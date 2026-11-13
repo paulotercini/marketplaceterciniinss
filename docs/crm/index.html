@@ -1935,6 +1935,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
            color:#fff;line-height:17px;white-space:nowrap}
   .zap-setor{display:inline-block;border-radius:5px;padding:0 6px;font-size:11px;font-weight:700;
              border:1px solid currentColor;line-height:16px;white-space:nowrap;background:#fff}
+  .zap-enc{font-size:12px;font-style:italic;color:var(--cinza);margin-bottom:2px}
   .zap-cit{border-left:3px solid #4a9b6f;background:rgba(0,0,0,.05);border-radius:5px;
            padding:3px 7px;margin-bottom:4px;font-size:12px;color:#3c4a42;cursor:pointer;
            max-height:3.4em;overflow:hidden}
@@ -7079,7 +7080,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.82</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.83</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18826,6 +18827,7 @@ function bolhaZap(m, cli, seguida){
   return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""} ${m.apagada_em?"apagada":""}
       ${m.status==="rascunho"?"rascunho":""} ${m.status==="agendada"?"agendada":""} ${seguida?"seguida":""}" id="zb-${m.id}">
     ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}${m.encaminhada_de?" · ↪ encaminhada":""}</div>`:""}
+    ${m.encaminhada?`<div class="zap-enc">↪ ${m.encaminhada>=4?"Encaminhada com frequência":"Encaminhada"}</div>`:""}
     ${citada?`<div class="zap-cit" onclick="irParaMsg('${citada.id}')">${esc(textoCurto(citada))}</div>`
       : m.responde_a||m.responde_externo?`<div class="zap-cit">mensagem citada (antiga)</div>`:""}
     ${m.status==="agendada"?`<div class="zap-ag">${zic("agenda",14)}Agendada para ${diaZap(m.enviar_em)}, ${horaSP(m.enviar_em)}

@@ -502,6 +502,9 @@ async function gravar(m, baixar, conversa, direcao, status, extra) {
     return { ...linha, repetida: true };
   }
 
+  const enc = N.encaminhadaDe(m);
+  if (enc) linha.encaminhada = enc;
+
   // respondeu citando: guarda o id do WhatsApp e, se a citada está no CRM, liga as duas
   const citada = N.citacaoDe(m);
   if (citada) {

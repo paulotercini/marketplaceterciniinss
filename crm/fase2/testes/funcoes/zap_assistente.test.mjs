@@ -54,3 +54,7 @@ assert.equal(linhaDoc({ nome: "Laudo pericial", criado_em: "2026-11-05T10:00:00Z
 const a2 = promptAprofundar("Maria", { casos: [], anotacoes: [], andamentos: [], eventos: [], agenda: [], prazos: [], documentos: ["Laudo pericial, de 05/11/2026:\nCPF 123.456.789-09 incapaz"] }, "x", q);
 assert.ok(a2.includes("<documentos_decisivos>") && !a2.includes("123.456") && a2.includes("pendencias"));
 console.log("zap_assistente: ok");
+
+// F581: mensagem encaminhada pelo cliente vem marcada para a IA
+assert.match(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "Seu benefício foi liberado", encaminhada: 2, criado_em: "2026-11-13T12:00:00Z" }]), /Cliente: \[encaminhada\] Seu benefício/);
+console.log("F581 assistente ok");
