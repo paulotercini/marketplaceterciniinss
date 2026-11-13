@@ -53,7 +53,7 @@ Fontes de dados paralelas ao CNIS. GFIP, eSocial com os eventos de vínculo, rem
 
 **Etapa 5, contagem auditável.** Apresente o tempo de contribuição e a carência com o intervalo de cada parcela, em tabela, e o total. Separe o cenário SEM CORREÇÃO, que é o que o INSS vê hoje, e o cenário COM CORREÇÃO, que é o que resulta dos achados. A diferença entre os dois é o valor do seu trabalho, e ela precisa estar explícita.
 
-**Etapa 6, qualidade de segurado.** Identifique a última competência com recolhimento ou benefício e projete o período de graça, considerando as prorrogações por 120 contribuições e por desemprego, hoje aplicáveis a todas as categorias de segurados obrigatórios. Diga a data em que a qualidade se perde ou se perdeu, e o que a preserva.
+**Etapa 6, qualidade de segurado.** Identifique a última competência com recolhimento ou benefício e projete o período de graça, considerando as prorrogações por 120 contribuições e por desemprego, hoje aplicáveis a todas as categorias de segurados obrigatórios. A prorrogação por mais de 120 contribuições sem perda da qualidade, uma vez atingida, vale em todo reingresso, sem novas 120 contribuições (Tema 1.352/STJ, julgado em 11/11/2026). Diga a data em que a qualidade se perde ou se perdeu, e o que a preserva.
 
 **Etapa 7, via de solução.** Para cada achado, diga se resolve por ACERTO ADMINISTRATIVO com o formulário próprio, por COMPLEMENTAÇÃO ou INDENIZAÇÃO de contribuição, por RETIFICAÇÃO na fonte de origem, ou se exige VIA JUDICIAL. Levar ao juízo o que se resolveria por acerto cria discussão desnecessária e risco de efeitos financeiros deslocados.
 

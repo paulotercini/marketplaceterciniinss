@@ -858,12 +858,12 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Conferido em. 03/10/2026 (auditoria 03/10/2026)
 
 ### TEMA 1352/STJ
-- Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório V4). Tema AFETADO, sem tese firmada, afetação em 09/06/2025. A suspensão alcança só recursos especiais e agravos em recurso especial.
-- Tese literal. Não há tese firmada. Questão, segundo o relatório V4: se a prorrogação do período de graça por mais de 120 contribuições pode ser reutilizada.
-- Órgão e leading case. STJ, Primeira Seção, Rel. Min. Paulo Sérgio Domingues, REsp 2.189.004/SP e REsp 2.188.858/SP, entre outros.
+- Situação. Mérito julgado em 11/11/2026 pela Primeira Seção, por unanimidade, com o recurso do INSS desprovido. A página oficial registra "Mérito Julgado" e "Aguardando a publicação do acórdão do julgamento de mérito" [CONFERIDO em 13/11/2026]. Acórdão não publicado e sem trânsito em julgado. Vinculante (art. 927, III, do CPC). Afetação publicada em 09/06/2025; a suspensão alcançava só recursos especiais e agravos em recurso especial.
+- Tese literal. Proclamada na sessão e conhecida por fonte secundária [NÃO CONFIRMADO na fonte oficial; conferir no acórdão publicado antes de transcrever em peça]: "A prorrogação do período de graça pelo prazo de 24 (vinte e quatro) meses, prevista no artigo 15, 'caput', II e §1º da Lei 8.213/1991, se incorpora ao patrimônio jurídico previdenciário do segurado do RGPS uma vez efetuado o pagamento de mais de 120 (cento e vinte) contribuições mensais sem interrupção que acarrete a perda da qualidade de segurado, admitindo-se sua utilização de forma permanente, sem limitação de reingressos no RGPS e independente de novo período contributivo."
+- Órgão e leading case. STJ, Primeira Seção, Rel. Min. Paulo Sérgio Domingues, REsp 2.188.858/SP, REsp 2.189.004/SP, REsp 2.171.338/SP e REsp 2.188.859/SP, todos do TRF3. Vide Controvérsia 699/STJ.
 - Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1352&cod_tema_final=1352
-- Uso indevido corrigido em 03/10/2026: a base o citava como tese sobre carência no reingresso.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Uso correto. Prorrogação do período de graça do art. 15, § 1º, por mais de 120 contribuições, com uso permanente em todo reingresso. Não é tese sobre carência no reingresso (uso indevido corrigido em 03/10/2026).
+- Conferido em. 13/11/2026 (Onda 186)
 
 ### TEMA 995/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório V4). Trânsito em julgado. Não confundir com o Tema 955/STJ (previdência complementar).

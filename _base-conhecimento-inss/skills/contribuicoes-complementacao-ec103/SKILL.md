@@ -188,7 +188,7 @@ Cessação de atividade remunerada — base 12 meses + 12 (se +120 contribuiçõ
 
 ### Precedentes vinculantes aplicáveis
 
-**Tema 255/TNU** (j. 16/10/2020) — direito à prorrogação por 120 contribuições se incorpora ao patrimônio jurídico. **ALERTA — Tema 1352/STJ [PENDENTE]** pode restringir ao uso único.
+**Tema 255/TNU** (j. 16/10/2020) — direito à prorrogação por 120 contribuições se incorpora ao patrimônio jurídico. O **Tema 1.352/STJ**, julgado em 11/11/2026 pela Primeira Seção por unanimidade, firmou em precedente vinculante (art. 927, III, do CPC) que a prorrogação por mais de 120 contribuições se incorpora ao patrimônio jurídico e se usa em todo reingresso, sem novo período contributivo. O acórdão não foi publicado até 13/11/2026; o detalhe e a marcação de conferência estão na skill `periodo-graca-qualidade-segurado`.
 
 **Tema 365/TNU** (j. 12/11/2025, auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF) — benefício por incapacidade intercalado NÃO conta para as 120 contribuições.
 
