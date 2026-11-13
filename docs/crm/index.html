@@ -2502,9 +2502,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-conv.nova .l1 b{font-weight:700}
   .zap-conv.nova .l2{color:var(--texto);font-weight:600}
   .app:not(.celular) .zap-escrever .ze-caixa{flex-direction:row;align-items:flex-end;padding:4px 6px 4px 14px;border-radius:22px;min-height:44px;box-sizing:border-box}
-  .app:not(.celular) .zap-escrever textarea#zap-txt{align-self:center;min-height:24px;max-height:160px;line-height:22px;resize:none;field-sizing:content}
+  .app:not(.celular) .zap-escrever textarea#zap-txt{align-self:center;min-height:24px;max-height:160px;line-height:22px;resize:none}
+  /* F572 · sem field-sizing: a troca content/fixed no campo esvaziado com foco derrubava a aba do Chrome (STATUS_BREAKPOINT) depois do envio; a altura vem do oninput */
   .app:not(.celular) .zap-escrever .ze-ferr{flex:none;min-height:0;align-items:center}
-  .app:not(.celular) .zap-escrever textarea#zap-txt:placeholder-shown{field-sizing:fixed;height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .app:not(.celular) .zap-escrever textarea#zap-txt:placeholder-shown{height:22px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* F424 · topo igual ao protótipo: uma linha "telefone | Adv. …", sem o "ninguém" ao lado do Assumir e sem chips vazios */
   .app:not(.celular) .zap-topo .zt-sub{flex-wrap:nowrap;overflow:hidden;column-gap:8px}
   .app:not(.celular) .zap-topo .zt-sub>*{overflow:hidden;text-overflow:ellipsis}
@@ -7077,7 +7078,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.75</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.76</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18997,7 +18998,7 @@ async function enviarZap(){
   if(!zapNota && barraAssumir(zapConvs.find(x=>x.id===conv))) return;
   if(_zapDesf){ clearTimeout(_zapDesf.timer); _zapDesf = null; document.querySelector(".ze-desf")?.remove(); }
   if(!zapNota && /\{[a-z_]+\}/.test(txt)){ travaZap(); return aviso("Há dado do caso sem preencher na mensagem"); }
-  t.value=""; t.style.height="auto"; guardarRascZap(conv, "");
+  t.value=""; t.style.height=""; guardarRascZap(conv, "");
   // nota interna nasce com direcao E status 'interna' — o banco recusa
   // qualquer nota que tente entrar na fila de envio
   try{
