@@ -33,6 +33,9 @@ insert into r select 'a0 dentro de 1 hora, segue com o atendente',
 select zap_encerrar((select id from v));
 update zap_atendimentos set encerrado_em = now() - interval '2 hours'
  where id = (select atendimento_id from zap_conversas where id = (select id from v));
+-- F577: a mensagem da equipe também é de antes do encerramento
+update zap_mensagens set criado_em = now() - interval '3 hours'
+ where conversa_id = (select id from v) and direcao = 'saida';
 insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'oi de novo' from v;
 insert into r select 'a2 reabre sem atendente e sem setor',
   (select status = 'aberta' and atendente_id is null and setor is null and bot_ativo from zap_conversas where id = (select id from v));
