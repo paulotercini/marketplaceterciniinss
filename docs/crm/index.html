@@ -7035,28 +7035,32 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link svg{vertical-align:-2px;opa
 html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:3px}
 @media (prefers-reduced-motion:reduce){html .faixa-prazos.fp5 .pz-mais,html .linha-caso.lc5 .lc-dobra{transition:none}html .faixa-prazos.fp5 .pz-mais:active{transform:none}}
 /* F567 · Resumo do Caso (variação 4, linha do tempo, escolhida pelo Paulo em 12.11.2026) */
-.rs5{--rs-rural:#4E7A3A;--rs-especial:#B4532A;--rs-comum:#3D6FA8;--rs-deficiencia:#7A4E9C;--rs-incapacidade:#A23B5A;--rs-outro:#7B7B7B;margin-top:10px;border:1px solid var(--borda,#ddd);border-radius:8px;padding:10px 12px;background:#FFFFFF;font-family:"IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs5{--rs-rural:#8DBA75;--rs-especial:#E08A62;--rs-comum:#7FA8DB;--rs-deficiencia:#B596D1;--rs-incapacidade:#D97B97;--rs-outro:#AAAAAA}}
-.rs5-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;text-transform:uppercase;font-size:12px;letter-spacing:.04em;color:var(--mut,#666)}
-.rs5-cab button,.rs5-acoes button{font-size:12px;padding:4px 8px;min-height:28px}
-.rs5-ped{margin:6px 0 8px;font-weight:600}
-.rs5-barra{position:relative;height:12px;border-radius:3px;background:#EEEEEE;overflow:hidden}
+.rs5{--rs-rural:#4E7A3A;--rs-especial:#B4532A;--rs-comum:#3D6FA8;--rs-deficiencia:#7A4E9C;--rs-incapacidade:#A23B5A;--rs-outro:#7B7B7B;--rs-bd:#E3E1DA;--rs-mut:#6B6862;margin-top:10px;border:1px solid var(--rs-bd);border-radius:8px;padding:10px 12px;background:#FFFFFF;color:#1F1E1B;font:13px/1.45 "IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rs5{--rs-rural:#8DBA75;--rs-especial:#E08A62;--rs-comum:#7FA8DB;--rs-deficiencia:#B596D1;--rs-incapacidade:#D97B97;--rs-outro:#AAAAAA;--rs-bd:#38363C;--rs-mut:#A29E97;background:#232226;color:#ECEAE4}}
+:root[data-theme="dark"] .rs5{--rs-rural:#8DBA75;--rs-especial:#E08A62;--rs-comum:#7FA8DB;--rs-deficiencia:#B596D1;--rs-incapacidade:#D97B97;--rs-outro:#AAAAAA;--rs-bd:#38363C;--rs-mut:#A29E97;background:#232226;color:#ECEAE4}
+.rs5-cab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.rs5-cab b{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--rs-mut);font-weight:600}
+.rs5-lk{font:inherit;font-size:12px;background:none;border:0;color:var(--rs-fase);cursor:pointer;padding:4px 0;min-height:0}
+.rs5-lk:focus-visible,.rs5-doc:focus-visible{outline:2px solid var(--rs-fase);outline-offset:2px;border-radius:4px}
+.rs5-ped{font-weight:500;margin-bottom:6px}
+.rs5-barra{position:relative;height:12px;border-radius:3px;background:var(--rs-bd);overflow:hidden;margin:6px 0 2px}
 .rs5-seg{position:absolute;top:0;bottom:0;min-width:2px}
-.rs5-eixo{display:flex;justify-content:space-between;font-size:11px;color:var(--mut,#666);margin-top:3px}
-.rs5-leg{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;margin-top:6px}
-.rs5-leg span,.rs5-lin{display:inline-flex;align-items:center;gap:6px}
+.rs5-eixo{display:flex;justify-content:space-between;font-size:11px;color:var(--rs-mut)}
+.rs5-leg{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;margin-top:4px}
+.rs5-leg span{display:inline-flex;align-items:center;gap:4px}
 .rs5-pt{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
-.rs5-lins{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
-.rs5-lins li{display:grid;grid-template-columns:8px 1fr auto;column-gap:8px;align-items:center}
-.rs5-dur{font-size:12px;color:var(--mut,#666);white-space:nowrap}
-.rs5-sub{grid-column:2/4;font-size:12px;color:var(--mut,#666)}
-.rs5-frase{margin:10px 0 0;line-height:1.45}
-.rs5-falta{margin:6px 0 0;font-size:12px;color:var(--mut,#666)}
+.rs5-lins{margin:0;padding:0;list-style:none}
+.rs5-lins li{display:grid;grid-template-columns:8px 1fr auto;gap:6px;align-items:center;padding:3px 0}
+.rs5-dur{font-size:12px;color:var(--rs-mut);white-space:nowrap}
+.rs5-sub{grid-column:2/4;font-size:12px;color:var(--rs-mut);margin-top:-2px}
+.rs5-frase{margin:6px 0 0}
+.rs5-falta{margin:6px 0 0;font-size:12px;color:var(--rs-mut)}
 .rs5-aviso{margin:6px 0 0;font-size:12px;color:#9A5B00}
-.rs5-fonte{margin-top:8px;padding-top:6px;border-top:1px solid var(--borda,#ddd);font-size:11px;color:var(--mut,#666)}
-.rs5-fonte button{font-size:11px;padding:0;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;min-height:0}
-.rs5-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.rs5-prop{margin-top:8px;padding:8px;border-radius:6px;background:#F6F3E8;font-size:12px}
+.rs5-fonte{margin-top:6px;padding-top:6px;border-top:1px solid var(--rs-bd);font-size:11px;color:var(--rs-mut)}
+.rs5-fonte .rs5-lk{font-size:11px;padding:0}
+.rs5-doc{font:inherit;padding:0;background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;min-height:0}
+.rs5-acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.rs5-prop{margin-top:6px;padding:8px;border-radius:6px;background:color-mix(in srgb,var(--rs-fase) 8%,transparent);font-size:12px}
 .rs5 textarea{width:100%;min-height:90px;font:inherit;box-sizing:border-box}
 </style>
 </head>
@@ -7070,7 +7074,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.72</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.74</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39225,7 +39229,12 @@ function dataDoMovimento(and){
 }
 // F567 · Resumo do Caso (planejamento de 11.11.2026, variação 4 de 12.11.2026): o que o caso pede, com cada período, lido da peça
 // do escritório. Aparece só fora do pré-caso e nas fases Conselho (recurso), Judicial e Pagamento (petição inicial); INSS fica sem.
-const RS_ANCORA = /DOS\s+PEDIDOS|DO\s+PEDIDO|Ante\s+o\s+exposto|Diante\s+do\s+exposto/gi;
+// F570 · sem /i: o "do pedido de revisão" do corpo do pedido virava a última âncora e o recorte perdia os períodos
+const RS_ANCORA = /DOS\s+PEDIDOS|DO\s+PEDIDO\b|DOS\s+REQUERIMENTOS|\bREQUERIMENTOS?\b(?!\s+ADMINISTRATIV)|\b(?:[Aa]nte|ANTE)\s+[oO]\s+(?:exposto|EXPOSTO)|\b(?:[Dd]iante|DIANTE)\s+(?:do|DO)\s+(?:exposto|EXPOSTO)/g;
+// o rodapé de cada folha do e-SAJ e do PJe cai no meio do pedido
+const rsLimpo = t => String(t||"").replace(/Este documento [ée] c[óo]pia do original[\s\S]{0,400}?c[óo]digo\s+\S+(?:\s*fls\.?\s*\d+)?/gi, " ")
+  .replace(/^[^\S\n]*fls\.?\s*\d+[^\S\n]*$/gim, "").replace(/^[^\S\n]*\d{1,3}[^\S\n]*$/gm, "")
+  .replace(/^.*Num\.\s*\d+\s*-\s*P[áa]g\.\s*\d+.*$/gim, "").replace(/^.*Assinado eletronicamente por.*$/gim, "").replace(/\n{3,}/g, "\n\n");
 const RS_FASES = ["conselho", "judicial", "pagamento"];
 const rsLigado = k => !!k && !k.pre_caso && RS_FASES.includes(faseEfetiva(k));
 const rsAssinada = d => d && typeof d.texto==="string" && d.texto.length>400 && /331[.\s]?110/.test(d.texto) && (RS_ANCORA.lastIndex=0, RS_ANCORA.test(d.texto))
@@ -39244,55 +39253,73 @@ function fonteDoResumo(k){
   return {docs:[ini, ...emendas], id:ini.id, nome:ini.nome, data:ini.data, rot:"Petição inicial" + (emendas.length ? " e emenda" : "")};
 }
 function recorteDoPedido(t){
-  t = String(t||"");
+  t = rsLimpo(t); RS_ANCORA.lastIndex = 0; // o test() de rsAssinada deixa o lastIndex adiante e o matchAll o copia
   const ms = [...t.matchAll(RS_ANCORA)]; if(!ms.length) return "";
   let ini = ms[ms.length-1].index;
-  const antes = t.slice(Math.max(0, ini-3000), ini), cab = [...antes.matchAll(/DOS\s+PEDIDOS/g)].pop();
+  const antes = t.slice(Math.max(0, ini-3000), ini), cab = [...antes.matchAll(/(?:\b[IVX\d]{1,4}\s*[.)–-]\s*)?(?:DOS\s+PEDIDOS|DOS\s+REQUERIMENTOS|\bREQUERIMENTOS\b)/g)].pop();
   if(cab) ini = ini - antes.length + cab.index;
   const resto = t.slice(ini), fecho = resto.search(/Pede\s+deferimento|Nestes\s+termos|Termos\s+em\s+que/i);
   let fim = resto.length;
   if(fecho>=0){ const ass = resto.slice(fecho).search(/331[.\s]?110/); fim = ass>=0 ? fecho + ass + 7 : fecho + 200; }
-  return t.slice(0, 500) + "\n[…]\n" + resto.slice(0, Math.min(fim, 6000));
+  const ped = resto.slice(0, Math.min(fim, 9000));
+  return t.slice(0, 500) + "\n[…]\n" + rsContexto(t.slice(0, ini), ped, 500) + ped;
+}
+// F570 · o pedido diz só as datas; a empresa e o agente estão na fundamentação, no trecho que cita a mesma data
+function rsContexto(corpo, ped, desde = 0){
+  const datas = [...new Set([...ped.matchAll(/\b\d{2}[./]\d{2}[./]\d{4}\b/g)].map(m=>m[0]))], jan = [];
+  for(const d of datas){
+    const rx = new RegExp(d.replace(/[./]/g, "[./]"), "g"); let m;
+    while((m = rx.exec(corpo))){ if(m.index+550>desde) jan.push([Math.max(desde, m.index-250), Math.min(corpo.length, m.index+550)]); if(jan.length>40) break; }
+  }
+  jan.sort((a,b)=>a[0]-b[0]);
+  const junt = []; for(const j of jan){ const u = junt[junt.length-1]; if(u && j[0]<=u[1]) u[1] = Math.max(u[1], j[1]); else junt.push([...j]); }
+  let out = "", n = 0;
+  for(const [a,b] of junt){ if(n + b - a > 6000) break; out += "[fundamentação] …" + corpo.slice(a, b) + "…\n"; n += b - a; }
+  return out ? out + "[pedido]\n" : "";
 }
 let _rsAberto = (()=>{ try{ return localStorage.getItem("crm_resumo_aberto")==="1"; }catch(e){ return false; } })();
 const _rsGerando = new Set();
 function rsAlternar(){ _rsAberto = !_rsAberto; try{ localStorage.setItem("crm_resumo_aberto", _rsAberto ? "1" : "0"); }catch(e){} repintarFicha(); }
 const rsCor = n => `var(--rs-${["rural","especial","comum","deficiencia","incapacidade"].includes(n) ? n : "outro"})`;
 const rsMes = s => { const [a, m] = String(s||"").split("-"); return a ? `${m}/${a}` : ""; };
-function rsBarra(ps){
+function rsBarra(ps, leg){
   if(!ps.length) return "";
   const t = s => Date.parse(s+"T00:00:00Z"), a = Math.min(...ps.map(p=>t(p.ini))), b = Math.max(...ps.map(p=>t(p.fim_iso))), tot = Math.max(b-a, 1);
   const segs = ps.map(p=>`<span class="rs5-seg" style="left:${((t(p.ini)-a)/tot*100).toFixed(2)}%;width:${((t(p.fim_iso)-t(p.ini))/tot*100).toFixed(2)}%;background:${rsCor(p.natureza)}" title="${esc(`${rsMes(p.ini)} a ${rsMes(p.fim_iso)} · ${p.dur} ${p.natureza}`)}"></span>`).join("");
-  const y1 = new Date(a).getUTCFullYear(), y2 = new Date(b).getUTCFullYear(), meio = y2-y1>=8 ? `<span>${Math.round((y1+y2)/2)}</span>` : "";
+  const y1 = new Date(a).getUTCFullYear(), y2 = new Date(b).getUTCFullYear(), meio = y2-y1>=2 ? `<span>${Math.round((y1+y2)/2)}</span>` : "";
   const nats = [...new Set(ps.map(p=>p.natureza))];
   return `<div class="rs5-barra" role="img" aria-label="${esc(ps.map(p=>`${p.dur} ${p.natureza}`).join("; "))}">${segs}</div>
     <div class="rs5-eixo" aria-hidden="true"><span>${y1}</span>${meio}<span>${y2}</span></div>
-    <div class="rs5-leg">${nats.map(n=>`<span><i class="rs5-pt" style="background:${rsCor(n)}"></i>${esc(n)}</span>`).join("")}</div>`;
+    ${leg ? `<div class="rs5-leg">${nats.map(n=>`<span><i class="rs5-pt" style="background:${rsCor(n)}"></i>${esc(maiusc1(n))}</span>`).join("")}</div>` : ""}`;
 }
+const maiusc1 = s => { s = String(s||""); return s.charAt(0).toUpperCase() + s.slice(1); };
+const rsLink = (txt, js, extra) => `<button type="button" class="rs5-lk" ${extra||""} onclick="${js}">${txt}</button>`;
+// F570 · o quadro segue a variação 4 do protótipo aprovado (c-280.html): cabeçalho com o link na cor da fase,
+// o pedido, a linha do tempo com o eixo e, aberto, uma linha por período e a fonte com Copiar, Editar e Atualizar
 function quadroResumo(k){
   if(!rsLigado(k)) return "";
-  const r = k.resumo, f = fonteDoResumo(k), gera = podeGravarCaso(), id = k.id;
-  const cab = `<div class="rs5-cab"><span>Resumo do caso</span>${r && r.texto ? `<button type="button" class="btn-mini" aria-expanded="${_rsAberto}" onclick="rsAlternar()">${_rsAberto ? "Recolher" : "Abrir"}</button>` : ""}</div>`;
-  if(_rsGerando.has(id)) return `<section class="rs5" aria-label="Resumo do caso">${cab}<p class="rs5-falta">Lendo o pedido da peça…</p></section>`;
-  if(!r || !r.texto){
-    const corpo = f ? (gera ? `<div class="rs5-acoes"><button type="button" class="btn-mini" onclick="gerarResumo('${id}')">Gerar</button></div><p class="rs5-falta">Pelo pedido: ${esc(f.rot)}.</p>` : `<p class="rs5-falta">Ainda não gerado.</p>`)
-      : `<p class="rs5-falta">Sem documento do pedido no CRM.</p>`;
-    return `<section class="rs5" aria-label="Resumo do caso">${cab}${corpo}</section>`;
-  }
+  const r = k.resumo, f = fonteDoResumo(k), gera = podeGravarCaso(), id = k.id, tem = !!(r && r.texto);
+  const cor = (LC_FASE[faseEfetiva(k)] || LC_FASE.judicial)[0];
+  const lk = _rsGerando.has(id) ? "" : tem ? rsLink(_rsAberto ? "Recolher" : "Abrir", "rsAlternar()", `aria-expanded="${_rsAberto}"`) : f && gera ? rsLink("Gerar", `gerarResumo('${id}')`) : "";
+  const cx = corpo => `<section class="rs5" style="--rs-fase:${cor}" aria-label="Resumo do caso"><div class="rs5-cab"><b>Resumo do caso</b>${lk}</div>${corpo}</section>`;
+  if(_rsGerando.has(id)) return cx(`<p class="rs5-falta">Lendo o pedido da peça…</p>`);
+  if(!tem) return cx(`<p class="rs5-falta">${f ? (gera ? `Pelo pedido da ${esc(f.rot.toLowerCase())}.` : "Ainda não gerado.") : "Sem documento do pedido no CRM."}</p>`);
   const ps = (r.periodos||[]).filter(p=>p.ini && p.fim_iso).sort((a,b)=>a.ini.localeCompare(b.ini));
-  const ped = [r.beneficio, r.der ? `DER ${r.der}` : ""].filter(Boolean).join(" · ");
+  const revs = (r.objetos||[]).filter(o=>o.natureza==="revisao" && o.motivo);
+  const ped = [r.tipo==="Ação de revisão" ? "Revisão" : "", maiusc1(r.beneficio), r.der ? `DER ${r.der}` : ""].filter(Boolean).join(" · ");
   const novo = f && r.fonte && f.id!==r.fonte.id && !(r.recusou||[]).includes(f.id) && !r.proposta;
   let aberto = "";
   if(_rsAberto){
-    aberto = `${ps.length ? `<ul class="rs5-lins">${ps.map(p=>`<li><i class="rs5-pt" style="background:${rsCor(p.natureza)}"></i><span>${rsMes(p.ini)} a ${rsMes(p.fim_iso)}</span><span class="rs5-dur">${esc(p.dur)} ${esc(p.natureza)}</span>${p.local||p.motivo ? `<span class="rs5-sub">${esc([p.local, p.motivo].filter(Boolean).join(" · "))}</span>` : ""}</li>`).join("")}</ul>` : ""}
-      <p class="rs5-frase" id="rs5-frase-${id}">${esc(r.texto)}</p>
+    const lins = ps.map(p=>`<li><i class="rs5-pt" style="background:${rsCor(p.natureza)}"></i><span>${rsMes(p.ini)} a ${rsMes(p.fim_iso)}</span><span class="rs5-dur">${esc(p.dur)} ${esc(p.natureza)}</span>${p.local||p.motivo ? `<span class="rs5-sub">${esc([p.local, p.motivo].filter(Boolean).join(" · "))}</span>` : ""}</li>`)
+      .concat(revs.map((o, i)=>`<li><i class="rs5-pt" style="background:var(--rs-fase)"></i><span>${esc(maiusc1(o.motivo))}</span><span class="rs5-dur">${i ? "subsidiário" : "pedido"}</span>${o.inicio ? `<span class="rs5-sub">desde ${esc(o.inicio)}</span>` : ""}</li>`)).join("");
+    const rot = r.fonte ? String(r.fonte.rot||"") : "", art = /^Recurso/.test(rot) ? "do" : "da";
+    aberto = `${lins ? `<ul class="rs5-lins">${lins}</ul>` : ""}<div id="rs5-frase-${id}"></div>
       ${(r.faltas||[]).length ? `<p class="rs5-falta">Não localizado: ${esc(r.faltas.join("; "))}.</p>` : ""}
       ${(r.avisos||[]).map(a=>`<p class="rs5-aviso">${esc(a)}</p>`).join("")}
-      <div class="rs5-acoes"><button type="button" class="btn-mini" onclick="copiarResumo('${id}')">Copiar</button>${podeAtender() ? `<button type="button" class="btn-mini" onclick="editarResumo('${id}')">Editar</button>` : ""}${novo && gera ? `<button type="button" class="btn-mini" title="Há peça mais nova: gerar uma proposta" onclick="gerarResumo('${id}', true)">Atualizar</button>` : ""}</div>
-      ${r.fonte ? `<div class="rs5-fonte">Lido de: <button type="button" onclick="abrirAnexo('${esc(r.fonte.id)}')">${esc(r.fonte.rot)}${r.fonte.data ? ` de ${esc(dataBR(String(r.fonte.data).slice(0,10)))}` : ""}</button>${r.travado ? ` · editado por ${esc(r.autor||"")}` : ""}</div>` : ""}`;
+      <div class="rs5-fonte">${r.fonte ? `Lido ${art} <button type="button" class="rs5-doc" onclick="abrirAnexo('${esc(r.fonte.id)}')">${esc(rot.toLowerCase())}</button>${r.fonte.data ? `, ${esc(dataBR(String(r.fonte.data).slice(0,10)))}` : ""}${r.travado ? `, editado por ${esc(r.autor||"")}` : ""} · ` : ""}${rsLink("Copiar texto", `copiarResumo('${id}')`)}${podeAtender() ? ` · ${rsLink("Editar", `editarResumoCaso('${id}')`)}` : ""}${novo && gera ? ` · ${rsLink("Atualizar", `gerarResumo('${id}', true)`, 'title="Há peça mais nova: gerar uma proposta"')}` : ""}</div>`;
   }
-  const prop = r.proposta ? `<div class="rs5-prop"><b>Proposta pela peça nova:</b> ${esc(r.proposta.texto)}<div class="rs5-acoes"><button type="button" class="btn-mini" onclick="aceitarResumo('${id}')">Aceitar</button><button type="button" class="btn-mini" onclick="manterResumo('${id}')">Manter</button></div></div>` : "";
-  return `<section class="rs5" aria-label="Resumo do caso">${cab}<p class="rs5-ped">${esc(ped || "Pedido não localizado")}</p>${rsBarra(ps)}${aberto}${prop}</section>`;
+  const prop = r.proposta ? `<div class="rs5-prop"><b>Proposta pela peça nova:</b> ${esc(r.proposta.texto)}<div class="rs5-acoes">${rsLink("Aceitar", `aceitarResumo('${id}')`)}${rsLink("Manter", `manterResumo('${id}')`)}</div></div>` : "";
+  return cx(`<div class="rs5-ped">${esc(ped || "Pedido não localizado")}</div>${rsBarra(ps, !_rsAberto)}${aberto}${prop}`);
 }
 async function rsGravar(k, resumo){ k.resumo = resumo; try{ await patchCaso(k.id, {resumo}); }catch(e){ aviso("Não gravei o resumo: " + msgErro(e), true); } repintarFicha(); }
 async function gerarResumo(casoId, comoProposta){
@@ -39304,7 +39331,7 @@ async function gerarResumo(casoId, comoProposta){
   catch(e){ r = {erro: msgErro(e)}; }
   _rsGerando.delete(casoId);
   if(!r || r.erro){ repintarFicha(); return aviso("Não gerei o resumo: " + ((r && r.erro) || "sem resposta"), true); }
-  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], beneficio:r.beneficio, der:r.der, tipo:r.tipo, faltas:r.faltas||[], avisos:r.avisos||[], fonte};
+  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], objetos:(r.objetos||[]).filter(o=>o.natureza==="revisao"), beneficio:r.beneficio, der:r.der, tipo:r.tipo, faltas:r.faltas||[], avisos:r.avisos||[], fonte};
   const atual = k.resumo;
   if(atual && atual.texto && (comoProposta || atual.travado)) return rsGravar(k, {...atual, proposta:{...base, em:new Date().toISOString()}});
   rsGravar(k, {...base, autor:eu && eu.nome, em:new Date().toISOString(), travado:false, versoes:(atual && atual.versoes)||[], recusou:(atual && atual.recusou)||[]});
@@ -39323,13 +39350,13 @@ function copiarResumo(casoId){
   const r = (D.casoPorId.get(casoId)||{}).resumo; if(!r) return;
   navigator.clipboard.writeText(r.texto).then(()=>aviso("Texto copiado"), ()=>aviso("Não foi possível copiar", true));
 }
-function editarResumo(casoId){
+function editarResumoCaso(casoId){
   const k = D.casoPorId.get(casoId), r = k && k.resumo; if(!r || !podeAtender()) return;
   const el = document.getElementById("rs5-frase-"+casoId); if(!el) return;
-  el.outerHTML = `<div class="rs5-frase"><textarea id="rs5-ed-${casoId}" aria-label="Texto do resumo">${esc(r.texto)}</textarea><div class="rs5-acoes"><button type="button" class="btn-mini" onclick="salvarResumo('${casoId}')">Salvar</button><button type="button" class="btn-mini" onclick="repintarFicha()">Cancelar</button></div></div>`;
+  el.outerHTML = `<div class="rs5-frase"><textarea id="rs5-ed-${casoId}" aria-label="Texto do resumo">${esc(r.texto)}</textarea><div class="rs5-acoes">${rsLink("Salvar", `salvarResumoCaso('${casoId}')`)}${rsLink("Cancelar", "repintarFicha()")}</div></div>`;
   document.getElementById("rs5-ed-"+casoId).focus();
 }
-function salvarResumo(casoId){
+function salvarResumoCaso(casoId){
   const k = D.casoPorId.get(casoId), r = k && k.resumo, t = (document.getElementById("rs5-ed-"+casoId)||{}).value;
   if(!r || !t || !t.trim() || t.trim()===r.texto) return repintarFicha();
   rsGravar(k, {...r, texto:t.trim(), travado:true, autor:eu && eu.nome, em:new Date().toISOString(), versoes:[...(r.versoes||[]), {texto:r.texto, em:r.em, autor:r.autor}].slice(-10)});
