@@ -136,16 +136,39 @@ export function promptAprofundar(nome: string, d: Dossie, conversa: string, quem
     `Se nada dos dados sustentar, escreva apenas "apenas a conversa".` +
     `\n\nEm "pendencias", liste o que o cliente perguntou e os dados não mostram, cada item em poucas palavras ` +
     `(como "resultado da perícia de 10/11 não registrado"); a mensagem não afirma nada sobre esses pontos e diz que o escritório vai verificar. ` +
-    `Sem pendência, lista vazia.`;
+    `Sem pendência, lista vazia.` +
+    `\n\nEm "providencia", indique a próxima providência INTERNA do escritório que os dados impõem (um prazo a cumprir, um lembrete ` +
+    `de conferir, uma tarefa), com a data dita nos dados ou contada deles, e o número do caso na lista <casos> ("caso 1", "caso 2"); ` +
+    `"rotulo" é a providência em poucas palavras, como "Recurso ao CRPS contra o indeferimento". Sem providência clara ou sem data segura, tipo "nenhuma".`;
 }
 export const ESQUEMA_APROF = {
-  type: "object", additionalProperties: false, required: ["texto", "bases", "pendencias"],
+  type: "object", additionalProperties: false, required: ["texto", "bases", "pendencias", "providencia"],
   properties: {
     texto: { type: "string", description: "a mensagem ao cliente" },
     bases: { type: "array", items: { type: "string" }, description: "as fontes que sustentam a resposta, com a data" },
     pendencias: { type: "array", items: { type: "string" }, description: "o que foi perguntado e os dados não mostram" },
+    providencia: {
+      type: "object", additionalProperties: false, required: ["tipo", "rotulo", "data", "caso"],
+      properties: {
+        tipo: { type: "string", enum: ["nenhuma", "prazo", "lembrete", "tarefa"] },
+        rotulo: { type: "string" }, data: { type: "string", description: "dd/mm/aaaa ou vazio" },
+        caso: { type: "integer", description: "o número do caso na lista <casos>, a partir de 1" },
+      },
+    },
   },
 };
+// F580 · a providência só passa com caso conhecido e data de hoje a 2 anos; nada se grava aqui, o CRM abre o campo de escrever
+export function providenciaDe(p: any, ids: string[], hoje = new Date()) {
+  if (!p || !["prazo", "lembrete", "tarefa"].includes(p.tipo)) return null;
+  const m = String(p.data || "").match(/^(\d{2})\/(\d{2})\/(\d{4})$/), caso_id = ids[Number(p.caso) - 1];
+  if (!m || !caso_id) return null;
+  const iso = `${m[3]}-${m[2]}-${m[1]}`, d = new Date(`${iso}T12:00:00Z`), h = hoje.toISOString().slice(0, 10);
+  if (isNaN(+d) || d.toISOString().slice(0, 10) !== iso || iso < h || +d - +hoje > 730 * 864e5) return null;
+  return { tipo: p.tipo, rotulo: String(p.rotulo || "").replace(/\s+/g, " ").trim().slice(0, 120), data: iso, caso_id };
+}
+// shortcut: cache por isolate (some no reinício da função); basta para o Aprofundar repetido logo em seguida na mesma conversa
+const CACHE_DOSSIE = new Map<string, { em: number; v: any[] }>();
+const TTL_DOSSIE = 15 * 60 * 1000;
 const dt = (s: unknown) => { const m = String(s || "").match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : ""; };
 const ORIGEM: Record<string, string> = { app: "anotação do escritório", todo: "anotação do escritório (To Do)", whatsapp: "anotação do WhatsApp", pat: "andamento do PAT", crps: "andamento do e-SISREC", pje: "andamento judicial" };
 export const linhaAnd = (a: { origem?: string; criado_em?: string; texto?: string | null }) =>
@@ -249,17 +272,19 @@ if (typeof Deno !== "undefined") {
         const anterior = String(m.anterior || ""), orientacao = String(m.orientacao || "");
         if (!fundo) return json({ texto: await claude([{ type: "text", text: promptOutra(primeiroNome(cli?.nome), casos.map(linhaDoCaso), conversa, quem, anterior, orientacao) }]) });
         const ids = casos.map((k) => k.id).join(",");
-        const [det, notas, portais, evs, docs] = ids ? await Promise.all([
+        const chave = `${convId}|${ids}`, guardado = CACHE_DOSSIE.get(chave);
+        const [det, notas, portais, evs, docs] = guardado && Date.now() - guardado.em < TTL_DOSSIE ? guardado.v : ids ? await Promise.all([
           ler(`casos?select=id,beneficio,titulo,fase,etapa,der,dib,dcb,exigencia_prazo,exigencia_descricao&id=in.(${ids})`),
           ler(`andamentos?select=origem,criado_em,texto&caso_id=in.(${ids})&origem=in.(app,todo,whatsapp)&order=criado_em.desc&limit=12`),
           ler(`andamentos?select=caso_id,origem,criado_em,texto&caso_id=in.(${ids})&origem=in.(pat,crps,pje)&order=criado_em.desc&limit=60`),
           ler(`eventos?select=tipo,data_hora,local,status&caso_id=in.(${ids})&data_hora=gte.${new Date(Date.now() - 30 * 864e5).toISOString()}&order=data_hora.asc&limit=10`),
           ler(`anexos?select=nome,criado_em,texto&caso_id=in.(${ids})&texto=not.is.null&or=(nome.ilike.*laudo*,nome.ilike.*decis*,nome.ilike.*senten*,nome.ilike.*acord*,nome.ilike.*acórd*,nome.ilike.*concess*)&order=criado_em.desc&limit=3`).catch(() => []),
         ]) : [[], [], [], [], []];
+        if (ids && !(guardado && Date.now() - guardado.em < TTL_DOSSIE)) CACHE_DOSSIE.set(chave, { em: Date.now(), v: [det, notas, portais, evs, docs] });
         const porCaso: Record<string, number> = {};
         const lista = (x: unknown) => (Array.isArray(x) ? x : []).map(String).slice(0, 15);
         const d: Dossie = {
-          casos: det.map((k: Record<string, any>) => linhaDoCaso(k as Caso) + [["DER", k.der], ["DIB", k.dib], ["DCB", k.dcb]].filter((c) => c[1]).map((c) => ` · ${c[0]} ${dt(c[1])}`).join("") +
+          casos: det.map((k: Record<string, any>, i: number) => `caso ${i + 1}: ` + linhaDoCaso(k as Caso) + [["DER", k.der], ["DIB", k.dib], ["DCB", k.dcb]].filter((c) => c[1]).map((c) => ` · ${c[0]} ${dt(c[1])}`).join("") +
             (k.exigencia_prazo ? ` · exigência até ${dt(k.exigencia_prazo)}${k.exigencia_descricao ? `: ${k.exigencia_descricao}` : ""}` : "")),
           anotacoes: notas.map(linhaAnd),
           andamentos: portais.filter((a: Record<string, any>) => (porCaso[a.caso_id] = (porCaso[a.caso_id] || 0) + 1) <= 6).map(linhaAnd),
@@ -273,7 +298,8 @@ if (typeof Deno !== "undefined") {
         // registro de quem pediu (RLS: o próprio colaborador); a falha do registro não perde a resposta
         await fetch(`${URL_SB}/rest/v1/zap_ia_aprofundar`, { method: "POST", headers: { ...auth, Prefer: "return=minimal" }, body: JSON.stringify({ conversa_id: convId, colaborador_id: eu.id }) }).catch(() => null);
         return json({ texto: String(r.texto || ""), bases: (Array.isArray(r.bases) ? r.bases : []).map(String).slice(0, 5),
-          pendencias: (Array.isArray(r.pendencias) ? r.pendencias : []).map(String).slice(0, 5) });
+          pendencias: (Array.isArray(r.pendencias) ? r.pendencias : []).map(String).slice(0, 5),
+          providencia: providenciaDe(r.providencia, det.map((k: Record<string, any>) => String(k.id))) });
       }
 
       if (m.acao === "documento" && msg) {
