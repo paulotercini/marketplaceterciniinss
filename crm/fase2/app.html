@@ -7070,7 +7070,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.72</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.73</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -39244,7 +39244,7 @@ function fonteDoResumo(k){
   return {docs:[ini, ...emendas], id:ini.id, nome:ini.nome, data:ini.data, rot:"Petição inicial" + (emendas.length ? " e emenda" : "")};
 }
 function recorteDoPedido(t){
-  t = String(t||"");
+  t = String(t||""); RS_ANCORA.lastIndex = 0; // o test() de rsAssinada deixa o lastIndex adiante e o matchAll o copia
   const ms = [...t.matchAll(RS_ANCORA)]; if(!ms.length) return "";
   let ini = ms[ms.length-1].index;
   const antes = t.slice(Math.max(0, ini-3000), ini), cab = [...antes.matchAll(/DOS\s+PEDIDOS/g)].pop();

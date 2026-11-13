@@ -27,7 +27,7 @@ const caso = (c, o) => { const k = { id: id("b"), cliente_id: c.id, titulo: c.no
 const PROC = "50000000000000000067";
 const INICIAL = "EXCELENTÍSSIMO SENHOR JUIZ FEDERAL DA VARA FEDERAL DE CATANDUVA. Cliente Teste, já qualificada, vem propor ação de concessão de aposentadoria. "
   + "DOS FATOS. A autora trabalhou na roça com a família e depois em atividade especial. ".repeat(4)
-  + "DOS PEDIDOS. Ante o exposto, requer a concessão da aposentadoria por tempo de contribuição desde a DER de 10/03/2025, com o reconhecimento do "
+  + "DOS PEDIDOS. Requer a concessão da aposentadoria por tempo de contribuição desde a DER de 10/03/2025, com o reconhecimento do "
   + "período rural de 02/12/1978 a 05/10/1986 e do período especial de 01/03/1990 a 31/08/1992. Pede deferimento. Monte Alto, 01/04/2025. Advogado OAB/SP 331.110.";
 
 const cA = cli("Cliente Teste Resumo");
