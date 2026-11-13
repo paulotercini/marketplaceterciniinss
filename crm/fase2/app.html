@@ -20623,11 +20623,11 @@ async function renderConfig(){
            <label class="cfg-ck" style="flex-basis:100%;flex-wrap:wrap">⏱ mensagem do Offline depois de
              <input type="number" id="cf-offline-min" min="0" max="1440" style="width:70px"
                value="${esc(cfgApp("zap_offline_min")||"15")}"> min sem a equipe
-             <small style="flex-basis:100%;color:var(--muted,#666)">Com o atendente Offline, a mensagem automática de ausência só sai se ninguém da equipe escreveu na conversa nesse prazo. Zero envia sempre.</small></label>
+             <small style="flex-basis:100%;font-size:12px;color:var(--muted,#666)">Com o atendente Offline, a mensagem automática de ausência só sai se ninguém da equipe escreveu na conversa nesse prazo. Zero envia sempre.</small></label>
            <label class="cfg-ck" style="flex-basis:100%;flex-wrap:wrap">🔁 conversa volta ao robô e à IA depois de
              <input type="number" id="cf-volta-min" min="0" max="1440" style="width:70px"
                value="${esc(cfgApp("zap_volta_min")||"30")}"> min
-             <small style="flex-basis:100%;color:var(--muted,#666)">Contados da última mensagem da equipe ou do encerramento. Antes disso, quem escreve continua com o atendente; depois, a conversa volta ao robô e à IA. Zero devolve na hora.</small></label>
+             <small style="flex-basis:100%;font-size:12px;color:var(--muted,#666)">Contados da última mensagem da equipe ou do encerramento. Antes disso, quem escreve continua com o atendente; depois, a conversa volta ao robô e à IA. Zero devolve na hora.</small></label>
            ${/* F92 · os feriados que o catálogo de prazos não conhece: os da
                 comarca e os forenses. Os nacionais (fixos e móveis) já estão
                 no programa. */""}
