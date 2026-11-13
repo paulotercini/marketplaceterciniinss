@@ -98,7 +98,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   // reagenda e não troca o que a equipe escreveu.
   // Essas decisões ficam com quem é gente.
   const robo = eu.papel === "assistente_ia";
-  const server = new McpServer({ name: "crm-tercini", version: "0.9.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.10.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -285,6 +285,68 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     if (!k) return texto("Caso não encontrado; nada foi gravado.");
     await anotar(caso_id, txt, { importante, urgente });
     return texto(`Anotação gravada no caso "${k.titulo}" de ${k.cliente}, em nome de ${eu.nome}.`);
+  });
+
+  // ── F571: análises da IA feitas nos Projetos do claude.ai ────────────────
+  // o projeto do cliente grava a análise aqui; ela aparece no quadro "Análises da IA"
+  // do caso e a rotina das 05:00 a lê. O mesmo texto do mesmo cliente não entra duas vezes.
+  server.registerTool("registrar_analise", {
+    title: "Registrar análise da IA",
+    description: "Grava no CRM uma análise feita pela IA (por exemplo, no Projeto do cliente no claude.ai): aparece no quadro 'Análises da IA' do caso, abaixo dos andamentos do escritório, e serve de fonte às rotinas. Informe caso_id (de ficha_cliente) ou, se a análise for do cliente e não de um caso, cliente_id. Para as análises antigas, informe feita_em com a data em que foram feitas. Repetir o mesmo texto não duplica.",
+    inputSchema: z.object({
+      caso_id: ID.optional(),
+      cliente_id: ID.optional(),
+      titulo: z.string().min(3).max(200).describe("assunto da análise, por exemplo 'Viabilidade da aposentadoria por idade'"),
+      texto: z.string().min(20).max(40000).describe("a análise inteira, em texto ou Markdown"),
+      projeto: z.string().max(300).optional().describe("nome ou link do Projeto do claude.ai de onde vem a análise"),
+      feita_em: DATA.optional().describe("data em que a análise foi feita (padrão: hoje)"),
+    }),
+    annotations: escrita,
+  }, async ({ caso_id, cliente_id, titulo, texto: txt, projeto, feita_em }) => {
+    let cli = cliente_id, onde = "";
+    if (caso_id) {
+      const k = await casoComCliente(caso_id);
+      if (!k) return texto("Caso não encontrado; nada foi gravado.");
+      if (cli && cli !== k.cliente_id) return texto("O caso não é desse cliente; nada foi gravado.");
+      cli = k.cliente_id; onde = `no caso "${k.titulo}" de ${k.cliente}`;
+    } else if (cli) {
+      const nome = (await clientesDe([cli])).get(cli);
+      if (!nome) return texto("Cliente não encontrado; nada foi gravado.");
+      onde = `na ficha de ${nome}`;
+    } else return texto("Informe caso_id ou cliente_id; nada foi gravado.");
+    const dia = feita_em ? isoDe(feita_em) : hojeSP();
+    if (!dia) return texto(`Data "${feita_em}" inválida; use AAAA-MM-DD ou DD/MM/AAAA. Nada foi gravado.`);
+    if (dia > hojeSP()) return texto("A data da análise não pode ser futura. Nada foi gravado.");
+    const corpo = txt.trim();
+    const hash = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(corpo))))
+      .map((b) => b.toString(16).padStart(2, "0")).join("");
+    if ((await db(`analises_ia?select=id&cliente_id=eq.${cli}&hash=eq.${hash}`)).length)
+      return texto(`Esta análise já estava gravada ${onde}; nada foi duplicado.`);
+    await db("analises_ia", { cliente_id: cli, caso_id: caso_id || null, titulo: titulo.trim(), texto: corpo,
+      projeto: projeto?.trim() || null, feita_em: dia, hash, autor_id: eu.id });
+    return texto(`Análise "${titulo.trim()}" de ${br(dia)} gravada ${onde}, em nome de ${eu.nome}.`);
+  });
+
+  server.registerTool("analises_caso", {
+    title: "Análises da IA do cliente",
+    description: "As análises da IA gravadas no CRM (registrar_analise) para um caso ou para todos os casos do cliente, da mais recente para a mais antiga, com o texto inteiro. Use antes de sugerir mensagem ou providência, para não repetir o que já foi analisado.",
+    inputSchema: z.object({
+      caso_id: ID.optional(),
+      cliente_id: ID.optional(),
+      limite: z.number().int().min(1).max(20).default(5),
+    }),
+    annotations: leitura,
+  }, async ({ caso_id, cliente_id, limite }) => {
+    let cli = cliente_id;
+    if (!cli && caso_id) cli = (await casoComCliente(caso_id))?.cliente_id;
+    if (!cli) return texto("Informe caso_id ou cliente_id de um cliente existente.");
+    // a análise do cliente (sem caso) vale para todos os casos dele
+    const filtro = caso_id ? `&or=(caso_id.eq.${caso_id},caso_id.is.null)` : "";
+    const as = await db(`analises_ia?select=caso_id,titulo,texto,projeto,feita_em,autor_id,criado_em&cliente_id=eq.${cli}${filtro}&order=feita_em.desc,criado_em.desc&limit=${limite}`);
+    const out = [];
+    for (const a of as) out.push({ feita_em: br(a.feita_em), titulo: a.titulo, projeto: a.projeto || undefined,
+      caso_id: a.caso_id || undefined, gravada_por: await nomeCol(a.autor_id), texto: a.texto });
+    return texto(out.length ? out : "Nenhuma análise da IA gravada para este cliente.");
   });
 
   server.registerTool("criar_tarefa", {
