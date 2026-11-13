@@ -7079,7 +7079,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.77</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.78</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9592,7 +9592,7 @@ function montarSidebar(){
     ["quadro","📌 Quadro", null],
     ["tabela","▦ Tabela", null],
     ["periciasaviso","🩺 Perícias", periciasDoAviso().length||null],   // F549
-    ["sugestoesdia","💡 Sugestões do dia", null],   // F573
+    ["sugestoesdia","💡 Sugestões do dia", null],   // F574
     // F132 · os Quadros 1, 2 e 3 saíram do menu: o "Agrupar por" do 📌 Quadro faz o mesmo numa tela só (F255)
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
@@ -12395,7 +12395,7 @@ function renderBase(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="tabela") return renderTabela();
   if(visao==="periciasaviso") return renderPericiasAviso();   // F549
-  if(visao==="sugestoesdia") return renderSugestoesDia();   // F573
+  if(visao==="sugestoesdia") return renderSugestoesDia();   // F574
   if(visao==="pessoas") return renderPessoas();
   if(/^quadro[123]$/.test(visao)) return renderQuadroN(+visao.slice(-1));
   if(visao==="vendas") return renderVendas();
@@ -18955,13 +18955,13 @@ async function descartarSugestaoZap(fica){
   const ant = c.sugestao_ia; c.sugestao_ia = null;
   try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:null})}); }
   catch(e){ c.sugestao_ia = ant; aviso(msgErro(e)); }
-  // F573 · o Descartar da mensagem de iniciativa fica registrado, para a rotina das 05:00 aprender; o Usar vira "enviada" no envio
+  // F574 · o Descartar da mensagem de iniciativa fica registrado, para a rotina das 05:00 aprender; o Usar vira "enviada" no envio
   if(!fica && ant.sugestao_id) api(`/rest/v1/sugestoes_rotina?id=eq.${ant.sugestao_id}&estado=eq.aberta`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({estado:"descartada", decidido_em:new Date().toISOString(), decidido_por:eu.id})}).catch(()=>{});
   if(!fica) pintarConversaGuardando();
 }
 
-// F573 · a anotação sugerida (rotina das 05:00 ou mensagem da equipe no WhatsApp) fica acima do campo de escrever, fora do histórico.
+// F574 · a anotação sugerida (rotina das 05:00 ou mensagem da equipe no WhatsApp) fica acima do campo de escrever, fora do histórico.
 // Nada grava no caso sem o clique: Usar leva o texto ao campo, Agendar cria o evento, Descartar fecha.
 const _sugAnot = new Map();   // caso_id → {em, itens}
 function sugAnotBox(k){ setTimeout(()=>pintarSugAnot(k.id), 0); return `<div class="sug-anot" id="sug-anot" data-caso="${k.id}"></div>`; }
@@ -19005,7 +19005,7 @@ async function agendarSugAnot(casoId, id){
   }catch(e){ return aviso("Não agendei: "+msgErro(e)); }
 }
 
-// F573 · Sugestões do dia: as mensagens de iniciativa que a rotina das 05:00 escreveu. Enviar põe na fila da ponte; nada sai sem o clique.
+// F574 · Sugestões do dia: as mensagens de iniciativa que a rotina das 05:00 escreveu. Enviar põe na fila da ponte; nada sai sem o clique.
 async function renderSugestoesDia(){
   tituloLista("💡 Sugestões do dia");
   const meio = document.getElementById("conteudo-meio");
