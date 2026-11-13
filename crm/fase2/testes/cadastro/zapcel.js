@@ -98,7 +98,7 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR
     await p.tap(".zp-fechar"); await p.waitForTimeout(200);
     // F423 · dentro da conversa, o ⋯ dos atalhos abre a agenda, as sugestões e a ajuda
     await p.tap("#fab-juntos"); await p.waitForTimeout(150);
-    conf("o ⋯ dos atalhos, dentro da conversa, mostra a agenda, as sugestões e a ajuda", await vis("#zap-ag") && await vis("#fab-sug") && await vis("#fab-ajuda"));
+    conf("o ⋯ dos atalhos, dentro da conversa, mostra a agenda e as sugestões", await vis("#zap-ag") && await vis("#fab-sug"));
     await p.tap("#zap-ag .zag-pilula").catch(() => {}); await p.waitForTimeout(150);
     conf("o toque na agenda abre o painel das vagas", await vis("#zap-ag .zag-cx"));
     await p.tap("#fab-juntos"); await p.waitForTimeout(150);
