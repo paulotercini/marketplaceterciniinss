@@ -2212,6 +2212,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-tela.wa .zap-b.saida:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#d9fdd3;
     border-top-left-radius:8px;border-top-right-radius:0}
   .zap-tela.wa .zap-b.bot{font-style:normal}
+  .zap-ant{align-self:center;font-size:12px;padding:4px 12px;margin:4px 0 8px;border:1px solid var(--borda,#ddd);border-radius:12px;background:var(--branco);color:var(--verde,#1a7f5a);cursor:pointer}
   .zap-tela.wa .zap-dia{background:#fff;border-color:transparent;box-shadow:0 1px .5px rgba(11,20,26,.13)}
   /* F270 · mais WhatsApp: cauda no primeiro balão da sequência, balões seguidos juntos, hora cinza,
      tiques no lugar de "enviada/entregue/lida" (azul na lida), bolinha verde das não lidas,
@@ -7080,7 +7081,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.84</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.85</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18177,6 +18178,27 @@ function atualizarVistos(){
 }
 
 // repintar sem perder o que está sendo escrito (chegou mensagem no meio da frase)
+// F583 · a conversa grande abre com as 150 mensagens mais recentes: desenhar milhares de balões de uma vez
+// derrubava a aba do Chrome. O começo da janela é guardado pelo id, para a mensagem que chega não deslocar a leitura;
+// "Mostrar anteriores", a busca, a citação, a favorita e a menção ampliam a janela até a mensagem procurada
+const ZAP_JAN = 150; let _zapJan = {conv:null, de:null, vis:0};
+function zapIni(){
+  if(_zapJan.conv!==zapAberta) _zapJan = {conv:zapAberta, de:null, vis:0};
+  let ini = _zapJan.de ? zapMsgs.findIndex(m=>m.id===_zapJan.de) : -1;
+  if(ini < 0){ ini = Math.max(0, zapMsgs.length - ZAP_JAN); _zapJan.de = zapMsgs[ini]?.id ?? null; }
+  const ach = zapPrimeiroAchado(); if(ach >= 0 && ach < ini) ini = ach;
+  return _zapJan.vis = ini;
+}
+function zapPrimeiroAchado(){
+  const t = semAcentoZap(zapBuscaConv && zapBuscaConv.q).trim();
+  return t.length < 2 ? -1 : zapMsgs.findIndex(m=>semAcentoZap(m.texto).includes(t));
+}
+function zapMostrarDesde(i){ _zapJan.de = zapMsgs[Math.max(0,i)]?.id ?? null; pintarConversaGuardando(); }
+function zapAnteriores(){
+  const cx = document.getElementById("zap-msgs"), h = cx ? cx.scrollHeight - cx.scrollTop : 0;
+  zapMostrarDesde(_zapJan.vis - ZAP_JAN);
+  const c2 = document.getElementById("zap-msgs"); if(c2) c2.scrollTop = c2.scrollHeight - h;   // a leitura fica onde estava
+}
 function pintarConversaGuardando(){
   const t = document.getElementById("zap-txt"), txt = t ? t.value : "", foco = document.activeElement===t;
   // quem está lendo mais acima não é puxado para o fim (só quem já estava no fim acompanha o que chega)
@@ -18309,13 +18331,14 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
         <button class="zb-nav" onclick="navBuscaZap(-1)" aria-label="Resultado anterior" title="mais antigo">${zic("baixo")}</button>
         <button class="zb-nav" onclick="navBuscaZap(1)" aria-label="Próximo resultado" title="mais recente">${zic("baixo")}</button>
         <button class="zb-nav" onclick="fecharBuscaZap()" aria-label="Fechar a busca">✕</button></div>`:""}
-     <div class="zap-msgs" id="zap-msgs">${zapMsgs.map((m,i)=>{
+     <div class="zap-msgs" id="zap-msgs">${(ini=>(ini?`<button class="zap-ant" onclick="zapAnteriores()">Mostrar ${Math.min(ini,ZAP_JAN)} anteriores</button>`:"")+zapMsgs.slice(ini).map((m,j)=>{
+        const i = ini + j;
         // a data entra entre as mensagens quando o dia muda, como no aparelho
         const d = dataSP(m.quando_wa||m.criado_em), ant = i && dataSP(zapMsgs[i-1].quando_wa||zapMsgs[i-1].criado_em);
         const dia = d!==ant ? `<div class="zap-dia">${(t=>t==="hoje"?"Hoje":t==="ontem"?"Ontem":dmaZap(d))(diaZap(m.quando_wa||m.criado_em))}</div>` : "";
         const a = i && zapMsgs[i-1];
         const seguida = !dia && a && a.direcao===m.direcao && (a.autor_id||"")===(m.autor_id||"") && !!a.por_bot===!!m.por_bot;
-        return dia + bolhaZap(m,cli,seguida); }).join("")
+        return dia + bolhaZap(m,cli,seguida); }).join(""))(zapIni())
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
      ${zapResponder?`<div class="zap-resp"><span>↩ respondendo</span>
         <span class="txt">${esc(textoCurto(zapMsgs.find(m=>m.id===zapResponder)))}</span>
@@ -18700,7 +18723,9 @@ function abrirBuscaZap(){
 function fecharBuscaZap(){ zapBuscaConv = null; pintarConversaGuardando(); }
 function ligarBuscaZap(foco){
   const q = document.getElementById("zap-bq"); if(!q) return;
-  q.oninput = ()=>{ zapBuscaConv.q = q.value; zapBuscaConv.i = -1; marcarBuscaZap(true); };
+  q.oninput = ()=>{ zapBuscaConv.q = q.value; zapBuscaConv.i = -1;
+    const ach = zapPrimeiroAchado(); if(ach >= 0 && ach < _zapJan.vis) pintarConversaGuardando();   // F583 · o achado antigo entra na janela
+    marcarBuscaZap(true); };
   q.onkeydown = e=>{
     if(e.key==="Escape"){ e.preventDefault(); fecharBuscaZap(); }
     else if(e.key==="Enter"){ e.preventDefault(); navBuscaZap(e.shiftKey?1:-1); }
@@ -18913,7 +18938,9 @@ function verFavoritasZap(){
     : `<p class="meio-sub">Nenhuma mensagem favorita nesta conversa. Segure o balão (ou passe o mouse) e toque em ★ para guardar uma.</p>`}`);
 }
 const textoCurto = m => !m ? "" : ((m.tipo&&m.tipo!=="texto"?"["+m.tipo+"] ":"") + (m.texto||"")).replace(/\s+/g," ").slice(0,90);
-function irParaMsg(id){ const el=document.getElementById("zb-"+id); if(el){ el.scrollIntoView({block:"center"}); el.style.outline="2px solid #4a9b6f"; setTimeout(()=>el.style.outline="",1500); } }
+function irParaMsg(id){ let el=document.getElementById("zb-"+id);
+  if(!el){ const i = zapMsgs.findIndex(m=>m.id==id); if(i>=0){ zapMostrarDesde(Math.min(i, _zapJan.vis) - 5); el = document.getElementById("zb-"+id); } }
+  if(el){ el.scrollIntoView({block:"center"}); el.style.outline="2px solid #4a9b6f"; setTimeout(()=>el.style.outline="",1500); } }
 
 // Rascunho é aviso automático que a regra mandou conferir antes. Soltar é
 // virar pedido de envio; descartar apaga — e a chave única impede que o
