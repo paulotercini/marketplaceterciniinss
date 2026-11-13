@@ -41,13 +41,14 @@ export const mascarar = (s: unknown) => String(s ?? "")
 const hojeBR = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 const hora = (iso: string) => new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" });
 
-type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; momento: string };
+type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; encaminhada?: number | null; momento: string };
 // a assinatura da equipe ("*Dr. Marcos:*") fica no texto: é ela que diz quem conversou com o cliente
 export function transcricao(msgs: Msg[]) {
   return msgs.map((m) => {
     const quem = m.direcao === "entrada" ? "Cliente" : m.por_bot ? "Assistente virtual" : "Escritório";
     const corpo = m.texto ? mascarar(m.texto).slice(0, 600) : `[${m.tipo}]`;
-    return `${hora(m.momento)} ${quem}: ${corpo}`;
+    const enc = m.encaminhada ? (m.encaminhada >= 4 ? "[encaminhada com frequência] " : "[encaminhada] ") : "";
+    return `${hora(m.momento)} ${quem}: ${enc}${corpo}`;
   }).join("\n");
 }
 
@@ -134,6 +135,7 @@ export const MARCOS = `Desconto na aposentadoria ou no benefício (empréstimo c
 
 // F422r · as correções do teste de 72 conversas (aprovadas pelo Paulo em 07.11.2026); prevalecem sobre o texto anterior
 export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem sobre o que estiver acima):\n` +
+  `- Mensagem marcada [encaminhada] é conteúdo que o cliente repassou de outra conversa, e não afirmação dele: trate-a como repassada e, se não estiver claro o que ele quer com ela, pergunte.\n` +
   `- Caso novo: faça no máximo uma pergunta sobre o caso e, em seguida, leve ao agendamento com as datas. Não colha idade, documentos, ` +
   `trabalho ou o que o INSS respondeu antes de agendar. O nome completo se pede uma vez só, para concluir o agendamento, e é o da pessoa ` +
   `que será atendida, e não o de quem escreve por ela. Se a pessoa já informou o nome, não peça de novo. ` +

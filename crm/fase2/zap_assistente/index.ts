@@ -39,12 +39,13 @@ export const mascarar = (s: unknown) => String(s ?? "")
   .replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
 export const primeiroNome = (s: unknown) => String(s ?? "").trim().split(/\s+/)[0] || "";
 
-type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; criado_em: string };
+type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; encaminhada?: number | null; criado_em: string };
 export function transcricao(msgs: Msg[]) {
   return msgs.filter((m) => m.direcao !== "interna").map((m) => {
     const quem = m.direcao === "entrada" ? "Cliente" : m.por_bot ? "Robô" : "Escritório";
     const corpo = m.texto ? mascarar(m.texto).slice(0, 800) : `[${m.tipo}]`;
-    return `${m.criado_em.slice(0, 16).replace("T", " ")} ${quem}: ${corpo}`;
+    const enc = m.encaminhada ? (m.encaminhada >= 4 ? "[encaminhada com frequência] " : "[encaminhada] ") : "";
+    return `${m.criado_em.slice(0, 16).replace("T", " ")} ${quem}: ${enc}${corpo}`;
   }).join("\n");
 }
 
@@ -103,7 +104,8 @@ export const quemEscreve = (nome: string, cargo: string) =>
   `("verifiquei", "fico à disposição"), sem "nós", sem citar o nome dela em terceira pessoa e sem assinatura.`;
 const PROIBE = `Não prometa resultado, prazo ou valor, não dê parecer jurídico e não afirme andamento que os dados não mostram; ` +
   `se faltar informação, diga que vai conferir e retorna. Escreva "agendar" e "atendimento", e não "marcar" ou "consulta". ` +
-  `Continue a conversa a partir da última mensagem, como quem já está nela: sem apresentação nem cumprimento repetido se a conversa já começou.`;
+  `Continue a conversa a partir da última mensagem, como quem já está nela: sem apresentação nem cumprimento repetido se a conversa já começou. ` +
+  `Mensagem marcada [encaminhada] é conteúdo que o cliente repassou de outra conversa, e não afirmação dele: trate-a como repassada.`;
 const DIVERSO = (anterior: string, orientacao: string) =>
   (anterior.trim() ? `\n\nSugestão anterior, que a equipe não quis usar (não a repita nem a parafraseie; siga outro caminho):\n<anterior>\n${mascarar(anterior).slice(0, 1500)}\n</anterior>` : "") +
   (orientacao.trim() ? `\n\nOrientação de quem pede (vale acima do tom da sugestão anterior; as proibições continuam): ${mascarar(orientacao).slice(0, 500)}` : "");
@@ -252,7 +254,7 @@ if (typeof Deno !== "undefined") {
       }
 
       if (m.acao === "resumo" || m.acao === "rascunho") {
-        const msgs: Msg[] = (await ler(`zap_mensagens?select=direcao,por_bot,tipo,texto,criado_em&conversa_id=eq.${convId}&order=seq.desc&limit=40`)).reverse();
+        const msgs: Msg[] = (await ler(`zap_mensagens?select=direcao,por_bot,tipo,texto,encaminhada,criado_em&conversa_id=eq.${convId}&order=seq.desc&limit=40`)).reverse();
         const conversa = transcricao(msgs);
         if (!conversa) return json({ erro: "conversa sem mensagens" }, 400);
         const [txt] = m.acao === "rascunho" ? await ler(`config_app?select=valor&chave=eq.zap_ia_txt_rascunho`) : [];
@@ -263,7 +265,7 @@ if (typeof Deno !== "undefined") {
 
       if (m.acao === "outra" || m.acao === "aprofundar") {
         const fundo = m.acao === "aprofundar";
-        const msgs: Msg[] = (await ler(`zap_mensagens?select=direcao,por_bot,tipo,texto,criado_em&conversa_id=eq.${convId}&order=seq.desc&limit=${fundo ? 60 : 40}`)).reverse();
+        const msgs: Msg[] = (await ler(`zap_mensagens?select=direcao,por_bot,tipo,texto,encaminhada,criado_em&conversa_id=eq.${convId}&order=seq.desc&limit=${fundo ? 60 : 40}`)).reverse();
         const conversa = transcricao(msgs);
         if (!conversa) return json({ erro: "conversa sem mensagens" }, 400);
         const quem = quemEscreve(primeiroNome(eu.nome), String(eu.cargo || ""));

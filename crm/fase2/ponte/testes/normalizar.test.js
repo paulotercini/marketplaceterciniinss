@@ -83,6 +83,9 @@ t.test("citação e reação do cliente, e a chave para citar ou reagir", () => 
   const citando = msg({ extendedTextMessage: { text: "isso mesmo", contextInfo: { stanzaId: "ORIG1" } } });
   a.equal(N.citacaoDe(citando), "ORIG1");
   a.equal(N.citacaoDe(msg({ conversation: "oi" })), null);
+  a.equal(N.encaminhadaDe(msg({ extendedTextMessage: { text: "x", contextInfo: { isForwarded: true, forwardingScore: 5 } } })), 5);
+  a.equal(N.encaminhadaDe(msg({ imageMessage: { contextInfo: { isForwarded: true } } })), 1);
+  a.equal(N.encaminhadaDe(msg({ conversation: "oi" })), null);
   const reage = { key: { remoteJid: "5500900000001@s.whatsapp.net", id: "R1" }, message: { reactionMessage: { key: { id: "ORIG1" }, text: "👍" } } };
   a.deepEqual(N.reacaoDe(reage), { id: "ORIG1", emoji: "👍" });
   a.deepEqual(N.reacaoDe({ key: {}, message: { reactionMessage: { key: { id: "ORIG1" }, text: "" } } }), { id: "ORIG1", emoji: "" });

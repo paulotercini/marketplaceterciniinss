@@ -197,6 +197,16 @@ function citacaoDe(m) {
   return null;
 }
 
+// Mensagem encaminhada: o forwardingScore (1 quando não vem; 4 ou mais = "encaminhada com frequência")
+function encaminhadaDe(m) {
+  const c = miolo(m);
+  for (const k of Object.keys(c)) {
+    const ci = c[k] && c[k].contextInfo;
+    if (ci && (ci.isForwarded || ci.forwardingScore > 0)) return Math.min(Number(ci.forwardingScore) || 1, 127);
+  }
+  return null;
+}
+
 // Reação a uma mensagem: { id da mensagem reagida, emoji } ("" = reação retirada)
 function reacaoDe(m) {
   const r = m && m.message && m.message.reactionMessage;
@@ -257,4 +267,4 @@ const variantesFone = t => {
 
 module.exports = { variantesFone, soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem, foneDaLigacao, agruparHistorico,
                    miolo, tipoDaMensagem, tipoSemTraducao, textoDaMensagem, deveIgnorar,
-                   nomeSeguro, quandoWa, numerosDoVcard, linhaContato, citacaoDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente, naoAbriu };
+                   nomeSeguro, quandoWa, numerosDoVcard, linhaContato, citacaoDe, encaminhadaDe, reacaoDe, alteracaoDe, chaveDaMensagem, recente, naoAbriu };
