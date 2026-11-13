@@ -7080,7 +7080,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.83</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.84</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18970,6 +18970,8 @@ async function descartarSugestaoZap(fica){
   try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:null})}); }
   catch(e){ c.sugestao_ia = ant; aviso(msgErro(e)); }
   // F574 · o Descartar da mensagem de iniciativa fica registrado, para a rotina das 05:00 aprender; o Usar vira "enviada" no envio
+  // F582 · o descarte fica registrado para a IA aprender o que a equipe não quer
+  if(!fica) retornoSugestao(c.id, ant, null, "descartada");
   if(!fica && ant.sugestao_id) api(`/rest/v1/sugestoes_rotina?id=eq.${ant.sugestao_id}&estado=eq.aberta`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({estado:"descartada", decidido_em:new Date().toISOString(), decidido_por:eu.id})}).catch(()=>{});
   if(!fica) pintarConversaGuardando();
@@ -19131,9 +19133,17 @@ async function providenciaZap(){
     tx.focus(); tx.scrollIntoView({block:"center"});
   });
 }
+// F582 · usada, editada ou descartada: o par sugestão e texto enviado vai a zap_sugestao_retorno, e o zap_assistente lê as últimas
+const _sugUsada = new Map();   // conversa → sugestão levada ao campo, até o envio
+function retornoSugestao(conv, sug, enviado, acao){
+  if(!sug || !sug.texto) return;
+  api(`/rest/v1/zap_sugestao_retorno`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({conversa_id:conv,
+    modo: sug.modo || (sug.sugestao_id ? "iniciativa" : "plantao"), sugestao: sug.texto, enviado, acao, por: eu.id})}).catch(()=>{});
+}
 function usarSugestaoZap(){
   const c = zapConvs.find(x=>x.id===zapAberta); if(!c || !c.sugestao_ia) return;
   const txt = c.sugestao_ia.texto;
+  _sugUsada.set(c.id, c.sugestao_ia);
   descartarSugestaoZap(true);
   document.querySelector(".ze-sug-ia")?.remove();
   const t = document.getElementById("zap-txt"); if(!t) return;
@@ -19157,6 +19167,10 @@ async function enviarZap(){
         : {conversa_id:conv, direcao:"saida", autor_id:eu.id,
            texto:txt, status:"fila", responde_a:zapResponder||null})});
   }catch(e){ t.value = txt; travaZap(); guardarRascZap(conv, txt); return aviso(msgErro(e)); }
+  if(!zapNota && _sugUsada.has(conv)){
+    const sug = _sugUsada.get(conv); _sugUsada.delete(conv);
+    retornoSugestao(conv, sug, txt, txt===sug.texto.trim() ? "usada" : "editada");
+  }
   // F187 · @Fulano na nota chama a pessoa. F357 · toda nota é menção: sem @, vai a quem
   // atende a conversa e ao advogado responsável pelo cliente (decisão do Paulo, 01.11.2026)
   if(zapNota){
