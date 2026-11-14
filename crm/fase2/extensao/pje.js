@@ -201,7 +201,7 @@
     // F385 · parar por 6 rodadas quietas ainda cortava a inicial (54 processos
     // sem o "Distribuído"): sem o primeiro movimento na tela, espera até 25
     let chegou = false;
-    for (let i = 0; i < 160 && quietos < (chegou ? 6 : 25); i++) {
+    for (let i = 0; i < 160 && quietos < (chegou ? 3 : 25); i++) {
       if (paginaMorreu()) { morreuNoMeio = true; break; }   // entrega o que carregou
       const n = tl.querySelectorAll('.media').length;
       if (n === antes) quietos++;
