@@ -37,7 +37,7 @@ insert into r select 'a1 fora do expediente não envia', zap_amparo_vez('2026-11
 insert into r select 'a2 envia só a de 70 min', zap_amparo_vez('2026-11-10 13:00:00+00') = 1;
 insert into r select 'a3 mensagem assinada pela assistente',
   exists (select 1 from zap_mensagens where conversa_id = (select id from v) and direcao = 'saida' and por_bot
-           and texto like '*Assistente do escritório:*%equipe já está ciente%ainda hoje.');
+           and texto = E'*Assistente do escritório:*\n\nBom dia. Recebemos a sua mensagem. A equipe responderá em breve.');
 insert into r select 'a4 recepção mencionada',
   exists (select 1 from mencoes where para_id = '55555555-5555-5555-5555-555555555555'
            and conversa_id = (select id from v) and texto like 'Cliente sem resposta há mais de 60 minutos%');
@@ -58,12 +58,13 @@ insert into r select 'b2 segundo amparo depois de 2 horas', zap_amparo_vez('2026
 -- terceira espera no mesmo dia: limite de 2
 update zap_conversas set ultima_entrada_em = '2026-11-10 15:30:00+00' where id = (select id from v);
 insert into r select 'b3 limite de 2 por dia', zap_amparo_vez('2026-11-10 18:00:00+00') = 0;
--- depois das 15h de Brasília a resposta é até o próximo dia útil (dia seguinte zera o limite)
+-- à tarde o cumprimento é boa tarde (dia seguinte zera o limite)
 update zap_conversas set ultima_entrada_em = '2026-11-11 17:00:00+00' where id = (select id from v);
 insert into r select 'b4 novo dia envia', zap_amparo_vez('2026-11-11 18:10:00+00') = 1;
-insert into r select 'b5 depois das 15h diz próximo dia útil',
+insert into r select 'b5 à tarde diz boa tarde e em breve, sem ainda hoje',
   exists (select 1 from zap_mensagens where conversa_id = (select id from v) and por_bot
-           and texto like '%até o próximo dia útil.');
+           and texto like '%Boa tarde. Recebemos a sua mensagem. A equipe responderá em breve.')
+  and not exists (select 1 from zap_mensagens where por_bot and (texto like '%ainda hoje%' or texto like '%ciente%'));
 -- pedido de andamento de cliente com ficha: equipe jurídica e URGENTE
 insert into clientes (id, nome) values ('66666666-6666-6666-6666-666666666666', 'Cliente Teste')
   on conflict (id) do nothing;
@@ -115,9 +116,9 @@ insert into r select 'e3 a IA lê o local da perícia',
   (zap_amparo_pegar((select id from u))->>'eventos') like '%Agência Teste, Rua A, 1%';
 insert into r select 'e4a a IA grava',
   zap_amparo_gravar((select id from u), 'A perícia será na Agência Teste, Rua A, 1.', '2026-11-12 12:11:00+00');
-insert into r select 'e4 resposta da IA com o aviso',
+insert into r select 'e4 resposta da IA sem o aviso de equipe ciente',
   exists (select 1 from zap_mensagens where conversa_id = (select id from u) and por_bot
-               and texto like '*Assistente do escritório:*%Agência Teste%equipe já está ciente%ainda hoje.');
+               and texto = E'*Assistente do escritório:*\n\nBom dia. A perícia será na Agência Teste, Rua A, 1.');
 insert into r select 'e5 não grava duas vezes',
   not zap_amparo_gravar((select id from u), 'outra', '2026-11-12 12:12:00+00');
 -- sem resposta da IA em 3 minutos: o texto fixo
@@ -126,7 +127,7 @@ insert into r select 'e6 pedido de novo', zap_amparo_vez('2026-11-12 16:10:00+00
 insert into r select 'e7a fixo depois de 3 minutos', zap_amparo_vez('2026-11-12 16:14:00+00') = 1;
 insert into r select 'e7 fixo depois de 3 minutos',
   exists (select 1 from zap_mensagens where conversa_id = (select id from u) and por_bot
-               and texto like '%equipe já está ciente. A resposta será enviada ainda hoje.');
+               and texto like '%Boa tarde. Recebemos a sua mensagem. A equipe responderá em breve.');
 -- desligado
 update config_app set valor = 'nao' where chave = 'zap_ia_amparo';
 update zap_conversas set ultima_entrada_em = '2026-11-12 13:00:00+00', ultima_resposta_em = null

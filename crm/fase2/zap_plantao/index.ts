@@ -611,13 +611,14 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
 // F599 · a IA de amparo responde, da ficha, o que o cliente perguntou: local da perícia, documentos a trazer, endereço do escritório
 // (decisão do Paulo de 14.11.2026). Sem parecer jurídico, sem andamento, sem orientação de como se portar na perícia, sem inventar.
 export const ESQ_AMPARO = {
-  type: "object", additionalProperties: false, required: ["responder", "resposta"],
+  type: "object", additionalProperties: false, required: ["responder", "resposta", "encaminhar"],
   properties: {
     responder: { type: "boolean", description: "true só quando a resposta inteira sai dos fatos abaixo; na dúvida, false" },
     resposta: { type: "string", description: "1 a 3 frases curtas, vazia quando responder for false" },
+    encaminhar: { type: "boolean", description: "true quando a mensagem traz outra pergunta que os fatos não respondem" },
   },
 };
-export type Amparo = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; quando: string;
+export type Amparo = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null;
   mensagens: Msg[]; eventos?: string[]; casos?: string[]; docs_pendentes?: string[]; tem_senha_gov?: boolean };
 export function fatosAmparo(a: Amparo) {
   return `Perícias, avaliações sociais e audiências agendadas:\n${(a.eventos || []).map((e) => "- " + e).join("\n") || "- nenhuma"}\n` +
@@ -638,10 +639,12 @@ export function promptAmparo(a: Amparo) {
     `ou o que dizer na perícia, confirmação de documento recebido sem arquivo na conversa, nem dado que não esteja nos fatos. ` +
     `Agradecimento, cumprimento, pedido de agendamento, pergunta que os fatos não respondem ou qualquer dúvida: responder = false.\n\n` +
     `Forma: 1 a 3 frases curtas, português formal, sem cumprimento, sem emoji, sem lista, sem assinatura, datas como 21/11/2026. ` +
-    `Não diga que a equipe está ciente nem quando responderá: o sistema acrescenta.\n\n` +
+    `Responda direto, sem dizer que a equipe está ciente nem quando responderá. Se a mensagem tiver outra pergunta que os fatos ` +
+    `não respondem, responda só o que os fatos respondem e marque encaminhar = true: o sistema acrescenta que ela vai à equipe.\n\n` +
     `Quem escreve: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n<fatos>\n${fatosAmparo(a)}\n</fatos>\n\n` +
     `<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
 }
+export const AMPARO_ENCAMINHA = "As demais perguntas serão encaminhadas à equipe.";
 // o código confere: todo número da resposta tem de estar nos fatos (data, hora, endereço, telefone), e andamento não passa
 export function conferirAmparo(resposta: string, a: Amparo) {
   const r = String(resposta || "").trim();
@@ -1441,7 +1444,8 @@ if (typeof Deno !== "undefined") {
         const a: Amparo | null = await rpc("zap_amparo_pegar", { p_conversa: corpo.amparo });
         if (!a) return json({ enviada: false });
         const r = await claude(promptAmparo(a), ESQ_AMPARO);
-        const texto = r.responder === true ? conferirAmparo(r.resposta, a) : "";
+        const ok = r.responder === true ? conferirAmparo(r.resposta, a) : "";
+        const texto = ok && r.encaminhar === true ? ok + "\n\n" + AMPARO_ENCAMINHA : ok;
         return json({ enviada: await rpc("zap_amparo_gravar", { p_conversa: corpo.amparo, p_resposta: texto }), respondeu: !!texto });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }

@@ -1,7 +1,7 @@
 -- F599 (fase 2 do plano das cobranças do WhatsApp, decisões do Paulo de 14.11.2026): a "IA de amparo".
 -- A conversa cuja última mensagem é do cliente e fica 1 hora sem resposta da equipe, no expediente,
--- recebe uma mensagem assinada "Assistente do escritório" que diz que a equipe está ciente e quando
--- responderá. Não dá orientação jurídica nem informa andamento: o pedido de andamento recebe apenas
+-- recebe uma mensagem assinada "Assistente do escritório", com o cumprimento do período, que diz que a
+-- equipe responderá em breve (forma usada pela equipe, levantada no histórico de 120 dias). Não dá orientação jurídica nem informa andamento: o pedido de andamento recebe apenas
 -- "a equipe jurídica vai verificar o seu processo", com menção URGENTE ao advogado.
 -- Uma mensagem por espera, no máximo 2 por conversa no dia e com 2 horas entre elas. Vale também na
 -- conversa assumida. Fica fora a automática, a sem_ia, a de contato (F586), a que a IA conduz (F594),
@@ -20,7 +20,6 @@ declare
   v_min int := coalesce(nullif((select valor from config_app where chave = 'zap_amparo_min'), '')::int, 60);
   v_local timestamp := p_agora at time zone 'America/Sao_Paulo';
   v_dia text := to_char(v_local, 'YYYY-MM-DD');
-  v_quando text := case when extract(hour from v_local) < 15 then 'ainda hoje' else 'até o próximo dia útil' end;
   v_rec boolean := exists (select 1 from colaboradores where ativo and cargo = 'recepcao');
   v_claude uuid := (select id from colaboradores where papel = 'assistente_ia' and ativo order by nome limit 1);
   c record;
@@ -29,10 +28,12 @@ declare
 begin
   select * into c from zap_conversas where id = p_conv;
   insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status, criado_em)
-  values (c.id, 'saida', true, '*Assistente do escritório:*' || E'\n\n' || p_txt, 'fila', p_agora);
+  values (c.id, 'saida', true, '*Assistente do escritório:*' || E'\n\n'
+          || case when extract(hour from v_local) < 12 then 'Bom dia. ' when extract(hour from v_local) < 18
+                  then 'Boa tarde. ' else 'Boa noite. ' end || p_txt, 'fila', p_agora);
   v_aviso := case when p_and then '⚠ URGENTE: ' else '' end
-    || 'Cliente sem resposta há mais de ' || v_min || ' minutos. A assistente do escritório informou que a resposta virá '
-    || v_quando || case when p_and then ' (pedido de andamento).' else '.' end || ' Responda a conversa.';
+    || 'Cliente sem resposta há mais de ' || v_min || ' minutos. A assistente do escritório informou que a equipe responderá em breve'
+    || case when p_and then ' (pedido de andamento).' else '.' end || ' Responda a conversa.';
   perform zap_nota_sistema(c.id, v_claude, 'Assistente do escritório: ' || p_txt);
   v_adv := zap_advogado_da_conversa(c.id);
   insert into mencoes (para_id, conversa_id, cliente_id, texto)
@@ -52,10 +53,8 @@ end $$;
 create or replace function public.zap_amparo_fixo(p_and boolean, p_agora timestamptz)
 returns text language sql stable set search_path = public as $$
   select case when p_and
-    then 'Recebemos a sua mensagem. A equipe jurídica vai verificar o seu processo e responderá '
-    else 'Recebemos a sua mensagem e a equipe já está ciente. A resposta será enviada ' end
-    || case when extract(hour from p_agora at time zone 'America/Sao_Paulo') < 15
-            then 'ainda hoje' else 'até o próximo dia útil' end || '.';
+    then 'Recebemos a sua mensagem. A equipe jurídica vai verificar o seu processo e responderá em breve.'
+    else 'Recebemos a sua mensagem. A equipe responderá em breve.' end;
 $$;
 
 -- A conversa continua sem resposta da equipe e sem mensagem do robô ou da IA depois do cliente.
@@ -152,8 +151,6 @@ begin
     'contato', coalesce(nullif(trim(c.contato_nome), ''), nullif(trim(c.nome_perfil), ''), ''),
     'relacao', nullif(trim(c.contato_relacao), ''),
     'cliente', (select cl.nome from clientes cl where cl.id = c.cliente_id),
-    'quando', case when extract(hour from now() at time zone 'America/Sao_Paulo') < 15
-                   then 'ainda hoje' else 'até o próximo dia útil' end,
     'mensagens', (select coalesce(jsonb_agg(jsonb_build_object('direcao', x.direcao, 'por_bot', x.por_bot,
                      'tipo', x.tipo, 'texto', x.texto, 'momento', x.momento) order by x.momento, x.seq), '[]'::jsonb)
                     from (select * from zap_mensagens where conversa_id = c.id and direcao in ('entrada', 'saida')
@@ -183,14 +180,13 @@ begin
                               and cr.tipo in ('meu_inss', 'gov_br') and nullif(trim(cr.valor), '') is not null));
 end $$;
 
--- A volta da IA: com resposta, ela e o aviso de que a equipe está ciente; sem resposta, o texto fixo.
+-- A volta da IA: com resposta, só ela (a função acrescenta, se for o caso, que as demais perguntas vão à
+-- equipe); sem resposta, o texto fixo.
 create or replace function public.zap_amparo_gravar(p_conversa uuid, p_resposta text, p_agora timestamptz default now())
 returns boolean language plpgsql security definer set search_path = public as $$
 declare
   c record;
   v_r text := nullif(trim(coalesce(p_resposta, '')), '');
-  v_quando text := case when extract(hour from p_agora at time zone 'America/Sao_Paulo') < 15
-                        then 'ainda hoje' else 'até o próximo dia útil' end;
 begin
   select * into c from zap_conversas where id = p_conversa for update;
   if c.id is null or (c.amparo->>'pedido') is null or (c.amparo->>'pedido')::timestamptz < c.ultima_entrada_em
@@ -198,8 +194,7 @@ begin
     return false;
   end if;
   perform zap_amparo_enviar(c.id,
-    case when v_r is null then zap_amparo_fixo(false, p_agora)
-         else v_r || E'\n\n' || 'A equipe já está ciente da sua mensagem e responderá ' || v_quando || '.' end,
+    coalesce(v_r, zap_amparo_fixo(false, p_agora)),
     false, p_agora);
   return true;
 end $$;
