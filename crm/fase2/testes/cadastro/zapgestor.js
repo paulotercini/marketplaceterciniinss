@@ -12,7 +12,7 @@ const SUPA = "https://ficticio.supabase.co";
 const AMANDA = "a2000000-0000-0000-0000-000000000001";
 const S1 = "e1000000-0000-0000-0000-000000000001";
 const DA_AMANDA = "d2000000-0000-0000-0000-000000000001", PENDENTE = "d2000000-0000-0000-0000-000000000002",
-      MINHA = "d2000000-0000-0000-0000-000000000003";
+      MINHA = "d2000000-0000-0000-0000-000000000003", COM_IA = "d2000000-0000-0000-0000-000000000005";
 const agora = new Date().toISOString();
 const conv = (id, nome, atendente, extra = {}) => ({ id, telefone: "551699999" + id.slice(-4), chave: "9999" + id.slice(-4),
   nome_perfil: nome, cliente_id: null, atendente_id: atendente, status: "aberta", nao_lidas: 0,
@@ -23,7 +23,10 @@ const T = {
   zap_conversas: [conv(DA_AMANDA, "Cliente da Amanda", AMANDA, { nao_lidas: 2 }),
                   conv(PENDENTE, "Cliente na fila", null, { setor_id: S1 }),
                   conv(MINHA, "Cliente do Paulo", EU),
-                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 1 })],
+                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 1 }),
+                  // F594 · a IA conduz esta; a outra já agendou e volta às Pendentes
+                  conv(COM_IA, "Cliente com a IA", null, { setor_id: S1, nao_lidas: 2, plantao: { modo: "conversa", n: 2 } }),
+                  conv("d2000000-0000-0000-0000-000000000006", "Cliente que agendou", null, { setor_id: S1, nao_lidas: 1, plantao: { modo: "conversa", n: 3, agendado_em: agora } })],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: DA_AMANDA, direcao: "entrada", tipo: "texto", texto: "Oi, doutora", status: "entregue", criado_em: agora }],
   zap_setores: [{ id: S1, nome: "Atendimento", cor: "#5b7fd6", ordem: 1, ativo: true }],
   colaborador_setores: [{ colaborador_id: EU, setor_id: S1 }],
@@ -77,7 +80,8 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   conf("gestor: a lista tem a fila Todas e o Painel da equipe", (await p.textContent(".zl-cab")).includes("Todas") && (await p.textContent(".zl-cab")).includes("Painel da equipe"));
-  conf("gestor: vê a conversa que está com a Amanda", (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  conf("gestor: vê a conversa que está com a Amanda", (await p.$$eval(".zap-conv", cs => cs.length)) === 6);
+  conf("F594: gestor tem a fila Com a IA", (await p.textContent(".zl-cab")).includes("Com a IA"));
   await p.evaluate(() => abrirPainelZap());
   await p.waitForSelector(".zg");
   const painel = await p.textContent(".zg");
@@ -105,6 +109,23 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForSelector(".zl-filas");
   const pend = await p.textContent("#app");
   conf("atendente: Pendentes mostra também a conversa já lida (F365)", pend.includes("Cliente que escreveu") && pend.includes("Cliente na fila"));
+  // F594 · a conversa com a IA fica fora das Pendentes e na fila Com a IA; a que agendou volta
+  conf("F594: Pendentes sem a conversa com a IA e com a que já agendou", !pend.includes("Cliente com a IA") && pend.includes("Cliente que agendou"));
+  await p.evaluate(() => { zapFiltro = "ia"; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  const fia = await p.textContent(".zl-lista");
+  conf("F594: a fila Com a IA mostra só a conversa que a IA conduz", fia.includes("Cliente com a IA") && !fia.includes("Cliente que agendou") && !fia.includes("Cliente na fila"));
+  conf("F594: lead conta como IA, agendado não", await p.evaluate(() => comIaZap({ status: "aberta", atendente_id: null, plantao: { modo: "lead" } })
+    && !comIaZap({ status: "aberta", atendente_id: null, plantao: { modo: "conversa", agendado_em: "x" } })));
+  await p.evaluate(id => abrirConversa(id), COM_IA);
+  await p.waitForSelector(".zap-topo");
+  let txtConf = "";
+  p.once("dialog", d => { txtConf = d.message(); d.dismiss(); });
+  const nAntes = escritas.filter(e => /rpc\/zap_assumir/.test(e.u)).length;
+  await p.evaluate(() => assumirConversa());
+  await p.waitForTimeout(400);
+  conf("F594: Assumir a conversa com a IA pede confirmação", txtConf.includes("A IA está conduzindo esta conversa"));
+  conf("F594: recusado, não assume", escritas.filter(e => /rpc\/zap_assumir/.test(e.u)).length === nAntes);
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
@@ -156,7 +177,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   // F368 · o atendente marcado como gestor do WhatsApp vê todas e transfere a conversa de outra pessoa, sem ser administrador
   await p.evaluate(() => { eu.gestor_zap = true; zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
   await p.waitForSelector(".zl-filas");
-  conf("gestor do WhatsApp: tem Todas e vê as 4 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  conf("gestor do WhatsApp: tem Todas e vê as 6 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 6);
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
   conf("gestor do WhatsApp: na conversa da Amanda há Transferir (F368)", (await p.textContent(".zap-topo")).includes("Transferir"));

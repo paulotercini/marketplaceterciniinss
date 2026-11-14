@@ -2246,6 +2246,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zl-filas button{height:auto;min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:1px;line-height:1.15;padding:5px 2px;min-width:0;overflow:hidden}
   .zl-filas .n{font-size:11px;font-variant-numeric:tabular-nums}
+  .zl-filas.cinco button{font-size:11px}
   .zl-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:1px 14px}
   .zl-chips::-webkit-scrollbar{display:none}
   .zl-chip,.zl-sel{flex:none;white-space:nowrap}
@@ -7096,7 +7097,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.92</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.93</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8379,7 +8380,7 @@ const CARGA_2 = {
     lembrarMotivos: ()=>todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
     rotinas: ()=>todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
     rotinasFeitas: ()=>todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
-    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status").catch(()=>[]),
+    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status,plantao").catch(()=>[]),
     inssCal: ()=>todas("inss_calendario","select=*").catch(()=>[]),
     anals: ()=>todas("analises_direito","select=*&order=data_analise.desc").catch(()=>null),
       // ⭐/⚡ as anotações marcadas, de TODOS os clientes — é a lista ⭐
@@ -8564,7 +8565,8 @@ function completarD(r){
   D.inssCal = r.inssCal||[];
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum (para o gestor, toda; para o colaborador, F362, a que tem mensagem não lida). O resto não precisa de contador piscando.
-  D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida"
+  // F594 · a conversa que a IA conduz não conta como nova
+  D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
     && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length;
   // só guarda o que é da segunda leva (a primeira já está em _bruto1)
   D._bruto2 = Object.fromEntries(Object.keys(CARGA_2).map(k=>[k, r[k]]));
@@ -17793,6 +17795,9 @@ async function carregarAuxZap(){
 const zapGestor = () => !visaoColab() || !!(eu && eu.gestor_zap);   // F368 · o gestor do WhatsApp vê e transfere todas, sem ser administrador do CRM
 const meusSetoresZap = () => zapAux.colabSetores.filter(x=>x.colaborador_id===eu.id).map(x=>x.setor_id);
 // F538 · a conversa coberta durante o Offline do titular fica com o substituto (onda 1, 11.11.2026)
+// F594 · a IA conduz: sem atendente, aberta, no modo conversa ou lead do plantão e sem ter agendado (o banco tira o modo ao passar à equipe)
+const comIaZap = c => !!c && !c.atendente_id && c.status!=="resolvida" && !!c.plantao
+  && (c.plantao.modo==="conversa" || c.plantao.modo==="lead") && !c.plantao.agendado_em;
 const cobrindoZap = c => !!c && !!c.cobertura && c.cobertura.cobre===eu.id && c.status!=="resolvida";
 function zapVisivel(c){
   if(zapGestor() || c.atendente_id===eu.id || cobrindoZap(c) || zapAux.mencionado.has(c.id)) return true;
@@ -18012,12 +18017,14 @@ function pintarListaZap(){
   // F346 · como no SMBot, o colaborador vê as Novas (as dele com mensagem não lida) e as Minhas;
   // Todas fica com o gestor; F362 · Pendentes voltou ao colaborador, para ele assumir quem escreveu e ninguém atende (pedido do Paulo de 02.11.2026);
   // F365 · volta a mostrar todas as pendentes ao colaborador: a leitura de um colega não pode tirá-las da fila (as antigas foram encerradas em 02.11.2026)
-  const filtros = gestor ? [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["todas","Todas"]]
-                         : [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"]];
+  // F594 · a conversa que a IA conduz fica em "Com a IA", fora de Novas e Pendentes, até a IA passar à equipe ou agendar
+  const filtros = gestor ? [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["ia","Com a IA"],["todas","Todas"]]
+                         : [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["ia","Com a IA"]];
   if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "novas";
   if(!gestor && zapFiltro==="todas") zapFiltro = "novas";
-  const naAba = (f,c) => f==="novas" ? meu(c)&&aberta(c)&&c.nao_lidas>0
-                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)
+  const naAba = (f,c) => f==="novas" ? meu(c)&&aberta(c)&&c.nao_lidas>0&&!comIaZap(c)
+                       : f==="minhas" ? meu(c)&&aberta(c) : f==="sem" ? !c.atendente_id&&aberta(c)&&!comIaZap(c)
+                       : f==="ia" ? comIaZap(c)
                        : f==="fim" ? !aberta(c)&&!c.automatica : f==="auto" ? !!c.automatica
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
@@ -18073,7 +18080,7 @@ function pintarListaZap(){
        ${zapComProblema()?`<button class="zap-estado ruim zl-faixa" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i><span>${esc(p.txt)}</span><b>${cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"}</b></button>`:""}
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
          placeholder="Buscar em todas: nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
-       <div class="zl-filas" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
+       <div class="zl-filas${filtros.length>4?" cinco":""}" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
           const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
         }).join("")}</div>
@@ -19720,6 +19727,7 @@ async function historicoTodasZap(){
 }
 async function assumirConversa(){
   if(!zapAberta) return;
+  if(comIaZap(zapConvs.find(x=>x.id===zapAberta)) && !await confirmar("A IA está conduzindo esta conversa. Assumir mesmo assim?")) return;
   try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:zapAberta})}); }
   catch(e){ return aviso(msgErro(e)); }
   zapNota = false;
@@ -20386,10 +20394,11 @@ async function responderZapLado(convId, cliId){
   if(!txt && !pend) return;
   if(zapLadoRec) return aviso("Pare a gravação antes de enviar", false);
   if(!zapGestor()){
-    const cv = (await todas("zap_conversas",`select=atendente_id&id=eq.${convId}`).catch(()=>[]))[0];
+    const cv = (await todas("zap_conversas",`select=atendente_id,status,plantao&id=eq.${convId}`).catch(()=>[]))[0];
     // F566 · ao lado da ficha, a conversa de outro colega se responde sem assumir: o responsável continua e a mensagem leva o autor_id de quem enviou
     if(cv && !cv.atendente_id){
       if(!await confirmar("Para responder, a conversa passa a ser sua. Assumir?")) return;
+      if(comIaZap(cv) && !await confirmar("A IA está conduzindo esta conversa. Assumir mesmo assim?")) return;
       try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:convId})}); }
       catch(e){ return aviso(msgErro(e)); }
     }

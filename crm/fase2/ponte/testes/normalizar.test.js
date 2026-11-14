@@ -10,6 +10,12 @@ t.test("variantes do celular: com e sem o 9; o fixo fica como está", () => {
   a.deepEqual(N.variantesFone("0030000005"), ["550030000005"]);
 });
 
+t.test("F593 · DDD + número sem o 55, ou com o 0 de discagem: o envio tenta com o 55", () => {
+  a.deepEqual(N.variantesFone("1090000007"), ["551090000007", "5510990000007"]);
+  a.deepEqual(N.variantesFone("0 (10) 9000-0007"), ["551090000007", "5510990000007"]);
+  a.deepEqual(N.variantesFone("010990000007"), ["5510990000007", "551090000007"]);
+});
+
 t.test("ligação: número do jid, do mapa do @lid, e nada fora do toque inicial", () => {
   a.equal(N.foneDaLigacao({ status: "offer", from: "5500990000004@s.whatsapp.net" }), "5500990000004");
   a.equal(N.foneDaLigacao({ status: "offer", from: "5500990000004:12@s.whatsapp.net" }), "5500990000004");
