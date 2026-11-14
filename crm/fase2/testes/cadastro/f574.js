@@ -25,7 +25,7 @@ const caso = o => { const k = { id: id("b"), cliente_id: c.id, titulo: c.nome, p
 const k1 = caso({ beneficio: "Auxílio por incapacidade", especie: "B31", fase: "inss", protocolos: ["1700000701"] });
 const k2 = caso({ beneficio: "Aposentadoria", especie: "B42", fase: "inss", protocolos: ["1700000702"] });
 const conv = { id: id("f"), cliente_id: c.id, telefone: "5500000000" + "11", status: "aberta", nao_lidas: 0 }; T.zap_conversas.push(conv);
-// F586 · sugestão da IA parada acima do campo de escrever; a de iniciativa (sugestao_id) não se repete
+// F587 · sugestão da IA parada acima do campo de escrever; a de iniciativa (sugestao_id) não se repete
 const conv2 = { id: id("f"), cliente_id: c.id, telefone: "5500000000" + "12", contato_nome: "Contato Teste", status: "aberta", nao_lidas: 0,
   ultima_em: "2026-11-13T10:00:00-03:00", sugestao_ia: { texto: "Recebi o documento, obrigado.", em: "2026-11-13T10:00:00-03:00", modo: "plantao" } };
 const conv3 = { id: id("f"), cliente_id: c.id, telefone: "5500000000" + "13", status: "aberta", nao_lidas: 0, ultima_em: "2026-11-13T09:00:00-03:00",
