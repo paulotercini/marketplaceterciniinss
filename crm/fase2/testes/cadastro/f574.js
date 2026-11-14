@@ -25,6 +25,12 @@ const caso = o => { const k = { id: id("b"), cliente_id: c.id, titulo: c.nome, p
 const k1 = caso({ beneficio: "Auxílio por incapacidade", especie: "B31", fase: "inss", protocolos: ["1700000701"] });
 const k2 = caso({ beneficio: "Aposentadoria", especie: "B42", fase: "inss", protocolos: ["1700000702"] });
 const conv = { id: id("f"), cliente_id: c.id, telefone: "5500000000" + "11", status: "aberta", nao_lidas: 0 }; T.zap_conversas.push(conv);
+// F587 · sugestão da IA parada acima do campo de escrever; a de iniciativa (sugestao_id) não se repete
+const conv2 = { id: id("f"), cliente_id: c.id, telefone: "5500000000" + "12", contato_nome: "Contato Teste", status: "aberta", nao_lidas: 0,
+  ultima_em: "2026-11-13T10:00:00-03:00", sugestao_ia: { texto: "Recebi o documento, obrigado.", em: "2026-11-13T10:00:00-03:00", modo: "plantao" } };
+const conv3 = { id: id("f"), cliente_id: c.id, telefone: "5500000000" + "13", status: "aberta", nao_lidas: 0, ultima_em: "2026-11-13T09:00:00-03:00",
+  sugestao_ia: { texto: "Texto de iniciativa", sugestao_id: "x" } };
+T.zap_conversas.push(conv2, conv3);
 const sug = o => { const x = { id: id("e"), estado: "aberta", origem: "rotina", cliente_id: c.id, criado_em: "2026-11-13T05:00:00-03:00", ...o }; T.sugestoes_rotina.push(x); return x; };
 const a1 = sug({ tipo: "anotacao", origem: "whatsapp", caso_id: k1.id, chave: "w1", texto: "Agendei a perícia para 20/11/2026, às 9h.", motivo: "mensagem enviada",
   evento: { tipo: "Perícia", data: "2026-11-20", hora: "09:00", local: "APS Catanduva" } });
@@ -71,6 +77,11 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const z = T.zap_mensagens[0];
   conf("Enviar grava a mensagem na fila da ponte", z && z.conversa_id === conv.id && z.status === "fila" && /procuração/.test(z.texto));
   conf("e marca a sugestão como enviada com o texto final", m1.estado === "enviada" && /procuração/.test(m1.texto_final || ""));
+  const nIa = await p.$$eval(".sug-ia", x => x.length);
+  conf(`a sugestão da IA pendente aparece, sem repetir a de iniciativa (${nIa})`, nIa === 1 && (await p.$eval(".sug-ia", e => e.textContent)).includes("Recebi o documento"));
+  await p.click(`.sug-ia[data-conv="${conv2.id}"] button[data-ac="ia-descartar"]`); await p.waitForTimeout(400);
+  conf("Descartar apaga a sugestão da conversa e tira o cartão", conv2.sugestao_ia === null && !(await p.$(".sug-ia")));
+  conf("e registra o retorno para a IA aprender", (T.zap_sugestao_retorno || []).some(r => r.conversa_id === conv2.id && r.acao === "descartada"));
   conf("sem erro de página", !erros.length);
   console.log(erros.join("\n"));
   console.log(`${ok.filter(([, v]) => v).length}/${ok.length} passaram`);
