@@ -66,3 +66,47 @@ test('eproc em HTML: segue o $.ajax do visualizador; o charset do HTML é lido d
   assert.equal(R.charsetDoHtml(Buffer.from(pag), 'text/html; charset=windows-1252'), 'windows-1252');
   assert.equal(R.charsetDoHtml(Buffer.from('<html><body>x</body></html>'), 'text/html'), 'utf-8');
 });
+
+// guardarDocs (comum.js): pausa também na falha, parada por recusas seguidas,
+// registro do que faltou e nova tentativa só do upload
+function carregarComum({ portal, storage }) {
+  const fs = require('fs'), vm = require('vm');
+  const pausas = [], subidas = [];
+  const win = { DOCS_REGRAS: R, __crmProvaDeVida: true };
+  const ctx = {
+    window: win, console: { warn() {}, log() {} }, location: { href: 'https://portal.exemplo/' },
+    URL, Uint8Array, TextDecoder, TextEncoder, Response, Promise, String, Math,
+    setTimeout: (f, ms) => { pausas.push(ms); f(); },
+    fetch: async (u, o) => { subidas.push(String(u)); const r = storage.shift(); if (r instanceof Error) throw r; return r; },
+  };
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(__dirname + '/../comum.js', 'utf8').replace('window.CRM = window.CRM ||', 'var CRM = window.CRM ='), ctx);
+  win.CRM.pedir = async m => m.acao === 'doc-existe' ? { existe: false } : { url: 'https://banco.exemplo', chave: 'k', token: 't' };
+  return { CRM: win.CRM, pausas, subidas, baixar: async () => portal.shift() };
+}
+const pdf = () => new Response(Buffer.from('%PDF-1.4 teste'), { headers: { 'content-type': 'application/pdf' } });
+
+test('guardarDocs: recusa do portal também pausa, fica registrada e para na 3ª seguida (409 não conta)', async () => {
+  const no = st => new Response(null, { status: st });
+  const a = carregarComum({ portal: [no(409), no(429), no(429), no(429), pdf()], storage: [] });
+  const docs = [1, 2, 3, 4, 5].map(i => ({ id: 'd' + i, nome: `d${i}.pdf` }));
+  const falhas = [];
+  const n = await a.CRM.guardarDocs('pat', '1', docs, { todos: true, baixar: a.baixar, pausaMs: 3000, pararEm: 3, falhas });
+  assert.equal(n, 0);
+  assert.deepEqual(a.pausas, [3000, 3000, 3000, 3000]);          // uma por pedido ao portal
+  assert.deepEqual(falhas.map(f => f.status), [409, 429, 429, 429]);
+  assert.equal(falhas.parou, 429);
+  assert.equal(docs[4].caminho, undefined);                       // o 5º nem foi pedido
+});
+
+test('guardarDocs: 5xx e queda de rede repetem só o upload; sem opções novas nada muda para o chamador', async () => {
+  const a = carregarComum({ portal: [pdf(), pdf()],
+    storage: [new Response('x', { status: 503 }), new Error('rede'), new Response('{}'), new Response('grande', { status: 413 })] });
+  const docs = [{ id: 'a', nome: 'a.pdf' }, { id: 'b', nome: 'b.pdf' }];
+  const n = await a.CRM.guardarDocs('pat', '1', docs, { todos: true, baixar: a.baixar, pausaMs: 600 });
+  assert.equal(n, 1);
+  assert.equal(docs[0].caminho, 'pat/1/a');
+  assert.equal(docs[1].caminho, undefined);                       // 4xx não repete
+  assert.equal(a.subidas.length, 4);
+  assert.deepEqual(a.pausas, [2000, 5000, 600, 600]);
+});

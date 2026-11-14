@@ -51,7 +51,7 @@ async function esperarAba(tabId, tetoMs = 20000) {
 // `ativar`, a aba ATIVA vem primeiro — no PJe, com um processo aberto na
 // frente, o clique coleta o histórico completo DELE — e a aba vem para a
 // frente. Sem `ativar` (o "atualizar tudo"), roda em segundo plano.
-async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url = null } = {}) {
+async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url = null, ctx = null } = {}) {
   const dominios = DOMINIOS[fonte];
   if (!aba && ativar && !url) {
     const [ativa] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -60,6 +60,7 @@ async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url 
   // `url`: abrir ESTE host, e não aproveitar a aba de outro host do mesmo portal
   if (!aba && !url) aba = abaPreferida(await chrome.tabs.query({ url: dominios }));
   const usar = aba || await chrome.tabs.create({ url: url || ALVO[fonte], active: ativar });
+  if (ctx) ctx.tabId = usar.id;                        // quem espera o "retomando" precisa saber a aba
   if (aba) { if (ativar) await chrome.tabs.update(aba.id, { active: true }); }
   else await esperarAba(usar.id);                      // deixa a página carregar de verdade
   // quem tem acesso ao chrome.storage é este worker: a data da última coleta
@@ -116,21 +117,54 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
 // "retomando" antes de terminar: aí o fim é a data da última coleta mudar
 // no storage, esperada até um teto.
 const CHAVE_ULTIMA = { crps: 'ultima_crps', pje: 'ultima_pje', eproc: 'ultima_eproc', esaj: 'ultima_esaj' };
-async function esperarConclusao(fonte, antes, tetoMs = 15 * 60000) {
-  const chave = CHAVE_ULTIMA[fonte];
-  for (let t = 0; t < tetoMs; t += 5000) {
-    await pausa(5000);
-    const st = await chrome.storage.local.get([chave]);
-    if (st[chave] && st[chave] !== antes) return { ok: 'retomado' };
+// as chaves que só avançam com a rodada INTEIRA daquele host: `ultima_pje`
+// muda já na entrega parcial e é a mesma para o 1º e o 2º grau, e a espera
+// de um grau terminava pelo carimbo do outro (`fim_pje_<host>` é opcional)
+export const chavesDoHost = (fonte, host) =>
+  fonte === 'pje' ? ['ultima_pje_' + (/pje2g/.test(host) ? '2g' : '1g'), 'fim_pje_' + host]
+  : fonte === 'eproc' ? ['ultima_eproc_' + host] : [CHAVE_ULTIMA[fonte]];
+// espera por CONDIÇÃO, e o teto só como rede: a retomada que desiste no portal
+// (aba fechada, sessão caída, faixa vermelha) segurava a rodada por 15 min.
+// A faixa verde também encerra: o eproc sem processos termina sem gravar data.
+// shortcut: lê a cor da faixa da página; se tela.js mudar as cores, acompanhar
+export async function esperarConclusao(chaves, antes, tabId = null, tetoMs = 15 * 60000, passo = 5000) {
+  for (let t = 0; t < tetoMs; t += passo) {
+    await pausa(passo);
+    const st = await chrome.storage.local.get(chaves);
+    if (chaves.some(k => st[k] && st[k] !== antes[k])) return { ok: 'retomado' };
+    if (tabId == null) continue;
+    let aba;
+    try { aba = await chrome.tabs.get(tabId); } catch (e) { return { erro: 'a aba foi fechada no meio da coleta' }; }
+    if (sessaoCaida(aba.url)) return { erro: 'a sessão caiu no meio da coleta — entre de novo no portal e clique outra vez' };
+    try {
+      const [r] = await chrome.scripting.executeScript({ target: { tabId }, func: () => {
+        const f = document.getElementById('crm-faixa');
+        return f && { cor: f.style.background, texto: f.textContent };
+      } });
+      const f = r && r.result;
+      if (f && /179, 38, 30|B3261E/i.test(f.cor)) return { erro: f.texto };
+      if (f && /30, 111, 80|1E6F50/i.test(f.cor)) return { ok: 'retomado' };
+    } catch (e) {}                                     // página no meio da recarga: tenta de novo no passo seguinte
   }
   return { erro: 'não terminou no tempo — veja a faixa na aba' };
 }
 // cada fonte roda em segundo plano na sua aba; o que responde "retomando"
-// termina quando a data da última coleta muda no storage
+// termina quando a data da última coleta DAQUELE host muda no storage.
+// `antes` ficou só pela assinatura: a data é lida aqui, na hora da chamada
 const rodadorDeFundo = (tarefas, antes) => (fonte, aba, rotulo, url) => tarefas.push((async () => {
-  let r = await rodarFonte(fonte, { aba, ativar: false, url });
-  if (r && r.erro === 'retomando') r = await esperarConclusao(fonte, antes[CHAVE_ULTIMA[fonte]]);
-  return { rotulo, ...r };
+  const host = new URL((aba && aba.url) || url || ALVO[fonte]).host;
+  const chaves = chavesDoHost(fonte, host);
+  const lido = await chrome.storage.local.get(chaves);
+  // a vigia não toca o painel do PJe enquanto o acervo deste host é lido
+  const marca = fonte === 'pje' ? 'acervo_pje_' + host : null;
+  if (marca) await chrome.storage.local.set({ [marca]: Date.now() });
+  const ctx = {};
+  try {
+    let r = await rodarFonte(fonte, { aba, ativar: false, url, ctx });
+    // PJe: a entrega parcial ainda vai recarregar e retomar (ou desistiu, e a faixa vermelha diz)
+    if (r && (r.erro === 'retomando' || r.emCurso || (fonte === 'pje' && r.parcial))) r = await esperarConclusao(chaves, lido, ctx.tabId);
+    return { rotulo, ...r };
+  } finally { if (marca) await chrome.storage.local.remove(marca); }
 })());
 // PJe e eproc: uma rodada por host com aba aberta (1º e 2º grau; os hosts do
 // eproc); sem aba nenhuma, abre a do 1º grau. 1.27 · o eproc da Fazenda
@@ -166,13 +200,14 @@ const judicialAoMesmoTempo = antes =>
 // 1.28 · sem os prazos dos tribunais (pedido do Paulo, 30.10.2026: não eram úteis)
 async function rodarTudo() {
   const antes = await chrome.storage.local.get(Object.values(CHAVE_ULTIMA));
-  const pat = await rodarFonte('pat', { ativar: true });   // prepara a tela e devolve na hora
+  // o PAT não segura a largada das outras: a aba dele carrega enquanto elas já rodam
+  const patP = rodarFonte('pat', { ativar: true }).catch(e => ({ erro: String(e.message || e) }));
   const tarefas = [];
   const roda = rodadorDeFundo(tarefas, antes);
   roda('crps', null, 'e-Recursos');
   roda('esaj', null, 'e-SAJ');
   tarefas.push(judicialAoMesmoTempo(antes));
-  return { feitos: (await Promise.all(tarefas)).flat(), pat };
+  return { feitos: (await Promise.all(tarefas)).flat(), pat: await patP };
 }
 
 // 1.25 · CONFERÊNCIA DAS SESSÕES antes de rodar. Só as abas abertas: a aba
@@ -182,28 +217,41 @@ async function rodarTudo() {
 // token, então vale o endereço da aba; o e-Recursos, o token da página.
 const NOME = { pat: 'INSS (PAT)', crps: 'e-Recursos', pje: 'PJe', eproc: 'eproc', esaj: 'e-SAJ' };
 async function sessoesCaidas() {
-  const caidas = [];
+  const alvos = [];
   for (const fonte of Object.keys(DOMINIOS)) {
     const vistos = new Set();
     for (const aba of await chrome.tabs.query({ url: DOMINIOS[fonte] })) {
       const host = new URL(aba.url).host;
       if (vistos.has(host)) continue;
       vistos.add(host);
-      let caiu = sessaoCaida(aba.url);
-      try {
-        if (!caiu && fonte === 'crps') {
-          const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id },
-            func: () => !localStorage.getItem('ifs_auth') });
-          caiu = !!(r && r.result);
-        } else if (!caiu && ['pje', 'eproc', 'esaj'].includes(fonte)) {
-          const r = await fetch(aba.url, { credentials: 'include', cache: 'no-store' });
-          caiu = sessaoCaida(r.url, await r.text());
-        }
-      } catch (e) { console.warn('[sessões]', fonte, e.message); }
-      if (caiu) caidas.push({ rotulo: `${NOME[fonte]} ${host.split('.')[0]}`, tabId: aba.id, windowId: aba.windowId });
+      alvos.push([fonte, host, aba]);
     }
   }
-  return { caidas };
+  // todas juntas e com tempo limite (15 s, o Painel do PJe é lento): uma aba
+  // sem resposta travava o início da rodada. Tempo esgotado conta como não caída
+  const caidas = await Promise.all(alvos.map(async ([fonte, host, aba]) => {
+    let caiu = sessaoCaida(aba.url);
+    try {
+      if (!caiu && fonte === 'crps') {
+        // o token pode existir e já não valer: só 401/403 da API diz que caiu
+        const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id }, func: async () => {
+          const t = localStorage.getItem('ifs_auth');
+          if (!t) return true;
+          try {
+            const r = await fetch('/api/v1/esisrec/', { credentials: 'include',
+              headers: { Authorization: 'Bearer ' + t }, signal: AbortSignal.timeout(15000) });
+            return r.status === 401 || r.status === 403;
+          } catch (e) { return false; }
+        } });
+        caiu = !!(r && r.result);
+      } else if (!caiu && ['pje', 'eproc', 'esaj'].includes(fonte)) {
+        const r = await fetch(aba.url, { credentials: 'include', cache: 'no-store', signal: AbortSignal.timeout(15000) });
+        caiu = sessaoCaida(r.url, await r.text());
+      }
+    } catch (e) { console.warn('[sessões]', fonte, e.message); }
+    return caiu && { rotulo: `${NOME[fonte]} ${host.split('.')[0]}`, tabId: aba.id, windowId: aba.windowId };
+  }));
+  return { caidas: caidas.filter(Boolean) };
 }
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'sessoes') return;
@@ -218,9 +266,9 @@ const CRM_IMPORTAR = 'https://paulotercini.github.io/marketplaceterciniinss/crm/
 const ICONE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 function avisarFim(titulo, r) {
   const feitos = (r && r.feitos) || [];
-  const erros = feitos.filter(f => f.erro).length;
+  const erros = feitos.filter(f => f.erro || f.falhas || f.parcial).length;   // F590 · a rodada parcial não é "concluído"
   const linhas = r && r.erro ? [r.erro]
-    : feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔'}`);
+    : feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : f.falhas || f.parcial ? `⚠ parcial${f.falhas ? ` (${f.falhas} falharam)` : ''}` : '✔'}`);
   try {
     chrome.notifications.create('crm-fim-' + Date.now(), {
       type: 'basic', iconUrl: ICONE, requireInteraction: true,
@@ -247,9 +295,17 @@ const comPulso = async f => {
   const p = setInterval(() => chrome.runtime.getPlatformInfo(() => {}), 20000);
   try { return await f(); } finally { clearInterval(p); }
 };
-const responderComAviso = (titulo, f, responder) => comPulso(f).then(
-  r => responder(avisarFim(titulo, r)),
-  e => responder(avisarFim(titulo, { erro: String(e.message || e) })));
+// uma rodada por vez: o segundo clique punha duas coletas nas mesmas abas.
+// Fica na memória do worker, que o pulso mantém vivo durante a rodada
+let rodadaEmCurso = null;
+const responderComAviso = (titulo, f, responder) => {
+  if (rodadaEmCurso) return responder({ erro: `já há uma rodada em andamento (${rodadaEmCurso}) — espere o aviso do fim` });
+  rodadaEmCurso = titulo;
+  return comPulso(f).then(
+    r => responder(avisarFim(titulo, r)),
+    e => responder(avisarFim(titulo, { erro: String(e.message || e) })))
+    .finally(() => { rodadaEmCurso = null; });
+};
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar-tudo') return;
   responderComAviso('Atualizar tudo', rodarTudo, responder);
@@ -275,12 +331,29 @@ async function completarPje() {
   const pulso = setInterval(() => chrome.runtime.getPlatformInfo(() => {}), 20000);
   const janela = await chrome.windows.create({ url: lista[0].url, focused: false, state: 'normal', width: 1200, height: 900 });
   const tabId = janela.tabs[0].id;
-  const lote = [];
-  let feitos = 0, falhas = 0, seguidas = 0, parou = null;
-  const entregar = async () => {
-    if (!lote.length) return;
-    const l = lote.splice(0);
-    await API.enviar('pje-processo', { versao: 1, fonte: 'pje-processo', sistema: 'pje', quando: new Date().toISOString(), qtd: l.length, lote: l });
+  const lote = [], doLote = [], falhos = [];
+  let feitos = 0, falhas = 0, seguidas = 0, leu = 0, parou = null;
+  // o lote só sai da fila DEPOIS de entregue (a falha no envio perdia 5
+  // cronologias), e a tentativa só é gasta em processo lido e entregue
+  // Sempre em pedaços de 5: o lote acumulado depois de uma queda do CRM não
+  // estoura o tamanho do pedido. A recusa (4xx) não melhora com repetição:
+  // o pedaço sai da fila como falha, senão travava todas as entregas seguintes;
+  // só a falha de rede ou 5xx mantém o lote.
+  const entregar = async tudo => {
+    while (lote.length >= (tudo ? 1 : 5)) {
+      const l = lote.slice(0, 5);
+      try {
+        await API.enviar('pje-processo', { versao: 1, fonte: 'pje-processo', sistema: 'pje', quando: new Date().toISOString(), qtd: l.length, lote: l });
+      } catch (e) {
+        if (!/o CRM recusou \(4(?!01|03)/.test(e.message || '')) throw e;   // F590 · login vencido do CRM mantém o lote
+        lote.splice(0, l.length); falhos.push(...doLote.splice(0, l.length));
+        feitos -= l.length; falhas += l.length;
+        console.warn('[CRM] lote recusado pelo CRM, fora da fila:', e.message);
+        continue;
+      }
+      lote.splice(0, l.length);
+      await API.gastarTentativas(doLote.splice(0, l.length));
+    }
   };
   try {
     for (let i = 0; i < lista.length; i++) {
@@ -291,17 +364,26 @@ async function completarPje() {
         await esperarAba(tabId, 30000);
         await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ARQUIVOS.pje });
         const res = await chrome.scripting.executeScript({ target: { tabId },
-          func: () => window.crmRodar ? window.crmRodar(null, { completo: true }) : { erro: 'o coletor não subiu' } });
+          func: curto => window.crmRodar ? window.crmRodar(null, { completo: true, curto }) : { erro: 'o coletor não subiu' },
+          args: [!!p.curto] });
         const r = res && res[0] && res[0].result;
-        if (r && r.out) { lote.push(r.out); feitos++; seguidas = 0; }
-        else { falhas++; seguidas++; console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
-        if (lote.length >= 5) await entregar();
-      } catch (e) { falhas++; seguidas++; console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+        if (r && r.out) { lote.push(r.out); doLote.push(p); feitos++; leu++; seguidas = 0; }
+        else { falhas++; seguidas++; falhos.push(p); console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
+      } catch (e) { falhas++; seguidas++; falhos.push(p); console.warn('[CRM] PJe não completado:', p.numero, e.message); }
+      // falha na entrega não é o PJe caído: o lote fica e vai junto na próxima
+      if (lote.length >= 5) try { await entregar(); } catch (e) { console.warn('[CRM] entrega adiada:', e.message); }
+      // F590 · as 5 seguidas saem da conta de falhas: são a sessão caída, não o processo
       // 5 seguidas é a sessão do PJe vencida (horas de rodada), não azar: insistir
       // nos que faltam só gera falha. Para, e a rodada seguinte pula o que já foi
-      if (seguidas >= 5) { parou = `parou no processo ${i + 1} de ${lista.length}: o PJe não abre mais os processos — entre de novo no PJe e clique outra vez (o que já foi guardado é pulado)`; break; }
+      if (seguidas >= 5) { falhos.splice(-5); parou = `parou no processo ${i + 1} de ${lista.length}: o PJe não abre mais os processos — entre de novo no PJe e clique outra vez (o que já foi guardado é pulado)`; break; }
     }
-    await entregar();
+    try { await entregar(true); }
+    catch (e) {
+      feitos -= lote.length;
+      parou = `${parou ? parou + '; ' : ''}${lote.length} processo(s) lidos não chegaram ao CRM (${e.message || e}) — clique de novo`;
+    }
+    // F590 · a falha também conta, senão o processo que não abre voltava para sempre; rodada sem nenhum lido é o PJe fora do ar, e não conta
+    if (leu) await API.gastarTentativas(falhos.map(p => ({ pend: [p.falha] }))).catch(() => {});
   } finally {
     clearInterval(pulso);
     await chrome.storage.local.set({ completar_pje: { i: lista.length, total: lista.length, feitos, falhas, parou, fim: new Date().toISOString() } });
@@ -313,8 +395,15 @@ async function completarPje() {
 // hosts juntos dobram a carga na mesma sessão do TJSP
 async function completarEproc() {
   const feitos = [];
-  for (const [aba, rotulo, url] of await alvosPorHost('eproc', 'eproc'))
-    feitos.push({ rotulo, ...(await rodarFonte('eproc', { aba, ativar: false, url, extra: { completo: true } })) });
+  for (const [aba, rotulo, url] of await alvosPorHost('eproc', 'eproc')) {
+    // "retomando" não é erro: espera este host acabar antes do seguinte. A
+    // data é lida logo antes de cada host (um por vez, a chave única serve)
+    const antes = await chrome.storage.local.get(['ultima_eproc_completo']);
+    const ctx = {};
+    let r = await rodarFonte('eproc', { aba, ativar: false, url, extra: { completo: true }, ctx });
+    if (r && (r.erro === 'retomando' || r.emCurso)) r = await esperarConclusao(['ultima_eproc_completo'], antes, ctx.tabId);
+    feitos.push({ rotulo, ...r });
+  }
   const erros = feitos.filter(f => f.erro);
   return feitos.length === 1 ? feitos[0]
     : { rotulo: 'eproc', ...(erros.length ? { erro: erros.map(f => `${f.rotulo}: ${f.erro}`).join('; ') } : { ok: feitos.length }) };
@@ -426,7 +515,11 @@ chrome.alarms.onAlarm.addListener(async a => {
     const porHost = new Map();
     for (const t of await chrome.tabs.query({ url: DOMINIOS[fonte] }))
       if (t.url && !porHost.has(new URL(t.url).host)) porHost.set(new URL(t.url).host, t.url);
-    for (const url of porHost.values()) {
+    for (const [host, url] of porHost) {
+      // o acervo do PJe deste host está sendo lido: o toque atropelava a conversa
+      // do JSF. Marca de mais de 15 min é de rodada que morreu no meio
+      const marca = 'acervo_pje_' + host;
+      if (fonte === 'pje' && Date.now() - ((await chrome.storage.local.get([marca]))[marca] || 0) < 15 * 60000) continue;
       try { await fetch(url, { credentials: 'include', cache: 'no-store' }); }
       catch (e) { console.warn('[vigia]', fonte, e.message); }
     }

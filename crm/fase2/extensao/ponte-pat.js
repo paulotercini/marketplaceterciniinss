@@ -35,16 +35,49 @@ if (!window.__crmPontePat) {
     }
     if (m.tipo === 'faixa') { faixa(m.texto, m.cor); if (/✔/.test(m.texto)) someFaixa(); }
     if (m.tipo === 'entregar') {
+      // DUAS ENTREGAS: situação, exigência e decisão vão ao CRM já (etapa
+      // 'detalhes'); os anexos descem depois, a 3 s cada, e a mesma coleta vai
+      // de novo com `arquivos` (etapa 'anexos'). Antes, aba fechada no meio dos
+      // anexos perdia a coleta inteira.
+      let soAnexos = false;
       try {
-        await guardarAnexosPat(m.dados.detalhes || [], m.cracha);
+        m.dados.etapa = 'detalhes';
         await CRM.enviar('pat', m.dados);
-        await chrome.storage.local.set({ ultima_pat: m.quando });
-        window.postMessage({ de: 'crm-ponte', tipo: 'entregue', quantos: m.quantos }, '*');
+        soAnexos = true;
+        let a = { faltam: 0, parou: null };
+        // com barreira, o portal acabou de recusar: os anexos ficam para a próxima
+        if (!m.barreira) {
+          a = await guardarAnexosPat(m.dados.detalhes || [], m.cracha);
+          m.dados.etapa = 'anexos';
+          await CRM.enviar('pat', m.dados);
+        }
+        // a data só anda com a rodada fechada: com portal recusando ou detalhe
+        // que ainda pode vir, a busca seguinte tem de cobrir a mesma janela.
+        // Falha permanente de um protocolo (404, ou a mesma pela segunda vez)
+        // não segura: congelava a data para sempre e a janela só crescia.
+        const semDetalhe = (m.dados.falhas || []).length;
+        const { pat_falhou } = await chrome.storage.local.get(['pat_falhou']);
+        const parado = !!(m.barreira || a.parou);
+        const fechou = !parado && !falhasQueSeguramPat(m.dados.falhas, pat_falhou).length;
+        if (fechou) await chrome.storage.local.set({ ultima_pat: m.quando, pat_falhou: [] });
+        // na barreira a recusa é do portal, não do protocolo: não conta como repetida
+        else if (!parado) await chrome.storage.local.set({ pat_falhou: (m.dados.falhas || []).map(f => String(f.protocolo)) });
+        window.postMessage({ de: 'crm-ponte', tipo: 'entregue', quantos: m.quantos, semDetalhe, faltam: a.faltam, fechou,
+          barreira: !!(m.barreira || a.parou), venceu: !!m.venceu || a.parou === 401 || a.parou === 403 }, '*');
       } catch (e) {
-        window.postMessage({ de: 'crm-ponte', tipo: 'falhou', erro: String(e.message || e) }, '*');
+        window.postMessage({ de: 'crm-ponte', tipo: 'falhou', soAnexos, erro: String(e.message || e) }, '*');
       }
     }
   });
+}
+
+// Os protocolos cuja falha de detalhe ainda segura a `ultima_pat`: só a
+// transitória (sem resposta, 401/403/429, 5xx) e só na primeira vez; `antes`
+// são os que já falharam na rodada anterior.
+function falhasQueSeguramPat(falhas, antes) {
+  const ja = new Set((antes || []).map(String));
+  return (falhas || []).filter(f => (f.status == null || [401, 403, 429].includes(f.status) || f.status >= 500) &&
+                                    !ja.has(String(f.protocolo))).map(f => String(f.protocolo));
 }
 
 // F184 · TODOS OS ANEXOS DO REQUERIMENTO vão para o bucket privado (decisão do
@@ -56,10 +89,30 @@ if (!window.__crmPontePat) {
 // velocidade do portal, o mesmo do detalhe. (`var`: este arquivo é
 // reinjetado a cada clique, e `const` declarado duas vezes derruba o arquivo)
 var TIPO_POR_EXT = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png' };
+// O crachá capturado na lista vale; só no 401 tenta UMA vez com o ifs_auth de
+// agora (o token gira no meio da rodada, como no e-Recursos na 1.33.1). Se o
+// crachá já era esse token, a sessão venceu mesmo e não há segunda chamada.
+async function pedirPat(url, cab, dono) {
+  const r = await fetch(url, { credentials: 'include', headers: cab });
+  const tok = localStorage.getItem('ifs_auth');
+  if (r.status !== 401 || !tok) return r;
+  const novo = {};
+  let era = null;
+  for (const k of Object.keys(cab)) { if (/^authorization$/i.test(k)) era = cab[k]; else novo[k] = cab[k]; }
+  if (era === 'Bearer ' + tok) return r;
+  novo.Authorization = 'Bearer ' + tok;
+  const r2 = await fetch(url, { credentials: 'include', headers: novo });
+  // F590: guarda o crachá novo na rodada, senão todo pedido seguinte sai em dobro (401 + repetição) e dobra o ritmo ao portal
+  if (r2.status !== 401) for (const o of [cab, dono]) if (o) {
+    for (const k of Object.keys(o)) if (/^authorization$/i.test(k)) delete o[k];
+    o.Authorization = novo.Authorization;
+  }
+  return r2;
+}
 async function baixarAnexoPat(protocolo, d, cracha) {
   const tok = localStorage.getItem('ifs_auth');
-  const r = await fetch(`/apis/arquivosPortalApi/tarefa/${protocolo}/anexo/${d.id}`, {
-    credentials: 'include', headers: cracha || (tok ? { Authorization: 'Bearer ' + tok } : {}) });
+  const r = await pedirPat(`/apis/arquivosPortalApi/tarefa/${protocolo}/anexo/${d.id}`,
+    cracha || (tok ? { Authorization: 'Bearer ' + tok } : {}));
   if (!r.ok) return r;
   let b64 = (await r.text()).trim();
   if (b64.startsWith('"')) b64 = JSON.parse(b64);
@@ -87,7 +140,7 @@ async function baixarPapPat(protocolo, cracha) {
   const q = `protocolo=${protocolo}&sistema=PAT&cpf=${eu.cpf}&nome=${encodeURIComponent(eu.nome)}&async=false`;
   let r;
   for (const api of ['consolidadorECApi', 'consolidadorApi']) {
-    r = await fetch(`/apis/${api}/pap/metadados?${q}`, { credentials: 'include', headers: cab });
+    r = await pedirPat(`/apis/${api}/pap/metadados?${q}`, cab, cracha);
     if (r.ok) break;
   }
   if (!r.ok) return r;
@@ -107,8 +160,11 @@ function docDoProcessoInteiro(det) {
            nome: fim || !st ? 'Processo administrativo integral.pdf' : `Cópia parcial (${st}).pdf` };
 }
 
+// devolve { n, faltam, parou }: quantos ficaram guardados, quantos anexos não
+// desceram e, se o portal recusou 3 seguidos, o status (os demais protocolos
+// ficam para a próxima rodada)
 async function guardarAnexosPat(detalhes, cracha) {
-  let n = 0;
+  let n = 0, faltam = 0, parou = null;
   for (const det of detalhes) {
     const p = String(det.protocolo || '').replace(/\D/g, '');
     const docs = (det.anexos || []).filter(a => a && a.id)
@@ -118,11 +174,19 @@ async function guardarAnexosPat(detalhes, cracha) {
     if (!p) continue;
     docs.unshift(docDoProcessoInteiro(det));
     faixa(`guardando os anexos do INSS no CRM (${n} até aqui)…`);
-    n += await CRM.guardarDocs('pat', p, docs, { todos: true, pausaMs: 3000,
+    // a pasta listada de uma vez: sem isso era uma ida ao banco por anexo
+    let existentes = null;
+    try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes', prefixo: `pat/${p}/` })).nomes); } catch (e) {}
+    const falhas = [];
+    n += await CRM.guardarDocs('pat', p, docs, { todos: true, pausaMs: 3000, pausaDesdeDownload: true, existentes,
+                                                 falhas, pararEm: 3,
                                                  baixar: d => d.pap ? baixarPapPat(p, cracha) : baixarAnexoPat(p, d, cracha) });
     det.arquivos = docs.filter(d => d.caminho);
+    // o PDF do processo que o INSS só enfileirou (409) é rotina, não falta
+    faltam += falhas.filter(f => !(f.status === 409 && /^processo-integral/.test(f.id))).length;
+    if (falhas.parou) { parou = falhas.parou; break; }
   }
-  return n;
+  return { n, faltam, parou };
 }
 
 // o botão do popup chama isto. Espera o coletor se anunciar — quando a

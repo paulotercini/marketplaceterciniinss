@@ -32,20 +32,22 @@
     const cab = { Accept: 'application/json', 'Content-Type': 'application/json', CnasVersao: versao, Authorization: 'Bearer ' + tok };
     // o token vale 10 min e o próprio site o renova no localStorage (13.10.2026):
     // num 401, relê o token e tenta uma vez mais
-    const pedir = async (caminho) => {
+    // a pausa de 1,2 s corre junto com a gravação (R.filaDePedidos)
+    const fila = R.filaDePedidos(D.pausa);
+    const pedir = caminho => fila(1200, async () => {
       let r = await fetch(API + caminho, { headers: cab });
       if (r.status === 401) {
         cab.Authorization = 'Bearer ' + (localStorage.getItem('token') || tok);
         await D.pausa(800);
         r = await fetch(API + caminho, { headers: cab });
       }
-      await D.pausa(1200);
       return r;
-    };
+    });
     const json = async caminho => { const r = await pedir(caminho); if (r.status === 204) return []; return r.ok ? r.json().catch(() => null) : null; };
 
     const ok = [], falhas = [], inexistentes = [];
     async function pdf(arquivo, caminho) {
+      if (fila.caiu) return;
       D.faixa(`CadÚnico: ${arquivo}…`);
       try {
         const r = await pedir(caminho);
@@ -119,17 +121,21 @@
         ok.push(`integrantes e renda da família ${nf}`);
       } catch (e) { falhas.push(`dados da família ${nf}: ${e.message || e}`); }
     }
+    if (fila.caiu) falhas.push(R.SESSAO_CAIU);
     const avisoCrm = await D.resumo(cliente, 'cadunico', { baixados: ok, inexistentes, falhas, familia: familias[0] || null, familias });
     // Portal da Transparência (sem login): cada integrante da família, pelo CPF/NIS que o CadÚnico deu
     const pessoas = familias.flatMap(f => f.membros || []).map(m => ({ nome: m.nome, cpf: m.cpf, nis: m.nis }));
     if (!pessoas.some(p => p.cpf === cpf)) pessoas.unshift({ nome: cliente.nome, cpf });
-    D.faixa(`Portal da Transparência: consultando ${pessoas.length} integrante(s)…`);
-    const tr = await chrome.runtime.sendMessage({ tipo: 'transparencia', cpf: cliente.cpf, nome: cliente.nome, pessoas }).catch(e => ({ aviso: `Portal da Transparência: ${e.message || e}` }));
-    D.faixa(`${ok.length} documento(s) do CadÚnico · ${vistos.size} família(s)`
+    // a Transparência segue em segundo plano (o service worker grava sozinho): a rodada
+    // não espera por ela, e a faixa se completa quando a resposta chega
+    const fim = t => D.faixa(`${ok.length} documento(s) do CadÚnico · ${vistos.size} família(s)`
       + (inexistentes.length ? `\n${inexistentes.length} não existem:\n• ${inexistentes.join('\n• ')}` : '')
-      + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.join('\n• ')}` : '') + avisoCrm
-      + `\n${(tr && tr.aviso) || 'Portal da Transparência: sem resposta'}`,
+      + (falhas.length ? `\n${falhas.length} falharam:\n• ${falhas.join('\n• ')}` : '') + avisoCrm + `\n${t}`,
       falhas.length ? '#9A6700' : '#1E6F50');
+    fim(`Portal da Transparência: consultando ${pessoas.length} integrante(s) em segundo plano…`);
+    chrome.runtime.sendMessage({ tipo: 'transparencia', cpf: cliente.cpf, nome: cliente.nome, pessoas })
+      .catch(e => ({ aviso: `Portal da Transparência: ${e.message || e}` }))
+      .then(tr => fim((tr && tr.aviso) || 'Portal da Transparência: sem resposta'));
     return { ok: ok.length, falhas };
   };
 })();
