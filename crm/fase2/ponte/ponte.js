@@ -447,7 +447,7 @@ async function entrou(m, baixar) {
   }
   const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: m.pushName || null });
   const linha = await gravar(m, baixar, conversa, "entrada", "entregue");
-  guardarFoto(conversa, m.key.remoteJid);
+  guardarFoto(conversa, String(m.key.remoteJid).endsWith("@broadcast") ? m.key.participant : m.key.remoteJid);
   log("←", fim4(fone), resumo(linha));
 }
 

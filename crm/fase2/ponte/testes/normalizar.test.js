@@ -205,3 +205,17 @@ t.test("F555: o cartão de contato guarda o nome e o número", () => {
     "👤 Cliente Teste · 5500000000011\n👤 Outro Teste · 550000000012");
   a.equal(N.textoDaMensagem({ message: { contactMessage: { displayName: "Sem Número", vcard: vc("Sem Número", []) } } }), "👤 Sem Número");
 });
+
+t.test("lista de transmissão: o número é o de quem escreveu, nunca o carimbo da lista", () => {
+  const b = (key) => msg({ conversation: "oi" }, { key: { remoteJid: "1700000000@broadcast", id: "B1", ...key } });
+  a.equal(N.foneDaMensagem(b({ participant: "5500900000001@s.whatsapp.net" })), "5500900000001");
+  const mapa = new Map();
+  a.equal(N.foneDaMensagem(b({ participant: "5555@lid", participantAlt: "5500900000002@s.whatsapp.net" }), mapa), "5500900000002");
+  a.equal(mapa.get("5555@lid"), "5500900000002@s.whatsapp.net");
+  a.equal(N.foneDaMensagem(b({ participant: "5500900000001@s.whatsapp.net", fromMe: true })), "");
+  a.equal(N.foneDaMensagem(b({})), "");
+  const h = { key: { remoteJid: "1700000000@broadcast", participant: "5500900000001@s.whatsapp.net", id: "HB", fromMe: false },
+    messageTimestamp: 1785000000, message: { conversation: "x" } };
+  const g = N.agruparHistorico([], [h], new Set(["00000001"]));
+  a.deepEqual([...g.keys()], ["5500900000001"]);
+});
