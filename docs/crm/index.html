@@ -2246,6 +2246,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zl-filas button{height:auto;min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:1px;line-height:1.15;padding:5px 2px;min-width:0;overflow:hidden}
   .zl-filas .n{font-size:11px;font-variant-numeric:tabular-nums}
+  .zl-filas.cinco button{font-size:11px}
   .zl-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:1px 14px}
   .zl-chips::-webkit-scrollbar{display:none}
   .zl-chip,.zl-sel{flex:none;white-space:nowrap}
@@ -18079,7 +18080,7 @@ function pintarListaZap(){
        ${zapComProblema()?`<button class="zap-estado ruim zl-faixa" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i><span>${esc(p.txt)}</span><b>${cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"}</b></button>`:""}
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
          placeholder="Buscar em todas: nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
-       <div class="zl-filas" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
+       <div class="zl-filas${filtros.length>4?" cinco":""}" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
           const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
         }).join("")}</div>
