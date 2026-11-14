@@ -7097,7 +7097,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.93</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.94</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14872,7 +14872,7 @@ function linhaNovidade(a){
       ?`<a class="btn-mini" href="${urlOk(l)}" target="_blank" rel="noopener" title="abrir os autos digitais${g?` do ${esc(g)}`:""} na sua sessão do ${nomeSistemaDoLink(l)}">abrir no ${nomeSistemaDoLink(l)}${g?` · ${esc(g)}`:""} ↗</a>`
       :a.origem==="crps"
       ?`<button class="btn-mini" onclick="abrirERecursos('${a.caso_id}','${a.id}')"
-          title="abre o recurso no e-Recursos e copia o NUP">${iconeFonte("crps")} ↗</button>`
+          title="abre o recurso no e-Recursos e copia o NUP">${iconeFonte("crps")} ${(n=>n?esc(formatarNup(n)):"")(nupNoTexto(a.texto)||crpsNups(k)[0]||"")} ↗</button>`
       :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:"")(grauDoAndamentoPje(a), a.origem==="pje"?linkPjeDoAndamento(a,k):null)}
     ${(i=>`${eventoDaNovidade(a)?`<button class="btn-mini" onclick="periciaRapida(${i})"
       title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique"><span aria-hidden="true">🩺 Agendar</span><span class="sr-only">🩺 agendar+aviso</span></button>`:""}${segBtnHtml(i, "📌 dar seguimento")}`)(
@@ -14931,8 +14931,33 @@ async function resolverPat(acao, protocolo){
     if(planoPat && (planoPat.novos||[]).some(x=>x.protocolo===protocolo)) await aplicarPatDeVerdade(); }
   render();
 }
+// F595 · o que a coleta de fato baixou nas últimas 24 h (PDF e peça), e não só o movimento:
+// por cliente e caso, numa seção recolhida; lido uma vez a cada 5 minutos
+let _docsNovos = null, _docsNovosEm = 0;
+async function carregarDocsNovos(){
+  const desde = new Date(Date.now()-864e5).toISOString();
+  _docsNovos = await api(`/rest/v1/anexos?select=id,nome,caso_id,cliente_id,origem,criado_em&origem=in.(pje,esaj,eproc,pat,crps)&criado_em=gte.${desde}&order=criado_em.desc&limit=500`).catch(()=>null) || [];
+  _docsNovosEm = Date.now();
+}
+function secaoDocsNovos(){
+  const ds = _docsNovos || [];
+  if(!ds.length) return "";
+  const porCli = new Map();
+  for(const d of ds){ const k = D.casoPorId.get(d.caso_id) || {}; const cid = d.cliente_id || k.cliente_id || "";
+    if(!porCli.has(cid)) porCli.set(cid, new Map());
+    const m = porCli.get(cid); if(!m.has(d.caso_id||"")) m.set(d.caso_id||"", []); m.get(d.caso_id||"").push(d); }
+  const blocos = [...porCli].map(([cid, casos])=>{
+    const c = D.cliPorId.get(cid) || {};
+    return `<div class="nov"><div class="nov-corpo"><div class="nov-cli" data-cli="${esc(cid)}"><span class="nov-nome">${esc(c.nome||"cliente sem ficha")}</span></div>`
+      + [...casos].map(([kid, docs])=>{ const k = D.casoPorId.get(kid) || {};
+        return `<div class="nov-txt"><b>${esc(k.beneficio||"sem caso")}</b> · ${docs.length} documento${docs.length>1?"s":""}: ${
+          esc(docs.slice(0,6).map(d=>`${({pje:"PJe",esaj:"e-SAJ",eproc:"eproc",pat:"PAT",crps:"e-Recursos"})[d.origem]||d.origem} ${String(d.nome||"").slice(0,60)}`).join("; "))}${docs.length>6?` e mais ${docs.length-6}`:""}</div>`; }).join("")
+      + `</div></div>`; }).join("");
+  return `<details class="docs-novos"><summary class="secao">📄 Documentos novos nas últimas 24 h (${ds.length}, ${porCli.size} cliente${porCli.size>1?"s":""})</summary>${blocos}</details>`;
+}
 function renderNovidades(){
   tituloLista("📣 Novidades");
+  if(Date.now()-_docsNovosEm > 3e5){ _docsNovosEm = Date.now(); carregarDocsNovos().then(()=>{ if(visao==="novidades") render(); }); }
   const ns = novidades();
   const semCaso = novSemCaso();
   if(ns.some(a=>!segNovidades.has(a.id))){ carregarSegNovidades(ns).then(()=>{ if(visao==="novidades") render(); }); }
@@ -14940,8 +14965,10 @@ function renderNovidades(){
     ? "O que os portais trouxeram e você ainda não leu. Marcar como lido tira daqui, não da ficha."
     : "Nada novo. Tudo o que os portais trouxeram já foi lido.";
   if(!ns.length){
-    document.getElementById("conteudo-meio").innerHTML = semCaso ||
-      "<p class='meio-sub'>Caixa vazia. 👏 Rode a extensão para buscar o que mudou hoje.</p>";
+    document.getElementById("conteudo-meio").innerHTML = (semCaso ||
+      "<p class='meio-sub'>Caixa vazia. 👏 Rode a extensão para buscar o que mudou hoje.</p>") + secaoDocsNovos();
+    document.querySelectorAll(".nov-cli[data-cli]").forEach(el=>el.onclick=()=>{
+      if(el.dataset.cli) abrirFicha(el.dataset.cli); });
     return;
   }
   // por dia, porque é assim que a pergunta é feita: "o que aconteceu hoje?"
@@ -14968,7 +14995,7 @@ function renderNovidades(){
     `<div class="filtros">${info.length?`<button class="fchip" id="ler-tudo" title="o que pede agenda continua na lista até alguém dar seguimento">✔ marcar as informativas como lidas (${info.length})</button>`:""}${
       nLinks?`<button class="fchip" id="abrir-tudo" title="abre o processo de cada novidade numa aba — PJe ou PAT, conforme a origem">↗ abrir todos os links (${nLinks})</button>`:""}${
       nPer?`<button class="fchip" id="agendar-tudo" title="para cada perícia/audiência detectada: agenda na aba 🩺 e cria o aviso 3 dias úteis antes (seg–sex)">🩺 agendar ${nPer} perícia(s) + avisos</button>`:""}</div>`
-    + semCaso + topo + corpo;
+    + semCaso + topo + corpo + secaoDocsNovos();
   const bAbrir=document.getElementById("abrir-tudo");
   if(bAbrir) bAbrir.onclick=abrirTodasNovidades;
   const bAg=document.getElementById("agendar-tudo");

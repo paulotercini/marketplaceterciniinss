@@ -59,7 +59,10 @@ async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url 
   }
   // `url`: abrir ESTE host, e não aproveitar a aba de outro host do mesmo portal
   if (!aba && !url) aba = abaPreferida(await chrome.tabs.query({ url: dominios }));
-  const usar = aba || await chrome.tabs.create({ url: url || ALVO[fonte], active: ativar });
+  // a aba criada para rodar em segundo plano ganha janela própria, normal e sem foco: aba
+  // escondida atrás de outra o Chrome freia (timers a 1 por minuto), janela à vista não
+  const usar = aba || (ativar ? await chrome.tabs.create({ url: url || ALVO[fonte], active: true })
+    : (await chrome.windows.create({ url: url || ALVO[fonte], focused: false, state: 'normal', width: 1200, height: 900 })).tabs[0]);
   if (ctx) ctx.tabId = usar.id;                        // quem espera o "retomando" precisa saber a aba
   if (aba) { if (ativar) await chrome.tabs.update(aba.id, { active: true }); }
   else await esperarAba(usar.id);                      // deixa a página carregar de verdade
