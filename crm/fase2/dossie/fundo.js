@@ -158,7 +158,8 @@ async function rodarHc(tabId) {
 }
 
 // ── RODAR TUDO ───────────────────────────────────────────────────────────
-// Um clique percorre os portais, um por vez, cada um na sua aba: a aba que já
+// Um clique percorre os portais (F595: Meu INSS primeiro e, com o CPF dele, e-Recursos, Emprega
+// Brasil e CadÚnico juntos; depois Redesim e HC), cada um na sua aba: a aba que já
 // está aberta é usada (é onde o login está); Meu INSS, e-Recursos, CadÚnico e Redesim
 // são abertos se faltarem (mesmo gov.br); Emprega Brasil e HC só rodam se a
 // aba estiver aberta, porque o login deles é por aba/portal. O HC vai depois
@@ -197,59 +198,74 @@ async function rodarTudo() {
   const relato = [];
   const anotar = (p, x) => relato.push(`${p.nome}: ${x && x.erro ? x.erro
     : `${(x && x.ok) || 0} doc(s)${x && x.falhas && x.falhas.length ? `, ${x.falhas.length} falha(s)` : ''}`}`);
+  const correndo = new Map();
+  const andamento = (p, x) => { correndo.set(p.nome, x); return [...correndo].map(([n, v]) => v ? `${n} (${v})` : n).join(', ') + '…'; };
+  const rodarPortal = async p => {
+    await chrome.storage.local.set({ rodada_andamento: andamento(p, '') });
+    try { await portal(p); } finally { correndo.delete(p.nome); }
+  };
+  const portal = async p => {
+    let [aba] = await chrome.tabs.query({ url: p.padrao });
+    if (!aba) {
+      if (p.soSeAberto) { relato.push(`${p.nome}: sem aba aberta — abra, entre e rode de novo`); return; }
+      aba = await chrome.tabs.create({ url: p.url, active: false });
+      await carregou(aba.id); await pausa(3000);
+    }
+    // portal sem sessão manda a aba para o login do gov.br (sso.acesso.gov.br),
+    // onde a extensão não entra: é "entre e rode de novo", não erro
+    const atual = await chrome.tabs.get(aba.id).catch(() => null);
+    const host = (p.padrao.match(/^https:\/\/([^/]+)/) || [])[1];
+    if (!atual || !atual.url || !atual.url.startsWith(`https://${host}/`)) {
+      relato.push(`${p.nome}: a aba foi para o login — entre com o gov.br nela e rode de novo`);
+      return;
+    }
+    try {
+      if (p.hc) anotar(p, await rodarHc(aba.id));
+      else if (p.redesim) {
+        await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', 'redesim-ponte.js'] });
+        await chrome.scripting.executeScript({ target: { tabId: aba.id }, world: 'MAIN', files: ['redesim.js'] });
+        await chrome.tabs.update(aba.id, { active: true });
+        relato.push(`${p.nome}: aberta — falta o seu clique em PESQUISAR`);
+      } else {
+        await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', p.arquivo] });
+        // dispara e ACOMPANHA em consultas curtas: uma chamada que fica minutos
+        // pendente deixa o service worker ser encerrado pelo Chrome no meio da
+        // rodada (foi o que prendeu o popup em "rodando: Meu INSS…", 11.10.2026)
+        await chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => {
+          window.__dossieResultado = null;
+          Promise.resolve().then(() => window.dossieRodar())
+            .then(r => { window.__dossieResultado = r || { ok: 0 }; }, e => { window.__dossieResultado = { erro: String(e && e.message || e) }; });
+        } });
+        let x = null;
+        for (let t = 0, mudo = 0; t < 40 * 60000 && !x; t += 3000) {       // teto de 40 min por portal
+          await pausa(3000);
+          await chrome.storage.local.set({ rodada_andamento: andamento(p, `${Math.round(t / 60000)} min`) });
+          // página recarregada: o __dossieResultado some e o coletor morreu com ela
+          const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id },
+            func: () => window.__dossieResultado === undefined ? { erro: 'a página recarregou no meio — rode de novo' } : window.__dossieResultado })
+            .catch(() => [undefined]);
+          x = r && r.result;
+          // aba fechada ou fora do portal: 3 consultas seguidas sem resposta e desiste
+          if (r) mudo = 0; else if (++mudo >= 3) x = { erro: 'a aba fechou ou saiu do portal no meio — rode de novo' };
+        }
+        anotar(p, x || { erro: 'não terminou em 40 min — veja a faixa na aba' });
+      }
+    } catch (e) { relato.push(`${p.nome}: ${e.message || e}`); }
+  };
   try {
     // o cliente da rodada anterior não vale para esta: quem o grava de novo é o Meu INSS
     await chrome.storage.local.remove('cliente');
     await chrome.storage.local.set({ rodada_desde: Date.now() });
-    for (const p of PORTAIS) {
-      await chrome.storage.local.set({ rodada_andamento: `${p.nome}…` });
-      let [aba] = await chrome.tabs.query({ url: p.padrao });
-      if (!aba) {
-        if (p.soSeAberto) { relato.push(`${p.nome}: sem aba aberta — abra, entre e rode de novo`); continue; }
-        aba = await chrome.tabs.create({ url: p.url, active: false });
-        await carregou(aba.id); await pausa(3000);
-      }
-      // portal sem sessão manda a aba para o login do gov.br (sso.acesso.gov.br),
-      // onde a extensão não entra: é "entre e rode de novo", não erro
-      const atual = await chrome.tabs.get(aba.id).catch(() => null);
-      const host = (p.padrao.match(/^https:\/\/([^/]+)/) || [])[1];
-      if (!atual || !atual.url || !atual.url.startsWith(`https://${host}/`)) {
-        relato.push(`${p.nome}: a aba foi para o login — entre com o gov.br nela e rode de novo`);
-        continue;
-      }
-      try {
-        if (p.hc) anotar(p, await rodarHc(aba.id));
-        else if (p.redesim) {
-          await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', 'redesim-ponte.js'] });
-          await chrome.scripting.executeScript({ target: { tabId: aba.id }, world: 'MAIN', files: ['redesim.js'] });
-          await chrome.tabs.update(aba.id, { active: true });
-          relato.push(`${p.nome}: aberta — falta o seu clique em PESQUISAR`);
-        } else {
-          await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['regras.js', 'pagina.js', p.arquivo] });
-          // dispara e ACOMPANHA em consultas curtas: uma chamada que fica minutos
-          // pendente deixa o service worker ser encerrado pelo Chrome no meio da
-          // rodada (foi o que prendeu o popup em "rodando: Meu INSS…", 11.10.2026)
-          await chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => {
-            window.__dossieResultado = null;
-            Promise.resolve().then(() => window.dossieRodar())
-              .then(r => { window.__dossieResultado = r || { ok: 0 }; }, e => { window.__dossieResultado = { erro: String(e && e.message || e) }; });
-          } });
-          let x = null;
-          for (let t = 0, mudo = 0; t < 40 * 60000 && !x; t += 3000) {       // teto de 40 min por portal
-            await pausa(3000);
-            await chrome.storage.local.set({ rodada_andamento: `${p.nome}… (${Math.round(t / 60000)} min)` });
-            // página recarregada: o __dossieResultado some e o coletor morreu com ela
-            const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id },
-              func: () => window.__dossieResultado === undefined ? { erro: 'a página recarregou no meio — rode de novo' } : window.__dossieResultado })
-              .catch(() => [undefined]);
-            x = r && r.result;
-            // aba fechada ou fora do portal: 3 consultas seguidas sem resposta e desiste
-            if (r) mudo = 0; else if (++mudo >= 3) x = { erro: 'a aba fechou ou saiu do portal no meio — rode de novo' };
-          }
-          anotar(p, x || { erro: 'não terminou em 40 min — veja a faixa na aba' });
-        }
-      } catch (e) { relato.push(`${p.nome}: ${e.message || e}`); }
-    }
+    // Meu INSS, e-Recursos, Emprega Brasil e CadÚnico correm juntos, cada um na sua aba; o
+    // Meu INSS sai na frente porque grava o cliente (nome da pasta) no começo. A Redesim só
+    // abre a tela, e o HC vem depois de todos, como antes.
+    const paralelos = PORTAIS.filter(p => !p.hc && !p.redesim);
+    const [primeiro, ...resto] = paralelos;
+    const vai = [rodarPortal(primeiro)];
+    for (let t = 0; t < 60000 && !(await chrome.storage.local.get(['cliente'])).cliente; t += 1000) await pausa(1000);
+    vai.push(...resto.map(rodarPortal));
+    await Promise.all(vai);
+    for (const p of PORTAIS.filter(p => p.redesim || p.hc)) await rodarPortal(p);
   } catch (e) {
     relato.push(`a rodada parou: ${e.message || e}`);       // erro fora do laço (abas, storage): fica visível no popup
   } finally {
