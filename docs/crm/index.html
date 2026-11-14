@@ -7096,7 +7096,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.87</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.88</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19152,12 +19152,16 @@ async function renderSugestoesDia(){
   tituloLista("💡 Sugestões do dia");
   const meio = document.getElementById("conteudo-meio");
   meio.innerHTML = `<p class="meio-sub">Carregando…</p>`;
-  let itens = [];
-  try{ itens = await api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,conversa_id,cliente_id,caso_id,criado_em&tipo=eq.mensagem&estado=eq.aberta&order=criado_em.asc&limit=100`); }
+  let itens = [], ia = [];
+  try{ [itens, ia] = await Promise.all([
+    api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,conversa_id,cliente_id,caso_id,criado_em&tipo=eq.mensagem&estado=eq.aberta&order=criado_em.asc&limit=100`),
+    // F586 · as sugestões da IA que ficaram acima do campo de escrever sem Usar nem Descartar (a de iniciativa já está na lista acima)
+    api(`/rest/v1/zap_conversas?select=id,cliente_id,lead_id,contato_nome,nome_perfil,telefone,sugestao_ia&sugestao_ia=not.is.null&order=ultima_em.desc&limit=100`).catch(()=>[])]); }
   catch(e){ meio.innerHTML = `<p class="meio-sub">Não carreguei: ${esc(msgErro(e))}</p>`; return; }
+  ia = (ia||[]).filter(c=>c.sugestao_ia && c.sugestao_ia.texto && !c.sugestao_ia.sugestao_id);
   if(visao!=="sugestoesdia") return;
   const pode = souAdmin() || zapGestor();
-  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${itens.length} para conferir</span>`;
+  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${itens.length+ia.length} para conferir</span>`;
   const chave = (k, rot) => `<label class="meio-sub" style="margin-right:12px"><input type="checkbox" data-cfg="${k}" ${cfgApp(k)==="sim"?"checked":""}> ${rot}</label>`;
   meio.innerHTML = `${souAdmin() ? `<div style="margin:0 0 12px">${chave("zap_iniciativa_ligada","Rotina das 05:00 sugere mensagens")}${chave("zap_anotacao_ligada","Sugerir anotação após mensagem da equipe")}</div>` : ""}
     ${itens.length && pode ? `<button type="button" class="btn-mini proc-pri" id="sug-todas">Enviar todas</button>` : ""}
@@ -19167,7 +19171,12 @@ async function renderSugestoesDia(){
         <textarea class="sug-dia-txt" rows="4" style="width:100%;margin:6px 0" ${s.conversa_id?"":"disabled"}>${esc(s.texto)}</textarea>
         <div>${s.conversa_id ? `<button type="button" class="btn-mini" data-ac="enviar">Enviar</button>` : `<span class="meio-sub">Sem conversa do WhatsApp</span>`}
           <button type="button" class="btn-mini" data-ac="descartar">Descartar</button>${c ? ` <button type="button" class="btn-mini" data-ac="ficha">Ficha</button>` : ""}</div></div>`; }).join("")
-      : `<p class="meio-sub">Nenhuma mensagem sugerida em aberto.</p>`}`;
+      : `<p class="meio-sub">Nenhuma mensagem sugerida em aberto.</p>`}
+    ${ia.length ? `<h3 class="secao">Sugestões da IA pendentes · ${ia.length}</h3>` + ia.map(c=>`<div class="cartao sug-ia" data-conv="${c.id}" style="display:block;padding:10px;margin:8px 0">
+        <div><strong>${esc(nomeDaConversa(c))}</strong> · <span class="meio-sub">${c.sugestao_ia.urgente?"⚠ urgente · ":""}sugerida ${esc(c.sugestao_ia.em ? dataBR(String(c.sugestao_ia.em).slice(0,10)) : "")}</span></div>
+        <p style="white-space:pre-wrap;margin:6px 0">${esc(c.sugestao_ia.texto)}</p>
+        <div><button type="button" class="btn-mini" data-ac="abrir" title="Abrir a conversa, onde a sugestão tem Usar">Abrir</button>
+          <button type="button" class="btn-mini" data-ac="ia-descartar">Descartar</button></div></div>`).join("") : ""}`;
   meio.onchange = async ev=>{ const k = ev.target.dataset && ev.target.dataset.cfg; if(!k) return;
     try{ await guardarCfgApp(k, ev.target.checked ? "sim" : "nao"); aviso("Gravado"); }catch(e){ ev.target.checked = !ev.target.checked; aviso(msgErro(e)); } };
   const enviar = async (s, txt) => {
@@ -19186,6 +19195,14 @@ async function renderSugestoesDia(){
         try{ await enviar(s, t); n++; }catch(e){ aviso(msgErro(e)); } }
       aviso(`${n} enviada(s)`); return renderSugestoesDia();
     }
+    const ci = b.closest(".sug-ia");
+    if(ci){ const c = ia.find(x=>x.id===ci.dataset.conv); if(!c) return;
+      if(b.dataset.ac==="abrir") return zapNaTela(c.id);
+      try{ await api(`/rest/v1/zap_conversas?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({sugestao_ia:null})}); }
+      catch(e){ return aviso(msgErro(e)); }
+      retornoSugestao(c.id, c.sugestao_ia, null, "descartada");
+      const z = zapConvs.find(x=>x.id===c.id); if(z) z.sugestao_ia = null;
+      return ci.remove(); }
     const el = b.closest(".sug-dia"); if(!el) return; const s = itens.find(x=>x.id===el.dataset.sug);
     if(b.dataset.ac==="ficha") return abrirFicha(s.cliente_id);
     try{
