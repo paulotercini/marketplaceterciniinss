@@ -300,18 +300,20 @@ export async function acervoPje() {
     if (dig(k.processo)) doCrm.add(dig(k.processo));
     for (const p of (Array.isArray(k.processos) ? k.processos : [])) if (dig(p && (p.numero || p))) doCrm.add(dig(p.numero || p));
   }
-  // a última cronologia entregue de cada processo (lotes de 5, 100 coletas
-  // cobrem duas rodadas completas); fora da janela, conta como nunca feito
-  const rp = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje-processo&order=criado_em.desc&limit=100`, { headers: cab });
+  // a última cronologia entregue de cada processo; F597: a entrega passou a ser
+  // por processo, por isso a janela cresceu de 100 para 500 coletas
+  const rp = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje-processo&order=criado_em.desc&limit=500`, { headers: cab });
   if (!rp.ok) throw new Error(`não consegui ler as cronologias entregues (${rp.status})`);
   // por host:número — o mesmo número existe no 1º e no 2º grau, e a cronologia
   // de um grau dava o outro por completado. Entrega antiga sem host reabre uma vez
-  const feitos = new Map();
+  const feitos = new Map(), inicioVisto = new Set();
   for (const c of await rp.json()) {
     const d = c.dados || {};
     for (const p of (Array.isArray(d.lote) ? d.lote : [d])) {
       const k = p && p.numero && (p.host || d.host || '') + ':' + dig(p.numero);
       if (k && !feitos.has(k)) feitos.set(k, p.itens || []);
+      // F597 · a rolagem curta não chega ao início: vale o início lido em qualquer entrega
+      if (k && chegouAoInicio(p.itens || [])) inicioVisto.add(k);
     }
   }
   // documento que FALHOU traz o processo de volta, até 3 tentativas por
@@ -327,15 +329,16 @@ export async function acervoPje() {
     for (const p of (d.processos || [])) {
       const num = dig(p.numero), chave = d.host + ':' + num;
       if (!p.id || !p.ca || !doCrm.has(num) || vistos.has(chave)) continue;
-      const ja = feitos.get(chave), faltam = pendentes(ja);
+      const ja = feitos.get(chave), faltam = pendentes(ja), viuInicio = inicioVisto.has(chave);
       // F385 · a cronologia nascida no PJe (número 5…) que não chegou ao primeiro
       // movimento volta, até 3 vezes: faltam a inicial e a distribuição
       // F590 · com o host: o 1º e o 2º grau gastavam as tentativas um do outro (a chave antiga, sem host, ainda vale para quem já esgotou)
       const ini = 'inicio2:' + chave   // 1.33.2 · a rolagem nova ganha 3 tentativas novas
         , nIni = tent[ini] ?? tent['inicio2:' + num] ?? 0
         , cortada = !!ja && /^5/.test(num)
-        && !chegouAoInicio(ja) && nIni < 3;
-      if (!movimentou(p.movimento, ja) && !faltam.length && !cortada) continue;
+        && !viuInicio && nIni < 3
+        , mov = movimentou(p.movimento, ja);
+      if (!mov && !faltam.length && !cortada) continue;
       // F590 · o processo que não abre ou que o CRM recusa sai da fila na 3ª falha, até movimentar de novo
       const falha = 'falha:' + chave + ':' + ((p.movimento && p.movimento.data) || '');
       if ((tent[falha] || 0) >= 3) continue;
@@ -343,11 +346,14 @@ export async function acervoPje() {
         url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}`,
         pend: faltam.map(x => x.id), ini: cortada ? ini : null, falha,
         // o início já foi lido antes (ou já se desistiu dele): o coletor pode encurtar a espera do fim da rolagem
-        curto: /^5/.test(num) && (chegouAoInicio(ja || []) || nIni >= 3) });
+        curto: /^5/.test(num) && (viuInicio || nIni >= 3),
+        prio: mov && ja ? 0 : !ja ? 1 : 2, data: (p.movimento && p.movimento.data) || '' });
     }
   }
-  return [...vistos.values()];
+  return ordemAcervo([...vistos.values()]);
 }
+// F597 · o que movimentou vem primeiro (o mais recente antes), depois o nunca lido, por último a nova tentativa
+export const ordemAcervo = ps => ps.sort((a, b) => a.prio - b.prio || String(b.data).localeCompare(String(a.data)));
 // soma uma tentativa para os documentos pendentes e o "início" de cada processo
 // que o completar leu e entregou (entrar na fila não gasta: a rodada pode parar antes)
 export async function gastarTentativas(ps) {

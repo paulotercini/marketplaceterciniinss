@@ -156,6 +156,7 @@
     // reaberta (eram 2 pedidos ao e-SAJ por processo ativo, toda rodada); a
     // rodada completa semanal confere todas
     const marca = REG.assinaturaMov(mv[0]);
+    out.movNovo = !!(marca && vistas[codigo] && vistas[codigo] !== marca);   // F597 · andou desde a última pasta inteira
     const docs = REG.baixaDocs(out.situacao, out.numero, ativos) && !(soMovNovo && marca && vistas[codigo] === marca);
     const mvDocs = mv.slice(0, 5).flatMap(m => m.docs || []);
     let existentes = null;
@@ -355,6 +356,8 @@
       const todos = [...mapa.values()];
       const chaveArq = REG.chaveArq;
       const fila = rapido ? todos.filter(p => !(arq[chaveArq(p)] && new Date(arq[chaveArq(p)]).getTime() > corte)) : todos;
+      // F597 · o que tem pasta pendente ou caso no CRM vai antes (sort estável)
+      fila.sort((x, y) => (pend[y.codigo] ? 1 : 0) - (pend[x.codigo] ? 1 : 0) || (ativos.has(y.numero) ? 1 : 0) - (ativos.has(x.numero) ? 1 : 0));
       const pulados = todos.length - fila.length;
       faixa(`${todos.length} processos do TJSP (${resumoFontes})${pulados ? `; ${pulados} arquivados ficam para a rodada semanal` : ''}`);
 
@@ -397,7 +400,9 @@
           // movimentações dos demais esperavam o fim da rodada), e a cada 15 o
           // lote já vai (o CRM não duplica nada)
           lote.push(x);
-          if (lote.length >= 15) { const l = lote.splice(0); await entregar(l, { lote: true }); l.forEach(p => entregues.add(p)); }
+          // F597 · pasta, peça ou movimento novo vai ao CRM na hora; o resto, de 15 em 15
+          const novo = x.pasta || x.movNovo || (x.codigo && novas[x.codigo]);
+          if (novo || lote.length >= 15) { const l = lote.splice(0); await entregar(l, { lote: true }); l.forEach(p => entregues.add(p)); }
           // [03.10.2026] os incidentes que a ficha lista (cumprimento de
           // sentença, RPV) entram no fim da fila, se a rodada ainda não os
           // tem — antes só os favoritados eram lidos
