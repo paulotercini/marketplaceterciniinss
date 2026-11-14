@@ -742,3 +742,15 @@ console.log("F581 plantão ok");
   assert.equal(conferirAmparo("O benefício foi deferido.", a), "");
   assert.equal(conferirAmparo("", a), "");
 }
+
+// F600: só a rajada final de imagens sem texto passa à checagem.
+{
+  const { imagensSoltas } = await import("../../zap_plantao/index.ts");
+  const img = (u) => ({ direcao: "entrada", tipo: "imagem", texto: "", midia_url: u, midia_mime: "image/jpeg" });
+  assert.equal(imagensSoltas([img("a"), img("b"), { direcao: "saida", tipo: "texto", texto: "x" }]).length, 2);
+  assert.equal(imagensSoltas([img("a"), { direcao: "entrada", tipo: "texto", texto: "olha isso" }]).length, 0);
+  assert.equal(imagensSoltas([{ ...img("a"), texto: "meu laudo" }]).length, 0);
+  assert.equal(imagensSoltas([{ ...img(""), midia_url: null }]).length, 0);
+  assert.equal(imagensSoltas([]).length, 0);
+  assert.equal(imagensSoltas([img("1"), img("2"), img("3"), img("4")]).length, 3);
+}
