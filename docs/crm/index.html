@@ -2212,6 +2212,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zap-tela.wa .zap-b.saida:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:#d9fdd3;
     border-top-left-radius:8px;border-top-right-radius:0}
   .zap-tela.wa .zap-b.bot{font-style:normal}
+  .zap-ant{align-self:center;font-size:12px;padding:4px 12px;margin:4px 0 8px;border:1px solid var(--borda,#ddd);border-radius:12px;background:var(--branco);color:var(--verde,#1a7f5a);cursor:pointer}
   .zap-tela.wa .zap-dia{background:#fff;border-color:transparent;box-shadow:0 1px .5px rgba(11,20,26,.13)}
   /* F270 · mais WhatsApp: cauda no primeiro balão da sequência, balões seguidos juntos, hora cinza,
      tiques no lugar de "enviada/entregue/lida" (azul na lida), bolinha verde das não lidas,
@@ -3818,6 +3819,21 @@ html[data-tema="v10"] #conteudo-meio .ag-ext{grid-column:1/-1;background:#FAFAF8
 :is(.ag-ext,.db) [hidden]{display:none!important}
 :is(.ag-ext,.db) .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:6px 8px;border:1px solid var(--borda);border-radius:4px}
 :is(.ag-ext,.db) .ae-lin,:is(.ag-ext,.db) .ae-dias{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.mcal{max-width:260px;margin-top:8px;font-variant-numeric:tabular-nums}
+.mcal-cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.mcal-cab b{font-size:13px;text-transform:capitalize}
+.mcal-nav{background:none;border:1px solid var(--borda);border-radius:4px;width:28px;height:28px;cursor:pointer;font:inherit;color:inherit}
+.mcal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.mcal-g i{font-style:normal;font-size:11px;color:var(--cinza);text-align:center}
+.mcal-g button{aspect-ratio:1;min-height:28px;border:1px solid transparent;border-radius:4px;background:none;font:inherit;font-size:12px;color:inherit;cursor:pointer;padding:0}
+@media (hover:hover){.mcal-g button:not(:disabled):hover,.mcal-nav:hover{background:var(--placa,#EFEEEB)}}
+.mcal-g button.nu{color:var(--cinza)}
+.mcal-g button.hj{border-color:var(--verde,#2f6b4f)}
+.mcal-g button.sel{background:var(--verde,#2f6b4f);color:#fff}
+.mcal-g button:disabled{opacity:.3;cursor:default}
+.mcal button:focus-visible{outline:2px solid var(--verde,#2f6b4f);outline-offset:1px}
+.app.celular .mcal{max-width:100%}
+.app.celular .mcal-g button,.app.celular .mcal-nav{min-height:40px;min-width:40px}
 :is(.ag-ext,.db) .ae-fim{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:8px}
 :is(.ag-ext,.db) .ae-canc{background:none;border:0;color:var(--cinza);text-decoration:underline;cursor:pointer;min-height:24px}
 :is(.ag-ext,.db) .ae-aviso{margin:4px 0;color:var(--cinza)}
@@ -7080,7 +7096,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.84</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.87</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11853,6 +11869,34 @@ function senhaMeuInss(cliId){
   return _senhaInss.get(cliId);
 }
 const umMes = d => { const x = new Date(d+"T12:00:00"); x.setMonth(x.getMonth()+1); return x.toLocaleDateString("sv"); };
+// F584: a mini agenda do Reagendar, do Prorrogar e do Adiar: o mês à vista, um clique escolhe o dia (antes de min fica desligado)
+const MCAL_MES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+function mcalMiolo(min, mes, sel){
+  const [a, m] = mes.split("-").map(Number), ini = new Date(a, m-1, 1).getDay(), fim = new Date(a, m, 0).getDate(), hj = hoje();
+  const nav = (d, r, t) => `<button type="button" class="mcal-nav" data-nav="${d}" aria-label="${t}"><span aria-hidden="true">${r}</span></button>`;
+  let h = `<div class="mcal-cab">${nav(-1,"‹","mês anterior")}<b>${MCAL_MES[m-1]} ${a}</b>${nav(1,"›","mês seguinte")}</div><div class="mcal-g">`
+    + ["D","S","T","Q","Q","S","S"].map(d=>`<i aria-hidden="true">${d}</i>`).join("") + "<span></span>".repeat(ini);
+  for(let d = 1; d <= fim; d++){
+    const iso = `${mes}-${String(d).padStart(2,"0")}`, c = [iso===hj&&"hj", !ehDiaUtil(iso)&&"nu", iso===sel&&"sel"].filter(Boolean).join(" ");
+    h += `<button type="button" data-d="${iso}"${c?` class="${c}"`:""}${iso<min?" disabled":""} aria-label="${fmtBarra(iso)}">${d}</button>`;
+  }
+  return h + "</div>";
+}
+function miniCal(min, sel){
+  const mes = (sel && sel >= min ? sel : min).slice(0, 7);
+  return `<div class="mcal" role="group" aria-label="Escolher a data" data-min="${min}" data-mes="${mes}">${mcalMiolo(min, mes, sel||"")}</div>`;
+}
+function ligarMiniCal(el, escolher){
+  if(!el) return;
+  el.onclick = e => {
+    const b = e.target.closest("button"); if(!b || b.disabled) return;
+    e.stopPropagation();
+    if(b.dataset.d) return escolher(b.dataset.d);
+    const d = new Date(el.dataset.mes + "-15T12:00:00"); d.setMonth(d.getMonth() + Number(b.dataset.nav));
+    el.dataset.mes = d.toISOString().slice(0, 7);
+    el.innerHTML = mcalMiolo(el.dataset.min, el.dataset.mes, "");
+  };
+}
 function painelExt(x, qual, txt){
   const it = x._it, mov = reagendavel(it), p = x.querySelector(".ae-painel");
   if(_ext) Object.assign(_ext, {painel:qual, txt});
@@ -11872,9 +11916,9 @@ function painelExt(x, qual, txt){
   } else if(qual==="reagendar"){
     const op = [["Amanhã", proxDiaUtil(somaDias(hoje(),1))], ["Próxima semana", proxSegunda()], ["Em 15 dias", proxDiaUtil(somaDias(hoje(),15))], ["Em 1 mês", proxDiaUtil(umMes(hoje()))]];
     p.innerHTML = mov ? `<div class="ae-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-ae="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}
-      <input type="date" class="ae-outra" aria-label="Outra data" min="${hoje()}"></div>` + fim("")
+      </div>${miniCal(hoje(), it.data)}` + fim("")
       : `<p class="ae-aviso">${naoMove}</p>` + fim(`<button type="button" class="btn-mini forte" data-ae="abrir">Abrir</button>`);
-    const o = p.querySelector(".ae-outra"); if(o) o.onchange = ()=>{ if(o.value) extReagendar(x, o.value); };
+    ligarMiniCal(p.querySelector(".mcal"), d => extReagendar(x, d));
   } else {
     p.innerHTML = nota(it.fatal && !it.tc ? "O que foi feito (o prazo fica cumprido)" : "O que foi feito (opcional)")
       + fim(`<button type="button" class="btn-mini forte" data-ae="concluir-ok">Concluir</button>`);
@@ -15359,7 +15403,8 @@ function reagendarVencidas(lote){
   caixa(`<h3 style="margin:0 0 6px">${lote ? `Nova data para ${ms.length} ${ms.length===1?"item":"itens"}` : `Reagendar ${ms.length} ${ms.length===1?"vencido":"vencidos"}`}</h3>
     <p class="meio-sub">Retornos, voltas à fila e lembretes vão para a data escolhida.${fica ? ` ${fica} ${fica===1?"item fica":"itens ficam"} (prazo fatal, perícia a confirmar, exigência e outros que pedem registro).` : ""}</p>
     <div class="conf-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" onclick="aplicarReagendar('${d}')" title="${fmtBarra(d)}">${r}</button>`).join("")}
-      <input type="date" id="reag-data" aria-label="Outra data" min="${hoje()}" onchange="if(this.value)aplicarReagendar(this.value)"></div>`);
+</div>${miniCal(hoje(), "")}`);
+  ligarMiniCal(document.querySelector("#modal .mcal"), aplicarReagendar);
 }
 // a data nova de uma linha: a tarefa da anotação, a tarefa pessoal ou o casos.prazo (a volta à fila anda com o despacho e volta a
 // ir ao To Do pela ponte, todo apagado; o retorno do To Do anda como no "Em análise": o To Do só o troca quando a data dele mudar)
@@ -18177,6 +18222,27 @@ function atualizarVistos(){
 }
 
 // repintar sem perder o que está sendo escrito (chegou mensagem no meio da frase)
+// F583 · a conversa grande abre com as 150 mensagens mais recentes: desenhar milhares de balões de uma vez
+// derrubava a aba do Chrome. O começo da janela é guardado pelo id, para a mensagem que chega não deslocar a leitura;
+// "Mostrar anteriores", a busca, a citação, a favorita e a menção ampliam a janela até a mensagem procurada
+const ZAP_JAN = 150; let _zapJan = {conv:null, de:null, vis:0};
+function zapIni(){
+  if(_zapJan.conv!==zapAberta) _zapJan = {conv:zapAberta, de:null, vis:0};
+  let ini = _zapJan.de ? zapMsgs.findIndex(m=>m.id===_zapJan.de) : -1;
+  if(ini < 0){ ini = Math.max(0, zapMsgs.length - ZAP_JAN); _zapJan.de = zapMsgs[ini]?.id ?? null; }
+  const ach = zapPrimeiroAchado(); if(ach >= 0 && ach < ini) ini = ach;
+  return _zapJan.vis = ini;
+}
+function zapPrimeiroAchado(){
+  const t = semAcentoZap(zapBuscaConv && zapBuscaConv.q).trim();
+  return t.length < 2 ? -1 : zapMsgs.findIndex(m=>semAcentoZap(m.texto).includes(t));
+}
+function zapMostrarDesde(i){ _zapJan.de = zapMsgs[Math.max(0,i)]?.id ?? null; pintarConversaGuardando(); }
+function zapAnteriores(){
+  const cx = document.getElementById("zap-msgs"), h = cx ? cx.scrollHeight - cx.scrollTop : 0;
+  zapMostrarDesde(_zapJan.vis - ZAP_JAN);
+  const c2 = document.getElementById("zap-msgs"); if(c2) c2.scrollTop = c2.scrollHeight - h;   // a leitura fica onde estava
+}
 function pintarConversaGuardando(){
   const t = document.getElementById("zap-txt"), txt = t ? t.value : "", foco = document.activeElement===t;
   // quem está lendo mais acima não é puxado para o fim (só quem já estava no fim acompanha o que chega)
@@ -18280,6 +18346,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${cli?`<button onclick="quemConversa()" title="dizer se quem escreve é o próprio cliente ou outra pessoa por ele">Identificar quem escreve</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
                <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
+               <button onclick="this.closest('details').open=false;baixarConversaZap()" title="baixar a conversa em MD ou PDF, inteira ou desde uma data">Baixar<span class="sr-only"> a conversa</span></button>
                <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}"><span aria-hidden="true">${c.nao_lidas?"Lida":"Desler"}</span><span class="sr-only">${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}</span></button>
                <button onclick="silenciarZap()" title="sem aviso desta conversa por um tempo">${silenciadaZap(c.id)?`🔕 Silenciada até ${new Date(zapSilencio.get(c.id)).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}`:"🔕 Silenciar"}</button>
                <button onclick="alternarFixar()">${c.fixada?"Desafixar da lista":"Fixar no topo da lista"}</button>
@@ -18309,13 +18376,14 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
         <button class="zb-nav" onclick="navBuscaZap(-1)" aria-label="Resultado anterior" title="mais antigo">${zic("baixo")}</button>
         <button class="zb-nav" onclick="navBuscaZap(1)" aria-label="Próximo resultado" title="mais recente">${zic("baixo")}</button>
         <button class="zb-nav" onclick="fecharBuscaZap()" aria-label="Fechar a busca">✕</button></div>`:""}
-     <div class="zap-msgs" id="zap-msgs">${zapMsgs.map((m,i)=>{
+     <div class="zap-msgs" id="zap-msgs">${(ini=>(ini?`<button class="zap-ant" onclick="zapAnteriores()">Mostrar ${Math.min(ini,ZAP_JAN)} anteriores</button>`:"")+zapMsgs.slice(ini).map((m,j)=>{
+        const i = ini + j;
         // a data entra entre as mensagens quando o dia muda, como no aparelho
         const d = dataSP(m.quando_wa||m.criado_em), ant = i && dataSP(zapMsgs[i-1].quando_wa||zapMsgs[i-1].criado_em);
         const dia = d!==ant ? `<div class="zap-dia">${(t=>t==="hoje"?"Hoje":t==="ontem"?"Ontem":dmaZap(d))(diaZap(m.quando_wa||m.criado_em))}</div>` : "";
         const a = i && zapMsgs[i-1];
         const seguida = !dia && a && a.direcao===m.direcao && (a.autor_id||"")===(m.autor_id||"") && !!a.por_bot===!!m.por_bot;
-        return dia + bolhaZap(m,cli,seguida); }).join("")
+        return dia + bolhaZap(m,cli,seguida); }).join(""))(zapIni())
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
      ${zapResponder?`<div class="zap-resp"><span>↩ respondendo</span>
         <span class="txt">${esc(textoCurto(zapMsgs.find(m=>m.id===zapResponder)))}</span>
@@ -18700,7 +18768,9 @@ function abrirBuscaZap(){
 function fecharBuscaZap(){ zapBuscaConv = null; pintarConversaGuardando(); }
 function ligarBuscaZap(foco){
   const q = document.getElementById("zap-bq"); if(!q) return;
-  q.oninput = ()=>{ zapBuscaConv.q = q.value; zapBuscaConv.i = -1; marcarBuscaZap(true); };
+  q.oninput = ()=>{ zapBuscaConv.q = q.value; zapBuscaConv.i = -1;
+    const ach = zapPrimeiroAchado(); if(ach >= 0 && ach < _zapJan.vis) pintarConversaGuardando();   // F583 · o achado antigo entra na janela
+    marcarBuscaZap(true); };
   q.onkeydown = e=>{
     if(e.key==="Escape"){ e.preventDefault(); fecharBuscaZap(); }
     else if(e.key==="Enter"){ e.preventDefault(); navBuscaZap(e.shiftKey?1:-1); }
@@ -18912,8 +18982,64 @@ function verFavoritasZap(){
       <span>${esc(textoCurto(m))}</span></button>`).join("")}</div>`
     : `<p class="meio-sub">Nenhuma mensagem favorita nesta conversa. Segure o balão (ou passe o mouse) e toque em ★ para guardar uma.</p>`}`);
 }
+// F585 · baixar a conversa inteira, ou desde uma data, em MD ou PDF (o PDF sai pela impressão do navegador)
+function baixarConversaZap(){
+  caixa(`<h3>Baixar a conversa</h3>
+    <p class="meio-sub">Sem data, sai a conversa inteira. Áudio, foto e documento aparecem pelo nome, com a transcrição ou a legenda.</p>
+    <label class="meio-sub">Desde <input type="date" id="zbx-desde"></label>
+    <label class="meio-sub" style="display:block;margin:8px 0"><input type="checkbox" id="zbx-notas"> Incluir as notas internas</label>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn-mini pri" onclick="baixarZapComo('md')" title="Baixar em Markdown (.md)">MD</button>
+      <button class="btn-mini" onclick="baixarZapComo('pdf')" title="Abrir para salvar em PDF">PDF</button>
+    </div>`);
+}
+const dataBrZap = ts => dataSP(ts).split("-").reverse().join("/");
+function linhasConversaZap(c, desde, notas){
+  const ini = desde ? new Date(desde+"T00:00:00-03:00") : null;
+  return zapMsgs.filter(m => !["rascunho","agendada"].includes(m.status)
+      && (notas || m.direcao!=="interna")
+      && (!ini || new Date(m.quando_wa||m.criado_em) >= ini))
+    .map(m => {
+      const d = m.quando_wa||m.criado_em;
+      const quem = m.direcao==="entrada" ? nomeDaConversa(c)
+        : m.direcao==="interna" ? `Nota interna · ${(D.colPorId.get(m.autor_id)||{}).nome||"escritório"}`
+        : m.por_bot ? "Robô" : m.aviso_chave ? "Aviso automático"
+        : (D.colPorId.get(m.autor_id)||{}).nome || "Escritório";
+      const tipo = {audio:"Áudio", imagem:"Foto", video:"Vídeo", documento:"Documento", figurinha:"Figurinha", localizacao:"Localização"}[m.tipo];
+      const anexo = tipo ? `[${tipo}${m.midia_nome?": "+m.midia_nome:""}]` : "";
+      const obs = [m.encaminhada||m.encaminhada_de ? "↪ Encaminhada" : "", m.editada_em ? "editada" : "",
+                   m.apagada_em ? `apagada em ${dataBrZap(m.apagada_em)}` : "", m.status==="erro" ? "não enviada" : ""].filter(Boolean);
+      return {quando:`${dataBrZap(d)} ${horaSP(d)}`, quem, texto:[anexo, m.texto||""].filter(Boolean).join(" "), obs};
+    });
+}
+function baixarZapComo(fmt){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const desde = document.getElementById("zbx-desde").value, notas = document.getElementById("zbx-notas").checked;
+  const ls = linhasConversaZap(c, desde, notas);
+  if(!ls.length){ aviso("Nenhuma mensagem nesse período"); return; }
+  const nome = nomeDaConversa(c), tit = `Conversa no WhatsApp com ${nome}${c.telefone?` (${foneZap(c.telefone)})`:""}`;
+  const sub = `${desde ? `Desde ${desde.split("-").reverse().join("/")}` : "Conversa inteira"} · ${ls.length} mensagens · baixada em ${dataBrZap(new Date().toISOString())} ${horaSP(new Date().toISOString())}`;
+  if(fmt==="md"){
+    const md = `# ${tit}\n\n${sub}\n\n` + ls.map(l => `**${l.quando} · ${l.quem}**${l.obs.length?` _(${l.obs.join(", ")})_`:""}\n\n${l.texto.replace(/\n/g,"  \n")||"(sem texto)"}\n`).join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([md], {type:"text/markdown;charset=utf-8"}));
+    a.download = `conversa-${nome.normalize("NFD").replace(/[^\w]+/g,"-").replace(/^-|-$/g,"").toLowerCase()}-${new Date().toISOString().slice(0,10)}.md`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+    fecharCaixa(); return;
+  }
+  const guia = window.open("", "_blank"); if(!guia){ aviso("O navegador bloqueou a janela; permita pop-ups"); return; }
+  guia.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(tit)}</title><style>
+    body{font:11pt/1.45 Arial,sans-serif;margin:24px;color:#111} h1{font-size:15pt;margin:0 0 4px} .sub{color:#555;margin:0 0 16px}
+    .m{margin:0 0 10px;page-break-inside:avoid} .q{font-weight:bold} .o{color:#666;font-style:italic} .t{white-space:pre-wrap}
+    @page{size:A4;margin:16mm}</style></head><body><h1>${esc(tit)}</h1><p class="sub">${esc(sub)}</p>
+    ${ls.map(l=>`<div class="m"><div><span class="q">${esc(l.quando)} · ${esc(l.quem)}</span>${l.obs.length?` <span class="o">(${esc(l.obs.join(", "))})</span>`:""}</div><div class="t">${esc(l.texto)||"(sem texto)"}</div></div>`).join("")}
+    <script>window.print()<\/script></body></html>`);
+  guia.document.close(); fecharCaixa();
+}
 const textoCurto = m => !m ? "" : ((m.tipo&&m.tipo!=="texto"?"["+m.tipo+"] ":"") + (m.texto||"")).replace(/\s+/g," ").slice(0,90);
-function irParaMsg(id){ const el=document.getElementById("zb-"+id); if(el){ el.scrollIntoView({block:"center"}); el.style.outline="2px solid #4a9b6f"; setTimeout(()=>el.style.outline="",1500); } }
+function irParaMsg(id){ let el=document.getElementById("zb-"+id);
+  if(!el){ const i = zapMsgs.findIndex(m=>m.id==id); if(i>=0){ zapMostrarDesde(Math.min(i, _zapJan.vis) - 5); el = document.getElementById("zb-"+id); } }
+  if(el){ el.scrollIntoView({block:"center"}); el.style.outline="2px solid #4a9b6f"; setTimeout(()=>el.style.outline="",1500); } }
 
 // Rascunho é aviso automático que a regra mandou conferir antes. Soltar é
 // virar pedido de envio; descartar apaga — e a chave única impede que o
@@ -22247,15 +22373,14 @@ function adiarTarefa(id){
     <div class="form-linha">
       <button class="btn-rap" onclick="mudarLembrar('${id}', maisDias(1))">+1 dia útil</button>
       <button class="btn-rap" onclick="mudarLembrar('${id}', maisDias(7))">+1 semana</button>
-      <input type="date" onchange="mudarLembrar('${id}', this.value)">
-    </div>
+    </div>${miniCal(hoje(), "")}
     <h3>⏰ Avisar na hora</h3>
     <p class="meio-sub">Na data do lembrete, o CRM avisa no horário escolhido, mesmo com a aba escondida.</p>
     <div class="form-linha">
       <button class="btn-rap" onclick="sonecaTarefa('${id}', 60)">Daqui a 1 hora</button>
       <input type="time" onchange="mudarHoraLembrar('${id}', this.value)">
       <button class="btn-mini" onclick="mudarHoraLembrar('${id}', null)" title="tirar o horário"><span aria-hidden="true">Limpar</span><span class="sr-only">tirar o horário</span></button>
-    </div>`);
+    </div>`);  ligarMiniCal(document.querySelector("#modal .mcal"), d => mudarLembrar(id, d));
 }
 // ── LEMBRETE COM HORÁRIO (como o To Do) ──────────────────────────────────
 // O To Do guarda data e hora do lembrete e dispara um aviso do Windows na
