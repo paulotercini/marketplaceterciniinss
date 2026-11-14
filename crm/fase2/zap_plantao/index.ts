@@ -608,6 +608,50 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `<casos>\n${casos || "sem casos abertos"}\n</casos>\n\n<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
 }
 
+// F599 · a IA de amparo responde, da ficha, o que o cliente perguntou: local da perícia, documentos a trazer, endereço do escritório
+// (decisão do Paulo de 14.11.2026). Sem parecer jurídico, sem andamento, sem orientação de como se portar na perícia, sem inventar.
+export const ESQ_AMPARO = {
+  type: "object", additionalProperties: false, required: ["responder", "resposta"],
+  properties: {
+    responder: { type: "boolean", description: "true só quando a resposta inteira sai dos fatos abaixo; na dúvida, false" },
+    resposta: { type: "string", description: "1 a 3 frases curtas, vazia quando responder for false" },
+  },
+};
+export type Amparo = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; quando: string;
+  mensagens: Msg[]; eventos?: string[]; casos?: string[]; docs_pendentes?: string[]; tem_senha_gov?: boolean };
+export function fatosAmparo(a: Amparo) {
+  return `Perícias, avaliações sociais e audiências agendadas:\n${(a.eventos || []).map((e) => "- " + e).join("\n") || "- nenhuma"}\n` +
+    `Benefícios em discussão: ${(a.casos || []).join("; ") || "nenhum"}\n` +
+    `Documentos que o escritório pediu e ainda não recebeu:\n${(a.docs_pendentes || []).map((d) => "- " + d).join("\n") || "- nenhum"}\n` +
+    `Senha do gov.br (Meu INSS) guardada na ficha: ${a.tem_senha_gov ? "sim" : "não"}` + FATOS;
+}
+export function promptAmparo(a: Amparo) {
+  const quem = a.relacao ? `${a.contato} (${a.relacao} de ${a.cliente || "o cliente"})` : a.contato;
+  return `Você é a assistente de um escritório de advocacia previdenciária. O cliente escreveu no WhatsApp e a equipe ainda não respondeu. ` +
+    `Responda somente o que a última mensagem pergunta e que os fatos abaixo respondem com certeza.\n\n` +
+    `Pode responder: data, hora e local da perícia, da avaliação social ou da audiência que estão nos fatos; endereço e horário do escritório; ` +
+    `os documentos a levar (sempre o documento de identificação e a carteira de trabalho; no auxílio por incapacidade, na aposentadoria por ` +
+    `incapacidade, no auxílio-acidente e no BPC da pessoa com deficiência, também os relatórios médicos, os exames e as receitas); quem pergunta ` +
+    `se deve levar a carteira de trabalho recebe sim; os documentos que o escritório pediu e ainda não recebeu; se a senha do gov.br já está na ficha ` +
+    `(apenas sim ou não, nunca a senha); a forma de entregar documentos.\n\n` +
+    `Nunca: parecer jurídico, andamento ou o que está acontecendo no processo, chance de ganhar, valor, prazo de decisão, como se portar ` +
+    `ou o que dizer na perícia, confirmação de documento recebido sem arquivo na conversa, nem dado que não esteja nos fatos. ` +
+    `Agradecimento, cumprimento, pedido de agendamento, pergunta que os fatos não respondem ou qualquer dúvida: responder = false.\n\n` +
+    `Forma: 1 a 3 frases curtas, português formal, sem cumprimento, sem emoji, sem lista, sem assinatura, datas como 21/11/2026. ` +
+    `Não diga que a equipe está ciente nem quando responderá: o sistema acrescenta.\n\n` +
+    `Quem escreve: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n<fatos>\n${fatosAmparo(a)}\n</fatos>\n\n` +
+    `<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
+}
+// o código confere: todo número da resposta tem de estar nos fatos (data, hora, endereço, telefone), e andamento não passa
+export function conferirAmparo(resposta: string, a: Amparo) {
+  const r = String(resposta || "").trim();
+  if (!r || r.length > 500) return "";
+  if (/andamento|decis[aã]o|senten[cç]a|ac[oó]rd[aã]o|deferid|indeferid|recurso|chance|valor|R\$/i.test(r)) return "";
+  const n = (x: string) => x.replace(/^0+(?=\d)/, "");
+  const fatos = new Set((fatosAmparo(a).match(/\d+/g) || []).map(n));
+  return (r.match(/\d+/g) || []).every((x) => fatos.has(n(x))) ? r : "";
+}
+
 export function promptPlantao(x: Contexto) {
   return `${regras(x.instrucoes)}\n\n<contexto>\n${contexto(x)}</contexto>\n\n<conversa>\n${transcricao(x.mensagens || [])}\n</conversa>`;
 }
@@ -1387,6 +1431,18 @@ if (typeof Deno !== "undefined") {
           return await rpc("zap_cobranca_gravar", { p_conversa: c.conversa_id, p_msg: c.msg_id, p_texto: texto });
         }));
         return json({ lidas: lista.length, sugeridas: feitas.filter((x) => x === true).length });
+      } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
+    }
+    if (typeof corpo.amparo === "string") {
+      // F599 · o zap_amparo_vez pede; sem resposta em 3 minutos, o banco manda o texto fixo
+      if (!CHAVE_IA) return json({ erro: "sem ANTHROPIC_API_KEY" }, 503);
+      if (!/^[0-9a-f-]{36}$/i.test(corpo.amparo)) return json({ erro: "amparo inválido" }, 400);
+      try {
+        const a: Amparo | null = await rpc("zap_amparo_pegar", { p_conversa: corpo.amparo });
+        if (!a) return json({ enviada: false });
+        const r = await claude(promptAmparo(a), ESQ_AMPARO);
+        const texto = r.responder === true ? conferirAmparo(r.resposta, a) : "";
+        return json({ enviada: await rpc("zap_amparo_gravar", { p_conversa: corpo.amparo, p_resposta: texto }), respondeu: !!texto });
       } catch (e) { return json({ erro: String(e).slice(0, 500) }, 500); }
     }
     if (typeof corpo.andamento === "string") {

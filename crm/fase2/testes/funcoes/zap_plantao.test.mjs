@@ -724,3 +724,19 @@ assert.match(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", t
 assert.match(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "corrente", encaminhada: 5, momento: "2026-11-13T12:00:00Z" }]), /\[encaminhada com frequência\] corrente/);
 assert.equal(transcricao([{ direcao: "entrada", por_bot: false, tipo: "texto", texto: "oi", momento: "2026-11-13T12:00:00Z" }]).includes("encaminhada"), false);
 console.log("F581 plantão ok");
+{
+  // F599 · a IA de amparo responde só com o que está na ficha, e o código confere os números
+  const { promptAmparo, conferirAmparo, ESQ_AMPARO } = await import("../../zap_plantao/index.ts");
+  const a = { conversa_id: "x", contato: "Cliente Teste", quando: "ainda hoje", cliente: "Cliente Teste",
+    mensagens: [{ direcao: "entrada", tipo: "texto", texto: "Onde vai ser a minha perícia?", momento: "2026-11-12T11:00:00Z" }],
+    eventos: ["Perícia em 21/11/2026 às 09:30, local: Agência Teste, Rua A, 1"], casos: ["B31"], docs_pendentes: [], tem_senha_gov: true };
+  const p = promptAmparo(a);
+  assert.ok(p.includes("Agência Teste, Rua A, 1") && p.includes("carteira de trabalho") && p.includes("Nunca: parecer jurídico"));
+  assert.ok(p.includes("Senha do gov.br (Meu INSS) guardada na ficha: sim"));
+  assert.deepEqual(ESQ_AMPARO.required, ["responder", "resposta"]);
+  assert.equal(conferirAmparo("A perícia será em 21/11/2026, às 09:30, na Agência Teste, Rua A, 1.", a), "A perícia será em 21/11/2026, às 09:30, na Agência Teste, Rua A, 1.");
+  assert.equal(conferirAmparo("A perícia será em 22/11/2026.", a), "");
+  assert.equal(conferirAmparo("O andamento do processo está normal.", a), "");
+  assert.equal(conferirAmparo("O benefício foi deferido.", a), "");
+  assert.equal(conferirAmparo("", a), "");
+}
