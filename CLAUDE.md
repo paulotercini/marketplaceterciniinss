@@ -756,6 +756,8 @@ A **F584** (13.86, pedido do Paulo de 13.11.2026): o Reagendar e o Prorrogar abr
 
 A **F585** (13.87, pedido do Paulo de 13.11.2026): o ⋯ da conversa do WhatsApp tem **Baixar** (`baixarConversaZap`, `linhasConversaZap`, `baixarZapComo`): a janela pede "Desde" (vazio, a conversa inteira) e "Incluir as notas internas" (desmarcado) e baixa em **MD** (arquivo `conversa-<nome>-<data>.md`) ou **PDF** (página de impressão do navegador, A4). Cada mensagem traz data dd/mm/aaaa, hora e quem escreveu (o contato, o colaborador, Robô, Aviso automático ou Nota interna), o anexo e o áudio pelo nome ("[Áudio: …]", "[Documento: …]") e as marcas encaminhada, editada, apagada e não enviada; rascunho e mensagem agendada ficam fora. Exporta as mensagens carregadas da conversa aberta. Teste: `testes/cadastro/f585.js`.
 
+A **F586** (13.88, pedido do Paulo de 14.11.2026): as **Sugestões do dia** (F574) mostram também as sugestões da IA que ficaram acima do campo de escrever do WhatsApp sem Usar nem Descartar (`zap_conversas.sugestao_ia` não nula, salvo a de iniciativa, que já está na lista pelo `sugestao_id`), na seção "Sugestões da IA pendentes", com o nome de quem fala, a data da sugestão e o texto. **Abrir** leva à conversa (`zapNaTela`), onde a faixa tem o Usar; **Descartar** apaga a sugestão e grava o retorno da F582 (`retornoSugestao`). Teste: `f574.js` (11 itens).
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
