@@ -1,4 +1,4 @@
--- Regressão da F592 (a fila "Com a IA"): o agendamento da IA marca plantao.agendado_em,
+-- Regressão da F594 (a fila "Com a IA"): o agendamento da IA marca plantao.agendado_em,
 -- e a marca sai quando o modo sai (passou à equipe ou encerrou).
 -- ⚠ Este arquivo APAGA conversas: banco de teste só.
 --   psql "postgres://…" -q -f crm/fase2/testes/zap_fila_ia.sql
