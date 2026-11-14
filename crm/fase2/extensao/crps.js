@@ -10,6 +10,9 @@
   window.__crmColetorNoAr = true;
 
   const SISTEMAS = ['esisrec', 'recben'];
+  // "dd/mm/aaaa[ hh:mm[:ss]]" → "aaaa-mm-ddThh:mm:ss" (comparável como texto); outro formato passa como veio
+  const isoBr = v => { const m = String(v || '').match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\D+(\d{2}):(\d{2})(?::(\d{2}))?)?/);
+    return m ? `${m[3]}-${m[2]}-${m[1]}T${m[4] || '00'}:${m[5] || '00'}:${m[6] || '00'}` : String(v || ''); };
 
   function crachas() {
     const fora = [null];
@@ -141,7 +144,7 @@
       // MODO RÁPIDO: recurso que o escritório marcou 🗄 no CRM não movimenta
       // mais — no dia a dia ele fica de fora da fila (cada consulta custa
       // ~5s), e uma rodada COMPLETA semanal confere todos mesmo assim.
-      const st = await chrome.storage.local.get(['ultima_crps_full', 'crps_404']);
+      const st = await chrome.storage.local.get(['ultima_crps_full', 'crps_404', 'crps_403', 'crps_ultimo']);
       const fullEm = st.ultima_crps_full ? new Date(st.ultima_crps_full).getTime() : 0;
       const rapido = !cliente && !!fullEm && (Date.now() - fullEm) < 7 * 86400000;
       // A FILA agora nasce do PORTAL, não da digitação. O que o CRM conhece
@@ -164,11 +167,20 @@
       // continua sem listar: custava duas consultas e 5 s por rodada, para sempre. Fica
       // para a rodada completa semanal, como os 🗄
       const sem404 = new Set((Array.isArray(st.crps_404) ? st.crps_404 : []).filter(n => !doPortal.de.has(n)));
-      const deFora = n => arqSet.has(n) || sem404.has(n);
+      // 1.39.0 · o NUP que as DUAS bases recusaram (403) também fica para a completa semanal:
+      // não é do escritório, e custava duas consultas e 5 s por rodada
+      const sem403 = new Set(Array.isArray(st.crps_403) ? st.crps_403 : []);
+      const deFora = n => arqSet.has(n) || sem404.has(n) || sem403.has(n);
+      // 1.39.0 · memória do último evento de cada recurso: o recurso nunca consultado vem
+      // primeiro, depois o de movimento mais recente (o que mais provavelmente andou)
+      const memo = (st.crps_ultimo && typeof st.crps_ultimo === 'object') ? { ...st.crps_ultimo } : {};
+      const prio = ns => ns.map((n, k) => [n, k]).sort(([a, ka], [b, kb]) =>
+        (!memo[a] !== !memo[b]) ? (memo[a] ? 1 : -1)
+          : (String((memo[b] || {}).d || '').localeCompare(String((memo[a] || {}).d || '')) || ka - kb)).map(([n]) => n);
       // na rodada completa, os arquivados vão para o FIM da fila: se o portal parar no
       // meio, a interrupção atinge só eles (mesmas consultas, em outra ordem)
-      const fila = rapido ? todos.filter(n => !deFora(n))
-        : [...todos.filter(n => !arqSet.has(n)), ...todos.filter(n => arqSet.has(n))];
+      const fila = rapido ? prio(todos.filter(n => !deFora(n)))
+        : [...prio(todos.filter(n => !arqSet.has(n))), ...todos.filter(n => arqSet.has(n))];
       if (rapido && fila.length < todos.length)
         faixa(`modo rápido: ${todos.length - fila.length} recurso(s) arquivados 🗄 ou que o portal não acha ficam para a rodada completa semanal`);
       else if (!rapido && !cliente && todos.some(n => arqSet.has(n)))
@@ -182,7 +194,16 @@
                               por_sistema: doPortal.porSis, novos },
                     ...(cliente ? { login: 'cliente' } : {}) };
       let seguidas = 0, abortou = false, parou = '', docsFaltando = 0;
-      const novos404 = [];
+      const novos404 = [], novos403 = [];
+      // 1.39.0 · entrega em etapas: o recurso que andou desde a última rodada (ou nunca lido)
+      // vai ao CRM na hora; os outros, de 10 em 10. A entrega final leva o resto e o `portal`
+      const cab = { versao: 1, ...(cliente ? { login: 'cliente' } : {}) };
+      let pend = {}, lotes = 0, entregues = 0;
+      const entregar = async its => {
+        try { await CRM.enviar('crps', { ...cab, quando: new Date().toISOString(), itens: its, falhas: [], parcial: true });
+              lotes++; entregues += Object.keys(its).length; return true; }
+        catch (e) { Object.assign(pend, its); return false; }   // não entregou: vai na entrega final
+      };
       // seis respostas ruins seguidas (recusa, rede caída, página que não é JSON): o portal
       // parou, e insistir na fila inteira só soma pedidos sem coletar nada
       const desistir = (i, motivo) => {
@@ -199,7 +220,7 @@
         faixa(`recurso ${i + 1} de ${fila.length}…`);
         const lst = doPortal.de.get(fila[i]) || primeiro;
         const ordem = lst ? [lst, ...SISTEMAS.filter(s => s !== lst)] : SISTEMAS;
-        let n404 = 0;
+        let n404 = 0, n403 = 0;
         for (const sis of ordem) {
           try {
             const r = await consultar(sis, fila[i], cracha());
@@ -220,7 +241,23 @@
               // o documento que o portal recusou fica sem `caminho`: antes sumia sem registro
               const faltou = docs.filter(d => !d.caminho).length;
               if (faltou) { docsFaltando += faltou; OUT.falhas.push({ nup: fila[i], sis, docs_faltando: faltou }); }
-              OUT.itens[`${fila[i]}_${sis}`] = j; seguidas = 0; await pausa(2500); break;
+              const evs = (j && j.eventos) || [];
+              const dt = evs.map(ev => isoBr(ev && ev.data)).filter(Boolean).sort().pop() || '';
+              const sig = `${dt}|${evs.length}|${docs.length}`;
+              const andou = !memo[fila[i]] || memo[fila[i]].s !== sig;
+              memo[fila[i]] = { d: dt, s: sig };
+              const k = `${fila[i]}_${sis}`;
+              if (andou && await entregar({ [k]: j })) {}
+              else if (!andou) {
+                pend[k] = j;
+                if (Object.keys(pend).length >= 10) { const lote = pend; pend = {}; await entregar(lote); }
+              }
+              seguidas = 0; await pausa(2500); break;
+            }
+            else if (r.status === 403) {
+              n403++;
+              OUT.falhas.push({ nup: fila[i], sis, status: 403 });
+              if (++seguidas >= 6) { desistir(i, 403); break; }
             }
             else if (r.status !== 404) {
               OUT.falhas.push({ nup: fila[i], sis, status: r.status });
@@ -235,9 +272,13 @@
         }
         if (abortou) break;
         if (n404 === ordem.length) novos404.push(fila[i]);
+        if (n403 === ordem.length) novos403.push(fila[i]);
       }
       OUT.quando = new Date().toISOString();
+      OUT.itens = pend;
+      if (lotes) OUT.lotes = lotes;
       await CRM.enviar('crps', OUT);
+      await chrome.storage.local.set({ crps_ultimo: memo });
       await chrome.storage.local.set({ ultima_crps: OUT.quando });
       // a rodada que consultou TODOS (inclusive arquivados) e chegou ao fim
       // é a que renova o ciclo semanal — abortada ou rápida não renova
@@ -246,8 +287,10 @@
       // a completa que chegou ao fim refaz a lista dos que o portal não acha; a rápida e a
       // abortada só acrescentam (o login do cliente não enxerga os outros: não conta)
       if (!cliente)
-        await chrome.storage.local.set({ crps_404: (rapido || abortou) ? [...new Set([...sem404, ...novos404])] : novos404 });
-      const n = Object.keys(OUT.itens).length;
+        await chrome.storage.local.set({
+          crps_404: (rapido || abortou) ? [...new Set([...sem404, ...novos404])] : novos404,
+          crps_403: (rapido || abortou) ? [...new Set([...sem403, ...novos403])] : novos403 });
+      const n = entregues + Object.keys(OUT.itens).length;
       // a rodada que parou no meio não é anunciada como concluída: a faixa vermelha fica, e
       // o retorno leva `erro` (é por ele que o popup e o aviso do Chrome trocam ✔ por ⚠)
       if (abortou) return { ok: n, falhas: OUT.falhas.length, erro: parou };
