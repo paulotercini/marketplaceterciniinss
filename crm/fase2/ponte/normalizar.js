@@ -24,9 +24,17 @@ const jidParaFone = jid => soDigitos(String(jid || "").split("@")[0].split(":")[
 // Sem mapa, devolve "" (não dá para saber de quem é a conversa).
 const foneDaMensagem = (m, mapa) => {
   const k = (m && m.key) || {};
-  const jid = String(k.remoteJid || "");
+  let jid = String(k.remoteJid || "");
+  let altJid = k.remoteJidAlt;
+  // lista de transmissão: o remoteJid é "<timestamp>@broadcast"; quem escreveu está em participant
+  if (jid.endsWith("@broadcast") && jid !== "status@broadcast") {
+    if (k.fromMe) return "";
+    jid = String(k.participant || "");
+    altJid = k.participantAlt;
+    if (!jid) return "";
+  }
   if (!jid.endsWith("@lid")) return jidParaFone(jid);
-  const alt = String(k.remoteJidAlt || "");
+  const alt = String(altJid || "");
   if (alt.endsWith("@s.whatsapp.net")) { if (mapa) mapa.set(jid, alt); return jidParaFone(alt); }
   if (!k.fromMe && k.senderPn) { if (mapa) mapa.set(jid, k.senderPn); return jidParaFone(k.senderPn); }
   if (mapa && mapa.has(jid)) return jidParaFone(mapa.get(jid));
@@ -173,11 +181,14 @@ function agruparHistorico(chats, mensagens, chavesClientes) {
   const grupos = new Map();
   for (const m of mensagens || []) {
     if (deveIgnorar(m)) continue;
-    const jid = String(m.key.remoteJid);
+    const lista = String(m.key.remoteJid).endsWith("@broadcast");  // lista de transmissão: quem escreveu é o participant
+    if (lista && m.key.fromMe) continue;
+    const jid = String(lista ? m.key.participant || "" : m.key.remoteJid);
     // senderPn só vale para o que o cliente mandou: no que saiu daqui, é o nosso número
-    const alt = String(m.key.remoteJidAlt || "").endsWith("@s.whatsapp.net") && m.key.remoteJidAlt;
+    const altJid = lista ? m.key.participantAlt : m.key.remoteJidAlt;
+    const alt = String(altJid || "").endsWith("@s.whatsapp.net") && altJid;
     const alvo = jid.endsWith("@lid") ? (pn.get(jid) || alt || (!m.key.fromMe && m.key.senderPn)) : jid;
-    if (!alvo || String(alvo).endsWith("@lid")) continue;
+    if (!alvo || String(alvo).endsWith("@lid") || String(alvo).endsWith("@broadcast")) continue;
     const fone = jidParaFone(alvo);
     if (!chavesClientes.has(chaveFone(fone))) continue;
     if (!grupos.has(fone)) grupos.set(fone, []);
