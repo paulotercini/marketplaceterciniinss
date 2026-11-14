@@ -605,7 +605,7 @@ async function recuperarMidias(s = sock) {
       + "&select=externo_id,direcao,quando_wa&order=quando_wa.desc&limit=1");
     // o celular guarda a conversa pelo id de privacidade (@lid) ou pelo número:
     // pergunta pelos dois, e fica com o que ele responder
-    let jids = await jidsDoFone(s, N.soDigitos(c.telefone));
+    let jids = await jidsDoFone(s, N.variantesFone(c.telefone)[0]);
     for (let volta = 0; ancora && volta < 40; volta++) {
       let msgs = null;
       for (const jid of jids) {
@@ -669,7 +669,7 @@ async function historicoDaConversa(s, c) {
   // sem id de partida; se o celular não responder, o banco pede de novo na primeira mensagem
   const semPartida = !ancora;
   if (semPartida) ancora = { externo_id: "", direcao: "entrada", quando_wa: agora() };
-  let jids = await jidsDoFone(s, N.soDigitos(c.telefone));
+  let jids = await jidsDoFone(s, N.variantesFone(c.telefone)[0]);
   let n = 0;
   // F478: primeiro as mais novas, de cada endereço: a mensagem que a ponte não abriu é mais
   // nova que todas do CRM, e o pedido abaixo só traz as anteriores à mais antiga
