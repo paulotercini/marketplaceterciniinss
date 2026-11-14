@@ -7096,7 +7096,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.91</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.92</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7767,7 +7767,7 @@ async function iniciar(){
   // F426 · o robô do servidor (crm-coletas.yml) abre o CRM com ?coletas=robo, aplica uma vez e diz como terminou
   if(souAdmin() && new URLSearchParams(location.search).get("coletas")==="robo"){
     window._coletasRobo = "rodando";
-    autoAplicarColetas().then(()=>window._coletasRobo="ok", e=>window._coletasRobo="erro: "+(e&&e.message||e));
+    autoAplicarColetas().then(r=>window._coletasRobo=r||"ok", e=>window._coletasRobo="erro: "+(e&&e.message||e));
   }
   else if(souAdmin() && !window._autoColetas && !navigator.webdriver){
     window._autoColetas = setInterval(()=>autoAplicarColetas().catch(()=>{}), AUTO_COLETAS_MS);
@@ -10795,7 +10795,7 @@ let coletasPendentes = [];
 async function buscarColetas(){
   try{
     coletasPendentes = await api(
-      `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero,host:dados->>host,grau:dados->>grau,sistema:dados->>sistema,parcial:dados->>parcial,qtd:dados->>qtd&aplicada_em=is.null&order=criado_em.desc`) || [];
+      `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero,host:dados->>host,grau:dados->>grau,sistema:dados->>sistema,parcial:dados->>parcial,qtd:dados->>qtd,login:dados->>login,etapa:dados->>etapa&aplicada_em=is.null&order=criado_em.desc`) || [];
   }catch(e){ coletasPendentes = []; }   // sem a tabela, a tela do arquivo continua
 }
 // SÓ A MAIS NOVA DE CADA PORTAL INTERESSA. Cada clique no botão da extensão
@@ -10817,7 +10817,12 @@ function coletasPorFonte(){
     const chave = c.fonte==="pje-processo" ? `${c.fonte}:${c.numero||c.id}`
                 : c.fonte==="pje" && c.parcial==="true" ? `${c.fonte}:lote:${c.id}`
                 : c.fonte==="pje" ? `${c.fonte}:${c.host||""}:${c.grau||""}`
-                : c.fonte==="prazos" ? `prazos:${c.sistema||""}:${c.host||""}` : c.fonte;
+                : c.fonte==="prazos" ? `prazos:${c.sistema||""}:${c.host||""}`
+                // o e-Recursos com o login do cliente traz só os recursos dele: não é repetição da rodada geral
+                : c.fonte==="crps" && c.login==="cliente" ? `crps:cliente:${c.id}`
+                // o INSS chega em duas entregas por rodada: a 'detalhes' (sem arquivos) é repetição quando há
+                // entrega mais nova, e nunca engole a 'anexos' mais antiga, que traz os arquivos
+                : c.fonte==="pat" && c.etapa==="detalhes" && !nova.pat ? "pat:detalhes" : c.fonte;
     if(!nova[chave]) nova[chave] = c; else velhas.push(c);
   }
   return { novas: Object.values(nova), velhas };
@@ -10840,6 +10845,7 @@ const LOTE_FONTES = { pje:["conferirPje","aplicarPje"], "pje-processo":["conferi
   crps:[null,"aplicarCrps"], prazos:[null,"aplicarPrazos"] };
 const coletasDoLote = () => coletasPorFonte().novas.filter(c => LOTE_FONTES[c.fonte]);
 let aplicandoTodas = false;
+let falhasDaColeta = 0;   // gravações que falharam na rodada automática (sem contar a repetição): o robô as relata
 async function aplicarTodasColetas(auto){
   const lista = coletasDoLote();
   if(aplicandoTodas || !lista.length) return;
@@ -10854,7 +10860,7 @@ async function aplicarTodasColetas(auto){
         if(c.fonte==="pje-processo" && !(planoPjeProcAtual && planoPjeProcAtual.coleta_id===c.id && planoPjeProcAtual.caso_id)){
           planoPjeProcAtual = null; continue; }
         await aplicar(c.id);
-      }catch(e){ console.warn("aplicar todas:", c.id, e); }
+      }catch(e){ falhasDaColeta++; console.warn("aplicar todas:", c.id, e); }
     }
   }finally{ aplicandoTodas = false; }
   await buscarColetas(); renderColeta();
@@ -10879,18 +10885,23 @@ async function autoAplicarColetas(){
   if(!souAdmin() || aplicandoTodas || document.hidden || coletaSilenciosa) return;
   await buscarColetas();
   const velhas = coletasPorFonte().velhas.filter(c => LOTE_FONTES[c.fonte] || c.fonte==="pat");
-  const pat = coletasPorFonte().novas.find(c => c.fonte==="pat");
-  if(!coletasDoLote().length && !velhas.length && !pat) return;
+  // o INSS pode ter mais de uma na fila (as duas entregas da rodada): todas, da mais antiga à mais nova
+  const pats = coletasPorFonte().novas.filter(c => c.fonte==="pat").reverse();
+  // sem devolver a contagem dos textos: o robô lê o retorno como estado e tomava "3" por falha
+  if(!coletasDoLote().length && !velhas.length && !pats.length){ if(textosPendentes) await lerTextosPendentes(Date.now()).catch(()=>{}); return; }
   const [t] = await api(`/rest/v1/config_app?select=valor&chave=eq.coletas_auto_em`).catch(()=>null) || [];
-  if(t && Date.now() - Date.parse(t.valor) < AUTO_TRAVA_MS) return;
+  // "travado" e não "ok": o robô do servidor precisa saber que esta rodada não aplicou nada
+  if(t && Date.now() - Date.parse(t.valor) < AUTO_TRAVA_MS) return "travado";
   await guardarCfgApp("coletas_auto_em", new Date().toISOString());
-  coletaSilenciosa = true;
+  coletaSilenciosa = true; falhasDaColeta = 0;
+  const inicio = Date.now();
   try{
     if(velhas.length) await api(`/rest/v1/coletas?id=in.(${velhas.map(c=>c.id).join(",")})`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
     await buscarColetas();
     await aplicarTodasColetas(true);
-    if(pat){
+    for(const pat of pats){
+      planoPat = null;   // o plano da coleta anterior não pode servir a esta se a leitura falhar
       await usarColeta(pat.id);
       const pl = planoPat;
       if(pl && !pl.erro && pl.coleta_id===pat.id){
@@ -10901,6 +10912,8 @@ async function autoAplicarColetas(){
         await aplicarPatDeVerdade();
       }
     }
+    // o texto dos documentos por último, com a fila já aplicada e dentro da mesma trava
+    await lerTextosPendentes(inicio).catch(e => console.warn("texto dos documentos:", e));
   }finally{
     coletaSilenciosa = false;
     await guardarCfgApp("coletas_auto_em", new Date(0).toISOString()).catch(()=>{});
@@ -10909,6 +10922,7 @@ async function autoAplicarColetas(){
   // calados (carga leve, sem trocar D com ficha ou campo em uso) e a tela os mostra no próximo clique; o menu atualiza os números.
   await carregar({leve:true, livre:()=>!telaOcupada()}).catch(()=>{});
   montarSidebar();
+  if(falhasDaColeta) return `${falhasDaColeta} falha(s)`;
 }
 async function usarColeta(id){
   try{
@@ -11011,14 +11025,14 @@ async function limparIgnoradosPat(){
 // F236 · a última leitura de cada portal, aplicada ou não: em vermelho a que passou de um dia útil
 let ultimasColetas = null;
 async function buscarUltimasColetas(){
-  try{ ultimasColetas = await api(`/rest/v1/coletas?select=fonte,criado_em,host:dados->>host,grau:dados->>grau,sistema:dados->>sistema&order=criado_em.desc&limit=400`) || []; }
+  try{ ultimasColetas = await api(`/rest/v1/coletas?select=fonte,criado_em,host:dados->>host,grau:dados->>grau,sistema:dados->>sistema,login:dados->>login&order=criado_em.desc&limit=400`) || []; }
   catch(e){ ultimasColetas = []; }
 }
 function linhaUltimasColetas(){
   if(!ultimasColetas || !ultimasColetas.length) return "";
   const vistas = new Map();
   for(const c of ultimasColetas){
-    const ch = c.fonte==="pje-processo" ? null : c.fonte==="pje" ? `pje:${c.host||""}:${c.grau||""}` : c.fonte==="prazos" ? `prazos:${c.sistema||""}:${c.host||""}` : c.fonte;
+    const ch = c.fonte==="pje-processo" || (c.fonte==="crps" && c.login==="cliente") ? null : c.fonte==="pje" ? `pje:${c.host||""}:${c.grau||""}` : c.fonte==="prazos" ? `prazos:${c.sistema||""}:${c.host||""}` : c.fonte;
     if(ch && !vistas.has(ch)) vistas.set(ch, c);
   }
   let limite = somaDias(hoje(),-1); while(!ehDiaUtil(limite)) limite = somaDias(limite,-1);
@@ -11290,12 +11304,14 @@ async function aplicarPatDeVerdade(){
   });
 
   for(const novo of plano.novos) await tentar(novo.protocolo, async () => {
-    const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    // F590 · outra sessão (o robô, outra aba) pode ter criado o caso depois da última carga de D: confere no banco
+    let [k] = await api(`/rest/v1/casos?select=*&cliente_id=eq.${novo.cliente_id}&encerrado_em=is.null&protocolos=cs.${encodeURIComponent(JSON.stringify([novo.protocolo]))}&limit=1`).catch(()=>null) || [];
+    if(!k) [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
         beneficio:novo.beneficio, especie:novo.especie, der:novo.der, ...(novo.datas||{}),
         protocolos:[novo.protocolo], marcadores:novo.marcadores,
         urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
-    if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+    if(k && !D.casoPorId.has(k.id)){ D.casos.push(k); D.casoPorId.set(k.id,k); }
     // TODO CASO IMPORTADO CONSTA EM 📣 NOVIDADES — inclusive para dizer que
     // não há comentários novos: silêncio e "ninguém olhou" eram iguais.
     // origem_id fixo por protocolo: importar de novo não duplica (índice único).
@@ -11322,9 +11338,10 @@ async function aplicarPatDeVerdade(){
 
   for(const bloco of plano.eventos)
     for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, async () => {
+      // a outra entrega da mesma rodada (detalhes e anexos) pode já ter gravado este evento: não é falha
       await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
-          data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local})});
+          data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local})}).catch(e=>{ if(!ehRepetido(e)) throw e; });
       // F40: agendamento também É novidade — sem esta linha, o evento entrava
       // na aba 🩺 e a caixa 📣 ficava calada sobre ele
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
@@ -11390,7 +11407,7 @@ async function aplicarPatDeVerdade(){
   await buscarColetas();
   await recarregarDaColeta();
   marcarEtapasVelhas(casosDoPlanoPat(plano)).catch(()=>{});   // F236 · só a marca para o portal
-  if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)${docsPat?` · ${docsPat} anexo(s) do INSS com o texto`:""}`);
+  if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)${docsPat?` · ${docsPat} anexo(s) do INSS (o texto é lido em seguida)`:""}`);
   aviso(recadoDeFalhas(feitos, falhas));
   console.warn("falhas da importação:", falhas);
 }
@@ -12752,8 +12769,9 @@ async function conferirPje(coletaId){
     // chave exata, o MOMENTO (processo+data+hora) de tudo que já está gravado
     // — inclusive pelo histórico completo (hist:) — para o acervo não regravar
     // como novo um movimento que o histórico do processo já trouxe.
+    // sem .catch: a memória que não veio não pode virar "tudo é novo"; a coleta espera a próxima rodada
     const bancoPje = await todas("andamentos",
-      "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
+      "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null");
     const vistos = new Set(bancoPje.map(a=>a.origem_id));
     const momentos = momentosPje(bancoPje), ultimas = ultimasDatasPje(momentos);
     // F131 · o caso casa pelo número principal E pelos números anexos
@@ -12885,7 +12903,10 @@ async function conferirPje(coletaId){
     planoPjeAtual = plano;
     await anotarSemCaso(dados, plano.semCaso, porProcesso, fora).catch(()=>{});
     renderColeta();
-  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+  }catch(e){
+    // sem plano desta coleta, o aplicar não roda com o plano velho; a falha entra na conta da rodada
+    if(planoPjeAtual && planoPjeAtual.coleta_id===coletaId) planoPjeAtual = null;
+    falhasDaColeta++; aviso("Não consegui ler a coleta: "+e.message); }
 }
 // F288 · PROCESSO SEM CASO HÁ MAIS DE 7 DIAS. A extensão do e-SAJ (1.24) só
 // baixa peças de processo com caso aberto, e o processo novo que a consulta
@@ -13327,7 +13348,7 @@ function docsDoMovimento(lista, k, origem, docs, oid, momento){
 }
 // o texto do documento guardado: PDF pelo pdf.js (linhas na ordem da folha),
 // HTML pelo próprio navegador. PDF digitalizado devolve null — sem OCR.
-async function textoDoDocumento(caminho){
+async function textoDoDocumento(caminho, semErroDoPdf){
   const r = await fetch(await linkArquivo(caminho, 300));
   if(!r.ok) throw new Error("HTTP "+r.status);
   const tipo = (r.headers.get("content-type")||"").split(";")[0];
@@ -13341,7 +13362,10 @@ async function textoDoDocumento(caminho){
     return { tipo, tamanho:blob.size, texto: texto.length>=50 ? texto : null };
   }
   if(!/pdf/.test(tipo)) return { tipo, tamanho:blob.size, texto:null };
-  const lido = await lerPdfPorPagina(blob);
+  let lido;
+  try{ lido = await lerPdfPorPagina(blob); }
+  // F590 · só o PDF que o pdf.js não abre; biblioteca ou worker que não carregou fica para a rodada seguinte
+  catch(e){ if(!semErroDoPdf || !window.pdfjsLib || /^cdn$|worker/i.test(String(e&&e.message||""))) throw e; return { tipo, tamanho:blob.size, texto:null }; }
   // F189 · o Postgres recusa o caractere nulo (\u0000), que alguns PDFs do e-SAJ
   // trazem no texto: a gravação falhava inteira e 148 documentos ficaram fora
   lido.texto = lido.texto.replace(/\u0000/g, "");
@@ -13395,49 +13419,130 @@ async function lerPdfPorPagina(blob){
   try{ await doc.destroy(); }catch(e){}
   return { texto: textos.join("\n").trim(), paginas, imagem };
 }
-async function gravarDocsDaColeta(docs){
-  let n = 0, i = 0;
-  const total = (docs||[]).length;
-  for(const d of (docs||[])){
-    // a primeira coleta da pasta digital traz centenas de PDFs: o texto de cada
-    // um sai aqui, um por vez — sem o contador a tela parecia travada
-    if(total > 10 && (++i % 5 === 1 || i === total)) aviso(`Documentos: ${i} de ${total} (lendo o texto de cada um)…`, false);
+// a repetição que o índice único segura não é falha: é a memória funcionando
+const ehRepetido = e => !!e && (e.status===409 || /23505/.test(String(e.message||e)));
+const postar = (tabela, corpo) => api(`/rest/v1/${tabela}`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(corpo)});
+// VÁRIAS LINHAS NUMA IDA AO BANCO (eram centenas de POST em fila por coleta). O índice único dos andamentos é
+// parcial e não serve a on_conflict: o lote que o banco recusa (uma repetição basta) é refeito linha a linha por
+// `um`, como era antes. Só linhas com as mesmas chaves vão juntas, porque o PostgREST exige isso na lista.
+async function gravarEmLote(tabela, linhas, um){
+  const res = {feitos:0, falhas:[]}, grupos = new Map();
+  um = um || (l => postar(tabela, l));
+  for(const l of linhas){ const ch = Object.keys(l).sort().join(","); grupos.set(ch, [...(grupos.get(ch)||[]), l]); }
+  for(const g of grupos.values()) for(let i=0; i<g.length; i+=100){
+    const parte = g.slice(i, i+100);
     try{
-      const [ja] = await api(`/rest/v1/anexos?select=id,caso_id&caminho=eq.${encodeURIComponent(d.caminho)}`) || [];
-      if(ja){
+      if(parte.length<2) throw 0;
+      await postar(tabela, parte); res.feitos += parte.length;
+    }catch(e0){
+      for(const l of parte){ try{ await um(l); res.feitos++; }catch(e){ res.falhas.push({linha:l, erro:e}); } }
+    }
+  }
+  return res;
+}
+// F590 · O DOCUMENTO ENTRA SEM O TEXTO. Ler o PDF de cada peça dentro do aplicar prendia a coleta por minutos (a
+// pasta digital do e-SAJ traz centenas) e, se a rodada caía, a coleta voltava inteira. Aqui só se grava a linha
+// do anexo (tipo nulo = texto ainda não lido); o texto vem em lerTextosPendentes, depois de a coleta sair da fila.
+async function gravarDocsDaColeta(docs){
+  docs = docs||[];
+  if(!docs.length) return 0;
+  let n = 0;
+  // o que já está em anexos: uma ida ao banco por pasta (pje/<processo>, pat/<protocolo>), e não uma por documento
+  const pasta = c => String(c).slice(0, String(c).lastIndexOf("/")), ja = new Map(), semLista = new Set();
+  for(const p of new Set(docs.map(d=>pasta(d.caminho)))){
+    try{
+      if(!p) throw 0;
+      for(const a of await todas("anexos", `select=id,caso_id,caminho&caminho=like.${encodeURIComponent(p)}/*`)) ja.set(a.caminho, a);
+    }catch(e){ semLista.add(p); }   // sem a lista da pasta, pergunta documento a documento, como antes
+  }
+  const ands = new Map(), novos = [];
+  for(const d of docs){
+    try{
+      let a = ja.get(d.caminho);
+      if(!a && semLista.has(pasta(d.caminho)))
+        [a] = await api(`/rest/v1/anexos?select=id,caso_id&caminho=eq.${encodeURIComponent(d.caminho)}`) || [];
+      if(a){
         // F228 · até o 11.08 o importador casava o processo com o primeiro caso do
         // número, mesmo encerrado, e o documento ficou preso lá: vem ao caso aberto
         // do mesmo cliente. Em outro caso ABERTO fica, porque foi levado de propósito (moverNumero)
-        const dono = D.casos.find(x=>x.id===ja.caso_id), alvo = D.casos.find(x=>x.id===d.caso_id);
+        const dono = D.casos.find(x=>x.id===a.caso_id), alvo = D.casos.find(x=>x.id===d.caso_id);
         if(dono && alvo && dono.id!==alvo.id && dono.encerrado_em && !alvo.encerrado_em && dono.cliente_id===alvo.cliente_id){
-          await api(`/rest/v1/anexos?id=eq.${ja.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+          await api(`/rest/v1/anexos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
             body:JSON.stringify({caso_id:alvo.id, cliente_id:alvo.cliente_id||null})});
-          n++;
+          a.caso_id = alvo.id; n++;
         }
         continue;
       }
-      let [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
-      // o e-SAJ não dá hora (00:00): vários movimentos no mesmo dia, e o momento
-      // ligaria a peça ao primeiro deles — aí só vale a chave exata
-      if(!an && d.momento && !/T00:00$/.test(d.momento))
-        [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}*`)}&order=criado_em.asc&limit=1`) || [];
-      let lido = { tipo:null, tamanho:null, texto:null };
-      // o worker do pdf.js que não responde não pode prender a fila inteira
-      try{ lido = await Promise.race([textoDoDocumento(d.caminho),
-        new Promise((_,erro)=>setTimeout(()=>erro(new Error("leitura passou de 3 min")), 180000))]); }
-      catch(e){ console.warn("texto do documento:", d.caminho, e); }
-      await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({caso_id:d.caso_id, cliente_id:d.cliente_id, autor_id:eu.id,
-          nome:d.nome, caminho:d.caminho, tipo:lido.tipo, tamanho:lido.tamanho,
-          origem:d.origem, andamento_id:an?an.id:null, texto:lido.texto,
-          ...(lido.paginas ? {paginas:lido.paginas, paginas_imagem:lido.paginas_imagem||[]} : {}),
-          // sem andamento (movimento antigo que nunca virou andamento), a data
-          // do documento é a do movimento, lida do momento (processo:dataThora)
-          ...(!an && /:(\d{4}-\d{2}-\d{2})T/.test(d.momento||"") ? {criado_em:`${d.momento.match(/:(\d{4}-\d{2}-\d{2})T/)[1]}T12:00:00-03:00`} : {})})});
-      n++;
-    }catch(e){ console.warn("documento da coleta não gravado:", d.caminho, e); }
+      // as peças do mesmo movimento perguntam pelo andamento uma vez só
+      const ch = `${d.caso_id}|${d.andamento_oid||""}|${d.momento||""}`;
+      if(!ands.has(ch)){
+        let [an] = d.andamento_oid ? (await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem_id=eq.${encodeURIComponent(d.andamento_oid)}&limit=1`) || []) : [];
+        // o e-SAJ não dá hora (00:00): vários movimentos no mesmo dia, e o momento
+        // ligaria a peça ao primeiro deles — aí só vale a chave exata
+        if(!an && d.momento && !/T00:00$/.test(d.momento))
+          [an] = await api(`/rest/v1/andamentos?select=id&caso_id=eq.${d.caso_id}&origem=eq.pje&origem_id=like.${encodeURIComponent(`*:${d.momento}*`)}&order=criado_em.asc&limit=1`) || [];
+        ands.set(ch, an||null);
+      }
+      const an = ands.get(ch);
+      ja.set(d.caminho, {caso_id:d.caso_id});   // o mesmo arquivo em dois movimentos entra uma vez
+      novos.push({caso_id:d.caso_id, cliente_id:d.cliente_id, autor_id:eu.id,
+        nome:d.nome, caminho:d.caminho, tipo:null, tamanho:null,
+        origem:d.origem, andamento_id:an?an.id:null, texto:null,
+        // sem andamento (movimento antigo que nunca virou andamento), a data
+        // do documento é a do movimento, lida do momento (processo:dataThora)
+        ...(!an && /:(\d{4}-\d{2}-\d{2})T/.test(d.momento||"") ? {criado_em:`${d.momento.match(/:(\d{4}-\d{2}-\d{2})T/)[1]}T12:00:00-03:00`} : {})});
+    }catch(e){ falhasDaColeta++; console.warn("documento da coleta não gravado:", d.caminho, e); }
+  }
+  const r = await gravarEmLote("anexos", novos);
+  for(const f of r.falhas){ if(!ehRepetido(f.erro)) falhasDaColeta++; console.warn("documento da coleta não gravado:", f.linha.caminho, f.erro); }
+  n += r.feitos;
+  if(r.feitos){
+    textosPendentes = true;
+    // no Importar à mão não há rodada automática por trás: a leitura começa já, sem prender o clique
+    if(!coletaSilenciosa) setTimeout(()=>lerTextosPendentes(Date.now()).catch(()=>{}), 0);
   }
   return n;
+}
+// F590 · A SEGUNDA PASSADA: o texto dos documentos que entraram sem ele (tipo nulo), um por vez (o pdf.js não roda
+// em paralelo), com teto de documentos e de tempo, para caber na rodada do robô (cortada aos 10 minutos: 4 do teto,
+// mais os 3 do documento começado no limite, mais a abertura do CRM e a carga do fim). O que
+// sobra fica para a rodada seguinte. A leitura que falha ou passa de 3 minutos grava o tipo sem o texto, para o
+// mesmo PDF não prender todas as rodadas; o arquivo que nem baixa fica para depois.
+// shortcut: com o CRM fechado, a sobra só é lida na rodada da próxima coleta; se pesar, o workflow passa a contar os anexos sem tipo
+const TEXTO_TETO = 150, TEXTO_ATE_MS = 4*60*1000;
+let textosPendentes = true, lendoTextos = false;   // nasce ligado: a sobra de outra sessão é vista uma vez
+async function lerTextosPendentes(inicio){
+  if(lendoTextos) return;
+  lendoTextos = true;
+  try{
+    const fila = await api(`/rest/v1/anexos?select=id,caminho&tipo=is.null&caminho=not.is.null&origem=in.(pje,esaj,eproc,pat)&order=criado_em.desc&limit=${TEXTO_TETO}`) || [];
+    let lidos = 0, vistos = 0;
+    for(const a of fila){
+      if(Date.now() - inicio > TEXTO_ATE_MS) break;
+      vistos++;
+      let lido;
+      try{
+        lido = await Promise.race([textoDoDocumento(a.caminho, true),
+          new Promise(ok=>setTimeout(()=>ok({tipo:"application/pdf", tamanho:null, texto:null}), 180000))]);
+      }catch(e){
+        console.warn("texto do documento:", a.caminho, e);
+        // F590 · arquivo que não existe no bucket sai da fila; rede, 5xx e o 400 de sessão vencida do Storage ficam para depois
+        const st = e.status || +(/^HTTP (\d+)/.exec(e.message||"")||[])[1];
+        if(st!==404 && !(st===400 && /not.?found/i.test(e.message||""))) continue;
+        lido = {tipo:"application/octet-stream", tamanho:null, texto:null};
+      }
+      const campos = {tipo:lido.tipo||"application/octet-stream", tamanho:lido.tamanho, texto:lido.texto,
+        ...(lido.paginas ? {paginas:lido.paginas, paginas_imagem:lido.paginas_imagem||[]} : {})};
+      try{
+        await api(`/rest/v1/anexos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
+        Object.assign((D.anexos||[]).find(x=>x.id===a.id)||{}, campos);
+        lidos++;
+      }catch(e){ console.warn("texto do documento não gravado:", a.caminho, e); }
+    }
+    // só continua nas próximas voltas enquanto anda: fila de arquivos que não baixam não vira laço
+    textosPendentes = lidos>0 && (vistos<fila.length || fila.length===TEXTO_TETO);
+    return lidos;
+  }finally{ lendoTextos = false; }
 }
 // ponytail: o DISPOSITIVO por regex — do último "ante o exposto", "julgo",
 // "nego provimento"… até ~700 caracteres; classificar o resultado
@@ -13471,9 +13576,13 @@ async function conferirPjeProc(coletaId){
     const plano = { coleta_id: coletaId, numero: lote.length>1 ? `${lote.length} processos` : (c0.numero||"?"),
                     grau: lote.length>1 ? "" : (c0.grau||""), caso_id: null, semCaso: [],
                     fichas: [], andamentos: [], docs: [], exps: [],
-                    resumo: { itens:0, movimentos:0, conhecidos:0, docs:0 } };
-    const bancoPje = await todas("andamentos",
-      "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
+                    resumo: { itens:0, movimentos:0, conhecidos:0, docs:0 }, criado_em: c.criado_em };
+    // a coleta parada sem caso (o processo completo que espera o vínculo) não baixa a memória a cada minuto
+    const comCaso = [...new Set(lote.map(d=>soDig(d.numero)).filter(dig=>dig && casoDe(dig)))];
+    // só os andamentos dos processos do lote (eram todos os do PJe, a cada coleta). Sem .catch: a leitura
+    // que falha não pode virar "tudo é novo" e regravar a história inteira
+    const bancoPje = comCaso.length ? await todas("andamentos",
+      `select=origem_id,texto&origem=eq.pje&or=(${comCaso.map(dig=>`origem_id.like.*${dig}*`).join(",")})`) : [];
     const vistos = new Set(bancoPje.map(a=>a.origem_id));
     const momentos = momentosPje(bancoPje);
     for(const dados of lote){
@@ -13511,7 +13620,10 @@ async function conferirPjeProc(coletaId){
     }
     planoPjeProcAtual = plano;
     renderColeta();
-  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+  }catch(e){
+    // sem plano desta coleta, o aplicar não roda com o plano velho; a falha entra na conta da rodada
+    if(planoPjeProcAtual && planoPjeProcAtual.coleta_id===coletaId) planoPjeProcAtual = null;
+    falhasDaColeta++; aviso("Não consegui ler a coleta: "+e.message); }
 }
 async function aplicarPjeProc(coletaId){
   if(!planoPjeProcAtual || planoPjeProcAtual.coleta_id!==coletaId) return;
@@ -13532,24 +13644,19 @@ async function aplicarPjeProc(coletaId){
     const c = ex.campo||"expedientes", ronda = {...(k.ronda||{}), [c]:{...((k.ronda||{})[c]||{}), [ex.chave]:ex.valor}};
     try{ await patchCaso(k.id, {ronda}); k.ronda = ronda; fichas++; }catch(e){}
   }
-  for(const a of plano.andamentos){
-    const corpo={caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
-      origem_id:a.origem_id, publico:false, texto:a.texto};
-    try{
-      // com a data do movimento; se o banco recusar o criado_em, sem ela
-      try{
-        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-          body:JSON.stringify(a.quando?{...corpo, criado_em:a.quando}:corpo)});
-      }catch(e1){
-        if(!a.quando) throw e1;
-        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-          body:JSON.stringify(corpo)});
-      }
-      feitos++;
-    }catch(e){ falhas.push(String(e.message||e).slice(0,90)); }
-  }
+  const f0 = falhasDaColeta;
+  const r = await gravarEmLote("andamentos", plano.andamentos.map(a=>({caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
+      origem_id:a.origem_id, publico:false, texto:a.texto, ...(a.quando?{criado_em:a.quando}:{})})),
+    // com a data do movimento; se o banco recusar o criado_em, sem ela
+    async l => { try{ await postar("andamentos", l); }
+      catch(e1){ if(!l.criado_em || ehRepetido(e1)) throw e1; const {criado_em, ...sem} = l; await postar("andamentos", sem); } });
+  feitos = r.feitos;
+  for(const f of r.falhas){ falhas.push(String(f.erro.message||f.erro).slice(0,90)); if(!ehRepetido(f.erro)) falhasDaColeta++; }
   const docsGravados = await gravarDocsDaColeta(plano.docs);
-  await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
+  // gravação que falhou (sem contar a repetição) em coleta recente: fica na fila e a rodada seguinte tenta de novo.
+  // Passada 1 hora sai de qualquer jeito, para a coleta com defeito não rodar para sempre
+  const ficou = falhasDaColeta>f0 && Date.now() - Date.parse(plano.criado_em||0) < 60*60*1000;
+  if(!ficou) await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   if(planoPjeProcAtual===plano) planoPjeProcAtual = null;
@@ -13558,9 +13665,9 @@ async function aplicarPjeProc(coletaId){
   marcarEtapasVelhas([...(plano.andamentos||[]), ...(plano.fichas||[])].map(a=>a.caso_id)).catch(()=>{});   // F236
   if(falhas.length){
     console.warn("falhas do histórico PJe:", falhas);
-    aviso(`${feitos} gravados; ${falhas.length} falharam — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
+    aviso(`${feitos} gravados; ${falhas.length} falharam${ficou?" — a coleta ficou na fila para tentar de novo":""} — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
   }else aviso(feitos||fichas||docsGravados
-    ?`✔ histórico do processo na ficha: ${feitos} movimento(s)${docsGravados?`, ${docsGravados} decisão(ões) com o texto`:""}${fichas?`, ficha completada (classe/órgão)`:""} — o que é antigo NÃO passa pelas Novidades`
+    ?`✔ histórico do processo na ficha: ${feitos} movimento(s)${docsGravados?`, ${docsGravados} documento(s) (o texto é lido em seguida)`:""}${fichas?`, ficha completada (classe/órgão)`:""} — o que é antigo NÃO passa pelas Novidades`
     :"Nada novo a gravar — a ficha já tinha essa história");
 }
 async function aplicarPje(coletaId){
@@ -13582,14 +13689,12 @@ async function aplicarPje(coletaId){
   // falha silenciosa aqui era o "117 fichas a completar" voltando toda vez:
   // o banco sem as colunas novas recusava o PATCH e ninguém ficava sabendo
   if(fichasFalha) aviso(`⚠ ${fichasFalha} ficha(s) não gravaram (classe/ajuizamento/órgão/link) — rode o schema_por_em_dia.sql no Supabase`);
-  for(const a of plano.andamentos){
-    try{
-      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
-          origem_id:a.origem_id, publico:false, texto:a.texto})});
-      feitos++;
-    }catch(e){ falhas.push(`${a.numero}: ${String(e.message||e).slice(0,90)}`); }
-  }
+  const numDe = new Map(plano.andamentos.map(a=>[a.origem_id, a.numero]));
+  const r = await gravarEmLote("andamentos", plano.andamentos.map(a=>({caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
+    origem_id:a.origem_id, publico:false, texto:a.texto})));
+  feitos = r.feitos;
+  for(const f of r.falhas){ falhas.push(`${numDe.get(f.linha.origem_id)}: ${String(f.erro.message||f.erro).slice(0,90)}`);
+    if(!ehRepetido(f.erro)) falhasDaColeta++; }
   const docsGravados = await gravarDocsDaColeta(plano.docs);
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
@@ -13615,8 +13720,9 @@ let planoCrpsAtual = null;
 // duplicação segurando a regravação da história inteira). Uma memória, um
 // helper, dois usuários.
 async function planoCrpsComMemoria(dados){
+  // sem .catch: a memória que não veio não pode virar "tudo é novo" (a história inteira regravada nas Novidades)
   const vistos = await todas("andamentos",
-    "select=origem_id&origem=eq.crps&origem_id=not.is.null").catch(()=>[]);
+    "select=origem_id&origem=eq.crps&origem_id=not.is.null");
   return planoCrps(dados,
     {...D, novid:[...(D.novid||[]), ...vistos.map(v=>({origem:"crps", origem_id:v.origem_id}))]});
 }
@@ -13789,7 +13895,7 @@ function fundirBlocoCrps(antigo, novo){
 async function aplicarCrps(coletaId){
   const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
   if(!c) return aviso("Não achei essa coleta");
-  const p = await planoCrpsComMemoria(c.dados);
+  const p = await planoCrpsComMemoria(c.dados).catch(e=>{ aviso("Não consegui ler a memória dos recursos: "+e.message); throw e; });
   if(!p.resumo.lidos) return aviso("A coleta veio vazia");
   const falhas = []; let feitos = 0;
   const tentar = async (rot, f) => { try{ await f(); feitos++; }
@@ -13809,11 +13915,13 @@ async function aplicarCrps(coletaId){
     k.crps = crps;
   });
   // e cada movimento novo, que é o que aparece em 📣 Novidades
-  for(const a of p.andamentos) await tentar(`mov ${a.nup}`, () =>
-    api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto:a.texto,
-        origem:"crps", origem_id:a.origem_id, publico:false,
-        ...(a.quando?{criado_em:a.quando+"T12:00:00"}:{})})}));
+  const nupDe = new Map(p.andamentos.map(a=>[a.origem_id, a.nup]));
+  const lote = await gravarEmLote("andamentos", p.andamentos.map(a=>({caso_id:a.caso_id, autor_id:eu.id, texto:a.texto,
+    origem:"crps", origem_id:a.origem_id, publico:false,
+    ...(a.quando?{criado_em:a.quando+"T12:00:00"}:{})})));
+  feitos += lote.feitos;
+  for(const f of lote.falhas){ falhas.push(`mov ${nupDe.get(f.linha.origem_id)}: ${String(f.erro.message||f.erro).slice(0,120)}`);
+    if(!ehRepetido(f.erro)) falhasDaColeta++; }
   // F192 · a decisão do CRPS conta o recurso (30 dias, art. 77 do Regimento)
   // da data do evento no e-Recursos; decisão mais nova substitui a anterior
   // F236 · e grava o efeito, como a janela Decisão: o provimento é resultado deferido (desliga o "Recorrer até"),
@@ -30652,7 +30760,8 @@ function caixaDossie(cli){
   return `<div class="apos-cx dossie-cx">
     <div class="apos-cab"><strong>📂 Dossiê — o que os portais têm</strong></div>
     ${portais.map(k=>{ const p=d[k]; const em=p.em?fmtTS(p.em):""; const n=(p.baixados||[]).length;
-      return `<div class="dossie-portal"><b>${NOME[k]}</b> <span class="meio-sub">${em?`rodado em ${em} · `:""}${n} documento${n===1?"":"s"}</span>
+      // F590 · o resumo antecipado da extensão (parcial) não é a rodada inteira
+      return `<div class="dossie-portal"><b>${NOME[k]}</b> <span class="meio-sub">${p.parcial ? "rodada em andamento ou interrompida: se não estiver rodando, rode de novo · " : em?`rodado em ${em} · `:""}${n} documento${n===1?"":"s"}</span>
         ${lista((p.inexistentes||[]).map(x=>"✗ "+(/defici/i.test(x) ? naoTxt(x) : explicaFalta(x, dep, cli))), "nao")}
         ${lista((p.falhas||[]).map(x=>"⚠ "+x), "falha")}</div>`; }).join("")}
     ${portais.length ? "" : `<p class="meio-sub dossie-sem">O resumo dos portais não foi gravado nesta coleta.
@@ -37084,7 +37193,7 @@ function provaPcdNoDoc(c, as){
        if(neg) return {est:"falta", txt:`pedido de ${neg.p.entrada || "data não lida"} indeferido: ${neg.motivo}`, fonte:"comunicação de decisão"};
        if(a==="Ainda não feita") return {est:"info", txt:`feita pelo INSS depois do pedido: perícia médica e avaliação social, ${inst}; ${x.v.def_laudo==="Sim" ? "leve o laudo com domínios e barreiras" : "prepare laudo com CID, início e prognóstico"}`};
        // F235 · nenhum pedido ao INSS no dossiê: a avaliação ainda não houve; vem depois do pedido
-       if(!a && x.c && (x.c.dossie||{}).meuinss && !(x.fd.processos||[]).length) return {est:"info", txt:`nenhum pedido ao INSS no dossiê: a perícia médica e a avaliação social são marcadas depois do pedido (${inst}); leve o relatório médico com CID, início e prognóstico`};
+       if(!a && x.c && (x.c.dossie||{}).meuinss && !x.c.dossie.meuinss.parcial && !(x.fd.processos||[]).length) return {est:"info", txt:`nenhum pedido ao INSS no dossiê: a perícia médica e a avaliação social são marcadas depois do pedido (${inst}); leve o relatório médico com CID, início e prognóstico`};
        return {est:"informar", txt:`informe se a avaliação já foi feita e o resultado (${inst})`}; }},
     {id:"renda_per_capita", rot:"A renda da família, dividida pelas pessoas da casa que a lei conta, é de até 1/4 do salário mínimo?",
      base:_BASE_RENDA, conf:"conferido", campos:["ren_pessoas","ren_total","ren_fora_nomes","ren_filhos_solteiros","ren_aprendiz","der"],
@@ -38732,7 +38841,7 @@ function quadrosDoPACalc(c, ks){
       : ct ? (cAc ? cAc.txt : `tem ${plu(ct.carencia, "mês", "meses")} de contribuição (${anosMeses(ct.anos, ct.meses)})`) : ""]),
     // F235 · o emprego na roça (cnis.emp) não é ponto do cadastro do INSS a conferir
     (n=>n ? `${plu(n, "ponto", "pontos")} no cadastro do INSS para conferir` : "")(Q.cnis.itens.filter(x=>!/^cnis\.(qual|limbo)/.test(x.k) && !/^cnis\.emp:/.test(x.k) && (x.est==="warn"||x.est==="crit")).length)].filter(Boolean).map(cap1).join(". ");
-  Q.cnis.vazio = g ? "" : docsDoDossie(c.id).some(a=>/^CNIS/i.test(fonteDoDossie(a)[0])) ? "o CNIS baixado ainda está sendo lido" : dz.meuinss ? "o Meu INSS foi consultado, mas o CNIS não veio" : "o Meu INSS não foi consultado";
+  Q.cnis.vazio = g ? "" : docsDoDossie(c.id).some(a=>/^CNIS/i.test(fonteDoDossie(a)[0])) ? "o CNIS baixado ainda está sendo lido" : dz.meuinss && !dz.meuinss.parcial ? "o Meu INSS foi consultado, mas o CNIS não veio" : "o Meu INSS não foi consultado";
   // F235 · quem tem deficiência tem a idade da PcD: o quadro diz de qual aposentadoria é cada idade
   pcdIdadeNoPA(c, Q.cnis);
   // F235 · os problemas do extrato vêm primeiro (a pendência e o vínculo sem saída ficavam escondidos em "mostrar mais")
@@ -40061,7 +40170,7 @@ function painelDocumentos(k, origens){
         <button class="arq-abrir" onclick="${d.id?`abrirAnexo('${escJs(d.id)}')`:`abrirDecisao('${escJs(d.caminho)}')`}" title="abrir o documento">
           ${(d.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(d.inicial?"Petição inicial":d.nome||"documento")}</button>
         <span class="meio-sub">${d.data?fmt(String(d.data).slice(0,10)):""}${d.tamanho?" · "+tamArq(d.tamanho):""}${
-          d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto ? " · digitalizado" : (paginasImagem(d)||[]).length ? ` · ${paginasImagem(d).length} de ${d.paginas} pág. em imagem` : " · com texto"}</span>
+          d.origem==="escritorio"||d.origem==="crps" ? "" : !d.texto && !d.tipo ? " · texto em leitura" : !d.texto ? " · digitalizado" : (paginasImagem(d)||[]).length ? ` · ${paginasImagem(d).length} de ${d.paginas} pág. em imagem` : " · com texto"}</span>
         <button class="${bt} doc-claude" onclick="menuClaudeDocs('${k.id}',['${escJs(chaveDoc(d))}'])">${temaV10()?IC_SVG.claude+" ":"✦ "}<span aria-hidden="true">Claude</span><span class="sr-only">Ler com Claude</span></button>
       </div>`).join("")}
     </div>`).join("")}
@@ -40389,9 +40498,11 @@ async function desenharPeca(d, caixaEl){
   const sec = caixaEl.parentElement;
   try{
     const url = await linkArquivo(d.caminho, 600);
-    if(/^image\//.test(d.tipo||"")){ caixaEl.innerHTML = `<img alt="${esc(d.nome||"imagem")}" src="${url}">`; return; }
     const r = await fetch(url); if(!r.ok) throw new Error(r.status);
-    if(/^text\//.test(d.tipo||"")){
+    // F590 · o documento novo nasce sem tipo até a leitura do texto: vale o que o Storage responde
+    const tipo = d.tipo || (r.headers.get("content-type")||"").split(";")[0];
+    if(/^image\//.test(tipo)){ caixaEl.innerHTML = `<img alt="${esc(d.nome||"imagem")}" src="${url}">`; return; }
+    if(/^text\//.test(tipo)){
       // o HTML do PJe sem script nenhum (sandbox sem allow-scripts); a mesma
       // origem serve só para medir a altura da folha
       const html = await r.text(); if(caixaEl._fora) return;
@@ -40455,8 +40566,9 @@ async function baixarDocsZip(casoId, soSel, lista){
       try{
         const r = await fetch(await linkArquivo(d.caminho, 300));
         if(!r.ok) throw new Error(r.status);
-        const ext = /pdf/.test(d.tipo||"") ? ".pdf" : /^text\//.test(d.tipo||"") ? ".html"
-                  : /jpe?g/.test(d.tipo||"") ? ".jpg" : /png/.test(d.tipo||"") ? ".png" : "";
+        const tipo = d.tipo || (r.headers.get("content-type")||"").split(";")[0];   // F590 · sem tipo até a leitura do texto
+        const ext = /pdf/.test(tipo) ? ".pdf" : /^text\//.test(tipo) ? ".html"
+                  : /jpe?g/.test(tipo) ? ".jpg" : /png/.test(tipo) ? ".png" : "";
         let nome = `${ORIGEM_DOC[d.origem]||d.origem}/${String(d.data||"").slice(0,10)} ${nomeSeguro(d.nome).replace(/\.(pdf|html?|jpe?g|png)$/i,"")}${ext}`;
         for(let i=2; usados.has(nome); i++) nome = nome.replace(/( \(\d+\))?(\.\w+)?$/, ` (${i})$2`);
         usados.add(nome);
@@ -45761,7 +45873,7 @@ function cartaoPericia(e){
       + docsDoCartao(la) + prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) + feitoDoCartao(la)
     // F236 · o laudo do PAT chega como documento, sem andamento: a conclusão e o CID vêm à vista
     : lx ? `<span class="tl-disp per-laudo"><b>Laudo de ${fmt(dataSP(lx.criado_em))}</b>${esc(resumoDoLaudo(lx))}</span>`
-      + docRow(lx.nome, `${lx.paginas?`${lx.paginas} pág. · `:""}${lx.texto?"com texto":"digitalizado"}`, `abrirAnexo('${escJs(lx.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(lx.id)}'])`, lx.texto ? lx.id : null) : "";
+      + docRow(lx.nome, `${lx.paginas?`${lx.paginas} pág. · `:""}${lx.texto?"com texto":lx.tipo?"digitalizado":"texto em leitura"}`, `abrirAnexo('${escJs(lx.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(lx.id)}'])`, lx.texto ? lx.id : null) : "";
   const portal = portalDaPericia(k);
   const bt = (rot, js, forte, tit) => `<button class="tl-bt${forte?" forte":""}" onclick="${js}"${tit?` title="${esc(tit)}"`:""}>${rot}</button>`;
   let acoes = "";

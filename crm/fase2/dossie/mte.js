@@ -29,11 +29,14 @@
     }
     // Accept igual ao do portal (axios): só "application/json" → 406 nos PDFs
     const cab = { Accept: 'application/json, text/plain, */*', 'Content-Type': 'application/json', Authorization: 'Bearer ' + tok };
-    const pedir = async (caminho, opts) => {
-      const r = await fetch(API + caminho, Object.assign({ headers: cab }, opts));
-      await D.pausa(1500);
-      return r;
-    };
+    // a pausa de 1,5 s corre junto com a gravação, e o crachá é relido a cada pedido,
+    // porque o portal o renova na aba no meio da rodada (R.filaDePedidos)
+    const fila = R.filaDePedidos(D.pausa);
+    const buscar = (url, opts) => fila(1500, () => {
+      cab.Authorization = 'Bearer ' + (sessionStorage.getItem('access-token') || tok);
+      return fetch(url, Object.assign({ headers: cab }, opts));
+    });
+    const pedir = (caminho, opts) => buscar(API + caminho, opts);
 
     D.faixa('lendo o cadastro do trabalhador…');
     const r0 = await pedir(`v4/trabalhador/${cpf}`);
@@ -48,6 +51,7 @@
 
     const ok = [], falhas = [], inexistentes = [];
     async function pdf(arquivo, caminho, corpo) {
+      if (fila.caiu) return;
       D.faixa(`${arquivo}…`);
       try {
         const r = await pedir(caminho, { method: 'POST', body: corpo ? JSON.stringify(corpo) : undefined });
@@ -104,8 +108,7 @@
       // mesmo conjunto que a tela manda — todas, inclusive a de resgatado
       const modalidades = 'consultarRequerimentosModalidadeFormal=true&consultarRequerimentosModalidadeBolsa=true'
         + '&consultarRequerimentosModalidadeDomestico=true&consultarRequerimentosModalidadePescador=true&consultarRequerimentosModalidadeResgatado=true';
-      const rs = await fetch(`${SD}/portal/requerimento/consultarRequerimentosPeloCpf/${cpf}?${modalidades}`, { headers: cab });
-      await D.pausa(1500);
+      const rs = await buscar(`${SD}/portal/requerimento/consultarRequerimentosPeloCpf/${cpf}?${modalidades}`);
       const txt = rs.ok ? await rs.text() : '';
       let lista = [];
       try { const j = JSON.parse(txt || 'null'); lista = Array.isArray(j) ? j : (j && typeof j === 'object' ? (Object.values(j).find(Array.isArray) || []) : []); } catch (e) {}
@@ -122,8 +125,7 @@
           if (!rota || !num) continue;
           D.faixa(`seguro-desemprego: requerimento ${i + 1} de ${lista.length}…`);
           try {
-            const rd = await fetch(`${SD}/requerimento/${rota}${rota === 'bolsa' ? '/obterpornumero' : ''}/${num}`, { headers: cab });
-            await D.pausa(1500);
+            const rd = await buscar(`${SD}/requerimento/${rota}${rota === 'bolsa' ? '/obterpornumero' : ''}/${num}`);
             if (rd.ok) Object.assign(req, { detalhe: await rd.json() });
             else req.detalhe_erro = `HTTP ${rd.status}`;
           } catch (e) { req.detalhe_erro = String(e.message || e); }
@@ -136,13 +138,12 @@
 
     // ── INFORME DE RENDIMENTOS dos benefícios do MTE (SD/abono), um PDF por ano
     try {
-      const re = await fetch(`${SD}/informesrendimentos/v1/exercicios`, { headers: cab });
-      await D.pausa(1500);
+      const re = await buscar(`${SD}/informesrendimentos/v1/exercicios`);
       const anos = re.ok ? [].concat(await re.json().catch(() => [])).map(a => String(typeof a === 'object' ? (a.ano || a.exercicio || a.valor || '') : a).replace(/\D/g, '')).filter(a => a.length === 4) : [];
       for (const ano of anos) {
         D.faixa(`informe de rendimentos ${ano}…`);
-        const r = await fetch(`${SD}/informesrendimentos/v1/${cpf}/ano/${ano}`, { headers: cab });
-        await D.pausa(1500);
+        if (fila.caiu) break;
+        const r = await buscar(`${SD}/informesrendimentos/v1/${cpf}/ano/${ano}`);
         const buf = await r.arrayBuffer();
         const u8 = r.ok ? R.comoPdf(buf) : null;
         if (u8) { await D.salvar(cliente, 'CTPS RAIS CAGED', `Informe de rendimentos MTE ${ano}`, u8); ok.push(`Informe de rendimentos ${ano}`); }
@@ -151,6 +152,7 @@
       }
     } catch (e) { falhas.push(`Informe de rendimentos: ${e.message || e}`); }
 
+    if (fila.caiu) falhas.push(R.SESSAO_CAIU);
     const avisoCrm = await D.resumo(cliente, 'mte', { baixados: ok, inexistentes, falhas });
     D.faixa(`${ok.length} documento(s) do Emprega Brasil · ${contratos.length} contrato(s) na CTPS`
       + (inexistentes.length ? `\n${inexistentes.length} não existem:\n• ${inexistentes.join('\n• ')}` : '')

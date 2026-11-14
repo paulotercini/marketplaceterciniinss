@@ -100,6 +100,9 @@
       if (cpf.length !== 11) {
         // login pelo registro HC (sem gov.br) não traz CPF: usa o último dossiê do Meu INSS
         if (!guardado) return { erro: 'não achei o CPF do paciente — entre no HC com "Entrar com gov.br" ou rode antes o dossiê no Meu INSS do paciente' };
+        // F590: o guardado pode ser de outro paciente; o primeiro nome do token do HC tem de bater com o dele
+        const prim = (s) => String(s || '').trim().split(/\s+/)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        if (prim(nome) && prim(guardado.nome) && prim(nome) !== prim(guardado.nome)) return { erro: 'o paciente desta aba do HC não é o cliente do último Meu INSS: entre no HC com "Entrar com gov.br" ou rode antes o Meu INSS deste paciente' };
         cpf = guardado.cpf; nome = guardado.nome || nome;
       }
       const link = parte => { const a = [...document.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes(`/${parte}?`)); return a && a.href; };
@@ -210,6 +213,9 @@
         D.faixa(`HC · imagens: exame ${i + 1} de ${estudos.length} (${rot})…`);
         try {
           const imgs = colher(await json({ requestType: 'IMAGE', regroup: '*', studyUID: e.studyUID, Position: 0, Count: 256, fromHeader: 'false' }), n => !!n.objectUID);
+          // o visualizador entrega no máximo 256 por pedido: o que passar disso fica de fora, e a ficha precisa saber
+          const total = Number(e.NumberOfStudyRelatedInstances);
+          if (imgs.length >= 256 && total > imgs.length) out.falhas.push(`${rot}: vieram ${imgs.length} de ${total} imagens (limite do visualizador) — confira o exame no HC`);
           for (const [k, im] of imgs.entries()) {
             const r = await wado({ requestType: 'XERO', studyUID: e.studyUID, seriesUID: im.se, objectUID: im.objectUID, rows: 3000 });
             guardar(out, 'HC Ribeirao/Imagens', `${rot} ${k + 1}`.slice(0, 150), r.ok ? new Uint8Array(await r.arrayBuffer()) : null, 'image/jpeg');

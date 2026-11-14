@@ -178,12 +178,17 @@ test('os incidentes listados na ficha: código e classe, sem o número', () => {
 });
 const movs = (sg, n) => `<tbody>${Array.from({ length: n }, (_, i) => `<tr class="containerMovimentacao"><td class="dataMovimentacao${sg ? 'Processo' : ''}">0${i + 1}/09/2026</td><td></td><td class="descricaoMovimentacao${sg ? 'Processo' : ''}">Movimento ${i + 1}</td></tr>`).join('')}</tbody>`;
 const ficha = (situacao, extra = '') => `<span id="numeroProcesso">${NUM}</span><span id="labelSituacaoProcesso" class="unj-tag">${situacao}</span><span id="classeProcesso">Apela&ccedil;&atilde;o C&iacute;vel</span>${extra}`;
-function rodada(favoritos, situacao1g) {
-  const pedidos = [], enviados = [];
+// `x`: numeros (os do CRM), antes(u) (resposta que vem na frente das de
+// sempre), guardado (o chrome.storage), vezes (cliques seguidos) e
+// semCrm (a entrega da coleta falha)
+function rodada(favoritos, situacao1g, x = {}) {
+  const pedidos = [], enviados = [], gravado = {};
   const responde = (url, html) => ({ ok: true, status: 200, url, text: async () => html, json: async () => JSON.parse(html) });
   const fetch = async u => {
     const url = 'https://esaj.tjsp.jus.br' + u;
     pedidos.push(u);
+    const antes = x.antes && x.antes(u);
+    if (antes != null) return antes.html ? responde(antes.url, antes.html) : responde(url, antes);
     if (u.startsWith('/tarefas-adv/')) return responde(url, '{"oabs":[{"stringOab":"331110SP"}]}');
     if (/NUMOAB/.test(u)) return responde(url, '<p>Não existem informações disponíveis para os parâmetros informados.</p>');
     if (/^\/cpopg\/search\.do.*NUMPROC/.test(u)) return responde(`https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=${PG}`, ficha(situacao1g, BLOCO_INC));
@@ -196,17 +201,18 @@ function rodada(favoritos, situacao1g) {
     throw new Error('pedido inesperado ' + u);
   };
   const nada = () => {};
-  const ctx = { location: { host: 'esaj.tjsp.jus.br' }, fetch, ESAJ_REGRAS: R, Math, Date, Promise,
+  const ctx = { location: { host: 'esaj.tjsp.jus.br' }, fetch, ESAJ_REGRAS: R, DOCS_REGRAS: { vaiBaixar: () => true }, Math, Date, Promise, AbortSignal, pausa: async () => {},
     setTimeout: f => { f(); return 0; }, faixa: nada, faixaOk: nada, faixaErr: nada, someFaixa: nada,
-    chrome: { runtime: { id: 'teste' }, storage: { local: { get: async () => ({}), set: async () => {} } } },
-    CRM: { guardarDocs: async () => 0, favoritosEsaj: async () => ({ favoritos }), processosTjsp: async () => ({ numeros: [NUM], fichas: 1 }),
-           enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
+    chrome: { runtime: { id: 'teste' }, storage: { local: { get: async () => x.guardado || {}, set: async o => { Object.assign(gravado, o); } } } },
+    CRM: { guardarDocs: async (s, n, docs) => { for (const d of docs) d.caminho = 'esaj/' + d.id; return 0; }, favoritosEsaj: async () => ({ favoritos }), processosTjsp: async () => ({ numeros: x.numeros || [NUM], fichas: 1 }),
+           enviar: async (fonte, dados) => { if (x.semCrm) throw new Error('CRM fora do ar'); enviados.push(dados); return true; } } };
   ctx.window = ctx; ctx.top = ctx;           // o quadro de cima: num iframe o coletor não sobe
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'esaj.js'), 'utf8'), ctx);
   // o JSON tira os objetos do outro contexto (outro Object), que o
   // deepStrictEqual não aceita como iguais
-  return ctx.window.crmRodar().then(r => JSON.parse(JSON.stringify({ r, pedidos, enviados })));
+  return Promise.all(Array.from({ length: x.vezes || 1 }, () => ctx.window.crmRodar()))
+    .then(rs => JSON.parse(JSON.stringify({ r: x.vezes ? rs : rs[0], pedidos, enviados, gravado })));
 }
 
 test('rodada: a apelação dos favoritos leva aos embargos, que entram com código, principal e cinco movimentações', async () => {
@@ -237,7 +243,7 @@ test('rodada: o 1º grau "em grau de recurso" sem favorito no 2º grau leva à a
   const cs = enviados[0].processos[1];
   assert.equal(cs.principal, NUM, 'o cumprimento listado na ficha entra com o processo principal');
   assert.equal(cs.tipo, 'Incidente');
-  assert.equal(enviados[0].parcial, false);
+  assert.equal(enviados[0].parcial, true, 'F590 · toda entrega é parte: a rodada seguinte não a descarta como velha');
   assert.equal(enviados[0].pulados, 0);
 });
 
@@ -278,4 +284,102 @@ test('documentos só de processo não arquivado e com caso aberto no CRM', () =>
   assert.ok(!R.baixaDocs('Arquivado', '1000087-72.2018.8.26.0368', ativos));          // arquivado
   assert.ok(!R.baixaDocs('Em andamento', '0004008-13.2005.8.26.0368', ativos));       // só da OAB/favoritos
   assert.ok(!R.baixaDocs('Em andamento', '1000087-72.2018.8.26.0368', null));         // CRM não respondeu
+});
+
+// ── a revisão de 14.11.2026 ────────────────────────────────────────────────
+test('a anotação de arquivado é pelo código: o incidente arquivado não marca o principal', () => {
+  assert.equal(R.chaveArq({ numero: NUM, codigo: CS }), 'cod:' + CS);
+  assert.equal(R.chaveArq({ numero: NUM, codigo: null }), NUM, 'a entrada do CRM, sem código, segue por número');
+  assert.notEqual(R.chaveArq({ numero: NUM, codigo: CS }), R.chaveArq({ numero: NUM, codigo: PG }));
+});
+
+test('o número do foro 0000 (nascido no tribunal) é consultado no 2º grau', () => {
+  assert.equal(R.grauDoNumero('2000001-11.2026.8.26.0000'), '2º grau');
+  assert.equal(R.grauDoNumero(NUM), '1º grau');
+});
+
+test('os erros que param a rodada casam com as mensagens do esaj.js', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'esaj.js'), 'utf8');
+  const msgs = [...src.matchAll(/throw new Error\('([^']+)'\)/g)].map(m => m[1]);
+  assert.equal(msgs.filter(R.erroDeSessao).length, 1);
+  assert.equal(msgs.filter(R.erroDeTrava).length, 1);
+  assert.ok(!R.erroDeSessao('o e-SAJ respondeu 500') && !R.erroDeTrava('o e-SAJ respondeu 500'));
+});
+
+test('a marca da pasta: muda com o movimento, e só vale com todo documento baixável guardado', () => {
+  const [m] = R.lerMovimentacoesHtml(movs(false, 1));
+  assert.notEqual(R.assinaturaMov(m), R.assinaturaMov({ ...m, texto: 'Outro' }));
+  assert.equal(R.assinaturaMov(null), '');
+  const vai = n => n !== 'Certidão';
+  assert.ok(R.pastaInteira([{ nome: 'Sentença', caminho: 'x' }, { nome: 'Certidão' }], vai));
+  assert.ok(!R.pastaInteira([{ nome: 'Sentença', caminho: 'x' }, { nome: 'Laudo' }], vai));
+});
+
+// cada número do CRM com a sua ficha e o seu código
+const nums = n => Array.from({ length: n }, (_, i) => `00000${String(i + 10)}-11.2026.8.26.0368`);
+const fichaDe = u => {
+  const n = (decodeURIComponent(u).match(/valorConsultaNuUnificado=(\d{7}-\d{2}\.\d{4}\.8\.26\.\d{4})/) || [])[1];
+  return n && { n, cod: 'PG' + n.slice(5, 7) };
+};
+
+test('rodada: todo processo lido vai em lote de 15; a última entrega leva só o resto, como parte', async () => {
+  const antes = u => { const f = /^\/cpopg\/search\.do.*NUMPROC/.test(u) && fichaDe(u);
+    return f ? { url: `https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=${f.cod}`,
+      html: `<span id="numeroProcesso">${f.n}</span><span id="labelSituacaoProcesso" class="unj-tag">Arquivado</span>` } : null; };
+  const { r, enviados, gravado } = await rodada([], null, { numeros: nums(16), antes });
+  assert.deepStrictEqual(r, { ok: 16, falhas: 0 });
+  assert.deepStrictEqual(enviados.map(e => [e.processos.length, e.parcial]), [[15, true], [1, true]]);
+  assert.ok(gravado.ultima_esaj, 'a data da última coleta só anda no fim');
+});
+
+test('rodada: a sessão caída entrega o que já leu, para e não mexe na data da coleta', async () => {
+  let n = 0;
+  const antes = u => (/^\/cpopg\/search\.do.*NUMPROC/.test(u) && ++n > 1 ? '<form action="/sajcas/login">Fazer login</form>' : null);
+  const { r, pedidos, enviados, gravado } = await rodada([], 'Arquivado', { numeros: nums(4), antes });
+  assert.match(r.erro, /sessão do e-SAJ caiu/);
+  assert.equal(pedidos.filter(u => /^\/cpopg\/search\.do.*NUMPROC/.test(u)).length, 2, 'não insiste contra a tela de login');
+  assert.equal(enviados.reduce((t, e) => t + e.processos.length, 0), 1, 'o processo já lido; o incidente dele ficava para o fim');
+  assert.ok(enviados.every(e => e.parcial));
+  assert.ok(!('ultima_esaj' in gravado) && !('ultima_esaj_full' in gravado));
+});
+
+test('rodada: o segundo clique com a rodada em curso não abre outro laço', async () => {
+  const { r, pedidos } = await rodada([], 'Em andamento', { vezes: 2 });
+  assert.deepStrictEqual(r, [{ ok: 2, falhas: 0 }, { ok: 'já em curso nesta aba', emCurso: true }]);
+  assert.equal(pedidos.filter(u => u.startsWith('/tarefas-adv/')).length, 1);
+});
+
+test('rodada rápida: sem movimento novo a pasta digital não é reaberta; com movimento novo, é', async () => {
+  const marca = R.assinaturaMov(R.lerMovimentacoesHtml(movs(false, 1))[0]);
+  const pastas = async vista => (await rodada([], 'Em andamento', { guardado: { ultima_esaj_full: new Date().toISOString(), esaj_pasta_vista: vista } }))
+    .pedidos.filter(u => u.includes('abrirPastaDigital') && u.includes(PG)).length;
+  assert.equal(await pastas({ [PG]: marca }), 0);
+  assert.equal(await pastas({ [PG]: 'outra' }), 1);
+});
+
+test('a marca da pasta só é gravada depois que a coleta do processo chega ao CRM', async () => {
+  const marca = R.assinaturaMov(R.lerMovimentacoesHtml(movs(false, 1))[0]);
+  const antes = u => (u.includes('abrirPastaDigital') ? 'https://esaj.tjsp.jus.br/pastadigital/abrirPastaProcessoDigital.do?cdProcesso=X'
+    : u.startsWith('/pastadigital/abrirPastaProcessoDigital') ? '<script>var requestScope = [{"data":{"title":"Sentença","cdDocumento":"1","dtInclusao":"02/03/2020 10:00:00"},"children":[{"data":{"title":"Página 1","parametros":"cdDocumento=1"}}]}]; var requestScopeArvoreSigilosos = [];</script>' : null);
+  const ok = await rodada([], 'Em andamento', { antes });
+  assert.equal(ok.gravado.esaj_pasta_vista[PG], marca);
+  assert.ok(!(PG in ok.gravado.esaj_pasta_pendente), 'F590 · entregue, a pasta deixa de estar pendente');
+  const falhou = await rodada([], 'Em andamento', { antes, semCrm: true });
+  assert.match(falhou.r.erro, /CRM fora do ar/);
+  assert.ok(!(PG in falhou.gravado.esaj_pasta_vista), 'sem a entrega, a pasta volta na rodada seguinte');
+  assert.equal(falhou.gravado.esaj_pasta_pendente[PG], 1, 'F590 · sem a entrega, a pasta inteira volta na rodada seguinte');
+});
+
+test('F590 · a RPV que aponta para o cumprimento vai ao CRM com o processo raiz como principal', async () => {
+  const [C] = nums(1), RAIZ = '0009999-11.2020.8.26.0368', RV = 'PG10RPV000001';
+  const antes = u => {
+    if (u.includes('abrirPastaDigital')) return '<p>sem pasta</p>';
+    if (/^\/cpopg\/search\.do.*NUMPROC/.test(u)) return { url: 'https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=PG10',
+      html: FICHA_INC.replace(/\(0000035-73\.2026\.8\.26\.0381\)/, `(${C})`).replace(/0000035-73\.2026\.8\.26\.0381/g, RAIZ) + BLOCO_INC.replace(CS, RV) };
+    if (u.startsWith(`/cpopg/show.do?processo.codigo=${RV}`)) return FICHA_INC.replace(/0000035-73\.2026\.8\.26\.0381/g, C);
+    return null;
+  };
+  const { enviados } = await rodada([], null, { numeros: [C], antes });
+  const ps = enviados.flatMap(e => e.processos);
+  assert.deepStrictEqual(ps.map(p => [p.codigo, p.principal]), [['PG10', RAIZ], [RV, RAIZ]]);
 });

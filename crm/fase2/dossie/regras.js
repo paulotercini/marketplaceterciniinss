@@ -90,6 +90,44 @@
     return { nups: [...fora], filtrouPorCpf: comCpf.length > 0 };
   }
 
+  // De quem são os recursos da lista (auditoria de 14.11.2026: os documentos iam à
+  // ficha do cliente ANTERIOR). O cliente guardado pelo Meu INSS só vale quando a
+  // lista traz o CPF dele (login do advogado) ou quando ele é o próprio CPF da
+  // sessão; fora disso vale a sessão, e só se a lista trouxer o CPF dela. Sem
+  // correspondência nenhuma devolve `cliente: null`: é recusar, e não adivinhar.
+  function clienteDoRecurso(lista, guardado, sessao) {
+    const cpfS = String((sessao && sessao.cpf) || '').replace(/\D/g, '');
+    if (guardado && guardado.cpf) {
+      const l = nupsDaLista(lista, guardado.cpf);
+      if (l.filtrouPorCpf || guardado.cpf === cpfS) return { cliente: guardado, ...l };
+    }
+    const l = nupsDaLista(lista, cpfS);
+    return { cliente: l.filtrouPorCpf ? { cpf: cpfS, nome: (sessao && sessao.nome) || '' } : null, ...l };
+  }
+
+  // Uma chamada por vez ao portal, com folga: a pausa conta da RESPOSTA e é esperada
+  // antes do pedido seguinte, e não logo depois deste. Assim ela corre junto com a
+  // gravação do arquivo (Drive + CRM) em vez de se somar a ela; o intervalo que o
+  // portal vê continua sendo, no mínimo, a pausa. Três 401 seguidos = a sessão caiu:
+  // daí em diante nada mais é pedido ao portal (resposta 401 de mentira, sem rede).
+  // `conta = false` tira o pedido dessa conta: onde o 401 pode ser recusa daquele
+  // documento, e não da sessão (e-Recursos), só o pedido do recurso decide a queda.
+  const SESSAO_CAIU = 'a sessão do portal caiu no meio (401): entre de novo e rode outra vez, os documentos do fim não vieram';
+  function filaDePedidos(pausa, limite = 3) {
+    let vez = null, seguidos = 0;
+    const pedir = async (ms, buscar, conta = true) => {
+      if (pedir.caiu) return { ok: false, status: 401, arrayBuffer: async () => new ArrayBuffer(0), json: async () => null, text: async () => '' };
+      await vez;
+      try {
+        const r = await buscar();
+        if (conta) seguidos = r && r.status === 401 ? seguidos + 1 : 0;
+        if (seguidos >= limite) pedir.caiu = true;
+        return r;
+      } finally { vez = pausa(ms); }
+    };
+    return pedir;
+  }
+
   // HC Ribeirão: exame de imagem e de método (laudo), não exame de sangue/laboratório.
   // ponytail: lista por palavra; exame que não casar fica de fora — some aqui o nome que faltar
   const IMAGEM = /RADIOGRAF|\bRX\b|RAIO[\s-]?X|TOMOGRAF|RESSON[AÂ]NCIA|\bRNM\b|ULTRA[\s-]?SSON|ULTRA[\s-]?SON|ECOGRAF|ECOCARDIO|DOPPLER|DUPLEX|MAMOGRAF|DENSITOMETR|CINTILOGRAF|\bPET\b|ANGIO|ARTERIOGRAF|FLEBOGRAF|UROGRAF|FLUOROSCOP|ESOFAGOGRAF|ENEMA|ENDOSCOP|COLONOSCOP|BRONCOSCOP|NEUROMIOGRAF|ELETROCARDIO|ELETROENCEFALO|\bECG\b|\bEEG\b|HOLTER|\bMAPA\b|ERGOMETR|AUDIOMETR|IMITANCIOMETR|ESPIROMETR|POLISSONOGRAF|CAMPIMETR|RETINOGRAF|BIOPSIA|ANATOMO/i;
@@ -304,7 +342,7 @@
     return { pessoas: resumo, texto: linhas.join('\n') };
   }
 
-  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, cadastroDoCnis, textoCadunico, textoTransparencia, b64, janela12Meses, nupsDaLista };
+  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, cadastroDoCnis, textoCadunico, textoTransparencia, b64, janela12Meses, nupsDaLista, clienteDoRecurso, filaDePedidos, SESSAO_CAIU };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOSSIE_REGRAS = API;
 })(typeof window !== 'undefined' ? window : globalThis);

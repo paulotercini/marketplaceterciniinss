@@ -231,6 +231,8 @@
     if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
     // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
     // processo arquivado: a cronologia vai, as peças não (pedido do Paulo)
+    // conversa caída na rolagem: a cronologia parcial vai, mas não se clica
+    // peça por peça numa página morta — os documentos ficam sem caminho
     const docs = REG.arquivado(itens) ? [] : itens.flatMap(i => i.docs || []);
     if (docs.some(d => DOCS_REGRAS.vaiBaixar(d.nome))) faixa(`processo ${cab.numero}: guardando as peças no CRM (as já guardadas são puladas)…`);
     // o PJe só libera o download do documento ABERTO no visualizador (medido
@@ -240,17 +242,22 @@
     let existentes = null;
     try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
       prefixo: `pje/${String(cab.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
-    await CRM.guardarDocs('pje', cab.numero, docs, { existentes, baixar: async d => {
+    if (!morreuNoMeio) await CRM.guardarDocs('pje', cab.numero, docs, { existentes, baixar: async d => {
       const a = [...tl.querySelectorAll('a')].find(x => x.textContent.trim().startsWith(d.id + ' -'));
       if (a) { a.click(); await pausa(700); await esperarLivre(); await esperarQuieto(700, 8000); }
       return fetch(d.url, { credentials: 'include' });
     } });
     // F190 · o que devia descer e não desceu vai marcado: a rodada seguinte
     // do "completar" reabre o processo só por causa dele (até 3 tentativas)
+    // F590 · página caiu: o que já está guardado não é falha (gastava as 3 tentativas de quem nunca falhou)
+    if (morreuNoMeio && existentes) for (const d of docs) {
+      const c = DOCS_REGRAS.caminhoDoc('pje', cab.numero, d);
+      if (DOCS_REGRAS.vaiBaixar(d.nome) && existentes.has(c)) d.caminho = c;
+    }
     for (const d of docs) if (!d.caminho && DOCS_REGRAS.vaiBaixar(d.nome)) d.falhou = true;
     // 1.35.0 · a aba Expedientes do processo vai junto (pedido do Paulo, 06.11.2026); falhar não perde a coleta
     let expedientes = null;
-    try { expedientes = await lerAbaExpedientes(cab.numero); } catch (e) { console.warn('expedientes:', e); }
+    if (!morreuNoMeio) try { expedientes = await lerAbaExpedientes(cab.numero); } catch (e) { console.warn('expedientes:', e); }
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null, ...(cab.detalhes ? { detalhes: cab.detalhes } : {}),
@@ -291,8 +298,10 @@
         .find(el => /»|>>|next/i.test(el.textContent + (el.getAttribute('onclick') || '')) && !/dsbld/.test(el.className));
       if (!prox) break;
       const a2 = tabProcExp().innerHTML;
-      prox.click();
+      await esperarLivre(); prox.click();
       for (let i = 0; i < 30 && tabProcExp() && tabProcExp().innerHTML === a2; i++) await pausa(400);
+      // o clique não virou a página: sair, em vez de reler a mesma até o teto
+      if (!tabProcExp() || tabProcExp().innerHTML === a2) break;
       await esperarLivre(); ler();
     }
     return [...lidos.values()];
@@ -412,9 +421,17 @@
   async function rodarDeVerdade(opts) {
     try {
       if (!REG) { faixaErr('pje-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
-      await esperarPainelPronto();
-      if (opts && opts.prazos) return await coletarPrazos();
       const noProcesso = /\/pje\/Processo\/ConsultaProcesso\/Detalhe\/listProcessoCompletoAdvogado\.seam/.test(location.pathname);
+      // os sinais do esperarPainelPronto só existem no Painel: na tela do
+      // processo eram 28 s parados por processo (40 x 700 ms) sem motivo.
+      // No processo espera-se a cronologia montar, e só (até uns 10 s)
+      if (noProcesso) for (let i = 0; i < 25 && !document.getElementById('divTimeLine') && !paginaMorreu(); i++) await pausa(400);
+      else if (!(opts && opts.completo)) await esperarPainelPronto();
+      // no "completar" os 28 s eram, sem querer, o intervalo entre um processo
+      // e o seguinte; fica uma folga explícita, para não abrir página atrás de
+      // página no PJe. Só encurtar depois de medir uma rodada real
+      if (noProcesso && opts && opts.completo) await pausa(5000);
+      if (opts && opts.prazos) return await coletarPrazos();
       // na janela de um processo aberto, o CLIQUE coleta o histórico COMPLETO
       // dele. F97 · o "atualizar tudo" (opts.acervo) quer o acervo: vai ao
       // Painel e recomeça de lá, como já se faz quando a conversa cai.
