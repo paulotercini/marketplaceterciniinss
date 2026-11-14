@@ -7096,7 +7096,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.89</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.90</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19115,7 +19115,7 @@ function sugAnotBox(k){ setTimeout(()=>pintarSugAnot(k.id), 0); return `<div cla
 async function pintarSugAnot(casoId, forcar){
   let g = _sugAnot.get(casoId);
   if(forcar || !g || Date.now()-g.em > 60e3){
-    try{ g = {em: Date.now(), itens: await api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,evento,origem,criado_em&caso_id=eq.${casoId}&tipo=eq.anotacao&estado=eq.aberta&order=criado_em.desc&limit=3`)}; }
+    try{ g = {em: Date.now(), itens: await api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,evento,origem,criado_em&caso_id=eq.${casoId}&tipo=eq.anotacao&estado=eq.aberta&origem=neq.colaborador&order=criado_em.desc&limit=3`)}; }
     catch(_){ g = {em: Date.now(), itens: []}; }
     _sugAnot.set(casoId, g);
   }
@@ -19157,16 +19157,18 @@ async function renderSugestoesDia(){
   tituloLista("💡 Sugestões do dia");
   const meio = document.getElementById("conteudo-meio");
   meio.innerHTML = `<p class="meio-sub">Carregando…</p>`;
-  let itens = [], ia = [];
-  try{ [itens, ia] = await Promise.all([
+  let itens = [], ia = [], colab = [];
+  try{ [itens, colab, ia] = await Promise.all([
     api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,conversa_id,cliente_id,caso_id,criado_em&tipo=eq.mensagem&estado=eq.aberta&order=criado_em.asc&limit=100`),
+    // F588 · o que o colaborador Claude deixou em pré-gravação (sem a coluna "dados", antes da migração, vem vazio)
+    api(`/rest/v1/sugestoes_rotina?select=id,tipo,texto,texto_final,motivo,dados,estado,cliente_id,caso_id,criado_em,decidido_em&origem=eq.colaborador&order=criado_em.desc&limit=500`).catch(()=>[]),
     // F587 · as sugestões da IA que ficaram acima do campo de escrever sem Usar nem Descartar (a de iniciativa já está na lista acima)
     api(`/rest/v1/zap_conversas?select=id,cliente_id,lead_id,contato_nome,nome_perfil,telefone,sugestao_ia&sugestao_ia=not.is.null&order=ultima_em.desc&limit=100`).catch(()=>[])]); }
   catch(e){ meio.innerHTML = `<p class="meio-sub">Não carreguei: ${esc(msgErro(e))}</p>`; return; }
   ia = (ia||[]).filter(c=>c.sugestao_ia && c.sugestao_ia.texto && !c.sugestao_ia.sugestao_id);
   if(visao!=="sugestoesdia") return;
   const pode = souAdmin() || zapGestor();
-  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${itens.length+ia.length} para conferir</span>`;
+  document.getElementById("sub-lista").innerHTML = `<span class="meio-sub">${itens.length+ia.length+colabAbertas(colab).length} para conferir</span>`;
   const chave = (k, rot) => `<label class="meio-sub" style="margin-right:12px"><input type="checkbox" data-cfg="${k}" ${cfgApp(k)==="sim"?"checked":""}> ${rot}</label>`;
   meio.innerHTML = `${souAdmin() ? `<div style="margin:0 0 12px">${chave("zap_iniciativa_ligada","Rotina das 05:00 sugere mensagens")}${chave("zap_anotacao_ligada","Sugerir anotação após mensagem da equipe")}</div>` : ""}
     ${itens.length && pode ? `<button type="button" class="btn-mini proc-pri" id="sug-todas">Enviar todas</button>` : ""}
@@ -19181,7 +19183,8 @@ async function renderSugestoesDia(){
         <div><strong>${esc(nomeDaConversa(c))}</strong> · <span class="meio-sub">${c.sugestao_ia.urgente?"⚠ urgente · ":""}sugerida ${esc(c.sugestao_ia.em ? dataBR(String(c.sugestao_ia.em).slice(0,10)) : "")}</span></div>
         <p style="white-space:pre-wrap;margin:6px 0">${esc(c.sugestao_ia.texto)}</p>
         <div><button type="button" class="btn-mini" data-ac="abrir" title="Abrir a conversa, onde a sugestão tem Usar">Abrir</button>
-          <button type="button" class="btn-mini" data-ac="ia-descartar">Descartar</button></div></div>`).join("") : ""}`;
+          <button type="button" class="btn-mini" data-ac="ia-descartar">Descartar</button></div></div>`).join("") : ""}
+    ${secaoColab(colab)}`;
   meio.onchange = async ev=>{ const k = ev.target.dataset && ev.target.dataset.cfg; if(!k) return;
     try{ await guardarCfgApp(k, ev.target.checked ? "sim" : "nao"); aviso("Gravado"); }catch(e){ ev.target.checked = !ev.target.checked; aviso(msgErro(e)); } };
   const enviar = async (s, txt) => {
@@ -19200,6 +19203,7 @@ async function renderSugestoesDia(){
         try{ await enviar(s, t); n++; }catch(e){ aviso(msgErro(e)); } }
       aviso(`${n} enviada(s)`); return renderSugestoesDia();
     }
+    if(b.closest(".sug-colab, .colab-regras")) return cliqueColab(b, colab);
     const ci = b.closest(".sug-ia");
     if(ci){ const c = ia.find(x=>x.id===ci.dataset.conv); if(!c) return;
       if(b.dataset.ac==="abrir") return zapNaTela(c.id);
@@ -19217,6 +19221,55 @@ async function renderSugestoesDia(){
     }catch(e){ return aviso(msgErro(e)); }
     el.remove();
   };
+}
+// F588 · Colaborador Claude: a pré-gravação (anotação, tarefa, peça, análise, Prazo da IA, regra proposta) só entra no caso com o ok
+// do administrador ou do revisor indicado (rpc colab_aprovar). Caderno de regras e placar de 30 dias, só o administrador.
+const COLAB_TIPO = {anotacao:"Anotação", tarefa:"Tarefa", peca:"Peça", analise:"Análise", prazo_ia:"Prazo da IA", regra:"Regra proposta"};
+function colabAbertas(rows){
+  return (rows||[]).filter(s=>s.estado==="aberta" && COLAB_TIPO[s.tipo] && (souAdmin() || (s.dados||{}).revisor===eu.id));
+}
+function secaoColab(rows){
+  rows = rows||[];
+  const ab = colabAbertas(rows), adm = souAdmin();
+  const resumo = adm ? rows.find(s=>s.tipo==="resumo") : null;
+  const regras = adm ? rows.filter(s=>s.tipo==="regra" && s.estado==="aprovada") : [];
+  if(!ab.length && !resumo && !adm) return "";
+  const linkOk = u => /^https:\/\//.test(u||"") ? u : "";
+  const cartao = s => { const d = s.dados||{}, c = D.cliPorId ? D.cliPorId.get(s.cliente_id) : null, lk = linkOk(d.link);
+    const para = d.para ? (D.colaboradores||[]).find(x=>x.id===d.para) : null;
+    return `<div class="cartao sug-colab" data-sug="${s.id}" style="display:block;padding:10px;margin:8px 0">
+      <div><strong>${COLAB_TIPO[s.tipo]}</strong>${d.titulo ? ` · ${esc(d.titulo)}` : ""}${c ? ` · ${esc(c.nome)}` : ""}${d.data ? ` · ${esc(dataBR(String(d.data).slice(0,10)))}` : ""}${para ? ` · para ${esc(para.nome)}` : ""}${d.nota!=null ? ` · nota ${esc(String(d.nota))}` : ""}${s.motivo ? ` · <span class="meio-sub">${esc(s.motivo)}</span>` : ""}</div>
+      <textarea class="sug-dia-txt" rows="${s.tipo==="peca"||s.tipo==="analise"?8:4}" style="width:100%;margin:6px 0">${esc(s.texto)}</textarea>
+      <div><button type="button" class="btn-mini proc-pri" data-ac="aprovar" title="Aprovar: grava no caso com o texto acima">Aprovar</button>
+        <button type="button" class="btn-mini" data-ac="descartar">Descartar</button>${lk ? ` <a class="btn-mini" href="${esc(lk)}" target="_blank" rel="noopener">Abrir</a>` : ""}${c ? ` <button type="button" class="btn-mini" data-ac="ficha">Ficha</button>` : ""}</div></div>`; };
+  const desde = Date.now() - 30*864e5, dec = rows.filter(s=>COLAB_TIPO[s.tipo] && s.tipo!=="regra" && s.decidido_em && new Date(s.decidido_em).getTime()>=desde);
+  const placar = Object.keys(COLAB_TIPO).filter(t=>t!=="regra").map(t=>{ const l = dec.filter(s=>s.tipo===t); if(!l.length) return "";
+    const ap = l.filter(s=>s.estado==="aprovada"), ed = ap.filter(s=>(s.texto_final||"").trim()!==(s.texto||"").trim()).length;
+    return `<li>${COLAB_TIPO[t]}: ${ap.length-ed} aprovada(s) sem mudança, ${ed} editada(s), ${l.length-ap.length} descartada(s)</li>`; }).join("");
+  return `<h3 class="secao">Colaborador Claude · ${ab.length} em pré-gravação</h3>
+    ${resumo ? `<details class="cartao" style="display:block;padding:10px;margin:8px 0" open><summary><strong>Resumo da rodada</strong> · <span class="meio-sub">${esc(dataBR(String(resumo.criado_em).slice(0,10)))}</span></summary><p style="white-space:pre-wrap;margin:6px 0">${esc(resumo.texto)}</p></details>` : ""}
+    ${ab.length ? ab.map(cartao).join("") : `<p class="meio-sub">Nada em pré-gravação.</p>`}
+    ${adm ? `<details class="cartao colab-regras" style="display:block;padding:10px;margin:8px 0"><summary><strong>Caderno de regras</strong> · ${regras.length}</summary>
+      ${regras.map(r=>`<div data-regra="${r.id}" style="margin:6px 0"><span style="white-space:pre-wrap">${esc(r.texto_final||r.texto)}</span> <button type="button" class="btn-mini" data-ac="revogar">Revogar</button></div>`).join("")}
+      <textarea id="colab-regra-txt" rows="2" style="width:100%;margin:6px 0" placeholder="Regra nova para o colaborador"></textarea>
+      <button type="button" class="btn-mini" data-ac="regra">Gravar</button>
+      <p class="meio-sub" style="margin-top:10px">Placar dos últimos 30 dias</p><ul>${placar || "<li>Sem decisões no período.</li>"}</ul></details>` : ""}`;
+}
+async function cliqueColab(b, rows){
+  const ac = b.dataset.ac, agora = () => ({decidido_em:new Date().toISOString(), decidido_por:eu.id});
+  const descarta = id => api(`/rest/v1/sugestoes_rotina?id=eq.${id}&origem=eq.colaborador`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({estado:"descartada", ...agora()})});
+  try{
+    if(ac==="regra"){ const t = document.getElementById("colab-regra-txt").value.trim(); if(!t) return;
+      await api(`/rest/v1/rpc/colab_regra`,{method:"POST",body:JSON.stringify({p_texto:t})}); aviso("Regra gravada"); return renderSugestoesDia(); }
+    if(ac==="revogar"){ const r = b.closest("[data-regra]"); if(!confirm("Revogar esta regra?")) return; await descarta(r.dataset.regra); return r.remove(); }
+    const el = b.closest(".sug-colab"), s = (rows||[]).find(x=>x.id===el.dataset.sug); if(!s) return;
+    if(ac==="ficha") return abrirFicha(s.cliente_id);
+    if(ac==="aprovar"){ const t = el.querySelector(".sug-dia-txt").value.trim(); if(!t) return;
+      await api(`/rest/v1/rpc/colab_aprovar`,{method:"POST",body:JSON.stringify({p_id:s.id, p_texto:t})}); aviso("Aprovada"); }
+    else if(ac==="descartar") await descarta(s.id);
+    else return;
+    el.remove();
+  }catch(e){ aviso(msgErro(e)); }
 }
 // F563 · Outra (sugestão em sentido diverso) e Aprofundar (consulta completa, só no clique). Nada é enviado.
 // F578 · atalhos de direção: um clique pede a sugestão já com a orientação
