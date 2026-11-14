@@ -43,6 +43,7 @@ create trigger zap_t_andamento_ins after insert or update of texto on zap_mensag
 \i crm/fase2/migracoes/f516_zap_saude.sql
 -- a migração roda duas vezes sem erro e sem dobrar o job
 \i crm/fase2/migracoes/f516_zap_saude.sql
+\i crm/fase2/migracoes/f591_plantao_substituida.sql
 
 create temp table r(k text, v boolean);
 insert into r select 'job do relógio agendado uma vez', count(*) = 1 from cron.job where jobname = 'zap-relogio';
@@ -98,12 +99,16 @@ insert into r select 'passados 20 s roda de novo', zap_relogio() = 1;
 insert into zap_mensagens(id, conversa_id, bot_ia) values
   ('20000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 'plantao:lendo'),
   ('20000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000002', 'plantao:lendo');
+-- F591: leitura antiga da conversa 2, já passada à mensagem nova do cliente
+insert into zap_mensagens(id, conversa_id, bot_ia, criado_em) values
+  ('20000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000002', 'plantao:lendo', now() - interval '5 minutes');
 update zap_conversas set plantao = '{"pedido_msg":"20000000-0000-0000-0000-000000000002"}',
        sugestao_ia = jsonb_build_object('texto', 'x', 'em', now() - interval '2 hours') where id = '10000000-0000-0000-0000-000000000002';
 update zap_conversas set sugestao_ia = jsonb_build_object('texto', 'x', 'em', now() - interval '30 hours') where id = '10000000-0000-0000-0000-000000000001';
 update zap_saude set visto_em = now() - interval '25 seconds' where componente = 'relogio';
 select zap_relogio();
 insert into r select 'leitura órfã da IA vira falhou', (select bot_ia from zap_mensagens where id = '20000000-0000-0000-0000-000000000001') = 'plantao:falhou';
+insert into r select 'leitura passada à mensagem nova vira substituida', (select bot_ia from zap_mensagens where id = '20000000-0000-0000-0000-000000000003') = 'plantao:substituida';
 insert into r select 'leitura com pedido vivo fica', (select bot_ia from zap_mensagens where id = '20000000-0000-0000-0000-000000000002') = 'plantao:lendo';
 insert into r select 'sugestão de mais de 24 h sai', (select sugestao_ia is null from zap_conversas where id = '10000000-0000-0000-0000-000000000001');
 insert into r select 'sugestão recente fica', (select sugestao_ia is not null from zap_conversas where id = '10000000-0000-0000-0000-000000000002');
