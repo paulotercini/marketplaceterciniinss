@@ -7097,7 +7097,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.94</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.95</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10822,6 +10822,8 @@ function coletasPorFonte(){
                 : c.fonte==="prazos" ? `prazos:${c.sistema||""}:${c.host||""}`
                 // o e-Recursos com o login do cliente traz só os recursos dele: não é repetição da rodada geral
                 : c.fonte==="crps" && c.login==="cliente" ? `crps:cliente:${c.id}`
+                // F598 · o lote do e-Recursos (o recurso que andou, entregue logo depois de lido) é fila própria
+                : c.fonte==="crps" && c.parcial==="true" ? `crps:lote:${c.id}`
                 // o INSS chega em duas entregas por rodada: a 'detalhes' (sem arquivos) é repetição quando há
                 // entrega mais nova, e nunca engole a 'anexos' mais antiga, que traz os arquivos
                 : c.fonte==="pat" && c.etapa==="detalhes" && !nova.pat ? "pat:detalhes" : c.fonte;
@@ -13898,7 +13900,13 @@ async function aplicarCrps(coletaId){
   const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
   if(!c) return aviso("Não achei essa coleta");
   const p = await planoCrpsComMemoria(c.dados).catch(e=>{ aviso("Não consegui ler a memória dos recursos: "+e.message); throw e; });
-  if(!p.resumo.lidos) return aviso("A coleta veio vazia");
+  if(!p.resumo.lidos){
+    // F598 · a entrega final da rodada em lotes pode vir sem item: os recursos já foram nos lotes
+    if(!(c.dados||{}).lotes) return aviso("A coleta veio vazia");
+    await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH", headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+    planoCrpsAtual = null; await buscarColetas(); return;
+  }
   const falhas = []; let feitos = 0;
   const tentar = async (rot, f) => { try{ await f(); feitos++; }
     catch(e){ falhas.push(`${rot}: ${String(e.message||e).slice(0,120)}`); } };

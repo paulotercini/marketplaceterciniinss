@@ -8,10 +8,12 @@ const fs = require('fs');
 const path = require('path');
 
 const NUP1 = '123456789012345678', NUP2 = '223456789012345678';
+const final = e => e[e.length - 1];
+const itensDe = e => Object.assign({}, ...e.map(x => x.itens));
 // `guardado`: o chrome.storage da rodada; `arquivados`: os 🗄 do CRM; `cai`: a consulta por
 // recurso lança (rede caída); `semDoc`: id do documento que o portal recusa; `dupla`: dois cliques
 function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, opts,
-                  guardado = {}, arquivados = [], cai = false, semDoc = null, dupla = false } = {}) {
+                  guardado = {}, arquivados = [], cai = false, semDoc = null, dupla = false, recusa = null } = {}) {
   const pedidos = [], enviados = [], gravados = {}, listagens = [], passados = [];
   const resp = (status, corpo) => ({ ok: status === 200, status, json: async () => corpo });
   const fetch = async (u, o = {}) => {
@@ -21,6 +23,7 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, op
     if (l) return base[l[1]] ? resp(200, base[l[1]].map(n => ({ proc: n, nb: '1' }))) : resp(404, {});
     const m = u.match(/^\/api\/v1\/([a-z]+)\/(\d+)$/);
     if (m && cai) throw new Error('Failed to fetch');
+    if (m && m[2] === recusa) return resp(403, {});
     if (m) return (base[m[1]] || []).includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x',
       eventos: [{ status: 'Julgado', documentos: [{ id: 7, nome: 'Acórdão.pdf', path: '/doc/7' }, { id: 8, nome: 'CNIS.pdf', path: '/doc/8' }] }] }) : resp(404, {});
     throw new Error('pedido inesperado ' + u);
@@ -50,8 +53,8 @@ test('o acervo vem do portal e cada recurso é consultado uma vez só, no sistem
   assert.deepStrictEqual(r, { ok: 2, falhas: 0 });
   const consultas = pedidos.filter(u => /\/\d+$/.test(u));
   assert.deepStrictEqual(consultas, [`/api/v1/esisrec/${NUP1}`, `/api/v1/esisrec/${NUP2}`], 'consultou o outro sistema sem precisar');
-  assert.deepStrictEqual(Object.keys(enviados[0].itens), [`${NUP1}_esisrec`, `${NUP2}_esisrec`]);
-  assert.deepStrictEqual(enviados[0].portal, { total: 2, sistema: 'esisrec', por_sistema: { esisrec: 2 }, novos: [NUP1, NUP2] });
+  assert.deepStrictEqual(Object.keys(itensDe(enviados)), [`${NUP1}_esisrec`, `${NUP2}_esisrec`]);
+  assert.deepStrictEqual(final(enviados).portal, { total: 2, sistema: 'esisrec', por_sistema: { esisrec: 2 }, novos: [NUP1, NUP2] });
 });
 
 test('1.30.0 · a lista do RecBen também é lida, e cada recurso vai direto à base que o listou', async () => {
@@ -60,7 +63,7 @@ test('1.30.0 · a lista do RecBen também é lida, e cada recurso vai direto à 
   assert.ok(pedidos.includes('/api/v1/recben/'), 'não pediu a lista do RecBen');
   const consultas = pedidos.filter(u => /\/\d+$/.test(u));
   assert.deepStrictEqual(consultas, [`/api/v1/esisrec/${NUP1}`, `/api/v1/recben/${NUP2}`]);
-  assert.deepStrictEqual(enviados[0].portal, { total: 2, sistema: 'esisrec+recben',
+  assert.deepStrictEqual(final(enviados).portal, { total: 2, sistema: 'esisrec+recben',
     por_sistema: { esisrec: 1, recben: 1 }, novos: [NUP1, NUP2] });
 });
 
@@ -69,7 +72,7 @@ test('recurso que o portal não lista mas o CRM conhece ainda é procurado nos d
   const { pedidos, enviados } = await rodada({ sistemaQueLista: 'recben', nupsDoCrm: [NUP3] });
   const doTerceiro = pedidos.filter(u => u.endsWith('/' + NUP3));
   assert.deepStrictEqual(doTerceiro, [`/api/v1/recben/${NUP3}`, `/api/v1/esisrec/${NUP3}`], 'o sistema que listou vem primeiro; o outro só depois do 404');
-  assert.equal(enviados[0].falhas.length, 0, '404 não é falha');
+  assert.equal(final(enviados).falhas.length, 0, '404 não é falha');
 });
 
 test('1.32.0 · todos os documentos descem e voltam com o caminho, o CNIS inclusive', async () => {
@@ -116,7 +119,7 @@ test('rede caída conta para o aborto, e a rodada que parou sai com erro, não c
 test('documento que o portal recusa deixa a rodada parcial', async () => {
   const { r, enviados } = await rodada({ semDoc: 8 });
   assert.deepStrictEqual(r, { ok: 2, falhas: 2, parcial: true });
-  assert.deepStrictEqual(enviados[0].falhas[0], { nup: NUP1, sis: 'esisrec', docs_faltando: 1 });
+  assert.deepStrictEqual(final(enviados).falhas[0], { nup: NUP1, sis: 'esisrec', docs_faltando: 1 });
 });
 
 test('NUP que as duas bases não acham é lembrado e fica para a rodada completa', async () => {
@@ -131,4 +134,31 @@ test('NUP que as duas bases não acham é lembrado e fica para a rodada completa
 test('na rodada completa os arquivados ficam para o fim da fila', async () => {
   const { pedidos } = await rodada({ arquivados: [NUP1] });
   assert.deepStrictEqual(consultasDe(pedidos), [`/api/v1/esisrec/${NUP2}`, `/api/v1/esisrec/${NUP1}`]);
+});
+
+test('1.39.0 · o recurso que andou vai ao CRM logo depois de lido, e a entrega final diz quantos lotes foram', async () => {
+  const { enviados } = await rodada();
+  assert.equal(enviados.length, 3);
+  assert.deepStrictEqual(enviados.slice(0, 2).map(e => [Object.keys(e.itens), e.parcial]),
+    [[[`${NUP1}_esisrec`], true], [[`${NUP2}_esisrec`], true]]);
+  assert.equal(final(enviados).lotes, 2);
+  assert.deepStrictEqual(final(enviados).itens, {});
+});
+
+test('1.39.0 · o recurso que não andou espera a entrega final, e o que movimentou por último vem primeiro', async () => {
+  const primeira = await rodada();
+  const lido = primeira.gravados.crps_ultimo;
+  assert.ok(lido[NUP1] && lido[NUP2], 'não gravou a memória dos recursos');
+  const { pedidos, enviados } = await rodada({ guardado: { crps_ultimo: { [NUP1]: { ...lido[NUP1], d: '2026-01-01T00:00:00' }, [NUP2]: { ...lido[NUP2], d: '2026-06-01T00:00:00' } } } });
+  assert.deepStrictEqual(consultasDe(pedidos), [`/api/v1/esisrec/${NUP2}`, `/api/v1/esisrec/${NUP1}`]);
+  assert.equal(enviados.length, 1, 'sem mudança, tudo na entrega final');
+  assert.deepStrictEqual(Object.keys(final(enviados).itens).sort(), [`${NUP1}_esisrec`, `${NUP2}_esisrec`]);
+});
+
+test('1.39.0 · o NUP que dá 403 nas duas bases fica para a rodada completa', async () => {
+  const completa = await rodada({ nupsDoCrm: [NUP3], recusa: NUP3 });
+  assert.deepStrictEqual(completa.gravados.crps_403, [NUP3]);
+  const rapida = await rodada({ nupsDoCrm: [NUP3], recusa: NUP3, guardado: { ultima_crps_full: new Date().toISOString(), crps_403: [NUP3] } });
+  assert.ok(!rapida.pedidos.some(u => u.endsWith('/' + NUP3)), 'consultou de novo o que dá 403');
+  assert.deepStrictEqual(rapida.gravados.crps_403, [NUP3]);
 });

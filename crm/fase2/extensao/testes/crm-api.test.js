@@ -287,3 +287,11 @@ test('leitura paginada: o que passa de 1.000 linhas não some; recurso de caso e
   assert.match(pedidos[4].url, /encerrado_em=not\.is\.null/);
   assert.deepStrictEqual(r.arquivados, [nup(5000)], 'o que está em caso aberto continua na fila');
 });
+
+// F597 · o processo que andou vai antes do nunca lido, e este antes do resto; no empate, o mais recente
+test('ordemAcervo põe o movimentado primeiro', async () => {
+  const { ordemAcervo } = await import(MOD + '?ordem');
+  const ps = [{ n: 'resto', prio: 2, data: '2026-11-14' }, { n: 'novo', prio: 1, data: '2026-11-01' },
+    { n: 'andou-velho', prio: 0, data: '2026-10-01' }, { n: 'andou', prio: 0, data: '2026-11-10' }];
+  assert.deepStrictEqual(ordemAcervo(ps).map(p => p.n), ['andou', 'andou-velho', 'novo', 'resto']);
+});

@@ -185,7 +185,7 @@
   // aqui rolamos até ela parar de crescer e lemos tudo com as regras puras.
   // Entrega como fonte 'pje-processo' — a tela de importação casa pelo número
   // e grava o histórico com a DATA DE CADA MOVIMENTO, sem inundar as Novidades.
-  async function coletarProcessoAberto({ entregar = true } = {}) {
+  async function coletarProcessoAberto({ entregar = true, curto = false } = {}) {
     const cab = REG.lerCabecalhoProcesso(document.documentElement.outerHTML);
     if (!cab) { faixaErr('não achei o número do processo no topo — a página terminou de abrir?'); return { erro: 'sem número' }; }
     let tl = document.getElementById('divTimeLine');
@@ -201,7 +201,7 @@
     // F385 · parar por 6 rodadas quietas ainda cortava a inicial (54 processos
     // sem o "Distribuído"): sem o primeiro movimento na tela, espera até 25
     let chegou = false;
-    for (let i = 0; i < 160 && quietos < (chegou ? 3 : 25); i++) {
+    for (let i = 0; i < 160 && quietos < (chegou || curto ? 3 : 25); i++) {
       if (paginaMorreu()) { morreuNoMeio = true; break; }   // entrega o que carregou
       const n = tl.querySelectorAll('.media').length;
       if (n === antes) quietos++;
@@ -436,7 +436,7 @@
       // dele. F97 · o "atualizar tudo" (opts.acervo) quer o acervo: vai ao
       // Painel e recomeça de lá, como já se faz quando a conversa cai.
       if (noProcesso && !(opts && opts.acervo))
-        return await coletarProcessoAberto(opts && opts.completo ? { entregar: false } : undefined);
+        return await coletarProcessoAberto(opts && opts.completo ? { entregar: false, curto: !!opts.curto } : undefined);
       // F187 · no "completar processos" a página TEM de ser o processo: se o
       // PJe mandou para o Painel ou para o login (sessão vencida), é falha —
       // coletar o acervo aqui encheu a fila de coletas repetidas e escondeu o erro
