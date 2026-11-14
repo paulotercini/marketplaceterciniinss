@@ -1,4 +1,4 @@
--- F591 (decisão do Paulo de 14.11.2026, análise da semana do WhatsApp): três correções.
+-- F593 (decisão do Paulo de 14.11.2026, análise da semana do WhatsApp): três correções.
 -- 1 · O telefone do contato novo gravado sem o 55 (DDD + número, 10 ou 11 dígitos, ou com o 0 de
 --     discagem) fez o robô falhar com "número não tem WhatsApp". A conversa passa a guardar 55 + DDD +
 --     número em qualquer gravação (gatilho antes do insert e do update do telefone, que cobre o
@@ -72,7 +72,7 @@ begin
   -- faxina e saúde não podem derrubar o que veio antes
   begin
     -- a leitura da IA que ninguém mais espera (o pedido da conversa já é de outra mensagem).
-    -- F591 · o cliente escreveu de novo e o pedido passou à mensagem nova: substituída, não falha
+    -- F593 · o cliente escreveu de novo e o pedido passou à mensagem nova: substituída, não falha
     update zap_mensagens m set bot_ia = 'plantao:substituida'
      where m.bot_ia = 'plantao:lendo'
        and not exists (select 1 from zap_conversas c

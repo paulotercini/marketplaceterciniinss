@@ -8565,7 +8565,7 @@ function completarD(r){
   D.inssCal = r.inssCal||[];
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum (para o gestor, toda; para o colaborador, F362, a que tem mensagem não lida). O resto não precisa de contador piscando.
-  // F592 · a conversa que a IA conduz não conta como nova
+  // F594 · a conversa que a IA conduz não conta como nova
   D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
     && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length;
   // só guarda o que é da segunda leva (a primeira já está em _bruto1)
@@ -17795,7 +17795,7 @@ async function carregarAuxZap(){
 const zapGestor = () => !visaoColab() || !!(eu && eu.gestor_zap);   // F368 · o gestor do WhatsApp vê e transfere todas, sem ser administrador do CRM
 const meusSetoresZap = () => zapAux.colabSetores.filter(x=>x.colaborador_id===eu.id).map(x=>x.setor_id);
 // F538 · a conversa coberta durante o Offline do titular fica com o substituto (onda 1, 11.11.2026)
-// F592 · a IA conduz: sem atendente, aberta, no modo conversa ou lead do plantão e sem ter agendado (o banco tira o modo ao passar à equipe)
+// F594 · a IA conduz: sem atendente, aberta, no modo conversa ou lead do plantão e sem ter agendado (o banco tira o modo ao passar à equipe)
 const comIaZap = c => !!c && !c.atendente_id && c.status!=="resolvida" && !!c.plantao
   && (c.plantao.modo==="conversa" || c.plantao.modo==="lead") && !c.plantao.agendado_em;
 const cobrindoZap = c => !!c && !!c.cobertura && c.cobertura.cobre===eu.id && c.status!=="resolvida";
@@ -18017,7 +18017,7 @@ function pintarListaZap(){
   // F346 · como no SMBot, o colaborador vê as Novas (as dele com mensagem não lida) e as Minhas;
   // Todas fica com o gestor; F362 · Pendentes voltou ao colaborador, para ele assumir quem escreveu e ninguém atende (pedido do Paulo de 02.11.2026);
   // F365 · volta a mostrar todas as pendentes ao colaborador: a leitura de um colega não pode tirá-las da fila (as antigas foram encerradas em 02.11.2026)
-  // F592 · a conversa que a IA conduz fica em "Com a IA", fora de Novas e Pendentes, até a IA passar à equipe ou agendar
+  // F594 · a conversa que a IA conduz fica em "Com a IA", fora de Novas e Pendentes, até a IA passar à equipe ou agendar
   const filtros = gestor ? [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["ia","Com a IA"],["todas","Todas"]]
                          : [["novas","Novas"],["minhas","Minhas"],["sem","Pendentes"],["ia","Com a IA"]];
   if(zapFiltro==="retornos") zapFiltro = gestor ? "todas" : "novas";

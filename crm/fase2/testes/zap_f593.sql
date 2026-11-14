@@ -1,6 +1,6 @@
--- Regressão da F591 (análise da semana do WhatsApp, 14.11.2026).
+-- Regressão da F593 (análise da semana do WhatsApp, 14.11.2026).
 -- ⚠ Este arquivo APAGA conversas: banco de teste só.
---   psql "postgres://…" -q -f crm/fase2/testes/zap_f591.sql
+--   psql "postgres://…" -q -f crm/fase2/testes/zap_f593.sql
 
 \set QUIET on
 delete from zap_mensagens; delete from zap_transferencias; delete from zap_conversas;

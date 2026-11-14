@@ -1,4 +1,4 @@
--- F592 · a fila "Com a IA" do WhatsApp (decisão do Paulo de 14.11.2026). A conversa que a IA conduz
+-- F594 · a fila "Com a IA" do WhatsApp (decisão do Paulo de 14.11.2026). A conversa que a IA conduz
 -- (plantao.modo conversa ou lead, sem atendente) sai de Novas e Pendentes; volta quando a IA passa
 -- à equipe (zap_plantao_aplicar já tira o modo) ou quando agenda: aqui o agendamento marca
 -- plantao.agendado_em. Não destrutiva.
@@ -27,7 +27,7 @@ begin
           || coalesce(nullif(trim(p_para), '') || ' · ', '') || p_rotulo
           || ' · ' || coalesce(nullif(p_modalidade, ''), 'presencial')
           || coalesce(' · ' || nullif(trim(p_assunto), ''), ''));
-  -- F592: a conversa volta a Novas e Pendentes
+  -- F594: a conversa volta a Novas e Pendentes
   update zap_conversas set plantao = coalesce(plantao, '{}'::jsonb) || jsonb_build_object('agendado_em', now())
    where id = p_conversa;
 end $$;
