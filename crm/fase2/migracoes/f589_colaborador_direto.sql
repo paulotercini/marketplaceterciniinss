@@ -1,3 +1,4 @@
+-- destrutiva-confirmada: Paulo, 14.11.2026 12:24 UTC ("Autorizo a exclusão prevista na F589")
 -- F589 · Colaborador Claude grava direto o que é interno (decisão do Paulo de 14.11.2026, "interno direto,
 -- externo com o senhor"): anotação, tarefa interna e Prazo da IA entram no caso na hora, com desfazer.
 -- Peça, análise, mensagem ao cliente, protocolo e prazo fatal continuam esperando o ok (colab_pregravar).
