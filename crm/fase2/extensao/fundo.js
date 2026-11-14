@@ -322,7 +322,8 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
 // - PJe: o documento só desce depois de aberto no visualizador, então não há
 //   atalho: este worker abre cada processo (o endereço dos Autos Digitais vem
 //   das coletas do acervo, só os que têm caso no CRM) numa JANELA DE TRABALHO,
-//   roda ali a coleta do processo aberto e entrega em lotes de 5. A janela
+//   roda ali a coleta do processo aberto e entrega cada processo assim que
+//   o lê (F597; o lote de 5 segurava o processo lido por até 2 horas). A janela
 //   fica normal (não minimizada): o Chrome freia página escondida, e a
 //   rolagem da cronologia e os cliques param de andar.
 // O que já está no CRM é pulado: só a primeira rodada é longa.
@@ -374,7 +375,7 @@ async function completarPje() {
         else { falhas++; seguidas++; falhos.push(p); console.warn('[CRM] PJe não completado:', p.numero, r && r.erro); }
       } catch (e) { falhas++; seguidas++; falhos.push(p); console.warn('[CRM] PJe não completado:', p.numero, e.message); }
       // falha na entrega não é o PJe caído: o lote fica e vai junto na próxima
-      if (lote.length >= 5) try { await entregar(); } catch (e) { console.warn('[CRM] entrega adiada:', e.message); }
+      if (lote.length) try { await entregar(true); } catch (e) { console.warn('[CRM] entrega adiada:', e.message); }
       // F590 · as 5 seguidas saem da conta de falhas: são a sessão caída, não o processo
       // 5 seguidas é a sessão do PJe vencida (horas de rodada), não azar: insistir
       // nos que faltam só gera falha. Para, e a rodada seguinte pula o que já foi
