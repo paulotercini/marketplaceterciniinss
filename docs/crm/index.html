@@ -19341,7 +19341,11 @@ function secaoColab(rows){
   const ab = colabAbertas(rows), adm = souAdmin();
   const resumo = adm ? rows.find(s=>s.tipo==="resumo") : null;
   const regras = adm ? rows.filter(s=>s.tipo==="regra" && s.estado==="aprovada") : [];
-  if(!ab.length && !resumo && !adm) return "";
+  // F589 · o interno (anotação, tarefa, Prazo da IA) grava direto; fica aqui 48 h com o Desfazer
+  const d48 = Date.now() - 48*36e5;
+  const diretos = rows.filter(s=>s.estado==="aprovada" && (s.dados||{}).direto && s.decidido_em && new Date(s.decidido_em).getTime()>=d48
+    && (adm || (s.dados||{}).revisor===eu.id));
+  if(!ab.length && !resumo && !adm && !diretos.length) return "";
   const linkOk = u => /^https:\/\//.test(u||"") ? u : "";
   const cartao = s => { const d = s.dados||{}, c = D.cliPorId ? D.cliPorId.get(s.cliente_id) : null, lk = linkOk(d.link);
     const para = d.para ? (D.colaboradores||[]).find(x=>x.id===d.para) : null;
@@ -19350,18 +19354,25 @@ function secaoColab(rows){
       <textarea class="sug-dia-txt" rows="${s.tipo==="peca"||s.tipo==="analise"?8:4}" style="width:100%;margin:6px 0">${esc(s.texto)}</textarea>
       <div><button type="button" class="btn-mini proc-pri" data-ac="aprovar" title="Aprovar: grava no caso com o texto acima">Aprovar</button>
         <button type="button" class="btn-mini" data-ac="descartar">Descartar</button>${lk ? ` <a class="btn-mini" href="${esc(lk)}" target="_blank" rel="noopener">Abrir</a>` : ""}${c ? ` <button type="button" class="btn-mini" data-ac="ficha">Ficha</button>` : ""}</div></div>`; };
+  const gravado = s => { const d = s.dados||{}, c = D.cliPorId ? D.cliPorId.get(s.cliente_id) : null;
+    return `<div class="cartao sug-colab" data-sug="${s.id}" style="display:block;padding:10px;margin:8px 0">
+      <div><strong>${COLAB_TIPO[s.tipo]}</strong>${d.titulo ? ` · ${esc(d.titulo)}` : ""}${c ? ` · ${esc(c.nome)}` : ""}${d.data ? ` · ${esc(dataBR(String(d.data).slice(0,10)))}` : ""} · <span class="meio-sub">gravado ${esc(dataBR(String(s.decidido_em).slice(0,10)))}</span></div>
+      <p style="white-space:pre-wrap;margin:6px 0">${esc(s.texto_final||s.texto)}</p>
+      <div><button type="button" class="btn-mini" data-ac="desfazer" title="Desfazer: apaga do caso o que o Claude gravou">Desfazer</button>${c ? ` <button type="button" class="btn-mini" data-ac="ficha">Ficha</button>` : ""}</div></div>`; };
   const desde = Date.now() - 30*864e5, dec = rows.filter(s=>COLAB_TIPO[s.tipo] && s.tipo!=="regra" && s.decidido_em && new Date(s.decidido_em).getTime()>=desde);
-  const placar = Object.keys(COLAB_TIPO).filter(t=>t!=="regra").map(t=>{ const l = dec.filter(s=>s.tipo===t); if(!l.length) return "";
+  const dir30 = dec.filter(s=>(s.dados||{}).direto), desf = dir30.filter(s=>(s.dados||{}).desfeito).length;
+  const placar = Object.keys(COLAB_TIPO).filter(t=>t!=="regra").map(t=>{ const l = dec.filter(s=>s.tipo===t && !(s.dados||{}).direto); if(!l.length) return "";
     const ap = l.filter(s=>s.estado==="aprovada"), ed = ap.filter(s=>(s.texto_final||"").trim()!==(s.texto||"").trim()).length;
     return `<li>${COLAB_TIPO[t]}: ${ap.length-ed} aprovada(s) sem mudança, ${ed} editada(s), ${l.length-ap.length} descartada(s)</li>`; }).join("");
   return `<h3 class="secao">Colaborador Claude · ${ab.length} em pré-gravação</h3>
     ${resumo ? `<details class="cartao" style="display:block;padding:10px;margin:8px 0" open><summary><strong>Resumo da rodada</strong> · <span class="meio-sub">${esc(dataBR(String(resumo.criado_em).slice(0,10)))}</span></summary><p style="white-space:pre-wrap;margin:6px 0">${esc(resumo.texto)}</p></details>` : ""}
     ${ab.length ? ab.map(cartao).join("") : `<p class="meio-sub">Nada em pré-gravação.</p>`}
+    ${diretos.length ? `<h3 class="secao">Gravado pelo Claude · ${diretos.length} nas últimas 48 h</h3>${diretos.map(gravado).join("")}` : ""}
     ${adm ? `<details class="cartao colab-regras" style="display:block;padding:10px;margin:8px 0"><summary><strong>Caderno de regras</strong> · ${regras.length}</summary>
       ${regras.map(r=>`<div data-regra="${r.id}" style="margin:6px 0"><span style="white-space:pre-wrap">${esc(r.texto_final||r.texto)}</span> <button type="button" class="btn-mini" data-ac="revogar">Revogar</button></div>`).join("")}
       <textarea id="colab-regra-txt" rows="2" style="width:100%;margin:6px 0" placeholder="Regra nova para o colaborador"></textarea>
       <button type="button" class="btn-mini" data-ac="regra">Gravar</button>
-      <p class="meio-sub" style="margin-top:10px">Placar dos últimos 30 dias</p><ul>${placar || "<li>Sem decisões no período.</li>"}</ul></details>` : ""}`;
+      <p class="meio-sub" style="margin-top:10px">Placar dos últimos 30 dias</p><ul>${placar}${dir30.length ? `<li>Gravado direto: ${dir30.length}, ${desf} desfeito(s)</li>` : ""}${placar || dir30.length ? "" : "<li>Sem decisões no período.</li>"}</ul></details>` : ""}`;
 }
 async function cliqueColab(b, rows){
   const ac = b.dataset.ac, agora = () => ({decidido_em:new Date().toISOString(), decidido_por:eu.id});
@@ -19375,6 +19386,8 @@ async function cliqueColab(b, rows){
     if(ac==="aprovar"){ const t = el.querySelector(".sug-dia-txt").value.trim(); if(!t) return;
       await api(`/rest/v1/rpc/colab_aprovar`,{method:"POST",body:JSON.stringify({p_id:s.id, p_texto:t})}); aviso("Aprovada"); }
     else if(ac==="descartar") await descarta(s.id);
+    else if(ac==="desfazer"){ if(!confirm("Desfazer o que o Claude gravou neste caso?")) return;
+      await api(`/rest/v1/rpc/colab_desfazer`,{method:"POST",body:JSON.stringify({p_id:s.id})}); aviso("Desfeito"); }
     else return;
     el.remove();
   }catch(e){ aviso(msgErro(e)); }
