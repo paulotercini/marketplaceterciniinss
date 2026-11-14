@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Jornada do cliente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F2EE; --card:#fff; --tx:#1f2328; --mut:#5b6169; --ln:#e2dfd7;
+  --esc:#2f7d4f; --inss:#2563a8; --crps:#8a5a2b; --jud:#6b3fa0; --pag:#6b3fa0; --fim:#3d4450;
+  --paulo:#2563a8; --marcos:#7a9a82; --amanda:#d9a400;
+  --ok:#2f7d4f; --risco:#b42318; --aviso:#b26a00;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 "IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+h1,h2{font-family:"Zilla Slab",Georgia,serif;margin:0}
+h1{font-size:22px} h2{font-size:20px}
+h3{font-size:15px;margin:0 0 8px}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--ln);background:#fff;padding:7px 14px;min-height:36px}
+button:active{transform:scale(.97)}
+button:focus-visible{outline:2px solid var(--inss);outline-offset:2px}
+.pri{background:var(--esc);border-color:var(--esc);color:#fff;font-weight:600}
+.mono{font-family:"IBM Plex Mono",monospace}
+.topo{background:#fff;border-bottom:1px solid var(--ln);padding:12px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.topo p{margin:0;color:var(--mut)}
+.modo{margin-left:auto;display:flex;gap:6px}
+.modo button[aria-pressed=true]{background:var(--tx);color:#fff;border-color:var(--tx)}
+main{max-width:1240px;margin:0 auto;padding:16px 20px 120px}
+
+/* trilho da jornada: sempre visível */
+.trilho{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:0 0 16px;padding:0;list-style:none}
+.trilho li button{width:100%;text-align:left;border:0;border-top:4px solid var(--c);background:#fff;padding:10px 12px;border-radius:8px;min-height:64px}
+.trilho li button small{display:block;color:var(--mut);font-size:12px}
+.trilho li button b{font-size:14px}
+.trilho li.feito button{background:#f6f6f4;color:var(--mut);border-top-color:#b9bcc1}
+.trilho li.feito b::before{content:"✓ ";color:var(--ok)}
+.trilho li.atual button{background:color-mix(in srgb,var(--c) 10%,#fff);box-shadow:inset 0 0 0 1px var(--c)}
+.trilho li.atual small::after{content:" · atual";font-weight:600;color:var(--c)}
+
+.ficha{background:#fff;border-radius:12px;border:1px solid var(--ln);padding:14px 18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.av{width:44px;height:44px;border-radius:8px;background:#e8e4da;display:grid;place-items:center;font:700 18px "Zilla Slab",serif}
+.dados{display:flex;gap:14px;flex-wrap:wrap;color:var(--mut)}
+.selo{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--c) 14%,#fff);color:color-mix(in srgb,var(--c) 80%,#000)}
+.ini{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;font-size:11px;font-weight:700;color:#fff;vertical-align:middle}
+
+.grade{display:grid;grid-template-columns:1fr 340px;gap:14px;align-items:start}
+.q{background:#fff;border:1px solid var(--ln);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.q.cab{border-top:4px solid var(--c)}
+.nota{background:#fffbea;border:1px solid #efe1a8;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:13px}
+.nota b:first-child{display:block;margin-bottom:2px}
+.hoje{background:#fdf1f0;border-color:#f3c7c2}
+.lin{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid #f0eee8}
+.lin:last-child{border-bottom:0}
+.lin span:first-child{color:var(--mut)}
+.risco{color:var(--risco);font-weight:600}
+.okt{color:var(--ok);font-weight:600}
+.passos{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.passos button[aria-current=step]{background:var(--esc);color:#fff;border-color:var(--esc)}
+.passos button.visto::before{content:"✓ "}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:6px 0}
+.chk input{margin-top:3px;width:18px;height:18px}
+.saidas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.saidas button{text-align:left;padding:12px;min-height:84px}
+.saidas button small{display:block;color:var(--mut);margin-top:4px}
+.saidas .pri small{color:#e5f2ea}
+.notas textarea{width:100%;min-height:70px;border:1px solid var(--ln);border-radius:8px;padding:8px;font:inherit}
+.anot{border-left:3px solid var(--c,#ccc);padding:6px 10px;margin:8px 0;background:#fafaf8;border-radius:0 6px 6px 0;font-size:13px}
+.anot small{color:var(--mut);display:block}
+.pe{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--ln);padding:10px 20px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.pe p{margin:0;color:var(--mut);font-size:13px}
+.oculto{display:none!important}
+
+/* comparativo */
+.comp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.comp ol{margin:0;padding-left:20px}
+.comp li{margin:6px 0}
+.mapa{display:flex;gap:0;align-items:stretch;margin:10px 0 4px;flex-wrap:wrap}
+.mapa div{flex:1;min-width:140px;padding:10px;border:1px solid var(--ln);background:#fff;position:relative}
+.mapa div+div{border-left:0}
+.mapa div b{display:block;color:var(--c)}
+.mapa div small{color:var(--mut)}
+.reg{font-size:12px;color:var(--mut);margin-top:10px}
+
+@media (max-width:860px){
+  .grade,.comp{grid-template-columns:1fr}
+  .trilho{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .trilho li button{padding:8px 6px;min-height:56px}
+  .trilho li button small{display:none}
+  .trilho li button b{font-size:12px}
+  .saidas{grid-template-columns:1fr}
+  main{padding:12px 12px 120px}
+  .pe{padding:10px 12px}
+  button{min-height:44px}
+}
+</style>
+</head>
+<body>
+<header class="topo">
+  <h1>Jornada do cliente</h1>
+  <p>Protótipo com dados fictícios. Nada aqui grava no CRM.</p>
+  <div class="modo" role="group" aria-label="Modo">
+    <button id="m-sim" aria-pressed="true">Simular</button>
+    <button id="m-comp" aria-pressed="false">Comparar</button>
+  </div>
+</header>
+
+<main>
+<!-- COMPARATIVO -->
+<section id="comparar" class="oculto">
+  <div class="q">
+    <h2>Um registro só, do balcão ao arquivo</h2>
+    <p>O pré-caso, o caso, os honorários e a conclusão são a mesma linha do cliente. Cada etapa herda tudo da anterior, e nada se redigita.</p>
+    <div class="mapa">
+      <div style="--c:var(--esc)"><b>1 · Identificação</b><small>CPF, senha gov.br, dossiê</small></div>
+      <div style="--c:var(--esc)"><b>2 · Pré-atendimento</b><small>Situação, benefício, documentos e decisão</small></div>
+      <div style="--c:var(--inss)"><b>3 · Caso</b><small>INSS, CRPS ou Judicial</small></div>
+      <div style="--c:var(--pag)"><b>4 · Honorários</b><small>Contrato, parcelas, recebidos</small></div>
+      <div style="--c:var(--fim)"><b>5 · Conclusão</b><small>Quitação e arquivo</small></div>
+    </div>
+  </div>
+  <div class="comp">
+    <div class="q">
+      <h3>Hoje</h3>
+      <ol>
+        <li>A Identificação, o "+ atendimento", o modo atendimento e a tela do caso são lugares diferentes.</li>
+        <li>O atendimento tem quatro passos (Identificação, Primeiro atendimento, Análise de Direito, Documentos), cada um com a sua trilha interna.</li>
+        <li>As anotações do atendimento ficam numa gaveta lateral, separadas das anotações do caso.</li>
+        <li>A saída fica no fim de Documentos (Criar caso, Aposentadoria futura, Encerrar), e o colaborador não sabe onde está.</li>
+        <li>Honorários e conclusão não aparecem como etapa da jornada.</li>
+      </ol>
+    </div>
+    <div class="q">
+      <h3>Proposta</h3>
+      <ol>
+        <li>Um trilho fixo de cinco etapas no alto da ficha, igual para toda a equipe.</li>
+        <li>O botão <b>Pré-atendimento</b> na Identificação abre a etapa 2 no próprio lugar.</li>
+        <li>O pré-atendimento tem três passos: Situação, Benefício e Documentos, e termina na Decisão.</li>
+        <li>As anotações do pré-caso aparecem ao lado e seguem com o caso, na mesma linha do tempo.</li>
+        <li>A concessão abre Honorários; a quitação abre a Conclusão.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="q">
+    <h3>Regras que valem em todas as etapas</h3>
+    <ul>
+      <li>O trilho diz onde o cliente está; a etapa atual é a única colorida.</li>
+      <li>Cada etapa tem um único botão principal, em verde, que leva à seguinte.</li>
+      <li>Quem cuida aparece pela inicial: Paulo em azul, Marcos em verde sálvia, Amanda em amarelo.</li>
+      <li>Voltar a uma etapa anterior é consulta; o que foi decidido nela não se perde.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SIMULAÇÃO -->
+<section id="simular">
+  <ol class="trilho" id="trilho" aria-label="Etapas do cliente"></ol>
+
+  <div class="ficha">
+    <div class="av">M</div>
+    <div>
+      <h2>Maria Teste da Silva</h2>
+      <div class="dados"><span class="mono">000.000.000-00</span><span>62 anos</span><span>(16) 99999-0000</span><span>Adv. <span class="ini" style="background:var(--amanda)">A</span> Amanda</span></div>
+    </div>
+    <span id="selo" class="selo" style="margin-left:auto"></span>
+  </div>
+
+  <div class="nota" id="narra"></div>
+
+  <!-- 1 IDENTIFICAÇÃO -->
+  <div class="tela" data-t="1">
+    <div class="grade">
+      <div>
+        <div class="q cab" style="--c:var(--esc)">
+          <h3>Identificação</h3>
+          <div class="lin"><span>CPF</span><span class="mono">000.000.000-00</span></div>
+          <div class="lin"><span>Senha gov.br</span><span class="okt">Testada hoje, entrou</span></div>
+          <div class="lin"><span>Dossiê</span><span>38 documentos (Meu INSS, CNIS, RAIS, CadÚnico)</span></div>
+          <div class="lin"><span>Endereço</span><span>Rua Fictícia, 100, Monte Alto/SP</span></div>
+          <div class="lin"><span>Atendimento agendado</span><span>Hoje, 09:00, Dra. Amanda (001)</span></div>
+        </div>
+        <div class="q">
+          <h3>Antes de começar</h3>
+          <label class="chk"><input type="checkbox" checked disabled> CPF conferido</label>
+          <label class="chk"><input type="checkbox" checked disabled> Senha do gov.br testada</label>
+          <label class="chk"><input type="checkbox" checked disabled> Dossiê baixado</label>
+        </div>
+      </div>
+      <aside class="q">
+        <h3>Casos e pré-casos</h3>
+        <p style="color:var(--mut);margin:0">Nenhum em aberto.</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 2 PRÉ-ATENDIMENTO -->
+  <div class="tela" data-t="2">
+    <div class="grade">
+      <div>
+        <div class="passos" id="passos" role="group" aria-label="Passos do pré-atendimento"></div>
+
+        <div class="sub" data-s="1">
+          <div class="q cab" style="--c:var(--esc)">
+            <h3>Situação no INSS</h3>
+            <div class="lin"><span>Qualidade de segurada</span><span class="okt">Mantida até 15/06/2027</span></div>
+            <div class="lin"><span>Carência</span><span>172 de 180 meses</span></div>
+            <div class="lin"><span>Tempo de contribuição</span><span>14a 4m</span></div>
+            <div class="lin"><span>Pedidos ao INSS</span><span class="risco">B41 indeferido em 02/10/2026</span></div>
+          </div>
+          <div class="q">
+            <h3>Problemas · 2</h3>
+            <div class="lin"><span>Vínculo de 1994 sem data de saída (PEXT)</span><span>Escritório · acerto no CNIS</span></div>
+            <div class="lin"><span>Recolhimentos de 2019 abaixo do mínimo</span><span>Cliente · complementar 8 guias</span></div>
+          </div>
+        </div>
+
+        <div class="sub" data-s="2">
+          <div class="q cab" style="--c:var(--esc)">
+            <h3>Benefício: Aposentadoria por idade urbana (B41)</h3>
+            <div class="lin"><span>Idade (62 anos)</span><span class="okt">Cumprida</span></div>
+            <div class="lin"><span>Carência (180 meses)</span><span class="risco">Faltam 8, com o acerto do CNIS cumpre</span></div>
+            <div class="lin"><span>Recurso do indeferimento</span><span class="risco">Prazo até 01/11/2026 já correu</span></div>
+            <div class="lin"><span>Data do direito</span><span>Hoje, com o acerto</span></div>
+            <div class="lin"><span>Valor estimado</span><span>R$ 1.621,00</span></div>
+          </div>
+          <div class="q"><h3>Conclusão do advogado</h3><p style="margin:0">Novo requerimento com o acerto do vínculo de 1994. Sem necessidade de recolher.</p></div>
+        </div>
+
+        <div class="sub" data-s="3">
+          <div class="q cab" style="--c:var(--esc)">
+            <h3>Documentos</h3>
+            <label class="chk"><input type="checkbox" checked> Procuração assinada</label>
+            <label class="chk"><input type="checkbox" checked> Contrato de honorários assinado</label>
+            <label class="chk"><input type="checkbox"> CTPS de 1994 (cliente traz até 28/11)</label>
+            <label class="chk"><input type="checkbox" checked disabled> CNIS e RAIS, já no dossiê</label>
+          </div>
+        </div>
+
+        <div class="sub" data-s="4">
+          <div class="q cab" style="--c:var(--esc)">
+            <h3>Decisão do pré-atendimento</h3>
+            <div class="saidas">
+              <button class="pri" data-ir="3">Caso<small>Abre o caso B41 no INSS, com tudo o que foi anotado</small></button>
+              <button data-msg="O cliente iria às Aposentadorias futuras, com a data do direito e o aviso.">Futura<small>Ainda não tem o direito; avisa na data</small></button>
+              <button data-msg="O pré-caso seria encerrado com o motivo, e as anotações ficam na ficha.">Encerrar<small>Sem direito ou sem interesse</small></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="q notas">
+        <h3>Anotações do pré-caso</h3>
+        <textarea placeholder="Escrever no pré-caso…" aria-label="Anotação do pré-caso"></textarea>
+        <div class="anot" style="--c:var(--amanda)"><small>Amanda · 14/11 09:12</small>Trabalhou de 1994 a 1997 na fábrica; tem a CTPS em casa.</div>
+        <div class="anot" style="--c:var(--amanda)"><small>Amanda · 14/11 09:20</small>Prefere esperar pelo valor maior.</div>
+        <p class="reg">Estas anotações seguem com o caso, na mesma linha do tempo.</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 3 CASO -->
+  <div class="tela" data-t="3">
+    <div class="grade">
+      <div>
+        <div class="q cab" style="--c:var(--inss)">
+          <h3>B41 · Aposentadoria por idade · INSS</h3>
+          <div class="lin"><span>Nasceu do pré-caso</span><span>14/11/2026, Dra. Amanda</span></div>
+          <div class="lin"><span>Protocolo</span><span class="mono">0000000000</span></div>
+          <div class="lin"><span>DER</span><span>17/11/2026</span></div>
+          <div class="lin"><span>Etapa</span><span>Aguardando análise, há 21 dias</span></div>
+          <div class="lin"><span>Prazo de análise do INSS</span><span>Até 16/01/2027</span></div>
+        </div>
+        <div class="q">
+          <h3>Último andamento no INSS</h3>
+          <div class="anot" style="--c:var(--inss)"><small>PAT · 05/12/2026</small>Benefício concedido. DIB 17/11/2026, renda R$ 1.621,00.</div>
+          <button class="pri" data-ir="4">Concedido</button>
+        </div>
+      </div>
+      <aside class="q notas">
+        <h3>Anotações do caso</h3>
+        <div class="anot" style="--c:var(--paulo)"><small>Paulo · 17/11 14:02</small>Protocolado com o acerto do vínculo de 1994.</div>
+        <div class="anot" style="--c:var(--amanda)"><small>Amanda · 14/11 09:20 · do pré-caso</small>Prefere esperar pelo valor maior.</div>
+        <div class="anot" style="--c:var(--amanda)"><small>Amanda · 14/11 09:12 · do pré-caso</small>Trabalhou de 1994 a 1997 na fábrica; tem a CTPS em casa.</div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 4 HONORÁRIOS -->
+  <div class="tela" data-t="4">
+    <div class="grade">
+      <div>
+        <div class="q cab" style="--c:var(--pag)">
+          <h3>Honorários do caso B41</h3>
+          <div class="lin"><span>Contrato</span><span>30% dos atrasados + 3 benefícios (assinado em 14/11)</span></div>
+          <div class="lin"><span>Atrasados</span><span>R$ 972,60</span></div>
+          <div class="lin"><span>Parcela 1 de 3</span><span class="okt">Recebida em 10/01/2027</span></div>
+          <div class="lin"><span>Parcela 2 de 3</span><span>Vence em 10/02/2027</span></div>
+          <div class="lin"><span>Parcela 3 de 3</span><span>Vence em 10/03/2027</span></div>
+        </div>
+        <div class="q">
+          <h3>Ações</h3>
+          <button data-msg="A parcela seria marcada como recebida, com o comprovante.">Recebido</button>
+          <button data-msg="A mensagem de cobrança iria ao campo do WhatsApp, para conferir antes de enviar.">Cobrar</button>
+          <button class="pri" data-ir="5">Quitado</button>
+        </div>
+      </div>
+      <aside class="q notas">
+        <h3>Vem do contrato</h3>
+        <p style="margin:0;color:var(--mut)">O contrato assinado no pré-atendimento define as parcelas. Ninguém digita de novo.</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 5 CONCLUSÃO -->
+  <div class="tela" data-t="5">
+    <div class="q cab" style="--c:var(--fim)">
+      <h3>Conclusão</h3>
+      <label class="chk"><input type="checkbox" checked> Honorários quitados</label>
+      <label class="chk"><input type="checkbox"> Documentos originais devolvidos ao cliente</label>
+      <label class="chk"><input type="checkbox"> Mensagem final enviada (pedido de avaliação no Google)</label>
+      <label class="chk"><input type="checkbox"> Revisão futura agendada (decadência até 01/12/2036)</label>
+      <p style="margin-top:12px"><button class="pri" data-msg="O caso seria arquivado. A ficha continua, pronta para um novo pré-atendimento.">Arquivar</button></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="pe" id="pe">
+  <p id="pe-txt"></p>
+  <div><button id="volta">Anterior</button> <button class="pri" id="segue">Próximo</button></div>
+</footer>
+
+<script>
+const ETAPAS=[
+  {n:1,t:"Identificação",d:"Quem é o cliente",c:"var(--esc)",selo:"Em identificação",narra:"<b>O cliente chega ao balcão.</b>A recepção abre a Identificação, confere o CPF, testa a senha do gov.br e baixa o dossiê. Pronto isso, o advogado toca em <b>Pré-atendimento</b>."},
+  {n:2,t:"Pré-atendimento",d:"Pré-caso",c:"var(--esc)",selo:"Pré-caso · B41",narra:"<b>O advogado atende.</b>O pré-caso nasce aqui e tem três passos: Situação, Benefício e Documentos. As anotações ficam ao lado e seguem com o caso. No fim, uma decisão: Caso, Futura ou Encerrar."},
+  {n:3,t:"Caso",d:"INSS, CRPS ou Judicial",c:"var(--inss)",selo:"Caso ativo · INSS",narra:"<b>O pré-caso vira caso.</b>É a mesma linha: benefício, documentos e anotações já estão aqui. A fase segue os portais (INSS, CRPS, Judicial)."},
+  {n:4,t:"Honorários",d:"Contrato e parcelas",c:"var(--pag)",selo:"Caso ativo · Honorários",narra:"<b>O benefício foi concedido.</b>As parcelas saem do contrato assinado no pré-atendimento. A equipe marca o recebido e cobra pelo WhatsApp."},
+  {n:5,t:"Conclusão",d:"Quitação e arquivo",c:"var(--fim)",selo:"Concluído",narra:"<b>O trabalho termina.</b>Uma lista curta fecha o cliente: quitação, devolução de documentos, mensagem final e a revisão futura."}
+];
+const PASSOS=["Situação","Benefício","Documentos","Decisão"];
+let et=1, ps=1, vistos=new Set([1]);
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+function pinta(){
+  $("#trilho").innerHTML=ETAPAS.map(e=>`<li class="${e.n<et?"feito":e.n===et?"atual":""}" style="--c:${e.c}"><button data-ir="${e.n}" ${e.n===et?'aria-current="step"':""}><small>${e.n} · ${e.d}</small><b>${e.t}</b></button></li>`).join("");
+  const E=ETAPAS[et-1];
+  $("#selo").textContent=E.selo; $("#selo").style.setProperty("--c",E.c);
+  $("#narra").innerHTML=E.narra;
+  $$(".tela").forEach(t=>t.classList.toggle("oculto",+t.dataset.t!==et));
+  $("#passos").innerHTML=PASSOS.map((p,i)=>`<button data-ps="${i+1}" class="${vistos.has(i+1)&&i+1!==ps?"visto":""}" ${i+1===ps?'aria-current="step"':""}>${i+1} · ${p}</button>`).join("");
+  $$(".sub").forEach(s=>s.classList.toggle("oculto",+s.dataset.s!==ps));
+  const seg=$("#segue");
+  if(et===1){seg.textContent="Pré-atendimento";$("#pe-txt").textContent="Etapa 1 de 5 · a recepção prepara; o advogado começa o pré-atendimento."}
+  else if(et===2){seg.textContent=ps<4?"Próximo":"Caso";$("#pe-txt").textContent=`Pré-atendimento · passo ${ps} de 4 · ${PASSOS[ps-1]}`}
+  else if(et===3){seg.textContent="Concedido";$("#pe-txt").textContent="Etapa 3 de 5 · o caso anda pelos portais."}
+  else if(et===4){seg.textContent="Quitado";$("#pe-txt").textContent="Etapa 4 de 5 · parcelas do contrato."}
+  else {seg.textContent="Reiniciar";$("#pe-txt").textContent="Etapa 5 de 5 · fechamento."}
+  $("#volta").disabled=et===1&&ps===1;
+}
+function ir(n){et=n; if(n===2){ps=1;vistos=new Set([1])} pinta(); scrollTo({top:0,behavior:"smooth"})}
+document.addEventListener("click",ev=>{
+  const b=ev.target.closest("button"); if(!b) return;
+  if(b.dataset.ir) ir(+b.dataset.ir);
+  else if(b.dataset.ps){ps=+b.dataset.ps;vistos.add(ps);pinta()}
+  else if(b.dataset.msg) alerta(b.dataset.msg);
+});
+$("#segue").onclick=()=>{
+  if(et===2&&ps<4){ps++;vistos.add(ps);pinta();return}
+  if(et===5){ir(1);return}
+  ir(et+1);
+};
+$("#volta").onclick=()=>{ if(et===2&&ps>1){ps--;pinta()} else if(et>1) ir(et-1) };
+function alerta(t){$("#narra").innerHTML="<b>No CRM:</b>"+t}
+function modo(c){$("#m-sim").setAttribute("aria-pressed",!c);$("#m-comp").setAttribute("aria-pressed",c);$("#simular").classList.toggle("oculto",c);$("#comparar").classList.toggle("oculto",!c);$("#pe").classList.toggle("oculto",c)}
+$("#m-sim").onclick=()=>modo(false); $("#m-comp").onclick=()=>modo(true);
+pinta();
+</script>
+</body>
+</html>
