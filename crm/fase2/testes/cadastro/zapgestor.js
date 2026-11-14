@@ -23,7 +23,8 @@ const T = {
   zap_conversas: [conv(DA_AMANDA, "Cliente da Amanda", AMANDA, { nao_lidas: 2 }),
                   conv(PENDENTE, "Cliente na fila", null, { setor_id: S1 }),
                   conv(MINHA, "Cliente do Paulo", EU),
-                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 1 })],
+                  conv("d2000000-0000-0000-0000-000000000004", "Cliente que escreveu", null, { setor_id: S1, nao_lidas: 1 }),
+                  conv("d2000000-0000-0000-0000-000000000005", "Cliente com a IA", null, { setor_id: S1, nao_lidas: 1, plantao: { modo: "conversa" } })],
   zap_mensagens: [{ id: "m1", seq: 1, conversa_id: DA_AMANDA, direcao: "entrada", tipo: "texto", texto: "Oi, doutora", status: "entregue", criado_em: agora }],
   zap_setores: [{ id: S1, nome: "Atendimento", cor: "#5b7fd6", ordem: 1, ativo: true }],
   colaborador_setores: [{ colaborador_id: EU, setor_id: S1 }],
@@ -77,7 +78,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   conf("gestor: a lista tem a fila Todas e o Painel da equipe", (await p.textContent(".zl-cab")).includes("Todas") && (await p.textContent(".zl-cab")).includes("Painel da equipe"));
-  conf("gestor: vê a conversa que está com a Amanda", (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  conf("gestor: vê a conversa que está com a Amanda", (await p.$$eval(".zap-conv", cs => cs.length)) === 5);
   await p.evaluate(() => abrirPainelZap());
   await p.waitForSelector(".zg");
   const painel = await p.textContent(".zg");
@@ -105,6 +106,20 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   await p.waitForSelector(".zl-filas");
   const pend = await p.textContent("#app");
   conf("atendente: Pendentes mostra também a conversa já lida (F365)", pend.includes("Cliente que escreveu") && pend.includes("Cliente na fila"));
+  // F593 · a conversa que a IA conduz fica fora de Pendentes e Novas e aparece em "Com a IA"
+  conf("F593: Pendentes não mostra a conversa com a IA", !pend.includes("Cliente com a IA"));
+  await p.evaluate(() => { zapFiltro = "novas"; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  conf("F593: Novas não mostra a conversa com a IA", !(await p.textContent("#app")).includes("Cliente com a IA"));
+  await p.evaluate(() => { zapFiltro = "ia"; irPara("whatsapp"); });
+  await p.waitForSelector(".zl-filas");
+  const comIa = await p.textContent("#app");
+  conf("F593: a fila Com a IA mostra só a conversa da IA", (await p.textContent(".zl-cab")).includes("Com a IA") && comIa.includes("Cliente com a IA") && !comIa.includes("Cliente na fila"));
+  let pergunta = "";
+  p.once("dialog", d => { pergunta = d.message(); d.dismiss(); });
+  await p.evaluate(async id => { await abrirConversa(id); await assumirConversa(); }, "d2000000-0000-0000-0000-000000000005");
+  await p.waitForTimeout(300);
+  conf("F593: Assumir a conversa com a IA pede confirmação e, recusado, não assume", pergunta.includes("A IA ainda conduz") && !escritas.some(e => /zap_conversas/.test(e.u) && e.b && e.b.atendente_id));
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
@@ -156,7 +171,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   // F368 · o atendente marcado como gestor do WhatsApp vê todas e transfere a conversa de outra pessoa, sem ser administrador
   await p.evaluate(() => { eu.gestor_zap = true; zapFiltro = "todas"; zapAberta = null; irPara("whatsapp"); });
   await p.waitForSelector(".zl-filas");
-  conf("gestor do WhatsApp: tem Todas e vê as 4 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 4);
+  conf("gestor do WhatsApp: tem Todas e vê as 5 conversas (F368)", (await p.textContent(".zl-cab")).includes("Todas") && (await p.$$eval(".zap-conv", cs => cs.length)) === 5);
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
   await p.waitForSelector(".zap-topo");
   conf("gestor do WhatsApp: na conversa da Amanda há Transferir (F368)", (await p.textContent(".zap-topo")).includes("Transferir"));
