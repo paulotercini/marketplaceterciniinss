@@ -96,11 +96,11 @@ jobs:
       # Falha = linha com ERROR ou FALHOU (o "role already exists" do teste de banco vazio não conta, os papéis são do servidor).
       # "vermelhos" são as suítes que já falhavam em 10.11.2026, por teste desatualizado ou schema.sql incompleto:
       # rodam e mostram o resultado, mas não derrubam o job. Ao consertar uma, tire o nome daqui.
-      - name: Rodar crm/fase2/testes/zap*.sql
+      - name: Rodar crm/fase2/testes/zap*.sql e colab*.sql
         run: |
           vermelhos=" zap zap_bot zap_ia zap_plantao zap_smbot zap_triagem zap_volta "
           ruim=0
-          for f in crm/fase2/testes/zap*.sql; do
+          for f in crm/fase2/testes/zap*.sql crm/fase2/testes/colab*.sql; do
             t=$(basename "$f" .sql)
             dropdb --if-exists "t_$t"
             if grep -qi 'banco vazio' "$f"; then createdb "t_$t"; else createdb -T base "t_$t"; fi
