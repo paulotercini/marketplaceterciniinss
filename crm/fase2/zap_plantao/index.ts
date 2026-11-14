@@ -655,6 +655,47 @@ export function conferirAmparo(resposta: string, a: Amparo) {
   return (r.match(/\d+/g) || []).every((x) => fatos.has(n(x))) ? r : "";
 }
 
+// F600 · imagem sem legenda e sem relação com o escritório (propaganda, cardápio, corrente) fica sem resposta, a pedido do Paulo
+type MsgImg = { direcao: string; tipo: string; texto: string | null; midia_url?: string | null; midia_mime?: string | null };
+// recebe as mensagens da mais nova à mais antiga; devolve as imagens da última rajada do cliente, só quando ela é apenas imagem sem texto
+export function imagensSoltas(ms: MsgImg[]) {
+  const rajada: MsgImg[] = [];
+  for (const m of ms) { if (m.direcao !== "entrada") break; rajada.push(m); }
+  if (!rajada.length || rajada.some((m) => m.tipo !== "imagem" || String(m.texto || "").trim() || !m.midia_url)) return [];
+  return rajada.slice(0, 3);
+}
+export const ESQ_IMAGEM = { type: "object", properties: { relacionada: { type: "boolean" } }, required: ["relacionada"], additionalProperties: false };
+export const PROMPT_IMAGEM =
+  "Um escritório de advocacia previdenciária (INSS, aposentadoria, benefício por incapacidade, perícia, BPC) recebeu do cliente, pelo WhatsApp, " +
+  "as imagens acima, sem texto. relacionada = true se alguma imagem pode ter relação com o escritório ou com o caso: documento pessoal, carteira " +
+  "de trabalho, carta, tela ou print do INSS ou do Meu INSS, laudo, atestado, receita, exame, relatório médico, comprovante de pagamento ou de PIX, " +
+  "papel de processo, print de conversa, foto de pessoa, de lesão ou de documento, ou qualquer imagem duvidosa. relacionada = false apenas quando " +
+  "todas são claramente alheias: propaganda, cardápio, oferta de produto ou serviço, corrente, meme, mensagem de bom dia, imagem religiosa, paisagem.";
+const MIME_IMG = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+function base64(u: Uint8Array) {
+  let s = "";
+  for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode(...u.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+// na dúvida (sem imagem legível, falha do modelo), vale a imagem relacionada e a conversa segue como antes
+async function imagemSemRelacao(conversa: string) {
+  const h = { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` };
+  const ms = await (await fetch(`${URL_SB}/rest/v1/zap_mensagens?conversa_id=eq.${conversa}&direcao=in.(entrada,saida)` +
+    `&select=direcao,tipo,texto,midia_url,midia_mime&order=criado_em.desc&limit=10`, { headers: h })).json();
+  const imgs = imagensSoltas(Array.isArray(ms) ? ms : []);
+  if (!imgs.length) return false;
+  const blocos: unknown[] = [];
+  for (const m of imgs) {
+    const r = await fetch(`${URL_SB}/storage/v1/object/authenticated/anexos/${m.midia_url}`, { headers: h });
+    const tipo = String(m.midia_mime || r.headers.get("content-type") || "").split(";")[0].trim().toLowerCase();
+    const u = r.ok ? new Uint8Array(await r.arrayBuffer()) : new Uint8Array();
+    if (!MIME_IMG.includes(tipo) || !u.length || u.length > 4_500_000) return false;
+    blocos.push({ type: "image", source: { type: "base64", media_type: tipo, data: base64(u) } });
+  }
+  blocos.push({ type: "text", text: PROMPT_IMAGEM });
+  return (await claude(blocos, ESQ_IMAGEM)).relacionada === false;
+}
+
 export function promptPlantao(x: Contexto) {
   return `${regras(x.instrucoes)}\n\n<contexto>\n${contexto(x)}</contexto>\n\n<conversa>\n${transcricao(x.mensagens || [])}\n</conversa>`;
 }
@@ -685,7 +726,7 @@ async function atendenteDe(conversa?: string | null): Promise<(Atendente & { off
 }
 // F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência e na agenda (F521)
 
-async function claude(texto: string, esquema: unknown = ESQUEMA) {
+async function claude(texto: string | unknown[], esquema: unknown = ESQUEMA) {
   const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: { "x-api-key": CHAVE_IA, "anthropic-version": "2023-06-01", "content-type": "application/json" },
@@ -1472,6 +1513,11 @@ if (typeof Deno !== "undefined") {
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       // F521 · a agenda pedida neste Offline a IA responde pelo escritório; F561 · fora dela, o Offline vira sugestão (zap_plantao_aplicar)
       if (x.atendente?.offline && x.atendente.iaAgenda) x.atendente = null;
+      if (!x.remarcar && x.conversa_id && await imagemSemRelacao(x.conversa_id).catch((e) => { console.error("zap_plantao imagem:", String(e)); return false; })) {
+        await rpc("zap_plantao_aplicar", { p_msg: msg, p_acao: "nada", p_resposta: "", p_advogado: "", p_urgente: false,
+          p_assunto: "imagem sem relação com o escritório", p_relato: "", p_nome: "" });
+        return json({ acao: "nada", imagem: "sem relação" });
+      }
       if (x.remarcar?.ler && x.conversa_id) {
         // a primeira resposta à confirmação: confirmar não passa pelo agente; o sistema manda a resposta do SIM
         let intencao = DE_CLASSE[x.remarcar.classe || ""] || "outro";
