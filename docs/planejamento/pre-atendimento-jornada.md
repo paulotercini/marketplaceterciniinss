@@ -52,7 +52,7 @@ A Dra. Amanda toca **Criar**, escolhe "INSS" e informa o protocolo.
 A ficha abre direto no caso. A linha das estações mostra Caso colorido, com a fase atual (INSS azul, Conselho marrom, Judicial roxo). O trabalho segue como já é hoje: prazos, andamentos dos portais, perícias.
 *Grava:* o que já grava hoje.
 
-**Passo 6. Cobrar (advogado ou financeiro).**
+**Passo 6. Cobrar (advogado).**
 Quando o caso recebe a concessão (carta, sentença, RPV), o CRM propõe os honorários do contrato (F236) e acende a estação Honorários. **Cobrar** abre as parcelas, a data e quem confere o pagamento.
 *Grava:* `pagamentos` com `caso_id`. Nada se grava sem o clique.
 
@@ -66,7 +66,7 @@ Com todas as parcelas recebidas, **Concluir** encerra o caso e pergunta se o cli
 |---|---|---|
 | Recepção (nível 2) | Identificação | Chegou, Dossiê, Pronto |
 | Advogado (nível 3 e 4) | Todas | Atender, Salvar, Criar, Futura, Arquivar, Cobrar, Concluir |
-| Estagiário (nível 3) | Caso | anotações e prazos |
+| Estagiário (nível 3) | Caso | anotações e prazos, sem Atender e sem Cobrar |
 
 O nível abaixo do 3 vê a linha das estações, mas sem os botões.
 
@@ -77,8 +77,9 @@ O nível abaixo do 3 vê a linha das estações, mas sem os botões.
 3. A linha das estações (`faixaJornada`) entra no alto da ficha, acima das fases.
 4. Honorários e Conclusão ganham estado próprio na mesma linha de `casos`.
 
-## 6. Pontos para decisão do Paulo
+## 6. Decisões do Paulo (14.11.2026)
 
-- Se o Arquivar do pré-caso fica visível no histórico do cliente ou apenas no Cuidar do acervo.
-- Se a estagiária pode tocar **Atender** em retorno de cliente já existente.
-- Se **Cobrar** fica com o advogado ou com uma pessoa do financeiro.
+- O pré-caso arquivado fica arquivado e **visível no histórico do cliente**, com o motivo e a data.
+- A estagiária **não toca Atender**; o botão aparece apenas para os advogados.
+- **Cobrar** fica com os advogados.
+- As telas seguem o padrão já adotado na tela dos casos (cabeçalho na cor da fase, quadro Prazos, Dashboard).
