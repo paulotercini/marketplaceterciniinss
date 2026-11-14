@@ -38,19 +38,45 @@ window.CRM = window.CRM || {
   // pausa: o portal é do tribunal, e derrubar a sessão custa a coleta inteira.
   // `baixar(doc)` → Response, para o portal que precisa de cabeçalho próprio.
   // Falha num documento não derruba a coleta: o andamento vai sem ele.
-  async guardarDocs(origem, processo, docs, { todos = false, baixar, pausaMs = 600, existentes = null } = {}) {
+  // Opcionais: `falhas` (lista do chamador, recebe { id, nome, motivo, status }
+  // de cada documento que não ficou guardado), `pararEm` (N recusas seguidas do
+  // portal encerram o laço e marcam `falhas.parou` com o status) e
+  // `pausaDesdeDownload` (a pausa conta do fim do download, com o upload dentro).
+  async guardarDocs(origem, processo, docs, { todos = false, baixar, pausaMs = 600, existentes = null,
+                                              falhas = null, pararEm = 0, pausaDesdeDownload = false } = {}) {
     const R = window.DOCS_REGRAS;
-    let n = 0;
+    const dormir = ms => new Promise(res => setTimeout(res, ms));
+    // nenhum documento some calado: fica no console e, se pedida, na lista
+    const faltou = (d, motivo, status) => {
+      console.warn('[CRM] documento não guardado:', d.nome, motivo);
+      if (falhas) falhas.push({ id: d.id, nome: d.nome, motivo, status });
+    };
+    let n = 0, seguidas = 0;
     for (const d of docs || []) {
       if (!d || (!d.url && !baixar) || (!todos && !R.vaiBaixar(d.nome))) continue;
       const caminho = R.caminhoDoc(origem, processo, d);
+      // a pausa vale para todo pedido ao portal, também o que falhou: sem ela,
+      // depois de uma recusa o documento seguinte saía na hora
+      let tocou = false, espera = null;
       try {
         // `existentes` (a pasta listada de uma vez) poupa uma ida ao banco por documento
         const jaTem = existentes ? existentes.has(caminho) : (await CRM.pedir({ tipo: 'crm', acao: 'doc-existe', caminho })).existe;
         if (!jaTem) {
-          const r = baixar ? await baixar(d)
-            : await fetch(new URL(d.url, location.href), { credentials: 'include' });
-          if (!r || !r.ok) continue;
+          tocou = true;
+          let r = null;
+          try {
+            r = baixar ? await baixar(d)
+              : await fetch(new URL(d.url, location.href), { credentials: 'include' });
+          } catch (e) { console.warn('[CRM] o portal não respondeu:', d.nome, e); }
+          if (pausaDesdeDownload) espera = dormir(pausaMs);
+          if (!r || !r.ok) {
+            const st = r ? r.status : 0;
+            faltou(d, r ? `o portal recusou (${st})` : 'o portal não respondeu', st);
+            // 409 é "não há documento" (PDF assíncrono do PAT), não recusa do portal
+            if (st !== 409 && pararEm && ++seguidas >= pararEm) { if (falhas) falhas.parou = st || 'sem resposta'; break; }
+            continue;
+          }
+          seguidas = 0;
           let buf = new Uint8Array(await r.arrayBuffer());
           let ctype = r.headers.get('content-type');
           let tipoDoc = R.tipoDoConteudo(buf, ctype);
@@ -65,7 +91,7 @@ window.CRM = window.CRM || {
             ctype = r2.headers.get('content-type');
             tipoDoc = R.tipoDoConteudo(buf, ctype);
           }
-          if (!tipoDoc) continue;                      // tela de login ou erro, não documento
+          if (!tipoDoc) { faltou(d, 'o portal não devolveu documento (login ou erro)'); continue; }
           // HTML em outro charset (o eproc é ISO-8859-1) vai ao bucket em UTF-8
           if (tipoDoc === 'text/html') {
             const cs = R.charsetDoHtml(buf, ctype);
@@ -80,19 +106,31 @@ window.CRM = window.CRM || {
           }
           // sobe DIRETO ao Storage (sem o teto de 64 MiB da mensagem interna)
           const { url, chave, token } = await CRM.pedir({ tipo: 'crm', acao: 'acesso-storage' });
-          const up = await fetch(`${url}/storage/v1/object/anexos/${caminho}`, { method: 'POST', body: buf,
-            headers: { apikey: chave, Authorization: 'Bearer ' + token, 'Content-Type': tipoDoc, 'x-upsert': 'false' } });
+          // queda de rede ou 5xx do Storage: repete só o upload (2 s e 5 s), com o
+          // mesmo `buf`. Perder o que já desceu custa reabrir o processo no portal
+          let up = null, erroRede = null;
+          for (const ms of [0, 2000, 5000]) {
+            if (ms) await dormir(ms);
+            try {
+              up = await fetch(`${url}/storage/v1/object/anexos/${caminho}`, { method: 'POST', body: buf,
+                headers: { apikey: chave, Authorization: 'Bearer ' + token, 'Content-Type': tipoDoc, 'x-upsert': 'false' } });
+              erroRede = null;
+            } catch (e) { up = null; erroRede = e; }
+            if (up && up.status < 500) break;
+          }
+          if (!up) throw erroRede;
           if (!up.ok) {
             const t = await up.text();
             if (!(up.status === 409 || /already exists|Duplicate/i.test(t))) {
-              console.warn('[CRM] o Storage recusou', d.nome, `(${Math.round(buf.length / 1048576)} MB):`, up.status, t.slice(0, 120));
-              continue;                                // grande demais ou recusado: segue para o próximo
+              // grande demais ou recusado: segue para o próximo
+              faltou(d, `o Storage recusou (${up.status}, ${Math.round(buf.length / 1048576)} MB): ${t.slice(0, 120)}`, up.status);
+              continue;
             }
           }
-          await new Promise(res => setTimeout(res, pausaMs));
         }
         d.caminho = caminho; n++;
-      } catch (e) { console.warn('[CRM] documento não guardado:', d.nome, e); }
+      } catch (e) { faltou(d, String((e && e.message) || e)); }
+      finally { if (tocou) await (espera || dormir(pausaMs)); }
     }
     return n;
   },

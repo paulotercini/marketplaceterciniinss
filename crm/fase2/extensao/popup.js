@@ -102,8 +102,8 @@ function rodarTudo() {
   chrome.runtime.sendMessage({ tipo: 'rodar-tudo' }, r => {
     if (!r) return (res.textContent = 'sem resposta — as coletas seguem nas abas; confira em 📥 Importar');
     if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
-    const linha = f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + (f.ok === 'retomado' ? 'ok' : f.ok)}`;
-    res.style.color = r.feitos.some(f => f.erro) ? '#B4530A' : '#1E6F50';
+    const linha = f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + (f.ok === 'retomado' ? 'ok' : f.ok) + (f.falhas ? ` (${f.falhas} falharam)` : '') + (f.parcial ? ' (parcial)' : '')}`;
+    res.style.color = r.feitos.some(f => f.erro || f.falhas || f.parcial) ? '#B4530A' : '#1E6F50';
     res.textContent = r.feitos.map(linha).join(' · ') + ' · INSS: '
       + (r.pat && r.pat.esperando ? 'tela pronta — clique em "Buscar"' : (r.pat && r.pat.erro) || 'ok');
   });
@@ -115,8 +115,8 @@ document.getElementById('b-judicial').onclick = () => {
   chrome.runtime.sendMessage({ tipo: 'rodar-judicial' }, r => {
     if (!r) return;
     if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
-    res.style.color = r.feitos.some(f => f.erro) ? '#B4530A' : '#1E6F50';
-    res.textContent = r.feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + (f.ok === 'retomado' ? 'ok' : f.ok)}`).join(' · ');
+    res.style.color = r.feitos.some(f => f.erro || f.falhas || f.parcial) ? '#B4530A' : '#1E6F50';
+    res.textContent = r.feitos.map(f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + (f.ok === 'retomado' ? 'ok' : f.ok) + (f.falhas ? ` (${f.falhas} falharam)` : '') + (f.parcial ? ' (parcial)' : '')}`).join(' · ');
   });
 };
 // F187 · completar processos: roda no service worker (o popup pode fechar);

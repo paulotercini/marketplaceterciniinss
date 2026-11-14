@@ -2,7 +2,6 @@
 // Só abre o navegador quando há coleta esperando. Entra como o administrador por um link de uso único
 // gerado com a service key (nenhum e-mail é enviado) e abre o CRM publicado com ?coletas=robo, que roda
 // o mesmo autoAplicarColetas do CRM aberto: mesma regra, mesma trava, o que pede escolha vai às Novidades.
-const { chromium } = require("playwright");
 const URL_ = (process.env.SUPABASE_URL||"").replace(/\/$/,""), SK = process.env.SUPABASE_SERVICE_KEY;
 const ANON = process.env.SUPABASE_ANON_KEY;
 const CRM = process.env.CRM_URL || "https://paulotercini.github.io/marketplaceterciniinss/crm/";
@@ -12,11 +11,20 @@ async function j(path, opt={}){
   if(!r.ok) throw new Error(`${path.split("?")[0]} ${r.status} ${(await r.text()).slice(0,200)}`);
   return r.json();
 }
+// só a coleta de até 24 h conta: a encalhada (processo sem caso, erro que se repete) não faz o robô
+// abrir o navegador a cada 10 minutos para nada; ela continua na fila do 📥 Importar
+const fila = () => j(`/rest/v1/coletas?aplicada_em=is.null&criado_em=gte.${new Date(Date.now()-864e5).toISOString()}&select=id,fonte,criado_em`);
+function porFonte(l){
+  const n = {}; for(const c of l) n[c.fonte] = (n[c.fonte]||0) + 1;
+  const velha = l.reduce((m,c)=>Math.min(m, Date.parse(c.criado_em)), Date.now());
+  return (Object.entries(n).map(([f,q])=>`${f} ${q}`).join(", ") || "nenhuma")
+    + (l.length ? `; a mais antiga há ${Math.round((Date.now()-velha)/60000)} min` : "");
+}
 (async () => {
   if(!URL_ || !SK || !ANON) return console.log("::notice::Segredos ausentes; robô das coletas pulado.");
-  const pend = await j("/rest/v1/coletas?aplicada_em=is.null&select=id,fonte");
+  const pend = await fila();
   if(!pend.length) return console.log("Nenhuma coleta esperando.");
-  console.log(`${pend.length} coleta(s) esperando: ${pend.map(c=>c.fonte).join(", ")}`);
+  console.log(`${pend.length} coleta(s) esperando: ${porFonte(pend)}`);
   const [adm] = await j("/rest/v1/colaboradores?papel=eq.admin&ativo=eq.true&auth_id=not.is.null&select=auth_id&limit=1");
   if(!adm) throw new Error("sem administrador ativo");
   const { email } = await j(`/auth/v1/admin/users/${adm.auth_id}`);
@@ -25,17 +33,26 @@ async function j(path, opt={}){
   const sessao = await j("/auth/v1/verify", { method:"POST", headers:{ apikey: ANON, Authorization:`Bearer ${ANON}` },
     body: JSON.stringify({ type:"magiclink", token_hash: tk }) });
   if(!sessao.access_token) throw new Error("verify sem sessão");
-  const nav = await chromium.launch();
+  const nav = await require("playwright").chromium.launch();
+  let fim = "erro", pg;
   try{
-    const pg = await nav.newPage();
+    pg = await nav.newPage();
     await pg.addInitScript(([cfg, s]) => { localStorage.setItem("crm_cfg", cfg); localStorage.setItem("crm_sessao", s); },
       [JSON.stringify({ url: URL_, key: ANON }), JSON.stringify(sessao)]);
     pg.on("pageerror", e => console.log("erro na página:", e.message));
     await pg.goto(CRM + "?coletas=robo");
-    await pg.waitForFunction(() => window._coletasRobo && window._coletasRobo !== "rodando", null, { timeout: 8*60*1000 });
-    const fim = await pg.evaluate(() => window._coletasRobo);
-    const resta = await j("/rest/v1/coletas?aplicada_em=is.null&select=id");
-    console.log(`Robô: ${fim}; ${pend.length - resta.length} aplicada(s), ${resta.length} na fila.`);
-    if(fim !== "ok") process.exitCode = 1;
-  } finally { await nav.close(); }
+    await pg.waitForFunction(() => window._coletasRobo && window._coletasRobo !== "rodando", null, { timeout: 10*60*1000 });
+    fim = String(await pg.evaluate(() => window._coletasRobo));
+    const resta = await fila(), ids = new Set(resta.map(c=>c.id));
+    console.log(`Robô: ${fim}; ${pend.filter(c=>!ids.has(c.id)).length} aplicada(s); na fila: ${porFonte(resta)}`);
+    // "travado" = outro CRM está aplicando esta mesma fila: não é falha, e a trava é dele
+    if(fim !== "ok" && fim !== "travado") process.exitCode = 1;
+  } finally {
+    // só solta a trava da rodada que a página começou e não terminou (estouro do tempo): a que terminou já a
+    // soltou, e a que nem começou não a pegou; nos dois casos a trava que houver é de outro CRM aplicando
+    const estado = pg ? await pg.evaluate(() => window._coletasRobo).catch(()=>null) : null;
+    await nav.close();
+    if(estado === "rodando") await j("/rest/v1/config_app?chave=eq.coletas_auto_em", { method:"PATCH",
+      headers:{ Prefer:"return=representation" }, body: JSON.stringify({ valor: new Date(0).toISOString() }) }).catch(()=>{});
+  }
 })().catch(e => { console.error(e.message); process.exit(1); });

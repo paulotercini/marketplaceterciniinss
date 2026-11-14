@@ -30,12 +30,17 @@
     const cab = { Accept: 'application/json', Authorization: 'Bearer ' + tok,
       miToken: localStorage.getItem('miToken') || '', userId: localStorage.getItem('userId') || '',
       sessionId: sessionStorage.getItem('sessionId') || '' };
-    const pedir = async (url, opts) => {
-      const r = await fetch(url, Object.assign({ headers: cab }, opts));
-      await D.pausa(1500);                                 // o portal é do INSS: uma chamada por vez, com folga
-      return r;
-    };
-    const json = async url => { const r = await pedir(url); return r.ok ? r.json() : null; };
+    // o portal é do INSS: uma chamada por vez, com 1,5 s de folga contados da resposta
+    // (a gravação do arquivo corre dentro da folga). O gov.br troca o ifs_auth e o
+    // miToken no meio da rodada: cada pedido relê os dois, também no cabeçalho do POST
+    const fila = R.filaDePedidos(D.pausa);
+    const pedir = (url, opts) => fila(1500, () => {
+      cab.Authorization = 'Bearer ' + (localStorage.getItem('ifs_auth') || tok);
+      cab.miToken = localStorage.getItem('miToken') || cab.miToken;
+      const o = Object.assign({ headers: cab }, opts);
+      if (opts && opts.headers) o.headers = Object.assign({}, opts.headers, { Authorization: cab.Authorization, miToken: cab.miToken });
+      return fetch(url, o);
+    });
 
     const ok = [], falhas = [], inexistentes = [];
     // baixa um PDF e entrega; nunca derruba a rodada.
@@ -43,6 +48,7 @@
     // não existe (benefício sem perícia não tem laudo; nem toda espécie tem
     // carta) — vai para "não existem", com a frase do INSS, e não para falha
     async function pdf(fonte, arquivo, url, opts) {
+      if (fila.caiu) return;                               // sessão caída: uma falha só, no fim
       D.faixa(`${fonte}: ${arquivo}…`);
       try {
         const r = await pedir(url, opts);
@@ -61,6 +67,19 @@
     // primeira lista de objetos dentro da resposta, qualquer que seja o nome do campo
     const lista = j => Array.isArray(j) ? j
       : (j && typeof j === 'object' ? Object.values(j).find(v => Array.isArray(v) && v.some(x => x && typeof x === 'object')) || [] : []);
+    // lista que não veio (401, 500, rede) é FALHA, e não "não tem": antes virava
+    // "0 pedido(s) · 0 PPP · 0 CAT" sem registro. 204, corpo vazio e 404 seguem como
+    // lista vazia: no pdf() o 404 é o INSS dizendo "não existe", e as listas de PPP e
+    // CAT nunca foram vistas ao vivo em conta sem PPP nem CAT (conferir na 1ª rodada)
+    const json = async (rotulo, url) => {
+      try {
+        const r = await pedir(url);
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const t = r.status === 204 ? '' : await r.text();
+        return t.trim() ? JSON.parse(t) : null;
+      } catch (e) { if (!fila.caiu) falhas.push(`${rotulo}: a lista não veio (${e.message || e}), rode de novo`); return null; }
+    };
 
     // 0.13.0 · só o extrato de pagamento (a consulta do dia, sem a rodada inteira): grava o PDF no Drive e
     // nos anexos, como na rodada, mas não mexe no resumo do portal (clientes.dossie.meuinss), que é da rodada completa
@@ -82,11 +101,15 @@
         const c = R.cadastroDoCnis(jc);
         cadastro = c.cadastro;
         if (cadastro.nome) { cliente.nome = cadastro.nome; await chrome.storage.local.set({ cliente }); }
-        await D.salvar(cliente, 'Cadastro', 'Dados cadastrais (CNIS)', new TextEncoder().encode(c.texto), 'text/plain');
-        ok.push('Cadastro · Dados cadastrais (CNIS)');
+        // o .txt que não gravou não pode segurar o cadastro: o resumo abaixo vai assim mesmo
+        try {
+          await D.salvar(cliente, 'Cadastro', 'Dados cadastrais (CNIS)', new TextEncoder().encode(c.texto), 'text/plain');
+          ok.push('Cadastro · Dados cadastrais (CNIS)');
+        } catch (e) { falhas.push(`Cadastro · Dados cadastrais (CNIS) em texto: ${e.message || e}`); }
         // vai ao CRM AGORA, antes dos outros downloads: a ficha fica preenchida em
-        // segundos, sem esperar os minutos da rodada (o resumo final regrava tudo)
-        const av = await D.resumo(cliente, 'meuinss', { baixados: ok, inexistentes, falhas, cadastro });
+        // segundos, sem esperar os minutos da rodada (o resumo final regrava tudo).
+        // `parcial` marca que a rodada ainda corre: se ela morrer, a ficha sabe
+        const av = await D.resumo(cliente, 'meuinss', { baixados: ok, inexistentes, falhas, cadastro, parcial: true });
         D.faixa(`cadastro gravado no CRM${av ? av.replace(/\n\(resumo no CRM: (.*)\)/, ' — $1') : ''} — seguindo com os documentos…`);
       } else falhas.push(`Cadastro: o CNIS não devolveu os dados (HTTP ${rc.status})`);
     } catch (e) { falhas.push(`Cadastro: ${e.message || e}`); }
@@ -170,7 +193,7 @@
     // ── Pedidos: TODOS (a tela filtra por ano; a API devolve a lista inteira)
     // e de cada um a cópia integral do processo administrativo (PAP)
     D.faixa('lendo a lista de pedidos…');
-    const tarefas = lista(await json(`${ARQ}SagService/tarefa`).catch(() => null));
+    const tarefas = lista(await json('Pedidos', `${ARQ}SagService/tarefa`));
     for (const t of tarefas) {
       if (!t || !t.protocolo) continue;
       const data = String(t.dataCriacao || '').slice(0, 10);
@@ -180,7 +203,7 @@
 
     // ── PPP eletrônico (obrigatório só desde 01/2023): a tela lista
     // listaVinculosTO e manda o vínculo inteiro no POST, como aqui ────────────
-    const vinculos = ((await json(`${API}declaracaoPppServices/obterDadosVinculos/`).catch(() => null)) || {}).listaVinculosTO || [];
+    const vinculos = ((await json('PPP', `${API}declaracaoPppServices/obterDadosVinculos/`)) || {}).listaVinculosTO || [];
     for (const [i, v] of vinculos.entries()) {
       const rotulo = `${v.nomeVinculo || v.codigoVinculo || `vinculo ${i + 1}`} ${String(v.dataInicio || '').slice(0, 10)}`;
       await pdf('PPP', `PPP ${rotulo}`, `${API}declaracaoPppServices/gerarDeclaracao/`,
@@ -188,12 +211,13 @@
     }
 
     // ── CAT ─────────────────────────────────────────────────────────────────
-    const cats = lista(await json(`${API}catservices/cat/${cpf}`).catch(() => null));
+    const cats = lista(await json('CAT', `${API}catservices/cat/${cpf}`));
     for (const c of cats) {
       const n = String(c.numeroCat || '').replace(/\D/g, '');
       if (n) await pdf('CAT', `CAT ${n}`, `${API}catservices/catPdf/${cpf}/${n}`);
     }
 
+    if (fila.caiu) falhas.push(R.SESSAO_CAIU);
     const resumo = `${ok.length} documento(s) baixado(s)`
       + ` · ${nbs.length} benefício(s) · ${tarefas.length} pedido(s) · ${vinculos.length} vínculo(s) PPP · ${cats.length} CAT · ${ctc} CTC`
       + (inexistentes.length ? `\n${inexistentes.length} não existem no INSS:\n• ${inexistentes.slice(0, 8).join('\n• ')}` : '')

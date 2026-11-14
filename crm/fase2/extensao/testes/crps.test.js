@@ -8,8 +8,11 @@ const fs = require('fs');
 const path = require('path');
 
 const NUP1 = '123456789012345678', NUP2 = '223456789012345678';
-function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, opts } = {}) {
-  const pedidos = [], enviados = [];
+// `guardado`: o chrome.storage da rodada; `arquivados`: os 🗄 do CRM; `cai`: a consulta por
+// recurso lança (rede caída); `semDoc`: id do documento que o portal recusa; `dupla`: dois cliques
+function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, opts,
+                  guardado = {}, arquivados = [], cai = false, semDoc = null, dupla = false } = {}) {
+  const pedidos = [], enviados = [], gravados = {}, listagens = [], passados = [];
   const resp = (status, corpo) => ({ ok: status === 200, status, json: async () => corpo });
   const fetch = async (u, o = {}) => {
     pedidos.push(u);
@@ -17,6 +20,7 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, op
     const l = u.match(/^\/api\/v1\/([a-z]+)\/$/);
     if (l) return base[l[1]] ? resp(200, base[l[1]].map(n => ({ proc: n, nb: '1' }))) : resp(404, {});
     const m = u.match(/^\/api\/v1\/([a-z]+)\/(\d+)$/);
+    if (m && cai) throw new Error('Failed to fetch');
     if (m) return (base[m[1]] || []).includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x',
       eventos: [{ status: 'Julgado', documentos: [{ id: 7, nome: 'Acórdão.pdf', path: '/doc/7' }, { id: 8, nome: 'CNIS.pdf', path: '/doc/8' }] }] }) : resp(404, {});
     throw new Error('pedido inesperado ' + u);
@@ -25,15 +29,20 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, op
   const ctx = { location: { host: 'consultaprocessos.inss.gov.br' }, fetch, Date, Promise, Object, Array, String, Set, JSON,
     setTimeout: f => { f(); return 0; }, faixa: nada, faixaOk: nada, faixaErr: nada, someFaixa: nada, pausa: async () => {},
     localStorage: { getItem: k => k === 'ifs_auth' ? 'token-cru' : null },
-    chrome: { storage: { local: { get: async () => ({}), set: async () => {} } } },
-    CRM: { nupsDoCrm: async () => ({ nups: nupsDoCrm, arquivados: [], fichas: 10 }),
+    chrome: { storage: { local: { get: async () => guardado, set: async o => { Object.assign(gravados, o); } } } },
+    CRM: { nupsDoCrm: async () => ({ nups: nupsDoCrm, arquivados, fichas: 10 }),
+           pedir: async m => { listagens.push(m); return { nomes: [`${m.prefixo}7`] }; },
            // F184 · só o acórdão desce; o caminho volta marcado no documento
-           guardarDocs: async (origem, nup, docs) => { docs.forEach(d => { d.caminho = `${origem}/${nup}/${d.id}`; }); return docs.length; },
+           guardarDocs: async (origem, nup, docs, o) => { passados.push(o.existentes);
+             docs.forEach(d => { if (d.id !== semDoc) d.caminho = `${origem}/${nup}/${d.id}`; }); return docs.length; },
            enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
   ctx.window = ctx; ctx.top = ctx;
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'crps.js'), 'utf8'), ctx);
-  return ctx.window.crmRodar(null, opts).then(r => JSON.parse(JSON.stringify({ r, pedidos, enviados })));
+  const segunda = dupla ? (ctx.window.crmRodar(null, opts), ctx.window.crmRodar(null, opts)) : null;
+  if (dupla) return segunda.then(r => JSON.parse(JSON.stringify(r)));
+  return ctx.window.crmRodar(null, opts).then(r => ({ ...JSON.parse(JSON.stringify({ r, pedidos, enviados, gravados, listagens })),
+    existentes: passados }));
 }
 
 test('o acervo vem do portal e cada recurso é consultado uma vez só, no sistema que o listou', async () => {
@@ -82,4 +91,44 @@ test('1.34.0 · login do cliente sem recurso na lista não consulta o CRM inteir
   const { r, pedidos } = await rodada({ nupsDoCrm: ['323456789012345678'], listas: {}, opts: { cliente: true } });
   assert.equal(r.erro, 'sem recurso no login do cliente');
   assert.ok(!pedidos.some(u => /\/\d+$/.test(u)));
+});
+
+const NUP3 = '323456789012345678', NUP4 = '423456789012345678';
+const consultasDe = pedidos => pedidos.filter(u => /\/\d+$/.test(u));
+
+test('a pasta do recurso é listada uma vez e vai em `existentes` ao guardarDocs', async () => {
+  const { listagens, existentes } = await rodada();
+  assert.deepStrictEqual(listagens, [NUP1, NUP2].map(n => ({ tipo: 'crm', acao: 'docs-existentes', prefixo: `crps/${n}/` })));
+  assert.ok(existentes[0].has(`crps/${NUP1}/7`));
+});
+
+test('segundo clique na mesma aba é recusado enquanto a rodada corre', async () => {
+  assert.deepStrictEqual(await rodada({ dupla: true }), { erro: 'já está rodando nesta aba' });
+});
+
+test('rede caída conta para o aborto, e a rodada que parou sai com erro, não como concluída', async () => {
+  const { r, pedidos, enviados } = await rodada({ listas: { esisrec: [NUP1, NUP2, NUP3, NUP4] }, cai: true });
+  assert.equal(consultasDe(pedidos).length, 6, 'seguiu a fila depois de seis quedas seguidas');
+  assert.match(r.erro, /parou no recurso 3 de 4/);
+  assert.equal(enviados.length, 1, 'o que foi lido ainda vai ao CRM');
+});
+
+test('documento que o portal recusa deixa a rodada parcial', async () => {
+  const { r, enviados } = await rodada({ semDoc: 8 });
+  assert.deepStrictEqual(r, { ok: 2, falhas: 2, parcial: true });
+  assert.deepStrictEqual(enviados[0].falhas[0], { nup: NUP1, sis: 'esisrec', docs_faltando: 1 });
+});
+
+test('NUP que as duas bases não acham é lembrado e fica para a rodada completa', async () => {
+  const completa = await rodada({ nupsDoCrm: [NUP3] });
+  assert.deepStrictEqual(completa.gravados.crps_404, [NUP3]);
+  const rapida = await rodada({ nupsDoCrm: [NUP3], guardado: { ultima_crps_full: new Date().toISOString(), crps_404: [NUP3] } });
+  assert.ok(!rapida.pedidos.some(u => u.endsWith('/' + NUP3)), 'consultou de novo o que não existe');
+  assert.deepStrictEqual(rapida.gravados.crps_404, [NUP3], 'a rodada rápida não esquece');
+  assert.ok(!('ultima_crps_full' in rapida.gravados));
+});
+
+test('na rodada completa os arquivados ficam para o fim da fila', async () => {
+  const { pedidos } = await rodada({ arquivados: [NUP1] });
+  assert.deepStrictEqual(consultasDe(pedidos), [`/api/v1/esisrec/${NUP2}`, `/api/v1/esisrec/${NUP1}`]);
 });

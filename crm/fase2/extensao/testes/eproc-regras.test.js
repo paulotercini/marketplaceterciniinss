@@ -70,3 +70,47 @@ test('a lista de eventos: um item por trEvento, com data, hora, descrição e do
     { id: '731', nome: 'DESPADEC1', url: 'controlador.php?acao=acessar_documento&doc=731&evento=69&key=ab' },
     { id: '69:PLANILHA2', nome: 'PLANILHA2', url: 'y' }]);
 });
+
+// A RODADA com o eproc fingido: o eproc.js roda num contexto à parte.
+const vm = require('vm');
+const fs = require('fs');
+const path = require('path');
+function rodadaEproc({ html, tela = {}, busca = '', vezes = 1 }) {
+  const gravado = {}, pedidos = [], guardar = [];
+  const nada = () => {};
+  const ids = { frmProcessoLista: { action: '/lista' }, selInfraUnidades: {}, ...tela };
+  const ctx = { EPROC_REGRAS: R, Date, Promise, AbortSignal, TextDecoder, URLSearchParams, URL, pausa: async () => {},
+    location: { host: 'eproc1g-crim.tjsp.jus.br', search: busca, href: 'https://eproc1g-crim.tjsp.jus.br/x' },
+    document: { getElementById: id => ids[id] || null, querySelector: () => null, documentElement: { outerHTML: html } },
+    FormData: class { delete() {} set() {} }, sessionStorage: { getItem: () => null, setItem: nada, removeItem: nada },
+    DOCS_REGRAS: { vaiBaixar: () => true },
+    fetch: async u => { pedidos.push(u); return { ok: true, status: 200, headers: { get: () => '' }, arrayBuffer: async () => Buffer.from(html, 'latin1'), text: async () => html }; },
+    setTimeout: f => { f(); return 0; }, faixa: nada, faixaOk: nada, faixaErr: nada, someFaixa: nada,
+    chrome: { storage: { local: { get: async () => ({}), set: async o => { Object.assign(gravado, o); } } } },
+    CRM: { enviar: async () => true, pedir: async m => { pedidos.push(m.acao + ':' + m.prefixo); return { nomes: [] }; },
+           guardarDocs: async (o, n, d, x) => { guardar.push(x); return 0; } } };
+  ctx.window = ctx; ctx.top = ctx;
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'eproc.js'), 'utf8'), ctx);
+  return Promise.all(Array.from({ length: vezes }, () => ctx.window.crmRodar()))
+    .then(rs => JSON.parse(JSON.stringify({ rs, gravado, pedidos, guardar: guardar.map(x => !!(x && x.existentes)) })));
+}
+const VAZIA = '<form id="frmProcessoLista"><p>Nenhum registro encontrado.</p></form>';
+
+test('rodada: o host sem processo grava a data da coleta', async () => {
+  const { rs, gravado } = await rodadaEproc({ html: VAZIA });
+  assert.deepStrictEqual(rs, [{ ok: 0 }]);
+  assert.ok(gravado.ultima_eproc && gravado['ultima_eproc_eproc1g-crim.tjsp.jus.br']);
+});
+
+test('rodada: o segundo clique com a rodada em curso não abre outro laço', async () => {
+  const { rs, pedidos } = await rodadaEproc({ html: VAZIA, vezes: 2 });
+  assert.deepStrictEqual(rs, [{ ok: 0 }, { ok: 'já em curso nesta aba', emCurso: true }]);
+  assert.equal(pedidos.length, 1);
+});
+
+test('processo aberto: o "já tenho?" vai numa listagem só, entregue ao guardarDocs', async () => {
+  const { pedidos, guardar } = await rodadaEproc({ html: CAPA, tela: { tblEventos: {} }, busca: '?acao=processo_selecionar' });
+  assert.deepStrictEqual(pedidos, ['docs-existentes:eproc/00024540820258260347/']);
+  assert.deepStrictEqual(guardar, [true]);
+});

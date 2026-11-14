@@ -2,6 +2,7 @@ name: CRM — aplicar coletas da extensão
 
 # F426 · as coletas entravam só com o CRM do administrador aberto e na frente.
 # Aqui entram a cada 10 minutos, das 7h às 20h50 de Brasília, sem o CRM aberto.
+# F590 · o banco também chama na hora em que a coleta chega (workflow_dispatch, gatilho coletas_disparo).
 on:
   schedule:
     - cron: '*/10 10-23 * * *'
@@ -32,15 +33,26 @@ jobs:
       - name: Há coleta esperando?
         id: fila
         run: |
-          n=$(curl -s "$SUPABASE_URL/rest/v1/coletas?aplicada_em=is.null&select=id" -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | grep -o '"id"' | wc -l)
+          # só a coleta de até 24 h: a encalhada não faz instalar o navegador a cada rodada
+          desde=$(date -u -d '24 hours ago' +%Y-%m-%dT%H:%M:%SZ)
+          n=$(curl -s "$SUPABASE_URL/rest/v1/coletas?aplicada_em=is.null&criado_em=gte.$desde&select=id" -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | grep -o '"id"' | wc -l)
           echo "n=$n" >> "$GITHUB_OUTPUT"; echo "$n coleta(s) esperando"
-      - name: Cache do navegador
+      - name: Cache do navegador e do pacote
+        id: cache
         if: steps.fila.outputs.n != '0'
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright
-          key: pw-${{ runner.os }}-${{ hashFiles('crm/fase2/testes/cadastro/package.json') }}
-      - if: steps.fila.outputs.n != '0'
-        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium chromium-headless-shell
+          path: |
+            ~/.cache/ms-playwright
+            crm/fase2/testes/cadastro/node_modules
+          key: pw2-${{ runner.os }}-${{ hashFiles('crm/fase2/testes/cadastro/package.json') }}
+      # o robô roda sem janela: basta o headless shell. As bibliotecas do sistema só entram se ele não abrir.
+      - if: steps.fila.outputs.n != '0' && steps.cache.outputs.cache-hit != 'true'
+        run: npm install --no-audit --no-fund && npx playwright install chromium-headless-shell
+      - name: O navegador abre?
+        if: steps.fila.outputs.n != '0'
+        run: |
+          abre='require("playwright").chromium.launch().then(b=>b.close())'
+          node -e "$abre" || { npx playwright install --with-deps chromium-headless-shell && node -e "$abre"; }
       - if: steps.fila.outputs.n != '0'
         run: NODE_PATH="$PWD/node_modules" node ../../robo_coletas.js

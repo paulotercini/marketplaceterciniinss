@@ -166,3 +166,53 @@ test('mensagemDoPortal: a mensagem aninhada do CadÚnico', () => {
   assert.equal(R.mensagemDoPortal(enc('{"detalhes":[{"mensagemErro":{"codigo":12,"descricao":"Usuário não é o responsável familiar"}}]}')), 'Usuário não é o responsável familiar');
   assert.equal(R.mensagemDoPortal(enc('{"mensagemErro":{"descricao":"Família sem comprovante"}}')), 'Família sem comprovante');
 });
+
+test('clienteDoRecurso: o cliente guardado só vale com o CPF na lista ou na sessão; sem correspondência, recusa', () => {
+  const A = '11111111111', B = '22222222222', ADV = '33333333333';
+  const lista = [{ nup: '44233123456202411', cpf: A }, { nup: '44233654321202422', cpf: B }];
+  const guardado = { cpf: A, nome: 'Cliente Teste' };
+  // login do advogado: a lista traz o CPF do cliente guardado
+  assert.deepEqual(R.clienteDoRecurso(lista, guardado, { cpf: ADV }).nups, ['44233123456202411']);
+  assert.equal(R.clienteDoRecurso(lista, guardado, { cpf: ADV }).cliente, guardado);
+  // o guardado é a própria sessão, e a lista não repete o CPF: vale
+  assert.equal(R.clienteDoRecurso([{ nup: '44233123456202411' }], guardado, { cpf: A }).cliente, guardado);
+  // guardado é o cliente ANTERIOR e a sessão é de outra pessoa: vale a sessão, com o que é dela
+  const r = R.clienteDoRecurso([lista[1]], guardado, { cpf: B, nome: 'Outra Pessoa' });
+  assert.deepEqual([r.cliente, r.nups], [{ cpf: B, nome: 'Outra Pessoa' }, ['44233654321202422']]);
+  // ninguém bate (lista curta, que antes passava): recusa, e não grava na ficha do anterior
+  assert.equal(R.clienteDoRecurso([{ nup: '44233123456202411' }], guardado, { cpf: B }).cliente, null);
+  assert.equal(R.clienteDoRecurso(lista, null, {}).cliente, null);
+});
+
+test('filaDePedidos: a pausa é esperada antes do pedido seguinte; três 401 seguidos param de pedir', async () => {
+  const passos = [];
+  let soltar;
+  const pausa = ms => { passos.push('pausa ' + ms); return new Promise(ok => { soltar = ok; }); };
+  const pedir = R.filaDePedidos(pausa);
+  const r1 = await pedir(1500, async () => { passos.push('pedido 1'); return { status: 200 }; });
+  assert.equal(r1.status, 200);                       // volta sem esperar a pausa: a gravação corre junto
+  const p2 = pedir(2500, async () => { passos.push('pedido 2'); return { status: 200 }; });
+  await new Promise(ok => setTimeout(ok, 5));
+  assert.deepEqual(passos, ['pedido 1', 'pausa 1500']);   // o segundo só sai depois da pausa do primeiro
+  soltar(); await p2;
+  assert.deepEqual(passos, ['pedido 1', 'pausa 1500', 'pedido 2', 'pausa 2500']);
+
+  const rapida = R.filaDePedidos(async () => {});
+  let idas = 0;
+  const com = st => rapida(0, async () => { idas++; return { status: st }; });
+  await com(401); await com(401); await com(200);     // um 200 no meio zera a conta
+  await com(401); await com(401); assert.ok(!rapida.caiu);
+  await com(401); assert.equal(rapida.caiu, true);
+  const depois = await com(200);
+  assert.deepEqual([depois.status, depois.ok, idas], [401, false, 6]);   // nada mais vai ao portal
+  // pedido fora da conta (documento do e-Recursos): 401 dele não derruba nem zera
+  const doc = R.filaDePedidos(async () => {});
+  await doc(0, async () => ({ status: 401 })); await doc(0, async () => ({ status: 401 }));
+  for (let i = 0; i < 5; i++) await doc(0, async () => ({ status: i % 2 ? 200 : 401 }), false);
+  assert.ok(!doc.caiu);
+  await doc(0, async () => ({ status: 401 })); assert.equal(doc.caiu, true);
+  // erro de rede não quebra a fila: a pausa vale assim mesmo
+  const f = R.filaDePedidos(async () => {});
+  await assert.rejects(f(0, async () => { throw new Error('rede'); }));
+  assert.equal((await f(0, async () => ({ status: 200 }))).status, 200);
+});

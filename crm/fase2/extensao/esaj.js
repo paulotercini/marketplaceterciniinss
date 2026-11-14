@@ -33,9 +33,23 @@
   const espera = ms => new Promise(r => setTimeout(r, ms + Math.random() * 500));
   const ARQ = 'esaj_arquivados';                     // { numero: ISO da última conferência }
   let ativos = new Set();                            // números do TJSP com caso aberto no CRM (a rodada preenche)
+  const VISTA = 'esaj_pasta_vista';                  // { codigo: marca do último movimento com a pasta inteira no CRM }
+  let vistas = {}, soMovNovo = false;                // a rodada rápida só reabre a pasta com movimento novo
+  const PEND = 'esaj_pasta_pendente';                // F590 · pasta baixada e ainda não entregue: a aba fechada deixava os arquivos no bucket sem anexo
+  let pend = {};
+  let novas = {};                                    // marcas à espera da entrega: sem a coleta no CRM, a pasta volta na rodada seguinte
+  let travas = 0;                                    // travas de "consultas simultâneas" em sequência
+  // a sessão caída para a rodada na hora; a trava só na 3ª seguida, porque o
+  // escritório usa o e-SAJ em outra aba enquanto a rodada corre
+  const deveParar = e => {
+    if (e.parar) return true;
+    travas = REG.erroDeTrava(e.message) ? travas + 1 : 0;
+    return (e.parar = REG.erroDeSessao(e.message) || travas >= 3);
+  };
 
   async function baixar(url) {
-    const r = await fetch(url, { credentials: 'include' });
+    // 1 min de teto: pedido sem resposta prendia a rodada inteira
+    const r = await fetch(url, { credentials: 'include', signal: AbortSignal.timeout(60000) });
     if (!r.ok) throw new Error(`o e-SAJ respondeu ${r.status}`);
     return { url: r.url, html: await r.text() };
   }
@@ -138,16 +152,36 @@
     // processo arquivado ou sem caso aberto no CRM: as movimentações vão, os
     // documentos não — a pasta digital do acervo antigo e dos processos só da
     // OAB/favoritos é o que fazia a rodada levar horas
-    const docs = REG.baixaDocs(out.situacao, out.numero, ativos);
-    if (docs) await CRM.guardarDocs('esaj', out.numero, mv.slice(0, 5).flatMap(m => m.docs || []));
+    // sem movimento novo desde que a pasta ficou inteira no CRM, ela não é
+    // reaberta (eram 2 pedidos ao e-SAJ por processo ativo, toda rodada); a
+    // rodada completa semanal confere todas
+    const marca = REG.assinaturaMov(mv[0]);
+    const docs = REG.baixaDocs(out.situacao, out.numero, ativos) && !(soMovNovo && marca && vistas[codigo] === marca);
+    const mvDocs = mv.slice(0, 5).flatMap(m => m.docs || []);
+    let existentes = null;
+    if (docs) {
+      // o que o CRM já tem deste processo, listado UMA vez: serve às
+      // movimentações e à pasta digital (era uma pergunta por documento)
+      try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
+        prefixo: `esaj/${String(out.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
+      await CRM.guardarDocs('esaj', out.numero, mvDocs, { existentes });
+      if (existentes) for (const d of mvDocs) if (d.caminho) existentes.add(d.caminho);
+    }
     out.movimentos = mv.slice(0, 5).map(m => ({ data: m.data, hora: '00:00',
       texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto,
       ...((m.docs || []).some(d => d.caminho) ? { docs: m.docs.filter(d => d.caminho) } : {}) }));
     out.movimento = out.movimentos[0] || null;
     if (docs) {
-      try { out.pasta = await guardarPasta(out, rot); }
-      catch (e) { console.warn('[CRM] pasta digital:', out.numero, e); }
+      delete vistas[codigo];
+      const devia = !!pend[codigo]; pend[codigo] = 1; await noNavegador({ [PEND]: pend });
+      try {
+        const p = await guardarPasta(out, rot, existentes, devia);
+        out.pasta = p && p.novos;
+        // a marca só fica com tudo guardado: o que falhou volta na rodada seguinte
+        if (p && p.inteira && REG.pastaInteira(mvDocs, DOCS_REGRAS.vaiBaixar)) novas[codigo] = marca;
+      } catch (e) { console.warn('[CRM] pasta digital:', out.numero, e); }
     }
+    travas = 0;                                      // ficha e movimentações lidas: a sequência de travas acabou
     return out;
   }
 
@@ -156,7 +190,7 @@
   // aberta na sessão (é o que arma a pasta). Página a página pelo getPDF, um
   // PDF por documento (pdf-lib, em vendor/); o que já está no CRM é pulado
   // antes de baixar, então só a primeira rodada é longa.
-  async function guardarPasta(out, rot) {
+  async function guardarPasta(out, rot, existentes, tudo) {
     const base = out.grau === '2º grau' ? '/cposg' : '/cpopg';
     const r0 = await baixarComPaciencia(`${base}/abrirPastaDigital.do?processo.codigo=${out.codigo}`, rot);
     const url = REG.urlDaPasta(r0.html);
@@ -182,15 +216,13 @@
       }
       return new Response(await doc.save(), { headers: { 'content-type': 'application/pdf' } });
     };
-    let existentes = null;
-    try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
-      prefixo: `esaj/${String(out.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
     await CRM.guardarDocs('esaj', out.numero, docs, { baixar: baixarDoc, existentes });
     // F189 · só vai ao CRM o que desceu NESTA rodada: entregar a pasta inteira
     // toda vez enchia a fila de coletas sem nada novo (227 em 5 dias). Sem a
     // lista do que já existia (falhou a consulta), vai tudo, como antes
-    const novo = d => d.caminho && !(existentes && existentes.has(d.caminho));
-    return docs.filter(novo).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho }));
+    const novo = d => d.caminho && (tudo || !(existentes && existentes.has(d.caminho)));
+    return { novos: docs.filter(novo).map(({ id, nome, data, hora, caminho }) => ({ id, nome, data, hora, caminho })),
+             inteira: REG.pastaInteira(docs, DOCS_REGRAS.vaiBaixar) };
   }
 
   // [02.10.2026] OS RECURSOS DENTRO DO RECURSO. No 2º grau, os embargos de
@@ -215,7 +247,7 @@
           classe: s.classe || null, link: `https://${host}/cposg/show.do?processo.codigo=${s.codigo}` }, rot);
         if (x.semFicha) { falhas++; continue; }
         vistos.add('2º grau:' + (x.codigo || x.numero)); lidos.push(x);
-      } catch (e) { falhas++; }
+      } catch (e) { if (deveParar(e)) throw e; falhas++; }
     }
     return falhas;
   }
@@ -252,12 +284,15 @@
     const grau = /\/cposg\//.test(location.pathname) ? '2º grau' : '1º grau';
     const { numeros, comDocs } = await CRM.processosTjsp();
     ativos = new Set(comDocs || numeros);
+    soMovNovo = false;                               // o clique no processo aberto sempre confere a pasta
+    pend = (await chrome.storage.local.get(PEND))[PEND] || {};   // F590 · sem ler, o clique apagava as marcas da rodada interrompida
     faixa('e-SAJ: lendo o processo aberto e guardando as peças (as já guardadas são puladas)…');
     const x = await lerProcesso({ numero: null, grau, origem: 'aberto', codigo: REG.codigoDaUrl(location.href),
       link: location.href }, 'e-SAJ ' + grau);
     if (x.semFicha) { faixaErr('não consegui ler a ficha deste processo — dê F5 e clique de novo'); return { erro: 'sem ficha' }; }
     await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab,
       quando: new Date().toISOString(), parcial: true, pulados: 0, processos: [paraEntrega(x)] });
+    delete pend[x.codigo]; await noNavegador({ [PEND]: pend });
     faixaOk(REG.baixaDocs(x.situacao, x.numero, ativos)
       ? `✔ processo ${x.numero} entregue ao CRM com as peças — confira em 📥 Importar.`
       : `✔ processo ${x.numero} entregue ao CRM, sem peças: está arquivado ou não tem caso previdenciário aberto no CRM.`);
@@ -265,7 +300,14 @@
     return { ok: 1 };
   }
 
+  // segundo clique com a rodada em curso: dois laços na mesma aba são
+  // consultas simultâneas na mesma sessão. Não é falha: a que corre segue
   window.crmRodar = async (_desde, opts) => {
+    if (window.__crmRodando) return { ok: 'já em curso nesta aba', emCurso: true };   // F590 · o fundo espera em vez de dar a fonte por pronta
+    window.__crmRodando = true;
+    try { return await rodar(_desde, opts); } finally { window.__crmRodando = false; }
+  };
+  const rodar = async (_desde, opts) => {
     try {
       if (!REG) { faixaErr('esaj-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       const oab = await oabLogada();
@@ -295,7 +337,7 @@
       const { numeros, fichas, comDocs } = await CRM.processosTjsp();
       ativos = new Set(comDocs || numeros);              // 1.24 · peças só de caso previdenciário
       const temNumero = n => [...mapa.values()].some(x => x.numero === n);
-      for (const n of numeros) if (!mapa.has(n) && !temNumero(n)) mapa.set(n, { numero: n, grau: '1º grau', origem: 'crm', codigo: null, link: null });
+      for (const n of numeros) if (!mapa.has(n) && !temNumero(n)) mapa.set(n, { numero: n, grau: REG.grauDoNumero(n), origem: 'crm', codigo: null, link: null });
       // e o complemento: a consulta por OAB nos dois graus, que descobre o que
       // não tem favorito nem ficha
       const antesOab = mapa.size;
@@ -303,14 +345,15 @@
       if (!mapa.size) { faixaErr(`nenhum processo do TJSP — ${favoritos.length} favorito(s), ${fichas} ficha(s) no CRM e a consulta por OAB vazia`); return { erro: 'vazio' }; }
       const resumoFontes = `${favoritos.length} dos favoritos, ${numeros.length} do CRM, ${mapa.size - antesOab} só na OAB`;
 
-      const st = await chrome.storage.local.get([ARQ, 'ultima_esaj_full']);
+      const st = await chrome.storage.local.get([ARQ, VISTA, PEND, 'ultima_esaj_full']);
       const arq = st[ARQ] || {};
+      vistas = st[VISTA] || {}; pend = st[PEND] || {}; novas = {}; travas = 0;
       const fullEm = st.ultima_esaj_full ? new Date(st.ultima_esaj_full).getTime() : 0;
       const rapido = !!fullEm && Date.now() - fullEm < 7 * 86400000;
+      soMovNovo = rapido;
       const corte = Date.now() - 7 * 86400000;
-      // a anotação de arquivado é por código ou por número — o que a entrada tiver
       const todos = [...mapa.values()];
-      const chaveArq = p => p.numero || 'cod:' + p.codigo;
+      const chaveArq = REG.chaveArq;
       const fila = rapido ? todos.filter(p => !(arq[chaveArq(p)] && new Date(arq[chaveArq(p)]).getTime() > corte)) : todos;
       const pulados = todos.length - fila.length;
       faixa(`${todos.length} processos do TJSP (${resumoFontes})${pulados ? `; ${pulados} arquivados ficam para a rodada semanal` : ''}`);
@@ -320,14 +363,21 @@
         vivo();
         const q = (extra && extra.quando) || new Date().toISOString();
         for (const grau of Object.keys(GRAUS)) {
-          const processos = lista.filter(p => p.grau === grau).map(paraEntrega);
+          // F590 · o pai do pai, lido nesta rodada: a RPV aponta para o cumprimento, que pode ter ido em outro lote
+          const pai = new Map(lidos.filter(x => x.principal && x.principal !== x.numero).map(x => [x.numero, x.principal]));
+          const processos = lista.filter(p => p.grau === grau)
+            .map(p => paraEntrega(p.principal && pai.has(p.principal) ? { ...p, principal: pai.get(p.principal) } : p));
           if (processos.length)
             await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando: q,
                                       parcial: !!(extra && (extra.parcial || extra.lote)), pulados: (extra && extra.pulados) || 0, processos });
         }
+        // só agora a marca vale: o `caminho` das peças chegou ao CRM
+        for (const p of lista) if (novas[p.codigo]) { vistas[p.codigo] = novas[p.codigo]; delete novas[p.codigo]; }
+        for (const p of lista) delete pend[p.codigo];
+        await noNavegador({ [PEND]: pend });
       };
       const vistos = new Set();                    // o mesmo processo pode vir de favorito E de ficha
-      let falhas = 0;
+      let falhas = 0, parou = null;                // parou: o erro que interrompeu a rodada
       for (let i = 0; i < fila.length; i++) {
         const p = fila[i];
         faixa(`e-SAJ: ${i + 1} de ${fila.length} — ${p.numero || p.codigo}…`);
@@ -342,12 +392,12 @@
           if (vistos.has(k)) continue;
           vistos.add(k); lidos.push(x);
           // F186 · ENTREGA EM LOTES: a rodada com a pasta digital leva horas, e
-          // tudo só ia ao CRM no fim — uma queda perdia a rodada inteira. A cada
-          // 5 processos com pasta, o lote já vai (o CRM não duplica nada)
-          if (x.pasta && x.pasta.length) {
-            lote.push(x);
-            if (lote.length >= 5) { const l = lote.splice(0); await entregar(l, { lote: true }); l.forEach(p => entregues.add(p)); }
-          }
+          // tudo só ia ao CRM no fim — uma queda perdia a rodada inteira. Todo
+          // processo lido entra no lote (antes, só o de pasta nova: as
+          // movimentações dos demais esperavam o fim da rodada), e a cada 15 o
+          // lote já vai (o CRM não duplica nada)
+          lote.push(x);
+          if (lote.length >= 15) { const l = lote.splice(0); await entregar(l, { lote: true }); l.forEach(p => entregues.add(p)); }
           // [03.10.2026] os incidentes que a ficha lista (cumprimento de
           // sentença, RPV) entram no fim da fila, se a rodada ainda não os
           // tem — antes só os favoritados eram lidos
@@ -355,25 +405,37 @@
             if (!vistos.has(x.grau + ':' + inc.codigo) && !fila.some(f => f.codigo === inc.codigo))
               fila.push({ numero: x.numero, grau: x.grau, origem: 'incidente', codigo: inc.codigo, classe: inc.classe,
                 link: `https://${host}${x.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${inc.codigo}` });
-        } catch (e) { falhas++; }
+        } catch (e) { if (deveParar(e)) { parou = e; break; } falhas++; }
       }
       const comRecurso = [...new Set(lidos.filter(x => x.grau === '2º grau' || /grau de recurso/i.test(x.situacao || ''))
         .map(x => x.numero).filter(Boolean))];
-      for (let i = 0; i < comRecurso.length; i++) {
+      for (let i = 0; i < comRecurso.length && !parou; i++) {
         faixa(`e-SAJ 2º grau: recursos de ${i + 1} de ${comRecurso.length} — ${comRecurso[i]}…`);
         await espera(1200);
-        try { falhas += await lerRecursosDoNumero(comRecurso[i], vistos, lidos); } catch (e) { falhas++; }
+        try { falhas += await lerRecursosDoNumero(comRecurso[i], vistos, lidos); }
+        catch (e) { if (deveParar(e)) parou = e; else falhas++; }
       }
-      await noNavegador({ [ARQ]: arq });
+      await noNavegador({ [ARQ]: arq, [VISTA]: vistas });
+      const resto = lidos.filter(p => !entregues.has(p));
+      // sessão caída ou trava repetida: o que já foi lido vai ao CRM e a rodada
+      // para aqui, com o motivo na faixa; a data da última coleta (e a da
+      // rodada completa semanal) não anda
+      if (parou) {
+        await entregar(resto, { parcial: true, pulados });
+        await noNavegador({ [VISTA]: vistas });
+        throw new Error(`${parou.message} (${lidos.length} de ${fila.length} processos já foram ao CRM)`);
+      }
       if (!lidos.length) { faixaErr(`nenhum processo lido (${falhas} falharam) — o e-SAJ está respondendo?`); return { erro: 'vazio' }; }
 
       // MESMO formato do PJe (fonte pje-acervo), uma coleta por grau: a tela
       // 📥 Importar casa pelo número; `sistema` diz de onde veio e `link`
       // abre a ficha no e-SAJ
       const quando = new Date().toISOString();
-      // a pasta de quem já foi entregue num lote não viaja de novo
-      await entregar(lidos.map(p => entregues.has(p) ? { ...p, pasta: null } : p), { parcial: falhas > 0, pulados, quando });
-      await noNavegador({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
+      // quem já foi num lote não viaja de novo; com lote entregue, esta última
+      // também é parte (parcial), para o CRM não a tomar pela rodada inteira
+      // F590 · sempre parte: a coleta inteira não aplicada era descartada como velha pela rodada seguinte, e a marca da pasta já andou
+      await entregar(resto, { parcial: true, pulados, quando });
+      await noNavegador({ [VISTA]: vistas, ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
       faixaOk(`✔ ${lidos.length} processos do e-SAJ entregues ao CRM${falhas ? ` (${falhas} sem ficha ou sem resposta)` : ''}${rapido ? ' (modo rápido)' : ''} — confira em 📥 Importar.`);
       someFaixa(15000);
       return { ok: lidos.length, falhas };
