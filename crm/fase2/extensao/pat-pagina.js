@@ -94,7 +94,22 @@
   // O concluído TAMBÉM tem detalhe: é nele que vem a decisão do INSS. Pular
   // o concluído entregava "0 requerimentos" quando a janela só tinha decisão
   // (30.10.2026, três concluídos na tela). Ele vai por último, e o portal tem
-  // limite de velocidade: 3 segundos entre chamadas, para na primeira recusa.
+  // limite de velocidade: 3 segundos entre chamadas (também depois de uma
+  // recusa), e para na terceira recusa seguida.
+  // O crachá capturado na lista vale; só no 401 tenta UMA vez com o ifs_auth
+  // de agora (o token gira no meio da rodada, como no e-Recursos).
+  async function pedirDetalhe(p) {
+    const url = `/apis/requerimentosPortalApi/requerimento/ec/tarefa/${p}`;
+    const r = await fetchOriginal(url, { credentials: 'include', headers: cracha || {} });
+    const tok = localStorage.getItem('ifs_auth');
+    if (r.status !== 401 || !tok) return r;
+    const h = new Headers(cracha || {});
+    if (h.get('authorization') === 'Bearer ' + tok) return r;   // é o mesmo: a sessão venceu
+    h.set('Authorization', 'Bearer ' + tok);
+    const r2 = await fetchOriginal(url, { credentials: 'include', headers: h });
+    if (r2.status !== 401) cracha = Object.fromEntries(h);   // F590: o token girou; os próximos (e os anexos da ponte) já vão com o novo, sem pedido em dobro
+    return r2;
+  }
   async function detalhar() {
     const feitos = new Set([...OUT.detalhes.map(d => String(d.protocolo)),
                             ...OUT.falhas.map(f => f.protocolo)]);
@@ -107,12 +122,11 @@
       const p = fila[i].protocolo;
       mostrar(`detalhe ${i + 1} de ${fila.length}…`);
       try {
-        const r = await fetchOriginal(
-          `/apis/requerimentosPortalApi/requerimento/ec/tarefa/${p}`,
-          { credentials: 'include', headers: cracha || {} });
+        const r = await pedirDetalhe(p);
         if (!r.ok) {
           OUT.falhas.push({ protocolo: String(p), status: r.status });
           if (++seguidas >= 3) { coletando = false; return barreira(r.status); }
+          await pausa(3000);
           continue;
         }
         seguidas = 0;
@@ -129,18 +143,22 @@
 
   function barreira(status) {
     diga('o portal parou de responder:', status);
-    mostrar(`o portal parou de responder (${status}). Entreguei o que já veio; ` +
-            `daqui a alguns minutos clique de novo.`, '#B3261E');
-    entregar();
+    // 401/403 não é limite de velocidade: esperar não resolve, é entrar de novo
+    const venceu = status === 401 || status === 403;
+    mostrar(venceu ? 'a sessão do INSS venceu: entre de novo e clique em Buscar. Entreguei o que já veio.'
+                   : `o portal parou de responder (${status}). Entreguei o que já veio; ` +
+                     `daqui a alguns minutos clique de novo.`, '#B3261E');
+    // a ponte não começa os anexos no portal que acabou de recusar
+    entregar({ barreira: true, venceu });
   }
 
   // a entrega é da ponte: daqui sai o pacote, e o resultado volta por outro recado
-  function entregar() {
+  function entregar(extra) {
     esperando = false;
     OUT.quando = new Date().toISOString();
     diga('entregando', OUT.lista.length, 'requerimento(s),', OUT.detalhes.length, 'com detalhe, à extensão.');
     // F184 · o crachá vai junto: é com ele que a ponte baixa os anexos
-    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.lista.length, cracha });
+    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.lista.length, cracha, ...extra });
   }
 
   // ── recados que vêm da ponte ────────────────────────────────────────────
@@ -163,11 +181,31 @@
       mostrar('Pronto: agora clique em "Buscar". O resto é comigo.', '#B4530A');
       dizer('pronto', { jaTinha: 0, esperando: true });
     }
-    if (m.tipo === 'entregue')
-      mostrar(`✔ ${m.quantos} requerimento(s) entregues ao CRM. ` +
-              `Abra 📥 Importar do INSS para conferir o plano.`, '#1E6F50');
+    if (m.tipo === 'entregue') {
+      // rodada fechada: zera o estado, e o clique seguinte nesta aba começa por
+      // uma busca nova em vez de reentregar a coleta velha. Com barreira ou
+      // detalhe que ainda pode vir, fica (como no 'falhou'): o clique seguinte
+      // continua a fila e tenta de novo só os que falharam, sem refazer os já baixados
+      if (m.fechou) { OUT.lista = []; OUT.detalhes = []; OUT.total = null; vistos.clear(); }
+      OUT.falhas = [];
+      // o que faltou fica dito, sem o ✔ (que faz a faixa sumir)
+      const falta = [
+        m.semDetalhe && (m.fechou ? `${m.semDetalhe} sem detalhe: o portal não o entrega`
+                       : m.venceu ? `${m.semDetalhe} sem detalhe: a sessão do INSS venceu, entre de novo e clique em Buscar`
+                                  : `${m.semDetalhe} sem detalhe: clique de novo daqui a alguns minutos`),
+        m.barreira && !m.semDetalhe && (m.venceu ? 'a sessão do INSS venceu: entre de novo e clique em Buscar'
+                                                 : 'o portal parou de responder: clique de novo daqui a alguns minutos'),
+        m.barreira && 'os anexos ficaram para a próxima rodada',
+        m.faltam && `${m.faltam} anexo(s) não baixados`].filter(Boolean);
+      if (falta.length)
+        mostrar(`${m.quantos} requerimento(s) entregues ao CRM. ${falta.join('; ')}.`, '#B4530A');
+      else
+        mostrar(`✔ ${m.quantos} requerimento(s) entregues ao CRM. ` +
+                `Abra 📥 Importar do INSS para conferir o plano.`, '#1E6F50');
+    }
     if (m.tipo === 'falhou')
-      mostrar('coletei, mas não consegui entregar: ' + m.erro, '#B3261E');
+      mostrar(m.soAnexos ? 'os dados entraram no CRM, mas os anexos não: clique de novo. ' + m.erro
+                         : 'coletei, mas não consegui entregar: ' + m.erro, '#B3261E');
   });
 
   // põe a data e o tamanho da página nos campos que a tela já tem. Preencher

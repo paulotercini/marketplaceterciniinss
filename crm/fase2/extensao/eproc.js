@@ -34,7 +34,8 @@
   const logado = () => !!document.getElementById('selInfraUnidades');
 
   async function baixar(url, opts) {
-    const r = await fetch(url, { credentials: 'include', ...opts });
+    // teto folgado: o pedido que o eproc nunca responde não prende a rodada
+    const r = await fetch(url, { credentials: 'include', signal: AbortSignal.timeout(60000), ...opts });
     if (!r.ok) throw new Error(`o eproc respondeu ${r.status}`);
     const buf = await r.arrayBuffer();
     const tipo = r.headers.get('content-type') || '';
@@ -77,6 +78,13 @@
   const logadoNoHtml = html => !/Sua sess[ãa]o foi encerrada|acao=login|externo_controlador/i.test(html.slice(0, 4000))
                               || /frmProcessoLista|selInfraUnidades/.test(html);
 
+  // o que o CRM já guarda do processo, numa listagem só (sem ela, o
+  // guardarDocs pergunta peça por peça)
+  async function jaGuardados(numero) {
+    try { return new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
+      prefixo: `eproc/${String(numero).replace(/\D/g, '')}/` })).nomes); } catch (e) { return null; }
+  }
+
   // ── o PROCESSO ABERTO: todos os eventos, com data de cada um ─────────────
   async function coletarProcessoAberto() {
     const html = document.documentElement.outerHTML;
@@ -87,7 +95,7 @@
     // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
     const docs = itens.flatMap(i => i.docs || []);
     if (docs.some(d => DOCS_REGRAS.vaiBaixar(d.nome))) faixa(`processo ${cab.numero}: guardando as peças no CRM (as já guardadas são puladas)…`);
-    await CRM.guardarDocs('eproc', cab.numero, docs);
+    await CRM.guardarDocs('eproc', cab.numero, docs, { existentes: await jaGuardados(cab.numero) });
     const OUT = { versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
                   quando: new Date().toISOString(), numero: cab.numero,
                   classe: cab.classe || null, orgao: cab.orgao || null,
@@ -121,10 +129,8 @@
         if (!logadoNoHtml(html)) throw new Error('a sessão do eproc caiu — faça login de novo e clique outra vez');
         const cab = REG.lerCabecalhoProcesso(html) || { numero: p.numero };
         const itens = REG.lerEventosHtml(html);
-        let existentes = null;
-        try { existentes = new Set((await CRM.pedir({ tipo: 'crm', acao: 'docs-existentes',
-          prefixo: `eproc/${String(cab.numero).replace(/\D/g, '')}/` })).nomes); } catch (e) {}
-        docs += await CRM.guardarDocs('eproc', cab.numero, itens.flatMap(it => it.docs || []), { existentes });
+        docs += await CRM.guardarDocs('eproc', cab.numero, itens.flatMap(it => it.docs || []),
+                                      { existentes: await jaGuardados(cab.numero) });
         lote.push({ versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
                     quando: new Date().toISOString(), numero: cab.numero, classe: cab.classe || p.classe || null,
                     orgao: cab.orgao || null, link: p.link, itens });
@@ -178,7 +184,13 @@
   // recomeça quando a página abrir — o sinal vive no sessionStorage
   const RETOMAR = 'crm_eproc_retomar';
 
+  // o segundo clique (ou a retomada) com a rodada em curso não abre outro laço
   window.crmRodar = async (_desde, opts) => {
+    if (window.__crmRodando) return { ok: 'já em curso nesta aba', emCurso: true };   // F590 · o fundo espera em vez de seguir ao host seguinte
+    window.__crmRodando = true;
+    try { return await rodar(_desde, opts); } finally { window.__crmRodando = false; }
+  };
+  const rodar = async (_desde, opts) => {
     try {
       if (!REG) { faixaErr('eproc-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       if (!logado()) { faixaErr('faça login no eproc (certificado ou senha) e clique de novo'); return { erro: 'sem login' }; }
@@ -209,6 +221,10 @@
         faixaOk(total === 0 ? `${sistema}: nenhum processo ativo neste eproc — nada a entregar.`
                             : `${sistema}: nenhum processo lido — a relação estava vazia na tela?`);
         someFaixa();
+        // o host sem processo também foi conferido: grava a data, senão ele
+        // fica eternamente "nunca coletado"
+        if (total === 0) { const quando = new Date().toISOString();
+          await chrome.storage.local.set({ ultima_eproc: quando, ['ultima_eproc_' + host]: quando }); }
         return { ok: 0 };
       }
       // MESMO formato do PJe (fonte pje-acervo): a tela 📥 Importar casa pelo

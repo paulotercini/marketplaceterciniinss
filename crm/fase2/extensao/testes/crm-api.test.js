@@ -131,14 +131,15 @@ test('queda de rede não custa o login; crachá recusado, sim', async () => {
 test('uma rodada renova o crachá uma vez só', async () => {
   const { api, pedidos } = await carregar({
     guardado: { refresh: 'r1' },
-    respostas: [CRACHA_OK, { corpo: [] }, { corpo: null }],
+    respostas: [CRACHA_OK],
   });
   await api.nups();
   await api.enviar('crps', { a: 1 });
   assert.equal(pedidos.filter(p => /grant_type/.test(p.url)).length, 1,
     'renovou o crachá de novo dentro da mesma rodada');
-  assert.match(pedidos[2].url, /\/rest\/v1\/coletas$/);
-  assert.equal(pedidos[2].opcoes.headers.Authorization, 'Bearer jwt-novo');
+  const envio = pedidos.at(-1);
+  assert.match(envio.url, /\/rest\/v1\/coletas$/);
+  assert.equal(envio.opcoes.headers.Authorization, 'Bearer jwt-novo');
 });
 
 test('F184 · o documento sobe ao bucket privado com o crachá; já existir não é erro', async () => {
@@ -191,12 +192,12 @@ test('acervoPje: só entra o processo que movimentou desde a última cronologia'
   ] } }];
   const casos = [{ processo: '5000000-11.2020.4.03.9999', processos: ['5000000-22.2020.4.03.9999', '5000000-33.2020.4.03.9999'] }];
   const entregues = [{ dados: { lote: [
-    { numero: '5000000-11.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }] },
-    { numero: '5000000-22.2020.4.03.9999', itens: [{ data: '2026-10-10', textos: ['Juntada'] }, { data: '2020-01-10', textos: ['Distribuído por sorteio'] }, { data: '2020-01-10', textos: [], docs: [{ id: '1', nome: 'Petição inicial', caminho: 'x' }] }] },
+    { numero: '5000000-11.2020.4.03.9999', host, itens: [{ data: '2026-10-10', textos: ['Juntada'] }] },
+    { numero: '5000000-22.2020.4.03.9999', host, itens: [{ data: '2026-10-10', textos: ['Juntada'] }, { data: '2020-01-10', textos: ['Distribuído por sorteio'] }, { data: '2020-01-10', textos: [], docs: [{ id: '1', nome: 'Petição inicial', caminho: 'x' }] }] },
   ] } }];
   const { api } = await carregar({ guardado: { refresh: 'r', quem: 'eu' },
     respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },
-                { corpo: acervo }, { corpo: casos }, { corpo: entregues }] });
+                { corpo: acervo }, { corpo: casos }, { corpo: [] }, { corpo: entregues }] });
   const lista = await api.acervoPje();
   assert.deepStrictEqual(lista.map(p => p.numero).sort(),
     ['5000000-11.2020.4.03.9999', '5000000-33.2020.4.03.9999']);   // o 22 não movimentou; o 33 nunca foi completado
@@ -206,21 +207,83 @@ test('acervoPje: documento que falhou traz o processo de volta, até 3 tentativa
   const host = 'pje1g.trf3.jus.br', numero = '5000000-22.2020.4.03.9999';
   const acervo = [{ dados: { host, processos: [{ numero, id: '2', ca: 'b', movimento: { data: '2026-10-10', texto: 'Juntada' } }] } }];
   const casos = [{ processo: numero, processos: [] }];
-  const entregues = [{ dados: { lote: [{ numero, itens: [{ data: '2026-10-10', textos: ['Juntada'],
-    docs: [{ id: '900', nome: 'Certidão' }, { id: '901', nome: 'Laudo', caminho: 'pje/x/901' }] },
+  const entregues = [{ dados: { lote: [{ numero, host, itens: [{ data: '2026-10-10', textos: ['Juntada'],
+    docs: [{ id: '900', nome: 'Certidão', falhou: true }, { id: '902', nome: 'Peça de processo arquivado' }, { id: '901', nome: 'Laudo', caminho: 'pje/x/901' }] },
     { data: '2020-01-10', textos: ['Distribuído por sorteio'] }, { data: '2020-01-10', textos: [], docs: [{ id: '1', nome: 'Petição inicial', caminho: 'x' }] }] }] } }];   // F385 · já chegou ao início
   const rodar = async tentativas => {
     const { api, memoria } = await carregar({ guardado: { refresh: 'r', quem: 'eu', pje_tentativas: tentativas },
       respostas: [{ corpo: { access_token: 't', refresh_token: 'r', expires_in: 3600 } },
-                  { corpo: acervo }, { corpo: casos }, { corpo: entregues }] });
-    return { lista: await api.acervoPje(), tent: memoria.pje_tentativas };
+                  { corpo: acervo }, { corpo: casos }, { corpo: [] }, { corpo: entregues }] });
+    const lista = await api.acervoPje(), naFila = { ...memoria.pje_tentativas };
+    await api.gastarTentativas(lista);             // o que o completar faz depois de ler e entregar
+    return { lista, naFila, tent: memoria.pje_tentativas };
   };
   let r = await rodar({});
   assert.equal(r.lista.length, 1, '1ª tentativa entra');
+  assert.deepStrictEqual(r.lista[0].pend, ['900'], 'só o que falhou é pendente: a peça não baixada de propósito (902) não conta');
+  assert.deepStrictEqual(r.naFila, {}, 'entrar na fila não gasta tentativa');
   assert.deepStrictEqual(r.tent, { 900: 1 });
   r = await rodar({ 900: 2 });
   assert.equal(r.lista.length, 1, '3ª tentativa ainda entra');
   assert.deepStrictEqual(r.tent, { 900: 3 });
   r = await rodar({ 900: 3 });
   assert.equal(r.lista.length, 0, 'depois de 3, desiste');
+});
+
+test('F590 · acervoPje: 3 falhas no mesmo movimento tiram o processo da fila; movimento novo o devolve', async () => {
+  const host = 'pje1g.trf3.jus.br', numero = '5000000-55.2020.4.03.9999';
+  const rodar = async (data, tent) => {
+    const acervo = [{ dados: { host, processos: [{ numero, id: '5', ca: 'e', movimento: { data, texto: 'Juntada' } }] } }];
+    const { api, memoria } = await carregar({ guardado: { refresh: 'r', quem: 'eu', pje_tentativas: tent },
+      respostas: [CRACHA_OK, { corpo: acervo }, { corpo: [{ processo: numero, processos: [] }] }, { corpo: [] }, { corpo: [] }] });
+    const lista = await api.acervoPje();
+    await api.gastarTentativas(lista.map(p => ({ pend: [p.falha] })));   // o que o completar faz com quem falhou
+    return { lista, tent: memoria.pje_tentativas };
+  };
+  const chave = `falha:${host}:50000005520204039999:2026-10-10`;
+  let r = await rodar('2026-10-10', { [chave]: 2 });
+  assert.equal(r.lista.length, 1, 'a 3ª tentativa ainda entra (nunca completado: antes não tinha chave para contar)');
+  assert.equal(r.tent[chave], 3);
+  assert.equal((await rodar('2026-10-10', r.tent)).lista.length, 0, 'depois de 3, sai da fila');
+  assert.equal((await rodar('2026-10-12', r.tent)).lista.length, 1, 'movimentou de novo: volta');
+});
+
+test('F590 · acervoPje: as tentativas do início cortado contam por grau; a chave antiga, sem host, ainda vale', async () => {
+  const numero = '5000000-66.2020.4.03.9999', n = '50000006620204039999', mov = { data: '2026-10-10', texto: 'Juntada' };
+  const hosts = ['pje1g.trf3.jus.br', 'pje2g.trf3.jus.br'];
+  const acervo = hosts.map(host => ({ dados: { host, processos: [{ numero, id: '6', ca: 'f', movimento: mov }] } }));
+  const entregues = [{ dados: { lote: hosts.map(host => ({ numero, host, itens: [{ data: '2026-10-10', textos: ['Juntada'] }] })) } }];   // cortada nos dois
+  const rodar = async tent => (await carregar({ guardado: { refresh: 'r', quem: 'eu', pje_tentativas: tent },
+    respostas: [CRACHA_OK, { corpo: acervo }, { corpo: [{ processo: numero, processos: [] }] }, { corpo: [] }, { corpo: entregues }] })).api.acervoPje();
+  let lista = await rodar({ ['inicio2:' + hosts[0] + ':' + n]: 3 });
+  assert.deepStrictEqual(lista.map(p => [p.host, p.ini]), [[hosts[1], 'inicio2:' + hosts[1] + ':' + n]], 'o 1º grau esgotado não gasta o 2º');
+  assert.equal((await rodar({ ['inicio2:' + n]: 3 })).length, 0, 'quem já esgotou pela chave antiga não reabre');
+});
+
+test('acervoPje: a cronologia de um grau não dá o outro grau por completado', async () => {
+  const numero = '5000000-44.2020.4.03.9999', mov = { data: '2026-10-10', texto: 'Juntada' };
+  const acervo = ['pje1g.trf3.jus.br', 'pje2g.trf3.jus.br'].map(host =>
+    ({ dados: { host, processos: [{ numero, id: '4', ca: 'd', movimento: mov }] } }));
+  const entregues = [{ dados: { lote: [{ numero, host: 'pje1g.trf3.jus.br', itens: [{ data: '2026-10-10', textos: ['Juntada'] },
+    { data: '2020-01-10', textos: ['Distribuído por sorteio'] }, { data: '2020-01-10', textos: [], docs: [{ id: '1', nome: 'Petição inicial', caminho: 'x' }] }] }] } }];
+  const { api, pedidos } = await carregar({ guardado: { refresh: 'r', quem: 'eu' },
+    respostas: [CRACHA_OK, { corpo: acervo }, { corpo: [{ processo: numero, processos: [] }] }, { corpo: [] }, { corpo: entregues }] });
+  const lista = await api.acervoPje();
+  assert.deepStrictEqual(lista.map(p => p.host), ['pje2g.trf3.jus.br']);
+  assert.equal(lista[0].curto, false, 'nunca lido neste grau: a rolagem espera o início inteiro');
+  assert.match(pedidos[1].url, /dados->>sistema=is\.null/, 'as coletas do eproc não ocupam a janela das 40');
+});
+
+test('leitura paginada: o que passa de 1.000 linhas não some; recurso de caso encerrado vai como arquivado', async () => {
+  const nup = i => '4423' + String(i).padStart(13, '0');
+  const pagina = (de, n) => Array.from({ length: n }, (_, i) => ({ crps_nups: [nup(de + i)], crps_nup: null }));
+  const { api, pedidos } = await carregar({ guardado: { refresh: 'r1' }, respostas: [CRACHA_OK,
+    { corpo: pagina(0, 1000) }, { corpo: pagina(1000, 3) }, { corpo: [] },
+    { corpo: [{ crps_nups: [nup(5000)], crps_nup: nup(2) }] }] });                // encerrados: um só dele, um que também está em caso aberto
+  const r = await api.nups();
+  assert.equal(r.nups.length, 1003);
+  assert.equal(r.fichas, 1003, 'fichas continua sendo a conta dos casos abertos');
+  assert.match(pedidos[2].url, /order=id&limit=1000&offset=1000$/);
+  assert.match(pedidos[4].url, /encerrado_em=not\.is\.null/);
+  assert.deepStrictEqual(r.arquivados, [nup(5000)], 'o que está em caso aberto continua na fila');
 });

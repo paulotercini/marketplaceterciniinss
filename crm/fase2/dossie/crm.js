@@ -62,8 +62,14 @@ export async function sair() {
   await chrome.storage.local.remove(['refresh', 'quem']);
 }
 
-export async function cracha() {
-  if (acesso && acesso.ate > Date.now() + 60000) return acesso.token;
+// uma renovação por vez: o refresh_token é de uso único, e duas gravações em
+// paralelo (Drive + CRM, Transparência + HC) pediam duas e a segunda derrubava o login
+let renovando = null;
+export function cracha() {
+  if (acesso && acesso.ate > Date.now() + 60000) return Promise.resolve(acesso.token);
+  return renovando || (renovando = renovar().finally(() => { renovando = null; }));
+}
+async function renovar() {
   const { url, chave } = await config();
   const refresh = soAscii((await chrome.storage.local.get(['refresh'])).refresh);
   if (!refresh) throw new Error('entre no CRM pela extensão (⚙) — sem isso o banco não devolve nada');
@@ -165,7 +171,15 @@ export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'applicat
 
 // o resumo da rodada de UM portal entra em clientes.dossie (schema_dossie.sql),
 // sem apagar o dos outros portais: lê o que há, troca só a chave do portal
-export async function guardarResumo({ cpf, portal, resumo }) {
+// um resumo por vez: o lê-e-regrava de dois portais ao mesmo tempo (a Transparência
+// corre em segundo plano) perdia a chave de um deles
+let filaResumo = Promise.resolve();
+export function guardarResumo(m) {
+  const vez = filaResumo.then(() => gravarResumo(m));
+  filaResumo = vez.catch(() => {});
+  return vez;
+}
+async function gravarResumo({ cpf, portal, resumo }) {
   const st = await chrome.storage.local.get(['refresh', 'url']);
   if (!st.refresh || !st.url) return 'sem login';
   const clienteId = await idDoCliente(cpf);

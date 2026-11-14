@@ -126,6 +126,21 @@ export async function enviar(fonte, dados) {
   }
 }
 
+// O PostgREST corta a resposta em 1.000 linhas SEM avisar, e o `limit=5000`
+// não muda isso: o que passava do corte sumia da rodada. Página a página, em
+// ordem fixa, até a página vazia (vale também se o teto do banco for menor).
+async function lerTudo(caminho, cab) {
+  const { url } = await config();
+  const fora = [];
+  for (;;) {
+    const r = await fetchTeimoso(`${url}/rest/v1/${caminho}&order=id&limit=1000&offset=${fora.length}`, { headers: cab });
+    if (!r.ok) throw new Error(String(r.status));
+    const l = await r.json();
+    if (!Array.isArray(l) || !l.length) return fora;
+    fora.push(...l);
+  }
+}
+
 // Os processos que o CRM quer que sejam consultados no e-Recursos.
 //
 // A LISTA A CONSULTAR é `crps_nups` (o número que a ficha guarda); `crps` é o
@@ -136,28 +151,31 @@ export async function enviar(fonte, dados) {
 // exatamente aí que a extensão passou duas rodadas dizendo a coisa errada com
 // toda a convicção.
 export async function nups() {
-  const { url } = await config();
   const cab = await cabecalhos();
   // `arquivados` diz quais recursos o escritório marcou 🗄 no CRM — é o que
   // permite ao coletor pular os que não movimentam mais. Banco antigo sem a
   // coluna não derruba a coleta: repete a consulta sem ela.
-  let r = await fetchTeimoso(
-    `${url}/rest/v1/casos?select=crps_nups,crps_nup,arquivados&encerrado_em=is.null&limit=5000`,
-    { headers: cab });
-  if (!r.ok) r = await fetchTeimoso(
-    `${url}/rest/v1/casos?select=crps_nups,crps_nup&encerrado_em=is.null&limit=5000`,
-    { headers: cab });
-  if (!r.ok) throw new Error(`não consegui ler os recursos do CRM (${r.status})`);
-  const linhas = await r.json();
+  let linhas;
+  try { linhas = await lerTudo('casos?select=crps_nups,crps_nup,arquivados&encerrado_em=is.null', cab); }
+  catch (e) {
+    try { linhas = await lerTudo('casos?select=crps_nups,crps_nup&encerrado_em=is.null', cab); }
+    catch (e2) { throw new Error(`não consegui ler os recursos do CRM (${e2.message})`); }
+  }
+  const nupsDe = l => [...(Array.isArray(l.crps_nups) ? l.crps_nups : []), l.crps_nup]
+    .map(n => String(n == null ? '' : n).replace(/\D/g, '')).filter(d => d.length >= 15 && d.length <= 25);
   const fora = new Set(), arq = new Set();
   for (const l of linhas)
-    for (const n of [...(Array.isArray(l.crps_nups) ? l.crps_nups : []), l.crps_nup]) {
-      const d = String(n == null ? '' : n).replace(/\D/g, '');
-      if (d.length >= 15 && d.length <= 25) {
-        fora.add(d);
-        if ((l.arquivados || {})['crps:' + d]) arq.add(d);
-      }
+    for (const d of nupsDe(l)) {
+      fora.add(d);
+      if ((l.arquivados || {})['crps:' + d]) arq.add(d);
     }
+  // recurso de caso ENCERRADO que o coletor ainda acha no portal era tratado
+  // como novo para sempre: vai como arquivado, salvo se também está em caso
+  // aberto. Falhar aqui não derruba a coleta
+  try {
+    for (const l of await lerTudo('casos?select=crps_nups,crps_nup&encerrado_em=not.is.null&or=(crps_nup.not.is.null,crps_nups.neq.[])', cab))
+      for (const d of nupsDe(l)) if (!fora.has(d)) arq.add(d);
+  } catch (e) { console.warn('[CRM] recursos de casos encerrados:', e.message); }
   return { nups: [...fora], arquivados: [...arq], fichas: linhas.length };
 }
 
@@ -172,12 +190,9 @@ export async function nups() {
 // como se fosse. Falência, execução, cobrança, ação contra banco ficam de fora
 export const previdenciario = b => !b || /apos|aux|esp[eé]cie|revis|cnis|bpc|loas|pens[aã]o|rural|incapac|acidente|reclus|matern|sal[aá]rio|benef|recurso|apura|inss|previd|defici/i.test(b);
 export async function processosTjsp() {
-  const { url } = await config();
-  const r = await fetchTeimoso(
-    `${url}/rest/v1/casos?select=processo,processos,beneficio&encerrado_em=is.null&limit=5000`,
-    { headers: await cabecalhos() });
-  if (!r.ok) throw new Error(`não consegui ler os processos do CRM (${r.status})`);
-  const linhas = await r.json();
+  let linhas;
+  try { linhas = await lerTudo('casos?select=processo,processos,beneficio&encerrado_em=is.null', await cabecalhos()); }
+  catch (e) { throw new Error(`não consegui ler os processos do CRM (${e.message})`); }
   const fora = new Set(), comDocs = new Set();
   const pega = (v, prev) => { const m = String(v || '').match(/\d{7}-\d{2}\.\d{4}\.8\.26\.\d{4}/); if (m) { fora.add(m[0]); if (prev) comDocs.add(m[0]); } };
   for (const l of linhas) {
@@ -274,13 +289,14 @@ const chegouAoInicio = (itens = []) => {
 export async function acervoPje() {
   const { url } = await config();
   const cab = await cabecalhos();
-  const r = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje&order=criado_em.desc&limit=40`, { headers: cab });
+  const r = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje&dados->>sistema=is.null&order=criado_em.desc&limit=40`, { headers: cab });
   if (!r.ok) throw new Error(`não consegui ler as coletas do PJe (${r.status})`);
-  const rc = await fetchTeimoso(`${url}/rest/v1/casos?select=processo,processos&encerrado_em=is.null&limit=5000`, { headers: cab });
-  if (!rc.ok) throw new Error(`não consegui ler os casos (${rc.status})`);
+  let casos;
+  try { casos = await lerTudo('casos?select=processo,processos&encerrado_em=is.null', cab); }
+  catch (e) { throw new Error(`não consegui ler os casos (${e.message})`); }
   const dig = v => String(v == null ? '' : v).replace(/\D/g, '');
   const doCrm = new Set();
-  for (const k of await rc.json()) {
+  for (const k of casos) {
     if (dig(k.processo)) doCrm.add(dig(k.processo));
     for (const p of (Array.isArray(k.processos) ? k.processos : [])) if (dig(p && (p.numero || p))) doCrm.add(dig(p.numero || p));
   }
@@ -288,18 +304,22 @@ export async function acervoPje() {
   // cobrem duas rodadas completas); fora da janela, conta como nunca feito
   const rp = await fetchTeimoso(`${url}/rest/v1/coletas?select=dados&fonte=eq.pje-processo&order=criado_em.desc&limit=100`, { headers: cab });
   if (!rp.ok) throw new Error(`não consegui ler as cronologias entregues (${rp.status})`);
+  // por host:número — o mesmo número existe no 1º e no 2º grau, e a cronologia
+  // de um grau dava o outro por completado. Entrega antiga sem host reabre uma vez
   const feitos = new Map();
   for (const c of await rp.json()) {
     const d = c.dados || {};
-    for (const p of (Array.isArray(d.lote) ? d.lote : [d]))
-      if (p && p.numero && !feitos.has(dig(p.numero))) feitos.set(dig(p.numero), p.itens || []);
+    for (const p of (Array.isArray(d.lote) ? d.lote : [d])) {
+      const k = p && p.numero && (p.host || d.host || '') + ':' + dig(p.numero);
+      if (k && !feitos.has(k)) feitos.set(k, p.itens || []);
+    }
   }
-  // documento sem arquivo guardado (falhou, ou o expediente que até a 1.30 se pulava) traz
-  // o processo de volta, até 3 tentativas por documento — contadas no navegador
-  // ao entrar na fila. shortcut: rodada que cai antes de chegar nele gasta uma
-  // tentativa; se incomodar, contar só na entrega
+  // documento que FALHOU traz o processo de volta, até 3 tentativas por
+  // documento. Só o `falhou`: a peça que não se baixa de propósito (processo
+  // arquivado) contava como pendente e reabria o processo por 3 rodadas. A
+  // tentativa é gasta em gastarTentativas, depois de o processo ser lido e entregue
   const tent = (await chrome.storage.local.get('pje_tentativas')).pje_tentativas || {};
-  const pendentes = itens => (itens || []).flatMap(i => i.docs || []).filter(d => !d.caminho && d.id && (tent[d.id] || 0) < 3);
+  const pendentes = itens => (itens || []).flatMap(i => i.docs || []).filter(d => d.falhou && !d.caminho && d.id && (tent[d.id] || 0) < 3);
   const vistos = new Map();
   for (const c of await r.json()) {
     const d = c.dados || {};
@@ -307,19 +327,31 @@ export async function acervoPje() {
     for (const p of (d.processos || [])) {
       const num = dig(p.numero), chave = d.host + ':' + num;
       if (!p.id || !p.ca || !doCrm.has(num) || vistos.has(chave)) continue;
-      const faltam = pendentes(feitos.get(num));
+      const ja = feitos.get(chave), faltam = pendentes(ja);
       // F385 · a cronologia nascida no PJe (número 5…) que não chegou ao primeiro
       // movimento volta, até 3 vezes: faltam a inicial e a distribuição
-      const ini = 'inicio2:' + num   // 1.33.2 · a rolagem nova ganha 3 tentativas novas
-        , cortada = feitos.has(num) && /^5/.test(num)
-        && !chegouAoInicio(feitos.get(num)) && (tent[ini] || 0) < 3;
-      if (!movimentou(p.movimento, feitos.get(num)) && !faltam.length && !cortada) continue;
-      for (const x of faltam) tent[x.id] = (tent[x.id] || 0) + 1;
-      if (cortada) tent[ini] = (tent[ini] || 0) + 1;
+      // F590 · com o host: o 1º e o 2º grau gastavam as tentativas um do outro (a chave antiga, sem host, ainda vale para quem já esgotou)
+      const ini = 'inicio2:' + chave   // 1.33.2 · a rolagem nova ganha 3 tentativas novas
+        , nIni = tent[ini] ?? tent['inicio2:' + num] ?? 0
+        , cortada = !!ja && /^5/.test(num)
+        && !chegouAoInicio(ja) && nIni < 3;
+      if (!movimentou(p.movimento, ja) && !faltam.length && !cortada) continue;
+      // F590 · o processo que não abre ou que o CRM recusa sai da fila na 3ª falha, até movimentar de novo
+      const falha = 'falha:' + chave + ':' + ((p.movimento && p.movimento.data) || '');
+      if ((tent[falha] || 0) >= 3) continue;
       vistos.set(chave, { numero: p.numero, host: d.host,
-        url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}` });
+        url: `https://${d.host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}`,
+        pend: faltam.map(x => x.id), ini: cortada ? ini : null, falha,
+        // o início já foi lido antes (ou já se desistiu dele): o coletor pode encurtar a espera do fim da rolagem
+        curto: /^5/.test(num) && (chegouAoInicio(ja || []) || nIni >= 3) });
     }
   }
-  await chrome.storage.local.set({ pje_tentativas: tent });
   return [...vistos.values()];
+}
+// soma uma tentativa para os documentos pendentes e o "início" de cada processo
+// que o completar leu e entregou (entrar na fila não gasta: a rodada pode parar antes)
+export async function gastarTentativas(ps) {
+  const tent = (await chrome.storage.local.get('pje_tentativas')).pje_tentativas || {};
+  for (const p of ps || []) for (const k of [...(p.pend || []), p.ini].filter(Boolean)) tent[k] = (tent[k] || 0) + 1;
+  await chrome.storage.local.set({ pje_tentativas: tent });
 }

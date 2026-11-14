@@ -229,6 +229,21 @@
   // documentos (sentença, pasta digital) só do processo vivo E com caso aberto
   // no CRM: sem caso, o documento não tem onde morar (mesma regra do PJe, F187)
   const baixaDocs = (situacao, numero, ativos) => !arquivado(situacao) && !!ativos && ativos.has(numero);
+  // a anotação de arquivado é pelo CÓDIGO quando há: o incidente (RPV,
+  // cumprimento) tem o número do principal, e arquivado marcava o principal
+  // ativo, que ficava 7 dias sem consulta. Só a entrada do CRM vai por número
+  const chaveArq = p => (p.codigo ? 'cod:' + p.codigo : p.numero);
+  // o número do foro 0000 nasceu no tribunal (agravo, ação originária): no
+  // 1º grau a consulta não o acha
+  const grauDoNumero = n => (/\.8\.26\.0000$/.test(String(n || '')) ? '2º grau' : '1º grau');
+  // os dois erros que param a rodada (as mensagens são as do esaj.js): a
+  // sessão caída na hora, a trava de simultâneas quando se repete
+  const erroDeSessao = msg => /sess[ãa]o do e-SAJ caiu/i.test(String(msg || ''));
+  const erroDeTrava = msg => /consultas simult/i.test(String(msg || ''));
+  // a pasta digital só é reaberta com movimento novo: a marca é a movimentação
+  // mais recente; e só vale guardar a marca com a pasta inteira no CRM
+  const assinaturaMov = m => (m ? [m.data, m.texto, m.detalhe || ''].join('|') : '');
+  const pastaInteira = (docs, vaiBaixar) => (docs || []).every(d => d.caminho || !vaiBaixar(d.nome));
 
   // a consulta por NÚMERO: no 1º grau cai direto na ficha (show.do); o mesmo
   // número no 2º grau é o recurso, quando existe
@@ -273,7 +288,8 @@
   }
 
   const API = { urlDaPasta, docsDaPasta, lerLinhaLista, lerListaHtml, totalRegistros, totalPaginas, bloqueado, pedeLogin, lerMovimentacoesHtml,
-                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, lerIncidentesFicha, arquivado, baixaDocs, urlBuscaNumero };
+                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, lerIncidentesFicha, arquivado, baixaDocs, urlBuscaNumero,
+                chaveArq, grauDoNumero, erroDeSessao, erroDeTrava, assinaturaMov, pastaInteira };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.ESAJ_REGRAS = raiz.ESAJ_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -44,19 +44,28 @@ async function noDrive(m, fonte) {
 
 async function salvar(m) {
   const fonte = String(m.fonte || 'Outros').split('/').map(R.nomeSeguro).join('/');
-  const local = await noDrive(m, fonte);
-  if (!local) {
-    const url = await urlDoBlob(m.b64);
-    await chrome.downloads.download({ url, filename: `${R.pastaCliente(m.nome, m.cpf)}/${fonte}/${m.arquivo}`,
-      conflictAction: 'overwrite', saveAs: false });
-  }
-
-  let crm;
-  try {
-    const bytes = Uint8Array.from(atob(m.b64), c => c.charCodeAt(0));
-    const caminho = `dossie/${m.cpf}/${fonte.split('/').map(R.slug).join('/')}/${R.slug(m.arquivo)}`;
-    crm = await CRM.guardarNoCrm({ cpf: m.cpf, caminho, nome: `${fonte} · ${m.arquivo}`, bytes, mime: m.mime || 'application/pdf' });
-  } catch (e) { crm = String(e.message || e); }
+  // Drive (ou Downloads) e CRM ao mesmo tempo: são destinos diferentes, um não espera o outro
+  const noDisco = async () => {
+    const local = await noDrive(m, fonte);
+    if (!local) {
+      const url = await urlDoBlob(m.b64);
+      await chrome.downloads.download({ url, filename: `${R.pastaCliente(m.nome, m.cpf)}/${fonte}/${m.arquivo}`,
+        conflictAction: 'overwrite', saveAs: false });
+    }
+    return local;
+  };
+  const noCrm = async () => {
+    try {
+      const bytes = Uint8Array.from(atob(m.b64), c => c.charCodeAt(0));
+      const caminho = `dossie/${m.cpf}/${fonte.split('/').map(R.slug).join('/')}/${R.slug(m.arquivo)}`;
+      return await CRM.guardarNoCrm({ cpf: m.cpf, caminho, nome: `${fonte} · ${m.arquivo}`, bytes, mime: m.mime || 'application/pdf' });
+    } catch (e) { return String(e.message || e); }
+  };
+  const [local, crm] = await Promise.all([noDisco(), noCrm()]);
+  // sem login e cliente fora do CRM são estados conhecidos (o arquivo fica só na pasta);
+  // qualquer outra recusa é falha: o arquivo não pode contar como baixado sem estar na ficha
+  if (!['ok', 'sem login', 'cliente fora do CRM'].includes(crm))
+    throw new Error(`gravado ${local ? 'no Drive' : 'em Downloads'}, mas o CRM recusou: ${crm}`);
   return { ok: true, crm, drive: !!local };
 }
 
@@ -83,13 +92,19 @@ async function noHc(tabId, metodo, arg) {
 // e a resposta com 32 relatórios de uma vez não chegava (16.10.2026)
 async function telaHc(tabId, tela, gravar, arg) {
   await noHc(tabId, 'rodar', { tela, arg });
-  for (let t = 0; t < 40 * 60000; t += 3000) {
+  // página recarregada (o __dossieHcPronto some) ou aba fechada (3 consultas seguidas sem
+  // resposta): não espera os 40 min. Nos exames a recarga é a do filtro "Exibir tudo"
+  const sumiu = () => tela === 'exames' ? { recarregar: true } : { falhas: ['a página recarregou no meio — rode o HC de novo'] };
+  for (let t = 0, mudo = 0; t < 40 * 60000; t += 3000) {
     await pausa(3000);
     const [c] = await chrome.scripting.executeScript({ target: { tabId }, world: 'MAIN',
-      func: () => { const f = window.__dossieHcFila || []; window.__dossieHcFila = []; return { fila: f, pronto: window.__dossieHcPronto }; } }).catch(() => []);
-    if (!c || !c.result) continue;
+      func: () => { const f = window.__dossieHcFila || []; window.__dossieHcFila = [];
+        return { fila: f, pronto: window.__dossieHcPronto, sumiu: window.__dossieHcPronto === undefined }; } }).catch(() => []);
+    if (!c || !c.result) { if (++mudo >= 3) return sumiu(); continue; }
+    mudo = 0;
     for (const a of c.result.fila) await gravar(a);
     if (c.result.pronto) return c.result.pronto;
+    if (c.result.sumiu) return sumiu();
   }
   return null;
 }
@@ -98,7 +113,7 @@ async function rodarHc(tabId) {
   const info = await noHc(tabId, 'info', st.cliente || null);
   if (!info || info.erro) { const e = (info && info.erro) || 'não consegui ler o HC'; await noHc(tabId, 'fim', { texto: e, cor: '#B3261E' }); return { erro: e }; }
   const { cliente, links, registro } = info;
-  let ok = 0; const falhas = [], inexistentes = [], porTela = {};
+  let ok = 0; const falhas = [], inexistentes = [], porTela = {}, naoGravou = new Set();
   for (const [tela, rotulo] of [['exames', 'exames'], ['internacoes', 'internações'], ['relatorios', 'relatórios']]) {
     if (!links[tela]) { falhas.push(`${rotulo}: link não encontrado no menu`); continue; }
     const pronto = carregou(tabId);
@@ -106,14 +121,14 @@ async function rodarHc(tabId) {
     await pronto; await pausa(2500);
     const gravar = async a => {
       try { await salvar({ cpf: cliente.cpf, nome: cliente.nome, ...a }); ok++; }
-      catch (e) { falhas.push(`${a.arquivo}: ${e.message || e}`); }
+      catch (e) { naoGravou.add(a.arquivo); falhas.push(`${a.arquivo}: ${e.message || e}`); }
     };
     let r = await telaHc(tabId, tela, gravar);
     if (r && r.recarregar) {                    // filtro "Exibir tudo" dos exames: a página se recarrega
       await carregou(tabId); await pausa(2500);
       r = await telaHc(tabId, tela, gravar);
     }
-    if (!r) { falhas.push(`${rotulo}: a tela não respondeu`); continue; }
+    if (!r || r.recarregar) { falhas.push(`${rotulo}: a tela não respondeu`); continue; }
     const anotar = (rot, x) => { porTela[rot] = x; falhas.push(...(x.falhas || []).map(f => `${rot} · ${f}`)); inexistentes.push(...(x.inexistentes || []).map(f => `${rot} · ${f}`)); };
     anotar(rotulo, r);
     if (tela !== 'exames') continue;
@@ -131,7 +146,7 @@ async function rodarHc(tabId) {
     await chrome.tabs.remove(aba.id).catch(() => {});
   }
   const baixados = [];
-  for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) baixados.push(`${tela} · ${a.arquivo}`);
+  for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) if (!naoGravou.has(a.arquivo)) baixados.push(`${tela} · ${a.arquivo}`);
   const res = await resumo({ cpf: cliente.cpf, portal: 'hc', baixados, inexistentes, falhas });
   // falha primeiro: é o que pede ação, e não pode sumir atrás da lista de "sem resultado"
   await noHc(tabId, 'fim', { cor: falhas.length ? '#9A6700' : '#1E6F50',
@@ -183,6 +198,8 @@ async function rodarTudo() {
   const anotar = (p, x) => relato.push(`${p.nome}: ${x && x.erro ? x.erro
     : `${(x && x.ok) || 0} doc(s)${x && x.falhas && x.falhas.length ? `, ${x.falhas.length} falha(s)` : ''}`}`);
   try {
+    // o cliente da rodada anterior não vale para esta: quem o grava de novo é o Meu INSS
+    await chrome.storage.local.remove('cliente');
     await chrome.storage.local.set({ rodada_desde: Date.now() });
     for (const p of PORTAIS) {
       await chrome.storage.local.set({ rodada_andamento: `${p.nome}…` });
@@ -218,12 +235,16 @@ async function rodarTudo() {
               .then(r => { window.__dossieResultado = r || { ok: 0 }; }, e => { window.__dossieResultado = { erro: String(e && e.message || e) }; });
           } });
           let x = null;
-          for (let t = 0; t < 40 * 60000 && !x; t += 3000) {       // teto de 40 min por portal
+          for (let t = 0, mudo = 0; t < 40 * 60000 && !x; t += 3000) {       // teto de 40 min por portal
             await pausa(3000);
             await chrome.storage.local.set({ rodada_andamento: `${p.nome}… (${Math.round(t / 60000)} min)` });
-            const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id }, func: () => window.__dossieResultado })
-              .catch(() => [null]);                                  // aba fechou ou navegou: segue esperando
+            // página recarregada: o __dossieResultado some e o coletor morreu com ela
+            const [r] = await chrome.scripting.executeScript({ target: { tabId: aba.id },
+              func: () => window.__dossieResultado === undefined ? { erro: 'a página recarregou no meio — rode de novo' } : window.__dossieResultado })
+              .catch(() => [undefined]);
             x = r && r.result;
+            // aba fechada ou fora do portal: 3 consultas seguidas sem resposta e desiste
+            if (r) mudo = 0; else if (++mudo >= 3) x = { erro: 'a aba fechou ou saiu do portal no meio — rode de novo' };
           }
           anotar(p, x || { erro: 'não terminou em 40 min — veja a faixa na aba' });
         }
@@ -307,6 +328,7 @@ async function transparencia(m) {
 // falhou) vai para clientes.dossie — é o que deixa a ficha dizer "sem CTC"
 const resumo = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
   resumo: Object.assign({ baixados: m.baixados || [], inexistentes: m.inexistentes || [], falhas: m.falhas || [] },
+    m.parcial ? { parcial: true } : {},                  // resumo antecipado do Meu INSS: a rodada ainda não acabou
     m.cadastro ? { cadastro: m.cadastro } : {},          // Meu INSS: os dados cadastrais do CNIS, nas colunas do CRM
     m.familia ? { familia: m.familia, familias: m.familias || [m.familia] } : {}) })   // CadÚnico: a família (renda per capita, integrantes)
   .then(crm => ({ ok: true, crm }), e => ({ ok: false, crm: String(e.message || e) }));
