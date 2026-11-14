@@ -7096,7 +7096,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.88</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.89</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9576,7 +9576,8 @@ function montarSidebar(){
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
         ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
-        ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length]]   // F250 · a lista de todos os clientes (nível 0)
+        ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length],
+        ["contatos","📇 Contatos", (D.clientes||[]).filter(ehContato).length||null]]   // F250 · a lista de todos os clientes (nível 0)
       .filter(([id])=>pode.includes(id) && !["particulares","rotinas"].includes(id))
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
@@ -9604,6 +9605,7 @@ function montarSidebar(){
     ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
     // a lista de todos os clientes (F250) também na visão do titular, e não só na do colaborador
     ["clientes","👥 Clientes", (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).length],
+    ["contatos","📇 Contatos", (D.clientes||[]).filter(ehContato).length||null],   // F586
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
@@ -11657,7 +11659,7 @@ function cartaoCliente(cli, casosMostrar){
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}${dataProx.slice(0,4)!==hj.slice(0,4)?"/"+dataProx.slice(2,4):""}`;
     return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}" data-casos="${ks.map(k=>k.id).join(",")}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
     <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
-    <div class="ag-txt"><b>${esc(cli.nome)}</b>${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
+    <div class="ag-txt"><b>${esc(cli.nome)}</b>${seloContato(cli)}${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
       ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(kP ? NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"" : "")}</span>
@@ -11686,7 +11688,7 @@ function cartaoCliente(cli, casosMostrar){
       ${/* o 🔥 aparecia duas vezes na mesma linha: ao lado do nome e no botão
              de ação, que já fica aceso quando o caso é urgente */""}
       ${/* F147 · o #CPF saiu das listas (pedido do Paulo): a busca continua achando por ele */""}
-      <div class="nome">${esc(cli.nome)}</div>
+      <div class="nome">${esc(cli.nome)}${seloContato(cli)}</div>
       ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
     ${quemProx.filter(c=>!resp.includes(c)).map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
@@ -12430,6 +12432,7 @@ function renderBase(){
   if(visao==="fase:aposentadoria_futura") return renderCardsApos();   // F218 · os cards, não os casos da fase
   if(visao==="agenda") return renderAgenda();
   if(visao==="clientes") return renderClientesTodos();   // F250
+  if(visao==="contatos") return renderContatos();   // F586
   if(visao==="calendario") return renderCalendario();
   if(visao==="particulares") return renderParticulares();
   if(visao==="meudia") return renderMeuDia();
@@ -14330,14 +14333,14 @@ const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab" || soIdent
 // F187 · o atendente precisa do WhatsApp e das Menções (aviso de transferência e @)
 const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","pessoas","agendaq","importante","particulares","rotinas",
   "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
-  "novocliente"];
+  "novocliente","contatos"];
 // F220 · a barra por CARGO: o "Atribuídas a mim" é de todos (é por ele que a
 // divisão de tarefas chega a quem faz); o advogado vê também as aposentadorias
 // futuras, a Análise de Direito e as perícias; a recepção vê o que atende
 // (cadastro, Escritório, agenda, perícias), sem as listas de processo
 const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
-  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente"],
+  recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente","contatos"],
 };
 const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
@@ -18057,6 +18060,7 @@ const advDaConversa = c => { const cli = clienteDaConversa(c); if(!cli) return "
 function clienteDaLinha(c){
   const cli = clienteDaConversa(c);
   if(!cli) return "Sem cliente vinculado";
+  if(ehContato(cli)) return `${esc(rotContato(cli))}: <b>${esc(cli.nome)}</b>`; // F586 · não é cliente
   // o mesmo número pode ser de mais de um cliente (F191, F268): todos aparecem, o dono primeiro
   const outros = representadosDe(cli, String(c.telefone||"").replace(/\D/g,"").slice(-8)).map(r=>r.x.nome);
   const nomes = [cli.nome, ...outros], vis = nomes.slice(0, 2).map(n=>`<b>${esc(n)}</b>`).join(" e ");
@@ -18065,7 +18069,7 @@ function clienteDaLinha(c){
 // o nome do WhatsApp não é o do cliente e ninguém disse quem conversa: pergunta
 function nomeDiferente(c){
   const cli = clienteDaConversa(c), p = dsa(c.nome_perfil||"").split(/\s+/)[0];
-  return !!cli && !c.contato_nome && p.length>=3 && !dsa(cli.nome).split(/\s+/).includes(p);
+  return !!cli && !ehContato(cli) && !c.contato_nome && p.length>=3 && !dsa(cli.nome).split(/\s+/).includes(p);
 }
 function quemConversa(){
   const c = zapConvs.find(x=>x.id===zapAberta); const cli = clienteDaConversa(c); if(!c) return;
@@ -18344,7 +18348,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                ${fim||pode||!deOutro?"":`<button class="zt-cel zt-trans" onclick="this.closest('details').open=false;pedirTransferencia()">Pedir<span class="sr-only"> transferência</span></button>`}
                ${pode?`<button class="zt-cel zt-fim" onclick="this.closest('details').open=false;${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":"Encerrar"}</button>`:""}
                ${cli?`<button onclick="quemConversa()" title="dizer se quem escreve é o próprio cliente ou outra pessoa por ele">Identificar quem escreve</button>`:`<button onclick="vincularConversa()" title="Vincular a um cliente">Vincular<span class="sr-only"> a um cliente</span></button>
-               <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>`}
+               <button onclick="this.closest('details').open=false;nomearConversa()" title="Alterar o nome do contato"><span aria-hidden="true">Renomear</span><span class="sr-only">Alterar o nome do contato</span></button>
+               <button onclick="this.closest('details').open=false;contatoDaConversa()" title="Salvar este número como contato que não é cliente"><span aria-hidden="true">Contato</span><span class="sr-only">Salvar como contato que não é cliente</span></button>`}
                <button onclick="this.closest('details').open=false;verFavoritasZap()">Mensagens favoritas${zapMsgs.some(m=>m.favorita_em)?` (${zapMsgs.filter(m=>m.favorita_em).length})`:""}</button>
                <button onclick="this.closest('details').open=false;baixarConversaZap()" title="baixar a conversa em MD ou PDF, inteira ou desde uma data">Baixar<span class="sr-only"> a conversa</span></button>
                <button class="zt-cel zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}"><span aria-hidden="true">${c.nao_lidas?"Lida":"Desler"}</span><span class="sr-only">${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}</span></button>
@@ -19155,7 +19160,7 @@ async function renderSugestoesDia(){
   let itens = [], ia = [];
   try{ [itens, ia] = await Promise.all([
     api(`/rest/v1/sugestoes_rotina?select=id,texto,motivo,conversa_id,cliente_id,caso_id,criado_em&tipo=eq.mensagem&estado=eq.aberta&order=criado_em.asc&limit=100`),
-    // F586 · as sugestões da IA que ficaram acima do campo de escrever sem Usar nem Descartar (a de iniciativa já está na lista acima)
+    // F587 · as sugestões da IA que ficaram acima do campo de escrever sem Usar nem Descartar (a de iniciativa já está na lista acima)
     api(`/rest/v1/zap_conversas?select=id,cliente_id,lead_id,contato_nome,nome_perfil,telefone,sugestao_ia&sugestao_ia=not.is.null&order=ultima_em.desc&limit=100`).catch(()=>[])]); }
   catch(e){ meio.innerHTML = `<p class="meio-sub">Não carreguei: ${esc(msgErro(e))}</p>`; return; }
   ia = (ia||[]).filter(c=>c.sugestao_ia && c.sugestao_ia.texto && !c.sugestao_ia.sugestao_id);
@@ -20056,7 +20061,9 @@ async function conferirContatoZap(){
   const ja = zapConvs.find(c=>ultimos8(c.telefone)===ultimos8(fone));
   res.innerHTML = `<p>${ja?`Já existe conversa com este número (${esc(nomeDaConversa(ja))}), sem ficha de cliente.`:"Este número não está em nenhuma ficha."}</p>
     <div class="form-linha"><button class="btn-sal" id="znc-conv" title="Abrir a conversa com este número">Conversar</button>
-    <button class="btn-rap" id="znc-cli" title="Criar a ficha de cliente com este número">Cliente</button></div>`;
+    <button class="btn-rap" id="znc-cli" title="Criar a ficha de cliente com este número">Cliente</button>
+    <button class="btn-rap" id="znc-ct" title="Cadastrar este número como contato que não é cliente (advogado, fornecedor, banco)"><span aria-hidden="true">Contato</span><span class="sr-only">Cadastrar como contato que não é cliente</span></button></div>`;
+  document.getElementById("znc-ct").onclick = ()=>{ fecharCaixa(); contatoDoNumero(fone, nome); };
   document.getElementById("znc-conv").onclick = async ()=>{
     let conv; try{ conv = ja ? ja.id : await abrirContatoZap(fone, nome); }catch(e){ return aviso("Não abri a conversa: "+msgErro(e)); }
     fecharCaixa();
@@ -21186,6 +21193,116 @@ function situacaoDaLista(c){
   if(abertos.some(k=>k.fase!=="escritorio")) return ["ativo","Caso ativo"];
   if(abertos.length || ((c.campos||{}).precasos||[]).length) return ["formacao","Em formação"];
   return ["inativo","Inativo"];
+}
+// F586 · CONTATOS QUE NÃO SÃO CLIENTES: advogado, fornecedor, gerente do banco, órgão público, parceiro.
+// O contato é linha de clientes com campos.nao_cliente (fica fora da lista Clientes e das contas) e campos.contato = {cat, empresa, obs};
+// a conversa do WhatsApp do número dele não recebe robô, menu nem IA (gatilhos da migração f586_contatos.sql).
+const CAT_CONTATO = ["Advogado","Fornecedor","Banco","Órgão público","Parceiro","Outro"];
+const ehContato = c => !!(c && (c.campos||{}).contato);
+const rotContato = c => `Contato${(c.campos.contato||{}).cat ? " · " + c.campos.contato.cat : ""}`;
+const seloContato = c => ehContato(c) ? `<span class="chip neutro ct-selo">${esc(rotContato(c))}</span>` : "";
+function formContato(pre){
+  const k = pre || {};
+  return `<label class="ct-l">Nome<input id="ct-nome" value="${esc(k.nome||"")}" autocomplete="off" style="width:100%"></label>
+    <label class="ct-l">Categoria<select id="ct-cat">${CAT_CONTATO.map(x=>`<option${x===(k.cat||"Outro")?" selected":""}>${x}</option>`).join("")}</select></label>
+    <label class="ct-l">Empresa ou órgão<input id="ct-emp" value="${esc(k.empresa||"")}" style="width:100%"></label>
+    ${k.semTel ? "" : `<label class="ct-l">Telefone<input id="ct-tel" value="${esc(k.tel||"(16) ")}" inputmode="tel" style="width:100%"></label>`}
+    <label class="ct-l">Observação<textarea id="ct-obs" rows="2" style="width:100%">${esc(k.obs||"")}</textarea></label>`;
+}
+const lerContato = () => ({cat: document.getElementById("ct-cat").value,
+  empresa: document.getElementById("ct-emp").value.trim(), obs: document.getElementById("ct-obs").value.trim()});
+// F586 · o número do WhatsApp vira contato: a ficha nasce com ele, e o gatilho do banco prende a conversa e cala a IA
+function contatoDoNumero(fone, nome){
+  novoContato({nome, tel: fone.slice(2), depois: async ()=>{
+    let conv; try{ conv = await abrirContatoZap(fone, nome); }catch(e){ return aviso("Contato salvo; não abri a conversa: "+msgErro(e)); }
+    await recarregarZap(true).catch(()=>{});
+    if(visao!=="whatsapp") irPara("whatsapp");
+    abrirConversa(conv, true);
+  }});
+}
+function contatoDaConversa(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const fone = String(c.telefone||"").replace(/\D/g,"");
+  contatoDoNumero(fone.length>=12 ? fone : "55"+fone, c.contato_nome||c.nome_perfil||"");
+}
+function novoContato(pre){
+  if(semCadastro()) return;
+  caixa(`<h3>Novo contato</h3><p class="meio-sub">Para quem não é cliente: advogado, fornecedor, banco, órgão público, parceiro. Não entra na lista Clientes, e o WhatsApp do número fica sem robô e sem IA.</p>
+    ${formContato(pre)}<div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="ct-ok">Salvar</button></div>`);
+  document.getElementById("ct-nome").focus();
+  document.getElementById("ct-ok").onclick = async ()=>{
+    const nome = document.getElementById("ct-nome").value.trim(); if(!nome) return aviso("Escreva o nome do contato");
+    let d = document.getElementById("ct-tel").value.replace(/\D/g,""); if(d.startsWith("55") && d.length>=12) d = d.slice(2);
+    if(d.length===8 || d.length===9) d = "16" + d;
+    if(d.length===2) d = "";
+    if(d && (d.length<10 || d.length>11)) return aviso("Telefone incompleto: escreva o DDD e o número");
+    const ja = d ? clientesDoTelefone(d) : [];
+    if(ja.length && !confirm(`Este número já está na ficha de ${ja[0].nome}. Criar o contato mesmo assim?`)) return;
+    let cli;
+    try{ [cli] = await api("/rest/v1/clientes",{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({nome, telefone: d ? fmtTelBR(d) : null, campos:{nao_cliente:true, contato:lerContato()}})}); }
+    catch(e){ return aviso("Não gravou o contato: "+msgErro(e)); }
+    D.clientes.push(cli); D.cliPorId.set(cli.id, cli); reindexarCliente(cli);
+    fecharCaixa(); aviso(`📇 ${nome} guardado em Contatos`, false);
+    if(pre && pre.depois) return pre.depois(cli);
+    montarSidebar(); if(visao==="contatos") pintarContatos();
+  };
+}
+// a ficha vira contato ou volta a cliente; com caso aberto não vira, porque o caso é de cliente
+function virarContato(cliId){
+  const c = D.cliPorId.get(cliId); if(!c || semCadastro()) return;
+  if(temCasoAberto(c)) return aviso(`${c.nome} tem caso aberto: encerre o caso antes de transformar a ficha em contato`);
+  caixa(`<h3>${esc(c.nome)} como contato</h3>${formContato({...(c.campos.contato||{}), nome:c.nome, semTel:true})}
+    <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="ct-ok">Salvar</button></div>`);
+  document.getElementById("ct-nome").disabled = true;
+  document.getElementById("ct-ok").onclick = ()=>gravarContato(cliId, lerContato());
+}
+async function gravarContato(cliId, ct){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const campos = {...(c.campos||{})};
+  if(ct){ campos.contato = ct; campos.nao_cliente = true; delete campos.e_cliente; }
+  else { delete campos.contato; delete campos.nao_cliente; campos.e_cliente = true; }
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos})}); }
+  catch(e){ return aviso("Não gravou: "+msgErro(e)); }
+  c.campos = campos; fecharCaixa();
+  aviso(ct ? `📇 ${c.nome} passou a Contatos` : `${c.nome} volta a ser cliente`, false);
+  montarSidebar(); if(clienteAberto===cliId) repintarFicha(); else render();
+}
+function itemContato(c){
+  if(!podeCadastrar()) return "";
+  return ehContato(c)
+    ? `<button class="cad-mini" style="margin-top:6px" onclick="virarContato('${c.id}')" title="mudar a categoria, a empresa ou a observação do contato">Editar<span class="sr-only"> contato</span></button>
+       <button class="cad-mini" style="margin-top:6px" onclick="gravarContato('${c.id}',null)" title="esta pessoa passou a ser cliente: volta à lista Clientes e o WhatsApp volta ao robô e à IA">Cliente<span class="sr-only">: voltar a ser cliente</span></button>`
+    : temCasoAberto(c) ? "" : `<button class="cad-mini" style="margin-top:6px" onclick="virarContato('${c.id}')" title="esta pessoa não é cliente (advogado, fornecedor, banco…): sai da lista Clientes e o WhatsApp fica sem robô e sem IA">Contato<span class="sr-only">: não é cliente</span></button>`;
+}
+let _ctFiltro = "", _ctCat = "";
+function renderContatos(){
+  tituloLista(temaV10() ? "Contatos" : "📇 Contatos");
+  document.getElementById("sub-lista").textContent = "Quem não é cliente: advogados, fornecedores, bancos, órgãos públicos, parceiros.";
+  document.getElementById("conteudo-meio").innerHTML = `<div class="cli-todos">
+    <nav class="cli-az" id="ct-cats" aria-label="Categorias"></nav>
+    <div class="form-linha"><input id="ct-filtro" class="aq-inp" placeholder="Filtrar por nome, empresa ou telefone" value="${esc(_ctFiltro)}" autocomplete="off">
+    ${podeCadastrar() ? `<button class="btn-sal" id="ct-novo" title="Cadastrar um contato que não é cliente">＋ Contato</button>` : ""}</div>
+    <ul class="cli-todos-l" id="ct-l"></ul></div>`;
+  const inp = document.getElementById("ct-filtro"); inp.oninput = () => { _ctFiltro = inp.value; pintarContatos(); };
+  const nv = document.getElementById("ct-novo"); if(nv) nv.onclick = () => novoContato();
+  pintarContatos();
+}
+function pintarContatos(){
+  const todos = (D.clientes||[]).filter(c=>c.nome && ehContato(c)).sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));
+  const cats = document.getElementById("ct-cats"); if(!cats) return;
+  cats.innerHTML = ["", ...CAT_CONTATO].map(x=>{ const n = x ? todos.filter(c=>c.campos.contato.cat===x).length : todos.length;
+    return `<button type="button" class="cli-az-l${_ctCat===x?" on":""}" data-cat="${esc(x)}" aria-pressed="${_ctCat===x}" ${n||!x?"":"disabled"}>${x||"Todos"} (${n})</button>`; }).join("");
+  cats.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{ _ctCat = _ctCat===b.dataset.cat ? "" : b.dataset.cat; pintarContatos(); });
+  const q = dsa(_ctFiltro).trim(), dig = _ctFiltro.replace(/\D/g,"");
+  const achados = todos.filter(c=>!_ctCat || c.campos.contato.cat===_ctCat)
+    .filter(c=>!q || dsa(c.nome + " " + (c.campos.contato.empresa||"")).includes(q) || (dig.length>=3 && String(c.telefone||"").replace(/\D/g,"").includes(dig)));
+  const l = document.getElementById("ct-l");
+  l.innerHTML = achados.map(c=>{ const k = c.campos.contato;
+    return `<li><button type="button" class="cli-todos-it" data-cli="${c.id}"><span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>
+      <span class="cli-todos-tx"><b>${esc(c.nome)}</b><span>${esc([k.cat, k.empresa, c.telefone ? fmtTelBR(c.telefone) : "", k.obs].filter(Boolean).join(" · "))}</span></span></button></li>`; }).join("")
+    || `<li class="meio-sub">${todos.length ? "Nenhum contato com esse filtro." : "Nenhum contato ainda. Use ＋ Contato."}</li>`;
+  l.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
 }
 function pintarClientesTodos(){
   const q = dsa(_cliFiltro).replace(/\s+/g," ").trim(), dig = _cliFiltro.replace(/\D/g,""), partes = q.split(" ").filter(Boolean);
@@ -49837,7 +49954,7 @@ async function registrarMovimento(casoId, i){
 function linhaAdvogado(c){
   const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
   // F254 · o "fora da lista" segue à vista; o botão de mudar foi ao ⋯ do cabeçalho (F274, itemNaoCliente)
-  const nc = souAdmin() && !ehClienteDaLista(c) ? ` · <span class="chip neutro">fora da lista Clientes</span>` : "";
+  const nc = ehContato(c) ? ` · ${seloContato(c)}` : souAdmin() && !ehClienteDaLista(c) ? ` · <span class="chip neutro">fora da lista Clientes</span>` : "";
   return `<span class="cli-adv">Advogado<span class="fp2-sr"> responsável:</span> <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
     title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}</span>`;
 }
@@ -54216,7 +54333,7 @@ function fichaIdentificacao(c, creds){
         <button class="cad-mini" style="margin-top:6px" title="busca de novo o que a extensão do gov.br baixou para este CPF"
           onclick="atualizarDossie('${c.id}')">Atualizar<span class="sr-only"> dossiê</span></button>
         ${casoDoDoc(c.id) ? `<button class="cad-mini sep-abrir" style="margin-top:6px" onclick="separarParaCliente('${c.id}')" title="Imprimir e separar para o cliente"><span aria-hidden="true">Separar</span><span class="sr-only">Imprimir e separar para o cliente</span></button>` : ""}
-        ${itemNaoCliente(c).replace('class="tl-mais-it', 'style="margin-top:6px" class="cad-mini').replace(' role="menuitem"', "")}</div>
+        ${ehContato(c) ? "" : itemNaoCliente(c).replace('class="tl-mais-it', 'style="margin-top:6px" class="cad-mini').replace(' role="menuitem"', "")}${itemContato(c)}</div>
     </div>
   </div>`;
 }
