@@ -88,3 +88,20 @@ test("revisão: tipo, períodos com empresa e agente, tese fora da linha do temp
   assert.match(r.texto, /^Ação de revisão de aposentadoria por tempo de contribuição \(DER 17\/05\/2018\) em que buscamos o reconhecimento dos períodos especiais de 12\/01\/1981 a 14\/03\/1991 na Empresa Teste S\/A, por ruído e hidrocarbonetos, e de 21\/04\/1999/);
   assert.match(r.texto, /, com a conversão em aposentadoria especial desde 17\/05\/2018 ou, subsidiariamente, a conversão do tempo especial em comum pelo fator 1,4\.$/);
 });
+
+// a DII principal e as datas subsidiárias não são três períodos (caso de 15.11.2026)
+test("incapacidade: DII com datas subsidiárias vira um pedido só, fora da linha do tempo", () => {
+  const recorte = `4. DOS PEDIDOS. Requer a concessão da aposentadoria por incapacidade permanente desde a DER em 18/12/2025, fixando a DII em 12/2025, data do segundo AVC; subsidiariamente, a DII em 07/2025, data do primeiro AVC; mais subsidiariamente, em qualquer data entre 01/2024 e 12/2025. Requer o adicional de 25% do art. 45.`;
+  const r = m.conferirResposta({
+    tipo: "concessao", beneficio: "aposentadoria por incapacidade permanente", beneficio_trecho: "aposentadoria por incapacidade permanente",
+    der: "18/12/2025", der_trecho: "DER em 18/12/2025",
+    objetos: [
+      { natureza: "incapacidade", inicio: "12/2025", fim: "", local: "", motivo: "segundo AVC", subsidiario: false, trecho: "fixando a DII em 12/2025, data do segundo AVC" },
+      { natureza: "incapacidade", inicio: "07/2025", fim: "", local: "", motivo: "primeiro AVC", subsidiario: true, trecho: "a DII em 07/2025, data do primeiro AVC" },
+      { natureza: "incapacidade", inicio: "01/2024", fim: "12/2025", local: "", motivo: "", subsidiario: true, trecho: "em qualquer data entre 01/2024 e 12/2025" },
+      { natureza: "outro", inicio: "", fim: "", local: "", motivo: "o adicional de 25% do art. 45", subsidiario: false, trecho: "o adicional de 25% do art. 45" },
+    ],
+  }, { recorte, hoje: "2026-11-15", fase: "judicial", der_caso: "2025-12-18" });
+  assert.equal(r.periodos.length, 0);
+  assert.equal(r.texto, "Ação de concessão de aposentadoria por incapacidade permanente (DER 18/12/2025) em que buscamos a incapacidade desde 12/2025, por segundo AVC, ou, subsidiariamente, desde 07/2025, por primeiro AVC, ou com início entre 01/2024 e 12/2025; e o adicional de 25% do art. 45.");
+});

@@ -41,13 +41,14 @@ export const ESQUEMA = {
       type: "array", description: "cada coisa pedida que é período, condição ou revisão, na ordem da peça",
       items: {
         type: "object", additionalProperties: false,
-        required: ["natureza", "inicio", "fim", "local", "motivo", "trecho"],
+        required: ["natureza", "inicio", "fim", "local", "motivo", "subsidiario", "trecho"],
         properties: {
           natureza: { type: "string", enum: NAT },
           inicio: { type: "string", description: DATA_DESC },
           fim: { type: "string", description: DATA_DESC },
           local: { type: "string", description: "empresa, sítio ou lugar do período, curto, ou vazio" },
           motivo: { type: "string", description: "agente nocivo com a medida, doença, função ou o que se revisa, curto, ou vazio" },
+          subsidiario: { type: "boolean", description: "true quando o item é pedido subsidiário (alternativa ao anterior)" },
           trecho: { type: "string", description: "cópia literal do trecho do recorte de onde saiu este item, com as datas" },
         },
       },
@@ -63,7 +64,8 @@ Regras:
 - Datas exatamente como estão no trecho (dd/mm/aaaa, dd.mm.aaaa, mm/aaaa ou aaaa). Não complete dia nem mês que o texto não traz.
 - Um objeto por período que o pedido manda reconhecer (rural, especial, comum), com as datas do pedido. A empresa ou o lugar (local) e o agente nocivo ou a função (motivo) você tira da fundamentação, no trecho que cita a mesma data; o trecho do objeto é o da fundamentação quando ele traz as datas e a empresa, senão o do pedido.
 - Não liste o período que a peça diz já reconhecido pelo INSS ou na via administrativa.
-- Um objeto por condição (deficiência ou incapacidade, com o início).
+- Um objeto por condição (deficiência ou incapacidade, com o início). Na incapacidade, inicio é a data de início da incapacidade (DII) pedida e motivo é a causa curta (ex.: "segundo AVC"); fim só quando a peça pede um período fechado de incapacidade. Cada data alternativa da DII ("subsidiariamente", "mais subsidiariamente", "qualquer data entre A e B") é outro objeto "incapacidade" com subsidiario true, na ordem da peça; "qualquer data entre A e B" leva inicio A e fim B.
+- O pedido acessório de mérito (ex.: o adicional de 25% do art. 45, a cessação do benefício assistencial e a implantação do previdenciário) é objeto "outro", com motivo curto começando por artigo e sem datas.
 - Quando a peça pede a revisão de um benefício já concedido, tipo "revisao" e beneficio é o benefício que se revisa (ex.: aposentadoria por tempo de contribuição). Cada resultado pedido vira um objeto "revisao" com motivo curto, começando por artigo (ex.: "a conversão em aposentadoria especial", "a conversão do tempo especial em comum pelo fator 1,4"), e inicio com a data desde quando se pede, se houver; o pedido subsidiário é outro objeto "revisao", depois do principal.
 - Não repita o mesmo período. Não inclua pedidos processuais (gratuidade, honorários, citação, prioridade, tutela, correção, juros).
 
@@ -155,7 +157,11 @@ function fraseObjeto(o: any) {
   const per = i && f ? `de ${i} a ${f}` : i ? `desde ${i}` : "";
   switch (o.natureza) {
     case "deficiencia": return `deficiência${o.motivo ? ` por ${o.motivo}` : ""}${per ? ` ${per}` : ""}`;
-    case "incapacidade": return `incapacidade${o.motivo ? ` por ${o.motivo}` : ""}${per ? ` ${per}` : ""}`;
+    case "incapacidade": {
+      // a DII alternativa não é período: "desde X" ou "com início entre X e Y"
+      const quando = i && f ? `com início entre ${i} e ${f}` : i ? `desde ${i}` : "";
+      return `${o.subsidiario ? "" : "a incapacidade "}${quando}${o.motivo ? `, por ${o.motivo}` : ""}`.trim();
+    }
     case "revisao": return `${o.motivo || "a revisão"}${i ? ` desde ${i}` : ""}`;
     default: return `${o.motivo || "outro pedido"}${per ? ` ${per}` : ""}`;
   }
@@ -178,9 +184,12 @@ export function montarFrase(tipo: string, beneficio: string, der: string, objeto
       const lista = vai.length < its.length ? vai.join(", ") : juntar(vai, vai.some((v) => v.includes(",")) ? ", e " : " e ");
       if (vai.length) grupos.push(`${ROT_GRUPO[nat][vai.length > 1 ? 1 : 0]} ${lista}`);
     }
-    for (const o of objetos.filter((o) => !PERIODO.includes(o.natureza) && o.natureza !== "revisao")) outros.push(fraseObjeto(o));
+    // a incapacidade principal e as datas subsidiárias formam um pedido só
+    const incs = objetos.filter((o) => o.natureza === "incapacidade");
+    if (incs.length) outros.push(incs.map((o, j) => (j ? (j === 1 ? "ou, subsidiariamente, " : "ou ") : "") + fraseObjeto({ ...o, subsidiario: j > 0 })).join(", "));
+    for (const o of objetos.filter((o) => !PERIODO.includes(o.natureza) && o.natureza !== "revisao" && o.natureza !== "incapacidade")) outros.push(fraseObjeto(o));
     const corpo = [grupos.length ? `o reconhecimento ${juntar(grupos, "; e ")}` : "", ...outros].filter(Boolean);
-    let t = corpo.length ? `${cab} em que buscamos ${juntar(corpo)}${cortados ? ` e mais ${cortados} ${cortados > 1 ? "períodos" : "período"}` : ""}` : cab;
+    let t = corpo.length ? `${cab} em que buscamos ${juntar(corpo, corpo.length > 1 && corpo.some((c) => c.includes(",")) ? "; e " : " e ")}${cortados ? ` e mais ${cortados} ${cortados > 1 ? "períodos" : "período"}` : ""}` : cab;
     if (revs.length) t += `${corpo.length ? ", com" : " em que buscamos"} ${revs.join(" ou, subsidiariamente, ")}`;
     return t + ".";
   };
@@ -216,12 +225,13 @@ export function conferirResposta(r: any, x: { recorte: string; hoje: string; fas
     const fim = o.fim && partes(o.fim) && dataNoTrecho(o.fim, o.trecho) ? o.fim.replace(/[.\-]/g, "/") : "";
     if ((o.inicio && !ini) || (o.fim && !fim)) { faltas.push(`${ROT_NAT[nat]} (data não confirmada no texto)`); continue; }
     if (!ini && [...PERIODO, "deficiencia", "incapacidade"].includes(nat)) faltas.push(`início do período ${ROT_NAT[nat]}`);
-    objetos.push({ natureza: nat, inicio: ini, fim, local: String(o.local || "").trim().slice(0, 80), motivo: String(o.motivo || "").trim().slice(0, 100) });
+    objetos.push({ natureza: nat, inicio: ini, fim, local: String(o.local || "").trim().slice(0, 80), motivo: String(o.motivo || "").trim().slice(0, 100), subsidiario: !!o.subsidiario });
   }
 
   const ate = der ? iso(der) : x.hoje;
   // a revisão e o outro pedido não são período: ficam na frase, fora da linha do tempo
-  const periodos = objetos.filter((o) => o.inicio && o.natureza !== "revisao" && o.natureza !== "outro").map((o) => {
+  // a DII pedida (aberta ou alternativa) também não: só a incapacidade de período fechado entra
+  const periodos = objetos.filter((o) => o.inicio && o.natureza !== "revisao" && o.natureza !== "outro" && !(o.natureza === "incapacidade" && (o.subsidiario || !o.fim))).map((o) => {
     const ini = iso(o.inicio), fimIso = o.fim ? iso(o.fim, true) : ate;
     return { ...o, ini, fim_iso: fimIso, dur: duracao(ini, fimIso) };
   });
