@@ -71,23 +71,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(500); };
   const linha = id => T.casos.find(k => k.id === id);
 
-  // A · Ativo → Futuro pede a data e grava mover_para
+  // A · F602b: até 31/12/2026 o estado vem só do To Do; a aba mostra o estado e não tem botão de mover
   await abrirPc(A);
-  conf("o pré-caso mostra o estado atual Ativo", /Ativo/.test(await p.$eval(".pc-mover .pc-est.on", e => e.textContent).catch(() => "")));
+  conf("o pré-caso mostra o estado Ativo · Escritório", /Ativo · Escritório/.test(await p.$eval(".pc-cab", e => e.textContent).catch(() => "")));
+  conf("sem botão de mover o pré-caso", !(await p.$("[data-pc-mover]")) && !(await p.$(".pc-mover")));
   await p.screenshot({ path: path.join(OUT, "a-ativo.png") });
-  await p.click(`[data-pc-mover="${KA}|futuro"]`); await p.waitForSelector("#pcm-ok");
-  await p.fill('[data-pcm="data"]', daqui(400)); await p.click("#pcm-ok"); await p.waitForTimeout(700);
-  conf("Futuro grava mover_para 🙏 Aposentadorias Futuras com a data", linha(KA).mover_para === "🙏 Aposentadorias Futuras"
-    && (linha(KA).precaso || {}).data_direito === daqui(400) && (linha(KA).precaso || {}).so_lembrete === true);
-
-  // B · Arquivo exige motivo
-  await abrirPc(B);
-  await p.click(`[data-pc-mover="${KB}|arquivo"]`); await p.waitForSelector("#pcm-ok");
-  await p.click("#pcm-ok"); await p.waitForTimeout(300);
-  conf("Arquivo sem motivo não grava", !!(await p.$("#pcm-ok")) && !linha(KB).mover_para);
-  await p.fill('[data-pcm="motivo"]', "Sem tempo de contribuição"); await p.click("#pcm-ok"); await p.waitForTimeout(700);
-  conf("Arquivo grava mover_para concluir com o motivo", linha(KB).mover_para === "concluir"
-    && ((linha(KB).precaso || {}).arquivo || {}).motivo === "Sem tempo de contribuição");
+  conf("nada grava mover_para", !linha(KA).mover_para && !linha(KB).mover_para);
 
   // 💰 Contribuições
   await p.evaluate(() => { document.querySelector("#detalhe") && fecharFicha && fecharFicha(); irPara("contribuicoes"); }).catch(() => p.evaluate(() => irPara("contribuicoes")));

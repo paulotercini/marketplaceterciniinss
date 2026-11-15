@@ -57223,12 +57223,15 @@ function pcDaFicha(c){
   const arq = [...linhasArq, ...((c.campos||{}).pc_arquivados||[]).filter(p=>!ids.has(p.id))];
   return {lista:vivos, arq, vivos:vivos.filter(p=>!p.so_lembrete).length, n:vivos.length+arq.length};
 }
+const PC_MOVER_LIGADO = false;
 const PC_ESTADOS = [["ativo","Ativo"],["futuro","Futuro"],["arquivo","Arquivo"],["caso","Gerar caso"]];
 function estadoPc(p, fora){ return fora ? "arquivo" : p.so_lembrete ? "futuro" : "ativo"; }
 function painelPreCasos(c){
   const z = pcDaFicha(c), cor = (LC_FASE.escritorio||["#0E5C58"])[0];
   const nome = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
+  // F602b · até 31/12/2026 o estado vem só da lista do To Do (ordem do Paulo de 15.11.2026): sem botões de mover
   const botoes = (p, fora) => {
+    if(!PC_MOVER_LIGADO) return "";
     if(!p.caso_id || !D.casoPorId.get(p.caso_id) || !podeAtender()) return "";
     const at = estadoPc(p, fora);
     return `<div class="pc-mover" role="group" aria-label="Mover este pré-caso">${PC_ESTADOS.map(([e,r])=>
