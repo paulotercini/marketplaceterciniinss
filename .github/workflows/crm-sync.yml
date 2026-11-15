@@ -115,12 +115,13 @@ jobs:
 
       # F220 · a ponte ESTREITA: só o card de aposentadoria futura que virou
       # caso ou foi arquivado no CRM conclui a tarefa dele no To Do, com uma
-      # linha datada no corpo. Ligada por padrão; desliga com a variável de
-      # repositório PONTE_CARDS = 0. Falha aqui não derruba a sincronização.
+      # linha datada no corpo. F602c · DESLIGADA até 31/12/2026 (ordem do Paulo de
+      # 15.11.2026: o CRM só repete o To Do); religa com a variável PONTE_CARDS = 1.
+      # Falha aqui não derruba a sincronização.
       # [BUG 30.10.2026] a variável não criada vale nulo, e nulo != '0' dá falso no
       # GitHub (os dois viram o número 0): as duas pontes nunca rodaram. Daí o || '1'.
       - name: Cards decididos no CRM -> concluir no To Do
-        if: steps.seg.outputs.tem == 'true' && (vars.PONTE_CARDS || '1') != '0'
+        if: steps.seg.outputs.tem == 'true' && (vars.PONTE_CARDS || '0') == '1'
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -128,10 +129,10 @@ jobs:
         run: python crm/fase2/ponte_cards.py
 
       # F291 · o "Concluir por hoje" do CRM (⭐ apagada e data de volta) vai à tarefa do To Do
-      # ANTES do crawl, senão a sincronização acenderia a estrela de novo. Desliga com
-      # PONTE_DESPACHO = 0. Falha aqui não derruba a sincronização (o migrar.py segura a ⭐).
+      # ANTES do crawl, senão a sincronização acenderia a estrela de novo. F602c ·
+      # DESLIGADA até 31/12/2026 (o CRM só repete o To Do); religa com PONTE_DESPACHO = 1. Falha aqui não derruba a sincronização (o migrar.py segura a ⭐).
       - name: Concluir por hoje no CRM -> To Do
-        if: steps.seg.outputs.tem == 'true' && (vars.PONTE_DESPACHO || '1') != '0'
+        if: steps.seg.outputs.tem == 'true' && (vars.PONTE_DESPACHO || '0') == '1'
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
