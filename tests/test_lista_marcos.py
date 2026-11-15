@@ -32,3 +32,15 @@ def test_nome_que_casa_com_ficha_com_cpf_nao_marca():
     banco = {migrar.nome_chave("Cliente Teste Ficto"): {CPF_A}}
     m = migrar.mapear(crm_json([t("☕ Marcos", "Cliente Teste Ficto", id="m3")]), banco)
     assert m["clientes"][0]["cpf"] == CPF_A and not m["notas_ficha"]
+
+
+def test_tarefa_sem_cpf_que_nao_parece_pessoa_fica_fora():
+    tarefas = [t("Marcos", x, id=f"x{i}") for i, x in enumerate(["Imprimir contrato", "Pai", "Ligar 3 vezes", "Ligar banco"])]
+    m = migrar.mapear(crm_json(tarefas + [t("Marcos", "Cliente Teste", id="ok")]))
+    assert [c["nome"] for c in m["clientes"]] == ["Cliente Teste"] and len(m["casos"]) == 1
+    assert m["pulados"] == {"Marcos (não é pessoa)": 4}
+
+
+def test_tarefa_com_cpf_entra_mesmo_com_titulo_de_tarefa():
+    m = migrar.mapear(crm_json([t("Marcos", f"Imprimir contrato #{CPF_A}", cpf=CPF_A, id="m5")]))
+    assert len(m["casos"]) == 1 and not m["pulados"]

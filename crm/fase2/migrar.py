@@ -17,7 +17,7 @@ Mapeamento (decisões de ago/2026):
   - Tarefa concluída no To Do -> fase='encerrado' (origem_lista preserva de onde veio).
   - Lista pessoal 'Tarefas' -> tarefas particulares do Paulo.
   - Outras listas: só tarefas com CPF entram (fase='outro'); o resto é contado e pulado.
-  - Lista Marcos (F614): toda tarefa entra (fase='outro'); sem CPF, a ficha leva a nota 'falta_cpf'.
+  - Lista Marcos (F614): toda tarefa entra (fase='outro'); sem CPF, a ficha leva a nota 'falta_cpf'; sem CPF nem ficha pelo nome, só entra o título que parece pessoa (F614b).
   - Blocos `DD.MM.AAAA (X):` -> andamentos com autor; perícias/audiências -> eventos.
   - Anti-eco: blocos idênticos a andamentos criados no app (mesmo caso, dia e
     texto) são pulados, para a escrita dupla não duplicar.
@@ -88,6 +88,23 @@ def _norm(s):
 # F614 · a lista do Dr. Marcos (matérias não previdenciárias) casa pelo nome inteiro "Marcos", com ou sem emoji
 def lista_marcos(lista):
     return re.sub(r"[^a-z]", "", _norm(lista)) == "marcos"
+
+
+# F614b · o filtro "não é pessoa" da lista Clientes do CRM (RX_NAO_PESSOA de app.html, F254), mais verbos de tarefa
+RE_NAO_PESSOA = re.compile(
+    r"(^|[^a-z])(imprimir|icloud|agenda|agendar|protocolos?|analise|contratos?|documentos?|peticao|peticoes|replica|"
+    r"ouvidoria|ver|ligar|comprar|conferencia|holerites|mascara|qrcode|procon|termo|medidas|anotacoes|doc|calculo|"
+    r"embargos|incapacidade|deficiencia|atividades?|auxilio-acidente|impugnacao|md|digitalizar|processo|aviso|colocar|"
+    r"comprovantes|ressonancia|cumprir|verificar|ultima|auditoria|esclarecimentos|estrategia|diagnostico|ruptura|"
+    r"recurso|escolha|acerto|advogad[oa]|forum|depoente|laudo|pdfs?|adicionar|descobrir|redimensionar|e-?mail|"
+    r"jurisprudencias?|procuracao|condominio|despejo|etiquetas|enviar|mandar|pagar|cobrar|falar|pedir|buscar|levar|"
+    r"fazer|entregar|banco|pai|mae|tercini)([^a-z]|$)")
+
+
+def parece_pessoa(titulo):
+    """Nome e sobrenome, sem número nem palavra de tarefa: a tarefa sem CPF da lista Marcos só entra assim."""
+    n = re.sub(r"[()\"'+,]", " ", _norm(titulo))
+    return len(n.split()) >= 2 and not re.search(r"\d", n) and not RE_NAO_PESSOA.search(n)
 
 
 # F296 · Onda E do fluxo do To Do (29.10.2026): a etapa da tarefa é a ficha do cliente. O NB vai ao caso, o parente com
@@ -334,6 +351,9 @@ def mapear(dados, cpf_por_nome=None):
         fase = fase or "outro"
 
         achado = None if t["cpf"] else cpf_pelo_nome(t["nome"] or t["titulo"], cpf_por_nome)
+        if lista_marcos(lista) and not t["cpf"] and not achado and not parece_pessoa(t["nome"] or t["titulo"]):
+            pulados[lista + " (não é pessoa)"] = pulados.get(lista + " (não é pessoa)", 0) + 1
+            continue
         tipo, chave = ("cpf", achado) if achado else _cliente_key(t)
         cid = uid("cliente", tipo, chave)
         c = clientes.setdefault(cid, {
