@@ -179,8 +179,12 @@
           : (String((memo[b] || {}).d || '').localeCompare(String((memo[a] || {}).d || '')) || ka - kb)).map(([n]) => n);
       // na rodada completa, os arquivados vão para o FIM da fila: se o portal parar no
       // meio, a interrupção atinge só eles (mesmas consultas, em outra ordem)
+      // 1.39.1 · na completa, o NUP que o portal já recusou (403) ou não achou (404) vai
+      // antes só dos arquivados: na frente, três recusados somavam seis 403 e abortavam a
+      // rodada no recurso 3, e a completa abortada nunca renovava o ciclo semanal
       const fila = rapido ? prio(todos.filter(n => !deFora(n)))
-        : [...prio(todos.filter(n => !arqSet.has(n))), ...todos.filter(n => arqSet.has(n))];
+        : [...prio(todos.filter(n => !deFora(n))),
+           ...todos.filter(n => !arqSet.has(n) && deFora(n)), ...todos.filter(n => arqSet.has(n))];
       if (rapido && fila.length < todos.length)
         faixa(`modo rápido: ${todos.length - fila.length} recurso(s) arquivados 🗄 ou que o portal não acha ficam para a rodada completa semanal`);
       else if (!rapido && !cliente && todos.some(n => arqSet.has(n)))
@@ -254,10 +258,9 @@
               }
               seguidas = 0; await pausa(2500); break;
             }
-            else if (r.status === 403) {
+            else if (r.status === 403) {   // conta para desistir só no fim do recurso (abaixo)
               n403++;
               OUT.falhas.push({ nup: fila[i], sis, status: 403 });
-              if (++seguidas >= 6) { desistir(i, 403); break; }
             }
             else if (r.status !== 404) {
               OUT.falhas.push({ nup: fila[i], sis, status: r.status });
@@ -272,7 +275,12 @@
         }
         if (abortou) break;
         if (n404 === ordem.length) novos404.push(fila[i]);
-        if (n403 === ordem.length) novos403.push(fila[i]);
+        if (n403 === ordem.length) {
+          novos403.push(fila[i]);
+          // 1.39.1 · o recurso recusado nas duas bases conta UMA vez, e o já sabido recusado
+          // não conta: o portal parado recusa recursos que antes respondiam
+          if (!sem403.has(fila[i]) && ++seguidas >= 6) { desistir(i, 403); break; }
+        }
       }
       OUT.quando = new Date().toISOString();
       OUT.itens = pend;
