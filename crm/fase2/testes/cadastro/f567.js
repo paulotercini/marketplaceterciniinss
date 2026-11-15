@@ -55,6 +55,11 @@ const RESP_REV = { texto: "Ação de revisão da aposentadoria por tempo de cont
   faltas: [], avisos: [] };
 const cB = cli("Cliente Teste Inss");
 const kB = caso(cB, { beneficio: "Auxílio por incapacidade", especie: "B31", fase: "inss", protocolos: ["1700000701"] });
+const cE = cli("Cliente Teste Isencao");
+const kE = caso(cE, { beneficio: "Isenção de IR", especie: "IIR", fase: "judicial", origem_lista: "👪 Judicial", processo: "50000000000000000069",
+  resumo: { texto: "Ação de revisão da aposentadoria…", tipo: "Ação de revisão", periodos: [], em: "2025-05-01T10:00:00-03:00" } });
+T.anexos.push({ id: id("a"), caso_id: kE.id, cliente_id: cE.id, andamento_id: null, nome: "Petição", caminho: "pje/50000000000000000069/1001", origem: "pje", texto: INICIAL,
+  tipo: "application/pdf", criado_em: "2025-04-01T10:00:00-03:00" });
 const cC = cli("Cliente Teste Pre");
 const kC = caso(cC, { beneficio: "Aposentadoria", fase: "judicial", pre_caso: true, origem_lista: "🙋 Escritório" });
 
@@ -132,6 +137,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.click("section.rs5 .rs5-fonte button[onclick^='editarResumo']");
   conf("Editar abre o texto copiado para a peça", await p.evaluate(id => (document.getElementById("rs5-ed-" + id) || {}).value || "", kD.id).then(t => /^Ação de revisão/.test(t)));
 
+  await abrir(cE.id, kE.id); await p.waitForSelector("section.rs5", { timeout: 3000 });
+  const txE = await p.evaluate(() => document.querySelector("section.rs5").textContent);
+  conf("F612: o resumo de revisão num caso de isenção pede um novo pela espécie", /outra espécie/.test(txE) && !/Ação de revisão/.test(txE) && !!(await p.$("section.rs5 button[onclick^='gerarResumo']")));
+  await p.evaluate(id => gravarEspecie(id, "B41"), kA.id); await p.waitForTimeout(400);
+  const rA = banco.t.casos.find(k => k.id === kA.id).resumo;
+  conf("F612: trocar a espécie leva o resumo às versões e o esvazia", !!rA && !rA.texto && (rA.versoes || []).length > 0);
   await abrir(cB.id, kB.id); await p.waitForTimeout(300);
   conf("no INSS não há quadro", !(await p.$("section.rs5")));
   await abrir(cC.id, kC.id); await p.waitForTimeout(300);

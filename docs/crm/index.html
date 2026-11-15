@@ -7115,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.05</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.06</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -40127,13 +40127,19 @@ const maiusc1 = s => { s = String(s||""); return s.charAt(0).toUpperCase() + s.s
 const rsLink = (txt, js, extra) => `<button type="button" class="rs5-lk" ${extra||""} onclick="${js}">${txt}</button>`;
 // F570 · o quadro segue a variação 4 do protótipo aprovado (c-280.html): cabeçalho com o link na cor da fase,
 // o pedido, a linha do tempo com o eixo e, aberto, uma linha por período e a fonte com Copiar, Editar e Atualizar
+// F612 · espécie de serviço que não é revisão do benefício (isenção de IR, CTC…): o resumo segue a espécie, e não vira "Ação de revisão"
+const RS_SERVICO = ["CNIS","CTC","COPIA","JA","IIR","GPS","SD"];
+const rsServico = k => RS_SERVICO.includes(k.especie) ? nomeDaEspecie(k.especie) : "";
+const rsEspecie = k => k.especie || k.beneficio || "";
+const rsVelho = (k, r) => !!(r && r.texto) && (r.especie !== undefined ? r.especie !== rsEspecie(k) : !!rsServico(k) && r.tipo === "Ação de revisão");
 function quadroResumo(k){
   if(!rsLigado(k)) return "";
-  const r = k.resumo, f = fonteDoResumo(k), gera = podeGravarCaso(), id = k.id, tem = !!(r && r.texto);
+  const r = k.resumo, f = fonteDoResumo(k), gera = podeGravarCaso(), id = k.id, velho = rsVelho(k, r), tem = !!(r && r.texto) && !velho;
   const cor = (LC_FASE[faseEfetiva(k)] || LC_FASE.judicial)[0];
   const lk = _rsGerando.has(id) ? "" : tem ? rsLink(_rsAberto ? "Recolher" : "Abrir", "rsAlternar()", `aria-expanded="${_rsAberto}"`) : f && gera ? rsLink("Gerar", `gerarResumo('${id}')`) : "";
   const cx = corpo => `<section class="rs5" style="--rs-fase:${cor}" aria-label="Resumo do caso"><div class="rs5-cab"><b>Resumo do caso</b>${lk}</div>${corpo}</section>`;
   if(_rsGerando.has(id)) return cx(`<p class="rs5-falta">Lendo o pedido da peça…</p>`);
+  if(velho) return cx(`<p class="rs5-falta">${f && gera ? "O resumo era de outra espécie; gere de novo pela espécie atual." : "Ainda não gerado."}</p>`);
   if(!tem) return cx(`<p class="rs5-falta">${f ? (gera ? `Pelo pedido da ${esc(f.rot.toLowerCase())}.` : "Ainda não gerado.") : "Sem documento do pedido no CRM."}</p>`);
   const ps = (r.periodos||[]).filter(p=>p.ini && p.fim_iso).sort((a,b)=>a.ini.localeCompare(b.ini));
   // F605 · revisão, DII pedida (com as alternativas) e pedido acessório: uma linha cada, fora da linha do tempo
@@ -40164,7 +40170,8 @@ async function gerarResumo(casoId, comoProposta){
   catch(e){ r = {erro: msgErro(e)}; }
   _rsGerando.delete(casoId);
   if(!r || r.erro){ repintarFicha(); return aviso("Não gerei o resumo: " + ((r && r.erro) || "sem resposta"), true); }
-  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], objetos:(r.objetos||[]).filter(o=>["revisao","incapacidade","outro"].includes(o.natureza)), beneficio:r.beneficio, der:r.der, tipo:r.tipo, faltas:r.faltas||[], avisos:r.avisos||[], fonte};
+  const sv = rsServico(k), objs = (r.objetos||[]).filter(o=>["revisao","incapacidade","outro"].includes(o.natureza)).map(o=>sv && o.natureza==="revisao" ? {...o, natureza:"outro"} : o);
+  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], objetos:objs, beneficio:sv || r.beneficio, der:r.der, tipo:sv || r.tipo, especie:rsEspecie(k), faltas:r.faltas||[], avisos:r.avisos||[], fonte};
   const atual = k.resumo;
   if(atual && atual.texto && (comoProposta || atual.travado)) return rsGravar(k, {...atual, proposta:{...base, em:new Date().toISOString()}});
   rsGravar(k, {...base, autor:eu && eu.nome, em:new Date().toISOString(), travado:false, versoes:(atual && atual.versoes)||[], recusou:(atual && atual.recusou)||[]});
@@ -41179,6 +41186,9 @@ async function gravarEspecie(casoId, cod, chave, livre){
     const t = String(livre||"").trim(); if(!t) return aviso("Escreva o nome do pedido");
     corpo = {especie:null, subespecie:null, beneficio:t};
   }
+  // F612 · trocou a espécie: o resumo antigo vai às versões e o quadro pede o novo
+  const r = k.resumo, nova = corpo.especie || corpo.beneficio;
+  if(r && r.texto && nova !== rsEspecie(k)) corpo.resumo = {versoes:[...(r.versoes||[]), {texto:r.texto, em:r.em, autor:r.autor}].slice(-10), recusou:r.recusou||[]};
   try{ await patchCaso(casoId, corpo); }
   catch(e){ return aviso(/42703|subespecie/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_linha_caso.sql no Supabase — falta a coluna subespecie" : "Não gravou — tente de novo"); }
   Object.assign(k, corpo); fecharCaixa();
