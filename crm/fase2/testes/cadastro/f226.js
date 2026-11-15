@@ -95,7 +95,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const menu = await p.evaluate(b => { const el = document.createElement("button"); document.body.appendChild(el);
     menuProcessos({ stopPropagation() {}, currentTarget: el }, D.casosDoCliente.get(b));
     const r = [...document.querySelectorAll("#menu-processos .mp-it small")].map(x => x.textContent); fecharMenuProcessos(); return r; }, B);
-  conf("no Casos ▾ o pré-caso vem antes do caso, marcado como pré-caso no escritório", /Pré-caso no escritório/.test(menu[0] || "") && !/Pré-caso/.test(menu[1] || ""));
+  conf("no Casos ▾ o pré-caso não aparece (F601: vai à aba Pré-caso)", !menu.some(t => /Pré-caso no escritório/.test(t || "")));
   // F372 · a linha de baixo traz NB, DER, e-Sisrec e processo, nessa ordem, e não o protocolo
   const linha = await p.evaluate(() => { const el = document.createElement("button"); document.body.appendChild(el);
     menuProcessos({ stopPropagation() {}, currentTarget: el }, [{ id: "k_f372", cliente_id: "x", fase: "conselho", beneficio: "Aposentadoria por idade",
