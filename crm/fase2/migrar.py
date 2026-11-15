@@ -17,7 +17,7 @@ Mapeamento (decisões de ago/2026):
   - Tarefa concluída no To Do -> fase='encerrado' (origem_lista preserva de onde veio).
   - Lista pessoal 'Tarefas' -> tarefas particulares do Paulo.
   - Outras listas: só tarefas com CPF entram (fase='outro'); o resto é contado e pulado.
-  - Lista Marcos (F613): toda tarefa entra (fase='outro'); sem CPF, a ficha leva a nota 'falta_cpf'.
+  - Lista Marcos (F614): toda tarefa entra (fase='outro'); sem CPF, a ficha leva a nota 'falta_cpf'.
   - Blocos `DD.MM.AAAA (X):` -> andamentos com autor; perícias/audiências -> eventos.
   - Anti-eco: blocos idênticos a andamentos criados no app (mesmo caso, dia e
     texto) são pulados, para a escrita dupla não duplicar.
@@ -85,7 +85,7 @@ def _norm(s):
                    if not unicodedata.combining(ch)).strip()
 
 
-# F613 · a lista do Dr. Marcos (matérias não previdenciárias) casa pelo nome inteiro "Marcos", com ou sem emoji
+# F614 · a lista do Dr. Marcos (matérias não previdenciárias) casa pelo nome inteiro "Marcos", com ou sem emoji
 def lista_marcos(lista):
     return re.sub(r"[^a-z]", "", _norm(lista)) == "marcos"
 
@@ -312,7 +312,7 @@ def mapear(dados, cpf_por_nome=None):
     credenciais, vinculos, pend_vinculos = {}, {}, []
     notas, subtarefas_dado = {}, []   # F296 · nota da ficha por cliente; ids das etapas que eram dado e viraram subtarefa
     pulados, sem_senha_padrao = {}, 0
-    marcos_sem_cpf = set()            # F613 · fichas da lista Marcos que chegaram sem CPF
+    marcos_sem_cpf = set()            # F614 · fichas da lista Marcos que chegaram sem CPF
 
     for t in dados["tarefas"]:
         lista = t["lista"]
