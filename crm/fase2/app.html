@@ -2968,6 +2968,17 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .exp-tab th{font-weight:600;background:var(--fundo2,#f5f5f2)}.exp-tab td:nth-child(2){white-space:nowrap}.exp-tela{max-width:960px;width:100%}.exp-tela .exp-tab{display:block;overflow-x:auto}
 .zof-salvas{margin-top:10px;display:flex;flex-direction:column;gap:6px}.zof-it{display:flex;gap:6px}.zof-it button:first-child{flex:1;text-align:left;white-space:normal;line-height:1.35}
 .sug-anot:empty{display:none}.sug-anot .sug-anot-it{margin:0 0 8px}
+/* F601 · a aba Pré-caso da ficha, no padrão dos cartões do caso */
+.pc-painel{display:flex;flex-direction:column;gap:10px;max-width:720px}
+.pc-topo{display:flex;justify-content:flex-end}
+.pc-cartao{border:1px solid var(--borda,#e2e2dc);border-radius:8px;overflow:hidden;background:#fff}
+.pc-cab{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 12px;background:var(--pc-cor);color:#fff;font-size:13px}
+.pc-cab span{font-size:12px;opacity:.9}
+.pc-corpo{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 12px;font-size:13px}
+.pc-arq{opacity:.6}
+.pc-sub{margin:8px 0 0;font-size:13px;color:var(--suave,#6b6b6b)}
+.pc-vazio{color:var(--suave,#6b6b6b);font-size:13px}
+.mt.mt-novopc{color:var(--acento,#0E5C58)}
 </style>
 <script>
 /* F80 · interruptor do tema v10. ?tema=v10 liga e guarda; ?tema= (vazio)
@@ -7097,7 +7108,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.95</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.96</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7430,11 +7441,11 @@ let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (
 let celAba = "and", celCad = "principal";
 function celIr(qual){
   celAba = qual;
-  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : qual==="pz" ? 5 : 2;   // F326 · Prazos é a aba do cliente
+  abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : qual==="pz" ? 5 : qual==="pc" ? 6 : 2;   // F326 · Prazos é a aba do cliente
   repintarFicha();
   const r = document.querySelector(".det-rolagem"); if(r) r.scrollTop = 0;
 }
-const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : abaAtiva===5 ? "pz" : ["cad","hon","per","pz"].includes(celAba) ? "and" : celAba;
+const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : abaAtiva===5 ? "pz" : abaAtiva===6 ? "pc" : ["cad","hon","per","pz","pc"].includes(celAba) ? "and" : celAba;
 function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-principal"); if(d) d.dataset.celCad = qual;
   document.querySelectorAll(".cel-cad-seg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.cc===qual))); }
 function celAbasHtml(c, ks, k, nPer, temHon){
@@ -7444,7 +7455,7 @@ function celAbasHtml(c, ks, k, nPer, temHon){
   // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
   const z = (()=>{ try{ return prazosDoCliente(c.id); }catch(e){ return {total:0, venc:0}; } })();
   const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], (k || z.total || abaAtiva===5) && ["pz", `Prazos${z.venc?` <span class="ca-n ca-venc" aria-label="${z.venc} vencido${z.venc>1?"s":""}">${z.venc}</span>`:""}`],
-    k && ["caso", "Caso"], ["cad", "Cadastro"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
+    k && ["caso", "Caso"], ["cad", "Cadastro"], (pcDaFicha(c).n || abaAtiva===6) && ["pc", "Pré-caso"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
   return `<nav class="cel-abas" role="tablist" aria-label="Partes da ficha">${it.map(([q, r])=>
     `<button role="tab" aria-selected="${celAba===q}" class="${celAba===q?"on":""}" onclick="celIr('${q}')">${r}</button>`).join("")}</nav>`;
 }
@@ -23623,9 +23634,13 @@ function pintarFicha(){
            Perícias só com perícia, Honorários só com caso ou recebimento.
            Cliente em formação vê só Cadastro e Lembretes — menos abas,
            menos lugar para se perder. */""}
-      ${ks.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
+      ${/* F601 · a aba Pré-caso, entre Cadastro e Casos (protótipo aprovado pelo Paulo em 14.11.2026):
+           aparece só com pré-caso, arquivado inclusive; sem nenhum, o advogado vê o ＋ Pré-caso */""}
+      ${(z=>(z.n||abaAtiva===6) ? `<button class="mt ${abaAtiva===6?"on":""}" data-vv="6">Pré-caso${z.vivos>1?` (${z.vivos})`:""}</button>`
+        : (podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""))(pcDaFicha(c))}
+      ${ksR.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
-          (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
+          (n=>n>1?` (${n})`:"")(processosDe(ksR).length)} ▾</button>` : ""}
       ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
       ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` <span class="mt-pzn">${z.total}</span>`:""}${z.venc?` <span class="mt-pzv">${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
@@ -23726,6 +23741,10 @@ function pintarFicha(){
     ${abaAtiva===5 ? painelPrazosCliente(cliId) : ""}
   </div>
 
+  <div class="painel ${abaAtiva===6?"ativo":""}" data-p="6">
+    ${abaAtiva===6 ? painelPreCasos(c) : ""}
+  </div>
+
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
     ${painelPericiasFicha(c, ks, evs)}
   </div>
@@ -23761,7 +23780,9 @@ function pintarFicha(){
   });
   // com o menu dinâmico o botão Casos pode nem existir (cliente sem caso)
   const btnProc=document.getElementById("btn-processos");
-  if(btnProc) btnProc.onclick=ev=>menuProcessos(ev, ks);
+  if(btnProc) btnProc.onclick=ev=>menuProcessos(ev, ksR);
+  document.querySelectorAll("#btn-novo-pc,[data-pc-novo]").forEach(b=>b.onclick=()=>novoAtendimento(cliId));
+  document.querySelectorAll("[data-pc-abrir]").forEach(b=>b.onclick=()=>abrirAtendimentoDe(cliId, b.dataset.pcAbrir));
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
@@ -27501,7 +27522,7 @@ function menuCasosDoCliente(ev, cliId){
 // a viver na aba 💰 Honorários — foi para isso que ela existe.
 function processosDe(ks){ return (ks||[]).filter(k=>k.fase!=="pagamento"); }
 function menuProcessos(ev, ks){
-  ks = processosDe(ks);
+  ks = processosDe(ks).filter(k=>!ehPreCaso(k));   // F601 · o pré-caso mora na aba Pré-caso
   ev.stopPropagation(); fecharMenuProcessos();
   const m=document.createElement("div"); m.id="menu-processos";
   // a linha diz EM QUE LISTA o caso está (com o emoji do To Do — "👪
@@ -27513,13 +27534,10 @@ function menuProcessos(ev, ks){
     <small>${k.fase==="encerrado"?"✔ Encerrado":ehPreCaso(k)?`🟡 Pré-caso no escritório · ${esc(passoDoPreCaso(k))}`:esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${(n=>esc([n.nb[0]&&`NB ${fmtNum("nb",n.nb[0])}`, k.der&&`DER ${fmtBarra(k.der)}`, n.nup[0]&&`e-Sisrec ${fmtNum("nup",n.nup[0])}`, n.proc[0]&&`proc. ${fmtNum("proc",n.proc[0])}`].filter(Boolean).map(x=>" · "+x).join("")))(numerosDoCaso(k))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}</small>
   </div>`;
   m.innerHTML =
-    // F226 · os pré-casos primeiro, acima dos casos
-    ks.filter(ehPreCaso).map(item).join("")
-    + ks.filter(k=>k.fase!=="encerrado" && !ehPreCaso(k)).map(item).join("")
+    ks.filter(k=>k.fase!=="encerrado").map(item).join("")
     + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
     + ks.filter(k=>k.fase==="encerrado").map(item).join("")
     + (ks.filter(k=>k.fase!=="encerrado").length>1 ? `<div class="mp-it mp-novo" data-mp="__org__">⇄ Organizar os casos</div>` : "")
-    + `<div class="mp-it mp-novo" data-mp="__novopc__" title="o cliente busca outro benefício: abre um pré-caso próprio">＋ Novo pré-caso (outro benefício)</div>`
     + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
   document.body.appendChild(m);
   const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
@@ -27529,7 +27547,6 @@ function menuProcessos(ev, ks){
     const v=it.dataset.mp;
     fecharMenuProcessos();
     if(v==="__org__") return organizarCasos(clienteAberto);
-    if(v==="__novopc__") return novoAtendimento(clienteAberto);
     const kp = D.casoPorId.get(v);
     if(ehPreCaso(kp)) return abrirAtendimentoDe(kp.cliente_id, (kp.precaso||{}).id||kp.id);   // F227
     if(v==="__novo__"){ abaAtiva=7; }
@@ -42079,6 +42096,15 @@ function linhasDeDatas(cliId){
     resumo:"atualizar no CRAS",
     rot:`<b>Atualizar o CadÚnico no CRAS até ${fmt(cu.ate)}</b> <small class="qd-de">última atualização em ${fmt(cu.base)}${cu.doDossie ? ", lida no Meu CadÚnico pela extensão" : ""}; sem ela o INSS bloqueia o BPC (Lei 8.742/93, art. 20, § 12)</small>`,
     edita:"", acao:""});
+  // F601 · o prazo que corre no pré-caso vivo (recurso ao CRPS, óbito, prisão) aparece aqui com o rótulo "Pré-caso"
+  try{ const pv = c.id && pcDaFicha(c).lista.find(p=>!p.so_lembrete);
+    if(pv){ let pz = prazosDoDossie(c); if(!pz.length){ const r = prazoDoRelato(c); if(r) pz = [r]; }
+      for(const ce of certidoesDoDossie(c.id)){ const f = ce.obito || ce.prisao; if(!f || f < "2019-01-18") continue; const lim = somaDias(f, 90);
+        if(lim >= hj) pz.push({fatal:lim, texto:`pedir ${ce.obito ? "a pensão por morte" : "o auxílio-reclusão"} até ${fmtBarra(lim)} (90 dias ${ce.obito ? "do óbito" : "da prisão"})`}); }
+      for(const p of pz) linhas.push({data:p.fatal, ico:"🙋", natureza:"lembrete", cru:true, rotulo:"Pré-caso", curto:"Pré-caso",
+        resumo:p.texto, rot:`<b>Pré-caso: ${esc(p.texto)}</b>`, edita:"",
+        acao:`<button class="btn-mini" onclick="abrirAtendimentoDe('${cliId}','${pv.id}')">Abrir</button>`}); }
+  }catch(e){}
   const ksCli = (D.casosDoCliente.get(cliId))||[];
   try{ for(const {ca, dec, ate} of decadenciasDoCliente(cliId)){
     const d = soDig(ca.nb), kd = d ? ksCli.find(k=>k.fase!=="encerrado" && nbsDoCaso(k).some(x=>soDig(x)===d)) : null;
@@ -56305,7 +56331,7 @@ async function desfechoCaso(cliId, forcar, ciente, espOk){
   // F236 · outro benefício também pede caso: o caso nasce com este, e o aviso diz qual fica para outro pré-caso
   const opP = opcaoDe(pcB.sub || pcB.cod || pcB.especie), maisUm = desfechoPorBenef(c).filter(l=>l.acao==="caso" && l.o && l.o.o!==(opP||{}).o);
   const r = pc.lembrete_id ? await gerarCasoDoPreECard(cliId, pc.id, pc.lembrete_id) : await gerarCasoDoPre(cliId, pc.id);
-  if(maisUm.length) aviso(`Caso gerado. ${maisUm.map(l=>l.o.rot).join(" e ")} também ${maisUm.length>1?"pedem":"pede"} caso: abra outro pré-caso (Casos ▾ › ＋ Novo pré-caso).`, false);
+  if(maisUm.length) aviso(`Caso gerado. ${maisUm.map(l=>l.o.rot).join(" e ")} também ${maisUm.length>1?"pedem":"pede"} caso: abra outro pré-caso (aba Pré-caso › Novo).`, false);
   return r;
 }
 // F277 · o botão Criar caso: o início e o número descem ao pré-caso (o início decide a lista e a via) e o caso nasce
@@ -57099,6 +57125,34 @@ function precasosDe(c){
   if(!pcs.length && cp.especie && cp.especie!==ESPECIE_PAGAMENTOS)
     return [{id:"legado", especie:cp.especie, natureza:"", marc:{}, honorarios:"", quem:null, em:null}];
   return pcs;
+}
+// F601 · os pré-casos da ficha: vivos (sem o "legado" da espécie única) e arquivados
+function pcDaFicha(c){
+  const vivos = precasosDe(c).filter(p=>p.id!=="legado");
+  const arq = ((c.campos||{}).pc_arquivados||[]).filter(p=>!vivos.some(v=>v.id===p.id));
+  return {lista:vivos, arq, vivos:vivos.filter(p=>!p.so_lembrete).length, n:vivos.length+arq.length};
+}
+function painelPreCasos(c){
+  const z = pcDaFicha(c), cor = (LC_FASE.escritorio||["#0E5C58"])[0];
+  const nome = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
+  const cartao = (p, fora) => {
+    const k = p.caso_id && D.casoPorId.get(p.caso_id);
+    const passo = fora ? "" : (p.so_lembrete ? "Em Aposentadorias futuras" : (k ? passoDoPreCaso(k) : "Identificação"));
+    const d = p.desfecho||{};
+    return `<div class="pc-cartao${fora?" pc-arq":""}" style="--pc-cor:${fora?"#8A8F98":cor}">
+      <div class="pc-cab"><b>${nome(p.especie)}</b><span>${fora?"Arquivado":"Escritório · pré-caso"}</span></div>
+      <div class="pc-corpo">${fora
+        ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
+        : `<div>Passo: <b>${esc(passo)}</b>${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
+           ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}</div>
+    </div>`;
+  };
+  return `<div class="pc-painel">
+    ${podeAtender()?`<div class="pc-topo"><button class="btn-mini" data-pc-novo="1" title="Novo pré-caso (outro benefício)">Novo</button></div>`:""}
+    ${z.lista.map(p=>cartao(p,false)).join("")}
+    ${z.arq.length?`<h4 class="pc-sub">Arquivados</h4>${z.arq.map(p=>cartao(p,true)).join("")}`:""}
+    ${z.n?"":`<p class="pc-vazio">Nenhum pré-caso.</p>`}
+  </div>`;
 }
 async function gravarPrecasos(cliId, pcs){
   const c = D.cliPorId.get(cliId); if(!c) return false;
