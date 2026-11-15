@@ -2983,6 +2983,8 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .ctb-px{font-size:12px;color:var(--suave,#666);white-space:nowrap}.ctb-px.venc{color:#b42318;font-weight:600}
 .pc-sub{margin:8px 0 0;font-size:13px;color:var(--suave,#6b6b6b)}
 .pc-vazio{color:var(--suave,#6b6b6b);font-size:13px}
+.pc-proc{border-top:1px solid var(--linha,#e5e5e5);padding:8px 12px;font-size:13px;display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}.pc-proc label{display:grid;gap:4px;flex:1 1 260px}.pc-proc input{width:100%}
+.pc-notas{border-top:1px solid var(--linha,#e5e5e5);padding:8px 12px;font-size:13px}.pc-notas summary{cursor:pointer;font-weight:600}.pc-notas ol{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}.pc-notas li{white-space:pre-wrap}.pc-notas .meio-sub{margin-right:6px}
 .mt.mt-novopc{color:var(--acento,#0E5C58)}
 </style>
 <script>
@@ -7113,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.97</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.98</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -23819,6 +23821,7 @@ function pintarFicha(){
   if(btnProc) btnProc.onclick=ev=>menuProcessos(ev, ksR);
   document.querySelectorAll("#btn-novo-pc,[data-pc-novo]").forEach(b=>b.onclick=()=>novoAtendimento(cliId));
   document.querySelectorAll("[data-pc-abrir]").forEach(b=>b.onclick=()=>abrirAtendimentoDe(cliId, b.dataset.pcAbrir));
+  document.querySelectorAll("[data-pc-proc-salvar]").forEach(b=>b.onclick=()=>{ const i = document.querySelector(`[data-pc-proc="${b.dataset.pcProcSalvar}"]`); gravarProcAnterior(b.dataset.pcProcSalvar, i ? i.value : ""); });
   document.querySelectorAll("[data-pc-mover]").forEach(b=>b.onclick=()=>{ const [id, e] = b.dataset.pcMover.split("|"); moverPreCaso(cliId, id, e); });
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
@@ -24232,9 +24235,19 @@ const ATEND_SUBS = new Set(["pa","mapa","direito","documentos"]);
 // F220 · a conversa da equipe dentro da tela de atendimento: as mesmas
 // anotações do atendimento (campos.atendimento), com @nome que vira menção,
 // sem sair da tela. Gerado o caso, elas viram andamentos dele, como sempre.
+// F603 · as anotações da tarefa do 🙋 Escritório no Microsoft To Do: desde a F602 são andamentos (origem todo) da
+// própria linha do pré-caso, que a ficha já carrega em D._andsFicha; só leitura (pedido do Paulo de 15.11.2026)
+function notasTodoDoPc(c, pc){
+  if(!pc || !pc.caso_id || (D._ficha||{}).cliId!==c.id) return [];
+  return (D._andsFicha||[]).filter(a=>a.caso_id===pc.caso_id && a.origem==="todo")
+    .sort((a, b)=>String(b.criado_em||"").localeCompare(String(a.criado_em||"")));
+}
+function notasTodoHtml(ts){
+  return `<ol class="atend-notas">${ts.map(a=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0] || "Microsoft To Do")}</b><span class="meio-sub">${a.criado_em?esc(fmt(String(a.criado_em).slice(0,10))):""} · Microsoft To Do</span></div><div class="atend-nota-txt">${esc(String(a.texto||""))}</div></li>`).join("")}</ol>`;
+}
 function conversaAtendimento(c){
-  const pc = preCasoAberto(c);
-  const ns = ((c.campos||{}).atendimento||[]).filter(n=>!pc || !n.precaso_id || n.precaso_id===pc.id).slice(-30).reverse();
+  const pc = preCasoAberto(c), todo = notasTodoDoPc(c, pc), idsTodo = new Set(todo.map(a=>a.id));
+  const ns = ((c.campos||{}).atendimento||[]).filter(n=>(!pc || !n.precaso_id || n.precaso_id===pc.id) && !(n.origem==="todo" && idsTodo.has(n.id))).slice(-30).reverse();
   // F283 · no modo atendimento as anotações ficam abertas, fixas à direita em todos os passos (pedido do Paulo, 26.10.2026)
   return `<details class="atend-conversa${notasAbertas() ? "" : " gaveta-fechada"}" id="atend-conversa" open ondragover="event.preventDefault()" ondrop="probSoltar(event)">
     <summary>Anotações do atendimento${ns.length?` (${ns.length})`:""} <span class="meio-sub">@nome avisa a pessoa</span></summary>
@@ -24246,6 +24259,7 @@ function conversaAtendimento(c){
       <div class="atend-bloco"><h4>Anotações${ns.length?` (${ns.length})`:""}</h4>
       ${ns.length ? `<ol class="atend-notas">${ns.map(n=>`<li class="atend-nota"><div class="atend-nota-cab"><b>${esc(n.quem||"")}</b><span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span></div><div class="atend-nota-txt">${destacarMencoes(esc(String(n.texto||"")))}</div>${(n.anexos||[]).map(a=>`<button class="btn-mini" onclick="abrirAnexo('${a.id}')">📎 ${esc(a.nome||"anexo")}</button>`).join(" ")}</li>`).join("")}</ol>`
         : `<p class="meio-sub">Nenhuma anotação ainda neste atendimento.</p>`}</div>
+      ${todo.length ? `<div class="atend-bloco atend-todo"><h4>Do Microsoft To Do (${todo.length})</h4>${notasTodoHtml(todo)}</div>` : ""}
       ${docsAnotadosHtml(c, pc)}
       ${atalhosDossie(c)}
     </div></details>
@@ -57249,6 +57263,8 @@ function painelPreCasos(c){
         : `<div>Passo: <b>${esc(passo)}</b>${p.data_direito?` · direito provável em ${fmt(p.data_direito)}`:""}${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
            ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}
         ${botoes(p, fora)}</div>
+      ${procAnteriorHtml(p, k, fora)}
+      ${(ts=>ts.length?`<details class="pc-notas"${fora?"":" open"}><summary>Anotações do Microsoft To Do (${ts.length})</summary>${notasTodoHtml(ts)}</details>`:"")(notasTodoDoPc(c, p))}
     </div>`;
   };
   return `<div class="pc-painel">
@@ -57257,6 +57273,28 @@ function painelPreCasos(c){
     ${z.arq.length?`<h4 class="pc-sub">Arquivados</h4>${z.arq.map(p=>cartao(p,true)).join("")}`:""}
     ${z.n?"":`<p class="pc-vazio">Nenhum pré-caso.</p>`}
   </div>`;
+}
+// F604 · o processo judicial anterior, de outro escritório (pedido do Paulo de 15.11.2026): fica no pré-caso,
+// em casos.precaso.proc_anterior, só no CRM; serve à conferência de litispendência e coisa julgada
+function procAnteriorHtml(p, k, fora){
+  if(!k) return "";
+  const v = (p.proc_anterior||{}).numero||"";
+  if(fora || !(podeAtender() || podeCadastrar()))
+    return v ? `<div class="pc-proc">Processo judicial anterior (outro escritório): <b>${esc(v)}</b></div>` : "";
+  return `<div class="pc-proc"><label>Processo judicial anterior (outro escritório)
+    <input type="text" data-pc-proc="${esc(k.id)}" value="${esc(v)}" maxlength="300" placeholder="Número do processo, se houver"></label>
+    <button class="btn-mini" data-pc-proc-salvar="${esc(k.id)}">Salvar</button></div>`;
+}
+async function gravarProcAnterior(casoId, valor){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const antes = k.precaso||{}, precaso = {...antes};
+  const v = String(valor||"").trim();
+  if(v === ((antes.proc_anterior||{}).numero||"")) return aviso("Sem alteração");
+  if(v) precaso.proc_anterior = {numero:v, em:new Date().toISOString(), por:(eu||{}).id||null};
+  else delete precaso.proc_anterior;
+  try { await patchCaso(casoId, {precaso}); } catch(e){ return aviso("Não gravei o processo anterior: " + (e.message||e)); }
+  k.precaso = precaso;
+  aviso(v ? "Processo anterior gravado" : "Processo anterior apagado");
 }
 // F602 · Ativo, Futuro, Arquivo e Gerar caso: grava a linha na hora (com desfazer) e põe mover_para, que a
 // ponte_precaso.py leva ao Microsoft To Do (cria na lista nova, conclui ou reabre) e menciona o Paulo
