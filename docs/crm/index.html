@@ -1032,6 +1032,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .arv-doc .arv-ia{float:right;min-height:24px;padding:1px 8px;font-size:12px;margin-left:6px}
   @media (pointer:coarse), (max-width:760px){#proc-inteiro .pi-arv-pe .db-bt,.arv-doc .arv-ia{min-height:44px}}
   body:has(#proc-inteiro) .modal-fundo{z-index:2100}
+  /* F613 · com uma janela aberta, o campo de escrever do celular e os flutuantes não ficam por cima dela */
+  body:has(#modal .modal-fundo) .fab-rapida,body:has(#modal .modal-fundo) .fab-sug,body:has(#modal .modal-fundo) #zap-ag,body:has(#modal .modal-fundo) #fab-juntos,body:has(#modal .modal-fundo) .app.celular .escrever{visibility:hidden}
+  /* F613 · no celular a folha do processo inteiro cabe na tela, e o título da peça quebra a linha sem cortar o IA */
+  #proc-inteiro .pi-autos,.pl-corpo{overflow-x:auto}#proc-inteiro .pi-peca h4,.pl-corpo .pi-peca h4{overflow-wrap:anywhere}
   /* a caixa aberta da janela do prazo (+ Etapa, Corrigir a data, Detalhes) vem por cima dela, e não atrás */
   body:has(#painel-prazo.aberto) .modal-fundo{z-index:950}
   #proc-inteiro .pi-it button{display:block;flex:1;min-width:0;text-align:left;border:0;background:none;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--texto);border-left:3px solid transparent}
@@ -1061,6 +1065,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
     #proc-inteiro .pi-arvore{position:absolute;top:49px;bottom:0;left:0;z-index:1;display:none;box-shadow:2px 0 8px rgba(0,0,0,.2)}
     #proc-inteiro.arvore-on .pi-arvore{display:block}
     #proc-inteiro .pi-autos{padding:8px}
+    .pl-corpo{padding:8px}
   }
   .arq-abrir{border:none;background:none;font:inherit;font-weight:600;color:var(--azul);
     cursor:pointer;padding:2px 0;text-align:left;word-break:break-word}
@@ -2953,7 +2958,7 @@ dialog.confirmar::backdrop{background:rgba(15,17,22,.38)}
 .arv-u{list-style:none;margin:0;padding:0}.arv-u ul{list-style:none;margin:0;padding:0 0 0 12px;border-left:2px solid var(--linha,#dfe3ea)}.arv-dia{margin:0 0 10px}.arv-data{display:block;font-size:12px;font-weight:600;color:var(--mut,#5d6675);margin-bottom:3px;font-variant-numeric:tabular-nums}
 .arv-doc,.arv-and{padding:3px 0 3px 4px;font-size:13px;line-height:1.4}.arv-doc{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}.arv-and{font-style:italic;color:var(--mut,#5d6675)}.arv-and.dec{color:#a3261d;font-style:normal;font-weight:600}
 .arv-nome{border:0;background:none;padding:0;font:inherit;font-weight:500;color:var(--azul,#2B5FC7);cursor:pointer;text-align:left}span.arv-nome{color:var(--mut,#5d6675);cursor:default}.arv-doc.dec .arv-nome{color:#a3261d;font-weight:600}
-.arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
+.arv-et.dec{font-weight:600}.arv-mov{font-size:12px;color:var(--mut,#5d6675)}.arv-txt{flex-basis:100%;font-size:12px;color:var(--mut,#5d6675);overflow-wrap:anywhere}.arv-antes>summary,.arv-dia details>summary{cursor:pointer;font-size:12px;color:var(--azul,#2B5FC7);padding:3px 0}.proc-q{border:1px solid var(--linha,#dfe3ea);border-radius:8px;margin-bottom:8px}.proc-q>summary{cursor:pointer;padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.proc-id{font-family:var(--f-mono,ui-monospace,monospace);font-size:12px}.proc-tit{font-weight:600;flex:1 1 200px;min-width:0}.proc-sit{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--fundo-sutil,#eef1f5)}.proc-sit.dec{color:#a3261d;font-weight:600}.proc-corpo{padding:4px 10px 10px;display:grid;gap:6px}.proc-lig{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.proc-tela{max-width:900px;max-height:80vh;overflow:auto}.proc-tela .tab{display:table;white-space:normal}.proc-tela .tab td{overflow-wrap:anywhere}.proc-tela .sub-menu.fontes{margin:0 0 0 8px!important;padding:0!important;width:auto!important;border:0;background:none;vertical-align:middle}.proc-tela .sub-menu.fontes::before{content:none!important}.pat-arv{list-style:none;margin:0;padding-left:18px}.pat-arv.pat-raiz{padding-left:0}.pat-arv li{margin:3px 0}.pat-arv summary{cursor:pointer}
 .proc-abas{display:inline-flex;flex-wrap:wrap;gap:2px;padding:2px;background:#EBEEF3;border-radius:8px}.proc-abas button{max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:0;background:none;font:inherit;font-size:13px;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--cinza,#4a4f57);font-variant-numeric:tabular-nums;transition:background-color 150ms ease}.proc-abas button.on{background:#fff;color:#16181d;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}.proc-abas-n{font-size:11px;color:var(--mut,#5d6675);font-weight:400}.proc-abas button:focus-visible{outline:2px solid #2B5FC7;outline-offset:1px}
 /* F430b · o acabamento da árvore e do leitor: resposta ao toque, foco visível e o ⋯ que abre do próprio botão */
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{flex:1 1 320px}
@@ -7115,7 +7120,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.07</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.08</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21446,7 +21451,7 @@ const naoPareceCliente = c => { const n = dsa(c.nome||"").replace(/[()"'+,]/g," 
   // nome de pessoa não tem número; o nome de quem é da equipe também não é de cliente
   return RX_NAO_PESSOA.test(n) || /\d/.test(n) || /^(a|aa|i ?m|pai|mae)$/.test(n.trim()) || /(^|\s)tercini(\s|$)/.test(n)
     || (D.colaboradores||[]).some(co=>{ const e = dsa(co.nome||"").trim(); return e.split(/\s+/).length>=2 && n.trim().startsWith(e); }); };
-// F613 · a tarefa da lista Marcos sem #CPF chega com a nota "falta_cpf" (migrar.py): é cliente e fica à vista até ter CPF
+// F614 · a tarefa da lista Marcos sem #CPF chega com a nota "falta_cpf" (migrar.py): é cliente e fica à vista até ter CPF
 const faltaCpf = c => String(c.cpf||"").replace(/\D/g,"").length!==11 && ((c.campos||{}).notas_todo||[]).some(n=>n && n.tipo==="falta_cpf");
 function ehClienteDaLista(c){
   const k = c.campos || {};
@@ -42436,7 +42441,7 @@ function linhasDeDatas(cliId){
       edita:"", acao:`<button class="btn-mini" onclick="fecharCaixa();propostaSustentacao('${x.id}')" title="cria a tarefa de decidir e pedir a sustentação oral até a data limite; quem decide se pede é o escritório"><span aria-hidden="true">＋ Sustentação</span><span class="sr-only">＋ tarefa da sustentação oral</span></button>`});
     if(fe==="conselho") for(const t of crpsBlocos(x)){
       const evs = (t.eventos||[]).filter(e=>!["ruido","ciencia"].includes(e.tipo)).sort(porDataDesc), ult = evs[0]; if(!ult) continue;
-      const dec = evs.find(e=>e.tipo==="decisao"), decAgora = !!dec && (ult===dec || ult.tipo==="cumprimento");
+      const dec = evs.find(e=>e.tipo==="decisao"), decAgora = decisaoAtualCrps(evs, dec);
       const deNup = t.nup ? ` · recurso ${esc(formatarNup(t.nup))}` : "";
       if(decAgora && CRPS.efeitoDecisao(dec)==="favoravel" && (CRPS.orgaoJulgador(dec.bruto||"")||{}).instancia!==2){
         const cump = evs.find(e=>e.tipo==="cumprimento" && qCrps(e)>=qCrps(dec)), dd = isoCrps(dec.data);
@@ -42455,7 +42460,7 @@ function linhasDeDatas(cliId){
             rot:`<b>A Perícia Médica Federal tem até ${fmt(ate)} para o parecer</b>
                  <small class="qd-de">30 dias, prorrogáveis por igual prazo (Regimento do CRPS, art. 75, § 6º, I); sem resposta nem prorrogação, cabe a Ouvidoria (art. 76)${deNup} · ${tit}</small>`, edita:"", acao:""});
         }
-        const ent = (t.eventos||[]).filter(e=>/\bpara CRPS\b|\(CRPS para/i.test(e.bruto||"")).sort(porDataDesc).pop();
+        const ent = entradaCrps(t, dec);
         if(ent){ const lim = somaDias(isoCrps(ent.data), 365);
           linhas.push({data:lim, ico:"🏛", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"CRPS julga até", curto:"CRPS julga até",
             resumo:"365 dias da entrada, sem a diligência",
@@ -47666,7 +47671,7 @@ function vistaProcessos(k, aba){
 function abaComProcessos(k, aba, andamentos){
   if(!processosDaFase(k, aba).length) return andamentos();
   if(vistaProc) return vistaProcessos(k, aba);
-  return `<div class="sub-menu proc-vista" style="width:100%"><button onclick="mudarVistaProc(true)" title="voltar à árvore do processo">‹ Árvore</button></div>` + andamentos();
+  return `<div class="sub-menu proc-vista" style="margin:0 0 10px;padding:0;width:100%"><button onclick="mudarVistaProc(true)" title="voltar à árvore do processo">‹ Árvore</button></div>` + andamentos();
 }
 function painelINSS(k, ands){
   const coms = comentariosPat(ands);
@@ -48057,6 +48062,12 @@ const decideOCaso = e => e.tipo==="decisao"
 // Portaria DIRBEN/INSS 996/2022, art. 15 (30 dias do recebimento para o INSS cumprir); LOAS, art. 20, § 4º
 // ══════════════════════════════════════════════════════════════════════════
 const qCrps = e => CRPS.dataParaISO(e.data) || String(e.data||"");
+// F613 · a decisão do CRPS continua sendo a situação até o recurso reabrir (recurso novo, pauta, perícia, diligência ou
+// nova entrada no CRPS); o andamento de cumprimento depois dela ("Requerimento protocolado") não traz de volta a mora de 365 dias
+const RX_ENTRADA_CRPS = /\bpara CRPS\b|\(CRPS para/i;
+const crpsReaberto = (evs, dec) => evs.slice(0, evs.indexOf(dec)).some(e=>["recurso","pauta","pericia","diligencia"].includes(e.tipo) || RX_ENTRADA_CRPS.test(e.bruto||""));
+const decisaoAtualCrps = (evs, dec) => !!dec && !crpsReaberto(evs, dec);
+const entradaCrps = (t, dec) => (t.eventos||[]).filter(e=>RX_ENTRADA_CRPS.test(e.bruto||"") && (!dec || qCrps(e)>qCrps(dec))).sort(porDataDesc).pop();
 const porDataDesc = (a, b) => qCrps(a)<qCrps(b) ? 1 : qCrps(a)>qCrps(b) ? -1 : 0;
 const CRPS_PEDE_ACAO = new Set(["diligencia","pauta","decisao"]);
 // prazo administrativo em dias corridos, prorrogado ao dia útil seguinte (Regimento do CRPS, art. 78, § 4º)
@@ -48231,7 +48242,7 @@ function passosDoRecurso(k, t){
   const evs = (t.eventos||[]).filter(e=>!["ruido","ciencia"].includes(e.tipo)).sort(porDataDesc);
   const ult = evs[0]; if(!ult || !k || !k.cliente_id) return "";
   const L = [], dia = e => fmtBarra(isoCrps(e.data)), alc = alcadaJunta(k), v10 = temaV10();
-  const dec = evs.find(e=>e.tipo==="decisao"), decAgora = !!dec && (ult===dec || ult.tipo==="cumprimento");
+  const dec = evs.find(e=>e.tipo==="decisao"), decAgora = decisaoAtualCrps(evs, dec);
   const s = decAgora ? null : sessaoCrps(k);
   const og = CRPS.orgaoJulgador(t.orgao_atual||""), org = og && og.instancia ? og.nome : "";   // "14ª JR" → "14ª Junta de Recursos"
   const esp = esc(k.especie || "Benefício por incapacidade");
@@ -48293,7 +48304,7 @@ function passosDoRecurso(k, t){
       : "Documento novo e alegações entram até a inclusão em pauta (Regimento do CRPS, art. 71, § 1º).");
   }
   if(!decAgora){
-    const ent = (t.eventos||[]).filter(e=>/\bpara CRPS\b|\(CRPS para/i.test(e.bruto||"")).sort(porDataDesc).pop();
+    const ent = entradaCrps(t, dec);
     if(ent){
       const lim = somaDias(isoCrps(ent.data), 365);
       L.push(`O CRPS tem 365 dias da entrada (${dia(ent)}) para julgar, sem contar o tempo em diligência (Regimento do CRPS, art. 77, §§ 5º e 6º): por volta de ${fmtBarra(lim)}${lim<hoje() ? ", e passou: cabe cobrar pela Ouvidoria ou mandado de segurança pela demora" : ""}.`);
