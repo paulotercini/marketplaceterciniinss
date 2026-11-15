@@ -390,6 +390,19 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("4.6 a situação da diligência é a providência traduzida, e não a notificação crua",
     /SITUAÇÃO\s*📋 Providências da diligência pedidas à parte pelo Meu INSS \(tarefa 998431207\)/i.test(tH) && !/Notificação efetuada automaticamente/.test(tH));
 
+  // F613 · depois do acórdão e dos embargos, o "Requerimento protocolado" do cumprimento não traz de volta a mora de 365 dias
+  const f613 = await p.evaluate(() => {
+    const evs = [
+      { data: "2026-02-27", tipo: "outro", bruto: "Requerimento protocolado - Tarefa" },
+      { data: "2026-02-05", tipo: "decisao", bruto: "Embargos de declaração julgados" },
+      { data: "2024-10-10", tipo: "decisao", bruto: "Acórdão" },
+      { data: "2023-03-14", tipo: "outro", bruto: "Encaminhado (INSS para CRPS)" } ];
+    const dec = evs.find(e => e.tipo === "decisao");
+    const reab = [{ data: "2026-03-01", tipo: "recurso", bruto: "Recurso especial interposto" }, ...evs];
+    return { atual: decisaoAtualCrps(evs, dec), ent: entradaCrps({ eventos: evs }, dec), reaberto: decisaoAtualCrps(reab, reab.find(e => e.tipo === "decisao")) };
+  });
+  conf("4.7 decisão seguida só de cumprimento continua a situação e não há entrada nova para contar 365 dias; recurso novo reabre",
+    f613.atual === true && !f613.ent && f613.reaberto === false);
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));
   const bons = ok.filter(x => x[1]).length;
