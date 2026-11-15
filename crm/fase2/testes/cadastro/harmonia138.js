@@ -81,7 +81,8 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const menu = document.getElementById("menu-conta").textContent;
     document.getElementById("btn-conta").click();
     const hoje = [...document.querySelectorAll("#grupo-dinamicas .lista-item")].map(e => e.dataset.v);
-    const listas = [...document.querySelectorAll("#grupo-fases .lista-item")].map(e => e.dataset.v);
+    // F602: 💰 Contribuições fica sob Aposentadorias futuras e não conta entre as seis
+    const listas = [...document.querySelectorAll("#grupo-fases .lista-item")].map(e => e.dataset.v).filter(v => v !== "contribuicoes");
     return { marca: getComputedStyle(document.querySelector(".v10-marca")).textTransform === "uppercase"
         && /Advocacia previdenciária/i.test(document.querySelector(".v10-marca").textContent),
       menu, hoje: hoje.join(","), nListas: listas.length, prazoFora: !listas.includes("fase:prazo"),

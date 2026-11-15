@@ -394,7 +394,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.evaluate(cli => abrirFicha(cli), "c0000000-0000-0000-0000-000000000002");
   await p.waitForTimeout(700);
   conf("cliente novo NÃO vê a aba Lembretes",
-    await p.evaluate(() => ![...document.querySelectorAll(".menu-topo .mt")]
+    await p.evaluate(() => ![...document.querySelectorAll(".menu-topo .mt:not(.mt-novopc)")]
       .some(b => /Aposentadorias futuras/.test(b.textContent))));
   // F165 · sem atendimento em curso, o trilho é só a Identificação e o
   // + atendimento em destaque (antes abria direto na Triagem)
@@ -408,7 +408,7 @@ FIX.colaboradores = [...FIX.colaboradores,
       && /^Identificação/.test(document.querySelector(".sub-menu button.on").textContent.trim())));
   // F167 · a Análise de Direito só depois da triagem: cliente novo vê só Cadastro
   conf("F167 · cliente novo vê no menu de cima só o Cadastro",
-    await p.evaluate(() => { const mt = [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim());
+    await p.evaluate(() => { const mt = [...document.querySelectorAll(".menu-topo .mt:not(.mt-novopc)")].map(b => b.textContent.trim());
       return mt.length === 1 && /^Cadastro/.test(mt[0]); }));
   // o + atendimento abre a Triagem, e o relato do balcão está dentro dela
   await p.click(".sub-menu .atend-novo");
@@ -428,7 +428,7 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.waitForTimeout(500);
   // F277 · as Aposentadorias futuras viraram o quadro Aposentadoria da Identificação, sem aba no menu
   conf("encerrada a triagem, o Cadastro traz o quadro Aposentadoria, sem aba no menu",
-    await p.evaluate(() => /Aposentadoria/.test(caixaAposCadastro(D.cliPorId.get(clienteAberto))) && ![...document.querySelectorAll(".menu-topo .mt")]
+    await p.evaluate(() => /Aposentadoria/.test(caixaAposCadastro(D.cliPorId.get(clienteAberto))) && ![...document.querySelectorAll(".menu-topo .mt:not(.mt-novopc)")]
       .some(b => /Aposentadorias futuras/.test(b.textContent))));
   conf("e o botão Anotações também",
     await p.evaluate(() => [...document.querySelectorAll(".sub-menu:not(.anot-trilho) button")]
