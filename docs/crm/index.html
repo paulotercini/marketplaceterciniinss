@@ -7115,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.04</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.05</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -41127,8 +41127,8 @@ function abrirCatalogoEspecies(titulo, atual, escolher){
     <div id="esp-lista" class="esp-lista"></div>
     <div class="form-linha" style="margin-top:10px;align-items:center;gap:8px">
       <input id="esp-livre" placeholder="outro pedido, à mão (ex.: Repetição de Indébito)" style="flex:1;min-width:220px"
-        onkeydown="if(event.key==='Enter')espCtx.escolherCampos(null,null,this.value)">
-      <button class="btn-mini" onclick="espCtx.escolherCampos(null,null,document.getElementById('esp-livre').value)" title="usar este nome"><span aria-hidden="true">Usar</span><span class="sr-only">usar este nome</span></button>
+        onkeydown="if(event.key==='Enter')espCtx.escolher(null,null,this.value)">
+      <button class="btn-mini" onclick="espCtx.escolher(null,null,document.getElementById('esp-livre').value)" title="usar este nome"><span aria-hidden="true">Usar</span><span class="sr-only">usar este nome</span></button>
     </div>`);
   pintarEspecies();
   document.getElementById("esp-busca").focus();
@@ -41144,7 +41144,7 @@ function pintarEspecies(){
   const html = FAMILIAS_ESPECIE.map(([fam, cods]) => {
     const itens = cods.flatMap(cod => subespeciesDe(cod).filter(([ch, nome]) => bate(`${cod} ${ch} ${nome}`)).map(([ch, nome]) => {
       const on = at.chave ? at.chave===ch : (at.cod===cod && ch===cod);
-      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="espCtx.escolherCampos('${cod}','${ch}')">
+      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="espCtx.escolher('${cod}','${ch}')">
         <span class="esp-cod-mini">${esc(cod)}</span>${esc(nome)}</button>`; }));
     return itens.length ? `<div class="esp-fam"><div class="esp-fam-rot">${esc(fam)}</div>${itens.join("")}</div>` : "";
   }).join("");

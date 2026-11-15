@@ -142,6 +142,14 @@ FIX.documentos_beneficio.push(
       return pc.cod === "B41" && pc.sub === "B41.RURAL" && /idade rural/.test(pc.especie); }, CLI_VAZIO));
   conf("e a mesa mostra o código e o nome escolhidos",
     /B41/.test(await p.evaluate(() => document.querySelector(".pc-cartao .esp-escolhida").textContent)));
+  // F610 · o botão Usar do campo livre grava (chamava espCtx.escolherCampos, inexistente)
+  await p.evaluate(([cli, id]) => escolherEspeciePre(cli, id), [CLI_VAZIO, pcId]);
+  await p.waitForTimeout(200);
+  await p.fill("#esp-livre", "Repetição de Indébito");
+  await p.click("#esp-livre + button");
+  await p.waitForTimeout(400);
+  conf("o Usar do campo livre grava a espécie escrita",
+    (await p.evaluate(cli => precasosDe(D.cliPorId.get(cli))[0].especie, CLI_VAZIO)) === "Repetição de Indébito");
   conf("os blocos da mesa têm fundo próprio (1 a 4)",
     await p.evaluate(() => ["mesa-b1", "mesa-b2", "mesa-b3", "mesa-b4"].every(k => document.querySelector(".caixa-atend ." + k))));
   await p.evaluate(([cli, id]) => mudarPreCaso(cli, id, "especie", "Guia de pagamento avulsa GPS"), [CLI_VAZIO, pcId]);
