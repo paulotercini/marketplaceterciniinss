@@ -23,7 +23,7 @@ function rodada({ sistemaQueLista = 'esisrec', nupsDoCrm = [], listas = null, op
     if (l) return base[l[1]] ? resp(200, base[l[1]].map(n => ({ proc: n, nb: '1' }))) : resp(404, {});
     const m = u.match(/^\/api\/v1\/([a-z]+)\/(\d+)$/);
     if (m && cai) throw new Error('Failed to fetch');
-    if (m && m[2] === recusa) return resp(403, {});
+    if (m && [].concat(recusa).includes(m[2])) return resp(403, {});
     if (m) return (base[m[1]] || []).includes(m[2]) ? resp(200, { nup: m[2], andamento: 'x',
       eventos: [{ status: 'Julgado', documentos: [{ id: 7, nome: 'Acórdão.pdf', path: '/doc/7' }, { id: 8, nome: 'CNIS.pdf', path: '/doc/8' }] }] }) : resp(404, {});
     throw new Error('pedido inesperado ' + u);
@@ -161,4 +161,20 @@ test('1.39.0 · o NUP que dá 403 nas duas bases fica para a rodada completa', a
   const rapida = await rodada({ nupsDoCrm: [NUP3], recusa: NUP3, guardado: { ultima_crps_full: new Date().toISOString(), crps_403: [NUP3] } });
   assert.ok(!rapida.pedidos.some(u => u.endsWith('/' + NUP3)), 'consultou de novo o que dá 403');
   assert.deepStrictEqual(rapida.gravados.crps_403, [NUP3]);
+});
+
+test('1.39.1 · na completa, os NUPs já recusados (403) vão para o fim e não abortam a rodada', async () => {
+  const recusados = [1, 2, 3, 4, 5, 6, 7].map(k => `9${k}345678901234567`.slice(0, 18));
+  const r = await rodada({ nupsDoCrm: recusados, recusa: recusados, guardado: { crps_403: recusados } });
+  assert.deepStrictEqual(consultasDe(r.pedidos).slice(0, 2), [`/api/v1/esisrec/${NUP1}`, `/api/v1/esisrec/${NUP2}`]);
+  assert.ok(!r.r.erro, 'abortou: ' + r.r.erro);
+  assert.ok('ultima_crps_full' in r.gravados, 'a completa não renovou o ciclo semanal');
+  assert.deepStrictEqual(r.gravados.crps_403.sort(), [...recusados].sort());
+});
+
+test('1.39.1 · três recursos novos recusados nas duas bases não somam seis e não abortam', async () => {
+  const novos = ['813456789012345678', '823456789012345678', '833456789012345678'];
+  const r = await rodada({ nupsDoCrm: novos, recusa: novos });
+  assert.ok(!r.r.erro, 'abortou: ' + r.r.erro);
+  assert.deepStrictEqual(r.gravados.crps_403.sort(), novos);
 });
