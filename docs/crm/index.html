@@ -7115,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.99</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15194,6 +15194,9 @@ function itensAgendaTodos(){
       por({data:t.lembrar_em, k, cli, tc:t, andId:t.andamento_id, fatal:t.natureza==="fatal"}, [t.colaborador_id]);
     }
     const donos = donosDoCaso(k);
+    // F606 · o retorno do pré-caso, gravado só no CRM (casos.precaso.retorno), entra no Meu Dia de quem cuida do pré-caso
+    const rpc = ehPreCaso(k) && ((k.precaso||{}).retorno||{}).data;
+    if(rpc) por({data:rpc, k, cli, selo:"Retorno do pré-caso", resumo:(k.precaso.retorno.motivo)||"retorno do pré-caso"}, donos);
     // F236 · o "Concluir em" do To Do no dia de um prazo que o CRM já conhece (recorrer até, exigência, prazo do tribunal
     // ainda não respondido) é ESSE prazo: um item só, o do prazo conhecido, com o selo de prazo fatal, como no quadro
     // do caso ("também no To Do"); antes o recurso especial da Luzia aparecia duas vezes no dia 27
@@ -23821,6 +23824,8 @@ function pintarFicha(){
   if(btnProc) btnProc.onclick=ev=>menuProcessos(ev, ksR);
   document.querySelectorAll("#btn-novo-pc,[data-pc-novo]").forEach(b=>b.onclick=()=>novoAtendimento(cliId));
   document.querySelectorAll("[data-pc-abrir]").forEach(b=>b.onclick=()=>abrirAtendimentoDe(cliId, b.dataset.pcAbrir));
+  document.querySelectorAll("[data-pc-ret-salvar]").forEach(b=>b.onclick=()=>{ const id = b.dataset.pcRetSalvar, q = s => document.querySelector(`[${s}="${id}"]`);
+    gravarRetornoPc(id, (q("data-pc-ret")||{}).value, (q("data-pc-ret-mot")||{}).value); });
   document.querySelectorAll("[data-pc-proc-salvar]").forEach(b=>b.onclick=()=>{ const i = document.querySelector(`[data-pc-proc="${b.dataset.pcProcSalvar}"]`); gravarProcAnterior(b.dataset.pcProcSalvar, i ? i.value : ""); });
   document.querySelectorAll("[data-pc-mover]").forEach(b=>b.onclick=()=>{ const [id, e] = b.dataset.pcMover.split("|"); moverPreCaso(cliId, id, e); });
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
@@ -42205,6 +42210,11 @@ function linhasDeDatas(cliId){
       for(const p of pz) linhas.push({data:p.fatal, ico:"🙋", natureza:"lembrete", cru:true, rotulo:"Pré-caso", curto:"Pré-caso",
         resumo:p.texto, rot:`<b>Pré-caso: ${esc(p.texto)}</b>`, edita:"",
         acao:`<button class="btn-mini" onclick="abrirAtendimentoDe('${cliId}','${pv.id}')">Abrir</button>`}); }
+    // F606 · a data de retorno de cada pré-caso vivo, gravada só no CRM
+    for(const p of (c.id ? pcDaFicha(c).lista : [])){ const r = p.retorno||{}; if(!r.data) continue;
+      linhas.push({data:r.data, ico:"🙋", natureza:"lembrete", cru:true, rotulo:"Retorno do pré-caso", curto:"Retorno do pré-caso",
+        resumo:r.motivo||"retorno do pré-caso", rot:`<b>Retorno do pré-caso${r.motivo?`: ${esc(r.motivo)}`:""}</b>`, edita:"",
+        acao:p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" onclick="abrirAtendimentoDe('${cliId}','${p.id}')">Abrir</button>`:""}); }
   }catch(e){}
   const ksCli = (D.casosDoCliente.get(cliId))||[];
   try{ for(const {ca, dec, ate} of decadenciasDoCliente(cliId)){
@@ -57265,6 +57275,7 @@ function painelPreCasos(c){
         : `<div>Passo: <b>${esc(passo)}</b>${p.data_direito?` · direito provável em ${fmt(p.data_direito)}`:""}${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
            ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}
         ${botoes(p, fora)}</div>
+      ${retornoPcHtml(p, k, fora)}
       ${procAnteriorHtml(p, k, fora)}
       ${(ts=>ts.length?`<details class="pc-notas"${fora?"":" open"}><summary>Anotações do Microsoft To Do (${ts.length})</summary>${notasTodoHtml(ts)}</details>`:"")(notasTodoDoPc(c, p))}
     </div>`;
@@ -57286,6 +57297,29 @@ function procAnteriorHtml(p, k, fora){
   return `<div class="pc-proc"><label>Processo judicial anterior (outro escritório)
     <input type="text" data-pc-proc="${esc(k.id)}" value="${esc(v)}" maxlength="300" placeholder="Número do processo, se houver"></label>
     <button class="btn-mini" data-pc-proc-salvar="${esc(k.id)}">Salvar</button></div>`;
+}
+// F606 · a data de retorno do pré-caso (pedido do Paulo de 15.11.2026, a última linha do padrão das anotações):
+// fica em casos.precaso.retorno = {data, motivo, em, por}, só no CRM, e entra no Meu Dia e na aba Prazos
+function retornoPcHtml(p, k, fora){
+  if(!k || fora) return "";
+  const r = p.retorno||{};
+  if(!(podeAtender() || podeCadastrar()))
+    return r.data ? `<div class="pc-proc">Retorno: <b>${fmt(r.data)}</b>${r.motivo?` · ${esc(r.motivo)}`:""}</div>` : "";
+  return `<div class="pc-proc"><label>Data de retorno
+    <input type="date" data-pc-ret="${esc(k.id)}" value="${esc(r.data||"")}"></label>
+    <label>Para quê <input type="text" data-pc-ret-mot="${esc(k.id)}" value="${esc(r.motivo||"")}" maxlength="200" placeholder="Opcional"></label>
+    <button class="btn-mini" data-pc-ret-salvar="${esc(k.id)}">Salvar</button></div>`;
+}
+async function gravarRetornoPc(casoId, data, motivo){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const antes = k.precaso||{}, precaso = {...antes}, r0 = antes.retorno||{};
+  const d = /^\d{4}-\d{2}-\d{2}$/.test(data||"") ? data : "", m = String(motivo||"").trim();
+  if(d === (r0.data||"") && m === (r0.motivo||"")) return aviso("Sem alteração");
+  if(d) precaso.retorno = {data:d, motivo:m||undefined, em:new Date().toISOString(), por:(eu||{}).id||null};
+  else delete precaso.retorno;
+  try { await patchCaso(casoId, {precaso}); } catch(e){ return aviso("Não gravei o retorno: " + (e.message||e)); }
+  k.precaso = precaso;
+  aviso(d ? `Retorno em ${fmt(d)} gravado` : "Retorno apagado");
 }
 async function gravarProcAnterior(casoId, valor){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -60138,9 +60172,9 @@ function pintarAgenda(){
   const dia = r.dias.find(d=>d.data===agq.sel) || r.dias[0];
   // F406b · o dia em que as vagas foram tiradas no Google e nada foi marcado diz "Sem vagas", em vez de 0/14
   const semVagas = d => !d.bloqueado && !d.atendimentos && !vagasDoDia(d).length;
-  const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado||semVagas(d)?" bloq":d.lotado?" lot":""}" data-aqdia="${d.data}">
+  const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado||semVagas(d)?" bloq":lotDia(d)?" lot":""}" data-aqdia="${d.data}">
       <b>${siglaData(d.data)}</b>
-      <span>${d.bloqueado?"Feriado ou férias":semVagas(d)?"Sem vagas":d.limite?`${d.atendimentos}/${d.limite}${d.lotado?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
+      <span>${d.bloqueado?"Feriado ou férias":semVagas(d)?"Sem vagas":d.limite?`${d.atendimentos}/${capDia(d)}${lotDia(d)?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}${lotDia(d)?" · lotado":""}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
   alvo.innerHTML = `<div class="aq">
     ${r.alerta?`<div class="aq-alerta" role="alert">${esc(r.alerta)}</div>`:""}
     <div class="aq-faixa" role="tablist" aria-label="Próximos dias de atendimento de ${esc(nomeProf(agq.prof))}">${faixa}</div>
@@ -60162,6 +60196,10 @@ function pintarAgenda(){
 const vagaPassou = (data, inicio) => data < hoje() || (data===hoje() && hmMin(inicio) <= new Date().getHours()*60 + new Date().getMinutes());
 const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga && !vagaPassou(d.data, s.inicio)).map(s=>({...s, tipo:s.tipo||t})))
   .sort((a, b)=>hmMin(a.inicio)-hmMin(b.inicio)) : [];
+// F607: no dia só de vagas do Google o total é atendimentos + vagas livres, e sem vaga livre o dia está lotado (mostrava 7/14 com tudo ocupado)
+const soVagasDia = d => !["001", "002"].some(t=>((d.livres||{})[t]||[]).some(s=>!s.vaga));
+const capDia = d => soVagasDia(d) ? d.atendimentos + vagasDoDia(d).length : d.limite;
+const lotDia = d => !!d.lotado || (!d.bloqueado && !!d.atendimentos && soVagasDia(d) && !vagasDoDia(d).length);
 // com vagas no dia, valem elas (dos dois tipos); sem vagas, os horários calculados do tipo escolhido, como antes
 const livresDoDia = (d, tipo) => { const v = vagasDoDia(d); return v.length ? v : (d && d.livres[tipo]) || []; };
 const minDoTipo = t => t==="001" ? 45 : 30;
@@ -60447,7 +60485,7 @@ function linhaDoTempoAgenda(dia, r){
       <b>${esc(nome)}</b>${por.curta?`<span class="aq-ev-por">${esc(por.curta)}</span>`:""}</button>`;
   };
   const reservas = (r.dias.find(d=>d.data===dia.data)||{}).reservas || dia.reservas || [];
-  const cab = dia.limite ? `${dia.atendimentos} de ${dia.limite} atendimentos${dia.lotado?" · lotado":""}` : `${dia.atendimentos} ${dia.atendimentos===1?"atendimento":"atendimentos"}`;
+  const cab = dia.limite ? `${dia.atendimentos} de ${capDia(dia)} atendimentos${lotDia(dia)?" · lotado":""}` : `${dia.atendimentos} ${dia.atendimentos===1?"atendimento":"atendimentos"}${lotDia(dia)?" · lotado":""}`;
   return `<div class="aq-tempo-cab"><b>${nomeProf(agq.prof)} · ${diaExt(dia.data)}, ${dataBR(dia.data)}</b><span>${cab}</span>
       <span class="aq-leg">${(agq.prof==="todos" ? ["paulo","marcos","amanda"] : [agq.prof]).map(pr=>`<span class="aq-leg-tipos">${esc(nomeProf(pr))}:
         <span><i class="aq-sw p-${pr} t001"></i>001 · 45 min</span>

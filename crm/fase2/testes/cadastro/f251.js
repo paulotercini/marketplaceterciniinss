@@ -101,7 +101,14 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("as vagas estão no tom do Paulo e do tipo", vagas.every(([, c]) => /p-paulo/.test(c)) && /t001/.test(vagas[0][1]) && /t002/.test(vagas[1][1]));
   conf("a vaga do Marcos e o atendimento dele não aparecem na agenda do Paulo", !(await p.$('[data-aqvaga="M2"]')) && !(await p.$('[data-aqev="M1"]')));
   conf("o atendimento lançado à mão (sem cor) aparece como do Paulo, no tom do 002", await p.evaluate(() => { const e = document.querySelector('[data-aqev="P3"]'); return !!e && e.classList.contains("p-paulo") && e.classList.contains("t002"); }));
-  conf("o dia conta 1 atendimento (a vaga não conta)", /1\/14/.test(await p.textContent(`[data-aqdia="${W}"]`)));
+  conf("o dia conta 1 atendimento de 4 (o atendimento e as 3 vagas livres, e não o limite de 14)", (await p.textContent(`[data-aqdia="${W}"] span`)).trim() === "1/4");
+  // F607 · dia só de vagas com todas tomadas e menos atendimentos que o limite: lotado, e não 7/14
+  conf("F607 · o dia sem vaga livre e com 7 atendimentos diz 7/7 · lotado", await p.evaluate(() => {
+    const d = { data: "2099-01-07", bloqueado: false, atendimentos: 7, limite: 14, lotado: false, livres: { "001": [], "002": [] } };
+    const v = { ...d, atendimentos: 2, livres: { "001": [{ inicio: "09:00", vaga: true }], "002": [] } };
+    const c = { ...d, atendimentos: 2, livres: { "001": [{ inicio: "09:00" }], "002": [] } };
+    return lotDia(d) && capDia(d) === 7 && !lotDia(v) && capDia(v) === 3 && !lotDia(c) && capDia(c) === 14;
+  }));
   conf("F406b · a quarta sem vaga no Google diz \"Sem vagas\", e não 0/14", await p.evaluate(d => { const o = [...document.querySelectorAll("[data-aqdia]")].filter(b => b.dataset.aqdia !== d && !/Feriado/.test(b.textContent));
     return o.length > 0 && o.every(b => /Sem vagas/.test(b.textContent) && !/0\/14/.test(b.textContent)); }, W));
   await foto("01-quarta-do-paulo");
