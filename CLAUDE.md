@@ -761,6 +761,8 @@ A **F587** (13.89, pedido do Paulo de 14.11.2026): as **Sugestões do dia** (F57
 
 A **F607** (14.01, pedido do Paulo de 15.11.2026): no dia só de vagas do Google (`SO_VAGAS`), o cartão do dia e o cabeçalho da Agenda contam atendimentos + vagas livres (`soVagasDia`, `capDia`) e dizem "lotado" sem vaga livre (`lotDia`), em vez do limite de 14 ("7/14" com tudo ocupado). Teste: `f251.js`.
 
+A **F608** (14.02, pedido do Paulo de 15.11.2026): a prévia da mensagem da perícia vem pronta, e não como modelo, e é editável antes do Ligar. O atendimento presencial é proposto no dia útil anterior à perícia, e nunca no próprio dia (`pericia_dia_atendimento`), e a mensagem não pergunta "Qual horário fica melhor?": oferece um horário de manhã e um à tarde, lidos das vagas 002 do Google Agenda do advogado escolhido (`perVagas`, `perTextoPronto`, pelo `agq.cache` e `vagasDoDia`). Na tela 🩺 Perícias o administrador edita o texto na própria bolha (`#per-txt`, guardado por perícia em `_perTxt`), e **Restaurar** volta ao texto pronto; o Ligar grava o texto em `pericia_avisos.texto` (RPC `pericia_texto_salvar`), e a rodada envia esse texto trocando a saudação pela do período. A IA do WhatsApp (`zap_plantao`) segue a mesma regra: dia útil anterior e um horário de manhã e outro à tarde. SQL em `crm/fase2/migracoes/f608_pericia_texto_pronto.sql`. Testes: `crm/fase2/testes/zap_pericia.sql`, `testes/cadastro/f549.js` e `testes/funcoes/zap_plantao.test.mjs`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
