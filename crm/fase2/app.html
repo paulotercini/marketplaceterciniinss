@@ -7115,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.98</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.99</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -40098,13 +40098,15 @@ function quadroResumo(k){
   if(_rsGerando.has(id)) return cx(`<p class="rs5-falta">Lendo o pedido da peça…</p>`);
   if(!tem) return cx(`<p class="rs5-falta">${f ? (gera ? `Pelo pedido da ${esc(f.rot.toLowerCase())}.` : "Ainda não gerado.") : "Sem documento do pedido no CRM."}</p>`);
   const ps = (r.periodos||[]).filter(p=>p.ini && p.fim_iso).sort((a,b)=>a.ini.localeCompare(b.ini));
-  const revs = (r.objetos||[]).filter(o=>o.natureza==="revisao" && o.motivo);
+  // F605 · revisão, DII pedida (com as alternativas) e pedido acessório: uma linha cada, fora da linha do tempo
+  const revs = (r.objetos||[]).filter(o=>(o.natureza==="revisao" && o.motivo) || o.natureza==="outro" && o.motivo || (o.natureza==="incapacidade" && o.inicio && (o.subsidiario || !o.fim)));
   const ped = [r.tipo==="Ação de revisão" ? "Revisão" : "", maiusc1(r.beneficio), r.der ? `DER ${r.der}` : ""].filter(Boolean).join(" · ");
   const novo = f && r.fonte && f.id!==r.fonte.id && !(r.recusou||[]).includes(f.id) && !r.proposta;
   let aberto = "";
   if(_rsAberto){
     const lins = ps.map(p=>`<li><i class="rs5-pt" style="background:${rsCor(p.natureza)}"></i><span>${rsMes(p.ini)} a ${rsMes(p.fim_iso)}</span><span class="rs5-dur">${esc(p.dur)} ${esc(p.natureza)}</span>${p.local||p.motivo ? `<span class="rs5-sub">${esc([p.local, p.motivo].filter(Boolean).join(" · "))}</span>` : ""}</li>`)
-      .concat(revs.map((o, i)=>`<li><i class="rs5-pt" style="background:var(--rs-fase)"></i><span>${esc(maiusc1(o.motivo))}</span><span class="rs5-dur">${i ? "subsidiário" : "pedido"}</span>${o.inicio ? `<span class="rs5-sub">desde ${esc(o.inicio)}</span>` : ""}</li>`)).join("");
+      .concat(revs.map((o, i)=>{ const inc = o.natureza==="incapacidade", sub = o.subsidiario || (o.natureza==="revisao" && revs.slice(0, i).some(x=>x.natureza==="revisao"));
+        return `<li><i class="rs5-pt" style="background:var(--rs-fase)"></i><span>${esc(inc ? `Incapacidade ${o.fim ? `com início entre ${o.inicio} e ${o.fim}` : `desde ${o.inicio}`}` : maiusc1(o.motivo))}</span><span class="rs5-dur">${sub ? "subsidiário" : "pedido"}</span>${inc ? (o.motivo ? `<span class="rs5-sub">${esc(o.motivo)}</span>` : "") : o.inicio ? `<span class="rs5-sub">desde ${esc(o.inicio)}</span>` : ""}</li>`; })).join("");
     const rot = r.fonte ? String(r.fonte.rot||"") : "", art = /^Recurso/.test(rot) ? "do" : "da";
     aberto = `${lins ? `<ul class="rs5-lins">${lins}</ul>` : ""}<div id="rs5-frase-${id}"></div>
       ${(r.faltas||[]).length ? `<p class="rs5-falta">Não localizado: ${esc(r.faltas.join("; "))}.</p>` : ""}
@@ -40124,7 +40126,7 @@ async function gerarResumo(casoId, comoProposta){
   catch(e){ r = {erro: msgErro(e)}; }
   _rsGerando.delete(casoId);
   if(!r || r.erro){ repintarFicha(); return aviso("Não gerei o resumo: " + ((r && r.erro) || "sem resposta"), true); }
-  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], objetos:(r.objetos||[]).filter(o=>o.natureza==="revisao"), beneficio:r.beneficio, der:r.der, tipo:r.tipo, faltas:r.faltas||[], avisos:r.avisos||[], fonte};
+  const fonte = {id:f.id, nome:f.nome, data:f.data, rot:f.rot}, base = {texto:r.texto, periodos:r.periodos||[], objetos:(r.objetos||[]).filter(o=>["revisao","incapacidade","outro"].includes(o.natureza)), beneficio:r.beneficio, der:r.der, tipo:r.tipo, faltas:r.faltas||[], avisos:r.avisos||[], fonte};
   const atual = k.resumo;
   if(atual && atual.texto && (comoProposta || atual.travado)) return rsGravar(k, {...atual, proposta:{...base, em:new Date().toISOString()}});
   rsGravar(k, {...base, autor:eu && eu.nome, em:new Date().toISOString(), travado:false, versoes:(atual && atual.versoes)||[], recusou:(atual && atual.recusou)||[]});
