@@ -596,7 +596,8 @@ def main():
         curados = [p for p in existentes if p.get("origem") == "curado"]
         curado_listas = {p.get("lista") for p in curados}
         autos = [montar_processo_safe(cpf, dn, por_lista[L], crm.get((cpf, L)))
-                 for L in PRIORIDADE if L in por_lista and L not in curado_listas]
+                 for L in PRIORIDADE if L in por_lista and L not in curado_listas
+                 and not (crm.get((cpf, L)) or {}).get("oculto")]     # F615
 
         if not autos:
             intactas += 1
