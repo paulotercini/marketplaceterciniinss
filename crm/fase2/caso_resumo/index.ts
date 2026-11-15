@@ -167,7 +167,7 @@ function fraseObjeto(o: any) {
   }
 }
 const ROT_GRUPO: Record<string, [string, string]> = { especial: ["do período especial", "dos períodos especiais"], rural: ["do período rural", "dos períodos rurais"], comum: ["do tempo comum", "dos períodos comuns"] };
-const juntar = (xs: string[], e = " e ") => (xs.length > 1 ? xs.slice(0, -1).join(", ") + e + xs.at(-1) : xs[0] || "");
+const juntar = (xs: string[], e = " e ", sep = ", ") => (xs.length > 1 ? xs.slice(0, -1).join(sep) + e + xs.at(-1) : xs[0] || "");
 
 // "o reconhecimento dos períodos especiais de A a B na X, por Y, e de C a D …, com a conversão …"
 export function montarFrase(tipo: string, beneficio: string, der: string, objetos: any[], teto = 60) {
@@ -189,7 +189,7 @@ export function montarFrase(tipo: string, beneficio: string, der: string, objeto
     if (incs.length) outros.push(incs.map((o, j) => (j ? (j === 1 ? "ou, subsidiariamente, " : "ou ") : "") + fraseObjeto({ ...o, subsidiario: j > 0 })).join(", "));
     for (const o of objetos.filter((o) => !PERIODO.includes(o.natureza) && o.natureza !== "revisao" && o.natureza !== "incapacidade")) outros.push(fraseObjeto(o));
     const corpo = [grupos.length ? `o reconhecimento ${juntar(grupos, "; e ")}` : "", ...outros].filter(Boolean);
-    let t = corpo.length ? `${cab} em que buscamos ${juntar(corpo, corpo.length > 1 && corpo.some((c) => c.includes(",")) ? "; e " : " e ")}${cortados ? ` e mais ${cortados} ${cortados > 1 ? "períodos" : "período"}` : ""}` : cab;
+    let t = corpo.length ? `${cab} em que buscamos ${(corpo.length > 1 && corpo.some((c) => c.includes(",")) ? juntar(corpo, "; e ", "; ") : juntar(corpo))}${cortados ? ` e mais ${cortados} ${cortados > 1 ? "períodos" : "período"}` : ""}` : cab;
     if (revs.length) t += `${corpo.length ? ", com" : " em que buscamos"} ${revs.join(" ou, subsidiariamente, ")}`;
     return t + ".";
   };
