@@ -7044,6 +7044,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-sobre-l{display:inline-flex;align-item
 html .linha-caso.lc5.lc5.lc5 .lc5-esp{display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:999px;background:color-mix(in srgb,var(--lc-cor) 85%,#000000);
   color:#FFFFFF;font:600 12px/1 var(--f-ui);font-variant-numeric:tabular-nums}
 html .linha-caso.lc5.lc5.lc5 .lc5-esp-vazia{background:#9A9890}
+html .linha-caso.lc5.lc5.lc5 .lc5-area-esc{background:#9A3412;border:0;cursor:pointer;font:inherit;color:#fff;box-shadow:0 0 0 2px #FDBA74}
 html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-sobre-l .lapis{opacity:.55;color:inherit}
 html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-cab{flex:1 1 auto;min-width:0;margin:0;display:block}
 html .linha-caso.lc5.lc5.lc5 .lc5-cab .lc-ben{display:block;font:600 14px/1.3 var(--f-ui);color:inherit;white-space:normal;text-wrap:balance}
@@ -7120,7 +7121,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.08</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.09</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8723,7 +8724,8 @@ const doAtendimentoDe = (c, col) => ((c.campos||{}).precasos||[]).some(p=>p.quem
 // F236 · QUEM RESPONDE PELO ITEM DA AGENDA: o que é do caso, os atribuídos; sem atribuído, o
 // administrador. Antes, o item sem dono aparecia no Meu Dia de todos e não era de ninguém.
 // 11.93 · a lista pessoal "☕ <Nome>" de um colaborador ativo é dele (decisão do Paulo, 31.10.2026: os casos do ☕ Marcos entram no Meu Dia e nos prazos dele)
-function donoDaLista(k){ const m = k && /^☕\s*(\S+)/.exec(listaDe(k)); if(!m) return null;
+// F615 · a lista "Marcos" do To Do, com ou sem emoji, é do colaborador ativo cujo nome começa por Marcos
+function donoDaLista(k){ const m = k && (/^☕\s*(\S+)/.exec(listaDe(k)) || (listaMarcos(k) && [, "Marcos"])); if(!m) return null;
   const n = semAcento(m[1]).toLowerCase();
   return [...D.colPorId.values()].find(c=>c.ativo!==false && semAcento((c.nome||"").split(" ")[0]).toLowerCase()===n) || null; }
 const donosDoCaso = k => { const a = (k && D.atrDoCaso.get(k.id))||[]; if(a.length) return a; const d = donoDaLista(k); return d ? [d.id] : [colAdmin().id]; };
@@ -8798,6 +8800,14 @@ function gcal(titulo, dataIso, horaIni, minutos, detalhes, local){
 // lista "efetiva" do caso: um mover pedido no app vale na hora,
 // mesmo antes de o To Do acompanhar (escrever_todo faz o mover físico)
 function listaDe(k){ return k.mover_para || k.origem_lista || "—"; }
+// F615 · a matéria é do CASO (casos.area): fora da previdenciária o caso é genérico, só anotações,
+// sem DER, NB, espécie, CRPS, Meu INSS, Resumo do Caso, prazos do INSS nem trilha (decisão do Paulo, 15.11.2026)
+const AREAS = {previdenciaria:"Previdenciária", civil:"Cível", trabalhista:"Trabalhista", familia:"Família", criminal:"Criminal", tributaria:"Tributária"};
+const areaDe = k => (k && AREAS[k.area] && k.area) || "previdenciaria";
+const ehPrev = k => areaDe(k)==="previdenciaria";
+const listaMarcos = k => !!k && semAcento(String(listaDe(k))).toLowerCase().replace(/[^a-z]/g, "")==="marcos";
+// o caso da lista Marcos sem espécie ainda não disse a matéria: o cartão pede a escolha, e o banco não chuta
+const areaAEscolher = k => ehPrev(k) && listaMarcos(k) && !k.especie && !k.beneficio;
 // 🙋 ESCRITÓRIO NÃO É LISTA DE CASOS (08.99, pedido do Paulo). Quem está lá
 // ainda não tem processo: é cliente em atendimento, atrás de documento. A
 // lista passa a mostrar esses cadastros — a sincronização não cria mais caso
@@ -8954,7 +8964,7 @@ const ETAPAS_POR_FASE = {
   aposentadoria_futura: ["monitorando","documentação em dia","pronto para protocolar"],
 };
 // F236 · a etapa é a da fase verdadeira: no 🗓 Tarefas com Prazo (fase "outro") o caso continua sendo o que é
-const etapasDaFase = k => ETAPAS_POR_FASE[k && faseEfetiva(k)] || [];
+const etapasDaFase = k => (k && !ehPrev(k)) ? [] : ETAPAS_POR_FASE[k && faseEfetiva(k)] || [];   // F615 · sem etapas fora da previdenciária
 function escolherEtapa(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const lista = etapasDaFase(k);
@@ -40074,7 +40084,7 @@ const rsLimpo = t => String(t||"").replace(/Este documento [ée] c[óo]pia do or
   .replace(/^[^\S\n]*fls\.?\s*\d+[^\S\n]*$/gim, "").replace(/^[^\S\n]*\d{1,3}[^\S\n]*$/gm, "")
   .replace(/^.*Num\.\s*\d+\s*-\s*P[áa]g\.\s*\d+.*$/gim, "").replace(/^.*Assinado eletronicamente por.*$/gim, "").replace(/\n{3,}/g, "\n\n");
 const RS_FASES = ["conselho", "judicial", "pagamento"];
-const rsLigado = k => !!k && !k.pre_caso && RS_FASES.includes(faseEfetiva(k));
+const rsLigado = k => !!k && !k.pre_caso && ehPrev(k) && RS_FASES.includes(faseEfetiva(k));
 const rsAssinada = d => d && typeof d.texto==="string" && d.texto.length>400 && /331[.\s]?110/.test(d.texto) && (RS_ANCORA.lastIndex=0, RS_ANCORA.test(d.texto))
   && !/processo administrativo integral|outros documentos/i.test(d.nome||"");
 function fonteDoResumo(k){
@@ -41368,7 +41378,7 @@ function moraVista(k, mora){
     || (D.tarefasPorCaso.get(k.id)||[]).some(t=>!t.concluida_em && t.lembrar_em && t.lembrar_em > hj);
 }
 function prazoMora(k){
-  if(!k || faseEfetiva(k)!=="inss" || !k.der || k.exigencia_prazo || pedidoDecidido(k)) return null;
+  if(!k || !ehPrev(k) || faseEfetiva(k)!=="inss" || !k.der || k.exigencia_prazo || pedidoDecidido(k)) return null;
   // F236 · mandado de segurança por mora já impetrado: a demora está na Justiça e o prazo que vale é o da liminar
   if(processosDoCaso(k).some(p=>p.papel==="ms")) return null;
   const esp = String(k.especie||"").toUpperCase().slice(0,3), dias = MORA_DIAS[esp]; if(!dias) return null;
@@ -41432,7 +41442,7 @@ function ultimaDecisaoCrps(k){
 // ou a última decisão foi favorável. No judicial vale o prazo do tribunal.
 function recorrerAte(k){
   const fe = faseEfetiva(k);
-  if(!k || !k.decisao_em || !["inss","conselho"].includes(fe) || k.resultado==="deferido") return null;
+  if(!k || !ehPrev(k) || !k.decisao_em || !["inss","conselho"].includes(fe) || k.resultado==="deferido") return null;
   // F236 · o PAT já diz que o pedido foi deferido: não há o que recorrer
   if(/deferid/i.test(k.situacao_inss||"") && !/indeferid/i.test(k.situacao_inss||"")) return null;
   const rec = [k.ro_protocolado_em, k.re_protocolado_em, k.ed_protocolado_em].filter(Boolean).sort().pop();
@@ -41469,7 +41479,7 @@ const reanalisePedida = k => { const r = (k && k.ronda||{}).reanalise; return r 
 // o último dia da reanálise, enquanto ela cabe: indeferimento documental com ciência na vigência, sem reanálise pedida
 // e sem recurso protocolado depois da decisão (que a preclui)
 function reanaliseAte(k){
-  if(!indefDocumental(k) || k.decisao_em < PC54_DESDE || reanalisePedida(k)) return null;
+  if(!ehPrev(k) || !indefDocumental(k) || k.decisao_em < PC54_DESDE || reanalisePedida(k)) return null;
   if([k.ro_protocolado_em, k.re_protocolado_em].some(d=>d && d >= k.decisao_em)) return null;
   return contarPrazo(k.decisao_em, PRAZOS_CATALOGO.find(x=>x.id==="reanl"), k);
 }
@@ -42198,7 +42208,7 @@ async function tarefasDaDiligencia(casoId){
 // O mandado de segurança: 120 dias da ciência (Lei 12.016/2009, art. 23), contados da decisão, o dia mais cedo em que a
 // ciência pode ter ocorrido; enquanto cabe o recurso e nada decidiu pelo mandado de segurança
 function msAte(k){
-  if(!k || faseEfetiva(k)!=="inss" || !recorrerAte(k) || msDecidido(k)) return null;
+  if(!k || !ehPrev(k) || faseEfetiva(k)!=="inss" || !recorrerAte(k) || msDecidido(k)) return null;
   const d = somaDias(k.decisao_em, 120);
   return d && d>=hoje() ? d : null;
 }
@@ -43047,6 +43057,7 @@ const PRAZO_DA_ETAPA = {inss:{"em exigência":"exig", decidido:"crps"}, conselho
 const PRAZO_ETAPA_JEF = {ques:"quesj", ap:"ri"};
 const _pzEtapaFora = new Set();
 function prazoDaEtapa(k){
+  if(!ehPrev(k)) return null;
   const f = faseEfetiva(k), jef = (dadosJudiciais(k)||{}).rito==="JEF";
   let id = ((PRAZO_DA_ETAPA[f]||{})[k.etapa||""]) || "";
   if(!id || (id==="crps" && k.resultado==="deferido")) return null;
@@ -43919,7 +43930,7 @@ function lcVerificacao(k){
     <span class="lc-check ${k.checado_em?"ok":""}" title="${esc(tit)}">✓${k.checado_em?` ${fmtBarra(dataSP(k.checado_em))}`:""}</span></span>`;
 }
 function lcNumeros(k){
-  const nbs = nbsDoCaso(k), nups = crpsNups(k), procs = processosDoCaso(k);
+  const prev = ehPrev(k), nbs = prev ? nbsDoCaso(k) : [], nups = prev ? crpsNups(k) : [], procs = processosDoCaso(k);
   const par = trilhaParalela(k), j = dadosJudiciais(k);
   const linha = (rot, itens, add, tit) => `<div class="lc-linha"><span class="lc-k">${rot}</span>${itens.join("")}
     <button class="lc-add" onclick="${add}" title="${esc(tit)}" aria-label="${esc(tit)}">+</button></div>`;
@@ -43949,7 +43960,7 @@ function lcNumeros(k){
     ], `lcNovoProc('${k.id}')`, "acrescentar outro processo"));
   const outros = acessosDoCaso(k).outros;
   if(outros.length) partes.push(`<div class="lc-linha"><span class="lc-k">Acessos</span>${outros.join("")}</div>`);
-  const falta = [["NB","lcNovoNb",!nbs.length],["E-SisREC","lcNovoNup",!nups.length],["Judicial","lcNovoProc",!procs.length]].filter(x=>x[2]);
+  const falta = [["NB","lcNovoNb",prev && !nbs.length],["E-SisREC","lcNovoNup",prev && !nups.length],["Judicial","lcNovoProc",!procs.length]].filter(x=>x[2]);
   if(falta.length) partes.push(`<div class="lc-linha"><span class="lc-k">Incluir</span>${
     falta.map(([r,f])=>`<button class="btn-mini" onclick="${f}('${k.id}')">+ ${r}</button>`).join("")}</div>`);
   // F220 · com mais de um caso aberto, o número que está no caso errado vai ao certo daqui
@@ -44224,7 +44235,8 @@ function acessosDoCaso(k){
     if(l) jud = [a(l, "e-SAJ · 1º grau", "abrir a consulta do processo no e-SAJ")];
   }
   const fe = faseEfetiva(k);   // F236
-  const ordem = fe==="inss" ? [inss, conselho, jud]
+  const ordem = !ehPrev(k) ? [jud]     // F615 · fora da previdenciária não há Meu INSS, PAT nem e-SISREC
+    : fe==="inss" ? [inss, conselho, jud]
     : fe==="conselho" ? [conselho, inss, jud]
     : (fe==="judicial" || fe==="pagamento") ? [jud, conselho, inss] : [[], inss, conselho, jud];
   const [atual, ...resto] = ordem;
@@ -44260,8 +44272,58 @@ function lcLugar(k){
   // o caso da fase "outro" diz o lugar verdadeiro (F236) e a lista do To Do fica no title
   return LC_FASE[fe] ? [...LC_FASE[fe], dica] : [LC_FASE.escritorio[0], dica || NOME_FASE[fe] || fe || "Escritório", ""];
 }
+// F615 · o cartão do caso não previdenciário: processo, vara, partes e valor da causa. Vara, valor e
+// polos vêm do cabeçalho do PJe (casos.ronda.detalhes, F509) e de orgao_judicial; as partes à mão em ronda.partes
+function detalhesPje(k){
+  const dig = soDig(k.processo||""), ds = Object.entries((k.ronda||{}).detalhes||{});
+  return ((ds.find(([c])=>c.split("|")[0]===dig) || ds[0] || [])[1]) || {};
+}
+function lcGradeArea(k){
+  const d = detalhesPje(k), dv = rx => d[Object.keys(d).find(c=>rx.test(c))] || "";
+  const vara = orgaoJudCurto(dv(/^[óo]rg[ãa]o julgador/i) || k.orgao_judicial || "");
+  const polos = [dv(/^polo ativo/i), dv(/^polo passivo/i)].filter(Boolean).join(" × ");
+  const partes = (k.ronda||{}).partes || polos, valor = dv(/^valor da causa/i);
+  const f = (rot, v, cls="") => `<span class="lc-f${cls}"><span class="lc-k">${rot}</span>${v || `<span class="lc-vazio">não informado</span>`}</span>`;
+  return [f("Processo", k.processo ? lcCop(fmtProc(k.processo), "Número do processo") : ""),
+    f("Vara", vara ? esc(vara) : ""),
+    `<span class="lc-f lc-partes"><span class="lc-k">Partes</span>${partes ? `<b class="lc-manual">${esc(partes)}</b>` : `<span class="lc-vazio">não informadas</span>`}<button class="lapis" title="escrever as partes" onclick="editarPartes('${k.id}')">✎</button></span>`,
+    f("Valor da causa", valor ? esc(valor) : "")].join("");
+}
+async function gravarRonda(k, ronda, msg){
+  const antes = k.ronda || null;
+  try{ await patchCaso(k.id, {ronda}); }catch(e){ return aviso("Não gravou — tente de novo"); }
+  k.ronda = ronda; fecharCaixa(); repintarSusp();
+  avisoDesfazer(msg, async ()=>{ k.ronda = antes; await patchCaso(k.id, {ronda:antes}).catch(()=>{}); aviso("Desfeito"); repintarSusp(); });
+}
+function editarPartes(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  caixa(`<h3 style="margin:0 0 8px">Partes do processo</h3>
+    <input id="lc-partes-in" maxlength="300" style="width:100%" placeholder="Autor × Réu" value="${esc((k.ronda||{}).partes||"")}">
+    <div class="form-linha" style="margin-top:10px"><button class="btn-rap" style="margin-left:auto" onclick="gravarPartes('${casoId}')" title="Gravar as partes">Gravar<span class="sr-only"> as partes</span></button></div>`);
+  setTimeout(()=>{ const i = document.getElementById("lc-partes-in"); if(i) i.focus(); }, 30);
+}
+function gravarPartes(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const v = ((document.getElementById("lc-partes-in")||{}).value||"").trim(), ronda = {...(k.ronda||{})};
+  if(v) ronda.partes = v; else delete ronda.partes;
+  return gravarRonda(k, ronda, "Partes gravadas");
+}
+function escolherArea(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  caixa(`<h3 style="margin:0 0 4px">Matéria do caso <small class="meio-sub">· ${esc(tituloProprio(k) || tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 8px">Fora da previdenciária o caso fica só com as anotações e os prazos anotados à mão: sem DER, NB, espécie, Meu INSS, CRPS, Resumo do caso nem etapas do INSS.</p>
+    <div class="form-linha" style="flex-wrap:wrap;gap:6px">${Object.entries(AREAS).map(([a, r])=>
+      `<button class="btn-mini${areaDe(k)===a?" on":""}" data-area="${a}" onclick="gravarArea('${casoId}','${a}')" aria-pressed="${areaDe(k)===a}">${esc(r)}</button>`).join("")}</div>`);
+}
+async function gravarArea(casoId, area){
+  const k = D.casoPorId.get(casoId); if(!k || !AREAS[area]) return;
+  const antes = areaDe(k); if(antes===area){ fecharCaixa(); return; }
+  try{ await patchCaso(casoId, {area}); }catch(e){ return aviso("Não gravou — tente de novo"); }
+  k.area = area; fecharCaixa(); repintarSusp();
+  avisoDesfazer(`Matéria: ${AREAS[area]}`, async ()=>{ k.area = antes; await patchCaso(casoId, {area:antes}).catch(()=>{}); aviso("Desfeito"); repintarSusp(); });
+}
 function linhaCaso(k){
-  const n = lcNivel(k.id);
+  const n = lcNivel(k.id), prev = ehPrev(k);
   const [cor, lugar, dica] = lcLugar(k);
   const pr = /^(inss|conselho)$/.test(faseEfetiva(k)) ? (k.protocolos||[]).map(String).filter(Boolean)[0] : "";
   const chips = [
@@ -44273,15 +44335,19 @@ function linhaCaso(k){
   return `<section class="linha-caso lc5" data-n="${n}" aria-label="O caso" style="--lc-cor:${cor}">
     <div class="lc-topo">
       <div class="lc5-cab">
-        <div class="lc-sobre-l">${k.especie ? `<span class="lc-sobre lc5-esp" title="espécie do INSS">${esc(k.especie)}</span>` : `<span class="lc-sobre lc5-esp lc5-esp-vazia" title="espécie não definida">?</span>`}
-        <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button></div>
+        ${!prev ? `<div class="lc-sobre-l"><span class="lc-sobre lc5-esp lc5-area" title="matéria do caso">${esc(AREAS[areaDe(k)])}</span>
+        <button class="lapis" title="trocar a matéria deste caso" aria-label="trocar a matéria deste caso" onclick="escolherArea('${k.id}')">✎</button></div>`
+        : areaAEscolher(k) ? `<div class="lc-sobre-l"><button type="button" class="lc-sobre lc5-esp lc5-area-esc" onclick="escolherArea('${k.id}')" title="caso da lista do Dr. Marcos sem espécie: escolher a matéria">Matéria?<span class="sr-only"> escolher a matéria do caso</span></button></div>`
+        : `<div class="lc-sobre-l">${k.especie ? `<span class="lc-sobre lc5-esp" title="espécie do INSS">${esc(k.especie)}</span>` : `<span class="lc-sobre lc5-esp lc5-esp-vazia" title="espécie não definida">?</span>`}
+        <button class="lapis" title="trocar a espécie ou o pedido deste caso" aria-label="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button></div>`}
         <div class="lc-cab"><b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
-          (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b></div>
+          !prev ? esc(tituloProprio(k) || `Caso ${AREAS[areaDe(k)].toLowerCase()}`) : (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b></div>
         <span class="lc5-lugar" title="${esc(dica ? `lista: ${dica}` : "onde o caso está agora")}">${esc(lugar)}</span>
         ${menuMais([
           `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
           k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="tl-mais-it desp-bt" role="menuitem" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila e tirar do Meu Dia; se quiser, passar a outra pessoa">✔ Concluir<span class="sr-only"> por hoje</span></button>` : "",
           k.fase!=="encerrado" && !ehPreCaso(k) && !suspensaoDe(k) ? `<button class="tl-mais-it lc-suspender" role="menuitem" onclick="suspenderCaso('${k.id}')" title="marcar o caso como suspenso por tema do STF, do STJ, da TNU ou do TRF3">⏸ Suspender<span class="sr-only"> por tema</span></button>` : "",
+          `<button class="tl-mais-it lc-area" role="menuitem" onclick="escolherArea('${k.id}')" title="trocar a matéria do caso (previdenciária, cível, trabalhista, família, criminal, tributária)">Matéria<span class="sr-only"> do caso</span></button>`,
           `<button class="tl-mais-it lc-seguir" role="menuitem" onclick="seguirCaso('${k.id}')" title="${sigoCaso(k.id) ? "deixar de receber as anotações e os movimentos deste caso nas Menções" : "receber nas Menções cada anotação e cada movimento oficial deste caso, sem ser responsável"}">${sigoCaso(k.id) ? `Seguindo<span class="sr-only">: deixar de seguir</span>` : `Seguir<span class="sr-only"> o caso</span>`}</button>`,
           `<button class="tl-mais-it lc-apagadas" role="menuitem" onclick="verApagadas('${k.id}')" title="ver as anotações e os prazos apagados deste caso, com quem apagou e quando">Apagadas<span class="sr-only"> anotações</span></button>`,
           k.fixo && k.fixo.texto ? "" : `<button class="tl-mais-it fixar-caso" role="menuitem" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário que aparece em destaque ao abrir o caso">${ICO_PIN} Fixar<span class="sr-only"> comentário</span></button>`,
@@ -44290,7 +44356,7 @@ function linhaCaso(k){
       ${chips ? `<div class="lc5-chips">${chips}</div>` : ""}
       ${/* F504 · a grade de detalhes: datas na fonte do CRM, NB e protocolo na fonte de código; o toque no número copia */""}
       <div class="lc-placa lc5-grade">
-      ${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
+      ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
         : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
@@ -44298,7 +44364,7 @@ function linhaCaso(k){
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
       ${filaTrf3(k)}
       ${recursoParado(k)}
-      ${avisoQuadro(k)}
+      ${avisoQuadro(k)}`}
       </div>
       <button type="button" class="lc-mais lc-mais-pe lc-dobra" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
         title="${n?"fechar":"tramitação, etapa, números do caso (NB, e-Sisrec, processo judicial) e a gestão do caso"}"><span>Números do caso e gestão</span>${setaAlca(!n)}</button>
@@ -44408,6 +44474,7 @@ const lerEtapaTrilha = x => { const ex = x.startsWith("#"); x = ex ? x.slice(1) 
 const FASE_TRILHA = {escritorio:"escritorio", peticao_inicial:"escritorio", aposentadoria_futura:"escritorio",
   inss:"inss", conselho:"conselho", judicial:"judicial", pagamento:"judicial"};
 function faseDaTrilha(k){
+  if(!ehPrev(k)) return null;      // F615 · o caso não previdenciário não tem trilha de etapas
   // F189 · lista sem processo previdenciário (tarefas pessoais) não tem trilha,
   // nem Pagamentos sem processo: a trilha inventada ali só confundia
   const temPrev = k.processo || (k.protocolos||[]).length || k.especie || k.beneficio;
