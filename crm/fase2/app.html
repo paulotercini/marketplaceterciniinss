@@ -2976,6 +2976,11 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .pc-cab span{font-size:12px;opacity:.9}
 .pc-corpo{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 12px;font-size:13px}
 .pc-arq{opacity:.6}
+.pc-mover{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.pc-est{font-size:12px;padding:3px 8px;border-radius:6px;border:1px solid var(--borda,#ccc)}
+.pc-est.on{background:var(--acc,#2f6b4f);color:#fff;border-color:transparent;font-weight:600}
+#ctb-l li{display:flex;align-items:center;gap:8px}#ctb-l li .cli-todos-it{flex:1;min-width:0}
+.ctb-px{font-size:12px;color:var(--suave,#666);white-space:nowrap}.ctb-px.venc{color:#b42318;font-weight:600}
 .pc-sub{margin:8px 0 0;font-size:13px;color:var(--suave,#6b6b6b)}
 .pc-vazio{color:var(--suave,#6b6b6b);font-size:13px}
 .mt.mt-novopc{color:var(--acento,#0E5C58)}
@@ -7108,7 +7113,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 13.96</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 13.97</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9599,14 +9604,16 @@ function montarSidebar(){
         `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
       + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f,"🙏 Aposentadorias futuras"])[1];
           const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
-          return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`; }).join("");
+          return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`
+            + (f==="aposentadoria_futura" ? itemContrib(rotu) : ""); }).join("");
     document.getElementById("grupo-visoes").innerHTML = "";
     document.getElementById("grupo-visoes").parentElement.style.display = "none";
   } else {
   document.getElementById("grupo-visoes").parentElement.style.display = "";
   document.getElementById("grupo-fases").innerHTML = ordemDasFases().filter(([f])=>f!=="prazo").map(([f,rot])=>{   // F378 · Tarefas com Prazo é aba do Planejado
     const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
-    return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
+    return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`
+      + (f==="aposentadoria_futura" ? itemContrib(rotu) : "");
   }).join("")
   // F68 · os casos de acompanhamento MANUAL têm a lista própria de checagem
   + (m=>`<div class="lista-item" role="button" tabindex="0" data-v="checagem" aria-label="Checagem manual">${
@@ -9660,7 +9667,7 @@ function montarSidebar(){
     const rotV = {};   // F236 · os nomes das listas são os mesmos para todos (os da barra do colaborador)
     const nFase = f => f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);   // F218
     document.getElementById("grupo-fases").innerHTML = ordemDasFases().filter(([f])=>visiveis.includes(f))
-      .map(([f,rot])=>item("fase:"+f, rotV[f]||rot, nFase(f))).join("");
+      .map(([f,rot])=>item("fase:"+f, rotV[f]||rot, nFase(f)) + (f==="aposentadoria_futura" ? itemContrib(rotu) : "")).join("");   // F602
     // o que já estava montado em Visões vai inteiro para o "Mais", menos as duas da vista
     const vis = document.getElementById("grupo-visoes");
     const tmp = document.createElement("div"); tmp.innerHTML = vis.innerHTML;
@@ -12465,6 +12472,7 @@ function renderBase(){
   if(visao==="agenda") return renderAgenda();
   if(visao==="clientes") return renderClientesTodos();   // F250
   if(visao==="contatos") return renderContatos();   // F586
+  if(visao==="contribuicoes") return renderContribuicoes();   // F602
   if(visao==="calendario") return renderCalendario();
   if(visao==="particulares") return renderParticulares();
   if(visao==="meudia") return renderMeuDia();
@@ -14468,7 +14476,7 @@ const LISTAS_COLAB = ["meudia","mencoes","whatsapp","calendario","planejado","pe
 // futuras, a Análise de Direito e as perícias; a recepção vê o que atende
 // (cadastro, Escritório, agenda, perícias), sem as listas de processo
 const LISTAS_POR_CARGO = {
-  advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "direito", "agenda"],
+  advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "contribuicoes", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente","contatos"],
 };
 const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
@@ -15074,7 +15082,7 @@ function renderAcervo(){
   document.getElementById("sub-lista").textContent =
     "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
   const corpo = blocoSuspensos() + blocoRotinas() + blocoCrpsManual() + blocoCadunico()
-    + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoQuadrosLote() + blocoEtapasLote() + blocoSemCpf();
+    + blocoPrecasoPares() + blocoMovimentosTodo() + blocoPrecasoLote() + blocoCardsPagamento() + blocoDocsSemData() + blocoCardsRever() + blocoRevisao() + blocoSemAcao() + blocoSemEndereco() + blocoVariosCasos() + blocoQuadrosLote() + blocoEtapasLote() + blocoSemCpf();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -21533,6 +21541,34 @@ function pintarContatos(){
     || `<li class="meio-sub">${todos.length ? "Nenhum contato com esse filtro." : "Nenhum contato ainda. Use ＋ Contato."}</li>`;
   l.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
 }
+// F602 · 💰 Contribuições: quem paga o INSS por plano (qualidade_planos). No To Do continua em 🙏 Aposentadorias Futuras.
+function clientesContrib(){
+  const por = new Map();
+  (D.qualidade||[]).filter(q=>q.ativo!==false).forEach(q=>{ const px = qualidadeProximos(q, 1)[0] || "";
+    const a = por.get(q.cliente_id); if(!a || (px && (!a.px || px < a.px))) por.set(q.cliente_id, {q, px}); });
+  return [...por.entries()].map(([id, v])=>({c: (D.clientes||[]).find(c=>c.id===id), ...v})).filter(x=>x.c)
+    .sort((a, b)=>(a.px||"9999").localeCompare(b.px||"9999") || dsa(a.c.nome).localeCompare(dsa(b.c.nome)));
+}
+function itemContrib(rotu){
+  if(visaoColab() && !listasDoColab().includes("contribuicoes")) return "";
+  const n = clientesContrib().length;
+  return `<div class="lista-item" role="button" tabindex="0" data-v="contribuicoes" aria-label="Contribuições">${rotu("💰 Contribuições")}${n?`<span class="cont">${n}</span>`:""}</div>`;
+}
+function renderContribuicoes(){
+  tituloLista(temaV10() ? "Contribuições" : "💰 Contribuições");
+  document.getElementById("sub-lista").textContent = "Quem paga o INSS por plano. No Microsoft To Do, continuam em Aposentadorias Futuras.";
+  const meio = document.getElementById("conteudo-meio");
+  if(D.qualidade===null){ meio.innerHTML = `<p class="meio-sub">A tabela dos planos não existe no banco: rode crm/fase2/schema_qualidade.sql.</p>`; return; }
+  const l = clientesContrib(), h = hoje();
+  meio.innerHTML = `<div class="cli-todos"><ul class="cli-todos-l" id="ctb-l">${l.map(({c, q, px})=>
+    `<li><button type="button" class="cli-todos-it" data-cli="${c.id}"><span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>
+      <span class="cli-todos-tx"><b>${esc(c.nome)}</b><span>${esc([qualFim(q), qualGuia(q), qualValor(q.valor)].filter(Boolean).join(" · "))}</span></span>
+      <span class="ctb-px${px && px<=h ? " venc" : ""}">${px ? `pagar até ${fmtBarra(px)}` : "sem pagamento por vir"}</span></button>
+      <button type="button" class="cad-mini" data-plano="${c.id}" title="ver o plano de pagamento">Plano</button></li>`).join("")
+    || `<li class="meio-sub">Nenhum cliente com plano de pagamento ativo.</li>`}</ul></div>`;
+  meio.querySelectorAll("[data-cli]").forEach(b=>b.onclick=()=>abrirFicha(b.dataset.cli));
+  meio.querySelectorAll("[data-plano]").forEach(b=>b.onclick=()=>verQualidade(b.dataset.plano));
+}
 function pintarClientesTodos(){
   const q = dsa(_cliFiltro).replace(/\s+/g," ").trim(), dig = _cliFiltro.replace(/\D/g,""), partes = q.split(" ").filter(Boolean);
   const todos = (D.clientes||[]).filter(c=>c.nome && ehClienteDaLista(c)).slice().sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));   // F254
@@ -23783,6 +23819,7 @@ function pintarFicha(){
   if(btnProc) btnProc.onclick=ev=>menuProcessos(ev, ksR);
   document.querySelectorAll("#btn-novo-pc,[data-pc-novo]").forEach(b=>b.onclick=()=>novoAtendimento(cliId));
   document.querySelectorAll("[data-pc-abrir]").forEach(b=>b.onclick=()=>abrirAtendimentoDe(cliId, b.dataset.pcAbrir));
+  document.querySelectorAll("[data-pc-mover]").forEach(b=>b.onclick=()=>{ const [id, e] = b.dataset.pcMover.split("|"); moverPreCaso(cliId, id, e); });
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
@@ -28992,6 +29029,54 @@ function cardsARever(){
     const motivo = !px && !dd ? "sem data" : px && px<hj && !(dd && dd.data<=hj) ? "vencido" : "";
     return {l, cli:D.cliPorId.get(l.cliente_id), dd, px, motivo};
   }).filter(x=>x.cli && x.motivo).sort((a, b)=>(a.px||"") < (b.px||"") ? -1 : 1);
+}
+// F602 · o 🧹 Cuidar do acervo diz o que a ponte do pré-caso fez e o que pede o Paulo
+function cfgJson(chave){ try{ return JSON.parse(cfgApp(chave)||"null"); }catch(e){ return null; } }
+function blocoMovimentosTodo(){
+  const xs = (cfgJson("todo_movimentos")||[]).slice(0, 40); if(!xs.length) return "";
+  const falhas = xs.filter(m=>m.ok===false).length;
+  return `<details class="sem-acao neutro" id="acervo-movtodo"><summary>Pré-casos levados ao To Do (${xs.length})${falhas ? ` · ${falhas} com falha` : ""}</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">O que o CRM moveu no Microsoft To Do, o mais recente primeiro. A falha não se repete sozinha: confira a tarefa no To Do.</p>
+    ${xs.map(m=>{ const cli = D.cliPorId.get(m.cliente_id);
+      return `<div class="semcpf-it movtodo${m.ok===false ? " falha" : ""}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${m.cliente_id}')">${esc(cli ? cli.nome : "Cliente")}</b>
+        <span class="meio-sub"${m.ok===false ? ' style="color:#b42318;font-weight:600"' : ""}>${esc(m.de||"")} → ${esc(m.para==="concluir" ? "Arquivo (concluída)" : m.para||"")} · ${fmt(String(m.em||"").slice(0,10))}${m.ok===false ? ` · falhou (${esc(m.erro||"erro")})` : ""}</span></div>`; }).join("")}
+  </details>`;
+}
+function blocoPrecasoPares(){
+  const cfg = cfgJson("precaso_pares")||{}, esc0 = cfg.escolhas||{};
+  const xs = (cfg.pares||[]).filter(p=>!esc0[p.nova]); if(!xs.length) return "";
+  return `<details class="sem-acao" id="acervo-pcpares" open><summary>Pré-casos a identificar (${xs.length}) · Precisa de você</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">A tarefa do To Do pode ser de mais de um pré-caso do mesmo cliente. Escolha qual é; ela só entra no CRM depois da escolha, na próxima sincronização.</p>
+    ${xs.map(p=>{ const cli = D.cliPorId.get(p.cliente_id);
+      return `<div class="semcpf-it pcpar" data-nova="${esc(p.nova)}"><b class="semcpf-nome" style="cursor:pointer" onclick="abrirFicha('${p.cliente_id}')">${esc(cli ? cli.nome : (p.titulo||"Cliente"))}</b>
+        <span class="meio-sub">${esc(p.lista||"")}</span>
+        <span>${(p.candidatos||[]).map(id=>{ const k = D.casoPorId && D.casoPorId.get(id);
+          return `<button class="btn-mini" data-par="${id}" onclick="escolherPar('${esc(p.nova)}','${id}')">${esc(k ? (k.beneficio||"sem espécie") : "pré-caso")}</button>`; }).join(" ")}
+        <button class="btn-mini" data-par="novo" onclick="escolherPar('${esc(p.nova)}','novo')">Novo</button></span></div>`; }).join("")}
+  </details>`;
+}
+async function escolherPar(nova, alvo){
+  const cfg = cfgJson("precaso_pares")||{};
+  cfg.escolhas = Object.assign({}, cfg.escolhas, {[nova]: alvo});
+  try{ await guardarCfgApp("precaso_pares", JSON.stringify(cfg)); }catch(e){ return aviso("Não gravei a escolha"); }
+  aviso(alvo==="novo" ? "Será um pré-caso novo, na próxima sincronização" : "Escolha gravada; a tarefa entra na próxima sincronização");
+  render();
+}
+function blocoPrecasoLote(){
+  const l = cfgJson("precaso_lote"); if(!l || !(l.ids||[]).length) return "";
+  const n = l.ids.length;
+  return `<details class="sem-acao neutro" id="acervo-pclote"${l.desfeito ? "" : " open"}><summary>Pré-casos do To Do (${n}) · ${fmt(String(l.em||"").slice(0,10))}</summary>
+    <p class="meio-sub" style="margin:8px 0 4px">${n} tarefa(s) do 🙋 Escritório viraram pré-casos Ativos na primeira sincronização.
+    ${l.apagados ? "O lote foi desfeito: as anotações voltaram ao cadastro." : l.desfeito ? "Desfeito: as linhas saem na próxima sincronização." : "O Desfazer tira os pré-casos e devolve as anotações ao cadastro."}</p>
+    ${l.desfeito ? "" : `<button class="btn-mini" id="pclote-desfazer" onclick="desfazerLotePrecaso()">Desfazer</button>`}
+  </details>`;
+}
+async function desfazerLotePrecaso(){
+  const l = cfgJson("precaso_lote"); if(!l || l.desfeito) return;
+  if(!confirm(`Desfazer os ${(l.ids||[]).length} pré-casos do To Do? As anotações voltam ao cadastro na próxima sincronização.`)) return;
+  l.desfeito = true; l.desfeito_por = eu.id; l.desfeito_em = new Date().toISOString();
+  try{ await guardarCfgApp("precaso_lote", JSON.stringify(l)); }catch(e){ return aviso("Não gravei o Desfazer"); }
+  aviso("Lote desfeito; os pré-casos saem na próxima sincronização"); render();
 }
 function blocoCardsRever(){
   const xs = cardsARever(); if(!xs.length) return "";
@@ -57127,24 +57212,40 @@ function precasosDe(c){
   return pcs;
 }
 // F601 · os pré-casos da ficha: vivos (sem o "legado" da espécie única) e arquivados
+// F602 · o arquivado também é a linha de casos encerrada com precaso.arquivo (pelo CRM ou concluída no To Do)
 function pcDaFicha(c){
-  const vivos = precasosDe(c).filter(p=>p.id!=="legado");
-  const arq = ((c.campos||{}).pc_arquivados||[]).filter(p=>!vivos.some(v=>v.id===p.id));
+  const vivos = precasosDe(c).filter(p=>p.id!=="legado" && !p.arquivo);
+  const linhasArq = (D.casosDoCliente.get(c.id)||[]).filter(k=>k.pre_caso && k.fase==="encerrado" && (k.precaso||{}).arquivo)
+    .map(k=>{ const p = k.precaso||{}, a = p.arquivo||{};
+      return {...p, id:p.id||k.id, especie:k.beneficio||"", caso_id:k.id,
+        desfecho:{motivo:a.motivo || (a.origem==="todo" ? "concluída no To Do" : ""), em:a.em}}; });
+  const ids = new Set([...vivos, ...linhasArq].map(p=>p.id));
+  const arq = [...linhasArq, ...((c.campos||{}).pc_arquivados||[]).filter(p=>!ids.has(p.id))];
   return {lista:vivos, arq, vivos:vivos.filter(p=>!p.so_lembrete).length, n:vivos.length+arq.length};
 }
+const PC_ESTADOS = [["ativo","Ativo"],["futuro","Futuro"],["arquivo","Arquivo"],["caso","Gerar caso"]];
+function estadoPc(p, fora){ return fora ? "arquivo" : p.so_lembrete ? "futuro" : "ativo"; }
 function painelPreCasos(c){
   const z = pcDaFicha(c), cor = (LC_FASE.escritorio||["#0E5C58"])[0];
   const nome = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
+  const botoes = (p, fora) => {
+    if(!p.caso_id || !D.casoPorId.get(p.caso_id) || !podeAtender()) return "";
+    const at = estadoPc(p, fora);
+    return `<div class="pc-mover" role="group" aria-label="Mover este pré-caso">${PC_ESTADOS.map(([e,r])=>
+      e===at ? `<span class="pc-est on" aria-current="true">${r}</span>`
+      : (fora && e==="caso") ? "" : `<button class="btn-mini" data-pc-mover="${esc(p.caso_id)}|${e}">${r}</button>`).join("")}</div>`;
+  };
   const cartao = (p, fora) => {
     const k = p.caso_id && D.casoPorId.get(p.caso_id);
     const passo = fora ? "" : (p.so_lembrete ? "Em Aposentadorias futuras" : (k ? passoDoPreCaso(k) : "Identificação"));
     const d = p.desfecho||{};
     return `<div class="pc-cartao${fora?" pc-arq":""}" style="--pc-cor:${fora?"#8A8F98":cor}">
-      <div class="pc-cab"><b>${nome(p.especie)}</b><span>${fora?"Arquivado":"Escritório · pré-caso"}</span></div>
+      <div class="pc-cab"><b>${nome(p.especie)}</b><span>${fora?"Arquivado":p.so_lembrete?"Futuro · Aposentadorias futuras":"Ativo · Escritório"}</span></div>
       <div class="pc-corpo">${fora
         ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
-        : `<div>Passo: <b>${esc(passo)}</b>${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
-           ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}</div>
+        : `<div>Passo: <b>${esc(passo)}</b>${p.data_direito?` · direito provável em ${fmt(p.data_direito)}`:""}${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
+           ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}
+        ${botoes(p, fora)}</div>
     </div>`;
   };
   return `<div class="pc-painel">
@@ -57153,6 +57254,66 @@ function painelPreCasos(c){
     ${z.arq.length?`<h4 class="pc-sub">Arquivados</h4>${z.arq.map(p=>cartao(p,true)).join("")}`:""}
     ${z.n?"":`<p class="pc-vazio">Nenhum pré-caso.</p>`}
   </div>`;
+}
+// F602 · Ativo, Futuro, Arquivo e Gerar caso: grava a linha na hora (com desfazer) e põe mover_para, que a
+// ponte_precaso.py leva ao Microsoft To Do (cria na lista nova, conclui ou reabre) e menciona o Paulo
+const PC_MOVER_PARA = {ativo:"🙋 Escritório", futuro:"🙏 Aposentadorias Futuras", arquivo:"concluir"};
+function pedirPc(titulo, corpo, ok){
+  return new Promise(res=>{
+    caixa(`<div class="adr-modal" role="dialog" aria-label="${esc(titulo)}"><h3>${esc(titulo)}</h3>${corpo}
+      <div class="adr-modal-bts"><button class="adr-bt" id="pcm-nao">Cancelar</button><button class="adr-bt adr-primario" id="pcm-ok">${esc(ok)}</button></div></div>`);
+    const fim = v => { fecharCaixa(); res(v); };
+    document.getElementById("pcm-nao").onclick = ()=>fim(null);
+    document.getElementById("pcm-ok").onclick = ()=>{
+      const vals = {}; document.querySelectorAll("[data-pcm]").forEach(i=>vals[i.dataset.pcm] = i.value.trim());
+      const falta = [...document.querySelectorAll("[data-pcm][required]")].find(i=>!i.value.trim());
+      if(falta){ falta.focus(); return aviso("Preencha o campo pedido"); }
+      fim(vals);
+    };
+  });
+}
+async function moverPreCaso(cliId, casoId, estado){
+  const k = D.casoPorId.get(casoId); if(!k || !podeAtender()) return;
+  const antes = {fase:k.fase, pre_caso:k.pre_caso, precaso:k.precaso||{}, mover_para:k.mover_para||null, encerrado_em:k.encerrado_em||null};
+  const p = {...antes.precaso}, sem = o => { const n = {...o}; delete n.so_lembrete; delete n.lembrete_id; delete n.arquivo; return n; };
+  const voltar = async () => { await patchCaso(casoId, antes); Object.assign(k, antes); montarSidebar(); render(); abrirFicha(cliId); };
+  let muda, msg;
+  if(estado==="ativo"){
+    muda = {fase:"escritorio", pre_caso:true, encerrado_em:null, precaso:sem(p), mover_para:PC_MOVER_PARA.ativo};
+    msg = "Pré-caso em Ativo (🙋 Escritório)";
+  } else if(estado==="futuro"){
+    const v = await pedirPc("Mover para Futuro", `<label>Data provável do direito <input type="date" data-pcm="data" value="${esc(p.data_direito||"")}" required></label>`, "Mover");
+    if(!v) return;
+    muda = {fase:"encerrado", pre_caso:true, encerrado_em:antes.encerrado_em||new Date().toISOString(),
+      precaso:{...sem(p), so_lembrete:true, lembrete_id:p.lembrete_id||null, data_direito:v.data}, mover_para:PC_MOVER_PARA.futuro};
+    if(!muda.precaso.lembrete_id) delete muda.precaso.lembrete_id;
+    if(p.lembrete_id) cardGravar(p.lembrete_id, cc=>{ cc.data_direito = v.data; cc.data_fonte = "informada no CRM"; });
+    msg = "Pré-caso em Futuro (🙏 Aposentadorias Futuras)";
+  } else if(estado==="arquivo"){
+    const v = await pedirPc("Arquivar o pré-caso", `<label>Motivo <input type="text" data-pcm="motivo" required placeholder="por que não segue"></label>`, "Arquivar");
+    if(!v) return;
+    muda = {fase:"encerrado", pre_caso:true, encerrado_em:new Date().toISOString(),
+      precaso:{...sem(p), arquivo:{em:hoje(), origem:"crm", motivo:v.motivo}}, mover_para:PC_MOVER_PARA.arquivo};
+    msg = "Pré-caso arquivado (concluído no To Do)";
+  } else if(estado==="caso"){
+    const v = await pedirPc("Gerar o caso", `<label>Início <select data-pcm="inicio">${Object.keys(INICIO_FASE).map(x=>
+        `<option value="${x}">${{inss:"INSS",conselho:"Conselho de Recursos",judicial:"Judicial"}[x]}</option>`).join("")}</select></label>
+      <label>Número <input type="text" data-pcm="numero" placeholder="${esc(ROT_NUM_INICIO.inss)}"></label>`, "Gerar");
+    if(!v) return;
+    if(p.so_lembrete || p.arquivo || k.fase!=="escritorio"){
+      const ativo = {fase:"escritorio", pre_caso:true, encerrado_em:null, precaso:sem(p)};
+      await patchCaso(casoId, ativo); Object.assign(k, ativo);
+    }
+    const pcId = (k.precaso||{}).id || k.id;
+    await mudarPreCasoCampos(cliId, pcId, x=>{ x.inicio = v.inicio; x.numero = v.numero; x.via = v.inicio==="judicial" ? "jud" : "adm"; });
+    await gerarCasoDoPre(cliId, pcId);
+    if(k.pre_caso) return;   // o gerarCasoDoPre recusou (espécie ou via a definir) e já avisou
+    avisoDesfazer("Caso gerado do pré-caso", voltar, 30000);
+    return;
+  } else return;
+  await patchCaso(casoId, muda); Object.assign(k, muda);
+  avisoDesfazer(msg, voltar, 30000);
+  montarSidebar(); render(); abrirFicha(cliId);
 }
 async function gravarPrecasos(cliId, pcs){
   const c = D.cliPorId.get(cliId); if(!c) return false;
@@ -57507,7 +57668,7 @@ async function gerarCasoDoPre(cliId, pcId){
   const {caso_id:_c, especie:_e, ...resto} = pc;
   const viraCaso = corpo => ({...corpo, pre_caso:false, precaso:{...resto, desfecho:{tipo:"caso", em:hoje(), quem:eu.id, via:pc.via||null, ...desf}},
     // a linha que veio do To Do não volta ao Escritório na sincronização seguinte (respeitar_movidos)
-    ...(linha && linha.todo_task_id ? {mover_para:corpo.origem_lista} : {})});
+    ...(linha ? {mover_para:corpo.origem_lista} : {})});
   const criar = async corpo => linha
     ? (await api(`/rest/v1/casos?id=eq.${linha.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
         body:JSON.stringify(viraCaso(corpo))}), [Object.assign(linha, viraCaso(corpo))])

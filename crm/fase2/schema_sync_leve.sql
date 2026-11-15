@@ -16,7 +16,8 @@ returns jsonb language sql stable set search_path = '' as $$
   vivas as (select distinct unnest(vivos) as t),
   pedidas as (select t from vivas union select unnest(consultar)),
   semnum as (select distinct unnest(sem_numero) as t),
-  k as (select c.id, c.todo_task_id, c.cliente_id, c.titulo, c.fase, c.processo, c.nb
+  k as (select c.id, c.todo_task_id, c.cliente_id, c.titulo, c.fase, c.processo, c.nb,
+                 c.beneficio, c.pre_caso, c.origem_lista, c.precaso, c.mover_para
           from public.casos c where c.todo_task_id is not null)
   select jsonb_build_object(
     -- clientes cujo id não é o determinístico (cadastrados no CRM)
@@ -34,7 +35,9 @@ returns jsonb language sql stable set search_path = '' as $$
     -- casos abertos cuja tarefa não veio na leitura (mudou de lista ou sumiu)
     'orfaos', coalesce((select jsonb_agg(jsonb_build_object('id', k.id, 'todo_task_id', k.todo_task_id,
          'cliente_id', k.cliente_id, 'titulo', k.titulo, 'fase', k.fase,
-         'processo', k.processo, 'nb', k.nb))
+         'processo', k.processo, 'nb', k.nb, 'beneficio', k.beneficio,
+         'pre_caso', k.pre_caso, 'origem_lista', k.origem_lista, 'precaso', k.precaso,
+         'mover_para', k.mover_para))
        from k where k.fase is distinct from 'encerrado'
         and not exists (select 1 from vivas v where v.t = k.todo_task_id)), '[]'::jsonb),
     -- processo/NB guardados no banco para as tarefas que chegaram sem eles
