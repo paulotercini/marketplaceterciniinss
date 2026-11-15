@@ -404,6 +404,8 @@ def mapear(dados, cpf_por_nome=None):
             "importante": t["importante"], "origem_lista": lista,
             "todo_importante": t["importante"],   # F373 · a ⭐ do To Do na última rodada (manter_dados_do_banco)
             "todo_task_id": t["id"],
+            # F602 · tarefa do 🙋 Escritório é pré-caso (Ativo; concluída, Arquivo)
+            "pre_caso": lista == "🙋 Escritório",
             "encerrado_em": t["concluida_em"] and t["concluida_em"] + "T12:00:00" + TZ,
         }
 
@@ -574,11 +576,12 @@ def remapear_casos(mapa, task_para_id_existente):
     return len(troca)
 
 
+APOS_LISTAS = ("🙏 Aposentadorias Futuras", "Aposentadorias Futuras")
 LIMITE_FAXINA = 300     # fantasmas encerrados por rodada, para a mudança ser vista
 LIMITE_RECUSADAS = 25   # acima disso a rodada falha: não é caso isolado, é pane
 
 
-def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None):
+def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None, pares=None, escolhas=None):
     """Acerta o que a MUDANÇA DE LISTA no To Do quebra.
 
     Mover a tarefa de lista faz a Microsoft apagar e recriar a tarefa com id
@@ -611,16 +614,77 @@ def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None):
         por_chave.setdefault((c.get("cliente_id"), sem_cpf(c.get("titulo"))), []).append(c)
 
     troca, adotados = {}, 0
-    for k in mapa.get("casos") or []:
-        if k.get("todo_task_id") in ja_no_banco:
-            continue                      # já existe: o remapeamento por id cuidou
-        fila = por_chave.get((k.get("cliente_id"), sem_cpf(k.get("titulo"))))
-        if not fila:
-            continue
-        velho = fila.pop()                # um caso velho serve a um caso novo só
+    usados = set()
+    escolhas = escolhas or {}
+    por_id = {c["id"]: c for c in orfaos}
+
+    def adotar(k, velho):
+        nonlocal adotados
+        for fila in por_chave.values():
+            if velho in fila:
+                fila.remove(velho)
+        usados.add(velho["id"])
         troca[k["id"]] = velho["id"]
         k["id"] = velho["id"]
         adotados += 1
+
+    def com_escritorio(k, cands):
+        return k.get("origem_lista") == "🙋 Escritório" or any(
+            c.get("pre_caso") or c.get("origem_lista") == "🙋 Escritório" for c in cands)
+
+    def pelo_beneficio(k, cands):
+        b = (k.get("beneficio") or "").strip()
+        iguais = [c for c in cands if b and (c.get("beneficio") or "").strip() == b]
+        return iguais[0] if len(iguais) == 1 else None
+
+    novos = [k for k in mapa.get("casos") or [] if k.get("todo_task_id") not in ja_no_banco]
+    segurar = set()
+    for k in novos:
+        # F602 · a escolha feita no 🧹 Cuidar do acervo vence
+        esc = escolhas.get(k.get("todo_task_id"))
+        if esc and esc in por_id and esc not in usados:
+            adotar(k, por_id[esc])
+            continue
+        if esc == "novo":
+            continue
+        fila = por_chave.get((k.get("cliente_id"), sem_cpf(k.get("titulo"))))
+        if not fila:
+            continue
+        if len(fila) > 1 and com_escritorio(k, fila):
+            # F602 · dois pré-casos vivos do mesmo cliente: a espécie decide
+            velho = pelo_beneficio(k, fila)
+            if not velho:
+                segurar.add(k["id"])
+                if pares is not None:
+                    pares.append({"nova": k.get("todo_task_id"), "nova_id": k["id"],
+                                  "cliente_id": k.get("cliente_id"), "titulo": k.get("titulo"),
+                                  "lista": k.get("origem_lista"),
+                                  "candidatos": [c["id"] for c in fila]})
+                continue
+            adotar(k, velho)
+            continue
+        adotar(k, fila[-1])               # um caso velho serve a um caso novo só
+    # F602 · o título mudou junto com a lista (pré-caso que virou caso): vale o
+    # mesmo cliente, com um órfão só ou um só da mesma espécie; senão, um par
+    for k in novos:
+        if k["id"] in troca.values() or k["id"] in segurar or escolhas.get(k.get("todo_task_id")) == "novo":
+            continue
+        if k["id"] in usados:
+            continue
+        cands = [c for c in orfaos if c["id"] not in usados
+                 and c.get("cliente_id") == k.get("cliente_id") and k.get("cliente_id")]
+        if not cands or not com_escritorio(k, cands):
+            continue
+        velho = cands[0] if len(cands) == 1 else pelo_beneficio(k, cands)
+        if velho:
+            adotar(k, velho)
+            continue
+        segurar.add(k["id"])
+        if pares is not None:
+            pares.append({"nova": k.get("todo_task_id"), "nova_id": k["id"],
+                          "cliente_id": k.get("cliente_id"), "titulo": k.get("titulo"),
+                          "lista": k.get("origem_lista"),
+                          "candidatos": [c["id"] for c in cands]})
     if troca:
         for a in mapa.get("andamentos") or []:
             a["caso_id"] = troca.get(a["caso_id"], a["caso_id"])
@@ -634,8 +698,9 @@ def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None):
 
     if len(vivos) < minimo_seguro:        # crawl incompleto: não encerra nada
         return adotados, []
+    em_par = {cid for p in pares or [] for cid in p["candidatos"]}
     sobrou = [(c["id"], c.get("titulo"))
-              for fila in por_chave.values() for c in fila]
+              for fila in por_chave.values() for c in fila if c["id"] not in em_par]
     return adotados, sobrou
 
 
@@ -652,11 +717,172 @@ def respeitar_movidos(mapa, movidos):
         m = por_id.get(k.get("id"))
         if not m:
             continue
-        if k.get("fase") == "encerrado" or k.get("origem_lista") == m["mover_para"]:
+        alvo = m["mover_para"]
+        pc = bool(m.get("precaso"))           # F602 · só o pré-caso tem a ponte que move a tarefa
+        # o pré-caso mandado às Aposentadorias futuras fica Futuro até a ponte
+        # mover a tarefa; quem limpa a marca é a ponte (ponte_precaso.py)
+        if pc and alvo in APOS_LISTAS:
+            k["fase"], k["pre_caso"] = "encerrado", True
+            continue
+        if pc and alvo == "concluir":         # Arquivo pedido no CRM
+            if k.get("fase") == "encerrado":
+                limpar.append(k["id"])
+            else:
+                k["fase"] = "encerrado"
+            continue
+        if k.get("origem_lista") == alvo:
+            if pc and k.get("fase") == "encerrado":  # reabrir pedido: espera a ponte
+                k["fase"] = LISTA_FASE.get(alvo) or k.get("fase")
+                k["pre_caso"] = alvo == "🙋 Escritório"
+            else:
+                limpar.append(k["id"])
+            continue
+        if k.get("fase") == "encerrado":      # concluída no To Do: o To Do vence
             limpar.append(k["id"])
             continue
-        k["fase"] = LISTA_FASE.get(m["mover_para"]) or m.get("fase") or k.get("fase")
+        k["fase"] = LISTA_FASE.get(alvo) or m.get("fase") or k.get("fase")
+        if pc and alvo in LISTA_FASE:
+            k["pre_caso"] = alvo == "🙋 Escritório"
     return limpar
+
+
+def estados_precaso(mapa, encerrar, orfaos_por_id, precasos_lemb, lemb_banco,
+                    ja_no_banco=None, completo=True, agora=None):
+    """F602 · o pré-caso espelha a lista do To Do em três estados.
+
+    🙋 Escritório = Ativo; 🙏 Aposentadorias Futuras = Futuro (so_lembrete);
+    tarefa concluída ou apagada = Arquivo. Mover a tarefa troca o id dela, por
+    isso o estado se reconhece pelo cliente e pelo card:
+    (a) pré-caso Ativo cuja tarefa sumiu e o cliente tem um card novo, sem
+        dono, nas Aposentadorias Futuras vira Futuro; sem card, Arquivo;
+    (b) Futuro cujo card sumiu e o cliente ganhou tarefa nova numa lista do
+        To Do volta à vida na MESMA linha (Ativo ou caso, conforme a lista);
+    (c) Futuro cujo card foi concluído ou apagado vira Arquivo;
+    (d) Arquivo cujo card foi reaberto volta a Futuro.
+    A linha com mover_para é da ponte (ponte_precaso.py) e fica de fora.
+    Devolve (patches de casos, patches de lembretes, encerrar que sobrou)."""
+    agora = agora or datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    lembs = mapa.get("lembretes") or []
+    presentes = {l["id"] for l in lembs}
+    vivos_l = {l["id"] for l in lembs if l.get("ativo", True)}
+    ligados = {(r.get("precaso") or {}).get("lembrete_id") for r in precasos_lemb or []}
+    card_vivo = {}                                   # cliente -> cards vivos sem dono
+    for l in lembs:
+        if l.get("ativo", True) and l.get("tipo", "aposentadoria_futura") == "aposentadoria_futura" \
+                and l["id"] not in ligados:
+            card_vivo.setdefault(l.get("cliente_id"), []).append(l["id"])
+    pc_patch, l_patch, resto = [], [], []
+
+    # (a) Ativo -> Futuro ou Arquivo
+    for cid, titulo in encerrar:
+        o = orfaos_por_id.get(cid) or {}
+        if not o.get("pre_caso") or o.get("mover_para"):
+            resto.append((cid, titulo))
+            continue
+        p = dict(o.get("precaso") or {})
+        cards = card_vivo.get(o.get("cliente_id")) or []
+        if len(cards) == 1:
+            p.update(so_lembrete=True, lembrete_id=cards[0])
+            p.pop("arquivo", None)
+            card_vivo[o.get("cliente_id")] = []
+        else:
+            p["arquivo"] = {"em": agora, "origem": "todo"}
+        pc_patch.append((cid, {"fase": "encerrado", "encerrado_em": agora, "precaso": p}))
+
+    # (b) Futuro -> Ativo ou caso, na mesma linha
+    orf = set(orfaos_por_id)
+    adotadas = set()
+    if completo:
+        futuros = {}
+        for r in precasos_lemb or []:
+            p = r.get("precaso") or {}
+            if p.get("so_lembrete") and not r.get("mover_para") \
+                    and p.get("lembrete_id") not in presentes:
+                futuros.setdefault(r.get("cliente_id"), []).append(r)
+        troca = {}
+        for k in mapa.get("casos") or []:
+            if k.get("fase") == "encerrado" or k["id"] in orf:
+                continue
+            if ja_no_banco is not None and k.get("todo_task_id") in ja_no_banco:
+                continue
+            fs = futuros.get(k.get("cliente_id")) or []
+            if len(fs) != 1:
+                continue
+            r = fs.pop()
+            troca[k["todo_task_id"]] = r["id"]
+            adotadas.add(r["id"])
+            p = {x: y for x, y in (r.get("precaso") or {}).items()
+                 if x not in ("so_lembrete", "lembrete_id", "arquivo")}
+            p["voltou_em"] = agora
+            pc_patch.append((r["id"], {"precaso": p}))
+            l_patch.append(((r.get("precaso") or {}).get("lembrete_id"), {"ativo": False}))
+        if troca:
+            remapear_casos(mapa, troca)
+
+    # (c) Futuro -> Arquivo; (d) Arquivo -> Futuro
+    tem_tid = {l["id"] for l in lemb_banco or [] if l.get("tid")}
+    for r in precasos_lemb or []:
+        if r["id"] in adotadas or r.get("mover_para"):
+            continue
+        p = dict(r.get("precaso") or {})
+        lid = p.get("lembrete_id")
+        if p.get("so_lembrete"):
+            morto = (lid in presentes and lid not in vivos_l) or (completo and lid not in presentes)
+            if morto and lid in tem_tid:
+                p.pop("so_lembrete", None)
+                p["arquivo"] = {"em": agora, "origem": "todo"}
+                pc_patch.append((r["id"], {"precaso": p}))
+        elif p.get("arquivo") and lid in vivos_l:
+            p.pop("arquivo", None)
+            p["so_lembrete"] = True
+            pc_patch.append((r["id"], {"precaso": p}))
+    return pc_patch, l_patch, resto
+
+
+def tirar_casos(mapa, ids):
+    """Tira do mapa os casos e o que pende deles (andamentos, eventos, tarefas, pagamentos)."""
+    mapa["casos"] = [k for k in mapa.get("casos") or [] if k["id"] not in ids]
+    for t in ("andamentos", "eventos", "pagamentos"):
+        mapa[t] = [x for x in mapa.get(t) or [] if x.get("caso_id") not in ids]
+    mapa["tarefas"] = [x for x in mapa.get("tarefas") or [] if x.get("caso_id") not in ids]
+
+
+def _cfg_ler(url, chave_c, nome):
+    try:
+        r = _rest(url, chave_c, "GET",
+                  f"/rest/v1/config_app?chave=eq.{nome}&select=valor") or []
+        return json.loads(r[0]["valor"]) if r and r[0].get("valor") else None
+    except Exception:                                   # noqa: BLE001
+        return None
+
+
+def _cfg_gravar(url, chave_c, nome, valor):
+    _rest(url, chave_c, "POST", "/rest/v1/config_app",
+          [{"chave": nome, "valor": json.dumps(valor, ensure_ascii=False)}],
+          prefer="resolution=merge-duplicates,return=minimal")
+
+
+def _paulo_id(url, chave_c):
+    try:
+        for c in _rest(url, chave_c, "GET",
+                       "/rest/v1/colaboradores?select=id,nome,papel,ativo") or []:
+            if c.get("ativo") and c.get("papel") == "admin" and (c.get("nome") or "").startswith("Paulo"):
+                return c["id"]
+    except Exception:                                   # noqa: BLE001
+        pass
+    return None
+
+
+def _mencionar(url, chave_c, para_id, texto, caso_id=None):
+    if not para_id:
+        return
+    corpo = {"para_id": para_id, "texto": texto}
+    if caso_id:
+        corpo["caso_id"] = caso_id
+    try:
+        _rest(url, chave_c, "POST", "/rest/v1/mencoes", corpo, prefer="return=minimal")
+    except Exception as e:                              # noqa: BLE001
+        print(f"  aviso: menção não gravada ({type(e).__name__})")
 
 
 def _dig(v):
@@ -1059,7 +1285,7 @@ def gerar_sql(mapa):
                                  "todo_importante",
                                  "beneficio = coalesce(casos.beneficio, excluded.beneficio)",
                                  "parceria", "protocolos",
-                                 "nb", "processo", "origem_lista", "encerrado_em")),
+                                 "nb", "processo", "origem_lista", "encerrado_em", "pre_caso")),
         _sql_insert("andamentos", mapa["andamentos"]),
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
@@ -1235,7 +1461,8 @@ def subir_rest(mapa):
     else:
         exist = _rest_todas(url, chave,
                             "/rest/v1/casos?todo_task_id=not.is.null"
-                            "&select=id,todo_task_id,processo,nb,cliente_id,titulo,fase")
+                            "&select=id,todo_task_id,processo,nb,cliente_id,titulo,fase,"
+                            "beneficio,pre_caso,origem_lista,precaso,mover_para")
         trocas = {c["todo_task_id"]: c["id"] for c in exist}
         ja_no_banco = None
     n = remapear_casos(mapa, trocas)
@@ -1250,10 +1477,64 @@ def subir_rest(mapa):
     # prazo, dos quais 203 eram fantasmas de tarefas que não existem mais.
     # A FAXINA NÃO PODE DERRUBAR A SINCRONIZAÇÃO. Ela é melhoria; o que não
     # pode faltar é o To Do chegar ao CRM. Qualquer tropeço aqui vira aviso.
+    paulo = _paulo_id(url, chave)
     try:
-        adotados, encerrar = casos_movidos(mapa, exist, ja_no_banco=ja_no_banco)
+        # F602 · os pares que só o Paulo decide ficam no 🧹 Cuidar do acervo
+        cfg_pares = _cfg_ler(url, chave, "precaso_pares") or {}
+        escolhas = cfg_pares.get("escolhas") or {}
+        pares = []
+        adotados, encerrar = casos_movidos(mapa, exist, ja_no_banco=ja_no_banco,
+                                           pares=pares, escolhas=escolhas)
         if adotados:
             print(f"  casos que mudaram de lista no To Do (id novo, mesmo caso): {adotados}")
+        # a tarefa nova do par fica fora até a escolha; nada dela entra
+        segurados = {p["nova_id"] for p in pares}
+        if segurados:
+            tirar_casos(mapa, segurados)
+        antigos = {p.get("nova") for p in cfg_pares.get("pares") or []}
+        for p in pares:
+            if p.get("nova") not in antigos:
+                _mencionar(url, chave, paulo,
+                           f"🧹 Cuidar do acervo: a tarefa \"{p.get('titulo')}\" "
+                           f"({p.get('lista')}) pode ser de {len(p['candidatos'])} pré-casos do "
+                           "mesmo cliente. Escolha qual é em \"Pré-casos a identificar\".")
+        vivas = {k.get("todo_task_id") for k in mapa.get("casos") or []}
+        _cfg_gravar(url, chave, "precaso_pares", {
+            "pares": pares,
+            "escolhas": {t: e for t, e in escolhas.items() if t in vivas},
+            "em": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")})
+
+        # F602 · os três estados do pré-caso (Ativo, Futuro, Arquivo)
+        try:
+            pc_lemb = _rest_todas(url, chave,
+                                  "/rest/v1/casos?pre_caso=is.true&fase=eq.encerrado"
+                                  "&precaso->>lembrete_id=not.is.null"
+                                  "&select=id,cliente_id,precaso,mover_para")
+            l_banco = _rest_todas(url, chave,
+                                  "/rest/v1/lembretes?tipo=eq.aposentadoria_futura"
+                                  "&select=id,cliente_id,ativo,tid:detalhes->>todo_task_id")
+        except BancoRecusou as e:
+            print(f"  aviso: estados do pré-caso não lidos ({e})")
+            pc_lemb, l_banco = None, None
+        if pc_lemb is not None:
+            vivos_mapa = sum(1 for k in mapa.get("casos") or [] if k.get("fase") != "encerrado")
+            jnb = ja_no_banco if ja_no_banco is not None else {c["todo_task_id"] for c in exist}
+            pc_patch, l_patch, encerrar = estados_precaso(
+                mapa, encerrar, {c["id"]: c for c in exist}, pc_lemb, l_banco,
+                ja_no_banco=jnb, completo=vivos_mapa >= 50)
+            for cid, corpo in pc_patch:
+                _rest(url, chave, "PATCH", f"/rest/v1/casos?id=eq.{cid}", corpo,
+                      prefer="return=minimal")
+            for lid, corpo in l_patch:
+                if lid:
+                    _rest(url, chave, "PATCH", f"/rest/v1/lembretes?id=eq.{lid}", corpo,
+                          prefer="return=minimal")
+                    for l in mapa.get("lembretes") or []:   # o upsert não religa o card
+                        if l["id"] == lid:
+                            l["ativo"] = False
+            if pc_patch:
+                print(f"  pré-casos que mudaram de estado pelo To Do: {len(pc_patch)}")
+
         if encerrar:
             print(f"  casos fantasmas a encerrar (a tarefa sumiu do To Do): {len(encerrar)}")
         feitos, falhas = 0, 0
@@ -1400,8 +1681,63 @@ def subir_rest(mapa):
     #   benefício     -> campos.especie, quando o cadastro ainda não tem uma
     # Casos de Escritório que JÁ EXISTEM no banco ficam como estão: carregam
     # andamentos de meses, e reescrever isso seria perder história.
-    novos_escr = {k["id"] for k in mapa["casos"]
-                  if k.get("origem_lista") == "🙋 Escritório" and k["id"] not in guardado}
+    # F602 · a tarefa do 🙋 Escritório é o PRÉ-CASO Ativo (decisão do Paulo de
+    # 15.11.2026): entra como linha de casos com pre_caso = true. O primeiro
+    # lote fica em config_app.precaso_lote, com o Desfazer do Cuidar do acervo;
+    # desfeito, as linhas saem do banco e o lote volta ao caminho de antes
+    # (anotações no cadastro).
+    escr_todos = {k["id"] for k in mapa["casos"] if k.get("origem_lista") == "🙋 Escritório"}
+    lote = _cfg_ler(url, chave, "precaso_lote") if escr_todos else None
+    desfeitos = set((lote or {}).get("ids") or []) if (lote or {}).get("desfeito") else set()
+    if desfeitos and not lote.get("apagados"):
+        no_banco = sorted(desfeitos & set(guardado))
+        try:
+            for i in range(0, len(no_banco), 80):
+                ids_q = ",".join(no_banco[i:i + 80])
+                for t in ("andamentos", "eventos", "tarefas"):
+                    _rest(url, chave, "DELETE", f"/rest/v1/{t}?caso_id=in.({ids_q})", None, "return=minimal")
+                _rest(url, chave, "DELETE", f"/rest/v1/casos?id=in.({ids_q})", None, "return=minimal")
+            lote["apagados"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            _cfg_gravar(url, chave, "precaso_lote", lote)
+            print(f"  🙋 Escritório: lote desfeito, {len(no_banco)} pré-caso(s) tirados do banco")
+        except BancoRecusou as e:
+            print(f"::warning::lote dos pré-casos não foi desfeito ({e})")
+    novos_pc = {kid for kid in escr_todos if kid not in guardado and kid not in desfeitos}
+    if novos_pc:
+        pc_cli = {k["cliente_id"] for k in mapa["casos"] if k["id"] in novos_pc and k.get("cliente_id")}
+        and_ids = {a["id"] for a in mapa["andamentos"] if a.get("caso_id") in novos_pc}
+        limpos = 0
+        try:
+            afet = sorted(pc_cli)
+            for i in range(0, len(afet), 100):
+                for c in _rest_todas(url, chave, "/rest/v1/clientes?select=id,campos"
+                                     f"&id=in.({','.join(afet[i:i + 100])})"):
+                    campos = dict(c.get("campos") or {})
+                    at = [n for n in (campos.get("atendimento") or [])
+                          if not (n.get("origem") == "todo" and n.get("id") in and_ids)]
+                    dp = [d for d in (campos.get("docs_pedidos") or []) if d.get("id") not in novos_pc]
+                    if len(at) != len(campos.get("atendimento") or []) or \
+                            len(dp) != len(campos.get("docs_pedidos") or []):
+                        campos["atendimento"], campos["docs_pedidos"] = at, dp
+                        _rest(url, chave, "PATCH", f"/rest/v1/clientes?id=eq.{c['id']}",
+                              {"campos": campos}, "return=minimal")
+                        limpos += 1
+        except BancoRecusou as e:
+            print(f"  aviso: anotações repetidas do 🙋 Escritório ficaram no cadastro ({e})")
+        if lote is None:
+            lote = {"em": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "ids": sorted(novos_pc), "desfeito": False}
+            try:
+                _cfg_gravar(url, chave, "precaso_lote", lote)
+                _mencionar(url, chave, _paulo_id(url, chave),
+                           f"🧹 Cuidar do acervo: {len(novos_pc)} tarefa(s) do 🙋 Escritório "
+                           "viraram pré-casos Ativos. Confira o lote em \"Pré-casos do To Do\"; "
+                           "o Desfazer devolve tudo ao cadastro.")
+            except BancoRecusou as e:
+                print(f"  aviso: lote dos pré-casos não registrado ({e})")
+        print(f"  🙋 Escritório: {len(novos_pc)} pré-caso(s) Ativo(s) novo(s); "
+              f"{limpos} cadastro(s) sem as anotações repetidas")
+    novos_escr = {kid for kid in escr_todos if kid in desfeitos}
     if novos_escr:
         por_caso = {k["id"]: k for k in mapa["casos"] if k["id"] in novos_escr}
         # o campos é um jsonb inteiro: sem ler o que já está lá, o PATCH
@@ -1503,7 +1839,7 @@ def subir_rest(mapa):
     #    lugar deles agora é a aba 🔔 Lembretes.
     try:
         lemb_exist = {l["id"]: l for l in _rest_todas(
-            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,todo_prazo,"
+            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,todo_prazo,crm,"
                         "intervalo_meses,ativo,responsavel_id,origem_caso")}
     except BancoRecusou:
         lemb_exist = None                    # banco sem a tabela: só avisa adiante
@@ -1629,7 +1965,7 @@ def subir_rest(mapa):
     for filtro in ("arquivados.neq.%7B%7D", "arquivados.not.is.null"):
         try:
             marcados = _rest_todas(url, chave, f"/rest/v1/casos?or=(mover_para.not.is.null,{filtro})"
-                                               "&select=id,mover_para,fase,arquivados")
+                                               "&select=id,mover_para,fase,arquivados,precaso")
             break
         except Exception as e:                  # noqa: BLE001 — sem a leitura, o comportamento antigo
             print(f"  aviso: não li as marcas do CRM nos casos ({e})")

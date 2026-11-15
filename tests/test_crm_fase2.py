@@ -707,19 +707,46 @@ def _sobe_escritorio(monkeypatch, m, existentes=(), clientes=()):
     return enviados, patches
 
 
-def test_tarefa_nova_do_escritorio_nao_vira_caso_e_vira_anotacao_do_cadastro(monkeypatch):
+def _lote_desfeito(monkeypatch, kids):
+    """Primeiro lote do F602 desfeito: as tarefas voltam ao caminho antigo (cadastro)."""
+    lote = {"em": "2026-11-15", "ids": list(kids), "desfeito": True, "apagados": "2026-11-15"}
+    monkeypatch.setattr(migrar, "_cfg_ler",
+                        lambda url, chave_c, nome: lote if nome == "precaso_lote" else None)
+
+
+def _kid_esc(m):
+    return next(k["id"] for k in m["casos"] if k["origem_lista"] == "🙋 Escritório")
+
+
+def test_tarefa_nova_do_escritorio_vira_pre_caso_ativo(monkeypatch):
+    # F602 (15.11.2026): o 🙋 Escritório é o pré-caso Ativo, na linha de casos
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "A", "autor": "Amanda",
+                       "texto": "Cliente veio buscar orientação sobre a documentação."}]),
+    ]))
+    kid = _kid_esc(m)
+    enviados, patches = _sobe_escritorio(monkeypatch, m)
+    (caso,) = [k for k in enviados.get("casos", []) if k["id"] == kid]
+    assert caso["pre_caso"] is True, "o Escritório não nasceu como pré-caso"
+    assert enviados.get("andamentos"), "o histórico do pré-caso não chegou"
+    assert not patches, "a tarefa virou anotação do cadastro em duplicidade"
+
+
+def test_lote_desfeito_volta_o_escritorio_ao_cadastro(monkeypatch):
     m = migrar.mapear(crm_json([
         t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
           andamentos=[{"data": "2026-08-12", "inicial": "A", "autor": "Amanda",
                        "texto": "Cliente veio buscar orientação sobre a documentação."}],
           checklist=[{"id": "i1", "texto": "Certidão de casamento", "feito": False}]),
     ]))
-    kid = next(k["id"] for k in m["casos"] if k["origem_lista"] == "🙋 Escritório")
+    kid = _kid_esc(m)
     cid = m["clientes"][0]["id"]
+    _lote_desfeito(monkeypatch, [kid])
     enviados, patches = _sobe_escritorio(monkeypatch, m)
 
     assert kid not in [k["id"] for k in enviados.get("casos", [])], \
-        "a lista Escritório continuou criando caso"
+        "o lote desfeito continuou criando caso"
     assert not enviados.get("andamentos"), "andamento ficou órfão, sem caso onde entrar"
     campos = patches[cid]["campos"]
     (nota,) = campos["atendimento"]
@@ -750,6 +777,7 @@ def test_anotacao_do_escritorio_nao_apaga_os_dados_civis_do_cadastro(monkeypatch
                        "texto": "Faltou a certidão."}]),
     ]))
     cid = m["clientes"][0]["id"]
+    _lote_desfeito(monkeypatch, [_kid_esc(m)])
     _, patches = _sobe_escritorio(monkeypatch, m, clientes=[
         {"id": cid, "campos": {"civil": {"rg": "12.345.678-9"},
                                "pasta_drive": "https://drive/x"}}])
@@ -768,6 +796,7 @@ def test_reimportar_o_escritorio_nao_duplica_a_anotacao(monkeypatch):
         ]))
     m1 = mapa()
     cid = m1["clientes"][0]["id"]
+    _lote_desfeito(monkeypatch, [_kid_esc(m1)])
     _, p1 = _sobe_escritorio(monkeypatch, m1)
     _, p2 = _sobe_escritorio(monkeypatch, mapa(), clientes=[{"id": cid, "campos": p1[cid]["campos"]}])
     assert len(p2[cid]["campos"]["atendimento"]) == 1, "a segunda rodada duplicou a anotação"
@@ -1045,13 +1074,13 @@ def test_e2_preserva_o_que_o_caminho_antigo_preservava(monkeypatch):
     # mudança de lista: o caso novo assume o antigo e leva o NB dele
     assert casos["nova-cons"]["id"] == "caso-velho"
     assert casos["nova-cons"]["nb"] == "1234567890", "o NB do caso antigo se perdeu na mudança de lista"
-    # Pagamentos e Escritório novos continuam sem virar caso
-    assert "pg" not in casos and "esc" not in casos
+    # Pagamentos continua sem virar caso; o Escritório novo é pré-caso (F602)
+    assert "pg" not in casos and casos["esc"]["pre_caso"] is True
     # 🙏 convertido à mão não ganha um segundo lembrete
     assert not leve.get("lembretes"), "nasceu lembrete em duplicidade"
-    # o Escritório não apagou os dados civis do cadastro
-    (campos,) = patches.values()
-    assert campos["campos"]["civil"]["rg"] == "12.345.678-9"
+    # nenhum PATCH do cadastro apagou os dados civis
+    for campos in patches.values():
+        assert campos["campos"]["civil"]["rg"] == "12.345.678-9"
 
 
 def test_e2_nao_baixa_a_carteira_inteira(monkeypatch):
@@ -1192,3 +1221,65 @@ def test_evento_remarcado_no_crm_nao_conta_como_recusa(monkeypatch):
     monkeypatch.setattr(migrar, "_rest", pk_repetida)
     migrar.subir_rest(mapa)                      # NÃO levanta BancoRecusou
     assert any(l.get("chave") == "todo_sync_em" for l in enviados)
+
+
+# F602 · pré-caso espelhado no To Do (Ativo, Futuro, Arquivo)
+def _orf(cid, cli, **kw):
+    return {"id": cid, "cliente_id": cli, "pre_caso": True, "precaso": {}, **kw}
+
+
+def test_precaso_ativo_vira_futuro_com_card_novo():
+    mapa = {"lembretes": [{"id": "L1", "cliente_id": "c1", "ativo": True}], "casos": []}
+    pc, lp, resto = migrar.estados_precaso(
+        mapa, [("k1", "x")], {"k1": _orf("k1", "c1")}, [], [], agora="T")
+    assert resto == [] and lp == []
+    assert pc == [("k1", {"fase": "encerrado", "encerrado_em": "T",
+                          "precaso": {"so_lembrete": True, "lembrete_id": "L1"}})]
+
+
+def test_precaso_ativo_sem_card_vira_arquivo_e_caso_comum_passa():
+    mapa = {"lembretes": [], "casos": []}
+    orf = {"k1": _orf("k1", "c1"), "k2": {"id": "k2", "cliente_id": "c2"},
+           "k3": _orf("k3", "c3", mover_para="🙏 Aposentadorias Futuras")}
+    pc, _, resto = migrar.estados_precaso(
+        mapa, [("k1", "a"), ("k2", "b"), ("k3", "c")], orf, [], [], agora="T")
+    assert pc[0][1]["precaso"]["arquivo"] == {"em": "T", "origem": "todo"}
+    assert resto == [("k2", "b"), ("k3", "c")]      # caso comum e o da ponte ficam
+
+
+def test_precaso_futuro_volta_na_mesma_linha():
+    mapa = {"lembretes": [], "casos": [
+        {"id": "novo", "todo_task_id": "t9", "cliente_id": "c1", "fase": "inss"}],
+        "andamentos": [{"id": "a1", "caso_id": "novo"}], "eventos": [], "tarefas": [], "pagamentos": []}
+    fut = [{"id": "pc1", "cliente_id": "c1",
+            "precaso": {"so_lembrete": True, "lembrete_id": "L1", "especie": "B41"}}]
+    pc, lp, _ = migrar.estados_precaso(mapa, [], {}, fut, [], agora="T")
+    assert mapa["casos"][0]["id"] == "pc1"            # a tarefa nova ocupa a linha do pré-caso
+    assert pc == [("pc1", {"precaso": {"especie": "B41", "voltou_em": "T"}})]
+    assert lp == [("L1", {"ativo": False})]
+
+
+def test_precaso_futuro_nao_adota_com_leitura_parcial():
+    mapa = {"lembretes": [], "casos": [{"id": "novo", "todo_task_id": "t9", "cliente_id": "c1"}]}
+    fut = [{"id": "pc1", "cliente_id": "c1", "precaso": {"so_lembrete": True, "lembrete_id": "L1"}}]
+    pc, _, _ = migrar.estados_precaso(mapa, [], {}, fut, [{"id": "L1", "tid": "x"}], completo=False)
+    assert pc == [] and mapa["casos"][0]["id"] == "novo"
+
+
+def test_precaso_card_concluido_arquiva_e_reaberto_volta():
+    fut = [{"id": "pc1", "cliente_id": "c1", "precaso": {"so_lembrete": True, "lembrete_id": "L1"}},
+           {"id": "pc2", "cliente_id": "c2", "precaso": {"arquivo": {"em": "x"}, "lembrete_id": "L2"}}]
+    mapa = {"lembretes": [{"id": "L1", "cliente_id": "c1", "ativo": False},
+                          {"id": "L2", "cliente_id": "c2", "ativo": True}], "casos": []}
+    pc, _, _ = migrar.estados_precaso(mapa, [], {}, fut,
+                                      [{"id": "L1", "tid": "a"}, {"id": "L2", "tid": "b"}], agora="T")
+    assert dict(pc) == {"pc1": {"precaso": {"lembrete_id": "L1", "arquivo": {"em": "T", "origem": "todo"}}},
+                        "pc2": {"precaso": {"lembrete_id": "L2", "so_lembrete": True}}}
+
+
+def test_tirar_casos_leva_o_que_pende():
+    mapa = {"casos": [{"id": "a"}, {"id": "b"}], "andamentos": [{"caso_id": "a"}, {"caso_id": "b"}],
+            "eventos": [], "pagamentos": [{"caso_id": "a"}], "tarefas": [{"caso_id": "a"}]}
+    migrar.tirar_casos(mapa, {"a"})
+    assert [k["id"] for k in mapa["casos"]] == ["b"]
+    assert mapa["andamentos"] == [{"caso_id": "b"}] and mapa["pagamentos"] == [] and mapa["tarefas"] == []

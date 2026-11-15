@@ -63,13 +63,13 @@ const SUPA = "https://ficticio.supabase.co";
   // F166 · Lembretes por último e o caso abre no Escritório
   await p.evaluate(cli => { abrirFicha(cli); }, CLI_CHEIO);
   await p.waitForSelector("#btn-processos");
-  const m = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim().split(" (")[0].replace(" ▾", "")), sub: subAba }));
+  const m = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".menu-topo .mt:not(.mt-novopc)")].map(b => b.textContent.trim().split(" (")[0].replace(" ▾", "")), sub: subAba }));
   conf("o caso abre nos andamentos do Escritório", m.sub === "escritorio");
   conf("Lembretes, quando existe, vem depois de Honorários", !m.menu.includes("Aposentadorias futuras") || m.menu.indexOf("Aposentadorias futuras") > m.menu.indexOf("Honorários"));
   // F165/F167 · cliente novo: só Cadastro, só Identificação e o + atendimento
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos = {...(c.campos || {})}; delete c.campos.precasos; delete c.campos.especie; return abrirFicha(cli); }, CLI_VAZIO);
   await p.waitForSelector("#campo-nome, .sub-menu .atend-novo", { state: "attached" });
-  const nv = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim()),
+  const nv = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".menu-topo .mt:not(.mt-novopc)")].map(b => b.textContent.trim()),
     sub: [...[...document.querySelectorAll(".sub-menu")].find(x => /Identificação/.test(x.textContent)).querySelectorAll("button:not(.trilho-mais)")].map(b => b.textContent.trim()),
     atend: !!document.querySelector(".sub-menu .atend-novo") }));
   conf("cliente novo vê só Cadastro → Identificação e o + atendimento", nv.menu.join("|") === "Cadastro" && nv.sub.join("|") === "Identificação" && nv.atend);
