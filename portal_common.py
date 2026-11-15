@@ -261,13 +261,14 @@ def crm_do_cliente():
     try:
         clientes = _supa_pagina(url, chave, "/rest/v1/clientes?select=id,cpf&cpf=not.is.null")
         casos = _supa_pagina(url, chave,
-                             "/rest/v1/casos?select=cliente_id,etapa,fase,mover_para,origem_lista,trf3,trilha,ronda"
-                             "&or=(etapa.not.is.null,trf3.not.is.null)")
+                             "/rest/v1/casos?select=cliente_id,etapa,fase,mover_para,origem_lista,trf3,trilha,ronda,area"
+                             "&fase=neq.encerrado")
     except Exception as e:
         print(f"   (dados do CRM indisponíveis: {type(e).__name__})")
         return {}
     cpf_de = {c["id"]: digits(c.get("cpf")) for c in clientes if digits(c.get("cpf")) }
     mapa = {}
+    prev, ocultos = set(), set()
     for k in casos:
         if k.get("fase") == "encerrado":
             continue
@@ -275,6 +276,11 @@ def crm_do_cliente():
         lista = k.get("mover_para") or k.get("origem_lista")
         if not (cpf and lista):
             continue
+        # F615 · o caso não previdenciário (cível, trabalhista…) não vai ao portal por ora
+        if (k.get("area") or "previdenciaria") != "previdenciaria":
+            ocultos.add((cpf, lista))
+            continue
+        prev.add((cpf, lista))
         fora = {}
         etapa = etapa_publicavel(k)     # F236 · catálogo, fase atual e não desatualizada
         if etapa:
@@ -293,6 +299,9 @@ def crm_do_cliente():
             de = (k.get("ronda") or {}).get("prazo_de")
             if k.get("fase") == "outro" and de and de != lista:
                 mapa.setdefault((cpf, de), fora)
+    # a tarefa da lista só some quando nenhum caso previdenciário aberto do cliente está nela
+    for chave in ocultos - prev:
+        mapa[chave] = {"oculto": True}
     return mapa
 
 

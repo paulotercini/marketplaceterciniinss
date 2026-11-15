@@ -72,3 +72,19 @@ def test_robo_do_whatsapp_usa_o_mesmo_catalogo_do_portal():
     trecho = sql.split("-- etapas:inicio", 1)[1].split("-- etapas:fim", 1)[0]
     pares = set(re.findall(r"\('([a-z_]+)','([^']+)'\)", trecho))
     assert pares == {(f, e) for f, es in pc.ETAPAS_POR_FASE.items() for e in es}
+
+
+def test_caso_nao_previdenciario_nao_vai_ao_portal(monkeypatch):
+    """F615 · o caso cível fica fora do portal: sem etapa e com a tarefa da lista oculta."""
+    _banco(monkeypatch, [{"cliente_id": "c1", "etapa": "sentença publicada", "fase": "judicial",
+                          "mover_para": "👪 Judicial", "origem_lista": None, "area": "civil"}])
+    assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {"oculto": True}}
+
+
+def test_caso_previdenciario_na_mesma_lista_nao_e_ocultado(monkeypatch):
+    """F615 · com um caso previdenciário aberto na mesma lista, a tarefa continua no portal."""
+    _banco(monkeypatch, [{"cliente_id": "c1", "etapa": None, "fase": "judicial",
+                          "mover_para": "👪 Judicial", "origem_lista": None, "area": "civil"},
+                         {"cliente_id": "c1", "etapa": "sentença publicada", "fase": "judicial",
+                          "mover_para": "👪 Judicial", "origem_lista": None}])
+    assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {"etapa": "sentença publicada"}}
