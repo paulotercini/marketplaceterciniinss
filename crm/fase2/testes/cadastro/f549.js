@@ -98,7 +98,7 @@ const TUDO = {
   const prev = () => p.evaluate(() => { const t = document.querySelector("#per-txt"); return t ? t.value : ((document.querySelector(".per5 .bolha") || {}).innerText || ""); });
   let bol = await prev();
   conf("a primeira mensagem diz dia, horário e local, sem dizer quem agendou nem se apresentar", /APS Teste/.test(bol) && !/INSS agendou/.test(bol) && !/Aqui é do escritório/.test(bol));
-  conf("a prévia vem pronta e editável, propõe o atendimento e não pergunta o horário", await p.evaluate(() => !!document.querySelector("#per-txt")) && /vamos agendar o seu atendimento presencial/.test(bol) && !/Qual horário/.test(bol));
+  conf("a prévia vem pronta e editável, propõe o atendimento e não pergunta o horário", await p.evaluate(() => !!document.querySelector("#per-txt")) && /precisamos agendar o seu atendimento presencial/.test(bol) && /Podemos agendar na /.test(bol) && !/Qual horário/.test(bol));
   await p.fill("#per-txt", bol + "\n\nTexto acrescentado."); await p.waitForTimeout(200);
   conf("a edição da prévia é mantida e oferece Restaurar", (await prev()).includes("Texto acrescentado.") && await p.evaluate(() => !!document.querySelector("#per-txt-volta")));
   await p.click("#per-txt-volta"); await p.waitForTimeout(200);
