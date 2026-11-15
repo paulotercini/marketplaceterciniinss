@@ -42,13 +42,13 @@ do $$ begin
   end if;
   -- 3. 1º aviso na rodada, uma vez só, com o texto aprovado na prévia (F608) e a saudação da rodada
   perform pericia_texto_salvar('00000000-0000-0000-0000-0000000000b1',
-    'Bom dia, Cliente. A sua perícia médica está agendada em APS Teste. Para a sua preparação, vamos agendar o seu atendimento presencial com a Dra. Amanda em sexta-feira, às 09:00 ou às 14:15.');
+    'Bom dia, Cliente. A sua perícia médica foi agendada em APS Teste. Para a sua preparação para a perícia médica, precisamos agendar o seu atendimento presencial com a Dra. Amanda. Podemos agendar na sexta-feira, às 09:00 ou às 14:15?');
   perform pericia_avisos_vez('tarde');
   perform pericia_avisos_vez('tarde');
   perform pg_temp.ok('1º aviso sai uma vez', pg_temp.msgs(':primeiro') = 1);
   perform pg_temp.ok('1º aviso cita a Dra. Amanda e o local',
     (select texto like '%a Dra. Amanda%' and texto like '%APS Teste%' and texto like 'Boa tarde, Cliente.%'
-       and texto not like '%INSS agendou%' and texto not like '%Aqui é do escritório%' and texto like '%às 09:00 ou às 14:15.' and texto not like '%Qual horário%'
+       and texto not like '%INSS agendou%' and texto not like '%Aqui é do escritório%' and texto like '%às 09:00 ou às 14:15?' and texto not like '%Qual horário%'
        from zap_mensagens where aviso_chave like '%:primeiro'));
   perform pg_temp.ok('conversa marcada aguardando',
     (select pericia->>'estado' from zap_conversas where id = '00000000-0000-0000-0000-0000000000e1') = 'aguardando');
