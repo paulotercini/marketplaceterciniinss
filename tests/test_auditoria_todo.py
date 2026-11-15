@@ -177,5 +177,5 @@ def test_o_que_so_o_crm_tem():
 
 
 def test_lista_fora_do_mapa_sem_cpf_vai_so_para_o_resumo():
-    linhas, resumo = roda([t("☕ Marcos", "Ligar para o contador", id="m1")])
-    assert linhas == [] and resumo["fora_do_crm"] == {"☕ Marcos": 1}
+    linhas, resumo = roda([t("☕ André", "Ligar para o contador", id="m1")])
+    assert linhas == [] and resumo["fora_do_crm"] == {"☕ André": 1}

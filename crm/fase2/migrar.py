@@ -17,6 +17,7 @@ Mapeamento (decisões de ago/2026):
   - Tarefa concluída no To Do -> fase='encerrado' (origem_lista preserva de onde veio).
   - Lista pessoal 'Tarefas' -> tarefas particulares do Paulo.
   - Outras listas: só tarefas com CPF entram (fase='outro'); o resto é contado e pulado.
+  - Lista Marcos (F613): toda tarefa entra (fase='outro'); sem CPF, a ficha leva a nota 'falta_cpf'.
   - Blocos `DD.MM.AAAA (X):` -> andamentos com autor; perícias/audiências -> eventos.
   - Anti-eco: blocos idênticos a andamentos criados no app (mesmo caso, dia e
     texto) são pulados, para a escrita dupla não duplicar.
@@ -82,6 +83,11 @@ RE_RELACAO = re.compile(
 def _norm(s):
     return "".join(ch for ch in unicodedata.normalize("NFD", (s or "").lower())
                    if not unicodedata.combining(ch)).strip()
+
+
+# F613 · a lista do Dr. Marcos (matérias não previdenciárias) casa pelo nome inteiro "Marcos", com ou sem emoji
+def lista_marcos(lista):
+    return re.sub(r"[^a-z]", "", _norm(lista)) == "marcos"
 
 
 # F296 · Onda E do fluxo do To Do (29.10.2026): a etapa da tarefa é a ficha do cliente. O NB vai ao caso, o parente com
@@ -306,6 +312,7 @@ def mapear(dados, cpf_por_nome=None):
     credenciais, vinculos, pend_vinculos = {}, {}, []
     notas, subtarefas_dado = {}, []   # F296 · nota da ficha por cliente; ids das etapas que eram dado e viraram subtarefa
     pulados, sem_senha_padrao = {}, 0
+    marcos_sem_cpf = set()            # F613 · fichas da lista Marcos que chegaram sem CPF
 
     for t in dados["tarefas"]:
         lista = t["lista"]
@@ -320,7 +327,7 @@ def mapear(dados, cpf_por_nome=None):
             }
             continue
 
-        fase = LISTA_FASE.get(lista)
+        fase = LISTA_FASE.get(lista) or ("outro" if lista_marcos(lista) else None)
         if fase is None and not t["cpf"]:
             pulados[lista] = pulados.get(lista, 0) + 1
             continue
@@ -339,6 +346,8 @@ def mapear(dados, cpf_por_nome=None):
             c["nome"] = t["nome"]
         c["dn"] = c["dn"] or t["dn"]
         c["telefone"] = c["telefone"] or t["telefone"]
+        if lista_marcos(lista) and not c["cpf"]:
+            marcos_sem_cpf.add(cid)
 
         # 🙏 Aposentadorias Futuras NÃO vira caso (combinado com o Paulo,
         # 08.90): é gente sem pedido ativo, e caso aberto para cada uma
@@ -524,6 +533,10 @@ def mapear(dados, cpf_por_nome=None):
                 "id": tid, "caso_id": kid, "titulo": txt, "prazo": None,
                 "concluida": feito, "concluida_em": None, "particular_de": None,
             }
+
+    for cid in marcos_sem_cpf:          # o CPF pode ter vindo depois, pelo checklist ou por outra tarefa
+        if not clientes[cid]["cpf"]:
+            _nota(notas, cid, "falta_cpf", "A tarefa da lista Marcos no To Do não tem #CPF: acrescente o CPF na ficha.")
 
     if sem_senha_padrao:
         print(f"AVISO: {sem_senha_padrao} item(ns) 'Padrão' ignorados — defina o "

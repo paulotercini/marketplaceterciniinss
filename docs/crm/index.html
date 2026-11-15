@@ -7115,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.06</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.07</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -21446,10 +21446,12 @@ const naoPareceCliente = c => { const n = dsa(c.nome||"").replace(/[()"'+,]/g," 
   // nome de pessoa não tem número; o nome de quem é da equipe também não é de cliente
   return RX_NAO_PESSOA.test(n) || /\d/.test(n) || /^(a|aa|i ?m|pai|mae)$/.test(n.trim()) || /(^|\s)tercini(\s|$)/.test(n)
     || (D.colaboradores||[]).some(co=>{ const e = dsa(co.nome||"").trim(); return e.split(/\s+/).length>=2 && n.trim().startsWith(e); }); };
+// F613 · a tarefa da lista Marcos sem #CPF chega com a nota "falta_cpf" (migrar.py): é cliente e fica à vista até ter CPF
+const faltaCpf = c => String(c.cpf||"").replace(/\D/g,"").length!==11 && ((c.campos||{}).notas_todo||[]).some(n=>n && n.tipo==="falta_cpf");
 function ehClienteDaLista(c){
   const k = c.campos || {};
   if(k.nao_cliente) return false;
-  if(k.e_cliente || String(c.cpf||"").replace(/\D/g,"").length===11) return true;
+  if(k.e_cliente || faltaCpf(c) || String(c.cpf||"").replace(/\D/g,"").length===11) return true;
   return palavrasDoNome(c.nome).length >= 2 && !naoPareceCliente(c);
 }
 async function marcarNaoCliente(cliId, nao){
@@ -39791,9 +39793,9 @@ function caixaAposCadastro(c){
 }
 // F296 · Onda E: as etapas do To Do que não têm campo na ficha (CNPJ, e-mail, telefone com recado, a data provável da
 // aposentadoria, o parente que não é cliente) chegam pelo migrar.py em campos.notas_todo e ficam à vista aqui
-const ROT_NOTA_TODO = {cnpj:"CNPJ", email:"E-mail", telefone:"Telefone", aposentadoria:"Aposentadoria", parente:"Parente"};
+const ROT_NOTA_TODO = {falta_cpf:"⚠ Falta CPF", cnpj:"CNPJ", email:"E-mail", telefone:"Telefone", aposentadoria:"Aposentadoria", parente:"Parente"};
 function caixaNotasTodo(c){
-  const ns = ((c.campos||{}).notas_todo||[]).filter(n=>n && n.texto);
+  const ns = ((c.campos||{}).notas_todo||[]).filter(n=>n && n.texto && (n.tipo!=="falta_cpf" || faltaCpf(c)));
   if(!ns.length) return "";
   return `<section class="idf-card idf-notas-todo" aria-labelledby="idf-ntodo"><h3 class="adr-h" id="idf-ntodo">Anotado nas etapas do To Do</h3>
     <ul class="ac-lista">${ns.map(n=>`<li class="ac-it"><b>${esc(ROT_NOTA_TODO[n.tipo]||"Nota")}</b><small>${esc(n.texto)}</small></li>`).join("")}</ul></section>`;
@@ -53095,8 +53097,9 @@ function blocoSemCpf(){
     .sort((a, b)=>dsa(a.nome).localeCompare(dsa(b.nome)));
   if(!sem.length) return "";
   const escondidos = sem.filter(c=>(c.campos||{}).nao_cliente), vivos = sem.filter(c=>!(c.campos||{}).nao_cliente);
-  const g1 = vivos.filter(naoPareceCliente), g2 = vivos.filter(c=>!naoPareceCliente(c) && palavrasDoNome(c.nome).length<2),
-        g3 = vivos.filter(c=>!naoPareceCliente(c) && palavrasDoNome(c.nome).length>=2);
+  const g0 = vivos.filter(faltaCpf), resto = vivos.filter(c=>!faltaCpf(c));
+  const g1 = resto.filter(naoPareceCliente), g2 = resto.filter(c=>!naoPareceCliente(c) && palavrasDoNome(c.nome).length<2),
+        g3 = resto.filter(c=>!naoPareceCliente(c) && palavrasDoNome(c.nome).length>=2);
   const casos = c => (D.casosDoCliente.get(c.id)||[]);
   const linha = (c, marcado) => `<label class="semcpf-it"><input type="checkbox" class="semcpf-ck" value="${c.id}"${marcado?" checked":""}>
     <b class="semcpf-nome" style="cursor:pointer" onclick="event.preventDefault();abrirFicha('${c.id}')">${esc(c.nome)}</b>
@@ -53105,6 +53108,7 @@ function blocoSemCpf(){
     ${l.map(c=>linha(c, marcado)).join("")}</details>` : "";
   return `<details class="sem-acao neutro" id="acervo-semcpf"><summary>Conferir cadastros sem CPF (${vivos.length}): o que não é cliente sai da lista Clientes</summary>
     <p class="meio-sub" style="margin:8px 0 4px">Nada é apagado: os marcados só saem da lista Clientes, com os casos e o histórico, e voltam pelo “É cliente” da ficha.</p>
+    ${grupo("⚠ Falta CPF · lista Marcos", "a tarefa do To Do não tem #CPF: abra a ficha e acrescente o CPF", g0, false, true)}
     ${grupo("Não parecem clientes", "tarefas do To Do e contatos (Imprimir, iCloud, Pai…), já marcados", g1, true, true)}
     ${grupo("Só o primeiro nome", "confira na ficha antes de marcar", g2, false, false)}
     ${grupo("Pessoas sem CPF", "em geral clientes antigos: continuam na lista", g3, false, false)}
