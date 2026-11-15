@@ -95,11 +95,16 @@ const TUDO = {
   await p.waitForTimeout(400);
   conf("a linha avisa o atendimento presencial já agendado", /Atendimento presencial já agendado/.test(await txt()));
   conf("a prévia avisa o atendimento já agendado e sugere Já orientado", /já tem atendimento presencial agendado/.test(await p.evaluate(() => document.querySelector(".per5 aside.lado").innerText)));
-  let bol = await p.evaluate(() => (document.querySelector(".per5 .bolha") || {}).innerText || "");
+  const prev = () => p.evaluate(() => { const t = document.querySelector("#per-txt"); return t ? t.value : ((document.querySelector(".per5 .bolha") || {}).innerText || ""); });
+  let bol = await prev();
   conf("a primeira mensagem diz dia, horário e local, sem dizer quem agendou nem se apresentar", /APS Teste/.test(bol) && !/INSS agendou/.test(bol) && !/Aqui é do escritório/.test(bol));
-  conf("a mensagem propõe o dia do atendimento presencial e pergunta o horário", /vamos agendar o seu atendimento presencial/.test(bol) && /Qual horário fica melhor\?/.test(bol));
+  conf("a prévia vem pronta e editável, propõe o atendimento e não pergunta o horário", await p.evaluate(() => !!document.querySelector("#per-txt")) && /vamos agendar o seu atendimento presencial/.test(bol) && !/Qual horário/.test(bol));
+  await p.fill("#per-txt", bol + "\n\nTexto acrescentado."); await p.waitForTimeout(200);
+  conf("a edição da prévia é mantida e oferece Restaurar", (await prev()).includes("Texto acrescentado.") && await p.evaluate(() => !!document.querySelector("#per-txt-volta")));
+  await p.click("#per-txt-volta"); await p.waitForTimeout(200);
+  conf("Restaurar volta ao texto pronto", !(await prev()).includes("Texto acrescentado."));
   await p.click("#sw-so"); await p.waitForTimeout(500);
-  bol = await p.evaluate(() => (document.querySelector(".per5 .bolha") || {}).innerText || "");
+  bol = await prev();
   conf("Já orientado grava pericia_so_lembretes e a prévia vira o lembrete", soCh.length === 1 && soCh[0].p_so === true && /Lembramos que/.test(bol) && !/atendimento presencial/.test(bol));
   await p.click("#sw-so"); await p.waitForTimeout(500);
   conf("desligar Já orientado volta ao primeiro aviso", soCh.length === 2 && soCh[1].p_so === false);
@@ -108,7 +113,7 @@ const TUDO = {
   conf("sem rua e número o Ligar não liga", chamadas.length === 0);
   const END = "Agência do INSS de Monte Alto, Rua Rui Barbosa, 664, Monte Alto";
   await p.fill("#per-local", END); await p.waitForTimeout(200);
-  conf("o endereço digitado aparece na mensagem", (await p.evaluate(() => document.querySelector(".per5 .bolha").innerText)).includes("Rua Rui Barbosa, 664"));
+  conf("o endereço digitado aparece na mensagem", (await prev()).includes("Rua Rui Barbosa, 664"));
   await p.click("#per-ligar"); await p.waitForTimeout(600);
   conf("o Ligar grava o endereço da perícia", locCh.length === 1 && locCh[0].p_local === END && locCh[0].p_evento === EV);
   conf("com atendimento futuro agendado o Ligar dispensa a oferta", soCh.length === 3 && soCh[2].p_so === true);

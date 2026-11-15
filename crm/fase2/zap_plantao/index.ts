@@ -486,8 +486,8 @@ export function contexto(x: Contexto) {
     // F549 · a perícia aprovada pelo Ligar: a IA oferece o atendimento presencial de preparação
     (x.pericia ? `Perícia: a pessoa tem ${x.pericia.tipo} em ${x.pericia.data} às ${x.pericia.hora}${x.pericia.local ? `, em ${x.pericia.local}` : ""}, e o escritório avisou por esta conversa. ` +
       `Ofereça um atendimento presencial (tipo 002) de preparação com ${x.pericia.profissional === "amanda" ? "a Dra. Amanda" : "o Dr. Paulo"}: ` +
-      `peça ao Agendador vagas desse advogado, de preferência no próprio dia da perícia, terminando até as ${x.pericia.ate_hora}, e, sem vaga, nos dias úteis anteriores. ` +
-      `Ofereça dois horários em frase, sem lista. Se a pessoa não puder vir ao escritório até ${x.pericia.limite_presenca}, ou não quiser vir, ` +
+      `peça ao Agendador vagas desse advogado no dia útil anterior à perícia ou nos dias anteriores; o próprio dia da perícia, terminando até as ${x.pericia.ate_hora}, somente sem vaga antes. ` +
+      `Se a mensagem do escritório já indicou dois horários, mantenha-os; senão indique um horário pela manhã e outro à tarde, em frase, sem lista e sem perguntar qual horário fica melhor. Se a pessoa não puder vir ao escritório até ${x.pericia.limite_presenca}, ou não quiser vir, ` +
       `ofereça um telefonema do advogado às 16h de ${x.pericia.telefone_em}; se recusar também, use encaminhar_equipe. ` +
       `Responda à dúvida sobre a perícia em linguagem simples, sem prometer resultado.\n` : "") +
     (x.modo === "lead" ? `Você já está atendendo este caso novo (${x.respostas} respostas suas até aqui; agende depois de ${Math.max(1, 6 - x.respostas)} respostas).\n`
