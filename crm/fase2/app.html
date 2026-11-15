@@ -7115,7 +7115,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.00</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -60172,9 +60172,9 @@ function pintarAgenda(){
   const dia = r.dias.find(d=>d.data===agq.sel) || r.dias[0];
   // F406b · o dia em que as vagas foram tiradas no Google e nada foi marcado diz "Sem vagas", em vez de 0/14
   const semVagas = d => !d.bloqueado && !d.atendimentos && !vagasDoDia(d).length;
-  const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado||semVagas(d)?" bloq":d.lotado?" lot":""}" data-aqdia="${d.data}">
+  const faixa = r.dias.map(d=>`<button class="aq-dia${d.data===agq.sel?" on":""}${d.bloqueado||semVagas(d)?" bloq":lotDia(d)?" lot":""}" data-aqdia="${d.data}">
       <b>${siglaData(d.data)}</b>
-      <span>${d.bloqueado?"Feriado ou férias":semVagas(d)?"Sem vagas":d.limite?`${d.atendimentos}/${d.limite}${d.lotado?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
+      <span>${d.bloqueado?"Feriado ou férias":semVagas(d)?"Sem vagas":d.limite?`${d.atendimentos}/${capDia(d)}${lotDia(d)?" · lotado":""}`:`${d.atendimentos} ${d.atendimentos===1?"atendimento":"atendimentos"}${lotDia(d)?" · lotado":""}`}</span>${(n=>n?`<span class="aq-dia-livres">${n} ${n===1?"vaga":"vagas"}</span>`:"")(vagasDoDia(d).length)}</button>`).join("");
   alvo.innerHTML = `<div class="aq">
     ${r.alerta?`<div class="aq-alerta" role="alert">${esc(r.alerta)}</div>`:""}
     <div class="aq-faixa" role="tablist" aria-label="Próximos dias de atendimento de ${esc(nomeProf(agq.prof))}">${faixa}</div>
@@ -60196,6 +60196,10 @@ function pintarAgenda(){
 const vagaPassou = (data, inicio) => data < hoje() || (data===hoje() && hmMin(inicio) <= new Date().getHours()*60 + new Date().getMinutes());
 const vagasDoDia = d => d && !d.bloqueado ? ["001", "002"].flatMap(t=>(d.livres[t]||[]).filter(s=>s.vaga && !vagaPassou(d.data, s.inicio)).map(s=>({...s, tipo:s.tipo||t})))
   .sort((a, b)=>hmMin(a.inicio)-hmMin(b.inicio)) : [];
+// F607: no dia só de vagas do Google o total é atendimentos + vagas livres, e sem vaga livre o dia está lotado (mostrava 7/14 com tudo ocupado)
+const soVagasDia = d => !["001", "002"].some(t=>((d.livres||{})[t]||[]).some(s=>!s.vaga));
+const capDia = d => soVagasDia(d) ? d.atendimentos + vagasDoDia(d).length : d.limite;
+const lotDia = d => !!d.lotado || (!d.bloqueado && !!d.atendimentos && soVagasDia(d) && !vagasDoDia(d).length);
 // com vagas no dia, valem elas (dos dois tipos); sem vagas, os horários calculados do tipo escolhido, como antes
 const livresDoDia = (d, tipo) => { const v = vagasDoDia(d); return v.length ? v : (d && d.livres[tipo]) || []; };
 const minDoTipo = t => t==="001" ? 45 : 30;
@@ -60481,7 +60485,7 @@ function linhaDoTempoAgenda(dia, r){
       <b>${esc(nome)}</b>${por.curta?`<span class="aq-ev-por">${esc(por.curta)}</span>`:""}</button>`;
   };
   const reservas = (r.dias.find(d=>d.data===dia.data)||{}).reservas || dia.reservas || [];
-  const cab = dia.limite ? `${dia.atendimentos} de ${dia.limite} atendimentos${dia.lotado?" · lotado":""}` : `${dia.atendimentos} ${dia.atendimentos===1?"atendimento":"atendimentos"}`;
+  const cab = dia.limite ? `${dia.atendimentos} de ${capDia(dia)} atendimentos${lotDia(dia)?" · lotado":""}` : `${dia.atendimentos} ${dia.atendimentos===1?"atendimento":"atendimentos"}${lotDia(dia)?" · lotado":""}`;
   return `<div class="aq-tempo-cab"><b>${nomeProf(agq.prof)} · ${diaExt(dia.data)}, ${dataBR(dia.data)}</b><span>${cab}</span>
       <span class="aq-leg">${(agq.prof==="todos" ? ["paulo","marcos","amanda"] : [agq.prof]).map(pr=>`<span class="aq-leg-tipos">${esc(nomeProf(pr))}:
         <span><i class="aq-sw p-${pr} t001"></i>001 · 45 min</span>
