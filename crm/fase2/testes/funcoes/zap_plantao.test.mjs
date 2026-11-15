@@ -690,6 +690,7 @@ console.log("formal: ok");
   const t = m.contexto({ mensagens: [], advogados: [], pericia });
   assert.ok(t.includes("Perícia: a pessoa tem perícia médica em 14/12/2026 às 14:00, em APS Teste"));
   assert.ok(t.includes("a Dra. Amanda") && t.includes("até as 11:00") && t.includes("às 16h de 11/12/2026"));
+  assert.ok(t.includes("dia útil anterior") && t.includes("um horário pela manhã e outro à tarde") && t.includes("sem perguntar qual horário fica melhor"), "F608");
   assert.ok(!m.contexto({ mensagens: [], advogados: [] }).includes("Perícia:"), "sem perícia, sem bloco");
   console.log("ok F549 perícia");
 }

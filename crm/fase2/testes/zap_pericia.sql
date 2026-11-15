@@ -40,16 +40,23 @@ do $$ begin
   if not pericia_util((now() at time zone 'America/Sao_Paulo')::date) then
     perform pg_temp.ok('(dia sem expediente: rodada pulada)', true); return;
   end if;
-  -- 3. 1º aviso na rodada, uma vez só
+  -- 3. 1º aviso na rodada, uma vez só, com o texto aprovado na prévia (F608) e a saudação da rodada
+  perform pericia_texto_salvar('00000000-0000-0000-0000-0000000000b1',
+    'Bom dia, Cliente. A sua perícia médica está agendada em APS Teste. Para a sua preparação, vamos agendar o seu atendimento presencial com a Dra. Amanda em sexta-feira, às 09:00 ou às 14:15.');
   perform pericia_avisos_vez('tarde');
   perform pericia_avisos_vez('tarde');
   perform pg_temp.ok('1º aviso sai uma vez', pg_temp.msgs(':primeiro') = 1);
   perform pg_temp.ok('1º aviso cita a Dra. Amanda e o local',
     (select texto like '%a Dra. Amanda%' and texto like '%APS Teste%' and texto like 'Boa tarde, Cliente.%'
-       and texto not like '%INSS agendou%' and texto not like '%Aqui é do escritório%' and texto like '%Qual horário fica melhor?%'
+       and texto not like '%INSS agendou%' and texto not like '%Aqui é do escritório%' and texto like '%às 09:00 ou às 14:15.' and texto not like '%Qual horário%'
        from zap_mensagens where aviso_chave like '%:primeiro'));
   perform pg_temp.ok('conversa marcada aguardando',
     (select pericia->>'estado' from zap_conversas where id = '00000000-0000-0000-0000-0000000000e1') = 'aguardando');
+  perform pg_temp.ok('modelo sem "Qual horário fica melhor?"',
+    (select valor not like '%Qual horário%' from config_app where chave = 'pericia_aviso_texto'));
+  perform pg_temp.ok('dia proposto antes da perícia',
+    pericia_dia_atendimento('00000000-0000-0000-0000-0000000000b1')
+      < ((select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b1') at time zone 'America/Sao_Paulo')::date);
   -- 4. sem resposta: repete na manhã do dia útil seguinte, e não à tarde
   update pericia_avisos set primeiro_em = now() - interval '1 day';
   perform pericia_avisos_vez('tarde');
