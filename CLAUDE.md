@@ -771,6 +771,8 @@ A **F615** (14.09, onda 1 dos casos não previdenciários, decisões do Paulo de
 
 A **F622** (ordem do Paulo de 16.11.2026): o colaborador Claude anota no caso apenas o que pede uma providência do escritório (prazo, peça, juntada, contato, documento a pedir, conferência com pendência); o movimento de rotina, o despacho informativo, a conferência sem pendência e a avaliação genérica do caso só marcam a `colaborador_fila`. O banco recusa o `colab_gravar` de tipo `anotacao` sem `dados.providencia` (ao menos 5 caracteres), e o `config_app.colab_manual` ganhou a seção 2-B com a regra; as tarefas agendadas leem o manual a cada rodada; os prompts criados pelo Hearth e os das triagens só mudam recriando a tarefa ou pela conversa de cada uma. As anotações informativas já gravadas não foram apagadas. SQL em `crm/fase2/migracoes/f622_colab_anotacao_providencia.sql`. Teste: `crm/fase2/testes/colab_direto.sql`.
 
+A **F623** (pedido do Paulo de 16.11.2026, um contato cuja última mensagem tinha 27 dias recebeu o amparo às 08:00): a IA de amparo (F599) só intervém quando o cliente cobra resposta, numa mensagem das últimas 24 horas posterior à última resposta da equipe (`zap_amparo_cobra`: "ninguém responde", "sem resposta", "estou aguardando", "aguardo o retorno", "alguém pode me responder", "já mandei", "não me responderam", "cadê", "alguma novidade?", "?" sozinho). A mensagem antiga parada, o cumprimento e a pergunta sem cobrança não recebem nada; os demais filtros da F599 e da F600 continuam. SQL em `crm/fase2/migracoes/f623_amparo_so_cobranca.sql`.
+
 **Limites**: cliente sem ficha → PDF só no Drive. Nada do dossiê vai ao portal público do cliente.
 Instalação e teste em `crm/fase2/dossie/COMO-INSTALAR.md`.
 
