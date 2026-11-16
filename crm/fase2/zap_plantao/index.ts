@@ -1516,6 +1516,8 @@ if (typeof Deno !== "undefined") {
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       // F521 · a agenda pedida neste Offline a IA responde pelo escritório; F561 · fora dela, o Offline vira sugestão (zap_plantao_aplicar)
       if (x.atendente?.offline && x.atendente.iaAgenda) x.atendente = null;
+      // F629 · assumida durante a conversa com a IA e sem mensagem da equipe: a IA segue pelo escritório e agenda
+      if (x.atendente && x.conversa_id && await rpc("zap_ia_segue", { p_conversa: x.conversa_id }).catch(() => false) === true) x.atendente = null;
       if (!x.remarcar && x.conversa_id && await imagemSemRelacao(x.conversa_id).catch((e) => { console.error("zap_plantao imagem:", String(e)); return false; })) {
         await rpc("zap_plantao_aplicar", { p_msg: msg, p_acao: "nada", p_resposta: "", p_advogado: "", p_urgente: false,
           p_assunto: "imagem sem relação com o escritório", p_relato: "", p_nome: "" });
