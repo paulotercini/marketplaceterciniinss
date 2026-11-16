@@ -145,6 +145,37 @@ select pericia_local('00000000-0000-0000-0000-0000000000b3', 'Rua Teste, 100, Ci
 select pg_temp.ok('pericia_local grava o endereço',
   (select local from eventos where id = '00000000-0000-0000-0000-0000000000b3') = 'Rua Teste, 100, Cidade Teste');
 
+-- 14. F624: hora não informada (00:00) e evento duplicado no mesmo dia não ligam nem enviam
+insert into eventos (id, caso_id, tipo, data_hora, local, status)
+select '00000000-0000-0000-0000-0000000000b4', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
+       ((current_date + 60)::timestamp + time '00:00') at time zone 'America/Sao_Paulo', 'Rua Teste, 1, Cidade Teste', 'agendada';
+do $$ begin
+  begin
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b4', true, 'paulo');
+    perform pg_temp.ok('hora não informada: o Ligar recusa', false);
+  exception when others then
+    perform pg_temp.ok('hora não informada: o Ligar recusa', sqlerrm like '%hora%não informada%');
+  end;
+end $$;
+insert into eventos (id, caso_id, tipo, data_hora, local, status)
+select '00000000-0000-0000-0000-0000000000b5', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
+       ((current_date + 60)::timestamp + time '13:20') at time zone 'America/Sao_Paulo', 'Rua Teste, 1, Cidade Teste', 'agendada';
+do $$ begin
+  begin
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b5', true, 'paulo');
+    perform pg_temp.ok('duplicado no mesmo dia: o Ligar recusa', false);
+  exception when others then
+    perform pg_temp.ok('duplicado no mesmo dia: o Ligar recusa', sqlerrm like '%mesmo dia%');
+  end;
+end $$;
+-- ligado antes do duplicado aparecer: a rodada não envia
+update eventos set status = 'cancelada' where id = '00000000-0000-0000-0000-0000000000b4';
+select pericia_ligar('00000000-0000-0000-0000-0000000000b5', true, 'paulo');
+update eventos set status = 'agendada' where id = '00000000-0000-0000-0000-0000000000b4';
+select pericia_avisos_vez('tarde');
+select pg_temp.ok('duplicado: a rodada não envia',
+  not exists (select 1 from zap_mensagens where aviso_chave like 'pericia:00000000-0000-0000-0000-0000000000b5:%'));
+
 \set QUIET off
 select n, case when ok then 'ok' else 'FALHOU' end, prova from _r order by n;
 select count(*) filter (where not ok) as falhas from _r;
