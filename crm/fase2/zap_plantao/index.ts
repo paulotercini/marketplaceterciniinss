@@ -39,6 +39,8 @@ export const mascarar = (s: unknown) => String(s ?? "")
   .replace(/\d[\d.\-/ ]{6,}\d/g, (m) => (m.replace(/\D/g, "").length >= 8 ? "[número]" : m));
 // F422af · o atendimento agendado ou remarcado para o mesmo dia já fica confirmado na agenda
 const hojeBR = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+// F625: atendimento até 2 dias adiante (hoje, amanhã ou depois de amanhã) já entra confirmado na agenda.
+export const confirmaJa = (d?: string, agora = new Date()) => !!d && d <= new Date(agora.getTime() + 2 * 864e5).toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 const hora = (iso: string) => new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" });
 
 type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | null; encaminhada?: number | null; momento: string };
@@ -887,7 +889,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       });
       if (r.codigo === "HORARIO_INDISPONIVEL") return { erro: "este horário acabou de ser tomado: consulte de novo e ofereça outro" };
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
-      if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
+      if (confirmaJa(v.data) && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
       // F422q · a confirmação diz de quem é o atendimento quando quem escreve agenda para outra pessoa
       const para = v.tipo === "002" ? c.nome_ficha || c.nome_numero : c.cliente_numero ? nomeDito : null;
       const conf = { p_conversa: conversa, p_rotulo: rotulo(v.data, v.inicio, COM[v.profissional]),
@@ -909,7 +911,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
         observacoes: "Remarcado pela assistente virtual do WhatsApp." });
       if (r.codigo === "HORARIO_INDISPONIVEL") return { erro: "este horário acabou de ser tomado: consulte de novo e ofereça outro" };
       if (!r.ok) return { erro: String(r.erro || r.codigo || "erro da agenda") };
-      if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
+      if (confirmaJa(v.data) && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
       await liberada(banco, antigo);
       const de = rotulo(antigo.data, antigo.inicio, COM[antigo.profissional] || "a equipe"), para = rotulo(v.data, v.inicio, COM[v.profissional]);
       await banco("zap_nota_sistema", { p_conversa: conversa, p_autor: null, p_texto: `📅 A assistente virtual remarcou o atendimento de ${de} para ${para}.` });
@@ -1015,13 +1017,11 @@ const hhmm = (h: string) => `${Number(h.slice(0, 2))}h${h.slice(3, 5)}`;
 export function msgOfertaEspera(e: Espera, v: VagaEspera, ate: Date) {
   const h = Number(ate.toLocaleString("en-GB", { timeZone: "America/Sao_Paulo", hour: "2-digit", hour12: false }));
   const ola = h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
-  const prazo = ate.toLocaleTimeString("pt-BR", { timeZone: "America/Sao_Paulo", hour: "2-digit", minute: "2-digit" }).replace(":", "h");
   const [a, m, d] = v.data.split("-").map(Number);
   const dia = SEMANA[new Date(Date.UTC(a, m - 1, d)).getUTCDay()];
   return `${ola}, ${String(e.nome || "").trim().split(/\s+/)[0]}. Surgiu um horário com ${COM[v.prof] || "a equipe"} na ${dia}, dia ${ddmm(v.data)}, ` +
     `às ${hhmm(v.inicio)}, no escritório.\n\nPodemos agendar o seu atendimento nesse horário?` +
-    (e.marcado ? ` Com a sua resposta positiva, o atendimento já agendado para ${ddmm(e.marcado)} fica liberado para outra pessoa.` : "") +
-    `\n\nAguardamos a sua resposta até as ${prazo}.`;
+    (e.marcado ? ` Com a sua resposta positiva, o atendimento já agendado para ${ddmm(e.marcado)} fica liberado para outra pessoa.` : "");
 }
 export const ESQ_ESPERA = { type: "object", additionalProperties: false, required: ["intencao"],
   properties: { intencao: { type: "string", enum: ["aceitar", "recusar", "outro"] } } };
@@ -1092,7 +1092,7 @@ export async function responderEspera(msg: string, chamar = agenda, banco = rpc,
   }
   if (r.codigo === "HORARIO_INDISPONIVEL") return responder("perdeu", `Este horário acabou de ser preenchido.\n\n${lista}`);
   if (!r.ok) return responder("outro");
-  if (v.data === hojeBR() && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
+  if (confirmaJa(v.data) && r.evento?.id) await chamar("confirmar", { eventId: r.evento.id }).catch(() => null);
   await banco("zap_plantao_marcado", { p_conversa: x.conversa, p_rotulo: o.rotulo, p_modalidade: "presencial", p_assunto: "lista de espera", p_para: null })
     .catch(() => banco("zap_plantao_marcado", { p_conversa: x.conversa, p_rotulo: o.rotulo, p_modalidade: "presencial", p_assunto: "lista de espera" }));
   return responder("aceitou");
