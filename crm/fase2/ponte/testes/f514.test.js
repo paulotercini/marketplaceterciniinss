@@ -107,7 +107,7 @@ t.test("tipo sem tradução deixa registro; vídeo redondo e resposta de botão 
   a.equal(N.deveIgnorar(novo), false);
   a.equal(N.tipoDaMensagem(novo), "texto");
   a.equal(N.tipoSemTraducao(novo), "tipoInventadoMessage");
-  a.match(N.textoDaMensagem(novo), /tipoInventado, veja no celular/);
+  a.match(N.textoDaMensagem(novo), /não exibe \(tipoInventado\); veja no celular/);
   a.equal(N.tipoSemTraducao(m({ conversation: "oi" })), undefined);
   a.equal(N.deveIgnorar(m({ keepInChatMessage: {} })), true);
   a.equal(N.tipoDaMensagem(m({ ptvMessage: { mimetype: "video/mp4" } })), "video");
