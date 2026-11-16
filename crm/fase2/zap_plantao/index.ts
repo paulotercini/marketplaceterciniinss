@@ -1232,6 +1232,14 @@ export const pendentesDoErro = (txt: string) => /waiting on responses/i.test(txt
 
 // um turno: abre o stream, manda a mensagem, responde às ferramentas da agenda e espera a decidir
 type Ferramentas = Record<string, (i: any) => Promise<unknown>>;
+// F630 · conversa assumida (fora da F521 e da F629): a IA só sugere, e agendar, remarcar, cancelar e a lista de espera não executam
+const SO_EQUIPE = ["marcar_atendimento", "remarcar_atendimento", "cancelar_atendimento", "entrar_na_espera"];
+export function semAgendarSeAssumida(fer: Ferramentas, assumida: boolean): Ferramentas {
+  if (!assumida) return fer;
+  const r = { ...fer };
+  for (const n of SO_EQUIPE) if (r[n]) r[n] = async () => ({ erro: "conversa assumida por um colaborador: não agende, não remarque e não cancele; a sua resposta vira sugestão para quem atende, que decidirá" });
+  return r;
+}
 export async function turno(sessao: string, texto: string, buscar: typeof fetch = fetch, ferramentas: Ferramentas = {}, guarda: Guarda = {}) {
   const ctl = new AbortController();
   const prazo = setTimeout(() => ctl.abort(), MA_PRAZO_MS);
@@ -1342,7 +1350,7 @@ async function decidirPorAgente(x: Contexto) {
   // a sessão fica presa à versão do agente em que nasceu: versão nova recomeça a sessão
   const viva = s?.id && s.v === versao && Date.now() - Date.parse(s.em) < MA_SESSAO_DIAS * 864e5;
   let r: Record<string, any> | null = null, id = viva ? s!.id : "", em = viva ? s!.em : "";
-  const fer = TOKEN_AGENDA && x.conversa_id ? ferramentasDaConversa(x.conversa_id, agenda, rpc, x.relacao ? x.contato || undefined : undefined) : {};
+  const fer = semAgendarSeAssumida(TOKEN_AGENDA && x.conversa_id ? ferramentasDaConversa(x.conversa_id, agenda, rpc, x.relacao ? x.contato || undefined : undefined) : {}, !!x.atendente);
   const guarda = guardaDoTexto([...msgs].reverse().find((m) => m.direcao === "entrada")?.texto, enviados(msgs).pop());
   if (viva) {
     try { r = await turno(id, textoDoTurno(x, msgs.filter((m) => m.momento > s!.ate), false), fetch, fer, guarda); }
