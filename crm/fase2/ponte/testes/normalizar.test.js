@@ -237,3 +237,19 @@ t.test("F631: registro de chamada vira texto legível; tipo desconhecido diz que
   a.equal(N.textoDaMensagem(m({ callLogMesssage: { isVideo: true } })), "📹 Chamada de vídeo");
   a.match(N.textoDaMensagem(m({ algoNovoMessage: { x: 1 } })), /CRM não exibe \(algoNovo\); veja no celular/);
 });
+
+t.test("F632: botões, modelo, lista e interativa viram corpo e opções legíveis", () => {
+  const m = c => ({ key: { remoteJid: "5500000000012@s.whatsapp.net", id: "Y" }, message: c });
+  const bt = m({ buttonsMessage: { contentText: "Seu pedido saiu", footerText: "Loja", buttons: [{ buttonText: { displayText: "Sim" } }, { buttonText: { displayText: "Não" } }] } });
+  a.equal(N.tipoDaMensagem(bt), "texto");
+  a.equal(N.textoDaMensagem(bt), "Seu pedido saiu\nLoja\nOpções: Sim · Não");
+  a.equal(N.textoDaMensagem(m({ viewOnceMessage: { message: { templateMessage: { hydratedTemplate: {
+    hydratedContentText: "Confirme o horário", hydratedButtons: [{ quickReplyButton: { displayText: "Confirmar" } }, { urlButton: { displayText: "Site" } }] } } } } })),
+    "Confirme o horário\nOpções: Confirmar · Site");
+  a.equal(N.textoDaMensagem(m({ templateMessage: { fourRowTemplate: { content: { text: "Olá" }, buttons: [{ quickReplyButton: { displayText: { text: "Ok" } } }] } } })), "Olá\nOpções: Ok");
+  a.equal(N.textoDaMensagem(m({ listMessage: { description: "Escolha", buttonText: "Ver", sections: [{ rows: [{ title: "A" }, { title: "B" }] }] } })), "Escolha\nOpções: A · B");
+  a.equal(N.textoDaMensagem(m({ deviceSentMessage: { message: { interactiveMessage: { body: { text: "Pague" }, nativeFlowMessage: { buttons: [{ name: "cta_url", buttonParamsJson: '{"display_text":"Abrir"}' }] } } } } })), "Pague\nOpções: Abrir");
+  a.equal(N.textoDaMensagem(m({ interactiveResponseMessage: { body: { text: "Abrir" } } })), "Abrir");
+  a.equal(N.textoDaMensagem(m({ buttonsResponseMessage: { selectedButtonId: "1", selectedDisplayText: "Sim" } })), "Sim");
+  a.equal(N.tipoSemTraducao(bt), undefined);
+});
