@@ -1,0 +1,137 @@
+<body>
+
+<div class="login" id="tela-login">
+  <!-- Sem <form> de propósito. Com formulário, um navegador que não executa o
+       JavaScript (visualizador embutido do WhatsApp, do Gmail, do Drive)
+       manda o clique no botão virar envio nativo: a página recarrega e os
+       campos aparecem em branco, como se o sistema tivesse apagado tudo.
+       Sem formulário, o botão simplesmente não responde — e o aviso abaixo
+       explica o que fazer. -->
+  <div class="cx-login">
+    <h1>AdvPrev <span class="versao">· versão 14.20</span></h1>
+    <div id="sem-js">
+      <strong>⚠ Este navegador não está rodando o sistema.</strong>
+      <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
+         aplicativo — WhatsApp, Gmail, Drive, Arquivos. Toque nos três pontinhos
+         e escolha <b>“Abrir no navegador”</b> (Chrome ou Safari).</p>
+      <p>Melhor ainda: peça o endereço do sistema na internet e salve na tela
+         de início. Aí não depende mais de arquivo nenhum.</p>
+    </div>
+    <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
+    <input id="login-email" type="email" placeholder="e-mail" autocomplete="username"
+      autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next">
+    <input id="login-senha" type="password" placeholder="senha" autocomplete="current-password"
+      autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+    <button id="btn-entrar" type="button" onclick="entrar(event)">Entrar</button>
+    <div class="erro" id="login-erro"></div>
+    <button type="button" class="cfg-link" onclick="pedirConfig()"
+      title="usar outro endereço de banco neste aparelho"><span aria-hidden="true">Configurar</span><span class="sr-only">configurar este aparelho</span></button>
+    <!-- 11.92 · ADM-06: o histórico das versões (parado na F160, 40 mil caracteres) saiu; ele mora no CLAUDE.md e no git -->
+  </div>
+  <noscript>
+    <div class="cx-login" style="margin-top:12px;color:var(--vermelho)">
+      Este sistema precisa de JavaScript. Abra o arquivo no Chrome ou no Safari.
+    </div>
+  </noscript>
+</div>
+
+<div class="app" id="app">
+  <nav class="sidebar" onmouseleave="esconderEtiqueta()" onscroll="seguirEtiqueta()">
+    <button id="btn-lateral" title="recolher/estender o menu">☰</button>
+    <!-- F144 · topo do visual novo: a marca e a conta, com o menu da conta -->
+    <div class="v10-topo">
+      <span class="v10-marca txt">Advocacia previdenciária</span>
+      <button class="v10-conta" id="btn-conta" aria-haspopup="menu" aria-expanded="false" title="sua conta">
+        <span class="avatar mini" id="conta-av"></span><span class="txt" id="conta-nome"></span>
+        <svg class="txt" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div class="menu-conta" id="menu-conta" role="menu" hidden></div>
+    </div>
+    <div class="v10-acoes">
+      <button class="v10-cli" id="btn-v10-cli" title="Novo Cliente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="txt">Cliente</span></button>
+      <button class="v10-anotar" id="btn-v10-anotar" title="anotação rápida: ligação ou balcão, o registro nasce urgente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg><span class="txt">Anotar</span></button>
+    </div>
+    <div class="usuario"><span class="avatar" id="u-avatar"></span>
+      <div><strong id="u-nome"></strong><div class="u-papel txt" id="u-papel"></div></div>
+      <button id="btn-som" title="ligar/desligar o som de conclusão"
+        style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
+      <button id="btn-vercomo" class="sair" onclick="alternarVerComo()" style="display:none"
+        title="mostra a barra exatamente como o colaborador a vê; clique de novo para voltar"><span aria-hidden="true">Simular</span><span class="sr-only">ver como colaborador</span></button>
+      <button id="btn-niveis" class="sair" onclick="abrirTransicao()" style="display:none"
+        title="a transição do To Do: o nível de cada colaborador e a onda dos recursos">níveis</button>
+      <button class="sair" onclick="sair()">sair</button></div>
+    <div class="sep"></div>
+    <!-- F52 · a anotação rápida tem porta FIXA na barra; F65 · ela subiu para
+         CIMA do Novo Cliente e trocou a lupa pelo ⚡ (pedido do Paulo: a lupa
+         fazia o campo parecer a busca) — clicou, o painel abre já procurando -->
+    <div class="busca rapida-caixa"><input id="ar-nome" placeholder="Anotação rápida — nome…"
+      autocomplete="off" onfocus="anotacaoRapida(this.value); this.value='';"
+      title="ligação ou balcão: clique e anote agora — o registro nasce urgente"></div>
+    <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="txt">Novo Cliente</span></button>
+    <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo, protocolo…" style="padding-right:26px">
+      <button id="busca-x" title="limpar pesquisa"
+        style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:#CFD3DA">✕</button>
+      <kbd class="busca-kbd" aria-hidden="true">/</kbd></div>
+    <div class="grupo" id="grupo-dinamicas"></div>
+    <div class="sep"></div>
+    <div class="grupo"><h3>Listas do escritório</h3><div id="grupo-fases"></div></div>
+    <div class="sep"></div>
+    <div class="grupo" id="grupo-salvas-g" hidden><h3>Visões salvas</h3><div id="grupo-salvas"></div></div>
+    <div class="grupo"><h3>Visões</h3><div id="grupo-visoes"></div><div id="grupo-mais"></div></div>
+    <div class="sep"></div>
+    <div class="sync-todo txt" id="sync-todo"></div>
+  </nav>
+  <main class="meio">
+    <div class="busca-cel">
+      <input id="busca-cel" type="search" placeholder="Nome, CPF ou processo…"
+        autocomplete="off" autocapitalize="off" enterkeyhint="search">
+      <button id="busca-cel-x" title="limpar" style="display:none">✕</button>
+    </div>
+    <div class="meio-topo">
+      <h1 id="titulo-lista"></h1>
+      <button class="ajuda-bt ajuda-tit" type="button" onclick="ajuda(null,event)" title="como usar esta tela" aria-label="Ajuda desta tela">?</button>
+      <div class="topo-extra" id="topo-extra"></div>
+      <!-- F274 · o fundo da lista e a ordem moram no ⋯ ao lado do título, como no To Do -->
+      <details class="tl-mais mais-baixo topo-mais" id="topo-mais"><summary class="tl-bt tl-bt-ic" aria-label="Opções da lista" title="opções da lista: ordem e fundo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></summary>
+      <span class="tl-mais-menu" role="menu">
+      <button class="btn-fundo" id="btn-fundo" title="mudar o fundo desta lista" onclick="abrirFundos()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.2 0 1.8-.7 1.8-1.5 0-1.4-1.3-1.7-1.3-2.9 0-.9.8-1.6 1.9-1.6h1.8a4.3 4.3 0 0 0 4.3-4.3c0-3.9-3.9-6.7-8.5-6.7Z"/><path d="M7.5 10.5h.01M10.5 7h.01M14.5 7h.01M17 10h.01"/></svg></button>
+        <!-- F236 · as listas abrem pela data que cobra, vencidos primeiro -->
+        <div class="ordenar"><select id="ordem" hidden aria-hidden="true">
+          <option value="prazo" selected>Data mais próxima</option>
+          <option value="alfa">Alfabética</option>
+          <option value="imp">Importante</option>
+        </select><div id="lista-opc" class="lista-opc"></div></div>
+      </span></details>
+    </div>
+    <div class="meio-sub" id="sub-lista"></div>
+    <div id="conteudo-meio"></div>
+    <!-- como no To Do: o campo de acrescentar fica sempre no pé da lista -->
+    <div class="add-rodape" id="add-rodape" style="display:none">
+      <span class="add-mais"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <input id="add-nome" placeholder="Adicionar cliente nesta lista (nome, ou Nome #CPF)"
+        autocomplete="off" enterkeyhint="done">
+      <input id="add-ben" list="lista-beneficios" placeholder="benefício (opcional)">
+      <button onclick="addNaLista()">Adicionar</button>
+    </div>
+  </main>
+  <aside class="detalhe" id="detalhe"></aside>
+</div>
+<!-- barra de baixo do celular: os quatro destinos de campo -->
+<div class="cel-fundo" id="cel-fundo" onclick="fecharMenuCel()"></div>
+<nav class="barra-cel" id="barra-cel">
+  <button data-cel="agendaq" class="so-n0"><b aria-hidden="true">📅</b>Agenda</button>
+  <button data-cel="clientes" class="so-n0"><b aria-hidden="true">👥</b>Clientes</button>
+  <button data-cel="busca" class="so-n0"><b aria-hidden="true">🔍</b>Buscar</button>
+  <button data-cel="meudia"><b aria-hidden="true">☀️</b>Meu Dia</button>
+  <button data-cel="whatsapp"><b aria-hidden="true">💬</b>WhatsApp<span class="selo" id="selo-zap" style="display:none"></span></button>
+  <button data-cel="mencoes"><b aria-hidden="true">📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
+  <button data-cel="menu"><b aria-hidden="true">☰</b>Listas</button>
+</nav>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+<button class="fab-rapida" id="fab-rapida" onclick="anotacaoRapida()"
+  title="anotação rápida (ligação ou balcão) — o registro nasce urgente">⚡</button>
+<button class="fab-sug" id="fab-sug" onclick="abrirSugestao()"
+  title="anotar um erro, uma correção ou uma melhoria do CRM; somente o Paulo lê" aria-label="Sugestões">✎<span class="fab-sug-t"> Sugestões</span></button>
+<div class="zap-ag" id="zap-ag"></div>
+<button class="fab-juntos" id="fab-juntos" type="button" onclick="alternarFabs()" aria-expanded="false" aria-label="Atalhos" title="agenda, sugestões e anotação rápida">⋯</button>
+<div id="modal" style="display:none"></div>
+

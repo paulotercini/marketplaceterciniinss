@@ -8,6 +8,8 @@
 
 ## Publicação
 
+- **Edite em `crm/fase2/src/` e rode `python3 crm/fase2/build_app.py`** (monta `app.html` e `docs/crm/index.html`; CI roda `--conferir`). Quem editou o `app.html` direto roda `--absorver` antes. Ordem dos módulos: `src/modulos.txt`; `html/` (cabeça, corpo, fim), `css/` (base, tema-v10), `js/NN-área.js` (whatsapp, agenda, prazos, pre-caso, pericias, casos), cortados entre blocos de topo. Para achar código: `grep -rn` em `src/`.
+
 - `crm/fase2/app.html` é o CRM inteiro; ao mudar, copie para `docs/crm/index.html` (o deploy confere com `cmp`).
 - Antes do merge, `git fetch origin main` e confira na main o próximo número F/versão livre (várias threads publicam em paralelo).
 - `crm/fase2/migracoes/`: SQL aplicado pelo `supabase-migracoes.yml` ao entrar na main. Edge Functions em `crm/fase2/<função>/index.ts`; ponte do WhatsApp em `crm/fase2/ponte/`; extensões em `crm/fase2/extensao/` e `crm/fase2/dossie/`.
@@ -22,3 +24,4 @@
 ## Outras partes
 
 - Site: `python3 build_site.py`. Portal: `graph_refresh.py` e `build_portal_listas.py`. Base de conhecimento: `_base-conhecimento-inss/` (ondas próprias, não misturar com portal).
+- Dossiê do cliente: extensão em `crm/fase2/dossie/` (versão **0.15.0**). Ao subir o `manifest.json`, troque aqui e no marcador. <!-- dossie-versao: 0.15.0 -->
