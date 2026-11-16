@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.18</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19917,7 +19917,7 @@ async function historicoTodasZap(){
 }
 async function assumirConversa(){
   if(!zapAberta) return;
-  if(comIaZap(zapConvs.find(x=>x.id===zapAberta)) && !await confirmar("A IA está conduzindo esta conversa. Assumir mesmo assim?")) return;
+  if(comIaZap(zapConvs.find(x=>x.id===zapAberta)) && !await confirmar("A IA continua a responder até você escrever ao cliente. Assumir a conversa?")) return;
   try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:zapAberta})}); }
   catch(e){ return aviso(msgErro(e)); }
   zapNota = false;
@@ -20588,7 +20588,7 @@ async function responderZapLado(convId, cliId){
     // F566 · ao lado da ficha, a conversa de outro colega se responde sem assumir: o responsável continua e a mensagem leva o autor_id de quem enviou
     if(cv && !cv.atendente_id){
       if(!await confirmar("Para responder, a conversa passa a ser sua. Assumir?")) return;
-      if(comIaZap(cv) && !await confirmar("A IA está conduzindo esta conversa. Assumir mesmo assim?")) return;
+      if(comIaZap(cv) && !await confirmar("A IA continua a responder até você escrever ao cliente. Assumir a conversa?")) return;
       try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:convId})}); }
       catch(e){ return aviso(msgErro(e)); }
     }
