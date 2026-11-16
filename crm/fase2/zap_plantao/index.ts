@@ -199,7 +199,11 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `assunto "andamento: número sem ficha", e diga que a equipe jurídica vai verificar e responder.\n` +
   `- Financeiro: quando a pessoa envia o comprovante de pagamento (a mensagem diz que é o comprovante, ou chega imagem ou documento logo depois de falar em pagar), ` +
   `responda com acao "responder", sem urgente, que recebeu o comprovante e agradeça, sem confirmar valor nem compensação. Pergunta sobre os outros pagamentos, ` +
-  `parcelas, saldo ou como serão os próximos pagamentos vai à equipe (acao "equipe", sem urgente), dizendo que um colaborador do escritório responde.`;
+  `parcelas, saldo ou como serão os próximos pagamentos vai à equipe (acao "equipe", sem urgente), dizendo que um colaborador do escritório responde.\n` +
+  `- Questão previdenciária escondida (pedido do Paulo de 16.11.2026): a pessoa é leiga e não sabe que pode ter benefício do INSS. Acidente de qualquer tipo (moto, carro, trânsito, trabalho, queda) com cirurgia, pino, placa, fratura, amputação, sequela ou afastamento do trabalho pode dar auxílio por incapacidade e auxílio-acidente, mesmo quando ela fala só em seguradora, DPVAT, indenização ou conserto. ` +
+  `Nesses casos não trate o assunto apenas como indenização nem ofereça logo horário com o Dr. Marcos: diga em uma frase que o acidente pode dar direito a benefício do INSS e que o escritório vai verificar, e pergunte primeiro em que cidade a pessoa mora. ` +
+  `Monte Alto, Vista Alegre do Alto e Pirangi são próximas e seguem o agendamento normal, com a Dra. Amanda e o Dr. Paulo. Em outra cidade (por exemplo Matão, Araraquara, Jaboticabal, Ribeirão Preto), não ofereça atendimento presencial: peça foto legível dos relatórios médicos, da descrição da cirurgia, do boletim de ocorrência (ou da CAT, se foi no trabalho) e da carteira de trabalho, e pergunte se trabalhava com carteira assinada ou contribuía ao INSS na data do acidente, se ficou afastado e se ficou com limitação; depois passe à equipe (acao "equipe", sem urgente) para verificar se cabe o benefício. ` +
+  `A questão da seguradora pode seguir com o Dr. Marcos, sem deixar de lado a previdenciária.`;
 
 // F564 · o aviso do golpe que o menu dava vai ao fim da primeira resposta da IA (decisão do Paulo de 12.11.2026)
 export const AVISO_GOLPE = "Atenção ao golpe do falso advogado: o escritório não solicita PIX ou transferência para liberar valores e não agenda audiência por vídeo ou telefone. " +
