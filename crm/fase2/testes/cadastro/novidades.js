@@ -15,7 +15,10 @@ const SUPA = "https://ficticio.supabase.co";
 const iso = d => d.toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const mais = n => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
 const br = d => iso(d).split("-").reverse().join(".");
-let SALTO = 3; while ([0, 5, 6].includes(mais(SALTO).getDay())) SALTO++;
+// o dia seguinte também não pode ser feriado nacional fixo (20/11 caía na sexta e o app pulava a segunda)
+// shortcut: só os feriados fixos; os móveis (Sexta-feira Santa) podem voltar a quebrar perto da Páscoa
+const FERIADO = d => ["01-01", "04-21", "05-01", "09-07", "10-12", "11-02", "11-15", "11-20", "12-25"].includes(iso(d).slice(5));
+let SALTO = 3; while ([0, 5, 6].includes(mais(SALTO).getDay()) || FERIADO(mais(SALTO)) || FERIADO(mais(SALTO + 1))) SALTO++;
 const dJul = mais(SALTO), dLem = mais(SALTO + 1), dPrazo = mais(40);
 const curto = br(dJul).slice(0, 6) + iso(dJul).slice(2, 4);   // dd.mm.aa → dd/mm/aa
 const curtoBarra = curto.replace(/\./g, "/");

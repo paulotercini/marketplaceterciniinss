@@ -104,7 +104,8 @@ function filtrar(linhas, q) {
   await p.evaluate(() => { visao = "fase:inss"; render(); caixa("<p>teste</p>"); });
   pedidos.length = 0;
   await p.evaluate(() => vigiarMudancas());
-  conf("caixa aberta: a vigia não consulta nada", pedidos.length === 0);
+  // só as tabelas da vigia: um GET de fundo (WhatsApp, config) no mesmo instante derrubava a prova no CI
+  conf("caixa aberta: a vigia não consulta nada", !pedidos.some(x => ["clientes", "casos", "tarefas", "eventos", "pagamentos", "lembretes", "apagados"].includes(x[0])));
   conf("caixa aberta: o título velho continua",
     await p.evaluate(id => D.casoPorId.get(id).titulo, CASO1) !== BANCO.casos[0].titulo);
 
