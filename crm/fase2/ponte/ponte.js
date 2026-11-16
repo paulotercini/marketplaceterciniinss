@@ -489,6 +489,10 @@ async function gravar(m, baixar, conversa, direcao, status, extra) {
   // (é assim que o --recuperar-midia devolve o áudio às mensagens antigas)
   const [ja] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(m.key.id)}&select=id,texto,midia_url`);
   if (ja) {
+    // F632 · a mensagem gravada antes como "[mensagem que o CRM não exibe …]" ganha o texto quando o histórico a reenvia
+    if (/^\[mensagem (que o CRM não exibe|de tipo) /.test(ja.texto || "") && linha.texto && !linha.texto.startsWith("[mensagem"))
+      await sb(`/rest/v1/zap_mensagens?id=eq.${ja.id}`, { method: "PATCH",
+        headers: { Prefer: "return=minimal" }, body: JSON.stringify({ texto: linha.texto }) });
     if (MIDIA.includes(tipo) && !ja.midia_url && (ja.texto || "").includes(SEM_MIDIA)) {
       const md = await baixarMidia(m, baixar, conversa, tipo).catch(e => { log("mídia ainda indisponível:", e.message); return null; });
       if (md) {

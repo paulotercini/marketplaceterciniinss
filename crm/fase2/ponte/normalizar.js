@@ -62,6 +62,7 @@ function miolo(m) {
     if (c.viewOnceMessageV2) { c = c.viewOnceMessageV2.message || {}; continue; }
     if (c.viewOnceMessageV2Extension) { c = c.viewOnceMessageV2Extension.message || {}; continue; }
     if (c.documentWithCaptionMessage) { c = c.documentWithCaptionMessage.message || {}; continue; }
+    if (c.deviceSentMessage) { c = c.deviceSentMessage.message || {}; continue; }
     break;
   }
   return c;
@@ -77,6 +78,9 @@ const MAPA = [
   // F514: o vídeo em círculo e a resposta de botão ou de lista
   ["ptvMessage", "video"], ["buttonsResponseMessage", "texto"],
   ["listResponseMessage", "texto"], ["templateButtonReplyMessage", "texto"],
+  // F632 · mensagem de empresa com botões, modelo, lista ou interativa: o corpo e as opções viram texto
+  ["buttonsMessage", "texto"], ["templateMessage", "texto"], ["listMessage", "texto"],
+  ["interactiveMessage", "texto"], ["interactiveResponseMessage", "texto"],
 ];
 // F514 · o tipo que a ponte não traduz (enquete, evento, pedido…) sumia sem rastro: agora vira uma linha
 // de texto que manda ver no celular. Devolve o nome do campo, ou undefined
@@ -106,12 +110,51 @@ function textoDaMensagem(m) {
   if (c.contactMessage) return linhaContato(c.contactMessage);
   if (c.contactsArrayMessage) return (c.contactsArrayMessage.contacts || []).map(linhaContato).join("\n");
   for (const [k, campo] of [["buttonsResponseMessage", "selectedDisplayText"], ["listResponseMessage", "title"],
-    ["templateButtonReplyMessage", "selectedDisplayText"]]) if (c[k]) return c[k][campo] || "";
+    ["templateButtonReplyMessage", "selectedDisplayText"]]) if (c[k]) return c[k][campo] || c[k].selectedId || c[k].singleSelectReply?.selectedRowId || "";
+  const bt = textoDeBotoes(c);
+  if (bt !== null) return bt;
   const d = tipoSemTraducao(m);
   // F631 · o registro de chamada (o proto escreve callLogMesssage, com três "s") vira texto legível
   if (/^callLogMess?sage$/.test(d || "")) return c[d]?.isVideo ? "📹 Chamada de vídeo" : "📞 Chamada de voz";
   if (d) return `[mensagem que o CRM não exibe (${d.replace(/Message$/, "")}); veja no celular]`;
   return "";
+}
+
+// F632 · botões, modelo, lista e interativa: "corpo\nrodapé\nOpções: A · B". Devolve null se não for nenhum deles
+const juntar = (partes, opcoes) => {
+  const ops = opcoes.map(o => String(o || "").trim()).filter(Boolean);
+  return [...partes.map(x => String(x || "").trim()).filter(Boolean), ops.length ? "Opções: " + ops.join(" · ") : ""]
+    .filter(Boolean).join("\n");
+};
+const jsonSeguro = t => { try { return JSON.parse(t || "{}") || {}; } catch { return {}; } };
+function textoDeBotoes(c) {
+  if (c.buttonsMessage) {
+    const b = c.buttonsMessage;
+    return juntar([b.text, b.contentText, b.footerText], (b.buttons || []).map(x => x.buttonText?.displayText));
+  }
+  if (c.templateMessage) {
+    const t = c.templateMessage;
+    const h = t.hydratedTemplate || t.hydratedFourRowTemplate || t.fourRowTemplate || {};
+    // no modelo hidratado displayText é texto; no fourRowTemplate é objeto { text }
+    const ops = (h.hydratedButtons || h.buttons || []).map(x => (x.quickReplyButton || x.urlButton || x.callButton || {}).displayText)
+      .map(o => typeof o === "string" ? o : o?.text);
+    return juntar([h.hydratedTitleText, h.hydratedContentText, h.content?.text, h.hydratedFooterText, h.footer?.text], ops);
+  }
+  if (c.listMessage) {
+    const l = c.listMessage;
+    const linhas = (l.sections || []).flatMap(s => (s.rows || []).map(r => r.title));
+    return juntar([l.title, l.description, l.footerText], linhas.length ? linhas : [l.buttonText]);
+  }
+  if (c.interactiveMessage) {
+    const i = c.interactiveMessage;
+    const ops = (i.nativeFlowMessage?.buttons || []).map(x => jsonSeguro(x.buttonParamsJson).display_text || x.name);
+    return juntar([i.header?.title, i.header?.subtitle, i.body?.text, i.footer?.text], ops);
+  }
+  if (c.interactiveResponseMessage) {
+    const r = c.interactiveResponseMessage, p = jsonSeguro(r.nativeFlowResponseMessage?.paramsJson);
+    return juntar([r.body?.text || p.display_text || p.title || p.id], []);
+  }
+  return null;
 }
 
 // F555 · o número do vCard: o waid (número no WhatsApp) vale mais que o TEL escrito; sem nenhum, só o nome

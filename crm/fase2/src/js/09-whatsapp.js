@@ -737,10 +737,15 @@ function linksZap(t){
 // primeira linha) em negrito no alto do balão, sem os asteriscos; o link não passa por aqui
 const FMT_ZAP = [[/\*/, "b"], [/_/, "i"], [/~/, "s"]];
 const fmtZap = h => FMT_ZAP.reduce((x, [m, tag]) => x.replace(new RegExp(`(^|[\\s(>])${m.source}(?=\\S)([^\\n]*?\\S)${m.source}(?=$|[\\s.,;:!?)<])`, "g"), `$1<${tag}>$2</${tag}>`), h);
+const TIPOS_ZAP_PT = { buttons: "mensagem com botões", template: "modelo de empresa", list: "lista de opções",
+  interactive: "mensagem interativa", pollCreation: "enquete", pollCreationV3: "enquete", event: "evento", order: "pedido",
+  product: "produto", groupInvite: "convite de grupo", requestPayment: "pedido de pagamento" };
 // F631 · textos técnicos já gravados pela ponte, mostrados de forma legível
 function textoZapLegivel(t){
   return String(t??"").replace(/\[mensagem de tipo callLogMess?sage, veja no celular\]/g, "📞 Chamada de voz")
     .replace(/\[mensagem de tipo ([^,\]]+), veja no celular\]/g, "[mensagem que o CRM não exibe ($1); veja no celular]")
+    // F632 · o nome técnico do tipo vira português (as novas já chegam com o texto; estas foram gravadas antes)
+    .replace(/\(([a-zA-Z]+?)(Message)?\); veja no celular\]/g, (x, k) => TIPOS_ZAP_PT[k] ? `(${TIPOS_ZAP_PT[k]}); veja no celular]` : x)
     .replace(/\[mídia não baixada\]/g, "[mídia não disponível no CRM; veja no celular]");
 }
 function textoZap(t){
