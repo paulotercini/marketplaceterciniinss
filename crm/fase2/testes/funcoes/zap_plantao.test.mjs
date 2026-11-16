@@ -768,5 +768,6 @@ console.log("F581 plantão ok");
   assert.ok(c628.includes("Questão previdenciária escondida"));
   assert.ok(c628.includes("auxílio-acidente") && c628.includes("seguradora"));
   assert.ok(c628.includes("Matão") && c628.includes("não ofereça atendimento presencial"));
+  assert.ok(c628.includes("Não pergunte a cidade") && !c628.includes("pergunte primeiro em que cidade"));
   assert.ok(pa628("Texto do Console.").includes("Questão previdenciária escondida"));
 }
