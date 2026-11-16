@@ -18,7 +18,7 @@ insert into casos (id, cliente_id, titulo, fase) values
   ('00000000-0000-0000-0000-00000000ca11', '00000000-0000-0000-0000-00000000c111', 'Caso Teste', 'inss');
 
 -- 1. anotação direta entra no caso, em nome do Claude
-select colab_gravar('{"tipo":"anotacao","chave":"t:an","caso_id":"00000000-0000-0000-0000-00000000ca11","texto":"Conferi o PAT: em análise."}'::jsonb) as id_an \gset
+select colab_gravar('{"tipo":"anotacao","chave":"t:an","caso_id":"00000000-0000-0000-0000-00000000ca11","texto":"Conferi o PAT: exigência aberta.","dados":{"providencia":"Recepção pede o laudo ao cliente."}}'::jsonb) as id_an \gset
 insert into t_res select 'anotacao gravada', exists(select 1 from andamentos where origem_id = 'colab:' || :'id_an'
   and autor_id = :'claude' and texto like 'Conferi o PAT%');
 insert into t_res select 'anotacao marcada aprovada e direta', exists(select 1 from sugestoes_rotina where id = :'id_an'
@@ -37,11 +37,14 @@ insert into t_res select 'prazo da IA ao advogado, lembrete', exists(select 1 fr
 -- 4. o externo não grava direto, e sem caso também não
 insert into t_res select 'peca recusada', pg_temp.tenta($q$select colab_gravar('{"tipo":"peca","chave":"t:pc","caso_id":"00000000-0000-0000-0000-00000000ca11","texto":"x"}'::jsonb)$q$) like 'erro%';
 insert into t_res select 'sem caso recusado', pg_temp.tenta($q$select colab_gravar('{"tipo":"anotacao","chave":"t:sc","texto":"x"}'::jsonb)$q$) like 'erro%';
+insert into t_res select 'anotacao sem providencia recusada', pg_temp.tenta($q$select colab_gravar('{"tipo":"anotacao","chave":"t:np","caso_id":"00000000-0000-0000-0000-00000000ca11","texto":"Despacho: não há prevenção."}'::jsonb)$q$) like 'erro%';
+insert into t_res select 'nada da anotacao informativa gravado', not exists(select 1 from sugestoes_rotina where chave = 't:np')
+  and not exists(select 1 from andamentos where texto like 'Despacho: não há prevenção%');
 insert into t_res select 'nada da peca gravado', not exists(select 1 from sugestoes_rotina where chave in ('t:pc','t:sc'));
 
 -- 5. a mesma chave já decidida não grava de novo
 insert into t_res select 'chave repetida devolve nulo',
-  colab_gravar('{"tipo":"anotacao","chave":"t:an","caso_id":"00000000-0000-0000-0000-00000000ca11","texto":"Outra vez."}'::jsonb) is null;
+  colab_gravar('{"tipo":"anotacao","chave":"t:an","caso_id":"00000000-0000-0000-0000-00000000ca11","texto":"Outra vez.","dados":{"providencia":"Recepção pede o laudo ao cliente."}}'::jsonb) is null;
 insert into t_res select 'chave repetida sem andamento novo', (select count(*) from andamentos where texto = 'Outra vez.') = 0;
 
 -- 6. desfazer: colaborador comum não pode; admin apaga a anotação e as tarefas e vai ao histórico
