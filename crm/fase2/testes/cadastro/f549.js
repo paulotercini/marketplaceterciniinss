@@ -135,6 +135,8 @@ const TUDO = {
   conf("o Ligar chama pericia_ligar com a Dra. Amanda", chamadas.length === 1 && chamadas[0].p_ligado === true && chamadas[0].p_profissional === "amanda");
   conf("F626: o Ligar manda a data e o horário confirmados", chamadas[0].p_confirmado === TUDO.eventos[0].data_hora);
   conf("depois do Ligar a chave da linha fica ligada", await p.evaluate(ev => document.querySelector(`[data-sw="${ev}"]`).getAttribute("aria-checked") === "true", EV));
+  await p.locator('[data-adv="paulo"]:visible').first().click(); await p.waitForTimeout(500);
+  conf("F626b: trocar o advogado com o aviso ligado manda a hora já conferida", chamadas.length === 2 && chamadas[1].p_profissional === "paulo" && chamadas[1].p_confirmado === TUDO.eventos[0].data_hora);
   await p.evaluate(() => { const d = document.querySelector("#notif"); if (d) d.open = true; });
   await p.click("#sw-d7"); await p.waitForTimeout(300);
   conf("desligar o lembrete de 7 dias grava a configuração", cfg.some(x => /pericia_aviso_d7/.test(x)));
