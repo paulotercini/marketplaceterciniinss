@@ -93,7 +93,7 @@
     const itens = REG.lerEventosHtml(html);
     if (!itens.length) { faixaErr('a lista de eventos estava vazia na tela'); return { erro: 'vazio' }; }
     // F184 · as decisões vão junto: o CRM passa a dizer O QUE foi decidido
-    const docs = itens.flatMap(i => i.docs || []);
+    const docs = REG.docsPorPrioridade(itens);
     if (docs.some(d => DOCS_REGRAS.vaiBaixar(d.nome))) faixa(`processo ${cab.numero}: guardando as peças no CRM (as já guardadas são puladas)…`);
     await CRM.guardarDocs('eproc', cab.numero, docs, { existentes: await jaGuardados(cab.numero) });
     const OUT = { versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
@@ -129,7 +129,7 @@
         if (!logadoNoHtml(html)) throw new Error('a sessão do eproc caiu — faça login de novo e clique outra vez');
         const cab = REG.lerCabecalhoProcesso(html) || { numero: p.numero };
         const itens = REG.lerEventosHtml(html);
-        docs += await CRM.guardarDocs('eproc', cab.numero, itens.flatMap(it => it.docs || []),
+        docs += await CRM.guardarDocs('eproc', cab.numero, REG.docsPorPrioridade(itens),
                                       { existentes: await jaGuardados(cab.numero) });
         lote.push({ versao: 1, fonte: 'pje-processo', sistema: 'eproc', tribunal: 'TJSP', grau, host,
                     quando: new Date().toISOString(), numero: cab.numero, classe: cab.classe || p.classe || null,

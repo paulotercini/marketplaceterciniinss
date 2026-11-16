@@ -65,10 +65,58 @@ test('a capa do processo: número, classe e órgão julgador, apesar do id repet
 test('a lista de eventos: um item por trEvento, com data, hora, descrição e documentos', () => {
   const ev = R.lerEventosHtml(CAPA);
   assert.equal(ev.length, 2);
-  assert.deepStrictEqual(ev[0], { evento: 73, data: '2026-09-12', hora: '06:01', textos: ['Decorrido prazo - Refer. ao Evento: 70'], docs: [] });
+  assert.deepStrictEqual(ev[0], { evento: 73, data: '2026-09-12', hora: '06:01', textos: ['Decorrido prazo - Refer. ao Evento: 70'], docs: [],
+    rotulo: 'Decorrido prazo - Refer. ao Evento: 70', complemento: null });
+  assert.equal(ev[1].decisivo, true);
   assert.deepStrictEqual(ev[1].docs, [
     { id: '731', nome: 'DESPADEC1', url: 'controlador.php?acao=acessar_documento&doc=731&evento=69&key=ab' },
     { id: '69:PLANILHA2', nome: 'PLANILHA2', url: 'y' }]);
+});
+
+// F617 · o complemento do evento, o cancelado e a prioridade dos decisivos (HTML fictício)
+const tr = (n, desc, docs = '') => `<tr id="trEvento${n}"><td>${n}</td><td>10/11/2026 14:20:00</td><td>${desc}</td><td>USR1</td><td>${docs || 'Evento não gerou documento'}</td></tr>`;
+const tabela = linhas => `<table id="tblEventos"><tr><th>Evento</th></tr>${linhas.join('')}</table>`;
+
+test('F617: a decisão traz o resultado do complemento, não só o rótulo', () => {
+  const [it] = R.lerEventosHtml(tabela([tr(40, '<label class="infraEventoDescricao">Decisão interlocutória</label> Pedido de tutela indeferido',
+    '<a class="infraLinkDocumento" href="c.php?doc=901">DESPADEC1</a>')]));
+  assert.equal(it.rotulo, 'Decisão interlocutória');
+  assert.equal(it.complemento, 'Pedido de tutela indeferido');
+  assert.deepStrictEqual(it.textos, ['Decisão interlocutória - Pedido de tutela indeferido']);
+  assert.equal(it.decisivo, true);
+});
+
+test('F617: a intimação com destinatário e prazo vem do tooltip', () => {
+  const [it] = R.lerEventosHtml(tabela([tr(41, `<label class="infraEventoDescricao" onmouseover="return infraTooltipMostrar('Intimado o INSS para implantar em 30 dias','Evento');">Determinada a intimação</label>`)]));
+  assert.equal(it.complemento, 'Intimado o INSS para implantar em 30 dias');
+  assert.deepStrictEqual(it.textos, ['Determinada a intimação - Intimado o INSS para implantar em 30 dias']);
+  assert.equal(it.decisivo, true);
+});
+
+test('F617: a requisição de pagamento traz o número e o valor do title', () => {
+  const [it] = R.lerEventosHtml(tabela([tr(42, '<label class="infraEventoDescricao" title="RPV expedida nº 2026000000 · R$ 12.345,67">Link para pagamento</label>')]));
+  assert.equal(it.complemento, 'RPV expedida nº 2026000000 · R$ 12.345,67');
+  assert.match(it.textos[0], /^Link para pagamento - RPV expedida/);
+  assert.equal(it.decisivo, true);
+});
+
+test('F617: o evento cancelado vai marcado, com o motivo, e não é decisivo', () => {
+  const ev = R.lerEventosHtml(tabela([
+    tr(43, '<s><label class="infraEventoDescricao">Sentença</label></s> Evento cancelado. Motivo: lançado em duplicidade'),
+    tr(44, '<label class="infraEventoDescricao">Decisão outras</label> Tornado sem efeito o evento 40')]));
+  assert.equal(ev[0].cancelado, true);
+  assert.equal(ev[0].motivo_cancelamento, 'lançado em duplicidade');
+  assert.equal(ev[0].decisivo, undefined);
+  assert.match(ev[0].textos[0], /^\[Cancelado\] Sentença - /);
+  assert.equal(ev[1].cancelado, true);
+});
+
+test('F617: os documentos dos decisivos baixam primeiro', () => {
+  const ev = R.lerEventosHtml(tabela([
+    tr(50, '<label class="infraEventoDescricao">PETIÇÃO</label>', '<a class="infraLinkDocumento" href="c.php?doc=1">PET1</a>'),
+    tr(51, '<label class="infraEventoDescricao">Juntada</label>', '<a class="infraLinkDocumento" href="c.php?doc=2">SENT1</a>'),
+    tr(52, '<label class="infraEventoDescricao">Despacho</label>', '<a class="infraLinkDocumento" href="c.php?doc=3">DESPADEC1</a> <a class="infraLinkDocumento" href="c.php?doc=4">ANEXO2</a>')]));
+  assert.deepStrictEqual(R.docsPorPrioridade(ev).map(d => d.nome), ['SENT1', 'DESPADEC1', 'ANEXO2', 'PET1']);
 });
 
 // A RODADA com o eproc fingido: o eproc.js roda num contexto à parte.
