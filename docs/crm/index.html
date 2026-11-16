@@ -7121,7 +7121,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.09</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.10</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7605,12 +7605,12 @@ async function api(caminho, opcoes={}, tentativa=0){
 // link fixo: para abrir, o app pede uma URL assinada que vence em minutos —
 // laudo médico e CNIS não podem ficar num endereço que funciona para sempre.
 const BUCKET = "anexos";
-async function subirArquivo(caminho, arquivo, bucket=BUCKET){
+async function subirArquivo(caminho, arquivo, bucket=BUCKET, upsert=false){
   const r = await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/${bucket}/${caminho}`,{
     method:"POST",
     headers:{ apikey: CONFIG.ANON_KEY,
               Authorization: "Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY),
-              "Content-Type": arquivo.type || "application/octet-stream" },
+              "Content-Type": arquivo.type || "application/octet-stream", ...(upsert ? {"x-upsert":"true"} : {}) },
     body: arquivo });
   if(!r.ok) throw new Error(`${r.status}: ${(await r.text()).slice(0,200)}`);
   return true;
@@ -30602,7 +30602,7 @@ function painelBeneficio(c, ks, op, oc){
       ${a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
       <p class="adb-quando">${a.quando ? quandoTxt(op, a, x) : ""}</p>
       ${linhaDireito(a, x)}
-      ${valorEstimado(op, x)}
+      ${valorEstimado(op, x)}${rmiPrevius(x && x.c)}
       ${tempos}</div>
   </section>`;
   }
@@ -30613,7 +30613,7 @@ function painelBeneficio(c, ks, op, oc){
     ${a && a.resumo ? `<p class="adb-resumo"><b>Em uma frase:</b> ${esc(a.resumo)}</p>` : ""}
     <p class="adb-quando">${a && a.quando ? quandoTxt(op, a, x) : ""}</p>
     ${linhaDireito(a, x)}
-    ${valorEstimado(op, x)}
+    ${valorEstimado(op, x)}${rmiPrevius(x && x.c)}
     ${der}
     ${a ? `<ol class="adb-lista">${a.rs.filter(r=>!rec.includes(r)).map(linha).join("")}</ol>${rec.length ? `<details class="adb-recolhido"><summary>${esc(ex.recolherRot || "Outros pontos")} (${rec.length})</summary><ol class="adb-lista">${rec.map(linha).join("")}</ol></details>` : ""}` : `<p class="meio-sub">Este benefício ainda não tem requisitos no catálogo.</p>`}
     ${tempos}
@@ -31264,6 +31264,161 @@ function laudoSabi(b){
     cid: cid ? cid[1] : "", cidDesc: "",
     resultado: /Não existe incapacidade/i.test(res) ? "capaz" : /Existe incapacidade/i.test(res) ? "incapaz" : "",
     grau: "", isencao: pega(/Isenção de Carência:[ \t]*(Sim|Não)/i)};
+}
+// F616 · PRÉVIUS (o cálculo do escritório): o relatório se reconhece pelo título, e a leitura tira o tempo,
+// a carência, a data do cálculo, os períodos, as regras com a RMI e a espécie. Campo não achado fica ausente.
+// O texto vem do PDF com os acentos certos ou trocados (fonte MacRoman), por isso os rótulos se casam sem acento.
+const _prevN = s => String(s||"").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^\x00-\x7f]/g, "?");
+const _prevIso = br => br ? br.split("/").reverse().join("-") : "";
+const _prevD = /\d{2}\/\d{2}\/\d{4}/g;
+function prevTempo(s){
+  const m = String(s||"").match(/(\d+)\s+anos?(?:,?\s*(?:e\s+)?(\d+)\s+m.s(?:es)?)?(?:,?\s*(?:e\s+)?(\d+)\s+dias?)?/i);
+  return m ? {anos:+m[1], meses:+(m[2]||0), dias:+(m[3]||0)} : null;
+}
+const prevDias = t => t ? t.anos*365 + t.meses*30 + t.dias : 0;
+const prevValor = s => { const m = String(s||"").match(/R\$\s*(\d[\d. ]*,\d{2})/); return m ? +m[1].replace(/[. ]/g, "").replace(",", ".") : null; };
+const PREV_ROT_DATAS = /Data de Nascimento:|Inscri..o no INSS:|In.cio do Benef.cio \(DIB\):|Data da Atualiza..o:|Data do C.lculo:/g;
+const PREV_TITULOS = [["transicao", /^Regras de Transi..o - EC 103\/2019$/i], ["regras", /^An.lise das Regras de Transi..o/i],
+  ["tempo", /^Relat.rio do Tempo de Contribui..o$/i], ["situacao", /^An.lise da Situa..o Atual do Benef.cio/i], ["rmi", /^C.lculo da R\.M\.I\. /i]];
+function lerPreviusTexto(texto){
+  const ls = String(texto||"").split("\n").map(l=>l.replace(/[ \t]+/g, " ").trim()).filter(Boolean), ns = ls.map(_prevN);
+  const layouts = PREV_TITULOS.filter(([, rx])=>ns.some(n=>rx.test(n))).map(([k])=>k);
+  if(!layouts.length) return null;
+  const p = {layouts, periodos:[], regras:[]}, abaixo = rx => { const i = ns.findIndex(n=>rx.test(n)); return i>=0 ? ls[i+1]||"" : ""; };
+  const cpf = (texto.match(/\d{3}\.\d{3}\.\d{3}-\d{2}/)||[])[0]; if(cpf) p.cpf = cpf.replace(/\D/g, "");
+  // a data do cálculo (o último dado da linha de baixo do rótulo) e, no relatório do tempo e no da RMI, a DIB informada
+  // o cabeçalho põe os rótulos numa linha e os valores na seguinte: a data do rótulo é a de mesma posição entre as datas
+  const dataRot = rx => { for(let i=0; i<ns.length-1; i++){ if(!rx.test(ns[i])) continue;
+    const rots = ns[i].match(PREV_ROT_DATAS)||[], k = rots.findIndex(r=>rx.test(r)), ds = ls[i+1].match(_prevD)||[];
+    const d = k<0 || !ds.length ? null : ds.length===rots.length ? ds[k] : k===rots.length-1 ? ds[ds.length-1] : k===0 ? ds[0] : null;
+    if(d) return _prevIso(d); } return ""; };
+  const dc = dataRot(/Data do C.lculo:/); if(dc) p.data = dc;
+  const dib = dataRot(/In.cio do Benef.cio \(DIB\):/); if(dib) p.dib = dib;
+  // a espécie: "42 - Aposentadoria ... (Deficiência Leve)" na linha de baixo do rótulo
+  for(let i=0; i<ns.length-1; i++) if(/^Esp.cie do Benef.cio:/.test(ns[i]) && /^\d{2} - /.test(ls[i+1])){
+    p.especie = ls[i+1].replace(_prevD, "").trim(); const g = _prevN(p.especie).match(/Defici.ncia (Leve|Moderada|Grave)/i); if(g) p.grau = g[1].toLowerCase(); break; }
+  // o tempo e a carência da "Análise dos Dados" (na DIB informada; o tempo da PcD já vem convertido)
+  for(let i=0; i<ns.length-1; i++){ const m = ns[i].match(/^Tempo de Contribui..o em (\d{2}\/\d{2}\/\d{4}) \(DIB Informada\)/i); if(!m) continue;
+    const t = prevTempo(ls[i+1]), c = ls[i+1].match(/(\d+) contribui/i);
+    if(t) p.tempo = t; if(c) p.carencia = +c[1]; p.tempoEm = _prevIso(m[1]); p.data = p.data || p.tempoEm; break; }
+  if(ns.some(n=>/^Tempo de Contribui..o \(PcD\)/i.test(n))) p.pcd = true;
+  // as regras do resumo "Regras de Transição": o nome vem na linha de cima da "Possível Aposentadoria: Tempo..."
+  ns.forEach((n, i)=>{ if(!/^Poss.vel Aposentadoria: Tempo/i.test(n) || i<1) return;
+    let fim = ns.findIndex((x, j)=>j>i && (/^Retorno do Investimento/i.test(x) || /^Poss.vel Aposentadoria: Tempo/i.test(x))); if(fim<0) fim = ns.length;
+    const bl = ls.slice(i+1, fim), r = {nome: ls[i-1]};
+    const d = bl.find(l=>/^\d{2}\/\d{2}\/\d{4}$/.test(l)); if(d) r.data = _prevIso(d);
+    const t = bl.find(l=>/^Possui \d+ anos/i.test(l)); if(t) r.tempo = prevTempo(t);
+    const car = bl.map(_prevN).map(l=>l.match(/Car.ncia = (\d+)|\((\d+) contribui/i)).find(Boolean); if(car) r.carencia = +(car[1]||car[2]);
+    const v = bl.map(prevValor).find(x=>x!=null); if(v!=null) r.rmi = v;
+    p.regras.push(r); });
+  // as regras da "Análise das Regras de Transição": o nome na linha de cima do cabeçalho, os valores na de baixo
+  ns.forEach((n, i)=>{ if(!/^Tempo de Contribui..o Car.ncia Idade Prov.vel RMI$/i.test(n) || i<1) return;
+    let fim = ns.findIndex((x, j)=>j>i && /^Poss.vel aposentadoria em/i.test(x)); if(fim<0) fim = Math.min(ns.length-1, i+8);
+    const bl = ls.slice(i+1, fim+1), r = {nome: ls[i-1]}, val = ls[i+1]||"";
+    const t = prevTempo(val), c = val.match(/(\d+) contribui/i), d = (ls[fim].match(_prevD)||[])[0];
+    if(t) r.tempo = t; if(c) r.carencia = +c[1]; if(d) r.data = _prevIso(d);
+    const v = bl.map(prevValor).find(x=>x!=null); if(v!=null) r.rmi = v;
+    if(bl.some(l=>/^Regra Escolhida$/i.test(l))) r.escolhida = true;
+    p.regras.push(r); });
+  p.regras = p.regras.filter((r, i, a)=>a.findIndex(x=>x.nome===r.nome && x.data===r.data)===i);
+  const esc = p.regras.find(r=>r.escolhida); if(esc) p.regra = esc.nome;
+  // sem a Análise dos Dados: o tempo e a carência da regra escolhida, senão o tempo que mais se repete no resumo
+  if(!p.tempo){ const src = esc ? [esc] : p.regras, mais = {};
+    src.filter(r=>r.tempo).forEach(r=>{ const k = JSON.stringify(r.tempo); mais[k] = (mais[k]||0) + 1; });
+    const k = Object.keys(mais).sort((a, b)=>mais[b]-mais[a])[0]; if(k) p.tempo = JSON.parse(k); }
+  if(p.carencia==null){ const r = esc || p.regras.find(x=>x.carencia!=null); if(r && r.carencia!=null) p.carencia = r.carencia; }
+  // a RMI: a do cálculo da RMI, senão a da situação atual, senão a da regra escolhida
+  const rmiL = ls.find(l=>/Renda Mensal Inicial: R\$/i.test(l)), sit = abaixo(/^Data de aposentadoria Valor estimado/i);
+  const rv = rmiL ? prevValor(rmiL.slice(rmiL.search(/Renda Mensal Inicial/i))) : sit ? prevValor(sit) : esc && esc.rmi;
+  if(rv!=null) p.rmi = {valor: rv, data: p.dib || _prevIso((sit.match(_prevD)||[])[0]) || (esc && esc.data) || undefined, especie: p.especie};
+  // os períodos informados (o relatório do tempo); o nome da empresa pode vir na linha de cima e na de baixo
+  const ini = ns.findIndex(n=>/^Per.odos Informados$/i.test(n));
+  if(ini>=0){ const ruim = l => !l || /^[*#]?\s*\d{2}\/\d{2}\/\d{4}/.test(l) || /^Def$|Fim Tipo|^Legenda|^\d+\/\d+$/i.test(l);
+    for(let i=ini+1; i<ls.length && !/^Legenda:|^Per.odos Considerados/i.test(ns[i]); i++){
+      const m = ls[i].match(/^[*#]?\s*(\d{2}\/\d{2}\/\d{4}) (\d{2}\/\d{2}\/\d{4}) (\S+)\s*(.*)$/); if(!m) continue;
+      const def = /\bDef$/.test(m[4]) || ls[i-1]==="Def";
+      let emp = m[4].replace(/\s*\bDef$/, "").trim();
+      if(!emp) emp = [ls[i-1], ls[i+1]].filter(l=>!ruim(l)).join(" ");
+      const tipo = _prevN(m[3]).toLowerCase(), nat = tipo==="especial" ? "especial" : tipo==="rural" ? "rural" : def ? "def" : "comum";
+      p.periodos.push({inicio:_prevIso(m[1]), fim:_prevIso(m[2]), empresa:emp, natureza:nat, def, ...(def && p.grau ? {grau:p.grau} : {}), ...(/projetad/i.test(_prevN(emp)) ? {projetado:true} : {})}); }
+    p.periodos = p.periodos.filter((x, i, a)=>a.findIndex(y=>y.inicio===x.inicio && y.fim===x.fim && y.empresa===x.empresa)===i); }
+  return p;
+}
+// a conferência com o CNIS: ctx = {ct (contagem), vinculos, ppps (nomes das empresas), temRural, temLaudo, hoje}
+function conferirPrevius(prev, ctx){
+  const out = [], x = ctx||{}, ct = x.ct, tf = t => `${t.anos} ${t.anos===1?"ano":"anos"}${t.meses ? `, ${t.meses} ${t.meses===1?"mês":"meses"}` : ""}${t.dias ? ` e ${t.dias} ${t.dias===1?"dia":"dias"}` : ""}`;
+  const br = iso => iso ? iso.split("-").reverse().join("/") : "";
+  if(!prev) return out;
+  const projecao = prev.tempoEm && x.hoje && prev.tempoEm > x.hoje;   // o tempo numa DIB futura soma o que ainda não houve
+  if(prev.tempo && ct && ct.anos!=null && !prev.pcd && !projecao){ const d = Math.abs(prevDias(prev.tempo) - (ct.anos*365 + (ct.meses||0)*30));
+    if(d > 30) out.push({tipo:"divergencia", k:"prev.tempo", fonte:"Prévius e CNIS", texto:`Tempo: o Prévius dá ${tf(prev.tempo)} e o CNIS ${tf({anos:ct.anos, meses:ct.meses||0, dias:0})} (diferença de ${d} dias)`}); }
+  if(prev.carencia!=null && ct && ct.carencia!=null && !projecao && Math.abs(prev.carencia - ct.carencia) > 1)
+    out.push({tipo:"divergencia", k:"prev.carencia", fonte:"Prévius e CNIS", texto:`Carência: o Prévius dá ${prev.carencia} contribuições e o CNIS ${ct.carencia}`});
+  const ps = (prev.periodos||[]).filter(p=>!p.projetado), vs = (x.vinculos||[]).filter(v=>v.inicio);
+  const vIso = v => [_prevIso(v.inicio), v.fim ? _prevIso(v.fim) : (x.hoje || "9999-12-31")];
+  const cruza = (a1, b1, a2, b2) => a1 <= b2 && a2 <= b1;
+  if(ps.length && vs.length){
+    for(const p of ps) if(!vs.some(v=>{ const [a, b] = vIso(v); return cruza(p.inicio, p.fim, a, b); }))
+      out.push({tipo:"divergencia", k:`prev.so:${p.inicio}|${p.fim}`, fonte:"Prévius", texto:`Período de ${br(p.inicio)} a ${br(p.fim)} (${p.empresa||"sem nome"}) está no Prévius e não no CNIS`});
+    for(const v of vs.filter(v=>!/benef/i.test(v.tipo||""))){ const [a, b] = vIso(v); if(!ps.some(p=>cruza(p.inicio, p.fim, a, b)))   // o Prévius põe benefício em linha à parte, que o leitor pula
+      out.push({tipo:"divergencia", k:`prev.cnis:${a}|${b}`, fonte:"CNIS", texto:`Vínculo do CNIS de ${v.inicio}${v.fim ? ` a ${v.fim}` : " em aberto"} (${v.origem||v.tipo||"sem nome"}) não está no Prévius`}); }
+  }
+  const pal = s => dsa(s).split(/[^a-z0-9]+/).filter(w=>w.length>=4 && !/^(ltda|eireli|servicos|comercio|industria)$/.test(w));
+  const ppps = (x.ppps||[]).map(pal);
+  for(const p of ps.filter(p=>p.natureza==="especial")) if(!ppps.some(w=>pal(p.empresa).some(q=>w.includes(q))))
+    out.push({tipo:"sem_documento", k:`prev.esp:${p.inicio}`, fonte:"Prévius", texto:`Especial de ${br(p.inicio)} a ${br(p.fim)} (${p.empresa||"sem nome"}) sem PPP no dossiê`});
+  if(ps.some(p=>p.natureza==="rural") && !x.temRural) out.push({tipo:"sem_documento", k:"prev.rural", fonte:"Prévius", texto:"Período rural no Prévius sem papel da roça no dossiê"});
+  if(ps.some(p=>p.def) && !x.temLaudo) out.push({tipo:"sem_documento", k:"prev.def", fonte:"Prévius", texto:"Período com deficiência no Prévius sem laudo no dossiê"});
+  return out;
+}
+// F616 · o Prévius do cliente: os anexos de origem "previus", o mais novo primeiro; o campo que falta num relatório vem de outro
+function previusDe(c){
+  const as = (D.anexos||[]).filter(a=>c && a.cliente_id===c.id && a.origem==="previus" && a.texto)
+    .sort((a, b)=>String(b.criado_em||"").localeCompare(String(a.criado_em||"")));
+  if(!as.length) return null;
+  const p = {layouts:[], periodos:[], regras:[]};
+  for(const a of as){ const x = lidoDoAnexo(a, lerPreviusTexto, "prev"); if(!x) continue;
+    for(const [k, v] of Object.entries(x)) if(Array.isArray(v)){ if(!(p[k]||[]).length) p[k] = v; } else if(p[k]==null) p[k] = v;
+    p.layouts = [...new Set([...p.layouts, ...x.layouts])]; }
+  return {a:as[0], p, n:as.length};
+}
+const prevTempoTxt = t => t ? [t.anos ? plu(t.anos, "ano", "anos") : "", t.meses ? plu(t.meses, "mês", "meses") : "", t.dias ? plu(t.dias, "dia", "dias") : ""].filter(Boolean).join(", ") || "nenhum dia" : "";
+// a RMI do Prévius na Análise de Direito: só informação, o cálculo do CRM continua o de cima
+function rmiPrevius(c){
+  const pv = previusDe(c), r = pv && pv.p.rmi; if(!r || r.valor==null) return "";
+  return `<p class="adb-valor meio-sub">RMI pelo Prévius: ${esc(moeda(r.valor))}${r.especie ? ` (${esc(r.especie)}${r.data ? `, ${esc(fmtBarra(r.data))}` : ""})` : r.data ? ` (${esc(fmtBarra(r.data))})` : ""}, só para conferência; o cálculo acima é o do CRM.</p>`;
+}
+// a linha do quadro do CNIS: o botão (escolher ou soltar o arquivo) e quando o Prévius foi enviado
+function previusLinha(c){
+  const pv = previusDe(c), id = `prev-arq-${c.id}`;
+  return `<p class="pa-prev-linha" ondragover="event.preventDefault()" ondrop="event.preventDefault();subirPrevius('${c.id}',event.dataTransfer.files)">
+    ${pv ? `Prévius enviado em ${esc(fmtBarra(String(pv.a.criado_em||"").slice(0, 10)))}.` : "Sem cálculo do Prévius."}
+    <label class="btn-mini" for="${id}" title="${pv ? "Trocar o cálculo do Prévius" : "Enviar o cálculo do Prévius (PDF), ou solte o arquivo aqui"}">${pv ? "Trocar" : "Prévius"}</label>
+    <input type="file" id="${id}" accept=".pdf,.txt,application/pdf,text/plain" hidden onchange="subirPrevius('${c.id}',this.files)"></p>`;
+}
+async function subirPrevius(cliId, arqs){
+  const arq = arqs && arqs[0], c = D.cliPorId.get(cliId); if(!arq || !c) return;
+  if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (até 20 MB)");
+  const cpf = soDig(c.cpf); if(cpf.length!==11) return aviso("Informe o CPF na ficha antes de enviar o Prévius");
+  let texto = "", paginas = null;
+  try{
+    if(/pdf/i.test(arq.type) || /\.pdf$/i.test(arq.name)){ const l = await lerPdfPorPagina(arq); texto = l.texto || ""; paginas = l.paginas ?? null; }
+    else texto = await arq.text();
+  }catch(e){ return aviso("Não consegui ler o arquivo: "+msgErro(e)); }
+  texto = texto.replace(/\u0000/g, "");
+  const p = lerPreviusTexto(texto);
+  if(!p) return aviso("O arquivo não parece um relatório do Prévius.");
+  if(p.cpf && p.cpf!==cpf) return aviso("O CPF do Prévius não é o desta ficha. Nada foi gravado.");
+  const caminho = `previus/${cpf}/${nomeSeguro(arq.name)}`, pc = preCasoAberto(c);
+  try{ await subirArquivo(caminho, arq, BUCKET, true); }catch(e){ return aviso("Não consegui enviar o arquivo: "+msgErro(e)); }
+  let an;
+  try{ [an] = await api(`/rest/v1/anexos?on_conflict=caminho`,{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=representation"},
+    body:JSON.stringify({cliente_id:cliId, caso_id:(pc && pc.caso_id) || null, autor_id:eu.id, nome:`Prévius · ${arq.name}`, caminho,
+      tipo:arq.type || null, tamanho:arq.size, origem:"previus", texto, paginas})}) || []; }
+  catch(e){ return aviso("Não consegui gravar o anexo: "+msgErro(e)); }
+  if(an){ D.anexos = (D.anexos||[]).filter(x=>x.caminho!==an.caminho); D.anexos.unshift(an); }
+  repintarFicha();
+  aviso("Prévius anexado ✔", false);
 }
 // CARTA DE CONCESSÃO · a de hoje ("CARTA DE / CONCESSÃO", com o NB e a renda na
 // linha de baixo dos rótulos) e a antiga ("Carta de Concessão / Memória de
@@ -32513,6 +32668,7 @@ function aposentadoriaAtiva(c){
 function assinaturaPA(c, ks){
   const g = cnisDe(c) || {}, t = triagemDe(c);
   return [c.id, c.dn, c.sexo, (ks||[]).map(k=>k.id+k.fase+(k.nb||"")+(k.dcb||"")+(k.atualizado_em||"")).join(), Object.keys(t).map(k=>(t[k]||{}).em||(t[k]||{}).estado||"").join(), docsDoDossie(c.id).map(a=>`${a.id}:${a.paginas??""}:${(a.texto||"").length}`).join(),
+    (D.anexos||[]).filter(a=>a.cliente_id===c.id && a.origem==="previus").map(a=>`${a.id}:${(a.texto||"").length}`).join(),
     Object.values(c.dossie||{}).map(x=>x&&x.em).join(), g.em, (t.graca||{}).desempregado, _mapaLente.get(c.id)||"", (aposDoCliente(c)||[]).map(a=>a.data).join(),
     [..._cnpjWs.values()].map(w=>(w.dados?1:0)+(w.erro?2:0)+(w.carregando?4:0)).join(""), hoje()].join("|");
 }
@@ -38719,6 +38875,9 @@ const PA_Q = [
     "aposentadoria rural e híbrida, salário-maternidade rural e seguro-defeso", null],
   ["cnis", "Situação no CNIS", "O CNIS é o cadastro do INSS: os vínculos, as contribuições e os benefícios da pessoa.",
     "todos os benefícios do INSS (qualidade de segurado, carência e tempo)", /^(Cadastro|CNIS|Declara)/i],
+  // F616 · o cálculo do escritório no Prévius, conferido com o CNIS; só aparece com o Prévius anexado
+  ["prev", "Prévius", "O cálculo do escritório no Prévius: tempo, carência, regras e RMI, conferido com o CNIS.",
+    "aposentadorias (tempo, carência, regra e valor)", null],
   ["rais", "RAIS e CAGED: há afastamento sem remuneração?", "A RAIS é a declaração anual do empregador e o CAGED registra admissões e saídas; mostram o que o CNIS não mostra, como a licença sem remuneração.",
     "aposentadorias (tempo), qualidade de segurado (desemprego) e acerto de CNIS", /^CTPS/i],
   ["cnpj", "CNPJs no CPF", "A Redesim mostra as empresas em que o CPF é sócio, titular ou responsável.",
@@ -39198,6 +39357,16 @@ function quadrosDoPACalc(c, ks){
   if(fz) Q.cad.extra = "transp";
   // F235 · a renda por pessoa da ficha não é a do BPC (a lei tira e põe rendas e pessoas)
   Q.cad.achado = fz ? `${(fz.membros||[]).length} ${(fz.membros||[]).length===1?"integrante":"integrantes"}; a ficha dá ${moeda(fz.renda_por_pessoa)} por pessoa, que não é a conta do BPC (a do BPC está logo abaixo e na Análise de Direito)` : "";
+  // F616 · o Prévius: o resumo nos números e só a divergência com o CNIS como problema
+  const pv = previusDe(c);
+  if(pv){ const pp = pv.p, rg = pp.regras.find(r=>r.escolhida);
+    Q.prev.blocos = [["Tempo", pp.tempo ? prevTempoTxt(pp.tempo) : "—", "info"], ["Carência", pp.carencia!=null ? plu(pp.carencia, "contribuição", "contribuições") : "—", "info"],
+      ["Regra", pp.regra || (pp.regras.length ? plu(pp.regras.length, "regra calculada", "regras calculadas") : "—"), "info"],
+      ["RMI", pp.rmi ? moeda(pp.rmi.valor) : rg && rg.rmi!=null ? moeda(rg.rmi) : "—", "info"]].filter(b=>b[1]!=="—");   // o que o relatório não traz não aparece
+    Q.prev.achado = `${pp.data ? `cálculo de ${fmtBarra(pp.data)}` : "cálculo sem data"}${pp.periodos.length ? `, ${plu(pp.periodos.length, "período", "períodos")}` : ""}`;
+    const cf = conferirPrevius(pp, {ct, vinculos:(g && g.vinculos)||[], ppps:fd.ppps.map(x=>x.empresa||""), temRural:rural, temLaudo:fd.laudos.length>0, hoje:hoje()});
+    for(const d of cf) it("prev", d.k, d.texto, d.tipo==="divergencia" ? "warn" : "info", d.fonte, pv.a.id);
+    if(!cf.some(d=>d.tipo==="divergencia")) it("prev", "prev.ok", "Prévius confere com o CNIS", "ok", "Prévius", pv.a.id); }
   // 9 · os documentos de cada quadro, e os que nenhum quadro lê
   const idsRoca = new Set(roca.map(p=>p.a.id));   // F235 · o papel da roça já está no quadro dele, um item por papel
   // F235 · o relatório do médico vai ao quadro da Saúde, venha da pasta que vier
@@ -39295,6 +39464,7 @@ function painelPA(c, ks){
           ${q.importa ? `<p class="paq-importa"><b>Importa para:</b> ${esc(q.importa)}.</p>` : ""}</div></details>
         <span class="paq-n">${t ? `${v} de ${t} vão à Análise` : ""}</span>
         ${t ? `<button type="button" class="adr-link paq-todos" onclick="paMarcarQuadro('${c.id}','${q.id}')" title="marcar ou desmarcar todos"><span aria-hidden="true">Todos</span><span class="sr-only">marcar ou desmarcar todos</span></button>` : ""}</div>
+      ${q.id==="cnis" ? previusLinha(c) : ""}
       ${q.achado && !q.blocos.length ? `<p class="paq-achado"><b>O que encontramos:</b> ${esc(q.achado)}.</p>` : ""}
       ${q.vazio ? `<p class="paq-vazio">Sem dado: ${esc(q.vazio)}.</p>` : ""}
       ${q.blocos.length ? `<div class="paq-blocos">${q.blocos.map(([r, val, est])=>`<div class="paq-bloco"><small title="${esc(r)}">${esc(PA_BLOCO_ROT[r] || r)}</small><b class="${est==="crit"?" crit":""}">${esc(PA_BLOCO_VAL(val))}</b></div>`).join("")}</div>` : ""}
@@ -39351,7 +39521,7 @@ function painelPA(c, ks){
 // F320 · os rótulos curtos dos números do CNIS (o completo fica no title)
 const PA_BLOCO_ROT = {"Qualidade de segurado":"Qualidade", "Carência (meses de contribuição)":"Carência", "Tempo pelo CNIS":"Tempo"};
 const PA_BLOCO_VAL = v => String(v).replace(/^(\d+) hoje; (\d+) com o acerto$/, "$1 · $2 com acerto");
-const PA_PASSO_ROT = {cnis:"CNIS", ped:"Pedidos ao INSS", roca:"Roça e pesca", cad:"CadÚnico", ben:"Cartas e extratos", falta:"Não encontrado"};
+const PA_PASSO_ROT = {cnis:"CNIS", prev:"Prévius", ped:"Pedidos ao INSS", roca:"Roça e pesca", cad:"CadÚnico", ben:"Cartas e extratos", falta:"Não encontrado"};
 // ══════════════════════════════════════════════════════════════════════════
 // F238 · PASSOS DENTRO DE UMA PÁGINA LONGA (crm/fase2/docs/ATENDIMENTO-EM-ETAPAS.md)
 // ══════════════════════════════════════════════════════════════════════════
