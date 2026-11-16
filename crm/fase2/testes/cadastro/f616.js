@@ -55,7 +55,8 @@ const PREV_OK = tempoDe(["* 01/02/2011 30/09/2019 Normal CONFECCOES FICTICIAS LT
 const PREV_DIV = tempoDe(["* 01/02/2011 30/09/2019 Normal CONFECCOES FICTICIAS LTDA", "* 01/01/2000 31/12/2005 Especial METALURGICA EXEMPLO SA"], 14, 8, 176);
 
 const P = "c0000000-0000-0000-0000-000000000a16", N = "c0000000-0000-0000-0000-000000000b16", Q = "c0000000-0000-0000-0000-000000000c16";
-const CPF = { [P]: "70010061601", [N]: "70010061603", [Q]: "70010061605" };
+const R = "c0000000-0000-0000-0000-000000000d16", S = "c0000000-0000-0000-0000-000000000e16";   // F618 · sem CNIS; Prévius vindo do Drive
+const CPF = { [P]: "70010061601", [N]: "70010061603", [Q]: "70010061605", [R]: "70010061607", [S]: "70010061609" };
 const CNIS = { em: "2026-10-08", nome: "Cliente Teste", paginas: 3, qtVinculos: 1, nits: [], contribSemPerda: 104, indicadores: [],
   vinculos: [{ seq: 1, tipo: "Empregado", origem: "CONFECCOES FICTICIAS LTDA", codigo: "11.444.777/0001-61", inicio: "01/02/2011", fim: "30/09/2019", ultRemun: "09/2019", aberto: false, indicadores: [] },
     { seq: 2, tipo: "Benefício", especie: "31", origem: "AUXILIO DOENCA PREVIDENCIARIO", nb: "6000000001", inicio: "10/03/2018", fim: "20/05/2018", situacao: "CESSADO", aberto: false }],
@@ -76,7 +77,14 @@ const cli = (id, nome) => ({ id, nome, cpf: CPF[id], dn: "1964-02-10", sexo: "F"
 dados.clientes.push(cli(P, "Cliente Teste Um"), cli(N, "Cliente Teste Dois"), cli(Q, "Cliente Teste Tres"));
 dados.casos.push(pre("b0000000-0000-0000-0000-000000000a16", P, "pc_p16"), pre("b0000000-0000-0000-0000-000000000b16", N, "pc_n16"), pre("b0000000-0000-0000-0000-000000000c16", Q, "pc_q16"));
 dados.anexos.push(AN(1, P, "tempo.txt", PREV_OK), AN(2, N, "tempo.txt", PREV_DIV), AN(3, N, "rmi.txt", RMI));
+// F618 · R sem dossiê e sem CNIS, com Prévius; S com dois Prévius que a extensão trouxe do Drive, sem texto (um de outro CPF)
+dados.clientes.push(Object.assign(cli(R, "Cliente Teste Quatro"), { dossie: {}, triagem: {} }), cli(S, "Cliente Teste Cinco"));
+dados.casos.push(pre("b0000000-0000-0000-0000-000000000d16", R, "pc_r16"), pre("b0000000-0000-0000-0000-000000000e16", S, "pc_s16"));
+dados.anexos.push(AN(4, R, "tempo.txt", PREV_OK), Object.assign(AN(5, S, "drive.txt", ""), { texto: null, paginas: null }),
+  Object.assign(AN(6, S, "alheio.txt", ""), { texto: null, paginas: null }));
 const banco = new Banco(dados);
+banco.arquivos.set(`anexos/previus/${CPF[S]}/drive.txt`, { tipo: "text/plain", corpo: PREV_OK });
+banco.arquivos.set(`anexos/previus/${CPF[S]}/alheio.txt`, { tipo: "text/plain", corpo: PREV_OK.replace("Cliente Teste", "Cliente Teste\nCPF: 999.888.777-66") });
 const T = banco.t;
 
 const ok = [];
@@ -141,6 +149,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     { ...base, ppps: ["Confecções Fictícias Ltda"] })).some(x => x.k.startsWith("prev.esp")));
   const proj = await confere({ tempo: { anos: 20, meses: 0, dias: 0 }, carencia: 300, tempoEm: "2030-01-01", periodos: [] }, base);
   conf("cálculo numa DIB futura: tempo e carência não se comparam", proj.length === 0);
+  // F618 · DIB futura: a soma dos períodos até hoje, sem os projetados; PcD: a soma bruta, sem a conversão
+  const fut = { tempo: { anos: 20, meses: 0, dias: 0 }, carencia: 300, tempoEm: "2030-01-01", periodos: [
+    { inicio: "2011-02-01", fim: "2019-09-30", natureza: "comum", empresa: "CONFECCOES" }, { inicio: "2027-01-01", fim: "2029-12-31", natureza: "comum", empresa: "Tempo Projetado", projetado: true }] };
+  conf("DIB futura: os períodos até hoje batem com o CNIS, nada a apontar", (await confere(fut, base)).length === 0);
+  const futDiv = await confere({ ...fut, periodos: [...fut.periodos, { inicio: "2020-01-01", fim: "2023-12-31", natureza: "comum", empresa: "OUTRA" }] },
+    { ...base, vinculos: [...CNIS.vinculos, { tipo: "Empregado", origem: "OUTRA", inicio: "01/01/2020", fim: "31/12/2023" }] });
+  conf(`DIB futura com quatro anos a mais que o CNIS: tempo e carência até hoje divergem (${futDiv.map(x => x.k).join()})`,
+    futDiv.some(x => x.k === "prev.tempo" && /até hoje/.test(x.texto)) && futDiv.some(x => x.k === "prev.carencia"));
+  const pcd = await confere({ pcd: true, tempo: { anos: 12, meses: 2, dias: 0 }, carencia: 104, tempoEm: "2026-11-05", periodos: [{ inicio: "2011-02-01", fim: "2019-09-30", natureza: "def", def: true, empresa: "X" }] },
+    { ...base, temLaudo: true });
+  conf(`PcD: o tempo convertido não diverge, a soma bruta bate com o CNIS (${pcd.map(x => x.k).join()})`, pcd.length === 0);
+  const pcdDiv = await confere({ pcd: true, tempo: { anos: 8, meses: 8, dias: 0 }, carencia: 104, tempoEm: "2026-11-05", periodos: [{ inicio: "2008-02-01", fim: "2019-09-30", natureza: "def", def: true, empresa: "X" }] },
+    { ...base, temLaudo: true });
+  conf("PcD: a soma bruta com três anos a mais aponta a divergência sem a conversão", pcdDiv.some(x => x.k === "prev.tempo" && /sem a conversão/.test(x.texto)));
   const rev = await confere({ periodos: [{ inicio: "1990-01-01", fim: "1995-12-31", natureza: "comum", empresa: "Z" }] }, base);
   conf("o vínculo do CNIS que falta no Prévius também aparece", rev.some(x => x.k.startsWith("prev.cnis:2011-02-01")) && !rev.some(x => x.k.startsWith("prev.cnis:2018")));
 
@@ -187,6 +209,24 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.setInputFiles(`#prev-arq-${Q}`, { name: "outro.txt", mimeType: "text/plain", buffer: Buffer.from(outroCpf) });
   await p.waitForTimeout(800);
   conf("o Prévius com CPF de outra pessoa não é gravado", !T.anexos.some(x => x.caminho === `previus/${CPF[Q]}/outro.txt`));
+  // F618 · ficha sem dossiê e sem CNIS, com Prévius
+  await abrir(R, "pc_r16");
+  q = await quadro();
+  conf("sem CNIS: o quadro Prévius aparece com o resumo", q && ["Tempo", "Carência"].every(k => q.blocos.some(x => x.includes(k))));
+  conf("sem CNIS: o item \"Sem CNIS no dossiê para conferir\" e nenhum \"confere\"", q && q.itens.some(([k, , t]) => k === "prev.semcnis" && /Sem CNIS no dossiê para conferir/.test(t)) && !q.itens.some(([k]) => k === "prev.ok"));
+  conf("sem CNIS: o botão Trocar fica no quadro Prévius, uma vez só", await p.evaluate(() => document.querySelectorAll(".pa-prev-linha").length === 1 && !!document.querySelector("#paq-prev .pa-prev-linha")));
+  await shot("03-sem-cnis.png");
+  conf("ficha sem nada: o botão Prévius está na caixa do sem dossiê", await p.evaluate(i => { const c = D.cliPorId.get(i), salva = D.anexos;
+    D.anexos = D.anexos.filter(a => a.cliente_id !== i); const h = painelPA(c, D.casosDoCliente.get(i) || []); D.anexos = salva;
+    return /pa-sem-dz[\s\S]*pa-prev-linha/.test(h); }, R));
+  conf("Primeiro atendimento simples também tem o botão", await p.evaluate(i => /pa-prev-linha/.test(paSimples(D.cliPorId.get(i), [])), R));
+  // F618 · o Prévius que a extensão trouxe do Drive: lido ao abrir a ficha, recusado o de outro CPF
+  await p.evaluate(i => abrirFicha(i), S);
+  await p.waitForFunction(i => D.anexos.filter(a => a.cliente_id === i && a.origem === "previus").every(a => a.texto != null), S, { timeout: 10000 }).catch(() => {});
+  const lido = T.anexos.find(x => x.caminho === `previus/${CPF[S]}/drive.txt`), alheio = T.anexos.find(x => x.caminho === `previus/${CPF[S]}/alheio.txt`);
+  conf("o Prévius do Drive sem texto é lido ao abrir a ficha e gravado", lido && /Tempo de Contribuição em/.test(lido.texto || ""));
+  conf("o do Drive com CPF de outra pessoa fica com texto vazio e não entra no quadro", alheio && alheio.texto === ""
+    && await p.evaluate(i => { const pv = previusDe(D.cliPorId.get(i)); return !!pv && pv.n === 1; }, S));
   conf("sem erro de página", erros.length === 0 || (console.log(erros), false));
 
   const n = ok.filter(x => x[1]).length, pts = Math.round(100 * n / ok.length);
