@@ -115,27 +115,70 @@
   // tblEventos: uma <tr id="trEvento73"> por evento com as células Evento,
   // Data/Hora, Descrição (label.infraEventoDescricao), Usuário e Documentos
   // (a.infraLinkDocumento, texto tipo "DESPADEC1").
+  // F617 · o evento decisivo (resultado, ordem com prazo, pagamento, fim do processo)
+  const RE_DECISIVO = /decis[ãa]o|despacho|senten[çc]a|ac[óo]rd[ãa]o|julgamento|julgad|provimento|deferid|indeferid|homologad|intima[çc][ãa]o|intimad|requisi[çc][ãa]o|\brpv\b|precat[óo]rio|tr[âa]nsito|transitad|baixa|implanta|pagamento/i;
+  const RE_PECA_DECISIVA = /^(DESPADEC|SENT|ACOR|DEC|DESP|VOTO|RELVOTO|EMENTA|CERTTRANS|RPV|PRECAT|REQPAG|OFIC)/i;
+  const RE_CANCELADO = /cancelad[oa]|tornad[oa]s?\s+sem\s+efeito|sem\s+efeito\s+o\s+evento|evento\s+exclu[íi]d/i;
+  // o texto que o eproc guarda no onmouseover (infraTooltipMostrar('...')) e no title
+  function dicas(html) {
+    const out = [];
+    for (const m of String(html || '').matchAll(/onmouseover="([^"]*)"/gi)) {
+      const t = desHtml(m[1]).match(/infraTooltipMostrar\(\s*'((?:\\'|[^'])*)'/i);
+      if (t) out.push(texto(t[1].replace(/\\'/g, "'")));
+    }
+    for (const m of String(html || '').matchAll(/\stitle="([^"]*)"/gi)) out.push(texto(m[1]));
+    return out.filter(Boolean);
+  }
   function lerEventosHtml(html) {
     const h = String(html || '');
     const t = (h.match(/<table[^>]*id="tblEventos"[^>]*>[\s\S]*?<\/table>/i) || [''])[0];
     const itens = [];
     for (const m of t.matchAll(/<tr[^>]*id="trEvento(\d+)"[^>]*>([\s\S]*?)<\/tr>/gi)) {
-      const c = celulas(m[2]);
-      const dh = texto(c[1] || '').match(RE_DATA_HORA);
-      const desc = (m[2].match(/infraEventoDescricao[^>]*>([\s\S]*?)<\/label>/i) || [])[1];
-      const textos = [texto(desc || c[2] || '')].filter(Boolean);
-      // F184 · o href é o que deixa baixar o documento; `doc=` é o id estável
-      // dele no eproc (a chave `key=` muda com a sessão, por isso não é o id)
+      const brutas = celulas(m[2]);
+      const dh = texto(brutas[1] || '').match(RE_DATA_HORA);
+      const cel = brutas[2] || '';
+      const lab = (cel.match(/<label[^>]*infraEventoDescricao[^>]*>([\s\S]*?)<\/label>/i) || [])[1];
+      const rotulo = texto(lab || cel);
+      // o resto da célula (sem o rótulo e sem os links de documento) e as dicas
+      const resto = texto(cel.replace(/<label[^>]*infraEventoDescricao[^>]*>[\s\S]*?<\/label>/i, ' ')
+        .replace(/<a[^>]*infraLinkDocumento[^>]*>[\s\S]*?<\/a>/gi, ' '));
+      const partes = [];
+      for (const p of [resto, ...dicas(cel)]) {
+        const q = p.replace(/^[\s|:\-·]+|[\s|:\-·]+$/g, '').trim();
+        if (q && q !== rotulo && !partes.some(x => x.includes(q)) && !(lab && rotulo.includes(q))) partes.push(q);
+      }
+      const complemento = partes.join(' · ') || null;
+      const inteiro = [rotulo, complemento].filter(Boolean).join(' ');
+      const riscado = /<(s|del|strike)\b|line-through|infraEventoCancelado/i.test(m[2]);
+      const cancelado = riscado || RE_CANCELADO.test(inteiro);
       const docs = [...m[2].matchAll(/<a([^>]*infraLinkDocumento[^>]*)>([\s\S]*?)<\/a>/gi)]
         .map(d => {
           const url = desHtml((d[1].match(/href="([^"]*)"/i) || [])[1] || '') || null;
           const doc = url && (url.match(/[?&]doc=([^&]+)/) || [])[1];
           return { id: doc || `${m[1]}:${texto(d[2])}`, nome: texto(d[2]), url };
         }).filter(d => d.nome);
+      const decisivo = !cancelado && (RE_DECISIVO.test(inteiro) || docs.some(d => RE_PECA_DECISIVA.test(d.nome)));
+      const linha = [rotulo, complemento].filter(Boolean).join(' - ');
+      // o cancelado vai marcado no texto: o CRM não o toma por fato
+      const textos = linha ? [cancelado ? `[Cancelado] ${linha}` : linha] : [];
       if (!textos.length && !docs.length) continue;
-      itens.push({ evento: +m[1], data: dataIso(dh), hora: dh && dh[4] ? dh[4] : null, textos, docs });
+      const it = { evento: +m[1], data: dataIso(dh), hora: dh && dh[4] ? dh[4] : null, textos, docs,
+        rotulo: rotulo || null, complemento };
+      if (cancelado) {
+        it.cancelado = true;
+        const mot = inteiro.match(/(?:motivo|raz[ãa]o)\s*:?\s*([^·|]+)/i);
+        if (mot) it.motivo_cancelamento = mot[1].trim();
+      }
+      if (decisivo) it.decisivo = true;
+      itens.push(it);
     }
     return itens;
+  }
+  // os documentos dos eventos decisivos primeiro, para baixarem antes na rodada
+  function docsPorPrioridade(itens) {
+    const peso = (it, d) => (it.decisivo ? 0 : 2) - (RE_PECA_DECISIVA.test(d.nome) ? 1 : 0);
+    return (itens || []).flatMap(it => (it.docs || []).map(d => ({ d, p: peso(it, d) })))
+      .sort((a, b) => a.p - b.p).map(x => x.d);
   }
 
   // a capa: spans txtNumProcesso, txtClasse, txtOrgaoJulgador, cada um com o
@@ -165,7 +208,7 @@
              situacao: g('txtSituacao') || null };
   }
 
-  const API = { lerLinhaAcervo, lerAcervoHtml, totalRegistros, lerEventosHtml, lerCabecalhoProcesso, colunas };
+  const API = { lerLinhaAcervo, lerAcervoHtml, totalRegistros, lerEventosHtml, docsPorPrioridade, lerCabecalhoProcesso, colunas };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.EPROC_REGRAS = raiz.EPROC_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);
