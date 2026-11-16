@@ -761,3 +761,12 @@ console.log("F581 plantão ok");
   assert.equal(imagensSoltas([]).length, 0);
   assert.equal(imagensSoltas([img("1"), img("2"), img("3"), img("4")]).length, 3);
 }
+
+// F628 · acidente com sequela é questão previdenciária; fora da região próxima, documentos em vez de presencial
+{
+  const { CORRECOES: c628, paraAgendador: pa628 } = await import("../../zap_plantao/index.ts");
+  assert.ok(c628.includes("Questão previdenciária escondida"));
+  assert.ok(c628.includes("auxílio-acidente") && c628.includes("seguradora"));
+  assert.ok(c628.includes("Matão") && c628.includes("não ofereça atendimento presencial"));
+  assert.ok(pa628("Texto do Console.").includes("Questão previdenciária escondida"));
+}
