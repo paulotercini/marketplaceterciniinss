@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.13</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.14</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -22721,12 +22721,18 @@ const FEITO_DA_TAREFA = [
   [/\bjuntar\b|juntada/i, "Documentos juntados"],
   [/peti[çc][ãa]o|manifestar|manifesta[çc][ãa]o/i, "Petição protocolada"],
 ];
+/* F622 · "Avaliar apelação…" não é apelação protocolada: verbo de exame antes da peça, sem verbo de fazer, não vale */
+const RX_FEITO_EXAME = /\b(avaliar|conferir|verificar|analisar|estudar|ler|acompanhar|aguardar|checar|revisar|consultar|ver se|decidir|pensar|discutir|explicar|orientar|informar|avisar|falar|ligar)\b/i;
+const RX_FEITO_FAZER = /\b(protocolar|apresentar|interpor|opor|elaborar|redigir|fazer|preparar|minutar|peticionar|cumprir|distribuir|ajuizar)\b/i;
+const feitoValido = (t, i) => { const antes = t.slice(0, i); return !RX_FEITO_EXAME.test(antes) || RX_FEITO_FAZER.test(antes); };
 function feitoDaTarefa(texto){
   const t = String(texto||"").slice(0, 300); let melhor = null;
   // a peça nomeada vence o "manifestar" genérico, que é a última regra
-  for(const [rx, frase] of FEITO_DA_TAREFA.slice(0, -1)){ const m = rx.exec(t); if(m && (!melhor || m.index<melhor.i)) melhor = {i:m.index, frase}; }
+  for(const [rx, frase] of FEITO_DA_TAREFA.slice(0, -1)){ const m = rx.exec(t); if(m && feitoValido(t, m.index) && (!melhor || m.index<melhor.i)) melhor = {i:m.index, frase}; }
   const [rxG, fraseG] = FEITO_DA_TAREFA[FEITO_DA_TAREFA.length-1];
-  return melhor ? melhor.frase : rxG.test(t) ? fraseG : null;
+  if(melhor) return melhor.frase;
+  const g = rxG.exec(t);
+  return g && feitoValido(t, g.index) ? fraseG : null;
 }
 const feitoDe = t => t && t.natureza!=="lembrete" && t.papel!=="revisa"
   ? feitoDaTarefa(((D._andsFicha||[]).find(a=>a.id===t.andamento_id)||{}).texto) : null;
@@ -47279,6 +47285,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   // texto) e entram no fim da barra; os vistos de leitura vão para o cabeçalho
   const apagar = a.autor_id===eu.id&&a.origem==="app"
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
+  const editarResp = a.autor_id===eu.id&&a.origem==="app"&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt tl-bt-nota resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
       ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? ""
@@ -47299,7 +47306,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${a.editado_em?`<button class="tl-hora tl-editada" onclick="verEdicoes('${a.id}')" title="editada em ${esc(fmtTS(a.editado_em))}; ver as versões anteriores">· editada</button>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${pzE && pzE.est==="vivo" && _cumprindo!==a.id ? "" : tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${a.editado_em?`<button class="tl-hora tl-editada" onclick="verEdicoes('${a.id}')" title="editada em ${esc(fmtTS(a.editado_em))}; ver as versões anteriores">· editada</button>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":editarResp+apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${pzE && pzE.est==="vivo" && _cumprindo!==a.id ? "" : tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
