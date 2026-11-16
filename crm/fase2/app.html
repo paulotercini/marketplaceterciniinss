@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.14</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.15</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -42673,11 +42673,13 @@ function linhasDeDatas(cliId){
       resumo:`${parado.tipo} de ${fmtBarra(parado.pendente).slice(0,5)}`,
       rot:`<b>Prazo de análise parado: confirme se a ${esc(parado.tipo)} de ${fmt(parado.pendente)} aconteceu</b>
            <small class="qd-de">${notaParado(parado, x)} Marque Compareceu ou Não compareceu na aba Perícias · ${tit}</small>`, edita:"", acao:""});
-    if(mora && !parado) linhas.push({data:mora.data, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true,
+    // F623 · Concluir tira a linha enquanto a data do prazo for a mesma; prazo recalculado volta a aparecer
+    const moraFora = mora && ((x.ronda||{}).mora_fora||{}).data===mora.data;
+    if(mora && !parado && !moraFora) linhas.push({data:mora.data, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true,
       rotulo:mora.vencido?"Prazo de análise do INSS vencido":"Prazo de análise do INSS", curto:mora.vencido?"Análise do INSS vencida":"INSS decide até",
       resumo:mora.vencido?(ms?"MS decidido: acompanhe a impetração":"avalie o mandado de segurança por mora"):`${mora.dias} dias ${mora.pericia?`da ${mora.tipo}`:"da DER"}${mora.suspenso?", descontada a exigência":""}`,
       rot:`<b>${mora.vencido?`O INSS passou do prazo de análise — ${ms?"o mandado de segurança por mora já foi decidido: acompanhe a impetração":"avalie o mandado de segurança por mora"}`:"Prazo do INSS para decidir o pedido"}</b>
-           <small class="qd-de">${mora.dias} dias ${mora.pericia?`da ${esc(mora.tipo)} de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", descontada a pausa da exigência (IN 128/2022, art. 566, § 9º)":""}, pelo acordo homologado no RE 1.171.152 (confira a vigência do acordo antes de citá-lo); reforço: Lei 9.784/1999, art. 49 (decidir em até 30 dias depois de concluída a instrução) · ${tit}</small>`, edita:"", acao: mora.vencido && !ms ? botaoOuvidoria(x) : "", ouv: mora.vencido && !ms ? botaoOuvidoria(x) : ""});   // F248 · também no cartão, num clique
+           <small class="qd-de">${mora.dias} dias ${mora.pericia?`da ${esc(mora.tipo)} de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", descontada a pausa da exigência (IN 128/2022, art. 566, § 9º)":""}, pelo acordo homologado no RE 1.171.152 (confira a vigência do acordo antes de citá-lo); reforço: Lei 9.784/1999, art. 49 (decidir em até 30 dias depois de concluída a instrução) · ${tit}</small>`, edita:"", acao: (mora.vencido && !ms ? botaoOuvidoria(x) : "") + botaoMoraFora(x, mora.data), ouv: mora.vencido && !ms ? botaoOuvidoria(x) : ""});   // F248 · também no cartão, num clique
     if(rec){
       const rotulo = fe==="conselho" ? "Recurso especial" : "Recurso ordinário";
       const l={data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo,
@@ -50861,6 +50863,15 @@ async function anotarUmClique(casoId, texto, o={}){
 // a Ouvidoria responde em até 30 dias, prorrogáveis (Lei 13.460/2017, art. 16)
 const RX_OUVIDORIA = /^\[OUVIDORIA\]/;
 const ouvidoriaDoCaso = k => (D._andsFicha||[]).some(a=>a.caso_id===k.id && !a.excluir && RX_OUVIDORIA.test(a.texto||"") && (!k.der || dataSP(a.criado_em)>=k.der));
+// F623 · encerra a linha do prazo de análise do INSS (compromisso, não prazo fatal) sem mexer no prazo calculado
+function botaoMoraFora(k, data){
+  return `<button class="btn-mini mora-fora" onclick="fecharCaixa();concluirMora('${k.id}','${data}')" title="encerra esta linha do prazo de análise do INSS; volta se o prazo mudar"><span aria-hidden="true">Concluir</span><span class="sr-only">Concluir o prazo de análise do INSS</span></button>`;
+}
+function concluirMora(casoId, data){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  if(typeof fecharPainelPrazo==="function") fecharPainelPrazo();
+  return gravarRonda(k, {...(k.ronda||{}), mora_fora:{data, por:(eu&&eu.id)||null, em:new Date().toISOString()}}, "Prazo de análise concluído");
+}
 function botaoOuvidoria(k){
   return ouvidoriaDoCaso(k)
     ? `<button class="btn-mini ouv-resp" onclick="fecharCaixa();ouvidoriaRespondeu('${k.id}')" title="anota que a Ouvidoria respondeu e o pedido segue em análise; confere de novo em 15 dias">Ouvidoria respondeu · +15 d</button>`
