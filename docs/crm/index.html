@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.13</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.15</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -22721,12 +22721,18 @@ const FEITO_DA_TAREFA = [
   [/\bjuntar\b|juntada/i, "Documentos juntados"],
   [/peti[çc][ãa]o|manifestar|manifesta[çc][ãa]o/i, "Petição protocolada"],
 ];
+/* F622 · "Avaliar apelação…" não é apelação protocolada: verbo de exame antes da peça, sem verbo de fazer, não vale */
+const RX_FEITO_EXAME = /\b(avaliar|conferir|verificar|analisar|estudar|ler|acompanhar|aguardar|checar|revisar|consultar|ver se|decidir|pensar|discutir|explicar|orientar|informar|avisar|falar|ligar)\b/i;
+const RX_FEITO_FAZER = /\b(protocolar|apresentar|interpor|opor|elaborar|redigir|fazer|preparar|minutar|peticionar|cumprir|distribuir|ajuizar)\b/i;
+const feitoValido = (t, i) => { const antes = t.slice(0, i); return !RX_FEITO_EXAME.test(antes) || RX_FEITO_FAZER.test(antes); };
 function feitoDaTarefa(texto){
   const t = String(texto||"").slice(0, 300); let melhor = null;
   // a peça nomeada vence o "manifestar" genérico, que é a última regra
-  for(const [rx, frase] of FEITO_DA_TAREFA.slice(0, -1)){ const m = rx.exec(t); if(m && (!melhor || m.index<melhor.i)) melhor = {i:m.index, frase}; }
+  for(const [rx, frase] of FEITO_DA_TAREFA.slice(0, -1)){ const m = rx.exec(t); if(m && feitoValido(t, m.index) && (!melhor || m.index<melhor.i)) melhor = {i:m.index, frase}; }
   const [rxG, fraseG] = FEITO_DA_TAREFA[FEITO_DA_TAREFA.length-1];
-  return melhor ? melhor.frase : rxG.test(t) ? fraseG : null;
+  if(melhor) return melhor.frase;
+  const g = rxG.exec(t);
+  return g && feitoValido(t, g.index) ? fraseG : null;
 }
 const feitoDe = t => t && t.natureza!=="lembrete" && t.papel!=="revisa"
   ? feitoDaTarefa(((D._andsFicha||[]).find(a=>a.id===t.andamento_id)||{}).texto) : null;
@@ -42667,11 +42673,13 @@ function linhasDeDatas(cliId){
       resumo:`${parado.tipo} de ${fmtBarra(parado.pendente).slice(0,5)}`,
       rot:`<b>Prazo de análise parado: confirme se a ${esc(parado.tipo)} de ${fmt(parado.pendente)} aconteceu</b>
            <small class="qd-de">${notaParado(parado, x)} Marque Compareceu ou Não compareceu na aba Perícias · ${tit}</small>`, edita:"", acao:""});
-    if(mora && !parado) linhas.push({data:mora.data, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true,
+    // F623 · Concluir tira a linha enquanto a data do prazo for a mesma; prazo recalculado volta a aparecer
+    const moraFora = mora && ((x.ronda||{}).mora_fora||{}).data===mora.data;
+    if(mora && !parado && !moraFora) linhas.push({data:mora.data, ico:"⌛", natureza:"compromisso", casoId:x.id, cru:true,
       rotulo:mora.vencido?"Prazo de análise do INSS vencido":"Prazo de análise do INSS", curto:mora.vencido?"Análise do INSS vencida":"INSS decide até",
       resumo:mora.vencido?(ms?"MS decidido: acompanhe a impetração":"avalie o mandado de segurança por mora"):`${mora.dias} dias ${mora.pericia?`da ${mora.tipo}`:"da DER"}${mora.suspenso?", descontada a exigência":""}`,
       rot:`<b>${mora.vencido?`O INSS passou do prazo de análise — ${ms?"o mandado de segurança por mora já foi decidido: acompanhe a impetração":"avalie o mandado de segurança por mora"}`:"Prazo do INSS para decidir o pedido"}</b>
-           <small class="qd-de">${mora.dias} dias ${mora.pericia?`da ${esc(mora.tipo)} de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", descontada a pausa da exigência (IN 128/2022, art. 566, § 9º)":""}, pelo acordo homologado no RE 1.171.152 (confira a vigência do acordo antes de citá-lo); reforço: Lei 9.784/1999, art. 49 (decidir em até 30 dias depois de concluída a instrução) · ${tit}</small>`, edita:"", acao: mora.vencido && !ms ? botaoOuvidoria(x) : "", ouv: mora.vencido && !ms ? botaoOuvidoria(x) : ""});   // F248 · também no cartão, num clique
+           <small class="qd-de">${mora.dias} dias ${mora.pericia?`da ${esc(mora.tipo)} de ${fmt(mora.desde)}`:`da DER de ${fmt(x.der)}`}${mora.suspenso?", descontada a pausa da exigência (IN 128/2022, art. 566, § 9º)":""}, pelo acordo homologado no RE 1.171.152 (confira a vigência do acordo antes de citá-lo); reforço: Lei 9.784/1999, art. 49 (decidir em até 30 dias depois de concluída a instrução) · ${tit}</small>`, edita:"", acao: (mora.vencido && !ms ? botaoOuvidoria(x) : "") + botaoMoraFora(x, mora.data), ouv: mora.vencido && !ms ? botaoOuvidoria(x) : ""});   // F248 · também no cartão, num clique
     if(rec){
       const rotulo = fe==="conselho" ? "Recurso especial" : "Recurso ordinário";
       const l={data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo,
@@ -47279,6 +47287,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   // texto) e entram no fim da barra; os vistos de leitura vão para o cabeçalho
   const apagar = a.autor_id===eu.id&&a.origem==="app"
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
+  const editarResp = a.autor_id===eu.id&&a.origem==="app"&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt tl-bt-nota resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
       ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? ""
@@ -47299,7 +47308,7 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${a.editado_em?`<button class="tl-hora tl-editada" onclick="verEdicoes('${a.id}')" title="editada em ${esc(fmtTS(a.editado_em))}; ver as versões anteriores">· editada</button>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${pzE && pzE.est==="vivo" && _cumprindo!==a.id ? "" : tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
+    <span class="texto"><span class="tl-cab"><span class="avatar mini tl-av" style="background:${cor}">${esc(co?co.inicial:"·")}</span><b class="autor-nome">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${(h=>`<span class="tl-dt">${fmtTS(a.criado_em).slice(0,5)}${h?" · ":""}</span>${h}`)(horaDoAnd(a))}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}${a.editado_em?`<button class="tl-hora tl-editada" onclick="verEdicoes('${a.id}')" title="editada em ${esc(fmtTS(a.editado_em))}; ver as versões anteriores">· editada</button>`:""}${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${pz && !pzE?`<span class="chip tl-pz-chip" title="prazo fatal marcado nesta anotação">prazo fatal ${esc(pz[1].slice(0,5).replace(".","/"))}</span>`:""}${rp?rp.chip:""}<span class="tl-cab-fim">${barra}${vistos(a)}${raiz?"":editarResp+apagar}</span></span><span class="tl-corpo${pzE && pzE.est==="vivo" && limpaRepPz(tp?tp.resto:corpo)===limpaRepPz(tituloNotaPz(a)) ? " tl-corpo-rep" : ""}">${destacarMencoes(esc(tp?tp.resto:corpo))}</span>${rp?rp.anexos:""}${pzE?faixaPrazoNota(a, pzE):""}${pzE && pzE.est==="vivo" && _cumprindo!==a.id ? "" : tarefasCartao(a)}${chipsReacao}${resposta||""}${raiz?caixaRespInline(a):""}</span>`;   // F244 · as ações na linha do autor
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -50854,6 +50863,15 @@ async function anotarUmClique(casoId, texto, o={}){
 // a Ouvidoria responde em até 30 dias, prorrogáveis (Lei 13.460/2017, art. 16)
 const RX_OUVIDORIA = /^\[OUVIDORIA\]/;
 const ouvidoriaDoCaso = k => (D._andsFicha||[]).some(a=>a.caso_id===k.id && !a.excluir && RX_OUVIDORIA.test(a.texto||"") && (!k.der || dataSP(a.criado_em)>=k.der));
+// F623 · encerra a linha do prazo de análise do INSS (compromisso, não prazo fatal) sem mexer no prazo calculado
+function botaoMoraFora(k, data){
+  return `<button class="btn-mini mora-fora" onclick="fecharCaixa();concluirMora('${k.id}','${data}')" title="encerra esta linha do prazo de análise do INSS; volta se o prazo mudar"><span aria-hidden="true">Concluir</span><span class="sr-only">Concluir o prazo de análise do INSS</span></button>`;
+}
+function concluirMora(casoId, data){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  if(typeof fecharPainelPrazo==="function") fecharPainelPrazo();
+  return gravarRonda(k, {...(k.ronda||{}), mora_fora:{data, por:(eu&&eu.id)||null, em:new Date().toISOString()}}, "Prazo de análise concluído");
+}
 function botaoOuvidoria(k){
   return ouvidoriaDoCaso(k)
     ? `<button class="btn-mini ouv-resp" onclick="fecharCaixa();ouvidoriaRespondeu('${k.id}')" title="anota que a Ouvidoria respondeu e o pedido segue em análise; confere de novo em 15 dias">Ouvidoria respondeu · +15 d</button>`
