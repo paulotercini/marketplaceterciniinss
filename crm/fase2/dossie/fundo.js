@@ -349,6 +349,33 @@ const resumo = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
     m.familia ? { familia: m.familia, familias: m.familias || [m.familia] } : {}) })   // CadÚnico: a família (renda per capita, integrantes)
   .then(crm => ({ ok: true, crm }), e => ({ ok: false, crm: String(e.message || e) }));
 
+// F618 · os PDFs do Prévius da pasta do cliente no Drive vão aos anexos do CRM (origem previus);
+// a extensão não lê o texto: o CRM lê e confere o CPF ao abrir a ficha
+// o mesmo nome do Storage que o botão Prévius do CRM usa (nomeSeguro do app), para o mesmo arquivo cair no mesmo caminho
+const nomeCrm = n => String(n || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9.\-_]+/g, '-').replace(/-+/g, '-').slice(-80) || 'arquivo';
+async function previusDoDrive(m) {
+  const cpf = String(m.cpf || '').replace(/\D/g, '');
+  if (cpf.length !== 11) return { aviso: 'digite o CPF com 11 dígitos' };
+  const cli = await CRM.clienteDoCpf(cpf).catch(() => null);
+  if (!cli) return { aviso: 'cliente fora do CRM (ou sem login no CRM)' };
+  let lista;
+  try { lista = await nativo({ acao: 'previus', cpf, nome: cli.nome || '' }); }
+  catch (e) { return { aviso: `o programa do Drive não respondeu: ${e.message || e}` }; }
+  if (!lista.pasta) return { aviso: 'pasta do cliente não achada no Drive' };
+  let ok = 0; const falhas = [];
+  for (const c of lista.caminhos || []) {
+    try {
+      const a = await nativo({ acao: 'ler_previus', caminho: c });
+      const bytes = Uint8Array.from(atob(a.b64), x => x.charCodeAt(0));
+      const r = await CRM.guardarNoCrm({ cpf, caminho: `previus/${cpf}/${nomeCrm(a.arquivo)}`, nome: `Prévius · ${a.arquivo}`, bytes, origem: 'previus' });
+      if (r === 'ok') ok++; else falhas.push(`${a.arquivo}: ${r}`);
+    } catch (e) { falhas.push(String(e.message || e)); }
+  }
+  return { aviso: (lista.caminhos || []).length ? `Prévius: ${ok} de ${lista.caminhos.length} enviado(s) ao CRM; abra a ficha para ler${falhas.length ? ' · ' + falhas.join(' · ') : ''}`
+    : 'nenhum PDF com "Prévius" no nome na pasta do cliente' };
+}
+
 chrome.runtime.onMessage.addListener((m, _de, responder) => {
   if (!m || m.tipo === 'blob') return false;                // é para o offscreen
   if (m.tipo === 'hc') { rodarHc(m.tabId).catch(() => {}); responder({ ok: true }); return false; }
@@ -362,6 +389,7 @@ chrome.runtime.onMessage.addListener((m, _de, responder) => {
     : m.tipo === 'resumo' ? resumo(m)
     : m.tipo === 'abrir' ? abrirTudo()
     : m.tipo === 'transparencia' ? transparencia(m)
+    : m.tipo === 'previus' ? previusDoDrive(m)
     : m.tipo === 'crm' && m.acao === 'entrar' ? CRM.entrar(m.email, m.senha).then(quem => ({ quem }))
     : m.tipo === 'crm' && m.acao === 'sair' ? CRM.sair().then(() => ({ ok: true }))
     : null;

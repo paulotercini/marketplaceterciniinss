@@ -7121,7 +7121,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.10</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.11</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -23542,6 +23542,7 @@ async function abrirFicha(cliId){
     // depois, o CNIS e a declaração pelos leitores do CRM
     if(SUB_DOSSIE_TUDO.has(subCad)) _dossieTudo.add(cliId);
     lerTextoDoDossie(cliId).then(()=>lerLeitoresDoDossie(cliId)).catch(e=>console.warn("dossiê:", e));
+    lerPreviusPendentes(cliId).catch(e=>console.warn("prévius:", e));   // F618
   }catch(e){
     console.error("abrirFicha:", e);
     const det=document.getElementById("detalhe");
@@ -31350,10 +31351,13 @@ function conferirPrevius(prev, ctx){
   const br = iso => iso ? iso.split("-").reverse().join("/") : "";
   if(!prev) return out;
   const projecao = prev.tempoEm && x.hoje && prev.tempoEm > x.hoje;   // o tempo numa DIB futura soma o que ainda não houve
-  if(prev.tempo && ct && ct.anos!=null && !prev.pcd && !projecao){ const d = Math.abs(prevDias(prev.tempo) - (ct.anos*365 + (ct.meses||0)*30));
-    if(d > 30) out.push({tipo:"divergencia", k:"prev.tempo", fonte:"Prévius e CNIS", texto:`Tempo: o Prévius dá ${tf(prev.tempo)} e o CNIS ${tf({anos:ct.anos, meses:ct.meses||0, dias:0})} (diferença de ${d} dias)`}); }
-  if(prev.carencia!=null && ct && ct.carencia!=null && !projecao && Math.abs(prev.carencia - ct.carencia) > 1)
-    out.push({tipo:"divergencia", k:"prev.carencia", fonte:"Prévius e CNIS", texto:`Carência: o Prévius dá ${prev.carencia} contribuições e o CNIS ${ct.carencia}`});
+  // F618 · na DIB futura e na PcD (tempo convertido), a soma bruta dos períodos até hoje, sem os projetados
+  const bruto = (projecao || prev.pcd) ? somaPeriodosPrev(prev.periodos, x.hoje) : null, tPrev = bruto ? bruto.tempo : prev.tempo, cPrev = bruto ? bruto.carencia : prev.carencia;
+  const rotT = bruto ? `Tempo até hoje${prev.pcd ? ", sem a conversão da PcD" : ""}` : "Tempo";
+  if(tPrev && ct && ct.anos!=null && (bruto || (!prev.pcd && !projecao))){ const d = Math.abs(prevDias(tPrev) - (ct.anos*365 + (ct.meses||0)*30));
+    if(d > 30) out.push({tipo:"divergencia", k:"prev.tempo", fonte:"Prévius e CNIS", texto:`${rotT}: o Prévius dá ${tf(tPrev)} e o CNIS ${tf({anos:ct.anos, meses:ct.meses||0, dias:0})} (diferença de ${d} dias)`}); }
+  if(cPrev!=null && ct && ct.carencia!=null && (bruto || !projecao) && Math.abs(cPrev - ct.carencia) > 1)
+    out.push({tipo:"divergencia", k:"prev.carencia", fonte:"Prévius e CNIS", texto:`Carência${bruto ? " até hoje" : ""}: o Prévius dá ${cPrev} contribuições e o CNIS ${ct.carencia}`});
   const ps = (prev.periodos||[]).filter(p=>!p.projetado), vs = (x.vinculos||[]).filter(v=>v.inicio);
   const vIso = v => [_prevIso(v.inicio), v.fim ? _prevIso(v.fim) : (x.hoje || "9999-12-31")];
   const cruza = (a1, b1, a2, b2) => a1 <= b2 && a2 <= b1;
@@ -31370,6 +31374,16 @@ function conferirPrevius(prev, ctx){
   if(ps.some(p=>p.natureza==="rural") && !x.temRural) out.push({tipo:"sem_documento", k:"prev.rural", fonte:"Prévius", texto:"Período rural no Prévius sem papel da roça no dossiê"});
   if(ps.some(p=>p.def) && !x.temLaudo) out.push({tipo:"sem_documento", k:"prev.def", fonte:"Prévius", texto:"Período com deficiência no Prévius sem laudo no dossiê"});
   return out;
+}
+// F618 · os períodos do Prévius até `ate`, sem os projetados: dias de calendário sem contar duas vezes a sobreposição e os meses tocados
+function somaPeriodosPrev(ps, ate){
+  const dia = iso => Date.UTC(+iso.slice(0,4), +iso.slice(5,7)-1, +iso.slice(8,10)) / 864e5, lim = ate || "9999-12-31";
+  const iv = (ps||[]).filter(p=>!p.projetado && p.inicio && p.fim && p.inicio <= lim).map(p=>[p.inicio, p.fim < lim ? p.fim : lim]).sort((a, b)=>a[0] < b[0] ? -1 : 1);
+  if(!iv.length) return null;
+  let dias = 0, fim = -Infinity; const meses = new Set();
+  for(const [a, b] of iv){ const da = dia(a), db = dia(b); if(db > fim){ dias += db - Math.max(da, fim + 1) + 1; fim = db; }
+    const km = iso => +iso.slice(0,4)*12 + +iso.slice(5,7); for(let k = km(a); k <= km(b); k++) meses.add(k); }
+  return {tempo:{anos:Math.floor(dias/365), meses:Math.floor(dias%365/30), dias:dias%365%30}, carencia:meses.size};
 }
 // F616 · o Prévius do cliente: os anexos de origem "previus", o mais novo primeiro; o campo que falta num relatório vem de outro
 function previusDe(c){
@@ -31394,7 +31408,24 @@ function previusLinha(c){
   return `<p class="pa-prev-linha" ondragover="event.preventDefault()" ondrop="event.preventDefault();subirPrevius('${c.id}',event.dataTransfer.files)">
     ${pv ? `Prévius enviado em ${esc(fmtBarra(String(pv.a.criado_em||"").slice(0, 10)))}.` : "Sem cálculo do Prévius."}
     <label class="btn-mini" for="${id}" title="${pv ? "Trocar o cálculo do Prévius" : "Enviar o cálculo do Prévius (PDF), ou solte o arquivo aqui"}">${pv ? "Trocar" : "Prévius"}</label>
-    <input type="file" id="${id}" accept=".pdf,.txt,application/pdf,text/plain" hidden onchange="subirPrevius('${c.id}',this.files)"></p>`;
+    <input type="file" id="${id}" accept=".pdf,.txt,application/pdf,text/plain" hidden onchange="subirPrevius('${c.id}',this.files)">
+    <span class="meio-sub">O que está no Drive vem pelo botão "Prévius do Drive" da extensão do dossiê.</span></p>`;
+}
+// F618 · o Prévius que a extensão trouxe do Drive chega sem texto (nulo): lido ao abrir a ficha, só com o CPF da ficha.
+// Recusado, fica com texto "" (lido e recusado), para não ser lido de novo
+async function lerPreviusPendentes(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const cpf = soDig(c.cpf); let n = 0;
+  for(const a of (D.anexos||[]).filter(a=>a.cliente_id===cliId && a.origem==="previus" && a.texto==null)){
+    let r; try{ r = await textoDoDocumento(a.caminho, true); }catch(e){ console.warn("prévius:", e); continue; }
+    const p = r.texto && lerPreviusTexto(r.texto), ok = !!p && (!p.cpf || p.cpf===cpf);
+    const dados = ok ? {texto:r.texto, paginas:r.paginas ?? null} : {texto:""};
+    try{ await api(`/rest/v1/anexos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(dados)}); }
+    catch(e){ console.warn("prévius:", e); continue; }
+    Object.assign(a, dados);
+    if(ok) n++; else aviso(`${a.nome||"O arquivo"}: ${p ? "o CPF do Prévius não é o desta ficha" : "não parece um relatório do Prévius"}. Não foi lido.`);
+  }
+  if(n && clienteAberto===cliId) repintarFicha();
 }
 async function subirPrevius(cliId, arqs){
   const arq = arqs && arqs[0], c = D.cliPorId.get(cliId); if(!arq || !c) return;
@@ -39366,7 +39397,8 @@ function quadrosDoPACalc(c, ks){
     Q.prev.achado = `${pp.data ? `cálculo de ${fmtBarra(pp.data)}` : "cálculo sem data"}${pp.periodos.length ? `, ${plu(pp.periodos.length, "período", "períodos")}` : ""}`;
     const cf = conferirPrevius(pp, {ct, vinculos:(g && g.vinculos)||[], ppps:fd.ppps.map(x=>x.empresa||""), temRural:rural, temLaudo:fd.laudos.length>0, hoje:hoje()});
     for(const d of cf) it("prev", d.k, d.texto, d.tipo==="divergencia" ? "warn" : "info", d.fonte, pv.a.id);
-    if(!cf.some(d=>d.tipo==="divergencia")) it("prev", "prev.ok", "Prévius confere com o CNIS", "ok", "Prévius", pv.a.id); }
+    if(!g) it("prev", "prev.semcnis", "Sem CNIS no dossiê para conferir", "warn", "Prévius", pv.a.id);   // F618
+    else if(!cf.some(d=>d.tipo==="divergencia")) it("prev", "prev.ok", "Prévius confere com o CNIS", "ok", "Prévius", pv.a.id); }
   // 9 · os documentos de cada quadro, e os que nenhum quadro lê
   const idsRoca = new Set(roca.map(p=>p.a.id));   // F235 · o papel da roça já está no quadro dele, um item por papel
   // F235 · o relatório do médico vai ao quadro da Saúde, venha da pasta que vier
@@ -39440,7 +39472,7 @@ function itensDoCnis(itens, li, ctx, linha){
 function painelPA(c, ks){
   if(telaSimples("pa", c)) return paSimples(c, ks);   // F249 · nível 1 e 2 antes da onda 5
   // F220 · sem dossiê não há quadro: o relato da recepção e a escolha do benefício
-  const semDz = !docsDoDossie(c.id).length && !cnisDe(c) && !familiaCadunico(c);   // a família do CadÚnico já é dossiê
+  const semDz = !docsDoDossie(c.id).length && !cnisDe(c) && !familiaCadunico(c) && !previusDe(c);   // a família do CadÚnico já é dossiê; F618 · o Prévius também
   const d = paDados(c, ks), qd = semDz ? {quadros:[]} : quadrosDoPA(c, ks), fora = paForaDe(c), pc = preCasoAberto(c);
   const dz = c.dossie || {}, ems = Object.values(dz).map(x=>x&&x.em).filter(Boolean).sort(), nDocs = docsDoDossie(c.id).length;
   const PORT = {meuinss:"Meu INSS", mte:"Emprega Brasil", recursos:"e-Recursos", hc:"HC Ribeirão", redesim:"Redesim", cadunico:"CadÚnico", transparencia:"Portal da Transparência"};
@@ -39464,7 +39496,7 @@ function painelPA(c, ks){
           ${q.importa ? `<p class="paq-importa"><b>Importa para:</b> ${esc(q.importa)}.</p>` : ""}</div></details>
         <span class="paq-n">${t ? `${v} de ${t} vão à Análise` : ""}</span>
         ${t ? `<button type="button" class="adr-link paq-todos" onclick="paMarcarQuadro('${c.id}','${q.id}')" title="marcar ou desmarcar todos"><span aria-hidden="true">Todos</span><span class="sr-only">marcar ou desmarcar todos</span></button>` : ""}</div>
-      ${q.id==="cnis" ? previusLinha(c) : ""}
+      ${q.id===(cnisDe(c) || !previusDe(c) ? "cnis" : "prev") ? previusLinha(c) : ""}
       ${q.achado && !q.blocos.length ? `<p class="paq-achado"><b>O que encontramos:</b> ${esc(q.achado)}.</p>` : ""}
       ${q.vazio ? `<p class="paq-vazio">Sem dado: ${esc(q.vazio)}.</p>` : ""}
       ${q.blocos.length ? `<div class="paq-blocos">${q.blocos.map(([r, val, est])=>`<div class="paq-bloco"><small title="${esc(r)}">${esc(PA_BLOCO_ROT[r] || r)}</small><b class="${est==="crit"?" crit":""}">${esc(PA_BLOCO_VAL(val))}</b></div>`).join("")}</div>` : ""}
@@ -39504,6 +39536,7 @@ function painelPA(c, ks){
     ${(n => n && !nomeIgual(n, c.nome) ? `<p class="pa-nome-dif" role="alert"><b>Nome diferente do CNIS.</b> No CRM consta <b>${esc(c.nome||"")}</b>, e no CNIS consta <b>${esc(n)}</b>. <button type="button" class="btn-mini" onclick="usarNomeCnis('${c.id}')" title="Usar o nome do CNIS">Usar<span class="sr-only"> o nome do CNIS</span></button></p>` : "")(nomeDoCnis(c))}
     ${semDz ? `<section class="pa-sem-dz" aria-label="Sem dossiê">
       <p><b>O dossiê ainda não foi baixado.</b> Os quadros nascem quando a extensão trouxer os documentos dos portais com o gov.br do cliente. Até lá, escolha o benefício abaixo e siga para a Análise de Direito.</p>
+      ${previusLinha(c)}
       ${(ns=>ns.length ? `<div class="pa-relato"><span class="meio-sub">O que a recepção registrou</span>${ns.map(n=>`<p><b>${esc(n.quem||"")}</b> <span class="meio-sub">${n.em?esc(fmtTS(n.em)):""}</span> ${esc(String(n.texto||"").slice(0,1500))}</p>`).join("")}</div>` : "")(((c.campos||{}).atendimento||[]).slice(-3))}
     </section>` : `${tp ? tp.trilha : ""}
     ${grupos.map(g=>`<div class="tp-passo" data-passo="${g.id}"${oculto(g.id)}>${g.qs.map(q=>quadro(q, ++nq)).join("")}</div>`).join("")}`}
@@ -50877,6 +50910,7 @@ function paSimples(c, ks){
     ${docs.length ? `<details class="nv-docs"><summary>O que o dossiê trouxe (${docs.length} documento${docs.length>1?"s":""})</summary>
       <ul>${docs.map(a=>`<li><button type="button" class="adr-link" onclick="abrirAnexo('${a.id}')">${esc(fonteDoDossie(a)[1])}</button></li>`).join("")}</ul></details>`
       : `<p class="meio-sub">Sem dossiê ainda.</p>`}
+    ${previusLinha(c)}
     ${linkCompleto("pa", "Ver o Primeiro atendimento completo")}</div>`;
 }
 function adSimples(c){

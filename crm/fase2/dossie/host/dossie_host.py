@@ -56,7 +56,7 @@ def cpf_da_pasta(nome):
     return d.zfill(11) if 9 <= len(d) <= 11 else ''
 
 
-def achar_ou_criar(raiz, cpf, nome):
+def achar_ou_criar(raiz, cpf, nome, criar=True):
     cpf = re.sub(r'\D', '', cpf).zfill(11)
     alvo_nome = chave_nome(nome)
     por_nome = None
@@ -70,13 +70,24 @@ def achar_ou_criar(raiz, cpf, nome):
                 return p.path, False
             if por_nome is None and alvo_nome and '#' not in p.name and chave_nome(p.name) == alvo_nome:
                 por_nome = p.path        # pasta antiga sem CPF: vale se nenhuma tiver o CPF
-    if por_nome:
+    if por_nome or not criar:
         return por_nome, False
     bonito = capitalizar(nome) if nome.strip() else 'Cliente'
     letra = sem_acento(bonito)[:1].upper() or '_'
     caminho = os.path.join(raiz, letra, seguro(f'{bonito} #{cpf}'))
     os.makedirs(caminho, exist_ok=True)
     return caminho, True
+
+
+def previus_da_pasta(pasta, fundo=2):
+    """PDFs com "previus"/"prévius" no nome, na pasta e em até `fundo` níveis de subpasta."""
+    achados = []
+    for e in sorted(os.scandir(pasta), key=lambda e: e.name):
+        if e.is_dir() and fundo > 0:
+            achados += previus_da_pasta(e.path, fundo - 1)
+        elif e.is_file() and e.name.lower().endswith('.pdf') and 'previus' in sem_acento(e.name).lower():
+            achados.append(e.path)
+    return achados
 
 
 def dentro(raiz, caminho):
@@ -99,6 +110,18 @@ def tratar(msg, raiz):
         with open(destino, 'wb') as f:
             f.write(base64.b64decode(msg['b64']))
         return {'ok': True, 'caminho': destino}
+    if msg.get('acao') == 'previus':
+        # só lê: a busca não cria pasta de cliente. Devolve os caminhos; o conteúdo vem um por mensagem
+        # (o Chrome corta a resposta do programa acima de 1 MB)
+        pasta, _ = achar_ou_criar(raiz, msg['cpf'], msg.get('nome', ''), criar=False)
+        return {'ok': True, 'pasta': pasta, 'caminhos': previus_da_pasta(pasta)[:10] if pasta else []}
+    if msg.get('acao') == 'ler_previus':
+        c = msg['caminho']
+        if not dentro(raiz, c) or 'previus' not in sem_acento(os.path.basename(c)).lower() or not c.lower().endswith('.pdf'):
+            return {'erro': 'arquivo fora da pasta de processos'}
+        if os.path.getsize(c) > 700_000:
+            return {'erro': 'Prévius acima de 700 KB: suba pelo botão Prévius do CRM'}
+        return {'ok': True, 'arquivo': os.path.basename(c), 'b64': base64.b64encode(open(c, 'rb').read()).decode()}
     if msg.get('acao') == 'ping':
         return {'ok': True, 'raiz': raiz, 'existe': os.path.isdir(raiz)}
     return {'erro': 'ação desconhecida'}
