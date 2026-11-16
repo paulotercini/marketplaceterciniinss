@@ -366,7 +366,7 @@ console.log("formal: ok");
   assert.ok(el("Pode acessar o seu Meu INSS.").includes("seu Meu INSS"));
   assert.ok(el("O senhor pode vir na quarta?").startsWith("O senhor pode"));
   assert.equal(el("Compreendi. Vou verificar.", ["Compreendi. Qual o assunto?"]), "Vou verificar.");
-  assert.equal(el("Compreendi. Vou verificar."), "Compreendi. Vou verificar.");
+  assert.equal(el("Compreendi. Vou verificar."), "Vou verificar.");
   assert.equal(el("Qual data prefere? às 9h ou às 15h?"), "Qual data prefere? Às 9h ou às 15h?");
   assert.equal(el("Com o Dr. Paulo. ok, combinado."), "Com o Dr. Paulo. Ok, combinado.");
   assert.equal(el("Boa noite! Agradecemos o contato.\n\nQual data prefere?", ["Boa noite!"]), "Qual data prefere?");
@@ -760,4 +760,14 @@ console.log("F581 plantão ok");
   assert.equal(imagensSoltas([{ ...img(""), midia_url: null }]).length, 0);
   assert.equal(imagensSoltas([]).length, 0);
   assert.equal(imagensSoltas([img("1"), img("2"), img("3"), img("4")]).length, 3);
+}
+
+// F628 · acidente com sequela é questão previdenciária; fora da região próxima, documentos em vez de presencial
+{
+  const { CORRECOES: c628, paraAgendador: pa628 } = await import("../../zap_plantao/index.ts");
+  assert.ok(c628.includes("Questão previdenciária escondida"));
+  assert.ok(c628.includes("auxílio-acidente") && c628.includes("seguradora"));
+  assert.ok(c628.includes("Matão") && c628.includes("não ofereça atendimento presencial"));
+  assert.ok(c628.includes("Não pergunte a cidade") && !c628.includes("pergunte primeiro em que cidade"));
+  assert.ok(pa628("Texto do Console.").includes("Questão previdenciária escondida"));
 }

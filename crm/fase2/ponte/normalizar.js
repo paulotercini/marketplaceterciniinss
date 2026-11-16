@@ -49,7 +49,7 @@ const recente = (m, ms, agora = Date.now()) => {
 // Mensagem que não é conversa: recibo de entrega, reação, apagamento, chave
 // de criptografia. Entra no fluxo do Baileys e não pode virar linha na tela.
 const TIPOS_MUDOS = ["protocolMessage", "reactionMessage", "senderKeyDistributionMessage",
-                     "messageContextInfo", "pollUpdateMessage", "encReactionMessage", "keepInChatMessage",
+                     "messageContextInfo", "secretEncryptedMessage", "pollUpdateMessage", "encReactionMessage", "keepInChatMessage",
                      "pinInChatMessage", "encEventResponseMessage", "albumMessage", "placeholderMessage",
                      "messageHistoryBundle", "stickerSyncRmrMessage"];
 
@@ -234,6 +234,13 @@ const textoEditado = e => (e && (e.conversation || (e.extendedTextMessage && e.e
 function alteracaoDe(m, idEditada) {
   let c = (m && m.message) || {};
   if (c.editedMessage) c = c.editedMessage.message || {};
+  // F627 · o Baileys 7 entrega a edição de alguns aparelhos cifrada (secretEncryptedMessage,
+  // MESSAGE_EDIT) e não a decifra; marca a original como editada, sem trocar o texto.
+  const se = c.secretEncryptedMessage;
+  if (se && se.targetMessageKey && se.targetMessageKey.id) {
+    const t = se.secretEncType;
+    return (t === 2 || t === "MESSAGE_EDIT") ? { id: se.targetMessageKey.id, editadaSemTexto: true } : null;
+  }
   const p = c.protocolMessage;
   if (!p || !p.key || !p.key.id) {
     const texto = idEditada ? textoEditado(c) : "";
