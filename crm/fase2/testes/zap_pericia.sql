@@ -30,7 +30,7 @@ select pg_temp.ok('sem Ligar não envia', pericia_avisos_vez('tarde') = 0 and pg
 
 -- 2. o Ligar aprova a data registrada
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000f1', false);
-select pericia_ligar('00000000-0000-0000-0000-0000000000b1', true, 'amanda');
+select pericia_ligar('00000000-0000-0000-0000-0000000000b1', true, 'amanda', (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b1'));
 select pg_temp.ok('Ligar grava a data aprovada',
   (select ligado and data_aprovada = (select data_hora from eventos where id = evento_id) and estado = 'ligado'
      from pericia_avisos where evento_id = '00000000-0000-0000-0000-0000000000b1'));
@@ -122,7 +122,7 @@ insert into eventos (id, caso_id, tipo, data_hora, local, status)
 select '00000000-0000-0000-0000-0000000000b2', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
        ((current_date + 40)::timestamp + time '14:00') at time zone 'America/Sao_Paulo', 'Fórum Teste', 'agendada';
 select pericia_so_lembretes('00000000-0000-0000-0000-0000000000b2', true);
-select pericia_ligar('00000000-0000-0000-0000-0000000000b2', true, 'paulo');
+select pericia_ligar('00000000-0000-0000-0000-0000000000b2', true, 'paulo', (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b2'));
 select pericia_avisos_vez('tarde');
 select pg_temp.ok('Já orientado: sem 1º aviso',
   (select so_lembretes from pericia_avisos where evento_id = '00000000-0000-0000-0000-0000000000b2')
@@ -135,7 +135,7 @@ select '00000000-0000-0000-0000-0000000000b3', '00000000-0000-0000-0000-00000000
        ((current_date + 50)::timestamp + time '14:00') at time zone 'America/Sao_Paulo', null, 'agendada';
 do $$ begin
   begin
-    perform pericia_ligar('00000000-0000-0000-0000-0000000000b3', true, 'paulo');
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b3', true, 'paulo', (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b3'));
     perform pg_temp.ok('sem endereço o Ligar recusa', false);
   exception when others then
     perform pg_temp.ok('sem endereço o Ligar recusa', sqlerrm like '%endereço%');
@@ -151,7 +151,7 @@ select '00000000-0000-0000-0000-0000000000b4', '00000000-0000-0000-0000-00000000
        ((current_date + 60)::timestamp + time '00:00') at time zone 'America/Sao_Paulo', 'Rua Teste, 1, Cidade Teste', 'agendada';
 do $$ begin
   begin
-    perform pericia_ligar('00000000-0000-0000-0000-0000000000b4', true, 'paulo');
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b4', true, 'paulo', (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b4'));
     perform pg_temp.ok('hora não informada: o Ligar recusa', false);
   exception when others then
     perform pg_temp.ok('hora não informada: o Ligar recusa', sqlerrm like '%hora%não informada%');
@@ -162,7 +162,7 @@ select '00000000-0000-0000-0000-0000000000b5', '00000000-0000-0000-0000-00000000
        ((current_date + 60)::timestamp + time '13:20') at time zone 'America/Sao_Paulo', 'Rua Teste, 1, Cidade Teste', 'agendada';
 do $$ begin
   begin
-    perform pericia_ligar('00000000-0000-0000-0000-0000000000b5', true, 'paulo');
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b5', true, 'paulo', (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b5'));
     perform pg_temp.ok('duplicado no mesmo dia: o Ligar recusa', false);
   exception when others then
     perform pg_temp.ok('duplicado no mesmo dia: o Ligar recusa', sqlerrm like '%mesmo dia%');
@@ -170,11 +170,38 @@ do $$ begin
 end $$;
 -- ligado antes do duplicado aparecer: a rodada não envia
 update eventos set status = 'cancelada' where id = '00000000-0000-0000-0000-0000000000b4';
-select pericia_ligar('00000000-0000-0000-0000-0000000000b5', true, 'paulo');
+select pericia_ligar('00000000-0000-0000-0000-0000000000b5', true, 'paulo', (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b5'));
 update eventos set status = 'agendada' where id = '00000000-0000-0000-0000-0000000000b4';
 select pericia_avisos_vez('tarde');
 select pg_temp.ok('duplicado: a rodada não envia',
   not exists (select 1 from zap_mensagens where aviso_chave like 'pericia:00000000-0000-0000-0000-0000000000b5:%'));
+
+-- 15. F626: ligar exige a data e o horário confirmados, iguais aos do evento
+insert into eventos (id, caso_id, tipo, data_hora, local, status)
+select '00000000-0000-0000-0000-0000000000b6', '00000000-0000-0000-0000-0000000000d1', 'Perícia',
+       ((current_date + 70)::timestamp + time '10:30') at time zone 'America/Sao_Paulo', 'Rua Teste, 2, Cidade Teste', 'agendada';
+do $$ begin
+  begin
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b6', true, 'paulo');
+    perform pg_temp.ok('F626: sem confirmação o Ligar recusa', false);
+  exception when others then
+    perform pg_temp.ok('F626: sem confirmação o Ligar recusa', sqlerrm like '%confirme o dia e o horário%');
+  end;
+  begin
+    perform pericia_ligar('00000000-0000-0000-0000-0000000000b6', true, 'paulo',
+      (select data_hora + interval '1 hour' from eventos where id = '00000000-0000-0000-0000-0000000000b6'));
+    perform pg_temp.ok('F626: horário diferente o Ligar recusa', false);
+  exception when others then
+    perform pg_temp.ok('F626: horário diferente o Ligar recusa', sqlerrm like '%confirme o dia e o horário%');
+  end;
+end $$;
+select pericia_ligar('00000000-0000-0000-0000-0000000000b6', true, 'paulo',
+  (select data_hora from eventos where id = '00000000-0000-0000-0000-0000000000b6'));
+select pg_temp.ok('F626: com o horário certo liga',
+  (select ligado from pericia_avisos where evento_id = '00000000-0000-0000-0000-0000000000b6'));
+select pg_temp.ok('F626: só a assinatura nova existe',
+  (select count(*) from pg_proc where proname = 'pericia_ligar') = 1
+  and not has_function_privilege('anon', 'pericia_ligar(uuid,boolean,text,timestamptz)', 'execute'));
 
 \set QUIET off
 select n, case when ok then 'ok' else 'FALHOU' end, prova from _r order by n;

@@ -114,10 +114,26 @@ const TUDO = {
   const END = "Agência do INSS de Monte Alto, Rua Rui Barbosa, 664, Monte Alto";
   await p.fill("#per-local", END); await p.waitForTimeout(200);
   conf("o endereço digitado aparece na mensagem", (await prev()).includes("Rua Rui Barbosa, 664"));
-  await p.click("#per-ligar"); await p.waitForTimeout(600);
+  // F626 · o Ligar abre a confirmação do dia e do horário; sem digitar o horário certo e marcar o dia, não liga
+  await p.click("#per-ligar"); await p.waitForTimeout(300);
+  const cx = () => p.evaluate(() => { const d = document.querySelector("dialog.per-conf"); return d ? d.innerText : ""; });
+  conf("F626: o Ligar abre a confirmação com dia da semana, data, horário e endereço", /14:00/.test(await cx()) && /feira|sábado|domingo/.test(await cx()) && /Rua Rui Barbosa, 664/.test(await cx()));
+  const desl = () => p.evaluate(() => document.querySelector("#pc-ligar").disabled);
+  conf("F626: sem conferir, o Ligar da janela fica desligado", await desl());
+  await p.check("#pc-dia"); await p.fill("#pc-hora", "15:00");
+  conf("F626: horário errado mantém o Ligar desligado", await desl());
+  await p.fill("#pc-hora", "14:00"); await p.uncheck("#pc-dia");
+  conf("F626: sem marcar o dia, o Ligar fica desligado", await desl());
+  await p.click("dialog.per-conf button[value=nao]"); await p.waitForTimeout(300);
+  conf("F626: Voltar não liga", chamadas.length === 0 && locCh.length === 0);
+  await p.click("#per-ligar"); await p.waitForTimeout(300);
+  await p.fill("#pc-hora", "14:00"); await p.check("#pc-dia");
+  conf("F626: horário certo e dia marcado ligam o botão", !(await desl()));
+  await p.click("#pc-ligar"); await p.waitForTimeout(600);
   conf("o Ligar grava o endereço da perícia", locCh.length === 1 && locCh[0].p_local === END && locCh[0].p_evento === EV);
   conf("com atendimento futuro agendado o Ligar dispensa a oferta", soCh.length === 3 && soCh[2].p_so === true);
   conf("o Ligar chama pericia_ligar com a Dra. Amanda", chamadas.length === 1 && chamadas[0].p_ligado === true && chamadas[0].p_profissional === "amanda");
+  conf("F626: o Ligar manda a data e o horário confirmados", chamadas[0].p_confirmado === TUDO.eventos[0].data_hora);
   conf("depois do Ligar a chave da linha fica ligada", await p.evaluate(ev => document.querySelector(`[data-sw="${ev}"]`).getAttribute("aria-checked") === "true", EV));
   await p.evaluate(() => { const d = document.querySelector("#notif"); if (d) d.open = true; });
   await p.click("#sw-d7"); await p.waitForTimeout(300);
