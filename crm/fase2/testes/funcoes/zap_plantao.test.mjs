@@ -1,6 +1,6 @@
 // node --experimental-strip-types testes/funcoes/zap_plantao.test.mjs
 import assert from "node:assert/strict";
-import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas, ehGolpe, primeiraPessoa } from "../../zap_plantao/index.ts";
+import { mascarar, transcricao, promptPlantao, ESQUEMA, regras, definicaoAgente, textoDoTurno, turno, FERRAMENTA, ferramentasDaConversa, semAgendarSeAssumida, vagasDoDia, rotulo, paraTriagem, ligacaoTriagem, AGENDAR_BULLET, emLinhas, paraAgendador, AG_ASSUNTO, AG_MODALIDADE, AG_HORARIOS, AG_ORIENTA, promptIntencao, ESQ_INTENCAO, promptCliente, ESQ_CLIENTE, promptCobranca, ESQ_COBRANCA, promptAndamento, ESQ_ANDAMENTO, mascararMenosDatas, ehGolpe, primeiraPessoa } from "../../zap_plantao/index.ts";
 
 assert.equal(mascarar("CPF 123.456.789-09"), "CPF [número]");
 // F515 · a senha não vai ao modelo; o lembrete do escritório ("leve a senha do gov.br") fica inteiro
@@ -770,4 +770,20 @@ console.log("F581 plantão ok");
   assert.ok(c628.includes("Matão") && c628.includes("não ofereça atendimento presencial"));
   assert.ok(c628.includes("Não pergunte a cidade") && !c628.includes("pergunte primeiro em que cidade"));
   assert.ok(pa628("Texto do Console.").includes("Questão previdenciária escondida"));
+}
+
+// F630: conversa assumida não agenda, não remarca, não cancela nem põe na espera
+{
+  let chamou = 0;
+  const conta = async () => { chamou++; return { ok: true }; };
+  const fer = { consultar_vagas: conta, marcar_atendimento: conta, remarcar_atendimento: conta, cancelar_atendimento: conta, entrar_na_espera: conta, encaminhar_equipe: conta };
+  assert.equal(semAgendarSeAssumida(fer, false), fer);
+  const a = semAgendarSeAssumida(fer, true);
+  for (const n of ["marcar_atendimento", "remarcar_atendimento", "cancelar_atendimento", "entrar_na_espera"]) {
+    const r = await a[n]({});
+    assert.match(r.erro, /conversa assumida/);
+  }
+  assert.equal(chamou, 0);
+  await a.consultar_vagas({}); await a.encaminhar_equipe({});
+  assert.equal(chamou, 2);
 }
