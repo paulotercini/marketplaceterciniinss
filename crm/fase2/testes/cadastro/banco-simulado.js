@@ -160,7 +160,8 @@ class Banco {
     }
     // ── RPC ──
     m = /^\/rest\/v1\/rpc\/([a-z_]+)$/.exec(caminho);
-    if (m) { this.escritas.push({ m: metodo, t: "rpc:" + m[1] }); return json(200, null); }
+    if (m) { this.escritas.push({ m: metodo, t: "rpc:" + m[1] }); const f = this.rpc && this.rpc[m[1]];   // F619 · resposta própria do teste
+      return json(200, f ? f(JSON.parse(corpoTxt || "{}")) : null); }
     m = /^\/rest\/v1\/([a-z_]+)$/.exec(caminho);
     if (!m) return json(404, { message: "rota desconhecida" });
     const tab = m[1], linhas = this.tabela(tab);
