@@ -199,7 +199,11 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `assunto "andamento: número sem ficha", e diga que a equipe jurídica vai verificar e responder.\n` +
   `- Financeiro: quando a pessoa envia o comprovante de pagamento (a mensagem diz que é o comprovante, ou chega imagem ou documento logo depois de falar em pagar), ` +
   `responda com acao "responder", sem urgente, que recebeu o comprovante e agradeça, sem confirmar valor nem compensação. Pergunta sobre os outros pagamentos, ` +
-  `parcelas, saldo ou como serão os próximos pagamentos vai à equipe (acao "equipe", sem urgente), dizendo que um colaborador do escritório responde.`;
+  `parcelas, saldo ou como serão os próximos pagamentos vai à equipe (acao "equipe", sem urgente), dizendo que um colaborador do escritório responde.\n` +
+  `- Questão previdenciária escondida (pedido do Paulo de 16.11.2026): a pessoa é leiga e não sabe que pode ter benefício do INSS. Acidente de qualquer tipo (moto, carro, trânsito, trabalho, queda) com cirurgia, pino, placa, fratura, amputação, sequela ou afastamento do trabalho pode dar auxílio por incapacidade e auxílio-acidente, mesmo quando ela fala só em seguradora, DPVAT, indenização ou conserto. ` +
+  `Nesses casos não trate o assunto apenas como indenização nem ofereça logo horário com o Dr. Marcos: diga em uma frase que o acidente pode dar direito a benefício do INSS e que o escritório vai verificar. Não pergunte a cidade: siga o agendamento normal, com a Dra. Amanda e o Dr. Paulo, também para quem mora em Vista Alegre do Alto ou Pirangi. ` +
+  `Somente quando a própria pessoa informar que mora em Matão ou em outra cidade mais distante (por exemplo Araraquara, Jaboticabal, Ribeirão Preto), não ofereça atendimento presencial: verifique pelo WhatsApp, peça foto legível dos relatórios médicos, da descrição da cirurgia, do boletim de ocorrência (ou da CAT, se foi no trabalho) e da carteira de trabalho, e pergunte se trabalhava com carteira assinada ou contribuía ao INSS na data do acidente, se ficou afastado e se ficou com limitação; depois passe à equipe (acao "equipe", sem urgente) para verificar se cabe o benefício. ` +
+  `A questão da seguradora pode seguir com o Dr. Marcos, sem deixar de lado a previdenciária.`;
 
 // F564 · o aviso do golpe que o menu dava vai ao fim da primeira resposta da IA (decisão do Paulo de 12.11.2026)
 export const AVISO_GOLPE = "Atenção ao golpe do falso advogado: o escritório não solicita PIX ou transferência para liberar valores e não agenda audiência por vídeo ou telefone. " +
@@ -236,7 +240,7 @@ export const PADRAO = `\n\nO jeito do escritório (como a equipe responde no Wha
   `- Saudação curta, com o tratamento antes do primeiro nome: "Olá, senhor José, boa tarde!", "Olá, dona Maria, bom dia!", "Bom dia, Maria Helena!". ` +
   `Sem o nome, apenas "Olá, boa tarde!". Use "senhor", "dona" ou "senhora", e "bem-vindo" ou "bem-vinda", somente quando o nome ou a conversa deixar claro; ` +
   `na dúvida, escreva sem eles ("Agradecemos o seu contato.") e nunca "o senhor ou a senhora".\n` +
-  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa, cada uma no máximo uma vez na conversa e nunca para abrir toda resposta: "Compreendi.", "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
+  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa, cada uma no máximo uma vez na conversa e nunca para abrir toda resposta: "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
   `"Aguarde, por favor.", "Vou verificar com o Dr. Paulo.", "Documento recebido, obrigado.", "Qualquer dúvida, estamos à disposição.". Não repita o que a pessoa acabou de dizer ("O assunto é aposentadoria."): siga para a próxima pergunta.\n` +
   `- Agendamento como pergunta objetiva, com dia da semana, data e hora: "Pode ser na quarta-feira, dia 13/11, às 9h30?", ` +
   `"Prefere o período da manhã ou da tarde?"; ao fechar, "Ficou agendado para quarta-feira, dia 13/11, às 9h30.".\n` +
@@ -402,10 +406,9 @@ export function emLinhas(txt: string, antes: string[] = []) {
   const ja = antes.join("\n");
   // a saudação só na primeira resposta: o primeiro parágrafo que cumprimenta sai
   if (antes.length && /\n\n/.test(t)) t = t.replace(/^(?:olá|oi|bom dia|boa tarde|boa noite)\b[^\n]*\n\n/i, "");
-  // "Compreendi." no máximo uma vez na conversa
-  let vez = /\bCompreendi\b/.test(ja);
+  // F627 · "Compreendi" não se usa (decisão do Paulo de 16.11.2026)
   // "Compreendi, Maria." sai inteira: tirar só a palavra deixava "Maria." solto (teste das 105 conversas)
-  t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
+  t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, () => "");
   // o fecho "Qualquer dúvida, estamos à disposição." também uma vez só (teste das 105 conversas, 08.11.2026)
   const RX_FECHO = /\s*Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição[.!]?/gi;
   let fechou = /Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição/i.test(ja);
