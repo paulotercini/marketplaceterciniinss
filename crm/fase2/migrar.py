@@ -1053,6 +1053,25 @@ def manter_lembrete(l, b):
         l["ativo"] = b.get("ativo", True)
 
 
+def sem_hora_ja_no_banco(mapa, banco):
+    """F624b · o evento sem hora (00:00) não entra quando o banco já tem, no
+    mesmo caso, o mesmo tipo no mesmo dia de Brasília, com qualquer status
+    (também o cancelado à mão): a chave inclui a hora, e o 09:00 antigo ou o
+    evento com hora certa não impediam o 00:00 novo. Devolve quantos saíram."""
+    def dia(dh):
+        d = datetime.datetime.fromisoformat(dh.replace("Z", "+00:00"))
+        if d.tzinfo:
+            d = d.astimezone(datetime.timezone(datetime.timedelta(hours=-3)))
+        return d.date().isoformat()
+    ja = {(e["caso_id"], e["tipo"], dia(e["data_hora"])) for e in banco or []}
+    ids = {e["id"] for e in banco or [] if e.get("id")}
+    antes = len(mapa["eventos"])
+    mapa["eventos"] = [e for e in mapa["eventos"]
+                       if e["data_hora"][11:16] != "00:00" or e["id"] in ids
+                       or (e["caso_id"], e["tipo"], e["data_hora"][:10]) not in ja]
+    return antes - len(mapa["eventos"])
+
+
 def respeitar_despacho(mapa, pendentes):
     """F291 · o "Concluir por hoje" do CRM marca a volta. Enquanto a ponte
     (ponte_despacho.py) não leva isso ao To Do, o caso despachado e ainda não levado
@@ -1644,6 +1663,14 @@ def subir_rest(mapa):
                     "&or=(prazo.not.is.null,importante.is.true,todo_importante.not.is.null,beneficio.not.is.null)"
                     "&select=id,prazo,todo_prazo,importante,todo_importante,beneficio"),
         "casos", ("prazo", "importante", "beneficio"))
+    sem_hora = sorted({e["caso_id"] for e in mapa.get("eventos") or [] if e["data_hora"][11:16] == "00:00"})
+    banco_ev = []
+    for i in range(0, len(sem_hora), 100):
+        banco_ev += _rest_todas(url, chave, "/rest/v1/eventos?select=id,caso_id,tipo,data_hora"
+                                "&caso_id=in.(" + ",".join(sem_hora[i:i + 100]) + ")")
+    n_sh = sem_hora and sem_hora_ja_no_banco(mapa, banco_ev)
+    if n_sh:
+        print(f"  eventos sem hora já no banco no mesmo dia (não gravados): {n_sh}")
     n_desp = respeitar_despacho(mapa, _rest_todas(
         url, chave, "/rest/v1/casos?todo_task_id=not.is.null&ronda->despacho=not.is.null"
                     "&ronda->despacho->>todo=is.null&select=id,ronda"))
