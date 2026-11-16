@@ -178,3 +178,11 @@ test('1.39.1 · três recursos novos recusados nas duas bases não somam seis e 
   assert.ok(!r.r.erro, 'abortou: ' + r.r.erro);
   assert.deepStrictEqual(r.gravados.crps_403.sort(), novos);
 });
+
+test('1.40.1 · seis recusas em recursos que já respondiam, sem nenhum lido, é a sessão caída', async () => {
+  const velhos = [1, 2, 3, 4, 5, 6].map(k => `7${k}3456789012345678`.slice(0, 18));
+  const memo = Object.fromEntries(velhos.map(n => [n, { d: '2026-11-10T00:00:00', s: 'x' }]));
+  const r = await rodada({ listas: { esisrec: velhos }, recusa: velhos, guardado: { crps_ultimo: memo } });
+  assert.match(r.r.erro || '', /inclusive os que respondiam antes/);
+  assert.deepStrictEqual(r.gravados.crps_403 || [], [], 'marcou como recusados os recursos da sessão caída');
+});
