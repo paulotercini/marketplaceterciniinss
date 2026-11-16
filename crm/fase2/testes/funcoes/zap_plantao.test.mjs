@@ -366,7 +366,7 @@ console.log("formal: ok");
   assert.ok(el("Pode acessar o seu Meu INSS.").includes("seu Meu INSS"));
   assert.ok(el("O senhor pode vir na quarta?").startsWith("O senhor pode"));
   assert.equal(el("Compreendi. Vou verificar.", ["Compreendi. Qual o assunto?"]), "Vou verificar.");
-  assert.equal(el("Compreendi. Vou verificar."), "Compreendi. Vou verificar.");
+  assert.equal(el("Compreendi. Vou verificar."), "Vou verificar.");
   assert.equal(el("Qual data prefere? às 9h ou às 15h?"), "Qual data prefere? Às 9h ou às 15h?");
   assert.equal(el("Com o Dr. Paulo. ok, combinado."), "Com o Dr. Paulo. Ok, combinado.");
   assert.equal(el("Boa noite! Agradecemos o contato.\n\nQual data prefere?", ["Boa noite!"]), "Qual data prefere?");
