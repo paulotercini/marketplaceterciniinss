@@ -1,8 +1,8 @@
 -- F626 · pedido do Paulo de 16.11.2026: ligar o aviso da perícia exige confirmar o dia e o horário.
 -- pericia_ligar ganha p_confirmado (a data_hora que o administrador conferiu e digitou na tela) e
 -- recusa ligar sem ela ou com ela diferente de eventos.data_hora. A confirmação fica gravada em
--- pericia_avisos.data_aprovada, ligado_por e ligado_em, como já era. A assinatura antiga sai, para o
--- app antigo não ligar sem confirmar. Recriada pela definição atual (com as guardas da F565 e da F624).
+-- pericia_avisos.data_aprovada, ligado_por e ligado_em, como já era. A assinatura antiga é renomeada
+-- (pericia_ligar_f626_antiga, sem execução), para o app antigo não ligar sem confirmar. Recriada pela definição atual (com as guardas da F565 e da F624).
 
 do $$
 declare d text; n text;
@@ -21,6 +21,8 @@ begin
   execute n;
 end $$;
 
-drop function public.pericia_ligar(uuid, boolean, text);
+-- a antiga sai do nome (renomeada e sem execução), sem drop, para o app antigo não ligar sem confirmar
+alter function public.pericia_ligar(uuid, boolean, text) rename to pericia_ligar_f626_antiga;
+revoke all on function public.pericia_ligar_f626_antiga(uuid, boolean, text) from public, anon, authenticated;
 revoke all on function public.pericia_ligar(uuid, boolean, text, timestamptz) from public, anon;
 grant execute on function public.pericia_ligar(uuid, boolean, text, timestamptz) to authenticated, service_role;
