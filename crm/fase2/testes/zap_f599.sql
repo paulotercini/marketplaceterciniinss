@@ -26,6 +26,12 @@ insert into s select zap_abrir('5500000000094', 'Cliente Teste');
 update zap_conversas set status = 'aberta', automatica = false, sem_ia = false, atendente_id = null,
   plantao = null, confirmacao = null, amparo = null, ultima_resposta_em = null;
 -- terça 10/11/2026: 13h UTC = 10h de Brasília
+-- F623: o amparo só intervém quando o cliente cobra resposta
+delete from zap_mensagens;
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from v), 'entrada', 'Ninguém responde?', '2026-11-10 11:50:00+00');
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from w), 'entrada', 'Estou aguardando o retorno.', '2026-11-10 12:30:00+00');
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from q), 'entrada', 'Ninguém responde?', '2026-11-10 11:00:00+00');
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from s), 'entrada', 'Ninguém responde?', '2026-11-10 11:00:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-10 11:50:00+00' where id = (select id from v);
 update zap_conversas set ultima_entrada_em = '2026-11-10 12:30:00+00' where id = (select id from w);
 update zap_conversas set ultima_entrada_em = '2026-11-10 11:00:00+00', plantao = '{"modo":"conversa"}'
@@ -52,13 +58,16 @@ insert into r select 'a8 não repete na rodada seguinte', zap_amparo_vez('2026-1
 update zap_conversas set ultima_resposta_em = '2026-11-10 12:55:00+00' where id = (select id from w);
 insert into r select 'a9 respondida não envia', zap_amparo_vez('2026-11-10 13:40:00+00') = 0;
 -- nova mensagem do cliente 1 hora depois do primeiro amparo: ainda não passaram 2 horas
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from v), 'entrada', 'Ninguém responde?', '2026-11-10 13:30:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-10 13:30:00+00' where id = (select id from v);
 insert into r select 'b1 intervalo de 2 horas', zap_amparo_vez('2026-11-10 14:40:00+00') = 0;
 insert into r select 'b2 segundo amparo depois de 2 horas', zap_amparo_vez('2026-11-10 15:05:00+00') = 1;
 -- terceira espera no mesmo dia: limite de 2
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from v), 'entrada', 'Ninguém responde?', '2026-11-10 15:30:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-10 15:30:00+00' where id = (select id from v);
 insert into r select 'b3 limite de 2 por dia', zap_amparo_vez('2026-11-10 18:00:00+00') = 0;
 -- à tarde o cumprimento é boa tarde (dia seguinte zera o limite)
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from v), 'entrada', 'Ninguém responde?', '2026-11-11 17:00:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-11 17:00:00+00' where id = (select id from v);
 insert into r select 'b4 novo dia envia', zap_amparo_vez('2026-11-11 18:10:00+00') = 1;
 insert into r select 'b5 à tarde diz boa tarde e em breve, sem ainda hoje',
@@ -72,7 +81,7 @@ update zap_conversas set cliente_id = '66666666-6666-6666-6666-666666666666',
        ultima_entrada_em = '2026-11-11 16:00:00+00', ultima_resposta_em = null
  where id = (select id from w);
 insert into zap_mensagens (conversa_id, direcao, texto, criado_em)
-values ((select id from w), 'entrada', 'Como está o andamento do meu processo?', '2026-11-11 16:00:00+00');
+values ((select id from w), 'entrada', 'Estou aguardando. Como está o andamento do meu processo?', '2026-11-11 16:00:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-11 16:00:00+00', ultima_resposta_em = null
  where id = (select id from w);
 insert into r select 'c1 pedido de andamento envia', zap_amparo_vez('2026-11-11 17:10:00+00') = 1;
@@ -103,7 +112,7 @@ insert into casos (id, cliente_id, titulo, beneficio, fase) values
 insert into eventos (caso_id, tipo, data_hora, local) values
   ('88888888-8888-8888-8888-888888888888', 'Perícia', now() + interval '10 days', 'Agência Teste, Rua A, 1');
 insert into zap_mensagens (conversa_id, direcao, texto, criado_em)
-values ((select id from u), 'entrada', 'Onde vai ser a minha perícia?', '2026-11-12 11:00:00+00');
+values ((select id from u), 'entrada', 'Ninguém responde. Onde vai ser a minha perícia?', '2026-11-12 11:00:00+00');
 update zap_conversas set status = 'aberta', automatica = false, sem_ia = false, atendente_id = null, plantao = null,
        confirmacao = null, amparo = null, cliente_id = '77777777-7777-7777-7777-777777777777',
        ultima_entrada_em = '2026-11-12 11:00:00+00', ultima_resposta_em = null
@@ -130,10 +139,22 @@ insert into r select 'e7 fixo depois de 3 minutos',
                and texto like '%Boa tarde. Recebemos a sua mensagem. A equipe responderá em breve.');
 -- desligado
 update config_app set valor = 'nao' where chave = 'zap_ia_amparo';
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from q), 'entrada', 'Ninguém responde?', '2026-11-12 13:00:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-12 13:00:00+00', ultima_resposta_em = null
  where id = (select id from q);
 update zap_conversas set plantao = null where id = (select id from q);
 insert into r select 'd1 desligado não envia', zap_amparo_vez('2026-11-12 15:00:00+00') = 0;
 
+-- F623: pergunta sem cobrança não recebe o amparo
+update config_app set valor = 'sim' where chave = 'zap_ia_amparo';
+create temp table n(id uuid);
+insert into n select zap_abrir('5500000000099', 'Cliente Teste');
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values ((select id from n), 'entrada', 'Qual o horário de vocês?', '2026-11-13 11:00:00+00');
+update zap_conversas set status = 'aberta', automatica = false, sem_ia = false, atendente_id = null, plantao = null,
+       confirmacao = null, amparo = null, ultima_entrada_em = '2026-11-13 11:00:00+00', ultima_resposta_em = null
+ where id = (select id from n);
+select zap_amparo_vez('2026-11-13 12:10:00+00');
+insert into r select 'f1 pergunta sem cobrança não envia',
+  not exists (select 1 from zap_mensagens where conversa_id = (select id from n) and direcao = 'saida' and por_bot);
 select k, case when v then 'ok' else 'FALHOU' end as resultado from r order by k;
 select count(*) filter (where not v) as falhas from r;
