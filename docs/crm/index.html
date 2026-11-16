@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.19</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.20</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -19040,7 +19040,14 @@ function linksZap(t){
 // primeira linha) em negrito no alto do balão, sem os asteriscos; o link não passa por aqui
 const FMT_ZAP = [[/\*/, "b"], [/_/, "i"], [/~/, "s"]];
 const fmtZap = h => FMT_ZAP.reduce((x, [m, tag]) => x.replace(new RegExp(`(^|[\\s(>])${m.source}(?=\\S)([^\\n]*?\\S)${m.source}(?=$|[\\s.,;:!?)<])`, "g"), `$1<${tag}>$2</${tag}>`), h);
+// F631 · textos técnicos já gravados pela ponte, mostrados de forma legível
+function textoZapLegivel(t){
+  return String(t??"").replace(/\[mensagem de tipo callLogMess?sage, veja no celular\]/g, "📞 Chamada de voz")
+    .replace(/\[mensagem de tipo ([^,\]]+), veja no celular\]/g, "[mensagem que o CRM não exibe ($1); veja no celular]")
+    .replace(/\[mídia não baixada\]/g, "[mídia não disponível no CRM; veja no celular]");
+}
 function textoZap(t){
+  t = textoZapLegivel(t);
   const a = /^\*([^*\n]{2,60}?):?\*:?[ \t]*\n/.exec(String(t));
   return a ? `<span class="zap-sig">${esc(a[1].replace(/:$/, ""))}</span>${linksZap(t.slice(a[0].length))}` : linksZap(t);
 }

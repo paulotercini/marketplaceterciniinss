@@ -230,3 +230,10 @@ t.test("lista de transmissão: o número é o de quem escreveu, nunca o carimbo 
   const g = N.agruparHistorico([], [h], new Set(["00000001"]));
   a.deepEqual([...g.keys()], ["5500900000001"]);
 });
+
+t.test("F631: registro de chamada vira texto legível; tipo desconhecido diz que o CRM não exibe", () => {
+  const m = c => ({ key: { remoteJid: "5500000000011@s.whatsapp.net", id: "X" }, message: c });
+  a.equal(N.textoDaMensagem(m({ callLogMesssage: { callOutcome: 1 } })), "📞 Chamada de voz");
+  a.equal(N.textoDaMensagem(m({ callLogMesssage: { isVideo: true } })), "📹 Chamada de vídeo");
+  a.match(N.textoDaMensagem(m({ algoNovoMessage: { x: 1 } })), /CRM não exibe \(algoNovo\); veja no celular/);
+});

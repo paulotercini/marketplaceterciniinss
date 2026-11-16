@@ -108,7 +108,9 @@ function textoDaMensagem(m) {
   for (const [k, campo] of [["buttonsResponseMessage", "selectedDisplayText"], ["listResponseMessage", "title"],
     ["templateButtonReplyMessage", "selectedDisplayText"]]) if (c[k]) return c[k][campo] || "";
   const d = tipoSemTraducao(m);
-  if (d) return `[mensagem de tipo ${d.replace(/Message$/, "")}, veja no celular]`;
+  // F631 · o registro de chamada (o proto escreve callLogMesssage, com três "s") vira texto legível
+  if (/^callLogMess?sage$/.test(d || "")) return c[d]?.isVideo ? "📹 Chamada de vídeo" : "📞 Chamada de voz";
+  if (d) return `[mensagem que o CRM não exibe (${d.replace(/Message$/, "")}); veja no celular]`;
   return "";
 }
 
