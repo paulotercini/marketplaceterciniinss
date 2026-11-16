@@ -102,7 +102,7 @@ export function promptCorrigir(texto: string, nome: string, nota = false) {
 export const quemEscreve = (nome: string, cargo: string) =>
   `Quem vai enviar é ${nome || "um colaborador"}${cargo ? ` (${cargo})` : ""}: escreva na primeira pessoa do singular dessa pessoa ` +
   `("verifiquei", "fico à disposição"), sem "nós", sem citar o nome dela em terceira pessoa e sem assinatura.`;
-const PROIBE = `Não prometa resultado, prazo ou valor, não dê parecer jurídico e não afirme andamento que os dados não mostram; ` +
+const PROIBE = `Não prometa resultado, prazo ou valor, não use "Compreendi" nem "Compreendo", não dê parecer jurídico e não afirme andamento que os dados não mostram; ` +
   `se faltar informação, diga que vai conferir e retorna. Escreva "agendar" e "atendimento", e não "marcar" ou "consulta". ` +
   `Continue a conversa a partir da última mensagem, como quem já está nela: sem apresentação nem cumprimento repetido se a conversa já começou. ` +
   `Mensagem marcada [encaminhada] é conteúdo que o cliente repassou de outra conversa, e não afirmação dele: trate-a como repassada.`;

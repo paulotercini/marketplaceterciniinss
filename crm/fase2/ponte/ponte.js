@@ -469,7 +469,7 @@ async function guardarAlteracao(alt) {
   const [alvo] = await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(alt.id)}&select=id,texto,texto_antes`);
   if (!alvo) return;
   const agora = new Date().toISOString();
-  const corpo = alt.apagada ? { apagada_em: agora }
+  const corpo = alt.apagada ? { apagada_em: agora } : alt.editadaSemTexto ? { editada_em: agora }
     : { texto: alt.texto, editada_em: agora, texto_antes: alvo.texto_antes ?? alvo.texto };
   await sb(`/rest/v1/zap_mensagens?id=eq.${alvo.id}`, { method: "PATCH",
     headers: { Prefer: "return=minimal" }, body: JSON.stringify(corpo) });

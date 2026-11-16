@@ -240,7 +240,7 @@ export const PADRAO = `\n\nO jeito do escritório (como a equipe responde no Wha
   `- Saudação curta, com o tratamento antes do primeiro nome: "Olá, senhor José, boa tarde!", "Olá, dona Maria, bom dia!", "Bom dia, Maria Helena!". ` +
   `Sem o nome, apenas "Olá, boa tarde!". Use "senhor", "dona" ou "senhora", e "bem-vindo" ou "bem-vinda", somente quando o nome ou a conversa deixar claro; ` +
   `na dúvida, escreva sem eles ("Agradecemos o seu contato.") e nunca "o senhor ou a senhora".\n` +
-  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa, cada uma no máximo uma vez na conversa e nunca para abrir toda resposta: "Compreendi.", "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
+  `- Uma ideia por frase, frases curtas e diretas, sem rodeio. Expressões da casa, cada uma no máximo uma vez na conversa e nunca para abrir toda resposta: "No caso, …" (somente para retomar o que a pessoa contou, nunca para abrir uma pergunta), "Combinado.", ` +
   `"Aguarde, por favor.", "Vou verificar com o Dr. Paulo.", "Documento recebido, obrigado.", "Qualquer dúvida, estamos à disposição.". Não repita o que a pessoa acabou de dizer ("O assunto é aposentadoria."): siga para a próxima pergunta.\n` +
   `- Agendamento como pergunta objetiva, com dia da semana, data e hora: "Pode ser na quarta-feira, dia 13/11, às 9h30?", ` +
   `"Prefere o período da manhã ou da tarde?"; ao fechar, "Ficou agendado para quarta-feira, dia 13/11, às 9h30.".\n` +
@@ -406,10 +406,9 @@ export function emLinhas(txt: string, antes: string[] = []) {
   const ja = antes.join("\n");
   // a saudação só na primeira resposta: o primeiro parágrafo que cumprimenta sai
   if (antes.length && /\n\n/.test(t)) t = t.replace(/^(?:olá|oi|bom dia|boa tarde|boa noite)\b[^\n]*\n\n/i, "");
-  // "Compreendi." no máximo uma vez na conversa
-  let vez = /\bCompreendi\b/.test(ja);
+  // F627 · "Compreendi" não se usa (decisão do Paulo de 16.11.2026)
   // "Compreendi, Maria." sai inteira: tirar só a palavra deixava "Maria." solto (teste das 105 conversas)
-  t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, (m) => (vez ? "" : ((vez = true), m)));
+  t = t.replace(/\bCompreendi(?:,\s*[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+(?:\s+[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç]+)?(?=[.!]))?[.,!]?\s*/g, () => "");
   // o fecho "Qualquer dúvida, estamos à disposição." também uma vez só (teste das 105 conversas, 08.11.2026)
   const RX_FECHO = /\s*Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição[.!]?/gi;
   let fechou = /Qualquer d[uú]vida,? (?:estamos|ficamos|seguimos|fico|sigo) à disposição/i.test(ja);
