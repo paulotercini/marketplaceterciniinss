@@ -145,7 +145,7 @@ export async function clienteDoCpf(cpf) {
 }
 
 // devolve 'ok' | 'sem login' | 'cliente fora do CRM'
-export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'application/pdf' }) {
+export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'application/pdf', origem = 'dossie' }) {
   const st = await chrome.storage.local.get(['refresh', 'url']);
   if (!st.refresh || !st.url) return 'sem login';
   const clienteId = await idDoCliente(cpf);
@@ -162,9 +162,11 @@ export async function guardarNoCrm({ cpf, caminho, nome, bytes, mime = 'applicat
       || (up.status === 400 && (await fetchTeimoso(`${url}/storage/v1/object/info/authenticated/anexos/${caminho}`, { headers: cab })).ok);
     if (!jaExiste) throw new Error(`upload recusado (${up.status})`);
   }
+  // o Prévius volta sem texto (texto nulo): o CRM o lê de novo ao abrir a ficha (F618)
+  const prev = origem === 'previus';
   const ln = await fetchTeimoso(`${url}/rest/v1/anexos?on_conflict=caminho`, { method: 'POST',
-    headers: Object.assign({}, cab, { Prefer: 'resolution=ignore-duplicates,return=minimal' }),
-    body: JSON.stringify({ cliente_id: clienteId, nome, caminho, tipo: mime, tamanho: bytes.length, origem: 'dossie' }) });
+    headers: Object.assign({}, cab, { Prefer: `resolution=${prev ? 'merge' : 'ignore'}-duplicates,return=minimal` }),
+    body: JSON.stringify(Object.assign({ cliente_id: clienteId, nome, caminho, tipo: mime, tamanho: bytes.length, origem }, prev ? { texto: null } : {})) });
   if (!ln.ok) throw new Error(`anexo recusado (${ln.status})`);
   return 'ok';
 }

@@ -53,3 +53,19 @@ def test_salvar_grava_em_dossie_e_barra_caminho_fora_da_raiz(tmp_path):
     assert 'erro' in fora
     sobe = H.tratar({'acao': 'salvar', 'pasta': pasta, 'fonte': '../..', 'arquivo': 'y.pdf', 'b64': b64}, raiz)
     assert 'erro' in sobe or sobe['caminho'].startswith(pasta)
+
+
+def test_previus_lista_pdfs_da_pasta_e_subpastas_sem_criar(tmp_path):
+    raiz = _arvore(tmp_path, 'C/Cliente Teste #12345678901/Calculos/2026', 'C/Cliente Teste #12345678901/a/b/c')
+    base = os.path.join(raiz, 'C', 'Cliente Teste #12345678901')
+    for rel in ('Relatorio PRÉVIUS.pdf', 'Calculos/2026/calculo previus.pdf', 'Calculos/outro.pdf',
+                'a/b/c/previus fundo.pdf', 'previus.txt'):
+        open(os.path.join(base, rel), 'wb').write(b'%PDF')
+    r = H.tratar({'acao': 'previus', 'cpf': '12345678901', 'nome': 'Cliente Teste'}, raiz)
+    assert sorted(os.path.basename(c) for c in r['caminhos']) == ['Relatorio PRÉVIUS.pdf', 'calculo previus.pdf']
+    lido = H.tratar({'acao': 'ler_previus', 'caminho': r['caminhos'][0]}, raiz)
+    assert base64.b64decode(lido['b64']) == b'%PDF'
+    assert 'erro' in H.tratar({'acao': 'ler_previus', 'caminho': os.path.join(base, 'Calculos', 'outro.pdf')}, raiz)
+    assert 'erro' in H.tratar({'acao': 'ler_previus', 'caminho': str(tmp_path.parent / 'previus.pdf')}, raiz)
+    nada = H.tratar({'acao': 'previus', 'cpf': '99999999999', 'nome': 'Outra Pessoa'}, raiz)
+    assert nada['caminhos'] == [] and not os.path.exists(os.path.join(raiz, 'O'))

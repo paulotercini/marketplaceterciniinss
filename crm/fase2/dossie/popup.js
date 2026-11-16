@@ -29,6 +29,13 @@ const COLETORES = {
     $('transp').disabled = false; $('transp').textContent = '🔎 Portal da Transparência (sem login)';
     $('transp-res').textContent = (r && (r.aviso || r.erro)) || 'sem resposta';
   };
+  // F618 · os PDFs "Prévius" da pasta do cliente no Drive vão ao CRM
+  $('prev-drive').onclick = async () => {
+    $('prev-drive').disabled = true; $('transp-res').className = 'meio';
+    const r = await chrome.runtime.sendMessage({ tipo: 'previus', cpf: $('cpf-transp').value }).catch(e => ({ aviso: String(e.message || e) }));
+    $('prev-drive').disabled = false;
+    $('transp-res').textContent = (r && (r.aviso || r.erro)) || 'sem resposta';
+  };
   $('abrir').onclick = async () => {
     const r = await chrome.runtime.sendMessage({ tipo: 'abrir' }).catch(() => null);
     $('rodada').className = 'meio';
