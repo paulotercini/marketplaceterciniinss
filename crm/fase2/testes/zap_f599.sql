@@ -23,6 +23,12 @@ insert into v select zap_abrir('5500000000091', 'Cliente Teste');
 insert into w select zap_abrir('5500000000092', 'Cliente Teste');
 insert into q select zap_abrir('5500000000093', 'Cliente Teste');
 insert into s select zap_abrir('5500000000094', 'Cliente Teste');
+-- F623: o amparo só intervém quando o cliente cobra resposta; as conversas que devem receber trazem a cobrança
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em) values
+  ((select id from v), 'entrada', 'Alguém pode me responder?', '2026-11-10 11:50:00+00'),
+  ((select id from v), 'entrada', 'Alguém pode me responder?', '2026-11-10 13:30:00+00'),
+  ((select id from v), 'entrada', 'Alguém pode me responder?', '2026-11-11 17:00:00+00');
+
 update zap_conversas set status = 'aberta', automatica = false, sem_ia = false, atendente_id = null,
   plantao = null, confirmacao = null, amparo = null, ultima_resposta_em = null;
 -- terça 10/11/2026: 13h UTC = 10h de Brasília
@@ -32,7 +38,6 @@ update zap_conversas set ultima_entrada_em = '2026-11-10 11:00:00+00', plantao =
  where id = (select id from q);
 update zap_conversas set ultima_entrada_em = '2026-11-10 11:00:00+00', confirmacao = '{"estado":"aguardando"}'
  where id = (select id from s);
-
 insert into r select 'a1 fora do expediente não envia', zap_amparo_vez('2026-11-10 23:00:00+00') = 0;
 insert into r select 'a2 envia só a de 70 min', zap_amparo_vez('2026-11-10 13:00:00+00') = 1;
 insert into r select 'a3 mensagem assinada pela assistente',
@@ -72,7 +77,7 @@ update zap_conversas set cliente_id = '66666666-6666-6666-6666-666666666666',
        ultima_entrada_em = '2026-11-11 16:00:00+00', ultima_resposta_em = null
  where id = (select id from w);
 insert into zap_mensagens (conversa_id, direcao, texto, criado_em)
-values ((select id from w), 'entrada', 'Como está o andamento do meu processo?', '2026-11-11 16:00:00+00');
+values ((select id from w), 'entrada', 'Como está o andamento do meu processo? Ninguém me responde.', '2026-11-11 16:00:00+00');
 update zap_conversas set ultima_entrada_em = '2026-11-11 16:00:00+00', ultima_resposta_em = null
  where id = (select id from w);
 insert into r select 'c1 pedido de andamento envia', zap_amparo_vez('2026-11-11 17:10:00+00') = 1;
@@ -103,7 +108,7 @@ insert into casos (id, cliente_id, titulo, beneficio, fase) values
 insert into eventos (caso_id, tipo, data_hora, local) values
   ('88888888-8888-8888-8888-888888888888', 'Perícia', now() + interval '10 days', 'Agência Teste, Rua A, 1');
 insert into zap_mensagens (conversa_id, direcao, texto, criado_em)
-values ((select id from u), 'entrada', 'Onde vai ser a minha perícia?', '2026-11-12 11:00:00+00');
+values ((select id from u), 'entrada', 'Onde vai ser a minha perícia? Alguém pode me responder?', '2026-11-12 11:00:00+00');
 update zap_conversas set status = 'aberta', automatica = false, sem_ia = false, atendente_id = null, plantao = null,
        confirmacao = null, amparo = null, cliente_id = '77777777-7777-7777-7777-777777777777',
        ultima_entrada_em = '2026-11-12 11:00:00+00', ultima_resposta_em = null
