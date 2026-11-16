@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.16</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.17</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -60727,7 +60727,7 @@ async function mudarEspera(id, corpo){
 }
 function msgOferta(e, s, data, ate){
   const h = new Date().getHours(), pn = (e.nome||"").split(" ")[0];
-  return `${h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}, ${pn}. Surgiu um horário com ${ESP_PROF[profDaVaga(s)]||nomeProf(profDaVaga(s))} na ${diaExt(data)}, dia ${dataBR(data).slice(0,5)}, às ${hmTxt(s.inicio)}, no escritório. Podemos agendar o seu atendimento nesse horário? Aguardamos a sua resposta até as ${ate.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}).replace(":","h")}.`;
+  return `${h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}, ${pn}. Surgiu um horário com ${ESP_PROF[profDaVaga(s)]||nomeProf(profDaVaga(s))} na ${diaExt(data)}, dia ${dataBR(data).slice(0,5)}, às ${hmTxt(s.inicio)}, no escritório. Podemos agendar o seu atendimento nesse horário?.`;
 }
 async function oferecerEspera(id, eventoId, data){
   const e = (agq.espera||[]).find(x=>x.id===id), dia = agq.disp && agq.disp.dias.find(d=>d.data===data);
