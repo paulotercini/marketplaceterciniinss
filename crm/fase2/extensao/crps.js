@@ -197,7 +197,7 @@
                     portal: { total: doPortal.nups.length, sistema: doPortal.sis,
                               por_sistema: doPortal.porSis, novos },
                     ...(cliente ? { login: 'cliente' } : {}) };
-      let seguidas = 0, abortou = false, parou = '', docsFaltando = 0;
+      let seguidas = 0, abortou = false, parou = '', docsFaltando = 0, lidos = 0;
       const novos404 = [], novos403 = [];
       // 1.39.0 · entrega em etapas: o recurso que andou desde a última rodada (ou nunca lido)
       // vai ao CRM na hora; os outros, de 10 em 10. A entrega final leva o resto e o `portal`
@@ -210,9 +210,17 @@
       };
       // seis respostas ruins seguidas (recusa, rede caída, página que não é JSON): o portal
       // parou, e insistir na fila inteira só soma pedidos sem coletar nada
+      let sessaoCaiu = false;
       const desistir = (i, motivo) => {
-        parou = `o portal parou no recurso ${i + 1} de ${fila.length} (${motivo})`;
-        faixaErr(`${parou} — o que foi lido vai ao CRM; clique de novo mais tarde`);
+        // 1.40.1 · seis recusas em recursos que já responderam (têm memória) e nenhum lido
+        // nesta rodada: é a sessão do portal que perdeu a autorização, e não os recursos
+        sessaoCaiu = motivo === 403 && !lidos && novos403.some(n => memo[n]);
+        parou = sessaoCaiu
+          ? `o e-Recursos recusou os ${i + 1} primeiros recursos, inclusive os que respondiam antes (403)`
+          : `o portal parou no recurso ${i + 1} de ${fila.length} (${motivo})`;
+        faixaErr(sessaoCaiu
+          ? `${parou} — a sessão perdeu a autorização: dê F5 na aba do e-Recursos, entre de novo pelo gov.br e clique de novo`
+          : `${parou} — o que foi lido vai ao CRM; clique de novo mais tarde`);
         abortou = true;
       };
       // [03.10.2026] cada recurso vive num sistema só: o que a lista do
@@ -256,7 +264,7 @@
                 pend[k] = j;
                 if (Object.keys(pend).length >= 10) { const lote = pend; pend = {}; await entregar(lote); }
               }
-              seguidas = 0; await pausa(2500); break;
+              seguidas = 0; lidos++; await pausa(2500); break;
             }
             else if (r.status === 403) {   // conta para desistir só no fim do recurso (abaixo)
               n403++;
@@ -297,7 +305,9 @@
       if (!cliente)
         await chrome.storage.local.set({
           crps_404: (rapido || abortou) ? [...new Set([...sem404, ...novos404])] : novos404,
-          crps_403: (rapido || abortou) ? [...new Set([...sem403, ...novos403])] : novos403 });
+          // a recusa da sessão caída não é do recurso: não entra na lista dos recusados
+          crps_403: sessaoCaiu ? [...sem403]
+            : (rapido || abortou) ? [...new Set([...sem403, ...novos403])] : novos403 });
       const n = entregues + Object.keys(OUT.itens).length;
       // a rodada que parou no meio não é anunciada como concluída: a faixa vermelha fica, e
       // o retorno leva `erro` (é por ele que o popup e o aviso do Chrome trocam ✔ por ⚠)
