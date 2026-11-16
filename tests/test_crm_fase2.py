@@ -1307,3 +1307,32 @@ def test_tirar_casos_leva_o_que_pende():
     migrar.tirar_casos(mapa, {"a"})
     assert [k["id"] for k in mapa["casos"]] == ["b"]
     assert mapa["andamentos"] == [{"caso_id": "b"}] and mapa["pagamentos"] == [] and mapa["tarefas"] == []
+
+
+# F624b · o 00:00 não entra quando o banco já tem o mesmo caso, tipo e dia
+# (Brasília), com hora ou cancelado; noutro dia, entra.
+def _mapa_sem_hora():
+    return {"eventos": [{"id": "novo", "caso_id": "k1", "tipo": "Perícia",
+                         "data_hora": "2026-11-16T00:00:00-03:00", "status": "agendada"}]}
+
+
+def test_sem_hora_com_evento_do_banco_com_hora_nao_grava():
+    m = _mapa_sem_hora()
+    banco = [{"id": "velho", "caso_id": "k1", "tipo": "Perícia", "data_hora": "2026-11-16T16:20:00+00:00"}]
+    assert migrar.sem_hora_ja_no_banco(m, banco) == 1 and m["eventos"] == []
+
+
+def test_sem_hora_com_evento_do_banco_cancelado_nao_grava():
+    m = _mapa_sem_hora()
+    banco = [{"id": "velho", "caso_id": "k1", "tipo": "Perícia", "status": "cancelada",
+              "data_hora": "2026-11-16T12:00:00+00:00"}]
+    assert migrar.sem_hora_ja_no_banco(m, banco) == 1 and m["eventos"] == []
+
+
+def test_sem_hora_dia_diferente_grava():
+    m = _mapa_sem_hora()
+    # 17/11 01:00 UTC é 16/11 22:00 em Brasília: mesmo dia; 17/11 12:00 UTC não
+    banco = [{"id": "velho", "caso_id": "k1", "tipo": "Perícia", "data_hora": "2026-11-17T12:00:00+00:00"}]
+    assert migrar.sem_hora_ja_no_banco(m, banco) == 0 and len(m["eventos"]) == 1
+    banco = [{"id": "velho", "caso_id": "k1", "tipo": "Perícia", "data_hora": "2026-11-17T01:00:00+00:00"}]
+    assert migrar.sem_hora_ja_no_banco(m, banco) == 1
