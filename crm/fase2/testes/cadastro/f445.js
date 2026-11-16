@@ -62,6 +62,8 @@ const gravados = [];
     return s.value === "aguardando perícia" && [...s.options].every(o => o.value === "" || ETAPAS_POR_FASE.inss.includes(o.value)); }));
   await p.selectOption("[data-tab-etapa]", "perícia realizada");
   await p.waitForFunction(c => D.casoPorId.get(c).etapa === "perícia realizada", CASO1, { timeout: 3000 }).catch(() => {});
+  // a memória muda antes do PATCH chegar ao banco simulado: espera a gravação, e não só a memória
+  for (let i = 0; i < 30 && !gravados.some(g => g.t === "casos" && g.m === "PATCH" && g.corpo.etapa === "perícia realizada"); i++) await p.waitForTimeout(100);
   conf("trocar a etapa na linha grava no caso", gravados.some(g => g.t === "casos" && g.m === "PATCH" && g.corpo.etapa === "perícia realizada"));
   // o aviso só aparece depois de a gravação terminar; a etapa já está na memória antes disso
   conf("a troca da etapa oferece desfazer", await p.waitForFunction(() => [...document.querySelectorAll("#aviso button, .aviso button")].some(b => /Desfazer/i.test(b.textContent)), null, { timeout: 3000 }).then(() => true, () => false));
