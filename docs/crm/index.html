@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.17</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17576,9 +17576,27 @@ function perNotif(p){
       <p class="regra">Na conversa já assumida por alguém da equipe, a resposta da IA aparece como sugestão acima do campo de escrever e não é enviada.</p>
     </div>`;
 }
-async function perLigar(evId, ligar, prof){
+// F626 · antes de ligar, o administrador confere o dia e o horário no documento da perícia:
+// digita o horário (tem de bater com o do evento) e marca a caixa do dia. O banco recusa sem isso.
+function perConfirmarHora(p, loc){
+  return new Promise(res=>{
+    const d = document.createElement("dialog"); d.className = "confirmar per-conf";
+    const sem = new Date(p.dia+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long"});
+    d.innerHTML = `<form method="dialog"><p class="confirmar-txt">Confira no documento da ${p.social?"avaliação social":"perícia"} antes de ligar.</p>
+      <div style="font-size:18px;line-height:1.5;margin:0 0 12px"><b>${esc(sem)}, <span class="num">${fmt(p.dia)}</span>, às <span class="num">${esc(p.hora)}</span></b><br><span style="font-size:14px">${esc(loc)}</span></div>
+      <label style="display:block;margin:0 0 8px">Digite o horário do documento (hh:mm) <input id="pc-hora" inputmode="numeric" maxlength="5" placeholder="hh:mm" autocomplete="off" style="width:80px"></label>
+      <label style="display:flex;gap:8px;align-items:center;margin:0 0 14px"><input type="checkbox" id="pc-dia"> Conferi o dia ${fmt(p.dia)} no documento da perícia</label>
+      <div class="confirmar-bts"><button value="nao" class="btn-rap">Voltar</button><button value="sim" id="pc-ligar" class="btn-rap forte" disabled>Ligar</button></div></form>`;
+    const h = d.querySelector("#pc-hora"), c = d.querySelector("#pc-dia"), b = d.querySelector("#pc-ligar");
+    const ver = () => { const v = h.value.trim().replace(/^(\d)(?=:)/, "0$1").replace(/[h.]/i, ":"); b.disabled = !(v===p.hora && c.checked); };
+    h.addEventListener("input", ver); c.addEventListener("change", ver);
+    d.addEventListener("close", ()=>{ res(d.returnValue==="sim" && !b.disabled); d.remove(); });
+    document.body.appendChild(d); d.showModal(); h.focus();
+  });
+}
+async function perLigar(evId, ligar, prof, quando){
   try{
-    await api(`/rest/v1/rpc/pericia_ligar`,{method:"POST", body:JSON.stringify({p_evento:evId, p_ligado:ligar, p_profissional:prof})});
+    await api(`/rest/v1/rpc/pericia_ligar`,{method:"POST", body:JSON.stringify({p_evento:evId, p_ligado:ligar, p_profissional:prof, ...(ligar ? {p_confirmado:quando} : {})})});
     return true;
   }catch(err){ aviso("Não foi possível: "+(err && err.message || err)); return false; }
 }
@@ -17634,13 +17652,13 @@ async function renderPericiasAviso(){
     const advB = t.closest("[data-adv]");
     if(advB){ if(!adm) return; const p = todas.find(x=>x.e.id===advB.dataset.id); if(!p) return;
       const prof = advB.dataset.adv; _perSel = p.e.id;
-      if(p.ligado){ if(!await perLigar(p.e.id, true, prof)) return; _perProf.delete(p.e.id); await perRecarregar(); }
+      if(p.ligado){ if(!await perLigar(p.e.id, true, prof, p.e.data_hora)) return; _perProf.delete(p.e.id); await perRecarregar(); }
       else { _perProf.set(p.e.id, prof); await renderPericiasAviso(); }
       aviso("Atendimento oferecido com "+PER_ADV[prof].nome+"."); return; }
     const s = t.closest("[data-sw]");
     if(s){ const p = todas.find(x=>x.e.id===s.dataset.sw); if(!p || !adm) return;
       if(p.ligado){ if(!await perLigar(p.e.id, false, p.prof)) return; await perRecarregar();
-        avisoDesfazer("Avisos de "+p.nome+" desligados.", async()=>{ if(await perLigar(p.e.id, true, p.prof)) await perRecarregar(); }); }
+        avisoDesfazer("Avisos de "+p.nome+" desligados.", async()=>{ if(await perLigar(p.e.id, true, p.prof, p.e.data_hora)) await perRecarregar(); }); }
       else abrir(p.e.id);
       return; }
     const pv = t.closest("[data-prev]"); if(pv){ abrir(pv.dataset.prev); return; }
@@ -17649,6 +17667,7 @@ async function renderPericiasAviso(){
       if(p.dup.length){ aviso("Há outro evento deste caso no mesmo dia ("+p.dup.join(", ")+"): confira a hora e cancele o errado antes de ligar."); return; }
       const inp = meio.querySelector("#per-local"), loc = String(inp ? inp.value : perLocalSugerido(p)).trim();
       if(!/\d/.test(loc) || loc.length < 10){ aviso("Informe o endereço da perícia, com rua, número e cidade, antes de ligar."); if(inp) inp.focus(); return; }
+      if(!await perConfirmarHora(p, loc)) return;
       try{
         if(loc!==String(p.e.local||"").trim()){ await api(`/rest/v1/rpc/pericia_local`,{method:"POST", body:JSON.stringify({p_evento:p.e.id, p_local:loc})}); p.e.local = loc; }
         // o cliente com atendimento presencial já agendado recebe apenas os lembretes
@@ -17659,7 +17678,7 @@ async function renderPericiasAviso(){
           if(txt) await api(`/rest/v1/rpc/pericia_texto_salvar`,{method:"POST", body:JSON.stringify({p_evento:p.e.id, p_texto:txt})}); }
       }catch(err){ aviso("Não foi possível: "+(err && err.message || err)); return; }
       _perLocal.delete(p.e.id); _perTxt.delete(p.e.id);
-      if(!await perLigar(p.e.id, true, p.prof)) return; _perProf.delete(p.e.id); await perRecarregar();
+      if(!await perLigar(p.e.id, true, p.prof, p.e.data_hora)) return; _perProf.delete(p.e.id); await perRecarregar();
       const q = document.getElementById("prev"); if(q) q.classList.remove("aberta");
       avisoDesfazer("Ligado. Data de "+perDm(p.dia)+" aprovada; "+(p.so ? "saem apenas os lembretes." : "o aviso sai às "+perProximoEnvio().hora+"."), async()=>{ if(await perLigar(p.e.id, false, p.prof)) await perRecarregar(); });
       return; }
@@ -19898,7 +19917,7 @@ async function historicoTodasZap(){
 }
 async function assumirConversa(){
   if(!zapAberta) return;
-  if(comIaZap(zapConvs.find(x=>x.id===zapAberta)) && !await confirmar("A IA está conduzindo esta conversa. Assumir mesmo assim?")) return;
+  if(comIaZap(zapConvs.find(x=>x.id===zapAberta)) && !await confirmar("A IA continua a responder até você escrever ao cliente. Assumir a conversa?")) return;
   try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:zapAberta})}); }
   catch(e){ return aviso(msgErro(e)); }
   zapNota = false;
@@ -20569,7 +20588,7 @@ async function responderZapLado(convId, cliId){
     // F566 · ao lado da ficha, a conversa de outro colega se responde sem assumir: o responsável continua e a mensagem leva o autor_id de quem enviou
     if(cv && !cv.atendente_id){
       if(!await confirmar("Para responder, a conversa passa a ser sua. Assumir?")) return;
-      if(comIaZap(cv) && !await confirmar("A IA está conduzindo esta conversa. Assumir mesmo assim?")) return;
+      if(comIaZap(cv) && !await confirmar("A IA continua a responder até você escrever ao cliente. Assumir a conversa?")) return;
       try{ await api(`/rest/v1/rpc/zap_assumir`,{method:"POST", body:JSON.stringify({p_conversa:convId})}); }
       catch(e){ return aviso(msgErro(e)); }
     }
