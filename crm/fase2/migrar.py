@@ -518,9 +518,9 @@ def mapear(dados, cpf_por_nome=None):
 
         for e in t["eventos"]:
             # "45:00" já chegou como hora (o leitor pegava qualquer número
-            # perto da data). Hora impossível cai no padrão em vez de virar
-            # um data_hora que o banco recusa.
-            hora = e["hora"] if hora_valida(e["hora"]) else "09:00"
+            # perto da data). F624: sem hora válida vai 00:00, o marcador de
+            # "hora não informada" (o 09:00 de antes parecia hora de verdade).
+            hora = e["hora"] if hora_valida(e["hora"]) else "00:00"
             eid = uid("evento", kid, e["tipo"], e["data"], hora)
             eventos[eid] = {
                 "id": eid, "caso_id": kid, "tipo": e["tipo"],
@@ -528,6 +528,14 @@ def mapear(dados, cpf_por_nome=None):
                 "status": "agendada" if e["data"] >= dados["gerado_em"][:10] else "realizada",
                 "obs": e["trecho"],
             }
+
+    # F624 · o evento sem hora some quando o caso tem, no mesmo dia, o mesmo
+    # tipo com hora (a anotação "perícia em 16/11" ao lado da "às 13h20")
+    com_hora = {(e["caso_id"], e["tipo"], e["data_hora"][:10])
+                for e in eventos.values() if e["data_hora"][11:16] != "00:00"}
+    for eid in [i for i, e in eventos.items() if e["data_hora"][11:16] == "00:00"
+                and (e["caso_id"], e["tipo"], e["data_hora"][:10]) in com_hora]:
+        del eventos[eid]
 
     # segunda passada: item de checklist com nome de gente vira vínculo se o
     # nome bater com OUTRO cliente da base; senão volta a ser subtarefa

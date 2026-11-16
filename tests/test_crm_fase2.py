@@ -362,7 +362,31 @@ def test_evento_com_hora_impossivel_cai_no_horario_padrao():
                     "trecho": "perícia 29/08 45:00"}]),
     ]))
     (ev,) = m["eventos"]
-    assert ev["data_hora"].startswith("2024-08-29T09:00")
+    assert ev["data_hora"].startswith("2024-08-29T00:00")
+
+
+# F624 · sem hora vira 00:00 (hora não informada), e não 09:00 silencioso;
+# com o mesmo tipo e dia com hora no caso, o sem hora não nasce.
+def test_evento_sem_hora_vai_00_00():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Cliente Teste #00000000353", cpf="00000000353",
+          eventos=[{"tipo": "Perícia", "data": "2026-11-16", "hora": None,
+                    "trecho": "perícia em 16/11"}]),
+    ]))
+    (ev,) = m["eventos"]
+    assert ev["data_hora"].startswith("2026-11-16T00:00")
+
+
+def test_evento_sem_hora_com_irmao_com_hora_nao_nasce():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Cliente Teste #00000000353", cpf="00000000353",
+          eventos=[{"tipo": "Perícia", "data": "2026-11-16", "hora": None,
+                    "trecho": "perícia em 16/11"},
+                   {"tipo": "Perícia", "data": "2026-11-16", "hora": "13:20",
+                    "trecho": "agendada para 16/11/2026 às 13h20"}]),
+    ]))
+    (ev,) = m["eventos"]
+    assert ev["data_hora"].startswith("2026-11-16T13:20")
 
 
 def test_evento_com_hora_de_verdade_continua_igual():

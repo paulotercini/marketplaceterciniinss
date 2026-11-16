@@ -125,6 +125,16 @@ const TUDO = {
   await p.evaluate(ev => { D.eventos.find(e => e.id === ev).data_hora = new Date(Date.now() + 25 * 864e5).toISOString(); render(); }, EV);
   await p.waitForTimeout(300);
   conf("data mudada depois do Ligar mostra Data mudou e desliga a chave", /Data mudou/.test(await txt()) && await p.evaluate(ev => document.querySelector(`[data-sw="${ev}"]`).getAttribute("aria-checked") !== "true", EV));
+  // F624 · hora não informada (00:00) e outro evento do caso no mesmo dia: aviso vermelho e o Ligar não liga
+  const EV2 = "e0000000-0000-0000-0000-000000000624";
+  await p.evaluate(([ev, ev2]) => { const o = D.eventos.find(e => e.id === ev);
+    D.eventos.push({ ...o, id: ev2, data_hora: dataSP(o.data_hora) + "T03:00:00.000Z" }); render(); }, [EV, EV2]);
+  await p.waitForTimeout(300);
+  conf("F624: 00:00 aparece como Hora não informada e o duplicado avisa", /Hora não informada/.test(await txt()) && /Há outro evento deste caso no mesmo dia/.test(await txt()));
+  const nAntes = chamadas.length;
+  await p.click(`[data-prev="${EV2}"]`); await p.waitForTimeout(300);
+  await p.click("#per-ligar"); await p.waitForTimeout(400);
+  conf("F624: o Ligar da perícia sem hora não chama pericia_ligar", chamadas.length === nAntes);
   conf("nenhum erro de página", erros.length === 0);
   if (process.env.SHOT) { await p.evaluate(ev => { D.eventos.find(e => e.id === ev).data_hora = new Date(Date.now() + 20 * 864e5).toISOString(); render(); }, EV); await p.waitForTimeout(400); await p.evaluate(() => { document.querySelectorAll("*").forEach(e => { if (e.scrollTop) e.scrollTop = 0; }); window.scrollTo(0,0); }); await p.screenshot({ path: process.env.SHOT }); }
   console.log("=== F549 · Perícias com aprovação ===");
