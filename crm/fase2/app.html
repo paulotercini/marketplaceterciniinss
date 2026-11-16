@@ -7012,7 +7012,7 @@ html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-cab .fp-menu{margin-left:0}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp-cab:not(:has(.fp5-n)) .fp-menu{margin-left:auto}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 > :is(.fp2-sem,.fp-sug,.fp3-out,.fp-resto,.fp-nv){margin:10px 14px}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-linhas{display:block}
-html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr) auto;grid-template-areas:"dia txt bt" "dia chip bt";
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr) auto auto;grid-template-areas:"dia txt av bt" "dia chip av bt";
   align-items:center;column-gap:10px;row-gap:3px;margin:0;padding:10px 14px 10px 16px;min-height:64px;border:0;border-bottom:1px solid var(--borda);border-radius:0;background:#FFFFFF;box-shadow:none}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 2px 2px 0;background:#9A9890}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .pz.fp5-lin:is(.pz-fatal,.pz-venceu,.pz-prorrog)::before{background:#B3261E}
@@ -7021,6 +7021,7 @@ html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-dia{grid-area:dia;display:flex;flex-
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-dia b{font:600 16px/1 var(--f-ui);font-variant-numeric:tabular-nums;color:#1F1E1B}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-dia small{margin-top:2px;font:500 10px/1 var(--f-ui);letter-spacing:.04em;text-transform:uppercase;color:#5E5D58}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-txt{grid-area:txt;min-width:0}
+html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-av{grid-area:av;align-self:center}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-txt .fp3-tit{display:block;font:500 14px/1.3 var(--f-ui);color:#1F1E1B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html .faixa-prazos.fp5.fp5.fp5.fp5.fp5 .fp5-chip{grid-area:chip;justify-self:start;display:inline-block;padding:1px 7px;border-radius:4px;background:#F0EFEC;color:#4A4944;
   font:500 12px/18px var(--f-ui);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -7126,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.12</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.13</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12077,7 +12078,16 @@ function dbClique(e, x, id){
   _ext = null;
   if(!x._it){ x._it = itemDoCaso(k); x._el = x; x._atual = (D.atrDoCaso.get(k.id)||[])[0] || ""; }
   const a = b.dataset.ae;
+  if(a==="responder") return dbResponder(k, b.dataset.and);
   return acaoExt(x, a, b);
+}
+// F621 · Responder: com tarefa ou prazo da anotação, abre a janela lateral (que tem o Concluir);
+// sem tarefa, abre a resposta presa à anotação (pedido do Paulo, 16.11.2026)
+function dbResponder(k, andId){
+  const ids = new Set([andId, ...(D._andsFicha||[]).filter(y=>y.responde_a===andId).map(y=>y.id)]);
+  const i = faixaAtual.findIndex(x=>x.casoId===k.id && x.andId && ids.has(x.andId));
+  if(i>=0) return abrirPainelPrazo(i);
+  _dbAnt.set(k.id, true); abrirRespInline(andId);
 }
 // o ícone do AdvPrev (o mesmo da tela de início), ao lado de docs/crm/index.html (F467, pedido do Paulo de 09.11.2026)
 const DB_LOGO_ADV = `<img src="icone-192.png" alt="">`;
@@ -12118,6 +12128,7 @@ function dbDespacho(k, ands){
   const ant = dbAnteriores(k, Math.max(0, notas.filter(a=>!a.responde_a).length-1), "anotações", aberto, `dbVerAnt('${k.id}')`);
   const acoes = podeGravarCaso() ? `<div class="ae-acoes db-acoes">
       <button type="button" class="btn-mini pri" data-ae="anotar">Anotar</button>
+      ${nota ? `<button type="button" class="btn-mini" data-ae="responder" data-and="${nota.id}" title="Responder a esta anotação ou seguir a tarefa dela">Responder</button>` : ""}
       ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}${ant}</div><div class="ae-painel" hidden></div>`
     : `<div class="ae-acoes db-acoes">${ant}</div>`;
   return `<section class="db db-desp" aria-label="Último andamento no Escritório" onclick="dbClique(event,this,'${k.id}')">
@@ -43264,10 +43275,13 @@ function faixaPrazos(k){
     const chip = x.aConfirmar ? "a confirmar" : x.data===hj ? "hoje" : f.urg==="venc" ? f.txt : `${f.n} ${f.un}`;
     const verm = nat==="fatal" || x.prorrogDe || venc;
     const sobre = destaque ? (venc ? "Prazo fatal vencido" : "Próximo prazo fatal") : rot;
+    // F621 · a inicial de quem faz, para saber de quem é a tarefa (pedido do Paulo, 16.11.2026)
+    const cq = D.colPorId.get(quemDaLinha(x, k.cliente_id));
+    const av = cq ? `<span class="pz-av fp5-av" style="background:${cq.cor}" title="${esc(cq.nome)}" aria-hidden="true">${esc(cq.inicial)}</span><span class="sr-only">Quem faz: ${esc(cq.nome)}</span>` : "";
     return `<div class="${cls}" ${dados}>
       <span class="fp5-dia fp2-data" aria-hidden="true"><b>${+dd}</b><small>${MES_CURTO[+mm-1]}</small></span>
       <span class="fp5-txt"><b class="fp3-tit" aria-hidden="true">${esc(rot)}</b><span class="sr-only">${esc(sobre)} ${esc(titulo)}, ${esc(f.txt)}, ${esc(diaCurtoPz(x.data))}</span></span>
-      <span class="fp5-chip fp3-n${verm?" verm":""}" aria-hidden="true">${esc(chip)}</span>
+      <span class="fp5-chip fp3-n${verm?" verm":""}" aria-hidden="true">${esc(chip)}</span>${av}
       <button type="button" class="fp2-mais pz-mais${destaque?" fp3-pri":""}" onclick="abrirPainelPrazo(${i})" aria-label="Abrir: ${esc(titulo)}">Abrir</button>
     </div>`;
   };
