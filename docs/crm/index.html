@@ -3896,6 +3896,11 @@ html[data-tema="v10"] .db>.db-cab{row-gap:0;margin:-14px -16px 12px;padding:4px 
 html[data-tema="v10"] .db>.db-cab :is(h3,.db-ant,.db-par){color:color-mix(in srgb,var(--db-cor) 80%,#000)}
 html[data-tema="v10"] .db>.db-cab h3{letter-spacing:.04em}
 html[data-tema="v10"] .db>.db-cab .db-when{color:#4A4E4E}
+/* F619 · a linha curta abaixo do título do cartão */
+.db-lc{display:flex;align-items:center;gap:8px;margin:-4px 0 10px;font-size:13px;font-weight:600;color:var(--tinta,#1F2424)}
+.db-lc-t{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.db-lc-bt{flex:none;background:none;border:0;padding:4px 2px;font-size:12px;color:color-mix(in srgb,var(--db-cor,#555) 80%,#000);text-decoration:underline;cursor:pointer;min-height:24px}
+.db-lc input{flex:1 1 auto;min-width:0;font-size:13px}
 html[data-tema="v10"] .db>.db-cab .db-logo{background:#fff;border-color:color-mix(in srgb,var(--db-cor) 35%,#fff)}
 .app.celular .db>.db-cab{margin:-12px -14px 10px;padding:8px 14px}
 html[data-tema="v10"] .db-mov{font-size:14px;line-height:1.45;margin:0}
@@ -7121,7 +7126,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.11</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.12</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12189,9 +12194,48 @@ function dbAndamento(k, ands, fase, par){
   const abre = it.n>0 && !!_dbAndAnt.get(`${k.id}|${it.aba}`);
   const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
   return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
-    <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}</div>
+    <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}</div>${lcHtml(k, it.aba)}
     ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts(dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`))}
     ${abre ? `<div class="db-pn" role="region" aria-label="${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores no ${esc(it.onde)}"><h4>${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores</h4>${it.ant()}</div>` : ""}</section>`;
+}
+// F619 · a linha curta de cada quadro (INSS, CRPS, Judicial), calculada no banco por linha_curta(); a correção
+// da equipe (casos.ronda.linha_curta.<aba>) vale enquanto a linha calculada for a mesma de quando se corrigiu
+const _lc = new Map(), LC_ABA = {inss:"inss", crps:"crps", cnj:"judicial"};
+function linhaCurtaDe(k){
+  const m = _lc.get(k.id); if(m) return m;
+  const novo = {d:{}}; _lc.set(k.id, novo);
+  api(`/rest/v1/rpc/linha_curta`,{method:"POST", body:JSON.stringify({p_caso:k.id})})
+    .then(r=>{ novo.d = r||{}; if(Object.keys(novo.d).length) repintarFicha(); }).catch(()=>{});
+  return novo;
+}
+function lcDe(k, ch){
+  const c = linhaCurtaDe(k).d[ch], cor = (((k.ronda||{}).linha_curta)||{})[ch];
+  if(!c || !c.texto) return null;
+  return cor && cor.original===c.texto ? {texto:cor.texto, nota:`corrigida por ${cor.por||"equipe"}`, c} : {texto:c.texto, nota:[c.data && dataBR(c.data), c.fonte].filter(Boolean).join(", "), c};
+}
+function lcHtml(k, aba){
+  const ch = LC_ABA[aba], l = ch && lcDe(k, ch); if(!l) return "";
+  return `<p class="db-lc" id="lc-${k.id}-${ch}"><span class="db-lc-t" title="${esc(l.texto + (l.nota ? ` (${l.nota})` : ""))}">${esc(l.texto)}</span>`
+    + (podeGravarCaso() ? `<button type="button" class="db-lc-bt" onclick="corrigirLinhaCurta('${k.id}','${ch}')" title="Corrigir a linha curta">Corrigir</button>` : "") + `</p>`;
+}
+function corrigirLinhaCurta(casoId, ch){
+  const k = D.casoPorId.get(casoId), l = k && lcDe(k, ch), el = document.getElementById(`lc-${casoId}-${ch}`);
+  if(!l || !el || !podeGravarCaso()) return;
+  el.innerHTML = `<input id="lc-ed-${casoId}-${ch}" aria-label="Linha curta" maxlength="200" value="${esc(l.texto)}"><button type="button" class="db-lc-bt" onclick="salvarLinhaCurta('${casoId}','${ch}')">Salvar</button><button type="button" class="db-lc-bt" onclick="repintarFicha()">Cancelar</button>`;
+  const i = document.getElementById(`lc-ed-${casoId}-${ch}`); i.focus();
+  i.onkeydown = e=>{ if(e.key==="Enter") salvarLinhaCurta(casoId, ch); else if(e.key==="Escape") repintarFicha(); };
+}
+async function salvarLinhaCurta(casoId, ch){
+  const k = D.casoPorId.get(casoId), l = k && lcDe(k, ch), t = String((document.getElementById(`lc-ed-${casoId}-${ch}`)||{}).value||"").trim();
+  if(!l || !t || t===l.texto) return repintarFicha();
+  try{
+    // a ronda inteira relida do banco antes de gravar: outro robô pode ter escrito nela
+    const [r] = await api(`/rest/v1/casos?id=eq.${casoId}&select=ronda`) || [];
+    const ronda = {...((r && r.ronda) || k.ronda || {})};
+    ronda.linha_curta = {...(ronda.linha_curta||{}), [ch]:{texto:t, original:l.c.texto, por:(eu && eu.nome || "").split(" ")[0], em:new Date().toISOString()}};
+    await patchCaso(casoId, {ronda}); k.ronda = ronda; aviso("Linha corrigida");
+  }catch(e){ aviso("Não gravei a correção: " + (e.message||e)); }
+  repintarFicha();
 }
 // F509 · as três últimas datas do processo no cartão Judicial (pedido do Paulo de 10.11.2026), sem o
 // prefixo do sistema, a data e o número que o texto do andamento repete; no mesmo dia, um item por movimento
