@@ -597,11 +597,17 @@ console.log("formal: ok");
   assert.equal(m.prazoOferta(v, agora).getTime() - agora, 30 * 60e3, "depois: 30 minutos");
   const txt = m.msgOfertaEspera({ ...e, marcado: "2026-12-01" }, v, m.prazoOferta(v, agora));
   assert.ok(txt.startsWith("Bom dia, Cliente.") && txt.includes("com a Dra. Amanda na sexta-feira, dia 13/11, às 10h30"), txt);
-  assert.ok(txt.includes("agendado para 01/12 fica liberado") && txt.includes("até as 09h30") && !/[—–]/.test(txt), "sem travessão");
+  assert.ok(txt.includes("agendado para 01/12 fica liberado") && !txt.includes("até as") && !/[—–]/.test(txt), "sem travessão");
   assert.ok(!m.msgOfertaEspera(e, v, m.prazoOferta(v, agora)).includes("fica liberado"));
   assert.equal(m.respostaPorPalavras("Sim, pode ser"), "aceitar");
   assert.equal(m.respostaPorPalavras("Não, prefiro manter"), "recusar");
   assert.equal(m.respostaPorPalavras("E à tarde, tem?"), "outro");
+  assert.equal(m.respostaPorPalavras("pode ser agradeço"), "aceitar");
+  const ag = new Date("2026-11-16T12:00:00Z");
+  assert.equal(m.confirmaJa("2026-11-16", ag), true);
+  assert.equal(m.confirmaJa("2026-11-17", ag), true);
+  assert.equal(m.confirmaJa("2026-11-18", ag), true);
+  assert.equal(m.confirmaJa("2026-11-19", ag), false);
   assert.ok(m.paraAgendador("Agendador.").includes("Lista de espera:"));
   assert.equal(m.paraAgendador(m.paraAgendador("Agendador.")).split("Lista de espera:").length, 2, "uma vez só");
 
