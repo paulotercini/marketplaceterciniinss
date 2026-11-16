@@ -124,7 +124,7 @@ const PAINEL = { totais: { online: 2, novas: 1, ativos: 3, pendentes: 1, retorno
   const nAntes = escritas.filter(e => /rpc\/zap_assumir/.test(e.u)).length;
   await p.evaluate(() => assumirConversa());
   await p.waitForTimeout(400);
-  conf("F594: Assumir a conversa com a IA pede confirmação", txtConf.includes("A IA está conduzindo esta conversa"));
+  conf("F594: Assumir a conversa com a IA pede confirmação", txtConf.includes("A IA continua a responder até você escrever ao cliente"));
   conf("F594: recusado, não assume", escritas.filter(e => /rpc\/zap_assumir/.test(e.u)).length === nAntes);
   // a conversa da Amanda só aparece porque ele foi mencionado nela
   await p.evaluate(id => abrirConversa(id), DA_AMANDA);
