@@ -24,3 +24,4 @@
 ## Outras partes
 
 - Site: `python3 build_site.py`. Portal: `graph_refresh.py` e `build_portal_listas.py`. Base de conhecimento: `_base-conhecimento-inss/` (ondas próprias, não misturar com portal).
+- Dossiê do cliente: extensão em `crm/fase2/dossie/` (versão **0.15.0**). Ao subir o `manifest.json`, troque aqui e no marcador. <!-- dossie-versao: 0.15.0 -->
