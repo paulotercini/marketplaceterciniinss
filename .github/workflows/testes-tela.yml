@@ -8,11 +8,15 @@ on:
     branches: [main]
     paths:
       - "crm/fase2/app.html"
+      - "crm/fase2/src/**"
+      - "crm/fase2/build_app.py"
       - "crm/fase2/testes/cadastro/**"
       - ".github/workflows/testes-tela.yml"
   pull_request:
     paths:
       - "crm/fase2/app.html"
+      - "crm/fase2/src/**"
+      - "crm/fase2/build_app.py"
       - "crm/fase2/testes/cadastro/**"
       - ".github/workflows/testes-tela.yml"
   workflow_dispatch:
@@ -42,6 +46,11 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install pytest
+
+      # app.html é montado de crm/fase2/src/: os dois têm de coincidir byte a byte
+      - name: Conferir montagem do app.html
+        working-directory: .
+        run: python3 crm/fase2/build_app.py --conferir
 
       # o Chromium do Playwright são ~150 MB por rodada; a chave é a versão
       # travada no package.json, então ele só volta a baixar quando a versão

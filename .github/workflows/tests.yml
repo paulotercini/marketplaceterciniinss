@@ -6,11 +6,17 @@ on:
     paths:
       - "*.py"
       - "tests/**"
+      - "crm/fase2/src/**"
+      - "crm/fase2/app.html"
+      - "crm/fase2/build_app.py"
       - ".github/workflows/tests.yml"
   pull_request:
     paths:
       - "*.py"
       - "tests/**"
+      - "crm/fase2/src/**"
+      - "crm/fase2/app.html"
+      - "crm/fase2/build_app.py"
       - ".github/workflows/tests.yml"
   workflow_dispatch:
 
