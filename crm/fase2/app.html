@@ -7127,7 +7127,7 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.18</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17652,7 +17652,7 @@ async function renderPericiasAviso(){
     const advB = t.closest("[data-adv]");
     if(advB){ if(!adm) return; const p = todas.find(x=>x.e.id===advB.dataset.id); if(!p) return;
       const prof = advB.dataset.adv; _perSel = p.e.id;
-      if(p.ligado){ if(!await perLigar(p.e.id, true, prof)) return; _perProf.delete(p.e.id); await perRecarregar(); }
+      if(p.ligado){ if(!await perLigar(p.e.id, true, prof, p.e.data_hora)) return; _perProf.delete(p.e.id); await perRecarregar(); }
       else { _perProf.set(p.e.id, prof); await renderPericiasAviso(); }
       aviso("Atendimento oferecido com "+PER_ADV[prof].nome+"."); return; }
     const s = t.closest("[data-sw]");
