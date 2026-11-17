@@ -100,10 +100,12 @@ async function enviar(terca: string) {
         if (!ev.atendimento || ev.confirmado || ev.profissional !== id) continue;
         const nome = ev.nome || nomeDoTitulo(ev.titulo);
         let tel = String(ev.telefone || "").replace(/\D/g, "");
-        if (!tel && ev.clienteId) {
-          const c = await rest(`clientes?id=eq.${encodeURIComponent(ev.clienteId)}&select=telefone`);
-          tel = String(c?.[0]?.telefone || "").replace(/\D/g, "");
-        }
+        // F635 · o WhatsApp da ficha vence o telefone gravado no evento: a equipe corrige a ficha, não o Google
+        const ficha = ev.clienteId
+          ? await rest(`clientes?id=eq.${encodeURIComponent(ev.clienteId)}&select=telefone`)
+          : tel.length >= 10 ? await rest(`clientes?telefones=cs.${encodeURIComponent(JSON.stringify([{ numero: tel.replace(/^55(?=\d{10,11}$)/, "") }]))}&select=telefone&limit=2`) : [];
+        const telFicha = ficha?.length === 1 ? String(ficha[0].telefone || "").replace(/\D/g, "") : "";
+        if (telFicha.length >= 10) tel = telFicha;
         // F422aa · evento lançado à mão no Google, sem telefone: a ficha do CRM de nome igual, se for uma só
         if (!tel && nome.length >= 5) {
           const c = await rest(`clientes?nome=ilike.${encodeURIComponent(nome.replace(/[%_*,()]/g, ""))}&select=telefone&limit=2`);

@@ -940,6 +940,7 @@ function bolhaZap(m, cli, seguida){
       ${horaSP(m.quando_wa||m.criado_em)}
       <span id="zs-${m.id}" data-st="${m.direcao==="saida"?esc(m.status||""):""}">${seloZap(m)}</span>
       ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
+      ${m.status==="erro"&&/^confirmacao:/.test(m.aviso_chave||"")?`<button class="btn-mini" onclick="reenviarConfZap('${m.id}')" title="mandar esta confirmação a outro número">Reenviar</button>`:""}
       ${m.alterar&&m.alterar.status==="fila"?`<span>${m.alterar.acao==="apagar"?"apagando…":"editando…"}</span>`:""}
       ${m.alterar&&m.alterar.status==="erro"?`<span title="${esc(m.alterar.erro||"")}">${m.alterar.acao==="apagar"?"não apagou":"não editou"}</span>`:""}
       ${cli&&podeGravarCaso()?`<button class="virar" onclick="virarAndamento('${m.id}')"
@@ -1235,4 +1236,16 @@ async function renderSugestoesDia(){
     }catch(e){ return aviso(msgErro(e)); }
     el.remove();
   };
+}
+
+// F635 · confirmação que não saiu (número sem WhatsApp): reenvia ao WhatsApp da ficha, ou ao número digitado
+async function reenviarConfZap(id){
+  const c = zapConvs.find(x=>x.id===zapAberta), cli = clienteDaConversa(c);
+  const zap = (cli && (cli.telefones||[]).find(t=>t.zap)) || {};
+  const tel = prompt("Reenviar a confirmação para qual número?", zap.numero || (cli&&cli.telefone) || "");
+  if(!tel) return;
+  try{
+    const r = await api(`/rest/v1/rpc/zap_conf_reenviar`,{method:"POST", body:JSON.stringify({p_msg:id, p_telefone:tel})});
+    aviso(r==="ja" ? "Esse número já recebeu a confirmação." : "Confirmação reenviada.");
+  }catch(e){ aviso("Não reenviou: "+(e.message||e)); }
 }
