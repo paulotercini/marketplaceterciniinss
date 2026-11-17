@@ -1618,6 +1618,15 @@ if (typeof Deno !== "undefined") {
       // F521 · o golpe sempre recebe resposta, também na conversa assumida e com o atendente Offline
       const ultima = String((x.mensagens || []).filter((m: Msg) => m.direcao === "entrada" && m.texto).slice(-1)[0]?.texto || "");
       if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }
+      // F642 · mensagem que o CRM não lê (botões, modelo de empresa): a IA pergunta uma vez; da segunda em diante vai à equipe,
+      // e não repete o aviso se o escritório já disse que um colaborador vai verificar (Paulo, 17.11.2026)
+      const ilegivel = (m: Msg) => m.direcao === "entrada" && (!m.texto || /veja no celular\]/.test(m.texto));
+      if ((x.mensagens || []).filter(ilegivel).length >= 2 && ilegivel((x.mensagens || []).slice(-1)[0] || {} as Msg)) {
+        const jaAvisou = (x.mensagens || []).some((m: Msg) => m.direcao === "saida" && /colaborador/i.test(m.texto || ""));
+        acao = jaAvisou ? "nada" : "equipe";
+        r = { ...r, assunto: r.assunto || "mensagens que o CRM não exibe; ver no celular",
+          resposta: jaAvisou ? "" : "Um colaborador do escritório vai verificar a sua mensagem e responder em seguida." };
+      }
       const antes = enviadosAtuais(x.mensagens);
       // F564 · na conversa assumida a resposta é sugestão; na confirmação e no aviso da perícia o escritório já abriu a conversa
       // F634 · o aviso vai na primeira resposta de cada dia (Paulo, 17.11.2026)
