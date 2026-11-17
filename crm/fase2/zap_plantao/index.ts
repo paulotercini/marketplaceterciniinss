@@ -504,6 +504,10 @@ export function contexto(x: Contexto) {
       `Exemplo do tom: "O acordo foi aprovado pelo juiz e, em 13/10/2026, o INSS recebeu a ordem para implantar o benefício, o que ainda não ocorreu. O escritório acompanha e avisa assim que for implantado." ` +
       `Uma ou duas datas que importam (a da decisão ou do acordo, a do envio ao INSS), sem cronologia completa. Nunca copie o texto do portal nem use termo técnico (certidão, juntada, conclusos, ofício, trânsito em julgado, homologação, ato ordinatório): diga o que significa. ` +
       `Ato de rotina não é o fato a contar: conte a última decisão ou o último fato decisivo. ` +
+      // F637 · caso do dia 17.11.2026: a IA misturou um pedido "concluído" do Meu INSS com o processo judicial e pediu print ao cliente
+      `Conte um fato só, o do processo que importa: com processo na Justiça, não mencione pedido do Meu INSS, salvo concessão, implantação ou pagamento; registro sem resultado ("concluído", "em análise") nunca entra na resposta. ` +
+      `"Concluso para decisão" quer dizer que o processo está com o juiz e se aguarda a decisão dele; se o andamento anterior mostrar o que ele vai decidir (por exemplo, marcar a nova perícia), diga isso. ` +
+      `Não peça print nem documento ao cliente quando os andamentos já respondem. Se a demora for longa, pode dizer que o processo está lento, sem culpar ninguém. ` +
       `Benefício implantado só se o andamento disser concessão, implantação, benefício ativo ou pagamento; sem isso, diga que ainda não foi implantado. A dúvida que restar fica com a equipe. ` +
       `Previsão: se a pessoa perguntar quando sai ou quanto tempo falta, use somente os tempos medidos do escritório abaixo, sempre com "em média" ou "costuma levar", nunca como promessa; ` +
       `quando a etapa não tiver medição ali, não fale em prazo. ` +
