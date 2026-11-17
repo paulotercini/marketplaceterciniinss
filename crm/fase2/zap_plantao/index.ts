@@ -88,6 +88,7 @@ export type Contexto = {
   motor?: string; ma?: { agente: string | null; ambiente: string | null; versao: string | null };
   sessao?: { id: string; em: string; ate: string; v?: string } | null;
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
+  andamentos?: { em: string; beneficio: string; texto: string }[];
   remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean; ler?: boolean; classe?: string } | null;
   pericia?: { tipo: string; data: string; hora: string; local: string | null; profissional: string; ate_hora: string; limite_presenca: string; telefone_em: string } | null;
 };
@@ -450,12 +451,25 @@ export function inicioRetomada(msgs: Msg[] = []) {
 }
 // as respostas já enviadas que contam para não repetir saudação e fórmulas: depois da retomada, só as novas
 export const enviadosAtuais = (msgs: Msg[] = []) => enviados(msgs.slice(Math.max(0, inicioRetomada(msgs))));
+// F633 · o escritório falou com a pessoa nos últimos dias, antes da mensagem atual (caso de 17.11.2026: "Bom dia" no dia seguinte ao agendamento)
+export const DIAS_RECENTE = 7;
+export function conversaRecente(msgs: Msg[] = [], ate = msgs.length) {
+  // a referência é a mensagem da retomada (ate) ou, sem ela, a última do cliente
+  const ult = ate < msgs.length ? ate : msgs.map((m) => m.direcao).lastIndexOf("entrada");
+  const ref = Date.parse(msgs[ult]?.momento || "");
+  return msgs.slice(0, ate).some((m) => m.direcao === "saida" && m.texto && ref - Date.parse(m.momento) < DIAS_RECENTE * 864e5);
+}
 export function retomada(msgs: Msg[] = []) {
   const j = inicioRetomada(msgs);
   if (j < 0) return "";
   const h = (Date.parse(msgs[j].momento) - Date.parse(msgs[j - 1].momento)) / 36e5;
+  const recente = conversaRecente(msgs, j);
   return `Retomada: a pessoa voltou a escrever ${Math.round(h)} horas depois da mensagem anterior. Trate como conversa nova: responda somente ao que ela disse agora. ` +
-      `Se for apenas um cumprimento, cumprimente e pergunte em que pode ajudar. Não retome o assunto anterior (agendamento, horários, pedidos) nem repita horários já oferecidos, salvo se ela o mencionar.\n`;
+      (recente
+        ? `O escritório já conversou com ela nos últimos dias: se for apenas um cumprimento, responda em uma frase curta com o cumprimento do horário e "Em que posso ajudar?", ` +
+          `sem boas-vindas, sem agradecer o contato, sem se apresentar, sem enumerar os assuntos e sem o nome, se a conversa acima já o usou. `
+        : `Se for apenas um cumprimento, cumprimente e pergunte em que pode ajudar. `) +
+      `Não retome o assunto anterior (agendamento, horários, pedidos) nem repita horários já oferecidos, salvo se ela o mencionar.\n`;
 }
 
 export function contexto(x: Contexto) {
@@ -470,6 +484,12 @@ export function contexto(x: Contexto) {
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
     `Agenda: ${x.agenda ? "ligada" : "desligada"}.\n` +
+    (x.andamentos?.length ? `Andamentos dos portais do INSS e da Justiça (os mais recentes):\n` +
+      x.andamentos.map((a) => `- registrado em ${hora(a.em)}, ${a.beneficio}: ${a.texto}`).join("\n") + `\n` +
+      // F633 · a IA consulta a ficha antes de encaminhar (pedido do Paulo de 17.11.2026)
+      `Pergunta sobre o processo, o benefício, pagamento ou valor liberado: confira esses andamentos e as mensagens do escritório na conversa. ` +
+      `Se responderem, informe o fato em uma frase, com a data, como está escrito, sem interpretar, sem parecer, sem valor e sem prazo, e use acao "responder". ` +
+      `Se não responderem, use acao "equipe", sem afirmar nem negar o que a pessoa disse.\n` : "") +
     retomada(x.mensagens) +
     (x.pagamento?.trim() ? `Dados de pagamento do escritório (somente para o cliente que quer pagar o escritório):\n${x.pagamento.trim()}\n` : "") +
     NOME_UMA_VEZ +
@@ -578,6 +598,12 @@ export const TEMPOS_MEDIDOS = `INSS: auxílio por incapacidade por análise docu
   `aproximadamente 1 mês e meio; Turma Recursal, aproximadamente 4 meses até o acórdão. Vara federal (rito comum): da distribuição à sentença, ` +
   `aproximadamente 2 anos e meio. Apelação no TRF3 sem fila conhecida, aproximadamente 7 meses. Mandado de segurança, aproximadamente 3 meses. ` +
   `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual, ação acidentária (TJSP): do ajuizamento à sentença ou ao acordo homologado, cerca de 8 meses (de 3 a 18 meses; metade termina em acordo); no Núcleo 4.0 de Acidentes do Trabalho há processos com mais de 15 meses sem sentença. Apelação, pagamento e RPV na Justiça Estadual: sem medição suficiente, não estime. Outras ações estaduais: não estime.`;
+// F633 · somente o que veio dos portais (a anotação da equipe é interna), os 6 mais recentes, sem números
+export function andamentosPublicos(a: { casos?: AndCaso[] } | null) {
+  return (a?.casos || []).flatMap((k) => (k.andamentos || []).filter((x) => !ORIGEM_AND[x.origem])
+    .map((x) => ({ em: x.em, beneficio: k.beneficio || "caso", texto: mascararMenosDatas(String(x.texto || "")).slice(0, 300) })))
+    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 6);
+}
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
   const quem = a.relacao ? `${a.contato} (${a.relacao} de ${a.cliente || "o cliente"})` : a.contato;
@@ -1156,7 +1182,7 @@ async function simular(s: Cenario) {
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
-    const resposta = comAvisoGolpe(emLinhas(r.resposta, enviadosAtuais(x.mensagens)), enviadosAtuais(x.mensagens), acao !== "nada");
+    const resposta = comAvisoGolpe(emLinhas(r.resposta, enviadosAtuais(x.mensagens)), enviados(x.mensagens), acao !== "nada" && !conversaRecente(x.mensagens));
     saida.push({ cliente: m.texto, acao, resposta, assunto: r.assunto, ferramentas: uso.slice(antes) });
     if (resposta) x.mensagens.push({ direcao: "saida", por_bot: true, tipo: "texto", texto: resposta, momento: new Date(t0 + i * 120000 + 30000).toISOString() });
     if (acao === "equipe") break;
@@ -1522,6 +1548,8 @@ if (typeof Deno !== "undefined") {
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
+      // F633 · os andamentos dos portais, só para o telefone principal da ficha
+      if (x.cliente?.mesmo_telefone) x.andamentos = andamentosPublicos(await rpc("zap_andamento_pegar", { p_msg: msg }).catch(() => null));
       // F521 · a agenda pedida neste Offline a IA responde pelo escritório; F561 · fora dela, o Offline vira sugestão (zap_plantao_aplicar)
       if (x.atendente?.offline && x.atendente.iaAgenda) x.atendente = null;
       // F629 · assumida durante a conversa com a IA e sem mensagem da equipe: a IA segue pelo escritório e agenda
@@ -1568,7 +1596,9 @@ if (typeof Deno !== "undefined") {
       if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }
       const antes = enviadosAtuais(x.mensagens);
       // F564 · na conversa assumida a resposta é sugestão; na confirmação e no aviso da perícia o escritório já abriu a conversa
-      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), antes, acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia);
+      // F633 · nem a quem o escritório já respondeu nos últimos dias
+      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), enviados(x.mensagens),
+        acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia && !conversaRecente(x.mensagens));
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: resposta, p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
