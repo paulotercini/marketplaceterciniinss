@@ -170,7 +170,7 @@ Ao receber caso de auxílio-reclusão, verificar sequencialmente.
 
 **5.2 Regime prisional** — fechado ou semiaberto. Se semiaberto e prisão pré-MP, Tema 357/TNU protege. Se semiaberto e prisão pós-MP, sem direito (salvo tese de equivalência material ao fechado, minoritária).
 
-**5.3 Qualidade de segurado na data da prisão** — verificar último vínculo, contribuições, período de graça.
+**5.3 Qualidade de segurado na data da prisão** — verificar último vínculo, contribuições, período de graça. Mais de 120 contribuições sem perda da qualidade, ainda que em filiação anterior, dão 24 meses de graça em todo reingresso (Tema 1.352/STJ, julgado em 11/11/2026).
 
 **5.4 Carência** — se prisão a partir de 18/01/2019, verificar 24 contribuições (IN 128/2022, art. 198, II) (auditoria 03/10/2026).
 

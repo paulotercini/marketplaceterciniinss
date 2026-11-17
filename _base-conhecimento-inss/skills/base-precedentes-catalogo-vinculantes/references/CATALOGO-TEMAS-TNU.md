@@ -249,7 +249,7 @@
 
 - **Tema 253:** É inacumulável o BPC/LOAS com o auxílio-acidente, sendo facultado ao beneficiário a opção pelo mais vantajoso.
 
-- **Tema 255:** O pagamento de mais de 120 contribuições mensais, sem interrupção que acarrete a perda da qualidade de segurado, garante o direito à prorrogação do período de graça. Tese em revisão pelo Tema 338/TNU, conforme a TNU no PUIL 0504133-21.2022.4.05.8200 (Rel. Juiz Federal Giovani Bigolin, acórdão disponibilizado em 28/06/2024), que suspendeu o processo até o julgamento do Tema 338. O Tema 338 segue afetado e pendente de julgamento (Rcl 5000246-54.2026.4.90.0000, j. 30/06/2026); conferir a situação atual na página oficial do CJF antes de citar. (auditoria 03/10/2026)
+- **Tema 255:** O pagamento de mais de 120 contribuições mensais, sem interrupção que acarrete a perda da qualidade de segurado, garante o direito à prorrogação do período de graça. Tese em revisão pelo Tema 338/TNU, conforme a TNU no PUIL 0504133-21.2022.4.05.8200 (Rel. Juiz Federal Giovani Bigolin, acórdão disponibilizado em 28/06/2024), que suspendeu o processo até o julgamento do Tema 338. O Tema 338 segue afetado e pendente de julgamento (Rcl 5000246-54.2026.4.90.0000, j. 30/06/2026); conferir a situação atual na página oficial do CJF antes de citar. (auditoria 03/10/2026) Confirmado pelo Tema 1.352/STJ, julgado em 11/11/2026 (Onda 186; acórdão não publicado).
 
 - **Tema 256:** O prazo decadencial do art. 103 da Lei 8.213/91 alcança o direito potestativo de impugnação do ato original de concessão e do ato de indeferimento da revisão administrativa.
 
@@ -325,7 +325,7 @@
 
 - **Tema 337:** Para períodos posteriores à Lei n. 9.032/1995, não se admite a especialidade da atividade de aeronauta apenas com base na exposição a pressão atmosférica 'hipobárica', à míngua de estudo técnico conclusivo.
 
-- **Tema 338:** [AFETADO E PENDENTE. Conferido em 03/10/2026 no acervo TNU do MCP Iurisprudencia, que não traz o julgamento de mérito. O tema revisa a tese do Tema 255 (prorrogação do período de graça por mais de 120 contribuições), e a TNU sobrestou processos até o seu julgamento (PUIL 0002328-16.2017.4.03.6327, em 2023, e PUIL 0504133-21.2022.4.05.8200, em 2024). A Rcl 5000246-54.2026.4.90.0000 (j. 30/06/2026) ainda se refere ao processo afetado para julgamento do Tema 338] Sem tese firmada. NÃO citar como julgado. (auditoria 03/10/2026)
+- **Tema 338:** [AFETADO E PENDENTE. Conferido em 03/10/2026 no acervo TNU do MCP Iurisprudencia, que não traz o julgamento de mérito. O tema revisa a tese do Tema 255 (prorrogação do período de graça por mais de 120 contribuições), e a TNU sobrestou processos até o seu julgamento (PUIL 0002328-16.2017.4.03.6327, em 2023, e PUIL 0504133-21.2022.4.05.8200, em 2024). A Rcl 5000246-54.2026.4.90.0000 (j. 30/06/2026) ainda se refere ao processo afetado para julgamento do Tema 338] Sem tese firmada. NÃO citar como julgado. (auditoria 03/10/2026) Atualização de 13/11/2026 (Onda 186): o Tema 1.352/STJ, julgado em 11/11/2026, firmou em precedente vinculante a incorporação da prorrogação ao patrimônio jurídico, com uso permanente; o Tema 338 deve seguir essa tese.
 
 - **Tema 343:** [Tese literal conferida na página oficial em 11/07/2026. Julgado em 14/04/2025, PEDILEF 0523447-97.2020.4.05.8013/AL] "A fixação da data de início da incapacidade (DII) na data da perícia constitui medida excepcional, que demanda fundamentação capaz de afastar a presunção lógica de que a incapacidade teve início em momento anterior ao exame pericial."
 
