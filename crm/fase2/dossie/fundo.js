@@ -147,7 +147,7 @@ async function rodarHc(tabId) {
   }
   const baixados = [];
   for (const [tela, r] of Object.entries(porTela)) for (const a of r.arquivos || []) if (!naoGravou.has(a.arquivo)) baixados.push(`${tela} · ${a.arquivo}`);
-  const res = await resumo({ cpf: cliente.cpf, portal: 'hc', baixados, inexistentes, falhas });
+  const res = await resumo({ cpf: cliente.cpf, nome: cliente.nome, portal: 'hc', baixados, inexistentes, falhas });
   // falha primeiro: é o que pede ação, e não pode sumir atrás da lista de "sem resultado"
   await noHc(tabId, 'fim', { cor: falhas.length ? '#9A6700' : '#1E6F50',
     texto: `${ok} documento(s) do HC${res.crm && res.crm !== 'ok' ? ` (resumo no CRM: ${res.crm})` : ''}`
@@ -342,7 +342,14 @@ async function transparencia(m) {
 
 // o resumo da rodada (o que veio, o que o portal diz que não existe, o que
 // falhou) vai para clientes.dossie — é o que deixa a ficha dizer "sem CTC"
-const resumo = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
+// F639 · portal consultado sem nada a baixar: um "Sem cadastro.txt" na pasta e no CRM prova que foi pesquisado
+const resumo = async m => {
+  const txt = R.textoSemCadastro(m);
+  if (txt && m.nome) await salvar({ cpf: m.cpf, nome: m.nome, fonte: R.FONTE_PORTAL[m.portal] || m.portal, arquivo: 'Sem cadastro.txt', mime: 'text/plain',
+    b64: R.b64(new TextEncoder().encode(txt)) }).catch(() => {});
+  return resumoCrm(m);
+};
+const resumoCrm = m => CRM.guardarResumo({ cpf: m.cpf, portal: m.portal,
   resumo: Object.assign({ baixados: m.baixados || [], inexistentes: m.inexistentes || [], falhas: m.falhas || [] },
     m.parcial ? { parcial: true } : {},                  // resumo antecipado do Meu INSS: a rodada ainda não acabou
     m.cadastro ? { cadastro: m.cadastro } : {},          // Meu INSS: os dados cadastrais do CNIS, nas colunas do CRM

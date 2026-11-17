@@ -342,7 +342,15 @@
     return { pessoas: resumo, texto: linhas.join('\n') };
   }
 
-  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, cadastroDoCnis, textoCadunico, textoTransparencia, b64, janela12Meses, nupsDaLista, clienteDoRecurso, filaDePedidos, SESSAO_CAIU };
+  // F639 · portal consultado sem nada a baixar: o texto do "Sem cadastro.txt" (vazio quando houve documento, falha ou rodada parcial)
+  const FONTE_PORTAL = { meuinss: 'Meu INSS', mte: 'CTPS RAIS CAGED', recursos: 'e-Recursos', hc: 'HC Ribeirao', redesim: 'Redesim', cadunico: 'CadUnico', transparencia: 'Portal da Transparencia' };
+  function textoSemCadastro(m, agora = new Date()) {
+    if (m.parcial || (m.baixados || []).length || (m.falhas || []).length || !(m.inexistentes || []).length) return '';
+    return `SEM CADASTRO - ${FONTE_PORTAL[m.portal] || m.portal}\nConsultado em ${agora.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}\n`
+      + 'Nenhum documento disponivel. O portal informou:\n- ' + m.inexistentes.join('\n- ') + '\n';
+  }
+
+  const API = { nomeSeguro, slug, pastaCliente, jwt, comoPdf, mensagemDoPortal, ehExameDeImagem, textoSeguroDesemprego, cadastroDoCnis, textoCadunico, textoTransparencia, b64, janela12Meses, nupsDaLista, clienteDoRecurso, filaDePedidos, SESSAO_CAIU, FONTE_PORTAL, textoSemCadastro };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.DOSSIE_REGRAS = API;
 })(typeof window !== 'undefined' ? window : globalThis);

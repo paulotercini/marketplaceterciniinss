@@ -3001,3 +3001,4 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
     document.head.appendChild(l); }
 }catch(e){}})();
 </script>
+.dossie-semcad{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;background:#FFF4D6;color:#7A5200;font-size:12px;font-weight:600}

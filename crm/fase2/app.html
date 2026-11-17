@@ -3010,6 +3010,7 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
     document.head.appendChild(l); }
 }catch(e){}})();
 </script>
+.dossie-semcad{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;background:#FFF4D6;color:#7A5200;font-size:12px;font-weight:600}
 <style id="tema-v10">
 /* ══════════════════════════════════════════════════════════════════════════
    F80 · TEMA "PAPEL E PETRÓLEO" (v10), atrás de interruptor
@@ -31091,9 +31092,12 @@ function caixaDossie(cli){
     <div class="apos-cab"><strong>📂 Dossiê — o que os portais têm</strong></div>
     ${portais.map(k=>{ const p=d[k]; const em=p.em?fmtTS(p.em):""; const n=(p.baixados||[]).length;
       // F590 · o resumo antecipado da extensão (parcial) não é a rodada inteira
-      return `<div class="dossie-portal"><b>${NOME[k]}</b> <span class="meio-sub">${p.parcial ? "rodada em andamento ou interrompida: se não estiver rodando, rode de novo · " : em?`rodado em ${em} · `:""}${n} documento${n===1?"":"s"}</span>
+      // F639 · consultado sem documento nem falha = "Não tem cadastro"
+      const semCad = !p.parcial && !n && !(p.falhas||[]).length && (p.inexistentes||[]).length;
+      return `<div class="dossie-portal"><b>${NOME[k]}</b>${semCad ? ` <span class="dossie-semcad">Não tem cadastro</span>` : ""} <span class="meio-sub">${p.parcial ? "rodada em andamento ou interrompida: se não estiver rodando, rode de novo · " : em?`rodado em ${em} · `:""}${n} documento${n===1?"":"s"}</span>
         ${lista((p.inexistentes||[]).map(x=>"✗ "+(/defici/i.test(x) ? naoTxt(x) : explicaFalta(x, dep, cli))), "nao")}
         ${lista((p.falhas||[]).map(x=>"⚠ "+x), "falha")}</div>`; }).join("")}
+    ${portais.length ? `<p class="meio-sub">Não pesquisado: ${Object.keys(NOME).filter(k=>!d[k]).map(k=>NOME[k]).join(", ") || "nenhum"}</p>` : ""}
     ${portais.length ? "" : `<p class="meio-sub dossie-sem">O resumo dos portais não foi gravado nesta coleta.
       Rode o dossiê de novo para registrar o que cada portal não tem.</p>`}
     ${docs.length ? `<div class="dossie-docs"><span class="meio-sub">${docs.length} documento${docs.length===1?"":"s"} · ${comTexto} com texto${
