@@ -112,7 +112,8 @@ function textoDaMensagem(m) {
   for (const [k, campo] of [["buttonsResponseMessage", "selectedDisplayText"], ["listResponseMessage", "title"],
     ["templateButtonReplyMessage", "selectedDisplayText"]]) if (c[k]) return c[k][campo] || c[k].selectedId || c[k].singleSelectReply?.selectedRowId || "";
   const bt = textoDeBotoes(c);
-  if (bt !== null) return bt;
+  // F642 · formato de empresa que os campos conhecidos não cobrem (interactiveMessageTemplate, cabeçalho com imagem…): varre os textos
+  if (bt !== null) return bt || textoProfundo(c) || "[mensagem com botões sem texto; veja no celular]";
   const d = tipoSemTraducao(m);
   // F631 · o registro de chamada (o proto escreve callLogMesssage, com três "s") vira texto legível
   if (/^callLogMess?sage$/.test(d || "")) return c[d]?.isVideo ? "📹 Chamada de vídeo" : "📞 Chamada de voz";
@@ -155,6 +156,19 @@ function textoDeBotoes(c) {
     return juntar([r.body?.text || p.display_text || p.title || p.id], []);
   }
   return null;
+}
+
+const CHAVES_TEXTO = ["hydratedTitleText", "title", "text", "contentText", "hydratedContentText", "caption", "description",
+  "footerText", "hydratedFooterText", "displayText", "display_text"];
+function textoProfundo(o, vistos = new Set(), saida = []) {
+  if (!o || typeof o !== "object" || vistos.has(o)) return saida.join("\n");
+  vistos.add(o);
+  for (const [k, v] of Object.entries(o)) {
+    if (typeof v === "string" && CHAVES_TEXTO.includes(k) && v.trim() && !saida.includes(v.trim())) saida.push(v.trim());
+    else if (k === "buttonParamsJson" || k === "paramsJson") textoProfundo(jsonSeguro(v), vistos, saida);
+    else if (v && typeof v === "object" && !ArrayBuffer.isView(v)) textoProfundo(v, vistos, saida);
+  }
+  return saida.join("\n");
 }
 
 // F555 · o número do vCard: o waid (número no WhatsApp) vale mais que o TEL escrito; sem nenhum, só o nome

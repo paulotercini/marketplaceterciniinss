@@ -1018,3 +1018,4 @@ A **F635** (pedido do Paulo de 17.11.2026, confirmação enviada a número sem W
 
 ## F640 · Vincular das Novidades abre a escolha do caso (17.11.2026)
 Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escolha à mão (vincular a caso sem número, incidente, caso Judicial novo) e oferece ➕ Cliente novo.
+- F642 (17.11.2026): a ponte varre os textos de botões e modelos de empresa fora dos campos conhecidos (antes gravava vazio, "[texto]"); o zap_plantao pergunta uma vez pela mensagem ilegível e depois encaminha à equipe sem repetir.

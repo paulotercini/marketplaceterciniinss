@@ -253,3 +253,11 @@ t.test("F632: botões, modelo, lista e interativa viram corpo e opções legíve
   a.equal(N.textoDaMensagem(m({ buttonsResponseMessage: { selectedButtonId: "1", selectedDisplayText: "Sim" } })), "Sim");
   a.equal(N.tipoSemTraducao(bt), undefined);
 });
+
+t.test("F642: modelo e botões fora dos campos conhecidos ainda viram texto", () => {
+  const m = x => ({ key: { remoteJid: "550000000001@s.whatsapp.net", id: "Z" }, message: x });
+  a.equal(N.textoDaMensagem(m({ templateMessage: { interactiveMessageTemplate: { body: { text: "Seu boleto venceu" },
+    nativeFlowMessage: { buttons: [{ buttonParamsJson: '{"display_text":"Pagar"}' }] } } } })), "Seu boleto venceu\nPagar");
+  a.equal(N.textoDaMensagem(m({ buttonsMessage: { imageMessage: { caption: "Promoção" } } })), "Promoção");
+  a.equal(N.textoDaMensagem(m({ buttonsMessage: {} })), "[mensagem com botões sem texto; veja no celular]");
+});
