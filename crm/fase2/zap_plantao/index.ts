@@ -459,6 +459,14 @@ export function conversaRecente(msgs: Msg[] = [], ate = msgs.length) {
   const ref = Date.parse(msgs[ult]?.momento || "");
   return msgs.slice(0, ate).some((m) => m.direcao === "saida" && m.texto && ref - Date.parse(m.momento) < DIAS_RECENTE * 864e5);
 }
+// F634 · o que o escritório já enviou hoje (dia de Brasília da última mensagem do cliente): sem nada, a resposta leva o aviso do golpe
+const diaBR = (iso: string) => new Date(iso).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+export function enviadosHoje(msgs: Msg[] = []) {
+  const ult = [...msgs].reverse().find((m) => m.direcao === "entrada");
+  const hoje = diaBR(ult?.momento || new Date().toISOString());
+  const t = enviados(msgs.filter((m) => m.direcao === "saida" && diaBR(m.momento) === hoje));
+  return t.length ? t : [];
+}
 export function retomada(msgs: Msg[] = []) {
   const j = inicioRetomada(msgs);
   if (j < 0) return "";
@@ -466,8 +474,11 @@ export function retomada(msgs: Msg[] = []) {
   const recente = conversaRecente(msgs, j);
   return `Retomada: a pessoa voltou a escrever ${Math.round(h)} horas depois da mensagem anterior. Trate como conversa nova: responda somente ao que ela disse agora. ` +
       (recente
-        ? `O escritório já conversou com ela nos últimos dias: se for apenas um cumprimento, responda em uma frase curta com o cumprimento do horário e "Em que posso ajudar?", ` +
-          `sem boas-vindas, sem agradecer o contato, sem se apresentar, sem enumerar os assuntos e sem o nome, se a conversa acima já o usou. `
+        // F634 · antes de perguntar, ver se o assunto da véspera ficou em aberto (Paulo, 17.11.2026)
+        ? `O escritório já conversou com ela nos últimos dias. Leia antes as mensagens anteriores: se o assunto ficou em aberto (pergunta sem resposta, pedido pendente, ` +
+          `algo que o escritório ficou de fazer), cumprimente pelo horário e dê continuidade a esse assunto. Se a conversa anterior terminou, responda ao cumprimento ` +
+          `com o cumprimento do horário e "Em que posso ajudar?", em uma frase, sem boas-vindas, sem agradecer o contato, sem se apresentar, sem enumerar os assuntos ` +
+          `e sem o nome, se a conversa acima já o usou. Na dúvida sobre o que a pessoa quer ou sobre o que ficou pendente, use acao "equipe". `
         : `Se for apenas um cumprimento, cumprimente e pergunte em que pode ajudar. `) +
       `Não retome o assunto anterior (agendamento, horários, pedidos) nem repita horários já oferecidos, salvo se ela o mencionar.\n`;
 }
@@ -1182,7 +1193,7 @@ async function simular(s: Cenario) {
     catch (e) { saida.push({ cliente: m.texto, erro: String(e).slice(0, 300) }); break; }
     const enc = fer.encaminhado as { motivo?: string };
     const acao = enc && "motivo" in enc ? "equipe" : r.acao;
-    const resposta = comAvisoGolpe(emLinhas(r.resposta, enviadosAtuais(x.mensagens)), enviados(x.mensagens), acao !== "nada" && !conversaRecente(x.mensagens));
+    const resposta = comAvisoGolpe(emLinhas(r.resposta, enviadosAtuais(x.mensagens)), enviadosHoje(x.mensagens), acao !== "nada");
     saida.push({ cliente: m.texto, acao, resposta, assunto: r.assunto, ferramentas: uso.slice(antes) });
     if (resposta) x.mensagens.push({ direcao: "saida", por_bot: true, tipo: "texto", texto: resposta, momento: new Date(t0 + i * 120000 + 30000).toISOString() });
     if (acao === "equipe") break;
@@ -1596,9 +1607,9 @@ if (typeof Deno !== "undefined") {
       if (acao !== "equipe" && /golpe|falso advogado|se passa(ndo|r)? (por|pelo)|pix para liberar/i.test(ultima)) { acao = "equipe"; r.urgente = true; r.assunto = r.assunto || "possível golpe"; }
       const antes = enviadosAtuais(x.mensagens);
       // F564 · na conversa assumida a resposta é sugestão; na confirmação e no aviso da perícia o escritório já abriu a conversa
-      // F633 · nem a quem o escritório já respondeu nos últimos dias
-      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), enviados(x.mensagens),
-        acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia && !conversaRecente(x.mensagens));
+      // F634 · o aviso vai na primeira resposta de cada dia (Paulo, 17.11.2026)
+      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), enviadosHoje(x.mensagens),
+        acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia);
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: resposta, p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
