@@ -26,4 +26,11 @@ window.faixaErr = window.faixaErr || (t => faixa(t, '#B3261E'));
 window.someFaixa = window.someFaixa || ((ms = 12000) => setTimeout(() => {
   const f = document.getElementById('crm-faixa'); if (f) f.remove();
 }, ms));
-window.pausa = window.pausa || (ms => new Promise(r => setTimeout(r, ms)));
+// F621 · aba em segundo plano há mais de 5 min: o Chrome acorda os timers da
+// página 1 vez por minuto, e a pausa de 700 ms virava 60 s. O relógio do fundo
+// (service worker) não sofre esse freio; vale o que acordar primeiro. A duração não muda.
+window.pausa = window.pausa || (ms => new Promise(r => {
+  let feito = false; const fim = () => { if (!feito) { feito = true; r(); } };
+  setTimeout(fim, ms);
+  try { chrome.runtime.sendMessage({ tipo: 'dormir', ms }, () => { void chrome.runtime.lastError; fim(); }); } catch (_) {}
+}));

@@ -1011,3 +1011,5 @@ A **F635** (pedido do Paulo de 17.11.2026, confirmação enviada a número sem W
 - F636 (17.11.2026, pedido do Paulo): IA do WhatsApp responde sobre andamento em linguagem simples: implantação, decisão com data, último fato decisivo e o que se espera; nunca copia o texto técnico do portal; previsão só pelos tempos medidos, ou "não há como prever"; recebe os 12 andamentos mais recentes. Ajuste (Paulo, 17.11): duas ou três frases, uma ou duas datas, sem termo técnico.
 
 - F637 (17.11.2026, pedido do Paulo): na resposta de andamento, um fato só; processo judicial não mistura pedido do Meu INSS sem resultado; concluso para decisão explicado; sem pedir print quando os andamentos respondem.
+
+- F638 (17.11.2026, pedido do Paulo, extensão 1.41.0): varredura do PJe 1º grau não para mais com a aba em segundo plano; pausas também correm no relógio do service worker (mensagem dormir), esperarQuieto sem timers da página e Caixa de entrada vazia ("Não há itens aqui") encerrada de imediato. Duração das pausas mantida.
