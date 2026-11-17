@@ -715,7 +715,7 @@ console.log("formal: ok");
   assert.equal(and.length, 1, "anotação da equipe não vai à IA do cliente");
   assert.ok(and[0].texto.includes("10.11.2026") && !and[0].texto.includes("1234567890"), "a data fica, o número sai");
   const ctx = m.contexto({ mensagens: msgs, advogados: [], andamentos: and });
-  assert.ok(ctx.includes("Benefício concedido em 10.11.2026") && ctx.includes("sem afirmar nem negar") && ctx.includes("Nunca copie o texto do portal") && ctx.includes("duas ou três frases curtas") && ctx.includes("Justiça Estadual, ação acidentária"));
+  assert.ok(ctx.includes("Benefício concedido em 10.11.2026") && ctx.includes("sem afirmar nem negar") && ctx.includes("Nunca copie o texto do portal") && ctx.includes("duas ou três frases curtas") && ctx.includes("Concluso para decisão") && ctx.includes("Justiça Estadual, ação acidentária"));
   assert.ok(!m.contexto({ mensagens: msgs, advogados: [] }).includes("Andamentos dos portais"));
   console.log("ok cliente com ficha no dia seguinte");
 }
