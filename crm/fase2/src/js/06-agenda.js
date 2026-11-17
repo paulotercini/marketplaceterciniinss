@@ -361,7 +361,7 @@ function novSemCaso(){
       <button class="btn-mini" onclick="ignorarProtocolo('${esc(x.protocolo)}')" title="parar de perguntar por este protocolo">Ignorar</button></div>`).join("")}
     ${js.map(x=>`<div class="nov-linha"><strong>${esc(x.sistema==="esaj"?"e-SAJ":x.sistema==="eproc"?"eproc":"PJe")} · ${esc(x.partes||"")}</strong>
       · processo ${esc(x.numero)} <span class="meio-sub">sem caso desde ${esc(fmt(dataSP(x.desde)))}</span>
-      <button class="btn-mini" onclick="irPara('patinss')" title="abrir a coleta do tribunal para vincular ou criar o caso">Vincular</button>
+      <button class="btn-mini" onclick="vincularDaNovidade('${esc(x.numero)}')" title="vincular a um caso do cliente ou criar o caso">Vincular</button>
       <button class="btn-mini" onclick="ignorarProcessoPje('${esc(x.numero)}')" title="parar de perguntar por este processo">Ignorar</button></div>`).join("")}`;
 }
 // resolve na própria Novidades: refaz o plano da coleta do INSS (contra o banco) e usa os botões de sempre

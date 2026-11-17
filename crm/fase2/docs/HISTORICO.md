@@ -1015,3 +1015,6 @@ A **F635** (pedido do Paulo de 17.11.2026, confirmação enviada a número sem W
 - F638 (17.11.2026, pedido do Paulo, extensão 1.41.0): varredura do PJe 1º grau não para mais com a aba em segundo plano; pausas também correm no relógio do service worker (mensagem dormir), esperarQuieto sem timers da página e Caixa de entrada vazia ("Não há itens aqui") encerrada de imediato. Duração das pausas mantida.
 
 - F639 (17.11.2026, pedido do Paulo, dossiê 0.16.0): portal consultado sem documento nem falha grava "Sem cadastro.txt" (fonte, data e o que o portal informou) na pasta do Drive e nos anexos do CRM; a caixa do Dossiê mostra "Não tem cadastro" nesse portal e lista em "Não pesquisado" os portais nunca rodados.
+
+## F640 · Vincular das Novidades abre a escolha do caso (17.11.2026)
+Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escolha à mão (vincular a caso sem número, incidente, caso Judicial novo) e oferece ➕ Cliente novo.

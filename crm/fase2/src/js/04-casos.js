@@ -645,6 +645,7 @@ function planoCrps(coleta, D){
 // coletas por dia não duplicam nada.
 let planoPjeAtual = null;
 async function conferirPje(coletaId){
+  if(!coletaId) return render();   // veio das Novidades, sem coleta: só redesenha
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
     if(!c) return aviso("Não achei essa coleta");
@@ -1095,7 +1096,16 @@ function filtrarEscolhaPje(numero){
           </div>`;}).join("") || `<div class="meio-sub" style="margin-top:3px">sem caso ativo</div>`}
         <button class="btn-mini" style="margin-top:5px"
           onclick="criarCasoEscolhidoPje('${numero}','${c.id}')">➕ caso Judicial novo p/ ${esc(c.nome.split(" ")[0])}</button>
-      </div>`;}).join("");
+      </div>`;}).join("")
+  // cliente que ainda não existe: o Novo Cliente abre com o nome; volta-se depois ao Vincular
+  if(q.length>=2) el.innerHTML += `<button class="btn-mini" style="margin-top:8px"
+    onclick="fecharCaixa();novoClienteDaBusca(document.getElementById('esc-pje-busca')?.value||'')">➕ Cliente novo</button>`;
+}
+// Novidades › Sem caso no CRM › Vincular: abre a mesma escolha à mão, sem passar pelo Importar
+function vincularDaNovidade(numero){
+  const x = pjeSemCaso()[soDig(numero)]; if(!x) return;
+  planoPjeAtual = {coleta_id:null, semCaso:[{numero:x.numero, partes:x.partes||"", sistema:x.sistema||"pje"}]};
+  escolherCasoPje(x.numero);
 }
 async function vincularEscolhidoPje(numero, casoId){
   const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
