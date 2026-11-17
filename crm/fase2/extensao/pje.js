@@ -60,15 +60,18 @@
   // do RichFaces antigo — esperar por eles era esperar por nada, o clique
   // seguinte colidia com a requisição em voo e a conversa caía já na
   // primeira página. Mutação de DOM não depende da casca.
-  function esperarQuieto(quieto = 900, teto = 12000) {
-    return new Promise(res => {
-      let t = setTimeout(fim, quieto);
-      const obs = new MutationObserver(() => { clearTimeout(t); t = setTimeout(fim, quieto); });
-      const teimosia = setTimeout(fim, teto);
-      function fim() { obs.disconnect(); clearTimeout(t); clearTimeout(teimosia); res(); }
-      obs.observe(document.body, { childList: true, subtree: true, attributes: true });
-    });
+  // F621 · conta pelo window.pausa (relógio do fundo), não por setTimeout da página
+  async function esperarQuieto(quieto = 900, teto = 12000) {
+    const ini = Date.now(); let ultima = ini;
+    const obs = new MutationObserver(() => { ultima = Date.now(); });
+    obs.observe(document.body, { childList: true, subtree: true, attributes: true });
+    while (Date.now() - ultima < quieto && Date.now() - ini < teto) await pausa(150);
+    obs.disconnect();
   }
+  // F621 · a caixa vazia do PJe diz "Não há itens aqui": segue na hora
+  const caixaVazia = () => !emRequisicao()
+    && [...document.querySelectorAll('div,span,td,p')].some(el => el.offsetParent !== null
+      && !el.children.length && /n[ãa]o h[áa] itens aqui/i.test(el.textContent || ''));
 
   // espera a tabela do acervo TROCAR de conteúdo (ou existir) após um clique.
   // SÓ devolve false quando o ERRO DO PJe está visível na tela: jurisdição
@@ -84,6 +87,7 @@
         await esperarQuieto(700);      // a página sossega antes do próximo passo
         return true;
       }
+      if (i >= 1 && !tabela() && caixaVazia()) return true;
     }
     await esperarQuieto(700);
     return !paginaMorreu();            // sem tabela ≠ morto; morto é erro NA TELA

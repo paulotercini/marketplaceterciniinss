@@ -102,6 +102,13 @@ async function rodarFonte(fonte, { aba = null, ativar = true, extra = null, url 
   } catch (e) { return { erro: String(e.message || e) }; }
 }
 
+// F621 · o relógio das pausas das abas (ver window.pausa em tela.js)
+chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
+  if (msg.tipo !== 'dormir') return;
+  setTimeout(() => responder(true), Math.max(0, Math.min(+msg.ms || 0, 25000)));
+  return true;
+});
+
 chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'rodar') return;
   rodarFonte(msg.fonte, msg.extra ? { extra: msg.extra } : {}).then(responder);
