@@ -499,8 +499,19 @@ export function contexto(x: Contexto) {
       x.andamentos.map((a) => `- registrado em ${hora(a.em)}, ${a.beneficio}: ${a.texto}`).join("\n") + `\n` +
       // F633 · a IA consulta a ficha antes de encaminhar (pedido do Paulo de 17.11.2026)
       `Pergunta sobre o processo, o benefício, pagamento ou valor liberado: confira esses andamentos e as mensagens do escritório na conversa. ` +
-      `Se responderem, informe o fato em uma frase, com a data, como está escrito, sem interpretar, sem parecer, sem valor e sem prazo, e use acao "responder". ` +
-      `Se não responderem, use acao "equipe", sem afirmar nem negar o que a pessoa disse.\n` : "") +
+      // F636 · linguagem simples (caso do dia 17.11.2026: a IA copiou a certidão do e-SAJ e o cliente perguntou "o que seria isso")
+      `Se responderem, escreva como a equipe escreve, em linguagem simples, de quem não conhece processo, em um parágrafo curto que responda o que a pessoa quer saber: ` +
+      `(1) se o benefício já foi implantado (está ativo ou começou a ser pago); (2) se houve decisão (sentença, acordo homologado, acórdão, concessão ou indeferimento) e em que data; ` +
+      `(3) a data do último andamento que importa; (4) o que se espera agora e de quem (o INSS, a Justiça ou o escritório). ` +
+      `Exemplo do tom: "Consultei o processo e o acordo foi homologado pelo juiz em 08/10/2026. Desde então ele aguarda o INSS implantar o benefício; o ofício com essa ordem foi enviado em 13/10/2026." ` +
+      `Nunca copie o texto do portal nem use o nome técnico do ato (certidão, juntada, conclusos, expedição, contagem de prazo, ato ordinatório): traduza o que ele significa para a pessoa. ` +
+      `Ato de rotina (certidão, juntada, intimação, publicação, conclusão ao juiz) não é o fato a contar: conte a última decisão ou o último fato decisivo e diga depois, se ajudar, que o processo segue em andamento. ` +
+      `Benefício implantado só se o andamento disser concessão, implantação, benefício ativo ou pagamento; sem isso, diga que ainda não consta como implantado. ` +
+      `Previsão: se a pessoa perguntar quando sai ou quanto tempo falta, use somente os tempos medidos do escritório abaixo, sempre com "em média" ou "costuma levar", nunca como promessa; ` +
+      `quando a etapa não tiver medição ali, diga que não há como prever e que o escritório acompanha e avisa assim que houver novidade. ` +
+      `Tempos medidos: ${TEMPOS_MEDIDOS} ` +
+      `Sem parecer, sem chance de ganhar e sem valor. Use acao "responder". Se a pessoa pedir explicação que vai além disso, responda o que os andamentos permitem e use acao "equipe".\n` +
+      `Se os andamentos não responderem, use acao "equipe", sem afirmar nem negar o que a pessoa disse.\n` : "") +
     retomada(x.mensagens) +
     (x.pagamento?.trim() ? `Dados de pagamento do escritório (somente para o cliente que quer pagar o escritório):\n${x.pagamento.trim()}\n` : "") +
     NOME_UMA_VEZ +
@@ -609,11 +620,11 @@ export const TEMPOS_MEDIDOS = `INSS: auxílio por incapacidade por análise docu
   `aproximadamente 1 mês e meio; Turma Recursal, aproximadamente 4 meses até o acórdão. Vara federal (rito comum): da distribuição à sentença, ` +
   `aproximadamente 2 anos e meio. Apelação no TRF3 sem fila conhecida, aproximadamente 7 meses. Mandado de segurança, aproximadamente 3 meses. ` +
   `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual, ação acidentária (TJSP): do ajuizamento à sentença ou ao acordo homologado, cerca de 8 meses (de 3 a 18 meses; metade termina em acordo); no Núcleo 4.0 de Acidentes do Trabalho há processos com mais de 15 meses sem sentença. Apelação, pagamento e RPV na Justiça Estadual: sem medição suficiente, não estime. Outras ações estaduais: não estime.`;
-// F633 · somente o que veio dos portais (a anotação da equipe é interna), os 6 mais recentes, sem números
+// F633 · somente o que veio dos portais (a anotação da equipe é interna), os 12 mais recentes (a rotina do e-SAJ escondia a decisão), sem números
 export function andamentosPublicos(a: { casos?: AndCaso[] } | null) {
   return (a?.casos || []).flatMap((k) => (k.andamentos || []).filter((x) => !ORIGEM_AND[x.origem])
     .map((x) => ({ em: x.em, beneficio: k.beneficio || "caso", texto: mascararMenosDatas(String(x.texto || "")).slice(0, 300) })))
-    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 6);
+    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 12);
 }
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
