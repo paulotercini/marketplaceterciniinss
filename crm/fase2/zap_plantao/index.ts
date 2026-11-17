@@ -501,8 +501,8 @@ export function contexto(x: Contexto) {
       `Pergunta sobre o processo, o benefício, pagamento ou valor liberado: confira esses andamentos e as mensagens do escritório na conversa. ` +
       // F636 · linguagem simples (caso do dia 17.11.2026: a IA copiou a certidão do e-SAJ e o cliente perguntou "o que seria isso")
       `Se responderem, escreva em duas ou três frases curtas, em linguagem simples, de quem não conhece processo: onde o caso está agora e o que se aguarda, e de quem (o INSS, a Justiça ou o escritório). ` +
-      `Exemplo do tom: "O acordo foi aprovado pelo juiz e o INSS já recebeu a ordem para implantar o benefício, o que ainda não ocorreu. O escritório acompanha e avisa assim que for implantado." ` +
-      `No máximo uma data, e só se ajudar; sem cronologia de datas. Nunca copie o texto do portal nem use termo técnico (certidão, juntada, conclusos, ofício, trânsito em julgado, homologação, ato ordinatório): diga o que significa. ` +
+      `Exemplo do tom: "O acordo foi aprovado pelo juiz e, em 13/10/2026, o INSS recebeu a ordem para implantar o benefício, o que ainda não ocorreu. O escritório acompanha e avisa assim que for implantado." ` +
+      `Uma ou duas datas que importam (a da decisão ou do acordo, a do envio ao INSS), sem cronologia completa. Nunca copie o texto do portal nem use termo técnico (certidão, juntada, conclusos, ofício, trânsito em julgado, homologação, ato ordinatório): diga o que significa. ` +
       `Ato de rotina não é o fato a contar: conte a última decisão ou o último fato decisivo. ` +
       `Benefício implantado só se o andamento disser concessão, implantação, benefício ativo ou pagamento; sem isso, diga que ainda não foi implantado. A dúvida que restar fica com a equipe. ` +
       `Previsão: se a pessoa perguntar quando sai ou quanto tempo falta, use somente os tempos medidos do escritório abaixo, sempre com "em média" ou "costuma levar", nunca como promessa; ` +
