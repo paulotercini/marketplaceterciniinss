@@ -216,3 +216,12 @@ test('filaDePedidos: a pausa é esperada antes do pedido seguinte; três 401 seg
   await assert.rejects(f(0, async () => { throw new Error('rede'); }));
   assert.equal((await f(0, async () => ({ status: 200 }))).status, 200);
 });
+
+test('F639: Sem cadastro.txt só quando o portal nada tem', () => {
+  const t = R.textoSemCadastro({ portal: 'cadunico', inexistentes: ['CadÚnico: o CPF não tem família cadastrada'] }, new Date('2026-11-17T16:00:00Z'));
+  assert.match(t, /^SEM CADASTRO - CadUnico\nConsultado em 17\/11\/2026/);
+  assert.match(t, /não tem família/);
+  assert.strictEqual(R.textoSemCadastro({ portal: 'mte', inexistentes: ['x'], baixados: ['a'] }), '');
+  assert.strictEqual(R.textoSemCadastro({ portal: 'mte', inexistentes: ['x'], falhas: ['y'] }), '');
+  assert.strictEqual(R.textoSemCadastro({ portal: 'mte', inexistentes: ['x'], parcial: true }), '');
+});
