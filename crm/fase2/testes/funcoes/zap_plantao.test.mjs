@@ -698,7 +698,12 @@ console.log("formal: ok");
   ];
   assert.equal(m.conversaRecente(msgs), true);
   assert.ok(m.retomada(msgs).includes("sem enumerar os assuntos"), "retomada curta para quem já conversa");
-  assert.equal(m.comAvisoGolpe("Bom dia!", [], !m.conversaRecente(msgs)), "Bom dia!", "sem aviso do golpe");
+  assert.deepEqual(m.enviadosHoje(msgs), [], "a véspera não conta");
+  assert.ok(m.comAvisoGolpe("Bom dia!", m.enviadosHoje(msgs)).includes("golpe"), "primeira resposta do dia leva o aviso");
+  const depois = [...msgs, { direcao: "saida", por_bot: true, texto: "Bom dia!\n\n" + m.AVISO_GOLPE, momento: "2026-11-17T11:01:30Z" },
+    { direcao: "entrada", texto: "Outra coisa", momento: "2026-11-17T11:02:00Z" }];
+  assert.equal(m.comAvisoGolpe("Certo.", m.enviadosHoje(depois)), "Certo.", "uma vez por dia");
+  assert.ok(m.retomada(msgs).includes("ficou em aberto") && m.retomada(msgs).includes("acao \"equipe\""));
   const velha = [{ ...msgs[0], momento: "2026-11-01T15:20:00Z" }, { ...msgs[1], momento: "2026-11-01T15:29:00Z" }, msgs[2]];
   assert.equal(m.conversaRecente(velha), false);
   assert.ok(!m.retomada(velha).includes("sem enumerar"), "16 dias depois volta a abertura normal");
