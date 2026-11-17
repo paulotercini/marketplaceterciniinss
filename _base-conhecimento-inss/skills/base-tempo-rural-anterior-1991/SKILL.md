@@ -110,6 +110,8 @@ Terceiro, autodeclaração tem força probatória, mas precisa de início docume
 
 Quarto, perspectiva de gênero reduz rigor probatório em trabalho rural feminino.
 
+Quinto, na tela PRISMA do processo administrativo, confira o RA e a FF do período rural. Rural anterior a 1991 lançado com RA urbano e FF de empregado faz o sistema computar carência que a lei veda (art. 55, § 2º). O erro favorece o segurado hoje e é risco de revisão pelo INSS amanhã: anotar só na análise interna e contar a carência sem esses meses. Roteiro em `base-siglas-inss`, verbete PRISMA.
+
 ## Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
