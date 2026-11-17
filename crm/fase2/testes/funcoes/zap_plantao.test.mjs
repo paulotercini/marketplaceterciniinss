@@ -689,6 +689,31 @@ console.log("formal: ok");
   assert.equal(m.enviadosAtuais(perto).length, 1);
   console.log("ok retomada");
 }
+{ // F633 · cliente com ficha que conversou ontem: "Bom dia" sem boas-vindas, menu nem aviso do golpe; andamentos dos portais no contexto
+  const m = await import("../../zap_plantao/index.ts");
+  const msgs = [
+    { direcao: "entrada", texto: "Quero agendar", momento: "2026-11-16T15:20:00Z" },
+    { direcao: "saida", por_bot: false, texto: "*Meissa:*\n\nPor nada.", momento: "2026-11-16T15:29:00Z" },
+    { direcao: "entrada", texto: "Bom dia", momento: "2026-11-17T11:01:00Z" },
+  ];
+  assert.equal(m.conversaRecente(msgs), true);
+  assert.ok(m.retomada(msgs).includes("sem enumerar os assuntos"), "retomada curta para quem já conversa");
+  assert.equal(m.comAvisoGolpe("Bom dia!", [], !m.conversaRecente(msgs)), "Bom dia!", "sem aviso do golpe");
+  const velha = [{ ...msgs[0], momento: "2026-11-01T15:20:00Z" }, { ...msgs[1], momento: "2026-11-01T15:29:00Z" }, msgs[2]];
+  assert.equal(m.conversaRecente(velha), false);
+  assert.ok(!m.retomada(velha).includes("sem enumerar"), "16 dias depois volta a abertura normal");
+  assert.equal(m.conversaRecente([msgs[2]]), false, "primeira mensagem de quem escreve recebe o aviso");
+  const and = m.andamentosPublicos({ casos: [{ beneficio: "Aposentadoria", fase: "inss", andamentos: [
+    { em: "2026-11-10T12:00:00Z", origem: "pat", texto: "Benefício concedido em 10.11.2026, NB 1234567890" },
+    { em: "2026-11-12T12:00:00Z", origem: "app", texto: "anotação interna da equipe" },
+  ] }] });
+  assert.equal(and.length, 1, "anotação da equipe não vai à IA do cliente");
+  assert.ok(and[0].texto.includes("10.11.2026") && !and[0].texto.includes("1234567890"), "a data fica, o número sai");
+  const ctx = m.contexto({ mensagens: msgs, advogados: [], andamentos: and });
+  assert.ok(ctx.includes("Benefício concedido em 10.11.2026") && ctx.includes("sem afirmar nem negar"));
+  assert.ok(!m.contexto({ mensagens: msgs, advogados: [] }).includes("Andamentos dos portais"));
+  console.log("ok cliente com ficha no dia seguinte");
+}
 { // F549 · perícia aprovada pelo Ligar: a IA oferece o atendimento de preparação
   const m = await import("../../zap_plantao/index.ts");
   const pericia = { tipo: "perícia médica", data: "14/12/2026", hora: "14:00", local: "APS Teste", profissional: "amanda",
