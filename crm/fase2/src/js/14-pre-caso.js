@@ -297,7 +297,9 @@ async function transcreverAtendimento(){
 }
 async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
   const c = cliId && D.cliPorId.get(cliId); if(!c || !texto) return false;
-  const k = casoId && D.casoPorId.get(casoId);
+  let k = casoId && D.casoPorId.get(casoId);
+  // F643: o pré-caso não mostra andamentos; a anotação vai às do atendimento, presa a ele
+  const pcK = ehPreCaso(k) ? k : null; if(pcK) k = null;
   const nota = resumo || `Transcrição do atendimento ${cab}.`, integral = `${nota}\n\nTranscrição completa ${cab}:\n${texto}`;
   let and = null;
   if(k){   // F543: com caso, o resumo é anotação do caso
@@ -326,7 +328,7 @@ async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
     if(clienteAberto === cliId) repintarFicha();
     return true;
   }
-  const noAtend = !!document.getElementById("atend-nota"), pc = noAtend ? preCasoAberto(c) : null;
+  const noAtend = !!pcK || !!document.getElementById("atend-nota"), pc = pcK ? {id:(pcK.precaso||{}).id||pcK.id} : noAtend ? preCasoAberto(c) : null;
   const n = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto: an ? nota : integral, gravacao:true,
     ...(an ? {anexos:[{id:an.id, nome:an.nome}]} : {}),
     ...(noAtend ? (pc ? {precaso_id:pc.id} : {}) : {origem:"rapida"})};   // fora do atendimento fica "para distribuir" (F404)

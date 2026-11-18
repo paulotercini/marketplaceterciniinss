@@ -128,9 +128,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // F543: escolhido o caso, o resumo é anotação do caso e a transcrição fica presa a ela
   await p.click("#ficha-gravar"); await p.waitForTimeout(200); await escolher(K2); await p.waitForTimeout(200);
   await p.click("#ficha-gravar"); await p.waitForTimeout(700);
-  const andK = T.andamentos.filter(a => a.caso_id === K2).pop() || {};
-  conf("com o caso escolhido, o resumo vira anotação dele e a transcrição se prende a ela", /^Informou que trabalhou na roça/.test(andK.texto || "") && !/Falante/.test(andK.texto)
-    && ultT().andamento_id === andK.id && notas().length === 3);
+  // F643: K2 é pré-caso, que não mostra andamentos: o resumo vai às anotações do atendimento, presas a ele
+  conf("com o pré-caso escolhido, o resumo vira anotação do atendimento dele e a transcrição se prende a ela", notas().length === 4 && ult().precaso_id === "pc_r2"
+    && /^Informou que trabalhou na roça/.test(ult().texto) && !/Falante/.test(ult().texto) && ult().anexos[0].id === ultT().id
+    && !T.andamentos.some(a => a.caso_id === K2));
   conf("a Identificação tem o quadro Transcrições de Atendimentos", await p.evaluate(N => { const q = document.querySelector(".idf-transc"); return !!q && new RegExp(`Transcrições de Atendimentos \\(${N}\\)`).test(q.textContent); }, transc().length));
   await p.click(".idf-transc button"); await p.waitForTimeout(300);
   conf("o Abrir mostra a transcrição inteira", await p.evaluate(() => /Falante 2: Trabalhei/.test((document.querySelector(".transc-txt") || {}).textContent || "")));
