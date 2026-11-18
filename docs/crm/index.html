@@ -24725,8 +24725,8 @@ async function transcreverAtendimento(){
       return d;
     };
     let d;
-    if(g.segs.length === 1) d = await post("", g.segs[0], g.segs[0].type || "audio/webm");
-    else {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
+    // F644: a transcrição e o resumo vão em chamadas separadas; juntos, o atendimento longo passava dos 150 s da função (504)
+    {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
       const textos = []; let seg = 0, fal = 0;
       for(const b of g.segs){
         let x; try{ x = await post(`?resumo=nao&desde=${Math.round(seg)}`, b, b.type || "audio/webm"); }
