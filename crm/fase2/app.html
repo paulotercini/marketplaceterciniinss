@@ -7117,39 +7117,48 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 .rs5-prop{margin-top:6px;padding:8px;border-radius:6px;background:color-mix(in srgb,var(--rs-fase) 8%,transparent);font-size:12px}
 .rs5 textarea{width:100%;min-height:90px;font:inherit;box-sizing:border-box}
 /* F645 · o painel lateral do cliente */
-#pcli{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100vw;z-index:900;overflow-y:auto;background:#F7F6F3;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-6px 0 18px rgba(0,0,0,.08);padding:8px 14px 24px;box-sizing:border-box;font-size:14px;color:#1F2A2E}
-#pcli .pc-topo{display:flex;justify-content:flex-end}
-#pcli .pc-x{background:none;border:0;font-size:22px;line-height:1;cursor:pointer;color:#555;padding:4px 8px}
-#pcli .pc-cx{background:#fff;border:1px solid var(--borda,#E7E6E1);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+#pcli{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;z-index:900;overflow-y:auto;background:#F7F6F3;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-6px 0 18px rgba(0,0,0,.08);padding:8px 14px 24px;box-sizing:border-box;font-size:14px;color:#1F2A2E}
+#pcli .pcl-topo{display:flex;justify-content:flex-end}
+#pcli .pcl-x{background:none;border:0;font-size:22px;line-height:1;cursor:pointer;color:#555;padding:4px 8px}
+#pcli .pcl-cx{background:#fff;border:1px solid var(--borda,#E7E6E1);border-radius:8px;padding:12px 14px;margin-bottom:10px}
 #pcli h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B6B66;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
-#pcli .pc-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-#pcli .pc-nome{background:none;border:0;padding:0;font:inherit;font-size:18px;font-weight:700;text-align:left;cursor:copy;color:inherit}
-#pcli .pc-tags{display:flex;gap:6px;margin-top:6px}
-#pcli .pc-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
-#pcli .pc-lis{background:#E3F1F0;color:#1D5C63}
-#pcli .pc-d{display:grid;grid-template-columns:1fr auto;padding:6px 0;border-top:1px solid #F0EFEB}
-#pcli .pc-d:first-of-type{border-top:0}
-#pcli .pc-r{grid-column:1;font-size:12px;color:#6B6B66}
-#pcli .pc-v{grid-column:1;font-weight:500;overflow-wrap:anywhere}
-#pcli .pc-ic{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;cursor:pointer;font-size:16px;padding:4px}
-#pcli .pc-zap svg{width:18px;height:18px;color:#25D366}
-#pcli .pc-resp{font-size:11px;text-transform:none;letter-spacing:0;background:#2563EB;color:#fff;border-radius:4px;padding:1px 6px}
-#pcli .pc-tt{margin:0 0 6px}
-#pcli .pc-venc{margin:0 0 8px;font-weight:600}
-#pcli .pc-venc.venc{color:#B42318}
-#pcli .pc-dias{display:flex;flex-wrap:wrap;gap:6px}
-#pcli .pc-dias .esp-it{width:auto;border:1px solid var(--borda,#E7E6E1);border-radius:999px;padding:4px 12px;cursor:pointer}
-#pcli .pc-dias .esp-it:hover{background:#EFEEEB}
-@media (min-width:1100px){body.pcli-aberto main.meio{margin-right:400px}}
+#pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
+#pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
+#pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
+#pcli .pcl-lis{background:#E3F1F0;color:#1D5C63}
+#pcli .pcl-dados{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;margin-top:12px;border-top:1px solid #F0EFEB}
+#pcli .pcl-larga{grid-column:1/-1}
+#pcli .pcl-cop{cursor:copy}
+#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444}
+#pcli .pcl-tipo.fatal{background:#B42318;color:#fff;border-color:#B42318}
+#pcli .pcl-mais{margin-left:auto;background:none;border:1px solid var(--borda,#E7E6E1);border-radius:6px;width:26px;height:26px;font-size:16px;cursor:pointer;color:#1D5C63}
+#pcli .pcl-n{margin-left:6px}
+#pcli .pcl-para{width:100%;font:inherit;padding:6px;border:1px solid var(--borda,#E7E6E1);border-radius:6px}
+#pcli .pcl-d{display:grid;grid-template-columns:1fr auto;padding:6px 0;border-top:1px solid #F0EFEB}
+#pcli h3 .pcl-n{font-weight:400}
+#pcli .pcl-r{grid-column:1;font-size:12px;color:#6B6B66}
+#pcli .pcl-v{grid-column:1;font-weight:500;overflow-wrap:anywhere}
+#pcli .pcl-ic{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;cursor:pointer;font-size:16px;padding:4px}
+#pcli .pcl-zap svg{width:18px;height:18px;color:#25D366}
+#pcli .pcl-resp{font-size:11px;text-transform:none;letter-spacing:0;background:#2563EB;color:#fff;border-radius:4px;padding:1px 6px}
+#pcli .pcl-tt{margin:0 0 6px}
+#pcli .pcl-venc{margin:0 0 8px;font-weight:700;font-size:16px}
+#pcli .pcl-venc.venc{color:#B42318}
+#pcli .pcl-dias{display:flex;flex-wrap:wrap;gap:6px}
+#pcli .pcl-dias .esp-it{width:auto;border:1px solid var(--borda,#E7E6E1);border-radius:999px;padding:4px 12px;cursor:pointer}
+#pcli .pcl-dias .esp-it:hover{background:#EFEEEB}
+@media (min-width:1100px){body.pcli-aberto main.meio{margin-right:460px}}
 #pcli .mcal{max-width:none}
-#pcli .pc-dica{font-size:12px;color:#6B6B66;margin:8px 0 0}
-#pcli .pc-fim{display:flex;justify-content:flex-end;margin-top:8px}
+#pcli .mcal-g button{height:32px;aspect-ratio:auto;padding:0}
+#pcli .pcl-dica{font-size:12px;color:#6B6B66;margin:8px 0 0}
+#pcli .pcl-fim{display:flex;justify-content:flex-end;margin-top:8px}
 #pcli .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--borda,#E7E6E1);border-radius:6px}
-#pcli .pc-ult-h{margin-top:14px}
-#pcli .pc-ult{white-space:pre-wrap;max-height:240px;overflow:auto}
-#pcli .pc-ult .ae-cab{display:block;font-size:12px;color:#6B6B66;margin-bottom:4px}
-#pcli .pc-a{display:flex;justify-content:space-between;gap:8px;width:100%;background:none;border:0;border-top:1px solid #F0EFEB;padding:6px 0;font:inherit;text-align:left;cursor:pointer}
-#pcli .pc-a span{font-size:12px;color:#6B6B66;white-space:nowrap}
+#pcli .pcl-ult-h{margin-top:14px}
+#pcli .pcl-ult{white-space:pre-wrap;max-height:240px;overflow:auto}
+#pcli .pcl-ult .ae-cab{display:block;font-size:12px;color:#6B6B66;margin-bottom:4px}
+#pcli .pcl-a{display:flex;justify-content:space-between;gap:8px;width:100%;background:none;border:0;border-top:1px solid #F0EFEB;padding:6px 0;font:inherit;text-align:left;cursor:pointer}
+#pcli .pcl-a span{font-size:12px;color:#6B6B66;white-space:nowrap}
 .cartao.pcli-on{box-shadow:inset 3px 0 0 #1D5C63;background:#EEF5F4}
 .cartao .ag-txt b{cursor:pointer}
 </style>
@@ -12276,42 +12285,57 @@ async function pcliMontar(){
   const atr = k ? (D.atrDoCaso.get(k.id)||[]) : [], resp = (it && it.tc ? [it.tc.colaborador_id] : atr).map(id=>D.colPorId.get(id)).filter(Boolean);
   const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
   const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
-  const dado = (rot, val, extra="") => `<div class="pc-d"><span class="pc-r">${rot}</span><span class="pc-v">${val}</span>${extra}</div>`;
-  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))], ["Próx. segunda", proxSegunda()], ["+7 dias", proxDiaUtil(somaDias(hoje(),7))], ["+30 dias", proxDiaUtil(somaDias(hoje(),30))]];
-  p.innerHTML = `<div class="pc-topo"><button type="button" class="pc-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
-    <section class="pc-cx pc-cab"><div class="pc-nl"><button type="button" class="pc-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
+  const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
+  p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
+    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
       <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
-      <div class="pc-tags">${k && k.especie ? `<span class="pc-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pc-tag pc-lis">${esc(lista)}</span>` : ""}</div></section>
-    <section class="pc-cx"><h3>Dados do cliente</h3>
-      ${dado("CPF", cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
-      ${dado("Senha do Meu INSS", `<span class="pc-senha">••••••••</span>`, `<button type="button" class="pc-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
-      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pc-ic pc-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
+      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
+      <div class="pcl-dados">
+      ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
+      ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
+      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
       ${dado("Parceria", esc(parceriaDe(cli, ks) || "Sem parceria"))}
-      ${dado("Parentesco", `<span class="pc-par">${esc(parentesTexto(cli, []) || "…")}</span>`)}</section>
-    ${it ? `<section class="pc-cx"><h3>Tarefa${resp.length ? `<span class="pc-resp">${esc(resp.map(c=>c.nome.split(" ")[0]).join(", "))}</span>` : ""}</h3>
-      <p class="pc-tt">${esc(it.selo ? it.selo + (k ? " · " + tituloCaso(k) : "") : k ? tituloCaso(k) : "")}${it.fatal ? " · prazo fatal" : ""}</p>
-      ${it.data ? `<p class="pc-venc${venc ? " venc" : ""}">${venc ? "Venceu em" : "Vence em"} ${esc(fmtBarra(it.data))}</p>` : `<p class="pc-venc">Sem data</p>`}
-      ${mov ? `<div class="pc-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}
-        <p class="pc-dica">Um clique em qualquer dia reagenda.</p>` : `<p class="ae-aviso">Prazo fatal, perícia e exigência não mudam de data aqui: o registro é feito no caso.</p>`}
-      <div class="pc-fim"><button type="button" class="btn-mini" data-pc="concluir">Concluir tarefa</button></div></section>` : ""}
-    <section class="pc-cx"><h3>Anexos <span class="pc-n"></span></h3><div class="pc-anx">Carregando…</div></section>
-    ${k ? `<section class="pc-cx"><h3>Anotação</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
-      <div class="pc-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
-      <h3 class="pc-ult-h">Última anotação</h3><div class="pc-ult">Carregando…</div>
+      <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
+    ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
+      <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
+      ${mov ? `<div class="pcl-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    <section class="pcl-cx"><h3>Anexos <span class="pcl-n"></span><button type="button" class="pcl-mais" data-pc="anexar" aria-label="Adicionar anexo" title="Adicionar anexo">+</button></h3>
+      <input type="file" class="pcl-arq" hidden><div class="pcl-anx">Carregando…</div></section>
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><select class="pcl-para" aria-label="Atribuir a">${atr[0] ? "" : `<option value="">Sem responsável</option>`}${equipeAtiva().map(c=>`<option value="${c.id}"${c.id===atr[0] ? " selected" : ""}>${esc(c.nome)}</option>`).join("")}</select></section>
+    <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
+      <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
+      <div class="pcl-ult">Carregando…</div>
       <button type="button" class="ae-mais" data-pc="ficha">Ver anotações anteriores</button></section>` : ""}`;
   Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
   p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
   const cid = cli.id;
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
-    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pc-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
+    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
   api(`/rest/v1/anexos?select=id,nome,tipo,caminho,origem,texto,criado_em&cliente_id=eq.${cid}&order=criado_em.desc&limit=30`).catch(()=>[]).then(r=>{
-    const box = _pcli && _pcli.cliId===cid && p.querySelector(".pc-anx"); if(!box) return;
-    p._anx = r||[]; p.querySelector(".pc-n").textContent = p._anx.length || "";
-    box.innerHTML = p._anx.length ? p._anx.map(a=>`<button type="button" class="pc-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.";
+    const box = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-anx"); if(!box) return;
+    p._anx = r||[]; p.querySelector(".pcl-n").textContent = p._anx.length || "";
+    pcliAnexos(p, false); return;
+    box.innerHTML = p._anx.length ? p._anx.map(a=>`<button type="button" class="pcl-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.";
   });
+  const sel = p.querySelector(".pcl-para");
+  if(sel) sel.onchange = async ()=>{ const de = p._atual, para = sel.value; if(!para || para===de) return;
+    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
+    repintaExt(k); pcliMontar(); avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); };
+  const inp = p.querySelector(".pcl-arq");
+  inp.onchange = async ()=>{ const arq = inp.files && inp.files[0]; inp.value = ""; if(!arq) return;
+    if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
+    const caminho = `${cid}/${new Date().toISOString().replace(/[:.]/g,"-").toLowerCase()}-${nomeSeguro(arq.name)}`;
+    aviso("Enviando o arquivo…", false);
+    try{ await subirArquivo(caminho, arq);
+      await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k?k.id:null, cliente_id:cid, autor_id:eu.id, nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+      if(k) notaNoCaso(k, `📎 Anexou: ${arq.name}`).catch(()=>{});
+      aviso("📎 Arquivo anexado"); pcliMontar();
+    }catch(e){ aviso("Não consegui anexar: "+String(e.message||e).slice(0,80)); } };
   if(_pcli.casos) ultAnotDe(_pcli.casos).then(a=>{
-    const t = _pcli && _pcli.cliId===cid && p.querySelector(".pc-ult"); if(!t) return;
+    const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
     const au = a && a.autor_id && D.colPorId.get(a.autor_id);
     t.innerHTML = a ? `<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc((a.texto||"").slice(0,1000))}` : "Sem anotação da equipe neste caso.";
   });
@@ -12321,18 +12345,24 @@ async function pcliAcao(p, b, cli){
   if(a==="fechar") return fecharPainelCli();
   if(a==="nome") return copiar(cli.nome, "Nome copiado");
   if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
-  if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pc-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
+  if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
     if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
   if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
+  if(a==="anexar") return p.querySelector(".pcl-arq").click();
+  if(a==="anx-todos") return pcliAnexos(p, true);
   if(a==="anexo") return abrirAnexo(b.dataset.id, p._anx);
   if(a==="dia") return pcliReagendar(p, b.dataset.data);
-  if(a==="concluir"){ await extConcluir(p); return setTimeout(pcliMontar, 50); }
   if(a==="anotar"){
     const ta = p.querySelector(".ae-nota"), txt = ta.value.trim(), k = p._it && p._it.k; if(!txt || !k) return aviso("Escreva a anotação");
     let undo; try{ undo = await notaNoCaso(k, txt); }catch(e){ return aviso("Não gravou: tente de novo"); }
     ta.value = ""; repintaExt(k); pcliMontar();
     avisoDesfazer("Anotado", async ()=>{ await undo(); repintaExt(k); pcliMontar(); aviso("Anotação desfeita", false); }, 30000);
   }
+}
+function pcliAnexos(p, todos){
+  const box = p.querySelector(".pcl-anx"), l = p._anx||[], v = todos ? l : l.slice(0,3);
+  box.innerHTML = (l.length ? v.map(a=>`<button type="button" class="pcl-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.")
+    + (l.length>3 && !todos ? `<button type="button" class="ae-mais" data-pc="anx-todos">Ver mais (${l.length-3})</button>` : "");
 }
 async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });
