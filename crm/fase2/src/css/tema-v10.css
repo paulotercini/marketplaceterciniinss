@@ -4110,6 +4110,8 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 #pcli .pcl-cx{background:#fff;border:1px solid var(--borda,#E7E6E1);border-radius:8px;padding:12px 14px;margin-bottom:10px}
 #pcli h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B6B66;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
 #pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
+#pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
 #pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
 #pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
 #pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}

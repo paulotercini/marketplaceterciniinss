@@ -1239,7 +1239,7 @@ async function pcliMontar(){
   const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
-    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
+    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
       <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
       <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
       <div class="pcl-dados">
@@ -1260,6 +1260,9 @@ async function pcliMontar(){
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
   p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
   const cid = cli.id;
+  // F661 · a foto do WhatsApp ao lado do nome, como na ficha
+  if(cli.foto_url) assinarFotosZap([cli]).then(()=>{ const u = zapFotos.get(cli.foto_url), av = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-av");
+    if(u && av) av.outerHTML = `<img class="avatar foto-zap pcl-av" src="${esc(u)}" alt="foto de ${esc(cli.nome)} no WhatsApp" title="clique para ampliar" onclick="verFotoGrande(this.src)">`; });
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
     const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
 
