@@ -322,6 +322,9 @@ async function desfazerAgora(){
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
 async function api(caminho, opcoes={}, tentativa=0){
+  // F660 · a versão de leitura não grava nada (o banco também recusa, pelas políticas so_leitura_*)
+  if(opcoes.method && opcoes.method!=="GET" && typeof soLeitura==="function" && soLeitura()){
+    aviso("Versão de leitura: anotar e alterar prazos não estão disponíveis."); throw new Error("versão de leitura"); }
   if(opcoes.method && opcoes.method!=="GET" && tentativa===0) escritas++;
   const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + caminho, {
     ...opcoes,

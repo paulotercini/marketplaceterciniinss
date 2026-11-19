@@ -1131,7 +1131,11 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "contribuicoes", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente","contatos"],
 };
-const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
+// F660 · versão de leitura do colaborador: só as listas fixas, sem anotar nem mexer em prazo (o banco também recusa)
+const soLeitura = () => !!eu && ((eu.papel==="colaborador" && eu.so_leitura!==false) || (souAdmin() && ler("crm_ver_como")==="colab"));
+const LISTAS_LEITURA = ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:marcos"];
+const visaoInicialColab = () => soLeitura() ? "fase:escritorio" : soIdentificacao() ? "agendaq" : "meudia";
+const listasDoColab = () => soLeitura() ? LISTAS_LEITURA : soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 // F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
 const podeGravarCaso = () => meuNivel()>=3;   // F396 · o nível 2 é cadastro e dossiê; a anotação passou ao 3
@@ -1140,7 +1144,7 @@ const podeCadastrar = () => meuNivel()>=2;     // F396 · criar o cliente e muda
 function semCadastro(){ if(podeCadastrar()) return false; aviso("Criar o cliente e mudar o cadastro é do nível 2"); return true; }
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = visaoInicialColab();   // F253 · as telas do administrador abrem em qualquer nível
   montarSidebar(); render();
 }
 let segAberto = null;
