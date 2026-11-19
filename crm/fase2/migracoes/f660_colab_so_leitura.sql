@@ -1,4 +1,4 @@
--- F660 · versão de leitura: o colaborador (papel 'colaborador') lê, mas não anota nem altera prazos, casos e fichas.
+-- F660 · versão de leitura: o colaborador (papel 'colaborador') lê, mas não anota nem altera prazos (tudo isso ainda é escrito no Microsoft To Do).
 -- Volta a escrever com: update colaboradores set so_leitura = false where id = '<id>';
 alter table public.colaboradores add column if not exists so_leitura boolean not null default true;
 
@@ -10,8 +10,7 @@ $$;
 do $$
 declare t text;
 begin
-  foreach t in array array['andamentos','andamento_tarefas','tarefas','lembretes','casos','clientes','anexos',
-                           'atribuicoes','eventos','pagamentos','aposentadorias','meu_dia'] loop
+  foreach t in array array['andamentos','andamento_tarefas','tarefas','lembretes','meu_dia'] loop
     execute format('drop policy if exists so_leitura_ins on public.%I', t);
     execute format('drop policy if exists so_leitura_upd on public.%I', t);
     execute format('drop policy if exists so_leitura_del on public.%I', t);
