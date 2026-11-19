@@ -64,6 +64,8 @@ insert into r select 'p10 a resposta vai ao cliente', pg_temp.respostas((select 
 insert into r select 'p11 o Dr. Marcos recebe a menção',
   exists (select 1 from mencoes where para_id = 'aaaaaaaa-0000-0000-0000-000000000002' and conversa_id = (select id from v)
             and texto like '%aguarda resposta no WhatsApp: quer saber do processo · responsável: Marcos');
+insert into r select 'p12b F662: a conversa passa ao responsável', (select atendente_id from zap_conversas where id = (select id from v)) is not null;
+update zap_conversas set atendente_id = null where id = (select id from v);
 insert into r select 'p12 nota interna para a equipe',
   exists (select 1 from zap_mensagens where conversa_id = (select id from v) and direcao = 'interna' and texto like 'Assistente virtual: respondeu e avisou a equipe (responsável: Marcos)%');
 
@@ -218,6 +220,7 @@ insert into r select 'p40 15 respostas da IA em 24 h devolvem ao plantão',
   pg_temp.ia(pg_temp.entra((select id from n2), 'mais uma')) = 'plantao:espera';
 select zap_plantao_sessao((select id from n1), '{"id":"sesn_teste","em":"2026-10-25T10:00:00Z","ate":"2026-10-25T10:05:00Z"}');
 select zap_plantao_ma_guardar('agent_teste', 'env_teste', 'v1');
+update zap_conversas set atendente_id = null where id = (select id from n1);
 create temp table n1c as select pg_temp.entra((select id from n1), 'obrigada') id;
 insert into r select 'p41 a sessão e o agente do Managed Agents voltam à função',
   (select j->'sessao'->>'id' = 'sesn_teste' and j->'ma'->>'agente' = 'agent_teste' and j->'ma'->>'versao' = 'v1'
@@ -226,7 +229,7 @@ select zap_plantao_ma_guardar('', '', '');
 update config_app set valor = '' where chave = 'zap_ia_txt_plantao';
 update config_app set valor = '0' where chave = 'zap_plantao_aberta_dias';
 -- F276 · a conversa marcada no ⋯ conversa com a IA na hora, com a equipe nela e o modo interativo desligado
-update zap_conversas set ia_conversa = true where id = (select id from v);
+update zap_conversas set ia_conversa = true, atendente_id = null where id = (select id from v);
 insert into r select 'p42 a IA conversa com este número', pg_temp.ia(pg_temp.entra((select id from v), 'quero marcar')) = 'plantao:pedida';
 update zap_conversas set ia_conversa = false, plantao = '{}' where id = (select id from v);
 
