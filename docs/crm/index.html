@@ -14697,7 +14697,7 @@ const LISTAS_POR_CARGO = {
 // F660 · versão de leitura do colaborador: só as listas fixas, sem anotar nem mexer em prazo (o banco também recusa)
 const soLeitura = () => !!eu && eu.papel==="colaborador" && eu.so_leitura===true;
 const LISTAS_FIXAS = ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:marcos"];
-const visaoInicialColab = () => listasFixasLigadas() ? "fase:escritorio" : soIdentificacao() ? "agendaq" : "meudia";
+const visaoInicialColab = () => soIdentificacao() ? "agendaq" : soLeitura() ? "fase:escritorio" : "meudia";
 // F660 · na leitura, o que o colaborador já tinha continua (WhatsApp, Agenda), sem Meu Dia, Importante e Planejado, e com as listas fixas
 const listasFixasLigadas = () => soLeitura() || meuNivel()===2;   // F660b · o nível 2 (e o admin que o olha) também vê as listas fixas
 const listasDoColab = () => listasFixasLigadas() ? ["mencoes","agendaq","whatsapp","clientes",...LISTAS_FIXAS, ...(podeCadastrar()?["novocliente"]:[])] : _listasDoColab();   // F660b · lista fechada pelo Paulo (19.11.2026)

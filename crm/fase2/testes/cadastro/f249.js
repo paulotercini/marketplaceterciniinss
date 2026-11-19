@@ -175,7 +175,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(400);
   conf("no nível 2, data-nivel=2 e a tela inicial é a Agenda", (await nivel()) === "2" && await p.evaluate(() => visao) === "agendaq");
   const itens2 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`no nível 2 a barra mostra a do nível 1 (${itens2.join(", ")})`, ["agendaq,clientes,mencoes,novocliente,whatsapp", "agendaq,clientes,mencoes,whatsapp"].includes(itens2.slice().sort().join()));
+  // F660b · o nível 2 mostra também as listas fixas (pedido do Paulo, 19.11.2026)
+  const fixas2 = "fase:aposentadoria_futura,fase:conselho,fase:escritorio,fase:inss,fase:judicial,fase:marcos,fase:peticao_inicial";
+  conf(`no nível 2 a barra mostra Menções, Agenda, WhatsApp, Clientes e as listas fixas (${itens2.join(", ")})`, [`agendaq,clientes,${fixas2},mencoes,novocliente,whatsapp`, `agendaq,clientes,${fixas2},mencoes,whatsapp`].includes(itens2.slice().sort().join()));
   conf("no nível 2 o botão do Novo Cliente aparece", await vis("#btn-v10-cli"));
   await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
   conf("o Novo Cliente abre no nível 2", await p.evaluate(() => visao) === "novocliente");
