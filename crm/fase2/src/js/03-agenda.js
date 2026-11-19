@@ -1250,7 +1250,7 @@ async function pcliMontar(){
       <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
-      ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+      ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}<button type="button" class="esp-it pcl-outra" data-pc="outra" title="Escolher outra data">Outra</button></div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
     ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}" title="${esc(c.nome.split(" ")[0])}" aria-label="${esc(c.nome.split(" ")[0])}" style="--av:${c.cor}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.inicial||c.nome[0])}</button>`).join("")}</div></section>
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="2" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
@@ -1288,6 +1288,7 @@ async function pcliAcao(p, b, cli){
   if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
     if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
   if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
+  if(a==="outra") return p.classList.toggle("pcl-cal-on"); // F664 · no celular o calendário só abre pelo Outra
   if(a==="dia") return pcliReagendar(p, b.dataset.data);
   if(a==="para"){ const k = p._it && p._it.k, de = p._atual, para = b.dataset.id; if(!k || para===de) return;
     const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
