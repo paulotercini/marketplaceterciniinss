@@ -1932,9 +1932,11 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]),
 html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),
 html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]),
-html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]),
+html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]):not([data-v^="fase:"]),
 :is(html[data-nivel="0"],html[data-nivel="1"],html[data-nivel="2"]) :is(.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
-.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"]){display:none!important}
+/* F660b · o nível 2 vê as listas fixas (Escritório, INSS, ... Marcos) */
+:is(html[data-nivel="0"],html[data-nivel="1"]) .grupo:has(#grupo-fases){display:none!important}
 html[data-nivel="0"] .barra-cel [data-cel="whatsapp"]{display:none!important}
 /* F355 · o nível 1 é o WhatsApp: conversa, agenda e Identificação; o que grava no caso fica para o nível 2. Na barra do celular, o WhatsApp no lugar do Buscar */
 html[data-nivel="1"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="1"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
