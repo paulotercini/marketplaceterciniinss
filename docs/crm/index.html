@@ -7105,6 +7105,8 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 #pcli .pcl-cx{background:#fff;border:1px solid var(--borda,#E7E6E1);border-radius:8px;padding:12px 14px;margin-bottom:10px}
 #pcli h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B6B66;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
 #pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
+#pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
 #pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
 #pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
 #pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
@@ -12273,7 +12275,7 @@ async function pcliMontar(){
   const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
-    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
+    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
       <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
       <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
       <div class="pcl-dados">
@@ -12296,6 +12298,9 @@ async function pcliMontar(){
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
   p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
   const cid = cli.id;
+  // F661 · a foto do WhatsApp ao lado do nome, como na ficha
+  if(cli.foto_url) assinarFotosZap([cli]).then(()=>{ const u = zapFotos.get(cli.foto_url), av = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-av");
+    if(u && av) av.outerHTML = `<img class="avatar foto-zap pcl-av" src="${esc(u)}" alt="foto de ${esc(cli.nome)} no WhatsApp" title="clique para ampliar" onclick="verFotoGrande(this.src)">`; });
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
     const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
   api(`/rest/v1/anexos?select=id,nome,tipo,caminho,origem,texto,criado_em&cliente_id=eq.${cid}&order=criado_em.desc&limit=30`).catch(()=>[]).then(r=>{
