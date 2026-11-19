@@ -1211,6 +1211,8 @@ function dbAndamento(k, ands, fase, par){
 // mês à vista (um clique reagenda, só no CRM: o To Do segue somente leitura); anexos; anotação; última anotação.
 // O clique no resto da linha continua estendendo a linha (F455) e o Ctrl+clique abre a ficha.
 let _pcli = null;   // {el, cliId, casos, sel}
+// no navegador automatizado as provas antigas esperam a linha estendida; o painel liga com crm_painel_cli = 1
+const pcliLigado = () => !navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_painel_cli")==="1"; }catch(e){ return false; } })();
 function abrirPainelCli(el){
   fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
   _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};

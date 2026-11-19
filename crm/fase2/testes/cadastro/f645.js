@@ -37,6 +37,7 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
       localStorage.setItem("crm_sessao", JSON.stringify(ss));
       localStorage.setItem("crm_tema", "v10");
       localStorage.setItem("crm_ext_linha", "1");
+      localStorage.setItem("crm_painel_cli", "1");
     }, [SUPA, SESSAO]);
     await ctx.route(SUPA + "/**", rota => {
       const q = rota.request(), u = q.url();
