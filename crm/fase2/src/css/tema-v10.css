@@ -4147,6 +4147,8 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 #pcli .pcl-dias .esp-it:hover{background:#EFEEEB}
 @media (min-width:1100px){body.pcli-aberto main.meio{margin-right:460px}}
 #pcli .mcal{max-width:none}
+#pcli .pcl-outra{display:none}
+@media (max-width:760px){#pcli .pcl-outra{display:inline-block}#pcli:not(.pcl-cal-on) .mcal{display:none}#pcli.pcl-cal-on .pcl-outra{background:var(--pr,#0F5C55);color:#fff}}
 #pcli .mcal-g button{height:32px;aspect-ratio:auto;padding:0}
 #pcli .pcl-dica{font-size:12px;color:#6B6B66;margin:8px 0 0}
 #pcli .pcl-fim{display:flex;justify-content:flex-end;margin-top:8px}
