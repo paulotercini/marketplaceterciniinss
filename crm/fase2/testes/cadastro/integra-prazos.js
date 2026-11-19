@@ -45,7 +45,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await new Promise(r => s.on("listening", r));
   const nav = await chromium.launch();
   const ctx = await nav.newContext({ viewport: { width: 1440, height: 1000 } });
-  await ctx.addInitScript(([u, ss]) => {
+  await ctx.addInitScript(([u, ss]) => { window.PZ_TODOS_TIPOS = true;
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss)); localStorage.setItem("crm_tema", "v10");
   }, [SUPA, SESSAO]);
