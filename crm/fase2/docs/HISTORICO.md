@@ -1045,3 +1045,4 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 ## F660c (19.11.2026)
 Nível 2 do colaborador: painel lateral direito mostra as anotações sem o campo de escrever nem o Anotar; a gravação em anotações e prazos é recusada no api(), como no somente leitura (F660).
 F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (leitura).
+- **F661** (19.11.2026): a IA do WhatsApp consulta o histórico da agenda (últimos 30 dias, pelo nome da ficha) e não oferece atendimento de preparação para a perícia a quem já foi atendido (zap_plantao, `atendidoHaPouco`).
