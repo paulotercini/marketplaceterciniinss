@@ -318,7 +318,6 @@ function renderBase(){
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
   pintarOpcLista();
-  mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){

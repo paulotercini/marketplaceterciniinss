@@ -203,52 +203,6 @@ async function reordenarListas(origem, destino){
   aviso("Ordem das listas guardada");
 }
 
-// ── ＋ Adicionar, fixo no pé da lista ─────────────────────────────────────
-// No To Do é assim que quase toda tarefa nasce: o campo está sempre ali, você
-// digita e dá Enter. Aqui ele cria o cliente e o primeiro caso já na lista
-// aberta. Aceita o formato do To Do — "Nome #CPF" — porque a equipe já digita
-// assim há anos.
-function mostrarAddRodape(){
-  const el=document.getElementById("add-rodape");
-  if(!el) return;
-  const mostra = !buscaTxt && visao.startsWith("fase:");
-  el.style.display = mostra ? "" : "none";
-  if(mostra){
-    const f=visao.slice(5), rot=(FASES.find(x=>x[0]===f)||[])[1]||"";
-    document.getElementById("add-nome").placeholder =
-      `Adicionar em ${rot.replace(/^\S+\s/,"")} (nome, ou Nome #CPF)`;
-  }
-}
-async function addNaLista(){
-  const inp=document.getElementById("add-nome"), bi=document.getElementById("add-ben");
-  const bruto=(inp.value||"").trim();
-  if(!bruto) return inp.focus();
-  const fase=visao.slice(5);
-  // "Maria dos Santos #12345678900" -> nome + CPF, como as tarefas do To Do
-  const m=bruto.match(/^(.*?)\s*#\s*([\d.\-]+)\s*$/);
-  const nome=(m?m[1]:bruto).trim(), cpf=m?digitosCpf(m[2]):null;
-  if(!nome) return aviso("Falta o nome");
-  if(cpf && cpf.length!==11) return aviso("O CPF tem 11 dígitos");
-  if(cpf){
-    let ja=D.clientes.find(x=>digitosCpf(x.cpf)===cpf);
-    if(!ja){ const achados=await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
-             if(achados&&achados.length){ ja=achados[0]; D.clientes.push(ja); D.cliPorId.set(ja.id,ja); } }
-    if(ja) return avisoCpfRepetido(ja, nome);
-  }
-  const beneficio=(bi.value||"").trim() || null;
-  const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({nome, cpf})});
-  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:cli.id, titulo:nome, beneficio, fase})});
-  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})}).catch(()=>{});
-  if(beneficio) await aplicarChecklistCaso(caso, true).catch(()=>{});
-  inp.value=""; bi.value="";
-  await carregar(); montarSidebar(); render();
-  await avisarCasoNovo(caso.id, cli.id, "＋ Adicionar, no pé da lista");
-  inp.focus();                                  // pronto para o próximo, sem tirar a mão
-  aviso(`✔ ${nome} entrou na lista`);
-}
 
 function renderParcerias(){
   tituloLista("🤝 Parcerias");
