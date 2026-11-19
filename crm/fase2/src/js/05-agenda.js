@@ -1137,7 +1137,7 @@ const LISTAS_FIXAS = ["fase:escritorio","fase:inss","fase:conselho","fase:judici
 const visaoInicialColab = () => listasFixasLigadas() ? "fase:escritorio" : soIdentificacao() ? "agendaq" : "meudia";
 // F660 · na leitura, o que o colaborador já tinha continua (WhatsApp, Agenda), sem Meu Dia, Importante e Planejado, e com as listas fixas
 const listasFixasLigadas = () => soLeitura() || meuNivel()===2;   // F660b · o nível 2 (e o admin que o olha) também vê as listas fixas
-const listasDoColab = () => listasFixasLigadas() ? [...new Set([..._listasDoColab().filter(x=>!["meudia","importante","planejado","fase:prazo"].includes(x)), ...LISTAS_FIXAS])] : _listasDoColab();
+const listasDoColab = () => listasFixasLigadas() ? ["mencoes","agendaq","whatsapp","clientes",...LISTAS_FIXAS, ...(podeCadastrar()?["novocliente"]:[])] : _listasDoColab();   // F660b · lista fechada pelo Paulo (19.11.2026)
 const _listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 // F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
