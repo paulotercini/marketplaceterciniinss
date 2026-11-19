@@ -1038,3 +1038,6 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 
 ## F648 · Painel lateral sem o quadro de anexos (19.11.2026) "Ver anotações anteriores" abre as demais anotações no próprio painel.
 - Pedido do Paulo: o quadro Anexos saiu do painel lateral do cliente, e a Atribuição virou botões com o nome de cada colaborador (um clique atribui, com Desfazer).
+
+## F660b · Listas fixas no nível 2 (19.11.2026)
+- O nível 2 da transição escondia o grupo das listas (CSS F249). Agora o nível 2, e o admin que o olha pelo "ver como nível", veem Escritório, INSS, Conselho, Judicial, Petições Iniciais, Aposentadorias Futuras e Marcos (`listasFixasLigadas`).
