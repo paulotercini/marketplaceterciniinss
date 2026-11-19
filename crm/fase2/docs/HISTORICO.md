@@ -1033,4 +1033,4 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 - Pedido do Paulo: o campo "Adicionar em <lista>", o benefício opcional e o botão Adicionar saíram de todas as listas, no computador e no celular. Saíram também o atalho N que focava o campo e o Enter que criava o cliente. Flutuantes e barra de baixo do celular continuam.
 
 ## F648 · Painel lateral sem o quadro de anexos (19.11.2026)
-- Pedido do Paulo: o quadro Anexos saiu do painel lateral do cliente.
+- Pedido do Paulo: o quadro Anexos saiu do painel lateral do cliente, e a Atribuição virou botões com o nome de cada colaborador (um clique atribui, com Desfazer).

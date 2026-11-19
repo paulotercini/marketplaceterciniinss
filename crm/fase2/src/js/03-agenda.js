@@ -1251,7 +1251,7 @@ async function pcliMontar(){
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
       ${mov ? `<div class="pcl-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
-    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><select class="pcl-para" aria-label="Atribuir a">${atr[0] ? "" : `<option value="">Sem responsável</option>`}${equipeAtiva().map(c=>`<option value="${c.id}"${c.id===atr[0] ? " selected" : ""}>${esc(c.nome)}</option>`).join("")}</select></section>
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().map(c=>`<button type="button" data-pc="para" data-id="${c.id}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.nome.split(" ")[0])}</button>`).join("")}</div></section>
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
       <div class="pcl-ult">Carregando…</div>
@@ -1263,10 +1263,6 @@ async function pcliMontar(){
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
     const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
 
-  const sel = p.querySelector(".pcl-para");
-  if(sel) sel.onchange = async ()=>{ const de = p._atual, para = sel.value; if(!para || para===de) return;
-    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
-    repintaExt(k); pcliMontar(); avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); };
   if(_pcli.casos) ultAnotDe(_pcli.casos).then(a=>{
     const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
     const au = a && a.autor_id && D.colPorId.get(a.autor_id);
@@ -1282,6 +1278,9 @@ async function pcliAcao(p, b, cli){
     if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
   if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
   if(a==="dia") return pcliReagendar(p, b.dataset.data);
+  if(a==="para"){ const k = p._it && p._it.k, de = p._atual, para = b.dataset.id; if(!k || para===de) return;
+    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
+    repintaExt(k); pcliMontar(); return avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); }
   if(a==="anotar"){
     const ta = p.querySelector(".ae-nota"), txt = ta.value.trim(), k = p._it && p._it.k; if(!txt || !k) return aviso("Escreva a anotação");
     let undo; try{ undo = await notaNoCaso(k, txt); }catch(e){ return aviso("Não gravou: tente de novo"); }
