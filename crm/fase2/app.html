@@ -14730,7 +14730,7 @@ const LISTAS_POR_CARGO = {
   recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente","contatos"],
 };
 // F660 · versão de leitura do colaborador: só as listas fixas, sem anotar nem mexer em prazo (o banco também recusa)
-const soLeitura = () => !!eu && ((eu.papel==="colaborador" && eu.so_leitura!==false) || (souAdmin() && ler("crm_ver_como")==="colab"));
+const soLeitura = () => !!eu && ((eu.papel==="colaborador" && eu.so_leitura===true) || (souAdmin() && ler("crm_ver_como")==="colab"));
 const LISTAS_FIXAS = ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:marcos"];
 const visaoInicialColab = () => soLeitura() ? "fase:escritorio" : soIdentificacao() ? "agendaq" : "meudia";
 // F660 · na leitura, o que o colaborador já tinha continua (WhatsApp, Agenda), sem Meu Dia, Importante e Planejado, e com as listas fixas
