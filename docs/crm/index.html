@@ -12282,7 +12282,7 @@ async function pcliMontar(){
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
       <div class="pcl-ult">Carregando…</div>
-      <button type="button" class="ae-mais" data-pc="ficha">Ver anotações anteriores</button></section>` : ""}`;
+      <button type="button" class="ae-mais" data-pc="ant">Ver anotações anteriores</button><div class="pcl-ant"></div></section>` : ""}`;
   Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
   p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
@@ -12300,6 +12300,13 @@ async function pcliAcao(p, b, cli){
   const a = b.dataset.pc;
   if(a==="fechar") return fecharPainelCli();
   if(a==="nome") return copiar(cli.nome, "Nome copiado");
+  if(a==="ant"){ const box = p.querySelector(".pcl-ant"); if(box.innerHTML){ box.innerHTML = ""; b.textContent = "Ver anotações anteriores"; return; }
+    b.textContent = "Ocultar anotações anteriores"; box.textContent = "Carregando…";
+    const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=1&limit=50`).catch(()=>null);
+    if(!box.isConnected) return;
+    box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>{ const au = x.autor_id && D.colPorId.get(x.autor_id);
+      return `<div class="pcl-ult"><span class="ae-cab">${esc(fmtBarra(dataSP(x.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(x.texto||"")}</div>`; }).join("") : "Sem anotações anteriores.";
+    return; }
   if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
   if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
     if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }

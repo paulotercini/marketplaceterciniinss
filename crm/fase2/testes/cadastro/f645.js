@@ -84,6 +84,8 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   conf("Anotar grava no caso", posts.some(([u, b]) => u.includes("/andamentos") && b.includes("pelo painel")));
   conf("sem o quadro de anexos", await p.locator("#pcli .pcl-anx").count() === 0);
   conf("Atribuição em botões", await p.locator('#pcli .pcl-seg [data-pc="para"]').count() >= 2 && await p.locator("#pcli .pcl-seg .on").count() === 1);
+  await p.click('#pcli [data-pc="ant"]'); await p.waitForTimeout(300);
+  conf("Anotações anteriores no próprio painel", await p.locator("#pcli").isVisible() && await p.locator("#pcli .pcl-ant").textContent().then(t => t.length > 0 && !t.includes("Carregando")));
   conf("o Prazo diz só o tipo", (await p.locator("#pcli .pcl-tipo").textContent()) === "Retorno");
   await p.evaluate(() => document.getElementById("pcli").scrollTop = 0);
   await p.screenshot({ path: "f645-painel.png" });
