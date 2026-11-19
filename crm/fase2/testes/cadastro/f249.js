@@ -183,7 +183,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o Novo Cliente abre no nível 2", await p.evaluate(() => visao) === "novocliente");
   await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
   const abas2 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
-  conf(`no nível 2 a ficha continua só no Cadastro e nada grava no caso (${abas2.join(", ")})`, abas2.join() === "Cadastro" && await p.evaluate(() => !podeGravarCaso()));
+  conf(`no nível 2 a ficha mostra Cadastro, Casos, Perícias e Prazos e nada grava no caso (${abas2.join(", ")})`, abas2[0] === "Cadastro" && abas2.slice(1).every(a => /^(Casos|Perícias|Prazos)/.test(a)) && await p.evaluate(() => !podeGravarCaso()));
   conf("no nível 2 a Identificação se edita e traz Dossiê e Atualizar", await vis(".idf-card .cad-lap") && await vis(".idf-dz-run") && await vis('.cad-mini[onclick^="atualizarDossie"]'));
   await p.evaluate(() => { window._abertas = []; window.open = u => { window._abertas.push(u); return {}; }; });
   await p.click(".idf-dz-run"); await p.waitForTimeout(300);
