@@ -71,9 +71,9 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   conf("a lista continua à vista", await linha(RET).isVisible());
   conf("o clique no nome não estende a linha", await p.locator(".ag-ext").count() === 0);
   conf("nome, Abrir ficha e CPF", (await pc.textContent()).includes("Cliente Fictício do Retorno") && await pc.locator('[data-pc="ficha"]').count() >= 1 && (await pc.textContent()).includes("454.000.000-01"));
-  conf("tarefa vencida em vermelho", await pc.locator(".pc-venc.venc").count() === 1);
-  conf("cinco atalhos e o mês à vista", await pc.locator(".pc-dias .esp-it").count() === 5 && await pc.locator(".mcal").count() === 1);
-  conf("última anotação", (await pc.locator(".pc-ult").textContent()).includes("aguardar a carta"));
+  conf("tarefa vencida em vermelho", await pc.locator(".pcl-venc.venc").count() === 1);
+  conf("Hoje, Amanhã e o mês à vista", await pc.locator(".pcl-dias .esp-it").count() === 2 && await pc.locator(".mcal").count() === 1);
+  conf("última anotação", (await pc.locator(".pcl-ult").textContent()).includes("aguardar a carta"));
   const alvo = await p.evaluate(() => { const d = new Date(hoje() + "T12:00:00"); d.setMonth(d.getMonth() + 1, 10); return d.toLocaleDateString("sv"); });
   await pc.locator('.mcal-nav[data-nav="1"]').click(); await p.waitForTimeout(100);
   await pc.locator(`button[data-d="${alvo}"]`).click(); await p.waitForTimeout(500);
@@ -82,6 +82,10 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   await p.locator("#pcli .ae-nota").fill("Anotação fictícia pelo painel");
   await p.locator('#pcli [data-pc="anotar"]').click(); await p.waitForTimeout(400);
   conf("Anotar grava no caso", posts.some(([u, b]) => u.includes("/andamentos") && b.includes("pelo painel")));
+  conf("Anexos com o botão +", await p.locator('#pcli [data-pc="anexar"]').count() === 1);
+  conf("Atribuição com a equipe", await p.locator("#pcli .pcl-para option").count() >= 2);
+  conf("o Prazo diz só o tipo", (await p.locator("#pcli .pcl-tipo").textContent()) === "Retorno");
+  await p.evaluate(() => document.getElementById("pcli").scrollTop = 0);
   await p.screenshot({ path: "f645-painel.png" });
   await p.keyboard.press("Escape"); await p.waitForTimeout(100);
   conf("Esc fecha", await p.locator("#pcli").count() === 0);

@@ -1235,42 +1235,57 @@ async function pcliMontar(){
   const atr = k ? (D.atrDoCaso.get(k.id)||[]) : [], resp = (it && it.tc ? [it.tc.colaborador_id] : atr).map(id=>D.colPorId.get(id)).filter(Boolean);
   const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
   const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
-  const dado = (rot, val, extra="") => `<div class="pc-d"><span class="pc-r">${rot}</span><span class="pc-v">${val}</span>${extra}</div>`;
-  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))], ["Próx. segunda", proxSegunda()], ["+7 dias", proxDiaUtil(somaDias(hoje(),7))], ["+30 dias", proxDiaUtil(somaDias(hoje(),30))]];
-  p.innerHTML = `<div class="pc-topo"><button type="button" class="pc-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
-    <section class="pc-cx pc-cab"><div class="pc-nl"><button type="button" class="pc-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
+  const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
+  p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
+    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
       <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
-      <div class="pc-tags">${k && k.especie ? `<span class="pc-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pc-tag pc-lis">${esc(lista)}</span>` : ""}</div></section>
-    <section class="pc-cx"><h3>Dados do cliente</h3>
-      ${dado("CPF", cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
-      ${dado("Senha do Meu INSS", `<span class="pc-senha">••••••••</span>`, `<button type="button" class="pc-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
-      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pc-ic pc-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
+      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
+      <div class="pcl-dados">
+      ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
+      ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
+      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
       ${dado("Parceria", esc(parceriaDe(cli, ks) || "Sem parceria"))}
-      ${dado("Parentesco", `<span class="pc-par">${esc(parentesTexto(cli, []) || "…")}</span>`)}</section>
-    ${it ? `<section class="pc-cx"><h3>Tarefa${resp.length ? `<span class="pc-resp">${esc(resp.map(c=>c.nome.split(" ")[0]).join(", "))}</span>` : ""}</h3>
-      <p class="pc-tt">${esc(it.selo ? it.selo + (k ? " · " + tituloCaso(k) : "") : k ? tituloCaso(k) : "")}${it.fatal ? " · prazo fatal" : ""}</p>
-      ${it.data ? `<p class="pc-venc${venc ? " venc" : ""}">${venc ? "Venceu em" : "Vence em"} ${esc(fmtBarra(it.data))}</p>` : `<p class="pc-venc">Sem data</p>`}
-      ${mov ? `<div class="pc-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}
-        <p class="pc-dica">Um clique em qualquer dia reagenda.</p>` : `<p class="ae-aviso">Prazo fatal, perícia e exigência não mudam de data aqui: o registro é feito no caso.</p>`}
-      <div class="pc-fim"><button type="button" class="btn-mini" data-pc="concluir">Concluir tarefa</button></div></section>` : ""}
-    <section class="pc-cx"><h3>Anexos <span class="pc-n"></span></h3><div class="pc-anx">Carregando…</div></section>
-    ${k ? `<section class="pc-cx"><h3>Anotação</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
-      <div class="pc-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
-      <h3 class="pc-ult-h">Última anotação</h3><div class="pc-ult">Carregando…</div>
+      <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
+    ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
+      <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
+      ${mov ? `<div class="pcl-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    <section class="pcl-cx"><h3>Anexos <span class="pcl-n"></span><button type="button" class="pcl-mais" data-pc="anexar" aria-label="Adicionar anexo" title="Adicionar anexo">+</button></h3>
+      <input type="file" class="pcl-arq" hidden><div class="pcl-anx">Carregando…</div></section>
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><select class="pcl-para" aria-label="Atribuir a">${atr[0] ? "" : `<option value="">Sem responsável</option>`}${equipeAtiva().map(c=>`<option value="${c.id}"${c.id===atr[0] ? " selected" : ""}>${esc(c.nome)}</option>`).join("")}</select></section>
+    <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
+      <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
+      <div class="pcl-ult">Carregando…</div>
       <button type="button" class="ae-mais" data-pc="ficha">Ver anotações anteriores</button></section>` : ""}`;
   Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
   p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
   const cid = cli.id;
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
-    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pc-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
+    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
   api(`/rest/v1/anexos?select=id,nome,tipo,caminho,origem,texto,criado_em&cliente_id=eq.${cid}&order=criado_em.desc&limit=30`).catch(()=>[]).then(r=>{
-    const box = _pcli && _pcli.cliId===cid && p.querySelector(".pc-anx"); if(!box) return;
-    p._anx = r||[]; p.querySelector(".pc-n").textContent = p._anx.length || "";
-    box.innerHTML = p._anx.length ? p._anx.map(a=>`<button type="button" class="pc-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.";
+    const box = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-anx"); if(!box) return;
+    p._anx = r||[]; p.querySelector(".pcl-n").textContent = p._anx.length || "";
+    pcliAnexos(p, false); return;
+    box.innerHTML = p._anx.length ? p._anx.map(a=>`<button type="button" class="pcl-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.";
   });
+  const sel = p.querySelector(".pcl-para");
+  if(sel) sel.onchange = async ()=>{ const de = p._atual, para = sel.value; if(!para || para===de) return;
+    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
+    repintaExt(k); pcliMontar(); avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); };
+  const inp = p.querySelector(".pcl-arq");
+  inp.onchange = async ()=>{ const arq = inp.files && inp.files[0]; inp.value = ""; if(!arq) return;
+    if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
+    const caminho = `${cid}/${new Date().toISOString().replace(/[:.]/g,"-").toLowerCase()}-${nomeSeguro(arq.name)}`;
+    aviso("Enviando o arquivo…", false);
+    try{ await subirArquivo(caminho, arq);
+      await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k?k.id:null, cliente_id:cid, autor_id:eu.id, nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+      if(k) notaNoCaso(k, `📎 Anexou: ${arq.name}`).catch(()=>{});
+      aviso("📎 Arquivo anexado"); pcliMontar();
+    }catch(e){ aviso("Não consegui anexar: "+String(e.message||e).slice(0,80)); } };
   if(_pcli.casos) ultAnotDe(_pcli.casos).then(a=>{
-    const t = _pcli && _pcli.cliId===cid && p.querySelector(".pc-ult"); if(!t) return;
+    const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
     const au = a && a.autor_id && D.colPorId.get(a.autor_id);
     t.innerHTML = a ? `<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc((a.texto||"").slice(0,1000))}` : "Sem anotação da equipe neste caso.";
   });
@@ -1280,18 +1295,24 @@ async function pcliAcao(p, b, cli){
   if(a==="fechar") return fecharPainelCli();
   if(a==="nome") return copiar(cli.nome, "Nome copiado");
   if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
-  if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pc-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
+  if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
     if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
   if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
+  if(a==="anexar") return p.querySelector(".pcl-arq").click();
+  if(a==="anx-todos") return pcliAnexos(p, true);
   if(a==="anexo") return abrirAnexo(b.dataset.id, p._anx);
   if(a==="dia") return pcliReagendar(p, b.dataset.data);
-  if(a==="concluir"){ await extConcluir(p); return setTimeout(pcliMontar, 50); }
   if(a==="anotar"){
     const ta = p.querySelector(".ae-nota"), txt = ta.value.trim(), k = p._it && p._it.k; if(!txt || !k) return aviso("Escreva a anotação");
     let undo; try{ undo = await notaNoCaso(k, txt); }catch(e){ return aviso("Não gravou: tente de novo"); }
     ta.value = ""; repintaExt(k); pcliMontar();
     avisoDesfazer("Anotado", async ()=>{ await undo(); repintaExt(k); pcliMontar(); aviso("Anotação desfeita", false); }, 30000);
   }
+}
+function pcliAnexos(p, todos){
+  const box = p.querySelector(".pcl-anx"), l = p._anx||[], v = todos ? l : l.slice(0,3);
+  box.innerHTML = (l.length ? v.map(a=>`<button type="button" class="pcl-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.")
+    + (l.length>3 && !todos ? `<button type="button" class="ae-mais" data-pc="anx-todos">Ver mais (${l.length-3})</button>` : "");
 }
 async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });

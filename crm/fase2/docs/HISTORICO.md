@@ -1022,3 +1022,6 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 
 ## F645 · Painel lateral do cliente (18.11.2026)
 - Pedido do Paulo (protótipo "Painel do Cliente Tercini"): o clique no NOME do cliente nas listas abre um painel à direita, sem sair da lista, com nome (copia), espécie e lista, Abrir ficha; CPF, senha do Meu INSS (olho, depois copia), telefone com WhatsApp, parceria e parentesco; a tarefa com responsável, vencimento em vermelho, Hoje, Amanhã, Próx. segunda, +7 e +30 dias e o mês à vista (um clique reagenda, só no CRM), Concluir tarefa; anexos; anotação; última anotação e Ver anotações anteriores. O resto da linha continua estendendo (F455) e o Ctrl+clique abre a ficha. Esc fecha. Prova: testes/cadastro/f645.js.
+
+## F646 · Painel lateral do cliente no modelo do To Do (19.11.2026)
+- Pedido do Paulo: painel com 460 px; nome na cor do texto (as classes pc-* colidiam com as do pré-caso e passaram a pcl-*); dados do cliente dois por linha; quadro Prazo só com a data e o tipo (Prazo fatal, Retorno, Lembrete), Hoje, Amanhã e o mês, um clique troca a data; Anexos com botão + e três à vista com Ver mais; quadro Atribuição com a equipe; Anotações por último.
