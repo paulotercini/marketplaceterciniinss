@@ -1929,7 +1929,7 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]),
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]):not([data-vv="3"]):not([data-vv="5"]):not(.mt-proc),
 html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),
 html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]),
 html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]):not([data-v^="fase:"]),
@@ -4160,7 +4160,7 @@ html[data-so-leitura] .escrever, html[data-so-leitura] [data-ae], html[data-so-l
 html[data-so-leitura] .pp-com-bt, html[data-so-leitura] .pzc-lk,
 html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"], html[data-so-leitura] [data-pc="anexar"],
 html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
-html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i]{display:none!important}
+html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
 </style>
 </head>
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}

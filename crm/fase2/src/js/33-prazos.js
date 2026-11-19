@@ -527,7 +527,7 @@ function aplicarNivel(){
   } else if(fx) fx.remove();
   if(n<NV_MAX) h.setAttribute("data-nivel", String(n)); else h.removeAttribute("data-nivel");
   if(podeCadastrar()) h.removeAttribute("data-sem-cad"); else h.setAttribute("data-sem-cad", "");   // F396
-  if(soLeitura()) h.setAttribute("data-so-leitura", ""); else h.removeAttribute("data-so-leitura");   // F660
+  if(semAnotar()) h.setAttribute("data-so-leitura", ""); else h.removeAttribute("data-so-leitura");   // F660
   const css = n<NV_MAX ? Object.entries(REC_ONDA).filter(([w])=>n<=2 || o < +w)
     .map(([, sel])=>sel.split(",").map(x=>`html[data-nivel] ${x}`).join(",") + "{display:none!important}").join("\n") : "";
   let st = document.getElementById("css-ondas");
