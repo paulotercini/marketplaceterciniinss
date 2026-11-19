@@ -407,24 +407,6 @@
   #conteudo-meio,.det-rolagem{scroll-padding-bottom:150px}
   /* F344 · o WhatsApp tem altura fixa e rola por dentro: a reserva fazia a tela inteira rolar e cortar o topo */
   .meio.zap-v #conteudo-meio::after{display:none}
-  /* ＋ Adicionar: sempre no pé da lista, como no To Do */
-  .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
-    display:flex;gap:8px;align-items:center;background:inherit;
-    border-top:1px solid var(--borda);box-shadow:0 -6px 14px -10px rgba(30,32,36,.35)}
-  .add-mais{color:var(--azul);display:inline-flex;line-height:1}
-  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:var(--raio);
-    font-size:13px;background:var(--branco);outline:none;box-shadow:var(--sombra)}
-  .add-rodape input:focus{border-color:var(--azul)}
-  /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
-     botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
-  .add-rodape #add-nome{flex:1 1 120px;min-width:0}
-  .add-rodape #add-ben{flex:0 1 210px;min-width:0}
-  .add-rodape button{flex:none}
-  .app.detalhe-aberto .add-rodape #add-ben{display:none}
-  .add-rodape button{padding:10px 18px;border:none;border-radius:8px;background:var(--azul);
-    color:#fff;font-weight:600;cursor:pointer}
-  .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
-  .app.celular .add-rodape #add-ben{width:100%;order:3}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
   /* título da lista (espec. 6.1): 19px, azul-escuro FIXO, ícone SVG ao lado */
   .meio-topo h1{font-size:19px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px;

@@ -416,24 +416,6 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #conteudo-meio,.det-rolagem{scroll-padding-bottom:150px}
   /* F344 · o WhatsApp tem altura fixa e rola por dentro: a reserva fazia a tela inteira rolar e cortar o topo */
   .meio.zap-v #conteudo-meio::after{display:none}
-  /* ＋ Adicionar: sempre no pé da lista, como no To Do */
-  .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
-    display:flex;gap:8px;align-items:center;background:inherit;
-    border-top:1px solid var(--borda);box-shadow:0 -6px 14px -10px rgba(30,32,36,.35)}
-  .add-mais{color:var(--azul);display:inline-flex;line-height:1}
-  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:var(--raio);
-    font-size:13px;background:var(--branco);outline:none;box-shadow:var(--sombra)}
-  .add-rodape input:focus{border-color:var(--azul)}
-  /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
-     botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
-  .add-rodape #add-nome{flex:1 1 120px;min-width:0}
-  .add-rodape #add-ben{flex:0 1 210px;min-width:0}
-  .add-rodape button{flex:none}
-  .app.detalhe-aberto .add-rodape #add-ben{display:none}
-  .add-rodape button{padding:10px 18px;border:none;border-radius:8px;background:var(--azul);
-    color:#fff;font-weight:600;cursor:pointer}
-  .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
-  .app.celular .add-rodape #add-ben{width:100%;order:3}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
   /* título da lista (espec. 6.1): 19px, azul-escuro FIXO, ícone SVG ao lado */
   .meio-topo h1{font-size:19px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px;
@@ -7269,14 +7251,6 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
     </div>
     <div class="meio-sub" id="sub-lista"></div>
     <div id="conteudo-meio"></div>
-    <!-- como no To Do: o campo de acrescentar fica sempre no pé da lista -->
-    <div class="add-rodape" id="add-rodape" style="display:none">
-      <span class="add-mais"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-      <input id="add-nome" placeholder="Adicionar cliente nesta lista (nome, ou Nome #CPF)"
-        autocomplete="off" enterkeyhint="done">
-      <input id="add-ben" list="lista-beneficios" placeholder="benefício (opcional)">
-      <button onclick="addNaLista()">Adicionar</button>
-    </div>
   </main>
   <aside class="detalhe" id="detalhe"></aside>
 </div>
@@ -12686,7 +12660,6 @@ function renderBase(){
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
   pintarOpcLista();
-  mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -22383,52 +22356,6 @@ async function reordenarListas(origem, destino){
   aviso("Ordem das listas guardada");
 }
 
-// ── ＋ Adicionar, fixo no pé da lista ─────────────────────────────────────
-// No To Do é assim que quase toda tarefa nasce: o campo está sempre ali, você
-// digita e dá Enter. Aqui ele cria o cliente e o primeiro caso já na lista
-// aberta. Aceita o formato do To Do — "Nome #CPF" — porque a equipe já digita
-// assim há anos.
-function mostrarAddRodape(){
-  const el=document.getElementById("add-rodape");
-  if(!el) return;
-  const mostra = !buscaTxt && visao.startsWith("fase:");
-  el.style.display = mostra ? "" : "none";
-  if(mostra){
-    const f=visao.slice(5), rot=(FASES.find(x=>x[0]===f)||[])[1]||"";
-    document.getElementById("add-nome").placeholder =
-      `Adicionar em ${rot.replace(/^\S+\s/,"")} (nome, ou Nome #CPF)`;
-  }
-}
-async function addNaLista(){
-  const inp=document.getElementById("add-nome"), bi=document.getElementById("add-ben");
-  const bruto=(inp.value||"").trim();
-  if(!bruto) return inp.focus();
-  const fase=visao.slice(5);
-  // "Maria dos Santos #12345678900" -> nome + CPF, como as tarefas do To Do
-  const m=bruto.match(/^(.*?)\s*#\s*([\d.\-]+)\s*$/);
-  const nome=(m?m[1]:bruto).trim(), cpf=m?digitosCpf(m[2]):null;
-  if(!nome) return aviso("Falta o nome");
-  if(cpf && cpf.length!==11) return aviso("O CPF tem 11 dígitos");
-  if(cpf){
-    let ja=D.clientes.find(x=>digitosCpf(x.cpf)===cpf);
-    if(!ja){ const achados=await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
-             if(achados&&achados.length){ ja=achados[0]; D.clientes.push(ja); D.cliPorId.set(ja.id,ja); } }
-    if(ja) return avisoCpfRepetido(ja, nome);
-  }
-  const beneficio=(bi.value||"").trim() || null;
-  const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({nome, cpf})});
-  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:cli.id, titulo:nome, beneficio, fase})});
-  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})}).catch(()=>{});
-  if(beneficio) await aplicarChecklistCaso(caso, true).catch(()=>{});
-  inp.value=""; bi.value="";
-  await carregar(); montarSidebar(); render();
-  await avisarCasoNovo(caso.id, cli.id, "＋ Adicionar, no pé da lista");
-  inp.focus();                                  // pronto para o próximo, sem tirar a mão
-  aviso(`✔ ${nome} entrou na lista`);
-}
 
 function renderParcerias(){
   tituloLista("🤝 Parcerias");
@@ -61611,11 +61538,6 @@ function atalhoDeLista(e){
   if(e.ctrlKey || e.metaKey || e.altKey) return false;
   if(e.key==="ArrowDown"){ e.preventDefault(); return moverCursor(1); }
   if(e.key==="ArrowUp"){ e.preventDefault(); return moverCursor(-1); }
-  if(e.key==="n" || e.key==="N"){
-    const inp = document.getElementById("add-nome");
-    if(!inp) return false;
-    e.preventDefault(); inp.focus(); inp.select(); return true;
-  }
   const cs = cartoesDaLista();
   if(!cs.length || cursorLista < 0 || !cs[cursorLista]) return false;
   const cliId = cs[cursorLista].dataset.cli;
@@ -61706,11 +61628,6 @@ function fecharPaleta(){ document.getElementById("paleta")?.remove(); }
   var el=document.getElementById(id);
   if(el) el.addEventListener("keydown", function(e){
     if(e.key==="Enter"){ e.preventDefault(); entrar(e); } });
-});
-// Enter no ＋ Adicionar cria sem tirar a mão do teclado
-["add-nome","add-ben"].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el) el.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addNaLista(); } });
 });
 // ── celular: barra de baixo e busca no alto da lista ──────────────────────
 document.querySelectorAll("#barra-cel button").forEach(b=>{
