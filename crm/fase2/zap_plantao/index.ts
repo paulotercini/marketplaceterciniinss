@@ -90,7 +90,7 @@ export type Contexto = {
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
   andamentos?: { em: string; beneficio: string; texto: string }[];
   remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean; ler?: boolean; classe?: string } | null;
-  pericia?: { tipo: string; data: string; hora: string; local: string | null; profissional: string; ate_hora: string; limite_presenca: string; telefone_em: string } | null;
+  pericia?: { tipo: string; data: string; hora: string; local: string | null; profissional: string; ate_hora: string; limite_presenca: string; telefone_em: string; atendido?: string | null } | null;
 };
 
 // as regras fixas: no Managed Agents são o system do agente, e cada mudança das
@@ -533,7 +533,12 @@ export function contexto(x: Contexto) {
       `Se ela pedir outro dia ou horário, peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
       `e que remarque esse atendimento (ou agende um novo, se ele já foi cancelado) quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
     // F549 · a perícia aprovada pelo Ligar: a IA oferece o atendimento presencial de preparação
-    (x.pericia ? `Perícia: a pessoa tem ${x.pericia.tipo} em ${x.pericia.data} às ${x.pericia.hora}${x.pericia.local ? `, em ${x.pericia.local}` : ""}, e o escritório avisou por esta conversa. ` +
+    // F661 · atendida há pouco (caso de 19.11.2026: atendido na véspera, a IA ofereceu a preparação de novo)
+    (x.pericia?.atendido ? `Perícia: a pessoa tem ${x.pericia.tipo} em ${x.pericia.data} às ${x.pericia.hora}${x.pericia.local ? `, em ${x.pericia.local}` : ""}, e o escritório avisou por esta conversa. ` +
+      `Ela já foi atendida no escritório em ${x.pericia.atendido}: não ofereça atendimento de preparação nem telefonema. ` +
+      `Se ela responder à oferta da mensagem do escritório, diga que, como já foi atendida, não é preciso novo atendimento antes da perícia, e lembre o dia, a hora e o local. ` +
+      `Agende somente se ela pedir expressamente outro atendimento. Responda à dúvida sobre a perícia em linguagem simples, sem prometer resultado.\n`
+    : x.pericia ? `Perícia: a pessoa tem ${x.pericia.tipo} em ${x.pericia.data} às ${x.pericia.hora}${x.pericia.local ? `, em ${x.pericia.local}` : ""}, e o escritório avisou por esta conversa. ` +
       `Ofereça um atendimento presencial (tipo 002) de preparação com ${x.pericia.profissional === "amanda" ? "a Dra. Amanda" : "o Dr. Paulo"}: ` +
       `peça ao Agendador vagas desse advogado no dia útil anterior à perícia ou nos dias anteriores; o próprio dia da perícia, terminando até as ${x.pericia.ate_hora}, somente sem vaga antes. ` +
       `Se a mensagem do escritório já indicou dois horários, mantenha-os; senão indique um horário pela manhã e outro à tarde, em frase, sem lista e sem perguntar qual horário fica melhor. Se a pessoa não puder vir ao escritório até ${x.pericia.limite_presenca}, ou não quiser vir, ` +
@@ -822,6 +827,14 @@ async function agenda(acao: string, corpo: Record<string, unknown>) {
     headers: { "Content-Type": "text/plain;charset=utf-8" },   // o Apps Script lê postData.contents
     body: JSON.stringify({ acao, token: TOKEN_AGENDA, ...corpo }) });
   return (await r.json().catch(() => ({ ok: false, erro: `agenda: ${r.status}` }))) as Record<string, any>;
+}
+// F661 · atendimento nos últimos 30 dias, pelo nome da ficha, no histórico da agenda: devolve o rótulo ou null
+export async function atendidoHaPouco(nome: string | undefined, chamar = agenda, hoje = new Date()) {
+  if (!nome || nome.trim().length < 5) return null;
+  const r = await chamar("historico", { q: nome.trim() });
+  const desde = new Date(hoje.getTime() - 30 * 86400000).toISOString().slice(0, 10);
+  const a = (r.atendimentos || []).find((e: Record<string, any>) => e.atendimento && e.data >= desde && mesmoNome(nome, e.nome || e.titulo));
+  return a ? rotulo(a.data, a.inicio, COM[a.profissional] || "a equipe") : null;
 }
 const SEMANA = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
 export function rotulo(data: string, inicio: string, com: string) {
@@ -1572,6 +1585,7 @@ if (typeof Deno !== "undefined") {
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
+      if (x.pericia) x.pericia.atendido = await atendidoHaPouco(x.cliente?.nome).catch(() => null);   // F661
       // F633 · os andamentos dos portais, só para o telefone principal da ficha
       if (x.cliente?.mesmo_telefone) x.andamentos = andamentosPublicos(await rpc("zap_andamento_pegar", { p_msg: msg }).catch(() => null));
       // F521 · a agenda pedida neste Offline a IA responde pelo escritório; F561 · fora dela, o Offline vira sugestão (zap_plantao_aplicar)
