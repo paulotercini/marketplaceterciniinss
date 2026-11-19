@@ -15,11 +15,6 @@ function fecharPaleta(){ document.getElementById("paleta")?.remove(); }
   if(el) el.addEventListener("keydown", function(e){
     if(e.key==="Enter"){ e.preventDefault(); entrar(e); } });
 });
-// Enter no ＋ Adicionar cria sem tirar a mão do teclado
-["add-nome","add-ben"].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el) el.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addNaLista(); } });
-});
 // ── celular: barra de baixo e busca no alto da lista ──────────────────────
 document.querySelectorAll("#barra-cel button").forEach(b=>{
   b.onclick=()=>irCel(b.dataset.cel);

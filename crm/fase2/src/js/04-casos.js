@@ -227,7 +227,7 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
-      if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey && e.target.closest(".ag-txt b") && pcliLigado()) return abrirPainelCli(el);   // F645 · o nome abre o painel lateral
+      if(!e.ctrlKey && !e.metaKey && pcliLigado()) return abrirPainelCli(el);   // F647 · o clique na linha de qualquer lista abre o painel lateral (a extensão F455 saiu)
       if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
       abrirDaLinha(el);
     };
@@ -318,7 +318,6 @@ function renderBase(){
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
   pintarOpcLista();
-  mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
