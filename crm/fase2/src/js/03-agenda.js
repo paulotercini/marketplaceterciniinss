@@ -1250,7 +1250,7 @@ async function pcliMontar(){
       <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
-      ${mov ? `<div class="pcl-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+      ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
     ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().map(c=>`<button type="button" data-pc="para" data-id="${c.id}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.nome.split(" ")[0])}</button>`).join("")}</div></section>
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
