@@ -1134,6 +1134,7 @@ const LISTAS_POR_CARGO = {
 // F660 · versão de leitura do colaborador: só as listas fixas, sem anotar nem mexer em prazo (o banco também recusa)
 const soLeitura = () => !!eu && eu.papel==="colaborador" && eu.so_leitura===true;
 const LISTAS_FIXAS = ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:marcos"];
+const semAnotar = () => soLeitura() || (!!eu && eu.papel==="colaborador" && meuNivel()===2);   // F660c · nível 2 lê as anotações e não escreve
 const visaoInicialColab = () => soIdentificacao() ? "agendaq" : soLeitura() ? "fase:escritorio" : "meudia";
 // F660 · na leitura, o que o colaborador já tinha continua (WhatsApp, Agenda), sem Meu Dia, Importante e Planejado, e com as listas fixas
 const listasFixasLigadas = () => soLeitura() || meuNivel()===2;   // F660b · o nível 2 (e o admin que o olha) também vê as listas fixas

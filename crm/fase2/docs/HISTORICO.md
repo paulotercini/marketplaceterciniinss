@@ -1041,3 +1041,6 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 
 ## F660b · Listas fixas no nível 2 (19.11.2026)
 - O nível 2 da transição escondia o grupo das listas (CSS F249). Agora o nível 2, e o admin que o olha pelo "ver como nível", veem Escritório, INSS, Conselho, Judicial, Petições Iniciais, Aposentadorias Futuras e Marcos (`listasFixasLigadas`).
+
+## F660c (19.11.2026)
+Nível 2 do colaborador: painel lateral direito mostra as anotações sem o campo de escrever nem o Anotar; a gravação em anotações e prazos é recusada no api(), como no somente leitura (F660).
