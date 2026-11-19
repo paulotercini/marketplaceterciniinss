@@ -1161,7 +1161,7 @@ function montarSidebar(){
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
     document.getElementById("grupo-fases").innerHTML =
-      din.filter(([id])=>pode.includes(id) && ["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
+      din.filter(([id])=>["particulares","rotinas"].includes(id) && !(soLeitura() && !pode.includes(id))).map(([id,rot,n])=>
         `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
       + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f, f==="marcos" ? "☕ Marcos" : "🙏 Aposentadorias futuras"])[1];
           const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);

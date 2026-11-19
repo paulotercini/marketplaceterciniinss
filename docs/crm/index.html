@@ -2993,12 +2993,6 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
     document.head.appendChild(l); }
 }catch(e){}})();
 </script>
-/* F660 · versão de leitura do colaborador: some o que anota, conclui ou muda data */
-html[data-so-leitura] .escrever, html[data-so-leitura] [data-ae], html[data-so-leitura] .tf-acao, html[data-so-leitura] .tf-dt,
-html[data-so-leitura] .pp-com-bt, html[data-so-leitura] .pzc-lk,
-html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"], html[data-so-leitura] [data-pc="anexar"],
-html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
-html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i]{display:none!important}
 <style id="tema-v10">
 /* ══════════════════════════════════════════════════════════════════════════
    F80 · TEMA "PAPEL E PETRÓLEO" (v10), atrás de interruptor
@@ -7149,6 +7143,12 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 #pcli .pcl-a span{font-size:12px;color:#6B6B66;white-space:nowrap}
 .cartao.pcli-on{box-shadow:inset 3px 0 0 #1D5C63;background:#EEF5F4}
 .cartao .ag-txt b{cursor:pointer}
+/* F660 · versão de leitura do colaborador: some o que anota, conclui ou muda data */
+html[data-so-leitura] .escrever, html[data-so-leitura] [data-ae], html[data-so-leitura] .tf-acao, html[data-so-leitura] .tf-dt,
+html[data-so-leitura] .pp-com-bt, html[data-so-leitura] .pzc-lk,
+html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"], html[data-so-leitura] [data-pc="anexar"],
+html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
+html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i]{display:none!important}
 </style>
 </head>
 <body>
@@ -9653,7 +9653,7 @@ function montarSidebar(){
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
     document.getElementById("grupo-fases").innerHTML =
-      din.filter(([id])=>pode.includes(id) && ["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
+      din.filter(([id])=>["particulares","rotinas"].includes(id) && !(soLeitura() && !pode.includes(id))).map(([id,rot,n])=>
         `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
       + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f, f==="marcos" ? "☕ Marcos" : "🙏 Aposentadorias futuras"])[1];
           const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
