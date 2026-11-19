@@ -1028,7 +1028,7 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 
 ## F660 · Versão de leitura para os colaboradores (19.11.2026)
 - Pedido do Paulo: colaborador (papel `colaborador`) mantém o que tinha (WhatsApp, Agenda) e, nas listas, vê só as fixas Escritório, INSS, Conselho de Recursos, Judicial, Petições Iniciais, Aposentadorias Futuras e ☕ Marcos; sem Meu Dia, Importante e Planejado. Lê fichas e o painel lateral, sem anotar nem mudar prazo.
-- Tela: `soLeitura()` (05-agenda.js), `api()` recusa escrita, CSS `html[data-so-leitura]`. O admin vê pelo "Ver como colaborador".
+- Tela: `soLeitura()` (05-agenda.js), `api()` recusa escrita, CSS `html[data-so-leitura]`.
 - Banco: `colaboradores.so_leitura` (padrão true) e políticas restritivas `so_leitura_*` em andamentos, andamento_tarefas, tarefas, lembretes e meu_dia (migração f660). Liberar alguém: `so_leitura = false`.
 ## F647 · O clique na linha de qualquer lista abre o painel lateral (19.11.2026)
 - Pedido do Paulo: o painel abria apenas pelo nome e só nas linhas com caso. Agora o clique em qualquer ponto da linha de qualquer lista abre o painel; a extensão abaixo do nome (F455) saiu da tela do usuário (fica só no navegador automatizado, para as provas antigas). Ctrl+clique continua abrindo a ficha.
