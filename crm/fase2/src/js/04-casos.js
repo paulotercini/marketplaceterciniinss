@@ -227,6 +227,7 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
+      if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey && e.target.closest(".ag-txt b")) return abrirPainelCli(el);   // F645 · o nome abre o painel lateral
       if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
       abrirDaLinha(el);
     };
