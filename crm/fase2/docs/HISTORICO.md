@@ -1025,3 +1025,6 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 
 ## F646 · Painel lateral do cliente no modelo do To Do (19.11.2026)
 - Pedido do Paulo: painel com 460 px; nome na cor do texto (as classes pc-* colidiam com as do pré-caso e passaram a pcl-*); dados do cliente dois por linha; quadro Prazo só com a data e o tipo (Prazo fatal, Retorno, Lembrete), Hoje, Amanhã e o mês, um clique troca a data; Anexos com botão + e três à vista com Ver mais; quadro Atribuição com a equipe; Anotações por último.
+
+## F647 · O clique na linha de qualquer lista abre o painel lateral (19.11.2026)
+- Pedido do Paulo: o painel abria apenas pelo nome e só nas linhas com caso. Agora o clique em qualquer ponto da linha de qualquer lista abre o painel; a extensão abaixo do nome (F455) saiu da tela do usuário (fica só no navegador automatizado, para as provas antigas). Ctrl+clique continua abrindo a ficha.

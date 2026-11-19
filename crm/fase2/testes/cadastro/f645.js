@@ -90,7 +90,7 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   await p.keyboard.press("Escape"); await p.waitForTimeout(100);
   conf("Esc fecha", await p.locator("#pcli").count() === 0);
   await linha(RET).locator(".ag-data").click(); await p.waitForTimeout(300);
-  conf("o resto da linha ainda estende", await p.locator(".ag-ext").count() === 1);
+  conf("o resto da linha também abre o painel, sem a extensão", await p.locator("#pcli").count() === 1 && await p.locator(".ag-ext").count() === 0);
   await ctx.close();
   const c2 = await abrir(390);
   await c2.p.locator(`.cartao[data-casos="${RET}"] .ag-txt b`).first().click(); await c2.p.waitForTimeout(400);
