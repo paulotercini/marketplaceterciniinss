@@ -1251,10 +1251,10 @@ async function pcliMontar(){
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
       ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
-    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}"${c.id===atr[0] ? ` class="on" aria-pressed="true" style="background:${c.cor};color:#fff"` : ` aria-pressed="false"`}>${esc(c.nome.split(" ")[0])}</button>`).join("")}</div></section>
-    <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}" title="${esc(c.nome.split(" ")[0])}" aria-label="${esc(c.nome.split(" ")[0])}" style="--av:${c.cor}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.inicial||c.nome[0])}</button>`).join("")}</div></section>
+    <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="2" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
-      <div class="pcl-ult">Carregando…</div>
+      <div class="pcl-tl"><div class="pcl-ult">Carregando…</div></div>
       <button type="button" class="ae-mais" data-pc="ant">Ver anotações anteriores</button><div class="pcl-ant"></div></section>` : ""}`;
   Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
@@ -1268,10 +1268,12 @@ async function pcliMontar(){
 
   if(_pcli.casos) ultAnotDe(_pcli.casos).then(a=>{
     const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
-    const au = a && a.autor_id && D.colPorId.get(a.autor_id);
-    t.innerHTML = a ? `<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc((a.texto||"").slice(0,1000))}` : "Sem anotação da equipe neste caso.";
+    t.innerHTML = a ? pclNota(a, 1000) : "Sem anotação da equipe neste caso.";
   });
 }
+// F663 · proposta A (19.11.2026): anotação em linha do tempo com a inicial quadrada do autor na cor dele
+function pclNota(a, max){ const au = a.autor_id && D.colPorId.get(a.autor_id), t = a.texto||"";
+  return `${au ? `<span class="pcl-au" style="--av:${au.cor}" title="${esc(au.nome.split(" ")[0])}">${esc(au.inicial||au.nome[0])}</span>` : ""}<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(max ? t.slice(0,max) : t)}`; }
 async function pcliAcao(p, b, cli){
   const a = b.dataset.pc;
   if(a==="fechar") return fecharPainelCli();
@@ -1280,8 +1282,7 @@ async function pcliAcao(p, b, cli){
     b.textContent = "Ocultar anotações anteriores"; box.textContent = "Carregando…";
     const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=1&limit=50`).catch(()=>null);
     if(!box.isConnected) return;
-    box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>{ const au = x.autor_id && D.colPorId.get(x.autor_id);
-      return `<div class="pcl-ult"><span class="ae-cab">${esc(fmtBarra(dataSP(x.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(x.texto||"")}</div>`; }).join("") : "Sem anotações anteriores.";
+    box.classList.add("pcl-tl"); box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>`<div class="pcl-ult">${pclNota(x)}</div>`).join("") : "Sem anotações anteriores.";
     return; }
   if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
   if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
