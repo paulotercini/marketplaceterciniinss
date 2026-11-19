@@ -370,6 +370,7 @@ function casosDaFase(f){
   // Tarefas com Prazo é a LISTA FIXA do To Do (não "tudo que tem data") —
   // a agenda geral por data fica na visão Planejado.
   if(f==="prazo") return ativos().filter(k=>listaDe(k)==="🗓 Tarefas com Prazo");
+  if(f==="marcos") return ativos().filter(listaMarcos);   // F660
   return ativos().filter(k=>k.fase===f);
 }
 // mover caso de lista, como o "Mover" do botão direito no To Do
@@ -1149,7 +1150,7 @@ function montarSidebar(){
     // Listas do escritório, antes das fases; Visões some inteira
     // F220 · as listas e as fases dependem do cargo (listasDoColab)
     const pode = listasDoColab();
-    const fasesColab = ["escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura"].filter(f=>pode.includes("fase:"+f));
+    const fasesColab = ["escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura","marcos"].filter(f=>pode.includes("fase:"+f));
     // F187 · o WhatsApp mora em Visões (que some para o colaborador): aqui ele
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
@@ -1160,9 +1161,9 @@ function montarSidebar(){
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
     document.getElementById("grupo-fases").innerHTML =
-      din.filter(([id])=>["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
+      din.filter(([id])=>["particulares","rotinas"].includes(id) && !(soLeitura() && !pode.includes(id))).map(([id,rot,n])=>
         `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
-      + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f,"🙏 Aposentadorias futuras"])[1];
+      + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f, f==="marcos" ? "☕ Marcos" : "🙏 Aposentadorias futuras"])[1];
           const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
           return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`
             + (f==="aposentadoria_futura" ? itemContrib(rotu) : ""); }).join("");
