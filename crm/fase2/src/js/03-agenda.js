@@ -1250,40 +1250,19 @@ async function pcliMontar(){
       <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
-      ${mov ? `<div class="pcl-dias">${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
-    <section class="pcl-cx"><h3>Anexos <span class="pcl-n"></span><button type="button" class="pcl-mais" data-pc="anexar" aria-label="Adicionar anexo" title="Adicionar anexo">+</button></h3>
-      <input type="file" class="pcl-arq" hidden><div class="pcl-anx">Carregando…</div></section>
-    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><select class="pcl-para" aria-label="Atribuir a">${atr[0] ? "" : `<option value="">Sem responsável</option>`}${equipeAtiva().map(c=>`<option value="${c.id}"${c.id===atr[0] ? " selected" : ""}>${esc(c.nome)}</option>`).join("")}</select></section>
+      ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}</div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}"${c.id===atr[0] ? ` class="on" aria-pressed="true" style="background:${c.cor};color:#fff"` : ` aria-pressed="false"`}>${esc(c.nome.split(" ")[0])}</button>`).join("")}</div></section>
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="3" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
       <div class="pcl-ult">Carregando…</div>
-      <button type="button" class="ae-mais" data-pc="ficha">Ver anotações anteriores</button></section>` : ""}`;
+      <button type="button" class="ae-mais" data-pc="ant">Ver anotações anteriores</button><div class="pcl-ant"></div></section>` : ""}`;
   Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
   ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
   p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
   const cid = cli.id;
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
     const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
-  api(`/rest/v1/anexos?select=id,nome,tipo,caminho,origem,texto,criado_em&cliente_id=eq.${cid}&order=criado_em.desc&limit=30`).catch(()=>[]).then(r=>{
-    const box = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-anx"); if(!box) return;
-    p._anx = r||[]; p.querySelector(".pcl-n").textContent = p._anx.length || "";
-    pcliAnexos(p, false); return;
-    box.innerHTML = p._anx.length ? p._anx.map(a=>`<button type="button" class="pcl-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.";
-  });
-  const sel = p.querySelector(".pcl-para");
-  if(sel) sel.onchange = async ()=>{ const de = p._atual, para = sel.value; if(!para || para===de) return;
-    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
-    repintaExt(k); pcliMontar(); avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); };
-  const inp = p.querySelector(".pcl-arq");
-  inp.onchange = async ()=>{ const arq = inp.files && inp.files[0]; inp.value = ""; if(!arq) return;
-    if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
-    const caminho = `${cid}/${new Date().toISOString().replace(/[:.]/g,"-").toLowerCase()}-${nomeSeguro(arq.name)}`;
-    aviso("Enviando o arquivo…", false);
-    try{ await subirArquivo(caminho, arq);
-      await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k?k.id:null, cliente_id:cid, autor_id:eu.id, nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
-      if(k) notaNoCaso(k, `📎 Anexou: ${arq.name}`).catch(()=>{});
-      aviso("📎 Arquivo anexado"); pcliMontar();
-    }catch(e){ aviso("Não consegui anexar: "+String(e.message||e).slice(0,80)); } };
+
   if(_pcli.casos) ultAnotDe(_pcli.casos).then(a=>{
     const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
     const au = a && a.autor_id && D.colPorId.get(a.autor_id);
@@ -1294,25 +1273,27 @@ async function pcliAcao(p, b, cli){
   const a = b.dataset.pc;
   if(a==="fechar") return fecharPainelCli();
   if(a==="nome") return copiar(cli.nome, "Nome copiado");
+  if(a==="ant"){ const box = p.querySelector(".pcl-ant"); if(box.innerHTML){ box.innerHTML = ""; b.textContent = "Ver anotações anteriores"; return; }
+    b.textContent = "Ocultar anotações anteriores"; box.textContent = "Carregando…";
+    const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=1&limit=50`).catch(()=>null);
+    if(!box.isConnected) return;
+    box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>{ const au = x.autor_id && D.colPorId.get(x.autor_id);
+      return `<div class="pcl-ult"><span class="ae-cab">${esc(fmtBarra(dataSP(x.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(x.texto||"")}</div>`; }).join("") : "Sem anotações anteriores.";
+    return; }
   if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
   if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
     if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
   if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
-  if(a==="anexar") return p.querySelector(".pcl-arq").click();
-  if(a==="anx-todos") return pcliAnexos(p, true);
-  if(a==="anexo") return abrirAnexo(b.dataset.id, p._anx);
   if(a==="dia") return pcliReagendar(p, b.dataset.data);
+  if(a==="para"){ const k = p._it && p._it.k, de = p._atual, para = b.dataset.id; if(!k || para===de) return;
+    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
+    repintaExt(k); pcliMontar(); return avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); }
   if(a==="anotar"){
     const ta = p.querySelector(".ae-nota"), txt = ta.value.trim(), k = p._it && p._it.k; if(!txt || !k) return aviso("Escreva a anotação");
     let undo; try{ undo = await notaNoCaso(k, txt); }catch(e){ return aviso("Não gravou: tente de novo"); }
     ta.value = ""; repintaExt(k); pcliMontar();
     avisoDesfazer("Anotado", async ()=>{ await undo(); repintaExt(k); pcliMontar(); aviso("Anotação desfeita", false); }, 30000);
   }
-}
-function pcliAnexos(p, todos){
-  const box = p.querySelector(".pcl-anx"), l = p._anx||[], v = todos ? l : l.slice(0,3);
-  box.innerHTML = (l.length ? v.map(a=>`<button type="button" class="pcl-a" data-pc="anexo" data-id="${a.id}"><b>${esc(a.nome||"documento")}</b><span>${esc(fmtBarra(dataSP(a.criado_em)))}</span></button>`).join("") : "Sem anexos.")
-    + (l.length>3 && !todos ? `<button type="button" class="ae-mais" data-pc="anx-todos">Ver mais (${l.length-3})</button>` : "");
 }
 async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
 document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });
