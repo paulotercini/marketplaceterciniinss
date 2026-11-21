@@ -1266,9 +1266,12 @@ async function pcliMontar(){
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
     const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
 
-  if(_pcli.casos) ultAnotDe(_pcli.casos).then(a=>{
+  // F665 · as 5 últimas anotações à vista; "Ver anotações anteriores" traz da sexta em diante (pedido do Paulo, 21.11.2026)
+  if(_pcli.casos) api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=5`).catch(()=>null).then(r=>{
     const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
-    t.innerHTML = a ? pclNota(a, 1000) : "Sem anotação da equipe neste caso.";
+    if(r==null) return t.textContent = "Não carregou: tente de novo";
+    if(!r.length) return t.textContent = "Sem anotação da equipe neste caso.";
+    t.outerHTML = r.map(a=>`<div class="pcl-ult">${pclNota(a, 1000)}</div>`).join("");
   });
 }
 // F663 · proposta A (19.11.2026): anotação em linha do tempo com a inicial quadrada do autor na cor dele
@@ -1280,7 +1283,7 @@ async function pcliAcao(p, b, cli){
   if(a==="nome") return copiar(cli.nome, "Nome copiado");
   if(a==="ant"){ const box = p.querySelector(".pcl-ant"); if(box.innerHTML){ box.innerHTML = ""; b.textContent = "Ver anotações anteriores"; return; }
     b.textContent = "Ocultar anotações anteriores"; box.textContent = "Carregando…";
-    const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=1&limit=50`).catch(()=>null);
+    const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=5&limit=50`).catch(()=>null);
     if(!box.isConnected) return;
     box.classList.add("pcl-tl"); box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>`<div class="pcl-ult">${pclNota(x)}</div>`).join("") : "Sem anotações anteriores.";
     return; }

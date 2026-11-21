@@ -73,7 +73,7 @@ FIX.andamentos = (FIX.andamentos || []).concat([{ id: "a454", caso_id: RET, auto
   conf("nome, Abrir ficha e CPF", (await pc.textContent()).includes("Cliente Fictício do Retorno") && await pc.locator('[data-pc="ficha"]').count() >= 1 && (await pc.textContent()).includes("454.000.000-01"));
   conf("tarefa vencida em vermelho", await pc.locator(".pcl-venc.venc").count() === 1);
   conf("Hoje, Amanhã e o mês à vista", await pc.locator(".pcl-dias .esp-it:not(.pcl-outra)").count() === 2 && await pc.locator(".mcal").count() === 1);
-  conf("última anotação", (await pc.locator(".pcl-ult").textContent()).includes("aguardar a carta"));
+  conf("última anotação", (await pc.locator(".pcl-ult").first().textContent()).includes("aguardar a carta"));
   const alvo = await p.evaluate(() => { const d = new Date(hoje() + "T12:00:00"); d.setMonth(d.getMonth() + 1, 10); return d.toLocaleDateString("sv"); });
   await pc.locator('.mcal-nav[data-nav="1"]').click(); await p.waitForTimeout(100);
   await pc.locator(`button[data-d="${alvo}"]`).click(); await p.waitForTimeout(500);
