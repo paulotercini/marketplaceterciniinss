@@ -12293,7 +12293,7 @@ async function pcliMontar(){
       ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
       ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
       ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
-      ${dado("Parceria", esc(parceriaDe(cli, ks) || "Sem parceria"))}
+      ${parceriaDe(cli, ks) ? dado("Parceria", esc(parceriaDe(cli, ks))) : ""}
       <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
@@ -12311,7 +12311,7 @@ async function pcliMontar(){
   if(cli.foto_url) assinarFotosZap([cli]).then(()=>{ const u = zapFotos.get(cli.foto_url), av = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-av");
     if(u && av) av.outerHTML = `<img class="avatar foto-zap pcl-av" src="${esc(u)}" alt="foto de ${esc(cli.nome)} no WhatsApp" title="clique para ampliar" onclick="verFotoGrande(this.src)">`; });
   api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
-    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(s) s.textContent = parentesTexto(cli, v||[]) || "Sem parente cadastrado"; });
+    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(!s) return; const t = parentesTexto(cli, v||[]); t ? s.textContent = t : s.closest(".pcl-d").remove(); }); // F665 · sem parente, o campo some
 
   // F665 · as 5 últimas anotações à vista; "Ver anotações anteriores" traz da sexta em diante (pedido do Paulo, 21.11.2026)
   if(_pcli.casos) api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=5`).catch(()=>null).then(r=>{
