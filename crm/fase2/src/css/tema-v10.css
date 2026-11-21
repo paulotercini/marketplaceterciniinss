@@ -4167,7 +4167,25 @@ html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"],
 html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
 html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
-</style>
-</head>
 html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
 html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;align-self:center}
+/* F667 · mini agenda do cliente, abaixo do quadro da espécie */
+.ma{margin:8px 0;padding:10px 12px;border:1px solid var(--borda,#E2E0DB);border-radius:10px;background:var(--fundo-cartao,#FFFFFF)}
+.ma-cab{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.ma-cab b{font-size:13px;font-weight:500}
+.ma-cab .pzm-nav{width:26px;height:26px;font-size:16px}
+.ma-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;text-align:center}
+.ma-g .pzm-sem{padding:0 0 2px;font-size:10px}
+.ma-d{height:24px;line-height:24px;border-radius:6px;font-size:12px}
+.ma-tem{color:#FFFFFF;font-weight:600}
+.ma-fatal{background:#B3261E}.ma-comp{background:#8F5400}.ma-lemb{background:var(--azul,#0E5C58)}.ma-ret{background:#6E6C66}
+.ma-leg{list-style:none;margin:8px 0 0;padding:6px 0 0;border-top:1px solid var(--borda,#E2E0DB);display:flex;flex-direction:column;gap:3px;font-size:12px}
+.ma-leg li{display:flex;align-items:center;gap:6px;min-width:0}
+.ma-leg i{flex:none;width:7px;height:7px;border-radius:50%}
+.ma-leg b{font-weight:600;font-variant-numeric:tabular-nums}
+.ma-leg span{color:var(--cinza,#4A4944)}
+.ma-leg em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--cinza-claro,#686660)}
+.ma-venc b{color:#B3261E}
+.ma-nada{margin:6px 0 0;font-size:12px;color:var(--cinza-claro,#686660)}
+</style>
+</head>

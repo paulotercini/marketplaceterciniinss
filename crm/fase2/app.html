@@ -7162,10 +7162,28 @@ html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"],
 html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
 html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
-</style>
-</head>
 html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
 html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;align-self:center}
+/* F667 · mini agenda do cliente, abaixo do quadro da espécie */
+.ma{margin:8px 0;padding:10px 12px;border:1px solid var(--borda,#E2E0DB);border-radius:10px;background:var(--fundo-cartao,#FFFFFF)}
+.ma-cab{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.ma-cab b{font-size:13px;font-weight:500}
+.ma-cab .pzm-nav{width:26px;height:26px;font-size:16px}
+.ma-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;text-align:center}
+.ma-g .pzm-sem{padding:0 0 2px;font-size:10px}
+.ma-d{height:24px;line-height:24px;border-radius:6px;font-size:12px}
+.ma-tem{color:#FFFFFF;font-weight:600}
+.ma-fatal{background:#B3261E}.ma-comp{background:#8F5400}.ma-lemb{background:var(--azul,#0E5C58)}.ma-ret{background:#6E6C66}
+.ma-leg{list-style:none;margin:8px 0 0;padding:6px 0 0;border-top:1px solid var(--borda,#E2E0DB);display:flex;flex-direction:column;gap:3px;font-size:12px}
+.ma-leg li{display:flex;align-items:center;gap:6px;min-width:0}
+.ma-leg i{flex:none;width:7px;height:7px;border-radius:50%}
+.ma-leg b{font-weight:600;font-variant-numeric:tabular-nums}
+.ma-leg span{color:var(--cinza,#4A4944)}
+.ma-leg em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--cinza-claro,#686660)}
+.ma-venc b{color:#B3261E}
+.ma-nada{margin:6px 0 0;font-size:12px;color:var(--cinza-claro,#686660)}
+</style>
+</head>
 <body>
 
 <div class="login" id="tela-login">
@@ -7176,7 +7194,7 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.21</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.22</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -24047,7 +24065,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaIncapacidade(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
+        ? `${faixaFixo(k)}${faixaIncapacidade(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${miniAgenda(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>
            <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
@@ -44354,6 +44372,35 @@ const fmtBarra = iso => iso ? `${iso.slice(8,10)}/${iso.slice(5,7)}/${iso.slice(
 const fmtNb = v => { const d = soDig(v); return d.length===10 ? `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6,9)}-${d.slice(9)}` : String(v||""); };
 function nbsDoCaso(k){
   return [...new Set([k.nb, ...(Array.isArray(k.nbs)?k.nbs:[])].map(x=>String(x||"").trim()).filter(Boolean))];
+}
+// F667 · MINI AGENDA DO CLIENTE (pedido do Paulo, 21.11.2026): abaixo do quadro da espécie, o mês com os dias de prazo do
+// cliente marcados e, embaixo, o índice com a data e o tipo de cada prazo do mês. Mesmas datas da aba Prazos (na transição,
+// só o Microsoft To Do); nada escreve no To Do. As setas trocam o mês; o dia marcado com mais de um prazo lista todos.
+let _maMes = null, _maCli = null;
+function miniAgenda(k){
+  if(!k || !k.cliente_id) return "";
+  if(k.cliente_id!==_maCli){ _maCli = k.cliente_id; _maMes = null; }
+  return `<section class="ma" id="ma-cli" aria-label="Agenda do cliente">${maConteudo(k.cliente_id)}</section>`;
+}
+function maMes(n){
+  const d = new Date((_maMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _maMes = d.toISOString().slice(0,7);
+  const el = document.getElementById("ma-cli"); if(el) el.innerHTML = maConteudo(_maCli);
+}
+function maConteudo(cliId){
+  const hj = hoje(), m = _maMes || hj.slice(0,7), [y, mm] = m.split("-").map(Number), off = new Date(y, mm-1, 1, 12).getDay(), nDias = new Date(y, mm, 0).getDate();
+  const its = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || ehRetornoPz(x) || x.todo) && x.data.slice(0,7)===m);
+  its.forEach((x, i)=>prepPz(x, i));
+  const por = new Map(); for(const x of its){ if(!por.has(x.data)) por.set(x.data, []); por.get(x.data).push(x); }
+  const tipo = x => ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete";
+  let g = ["D","S","T","Q","Q","S","S"].map(s=>`<span class="pzm-sem" aria-hidden="true">${s}</span>`).join("") + "<span></span>".repeat(off);
+  for(let d=1; d<=nDias; d++){
+    const iso = `${m}-${String(d).padStart(2,"0")}`, xs = por.get(iso) || [];
+    g += `<span class="ma-d${iso===hj ? " pzm-hoje" : ""}${ehDiaUtil(iso) ? "" : " pzm-nu"}${xs.length ? ` ma-tem ma-${corPz(xs[0])}` : ""}"${xs.length ? ` title="${esc(xs.map(x=>`${tipo(x)}: ${x._titulo}`).join("\n"))}"` : ""}>${d}</span>`;
+  }
+  const leg = its.map(x=>`<li class="${x.data<hj ? "ma-venc" : ""}"><i class="pzm-${corPz(x)}" aria-hidden="true"></i><b>${fmtBarra(x.data).slice(0,5)}</b><span>${esc(tipo(x))}</span>${x._titulo && x._titulo!==tipo(x) ? `<em title="${esc(x._titulo)}">${esc(x._titulo)}</em>` : ""}</li>`).join("");
+  return `<div class="ma-cab"><button type="button" class="pzm-nav" onclick="maMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="maMes(1)" aria-label="Próximo mês">›</button></div>
+    <div class="ma-g">${g}</div>
+    ${leg ? `<ul class="ma-leg">${leg}</ul>` : `<p class="ma-nada">Sem prazos neste mês.</p>`}`;
 }
 const TRAMITA = {escritorio:"Escritório", inss:"INSS", conselho:"Conselho de Recursos", judicial:"Judicial",
   pagamento:"Pagamento", encerrado:"Encerrado", aposentadoria_futura:"Aposentadoria futura"};

@@ -1052,3 +1052,6 @@ F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (lei
 - **F665** (21.11.2026): painel lateral do cliente mostra as 5 últimas anotações da equipe; "Ver anotações anteriores" traz da sexta em diante. Parceria e Parentesco só aparecem quando há alguém cadastrado.
 
 - F666 (21.11.2026): o quadro de etapas saiu da tela do Caso (atualização manual, poluía o andamento); a etapa fica num selo ao lado da espécie, clique muda a etapa; dados no banco preservados para o portal.
+
+## F667 · mini agenda do cliente no Caso (v14.22, 21.11.2026)
+Abaixo do quadro da espécie, o mês com os dias de prazo do cliente marcados e o índice (data, tipo, título). Mesmas datas da aba Prazos (na transição, só Microsoft To Do). `miniAgenda`/`maConteudo` em 27-prazos.js; teste testes/cadastro/f667.js. Corrigido o CSS do F666c que ficara depois do </head>.
