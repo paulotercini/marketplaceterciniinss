@@ -7164,7 +7164,7 @@ html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
 </style>
 </head>
-html .linha-caso.lc5 .lc5-etapa{flex:none;background:none;border:0;padding:0;cursor:pointer}
+html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
 <body>
 
 <div class="login" id="tela-login">
@@ -44776,7 +44776,8 @@ function linhaCaso(k){
     (s=>s?`<button type="button" class="chip lc-susp" onclick="suspenderCaso('${k.id}')" title="${esc(tituloSusp(s))}: clique para alterar ou retomar">⏸ Suspenso · ${esc(rotSusp(s))}</button>`:"")(suspensaoDe(k)),
     (c=>c && !suspensaoDe(k) && k.fase!=="encerrado" ? `<span class="chip lc-susp lc-susp-conf" title="o movimento do ${esc(c.fonte)} fala em suspensão, mas não traz o número do tema">⏸ Suspensão sem tema · <button type="button" class="btn-mini" onclick="suspenderCaso('${k.id}')" title="Informar o tema da suspensão">Suspender<span class="sr-only"> informando o tema</span></button> <button type="button" class="btn-mini" onclick="suspConferirNao('${k.id}')" title="O caso não está suspenso por tema">Não<span class="sr-only"> está suspenso por tema</span></button></span>` : "")((k.ronda||{}).susp_conferir),
     semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:"",
-  ].filter(Boolean).join("");
+    prev && k.etapa ? `<span class="lc5-etapa" role="button" tabindex="0" onclick="escolherEtapa('${k.id}')" title="etapa do caso: clique para mudar">${seloEtapaLista(k)}</span>` : "",   // F666 · o quadro de etapas saiu do caso; a etapa fica aqui
+].filter(Boolean).join("");
   return `<section class="linha-caso lc5" data-n="${n}" aria-label="O caso" style="--lc-cor:${cor}">
     <div class="lc-topo">
       <div class="lc5-cab">
@@ -44788,7 +44789,7 @@ function linhaCaso(k){
         <div class="lc-cab"><b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
           !prev ? esc(tituloProprio(k) || `Caso ${AREAS[areaDe(k)].toLowerCase()}`) : (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b></div>
         <span class="lc5-lugar" title="${esc(dica ? `lista: ${dica}` : "onde o caso está agora")}">${esc(lugar)}</span>
-        ${/* F666 · o quadro de etapas saiu do caso: a fase atual fica num selo ao lado da espécie; o clique muda a etapa */""}${prev && k.etapa ? `<button type="button" class="lc5-etapa" onclick="escolherEtapa('${k.id}')">${seloEtapaLista(k)}</button>` : ""}
+        
         ${menuMais([
           `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
           k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="tl-mais-it desp-bt" role="menuitem" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila e tirar do Meu Dia; se quiser, passar a outra pessoa">✔ Concluir<span class="sr-only"> por hoje</span></button>` : "",

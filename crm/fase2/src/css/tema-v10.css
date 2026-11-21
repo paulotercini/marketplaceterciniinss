@@ -4169,4 +4169,4 @@ html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
 </style>
 </head>
-html .linha-caso.lc5 .lc5-etapa{flex:none;background:none;border:0;padding:0;cursor:pointer}
+html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
