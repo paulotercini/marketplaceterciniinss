@@ -4167,7 +4167,7 @@ html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"],
 html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
 html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
-</style>
-</head>
 html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
 html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;align-self:center}
+</style>
+</head>
