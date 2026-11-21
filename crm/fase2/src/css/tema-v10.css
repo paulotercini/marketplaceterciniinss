@@ -3735,9 +3735,12 @@ html[data-tema="v10"] .app.celular .cel-abas button.on{color:var(--texto);font-w
 html[data-tema="v10"] .app.celular .cel-abas button:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n{min-width:18px;height:18px;border-radius:9px;background:var(--azul);color:#fff;font-size:11px;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n.ca-venc{background:var(--venc,#B3261E)}
-html[data-tema="v10"] .app.celular [data-cel-aba="and"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida,details.incap,.caso-esq){display:none!important}
-html[data-tema="v10"] .app.celular [data-cel-aba="caso"] .painel[data-p="2"] :is(.caso-dir,.caso-pz){display:none!important}
-html[data-tema="v10"] .app.celular [data-cel-aba="caso"] .painel[data-p="2"] .outras-abas[hidden]{display:block!important}
+/* F677 · Casos: no lugar da linha do tempo, os botões dos andamentos; o resumo e os dados do benefício seguem à vista */
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida){display:none!important}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{display:flex!important}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-2col{display:flex;flex-direction:column}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-2col > .caso-dir{display:contents}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{order:-1;margin-top:0}
 html[data-tema="v10"] .app.celular [data-cel-cad="principal"] .painel[data-p="0"] > :not(.cel-principal){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-cad="mais"] .cel-principal > :not(.cel-cad-seg){display:none}
 html[data-tema="v10"] .app.celular .cel-principal{padding:12px 0 4px}
@@ -3760,7 +3763,7 @@ html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button{
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button.on{background:#fff;color:var(--texto);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 html[data-tema="v10"] .app.celular .caso-dir > .sub-menu.menu-andamentos button::after{display:none}
 html[data-tema="v10"] .app.celular.detalhe-aberto ~ .barra-cel{display:flex}
-html[data-tema="v10"] .app.celular .det-principal:not([data-cel-aba="and"]) ~ * .escrever,html[data-tema="v10"] .app.celular .escrever{bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+html[data-tema="v10"] .app.celular .det-principal:not([data-cel-aba="casos"]) ~ * .escrever,html[data-tema="v10"] .app.celular .escrever{bottom:calc(56px + env(safe-area-inset-bottom,0px))}
 html[data-tema="v10"] .app.celular .caso-dir .timeline > li:not(.toque) .tl-cab-fim .tl-barra{display:none}
 html[data-tema="v10"] .app.celular .det-topo .det-mais .tl-mais-menu{left:auto;right:0}
 html[data-tema="v10"] .app.celular .linha-caso .lc-mais-pe{min-height:32px}   /* alvo de toque (11.93 · VCE-05) */   /* o ⋯ ficou no canto direito */
