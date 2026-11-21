@@ -829,6 +829,11 @@ function alcaTrilha(fechada){
 }
 const etapasAbertas = () => ler("crm_etapas")==="1";
 function etapasAlternar(abrir){ guardar("crm_etapas", abrir ? "1" : ""); if(!abrir){ trAjuda = false; trSel = {}; } trRepintar(); }
+// F666 · o caso guarda só as fases (Escritório, INSS, CRPS, Judicial, Tudo) como navegação; as etapas saíram da tela
+function faixaSoFases(k){
+  const t = faixaTrilha(k), i = t ? t.indexOf('class="jn-l"') : -1; if(i<0) return "";
+  return t.slice(0, t.indexOf("</div>", i) + 6).replace('class="tr-faixa ', 'class="tr-so-fases tr-faixa ').replace(/<button class="tr-ajuda[\s\S]*?<\/button>/, "") + "</section>";
+}
 function faixaTrilhaComAlca(k){
   const t = faixaTrilha(k);
   if(!t) return faixaIncapacidade(k);

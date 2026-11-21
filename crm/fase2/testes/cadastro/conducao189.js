@@ -42,7 +42,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   p.on("pageerror", e => erros.push("pageerror: " + e.message));
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
-  await p.waitForSelector("#app.logado");
+  await p.waitForSelector("#app.logado"); await p.evaluate(() => { faixaSoFases = faixaTrilhaComAlca; });   // F666 · a trilha saiu da tela do caso, mas a lógica das etapas segue (portal): a prova a confere inteira
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(([cli, id]) => { abrirFicha(cli); casoSel = id; abaAtiva = 2; subAba = "escritorio"; }, [CLI_CHEIO, CASO1]);
   await p.waitForSelector(".tr-faixa .tr-l");

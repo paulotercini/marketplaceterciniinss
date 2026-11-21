@@ -81,7 +81,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   p.on("pageerror", e => erros.push(e.message));
   p.on("dialog", d => d.accept());
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=v10`);
-  await p.waitForSelector("#app.logado", { timeout: 15000 });
+  await p.waitForSelector("#app.logado", { timeout: 15000 }); await p.evaluate(() => { faixaSoFases = faixaTrilhaComAlca; });   // F666 · a trilha saiu da tela do caso, mas a lógica das etapas segue (portal): a prova a confere inteira
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   await p.evaluate(id => abrirFicha(id), cA.id);

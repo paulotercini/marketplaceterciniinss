@@ -159,7 +159,7 @@ const casoDe = id => T.casos.find(k => k.id === id);
   p.on("pageerror", e => erros.push(e.message));
   p.on("dialog", d => d.accept());
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
-  await p.waitForSelector("#app.logado", { timeout: 15000 });
+  await p.waitForSelector("#app.logado", { timeout: 15000 }); await p.evaluate(() => { faixaSoFases = faixaTrilhaComAlca; });   // F666 · a trilha saiu da tela do caso, mas a lógica das etapas segue (portal): a prova a confere inteira
   await p.waitForFunction(() => typeof D !== "undefined" && D._completo === true && D.cliPorId && D.cliPorId.size > 0);
   const abrir = async (x, tema = "v10") => {
     await p.evaluate(async ([cli, id, tema]) => {
