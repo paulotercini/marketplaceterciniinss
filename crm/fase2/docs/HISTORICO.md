@@ -1056,3 +1056,6 @@ F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (lei
 - F667 (21.11.2026): quadros do Caso renomeados para Andamentos do Escritório, do INSS, do CRPS e do Judicial (pedido do Paulo).
 
 - F668 (21.11.2026): onda 1 do caso em formação (estudo aprovado pelo Paulo). A aba Pré-caso saiu do menu do cliente; o Casos ▾ traz o pré-caso primeiro, com o selo âmbar "Em formação" (ou "Futuro"), e os pré-casos encerrados recolhidos em "Pré-casos encerrados (N)"; o "＋ Novo pré-caso" mora no Casos ▾, e o "＋ Pré-caso" avulso só aparece sem caso nem pré-caso. A tela do caso em formação abre com o quadro no alto: passos do atendimento, lista do To Do, Continuar atendimento, data de retorno, processo anterior e anotações do To Do (só leitura). Nada escreve no To Do. Também corrige o CSS do F666 que ficou fora do `</style>` e aparecia como texto no alto da tela. Teste: testes/cadastro/f601.js.
+
+## F669 · mini agenda do cliente no Caso (v14.22, 21.11.2026)
+Abaixo do quadro da espécie, o mês com os dias de prazo do cliente marcados e o índice (data, tipo, título). Mesmas datas da aba Prazos (na transição, só Microsoft To Do). `miniAgenda`/`maConteudo` em 27-prazos.js; teste testes/cadastro/f667.js. Corrigido o CSS do F666c que ficara depois do </head>.
