@@ -12188,11 +12188,11 @@ function dbQuando(iso){
   const d = dataSP(iso), n = diasEntreIso(d, hoje());
   return `${fmtBarra(d)} ${horaSP(iso)} · ${n<=0 ? "hoje" : n===1 ? "ontem" : `há ${n} dias`}`;
 }
-// F671 · "Data do último andamento: 21/11/2026 - há 2 dias" no cabeçalho e a data e hora antes de cada anotação (pedido do Paulo de 21.11.2026)
+// F671 · "Último há 2 dias" no cabeçalho e a data e hora antes de cada anotação (pedido do Paulo de 21.11.2026)
 function dbUltimo(iso){
   if(!iso) return "";
   const n = diasEntreIso(dataSP(iso), hoje());
-  return `Data do último andamento: ${fmtBarra(dataSP(iso))} - ${n<=0 ? "hoje" : n===1 ? "ontem" : `há ${n} dias`}`;
+  return `Último ${n<=0 ? "hoje" : n===1 ? "ontem" : `há ${n} dias`}`;
 }
 function dbDataHora(iso){
   if(!iso) return "";
