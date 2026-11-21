@@ -175,13 +175,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForTimeout(400);
   conf("no nível 2, data-nivel=2 e a tela inicial é a Agenda", (await nivel()) === "2" && await p.evaluate(() => visao) === "agendaq");
   const itens2 = await p.evaluate(() => [...document.querySelectorAll(".lista-item")].filter(e => e.offsetParent !== null).map(e => e.dataset.v));
-  conf(`no nível 2 a barra mostra a do nível 1 (${itens2.join(", ")})`, ["agendaq,clientes,mencoes,novocliente,whatsapp", "agendaq,clientes,mencoes,whatsapp"].includes(itens2.slice().sort().join()));
+  // F660b · o nível 2 mostra também as listas fixas (pedido do Paulo, 19.11.2026)
+  const fixas2 = "fase:aposentadoria_futura,fase:conselho,fase:escritorio,fase:inss,fase:judicial,fase:marcos,fase:peticao_inicial";
+  conf(`no nível 2 a barra mostra Menções, Agenda, WhatsApp, Clientes e as listas fixas (${itens2.join(", ")})`, [`agendaq,clientes,${fixas2},mencoes,novocliente,whatsapp`, `agendaq,clientes,${fixas2},mencoes,whatsapp`].includes(itens2.slice().sort().join()));
   conf("no nível 2 o botão do Novo Cliente aparece", await vis("#btn-v10-cli"));
   await p.click("#btn-v10-cli"); await p.waitForTimeout(400);
   conf("o Novo Cliente abre no nível 2", await p.evaluate(() => visao) === "novocliente");
   await p.evaluate(id => abrirFicha(id), cX.id); await p.waitForTimeout(600);
   const abas2 = await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].filter(e => e.offsetParent !== null).map(e => [...e.childNodes].filter(n => !(n.classList && n.classList.contains("mt-ponto"))).map(n => n.textContent).join("").trim()));
-  conf(`no nível 2 a ficha continua só no Cadastro e nada grava no caso (${abas2.join(", ")})`, abas2.join() === "Cadastro" && await p.evaluate(() => !podeGravarCaso()));
+  conf(`no nível 2 a ficha mostra Cadastro, Casos, Perícias e Prazos e nada grava no caso (${abas2.join(", ")})`, abas2[0] === "Cadastro" && abas2.slice(1).every(a => /^(Casos|Perícias|Prazos)/.test(a)) && await p.evaluate(() => !podeGravarCaso()));
   conf("no nível 2 a Identificação se edita e traz Dossiê e Atualizar", await vis(".idf-card .cad-lap") && await vis(".idf-dz-run") && await vis('.cad-mini[onclick^="atualizarDossie"]'));
   await p.evaluate(() => { window._abertas = []; window.open = u => { window._abertas.push(u); return {}; }; });
   await p.click(".idf-dz-run"); await p.waitForTimeout(300);

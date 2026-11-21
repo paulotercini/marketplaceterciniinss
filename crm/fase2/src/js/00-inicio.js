@@ -322,6 +322,9 @@ async function desfazerAgora(){
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
 async function api(caminho, opcoes={}, tentativa=0){
+  // F660 · a versão de leitura não grava nada (o banco também recusa, pelas políticas so_leitura_*)
+  if(opcoes.method && opcoes.method!=="GET" && typeof semAnotar==="function" && semAnotar() && /^\/rest\/v1\/(andamentos|andamento_tarefas|tarefas|lembretes|meu_dia)[?/]/.test(caminho)){
+    aviso("Versão de leitura: anotar e alterar prazos não estão disponíveis."); throw new Error("versão de leitura"); }
   if(opcoes.method && opcoes.method!=="GET" && tentativa===0) escritas++;
   const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + caminho, {
     ...opcoes,
@@ -370,8 +373,8 @@ async function linkArquivo(caminho, segundos=120, bucket=BUCKET){
     {method:"POST", body:JSON.stringify({expiresIn:segundos})});
   return CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/storage/v1" + d.signedURL;
 }
-async function abrirAnexo(id){
-  const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
+async function abrirAnexo(id, lista){
+  const a=(lista||D.anexos||[]).find(x=>x.id===id); if(!a) return;
   if(a.origem==="transcricao" && a.texto) return verTranscricao(id);   // F543
   const guia=window.open("", "_blank");            // abrir agora: o navegador
   try{                                             // bloqueia janela tardia

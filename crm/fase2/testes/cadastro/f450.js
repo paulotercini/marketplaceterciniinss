@@ -29,7 +29,7 @@ FIX.tarefas = [{ id: "t-f450", titulo: "Tarefa pessoal fictícia", concluida: fa
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
   const erros = [], patches = [];
   const ctx = await nav.newContext({ viewport: { width: 1440, height: 900 } });
-  await ctx.addInitScript(([u, ss]) => {
+  await ctx.addInitScript(([u, ss]) => { window.PZ_TODOS_TIPOS = true;
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10");

@@ -1125,11 +1125,6 @@ function atalhoDeLista(e){
   if(e.ctrlKey || e.metaKey || e.altKey) return false;
   if(e.key==="ArrowDown"){ e.preventDefault(); return moverCursor(1); }
   if(e.key==="ArrowUp"){ e.preventDefault(); return moverCursor(-1); }
-  if(e.key==="n" || e.key==="N"){
-    const inp = document.getElementById("add-nome");
-    if(!inp) return false;
-    e.preventDefault(); inp.focus(); inp.select(); return true;
-  }
   const cs = cartoesDaLista();
   if(!cs.length || cursorLista < 0 || !cs[cursorLista]) return false;
   const cliId = cs[cursorLista].dataset.cli;

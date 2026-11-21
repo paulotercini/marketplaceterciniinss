@@ -1929,12 +1929,14 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]),
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]):not([data-vv="3"]):not([data-vv="5"]):not(.mt-proc),
 html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),
 html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]),
-html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]),
+html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]):not([data-v^="fase:"]),
 :is(html[data-nivel="0"],html[data-nivel="1"],html[data-nivel="2"]) :is(.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
-.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"]){display:none!important}
+/* F660b · o nível 2 vê as listas fixas (Escritório, INSS, ... Marcos) */
+:is(html[data-nivel="0"],html[data-nivel="1"]) .grupo:has(#grupo-fases){display:none!important}
 html[data-nivel="0"] .barra-cel [data-cel="whatsapp"]{display:none!important}
 /* F355 · o nível 1 é o WhatsApp: conversa, agenda e Identificação; o que grava no caso fica para o nível 2. Na barra do celular, o WhatsApp no lugar do Buscar */
 html[data-nivel="1"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="1"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
@@ -3651,7 +3653,7 @@ html[data-tema="v10"] .tr-ha.tr-longo{color:#B42318;font-weight:500}
 html[data-tema="v10"] .ag-tipo.ag-etapa:not(.ag-velha){background:var(--ff);color:var(--ft);border-color:color-mix(in srgb,var(--fc) 35%,#FFFFFF)}
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
+html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos span.avatar{display:none}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 0 12px;min-width:0;font-size:13px;color:var(--cinza)}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .resumo-lado{margin:0;gap:6px 18px}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .id-min b{font-weight:400;font-size:13px;letter-spacing:0;text-transform:none;color:var(--cinza-claro)}
@@ -4107,5 +4109,67 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 html .timeline.tl-fixos{margin-bottom:12px}
 html .timeline.tl-fixos > li.tl-fixo,html[data-tema="v10"] .painel[data-p="2"] .timeline.tl-fixos > li.tl-card.tl-card.tl-fixo{border:1px solid var(--dk-fatal,#B3261E);box-shadow:inset 3px 0 0 var(--dk-fatal,#B3261E);background:#FFF7F6}
 html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
+/* F645 · o painel lateral do cliente */
+#pcli{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;z-index:900;overflow-y:auto;background:#F7F6F3;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-6px 0 18px rgba(0,0,0,.08);padding:8px 14px 24px;box-sizing:border-box;font-size:14px;color:#1F2A2E}
+#pcli .pcl-topo{display:flex;justify-content:flex-end}
+#pcli .pcl-x{background:none;border:0;font-size:22px;line-height:1;cursor:pointer;color:#555;padding:4px 8px}
+#pcli .pcl-cx{background:#fff;border:1px solid var(--borda,#E7E6E1);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+#pcli h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B6B66;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+#pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
+#pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
+#pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
+#pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
+#pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
+#pcli .pcl-lis{background:#E3F1F0;color:#1D5C63}
+#pcli .pcl-dados{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;margin-top:12px;border-top:1px solid #F0EFEB}
+#pcli .pcl-larga{grid-column:1/-1}
+#pcli .pcl-cop{cursor:copy}
+#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444}
+#pcli .pcl-tipo.fatal{background:#B42318;color:#fff;border-color:#B42318}
+#pcli .pcl-mais{margin-left:auto;background:none;border:1px solid var(--borda,#E7E6E1);border-radius:6px;width:26px;height:26px;font-size:16px;cursor:pointer;color:#1D5C63}
+#pcli .pcl-n{margin-left:6px}
+#pcli .pcl-seg{display:flex;gap:8px;flex-wrap:nowrap}
+#pcli .pcl-seg button{width:34px;height:34px;flex:none;border:0;border-radius:8px;background:#E3E2DD;color:#666;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .15s,box-shadow .15s}
+#pcli .pcl-seg button:hover{color:#1F2A2E}
+#pcli .pcl-seg button.on{background:var(--av);color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--av)}
+#pcli .pcl-tl{border-left:2px solid #E7E6E1;margin:12px 0 4px 11px;padding-left:16px}
+#pcli .pcl-tl .pcl-ult{position:relative;margin-bottom:12px}
+#pcli .pcl-au{position:absolute;left:-28px;top:0;width:22px;height:22px;border-radius:6px;background:var(--av);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+#pcli .pcl-d{display:grid;grid-template-columns:1fr auto;padding:6px 0;border-top:1px solid #F0EFEB}
+#pcli h3 .pcl-n{font-weight:400}
+#pcli .pcl-r{grid-column:1;font-size:12px;color:#6B6B66}
+#pcli .pcl-v{grid-column:1;font-weight:500;overflow-wrap:anywhere}
+#pcli .pcl-ic{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;cursor:pointer;font-size:16px;padding:4px}
+#pcli .pcl-zap svg{width:18px;height:18px;color:#25D366}
+#pcli .pcl-resp{font-size:11px;text-transform:none;letter-spacing:0;background:#2563EB;color:#fff;border-radius:4px;padding:1px 6px}
+#pcli .pcl-tt{margin:0 0 6px}
+#pcli .pcl-venc{margin:0 0 8px;font-weight:700;font-size:16px}
+#pcli .pcl-venc.venc{color:#B42318}
+#pcli .pcl-dias{display:flex;flex-wrap:wrap;gap:6px}
+#pcli .pcl-dias .esp-it{width:auto;border:1px solid var(--borda,#E7E6E1);border-radius:999px;padding:4px 12px;cursor:pointer}
+#pcli .pcl-dias .esp-it:hover{background:#EFEEEB}
+@media (min-width:1100px){body.pcli-aberto main.meio{margin-right:460px}}
+#pcli .mcal{max-width:none}
+#pcli .pcl-outra{display:none}
+@media (max-width:760px){#pcli .pcl-outra{display:inline-block}#pcli:not(.pcl-cal-on) .mcal{display:none}#pcli.pcl-cal-on .pcl-outra{background:var(--pr,#0F5C55);color:#fff}}
+#pcli .mcal-g button{height:32px;aspect-ratio:auto;padding:0}
+#pcli .pcl-dica{font-size:12px;color:#6B6B66;margin:8px 0 0}
+#pcli .pcl-fim{display:flex;justify-content:flex-end;margin-top:8px}
+#pcli .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--borda,#E7E6E1);border-radius:6px}
+#pcli .pcl-ult-h{margin-top:14px}
+#pcli .pcl-ult{white-space:pre-wrap;max-height:240px;overflow:auto}
+#pcli .pcl-ult .ae-cab{display:block;font-size:12px;color:#6B6B66;margin-bottom:4px}
+#pcli .pcl-a{display:flex;justify-content:space-between;gap:8px;width:100%;background:none;border:0;border-top:1px solid #F0EFEB;padding:6px 0;font:inherit;text-align:left;cursor:pointer}
+#pcli .pcl-a span{font-size:12px;color:#6B6B66;white-space:nowrap}
+.cartao.pcli-on{box-shadow:inset 3px 0 0 #1D5C63;background:#EEF5F4}
+.cartao .ag-txt b{cursor:pointer}
+/* F660 · versão de leitura do colaborador: some o que anota, conclui ou muda data */
+html[data-so-leitura] .escrever, html[data-so-leitura] [data-ae], html[data-so-leitura] .tf-acao, html[data-so-leitura] .tf-dt,
+html[data-so-leitura] .pp-com-bt, html[data-so-leitura] .pzc-lk,
+html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"], html[data-so-leitura] [data-pc="anexar"],
+html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
+html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
+#pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
 </style>
 </head>

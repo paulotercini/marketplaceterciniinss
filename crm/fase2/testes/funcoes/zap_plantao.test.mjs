@@ -817,3 +817,19 @@ console.log("F581 plantão ok");
   await a.consultar_vagas({}); await a.encaminhar_equipe({});
   assert.equal(chamou, 2);
 }
+
+// F661 · atendida nos últimos 30 dias não recebe nova oferta de preparação para a perícia
+{
+  const { atendidoHaPouco } = await import("../../zap_plantao/index.ts");
+  const hoje = new Date("2026-11-19T12:00:00Z");
+  const hist = (lista) => async (acao) => (assert.equal(acao, "historico"), { atendimentos: lista });
+  const ontem = { atendimento: true, data: "2026-11-18", inicio: "10:00", profissional: "paulo", titulo: "002 - Cliente Teste Silva" };
+  assert.match(await atendidoHaPouco("Cliente Teste Silva", hist([ontem]), hoje), /18\/11.*Dr\. Paulo/);
+  assert.equal(await atendidoHaPouco("Cliente Teste Silva", hist([{ ...ontem, data: "2026-09-01" }]), hoje), null, "antigo não conta");
+  assert.equal(await atendidoHaPouco("Outra Pessoa Souza", hist([ontem]), hoje), null, "outro nome não conta");
+  assert.equal(await atendidoHaPouco(undefined, hist([ontem]), hoje), null);
+  const p = { tipo: "perícia médica", data: "23/11/2026", hora: "14:15", local: null, profissional: "paulo", ate_hora: "11:15", limite_presenca: "15/11/2026", telefone_em: "20/11/2026" };
+  const base = { contato: "Cliente Teste", advogado: null, advogados: null, modo: "plantao", respostas: 0, horario: true, agenda: true, agora: "", mensagens: [], cliente: null };
+  assert.match(promptPlantao({ ...base, pericia: { ...p, atendido: "quarta, 18/11" } }), /já foi atendida.*não ofereça/);
+  assert.match(promptPlantao({ ...base, pericia: p }), /Ofereça um atendimento presencial/);
+}

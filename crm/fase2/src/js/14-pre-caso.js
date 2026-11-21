@@ -259,8 +259,8 @@ async function transcreverAtendimento(){
       return d;
     };
     let d;
-    if(g.segs.length === 1) d = await post("", g.segs[0], g.segs[0].type || "audio/webm");
-    else {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
+    // F644: a transcrição e o resumo vão em chamadas separadas; juntos, o atendimento longo passava dos 150 s da função (504)
+    {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
       const textos = []; let seg = 0, fal = 0;
       for(const b of g.segs){
         let x; try{ x = await post(`?resumo=nao&desde=${Math.round(seg)}`, b, b.type || "audio/webm"); }
@@ -297,7 +297,9 @@ async function transcreverAtendimento(){
 }
 async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
   const c = cliId && D.cliPorId.get(cliId); if(!c || !texto) return false;
-  const k = casoId && D.casoPorId.get(casoId);
+  let k = casoId && D.casoPorId.get(casoId);
+  // F643: o pré-caso não mostra andamentos; a anotação vai às do atendimento, presa a ele
+  const pcK = ehPreCaso(k) ? k : null; if(pcK) k = null;
   const nota = resumo || `Transcrição do atendimento ${cab}.`, integral = `${nota}\n\nTranscrição completa ${cab}:\n${texto}`;
   let and = null;
   if(k){   // F543: com caso, o resumo é anotação do caso
@@ -326,7 +328,7 @@ async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
     if(clienteAberto === cliId) repintarFicha();
     return true;
   }
-  const noAtend = !!document.getElementById("atend-nota"), pc = noAtend ? preCasoAberto(c) : null;
+  const noAtend = !!pcK || !!document.getElementById("atend-nota"), pc = pcK ? {id:(pcK.precaso||{}).id||pcK.id} : noAtend ? preCasoAberto(c) : null;
   const n = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto: an ? nota : integral, gravacao:true,
     ...(an ? {anexos:[{id:an.id, nome:an.nome}]} : {}),
     ...(noAtend ? (pc ? {precaso_id:pc.id} : {}) : {origem:"rapida"})};   // fora do atendimento fica "para distribuir" (F404)

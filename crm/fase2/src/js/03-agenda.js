@@ -1205,3 +1205,103 @@ function dbAndamento(k, ands, fase, par){
     ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts(dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`))}
     ${abre ? `<div class="db-pn" role="region" aria-label="${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores no ${esc(it.onde)}"><h4>${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores</h4>${it.ant()}</div>` : ""}</section>`;
 }
+// F645 · O PAINEL LATERAL DO CLIENTE (protótipo "Painel do Cliente Tercini", pedido do Paulo de 18.11.2026). O clique no
+// NOME do cliente nas listas abre à direita, sem sair da lista: nome (copia), espécie e lista, Abrir ficha; CPF, senha do
+// Meu INSS, telefone com WhatsApp, parceria e parentesco; a tarefa com Hoje, Amanhã, Próx. segunda, +7 e +30 dias e o
+// mês à vista (um clique reagenda, só no CRM: o To Do segue somente leitura); anexos; anotação; última anotação.
+// O clique no resto da linha continua estendendo a linha (F455) e o Ctrl+clique abre a ficha.
+let _pcli = null;   // {el, cliId, casos, sel}
+// no navegador automatizado as provas antigas esperam a linha estendida; o painel liga com crm_painel_cli = 1
+const pcliLigado = () => !navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_painel_cli")==="1"; }catch(e){ return false; } })();
+function abrirPainelCli(el){
+  fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
+  _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};
+  pcliMontar();
+}
+function fecharPainelCli(){ _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
+async function pcliMontar(){
+  if(!_pcli) return;
+  // a linha pode ter sido redesenhada depois de uma ação: procura a mesma de novo
+  const el = [...document.querySelectorAll(".cartao[data-cli]")].find(x=>x.dataset.cli===_pcli.cliId && (x.dataset.sel||"")===_pcli.sel && (x.dataset.casos||"")===_pcli.casos) || _pcli.el;
+  _pcli.el = el;
+  const cli = D.cliPorId.get(_pcli.cliId); if(!cli) return fecharPainelCli();
+  const it = document.body.contains(el) ? itemDaLinha(el) : itemDoCaso(_pcli.casos.split(",").map(id=>D.casoPorId.get(id)).find(Boolean));
+  const k = it && it.k, ks = _pcli.casos.split(",").map(id=>D.casoPorId.get(id)).filter(Boolean);
+  document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); el.classList.add("pcli-on");
+  let p = document.getElementById("pcli");
+  if(!p){ p = document.createElement("aside"); p.id = "pcli"; p.setAttribute("aria-label","Painel do cliente"); document.body.appendChild(p); }
+  document.body.classList.add("pcli-aberto");
+  const tel = telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0];
+  const atr = k ? (D.atrDoCaso.get(k.id)||[]) : [], resp = (it && it.tc ? [it.tc.colaborador_id] : atr).map(id=>D.colPorId.get(id)).filter(Boolean);
+  const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
+  const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
+  const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
+  p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
+    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
+      <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
+      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
+      <div class="pcl-dados">
+      ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
+      ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
+      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
+      ${parceriaDe(cli, ks) ? dado("Parceria", esc(parceriaDe(cli, ks))) : ""}
+      <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
+    ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
+      <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
+      ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}<button type="button" class="esp-it pcl-outra" data-pc="outra" title="Escolher outra data">Outra</button></div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}" title="${esc(c.nome.split(" ")[0])}" aria-label="${esc(c.nome.split(" ")[0])}" style="--av:${c.cor}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.inicial||c.nome[0])}</button>`).join("")}</div></section>
+    <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="2" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
+      <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
+      <div class="pcl-tl"><div class="pcl-ult">Carregando…</div></div>
+      <button type="button" class="ae-mais" data-pc="ant">Ver anotações anteriores</button><div class="pcl-ant"></div></section>` : ""}`;
+  Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
+  ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
+  p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
+  const cid = cli.id;
+  // F661 · a foto do WhatsApp ao lado do nome, como na ficha
+  if(cli.foto_url) assinarFotosZap([cli]).then(()=>{ const u = zapFotos.get(cli.foto_url), av = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-av");
+    if(u && av) av.outerHTML = `<img class="avatar foto-zap pcl-av" src="${esc(u)}" alt="foto de ${esc(cli.nome)} no WhatsApp" title="clique para ampliar" onclick="verFotoGrande(this.src)">`; });
+  api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
+    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(!s) return; const t = parentesTexto(cli, v||[]); t ? s.textContent = t : s.closest(".pcl-d").remove(); }); // F665 · sem parente, o campo some
+
+  // F665 · as 5 últimas anotações à vista; "Ver anotações anteriores" traz da sexta em diante (pedido do Paulo, 21.11.2026)
+  if(_pcli.casos) api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=5`).catch(()=>null).then(r=>{
+    const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
+    if(r==null) return t.textContent = "Não carregou: tente de novo";
+    if(!r.length) return t.textContent = "Sem anotação da equipe neste caso.";
+    t.outerHTML = r.map(a=>`<div class="pcl-ult">${pclNota(a, 1000)}</div>`).join("");
+  });
+}
+// F663 · proposta A (19.11.2026): anotação em linha do tempo com a inicial quadrada do autor na cor dele
+function pclNota(a, max){ const au = a.autor_id && D.colPorId.get(a.autor_id), t = a.texto||"";
+  return `${au ? `<span class="pcl-au" style="--av:${au.cor}" title="${esc(au.nome.split(" ")[0])}">${esc(au.inicial||au.nome[0])}</span>` : ""}<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(max ? t.slice(0,max) : t)}`; }
+async function pcliAcao(p, b, cli){
+  const a = b.dataset.pc;
+  if(a==="fechar") return fecharPainelCli();
+  if(a==="nome") return copiar(cli.nome, "Nome copiado");
+  if(a==="ant"){ const box = p.querySelector(".pcl-ant"); if(box.innerHTML){ box.innerHTML = ""; b.textContent = "Ver anotações anteriores"; return; }
+    b.textContent = "Ocultar anotações anteriores"; box.textContent = "Carregando…";
+    const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=5&limit=50`).catch(()=>null);
+    if(!box.isConnected) return;
+    box.classList.add("pcl-tl"); box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>`<div class="pcl-ult">${pclNota(x)}</div>`).join("") : "Sem anotações anteriores.";
+    return; }
+  if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
+  if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
+    if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
+  if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
+  if(a==="outra") return p.classList.toggle("pcl-cal-on"); // F664 · no celular o calendário só abre pelo Outra
+  if(a==="dia") return pcliReagendar(p, b.dataset.data);
+  if(a==="para"){ const k = p._it && p._it.k, de = p._atual, para = b.dataset.id; if(!k || para===de) return;
+    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
+    repintaExt(k); pcliMontar(); return avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); }
+  if(a==="anotar"){
+    const ta = p.querySelector(".ae-nota"), txt = ta.value.trim(), k = p._it && p._it.k; if(!txt || !k) return aviso("Escreva a anotação");
+    let undo; try{ undo = await notaNoCaso(k, txt); }catch(e){ return aviso("Não gravou: tente de novo"); }
+    ta.value = ""; repintaExt(k); pcliMontar();
+    avisoDesfazer("Anotado", async ()=>{ await undo(); repintaExt(k); pcliMontar(); aviso("Anotação desfeita", false); }, 30000);
+  }
+}
+async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });

@@ -416,24 +416,6 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   #conteudo-meio,.det-rolagem{scroll-padding-bottom:150px}
   /* F344 · o WhatsApp tem altura fixa e rola por dentro: a reserva fazia a tela inteira rolar e cortar o topo */
   .meio.zap-v #conteudo-meio::after{display:none}
-  /* ＋ Adicionar: sempre no pé da lista, como no To Do */
-  .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
-    display:flex;gap:8px;align-items:center;background:inherit;
-    border-top:1px solid var(--borda);box-shadow:0 -6px 14px -10px rgba(30,32,36,.35)}
-  .add-mais{color:var(--azul);display:inline-flex;line-height:1}
-  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:var(--raio);
-    font-size:13px;background:var(--branco);outline:none;box-shadow:var(--sombra)}
-  .add-rodape input:focus{border-color:var(--azul)}
-  /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
-     botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
-  .add-rodape #add-nome{flex:1 1 120px;min-width:0}
-  .add-rodape #add-ben{flex:0 1 210px;min-width:0}
-  .add-rodape button{flex:none}
-  .app.detalhe-aberto .add-rodape #add-ben{display:none}
-  .add-rodape button{padding:10px 18px;border:none;border-radius:8px;background:var(--azul);
-    color:#fff;font-weight:600;cursor:pointer}
-  .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
-  .app.celular .add-rodape #add-ben{width:100%;order:3}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
   /* título da lista (espec. 6.1): 19px, azul-escuro FIXO, ícone SVG ao lado */
   .meio-topo h1{font-size:19px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px;
@@ -4942,12 +4924,14 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .cli-sit-t{font-style:normal;font-weight:600}.cli-sit-t.ativo{color:#1f6b41}.cli-sit-t.formacao{color:#8a6500}.cli-sit-t.inativo{color:#a3291c}
 @media (hover:hover) and (pointer:fine){.cli-todos-it:hover{background:var(--fundo2,#f5f5f2)}}
 /* F249 · o nível 0 (primeiro acesso): na ficha só o Cadastro (Identificação); na barra só a Agenda, e o Novo Cliente fica no botão fixo */
-html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]),
+html[data-nivel="0"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="1"] .menu-topo .mt:not([data-vv="0"]),html[data-nivel="2"] .menu-topo .mt:not([data-vv="0"]):not([data-vv="3"]):not([data-vv="5"]):not(.mt-proc),
 html[data-nivel="0"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]),
 html[data-nivel="1"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]),
-html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]),
+html[data-nivel="2"] .lista-item:not([data-v="agendaq"]):not([data-v="clientes"]):not([data-v="mencoes"]):not([data-v="whatsapp"]):not([data-v="novocliente"]):not([data-v^="fase:"]),
 :is(html[data-nivel="0"],html[data-nivel="1"],html[data-nivel="2"]) :is(.cel-tudo,#btn-v10-anotar,.rapida-caixa,#fab-rapida,
-.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"],.grupo:has(#grupo-fases)){display:none!important}
+.barra-cel [data-cel="meudia"],.barra-cel [data-cel="menu"]){display:none!important}
+/* F660b · o nível 2 vê as listas fixas (Escritório, INSS, ... Marcos) */
+:is(html[data-nivel="0"],html[data-nivel="1"]) .grupo:has(#grupo-fases){display:none!important}
 html[data-nivel="0"] .barra-cel [data-cel="whatsapp"]{display:none!important}
 /* F355 · o nível 1 é o WhatsApp: conversa, agenda e Identificação; o que grava no caso fica para o nível 2. Na barra do celular, o WhatsApp no lugar do Buscar */
 html[data-nivel="1"] :is(.zp-tarefas,[onclick^="levarRobo"]),html[data-nivel="1"] .barra-cel .so-n0[data-cel="busca"]{display:none!important}
@@ -6664,7 +6648,7 @@ html[data-tema="v10"] .tr-ha.tr-longo{color:#B42318;font-weight:500}
 html[data-tema="v10"] .ag-tipo.ag-etapa:not(.ag-velha){background:var(--ff);color:var(--ft);border-color:color-mix(in srgb,var(--fc) 35%,#FFFFFF)}
 /* o cabeçalho da ficha em duas linhas: o nome e os botões; embaixo CPF, Meu INSS, telefone, advogado e a situação */
 html[data-tema="v10"] :is(.cli-adv,.atend-acoes) .fp2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos .avatar{display:none}
+html[data-tema="v10"] .app:not(.celular) .det-topo .cli-casos span.avatar{display:none}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 0 12px;min-width:0;font-size:13px;color:var(--cinza)}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .resumo-lado{margin:0;gap:6px 18px}
 html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .id-min b{font-weight:400;font-size:13px;letter-spacing:0;text-transform:none;color:var(--cinza-claro)}
@@ -7116,10 +7100,72 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 .rs5-acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
 .rs5-prop{margin-top:6px;padding:8px;border-radius:6px;background:color-mix(in srgb,var(--rs-fase) 8%,transparent);font-size:12px}
 .rs5 textarea{width:100%;min-height:90px;font:inherit;box-sizing:border-box}
-/* F647 · a anotação com prazo em aberto, fixada no topo, em vermelho */
+/* F666 · a anotação com prazo em aberto, fixada no topo, em vermelho */
 html .timeline.tl-fixos{margin-bottom:12px}
 html .timeline.tl-fixos > li.tl-fixo,html[data-tema="v10"] .painel[data-p="2"] .timeline.tl-fixos > li.tl-card.tl-card.tl-fixo{border:1px solid var(--dk-fatal,#B3261E);box-shadow:inset 3px 0 0 var(--dk-fatal,#B3261E);background:#FFF7F6}
 html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
+/* F645 · o painel lateral do cliente */
+#pcli{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;z-index:900;overflow-y:auto;background:#F7F6F3;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-6px 0 18px rgba(0,0,0,.08);padding:8px 14px 24px;box-sizing:border-box;font-size:14px;color:#1F2A2E}
+#pcli .pcl-topo{display:flex;justify-content:flex-end}
+#pcli .pcl-x{background:none;border:0;font-size:22px;line-height:1;cursor:pointer;color:#555;padding:4px 8px}
+#pcli .pcl-cx{background:#fff;border:1px solid var(--borda,#E7E6E1);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+#pcli h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6B6B66;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+#pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
+#pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
+#pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
+#pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
+#pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
+#pcli .pcl-lis{background:#E3F1F0;color:#1D5C63}
+#pcli .pcl-dados{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;margin-top:12px;border-top:1px solid #F0EFEB}
+#pcli .pcl-larga{grid-column:1/-1}
+#pcli .pcl-cop{cursor:copy}
+#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444}
+#pcli .pcl-tipo.fatal{background:#B42318;color:#fff;border-color:#B42318}
+#pcli .pcl-mais{margin-left:auto;background:none;border:1px solid var(--borda,#E7E6E1);border-radius:6px;width:26px;height:26px;font-size:16px;cursor:pointer;color:#1D5C63}
+#pcli .pcl-n{margin-left:6px}
+#pcli .pcl-seg{display:flex;gap:8px;flex-wrap:nowrap}
+#pcli .pcl-seg button{width:34px;height:34px;flex:none;border:0;border-radius:8px;background:#E3E2DD;color:#666;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:background .15s,box-shadow .15s}
+#pcli .pcl-seg button:hover{color:#1F2A2E}
+#pcli .pcl-seg button.on{background:var(--av);color:#fff;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--av)}
+#pcli .pcl-tl{border-left:2px solid #E7E6E1;margin:12px 0 4px 11px;padding-left:16px}
+#pcli .pcl-tl .pcl-ult{position:relative;margin-bottom:12px}
+#pcli .pcl-au{position:absolute;left:-28px;top:0;width:22px;height:22px;border-radius:6px;background:var(--av);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+#pcli .pcl-d{display:grid;grid-template-columns:1fr auto;padding:6px 0;border-top:1px solid #F0EFEB}
+#pcli h3 .pcl-n{font-weight:400}
+#pcli .pcl-r{grid-column:1;font-size:12px;color:#6B6B66}
+#pcli .pcl-v{grid-column:1;font-weight:500;overflow-wrap:anywhere}
+#pcli .pcl-ic{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;cursor:pointer;font-size:16px;padding:4px}
+#pcli .pcl-zap svg{width:18px;height:18px;color:#25D366}
+#pcli .pcl-resp{font-size:11px;text-transform:none;letter-spacing:0;background:#2563EB;color:#fff;border-radius:4px;padding:1px 6px}
+#pcli .pcl-tt{margin:0 0 6px}
+#pcli .pcl-venc{margin:0 0 8px;font-weight:700;font-size:16px}
+#pcli .pcl-venc.venc{color:#B42318}
+#pcli .pcl-dias{display:flex;flex-wrap:wrap;gap:6px}
+#pcli .pcl-dias .esp-it{width:auto;border:1px solid var(--borda,#E7E6E1);border-radius:999px;padding:4px 12px;cursor:pointer}
+#pcli .pcl-dias .esp-it:hover{background:#EFEEEB}
+@media (min-width:1100px){body.pcli-aberto main.meio{margin-right:460px}}
+#pcli .mcal{max-width:none}
+#pcli .pcl-outra{display:none}
+@media (max-width:760px){#pcli .pcl-outra{display:inline-block}#pcli:not(.pcl-cal-on) .mcal{display:none}#pcli.pcl-cal-on .pcl-outra{background:var(--pr,#0F5C55);color:#fff}}
+#pcli .mcal-g button{height:32px;aspect-ratio:auto;padding:0}
+#pcli .pcl-dica{font-size:12px;color:#6B6B66;margin:8px 0 0}
+#pcli .pcl-fim{display:flex;justify-content:flex-end;margin-top:8px}
+#pcli .ae-nota{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--borda,#E7E6E1);border-radius:6px}
+#pcli .pcl-ult-h{margin-top:14px}
+#pcli .pcl-ult{white-space:pre-wrap;max-height:240px;overflow:auto}
+#pcli .pcl-ult .ae-cab{display:block;font-size:12px;color:#6B6B66;margin-bottom:4px}
+#pcli .pcl-a{display:flex;justify-content:space-between;gap:8px;width:100%;background:none;border:0;border-top:1px solid #F0EFEB;padding:6px 0;font:inherit;text-align:left;cursor:pointer}
+#pcli .pcl-a span{font-size:12px;color:#6B6B66;white-space:nowrap}
+.cartao.pcli-on{box-shadow:inset 3px 0 0 #1D5C63;background:#EEF5F4}
+.cartao .ag-txt b{cursor:pointer}
+/* F660 · versão de leitura do colaborador: some o que anota, conclui ou muda data */
+html[data-so-leitura] .escrever, html[data-so-leitura] [data-ae], html[data-so-leitura] .tf-acao, html[data-so-leitura] .tf-dt,
+html[data-so-leitura] .pp-com-bt, html[data-so-leitura] .pzc-lk,
+html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"], html[data-so-leitura] [data-pc="anexar"],
+html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
+html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
+#pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
 </style>
 </head>
 <body>
@@ -7228,14 +7274,6 @@ html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
     </div>
     <div class="meio-sub" id="sub-lista"></div>
     <div id="conteudo-meio"></div>
-    <!-- como no To Do: o campo de acrescentar fica sempre no pé da lista -->
-    <div class="add-rodape" id="add-rodape" style="display:none">
-      <span class="add-mais"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-      <input id="add-nome" placeholder="Adicionar cliente nesta lista (nome, ou Nome #CPF)"
-        autocomplete="off" enterkeyhint="done">
-      <input id="add-ben" list="lista-beneficios" placeholder="benefício (opcional)">
-      <button onclick="addNaLista()">Adicionar</button>
-    </div>
   </main>
   <aside class="detalhe" id="detalhe"></aside>
 </div>
@@ -7583,6 +7621,9 @@ async function desfazerAgora(){
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
 async function api(caminho, opcoes={}, tentativa=0){
+  // F660 · a versão de leitura não grava nada (o banco também recusa, pelas políticas so_leitura_*)
+  if(opcoes.method && opcoes.method!=="GET" && typeof semAnotar==="function" && semAnotar() && /^\/rest\/v1\/(andamentos|andamento_tarefas|tarefas|lembretes|meu_dia)[?/]/.test(caminho)){
+    aviso("Versão de leitura: anotar e alterar prazos não estão disponíveis."); throw new Error("versão de leitura"); }
   if(opcoes.method && opcoes.method!=="GET" && tentativa===0) escritas++;
   const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + caminho, {
     ...opcoes,
@@ -7631,8 +7672,8 @@ async function linkArquivo(caminho, segundos=120, bucket=BUCKET){
     {method:"POST", body:JSON.stringify({expiresIn:segundos})});
   return CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/storage/v1" + d.signedURL;
 }
-async function abrirAnexo(id){
-  const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
+async function abrirAnexo(id, lista){
+  const a=(lista||D.anexos||[]).find(x=>x.id===id); if(!a) return;
   if(a.origem==="transcricao" && a.texto) return verTranscricao(id);   // F543
   const guia=window.open("", "_blank");            // abrir agora: o navegador
   try{                                             // bloqueia janela tardia
@@ -8838,6 +8879,7 @@ function casosDaFase(f){
   // Tarefas com Prazo é a LISTA FIXA do To Do (não "tudo que tem data") —
   // a agenda geral por data fica na visão Planejado.
   if(f==="prazo") return ativos().filter(k=>listaDe(k)==="🗓 Tarefas com Prazo");
+  if(f==="marcos") return ativos().filter(listaMarcos);   // F660
   return ativos().filter(k=>k.fase===f);
 }
 // mover caso de lista, como o "Mover" do botão direito no To Do
@@ -9617,7 +9659,7 @@ function montarSidebar(){
     // Listas do escritório, antes das fases; Visões some inteira
     // F220 · as listas e as fases dependem do cargo (listasDoColab)
     const pode = listasDoColab();
-    const fasesColab = ["escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura"].filter(f=>pode.includes("fase:"+f));
+    const fasesColab = ["escritorio","inss","conselho","judicial","peticao_inicial","aposentadoria_futura","marcos"].filter(f=>pode.includes("fase:"+f));
     // F187 · o WhatsApp mora em Visões (que some para o colaborador): aqui ele
     // entra nas listas, porque é onde o atendente trabalha
     document.getElementById("grupo-dinamicas").innerHTML = [...din, ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
@@ -9628,9 +9670,9 @@ function montarSidebar(){
       .map(([id,rot,n])=>`<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
         (id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""} · ${n||0} hoje">${n?`${nVenc} · ${n}`:nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");   // F236 · vencidas · hoje, como a tela
     document.getElementById("grupo-fases").innerHTML =
-      din.filter(([id])=>["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
+      din.filter(([id])=>["particulares","rotinas"].includes(id) && !(soLeitura() && !pode.includes(id))).map(([id,rot,n])=>
         `<div class="lista-item" role="button" tabindex="0" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
-      + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f,"🙏 Aposentadorias futuras"])[1];
+      + fasesColab.map(f=>{ const rot=(FASES.find(x=>x[0]===f)||[f, f==="marcos" ? "☕ Marcos" : "🙏 Aposentadorias futuras"])[1];
           const n = f==="aposentadoria_futura" ? cardsApos().length : casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
           return `<div class="lista-item" role="button" tabindex="0" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`
             + (f==="aposentadoria_futura" ? itemContrib(rotu) : ""); }).join("");
@@ -12214,6 +12256,106 @@ function dbAndamento(k, ands, fase, par){
     ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts(dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`))}
     ${abre ? `<div class="db-pn" role="region" aria-label="${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores no ${esc(it.onde)}"><h4>${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores</h4>${it.ant()}</div>` : ""}</section>`;
 }
+// F645 · O PAINEL LATERAL DO CLIENTE (protótipo "Painel do Cliente Tercini", pedido do Paulo de 18.11.2026). O clique no
+// NOME do cliente nas listas abre à direita, sem sair da lista: nome (copia), espécie e lista, Abrir ficha; CPF, senha do
+// Meu INSS, telefone com WhatsApp, parceria e parentesco; a tarefa com Hoje, Amanhã, Próx. segunda, +7 e +30 dias e o
+// mês à vista (um clique reagenda, só no CRM: o To Do segue somente leitura); anexos; anotação; última anotação.
+// O clique no resto da linha continua estendendo a linha (F455) e o Ctrl+clique abre a ficha.
+let _pcli = null;   // {el, cliId, casos, sel}
+// no navegador automatizado as provas antigas esperam a linha estendida; o painel liga com crm_painel_cli = 1
+const pcliLigado = () => !navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_painel_cli")==="1"; }catch(e){ return false; } })();
+function abrirPainelCli(el){
+  fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
+  _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};
+  pcliMontar();
+}
+function fecharPainelCli(){ _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
+async function pcliMontar(){
+  if(!_pcli) return;
+  // a linha pode ter sido redesenhada depois de uma ação: procura a mesma de novo
+  const el = [...document.querySelectorAll(".cartao[data-cli]")].find(x=>x.dataset.cli===_pcli.cliId && (x.dataset.sel||"")===_pcli.sel && (x.dataset.casos||"")===_pcli.casos) || _pcli.el;
+  _pcli.el = el;
+  const cli = D.cliPorId.get(_pcli.cliId); if(!cli) return fecharPainelCli();
+  const it = document.body.contains(el) ? itemDaLinha(el) : itemDoCaso(_pcli.casos.split(",").map(id=>D.casoPorId.get(id)).find(Boolean));
+  const k = it && it.k, ks = _pcli.casos.split(",").map(id=>D.casoPorId.get(id)).filter(Boolean);
+  document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); el.classList.add("pcli-on");
+  let p = document.getElementById("pcli");
+  if(!p){ p = document.createElement("aside"); p.id = "pcli"; p.setAttribute("aria-label","Painel do cliente"); document.body.appendChild(p); }
+  document.body.classList.add("pcli-aberto");
+  const tel = telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0];
+  const atr = k ? (D.atrDoCaso.get(k.id)||[]) : [], resp = (it && it.tc ? [it.tc.colaborador_id] : atr).map(id=>D.colPorId.get(id)).filter(Boolean);
+  const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
+  const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
+  const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
+  p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
+    <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
+      <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
+      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
+      <div class="pcl-dados">
+      ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
+      ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
+      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
+      ${parceriaDe(cli, ks) ? dado("Parceria", esc(parceriaDe(cli, ks))) : ""}
+      <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
+    ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
+      <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
+      ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}<button type="button" class="esp-it pcl-outra" data-pc="outra" title="Escolher outra data">Outra</button></div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}" title="${esc(c.nome.split(" ")[0])}" aria-label="${esc(c.nome.split(" ")[0])}" style="--av:${c.cor}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.inicial||c.nome[0])}</button>`).join("")}</div></section>
+    <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="2" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
+      <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
+      <div class="pcl-tl"><div class="pcl-ult">Carregando…</div></div>
+      <button type="button" class="ae-mais" data-pc="ant">Ver anotações anteriores</button><div class="pcl-ant"></div></section>` : ""}`;
+  Object.assign(p, {_it:it, _el:el, _atual:atr[0]||""});
+  ligarMiniCal(p.querySelector(".mcal"), d => pcliReagendar(p, d));
+  p.onclick = e => { const b = e.target.closest("[data-pc]"); if(b){ e.stopPropagation(); pcliAcao(p, b, cli); } };
+  const cid = cli.id;
+  // F661 · a foto do WhatsApp ao lado do nome, como na ficha
+  if(cli.foto_url) assinarFotosZap([cli]).then(()=>{ const u = zapFotos.get(cli.foto_url), av = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-av");
+    if(u && av) av.outerHTML = `<img class="avatar foto-zap pcl-av" src="${esc(u)}" alt="foto de ${esc(cli.nome)} no WhatsApp" title="clique para ampliar" onclick="verFotoGrande(this.src)">`; });
+  api(`/rest/v1/vinculos?select=*&or=(cliente_id.eq.${cid},ligado_a.eq.${cid})`).catch(()=>[]).then(v=>{
+    const s = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-par"); if(!s) return; const t = parentesTexto(cli, v||[]); t ? s.textContent = t : s.closest(".pcl-d").remove(); }); // F665 · sem parente, o campo some
+
+  // F665 · as 5 últimas anotações à vista; "Ver anotações anteriores" traz da sexta em diante (pedido do Paulo, 21.11.2026)
+  if(_pcli.casos) api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&limit=5`).catch(()=>null).then(r=>{
+    const t = _pcli && _pcli.cliId===cid && p.querySelector(".pcl-ult"); if(!t) return;
+    if(r==null) return t.textContent = "Não carregou: tente de novo";
+    if(!r.length) return t.textContent = "Sem anotação da equipe neste caso.";
+    t.outerHTML = r.map(a=>`<div class="pcl-ult">${pclNota(a, 1000)}</div>`).join("");
+  });
+}
+// F663 · proposta A (19.11.2026): anotação em linha do tempo com a inicial quadrada do autor na cor dele
+function pclNota(a, max){ const au = a.autor_id && D.colPorId.get(a.autor_id), t = a.texto||"";
+  return `${au ? `<span class="pcl-au" style="--av:${au.cor}" title="${esc(au.nome.split(" ")[0])}">${esc(au.inicial||au.nome[0])}</span>` : ""}<span class="ae-cab">${esc(fmtBarra(dataSP(a.criado_em)))}${au ? " · "+esc(au.nome.split(" ")[0]) : ""}</span>${esc(max ? t.slice(0,max) : t)}`; }
+async function pcliAcao(p, b, cli){
+  const a = b.dataset.pc;
+  if(a==="fechar") return fecharPainelCli();
+  if(a==="nome") return copiar(cli.nome, "Nome copiado");
+  if(a==="ant"){ const box = p.querySelector(".pcl-ant"); if(box.innerHTML){ box.innerHTML = ""; b.textContent = "Ver anotações anteriores"; return; }
+    b.textContent = "Ocultar anotações anteriores"; box.textContent = "Carregando…";
+    const r = await api(`/rest/v1/andamentos?select=texto,criado_em,autor_id&caso_id=in.(${_pcli.casos})&origem=not.in.(${[...new Set([...ORIGENS_ROBO, ...ORIGENS_OFICIAIS])].join(",")})&excluir=not.is.true&order=criado_em.desc&offset=5&limit=50`).catch(()=>null);
+    if(!box.isConnected) return;
+    box.classList.add("pcl-tl"); box.innerHTML = r==null ? "Não carregou: tente de novo" : r.length ? r.map(x=>`<div class="pcl-ult">${pclNota(x)}</div>`).join("") : "Sem anotações anteriores.";
+    return; }
+  if(a==="ficha"){ const el = p._el; fecharPainelCli(); return document.body.contains(el) ? abrirDaLinha(el) : abrirFicha(cli.id); }
+  if(a==="senha"){ const cr = await senhaMeuInss(cli.id), s = p.querySelector(".pcl-senha"); if(!cr) return aviso("Sem senha do Meu INSS na ficha");
+    if(s.dataset.vis){ return copiar(cr.valor, "Senha copiada 📋"); } s.textContent = cr.valor; s.dataset.vis = 1; b.title = "Copiar a senha"; return; }
+  if(a==="zap"){ const tel = celular() && (telefonesDe(cli).find(t=>t.zap) || telefonesDe(cli)[0]); fecharPainelCli(); return tel ? zapDoNumero(tel.numero) : fichaComZap(cli.id); }
+  if(a==="outra") return p.classList.toggle("pcl-cal-on"); // F664 · no celular o calendário só abre pelo Outra
+  if(a==="dia") return pcliReagendar(p, b.dataset.data);
+  if(a==="para"){ const k = p._it && p._it.k, de = p._atual, para = b.dataset.id; if(!k || para===de) return;
+    const u = await passarComDesfazer(k, para, de).catch(()=>null); if(!u) return aviso("Não gravou: tente de novo");
+    repintaExt(k); pcliMontar(); return avisoDesfazer(`Atribuído a ${D.colPorId.get(para).nome.split(" ")[0]}`, async ()=>{ await u(); repintaExt(k); pcliMontar(); }, 30000); }
+  if(a==="anotar"){
+    const ta = p.querySelector(".ae-nota"), txt = ta.value.trim(), k = p._it && p._it.k; if(!txt || !k) return aviso("Escreva a anotação");
+    let undo; try{ undo = await notaNoCaso(k, txt); }catch(e){ return aviso("Não gravou: tente de novo"); }
+    ta.value = ""; repintaExt(k); pcliMontar();
+    avisoDesfazer("Anotado", async ()=>{ await undo(); repintaExt(k); pcliMontar(); aviso("Anotação desfeita", false); }, 30000);
+  }
+}
+async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });
 // F619 · a linha curta de cada quadro (INSS, CRPS, Judicial), calculada no banco por linha_curta(); a correção
 // da equipe (casos.ronda.linha_curta.<aba>) vale enquanto a linha calculada for a mesma de quando se corrigiu
 const _lc = new Map(), LC_ABA = {inss:"inss", crps:"crps", cnj:"judicial"};
@@ -12443,6 +12585,7 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
+      if(!e.ctrlKey && !e.metaKey && pcliLigado()) return abrirPainelCli(el);   // F647 · o clique na linha de qualquer lista abre o painel lateral (a extensão F455 saiu)
       if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
       abrirDaLinha(el);
     };
@@ -12518,7 +12661,7 @@ function filtroPessoaNoMais(){
 }
 function renderBase(){
   aplicarTema(); marcarBarraCel();
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = visaoInicialColab();   // F253 · as telas do administrador abrem em qualquer nível
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -12533,7 +12676,6 @@ function renderBase(){
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
   pintarOpcLista();
-  mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -12584,7 +12726,7 @@ function renderBase(){
   else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante);
     subt="As anotações marcadas ⭐/⚡, os processos importantes e, no topo, o que os portais trouxeram e ninguém leu ainda."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
-    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || f; casosSel=casosDaFase(f);
+    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || (f==="marcos" ? "☕ Marcos" : f); casosSel=casosDaFase(f);
     // F38 · Tarefas com Prazo ordena pela DATA FATAL: o mais urgente no topo,
     // sem data no fim — é o controle apertado que a lista existe para dar
     if(f==="prazo") casosSel.sort((a,b)=>String(a.prazo||"9999").localeCompare(String(b.prazo||"9999"))); }
@@ -14566,7 +14708,15 @@ const LISTAS_POR_CARGO = {
   advogado: [...LISTAS_COLAB, "minhas", "fase:aposentadoria_futura", "contribuicoes", "direito", "agenda"],
   recepcao: ["meudia","mencoes","whatsapp","planejado","calendario","pessoas","agendaq","minhas","particulares","rotinas","fase:escritorio","fase:prazo","agenda","novocliente","contatos"],
 };
-const listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
+// F660 · versão de leitura do colaborador: só as listas fixas, sem anotar nem mexer em prazo (o banco também recusa)
+const soLeitura = () => !!eu && eu.papel==="colaborador" && eu.so_leitura===true;
+const LISTAS_FIXAS = ["fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial","fase:aposentadoria_futura","fase:marcos"];
+const semAnotar = () => soLeitura() || (!!eu && eu.papel==="colaborador" && meuNivel()===2);   // F660c · nível 2 lê as anotações e não escreve
+const visaoInicialColab = () => soIdentificacao() ? "agendaq" : soLeitura() ? "fase:escritorio" : "meudia";
+// F660 · na leitura, o que o colaborador já tinha continua (WhatsApp, Agenda), sem Meu Dia, Importante e Planejado, e com as listas fixas
+const listasFixasLigadas = () => soLeitura() || meuNivel()===2;   // F660b · o nível 2 (e o admin que o olha) também vê as listas fixas
+const listasDoColab = () => listasFixasLigadas() ? ["mencoes","agendaq","whatsapp","clientes",...LISTAS_FIXAS, ...(podeCadastrar()?["novocliente"]:[])] : _listasDoColab();   // F660b · lista fechada pelo Paulo (19.11.2026)
+const _listasDoColab = () => soIdentificacao() ? ["agendaq", "clientes", "mencoes", ...(meuNivel()>=1||(eu&&eu.gestor_zap)?["whatsapp"]:[]), ...(podeCadastrar()?["novocliente"]:[])]   // F249 · primeiro acesso: só a 📅 Agenda do Google (e o Novo Cliente); 11.91 · REC-09: as 📥 Menções em todos os níveis; F355 · o nível 1 também o 💬 WhatsApp
   : LISTAS_POR_CARGO[(eu&&eu.cargo)||""] || [...LISTAS_COLAB, "minhas"];
 // F355 · o nível 1 (WhatsApp) conversa e marca horário, mas não grava no caso: andamento, documento e tarefa são do nível 2
 const podeGravarCaso = () => meuNivel()>=3;   // F396 · o nível 2 é cadastro e dossiê; a anotação passou ao 3
@@ -14575,7 +14725,7 @@ const podeCadastrar = () => meuNivel()>=2;     // F396 · criar o cliente e muda
 function semCadastro(){ if(podeCadastrar()) return false; aviso("Criar o cliente e mudar o cadastro é do nível 2"); return true; }
 function alternarVerComo(){
   guardar("crm_ver_como", visaoColab() ? "" : "colab");
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = visaoInicialColab();   // F253 · as telas do administrador abrem em qualquer nível
   montarSidebar(); render();
 }
 let segAberto = null;
@@ -22230,52 +22380,6 @@ async function reordenarListas(origem, destino){
   aviso("Ordem das listas guardada");
 }
 
-// ── ＋ Adicionar, fixo no pé da lista ─────────────────────────────────────
-// No To Do é assim que quase toda tarefa nasce: o campo está sempre ali, você
-// digita e dá Enter. Aqui ele cria o cliente e o primeiro caso já na lista
-// aberta. Aceita o formato do To Do — "Nome #CPF" — porque a equipe já digita
-// assim há anos.
-function mostrarAddRodape(){
-  const el=document.getElementById("add-rodape");
-  if(!el) return;
-  const mostra = !buscaTxt && visao.startsWith("fase:");
-  el.style.display = mostra ? "" : "none";
-  if(mostra){
-    const f=visao.slice(5), rot=(FASES.find(x=>x[0]===f)||[])[1]||"";
-    document.getElementById("add-nome").placeholder =
-      `Adicionar em ${rot.replace(/^\S+\s/,"")} (nome, ou Nome #CPF)`;
-  }
-}
-async function addNaLista(){
-  const inp=document.getElementById("add-nome"), bi=document.getElementById("add-ben");
-  const bruto=(inp.value||"").trim();
-  if(!bruto) return inp.focus();
-  const fase=visao.slice(5);
-  // "Maria dos Santos #12345678900" -> nome + CPF, como as tarefas do To Do
-  const m=bruto.match(/^(.*?)\s*#\s*([\d.\-]+)\s*$/);
-  const nome=(m?m[1]:bruto).trim(), cpf=m?digitosCpf(m[2]):null;
-  if(!nome) return aviso("Falta o nome");
-  if(cpf && cpf.length!==11) return aviso("O CPF tem 11 dígitos");
-  if(cpf){
-    let ja=D.clientes.find(x=>digitosCpf(x.cpf)===cpf);
-    if(!ja){ const achados=await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
-             if(achados&&achados.length){ ja=achados[0]; D.clientes.push(ja); D.cliPorId.set(ja.id,ja); } }
-    if(ja) return avisoCpfRepetido(ja, nome);
-  }
-  const beneficio=(bi.value||"").trim() || null;
-  const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({nome, cpf})});
-  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:cli.id, titulo:nome, beneficio, fase})});
-  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})}).catch(()=>{});
-  if(beneficio) await aplicarChecklistCaso(caso, true).catch(()=>{});
-  inp.value=""; bi.value="";
-  await carregar(); montarSidebar(); render();
-  await avisarCasoNovo(caso.id, cli.id, "＋ Adicionar, no pé da lista");
-  inp.focus();                                  // pronto para o próximo, sem tirar a mão
-  aviso(`✔ ${nome} entrou na lista`);
-}
 
 function renderParcerias(){
   tituloLista("🤝 Parcerias");
@@ -23946,7 +24050,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaTrilhaComAlca(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>${(faixaPrazos(k), "")/* F647 · o quadro saiu do Caso (fica no menu Prazos); a lista segue montada para a janela lateral do prazo */}</div>`
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>${(faixaPrazos(k), "")/* F666 · o quadro saiu do Caso (fica no menu Prazos); a lista segue montada para a janela lateral do prazo */}</div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
             : aba==="inss" ? abaComProcessos(k, "inss", ()=>painelINSS(k, andsVis))
@@ -24728,8 +24832,8 @@ async function transcreverAtendimento(){
       return d;
     };
     let d;
-    if(g.segs.length === 1) d = await post("", g.segs[0], g.segs[0].type || "audio/webm");
-    else {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
+    // F644: a transcrição e o resumo vão em chamadas separadas; juntos, o atendimento longo passava dos 150 s da função (504)
+    {   // F537: cada trecho da gravação interrompida se transcreve com o tempo contado do início, e o resumo sai do texto inteiro
       const textos = []; let seg = 0, fal = 0;
       for(const b of g.segs){
         let x; try{ x = await post(`?resumo=nao&desde=${Math.round(seg)}`, b, b.type || "audio/webm"); }
@@ -24766,7 +24870,9 @@ async function transcreverAtendimento(){
 }
 async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
   const c = cliId && D.cliPorId.get(cliId); if(!c || !texto) return false;
-  const k = casoId && D.casoPorId.get(casoId);
+  let k = casoId && D.casoPorId.get(casoId);
+  // F643: o pré-caso não mostra andamentos; a anotação vai às do atendimento, presa a ele
+  const pcK = ehPreCaso(k) ? k : null; if(pcK) k = null;
   const nota = resumo || `Transcrição do atendimento ${cab}.`, integral = `${nota}\n\nTranscrição completa ${cab}:\n${texto}`;
   let and = null;
   if(k){   // F543: com caso, o resumo é anotação do caso
@@ -24795,7 +24901,7 @@ async function gravarTranscricao(cliId, casoId, resumo, texto, cab, dia){
     if(clienteAberto === cliId) repintarFicha();
     return true;
   }
-  const noAtend = !!document.getElementById("atend-nota"), pc = noAtend ? preCasoAberto(c) : null;
+  const noAtend = !!pcK || !!document.getElementById("atend-nota"), pc = pcK ? {id:(pcK.precaso||{}).id||pcK.id} : noAtend ? preCasoAberto(c) : null;
   const n = {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto: an ? nota : integral, gravacao:true,
     ...(an ? {anexos:[{id:an.id, nome:an.nome}]} : {}),
     ...(noAtend ? (pc ? {precaso_id:pc.id} : {}) : {origem:"rapida"})};   // fora do atendimento fica "para distribuir" (F404)
@@ -43052,7 +43158,9 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila";
+const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
+// 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
+const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
 const corPz = x => ehRetornoPz(x) ? "ret" : x._nat==="fatal" ? "fatal" : x._nat==="compromisso" ? "comp" : "lemb";
 const pillPz = x => ehRetornoPz(x) ? `<span class="pz-pill pz-pill-lembrete"><i aria-hidden="true"></i>${esc(x.rotulo)}</span>${pillTodo(x)}` : pillNat(x._nat) + pillTodo(x);
@@ -43108,7 +43216,7 @@ function calendarioPz(){
 function pzConteudo(cliId){
   const hj = hoje(), em = n => somaDias(hj, n);
   _pzCliId = cliId;
-  _pzCli = prazosDoCliente(cliId).lista;
+  _pzCli = prazosDoCliente(cliId).lista.filter(x=>!PZ_SO_TODO || ehRetornoPz(x) || x.todo);
   _pzCli.forEach((x, i)=>prepPz(x, i, "cli"));
   if(painelPz && painelPz.fonte==="cli"){ const j = _pzCli.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId && (x.rotulo||"")===painelPz.rotulo);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j, "cli")); }
@@ -43119,7 +43227,7 @@ function pzConteudo(cliId){
   const fatais = _pzCli.filter(x=>x._nat==="fatal" && !x.aConfirmar);
   const heroX = fatais.find(x=>x.data>=hj) || fatais.find(pend) || null;
   const ferr = `<div class="pzc-ferr">
-    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${[["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Retorno"]].map(([v, r])=>
+    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Retorno"]]).map(([v, r])=>
       `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
     <div class="pzc-seg" role="group" aria-label="Agrupar os prazos">${[["data","Por data"],["caso","Por caso"]].map(([v, r])=>
       `<button type="button" aria-pressed="${_pzVer===v}" class="${_pzVer===v?"on":""}" onclick="pzVer('${v}')">${r}</button>`).join("")}</div>
@@ -47461,7 +47569,7 @@ function linhaDoTempo(ands){
     if(ant && ehConf(a) && ehConf(ant) && (euLi(a) || (a.autor_id===eu.id && !ORIGENS_ROBO.includes(a.origem)))){ ant._confMais = (ant._confMais||0) + 1; ant._confDesde = dataSP(a.criado_em); continue; }
     if(ehConf(a)){ a._confMais = 0; a._confDesde = null; }
     raiz.push(a); }
-  // F647 · o prazo em aberto da anotação fica fixado no topo, em vermelho, junto da própria anotação (pedido do Paulo, 21.11.2026)
+  // F666 · o prazo em aberto da anotação fica fixado no topo, em vermelho, junto da própria anotação (pedido do Paulo, 21.11.2026)
   const pzAberto = a => { const e = estadoPrazoNota(a); return !!e && (e.est==="vivo" || e.est==="vencido"); };
   const fixos = raiz.filter(pzAberto).sort((x,y)=>{ const dx = estadoPrazoNota(x).data||"", dy = estadoPrazoNota(y).data||""; return dx<dy?-1:dx>dy?1:0; });
   if(fixos.length) for(let i = raiz.length-1; i>=0; i--) if(fixos.includes(raiz[i])) raiz.splice(i, 1);
@@ -51046,6 +51154,7 @@ function aplicarNivel(){
   } else if(fx) fx.remove();
   if(n<NV_MAX) h.setAttribute("data-nivel", String(n)); else h.removeAttribute("data-nivel");
   if(podeCadastrar()) h.removeAttribute("data-sem-cad"); else h.setAttribute("data-sem-cad", "");   // F396
+  if(semAnotar()) h.setAttribute("data-so-leitura", ""); else h.removeAttribute("data-so-leitura");   // F660
   const css = n<NV_MAX ? Object.entries(REC_ONDA).filter(([w])=>n<=2 || o < +w)
     .map(([, sel])=>sel.split(",").map(x=>`html[data-nivel] ${x}`).join(",") + "{display:none!important}").join("\n") : "";
   let st = document.getElementById("css-ondas");
@@ -61458,11 +61567,6 @@ function atalhoDeLista(e){
   if(e.ctrlKey || e.metaKey || e.altKey) return false;
   if(e.key==="ArrowDown"){ e.preventDefault(); return moverCursor(1); }
   if(e.key==="ArrowUp"){ e.preventDefault(); return moverCursor(-1); }
-  if(e.key==="n" || e.key==="N"){
-    const inp = document.getElementById("add-nome");
-    if(!inp) return false;
-    e.preventDefault(); inp.focus(); inp.select(); return true;
-  }
   const cs = cartoesDaLista();
   if(!cs.length || cursorLista < 0 || !cs[cursorLista]) return false;
   const cliId = cs[cursorLista].dataset.cli;
@@ -61553,11 +61657,6 @@ function fecharPaleta(){ document.getElementById("paleta")?.remove(); }
   var el=document.getElementById(id);
   if(el) el.addEventListener("keydown", function(e){
     if(e.key==="Enter"){ e.preventDefault(); entrar(e); } });
-});
-// Enter no ＋ Adicionar cria sem tirar a mão do teclado
-["add-nome","add-ben"].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el) el.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addNaLista(); } });
 });
 // ── celular: barra de baixo e busca no alto da lista ──────────────────────
 document.querySelectorAll("#barra-cel button").forEach(b=>{

@@ -227,6 +227,7 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
+      if(!e.ctrlKey && !e.metaKey && pcliLigado()) return abrirPainelCli(el);   // F647 · o clique na linha de qualquer lista abre o painel lateral (a extensão F455 saiu)
       if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
       abrirDaLinha(el);
     };
@@ -302,7 +303,7 @@ function filtroPessoaNoMais(){
 }
 function renderBase(){
   aplicarTema(); marcarBarraCel();
-  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = soIdentificacao() ? "agendaq" : "meudia";   // F253 · as telas do administrador abrem em qualquer nível
+  if(visaoColab() && !listasDoColab().includes(visao) && !(souAdmin() && ["config","auditoria"].includes(visao))) visao = visaoInicialColab();   // F253 · as telas do administrador abrem em qualquer nível
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -317,7 +318,6 @@ function renderBase(){
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
   pintarOpcLista();
-  mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -368,7 +368,7 @@ function renderBase(){
   else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante);
     subt="As anotações marcadas ⭐/⚡, os processos importantes e, no topo, o que os portais trouxeram e ninguém leu ainda."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
-    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || f; casosSel=casosDaFase(f);
+    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || (f==="marcos" ? "☕ Marcos" : f); casosSel=casosDaFase(f);
     // F38 · Tarefas com Prazo ordena pela DATA FATAL: o mais urgente no topo,
     // sem data no fim — é o controle apertado que a lista existe para dar
     if(f==="prazo") casosSel.sort((a,b)=>String(a.prazo||"9999").localeCompare(String(b.prazo||"9999"))); }

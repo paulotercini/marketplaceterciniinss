@@ -62,12 +62,15 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
       requestData() {}
       stop() { this.state = "inactive"; this.ondataavailable({ data: new Blob([new Uint8Array(5000)]) }); this.onstop(); } };
   });
-  let falhar = true, mudo = false, comResumo = false, pedidos = [];
+  let falhar = true, mudo = false, comResumo = false, pedidos = [], audios = 0;
   await ctx.route(/functions\/v1\/atendimento_transcricao/, async r => {
     pedidos.push({ tipo: r.request().headers()["content-type"], tam: (r.request().postDataBuffer() || []).length, url: r.request().url() });
-    if (/json/.test(r.request().headers()["content-type"])) return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ resumo: "Resumo dos dois trechos.\nDefinir retorno." }) });
+    // F644: o resumo sai sempre de uma chamada própria, com o texto; dois áudios antes dela são a gravação em trechos
+    if (/json/.test(r.request().headers()["content-type"])) { const n = audios; audios = 0; return r.fulfill({ status: 200, contentType: "application/json",
+      body: JSON.stringify(!comResumo ? {} : { resumo: n > 1 ? "Resumo dos dois trechos.\nDefinir retorno." : "Informou que trabalhou na roça.\nDefinir retorno." }) }); }
     if (mudo) return r.fulfill({ status: 422, contentType: "application/json", body: JSON.stringify({ erro: "nenhuma fala reconhecida na gravação" }) });
     if (falhar) return r.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ erro: "ElevenLabs: 503" }) });
+    audios++;
     r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ texto: "[00:00] Falante 1: Bom dia.\n[00:04] Falante 2: Trabalhei na roça.", falantes: 2, minutos: 1, segundos: 300, ...(comResumo ? { resumo: "Informou que trabalhou na roça.\nDefinir retorno." } : {}) }) });
   });
   const p = await ctx.newPage();
@@ -94,7 +97,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const notas = () => (T.clientes.find(x => x.id === A).campos || {}).atendimento || [], ult = () => notas()[notas().length - 1] || {};
   const transc = () => T.anexos.filter(a => a.origem === "transcricao"), ultT = () => transc()[transc().length - 1] || {};
   const escolher = v => p.evaluate(v => document.querySelector(`dialog.confirmar[open] button[value="${v}"]`).click(), v);
-  conf("o Repetir reenvia e a transcrição grava sozinha nas anotações do atendimento, com os falantes e o pré-caso (F539)", pedidos.length === 2 && notas().length === 1
+  conf("o Repetir reenvia e a transcrição grava sozinha nas anotações do atendimento, com os falantes e o pré-caso (F539)", pedidos.length === 3 && notas().length === 1
     && /^Transcrição do atendimento .*2 falantes/.test(ult().texto) && ult().precaso_id === "pc_r1" && !ult().origem);
   conf("a transcrição inteira vai a um anexo do cliente, com o link na anotação (F543)", transc().length === 1 && /Falante 2: Trabalhei na roça/.test(ultT().texto)
     && ultT().cliente_id === A && ultT().tipo === "text/plain" && (ult().anexos || [])[0] && ult().anexos[0].id === ultT().id && !/Falante/.test(ult().texto));
@@ -128,9 +131,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // F543: escolhido o caso, o resumo é anotação do caso e a transcrição fica presa a ela
   await p.click("#ficha-gravar"); await p.waitForTimeout(200); await escolher(K2); await p.waitForTimeout(200);
   await p.click("#ficha-gravar"); await p.waitForTimeout(700);
-  const andK = T.andamentos.filter(a => a.caso_id === K2).pop() || {};
-  conf("com o caso escolhido, o resumo vira anotação dele e a transcrição se prende a ela", /^Informou que trabalhou na roça/.test(andK.texto || "") && !/Falante/.test(andK.texto)
-    && ultT().andamento_id === andK.id && notas().length === 3);
+  // F643: K2 é pré-caso, que não mostra andamentos: o resumo vai às anotações do atendimento, presas a ele
+  conf("com o pré-caso escolhido, o resumo vira anotação do atendimento dele e a transcrição se prende a ela", notas().length === 4 && ult().precaso_id === "pc_r2"
+    && /^Informou que trabalhou na roça/.test(ult().texto) && !/Falante/.test(ult().texto) && ult().anexos[0].id === ultT().id
+    && !T.andamentos.some(a => a.caso_id === K2));
   conf("a Identificação tem o quadro Transcrições de Atendimentos", await p.evaluate(N => { const q = document.querySelector(".idf-transc"); return !!q && new RegExp(`Transcrições de Atendimentos \\(${N}\\)`).test(q.textContent); }, transc().length));
   await p.click(".idf-transc button"); await p.waitForTimeout(300);
   conf("o Abrir mostra a transcrição inteira", await p.evaluate(() => /Falante 2: Trabalhei/.test((document.querySelector(".transc-txt") || {}).textContent || "")));

@@ -1021,3 +1021,33 @@ Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escol
 - F642 (17.11.2026): a ponte varre os textos de botões e modelos de empresa fora dos campos conhecidos (antes gravava vazio, "[texto]"); o zap_plantao pergunta uma vez pela mensagem ilegível e depois encaminha à equipe sem repetir.
 
 - F666 (21.11.2026): quadro de Prazos sai do Caso (fica no menu Prazos); prazo em aberto da anotação fixado no topo da linha do tempo, em vermelho. Botões de conferência (Em análise/Movimentou/Não implantado) saíram junto.
+## F645 · Painel lateral do cliente (18.11.2026)
+- Pedido do Paulo (protótipo "Painel do Cliente Tercini"): o clique no NOME do cliente nas listas abre um painel à direita, sem sair da lista, com nome (copia), espécie e lista, Abrir ficha; CPF, senha do Meu INSS (olho, depois copia), telefone com WhatsApp, parceria e parentesco; a tarefa com responsável, vencimento em vermelho, Hoje, Amanhã, Próx. segunda, +7 e +30 dias e o mês à vista (um clique reagenda, só no CRM), Concluir tarefa; anexos; anotação; última anotação e Ver anotações anteriores. O resto da linha continua estendendo (F455) e o Ctrl+clique abre a ficha. Esc fecha. Prova: testes/cadastro/f645.js.
+
+## F646 · Painel lateral do cliente no modelo do To Do (19.11.2026)
+- Pedido do Paulo: painel com 460 px; nome na cor do texto (as classes pc-* colidiam com as do pré-caso e passaram a pcl-*); dados do cliente dois por linha; quadro Prazo só com a data e o tipo (Prazo fatal, Retorno, Lembrete), Hoje, Amanhã e o mês, um clique troca a data; Anexos com botão + e três à vista com Ver mais; quadro Atribuição com a equipe; Anotações por último.
+
+## F660 · Versão de leitura para os colaboradores (19.11.2026)
+- Pedido do Paulo: colaborador (papel `colaborador`) mantém o que tinha (WhatsApp, Agenda) e, nas listas, vê só as fixas Escritório, INSS, Conselho de Recursos, Judicial, Petições Iniciais, Aposentadorias Futuras e ☕ Marcos; sem Meu Dia, Importante e Planejado. Lê fichas e o painel lateral, sem anotar nem mudar prazo.
+- Tela: `soLeitura()` (05-agenda.js), `api()` recusa escrita, CSS `html[data-so-leitura]`.
+- Banco: `colaboradores.so_leitura` (padrão true) e políticas restritivas `so_leitura_*` em andamentos, andamento_tarefas, tarefas, lembretes e meu_dia (migração f660). Liberar alguém: `so_leitura = false`.
+## F647 · O clique na linha de qualquer lista abre o painel lateral (19.11.2026)
+- Pedido do Paulo: o painel abria apenas pelo nome e só nas linhas com caso. Agora o clique em qualquer ponto da linha de qualquer lista abre o painel; a extensão abaixo do nome (F455) saiu da tela do usuário (fica só no navegador automatizado, para as provas antigas). Ctrl+clique continua abrindo a ficha.
+
+## F648 · Sai a barra de adicionar do pé das listas (19.11.2026) "Ver anotações anteriores" abre as demais anotações no próprio painel.
+- Pedido do Paulo: o campo "Adicionar em <lista>", o benefício opcional e o botão Adicionar saíram de todas as listas, no computador e no celular. Saíram também o atalho N que focava o campo e o Enter que criava o cliente. Flutuantes e barra de baixo do celular continuam.
+
+## F648 · Painel lateral sem o quadro de anexos (19.11.2026) "Ver anotações anteriores" abre as demais anotações no próprio painel.
+- Pedido do Paulo: o quadro Anexos saiu do painel lateral do cliente, e a Atribuição virou botões com o nome de cada colaborador (um clique atribui, com Desfazer).
+
+## F660b · Listas fixas no nível 2 (19.11.2026)
+- O nível 2 da transição escondia o grupo das listas (CSS F249). Agora o nível 2, e o admin que o olha pelo "ver como nível", veem Escritório, INSS, Conselho, Judicial, Petições Iniciais, Aposentadorias Futuras e Marcos (`listasFixasLigadas`).
+
+## F660c (19.11.2026)
+Nível 2 do colaborador: painel lateral direito mostra as anotações sem o campo de escrever nem o Anotar; a gravação em anotações e prazos é recusada no api(), como no somente leitura (F660).
+F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (leitura).
+- **F661** (19.11.2026): a IA do WhatsApp consulta o histórico da agenda (últimos 30 dias, pelo nome da ficha) e não oferece atendimento de preparação para a perícia a quem já foi atendido (zap_plantao, `atendidoHaPouco`).
+- **F662** (19.11.2026): o plantão da IA, ao encaminhar ao advogado responsável, atribui a ele a conversa sem dono (atendente_id), salvo agendamento e conversa marcada "A IA conversa com este número"; antes só saía a menção a toda a equipe e a conversa não entrava na fila do responsável (migração f662).
+- **F663** (19.11.2026): painel lateral do cliente (proposta A escolhida pelo Paulo): Atribuição em iniciais quadradas, cinza e na cor do colaborador quando selecionado (nome no title); Anotações em linha do tempo com a inicial do autor na cor dele; campo de escrita com 2 linhas.
+- **F664** (19.11.2026): no celular o painel lateral esconde o calendário do Prazo; o botão "Outra", ao lado de Hoje e Amanhã, abre e fecha o calendário. No computador o calendário continua à vista.
+- **F665** (21.11.2026): painel lateral do cliente mostra as 5 últimas anotações da equipe; "Ver anotações anteriores" traz da sexta em diante. Parceria e Parentesco só aparecem quando há alguém cadastrado.

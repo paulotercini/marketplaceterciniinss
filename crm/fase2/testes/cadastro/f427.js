@@ -83,7 +83,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
   const nav = await chromium.launch();
   for (const [nome, vp] of [["pc", { width: 1440, height: 900 }], ["cel", { width: 390, height: 844, isMobile: true, hasTouch: true }]]) {
     const ctx = await nav.newContext({ viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch });
-    await ctx.addInitScript(([u, ss]) => { localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
+    await ctx.addInitScript(([u, ss]) => { window.PZ_TODOS_TIPOS = true; localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
       localStorage.setItem("crm_sessao", JSON.stringify(ss)); localStorage.setItem("crm_tema", "v10"); }, [SUPA, SESSAO]);
     await instalarBanco(ctx, { SUPA, SESSAO, banco });
     const p = await ctx.newPage();
