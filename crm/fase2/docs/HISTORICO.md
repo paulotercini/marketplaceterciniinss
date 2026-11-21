@@ -1065,3 +1065,5 @@ No Caso, logo abaixo do menu, o quadro do protótipo do Base44 aprovado pelo Pau
 
 ## F672 · Cabeçalho da ficha (21.11.2026)
 Rótulo "Advogado" virou "Responsável"; clique no nome copia (a ▾ abre os casos); sem 📋 ao lado do nome; WhatsApp ao lado do nome e sem a linha Telefone; senha do Meu INSS à vista, clique copia; símbolo do Meu INSS no lugar do ↗; a parceria saiu do lado do nome e foi para baixo do Responsável; o chip da agenda diz "Atendimento Presencial" (ou "Online" se a modalidade vier gravada).
+- F670b (v14.24, 21.11.2026): a linha do tempo começa na primeira anotação do caso; o quadro das etapas (faixaSoFases) saiu do Caso, a pedido do Paulo.
+- F670c (v14.24, 21.11.2026): a barra da linha do tempo é a fila das fases; Escritório, INSS, CRPS e Judicial são botões que abrem o cartão de cada fase, com o resumo da etapa atual logo abaixo, no mesmo quadro.

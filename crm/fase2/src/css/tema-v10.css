@@ -4194,6 +4194,7 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
 .ma-venc b{color:#B3261E}
 .ma-nada{margin:6px 0 0;font-size:12px;color:var(--cinza-claro,#686660)}
 /* F670 · linha do tempo do caso */
+.ltc-faixa .ltc{border:0;padding:0;margin:0 0 8px;background:none}
 .ltc{background:#FDFDFB;border:1px solid #E6E6E2;border-radius:12px;padding:12px 16px;margin:0 0 12px}
 .ltc-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6B7070}
 .ltc-t{font-size:20px;margin:2px 0 12px}
@@ -4203,6 +4204,16 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
 .ltc-r{height:10px;border-radius:3px;background:var(--c)}
 .ltc-a .ltc-r{outline:2px solid var(--c);outline-offset:2px}
 .ltc-v .ltc-r{background:none;border:1px dashed var(--c)}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b{all:unset;box-sizing:border-box;cursor:pointer;min-width:0;display:flex;flex-direction:column;gap:5px}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b,html[data-tema="v10"] .app .tr-compacta .ltc .jn-b::before,html[data-tema="v10"] .app .tr-compacta .ltc .jn-b::after{background:none!important;border:0!important;box-shadow:none!important}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b::before,html[data-tema="v10"] .app .tr-compacta .ltc .jn-b::after{display:none!important}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b:focus-visible{outline:2px solid var(--c);outline-offset:2px;border-radius:3px}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b.jn-ver .ltc-r{box-shadow:0 0 0 2px #FDFDFB,0 0 0 4px var(--c)}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-nome i,html[data-tema="v10"] .app .tr-compacta .ltc .jn-st{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-nome{display:block;padding:0;font-size:10px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#6B7070;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b .ltc-y{order:-2}html[data-tema="v10"] .app .tr-compacta .ltc .jn-b .ltc-r{order:-1}
+html[data-tema="v10"] .app .ltc .ltc-bar.jn-l{display:flex;gap:4px;padding:0;border:0;background:none;border-radius:0;overflow:visible}
+html[data-tema="v10"] .ltc .jn-tudo{position:static;order:99;flex:none;align-self:flex-end;margin-left:8px}
 .ltc-n{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#6B7070;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
