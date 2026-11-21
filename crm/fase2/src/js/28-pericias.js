@@ -432,6 +432,7 @@ function linhaCaso(k){
         <div class="lc-cab"><b class="lc-ben ${(k.especie||k.beneficio||tituloProprio(k))?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc((k.especie||k.beneficio) ? tituloCaso(k) : tituloProprio(k) || tituloCaso(k))}. Clique na canetinha para trocar">${
           !prev ? esc(tituloProprio(k) || `Caso ${AREAS[areaDe(k)].toLowerCase()}`) : (k.especie||k.beneficio) ? esc(tituloCaso(k)) : tituloProprio(k) ? esc(tituloProprio(k)) : "definir o pedido"}</b></div>
         <span class="lc5-lugar" title="${esc(dica ? `lista: ${dica}` : "onde o caso está agora")}">${esc(lugar)}</span>
+        ${/* F666 · o quadro de etapas saiu do caso: a fase atual fica num selo ao lado da espécie; o clique muda a etapa */""}${prev && k.etapa ? `<button type="button" class="lc5-etapa" onclick="escolherEtapa('${k.id}')">${seloEtapaLista(k)}</button>` : ""}
         ${menuMais([
           `<button class="tl-mais-it lc-claude" role="menuitem" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)"><span aria-hidden="true">✦ Claude</span><span class="sr-only">✦ Pedir ao Claude</span></button>`,
           k.fase!=="encerrado" && !ehPreCaso(k) ? `<button class="tl-mais-it desp-bt" role="menuitem" onclick="despachar('${k.id}',event)" title="Concluir por hoje: escolher quando o cliente volta à fila e tirar do Meu Dia; se quiser, passar a outra pessoa">✔ Concluir<span class="sr-only"> por hoje</span></button>` : "",
