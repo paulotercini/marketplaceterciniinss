@@ -833,3 +833,7 @@ console.log("F581 plantão ok");
   assert.match(promptPlantao({ ...base, pericia: { ...p, atendido: "quarta, 18/11" } }), /já foi atendida.*não ofereça/);
   assert.match(promptPlantao({ ...base, pericia: p }), /Ofereça um atendimento presencial/);
 }
+
+// F674 · ajustes da semana de 16 a 21.11.2026
+assert.match(regras(), /Remetente automático/);
+assert.match(regras(), /nunca copie o nome do ato do portal/);

@@ -204,7 +204,14 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Questão previdenciária escondida (pedido do Paulo de 16.11.2026): a pessoa é leiga e não sabe que pode ter benefício do INSS. Acidente de qualquer tipo (moto, carro, trânsito, trabalho, queda) com cirurgia, pino, placa, fratura, amputação, sequela ou afastamento do trabalho pode dar auxílio por incapacidade e auxílio-acidente, mesmo quando ela fala só em seguradora, DPVAT, indenização ou conserto. ` +
   `Nesses casos não trate o assunto apenas como indenização nem ofereça logo horário com o Dr. Marcos: diga em uma frase que o acidente pode dar direito a benefício do INSS e que o escritório vai verificar. Não pergunte a cidade: siga o agendamento normal, com a Dra. Amanda e o Dr. Paulo, também para quem mora em Vista Alegre do Alto ou Pirangi. ` +
   `Somente quando a própria pessoa informar que mora em Matão ou em outra cidade mais distante (por exemplo Araraquara, Jaboticabal, Ribeirão Preto), não ofereça atendimento presencial: verifique pelo WhatsApp, peça foto legível dos relatórios médicos, da descrição da cirurgia, do boletim de ocorrência (ou da CAT, se foi no trabalho) e da carteira de trabalho, e pergunte se trabalhava com carteira assinada ou contribuía ao INSS na data do acidente, se ficou afastado e se ficou com limitação; depois passe à equipe (acao "equipe", sem urgente) para verificar se cabe o benefício. ` +
-  `A questão da seguradora pode seguir com o Dr. Marcos, sem deixar de lado a previdenciária.`;
+  `A questão da seguradora pode seguir com o Dr. Marcos, sem deixar de lado a previdenciária.` +
+  // F674 · leitura das conversas de 16 a 21.11.2026, ajustes pedidos pelo Paulo em 21.11.2026
+  `\n- Despedida: depois que você já encerrou (agradeceu, desejou bom dia, disse "aguardamos"), nova despedida da pessoa ("pra você também", "até amanhã", "combinado", "ok, obrigada") é acao "nada".\n` +
+  `- Remetente automático (empresa, loja, banco, imobiliária, propaganda, notificação ou resposta automática de outro robô): acao "nada", sem resposta.\n` +
+  `- Andamento: nunca copie o nome do ato do portal ("Certidão de...", "Juntada de...", "Conclusos"); diga em palavras simples o que aconteceu e o que se aguarda.\n` +
+  `- Atendimento confirmado pelo sistema ("está confirmado" na conversa): não repita a confirmação.\n` +
+  `- Agendamento pedido por outra pessoa (advogado parceiro, parente) para quem será atendido: peça o telefone com WhatsApp da pessoa atendida, para a confirmação ir a ela; sem esse telefone, diga que a confirmação irá a este número.\n` +
+  `- A equipe fez uma pergunta ao cliente e ele respondeu: acao "nada"; quem perguntou continua a conversa.`;
 
 // F564 · o aviso do golpe que o menu dava vai ao fim da primeira resposta da IA (decisão do Paulo de 12.11.2026)
 export const AVISO_GOLPE = "Atenção ao golpe do falso advogado: o escritório não solicita PIX ou transferência para liberar valores e não agenda audiência por vídeo ou telefone. " +
@@ -656,7 +663,7 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `(diga o mês e o ano e que é estimativa pela posição do processo no gabinete). Nos demais, use o tempo que os processos do escritório ` +
     `levaram (medição de 09.11.2026), contado da data do fato: ` + TEMPOS_MEDIDOS + ` ` +
     `Perícia, audiência ou prazo do escritório com data: diga a data. Sem andamento que permita dizer onde o processo está, escreva que ` +
-    `o escritório vai conferir e retornar. Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
+    `o escritório vai conferir e retornar. Nunca afirme que não há decisão, resultado ou recurso julgado: o caso pode não trazer tudo; se o cliente fala em decisão que os casos não mostram, ou se os casos divergem entre si, escreva que o escritório vai verificar e retornar (F674, caso de 17.11.2026). Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
     `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
     `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
     primeiraPessoa(a.atendente) + `\n` +

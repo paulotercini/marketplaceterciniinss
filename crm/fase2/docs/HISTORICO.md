@@ -1069,3 +1069,8 @@ Rótulo "Advogado" virou "Responsável"; clique no nome copia (a ▾ abre os cas
 - F670c (v14.24, 21.11.2026): a barra da linha do tempo é a fila das fases; Escritório, INSS, CRPS e Judicial são botões que abrem o cartão de cada fase, com o resumo da etapa atual logo abaixo, no mesmo quadro.
 
 - F673 (21.11.2026, v14.25): a mini agenda do Caso e o Mês da aba Prazos usam o mesmo mês (_pzMes); o dia marcado na mini agenda abre a aba Prazos filtrada nesse dia.
+
+## F674 · ajustes da IA do WhatsApp pela leitura da semana (21.11.2026)
+- zap_smb_bot: com resposta da equipe nas últimas 3 horas a mensagem do cliente fica com a equipe, salvo pedido de agendamento.
+- zap_amparo_vez: ausência automática e recado do robô não impedem o amparo; o amparo entra também após 2 h sem resposta no expediente.
+- zap_plantao (regras e sugestão de andamento): despedida repetida e remetente automático sem resposta; sem cópia do nome do ato do portal; sem repetir confirmação; telefone de quem é atendido quando outra pessoa agenda; sugestão não afirma que não há decisão.
