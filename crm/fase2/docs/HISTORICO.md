@@ -1077,3 +1077,5 @@ Rótulo "Advogado" virou "Responsável"; clique no nome copia (a ▾ abre os cas
 
 ## F675 · Painel lateral do cliente sem telefone (21.11.2026)
 O campo Telefone saiu do painel lateral; o botão do WhatsApp fica na linha dos selos, à direita do INSS (computador e celular).
+
+- **F676 · Painel lateral: botão Abrir e WhatsApp ao lado** (21.11.2026). O botão "Abrir ficha" passa a ler "Abrir"; o ícone do WhatsApp sai da linha dos selos e fica à esquerda do Abrir, no canto superior direito do painel `#pcli`.
