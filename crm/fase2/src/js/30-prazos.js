@@ -626,6 +626,10 @@ function linhaDoTempo(ands){
     if(ant && ehConf(a) && ehConf(ant) && (euLi(a) || (a.autor_id===eu.id && !ORIGENS_ROBO.includes(a.origem)))){ ant._confMais = (ant._confMais||0) + 1; ant._confDesde = dataSP(a.criado_em); continue; }
     if(ehConf(a)){ a._confMais = 0; a._confDesde = null; }
     raiz.push(a); }
+  // F666 · o prazo em aberto da anotação fica fixado no topo, em vermelho, junto da própria anotação (pedido do Paulo, 21.11.2026)
+  const pzAberto = a => { const e = estadoPrazoNota(a); return !!e && (e.est==="vivo" || e.est==="vencido"); };
+  const fixos = raiz.filter(pzAberto).sort((x,y)=>{ const dx = estadoPrazoNota(x).data||"", dy = estadoPrazoNota(y).data||""; return dx<dy?-1:dx>dy?1:0; });
+  if(fixos.length) for(let i = raiz.length-1; i>=0; i--) if(fixos.includes(raiz[i])) raiz.splice(i, 1);
   // F236 · o que veio de um portal conta como novo mesmo importado por mim (o selo "Novo · não lido" já contava),
   // salvo a linha de sistema, que não tem selo: o número do aviso, a linha divisória e os selos falam da mesma coisa
   const naoLi = a => !euLi(a) && (a.autor_id!==eu.id || (ORIGENS_ROBO.includes(a.origem) && !ehEventoSistema(a)));
@@ -685,8 +689,9 @@ function linhaDoTempo(ands){
   // F244 · as novas e as menções num aviso só, com o "marcar todas como lidas" no fim
   const banner = bannerTxt || mencTxt ? `<div class="tl-banner tl-banner-um">${[bannerTxt, mencTxt].filter(Boolean).join(" <span class=\"tl-banner-sep\">·</span> ")}${
     bannerTxt ? `<button class="btn-mini" onclick="liTudoNaFicha('${casoId}')" title="✔ marcar todas como lidas"><span aria-hidden="true">✔ Lidas</span><span class="sr-only">✔ marcar todas como lidas</span></button>` : ""}</div>` : "";
-  return banner + `<ul class="timeline">${corpo
-    || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+  const fixHtml = fixos.length ? `<ul class="timeline tl-fixos" aria-label="Prazos das anotações">${fixos.map(a=>li(a).replace('<li class="', '<li class="tl-fixo ')).join("")}</ul>` : "";
+  return banner + fixHtml + `<ul class="timeline">${corpo || fixHtml ? corpo
+    : "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
 const TL_VISIVEIS = 5, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
 function tlVerAntigos(bt, casoId){
