@@ -1059,3 +1059,6 @@ F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (lei
 
 ## F669 · mini agenda do cliente no Caso (v14.22, 21.11.2026)
 Abaixo do quadro da espécie, o mês com os dias de prazo do cliente marcados e o índice (data, tipo, título). Mesmas datas da aba Prazos (na transição, só Microsoft To Do). `miniAgenda`/`maConteudo` em 27-prazos.js; teste testes/cadastro/f667.js. Corrigido o CSS do F666c que ficara depois do </head>.
+
+## F670 · linha do tempo do caso (v14.23, 21.11.2026)
+No Caso, logo abaixo do menu, o quadro do protótipo do Base44 aprovado pelo Paulo: total desde o 1º contato (anos e meses) e a barra das fases (Escritório, INSS, CRPS, Judicial, Implantação, Honorários) nas cores do CRM, com o ano de início de cada fase. Lido de casos (criado_em, der, ro_protocolado_em, ajuizado_em, dib), da ficha do cliente e de pagamentos; fase futura tracejada, fase que não houve fica fora. Nada se digita. `linhaTempoCaso` em js/28-pericias.js.

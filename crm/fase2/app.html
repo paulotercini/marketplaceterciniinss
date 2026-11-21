@@ -7199,6 +7199,17 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
 .ma-leg em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--cinza-claro,#686660)}
 .ma-venc b{color:#B3261E}
 .ma-nada{margin:6px 0 0;font-size:12px;color:var(--cinza-claro,#686660)}
+/* F670 · linha do tempo do caso */
+.ltc{background:#FDFDFB;border:1px solid #E6E6E2;border-radius:12px;padding:12px 16px;margin:0 0 12px}
+.ltc-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6B7070}
+.ltc-t{font-size:20px;margin:2px 0 12px}
+.ltc-bar{display:flex;gap:4px}
+.ltc-s{min-width:0;display:flex;flex-direction:column;gap:5px}
+.ltc-y{font-size:12px;font-weight:600;color:var(--c);height:15px;font-variant-numeric:tabular-nums}
+.ltc-r{height:10px;border-radius:3px;background:var(--c)}
+.ltc-a .ltc-r{outline:2px solid var(--c);outline-offset:2px}
+.ltc-v .ltc-r{background:none;border:1px dashed var(--c)}
+.ltc-n{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#6B7070;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -7211,7 +7222,7 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.22</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.23</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -24081,7 +24092,7 @@ function pintarFicha(){
         // de escrever em cima e os andamentos embaixo
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
-        ? `${faixaFixo(k)}${faixaSoFases(k)}${faixaIncapacidade(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${miniAgenda(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
+        ? `${linhaTempoCaso(k)}${faixaFixo(k)}${faixaSoFases(k)}${faixaIncapacidade(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${miniAgenda(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
            <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>${(faixaPrazos(k), "")/* F666 · o quadro saiu do Caso (fica no menu Prazos); a lista segue montada para a janela lateral do prazo */}</div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
@@ -45765,6 +45776,34 @@ function blocoFatos(k){
       <span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap">${acoesDoCaso(k)}</span>
     </div>
   </section>`;
+}
+// F670 · linha do tempo do caso (protótipo do Base44 aprovado pelo Paulo, 21.11.2026): total desde o 1º contato e a barra
+// das fases na cor de cada uma, com o ano em que começou. Tudo lido do que já está gravado; nada se digita aqui.
+function linhaTempoCaso(k){
+  if(!ehPrev(k) || ehPreCaso(k)) return "";
+  const ano = s => (/^\d{4}/.exec(String(s||""))||[""])[0];
+  const fs = jornadaFases(k), st = f => (fs.find(x=>x.f===f)||{}).st;
+  const pg = (D.pagamentos||[]).filter(p=>p.caso_id===k.id);
+  const pago = pg.filter(p=>p.status!=="aberto" && p.pago_em).map(p=>p.pago_em).sort();
+  const impl = !!k.dib || /^(pagamento|encerrado)$/.test(k.fase||"");
+  const cli = D.cliPorId.get(k.cliente_id) || {}, ini = [cli.criado_em, k.criado_em].filter(Boolean).sort()[0];
+  const segs = [
+    ["escritorio", st("escritorio"), ano(ini), 2],
+    ["inss", st("inss"), ano(k.der), 1.6],
+    ["conselho", st("conselho"), ano(k.ro_protocolado_em), 1],
+    ["judicial", st("judicial"), ano(k.ajuizado_em), 2.4],
+    ["implantacao", impl ? "f" : "v", ano(k.dib), 1],
+    ["honorarios", pg.length && pago.length===pg.length ? "f" : pago.length ? "a" : "v", ano(pago[0]), 1.4]];
+  const COR = {implantacao:["#6B3FA0","Implantação"], honorarios:["#0E5C58","Honorários"]};
+  const bar = segs.filter(([,s])=>s!=="n").map(([f,s,a,fl])=>{
+    const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v";
+    return `<div class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""}" style="flex:${fl};--c:${fut?"#B7BCC2":c}" title="${esc(n)}${a&&!fut?` · desde ${a}`:""}">
+      <span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span><span class="ltc-n">${esc(n)}</span></div>`; }).join("");
+  let tot = "";
+  if(ini){ const d0 = new Date(ini), h = new Date(), m = (h.getFullYear()-d0.getFullYear())*12 + h.getMonth()-d0.getMonth() - (h.getDate()<d0.getDate()?1:0);
+    const a = Math.floor(m/12), r = m%12;
+    tot = [a ? `${a} ${a>1?"anos":"ano"}` : "", r ? `${r} ${r>1?"meses":"mês"}` : ""].filter(Boolean).join(" e ") || "menos de um mês"; }
+  return `<section class="ltc" aria-label="Linha do tempo do caso">${tot ? `<div class="ltc-k">Total desde o 1º contato</div><div class="ltc-t">${tot}</div>` : ""}<div class="ltc-bar">${bar}</div></section>`;
 }
 // F102 · as ações do caso (fundir / não é caso / encerrar / reabrir) servem
 // ao cartão e à linha do caso — um lugar só para os quatro botões
