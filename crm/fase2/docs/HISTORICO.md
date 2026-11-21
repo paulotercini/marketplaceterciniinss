@@ -1077,3 +1077,6 @@ Rótulo "Advogado" virou "Responsável"; clique no nome copia (a ▾ abre os cas
 
 ## F675 · Painel lateral do cliente sem telefone (21.11.2026)
 O campo Telefone saiu do painel lateral; o botão do WhatsApp fica na linha dos selos, à direita do INSS (computador e celular).
+
+## F676 · Menu do cliente no celular (21.11.2026)
+No celular as abas do cliente são Casos, Cadastro, Prazos, Perícias e Honorários; Prazos, Perícias e Honorários só aparecem quando existem. O toque em Casos, com mais de um caso, abre a escolha do caso. Em Casos, os botões Escritório, INSS, CRPS e Judicial ficam no alto, no lugar da linha do tempo, com o resumo e os dados do benefício abaixo.

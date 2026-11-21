@@ -599,7 +599,7 @@ function pintarFicha(){
     </div>
     <button class="cel-tudo" onclick="fichaTudo()" title="⋯ mostrar tudo da ficha"><span aria-hidden="true">⋯ Tudo</span><span class="sr-only">⋯ mostrar tudo da ficha</span></button>
     ${temaV10() && celular() ? (k=>`${k ? `<p class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</p>` : ""}${celAbasHtml(c, ks, k,
-      evs.some(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada"), !!(ks.length || pagK.length || pgs.length))}`)(casoSel && D.casoPorId.get(casoSel)) : ""}
+      evs.some(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada"), !!(pagK.length || pgs.length))}`)(casoSel && D.casoPorId.get(casoSel)) : ""}
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">

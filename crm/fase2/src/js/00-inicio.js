@@ -201,14 +201,20 @@ let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobreviv
 let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (tema v10), por caso:fase
 // F320 · no celular a ficha se lê em abas no alto (plano de interface limpa, 31.10.2026): Andamentos, Prazos, Caso,
 // Cadastro e Honorários; o Cadastro abre no Principal (CPF, Meu INSS e telefone, cada um com o seu botão)
-let celAba = "and", celCad = "principal";
-function celIr(qual){
+let celAba = "casos", celCad = "principal";
+// F676 · o menu do celular é Casos, Cadastro, Prazos, Perícias e Honorários (pedido do Paulo, 21.11.2026); Casos reúne
+// os andamentos (botões Escritório, INSS, CRPS, Judicial), o resumo e os dados do benefício; "and" e "caso" ficam como sinônimos
+function celIr(qual, escolher){
+  if(qual==="and" || qual==="caso") qual = "casos";
+  // com mais de um caso, o toque em Casos abre a escolha do caso
+  const ks = escolher && qual==="casos" ? (D.casosDoCliente.get(clienteAberto)||[]).filter(k=>k.fase!=="encerrado") : [];
   celAba = qual;
   abaAtiva = qual==="cad" ? 0 : qual==="hon" ? 4 : qual==="per" ? 3 : qual==="pz" ? 5 : qual==="pc" ? 6 : 2;   // F326 · Prazos é a aba do cliente
   repintarFicha();
   const r = document.querySelector(".det-rolagem"); if(r) r.scrollTop = 0;
+  if(ks.length>1) escolherProcesso(clienteAberto, ks);
 }
-const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : abaAtiva===5 ? "pz" : abaAtiva===6 ? "pc" : ["cad","hon","per","pz","pc"].includes(celAba) ? "and" : celAba;
+const celAbaNorm = () => abaAtiva===0 ? "cad" : abaAtiva===4 ? "hon" : abaAtiva===3 ? "per" : abaAtiva===5 ? "pz" : abaAtiva===6 ? "pc" : "casos";
 function celCadIr(qual){ celCad = qual; const d = document.querySelector(".det-principal"); if(d) d.dataset.celCad = qual;
   document.querySelectorAll(".cel-cad-seg button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.cc===qual))); }
 function celAbasHtml(c, ks, k, nPer, temHon){
@@ -217,10 +223,11 @@ function celAbasHtml(c, ks, k, nPer, temHon){
   const nNov = k ? (D.novid||[]).filter(a=>a.caso_id===k.id).length : 0;
   // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
   const z = (()=>{ try{ return prazosDoCliente(c.id); }catch(e){ return {total:0, venc:0}; } })();
-  const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], (k || z.total || abaAtiva===5) && ["pz", `Prazos${z.venc?` <span class="ca-n ca-venc" aria-label="${z.venc} vencido${z.venc>1?"s":""}">${z.venc}</span>`:""}`],
-    k && ["caso", "Caso"], ["cad", "Cadastro"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
+  const it = [ks.length && ["casos", `Casos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], ["cad", "Cadastro"],
+    (z.total || abaAtiva===5) && ["pz", `Prazos${z.venc?` <span class="ca-n ca-venc" aria-label="${z.venc} vencido${z.venc>1?"s":""}">${z.venc}</span>`:""}`],
+    nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
   return `<nav class="cel-abas" role="tablist" aria-label="Partes da ficha">${it.map(([q, r])=>
-    `<button role="tab" aria-selected="${celAba===q}" class="${celAba===q?"on":""}" onclick="celIr('${q}')">${r}</button>`).join("")}</nav>`;
+    `<button role="tab" aria-selected="${celAba===q}" class="${celAba===q?"on":""}" onclick="celIr('${q}',1)">${r}</button>`).join("")}</nav>`;
 }
 function alertaVencidoCel(k){
   let x; try{ x = linhasDeDatas(k.cliente_id).soltas.filter(y=>(!y.casoId || y.casoId===k.id) && y.data<hoje() && !y.aConfirmar && y.lembTipo!=="aposentadoria_futura")

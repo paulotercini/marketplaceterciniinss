@@ -130,20 +130,20 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await m.evaluate(([cid, kid]) => { abrirFicha(cid).then(() => { casoSel = kid; abaAtiva = 2; repintarFicha(); }); }, [cA.id, kA.id]);
   await m.waitForSelector(".cel-abas"); await m.waitForTimeout(500);
   const abas = await m.$$eval(".cel-abas button", a => a.map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
-  conf(`no celular, as abas do topo (${abas.join(", ")})`, ["Andamentos", "Prazos", "Caso", "Cadastro", "Honorários"].every(x => abas.includes(x)));
+  conf(`no celular, as abas do topo (${abas.join(", ")})`, abas[0] === "Casos" && abas[1] === "Cadastro" && !abas.some(x => /Andamentos|^Caso$/.test(x)));
   const and = await m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
   // F330 · sem andamento nem número, INSS, CRPS e Judicial não aparecem; o número da gestão do caso os faz nascer
   const abasAnd = () => m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
-  conf(`F666 · no celular a barra Escritório, INSS e Tudo saiu do caso (${and.join(", ")})`, !and.length);
+  conf(`F676 · em Casos, os botões dos andamentos no lugar da linha do tempo (${and.join(", ")})`, and[0] === "Escritório" && !(await vis(m, ".tr-faixa")));
   await m.evaluate(kid => { D.casoPorId.get(kid).nb = "2161976766"; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   const and2 = await abasAnd();
-  conf(`com o NB, a barra continua fora (${and2.join(", ")})`, !and2.length);
+  conf(`com o NB, nasce o botão INSS (${and2.join(", ")})`, and2.includes("INSS"));
   await m.evaluate(kid => { const k = D.casoPorId.get(kid); k.nb = null; k.protocolos = ["123456789"]; k.crps_nups = ["44236386953202361"]; k.processos = [{ numero: "5000001-02.2024.4.03.6136", nosso: true }]; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   const and3 = await abasAnd();
-  conf(`com protocolo, e-Sisrec e CNJ, a barra continua fora (${and3.join(", ")})`, !and3.length);
+  conf(`com protocolo, e-Sisrec e CNJ, INSS, CRPS e Judicial (${and3.join(", ")})`, ["INSS", "CRPS", "Judicial"].every(x => and3.includes(x)));
   await m.evaluate(kid => { const k = D.casoPorId.get(kid); k.protocolos = []; k.crps_nups = []; k.processos = []; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
-  await m.evaluate(() => celIr("caso")); await m.waitForTimeout(300);
-  conf("a aba Caso mostra o cartão do caso e esconde os andamentos", await vis(m, ".linha-caso") && !(await vis(m, ".caso-dir .timeline")));
+  await m.screenshot({ path: OUT + "/cel-casos.png" });
+  conf("Casos mostra também o cartão do caso (resumo e dados do benefício)", await vis(m, ".linha-caso"));
   await m.evaluate(() => celIr("cad")); await m.waitForTimeout(400);
   const cad = await m.evaluate(() => { const v = e => !!(e && e.offsetParent); const ds = [...document.querySelectorAll(".cel-dado")].filter(v);
     return { rot: ds.map(d => d.querySelector(".cel-rot").textContent), cop: ds[0] && /Copiar/.test(ds[0].textContent), tel: !!document.querySelector('.cel-dado a[href^="tel:"]'), ident: v(document.querySelector('.painel[data-p="0"] .id-quadros, .painel[data-p="0"] form, .painel[data-p="0"] .cad-sec')) }; });
@@ -152,7 +152,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("Mais dados troca para o resto do cadastro, sem repintar", await m.evaluate(() => document.querySelector(".det-principal").dataset.celCad === "mais" && ![...document.querySelectorAll(".cel-dado")].some(e => e.offsetParent)));
   await m.screenshot({ path: OUT + "/cel-cadastro.png" });
   await m.evaluate(() => celIr("and")); await m.waitForTimeout(300);
-  conf("de volta aos Andamentos, o campo de escrever aparece", await vis(m, ".escrever"));
+  conf("de volta a Casos, o campo de escrever aparece", await vis(m, ".escrever"));
 
   conf("sem erro de página", !erros.length);
   if (erros.length) console.log(erros);
