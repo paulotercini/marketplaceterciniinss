@@ -1357,13 +1357,23 @@ function linhaTempoCaso(k){
     ["implantacao", impl ? "f" : "v", ano(k.dib), 1],
     ["honorarios", pg.length && pago.length===pg.length ? "f" : pago.length ? "a" : "v", ano(pago[0]), 1.4]];
   const COR = {implantacao:["#6B3FA0","Implantação"], honorarios:["#0E5C58","Honorários"]};
-  const bar = segs.filter(([,s])=>s!=="n").map(([f,s,a,fl])=>{
-    const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v";
+  // F670c · a barra é a própria fila das fases: cada fase do processo é o botão que abre o seu cartão (decisão do Paulo, 21.11)
+  const so = faixaSoFases(k), bt = {};
+  (so.match(/<button role="tab"[\s\S]*?<\/button>/g)||[]).forEach(b=>{ const m = /trVerFase\('[^']*','(\w+)'\)/.exec(b); if(m) bt[m[1]] = b; });
+  const tudo = (/<button type="button" class="jn-tudo[\s\S]*?<\/button>/.exec(so)||[""])[0];
+  // o resumo da etapa atual (etapa, desde quando, próximo passo) fica numa linha dentro do mesmo quadro
+  const resto = so.replace(/<button role="tab"[\s\S]*?<\/button>/g, "").replace(tudo, "");
+  const bar = segs.filter(([f,s])=>s!=="n" || bt[f]).map(([f,s,a,fl])=>{
+    const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v" || s==="n";
+    if(bt[f]) return bt[f].replace('class="jn-b ', `class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""} jn-b `).replace('style="', `style="flex:${fl};--c:${fut?"#B7BCC2":c};`)
+      .replace(/<\/button>$/, `<span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span></button>`);
     return `<div class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""}" style="flex:${fl};--c:${fut?"#B7BCC2":c}" title="${esc(n)}${a&&!fut?` · desde ${a}`:""}">
       <span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span><span class="ltc-n">${esc(n)}</span></div>`; }).join("");
   let tot = "";
   if(ini){ const d0 = new Date(ini), h = new Date(), m = (h.getFullYear()-d0.getFullYear())*12 + h.getMonth()-d0.getMonth() - (h.getDate()<d0.getDate()?1:0);
     const a = Math.floor(m/12), r = m%12;
     tot = [a ? `${a} ${a>1?"anos":"ano"}` : "", r ? `${r} ${r>1?"meses":"mês"}` : ""].filter(Boolean).join(" e ") || "menos de um mês"; }
-  return `<section class="ltc" aria-label="Linha do tempo do caso">${tot ? `<div class="ltc-k">Total desde o 1º contato</div><div class="ltc-t">${tot}</div>` : ""}<div class="ltc-bar">${bar}</div></section>`;
+  const ltc = `<div class="ltc" aria-label="Linha do tempo do caso">${tot ? `<div class="ltc-k">Total desde o 1º contato</div><div class="ltc-t">${tot}</div>` : ""}<div class="ltc-bar jn-l" role="tablist" aria-label="Fases do caso">${bar}${tudo}</div></div>`;
+  // a linha do tempo ocupa o lugar da fila das fases, dentro da mesma faixa (o resumo da etapa atual segue logo abaixo)
+  return resto ? resto.replace(/<div class="jn-l"[^>]*>([\s\S]*?)<\/div>/, (m, sobra)=>ltc.replace("</div></div>", `${sobra.trim()}</div></div>`)).replace('class="tr-so-fases ', 'class="tr-so-fases ltc-faixa ') : `<section class="ltc-faixa">${ltc}</section>`;
 }
