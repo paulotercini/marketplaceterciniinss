@@ -102,7 +102,8 @@ const casoDe = id => T.casos.find(k => k.id === id);
   await new Promise(r => s.on("listening", r));
   const nav = await chromium.launch();
   const ctx = await nav.newContext({ viewport: { width: 1440, height: 1000 } });
-  await ctx.addInitScript(([u, ss]) => {
+  await ctx.addInitScript(([u, ss]) => { window.TRILHA_NO_CASO = true; // F666 tirou a trilha do Caso; as provas dela a religam
+
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10"); localStorage.setItem("crm_etapas", "1");   // F320 · as etapas abertas (no computador nascem recolhidas)
