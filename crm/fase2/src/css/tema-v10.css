@@ -870,6 +870,7 @@ html[data-tema="v10"] .db-desp .db-corpo{display:grid;grid-template-columns:22px
 html[data-tema="v10"] .db-quem{width:22px;height:22px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;margin-top:2px}
 html[data-tema="v10"] .db-autor{font-size:12px;color:var(--db-cinza);margin-bottom:2px}
 html[data-tema="v10"] .db-txt{font-size:15px;line-height:1.5;white-space:pre-line;margin:0}
+html[data-tema="v10"] .db-dh{font-weight:600;color:var(--db-cinza);font-variant-numeric:tabular-nums}
 html[data-tema="v10"] .db-resp{margin:8px 0 0 10px;padding-left:10px;border-left:2px solid var(--db-borda);font-size:13px;color:var(--db-cinza);white-space:pre-line}
 html[data-tema="v10"] .db-vazio{margin:0;font-size:14px;color:var(--db-cinza)}
 html[data-tema="v10"] .db .ae-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--db-borda)}
