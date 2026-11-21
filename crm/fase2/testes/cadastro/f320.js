@@ -134,13 +134,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const and = await m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
   // F330 · sem andamento nem número, INSS, CRPS e Judicial não aparecem; o número da gestão do caso os faz nascer
   const abasAnd = () => m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
-  conf(`nos Andamentos, sem número nem andamento, só Escritório e Tudo (${and.join(", ")})`, and.join() === "Escritório,Tudo");
+  conf(`F666 · no celular a barra Escritório, INSS e Tudo saiu do caso (${and.join(", ")})`, !and.length);
   await m.evaluate(kid => { D.casoPorId.get(kid).nb = "2161976766"; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   const and2 = await abasAnd();
-  conf(`com o NB, a aba INSS aparece (${and2.join(", ")})`, and2.join() === "Escritório,INSS,Tudo");
+  conf(`com o NB, a barra continua fora (${and2.join(", ")})`, !and2.length);
   await m.evaluate(kid => { const k = D.casoPorId.get(kid); k.nb = null; k.protocolos = ["123456789"]; k.crps_nups = ["44236386953202361"]; k.processos = [{ numero: "5000001-02.2024.4.03.6136", nosso: true }]; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   const and3 = await abasAnd();
-  conf(`com protocolo, e-Sisrec e CNJ, as três abas aparecem e nenhum + número (${and3.join(", ")})`, and3.join() === "Escritório,INSS,CRPS,Judicial,Tudo");
+  conf(`com protocolo, e-Sisrec e CNJ, a barra continua fora (${and3.join(", ")})`, !and3.length);
   await m.evaluate(kid => { const k = D.casoPorId.get(kid); k.protocolos = []; k.crps_nups = []; k.processos = []; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   await m.evaluate(() => celIr("caso")); await m.waitForTimeout(300);
   conf("a aba Caso mostra o cartão do caso e esconde os andamentos", await vis(m, ".linha-caso") && !(await vis(m, ".caso-dir .timeline")));
