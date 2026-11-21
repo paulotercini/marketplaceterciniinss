@@ -2972,6 +2972,18 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .pc-vazio{color:var(--suave,#6b6b6b);font-size:13px}
 .pc-proc{border-top:1px solid var(--linha,#e5e5e5);padding:8px 12px;font-size:13px;display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}.pc-proc label{display:grid;gap:4px;flex:1 1 260px}.pc-proc input{width:100%}
 .pc-notas{border-top:1px solid var(--linha,#e5e5e5);padding:8px 12px;font-size:13px}.pc-notas summary{cursor:pointer;font-weight:600}.pc-notas ol{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}.pc-notas li{white-space:pre-wrap}.pc-notas .meio-sub{margin-right:6px}
+/* F668 · o caso em formação: selo âmbar tracejado no Casos ▾ e quadro no alto da tela do caso */
+.selo-form{display:inline-block;font-size:11px;font-weight:600;line-height:18px;padding:0 7px;border-radius:4px;border:1px dashed #B7791F;background:#FDF3E1;color:#8A5A12;vertical-align:1px;margin-left:4px;white-space:nowrap}
+#menu-processos .mp-pc-tog{color:var(--cinza)}
+.pc-quadro{border:1px dashed #B7791F;border-radius:8px;overflow:hidden;background:var(--branco,#fff);margin:0 0 12px}
+.pc-quadro.pc-arq{opacity:.7;border-color:var(--borda,#ccc)}
+.pcq-cab{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:#FDF3E1;color:#6B4510;font-size:14px}
+.pcq-cab .selo-form{margin-left:auto}
+.pcq-corpo{display:grid;gap:8px;padding:10px 12px;font-size:13px}
+.pcq-passos{display:flex;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0}
+.pcq-passos li{flex:1 1 110px;text-align:center;padding:5px 6px;border:1px solid var(--borda,#ddd);border-radius:6px;font-size:12px}
+.pcq-passos li.ok{background:#E6F2EA;color:#1E5A37;border-color:#B9DCC5}
+.pcq-passos li.at{border:2px solid #B7791F;font-weight:600}
 .mt.mt-novopc{color:var(--acento,#0E5C58)}
 .dossie-semcad{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;background:#FFF4D6;color:#7A5200;font-size:12px;font-weight:600}
 </style>
@@ -7162,10 +7174,10 @@ html[data-so-leitura] [data-pc="anotar"], html[data-so-leitura] [data-pc="dia"],
 html[data-so-leitura] [onclick*="concluir" i], html[data-so-leitura] [onclick*="adiar" i], html[data-so-leitura] [onclick*="reagendar" i],
 html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="anotar" i], html[data-so-leitura] .pcl-cx .ae-nota, html[data-so-leitura] .pcl-cx .pcl-fim{display:none!important}
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
-</style>
-</head>
 html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
 html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;align-self:center}
+</style>
+</head>
 <body>
 
 <div class="login" id="tela-login">
@@ -7515,7 +7527,7 @@ function celAbasHtml(c, ks, k, nPer, temHon){
   // F326 · a aba Prazos do celular é a do cliente (todos os casos), com o número dos vencidos em vermelho
   const z = (()=>{ try{ return prazosDoCliente(c.id); }catch(e){ return {total:0, venc:0}; } })();
   const it = [k && ["and", `Andamentos${nNov?` <span class="ca-n">${nNov}</span>`:""}`], (k || z.total || abaAtiva===5) && ["pz", `Prazos${z.venc?` <span class="ca-n ca-venc" aria-label="${z.venc} vencido${z.venc>1?"s":""}">${z.venc}</span>`:""}`],
-    k && ["caso", "Caso"], ["cad", "Cadastro"], (pcDaFicha(c).n || abaAtiva===6) && ["pc", "Pré-caso"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
+    k && ["caso", "Caso"], ["cad", "Cadastro"], nPer && ["per", "Perícias"], temHon && ["hon", "Honorários"]].filter(Boolean);
   return `<nav class="cel-abas" role="tablist" aria-label="Partes da ficha">${it.map(([q, r])=>
     `<button role="tab" aria-selected="${celAba===q}" class="${celAba===q?"on":""}" onclick="celIr('${q}')">${r}</button>`).join("")}</nav>`;
 }
@@ -23957,13 +23969,12 @@ function pintarFicha(){
            Perícias só com perícia, Honorários só com caso ou recebimento.
            Cliente em formação vê só Cadastro e Lembretes — menos abas,
            menos lugar para se perder. */""}
-      ${/* F601 · a aba Pré-caso, entre Cadastro e Casos (protótipo aprovado pelo Paulo em 14.11.2026):
-           aparece só com pré-caso, arquivado inclusive; sem nenhum, o advogado vê o ＋ Pré-caso */""}
-      ${(z=>(z.n||abaAtiva===6) ? `<button class="mt ${abaAtiva===6?"on":""}" data-vv="6">Pré-caso${z.vivos>1?` (${z.vivos})`:""}</button>`
-        : (podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""))(pcDaFicha(c))}
-      ${ksR.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
+      ${/* F668 · a aba Pré-caso saiu (onda 1, 21.11.2026): o pré-caso é caso em formação, no Casos ▾;
+           sem caso nem pré-caso, o advogado vê o ＋ Pré-caso */""}
+      ${!ksR.length && !pcDaFicha(c).n && podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""}
+      ${ksR.length || pcDaFicha(c).n ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
-          (n=>n>1?` (${n})`:"")(processosDe(ksR).length)} ▾</button>` : ""}
+          (n=>n>1?` (${n})`:"")(processosDe(ksR).length + pcDaFicha(c).lista.length)} ▾</button>` : ""}
       ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
       ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` <span class="mt-pzn">${z.total}</span>`:""}${z.venc?` <span class="mt-pzv">${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
@@ -24000,7 +24011,7 @@ function pintarFicha(){
       }
       // Ordem da tela: o sub-menu decide O QUE olhar; o cartão de fatos diz
       // DE QUE processo se trata; e só então vem o trabalho (escrever/ler).
-      return `${(()=>{
+      return `${quadroEmFormacao(c, k)}${(()=>{
           // ══════════════════════════════════════════════════════════════════
           // ABA SÓ APARECE COM O QUE MOSTRAR
           // ══════════════════════════════════════════════════════════════════
@@ -24062,10 +24073,6 @@ function pintarFicha(){
 
   <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
     ${abaAtiva===5 ? painelPrazosCliente(cliId) : ""}
-  </div>
-
-  <div class="painel ${abaAtiva===6?"ativo":""}" data-p="6">
-    ${abaAtiva===6 ? painelPreCasos(c) : ""}
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
@@ -27862,7 +27869,13 @@ function menuCasosDoCliente(ev, cliId){
 // a viver na aba 💰 Honorários — foi para isso que ela existe.
 function processosDe(ks){ return (ks||[]).filter(k=>k.fase!=="pagamento"); }
 function menuProcessos(ev, ks){
-  ks = processosDe(ks).filter(k=>!ehPreCaso(k));   // F601 · o pré-caso mora na aba Pré-caso
+  ks = processosDe(ks).filter(k=>!k.pre_caso);
+  // F668 · o pré-caso é caso em formação (onda 1, 21.11.2026): vem primeiro, com o selo; os encerrados ficam recolhidos no fim
+  const cli = D.cliPorId.get((ks[0]||{}).cliente_id || clienteAberto), z = cli ? pcDaFicha(cli) : {lista:[], arq:[]};
+  const itPc = (p, fora) => `<div class="mp-it mp-pc${fora ? " mp-pc-arq" : ""}${p.caso_id && casoSel===p.caso_id ? " sel" : ""}" ${p.caso_id ? `data-mp="${esc(p.caso_id)}"` : p.id!=="legado" && !fora ? `data-mp-pc="${esc(p.id)}"` : ""}${fora ? " hidden" : ""}>
+    <b>${nomePc(p.especie)}</b> <span class="selo-form">${fora ? "Encerrado" : p.so_lembrete ? "Futuro" : "Em formação"}</span>
+    <small>${fora ? esc([(p.desfecho||{}).motivo || "sem motivo registrado", (p.desfecho||{}).em && fmt(String(p.desfecho.em).slice(0,10))].filter(Boolean).join(" · "))
+      : p.so_lembrete ? "🙏 Aposentadorias Futuras" : esc(`Passo: ${(k=>k ? passoDoPreCaso(k) : "Identificação")(p.caso_id && D.casoPorId.get(p.caso_id))}`)}</small></div>`;
   ev.stopPropagation(); fecharMenuProcessos();
   const m=document.createElement("div"); m.id="menu-processos";
   // a linha diz EM QUE LISTA o caso está (com o emoji do To Do — "👪
@@ -27874,21 +27887,28 @@ function menuProcessos(ev, ks){
     <small>${k.fase==="encerrado"?"✔ Encerrado":ehPreCaso(k)?`🟡 Pré-caso no escritório · ${esc(passoDoPreCaso(k))}`:esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${(n=>esc([n.nb[0]&&`NB ${fmtNum("nb",n.nb[0])}`, k.der&&`DER ${fmtBarra(k.der)}`, n.nup[0]&&`e-Sisrec ${fmtNum("nup",n.nup[0])}`, n.proc[0]&&`proc. ${fmtNum("proc",n.proc[0])}`].filter(Boolean).map(x=>" · "+x).join("")))(numerosDoCaso(k))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}</small>
   </div>`;
   m.innerHTML =
-    ks.filter(k=>k.fase!=="encerrado").map(item).join("")
+    z.lista.map(p=>itPc(p, false)).join("")
+    + ks.filter(k=>k.fase!=="encerrado").map(item).join("")
     + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
     + ks.filter(k=>k.fase==="encerrado").map(item).join("")
+    + (z.arq.length ? `<div class="mp-it mp-pc-tog" role="button" aria-expanded="false"><b>Pré-casos encerrados (${z.arq.length})</b><small>ver</small></div>${z.arq.map(p=>itPc(p, true)).join("")}` : "")
     + (ks.filter(k=>k.fase!=="encerrado").length>1 ? `<div class="mp-it mp-novo" data-mp="__org__">⇄ Organizar os casos</div>` : "")
+    + (cli && podeAtender() ? `<div class="mp-it mp-novo" data-mp-novopc="1">＋ Novo pré-caso</div>` : "")
     + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
   document.body.appendChild(m);
   const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
   m.style.left=Math.min(r.left, innerWidth-W-8)+"px";
   m.style.top=Math.min(r.bottom+4, innerHeight-H-8)+"px";
+  const tog = m.querySelector(".mp-pc-tog");
+  if(tog) tog.onclick = e=>{ e.stopPropagation(); const ab = tog.getAttribute("aria-expanded")!=="true";
+    tog.setAttribute("aria-expanded", String(ab)); tog.querySelector("small").textContent = ab ? "ocultar" : "ver";
+    m.querySelectorAll(".mp-pc-arq").forEach(x=>x.hidden = !ab); };
+  m.querySelectorAll("[data-mp-pc]").forEach(it=>it.onclick=()=>{ fecharMenuProcessos(); abrirAtendimentoDe(cli.id, it.dataset.mpPc); });
+  m.querySelectorAll("[data-mp-novopc]").forEach(it=>it.onclick=()=>{ fecharMenuProcessos(); novoAtendimento(cli.id); });
   m.querySelectorAll("[data-mp]").forEach(it=>it.onclick=()=>{
     const v=it.dataset.mp;
     fecharMenuProcessos();
     if(v==="__org__") return organizarCasos(clienteAberto);
-    const kp = D.casoPorId.get(v);
-    if(ehPreCaso(kp)) return abrirAtendimentoDe(kp.cliente_id, (kp.precaso||{}).id||kp.id);   // F227
     if(v==="__novo__"){ abaAtiva=7; }
     else { casoSel=v||null; abaAtiva=2; subAba="escritorio"; }   // F166
     repintarFicha();
@@ -57837,40 +57857,40 @@ function pcDaFicha(c){
 const PC_MOVER_LIGADO = false;
 const PC_ESTADOS = [["ativo","Ativo"],["futuro","Futuro"],["arquivo","Arquivo"],["caso","Gerar caso"]];
 function estadoPc(p, fora){ return fora ? "arquivo" : p.so_lembrete ? "futuro" : "ativo"; }
-function painelPreCasos(c){
-  const z = pcDaFicha(c), cor = (LC_FASE.escritorio||["#0E5C58"])[0];
-  const nome = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
-  // F602b · até 31/12/2026 o estado vem só da lista do To Do (ordem do Paulo de 15.11.2026): sem botões de mover
-  const botoes = (p, fora) => {
-    if(!PC_MOVER_LIGADO) return "";
-    if(!p.caso_id || !D.casoPorId.get(p.caso_id) || !podeAtender()) return "";
-    const at = estadoPc(p, fora);
-    return `<div class="pc-mover" role="group" aria-label="Mover este pré-caso">${PC_ESTADOS.map(([e,r])=>
-      e===at ? `<span class="pc-est on" aria-current="true">${r}</span>`
-      : (fora && e==="caso") ? "" : `<button class="btn-mini" data-pc-mover="${esc(p.caso_id)}|${e}">${r}</button>`).join("")}</div>`;
-  };
-  const cartao = (p, fora) => {
-    const k = p.caso_id && D.casoPorId.get(p.caso_id);
-    const passo = fora ? "" : (p.so_lembrete ? "Em Aposentadorias futuras" : (k ? passoDoPreCaso(k) : "Identificação"));
-    const d = p.desfecho||{};
-    return `<div class="pc-cartao${fora?" pc-arq":""}" style="--pc-cor:${fora?"#8A8F98":cor}">
-      <div class="pc-cab"><b>${nome(p.especie)}</b><span>${fora?"Arquivado":p.so_lembrete?"Futuro · Aposentadorias futuras":"Ativo · Escritório"}</span></div>
-      <div class="pc-corpo">${fora
-        ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
-        : `<div>Passo: <b>${esc(passo)}</b>${p.data_direito?` · direito provável em ${fmt(p.data_direito)}`:""}${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
-           ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}
-        ${botoes(p, fora)}</div>
-      ${retornoPcHtml(p, k, fora)}
-      ${procAnteriorHtml(p, k, fora)}
-      ${(ts=>ts.length?`<details class="pc-notas"${fora?"":" open"}><summary>Anotações do Microsoft To Do (${ts.length})</summary>${notasTodoHtml(ts)}</details>`:"")(notasTodoDoPc(c, p))}
-    </div>`;
-  };
-  return `<div class="pc-painel">
-    ${podeAtender()?`<div class="pc-topo"><button class="btn-mini" data-pc-novo="1" title="Novo pré-caso (outro benefício)">Novo</button></div>`:""}
-    ${z.lista.map(p=>cartao(p,false)).join("")}
-    ${z.arq.length?`<h4 class="pc-sub">Arquivados</h4>${z.arq.map(p=>cartao(p,true)).join("")}`:""}
-    ${z.n?"":`<p class="pc-vazio">Nenhum pré-caso.</p>`}
-  </div>`;
+// F668 · onda 1 do caso em formação (aprovada pelo Paulo em 21.11.2026): a aba Pré-caso saiu do menu; o pré-caso
+// é o próprio caso, com o selo "Em formação" no Casos ▾ e este quadro no alto da tela do caso
+const nomePc = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
+const PC_PASSOS = [["identificacao","Identificação"],["pa","1º atendimento"],["analise","Análise de Direito"],["documentos","Documentos"]];
+// F602b · até 31/12/2026 o estado vem só da lista do To Do (ordem do Paulo de 15.11.2026): sem botões de mover
+function botoesMoverPc(p, fora){
+  if(!PC_MOVER_LIGADO) return "";
+  if(!p.caso_id || !D.casoPorId.get(p.caso_id) || !podeAtender()) return "";
+  const at = estadoPc(p, fora);
+  return `<div class="pc-mover" role="group" aria-label="Mover este pré-caso">${PC_ESTADOS.map(([e,r])=>
+    e===at ? `<span class="pc-est on" aria-current="true">${r}</span>`
+    : (fora && e==="caso") ? "" : `<button class="btn-mini" data-pc-mover="${esc(p.caso_id)}|${e}">${r}</button>`).join("")}</div>`;
+}
+function quadroEmFormacao(c, k){
+  if(!k || !k.pre_caso || !c) return "";
+  const z = pcDaFicha(c), id = x => x.caso_id===k.id;
+  const p = z.lista.find(id), pa = !p && z.arq.find(id);
+  if(!p && !pa) return "";
+  const fora = !!pa, q = p || pa, d = q.desfecho||{}, et = (k.precaso||{}).etapas||{};
+  const at = PC_PASSOS.findIndex(([x])=>!et[x]);
+  const passos = fora || q.so_lembrete ? "" : `<ol class="pcq-passos" aria-label="Passos do atendimento">${PC_PASSOS.map(([x, r], i)=>
+    `<li class="${et[x] ? "ok" : i===at ? "at" : ""}"${i===at ? ' aria-current="step"' : ""}>${et[x] ? "✓ " : ""}${r}</li>`).join("")}</ol>`;
+  const est = fora ? "Pré-caso encerrado" : q.so_lembrete ? "Futuro · Aposentadorias futuras" : "Caso em formação";
+  return `<section class="pc-quadro${fora ? " pc-arq" : ""}" aria-label="${est}">
+    <div class="pcq-cab"><b>${est}</b> · ${nomePc(q.especie)}<span class="selo-form">${fora ? "Encerrado" : q.so_lembrete ? "Futuro" : "Em formação"}</span></div>
+    <div class="pcq-corpo">${passos}
+      ${fora ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
+        : `<div>Lista no To Do: <b>${esc(listaDe(k)!=="—" ? listaDe(k) : q.so_lembrete ? "🙏 Aposentadorias Futuras" : "🙋 Escritório")}</b>${q.data_direito?` · direito provável em ${fmt(q.data_direito)}`:""}</div>`}
+      ${!fora && !q.so_lembrete && podeAtender() ? `<div><button class="btn-mini pcq-cont" data-pc-abrir="${esc(q.id)}">Continuar atendimento</button></div>` : ""}
+      ${botoesMoverPc(q, fora)}</div>
+    ${retornoPcHtml(q, k, fora)}
+    ${procAnteriorHtml(q, k, fora)}
+    ${(ts=>ts.length?`<details class="pc-notas"${fora?"":" open"}><summary>Anotações do Microsoft To Do (${ts.length})</summary>${notasTodoHtml(ts)}</details>`:"")(notasTodoDoPc(c, q))}
+  </section>`;
 }
 // F604 · o processo judicial anterior, de outro escritório (pedido do Paulo de 15.11.2026): fica no pré-caso,
 // em casos.precaso.proc_anterior, só no CRM; serve à conferência de litispendência e coisa julgada

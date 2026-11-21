@@ -2963,6 +2963,18 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .pc-vazio{color:var(--suave,#6b6b6b);font-size:13px}
 .pc-proc{border-top:1px solid var(--linha,#e5e5e5);padding:8px 12px;font-size:13px;display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}.pc-proc label{display:grid;gap:4px;flex:1 1 260px}.pc-proc input{width:100%}
 .pc-notas{border-top:1px solid var(--linha,#e5e5e5);padding:8px 12px;font-size:13px}.pc-notas summary{cursor:pointer;font-weight:600}.pc-notas ol{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}.pc-notas li{white-space:pre-wrap}.pc-notas .meio-sub{margin-right:6px}
+/* F668 · o caso em formação: selo âmbar tracejado no Casos ▾ e quadro no alto da tela do caso */
+.selo-form{display:inline-block;font-size:11px;font-weight:600;line-height:18px;padding:0 7px;border-radius:4px;border:1px dashed #B7791F;background:#FDF3E1;color:#8A5A12;vertical-align:1px;margin-left:4px;white-space:nowrap}
+#menu-processos .mp-pc-tog{color:var(--cinza)}
+.pc-quadro{border:1px dashed #B7791F;border-radius:8px;overflow:hidden;background:var(--branco,#fff);margin:0 0 12px}
+.pc-quadro.pc-arq{opacity:.7;border-color:var(--borda,#ccc)}
+.pcq-cab{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:#FDF3E1;color:#6B4510;font-size:14px}
+.pcq-cab .selo-form{margin-left:auto}
+.pcq-corpo{display:grid;gap:8px;padding:10px 12px;font-size:13px}
+.pcq-passos{display:flex;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0}
+.pcq-passos li{flex:1 1 110px;text-align:center;padding:5px 6px;border:1px solid var(--borda,#ddd);border-radius:6px;font-size:12px}
+.pcq-passos li.ok{background:#E6F2EA;color:#1E5A37;border-color:#B9DCC5}
+.pcq-passos li.at{border:2px solid #B7791F;font-weight:600}
 .mt.mt-novopc{color:var(--acento,#0E5C58)}
 .dossie-semcad{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;background:#FFF4D6;color:#7A5200;font-size:12px;font-weight:600}
 </style>

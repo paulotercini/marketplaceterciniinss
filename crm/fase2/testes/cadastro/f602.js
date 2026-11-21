@@ -68,12 +68,12 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const abrirPc = async id => { await p.evaluate(i => { abaAtiva = 0; abrirFicha(i); }, id); await p.waitForTimeout(700);
-    await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(500); };
+    await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(500); };
   const linha = id => T.casos.find(k => k.id === id);
 
-  // A · F602b: até 31/12/2026 o estado vem só do To Do; a aba mostra o estado e não tem botão de mover
+  // A · F602b: até 31/12/2026 o estado vem só do To Do; o quadro do caso em formação (F668) mostra o estado e não tem botão de mover
   await abrirPc(A);
-  conf("o pré-caso mostra o estado Ativo · Escritório", /Ativo · Escritório/.test(await p.$eval(".pc-cab", e => e.textContent).catch(() => "")));
+  conf("o caso em formação mostra o estado no quadro", /Caso em formação/.test(await p.$eval(".pcq-cab", e => e.textContent).catch(() => "")));
   conf("sem botão de mover o pré-caso", !(await p.$("[data-pc-mover]")) && !(await p.$(".pc-mover")));
   await p.screenshot({ path: path.join(OUT, "a-ativo.png") });
   conf("nada grava mover_para", !linha(KA).mover_para && !linha(KB).mover_para);
