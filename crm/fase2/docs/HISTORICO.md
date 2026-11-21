@@ -1050,3 +1050,5 @@ F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (lei
 - **F663** (19.11.2026): painel lateral do cliente (proposta A escolhida pelo Paulo): Atribuição em iniciais quadradas, cinza e na cor do colaborador quando selecionado (nome no title); Anotações em linha do tempo com a inicial do autor na cor dele; campo de escrita com 2 linhas.
 - **F664** (19.11.2026): no celular o painel lateral esconde o calendário do Prazo; o botão "Outra", ao lado de Hoje e Amanhã, abre e fecha o calendário. No computador o calendário continua à vista.
 - **F665** (21.11.2026): painel lateral do cliente mostra as 5 últimas anotações da equipe; "Ver anotações anteriores" traz da sexta em diante. Parceria e Parentesco só aparecem quando há alguém cadastrado.
+
+- F666 (21.11.2026): o quadro de etapas saiu da tela do Caso (atualização manual, poluía o andamento); a etapa fica num selo ao lado da espécie, clique muda a etapa; dados no banco preservados para o portal.
