@@ -4119,6 +4119,7 @@ html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 #pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 #pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
 #pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
+#pcli .pcl-acoes{flex:none;display:inline-flex;align-items:center;gap:6px} /* F676 · WhatsApp à esquerda do Abrir */
 #pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
 #pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
 #pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
