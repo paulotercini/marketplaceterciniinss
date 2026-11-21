@@ -23946,16 +23946,12 @@ function pintarFicha(){
   // F243 · no v10 o CPF, a senha do Meu INSS e o telefone vão na linha do nome, e o menu do cliente sobe (pedido do Paulo, 18.10.2026)
   const resumoIn = `      <span class="id-min"><b>CPF</b> ${c.cpf?`<span class="cop" data-cop="${esc(c.cpf)}" data-cop-msg="CPF copiado" title="clique para copiar">${fmtCpf(c.cpf)}</span>
         <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:"—"}</span>
-      ${(cr=>cr?`<span class="id-min"><b>Meu INSS</b> ••••••
-        <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button>
-        <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button>${c.cpf?`
-        <button class="olho entrar-inss" title="entrar no Meu INSS: copia o CPF e abre o login do gov.br" onclick="entrarMeuInss('${cliId}')">↗</button>`:""}</span>`
+      ${(cr=>cr?`<span class="id-min"><b>Meu INSS</b> <span class="cop" id="cred-${cr.id}" onclick="copiarCred('${cr.id}')" title="clique para copiar a senha (fica registrado)">${(setTimeout(()=>mostrarCredFicha(cr.id)),"••••••")}</span>${c.cpf?`
+        <button class="olho entrar-inss" title="entrar no Meu INSS: copia o CPF e abre o login do gov.br" aria-label="entrar no Meu INSS" onclick="entrarMeuInss('${cliId}')">${iconeFonte("inss")}</button>`:""}</span>`
         :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span>${c.cpf?`
-        <button class="olho entrar-inss" title="entrar no Meu INSS: copia o CPF e abre o login do gov.br" onclick="entrarMeuInss('${cliId}')">↗</button>`:""}</span>`)(creds.find(x=>x.tipo==="meu_inss"))}
+        <button class="olho entrar-inss" title="entrar no Meu INSS: copia o CPF e abre o login do gov.br" aria-label="entrar no Meu INSS" onclick="entrarMeuInss('${cliId}')">${iconeFonte("inss")}</button>`:""}</span>`)(creds.find(x=>x.tipo==="meu_inss"))}
       ${/* F86 · o telefone ao lado do CPF e da senha: é o terceiro dado que a
            equipe copia o dia inteiro (o protótipo o mostrava na faixa) */""}
-      ${(temaV10() && c.telefone)?`<span class="id-min"><b>Telefone</b> <span class="cop" data-cop="${esc(c.telefone)}" data-cop-msg="Telefone copiado" title="clique para copiar">${esc(c.telefone)}</span>
-        <button class="olho" title="copiar o telefone" onclick="copiar('${escJs(c.telefone)}','Telefone copiado')">📋</button>${botaoZapCliente(cliId)}</span>`:""}
       ${/* F56 · o "Concluir em" do To Do agora mora aqui: UMA data à vista
            dizendo quando este cliente volta — vencida grita em vermelho,
            futura avisa em azul, e a ausência de data também é informação */""}
@@ -23977,20 +23973,17 @@ function pintarFicha(){
       <button class="cel-voltar so-cel" onclick="fecharFicha()" title="voltar para a lista">‹</button>
       ${/* o nome e a bolinha abrem o mapa dos casos (pedido do Paulo): em
            que lista está cada um, e um clique leva direto ao processo */""}
-      <span class="cli-bloco"><span class="cli-casos" onclick="menuCasosDoCliente(event,'${cliId}')"
-        title="ver os casos deste cliente e em que lista está cada um">
+      <span class="cli-bloco"><span class="cli-casos" title="clique para copiar o nome">
         ${(u=>u?`<img class="avatar foto-zap" src="${esc(u)}" alt="foto de ${esc(c.nome)} no WhatsApp" title="foto do WhatsApp — clique para ampliar" onclick="verFotoGrande(this.src)">`
-          :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2>${esc(c.nome)}</h2>
-        <span class="cli-casos-seta">▾</span>
+          :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2 onclick="copiar('${escJs(c.nome)}','Nome copiado')">${esc(c.nome)}</h2>
+        <span class="cli-casos-seta" role="button" title="ver os casos deste cliente e em que lista está cada um" onclick="menuCasosDoCliente(event,'${cliId}')">▾</span>
       </span>${temaV10() && celular() ? linhaAdvogado(c, chipParceria(c, ks)) : ""}</span>
       ${/* F278 · o copiar o nome volta ao lado do nome (pedido do Paulo, 25.10.2026) */""}
-      <button class="olho" title="copiar o nome do cliente"
-        onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
            ficha vê de cara que o caso é dividido com outro advogado */""}
       ${temaV10() ? "" : chipParceria(c, ks)}
       ${chipsParentes(c)}${chipEntregar(c)}
-      ${temaV10() && c.telefone ? "" : botaoZapCliente(cliId)}
+      ${botaoZapCliente(cliId)}
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c, chipParceria(c, ks))}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
@@ -60421,6 +60414,10 @@ async function copiarCred(id){
   await copiar(cr.valor,"Senha copiada 📋");
   api(`/rest/v1/credencial_vis`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});
+}
+// F672 · a senha do Meu INSS à vista no cabeçalho da ficha (pedido do Paulo, 21.11.2026); copiar continua registrado
+async function mostrarCredFicha(id){
+  try{ const [cr]=await api(`/rest/v1/credenciais?id=eq.${id}&select=valor`); const el=document.getElementById("cred-"+id); if(el && cr) el.textContent=cr.valor; }catch(e){}
 }
 async function verCred(id){
   const [cr]=await api(`/rest/v1/credenciais?id=eq.${id}&select=valor`);

@@ -83,7 +83,7 @@ FIX.andamentos = [
     const e = [...document.querySelectorAll(".det-topo .resumo .id-min")].find(x => /Telefone/.test(x.textContent));
     return e ? { txt: e.textContent.replace(/\s+/g, " ").trim(), copia: !!e.querySelector("button[onclick^='copiar']") } : null;
   });
-  conf("o telefone entra na faixa do cliente, com copiar", tel && /\(16\) 99999-0001/.test(tel.txt) && tel.copia);
+  conf("o telefone saiu da faixa do cliente; o WhatsApp fica ao lado do nome (F672)", !tel);
 
   await abrir("?tema=", "escritorio");
   const off = await p.evaluate(() => ({
