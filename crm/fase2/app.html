@@ -5819,11 +5819,11 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
 /* F278 · o caso em três colunas: o caso, os andamentos e os prazos; com o WhatsApp aberto, os prazos descem para baixo do caso */
 @container ficha (min-width:900px){
-  html[data-tema="v10"] .caso-2col.caso-3col{grid-template-columns:280px minmax(0,1fr) 250px;grid-template-areas:"esq dir pz";gap:0 18px}
+  html[data-tema="v10"] .caso-2col.caso-3col{grid-template-columns:280px minmax(0,1fr);grid-template-areas:"esq dir";gap:0 18px}
   html[data-tema="v10"] .caso-3col > .caso-esq:not(.caso-pz){grid-area:esq}
   html[data-tema="v10"] .caso-3col > .caso-dir{grid-area:dir}
   html[data-tema="v10"] .caso-3col > .caso-pz{grid-area:pz}
-  html[data-tema="v10"] body.zap-aberto .caso-2col.caso-3col{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"pz dir" "esq dir";grid-template-rows:auto 1fr}
+  html[data-tema="v10"] body.zap-aberto .caso-2col.caso-3col{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"esq dir"}
   html[data-tema="v10"] body.zap-aberto .caso-3col > .caso-esq{position:static;max-height:none}
 }
 @container ficha (max-width:899px){
@@ -6870,7 +6870,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-card.tl-nao-li
 html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens li.tl-card.tl-imp,
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-card.tl-imp{box-shadow:none;padding-left:14px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .chip.tl-menc{background:transparent;border:0;padding:0;color:var(--azul);font-size:12px;font-weight:500}
-html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo{background:var(--placa,#F3F2EE);border:0;border-radius:8px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo{background:#FBE9E8;border:0;border-radius:8px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-corpo.tl-corpo-rep{display:none}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-pill{background:transparent;color:var(--cinza);padding:0}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-pill i{background:var(--dk-fatal,#B3261E)}
@@ -7112,6 +7112,10 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 .rs5-acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
 .rs5-prop{margin-top:6px;padding:8px;border-radius:6px;background:color-mix(in srgb,var(--rs-fase) 8%,transparent);font-size:12px}
 .rs5 textarea{width:100%;min-height:90px;font:inherit;box-sizing:border-box}
+/* F666 · a anotação com prazo em aberto, fixada no topo, em vermelho */
+html .timeline.tl-fixos{margin-bottom:12px}
+html .timeline.tl-fixos > li.tl-fixo,html[data-tema="v10"] .painel[data-p="2"] .timeline.tl-fixos > li.tl-card.tl-card.tl-fixo{border:1px solid var(--dk-fatal,#B3261E);box-shadow:inset 3px 0 0 var(--dk-fatal,#B3261E);background:#FFF7F6}
+html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 /* F645 · o painel lateral do cliente */
 #pcli{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;z-index:900;overflow-y:auto;background:#F7F6F3;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-6px 0 18px rgba(0,0,0,.08);padding:8px 14px 24px;box-sizing:border-box;font-size:14px;color:#1F2A2E}
 #pcli .pcl-topo{display:flex;justify-content:flex-end}
@@ -24059,8 +24063,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaIncapacidade(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>
-           <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>${(faixaPrazos(k), "")/* F666 · o quadro saiu do Caso (fica no menu Prazos); a lista segue montada para a janela lateral do prazo */}</div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
             : aba==="inss" ? abaComProcessos(k, "inss", ()=>painelINSS(k, andsVis))
@@ -43177,7 +43180,7 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila";
+const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
@@ -47590,6 +47593,10 @@ function linhaDoTempo(ands){
     if(ant && ehConf(a) && ehConf(ant) && (euLi(a) || (a.autor_id===eu.id && !ORIGENS_ROBO.includes(a.origem)))){ ant._confMais = (ant._confMais||0) + 1; ant._confDesde = dataSP(a.criado_em); continue; }
     if(ehConf(a)){ a._confMais = 0; a._confDesde = null; }
     raiz.push(a); }
+  // F666 · o prazo em aberto da anotação fica fixado no topo, em vermelho, junto da própria anotação (pedido do Paulo, 21.11.2026)
+  const pzAberto = a => { const e = estadoPrazoNota(a); return !!e && (e.est==="vivo" || e.est==="vencido"); };
+  const fixos = raiz.filter(pzAberto).sort((x,y)=>{ const dx = estadoPrazoNota(x).data||"", dy = estadoPrazoNota(y).data||""; return dx<dy?-1:dx>dy?1:0; });
+  if(fixos.length) for(let i = raiz.length-1; i>=0; i--) if(fixos.includes(raiz[i])) raiz.splice(i, 1);
   // F236 · o que veio de um portal conta como novo mesmo importado por mim (o selo "Novo · não lido" já contava),
   // salvo a linha de sistema, que não tem selo: o número do aviso, a linha divisória e os selos falam da mesma coisa
   const naoLi = a => !euLi(a) && (a.autor_id!==eu.id || (ORIGENS_ROBO.includes(a.origem) && !ehEventoSistema(a)));
@@ -47649,8 +47656,9 @@ function linhaDoTempo(ands){
   // F244 · as novas e as menções num aviso só, com o "marcar todas como lidas" no fim
   const banner = bannerTxt || mencTxt ? `<div class="tl-banner tl-banner-um">${[bannerTxt, mencTxt].filter(Boolean).join(" <span class=\"tl-banner-sep\">·</span> ")}${
     bannerTxt ? `<button class="btn-mini" onclick="liTudoNaFicha('${casoId}')" title="✔ marcar todas como lidas"><span aria-hidden="true">✔ Lidas</span><span class="sr-only">✔ marcar todas como lidas</span></button>` : ""}</div>` : "";
-  return banner + `<ul class="timeline">${corpo
-    || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+  const fixHtml = fixos.length ? `<ul class="timeline tl-fixos" aria-label="Prazos das anotações">${fixos.map(a=>li(a).replace('<li class="', '<li class="tl-fixo ')).join("")}</ul>` : "";
+  return banner + fixHtml + `<ul class="timeline">${corpo || fixHtml ? corpo
+    : "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
 const TL_VISIVEIS = 5, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
 function tlVerAntigos(bt, casoId){

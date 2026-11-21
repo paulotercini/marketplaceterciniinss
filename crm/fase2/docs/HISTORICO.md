@@ -1020,6 +1020,7 @@ A **F635** (pedido do Paulo de 17.11.2026, confirmação enviada a número sem W
 Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escolha à mão (vincular a caso sem número, incidente, caso Judicial novo) e oferece ➕ Cliente novo.
 - F642 (17.11.2026): a ponte varre os textos de botões e modelos de empresa fora dos campos conhecidos (antes gravava vazio, "[texto]"); o zap_plantao pergunta uma vez pela mensagem ilegível e depois encaminha à equipe sem repetir.
 
+- F666 (21.11.2026): quadro de Prazos sai do Caso (fica no menu Prazos); prazo em aberto da anotação fixado no topo da linha do tempo, em vermelho. Botões de conferência (Em análise/Movimentou/Não implantado) saíram junto.
 ## F645 · Painel lateral do cliente (18.11.2026)
 - Pedido do Paulo (protótipo "Painel do Cliente Tercini"): o clique no NOME do cliente nas listas abre um painel à direita, sem sair da lista, com nome (copia), espécie e lista, Abrir ficha; CPF, senha do Meu INSS (olho, depois copia), telefone com WhatsApp, parceria e parentesco; a tarefa com responsável, vencimento em vermelho, Hoje, Amanhã, Próx. segunda, +7 e +30 dias e o mês à vista (um clique reagenda, só no CRM), Concluir tarefa; anexos; anotação; última anotação e Ver anotações anteriores. O resto da linha continua estendendo (F455) e o Ctrl+clique abre a ficha. Esc fecha. Prova: testes/cadastro/f645.js.
 
