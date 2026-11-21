@@ -4170,3 +4170,4 @@ html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="
 </style>
 </head>
 html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
+html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;align-self:center}
