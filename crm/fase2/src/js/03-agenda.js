@@ -1252,11 +1252,10 @@ async function pcliMontar(){
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
     <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
       <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
-      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
+      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}${/* F675 · o WhatsApp ao lado dos selos; o telefone saiu do painel (pedido do Paulo, 21.11.2026) */""}${tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : ""}</div>
       <div class="pcl-dados">
       ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
       ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}
-      ${dado("Telefone", tel ? esc(tel.numero) : "sem telefone", tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : "")}
       ${parceriaDe(cli, ks) ? dado("Parceria", esc(parceriaDe(cli, ks))) : ""}
       <div class="pcl-d pcl-larga"><span class="pcl-r">Parentesco</span><span class="pcl-v pcl-par">…</span></div></div></section>
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
