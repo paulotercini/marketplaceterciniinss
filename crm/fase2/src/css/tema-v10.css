@@ -4207,6 +4207,6 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
 </style>
 </head>
 
-/* F671 · a parceria logo abaixo do Responsável (pedido do Paulo, 21.11.2026) */
+/* F672 · a parceria logo abaixo do Responsável (pedido do Paulo, 21.11.2026) */
 .cli-adv{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px}
 .cli-adv-parc .chip{margin:0}
