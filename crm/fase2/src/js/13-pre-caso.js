@@ -598,7 +598,7 @@ function pintarFicha(){
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(n=>n?` (${n})`:"")(pgs.filter(p=>p.status==="aberto").length)}${/* F236 · o vencido na própria aba */""}${(v=>v?` <span class="mt-venc">· ${v} vencido${v>1?"s":""}</span>`:"")(pgs.filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length)}${pontoAba(casoSel && D.casoPorId.get(casoSel), "hon")}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()" title="⋯ mostrar tudo da ficha"><span aria-hidden="true">⋯ Tudo</span><span class="sr-only">⋯ mostrar tudo da ficha</span></button>
-    ${temaV10() && celular() ? (k=>`${k ? `<p class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase], k.etapa].filter(Boolean).join(" · "))}</p>` : ""}${celAbasHtml(c, ks, k,
+    ${temaV10() && celular() ? (k=>`${k ? `<p class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</p>` : ""}${celAbasHtml(c, ks, k,
       evs.some(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada"), !!(ks.length || pagK.length || pgs.length))}`)(casoSel && D.casoPorId.get(casoSel)) : ""}
   </div>
 
