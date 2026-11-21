@@ -1,7 +1,7 @@
-// F601 · a aba Pré-caso da ficha (jornada aprovada em 14.11.2026): o Casos ▾ mostra só
-// casos; a aba Pré-caso aparece quando há pré-caso (vivo ou arquivado), senão o advogado
-// vê "＋ Pré-caso"; o arquivado fica esmaecido com motivo e data; o prazo do pré-caso
-// entra nas datas do cliente com o rótulo "Pré-caso". Banco simulado e dados fictícios.
+// F601 e F668 · o pré-caso como caso em formação (onda 1, aprovada em 21.11.2026): a aba Pré-caso saiu; o Casos ▾ traz
+// o caso em formação primeiro, com o selo, e os encerrados recolhidos; a tela do caso abre com o quadro no alto;
+// sem caso nem pré-caso, o advogado vê "＋ Pré-caso"; o prazo do pré-caso entra nas datas do cliente com o rótulo
+// "Pré-caso". Banco simulado e dados fictícios.
 // Uso: node f601.js [pasta-das-fotos]
 const { chromium } = require("playwright");
 const http = require("http");
@@ -21,7 +21,7 @@ Object.assign(dados, { colaboradores: FIX.colaboradores, clientes: JSON.parse(JS
   atribuicoes: FIX.atribuicoes, documentos_beneficio: FIX.documentos_beneficio || [], modelos_documento: FIX.modelos_documento, config_app: FIX.config_app });
 const banco = new Banco(dados);
 const T = banco.t;
-const A = "c0000000-0000-0000-0000-000000000a61", B = "c0000000-0000-0000-0000-000000000b61", C = "c0000000-0000-0000-0000-000000000c61";
+const A = "c0000000-0000-0000-0000-000000000a61", B = "c0000000-0000-0000-0000-000000000b61", C = "c0000000-0000-0000-0000-000000000c61", D = "c0000000-0000-0000-0000-000000000d61";
 const KA = "b0000000-0000-0000-0000-000000000a61", KE = "b0000000-0000-0000-0000-000000000e61", KB = "b0000000-0000-0000-0000-000000000b61";
 const d5 = new Date(Date.now() - 5 * 864e5);
 const cien = `${String(d5.getDate()).padStart(2, "0")}/${String(d5.getMonth() + 1).padStart(2, "0")}/${d5.getFullYear()}`;
@@ -34,6 +34,8 @@ T.clientes.push({ id: B, nome: "Cliente Teste Dois", cpf: "70010060022", telefon
 // C: só um pré-caso arquivado
 T.clientes.push({ id: C, nome: "Cliente Teste Tres", cpf: "70010060033", telefone: "(16) 5500000003", criado_em: "2025-01-01T12:00:00Z",
   campos: { pc_arquivados: [{ id: "pc_c1", especie: "BPC/LOAS", desfecho: { tipo: "arquivado", motivo: "Renda acima do limite", em: "2026-11-02" } }] } });
+// D: sem caso e sem pré-caso
+T.clientes.push({ id: D, nome: "Cliente Teste Quatro", cpf: "70010060044", telefone: "(16) 5500000004", campos: {}, criado_em: "2025-01-01T12:00:00Z" });
 T.casos.push(caso({ id: KA, cliente_id: A, titulo: "Cliente Teste Um", fase: "inss", beneficio: "Aposentadoria por idade", criado_em: "2025-02-01T12:00:00Z" }),
   caso({ id: KE, cliente_id: A, titulo: "Cliente Teste Um", fase: "encerrado", encerrado: true, encerrado_em: "2025-06-01T12:00:00Z", beneficio: "Auxílio-doença", criado_em: "2025-01-02T12:00:00Z" }),
   caso({ id: KB, cliente_id: B, titulo: "Cliente Teste Dois", fase: "escritorio", pre_caso: true, precaso: { id: "pc_b1", especie: "Aposentadoria por invalidez" },
@@ -73,31 +75,51 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     fecharMenuProcessos(); el.remove(); return v;
   }, id);
 
-  // A · sem pré-caso: sem aba, com o ＋ Pré-caso do advogado; o Casos ▾ só com casos
+  // A · com casos e sem pré-caso: sem aba Pré-caso; o ＋ Novo pré-caso mora no Casos ▾
   await abrir(A);
-  conf("sem pré-caso, a aba Pré-caso não aparece", !(await p.$('.mt[data-vv="6"]')));
-  conf("o advogado vê o ＋ Pré-caso", !!(await p.$("#btn-novo-pc")));
+  conf("a aba Pré-caso não existe mais (F668)", !(await p.$('.mt[data-vv="6"]')));
   const mA = await menuCasos(A);
-  conf("o Casos ▾ lista o caso ativo e o encerrado, sem pré-caso", mA.length >= 2 && !mA.some(t => /pré-caso/i.test(t)));
+  conf("o Casos ▾ lista o caso ativo e o encerrado, sem selo Em formação", mA.length >= 2 && !mA.some(t => /Em formação/.test(t)));
+  conf("o Casos ▾ oferece o ＋ Novo pré-caso", mA.some(t => /Novo pré-caso/.test(t)));
   await p.screenshot({ path: path.join(OUT, "a-sem-precaso.png") });
 
-  // B · pré-caso vivo: aba presente, fora do Casos ▾, prazo com rótulo Pré-caso
+  // B · pré-caso vivo: primeiro no Casos ▾, com o selo; abre a tela do caso com o quadro no alto
   await abrir(B);
-  conf("com pré-caso vivo, a aba Pré-caso aparece", !!(await p.$('.mt[data-vv="6"]')));
-  conf("o pré-caso não entra no Casos ▾", !(await menuCasos(B)).some(t => /pré-caso/i.test(t)));
+  conf("com pré-caso vivo, nenhuma aba Pré-caso", !(await p.$('.mt[data-vv="6"]')));
+  const mB = await menuCasos(B);
+  conf("o caso em formação vem primeiro no Casos ▾, com o selo", /Em formação/.test(mB[0] || "") && /Passo:/.test(mB[0] || ""));
   conf("o prazo do pré-caso entra nas datas do cliente com o rótulo Pré-caso",
     await p.evaluate(i => linhasDeDatas(i).linhas.filter(l => l.rotulo === "Pré-caso").length === 1, B));
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(500);
-  await p.screenshot({ path: path.join(OUT, "b-precaso-vivo.png") });
+  await p.click("#btn-processos"); await p.waitForTimeout(200);
+  await p.screenshot({ path: path.join(OUT, "b-menu.png") });
+  await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(500);
+  const q = await p.evaluate(() => { const e = document.querySelector(".pc-quadro"); return e ? {
+    t: e.textContent.replace(/\s+/g, " "), at: (e.querySelector('.pcq-passos [aria-current="step"]') || {}).textContent || "",
+    alto: !e.previousElementSibling || !e.closest(".painel").textContent.trim().startsWith(e.textContent.trim()) ? e.getBoundingClientRect().top : e.getBoundingClientRect().top } : null; });
+  conf("a ficha abre o caso com o quadro Caso em formação", !!q && /Caso em formação/.test(q.t) && /Em formação/.test(q.t));
+  conf("o quadro marca o passo atual (Identificação)", !!q && /Identificação/.test(q.at));
+  conf("o quadro tem Continuar atendimento e a lista do To Do", !!q && /Continuar atendimento/.test(q.t) && /Lista no To Do: 🙋 Escritório/.test(q.t));
+  conf("o quadro vem antes dos andamentos do caso", await p.evaluate(() => { const e = document.querySelector(".pc-quadro"), o = document.querySelector(".caso-2col");
+    return !!e && (!o || !!(e.compareDocumentPosition(o) & Node.DOCUMENT_POSITION_FOLLOWING)); }));
+  await p.screenshot({ path: path.join(OUT, "b-quadro.png") });
+  await p.click(".pcq-cont"); await p.waitForTimeout(500);
+  conf("Continuar atendimento abre o atendimento daquele pré-caso", await p.evaluate(() => abaAtiva === 0));
 
-  // C · só arquivado: aba presente, cartão esmaecido com motivo e data
+  // C · só arquivado (legado): Casos ▾ com "Pré-casos encerrados (1)" recolhido, que abre com motivo e data
   await abrir(C);
-  conf("com pré-caso arquivado, a aba Pré-caso aparece", !!(await p.$('.mt[data-vv="6"]')));
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(500);
-  const arq = await p.evaluate(() => { const e = document.querySelector(".pc-cartao.pc-arq");
-    return e ? { t: e.textContent, o: +getComputedStyle(e).opacity } : null; });
-  conf("o arquivado aparece esmaecido com o motivo e a data", !!arq && arq.t.includes("Renda acima do limite") && arq.t.includes("02.11.2026") && arq.o < 1);
+  conf("só com arquivado, o Casos ▾ aparece", !!(await p.$("#btn-processos")));
+  await p.click("#btn-processos"); await p.waitForTimeout(200);
+  conf("os encerrados ficam recolhidos", await p.evaluate(() => /Pré-casos encerrados \(1\)/.test(document.querySelector(".mp-pc-tog").textContent)
+    && document.querySelector(".mp-pc-arq").hidden));
+  await p.click(".mp-pc-tog"); await p.waitForTimeout(200);
+  const arq = await p.evaluate(() => { const e = document.querySelector(".mp-pc-arq"); return e && !e.hidden ? e.textContent : ""; });
+  conf("aberto, o encerrado traz o motivo e a data", arq.includes("Renda acima do limite") && arq.includes("02.11.2026") && /Encerrado/.test(arq));
   await p.screenshot({ path: path.join(OUT, "c-arquivado.png") });
+  await p.evaluate(() => fecharMenuProcessos());
+
+  // D · sem caso nem pré-caso: o advogado vê o ＋ Pré-caso
+  await abrir(D);
+  conf("sem caso nem pré-caso, o advogado vê o ＋ Pré-caso", !!(await p.$("#btn-novo-pc")) && !(await p.$("#btn-processos")));
 
   conf("sem erro de página", erros.length === 0);
   if (erros.length) console.log(erros);

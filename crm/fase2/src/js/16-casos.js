@@ -868,7 +868,13 @@ function menuCasosDoCliente(ev, cliId){
 // a viver na aba 💰 Honorários — foi para isso que ela existe.
 function processosDe(ks){ return (ks||[]).filter(k=>k.fase!=="pagamento"); }
 function menuProcessos(ev, ks){
-  ks = processosDe(ks).filter(k=>!ehPreCaso(k));   // F601 · o pré-caso mora na aba Pré-caso
+  ks = processosDe(ks).filter(k=>!k.pre_caso);
+  // F668 · o pré-caso é caso em formação (onda 1, 21.11.2026): vem primeiro, com o selo; os encerrados ficam recolhidos no fim
+  const cli = D.cliPorId.get((ks[0]||{}).cliente_id || clienteAberto), z = cli ? pcDaFicha(cli) : {lista:[], arq:[]};
+  const itPc = (p, fora) => `<div class="mp-it mp-pc${fora ? " mp-pc-arq" : ""}${p.caso_id && casoSel===p.caso_id ? " sel" : ""}" ${p.caso_id ? `data-mp="${esc(p.caso_id)}"` : p.id!=="legado" && !fora ? `data-mp-pc="${esc(p.id)}"` : ""}${fora ? " hidden" : ""}>
+    <b>${nomePc(p.especie)}</b> <span class="selo-form">${fora ? "Encerrado" : p.so_lembrete ? "Futuro" : "Em formação"}</span>
+    <small>${fora ? esc([(p.desfecho||{}).motivo || "sem motivo registrado", (p.desfecho||{}).em && fmt(String(p.desfecho.em).slice(0,10))].filter(Boolean).join(" · "))
+      : p.so_lembrete ? "🙏 Aposentadorias Futuras" : esc(`Passo: ${(k=>k ? passoDoPreCaso(k) : "Identificação")(p.caso_id && D.casoPorId.get(p.caso_id))}`)}</small></div>`;
   ev.stopPropagation(); fecharMenuProcessos();
   const m=document.createElement("div"); m.id="menu-processos";
   // a linha diz EM QUE LISTA o caso está (com o emoji do To Do — "👪
@@ -880,21 +886,28 @@ function menuProcessos(ev, ks){
     <small>${k.fase==="encerrado"?"✔ Encerrado":ehPreCaso(k)?`🟡 Pré-caso no escritório · ${esc(passoDoPreCaso(k))}`:esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${(n=>esc([n.nb[0]&&`NB ${fmtNum("nb",n.nb[0])}`, k.der&&`DER ${fmtBarra(k.der)}`, n.nup[0]&&`e-Sisrec ${fmtNum("nup",n.nup[0])}`, n.proc[0]&&`proc. ${fmtNum("proc",n.proc[0])}`].filter(Boolean).map(x=>" · "+x).join("")))(numerosDoCaso(k))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}</small>
   </div>`;
   m.innerHTML =
-    ks.filter(k=>k.fase!=="encerrado").map(item).join("")
+    z.lista.map(p=>itPc(p, false)).join("")
+    + ks.filter(k=>k.fase!=="encerrado").map(item).join("")
     + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
     + ks.filter(k=>k.fase==="encerrado").map(item).join("")
+    + (z.arq.length ? `<div class="mp-it mp-pc-tog" role="button" aria-expanded="false"><b>Pré-casos encerrados (${z.arq.length})</b><small>ver</small></div>${z.arq.map(p=>itPc(p, true)).join("")}` : "")
     + (ks.filter(k=>k.fase!=="encerrado").length>1 ? `<div class="mp-it mp-novo" data-mp="__org__">⇄ Organizar os casos</div>` : "")
+    + (cli && podeAtender() ? `<div class="mp-it mp-novo" data-mp-novopc="1">＋ Novo pré-caso</div>` : "")
     + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
   document.body.appendChild(m);
   const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
   m.style.left=Math.min(r.left, innerWidth-W-8)+"px";
   m.style.top=Math.min(r.bottom+4, innerHeight-H-8)+"px";
+  const tog = m.querySelector(".mp-pc-tog");
+  if(tog) tog.onclick = e=>{ e.stopPropagation(); const ab = tog.getAttribute("aria-expanded")!=="true";
+    tog.setAttribute("aria-expanded", String(ab)); tog.querySelector("small").textContent = ab ? "ocultar" : "ver";
+    m.querySelectorAll(".mp-pc-arq").forEach(x=>x.hidden = !ab); };
+  m.querySelectorAll("[data-mp-pc]").forEach(it=>it.onclick=()=>{ fecharMenuProcessos(); abrirAtendimentoDe(cli.id, it.dataset.mpPc); });
+  m.querySelectorAll("[data-mp-novopc]").forEach(it=>it.onclick=()=>{ fecharMenuProcessos(); novoAtendimento(cli.id); });
   m.querySelectorAll("[data-mp]").forEach(it=>it.onclick=()=>{
     const v=it.dataset.mp;
     fecharMenuProcessos();
     if(v==="__org__") return organizarCasos(clienteAberto);
-    const kp = D.casoPorId.get(v);
-    if(ehPreCaso(kp)) return abrirAtendimentoDe(kp.cliente_id, (kp.precaso||{}).id||kp.id);   // F227
     if(v==="__novo__"){ abaAtiva=7; }
     else { casoSel=v||null; abaAtiva=2; subAba="escritorio"; }   // F166
     repintarFicha();

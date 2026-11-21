@@ -55,10 +55,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(i => { abaAtiva = 0; abrirFicha(i); }, A); await p.waitForTimeout(900);
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(500);
+  await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(500);
 
   const bloco = await p.$eval(".pc-notas", e => e.textContent).catch(() => "");
-  conf("a aba Pré-caso tem o bloco das anotações do To Do", /Anotações do Microsoft To Do \(2\)/.test(bloco));
+  conf("o quadro do caso em formação tem o bloco das anotações do To Do", /Anotações do Microsoft To Do \(2\)/.test(bloco));
   conf("o bloco traz o texto das anotações", /CTPS antiga/.test(bloco) && /aposentar por idade/.test(bloco));
   conf("a mais recente vem primeiro", bloco.indexOf("CTPS antiga") < bloco.indexOf("aposentar por idade"));
   await p.screenshot({ path: path.join(OUT, "a-aba.png") });
@@ -70,7 +70,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const linha = T.casos.find(k => k.id === KA);
   conf("grava o número em precaso.proc_anterior", (linha.precaso.proc_anterior||{}).numero === "0001234-56.2020.4.03.6314" && linha.precaso.id === "pc_a63");
   await p.evaluate(i => { abaAtiva = 0; abrirFicha(i); }, A); await p.waitForTimeout(700);
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(400);
+  await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(400);
   conf("o número volta ao reabrir a ficha", await p.$eval(`[data-pc-proc="${KA}"]`, e => e.value) === "0001234-56.2020.4.03.6314");
   await p.screenshot({ path: path.join(OUT, "b-proc.png") });
 

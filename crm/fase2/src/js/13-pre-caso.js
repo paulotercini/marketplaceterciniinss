@@ -586,13 +586,12 @@ function pintarFicha(){
            Perícias só com perícia, Honorários só com caso ou recebimento.
            Cliente em formação vê só Cadastro e Lembretes — menos abas,
            menos lugar para se perder. */""}
-      ${/* F601 · a aba Pré-caso, entre Cadastro e Casos (protótipo aprovado pelo Paulo em 14.11.2026):
-           aparece só com pré-caso, arquivado inclusive; sem nenhum, o advogado vê o ＋ Pré-caso */""}
-      ${(z=>(z.n||abaAtiva===6) ? `<button class="mt ${abaAtiva===6?"on":""}" data-vv="6">Pré-caso${z.vivos>1?` (${z.vivos})`:""}</button>`
-        : (podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""))(pcDaFicha(c))}
-      ${ksR.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
+      ${/* F668 · a aba Pré-caso saiu (onda 1, 21.11.2026): o pré-caso é caso em formação, no Casos ▾;
+           sem caso nem pré-caso, o advogado vê o ＋ Pré-caso */""}
+      ${!ksR.length && !pcDaFicha(c).n && podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""}
+      ${ksR.length || pcDaFicha(c).n ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
-          (n=>n>1?` (${n})`:"")(processosDe(ksR).length)} ▾</button>` : ""}
+          (n=>n>1?` (${n})`:"")(processosDe(ksR).length + pcDaFicha(c).lista.length)} ▾</button>` : ""}
       ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
       ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` <span class="mt-pzn">${z.total}</span>`:""}${z.venc?` <span class="mt-pzv">${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
@@ -629,7 +628,7 @@ function pintarFicha(){
       }
       // Ordem da tela: o sub-menu decide O QUE olhar; o cartão de fatos diz
       // DE QUE processo se trata; e só então vem o trabalho (escrever/ler).
-      return `${(()=>{
+      return `${quadroEmFormacao(c, k)}${(()=>{
           // ══════════════════════════════════════════════════════════════════
           // ABA SÓ APARECE COM O QUE MOSTRAR
           // ══════════════════════════════════════════════════════════════════
@@ -690,10 +689,6 @@ function pintarFicha(){
 
   <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
     ${abaAtiva===5 ? painelPrazosCliente(cliId) : ""}
-  </div>
-
-  <div class="painel ${abaAtiva===6?"ativo":""}" data-p="6">
-    ${abaAtiva===6 ? painelPreCasos(c) : ""}
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
