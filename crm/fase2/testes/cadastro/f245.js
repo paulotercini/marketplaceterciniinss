@@ -82,7 +82,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 1 · o advogado responsável abaixo do nome, e os botões no quadro de prazos
   await abrir(cA, kA);
   await p.screenshot({ path: path.join(OUT, "01-caso.png") });
-  conf("abaixo do nome, o advogado responsável escolhido (Marcos)", /Advogado responsável:\s*Marcos Fictício/.test(await p.textContent(".det-topo .cli-adv")));
+  conf("abaixo do nome, o advogado responsável escolhido (Marcos)", /(Advogado responsável|Responsável pelo cliente):\s*Marcos Fictício/.test(await p.textContent(".det-topo .cli-adv")));
   conf("o quadro de prazos traz 'Em análise · +7 d' e 'Movimentou'", /Em análise · \+7 d/.test(await p.textContent(".faixa-prazos .conf-sem")) && !!(await p.$(".faixa-prazos .conf-mov")));
 
   // 2 · Sem novidade: um clique

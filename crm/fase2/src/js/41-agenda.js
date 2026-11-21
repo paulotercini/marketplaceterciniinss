@@ -785,7 +785,7 @@ async function registrarAgendaNoCliente(c, texto, marca){
 function chipAgendaCliente(c){
   const a = (c.campos||{}).agenda_quarta;
   if(!a || !a.data || a.data<hoje()) return "";
-  return `<button class="chip aq-chip" onclick="agq.prof='${a.profissional||"paulo"}';agq.disp=agq.cache[agq.prof]||null;agq.sel='${a.data}';irPara('agendaq')" title="abrir a agenda nesse dia">Atendimento ${siglaData(a.data)} às ${hmTxt(a.inicio)}${a.profissional?` · ${esc(nomeProf(a.profissional))}`:""}</button>`;
+  return `<button class="chip aq-chip" onclick="agq.prof='${a.profissional||"paulo"}';agq.disp=agq.cache[agq.prof]||null;agq.sel='${a.data}';irPara('agendaq')" title="abrir a agenda nesse dia">Atendimento ${a.modalidade==="online"?"Online":"Presencial"} ${siglaData(a.data)} às ${hmTxt(a.inicio)}${a.profissional?` · ${esc(nomeProf(a.profissional))}`:""}</button>`;
 }
 
 // ── o fluxo de agendamento, em etapas ────────────────────────────────────

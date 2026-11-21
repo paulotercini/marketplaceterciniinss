@@ -1062,3 +1062,6 @@ Abaixo do quadro da espécie, o mês com os dias de prazo do cliente marcados e 
 
 ## F670 · linha do tempo do caso (v14.23, 21.11.2026)
 No Caso, logo abaixo do menu, o quadro do protótipo do Base44 aprovado pelo Paulo: total desde o 1º contato (anos e meses) e a barra das fases (Escritório, INSS, CRPS, Judicial, Implantação, Honorários) nas cores do CRM, com o ano de início de cada fase. Lido de casos (criado_em, der, ro_protocolado_em, ajuizado_em, dib), da ficha do cliente e de pagamentos; fase futura tracejada, fase que não houve fica fora. Nada se digita. `linhaTempoCaso` em js/28-pericias.js.
+
+## F671 · Cabeçalho da ficha (21.11.2026)
+Rótulo "Advogado" virou "Responsável"; a parceria saiu do lado do nome e foi para baixo do Responsável; o chip da agenda diz "Atendimento Presencial" (ou "Online" se a modalidade vier gravada).

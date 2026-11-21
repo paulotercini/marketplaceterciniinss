@@ -549,17 +549,17 @@ function pintarFicha(){
         ${(u=>u?`<img class="avatar foto-zap" src="${esc(u)}" alt="foto de ${esc(c.nome)} no WhatsApp" title="foto do WhatsApp — clique para ampliar" onclick="verFotoGrande(this.src)">`
           :`<span class="avatar" style="--av:${corDoNome(c.nome)}">${esc(c.nome[0])}</span>`)(fotoDoCliente(c.id))}<h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
-      </span>${temaV10() && celular() ? linhaAdvogado(c) : ""}</span>
+      </span>${temaV10() && celular() ? linhaAdvogado(c, chipParceria(c, ks)) : ""}</span>
       ${/* F278 · o copiar o nome volta ao lado do nome (pedido do Paulo, 25.10.2026) */""}
       <button class="olho" title="copiar o nome do cliente"
         onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
            ficha vê de cara que o caso é dividido com outro advogado */""}
-      ${chipParceria(c, ks)}
+      ${temaV10() ? "" : chipParceria(c, ks)}
       ${chipsParentes(c)}${chipEntregar(c)}
       ${temaV10() && c.telefone ? "" : botaoZapCliente(cliId)}
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
-      ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c)}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
+      ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c, chipParceria(c, ks))}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
       ${/* F403 · o ⋯ do cabeçalho saiu: no lugar, as Anotações rápidas do cliente; Separar e Não é cliente foram ao Cadastro (pedido do Paulo, 05.11.2026) */""}
       ${botaoGravarFicha(cliId)}<span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>
