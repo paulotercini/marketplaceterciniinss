@@ -131,7 +131,7 @@ function dbRelevantes(vs){
     const ps = movLimpo(a.texto).split(" · ").map(t=>t.replace(/\s*-\s*ID de origem\s*\d+/i, "").trim()).filter(Boolean);
     const vivas = ps.filter(t=>!(RX_ROTINA.test(t) && !RX_NAO_ROTINA.test(t)));
     const txt = (vivas.length ? vivas : ps).join(" · "), m = /^(\S+)(\s[\s\S]*)?$/.exec(txt) || ["", txt, ""];
-    return `<li><span class="d">${fmtBarra(dataSP(dataDoDb(a)))}</span><span class="t"><b>${esc(m[1])}</b>${esc(m[2]||"")}</span></li>`;
+    return `<li><span class="d">${fmtBarra(dataSP(dataDoDb(a)))}${/T\d{2}:\d{2}/.test(dataDoDb(a)||"") ? ` ${horaSP(dataDoDb(a))}` : ""}</span><span class="t"><b>${esc(m[1])}</b>${esc(m[2]||"")}</span></li>`;
   }).join("")}</ul>`;
 }
 function dbMovsPje(pj, max=3){

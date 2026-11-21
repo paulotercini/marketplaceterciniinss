@@ -1092,6 +1092,17 @@ function dbQuando(iso){
   const d = dataSP(iso), n = diasEntreIso(d, hoje());
   return `${fmtBarra(d)} ${horaSP(iso)} · ${n<=0 ? "hoje" : n===1 ? "ontem" : `há ${n} dias`}`;
 }
+// F671 · "Data do último andamento: 21/11/2026 - há 2 dias" no cabeçalho e a data e hora antes de cada anotação (pedido do Paulo de 21.11.2026)
+function dbUltimo(iso){
+  if(!iso) return "";
+  const n = diasEntreIso(dataSP(iso), hoje());
+  return `Data do último andamento: ${fmtBarra(dataSP(iso))} - ${n<=0 ? "hoje" : n===1 ? "ontem" : `há ${n} dias`}`;
+}
+function dbDataHora(iso){
+  if(!iso) return "";
+  const h = /T\d{2}:\d{2}/.test(String(iso)) ? horaSP(iso) : "";
+  return `<span class="db-dh">${fmtBarra(dataSP(iso))}${h ? ` ${h}` : ""}</span> `;
+}
 function dbLead(txt){
   const m = String(txt||"").match(/^(.{3,60}?[.:])\s+([\s\S]*)$/);
   return m ? `<b>${esc(m[1])}</b> ${esc(m[2])}` : esc(txt||"");
@@ -1115,8 +1126,8 @@ function dbDespacho(k, ands){
   const corpo = nota
     ? `<div class="db-corpo"><span class="db-quem" style="background:${esc((au||{}).cor||"#6B7070")}" aria-hidden="true">${esc((au||{}).inicial||"?")}</span><div>
         <div class="db-autor">${esc((au||{}).nome||"Equipe")}</div>
-        <p class="db-txt">${esc(String(nota.texto||"").slice(0,1000))}</p>
-        ${resp ? `<div class="db-resp">${esc(((D.colPorId.get(resp.autor_id)||{}).nome||"").split(" ")[0])}: ${esc(String(resp.texto||"").slice(0,400))}</div>` : ""}</div></div>`
+        <p class="db-txt">${dbDataHora(nota.criado_em)}${esc(String(nota.texto||"").slice(0,1000))}</p>
+        ${resp ? `<div class="db-resp">${dbDataHora(resp.criado_em)}${esc(((D.colPorId.get(resp.autor_id)||{}).nome||"").split(" ")[0])}: ${esc(String(resp.texto||"").slice(0,400))}</div>` : ""}</div></div>`
     : `<p class="db-vazio">Sem anotação da equipe neste caso.</p>`;
   // Prorrogar só com data a mover, o retorno ou a volta à fila (F473, pedido do Paulo de 09.11.2026); sem ela, só o Anotar
   const prorroga = !!k.prazo && reagendavel(itemDoCaso(k));
@@ -1128,7 +1139,7 @@ function dbDespacho(k, ands){
       ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}${ant}</div><div class="ae-painel" hidden></div>`
     : `<div class="ae-acoes db-acoes">${ant}</div>`;
   return `<section class="db db-desp" aria-label="Andamentos do Escritório" onclick="dbClique(event,this,'${k.id}')">
-    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Andamentos do Escritório</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span></div>
+    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Andamentos do Escritório</h3><span class="db-when">${nota ? dbUltimo(nota.criado_em) : ""}</span></div>
     ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
 }
 // F492 · a data do andamento, e não a da importação: o PJe guarda a do movimento
@@ -1163,7 +1174,7 @@ function dbAndamento(k, ands, fase, par){
     const vs = coms.length ? coms : pats, c = vs[0];
     const m = /^(INSS|Escrit[óo]rio)\s*·\s*([\s\S]*)$/.exec(String(c.texto||""));
     it = {cls:"", nome:"Meu INSS", onde:"INSS", logo:iconeFonte("inss"), iso:dataDoDb(c),
-      txt: m ? `<b>${m[1]==="INSS" ? "Comentário do INSS" : "Comentário do escritório"}:</b> ${esc(m[2].slice(0,1000))}` : dbLead(c.texto),
+      txt: dbDataHora(dataDoDb(c)) + (m ? `<b>${m[1]==="INSS" ? "Comentário do INSS" : "Comentário do escritório"}:</b> ${esc(m[2].slice(0,1000))}` : dbLead(c.texto)),
       sub:sit ? sit.split(":").slice(2).join(":") : especieDoCaso(k),
       abrir: prot ? `abrirMeuInss('${escJs(prot)}')` : "", n:vs.length-1, aba:"inss", rot:coms.length ? "comentários" : "andamentos",
       ant:()=>dbListaDias(vs.slice(1).map(x=>({d:dataSP(dataDoDb(x)), partes:[x.texto]}))).html, bts:f=>dbBotoes(k, "inss", (String(a.origem_id||"").match(/:(\d{6,})/)||[])[1]||soDig(prot||""), "", f)};
@@ -1199,7 +1210,7 @@ function dbAndamento(k, ands, fase, par){
     : it.abrir ? `<button type="button" class="db-logo" onclick="${it.abrir}" aria-label="Abrir no ${esc(it.nome)}" title="${esc(it.nome)}">${it.logo}</button>`
     : `<span class="db-logo" aria-hidden="true">${it.logo}</span>`;
   const abre = it.n>0 && !!_dbAndAnt.get(`${k.id}|${it.aba}`);
-  const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
+  const quando = dbUltimo(it.iso);
   return `<section class="db db-and ${it.cls}" aria-label="Andamentos do ${it.cls==="jud"?"Judicial":esc(it.onde)}">
     <div class="db-cab">${logo}<h3>Andamentos do ${it.cls==="jud"?"Judicial":esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}</div>${lcHtml(k, it.aba)}
     ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts(dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`))}
