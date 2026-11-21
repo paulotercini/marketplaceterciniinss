@@ -100,7 +100,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("ver as etapas abre a trilha e a escolha fica no navegador", await p.evaluate(() => !!document.querySelector(".tr-faixa.tr-aberta") && !document.querySelector(".tr-corpo").hidden && localStorage.getItem("crm_etapas") === "1"));
   await p.click(".tr-alca-et"); await p.waitForTimeout(300);
   conf("recolher etapas volta à linha do resumo", await p.evaluate(() => !!document.querySelector(".tr-faixa.tr-fechada") && !localStorage.getItem("crm_etapas")));
-  const col = await p.evaluate(() => { const e = document.querySelector(".caso-esq:not(.caso-pz)").getBoundingClientRect(), pz = document.querySelector(".caso-pz").getBoundingClientRect(), d = document.querySelector(".caso-dir").getBoundingClientRect();
+  const col = await p.evaluate(() => { const e = document.querySelector(".caso-esq:not(.caso-pz)").getBoundingClientRect(), pz = {bottom:-1e9,right:-1e9}/* F666 · o quadro de Prazos saiu do Caso */, d = document.querySelector(".caso-dir").getBoundingClientRect();
     return { e: e.right <= d.left + 1, pz: pz.bottom <= e.top + 1 && pz.right <= d.left + 1 }; });
   conf("duas colunas: os prazos acima do cartão, à esquerda, e os andamentos à direita (F333)", col.e && col.pz);
   conf("a segunda linha do cabeçalho traz os dados, o advogado e a situação", await p.evaluate(() => { const l = document.querySelector(".det-topo .linha2"); return !!(l && l.querySelector(".resumo-lado") && l.querySelector(".cli-adv") && l.querySelector(".cli-st")); }));

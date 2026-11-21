@@ -586,13 +586,12 @@ function pintarFicha(){
            Perícias só com perícia, Honorários só com caso ou recebimento.
            Cliente em formação vê só Cadastro e Lembretes — menos abas,
            menos lugar para se perder. */""}
-      ${/* F601 · a aba Pré-caso, entre Cadastro e Casos (protótipo aprovado pelo Paulo em 14.11.2026):
-           aparece só com pré-caso, arquivado inclusive; sem nenhum, o advogado vê o ＋ Pré-caso */""}
-      ${(z=>(z.n||abaAtiva===6) ? `<button class="mt ${abaAtiva===6?"on":""}" data-vv="6">Pré-caso${z.vivos>1?` (${z.vivos})`:""}</button>`
-        : (podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""))(pcDaFicha(c))}
-      ${ksR.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
+      ${/* F668 · a aba Pré-caso saiu (onda 1, 21.11.2026): o pré-caso é caso em formação, no Casos ▾;
+           sem caso nem pré-caso, o advogado vê o ＋ Pré-caso */""}
+      ${!ksR.length && !pcDaFicha(c).n && podeAtender() ? `<button class="mt mt-novopc" id="btn-novo-pc" title="Novo pré-caso">＋ Pré-caso</button>` : ""}
+      ${ksR.length || pcDaFicha(c).n ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
-          (n=>n>1?` (${n})`:"")(processosDe(ksR).length)} ▾</button>` : ""}
+          (n=>n>1?` (${n})`:"")(processosDe(ksR).length + pcDaFicha(c).lista.length)} ▾</button>` : ""}
       ${/* P3 · a aba Prazos junta as datas de todos os casos e as do cliente (decisão do Paulo, 31.10.2026) */""}
       ${(z=>(z.total||abaAtiva===5) ? `<button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Prazos${z.total?` <span class="mt-pzn">${z.total}</span>`:""}${z.venc?` <span class="mt-pzv">${z.venc} vencido${z.venc>1?"s":""}</span>`:""}</button>` : "")((()=>{ try{ return prazosDoCliente(cliId); }catch(e){ return {total:0, venc:0}; } })())}
       ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
@@ -629,7 +628,7 @@ function pintarFicha(){
       }
       // Ordem da tela: o sub-menu decide O QUE olhar; o cartão de fatos diz
       // DE QUE processo se trata; e só então vem o trabalho (escrever/ler).
-      return `${(()=>{
+      return `${quadroEmFormacao(c, k)}${(()=>{
           // ══════════════════════════════════════════════════════════════════
           // ABA SÓ APARECE COM O QUE MOSTRAR
           // ══════════════════════════════════════════════════════════════════
@@ -677,8 +676,7 @@ function pintarFicha(){
         // F155 · o comentário fixo atravessa as duas colunas, em itálico, logo
         // acima delas: é a primeira coisa que se lê ao abrir o caso
         ? `${faixaFixo(k)}${faixaSoFases(k)}${faixaIncapacidade(k)}<div class="caso-2col caso-3col${!celular() && dirOculta() ? " dir-oculta" : !celular() && esqOculta() ? " esq-oculta" : ""}">${semMenu && !esqOculta() ? `<button type="button" class="caso-dir-alca" aria-expanded="${!dirOculta()}" title="${dirOculta() ? "mostrar os andamentos" : "recolher os andamentos"}" onclick="dirAlternar()"><span aria-hidden="true">${dirOculta() ? "‹" : "›"}</span><span class="sr-only">${dirOculta() ? "Mostrar os andamentos" : "Recolher os andamentos"}</span></button>` : ""}<aside class="caso-esq" aria-label="O caso">${/* F278 · três colunas (pedido do Paulo, 25.10.2026): o caso à esquerda, os andamentos no meio e os prazos à direita; com o WhatsApp aberto, os prazos descem para baixo do caso */""}${linhaCaso(k)}${quadroResumo(k)}${(h=>h && !lcNivel(k.id) ? h.replace('<section class="outras-abas"', '<section class="outras-abas" hidden') : h)(painelOutrasAbas(k))}${quadroDoAtendimento(k)}</aside>
-           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>
-           <aside class="caso-esq caso-pz" aria-label="Prazos">${faixaPrazos(k)}</aside></div>`
+           <div class="caso-dir${v10 && aba==="escritorio" && dashLigado() && !_dbAnt.get(k.id) ? " db-recolhido" : ""}">${semMenu && !dirOculta() ? `<button type="button" class="caso-esq-alca" aria-expanded="${!esqOculta()}" title="${esqOculta() ? "mostrar os prazos e o cartão do caso" : "recolher os prazos e o cartão do caso"}" onclick="esqAlternar()"><span aria-hidden="true">${esqOculta() ? "›" : "‹"}</span><span class="sr-only">${esqOculta() ? "Mostrar os prazos e o cartão do caso" : "Recolher os prazos e o cartão do caso"}</span></button>` : ""}${bannerAClassificar(k)}${semMenu ? "" : menu}${v10Cel ? alertaVencidoCel(k) : ""}${/* F242 · as abas vêm antes do campo de escrever, e nas abas dos portais (INSS, Recurso, Judicial) o campo some: lá não se escreve andamento (pedido do Paulo, 18.10.2026) */""}${/^(inss|crps|cnj)$/.test(aba) || (v10 && aba==="escritorio" && dashLigado()) ? "" : composerCaso(k)}${/* F486 · o cartão do Escritório fica abaixo do campo de escrever (pedido do Paulo, 09.11.2026) */""}${v10 && aba==="escritorio" && dashLigado() ? dashboardLado(k, andsVis, painelDaAba()) : painelDaAba()}</div>${(faixaPrazos(k), "")/* F666 · o quadro saiu do Caso (fica no menu Prazos); a lista segue montada para a janela lateral do prazo */}</div>`
         : `${menu}${blocoFatos(k)}${/* F236 · o que o atendimento decidiu vale também no clássico, o visual padrão da equipe */""}${quadroDoAtendimento(k, true)}${painelDaAba()}`);
           function painelDaAba(){ return aba==="cnj" ? abaComProcessos(k, "cnj", ()=>painelCNJ(k, andsVis)) : aba==="crps" ? abaComProcessos(k, "crps", ()=>painelCRPS(k))
             : aba==="inss" ? abaComProcessos(k, "inss", ()=>painelINSS(k, andsVis))
@@ -691,10 +689,6 @@ function pintarFicha(){
 
   <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
     ${abaAtiva===5 ? painelPrazosCliente(cliId) : ""}
-  </div>
-
-  <div class="painel ${abaAtiva===6?"ativo":""}" data-p="6">
-    ${abaAtiva===6 ? painelPreCasos(c) : ""}
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">

@@ -54,7 +54,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.waitForSelector("#app.logado", { timeout: 15000 });
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(i => { abaAtiva = 0; abrirFicha(i); }, A); await p.waitForTimeout(900);
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(500);
+  await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(500);
 
   const dia = "2026-12-01";
   conf("o cartão tem o campo da data de retorno", !!(await p.$(`[data-pc-ret="${KA}"]`)));
@@ -65,7 +65,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("grava em precaso.retorno sem perder o id", (linha.precaso.retorno||{}).data === dia && linha.precaso.retorno.motivo === "trazer a CTPS antiga" && linha.precaso.id === "pc_a63");
   conf("não mexe no casos.prazo (do To Do)", !linha.prazo);
   await p.evaluate(i => { abaAtiva = 0; abrirFicha(i); }, A); await p.waitForTimeout(700);
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(400);
+  await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(400);
   conf("a data volta ao reabrir a ficha", await p.$eval(`[data-pc-ret="${KA}"]`, e => e.value) === dia);
   await p.screenshot({ path: path.join(OUT, "a-cartao.png") });
   const md = await p.evaluate(k => itensAgendaTodos().filter(x => x.k && x.k.id === k).map(x => [x.data, x.selo, x.resumo, x.fatal]), KA);
@@ -75,7 +75,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("aparece na aba Prazos", /Retorno do pré-caso/.test(pz));
   await p.screenshot({ path: path.join(OUT, "b-prazos.png") });
   // apagar
-  await p.click('.mt[data-vv="6"]'); await p.waitForTimeout(400);
+  await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(400);
   await p.fill(`[data-pc-ret="${KA}"]`, "");
   await p.click(`[data-pc-ret-salvar="${KA}"]`); await p.waitForTimeout(500);
   conf("apagar a data tira o retorno", !T.casos.find(k => k.id === KA).precaso.retorno);

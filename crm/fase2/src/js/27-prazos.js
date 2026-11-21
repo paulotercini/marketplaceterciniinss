@@ -50,7 +50,7 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila";
+const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;

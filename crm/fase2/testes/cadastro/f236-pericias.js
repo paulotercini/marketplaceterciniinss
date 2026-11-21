@@ -140,7 +140,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await ficha(A.c.id, A.k.id);
   conf("a aba Perícias aparece só com a que passou, dizendo quantas faltam confirmar", /Perícias · 1 a confirmar/.test(await menu()), await menu());
   const cA = await cartoes();
-  conf("Prazos e compromissos pergunta 'Compareceu?' na data da perícia", cA.some(c => c.tipo === "Compareceu?" && c.data === br(iso(-12))), cA);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("Prazos e compromissos pergunta 'Compareceu?' na data da perícia", cA.some(c => c.tipo === "Compareceu?" && c.data === br(iso(-12))), cA);
   const oaA = await p.evaluate(() => (document.querySelector(".outras-abas") || {}).textContent || "");
   conf("Nas outras abas também", /Perícia de .* aconteceu\? confirme/.test(oaA), oaA);
   const lnA = await p.evaluate(() => { const x = faixaAtual.find(l => l.rotulo === "Compareceu?"); return x ? { rot: x.rot, acao: x.acao } : null; });
@@ -197,8 +197,8 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   await ficha(C.c.id, C.k.id);
   conf("a aba Perícias aparece com a perícia do processo a agendar", /Perícias · 1 a agendar/.test(await menu()), await menu());
   const cC = await cartoes();
-  conf("Prazos e compromissos: 'Perícia a agendar' na data do movimento", cC.some(c => c.tipo === "Perícia a agendar" && c.data === br(iso(14))), cC);
-  conf("o prazo do PJe diz que é de quesitos e que falta atribuir", cC.some(c => c.tipo === "Quesitos · atribuir" && c.data === br(iso(11))), cC);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("Prazos e compromissos: 'Perícia a agendar' na data do movimento", cC.some(c => c.tipo === "Perícia a agendar" && c.data === br(iso(14))), cC);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("o prazo do PJe diz que é de quesitos e que falta atribuir", cC.some(c => c.tipo === "Quesitos · atribuir" && c.data === br(iso(11))), cC);
   await p.evaluate(() => { subAba = "tudo"; filtroTudo = "tudo"; repintarFicha(); }); await espera(250);
   const mov = await p.evaluate(() => { const l = [...document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')].find(x => /Designada perícia médica/.test(x.textContent));
     const ato = [...document.querySelectorAll('.painel[data-p="2"] li.tl-oficial')].find(x => /Ato ordinatório praticado/.test(x.textContent));
@@ -227,8 +227,8 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
     && T.andamento_tarefas.some(t => t.andamento_id === qC.id && t.colaborador_id === MARCOS && t.lembrar_em === quesData), qC && qC.texto);
   await ficha(C.c.id, C.k.id);
   const cC2 = await cartoes();
-  conf("agora o prazo do PJe diz quem cuida: 'Quesitos · Marcos'", cC2.some(c => c.tipo === "Quesitos · Marcos"), cC2);
-  conf("e a perícia do processo virou compromisso marcado ('avisar')", cC2.some(c => c.tipo === "Perícia · avisar" && c.data === br(iso(14))) && !cC2.some(c => /a agendar/.test(c.tipo)), cC2);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("agora o prazo do PJe diz quem cuida: 'Quesitos · Marcos'", cC2.some(c => c.tipo === "Quesitos · Marcos"), cC2);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("e a perícia do processo virou compromisso marcado ('avisar')", cC2.some(c => c.tipo === "Perícia · avisar" && c.data === br(iso(14))) && !cC2.some(c => /a agendar/.test(c.tipo)), cC2);
 
   // ── D · a perícia futura: uma só (Perícia = Perícia médica), avisada pelo To Do; o roteiro do INSS sem quesitos ──
   await ficha(DD.c.id, DD.k.id, 3);
@@ -240,7 +240,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   conf("o atendimento de preparação não pede aviso nem roteiro", atD && atD.est === "marcado" && !/Avisar cliente|Preparar/.test(atD.txt), atD);
   await p.evaluate(() => { abaAtiva = 2; repintarFicha(); }); await espera(150);
   const cD = await cartoes();
-  conf("Prazos e compromissos: 'Perícia · avisado' e o atendimento sem 'avisar'", cD.some(c => c.tipo === "Perícia · avisado" && c.data === br(iso(9))) && cD.some(c => c.tipo === "Atendimento pré-perícia" && c.data === br(iso(6))), cD);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("Prazos e compromissos: 'Perícia · avisado' e o atendimento sem 'avisar'", cD.some(c => c.tipo === "Perícia · avisado" && c.data === br(iso(9))) && cD.some(c => c.tipo === "Atendimento pré-perícia" && c.data === br(iso(6))), cD);
   await p.evaluate(id => prepararPericia(id), ED.id); await espera(250);
   const rotD = await p.evaluate(() => ({ ques: !!document.getElementById("rot-ques"), concl: (document.getElementById("rot-concl") || {}).checked, vesp: (document.getElementById("rot-vesp") || {}).checked,
     passos: [...document.querySelectorAll(".rot-li .rot-rot")].map(e => e.textContent.trim()) }));
@@ -257,7 +257,7 @@ const conf = (nome, v, extra) => { ok.push([nome, !!v]); console.log((v ? "PASSO
   // ── E · julgamento não é perícia ─────────────────────────────────────────
   await ficha(E.c.id, E.k.id);
   const cE = await cartoes();
-  conf("Prazos e compromissos chama o julgamento de julgamento", cE.some(c => c.tipo === "Julgamento" && c.data === br(iso(5))) && !cE.some(c => /Perícia/.test(c.tipo)), cE);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("Prazos e compromissos chama o julgamento de julgamento", cE.some(c => c.tipo === "Julgamento" && c.data === br(iso(5))) && !cE.some(c => /Perícia/.test(c.tipo)), cE);
   conf("e Nas outras abas também", /Julgamento \d\d\/\d\d às 09:00/.test(await p.evaluate(() => (document.querySelector(".outras-abas") || {}).textContent || "")));
   await p.evaluate(() => { abaAtiva = 3; repintarFicha(); }); await espera(150);
   const cardE = await p.evaluate(id => { const l = document.querySelector(`li.tl-pericia[data-ev="${id}"]`); return l ? { est: l.querySelector(".per-est").textContent, txt: l.textContent } : null; }, EE.id);

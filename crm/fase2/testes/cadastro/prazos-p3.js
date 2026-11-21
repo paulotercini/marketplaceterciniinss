@@ -90,9 +90,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await p.evaluate(kid => { casoSel = kid; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, kA1.id);
   await p.waitForTimeout(300);
   const link = await p.$(".fp-outros");
-  conf("o quadro Prazos do caso avisa as datas dos outros casos", link && /Outros casos do cliente: 1 data/.test(await link.evaluate(b => b.closest(".fp3-out").textContent)));
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("o quadro Prazos do caso avisa as datas dos outros casos", link && /Outros casos do cliente: 1 data/.test(await link.evaluate(b => b.closest(".fp3-out").textContent)));
   if (link) { await link.click(); await p.waitForSelector(".pz-cli"); }
-  conf("o link abre a aba Prazos", await p.evaluate(() => abaAtiva === 5));
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("o link abre a aba Prazos", await p.evaluate(() => abaAtiva === 5));
 
   await p.evaluate(async c => { await abrirFicha(c); const m = document.getElementById("modal"); if (m) m.style.display = "none"; abaAtiva = 2; repintarFicha(); }, cB.id);
   await p.waitForTimeout(300);

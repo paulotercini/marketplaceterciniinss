@@ -159,7 +159,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   });
   conf(`a ficha usa só a fonte do tema (${f.plex} em Plex, ${f.segoe} em Segoe UI)`, f.segoe === 0 && f.plex > 20);
   conf(`F405 · as fases vão de Escritório ao Tudo (Caso Completo) (${f.primeira} … ${f.ultima})`, /^Escritório/.test(f.primeira || "") && /^Tudo/.test(f.ultima || ""));
-  conf("F145 · à esquerda, parada, a placa e os prazos", f.esq);
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("F145 · à esquerda, parada, a placa e os prazos", f.esq);
   conf("F405 · à direita, sem as abas: a seta, o campo de escrever e os andamentos", f.dir);
   conf("F504 · a placa em grade: rótulo em cima, valor embaixo", f.placa2);
   conf("F254 · os prazos em linhas, em ordem crescente depois do prazo fatal", f.pzDesc && f.pzFina);
