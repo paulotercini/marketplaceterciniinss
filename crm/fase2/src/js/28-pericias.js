@@ -1347,7 +1347,8 @@ function linhaTempoCaso(k){
   const pg = (D.pagamentos||[]).filter(p=>p.caso_id===k.id);
   const pago = pg.filter(p=>p.status!=="aberto" && p.pago_em).map(p=>p.pago_em).sort();
   const impl = !!k.dib || /^(pagamento|encerrado)$/.test(k.fase||"");
-  const cli = D.cliPorId.get(k.cliente_id) || {}, ini = [cli.criado_em, k.criado_em].filter(Boolean).sort()[0];
+  const cli = D.cliPorId.get(k.cliente_id) || {}, ini = andsDoCaso(k).filter(a=>!a.excluir).map(a=>a.criado_em).filter(Boolean).sort()[0]   // F670b · o início é a primeira anotação
+    || [cli.criado_em, k.criado_em].filter(Boolean).sort()[0];
   const segs = [
     ["escritorio", st("escritorio"), ano(ini), 2],
     ["inss", st("inss"), ano(k.der), 1.6],
