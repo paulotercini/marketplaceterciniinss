@@ -4192,5 +4192,16 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
 .ma-leg em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--cinza-claro,#686660)}
 .ma-venc b{color:#B3261E}
 .ma-nada{margin:6px 0 0;font-size:12px;color:var(--cinza-claro,#686660)}
+/* F670 · linha do tempo do caso */
+.ltc{background:#FDFDFB;border:1px solid #E6E6E2;border-radius:12px;padding:12px 16px;margin:0 0 12px}
+.ltc-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6B7070}
+.ltc-t{font-size:20px;margin:2px 0 12px}
+.ltc-bar{display:flex;gap:4px}
+.ltc-s{min-width:0;display:flex;flex-direction:column;gap:5px}
+.ltc-y{font-size:12px;font-weight:500;color:var(--c);height:15px;font-variant-numeric:tabular-nums}
+.ltc-r{height:10px;border-radius:3px;background:var(--c)}
+.ltc-a .ltc-r{outline:2px solid var(--c);outline-offset:2px}
+.ltc-v .ltc-r{background:none;border:1px dashed var(--c)}
+.ltc-n{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#6B7070;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>

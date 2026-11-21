@@ -1338,3 +1338,31 @@ function blocoFatos(k){
     </div>
   </section>`;
 }
+// F670 · linha do tempo do caso (protótipo do Base44 aprovado pelo Paulo, 21.11.2026): total desde o 1º contato e a barra
+// das fases na cor de cada uma, com o ano em que começou. Tudo lido do que já está gravado; nada se digita aqui.
+function linhaTempoCaso(k){
+  if(!ehPrev(k) || ehPreCaso(k)) return "";
+  const ano = s => (/^\d{4}/.exec(String(s||""))||[""])[0];
+  const fs = jornadaFases(k), st = f => (fs.find(x=>x.f===f)||{}).st;
+  const pg = (D.pagamentos||[]).filter(p=>p.caso_id===k.id);
+  const pago = pg.filter(p=>p.status!=="aberto" && p.pago_em).map(p=>p.pago_em).sort();
+  const impl = !!k.dib || /^(pagamento|encerrado)$/.test(k.fase||"");
+  const cli = D.cliPorId.get(k.cliente_id) || {}, ini = [cli.criado_em, k.criado_em].filter(Boolean).sort()[0];
+  const segs = [
+    ["escritorio", st("escritorio"), ano(ini), 2],
+    ["inss", st("inss"), ano(k.der), 1.6],
+    ["conselho", st("conselho"), ano(k.ro_protocolado_em), 1],
+    ["judicial", st("judicial"), ano(k.ajuizado_em), 2.4],
+    ["implantacao", impl ? "f" : "v", ano(k.dib), 1],
+    ["honorarios", pg.length && pago.length===pg.length ? "f" : pago.length ? "a" : "v", ano(pago[0]), 1.4]];
+  const COR = {implantacao:["#6B3FA0","Implantação"], honorarios:["#0E5C58","Honorários"]};
+  const bar = segs.filter(([,s])=>s!=="n").map(([f,s,a,fl])=>{
+    const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v";
+    return `<div class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""}" style="flex:${fl};--c:${fut?"#B7BCC2":c}" title="${esc(n)}${a&&!fut?` · desde ${a}`:""}">
+      <span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span><span class="ltc-n">${esc(n)}</span></div>`; }).join("");
+  let tot = "";
+  if(ini){ const d0 = new Date(ini), h = new Date(), m = (h.getFullYear()-d0.getFullYear())*12 + h.getMonth()-d0.getMonth() - (h.getDate()<d0.getDate()?1:0);
+    const a = Math.floor(m/12), r = m%12;
+    tot = [a ? `${a} ${a>1?"anos":"ano"}` : "", r ? `${r} ${r>1?"meses":"mês"}` : ""].filter(Boolean).join(" e ") || "menos de um mês"; }
+  return `<section class="ltc" aria-label="Linha do tempo do caso">${tot ? `<div class="ltc-k">Total desde o 1º contato</div><div class="ltc-t">${tot}</div>` : ""}<div class="ltc-bar">${bar}</div></section>`;
+}
