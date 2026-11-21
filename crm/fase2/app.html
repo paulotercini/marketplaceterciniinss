@@ -6742,7 +6742,7 @@ html[data-tema="v10"] .app.celular .cel-abas button.on{color:var(--texto);font-w
 html[data-tema="v10"] .app.celular .cel-abas button:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n{min-width:18px;height:18px;border-radius:9px;background:var(--azul);color:#fff;font-size:11px;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n.ca-venc{background:var(--venc,#B3261E)}
-/* F676 · Casos: no lugar da linha do tempo, os botões dos andamentos; o resumo e os dados do benefício seguem à vista */
+/* F677 · Casos: no lugar da linha do tempo, os botões dos andamentos; o resumo e os dados do benefício seguem à vista */
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{display:flex!important}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-2col{display:flex;flex-direction:column}
@@ -7129,6 +7129,7 @@ html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 #pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 #pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
 #pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
+#pcli .pcl-acoes{flex:none;display:inline-flex;align-items:center;gap:6px} /* F676 · WhatsApp à esquerda do Abrir */
 #pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
 #pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
 #pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
@@ -7567,7 +7568,7 @@ let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (
 // F320 · no celular a ficha se lê em abas no alto (plano de interface limpa, 31.10.2026): Andamentos, Prazos, Caso,
 // Cadastro e Honorários; o Cadastro abre no Principal (CPF, Meu INSS e telefone, cada um com o seu botão)
 let celAba = "casos", celCad = "principal";
-// F676 · o menu do celular é Casos, Cadastro, Prazos, Perícias e Honorários (pedido do Paulo, 21.11.2026); Casos reúne
+// F677 · o menu do celular é Casos, Cadastro, Prazos, Perícias e Honorários (pedido do Paulo, 21.11.2026); Casos reúne
 // os andamentos (botões Escritório, INSS, CRPS, Judicial), o resumo e os dados do benefício; "and" e "caso" ficam como sinônimos
 function celIr(qual, escolher){
   if(qual==="and" || qual==="caso") qual = "casos";
@@ -12375,8 +12376,8 @@ async function pcliMontar(){
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
     <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
-      <button type="button" class="btn-mini forte" data-pc="ficha">Abrir ficha</button></div>
-      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}${/* F675 · o WhatsApp ao lado dos selos; o telefone saiu do painel (pedido do Paulo, 21.11.2026) */""}${tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : ""}</div>
+      ${/* F676 · o WhatsApp à esquerda do Abrir; o telefone saiu do painel (pedido do Paulo, 21.11.2026) */""}<span class="pcl-acoes">${tel ? `<button type="button" class="pcl-ic pcl-zap" data-pc="zap" title="Abrir o WhatsApp">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button>` : ""}<button type="button" class="btn-mini forte" data-pc="ficha" title="Abrir a ficha">Abrir</button></span></div>
+      <div class="pcl-tags">${k && k.especie ? `<span class="pcl-tag">${esc(k.especie)}</span>` : ""}${lista ? `<span class="pcl-tag pcl-lis">${esc(lista)}</span>` : ""}</div>
       <div class="pcl-dados">
       ${dado("CPF", cli.cpf ? `<span class="pcl-cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">${esc(fmtCpf(cli.cpf))}</span>` : "sem CPF")}
       ${dado("Senha do Meu INSS", `<span class="pcl-senha">••••••</span>`, `<button type="button" class="pcl-ic" data-pc="senha" aria-label="Mostrar a senha do Meu INSS" title="Mostrar a senha">👁</button>`)}

@@ -202,7 +202,7 @@ let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (
 // F320 · no celular a ficha se lê em abas no alto (plano de interface limpa, 31.10.2026): Andamentos, Prazos, Caso,
 // Cadastro e Honorários; o Cadastro abre no Principal (CPF, Meu INSS e telefone, cada um com o seu botão)
 let celAba = "casos", celCad = "principal";
-// F676 · o menu do celular é Casos, Cadastro, Prazos, Perícias e Honorários (pedido do Paulo, 21.11.2026); Casos reúne
+// F677 · o menu do celular é Casos, Cadastro, Prazos, Perícias e Honorários (pedido do Paulo, 21.11.2026); Casos reúne
 // os andamentos (botões Escritório, INSS, CRPS, Judicial), o resumo e os dados do benefício; "and" e "caso" ficam como sinônimos
 function celIr(qual, escolher){
   if(qual==="and" || qual==="caso") qual = "casos";

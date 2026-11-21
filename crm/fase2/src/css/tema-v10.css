@@ -3735,7 +3735,7 @@ html[data-tema="v10"] .app.celular .cel-abas button.on{color:var(--texto);font-w
 html[data-tema="v10"] .app.celular .cel-abas button:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n{min-width:18px;height:18px;border-radius:9px;background:var(--azul);color:#fff;font-size:11px;display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
 html[data-tema="v10"] .app.celular .cel-abas .ca-n.ca-venc{background:var(--venc,#B3261E)}
-/* F676 · Casos: no lugar da linha do tempo, os botões dos andamentos; o resumo e os dados do benefício seguem à vista */
+/* F677 · Casos: no lugar da linha do tempo, os botões dos andamentos; o resumo e os dados do benefício seguem à vista */
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .painel[data-p="2"] :is(.tr-faixa,.tr-recolhida){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{display:flex!important}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-2col{display:flex;flex-direction:column}
@@ -4122,6 +4122,7 @@ html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 #pcli .pcl-nl{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 #pcli .pcl-nl .pcl-av{flex:none;width:36px;height:36px}
 #pcli .pcl-nl .pcl-nome{flex:1;text-align:left}
+#pcli .pcl-acoes{flex:none;display:inline-flex;align-items:center;gap:6px} /* F676 · WhatsApp à esquerda do Abrir */
 #pcli .pcl-nome{background:none!important;border:0;padding:0;font:inherit;font-size:19px;font-weight:700;text-align:left;cursor:copy;color:#1F2A2E!important}
 #pcli .pcl-tags{display:flex;gap:6px;margin-top:6px}
 #pcli .pcl-tag{font-size:11px;font-weight:600;background:#EFEEEB;border-radius:4px;padding:1px 6px}
