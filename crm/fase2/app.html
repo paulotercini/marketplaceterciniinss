@@ -12176,8 +12176,8 @@ function dbDespacho(k, ands){
       ${nota ? `<button type="button" class="btn-mini" data-ae="responder" data-and="${nota.id}" title="Responder a esta anotação ou seguir a tarefa dela">Responder</button>` : ""}
       ${prorroga ? `<button type="button" class="btn-mini" data-ae="reagendar" title="Mudar a data do retorno">Prorrogar</button>` : ""}${ant}</div><div class="ae-painel" hidden></div>`
     : `<div class="ae-acoes db-acoes">${ant}</div>`;
-  return `<section class="db db-desp" aria-label="Último andamento no Escritório" onclick="dbClique(event,this,'${k.id}')">
-    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Último andamento no Escritório</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span></div>
+  return `<section class="db db-desp" aria-label="Andamentos do Escritório" onclick="dbClique(event,this,'${k.id}')">
+    <div class="db-cab"><span class="db-logo" aria-hidden="true">${DB_LOGO_ADV}</span><h3>Andamentos do Escritório</h3><span class="db-when">${nota ? dbQuando(nota.criado_em) : ""}</span></div>
     ${corpo}${acoes}${aberto ? dbNumeros(k) : ""}</section>`;
 }
 // F492 · a data do andamento, e não a da importação: o PJe guarda a do movimento
@@ -12249,8 +12249,8 @@ function dbAndamento(k, ands, fase, par){
     : `<span class="db-logo" aria-hidden="true">${it.logo}</span>`;
   const abre = it.n>0 && !!_dbAndAnt.get(`${k.id}|${it.aba}`);
   const quando = it.soData ? `${fmtBarra(dataSP(it.iso))} · ${(n=>n<=0?"hoje":n===1?"ontem":`há ${n} dias`)(diasEntreIso(dataSP(it.iso), hoje()))}` : dbQuando(it.iso);
-  return `<section class="db db-and ${it.cls}" aria-label="Último andamento no ${esc(it.onde)}">
-    <div class="db-cab">${logo}<h3>Último andamento no ${esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}</div>${lcHtml(k, it.aba)}
+  return `<section class="db db-and ${it.cls}" aria-label="Andamentos do ${it.cls==="jud"?"Judicial":esc(it.onde)}">
+    <div class="db-cab">${logo}<h3>Andamentos do ${it.cls==="jud"?"Judicial":esc(it.onde)}</h3><span class="db-when">${quando}</span>${par ? `<span class="db-par">Em paralelo · mandado de segurança</span>` : ""}</div>${lcHtml(k, it.aba)}
     ${it.lista || `<p class="db-mov">${it.txt}${it.sub ? `<span class="db-sub">${esc(it.sub)}</span>` : ""}</p>`}${it.doc||""}${it.bts(dbAnteriores(k, Math.max(0, it.n), it.rot, abre, it.n>0 ? `dbVerAnd('${k.id}','${it.aba}')` : `irSubAba('${it.aba}')`))}
     ${abre ? `<div class="db-pn" role="region" aria-label="${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores no ${esc(it.onde)}"><h4>${it.rot==="comentários" ? "Comentários" : "Andamentos"} anteriores</h4>${it.ant()}</div>` : ""}</section>`;
 }
