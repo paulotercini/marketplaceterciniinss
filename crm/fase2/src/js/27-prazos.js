@@ -1251,18 +1251,19 @@ function nbsDoCaso(k){
 // F669 · MINI AGENDA DO CLIENTE (pedido do Paulo, 21.11.2026): abaixo do quadro da espécie, o mês com os dias de prazo do
 // cliente marcados e, embaixo, o índice com a data e o tipo de cada prazo do mês. Mesmas datas da aba Prazos (na transição,
 // só o Microsoft To Do); nada escreve no To Do. As setas trocam o mês; o dia marcado com mais de um prazo lista todos.
-let _maMes = null, _maCli = null;
+// F673 · a mini agenda e o Mês da aba Prazos andam juntos: o mesmo mês (_pzMes) e o dia clicado abre a aba nele
 function miniAgenda(k){
   if(!k || !k.cliente_id) return "";
-  if(k.cliente_id!==_maCli){ _maCli = k.cliente_id; _maMes = null; }
+  if(k.cliente_id!==_pzCliId){ _pzCliId = k.cliente_id; _pzMes = null; _pzDia = null; }
   return `<section class="ma" id="ma-cli" aria-label="Agenda do cliente">${maConteudo(k.cliente_id)}</section>`;
 }
 function maMes(n){
-  const d = new Date((_maMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _maMes = d.toISOString().slice(0,7);
-  const el = document.getElementById("ma-cli"); if(el) el.innerHTML = maConteudo(_maCli);
+  const d = new Date((_pzMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7);
+  const el = document.getElementById("ma-cli"); if(el) el.innerHTML = maConteudo(_pzCliId);
 }
+function maDia(iso){ _pzDia = iso; _pzMes = iso.slice(0,7); abaAtiva = 5; repintarFicha(); }
 function maConteudo(cliId){
-  const hj = hoje(), m = _maMes || hj.slice(0,7), [y, mm] = m.split("-").map(Number), off = new Date(y, mm-1, 1, 12).getDay(), nDias = new Date(y, mm, 0).getDate();
+  const hj = hoje(), m = _pzMes || hj.slice(0,7), [y, mm] = m.split("-").map(Number), off = new Date(y, mm-1, 1, 12).getDay(), nDias = new Date(y, mm, 0).getDate();
   const its = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || ehRetornoPz(x) || x.todo) && x.data.slice(0,7)===m);
   its.forEach((x, i)=>prepPz(x, i));
   const por = new Map(); for(const x of its){ if(!por.has(x.data)) por.set(x.data, []); por.get(x.data).push(x); }
@@ -1270,7 +1271,8 @@ function maConteudo(cliId){
   let g = ["D","S","T","Q","Q","S","S"].map(s=>`<span class="pzm-sem" aria-hidden="true">${s}</span>`).join("") + "<span></span>".repeat(off);
   for(let d=1; d<=nDias; d++){
     const iso = `${m}-${String(d).padStart(2,"0")}`, xs = por.get(iso) || [];
-    g += `<span class="ma-d${iso===hj ? " pzm-hoje" : ""}${ehDiaUtil(iso) ? "" : " pzm-nu"}${xs.length ? ` ma-tem ma-${corPz(xs[0])}` : ""}"${xs.length ? ` title="${esc(xs.map(x=>`${tipo(x)}: ${x._titulo}`).join("\n"))}"` : ""}>${d}</span>`;
+    const cls = `ma-d${iso===hj ? " pzm-hoje" : ""}${ehDiaUtil(iso) ? "" : " pzm-nu"}`;
+    g += xs.length ? `<button type="button" class="${cls} ma-tem ma-${corPz(xs[0])}" onclick="maDia('${iso}')" title="${esc(xs.map(x=>`${tipo(x)}: ${x._titulo}`).join("\n"))}\nClique para ver na aba Prazos">${d}</button>` : `<span class="${cls}">${d}</span>`;
   }
   const leg = its.map(x=>`<li class="${x.data<hj ? "ma-venc" : ""}"><i class="pzm-${corPz(x)}" aria-hidden="true"></i><b>${fmtBarra(x.data).slice(0,5)}</b><span>${esc(tipo(x))}</span>${x._titulo && x._titulo!==tipo(x) ? `<em title="${esc(x._titulo)}">${esc(x._titulo)}</em>` : ""}</li>`).join("");
   return `<div class="ma-cab"><button type="button" class="pzm-nav" onclick="maMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="maMes(1)" aria-label="Próximo mês">›</button></div>

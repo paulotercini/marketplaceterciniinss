@@ -83,6 +83,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("dia do prazo marcado na mini agenda", r2.marcado.includes(String(+iso(dRet).slice(8))));
   conf("índice traz a data e o tipo", r2.leg.includes(iso(dRet).slice(8) + "/" + iso(dRet).slice(5, 7)) && /Retorno/.test(r2.leg));
   await p.screenshot({ path: path.join(OUT, "mini-agenda.png"), clip: { x: 0, y: 0, width: 720, height: 900 } });
+  await p.evaluate(d => { const b = [...document.querySelectorAll(".ma button.ma-tem")].find(e => e.textContent === String(+d.slice(8))); b.click(); }, iso(dRet));
+  await p.waitForSelector("#pz-cli");
+  const sinc = await p.evaluate(d => ({ dia: _pzDia === d, mes: (document.querySelector(".pzm-cab b") || {}).textContent || "" }), iso(dRet));
+  conf("o dia da mini agenda abre a aba Prazos filtrada no mesmo dia e no mesmo mês", sinc.dia && /de \d{4}/.test(sinc.mes));
   conf("sem erro na página", !erros.length); if (erros.length) console.log(erros);
   await nav.close(); s.close();
   process.exit(ok.every(([, v]) => v) && !erros.length ? 0 : 1);
