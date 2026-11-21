@@ -4220,6 +4220,7 @@ html[data-tema="v10"] .ltc .jn-tudo{position:static;order:99;flex:none;align-sel
 .cli-adv-parc .chip{margin:0}
 /* F672 · a ▾ abre os casos sozinha: alvo de toque de 24 px */
 .cli-casos-seta[role=button]{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;cursor:pointer}
+.ma-d.ma-tem{border:0;padding:0;cursor:pointer;font:inherit;font-size:12px}
 </style>
 </head>
 
