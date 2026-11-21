@@ -142,8 +142,8 @@ FIX.andamentos.push({ id: NOV, caso_id: CASO1, origem: "pat", origem_id: "novtes
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForTimeout(800);
   // F271 · o copiar o nome mora no ⋯ do cabeçalho da ficha
-  conf("a ficha tem o 📋 de copiar o nome ao lado do nome (F278)",
-    await p.evaluate(() => !!document.querySelector('.linha1 > button[title="copiar o nome do cliente"]')));
+  conf("o clique no nome da ficha copia o nome (F672)",
+    await p.evaluate(() => /copiar\(/.test((document.querySelector(".det-topo .cli-casos h2")||{}).getAttribute?.("onclick")||"")));
   await (await p.$(".linha1")).screenshot({ path: path.join(__dirname, "f40-copiar-nome.png") });
 
   console.log("=== novidades da importação (F40) ===");

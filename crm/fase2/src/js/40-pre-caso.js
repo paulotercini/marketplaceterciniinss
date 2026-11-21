@@ -1061,6 +1061,10 @@ async function copiarCred(id){
   api(`/rest/v1/credencial_vis`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});
 }
+// F672 · a senha do Meu INSS à vista no cabeçalho da ficha (pedido do Paulo, 21.11.2026); copiar continua registrado
+async function mostrarCredFicha(id){
+  try{ const [cr]=await api(`/rest/v1/credenciais?id=eq.${id}&select=valor`); const el=document.getElementById("cred-"+id); if(el && cr) el.textContent=cr.valor; }catch(e){}
+}
 async function verCred(id){
   const [cr]=await api(`/rest/v1/credenciais?id=eq.${id}&select=valor`);
   document.getElementById("cred-"+id).textContent=cr.valor;

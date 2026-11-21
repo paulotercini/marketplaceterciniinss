@@ -259,12 +259,12 @@ async function registrarMovimento(casoId, i){
   });
 }
 // o advogado responsável, abaixo do nome do cliente: o escolhido ou o advogado dos casos
-function linhaAdvogado(c){
+function linhaAdvogado(c, parc=""){
   const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
   // F254 · o "fora da lista" segue à vista; o botão de mudar foi ao ⋯ do cabeçalho (F274, itemNaoCliente)
   const nc = ehContato(c) ? ` · ${seloContato(c)}` : souAdmin() && !ehClienteDaLista(c) ? ` · <span class="chip neutro">fora da lista Clientes</span>` : "";
-  return `<span class="cli-adv">Advogado<span class="fp2-sr"> responsável:</span> <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
-    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}</span>`;
+  return `<span class="cli-adv">Responsável<span class="fp2-sr"> pelo cliente:</span> <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
+    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}${parc ? `<span class="cli-adv-parc">${parc}</span>` : ""}</span>`;
 }
 function itemNaoCliente(c){
   if(!souAdmin()) return "";

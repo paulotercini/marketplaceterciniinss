@@ -127,7 +127,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("o Não é cliente está no Cadastro", !!(await p.$(".idf-dossie .cli-nao")));
   T.zap_conversas.push({ id: id("z"), cliente_id: cA.id, telefone: "5516999990000", nao_lidas: 0, ultima_em: ts(-1) });
   await p.evaluate(async c => { await abrirFicha(c); }, cA.id); await p.waitForTimeout(500);
-  conf("o WhatsApp fica ao lado do telefone", await p.evaluate(() => [...document.querySelectorAll(".resumo-lado .id-min")].some(x => /Telefone/.test(x.textContent) && x.querySelector('[onclick^="verZapCliente"]'))));
+  conf("o WhatsApp fica ao lado do nome, sem a linha do Telefone (F672)", await p.evaluate(() => !!document.querySelector('.linha1 > [onclick^="verZapCliente"]') && ![...document.querySelectorAll(".resumo-lado .id-min")].some(x => /Telefone/.test(x.textContent))));
   await p.screenshot({ path: path.join(OUT, "01-cabecalho.png"), clip: { x: 0, y: 0, width: 1500, height: 160 } });
 
   conf("sem erro de página", !erros.length);
