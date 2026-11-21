@@ -130,7 +130,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // ── 1 · computador, caso A ──
   let { p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cA, kA);
-  conf("os cartões dizem o lugar do andamento (F486)", /^Último andamento no Escritório$/.test((await p.locator(".db-desp h3").textContent()).trim()) && /^Último andamento no INSS$/.test((await p.locator(".db-and h3").textContent()).trim()));
+  conf("os cartões dizem o lugar do andamento (F486)", /^Andamentos do Escritório$/.test((await p.locator(".db-desp h3").textContent()).trim()) && /^Andamentos do INSS$/.test((await p.locator(".db-and h3").textContent()).trim()));
   conf("o Último despacho mostra a última anotação da equipe e a resposta", /Aguardar a perícia/.test(await p.locator(".db-desp .db-txt").textContent()) && /Marcos: Exames separados/.test(await p.locator(".db-desp .db-resp").textContent()));
   conf("o cabeçalho diz quando e quantas anteriores", /ontem|há 2 dias/.test(await p.locator(".db-desp .db-when").textContent()) && /Ver anotações anteriores \(1\)/.test(await p.locator(".db-desp .db-ant").textContent()));
   conf("Anotar (verde), Responder e Prorrogar, sem Concluir (F467, F621)", (await p.locator(".db-desp .db-acoes .btn-mini").allTextContents()).join(",") === "Anotar,Responder,Prorrogar" && await p.evaluate(() => { const b = document.querySelector('.db-desp [data-ae="anotar"]'); const c = getComputedStyle(b); return c.color === "rgb(255, 255, 255)" && c.backgroundColor !== "rgb(255, 255, 255)"; }));
@@ -170,7 +170,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
 
   // ── 2 · caso B: CRPS e o mandado de segurança em paralelo ──
   ({ p, ctx } = await pagina({ viewport: { width: 1440, height: 1000 } }, cB, kB));
-  conf("o cartão do Conselho diz CRPS (F499)", /^Último andamento no CRPS$/.test((await p.locator(".db-and.crps h3").textContent()).trim()));
+  conf("o cartão do Conselho diz CRPS (F499)", /^Andamentos do CRPS$/.test((await p.locator(".db-and.crps h3").textContent()).trim()));
   conf("dois cartões de processo ficam empilhados à direita", await p.locator(".db-col-dir .db-and").count() === 2);
   conf("no Conselho o Último andamento é do e-Recursos", await p.locator(".db-and.crps").count() === 1);
   const crpsLis = await p.locator(".db-and.crps .db-movs li").allTextContents();

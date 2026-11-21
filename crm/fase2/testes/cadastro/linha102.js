@@ -41,8 +41,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await new Promise(r => s.on("listening", r));
   const nav = await chromium.launch();
   const ctx = await nav.newContext({ viewport: { width: 1440, height: 900 } });
-  await ctx.addInitScript(([u, ss]) => { window.TRILHA_NO_CASO = true; // F666 tirou a trilha do Caso; as provas dela a religam
-
+  await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
   }, [SUPA, SESSAO]);
@@ -69,7 +68,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   const patches = campo => escritos.filter(e => e.t === "casos" && e.m === "PATCH").map(e => JSON.parse(e.corpo)).filter(b => campo in b);
 
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=v10`);
-  await p.waitForSelector("#app.logado");
+  await p.waitForSelector("#app.logado"); await p.evaluate(() => { faixaSoFases = faixaTrilhaComAlca; });   // F666 · a trilha saiu da tela do caso, mas a lógica das etapas segue (portal): a prova a confere inteira
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(async (a) => { await abrirFicha(a.cli); casoSel = a.id; abaAtiva = 2; localStorage.removeItem("crm_subaba"); subAba = "tudo"; repintarFicha(); }, { cli: CLI_CHEIO, id: CASO1 });
   await p.waitForTimeout(300);
@@ -523,7 +522,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── desligado: nada disso muda o tema antigo ─────────────────────────────
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=`);
-  await p.waitForSelector("#app.logado");
+  await p.waitForSelector("#app.logado"); await p.evaluate(() => { faixaSoFases = faixaTrilhaComAlca; });   // F666 · a trilha saiu da tela do caso, mas a lógica das etapas segue (portal): a prova a confere inteira
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   await p.evaluate(async (a) => { await abrirFicha(a.cli); casoSel = a.id; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, { cli: CLI_CHEIO, id: CASO1 });
   await p.waitForTimeout(250);

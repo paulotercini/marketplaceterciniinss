@@ -66,8 +66,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const nav = await chromium.launch();
   const erros = [];
   const ctx = await nav.newContext({ viewport: { width: 1440, height: 1000 } });
-  await ctx.addInitScript(([u, ss]) => { window.TRILHA_NO_CASO = true; // F666 tirou a trilha do Caso; as provas dela a religam
-
+  await ctx.addInitScript(([u, ss]) => {
     localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
     localStorage.setItem("crm_sessao", JSON.stringify(ss));
     localStorage.setItem("crm_tema", "v10");

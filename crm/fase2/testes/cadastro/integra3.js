@@ -107,7 +107,7 @@ const caso = extra => ({ ...FIX.casos[0], fase: "judicial", especie: "B42", proc
   conf("o fase encerrada mora na linha das fontes, sem linha própria", fo && fo.fase && !fo.barra);
 
   // o honorário em aberto entra nos prazos do caso
-  conf("o vencimento do honorário entra em Prazos e compromissos do caso", /Honorários/.test(await p.evaluate(() => (document.querySelector(".faixa-prazos") || {}).textContent || "")));
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("o vencimento do honorário entra em Prazos e compromissos do caso", /Honorários/.test(await p.evaluate(() => (document.querySelector(".faixa-prazos") || {}).textContent || "")));
 
   // régua de botões: seção 40px
   await ir("abaAtiva=4");

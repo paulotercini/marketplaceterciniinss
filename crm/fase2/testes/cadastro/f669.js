@@ -1,4 +1,4 @@
-// F667 · mini agenda do cliente abaixo do quadro da espécie: o dia do prazo marcado e o índice com data e tipo. Uso: node f667.js
+// F669 · mini agenda do cliente abaixo do quadro da espécie: o dia do prazo marcado e o índice com data e tipo. Uso: node f667.js
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -6,7 +6,7 @@ const path = require("path");
 const { FIX, SESSAO } = require("./fixturas");
 const { Banco, instalarBanco } = require("./banco-simulado");
 const SUPA = "https://ficticio.supabase.co";
-const OUT = process.argv[2] || "/tmp/f667";
+const OUT = process.argv[2] || "/tmp/f669";
 fs.mkdirSync(OUT, { recursive: true });
 
 const PAULO = FIX.colaboradores[0].id, MARCOS = "22222222-2222-2222-2222-222222222222";

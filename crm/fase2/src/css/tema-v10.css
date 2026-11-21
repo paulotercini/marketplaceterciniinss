@@ -2812,11 +2812,11 @@ html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-circ{width:22px;height:22px}
 html .faixa-prazos.fp2.fp2.fp2.fp2 .fp2-ini a{font-weight:500}
 /* F278 · o caso em três colunas: o caso, os andamentos e os prazos; com o WhatsApp aberto, os prazos descem para baixo do caso */
 @container ficha (min-width:900px){
-  html[data-tema="v10"] .caso-2col.caso-3col{grid-template-columns:280px minmax(0,1fr) 250px;grid-template-areas:"esq dir pz";gap:0 18px}
+  html[data-tema="v10"] .caso-2col.caso-3col{grid-template-columns:280px minmax(0,1fr);grid-template-areas:"esq dir";gap:0 18px}
   html[data-tema="v10"] .caso-3col > .caso-esq:not(.caso-pz){grid-area:esq}
   html[data-tema="v10"] .caso-3col > .caso-dir{grid-area:dir}
   html[data-tema="v10"] .caso-3col > .caso-pz{grid-area:pz}
-  html[data-tema="v10"] body.zap-aberto .caso-2col.caso-3col{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"pz dir" "esq dir";grid-template-rows:auto 1fr}
+  html[data-tema="v10"] body.zap-aberto .caso-2col.caso-3col{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"esq dir"}
   html[data-tema="v10"] body.zap-aberto .caso-3col > .caso-esq{position:static;max-height:none}
 }
 @container ficha (max-width:899px){
@@ -3863,7 +3863,7 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-card.tl-nao-li
 html[data-tema="v10"] .painel[data-p="2"] .timeline .dia-itens li.tl-card.tl-imp,
 html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-card.tl-card.tl-imp{box-shadow:none;padding-left:14px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .chip.tl-menc{background:transparent;border:0;padding:0;color:var(--azul);font-size:12px;font-weight:500}
-html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo{background:var(--placa,#F3F2EE);border:0;border-radius:8px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo{background:#FBE9E8;border:0;border-radius:8px}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-corpo.tl-corpo-rep{display:none}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-pill{background:transparent;color:var(--cinza);padding:0}
 html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-pz.tl-pz-vivo .tl-pz-pill i{background:var(--dk-fatal,#B3261E)}
@@ -4105,6 +4105,10 @@ html .linha-caso.lc5.lc5.lc5 .lc5-tram .lc-tram-link:focus-visible{outline:2px s
 .rs5-acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
 .rs5-prop{margin-top:6px;padding:8px;border-radius:6px;background:color-mix(in srgb,var(--rs-fase) 8%,transparent);font-size:12px}
 .rs5 textarea{width:100%;min-height:90px;font:inherit;box-sizing:border-box}
+/* F666 · a anotação com prazo em aberto, fixada no topo, em vermelho */
+html .timeline.tl-fixos{margin-bottom:12px}
+html .timeline.tl-fixos > li.tl-fixo,html[data-tema="v10"] .painel[data-p="2"] .timeline.tl-fixos > li.tl-card.tl-card.tl-fixo{border:1px solid var(--dk-fatal,#B3261E);box-shadow:inset 3px 0 0 var(--dk-fatal,#B3261E);background:#FFF7F6}
+html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 /* F645 · o painel lateral do cliente */
 #pcli{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;z-index:900;overflow-y:auto;background:#F7F6F3;border-left:1px solid var(--borda,#E7E6E1);box-shadow:-6px 0 18px rgba(0,0,0,.08);padding:8px 14px 24px;box-sizing:border-box;font-size:14px;color:#1F2A2E}
 #pcli .pcl-topo{display:flex;justify-content:flex-end}
@@ -4169,7 +4173,7 @@ html[data-so-leitura] [onclick*="comentar" i], html[data-so-leitura] [onclick*="
 #pcli .pcl-rot{align-self:center;font-size:13px;color:#5B6B70;margin-right:4px}
 html .linha-caso.lc5 .lc5-etapa{cursor:pointer;white-space:nowrap}
 html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;align-self:center}
-/* F667 · mini agenda do cliente, abaixo do quadro da espécie */
+/* F669 · mini agenda do cliente, abaixo do quadro da espécie */
 .ma{margin:8px 0;padding:10px 12px;border:1px solid var(--borda,#E2E0DB);border-radius:10px;background:var(--fundo-cartao,#FFFFFF)}
 .ma-cab{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .ma-cab b{font-size:13px;font-weight:500}

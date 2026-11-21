@@ -260,7 +260,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const fx = await p.evaluate(() => { const ds = [...document.querySelectorAll(".caso-esq .pz:not(.fp2-fatal)")].map(b => b.dataset.data);
     const dq = document.querySelector(".caso-esq .pz.fp2-fatal");
     return { asc: ds.every((x, i) => !i || ds[i - 1] <= x), destaque: dq ? dq.textContent.replace(/\s+/g, " ") : "" }; });
-  conf("F254 · a coluna abre com o prazo fatal em destaque (a prorrogação) e segue em ordem crescente", fx.asc && /prorroga/i.test(fx.destaque) && /falta|vence|venceu/.test(fx.destaque));
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("F254 · a coluna abre com o prazo fatal em destaque (a prorrogação) e segue em ordem crescente", fx.asc && /prorroga/i.test(fx.destaque) && /falta|vence|venceu/.test(fx.destaque));
   if (!(fx.asc && /prorroga/i.test(fx.destaque))) console.log("faixa:", JSON.stringify(fx));
 
   conf("sem erro de página", !p._erros.length);

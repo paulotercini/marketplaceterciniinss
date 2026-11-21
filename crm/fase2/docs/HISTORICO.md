@@ -1020,6 +1020,7 @@ A **F635** (pedido do Paulo de 17.11.2026, confirmação enviada a número sem W
 Novidades › Sem caso no CRM › Vincular deixa de ir ao Importar: abre a escolha à mão (vincular a caso sem número, incidente, caso Judicial novo) e oferece ➕ Cliente novo.
 - F642 (17.11.2026): a ponte varre os textos de botões e modelos de empresa fora dos campos conhecidos (antes gravava vazio, "[texto]"); o zap_plantao pergunta uma vez pela mensagem ilegível e depois encaminha à equipe sem repetir.
 
+- F666 (21.11.2026): quadro de Prazos sai do Caso (fica no menu Prazos); prazo em aberto da anotação fixado no topo da linha do tempo, em vermelho. Botões de conferência (Em análise/Movimentou/Não implantado) saíram junto.
 ## F645 · Painel lateral do cliente (18.11.2026)
 - Pedido do Paulo (protótipo "Painel do Cliente Tercini"): o clique no NOME do cliente nas listas abre um painel à direita, sem sair da lista, com nome (copia), espécie e lista, Abrir ficha; CPF, senha do Meu INSS (olho, depois copia), telefone com WhatsApp, parceria e parentesco; a tarefa com responsável, vencimento em vermelho, Hoje, Amanhã, Próx. segunda, +7 e +30 dias e o mês à vista (um clique reagenda, só no CRM), Concluir tarefa; anexos; anotação; última anotação e Ver anotações anteriores. O resto da linha continua estendendo (F455) e o Ctrl+clique abre a ficha. Esc fecha. Prova: testes/cadastro/f645.js.
 
@@ -1052,6 +1053,9 @@ F660d (19.11.2026): nível 2 vê na ficha as abas Casos, Perícias e Prazos (lei
 - **F665** (21.11.2026): painel lateral do cliente mostra as 5 últimas anotações da equipe; "Ver anotações anteriores" traz da sexta em diante. Parceria e Parentesco só aparecem quando há alguém cadastrado.
 
 - F666 (21.11.2026): o quadro de etapas saiu da tela do Caso (atualização manual, poluía o andamento); a etapa fica num selo ao lado da espécie, clique muda a etapa; dados no banco preservados para o portal.
+- F667 (21.11.2026): quadros do Caso renomeados para Andamentos do Escritório, do INSS, do CRPS e do Judicial (pedido do Paulo).
 
-## F667 · mini agenda do cliente no Caso (v14.22, 21.11.2026)
+- F668 (21.11.2026): onda 1 do caso em formação (estudo aprovado pelo Paulo). A aba Pré-caso saiu do menu do cliente; o Casos ▾ traz o pré-caso primeiro, com o selo âmbar "Em formação" (ou "Futuro"), e os pré-casos encerrados recolhidos em "Pré-casos encerrados (N)"; o "＋ Novo pré-caso" mora no Casos ▾, e o "＋ Pré-caso" avulso só aparece sem caso nem pré-caso. A tela do caso em formação abre com o quadro no alto: passos do atendimento, lista do To Do, Continuar atendimento, data de retorno, processo anterior e anotações do To Do (só leitura). Nada escreve no To Do. Também corrige o CSS do F666 que ficou fora do `</style>` e aparecia como texto no alto da tela. Teste: testes/cadastro/f601.js.
+
+## F669 · mini agenda do cliente no Caso (v14.22, 21.11.2026)
 Abaixo do quadro da espécie, o mês com os dias de prazo do cliente marcados e o índice (data, tipo, título). Mesmas datas da aba Prazos (na transição, só Microsoft To Do). `miniAgenda`/`maConteudo` em 27-prazos.js; teste testes/cadastro/f667.js. Corrigido o CSS do F666c que ficara depois do </head>.

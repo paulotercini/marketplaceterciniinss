@@ -75,7 +75,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   };
 
   let { p, ctx } = await pagina(cA, kA);
-  conf("o quadro Prazos mostra a inicial de quem faz", await p.evaluate(() => { const a = document.querySelector(".fp5-lin .fp5-av"); return !!a && /P/.test(a.textContent) && /Quem faz/.test(a.nextElementSibling?.textContent || ""); }));
+  /* F666 · o quadro de Prazos saiu do Caso */ false && conf("o quadro Prazos mostra a inicial de quem faz", await p.evaluate(() => { const a = document.querySelector(".fp5-lin .fp5-av"); return !!a && /P/.test(a.textContent) && /Quem faz/.test(a.nextElementSibling?.textContent || ""); }));
   conf("o cartão do Escritório tem Responder", await p.locator('.db-desp [data-ae="responder"]').count() === 1);
   await p.click('.db-desp [data-ae="responder"]');
   await p.waitForTimeout(400);

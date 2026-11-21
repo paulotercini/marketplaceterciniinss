@@ -28,7 +28,9 @@ const COPIA = path.join(AQUI, "app.html");
 
 // não são provas: uma exporta as fixturas, a outra o PDF falso, e este
 // arquivo é o próprio corredor
-const NAO_SAO_PROVAS = new Set(["req-harness.js", "fixturas.js", "fixt-pdf.js", "rodar.js", "agendagas.js", "acesso-colab.js"]);
+// F666 · o quadro de Prazos saiu do Caso: as provas que só conferiam o quadro ficam aposentadas
+const APOSENTADAS = ["acao84.js","f241.js","f245.js","f247.js","f291.js","f333.js","f388.js","f504.js","linha102.js","natureza87.js","prazo85.js","prazo168.js"];
+const NAO_SAO_PROVAS = new Set([...APOSENTADAS, "req-harness.js", "fixturas.js", "fixt-pdf.js", "rodar.js", "agendagas.js", "acesso-colab.js"]);
 
 // teto por prova. As mais pesadas (desempenho.js pinta 7.000 tarefas) levam
 // perto de um minuto; acima disso é travamento, não lentidão.

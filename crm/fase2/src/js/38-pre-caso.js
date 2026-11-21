@@ -1038,40 +1038,40 @@ function pcDaFicha(c){
 const PC_MOVER_LIGADO = false;
 const PC_ESTADOS = [["ativo","Ativo"],["futuro","Futuro"],["arquivo","Arquivo"],["caso","Gerar caso"]];
 function estadoPc(p, fora){ return fora ? "arquivo" : p.so_lembrete ? "futuro" : "ativo"; }
-function painelPreCasos(c){
-  const z = pcDaFicha(c), cor = (LC_FASE.escritorio||["#0E5C58"])[0];
-  const nome = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
-  // F602b · até 31/12/2026 o estado vem só da lista do To Do (ordem do Paulo de 15.11.2026): sem botões de mover
-  const botoes = (p, fora) => {
-    if(!PC_MOVER_LIGADO) return "";
-    if(!p.caso_id || !D.casoPorId.get(p.caso_id) || !podeAtender()) return "";
-    const at = estadoPc(p, fora);
-    return `<div class="pc-mover" role="group" aria-label="Mover este pré-caso">${PC_ESTADOS.map(([e,r])=>
-      e===at ? `<span class="pc-est on" aria-current="true">${r}</span>`
-      : (fora && e==="caso") ? "" : `<button class="btn-mini" data-pc-mover="${esc(p.caso_id)}|${e}">${r}</button>`).join("")}</div>`;
-  };
-  const cartao = (p, fora) => {
-    const k = p.caso_id && D.casoPorId.get(p.caso_id);
-    const passo = fora ? "" : (p.so_lembrete ? "Em Aposentadorias futuras" : (k ? passoDoPreCaso(k) : "Identificação"));
-    const d = p.desfecho||{};
-    return `<div class="pc-cartao${fora?" pc-arq":""}" style="--pc-cor:${fora?"#8A8F98":cor}">
-      <div class="pc-cab"><b>${nome(p.especie)}</b><span>${fora?"Arquivado":p.so_lembrete?"Futuro · Aposentadorias futuras":"Ativo · Escritório"}</span></div>
-      <div class="pc-corpo">${fora
-        ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
-        : `<div>Passo: <b>${esc(passo)}</b>${p.data_direito?` · direito provável em ${fmt(p.data_direito)}`:""}${p.em?` · desde ${fmt(String(p.em).slice(0,10))}`:""}</div>
-           ${p.id!=="legado"&&!p.so_lembrete?`<button class="btn-mini" data-pc-abrir="${esc(p.id)}">Abrir</button>`:""}`}
-        ${botoes(p, fora)}</div>
-      ${retornoPcHtml(p, k, fora)}
-      ${procAnteriorHtml(p, k, fora)}
-      ${(ts=>ts.length?`<details class="pc-notas"${fora?"":" open"}><summary>Anotações do Microsoft To Do (${ts.length})</summary>${notasTodoHtml(ts)}</details>`:"")(notasTodoDoPc(c, p))}
-    </div>`;
-  };
-  return `<div class="pc-painel">
-    ${podeAtender()?`<div class="pc-topo"><button class="btn-mini" data-pc-novo="1" title="Novo pré-caso (outro benefício)">Novo</button></div>`:""}
-    ${z.lista.map(p=>cartao(p,false)).join("")}
-    ${z.arq.length?`<h4 class="pc-sub">Arquivados</h4>${z.arq.map(p=>cartao(p,true)).join("")}`:""}
-    ${z.n?"":`<p class="pc-vazio">Nenhum pré-caso.</p>`}
-  </div>`;
+// F668 · onda 1 do caso em formação (aprovada pelo Paulo em 21.11.2026): a aba Pré-caso saiu do menu; o pré-caso
+// é o próprio caso, com o selo "Em formação" no Casos ▾ e este quadro no alto da tela do caso
+const nomePc = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
+const PC_PASSOS = [["identificacao","Identificação"],["pa","1º atendimento"],["analise","Análise de Direito"],["documentos","Documentos"]];
+// F602b · até 31/12/2026 o estado vem só da lista do To Do (ordem do Paulo de 15.11.2026): sem botões de mover
+function botoesMoverPc(p, fora){
+  if(!PC_MOVER_LIGADO) return "";
+  if(!p.caso_id || !D.casoPorId.get(p.caso_id) || !podeAtender()) return "";
+  const at = estadoPc(p, fora);
+  return `<div class="pc-mover" role="group" aria-label="Mover este pré-caso">${PC_ESTADOS.map(([e,r])=>
+    e===at ? `<span class="pc-est on" aria-current="true">${r}</span>`
+    : (fora && e==="caso") ? "" : `<button class="btn-mini" data-pc-mover="${esc(p.caso_id)}|${e}">${r}</button>`).join("")}</div>`;
+}
+function quadroEmFormacao(c, k){
+  if(!k || !k.pre_caso || !c) return "";
+  const z = pcDaFicha(c), id = x => x.caso_id===k.id;
+  const p = z.lista.find(id), pa = !p && z.arq.find(id);
+  if(!p && !pa) return "";
+  const fora = !!pa, q = p || pa, d = q.desfecho||{}, et = (k.precaso||{}).etapas||{};
+  const at = PC_PASSOS.findIndex(([x])=>!et[x]);
+  const passos = fora || q.so_lembrete ? "" : `<ol class="pcq-passos" aria-label="Passos do atendimento">${PC_PASSOS.map(([x, r], i)=>
+    `<li class="${et[x] ? "ok" : i===at ? "at" : ""}"${i===at ? ' aria-current="step"' : ""}>${et[x] ? "✓ " : ""}${r}</li>`).join("")}</ol>`;
+  const est = fora ? "Pré-caso encerrado" : q.so_lembrete ? "Futuro · Aposentadorias futuras" : "Caso em formação";
+  return `<section class="pc-quadro${fora ? " pc-arq" : ""}" aria-label="${est}">
+    <div class="pcq-cab"><b>${est}</b> · ${nomePc(q.especie)}<span class="selo-form">${fora ? "Encerrado" : q.so_lembrete ? "Futuro" : "Em formação"}</span></div>
+    <div class="pcq-corpo">${passos}
+      ${fora ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
+        : `<div>Lista no To Do: <b>${esc(listaDe(k)!=="—" ? listaDe(k) : q.so_lembrete ? "🙏 Aposentadorias Futuras" : "🙋 Escritório")}</b>${q.data_direito?` · direito provável em ${fmt(q.data_direito)}`:""}</div>`}
+      ${!fora && !q.so_lembrete && podeAtender() ? `<div><button class="btn-mini pcq-cont" data-pc-abrir="${esc(q.id)}">Continuar atendimento</button></div>` : ""}
+      ${botoesMoverPc(q, fora)}</div>
+    ${retornoPcHtml(q, k, fora)}
+    ${procAnteriorHtml(q, k, fora)}
+    ${(ts=>ts.length?`<details class="pc-notas"${fora?"":" open"}><summary>Anotações do Microsoft To Do (${ts.length})</summary>${notasTodoHtml(ts)}</details>`:"")(notasTodoDoPc(c, q))}
+  </section>`;
 }
 // F604 · o processo judicial anterior, de outro escritório (pedido do Paulo de 15.11.2026): fica no pré-caso,
 // em casos.precaso.proc_anterior, só no CRM; serve à conferência de litispendência e coisa julgada

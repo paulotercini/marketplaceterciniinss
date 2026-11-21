@@ -50,7 +50,7 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila";
+const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
@@ -1248,7 +1248,7 @@ const fmtNb = v => { const d = soDig(v); return d.length===10 ? `${d.slice(0,3)}
 function nbsDoCaso(k){
   return [...new Set([k.nb, ...(Array.isArray(k.nbs)?k.nbs:[])].map(x=>String(x||"").trim()).filter(Boolean))];
 }
-// F667 · MINI AGENDA DO CLIENTE (pedido do Paulo, 21.11.2026): abaixo do quadro da espécie, o mês com os dias de prazo do
+// F669 · MINI AGENDA DO CLIENTE (pedido do Paulo, 21.11.2026): abaixo do quadro da espécie, o mês com os dias de prazo do
 // cliente marcados e, embaixo, o índice com a data e o tipo de cada prazo do mês. Mesmas datas da aba Prazos (na transição,
 // só o Microsoft To Do); nada escreve no To Do. As setas trocam o mês; o dia marcado com mais de um prazo lista todos.
 let _maMes = null, _maCli = null;

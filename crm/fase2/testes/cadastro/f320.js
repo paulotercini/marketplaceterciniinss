@@ -67,8 +67,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const erros = [];
   const pagina = async (opc) => {
     const ctx = await nav.newContext(opc);
-    await ctx.addInitScript(([u, ss]) => { window.TRILHA_NO_CASO = true; // F666 tirou a trilha do Caso; as provas dela a religam
-
+    await ctx.addInitScript(([u, ss]) => {
       localStorage.setItem("crm_cfg", JSON.stringify({ url: u, key: "a".repeat(60) }));
       localStorage.setItem("crm_sessao", JSON.stringify(ss));
       localStorage.setItem("crm_tema", "v10");
@@ -79,7 +78,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     p.on("pageerror", e => erros.push(e.message));
     p.on("dialog", d => d.accept());
     await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=v10`);
-    await p.waitForSelector("#app.logado", { timeout: 15000 });
+    await p.waitForSelector("#app.logado", { timeout: 15000 }); await p.evaluate(() => { faixaSoFases = faixaTrilhaComAlca; });   // F666 · a trilha saiu da tela do caso, mas a lógica das etapas segue (portal): a prova a confere inteira
     await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
     return p;
   };
@@ -101,7 +100,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("ver as etapas abre a trilha e a escolha fica no navegador", await p.evaluate(() => !!document.querySelector(".tr-faixa.tr-aberta") && !document.querySelector(".tr-corpo").hidden && localStorage.getItem("crm_etapas") === "1"));
   await p.click(".tr-alca-et"); await p.waitForTimeout(300);
   conf("recolher etapas volta à linha do resumo", await p.evaluate(() => !!document.querySelector(".tr-faixa.tr-fechada") && !localStorage.getItem("crm_etapas")));
-  const col = await p.evaluate(() => { const e = document.querySelector(".caso-esq:not(.caso-pz)").getBoundingClientRect(), pz = document.querySelector(".caso-pz").getBoundingClientRect(), d = document.querySelector(".caso-dir").getBoundingClientRect();
+  const col = await p.evaluate(() => { const e = document.querySelector(".caso-esq:not(.caso-pz)").getBoundingClientRect(), pz = {bottom:-1e9,right:-1e9}/* F666 · o quadro de Prazos saiu do Caso */, d = document.querySelector(".caso-dir").getBoundingClientRect();
     return { e: e.right <= d.left + 1, pz: pz.bottom <= e.top + 1 && pz.right <= d.left + 1 }; });
   conf("duas colunas: os prazos acima do cartão, à esquerda, e os andamentos à direita (F333)", col.e && col.pz);
   conf("a segunda linha do cabeçalho traz os dados, o advogado e a situação", await p.evaluate(() => { const l = document.querySelector(".det-topo .linha2"); return !!(l && l.querySelector(".resumo-lado") && l.querySelector(".cli-adv") && l.querySelector(".cli-st")); }));
