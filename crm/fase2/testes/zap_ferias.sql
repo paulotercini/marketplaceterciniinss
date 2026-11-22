@@ -46,6 +46,14 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'p
 insert into r select 'f6 mensagem do titular não interrompe o repasse',
   (select cobertura is not null from zap_conversas where id = (select id from v));
 
+-- conversa sem cobertura: nem aviso nem repasse
+delete from v; insert into v select zap_abrir('5500000000013', 'Cliente Teste');
+update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333', sem_cobertura = true where id = (select id from v);
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'oi, tudo certo para sábado?' from v;
+insert into r select 'f9 sem cobertura: sem aviso e sem repasse',
+  not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v))
+  and (select cobertura is null from zap_conversas where id = (select id from v));
+
 -- retorno automático
 update colaboradores set zap_ferias_ate = now() - interval '1 minute' where inicial = 'X';
 select zap_ferias_fim();

@@ -73,6 +73,8 @@ begin
     values (c.id, 'saida', true, 'Encaminhei a sua mensagem à equipe jurídica, que responderá em breve.', 'fila');
     return new;
   end if;
+  -- F678 · conversa marcada "sem cobertura" (pessoa que não é cliente) fica fora das férias: sem aviso e sem repasse
+  if c.zap_ferias_ate is not null and coalesce(c.sem_cobertura, false) then return new; end if;
   v_txt := coalesce(nullif(trim(c.zap_offline_msg), ''), zap_offline_padrao(c.nome));
   -- F678 · {fim} vira a data de retorno
   if c.zap_ferias_ate is not null then
