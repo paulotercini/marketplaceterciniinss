@@ -33,3 +33,26 @@ assert.equal(conferirSegredo(null, "s", false).ok, true);
 assert.equal(conferirSegredo(null, "s", true).ok, false);
 assert.equal(conferirSegredo("s", "s", true).ok, true);
 console.log("zap_anotacao: 6 grupos ok");
+
+// F678 · resumo diário
+const { promptResumo, conferirResumo, ESQUEMA_RESUMO } = await import("../../zap_anotacao/index.ts");
+{
+  const casos = [{ id: "k1", beneficio: "B31" }, { id: "k2", beneficio: "BPC" }];
+  const g = conferirResumo({ itens: [
+    { caso_id: "k2", texto: "Cliente enviou o laudo — CPF 123.456.789-00", conferir: false },
+    { caso_id: "", texto: "- Pendente: carteira de trabalho", conferir: true },
+    { caso_id: "zz", texto: "Informei a perícia", conferir: false },
+    { caso_id: "k1", texto: "  ", conferir: false },
+  ] }, casos);
+  assert.deepEqual([...g.keys()], ["k2", "k1"]);
+  assert.equal(g.get("k2")[0], "Cliente enviou o laudo , CPF [número]");
+  assert.deepEqual(g.get("k1"), ["Pendente: carteira de trabalho (conferir o caso)", "Informei a perícia (conferir o caso)"]);
+  assert.equal(conferirResumo({ itens: [{ caso_id: "", texto: "x", conferir: true }] }, [{ id: "k1" }]).get("k1")[0], "x");
+  assert.equal(conferirResumo({ itens: [{ caso_id: "k1", texto: "x" }] }, []).size, 0);
+}
+{
+  const p = promptResumo({ dia: "2026-11-23", casos: [{ id: "k1", beneficio: "B31" }], mensagens: [{ hora: "09:00", quem: "Cliente", texto: "oi" }] });
+  assert.match(p, /Descarte o que não é do caso: agendamento/);
+  assert.match(p, /\[09:00\] Cliente: oi/);
+  assert.ok(ESQUEMA_RESUMO.properties.itens);
+}

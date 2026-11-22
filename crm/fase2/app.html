@@ -47331,7 +47331,7 @@ function comentario(a, resposta, reacoes, raiz){
       <button class="apaga" title="👍 ciente — um toque, sem texto" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
       <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
         onclick="armarResposta('${a.id}')">↩</button>
-      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
+      ${(a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
     </span>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -47625,9 +47625,9 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   const minha = abertas.find(t=>t.colaborador_id===eu.id), alvo = minha || abertas[0];
   // F182 · ciente, apagar, ⭐ e ⚡ saem da coluna da direita (que espremia o
   // texto) e entram no fim da barra; os vistos de leitura vão para o cabeçalho
-  const apagar = a.autor_id===eu.id&&a.origem==="app"
+  const apagar = (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
-  const editarResp = a.autor_id===eu.id&&a.origem==="app"&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
+  const editarResp = (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt tl-bt-nota resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
       ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? ""
@@ -47643,8 +47643,8 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
           `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')" title="Copiar o texto">Copiar<span class="sr-only"> o texto</span></button>`,
           itemLevarAndamento(a),
           pzE && pzE.resp ? `<button class="tl-mais-it" role="menuitem" onclick="desfazerCumprimento('${pzE.resp.id}')" title="Desfazer o registro do prazo">Desfazer<span class="sr-only"> o registro do prazo</span></button>` : "",
-          a.autor_id===eu.id&&a.origem==="app"&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
-          a.autor_id===eu.id&&a.origem==="app" ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
+          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
+          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo") ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
