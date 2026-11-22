@@ -1081,3 +1081,9 @@ O campo Telefone saiu do painel lateral; o botão do WhatsApp fica na linha dos 
 - **F676 · Painel lateral: botão Abrir e WhatsApp ao lado** (21.11.2026). O botão "Abrir ficha" passa a ler "Abrir"; o ícone do WhatsApp sai da linha dos selos e fica à esquerda do Abrir, no canto superior direito do painel `#pcli`.
 ## F677 · Menu do cliente no celular (21.11.2026)
 No celular as abas do cliente são Casos, Cadastro, Prazos, Perícias e Honorários; Prazos, Perícias e Honorários só aparecem quando existem. O toque em Casos, com mais de um caso, abre a escolha do caso. Em Casos, os botões Escritório, INSS, CRPS e Judicial ficam no alto, no lugar da linha do tempo, com o resumo e os dados do benefício abaixo.
+
+## F678 · Resumo diário automático do WhatsApp nas anotações (22.11.2026)
+- Às 18h (cron `zap-resumo-diario`, 21h UTC), `zap_resumo_vez()` manda cada conversa de cliente com ficha que teve mensagem do cliente no dia à Edge Function `zap_anotacao` no modo `{resumo, dia}`.
+- `zap_resumo_pegar` devolve as mensagens do dia (cliente, equipe e assistente) e os casos abertos, do mais recente ao mais antigo; conversa já resumida no dia volta nula.
+- O modelo leva apenas o pertinente ao caso, em itens curtos; agendamento, pagamento, cortesia e dúvida geral são descartados. Item de dúvida entre casos vai ao mais recente com "(conferir o caso)".
+- Grava uma anotação por caso (origem `zap_resumo`, selo "Resumo automático do WhatsApp (dd/mm)"), que qualquer pessoa da equipe edita ou apaga. A sugestão por mensagem (`zap_anotacao_ligada`) foi desligada; `zap_resumo_ligado` liga e desliga o resumo.
