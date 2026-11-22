@@ -20582,6 +20582,7 @@ function foneZapNovo(t){
 }
 // F397 · Online e Offline: offline, o contato que eu assumi recebe uma vez a mensagem automática que eu escrevi
 const offlinePadrao = () => `Olá! ${(eu.nome||"").trim().split(" ")[0]||"Quem atende você"} está fora do atendimento no momento e responderá a sua mensagem assim que retornar.`;
+const feriasPadrao = () => `Olá! Neste período o ${(eu.assinatura_zap||eu.nome||"").replace(/:$/,"")} não acompanhará as mensagens do WhatsApp. Por isso, a sua mensagem está sendo repassada à Dra. Amanda Garcez, que dará andamento ao seu atendimento.`;
 async function gravarEstadoZap(off, msg, ferias){
   // F678 · férias: Offline com data de retorno; a substituta recebe a conversa já na primeira mensagem
   if(off && ferias === "") return aviso("Informe a data de retorno das férias");
@@ -20603,7 +20604,7 @@ function estadoZap(){
     <textarea id="zof-msg" rows="4" style="width:100%" aria-label="Mensagem automática">${esc(eu.zap_offline_msg||offlinePadrao())}</textarea>
     <label class="cfg-ck" style="margin-top:6px"><input type="checkbox" id="zof-fer"${eu.zap_ferias_ate?" checked":""}> Férias, retorno em
       <input type="date" id="zof-ate" value="${eu.zap_ferias_ate?new Date(eu.zap_ferias_ate).toLocaleDateString("sv-SE",{timeZone:"America/Sao_Paulo"}):""}"></label>
-    <p class="meio-sub" style="margin:2px 0 0">Nas férias, a mensagem acima vai a toda conversa sua com mensagem nova e a substituta a recebe já na primeira. Escreva {fim} para mostrar a data de retorno. Na data, você volta ao Online sozinho.</p>
+    <p class="meio-sub" style="margin:2px 0 0">Nas férias, a mensagem acima vai a toda conversa sua com mensagem nova e a substituta a recebe já na primeira. Na data, você volta ao Online sozinho.</p>
     ${(eu.zap_offline_salvas||[]).length ? `<div class="zof-salvas"><b>Mensagens salvas</b>${eu.zap_offline_salvas.map((m,i) =>
       `<div class="zof-it"><button class="btn-mini" data-zof-usar="${i}" title="Usar esta mensagem">${esc(m)}</button><button class="btn-mini" data-zof-tirar="${i}" title="Tirar da lista" aria-label="Tirar da lista">✕</button></div>`).join("")}</div>` : ""}
     <div class="form-linha" style="margin-top:10px">
@@ -20614,6 +20615,8 @@ function estadoZap(){
   const txt = () => document.getElementById("zof-msg").value.trim();
   const b = id => document.getElementById(id);
   const fer = () => b("zof-fer").checked ? b("zof-ate").value : null;
+  // F678 · o cliente não lê "férias": apenas que a mensagem vai à substituta
+  b("zof-fer").onchange = () => { if(b("zof-fer").checked && txt() === offlinePadrao()) b("zof-msg").value = feriasPadrao(); };
   if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
   if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt(), fer());
   if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt(), fer());
