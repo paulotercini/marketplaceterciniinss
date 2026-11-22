@@ -779,10 +779,15 @@ function foneZapNovo(t){
 }
 // F397 · Online e Offline: offline, o contato que eu assumi recebe uma vez a mensagem automática que eu escrevi
 const offlinePadrao = () => `Olá! ${(eu.nome||"").trim().split(" ")[0]||"Quem atende você"} está fora do atendimento no momento e responderá a sua mensagem assim que retornar.`;
-async function gravarEstadoZap(off, msg){
-  try{ await api(`/rest/v1/rpc/zap_meu_offline`,{method:"POST", body:JSON.stringify({p_offline:off, p_msg:msg||null})}); }
-  catch(e){ return aviso("Não gravou: tente de novo"); }
+async function gravarEstadoZap(off, msg, ferias){
+  // F678 · férias: Offline com data de retorno; a substituta recebe a conversa já na primeira mensagem
+  if(off && ferias === "") return aviso("Informe a data de retorno das férias");
+  const ate = off && ferias ? new Date(ferias + "T08:00:00-03:00").toISOString() : null;
+  try{ await api(`/rest/v1/rpc/${ate?"zap_minhas_ferias":"zap_meu_offline"}`,{method:"POST",
+         body:JSON.stringify(ate ? {p_ate:ate, p_msg:msg||null} : {p_offline:off, p_msg:msg||null})}); }
+  catch(e){ return aviso(ate ? "Não gravou: confira a data de retorno" : "Não gravou: tente de novo"); }
   eu.zap_offline_desde = off ? (eu.zap_offline_desde || new Date().toISOString()) : null;
+  eu.zap_ferias_ate = ate;
   if(msg){ eu.zap_offline_msg = msg; eu.zap_offline_salvas = [msg, ...(eu.zap_offline_salvas||[]).filter(x => x !== msg)].slice(0,20); }
   fecharCaixa(); pintarListaZap();
   if(zapAberta && document.getElementById("zap-txt")) pintarConversaGuardando();   // F534: o aviso vermelho do campo de escrever acompanha
@@ -793,6 +798,9 @@ function estadoZap(){
   caixa(`<h3>${off?"Você está offline":"Ficar offline"}</h3>
     <p class="meio-sub">Offline, quem escrever numa conversa que você assumiu recebe esta mensagem, uma vez por conversa, até você voltar.</p>
     <textarea id="zof-msg" rows="4" style="width:100%" aria-label="Mensagem automática">${esc(eu.zap_offline_msg||offlinePadrao())}</textarea>
+    <label class="cfg-ck" style="margin-top:6px"><input type="checkbox" id="zof-fer"${eu.zap_ferias_ate?" checked":""}> Férias, retorno em
+      <input type="date" id="zof-ate" value="${eu.zap_ferias_ate?new Date(eu.zap_ferias_ate).toLocaleDateString("sv-SE",{timeZone:"America/Sao_Paulo"}):""}"></label>
+    <p class="meio-sub" style="margin:2px 0 0">Nas férias, a mensagem acima vai a toda conversa sua com mensagem nova e a substituta a recebe já na primeira. Escreva {fim} para mostrar a data de retorno. Na data, você volta ao Online sozinho.</p>
     ${(eu.zap_offline_salvas||[]).length ? `<div class="zof-salvas"><b>Mensagens salvas</b>${eu.zap_offline_salvas.map((m,i) =>
       `<div class="zof-it"><button class="btn-mini" data-zof-usar="${i}" title="Usar esta mensagem">${esc(m)}</button><button class="btn-mini" data-zof-tirar="${i}" title="Tirar da lista" aria-label="Tirar da lista">✕</button></div>`).join("")}</div>` : ""}
     <div class="form-linha" style="margin-top:10px">
@@ -802,9 +810,10 @@ function estadoZap(){
     </div>`);
   const txt = () => document.getElementById("zof-msg").value.trim();
   const b = id => document.getElementById(id);
+  const fer = () => b("zof-fer").checked ? b("zof-ate").value : null;
   if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
-  if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt());
-  if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt());
+  if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt(), fer());
+  if(b("zof-off")) b("zof-off").onclick = () => gravarEstadoZap(true, txt(), fer());
   // F519 · a mensagem salva volta ao campo no clique; o ✕ a tira da lista
   document.querySelectorAll("[data-zof-usar]").forEach(x => x.onclick = () => { b("zof-msg").value = eu.zap_offline_salvas[+x.dataset.zofUsar]; });
   document.querySelectorAll("[data-zof-tirar]").forEach(x => x.onclick = async () => {
