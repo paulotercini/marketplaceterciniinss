@@ -206,6 +206,7 @@ let celAba = "casos", celCad = "principal";
 // os andamentos (botões Escritório, INSS, CRPS, Judicial), o resumo e os dados do benefício; "and" e "caso" ficam como sinônimos
 function celIr(qual, escolher){
   if(qual==="and" || qual==="caso") qual = "casos";
+  if(qual==="casos" && escolher) subAba = "escritorio";   // F680 · sem o botão Escritório, o toque em Casos volta a ele
   // com mais de um caso, o toque em Casos abre a escolha do caso
   const ks = escolher && qual==="casos" ? (D.casosDoCliente.get(clienteAberto)||[]).filter(k=>k.fase!=="encerrado") : [];
   celAba = qual;
