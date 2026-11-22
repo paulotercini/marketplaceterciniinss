@@ -428,12 +428,16 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
        </div>
        ${desfazerZapHtml()}
        <div class="ze-linha ze-vazio">
-         ${zapNota?"":`<details class="ze-mais so-cel-ze">
+         <details class="ze-mais so-cel-ze">
            <summary aria-label="Mais opções">+</summary>
            <div class="zt-menu">
+             <button onclick="this.closest('details').open=false;ditarZap()" title="Ditar a mensagem; toque de novo no microfone do campo para parar">Ditar<span class="sr-only"> a mensagem</span></button>
+             <button onclick="this.closest('details').open=false;corrigirZap()" title="Corrigir com a IA o que está escrito">Corrigir<span class="sr-only"> com a IA</span></button>
+             ${zapNota?"":`${c.sugestao_ia&&c.sugestao_ia.texto?"":`<button onclick="this.closest('details').open=false;iaSugestaoZap('outra')" title="Pedir uma sugestão de resposta à IA">Sugerir<span class="sr-only"> resposta</span></button>
+             <button onclick="this.closest('details').open=false;iaSugestaoZap('aprofundar')" title="Sugestão com consulta completa">Aprofundar<span class="sr-only"> a sugestão</span></button>`}
              <button onclick="this.closest('details').open=false;frasesZap()" title="Mensagens prontas"><span aria-hidden="true">Modelos</span><span class="sr-only">Mensagens prontas</span></button>
-             <button onclick="this.closest('details').open=false;agendarZap()" title="Agendar o envio">Agendar<span class="sr-only"> o envio</span></button>
-           </div></details>`}
+             <button onclick="this.closest('details').open=false;agendarZap()" title="Agendar o envio">Agendar<span class="sr-only"> o envio</span></button>`}
+           </div></details>
          <div class="ze-caixa">
            <textarea id="zap-txt" rows="1" placeholder="${zapNota?"Nota para a equipe":"Mensagem"}" title="${zapNota
              ? "Anotação para a equipe, o cliente não vê. Avisa quem atende e o advogado do cliente; @nome avisa outra pessoa."
@@ -442,14 +446,14 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
              <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
              <details class="ze-emo"${emoAberto?" open":""}><summary class="zap-icone" title="emojis" aria-label="Emojis">${zic("emoji")}</summary>
                <div class="ze-emo-grade" role="group" aria-label="Emojis">${EMOJIS_ESCREVER.map(e=>`<button type="button" onclick="emojiZap('${e}')">${e}</button>`).join("")}</div></details>
-             <button class="zap-icone${_ditado?" gravando":""}" id="zap-ditar" onclick="ditarZap()" title="ditar: fale a mensagem, toque de novo para parar e a IA a corrige no campo, sem enviar" aria-label="Ditar a mensagem">${zic("ditar")}</button>
-             <button class="zap-icone" id="zap-corrigir" onclick="corrigirZap()" title="corrigir com a IA o que está escrito, sem enviar" aria-label="Corrigir o texto com a IA">${zic("corrigir")}</button>
+             <button class="zap-icone ze-so-pc${_ditado?" gravando":""}" id="zap-ditar" onclick="ditarZap()" title="ditar: fale a mensagem, toque de novo para parar e a IA a corrige no campo, sem enviar" aria-label="Ditar a mensagem">${zic("ditar")}</button>
+             <button class="zap-icone ze-so-pc" id="zap-corrigir" onclick="corrigirZap()" title="corrigir com a IA o que está escrito, sem enviar" aria-label="Corrigir o texto com a IA">${zic("corrigir")}</button>
              ${zapNota?"":`<button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
                title="mandar foto, PDF ou áudio" aria-label="Anexar arquivo">${zic("clipe")}</button>
              <button class="zap-icone ze-so-pc" onclick="frasesZap()" title="mensagens prontas (ou digite / no campo)" aria-label="Mensagens prontas">${zic("frases")}</button>
              <button class="zap-icone ze-so-pc" onclick="agendarZap()" title="agendar o envio para outro dia e hora" aria-label="Agendar envio">${zic("agenda")}</button>
-             ${c.sugestao_ia&&c.sugestao_ia.texto?"":`<button class="zap-icone" id="zap-sugerir" onclick="iaSugestaoZap('outra')" title="pedir uma sugestão de resposta à IA, sem enviar" aria-label="Pedir sugestão de resposta">${zic("ideia")}</button>
-             <button class="zap-icone" id="zap-aprofundar" onclick="iaSugestaoZap('aprofundar')" title="sugestão com consulta completa (anotações, andamentos, prazos, perícias, agenda e mensagens), sem enviar" aria-label="Pedir sugestão aprofundada">${zic("lupa2")}</button>`}`}
+             ${c.sugestao_ia&&c.sugestao_ia.texto?"":`<button class="zap-icone ze-so-pc" id="zap-sugerir" onclick="iaSugestaoZap('outra')" title="pedir uma sugestão de resposta à IA, sem enviar" aria-label="Pedir sugestão de resposta">${zic("ideia")}</button>
+             <button class="zap-icone ze-so-pc" id="zap-aprofundar" onclick="iaSugestaoZap('aprofundar')" title="sugestão com consulta completa (anotações, andamentos, prazos, perícias, agenda e mensagens), sem enviar" aria-label="Pedir sugestão aprofundada">${zic("lupa2")}</button>`}`}
            </div>
          </div>
          <button class="ze-nota-cel so-cel-ze ${zapNota?"on":""}" aria-pressed="${zapNota}" onclick="alternarNota()"

@@ -2358,6 +2358,9 @@
   .app.celular .ze-linha{gap:6px}
   .app.celular .ze-caixa{flex-direction:row;align-items:flex-end;min-height:44px;box-sizing:border-box;padding:4px 4px 4px 12px;border-radius:22px}
   .app.celular .zap-escrever textarea#zap-txt{height:24px;align-self:center;font-size:16px;line-height:24px}
+  /* F681 · o campo no celular: dentro dele só emoji e anexo (ditar, corrigir, sugerir e aprofundar no +); cresce até duas linhas e rola */
+  .app.celular .zap-escrever textarea#zap-txt{max-height:48px!important;overflow-y:auto}
+  .app.celular .ze-ferr .ze-so-pc.gravando{display:inline-flex}
   .app.celular .ze-ferr{flex:none;min-height:0}
   .app.celular .ze-mais{display:block;position:relative;flex:none}
   .app.celular .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;

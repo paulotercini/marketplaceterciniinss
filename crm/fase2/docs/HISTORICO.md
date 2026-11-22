@@ -1092,3 +1092,6 @@ Na caixa do Offline, "Férias, retorno em" com data: toda mensagem nova em conve
 
 ## F680 · Casos no celular sem Escritório e Tudo (21.11.2026)
 No celular, Casos mostra apenas os botões INSS, CRPS e Judicial; o toque em Casos volta aos andamentos do Escritório.
+
+## F681 · Campo de escrever do WhatsApp no celular (22.11.2026)
+No celular, dentro do campo ficam apenas emoji e anexo; Ditar, Corrigir, Sugerir e Aprofundar passam ao botão +. O campo cresce até duas linhas e rola depois. Computador inalterado.
