@@ -1,4 +1,4 @@
--- Regressão da F678 (modo férias no WhatsApp).
+-- Regressão da F679 (modo férias no WhatsApp).
 -- ⚠ Este arquivo APAGA conversas: banco de teste só.
 --   psql "postgres://…" -q -f crm/fase2/testes/zap_ferias.sql
 

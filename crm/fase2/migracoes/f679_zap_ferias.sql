@@ -1,4 +1,4 @@
--- F678 · modo férias no WhatsApp (pedido do Paulo de 21.11.2026).
+-- F679 · modo férias no WhatsApp (pedido do Paulo de 21.11.2026).
 -- Offline com data de retorno (colaboradores.zap_ferias_ate): toda mensagem nova em conversa atribuída ao titular
 -- recebe uma vez a mensagem editável do Offline ({fim} vira a data) e abre a cobertura do substituto
 -- (zap_cobre_id) já na primeira mensagem, e não na segunda. Golpe e pedido de agendamento seguem primeiro com a IA.
@@ -22,7 +22,7 @@ begin
    where z.id = new.conversa_id and z.status <> 'resolvida';
   if c.id is null or c.zap_offline_desde is null or coalesce(c.automatica, false) then return new; end if;
   -- F577: a equipe escreveu depois do Offline ou na última hora: a conversa está em curso
-  -- F678 · nas férias a mensagem do titular não interrompe o repasse
+  -- F679 · nas férias a mensagem do titular não interrompe o repasse
   if c.zap_ferias_ate is null and zap_equipe_escreveu(c.id, now() - make_interval(mins => coalesce(nullif((select valor from config_app where chave = 'zap_offline_min'), '')::int, 15))) is not null then
     return new;
   end if;
@@ -68,15 +68,15 @@ begin
     insert into mencoes (de_id, para_id, conversa_id, cliente_id, texto)
     values (c.kid, v_sub.id, c.id, c.cliente_id,
             'Cobertura do WhatsApp: ' || c.nome || ' está offline e o cliente escreveu de novo. Responda sem assumir.');
-    if c.zap_ferias_ate is not null then return new; end if;  -- F678 · nas férias o aviso de férias já foi enviado
+    if c.zap_ferias_ate is not null then return new; end if;  -- F679 · nas férias o aviso de férias já foi enviado
     insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
     values (c.id, 'saida', true, 'Encaminhei a sua mensagem à equipe jurídica, que responderá em breve.', 'fila');
     return new;
   end if;
-  -- F678 · conversa marcada "sem cobertura" (pessoa que não é cliente) fica fora das férias: sem aviso e sem repasse
+  -- F679 · conversa marcada "sem cobertura" (pessoa que não é cliente) fica fora das férias: sem aviso e sem repasse
   if c.zap_ferias_ate is not null and coalesce(c.sem_cobertura, false) then return new; end if;
   v_txt := coalesce(nullif(trim(c.zap_offline_msg), ''), zap_offline_padrao(c.nome));
-  -- F678 · {fim} vira a data de retorno
+  -- F679 · {fim} vira a data de retorno
   if c.zap_ferias_ate is not null then
     v_txt := replace(v_txt, '{fim}', to_char(c.zap_ferias_ate at time zone 'America/Sao_Paulo', 'DD/MM'));
   end if;
@@ -85,7 +85,7 @@ begin
   insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
   values (c.id, 'saida', true, v_txt, 'fila');
   update zap_conversas set offline_aviso_em = now() where id = c.id;
-  -- F678 · nas férias a cobertura abre já na primeira mensagem, sem o recado de encaminhamento
+  -- F679 · nas férias a cobertura abre já na primeira mensagem, sem o recado de encaminhamento
   if c.zap_ferias_ate is not null and coalesce((select valor from config_app where chave = 'zap_cobertura'), 'nao') = 'sim'
      and c.zap_cobre_id is not null and not coalesce(c.sem_cobertura, false) and not zap_conf_agradece(new.tipo, new.texto) then
     select id, nome into v_sub from colaboradores

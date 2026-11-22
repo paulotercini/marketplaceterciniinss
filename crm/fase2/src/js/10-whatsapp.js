@@ -781,7 +781,7 @@ function foneZapNovo(t){
 const offlinePadrao = () => `Olá! ${(eu.nome||"").trim().split(" ")[0]||"Quem atende você"} está fora do atendimento no momento e responderá a sua mensagem assim que retornar.`;
 const feriasPadrao = () => `Olá! Neste período o ${(eu.assinatura_zap||eu.nome||"").replace(/:$/,"")} não acompanhará as mensagens do WhatsApp. Por isso, a sua mensagem está sendo repassada à Dra. Amanda Garcez, que dará andamento ao seu atendimento.`;
 async function gravarEstadoZap(off, msg, ferias){
-  // F678 · férias: Offline com data de retorno; a substituta recebe a conversa já na primeira mensagem
+  // F679 · férias: Offline com data de retorno; a substituta recebe a conversa já na primeira mensagem
   if(off && ferias === "") return aviso("Informe a data de retorno das férias");
   const ate = off && ferias ? new Date(ferias + "T08:00:00-03:00").toISOString() : null;
   try{ await api(`/rest/v1/rpc/${ate?"zap_minhas_ferias":"zap_meu_offline"}`,{method:"POST",
@@ -812,7 +812,7 @@ function estadoZap(){
   const txt = () => document.getElementById("zof-msg").value.trim();
   const b = id => document.getElementById(id);
   const fer = () => b("zof-fer").checked ? b("zof-ate").value : null;
-  // F678 · o cliente não lê "férias": apenas que a mensagem vai à substituta
+  // F679 · o cliente não lê "férias": apenas que a mensagem vai à substituta
   b("zof-fer").onchange = () => { if(b("zof-fer").checked && txt() === offlinePadrao()) b("zof-msg").value = feriasPadrao(); };
   if(b("zof-on")) b("zof-on").onclick = () => gravarEstadoZap(false, txt());
   if(b("zof-sal")) b("zof-sal").onclick = () => gravarEstadoZap(true, txt(), fer());
