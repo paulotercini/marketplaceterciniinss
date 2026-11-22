@@ -29,6 +29,12 @@ concurrency:
 
 jobs:
   tela:
+    # três máquinas dividem as provas: a suíte de ~9 min cai para ~3
+    strategy:
+      fail-fast: false
+      matrix:
+        fatia: [1, 2, 3]
+    name: tela (${{ matrix.fatia }}/3)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -70,6 +76,8 @@ jobs:
       # o corredor copia crm/fase2/app.html para cá antes de começar: a
       # suíte fala sempre do app deste commit
       - name: Rodar as provas
+        env:
+          FATIA: ${{ matrix.fatia }}/3
         run: node rodar.js
 
       # falhou? as capturas contam a história melhor que o log
@@ -77,7 +85,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: capturas-da-falha
+          name: capturas-da-falha-${{ matrix.fatia }}
           path: crm/fase2/testes/cadastro/*.png
           retention-days: 7
           if-no-files-found: ignore

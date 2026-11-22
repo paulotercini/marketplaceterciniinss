@@ -45,7 +45,9 @@ function provas() {
   return fs.readdirSync(AQUI)
     .filter(f => f.endsWith(".js") && !NAO_SAO_PROVAS.has(f))
     .filter(f => !filtros.length || filtros.some(q => f.includes(q)))
-    .sort();
+    .sort()
+    // FATIA=i/n: a CI divide a suíte em n máquinas; cada uma roda as provas de índice ≡ i-1 (mod n)
+    .filter((f, i) => { const m = /^(\d+)\/(\d+)$/.exec(process.env.FATIA || ""); return !m || i % +m[2] === +m[1] - 1; });
 }
 
 function rodar(arquivo) {

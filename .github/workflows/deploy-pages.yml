@@ -54,26 +54,9 @@ jobs:
           fi
           echo "idêntico ($(wc -c < docs/crm/index.html) bytes)"
 
-      - name: Cache do navegador
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: pw-${{ runner.os }}-${{ hashFiles('crm/fase2/testes/cadastro/package.json') }}
-      - name: Suíte de tela (59 provas)
-        working-directory: crm/fase2/testes/cadastro
-        run: |
-          npm install --no-audit --no-fund
-          npx playwright install --with-deps chromium chromium-headless-shell
-          node rodar.js
-
-      - name: Guardar as capturas
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: capturas-da-falha
-          path: crm/fase2/testes/cadastro/*.png
-          retention-days: 7
-          if-no-files-found: ignore
+      # A suíte de tela (59 provas, ~9 min) já decidiu o merge no PR e roda de
+      # novo na main pelo testes-tela.yml, em paralelo a este deploy. Repeti-la
+      # aqui atrasava toda publicação em 9 minutos sem proteger nada a mais.
 
   deploy:
     needs: conferir
