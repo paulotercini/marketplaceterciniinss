@@ -1089,3 +1089,6 @@ No celular as abas do cliente são Casos, Cadastro, Prazos, Perícias e Honorár
 - Grava uma anotação por caso (origem `zap_resumo`, selo "Resumo automático do WhatsApp (dd/mm)"), que qualquer pessoa da equipe edita ou apaga. A sugestão por mensagem (`zap_anotacao_ligada`) foi desligada; `zap_resumo_ligado` liga e desliga o resumo.
 ## F679 · Modo férias no WhatsApp (22.11.2026)
 Na caixa do Offline, "Férias, retorno em" com data: toda mensagem nova em conversa atribuída ao titular recebe uma vez a mensagem editável ({fim} vira a data) e abre a cobertura do substituto (zap_cobre_id) já na primeira mensagem. Golpe e pedido de agendamento seguem primeiro com a IA. A mensagem do titular nas férias não interrompe o repasse. Na data, zap_ferias_fim (cron a cada 15 min) volta o titular ao Online e encerra as coberturas com nota interna. Migração f679_zap_ferias.sql; teste testes/zap_ferias.sql.
+
+## F680 · Casos no celular sem Escritório e Tudo (21.11.2026)
+No celular, Casos mostra apenas os botões INSS, CRPS e Judicial; o toque em Casos volta aos andamentos do Escritório.

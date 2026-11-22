@@ -3741,6 +3741,9 @@ html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-2col{display:flex;flex-direction:column}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-2col > .caso-dir{display:contents}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{order:-1;margin-top:0}
+/* F680 · sem Escritório e Tudo no celular (pedido do Paulo, 21.11.2026); o toque em Casos volta ao Escritório */
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .menu-andamentos > button:is(:first-child,:last-child){display:none}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .menu-andamentos:not(:has(> button:not(:first-child):not(:last-child))){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-cad="principal"] .painel[data-p="0"] > :not(.cel-principal){display:none!important}
 html[data-tema="v10"] .app.celular [data-cel-cad="mais"] .cel-principal > :not(.cel-cad-seg){display:none}
 html[data-tema="v10"] .app.celular .cel-principal{padding:12px 0 4px}

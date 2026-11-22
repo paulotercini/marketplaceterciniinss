@@ -134,10 +134,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const and = await m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
   // F330 · sem andamento nem número, INSS, CRPS e Judicial não aparecem; o número da gestão do caso os faz nascer
   const abasAnd = () => m.$$eval(".caso-dir .menu-andamentos button", a => a.filter(b => b.offsetParent).map(b => b.textContent.trim().replace(/\s*\d+$/, "")));
-  conf(`F677 · em Casos, os botões dos andamentos no lugar da linha do tempo (${and.join(", ")})`, and[0] === "Escritório" && !(await vis(m, ".tr-faixa")));
+  conf(`F680 · sem número, Casos não mostra botões (Escritório e Tudo saíram) (${and.join(", ")})`, !and.length && !(await vis(m, ".tr-faixa")));
   await m.evaluate(kid => { D.casoPorId.get(kid).nb = "2161976766"; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   const and2 = await abasAnd();
-  conf(`com o NB, nasce o botão INSS (${and2.join(", ")})`, and2.includes("INSS"));
+  conf(`com o NB, só o botão INSS (${and2.join(", ")})`, and2.join() === "INSS");
   await m.evaluate(kid => { const k = D.casoPorId.get(kid); k.nb = null; k.protocolos = ["123456789"]; k.crps_nups = ["44236386953202361"]; k.processos = [{ numero: "5000001-02.2024.4.03.6136", nosso: true }]; repintarFicha(); }, kA.id); await m.waitForTimeout(300);
   const and3 = await abasAnd();
   conf(`com protocolo, e-Sisrec e CNJ, INSS, CRPS e Judicial (${and3.join(", ")})`, ["INSS", "CRPS", "Judicial"].every(x => and3.includes(x)));

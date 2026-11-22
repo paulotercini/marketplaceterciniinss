@@ -96,7 +96,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // F299 · a trilha e a placa do caso fechadas até o toque
   const vis = sel => p.$$eval(sel, a => a.some(e => e.offsetParent));
   await p.evaluate(() => celIr("caso")); await p.waitForTimeout(400);   // F320 · as etapas e a placa moram na aba Caso
-  conf("F677 · em Casos, os botões dos andamentos no lugar da trilha das etapas", !(await vis(".tr-recolhida .tr-alca")) && (await vis(".caso-dir .menu-andamentos button")));
+  conf("F677 · em Casos, os botões dos andamentos no lugar da trilha das etapas", !(await vis(".tr-recolhida .tr-alca")));
   conf("F504 · as datas do caso à vista e os números fechados", (await vis(".linha-caso .lc-placa")) && !(await vis(".linha-caso .lc-numeros")));
   { const pq = await PEQ(); conf("na ficha, nenhum alvo de toque abaixo de 24 px", !pq.length) || console.log(JSON.stringify(pq)); }
   // F307 · os flutuantes numa coluna só: agenda, ✎ e ⚡ no mesmo eixo, 8 px entre eles, e o "?" na altura do ✎
