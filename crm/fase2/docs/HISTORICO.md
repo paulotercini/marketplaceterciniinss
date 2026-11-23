@@ -1109,3 +1109,6 @@ Pedido do Paulo: no quadro do caso, a DER subia sobre o rótulo Protocolo (o val
 
 ## F687 · Lista do WhatsApp não volta ao topo no celular (23.11.2026)
 Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao topo sozinha. A lista se repinta a cada 6 s e, no celular, quem rola é a coluna `.meio` (a restauração guardava só a `.zl-lista`). Agora `pintarListaZap` não troca o DOM quando nada mudou e guarda e devolve a rolagem da `.meio`. Prova: `testes/cadastro/zaprolagem.js` (390 px). v14.31.
+
+## F688 · Aviso de férias não interrompe atendimento de colega (23.11.2026)
+- `zap_offline_gatilho` (migração f688): nas férias, conversa em que outro colaborador escreveu nas últimas 12 horas não recebe o aviso, não abre repasse e não chama a IA pelo Offline (a IA respondia ao pedido de dia e horário depois de a Dra. Amanda escrever). Teste f12 em testes/zap_ferias.sql.

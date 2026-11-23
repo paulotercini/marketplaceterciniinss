@@ -65,6 +65,15 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 't
 insert into r select 'f11 aviso sem o cabeçalho do titular',
   exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v) and texto not like '*%');
 
+-- F688 · outro colaborador atendeu há 4 minutos: sem aviso
+delete from v; insert into v select zap_abrir('5500000000015', 'Cliente Teste');
+update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);
+insert into zap_mensagens (conversa_id, direcao, texto, autor_id, criado_em)
+  select id, 'saida', 'Pode trazer os documentos.', '55555555-5555-5555-5555-555555555555', now() - interval '4 minutes' from v;
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'Amanhã depois do meio dia então' from v;
+insert into r select 'f12 colega atendendo: sem aviso',
+  not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
+
 -- retorno automático
 update colaboradores set zap_ferias_ate = now() - interval '1 minute' where inicial = 'X';
 select zap_ferias_fim();
