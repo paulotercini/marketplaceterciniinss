@@ -407,10 +407,12 @@ function renderRecebimentos(){
     </div>`; };
   const casosPag = D.casos.filter(k=>k.fase==="pagamento" && !ab.some(p=>casoDoPgto(p)===k.id));
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="rc-tot"><span>Vencido: <b class="venc">${moeda(soma(venc))}</b> (${venc.length})</span><span>A vencer: <b>${moeda(soma(prox))}</b> (${prox.length})</span>
-      <span>Sem data: ${semData.length}</span>${conferir.length?`<span>Valor a conferir, fora dos totais: ${conferir.length}</span>`:""}</div>`
-    + `<h3 class="secao" style="color:var(--venc-tinta,#B3261E)">Vencidos (${venc.length})</h3>${venc.map(linha).join("") || "<p class='meio-sub'>Nada vencido.</p>"}`
-    + `<h3 class="secao">A vencer (${prox.length})</h3>${prox.map(linha).join("") || "<p class='meio-sub'>Nada a vencer com data.</p>"}`
+    // F684 · três números lado a lado; vermelho só quando há vencido; sem nada lançado, uma frase só
+    `<div class="rc-tot"><span><small>Vencido (${venc.length})</small><b${venc.length?' class="venc"':""}>${moeda(soma(venc))}</b></span><span><small>A vencer (${prox.length})</small><b>${moeda(soma(prox))}</b></span>
+      <span><small>Sem data</small><b>${semData.length}</b></span>${conferir.length?`<span><small>Valor a conferir, fora dos totais</small><b>${conferir.length}</b></span>`:""}</div>`
+    + (!venc.length && !prox.length && !semData.length && !conferir.length ? "<p class='meio-sub rc-vazio'>Nenhum honorário a receber. As parcelas aparecem aqui quando forem lançadas na aba Honorários do cliente.</p>"
+      : (venc.length ? `<h3 class="secao" style="color:var(--venc-tinta,#B3261E)">Vencidos (${venc.length})</h3>${venc.map(linha).join("")}` : "")
+      + `<h3 class="secao">A vencer${prox.length?` (${prox.length})`:""}</h3>${prox.map(linha).join("") || "<p class='meio-sub'>Nada a vencer com data.</p>"}`)
     + (semData.length ? `<details class="rc-grupo"><summary class="secao">Sem data de vencimento (${semData.length})</summary>${semData.slice(0,LIM).map(linha).join("")}${semData.length>LIM?`<p class="meio-sub">e mais ${semData.length-LIM}: veja na aba Honorários de cada cliente.</p>`:""}</details>` : "")
     + (conferir.length ? `<details class="rc-grupo"><summary class="secao">Valor a conferir (${conferir.length})</summary><p class="meio-sub">Valor acima de ${moeda(HON_VALOR_ABSURDO)} ou igual a um número do cliente (processo, benefício, protocolo): quase sempre leitura errada do To Do. Fica fora dos totais até alguém conferir.</p>${conferir.map(linha).join("")}</details>` : "")
     + (casosPag.length ? `<h3 class="secao">Em Pagamentos, sem nada lançado (${casosPag.length})</h3>${grupoClientes(casosPag).map(([c,ks])=>cartaoCliente(c,ks)).join("")}` : "");

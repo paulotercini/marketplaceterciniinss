@@ -30,7 +30,7 @@ function renderQuadro(){
   const lim = (modo==="etapa"||modo==="responsavel") ? quadroLim() : 0, atr = {fase:"fase", etapa:"etapa", responsavel:"colab"}[modo];
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="kanban">`+colunasDoQuadro(modo).map(([id,rot,ks])=>
-      `<div class="coluna${lim && ks.length>lim?" acima":""}" ${atr?`data-${atr}="${esc(id)}"`:""}><h4>${esc(rot)}<span${lim && ks.length>lim?` title="acima do limite de ${lim}"`:""}>${ks.length}</span></h4>
+      `<div class="coluna${lim && ks.length>lim?" acima":""}" ${atr?`data-${atr}="${esc(id)}"`:""}><h4>${esc(semEmoji(rot))}<span${lim && ks.length>lim?` title="acima do limite de ${lim}"`:""}>${ks.length}</span></h4>
         ${ks.slice(0,60).map(kcardCaso).join("")}
         ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`).join("")+`</div>`;
   document.querySelectorAll("[data-agrupar]").forEach(b=>b.onclick=()=>{ guardar("crm_quadro_agrupar", b.dataset.agrupar); renderQuadro(); });
@@ -761,7 +761,7 @@ function renderQuadroN(n){
   let html = chipsQuadro();
   if(n===1){
     html += `<div class="kanban kq">`+hz.map(([id,rot,f])=>{ const g=ps.filter(p=>f(p.data));
-      return `<div class="coluna" data-hz="${id}"><h4>${rot}<span>${g.length}</span></h4>${g.map(kcardProv).join("")}</div>`; }).join("")+`</div>`;
+      return `<div class="coluna" data-hz="${id}"><h4>${semEmoji(rot)}<span>${g.length}</span></h4>${g.map(kcardProv).join("")}</div>`; }).join("")+`</div>`;
   } else if(n===2){
     const cols = [...eq, {id:null, nome:"Sem dono", inicial:"—", cor:"#9AA0B0"}].filter(c=>!quadroColab || c.id===quadroColab);
     const de = (c, g) => g.filter(p=> c.id ? p.donos.includes(c.id) : !p.donos.length);
@@ -776,7 +776,7 @@ function renderQuadroN(n){
       const faixas = [...eq.filter(c=>!quadroColab || c.id===quadroColab).map(c=>[c, g.filter(p=>p.donos.includes(c.id))]),
                       [{nome:"Sem dono", inicial:"—", cor:"#9AA0B0"}, quadroColab?[]:g.filter(p=>!p.donos.length)]]
         .filter(([,x])=>x.length);
-      return `<div class="coluna" data-hz="${id}"><h4>${rot}<span>${g.length}</span></h4>`
+      return `<div class="coluna" data-hz="${id}"><h4>${semEmoji(rot)}<span>${g.length}</span></h4>`
         + faixas.map(([c,x])=>`<div class="faixa"><span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome.split(" ")[0])} <span class="meio-sub">${x.length}</span></div>${x.map(kcardProv).join("")}`).join("")
         + `</div>`; }).join("")+`</div>`;
   }
@@ -817,7 +817,7 @@ function renderVendas(){
     ${taxa!=null?`<div class="meio-sub">Conversão até hoje: <b>${taxa}%</b> (${fech} fechados, ${perd} perdidos)</div>`:""}
     <div class="kanban">`+ETAPAS.map(([e,rot])=>{
       const ls=D.leads.filter(l=>l.etapa===e);
-      return `<div class="coluna" data-etapa="${e}"><h4>${rot}<span>${ls.length}</span></h4>
+      return `<div class="coluna" data-etapa="${e}"><h4>${semEmoji(rot)}<span>${ls.length}</span></h4>
         ${ls.slice(0,40).map(l=>`<div class="kcard" draggable="true" data-lead="${l.id}">
           <div class="nome">${esc(l.nome)}</div>
           <div class="meta">${l.beneficio_interesse?`<span class="chip ben">${esc(l.beneficio_interesse)}</span>`:""}
@@ -995,7 +995,7 @@ async function atualizarEstadoZap(){
   rs.forEach(r=>(D.config=D.config||new Map()).set(r.chave, r.valor));
   if(document.getElementById("zx-painel")) pintarConexaoZap();
 }
-const zapComProblema = () => estadoPonte().txt!=="ponte ligada";
+const zapComProblema = () => estadoPonte().txt!=="WhatsApp conectado";
 
 // F185 · Corrigir a conexão de dentro do CRM. O CRM não fala com o WhatsApp:
 // grava o pedido em zap_comando e a ponte (que lê a cada 10 s) obedece.
@@ -1016,7 +1016,7 @@ function pintarConexaoZap(){
   if(el.dataset.chave===chave) return;
   el.dataset.chave = chave;
   el.innerHTML = `<h3>Conexão do WhatsApp</h3>
-    <p class="zx-estado"><i style="background:${p.cor}"></i><b>${esc(p.txt==="ponte ligada"?"Conectado":p.txt)}</b>
+    <p class="zx-estado"><i style="background:${p.cor}"></i><b>${esc(p.txt==="WhatsApp conectado"?"Conectado":p.txt)}</b>
       ${visto?`<span class="meio-sub">· sinal de vida ${diaZap(visto)} às ${horaSP(visto)}</span>`:""}</p>
     ${morta?`<div class="zx-aviso">A ponte não dá sinal há mais de 2 minutos. Ela roda no computador do escritório:
         confira se ele está ligado e com internet. Quando o computador volta, a ponte volta sozinha.
@@ -1060,10 +1060,10 @@ function estadoPonte(){
   // 2 minutos sem bater ponto: a ponte morreu, e é melhor dizer isso do que
   // deixar todo mundo achando que ninguém escreveu hoje
   const morta = !visto || (Date.now() - new Date(visto).getTime() > 120000);
-  if(st==="ligado" && !morta) return {cor:"#0a7d43", txt:"ponte ligada"};
+  if(st==="ligado" && !morta) return {cor:"#0a7d43", txt:"WhatsApp conectado"};
   if(st.includes("QR")) return {cor:"#b06000", txt:"esperando leitura do QR"};
-  if(!st) return {cor:"var(--cinza)", txt:"ponte nunca subiu"};
-  return {cor:"#b00020", txt: morta ? "ponte sem sinal" : st};
+  if(!st) return {cor:"#b00020", txt:"WhatsApp desconectado"}   // F684 · vermelho e sem jargão: ao lado do "Online" o cinza parecia estar tudo bem;
+  return {cor:"#b00020", txt: morta ? "WhatsApp sem sinal" : st};
 }
 
 // Ícones desenhados da tela (traço, como os do menu lateral): emoji em botão

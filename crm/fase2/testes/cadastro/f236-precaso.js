@@ -278,7 +278,7 @@ const cli = c => T.clientes.find(x => x.id === c);
   conf("sem pré-caso, o benefício em análise é o do caso (B32)", await p.evaluate(j => JSON.stringify(benefSel(D.cliPorId.get(j))) === '{"incapacidade":["b32"]}', J));
   await p.evaluate(() => { abaAtiva = 0; irSubCad("identificacao"); });
   await p.waitForTimeout(300);
-  conf("a Identificação diz quantas lacunas a peça tem", /Cadastro 10% completo · 9 lacunas nas peças/.test(await texto(".idf-comp")));
+  conf("a Identificação diz quantas lacunas a peça tem", /Cadastro 10% completo · faltam 9 dados para as peças/.test(await texto(".idf-comp")));
 
   conf("o caso avisa que a petição inicial traz os dados do cadastro", /a petição inicial traz os dados/.test(oa));
   const qual = await texto(".pa-nome-dif");

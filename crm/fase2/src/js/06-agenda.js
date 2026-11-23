@@ -926,7 +926,7 @@ function renderAgendaV10(qual){
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
   const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
-  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Prazo</span></div>` : "")
+  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Tipo</span><span>Prazo</span></div>` : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")

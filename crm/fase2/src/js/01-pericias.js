@@ -312,7 +312,8 @@ const dataQueCobra = ks => ks.map(k=>(agendaPorCaso().get(k.id)||{}).data || k.p
 function chipPrazo(prazo, motivo){
   if(!prazo) return "";
   const cls = prazo<hoje() ? "venc" : prazo===hoje() ? "hoje" : "ok";
-  return `<span class="chip prazo ${cls}"${motivo?` title="${esc(motivo)}"`:""}>🗓 ${prazo===hoje()?"Hoje":fmt(prazo)}</span>`;
+  // F684 · data curta, como nas listas (o ano só quando não é o corrente) e sem o emoji, que virava quadradinho
+  return `<span class="chip prazo ${cls}" title="${esc(motivo||fmt(prazo))}">${prazo===hoje()?"Hoje":prazo.slice(8,10)+"/"+prazo.slice(5,7)+(prazo.slice(0,4)===hoje().slice(0,4)?"":"/"+prazo.slice(2,4))}</span>`;
 }
 function diasAte(iso){ return Math.ceil((new Date(iso+"T12:00:00")-new Date(hoje()+"T12:00:00"))/864e5); }
 function chipExig(k){

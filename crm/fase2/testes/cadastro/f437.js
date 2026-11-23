@@ -76,7 +76,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
       lista: (document.querySelector("#conteudo-meio .ag-linha .ag-c-lista") || {}).offsetWidth }; });
   conf(`F444: data e ⭐ na mesma coluna em ${col.n} linhas (${col.data}, ${col.est})`, col.n > 2 && col.data === 1 && col.est === 1);
   conf(`F444: a ⭐ à vista sem o mouse (${col.op})`, col.op === "1");
-  conf(`F444: cabeçalho Cliente, Lista, Etapa, Prazo e coluna da lista (${col.th})`, col.th === "Cliente,Lista,Etapa,Prazo" && col.lista > 0);
+  conf(`F444: cabeçalho Cliente, Lista, Etapa, Tipo, Prazo e coluna da lista (${col.th})`, col.th === "Cliente,Lista,Etapa,Tipo,Prazo" && col.lista > 0);
   if (process.env.SHOT) await p.screenshot({ path: process.env.SHOT });
   await ab();
   const menu = await p.evaluate(() => [...document.querySelectorAll("#lista-opc .lo-ln > span")].map(e => e.textContent));

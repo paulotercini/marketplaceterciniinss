@@ -96,7 +96,7 @@ const SUPA = "https://ficticio.supabase.co";
     return cx ? { txt: cx.innerText.replace(/\n/g, " "), tracejado: getComputedStyle(bt || cx).borderStyle,
                   clicavel: getComputedStyle(cx).cursor } : null;
   });
-  conf("F180 · sem senha: convida a cadastrar", vazia && /cadastrar/.test(vazia.txt));
+  conf("F180 · sem senha: convida a preencher", vazia && /preencher/.test(vazia.txt));
   conf("F180 · sem senha: botão tracejado", vazia && vazia.tracejado === "dashed");
   conf("sem senha: cartão clicável", vazia && vazia.clicavel === "pointer");
   await p.evaluate(() => {
