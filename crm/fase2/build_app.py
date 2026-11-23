@@ -111,6 +111,11 @@ if __name__ == "__main__":
         for f in (APP, PUB):
             if f.read_bytes() != dados:
                 sys.exit(f"{f.relative_to(RAIZ)} difere de crm/fase2/src/. Edite em src/ e rode: python3 crm/fase2/build_app.py")
+        # nome global repetido sobrescreve o anterior sem aviso
+        nomes = re.findall(rb"^(?:async )?function ([A-Za-z0-9_$]+)", dados, re.M)
+        rep = sorted({n.decode() for n in nomes if nomes.count(n) > 1})
+        if rep:
+            sys.exit("função global duplicada: " + ", ".join(rep))
         print("ok: app.html idêntico à montagem de src/")
         sys.exit(0)
     if arg not in ("", "--dividir", "--absorver"):
