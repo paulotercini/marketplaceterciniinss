@@ -97,7 +97,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf(`a espécie fica no cabeçalho (${v.esp})`, v.esp === "B41");
   conf("o Concluir mora no ⋯ e não fica à vista", v.concluirNoMenu && !v.concluirFora);
   conf("sem botão de copiar: o toque no número copia", !v.copiar);
-  conf(`a DER na fonte do CRM e o NB na de código (${v.derFonte.split(",")[0]} · ${v.nbFonte.split(",")[0]})`, /Plex Sans|system|sans/i.test(v.derFonte) && /Mono|mono/i.test(v.nbFonte));
+  conf(`F685: DER e NB na fonte do CRM (${v.derFonte.split(",")[0]} · ${v.nbFonte.split(",")[0]})`, /Plex Sans|system|sans/i.test(v.derFonte) && /Plex Sans|system|sans/i.test(v.nbFonte));
   conf(`o pé diz Números do caso e gestão e a tramitação fica nele (${v.pe})`, v.pe === "Números do caso e gestão" && !v.tramFora);
   conf(`nenhum valor da grade passa da borda (${v.sobra})`, !v.sobra);
   await p.screenshot({ path: OUT + "/1-judicial.png" });

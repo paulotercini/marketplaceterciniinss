@@ -4320,6 +4320,11 @@ html[data-tema="v10"] .app:not(.celular) .det-topo .linha2,html[data-tema="v10"]
 /* 13 · celular: INSS, CRPS e Judicial no mesmo controle segmentado de Principal e Mais dados (as cores das abas ficam) */
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{gap:2px;padding:3px;background:var(--placa);border:0;border-radius:10px}
 html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos > button{border-radius:7px}
+/* F685 · quadro do caso: DER, NB e Protocolo na fonte do CRM, sem negrito, e sem o valor encolher a zero (flex:1 1 0 na coluna fazia a DER subir sobre o rótulo de baixo) */
+html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f > *{flex:none}
+html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:var(--f-ui);font-weight:400;font-variant-numeric:tabular-nums;color:var(--texto)}
+/* F685 · "Ver anotações anteriores" do painel lateral como link, igual ao da linha estendida (saía como botão cru) */
+#pcli .ae-mais{display:block;margin:4px 0 0;background:none;border:0;padding:0;color:var(--azul);font:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline}
 </style>
 </head>
 

@@ -1225,6 +1225,8 @@ let _pcli = null;   // {el, cliId, casos, sel}
 // no navegador automatizado as provas antigas esperam a linha estendida; o painel liga com crm_painel_cli = 1
 const pcliLigado = () => !navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_painel_cli")==="1"; }catch(e){ return false; } })();
 function abrirPainelCli(el){
+  // F685 · o painel não abre sobre a ficha de outro cliente: a ficha aberta fecha e a lista volta à largura inteira
+  if(clienteAberto) fecharFicha(false);
   fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
   _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};
   pcliMontar();
