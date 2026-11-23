@@ -1109,3 +1109,6 @@ Pedido do Paulo: no quadro do caso, a DER subia sobre o rótulo Protocolo (o val
 
 ## F686 · Correções da vistoria de botões (23.11.2026)
 Pedido do Paulo após a vistoria com Playwright (relatório em project-files/vistoria-botoes-2311). O lápis da DER no cartão do caso não abria (faltava o contêiner lc-der); Apagadas ganha Restaurar para o autor (volta texto e data, sem as tarefas); o Desfazer passa de 8 s a 30 s. Prova: testes/cadastro/f686.js.
+
+## F687 · Ícones, voltar entre fichas, Ações de hoje e atalho C (23.11.2026)
+Pedido do Paulo após a vistoria: na anotação, ＋ tarefa, ⧉ copiar, ✎ editar e 🗑 apagar saem do ⋯ e viram ícones; o ⋯ do caso mostra só ícones (✦ ✔ ⏸ ⚖ 🔔 ↺ 📌), a palavra no title. Ficha aberta de outra ficha ganha ‹ voltar (pilha limpa ao fechar). Cada ação com Desfazer fica em "Ações de hoje" no menu da conta, desfazível até recarregar. Atalho C abre o cliente novo; "Atalhos do teclado" no menu da conta. Prova: testes/cadastro/f687.js; f190 e f544 atualizados.

@@ -97,7 +97,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
 
   await abrir(c1);
   conf("a anotação própria tem Editar; a da Amanda não", await botao(nN.id) && !(await botao(nO.id)), 10);
-  conf("o botão diz uma palavra", await p.evaluate(x => document.querySelector(`[onclick="editarAndamento('${x}')"]`).firstChild.textContent.trim(), nN.id) === "Editar", 5);
+  conf("o botão é o ícone ✎ com a palavra no title (F687)", await p.evaluate(x => { const b = document.querySelector(`[onclick="editarAndamento('${x}')"]`); return b.textContent.trim() + "|" + b.getAttribute("aria-label"); }, nN.id) === "✎|Editar este comentário", 5);
 
   const v1 = await editar(nN.id, "Telefonei para a cliente e combinei a entrega na sexta.");
   const a1 = T().andamentos.find(x => x.id === nN.id);

@@ -327,6 +327,11 @@ function preCarregarFicha(cliId){
   // não guarda mais que 6: quem passa o mouse pela lista inteira não enche a memória
   if(preFicha.size>6) preFicha.delete(preFicha.keys().next().value);
 }
+var _fichasAnteriores = [], _voltandoFicha = false;
+async function voltarFicha(){
+  const id = _fichasAnteriores.pop(); if(!id) return fecharFicha();
+  _voltandoFicha = true; try{ await abrirFicha(id); } finally{ _voltandoFicha = false; }
+}
 async function abrirFicha(cliId){
   if(_pcli) fecharPainelCli();   // F685 · ficha e painel lateral não ficam abertos juntos
   // F262 · a conversa ao lado acompanha a ficha nas abas (INSS, Conselho, Judicial); trocar de CLIENTE fecha a do anterior
@@ -334,6 +339,8 @@ async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
   const trocouCliente = clienteAberto !== cliId;
+  // F687 · de ficha em ficha: guarda a anterior para o ‹ voltar da ficha
+  if(trocouCliente && clienteAberto && !_voltandoFicha) _fichasAnteriores.push(clienteAberto);
   if(trocouCliente){
     casoSel = "__auto__";
     mesaAberta.clear(); // F55 · ficha nova, mesa arrumada de novo
@@ -560,7 +567,7 @@ function pintarFicha(){
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
       <span class="det-canto">${temaV10() && !celular() ? "" : `${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}`}
       ${chipAgendaCliente(c)}
-      <button class="fechar nao-cel" onclick="fecharFicha()" title="fechar a ficha" aria-label="fechar a ficha">✕</button></span></div>
+      ${_fichasAnteriores.length ? `<button class="fechar nao-cel" onclick="voltarFicha()" title="voltar à ficha anterior" aria-label="voltar à ficha anterior">‹</button>` : ""}<button class="fechar nao-cel" onclick="fecharFicha()" title="fechar a ficha" aria-label="fechar a ficha">✕</button></span></div>
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
          Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
     ${temaV10() ? "" : `<div class="resumo">${resumoIn}</div>`}

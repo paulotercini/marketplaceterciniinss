@@ -306,12 +306,22 @@ function aviso(msg, som=true, naColeta=false){
 // Concluir em um clique só é seguro com volta. O To Do desfaz clicando de novo
 // no círculo; aqui a faixa fica trinta segundos com o botão (F686: eram oito, curtos na vistoria), e some sozinha.
 // Oito e não três: o tempo de perceber o engano é o tempo de ler o que mudou.
-let _desfazer = null, _desfazerTimer = null;
+let _desfazer = null, _desfazerTimer = null; var _acoesHoje = [];
+function verAcoesHoje(){
+  const hj = new Date().toDateString(), ls = _acoesHoje.filter(x=>x.em.toDateString()===hj);
+  caixa(`<h3 style="margin:0 0 8px">Ações de hoje</h3>${ls.length ? `<ul class="apagadas">${ls.map(x=>`<li class="apagada">
+    <span class="meio-sub">${x.em.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}</span> ${esc(x.msg)}
+    ${x.feita ? `<span class="meio-sub">· desfeita</span>` : `<button class="btn-mini" onclick="desfazerAcao(${_acoesHoje.indexOf(x)})">Desfazer</button>`}</li>`).join("")}</ul>`
+    : `<p class="meio-sub">Nenhuma ação com Desfazer nesta sessão.</p>`}`);
+}
+async function desfazerAcao(i){ const x = _acoesHoje[i]; if(!x || x.feita) return; x.feita = true; fecharCaixa(); await x.voltar(); }
 function avisoDesfazer(msg, voltar, ms = 30000){
   const el = document.getElementById("aviso");
   if(!el || typeof voltar !== "function") return aviso(msg, false);
   clearTimeout(_desfazerTimer);
   _desfazer = voltar;
+  // F687 · cada ação com Desfazer fica nas Ações de hoje (menu da conta) até recarregar a página
+  _acoesHoje.unshift({msg, voltar, em:new Date(), feita:false}); _acoesHoje.length = Math.min(_acoesHoje.length, 30);
   el.innerHTML = `${esc(msg)}<button class="aviso-bt" onclick="desfazerAgora()">desfazer</button>`;
   el.classList.add("on","com-bt"); el.style.pointerEvents = "auto";
   _desfazerTimer = setTimeout(esconderDesfazer, ms);
@@ -325,6 +335,7 @@ function esconderDesfazer(){
 async function desfazerAgora(){
   const f = _desfazer;
   esconderDesfazer();
+  const x = _acoesHoje.find(a=>a.voltar===f); if(x) x.feita = true;
   if(f) await f();
 }
 

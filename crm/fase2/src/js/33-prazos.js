@@ -824,7 +824,7 @@ function dataNatural(texto){
 
 function fecharFicha(rerender=true){
   { const d = document.getElementById("detalhe"); if(d) d.classList.remove("atend-tela"); }
-  clienteAberto=null; abaAtiva=2;
+  clienteAberto=null; abaAtiva=2; _fichasAnteriores.length = 0;
   // sem ficha, a conversa e o prazo ao lado não têm com o que conversar (o prazo aberto espremia o WhatsApp, teste 11.88, JUR-01)
   if(painelZapCli || painelPz) fecharPainelPrazo();
   menuFichaSessao=null;   // a exceção do ☰ morre com a ficha

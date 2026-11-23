@@ -533,13 +533,14 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
         <button class="tl-bt tl-bt-ic" title="ciente — um toque, sem texto" aria-label="ciente" onclick="reagir('${a.id}','${a.caso_id}')">${IC_SVG.ciente}</button>
         ${sinaisHtml(a)}
         ${/* F190 · o raro sai da vista: mais uma tarefa e apagar vão para o ⋯ */""}
+        ${/* F687 · tarefa, copiar, editar e apagar saem do ⋯ e viram ícones (pedido do Paulo, 23.11) */""}
+        <button class="tl-bt tl-bt-ic" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')" title="Mais uma tarefa neste comentário" aria-label="Mais uma tarefa neste comentário">＋</button>
+        <button class="tl-bt tl-bt-ic" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')" title="Copiar o texto" aria-label="Copiar o texto">⧉</button>
+        ${(a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-bt tl-bt-ic" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico" aria-label="Editar este comentário">✎</button>` : ""}
+        ${(a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo") ? `<button class="tl-bt tl-bt-ic perigo" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário" aria-label="Apagar este comentário">🗑</button>` : ""}
         ${menuMais([
-          `<button class="tl-mais-it" role="menuitem" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')" title="Mais uma tarefa neste comentário"><span aria-hidden="true">＋ Tarefa</span><span class="sr-only">Mais uma tarefa neste comentário</span></button>`,
-          `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')" title="Copiar o texto">Copiar<span class="sr-only"> o texto</span></button>`,
           itemLevarAndamento(a),
           pzE && pzE.resp ? `<button class="tl-mais-it" role="menuitem" onclick="desfazerCumprimento('${pzE.resp.id}')" title="Desfazer o registro do prazo">Desfazer<span class="sr-only"> o registro do prazo</span></button>` : "",
-          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
-          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo") ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>

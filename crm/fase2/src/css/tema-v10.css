@@ -4325,6 +4325,9 @@ html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f > *{flex:none}
 html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:var(--f-ui);font-weight:400;font-variant-numeric:tabular-nums;color:var(--texto)}
 /* F685 · "Ver anotações anteriores" do painel lateral como link, igual ao da linha estendida (saía como botão cru) */
 #pcli .ae-mais{display:block;margin:4px 0 0;background:none;border:0;padding:0;color:var(--azul);font:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline}
+/* F687 · menu ⋯ do caso: ícones em linha, a palavra fica no title */
+.lc-menu .tl-mais-menu{display:flex;flex-direction:row;flex-wrap:nowrap;gap:2px;min-width:0;padding:4px}
+.lc-menu .tl-mais-it{min-width:34px;justify-content:center;text-align:center;font-size:16px;padding:6px 8px}
 </style>
 </head>
 

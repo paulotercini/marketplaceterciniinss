@@ -1143,7 +1143,7 @@ function janelaAtalhos(){
     ["Espaço","concluir a sua tarefa daquele caso"],["N","escrever na linha de acrescentar"],
     ["/ ou Ctrl+F","ir para a pesquisa"],["Ctrl+K","paleta: listas, ações e clientes"],
     ["N","anotação rápida (com a ficha aberta, para este cliente)"],
-    ["G e D","ir ao Meu Dia"],["G e P","ir ao Planejado"],["Esc","fechar o que estiver aberto"],
+    ["C","cliente novo"],["G e D","ir ao Meu Dia"],["G e P","ir ao Planejado"],["Esc","fechar o que estiver aberto"],
     ["?","esta lista"]];
   caixa(`<h3>Atalhos de teclado</h3>
     <p class="meio-sub">As setas, Enter e Espaço valem na lista, com a ficha fechada. Dentro de um campo de texto
@@ -1164,6 +1164,7 @@ function atalhoGeral(e){
   if(_gEm && Date.now()-_gEm < 1200 && (t==="d" || t==="p")){ _gEm = 0; e.preventDefault(); irPara(t==="d" ? "meudia" : "planejado"); return true; }
   _gEm = t==="g" ? Date.now() : 0;
   if(t==="g"){ e.preventDefault(); return true; }
+  if(t==="c" && document.getElementById("btn-v10-cli")?.getClientRects().length){ e.preventDefault(); document.getElementById("btn-v10-cli").click(); return true; }   // F687
   if(t==="n" && podeRapida()){ e.preventDefault(); anotacaoRapida(null, clienteAberto || undefined); return true; }
   return false;
 }

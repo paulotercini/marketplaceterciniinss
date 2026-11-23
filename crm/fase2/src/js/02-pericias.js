@@ -18,6 +18,7 @@ function montarConta(){
     + (navigator.setAppBadge ? op("badge", "Número no ícone", (BADGE_OPCOES.find(([v])=>v===(ler("crm_badge")||"meudia"))||[])[1]) : "")
     + (souAdmin() ? op("vercomo", visaoColab()?"Voltar à minha visão":"Ver como colaborador")
         + op("niveis", "Níveis da equipe", transicao() ? `transição na onda ${ondaAtual()}` : "transição desligada") : "")   // F249
+    + op("acoes","Ações de hoje", "desfazer o que foi feito") + op("atalhos","Atalhos do teclado")
     + op("recolher","Recolher o menu") + `<hr>` + op("sair","Sair");
   const fechar = () => { m.hidden = true; b.setAttribute("aria-expanded","false"); };
   b.onclick = e => { e.stopPropagation(); m.hidden = !m.hidden; b.setAttribute("aria-expanded", String(!m.hidden)); };
@@ -30,6 +31,8 @@ function montarConta(){
        badge: ()=>escolherBadge(),
        vercomo: ()=>alternarVerComo(),
        niveis: ()=>abrirTransicao(),
+       acoes: ()=>verAcoesHoje(),
+       atalhos: ()=>janelaAtalhos(),
        recolher: ()=>document.getElementById("btn-lateral").click(),
        sair: ()=>sair() })[x.dataset.conta]();
   });
@@ -1216,3 +1219,4 @@ async function montarPlanoPat(arquivo){
   plano.erro = conferirPlanoPat(arquivo, plano);
   return plano;
 }
+
