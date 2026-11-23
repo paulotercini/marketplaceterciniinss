@@ -133,8 +133,7 @@ function completarD(r){
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum (para o gestor, toda; para o colaborador, F362, a que tem mensagem não lida). O resto não precisa de contador piscando.
   // F594 · a conversa que a IA conduz não conta como nova
-  D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
-    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length;
+  D.zapResumo = contaZapResumo(r.zaps);
   // só guarda o que é da segunda leva (a primeira já está em _bruto1)
   D._bruto2 = Object.fromEntries(Object.keys(CARGA_2).map(k=>[k, r[k]]));
 }
@@ -1106,6 +1105,8 @@ function tituloLista(rot){
   else h.textContent = rot;
 }
 
+function contaZapResumo(zs){ return (zs||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
+    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length; }
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],

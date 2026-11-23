@@ -340,7 +340,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn zt-trans" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${fim||pode||!deOutro?"":`<button class="zt-btn zt-trans" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
-           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}" aria-label="${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}"><span class="lbl">${c.nao_lidas?"Lida":"Desler"}</span></button>
+           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}" aria-label="${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}">${zic("carta")}<span class="lbl">${c.nao_lidas?"Lida":"Desler"}</span></button>
            ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>

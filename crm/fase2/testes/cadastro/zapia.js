@@ -111,7 +111,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
   conf("e nada é enviado ao cliente", !escritas.some(e => e.m === "POST" && /rest\/v1\/zap_mensagens/.test(e.u)));
   // F479 · Corrigir e Ditar: o texto corrigido volta ao campo, com desfazer, e nada é enviado
   await p.fill("#zap-txt", "bom dia o atendimento ta marcado pro dia 12/11");
-  await p.click("#zap-corrigir");
+  await p.click(".ze-mais > summary"); await p.click('.ze-mais .zt-menu button:has-text("Corrigir")');   // F682 · no computador também pelo +
   await p.waitForTimeout(400);
   const co = escritas.find(e => /zap_assistente/.test(e.u) && e.b.acao === "corrigir");
   conf("F479 · Corrigir manda o texto escrito à função", co && co.b.texto === "bom dia o atendimento ta marcado pro dia 12/11" && co.b.conversa_id === CONV);
@@ -125,7 +125,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
     window.SpeechRecognition = class { start(){ setTimeout(() => this.onresult({ results: [Object.assign([{ transcript: "agendado pro dia 12/11" }], { isFinal: true })] }), 20); }
       stop(){ setTimeout(() => this.onend(), 10); } };
     document.getElementById("zap-txt").value = ""; });
-  await p.click("#zap-ditar");
+  await p.click(".ze-mais > summary"); await p.click('.ze-mais .zt-menu button:has-text("Ditar")');
   await p.waitForTimeout(150);
   conf("F479 · o ditado escreve no campo", (await p.inputValue("#zap-txt")) === "agendado pro dia 12/11");
   await p.click("#zap-ditar");
@@ -134,7 +134,7 @@ const PAINEL = { totais: {}, setores: [], atendentes: [] };
     && (await p.inputValue("#zap-txt")) === "Bom dia. O atendimento está agendado para o dia 12/11.");
   // F563 · Outra e Aprofundar: sem sugestão aberta pelo ícone; a nova sugestão fica acima do campo, com as bases
   await p.fill("#zap-txt", "");
-  await p.click("#zap-sugerir");
+  await p.click(".ze-mais > summary"); await p.click('.ze-mais .zt-menu button:has-text("Sugerir")');
   await p.fill("#ia-orient", "mais curta");
   await p.click('button:has-text("Pedir")');
   await p.waitForTimeout(400);

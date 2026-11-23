@@ -775,7 +775,7 @@ function faixaTrilha(k){
       <button class="tr-x-bt" aria-label="fechar" title="fechar" onclick="trEscolher('${k.id}','${rito}',null)">✕</button></span></div>`;
   }
   const leg = trAjuda ? `<div class="tr-leg" id="tr-leg"><span><i class="tr-lf"></i>cumprida</span><span><i class="tr-la"></i>atual</span><span><i class="tr-lv"></i>a vir</span>
-      <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i><s>não houve</s></span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
+      <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i>não houve</span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
       <span>A data vem da anotação que cumpriu a etapa. Grupos cumpridos ficam recolhidos; clique para abrir.</span></div>` : "";
   // F243 · a faixa compacta (pedido do Paulo, 18.10.2026): as fases numa linha e as etapas logo abaixo; o nome da trilha, o
   // tipo de processo, a legenda e "esta fase não houve" ficam no "?", que ganha um ponto quando o tipo pede confirmação

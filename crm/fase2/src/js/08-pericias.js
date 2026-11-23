@@ -946,7 +946,8 @@ const chipSetor = s => `<span class="zap-setor" style="color:${esc(s.cor)}">${es
 
 function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
 
-async function renderWhats(){
+let zapAbaAuto = false;   // auditoria 23.11 · ao entrar, Novas vazia abre Pendentes, onde está o que o número do menu conta
+async function renderWhats(){ zapAbaAuto = true;
   tituloLista("💬 WhatsApp");
   document.getElementById("sub-lista").textContent=
     "As conversas do escritório. Quem responde assume a conversa — e o robô se cala na hora.";
@@ -1072,6 +1073,7 @@ const ZIC = {
   relogio:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
   seta:'<path d="M4 12h13m-4-5 5 5-5 5"/>',
   ok:'<path d="m5 12 5 5 9-10"/>',
+  carta:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="m3 8 9 6 9-6"/>',
   mais:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
   clipe:'<path d="m20 11-8.5 8.5a5 5 0 0 1-7-7L13 4a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4L14 7.6"/>',
   frases:'<path d="M5 5h14v10H9l-4 4z"/>',
@@ -1148,6 +1150,10 @@ function pintarListaZap(){
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
   const visiveis = zapConvs.filter(zapVisivel);
+  // a conversa lida sai das Novas: o número do menu acompanha, em vez de ficar o da carga
+  if(zapAbaAuto && zapConvs.length){ zapAbaAuto = false;
+    if(zapFiltro==="novas" && !visiveis.some(c=>naAba("novas",c)) && visiveis.some(c=>naAba("sem",c))) zapFiltro = "sem"; }
+  const nRes = contaZapResumo(visiveis); if(nRes!==D.zapResumo){ D.zapResumo = nRes; montarSidebar(); marcarBarraCel(); }
   // F410 · com texto na busca, procura em todas as filas, encerradas inclusive (pedido do Paulo de 05.11.2026)
   const buscando = q.length>=2 || qd.length>=4;
   let cs = visiveis.filter(c=>(buscando || naAba(zapFiltro,c))
@@ -1198,7 +1204,7 @@ function pintarListaZap(){
            </span></details></div>
        ${zapComProblema()?`<button class="zap-estado ruim zl-faixa" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i><span>${esc(p.txt)}</span><b>${cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"}</b></button>`:""}
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
-         placeholder="Buscar em todas: nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
+         placeholder="Nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
        <div class="zl-filas${filtros.length>4?" cinco":""}" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
           const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
