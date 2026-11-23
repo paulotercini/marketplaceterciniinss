@@ -4245,6 +4245,8 @@ html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-acoes{margin-left:
 html[data-tema="v10"] .app.celular .linha-caso.lc5.lc5.lc5 .lc5-cab{padding-right:20px}
 /* 12 · a hora da anotação fica ao lado do autor, e a coluna da esquerda guarda só o dia */
 html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.autor-nome+.tl-hora.tl-hora{position:static;width:auto;text-align:left;margin-left:8px}
+/* 2 · caso no celular: o calendário recua da coluna dos flutuantes (F307), que fica como está */
+html[data-tema="v10"] .app.celular .caso-esq .ma{padding-right:56px}
 </style>
 </head>
 
