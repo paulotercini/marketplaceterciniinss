@@ -1106,3 +1106,6 @@ Pedido do Paulo após a revisão de 23.11 (relatório em project-files/melhorias
 
 ## F685 · Quadro do caso e painel lateral (23.11.2026)
 Pedido do Paulo: no quadro do caso, a DER subia sobre o rótulo Protocolo (o valor tinha flex:1 1 0 numa coluna e encolhia a zero); DER, NB e Protocolo passam à fonte do CRM, sem negrito. O painel lateral do cliente fecha a ficha aberta de outro cliente, e abrir a ficha fecha o painel. "Ver anotações anteriores" do painel como link.
+
+## F686 · Correções da vistoria de botões (23.11.2026)
+Pedido do Paulo após a vistoria com Playwright (relatório em project-files/vistoria-botoes-2311). O lápis da DER no cartão do caso não abria (faltava o contêiner lc-der); Apagadas ganha Restaurar para o autor (volta texto e data, sem as tarefas); o Desfazer passa de 8 s a 30 s. Prova: testes/cadastro/f686.js.

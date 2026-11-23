@@ -304,10 +304,10 @@ function aviso(msg, som=true, naColeta=false){
 }
 // F14 · DESFAZER
 // Concluir em um clique só é seguro com volta. O To Do desfaz clicando de novo
-// no círculo; aqui a faixa fica oito segundos com o botão, e some sozinha.
+// no círculo; aqui a faixa fica trinta segundos com o botão (F686: eram oito, curtos na vistoria), e some sozinha.
 // Oito e não três: o tempo de perceber o engano é o tempo de ler o que mudou.
 let _desfazer = null, _desfazerTimer = null;
-function avisoDesfazer(msg, voltar, ms = 8000){
+function avisoDesfazer(msg, voltar, ms = 30000){
   const el = document.getElementById("aviso");
   if(!el || typeof voltar !== "function") return aviso(msg, false);
   clearTimeout(_desfazerTimer);

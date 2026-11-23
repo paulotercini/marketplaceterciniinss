@@ -7363,7 +7363,7 @@ html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:v
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.29</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.30</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7788,10 +7788,10 @@ function aviso(msg, som=true, naColeta=false){
 }
 // F14 · DESFAZER
 // Concluir em um clique só é seguro com volta. O To Do desfaz clicando de novo
-// no círculo; aqui a faixa fica oito segundos com o botão, e some sozinha.
+// no círculo; aqui a faixa fica trinta segundos com o botão (F686: eram oito, curtos na vistoria), e some sozinha.
 // Oito e não três: o tempo de perceber o engano é o tempo de ler o que mudou.
 let _desfazer = null, _desfazerTimer = null;
-function avisoDesfazer(msg, voltar, ms = 8000){
+function avisoDesfazer(msg, voltar, ms = 30000){
   const el = document.getElementById("aviso");
   if(!el || typeof voltar !== "function") return aviso(msg, false);
   clearTimeout(_desfazerTimer);
@@ -45069,9 +45069,9 @@ function linhaCaso(k){
       ${chips ? `<div class="lc5-chips">${chips}</div>` : ""}
       ${/* F504 · a grade de detalhes: datas na fonte do CRM, NB e protocolo na fonte de código; o toque no número copia */""}
       <div class="lc-placa lc5-grade">
-      ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
+      ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span><span id="lc-der-${k.id}">${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
-        : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
+        : `<span class="lc-vazio">não informada</span>`}</span><button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der','lc')">✎</button></span>`}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       ${k.nb && !camposEssenciais(k).some(c=>soCampo(c)==="nb") ? `<span class="lc-f lc-nb"><span class="lc-k">NB</span>${lcCop(fmtNb(k.nb),"NB")}</span>` : ""}
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
@@ -52672,18 +52672,31 @@ async function verApagadas(casoId){
   const marcadas = (await api(`/rest/v1/andamentos?caso_id=eq.${casoId}&excluir=eq.true&select=id,autor_id,texto,criado_em&order=criado_em.desc`).catch(()=>[])||[])
     .map(x=>({...x, apagado_por:x.autor_id, apagado_em:null}));
   ls = [...marcadas, ...(ls||[])];
+  // restaurada volta a existir em andamentos; some daqui sem precisar apagar o histórico
+  const vivos = new Set(((await api(`/rest/v1/andamentos?caso_id=eq.${casoId}&excluir=eq.false&select=id`).catch(()=>[]))||[]).map(x=>x.id));
+  ls = ls.filter(x=>!x.andamento_id || !vivos.has(x.andamento_id));
+  window._apagadas = ls;
   const eds = (await api(`/rest/v1/andamentos_editados?caso_id=eq.${casoId}&select=*&order=editado_em.desc&limit=200`).catch(()=>[])) || [];
   const nome = id => ((D.colPorId.get(id)||{}).nome||"").split(" ")[0] || "alguém";
   const tfs = x => (x.tarefas||[]).map(t=>`${t.natureza==="fatal"?"prazo fatal":t.papel==="revisa"?"revisão":"tarefa"} de ${esc(nome(t.colaborador_id))}${t.lembrar_em?` para ${esc(fmt(t.lembrar_em))}`:""}${t.concluida_em?" (concluída)":""}`).join("; ");
   caixa(`<h3 style="margin:0 0 4px">Anotações apagadas <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
     <p class="meio-sub" style="margin:0 0 8px">Quem escreveu pode apagar a anotação ou o prazo. Ela sai das anotações e fica aqui.</p>
-    ${(ls||[]).length ? `<ul class="apagadas">${ls.map(x=>`<li class="apagada">
+    ${(ls||[]).length ? `<ul class="apagadas">${ls.map((x,i)=>`<li class="apagada">
       <div class="meio-sub">Escrita por <b>${esc(nome(x.autor_id))}</b> em ${esc(fmtTS(x.criado_em))} · apagada${x.apagado_por?` por <b>${esc(nome(x.apagado_por))}</b>`:""}${x.apagado_em ? ` em ${esc(fmtTS(x.apagado_em))} às ${esc(new Date(x.apagado_em).toLocaleTimeString("pt-BR",{timeZone:"America/Sao_Paulo",hour:"2-digit",minute:"2-digit"}))}` : "; o texto ainda consta no Microsoft To Do"}</div>
-      <div class="apagada-txt">${esc(x.texto||"")}</div>${tfs(x)?`<div class="meio-sub">Tinha: ${tfs(x)}</div>`:""}</li>`).join("")}</ul>`
+      <div class="apagada-txt">${esc(x.texto||"")}</div>${tfs(x)?`<div class="meio-sub">Tinha: ${tfs(x)}</div>`:""}${x.andamento_id && x.autor_id===eu.id ? `<button class="btn-mini" onclick="restaurarApagada(${i})" title="Restaurar: a anotação volta ao caso, sem as tarefas">Restaurar<span class="sr-only"> a anotação</span></button>` : ""}</li>`).join("")}</ul>`
       : `<p class="meio-sub">Nenhuma anotação apagada neste caso.</p>`}
     ${eds.length ? `<h3 style="margin:12px 0 4px">Anotações editadas</h3><ul class="apagadas">${eds.map(x=>`<li class="apagada">
       <div class="meio-sub">Versão anterior, substituída por <b>${esc(nome(x.editado_por))}</b> em ${esc(fmtTS(x.editado_em))}</div>
       <div class="apagada-txt">${esc(x.texto_antes||"")}</div></li>`).join("")}</ul>` : ""}`);
+}
+
+// a anotação apagada volta com o mesmo id, texto e data; as tarefas não voltam (o prazo se marca de novo)
+async function restaurarApagada(i){
+  const x = (window._apagadas||[])[i]; if(!x) return;
+  try{ await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({id:x.andamento_id, caso_id:x.caso_id,
+    autor_id:x.autor_id, origem:x.origem||"app", origem_id:x.origem_id, responde_a:x.responde_a, texto:x.texto, criado_em:x.criado_em})}); }
+  catch(e){ return aviso("Não restaurou: tente de novo"); }
+  fecharCaixa(); aviso("Anotação restaurada", false); abrirFicha(clienteAberto);
 }
 
 // Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)

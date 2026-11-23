@@ -447,9 +447,9 @@ function linhaCaso(k){
       ${chips ? `<div class="lc5-chips">${chips}</div>` : ""}
       ${/* F504 · a grade de detalhes: datas na fonte do CRM, NB e protocolo na fonte de código; o toque no número copia */""}
       <div class="lc-placa lc5-grade">
-      ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
+      ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span><span id="lc-der-${k.id}">${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
-        : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
+        : `<span class="lc-vazio">não informada</span>`}</span><button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der','lc')">✎</button></span>`}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       ${k.nb && !camposEssenciais(k).some(c=>soCampo(c)==="nb") ? `<span class="lc-f lc-nb"><span class="lc-k">NB</span>${lcCop(fmtNb(k.nb),"NB")}</span>` : ""}
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
