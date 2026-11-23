@@ -1106,3 +1106,6 @@ Pedido do Paulo após a revisão de 23.11 (relatório em project-files/melhorias
 
 ## F685 · Quadro do caso e painel lateral (23.11.2026)
 Pedido do Paulo: no quadro do caso, a DER subia sobre o rótulo Protocolo (o valor tinha flex:1 1 0 numa coluna e encolhia a zero); DER, NB e Protocolo passam à fonte do CRM, sem negrito. O painel lateral do cliente fecha a ficha aberta de outro cliente, e abrir a ficha fecha o painel. "Ver anotações anteriores" do painel como link.
+
+## F686 · Lista do WhatsApp não volta ao topo no celular (23.11.2026)
+Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao topo sozinha. A lista se repinta a cada 6 s e, no celular, quem rola é a coluna `.meio` (a restauração guardava só a `.zl-lista`). Agora `pintarListaZap` não troca o DOM quando nada mudou e guarda e devolve a rolagem da `.meio`. Prova: `testes/cadastro/zaprolagem.js` (390 px). v14.30.

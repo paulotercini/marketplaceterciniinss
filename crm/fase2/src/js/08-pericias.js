@@ -973,6 +973,7 @@ async function recarregarZap(silencioso){
   const cs = await todas("zap_conversas","select=*&order=ultima_em.desc.nullslast")
     .catch(()=>null);
   if(cs===null){
+    document.querySelector(".zap-lado")._html = null;
     document.querySelector(".zap-lado").innerHTML =
       `<p class="meio-sub">Ainda não dá para listar: o banco não tem as tabelas do
         WhatsApp, ou a ponte nunca subiu. Rode o schema.sql e veja o
@@ -1183,8 +1184,10 @@ function pintarListaZap(){
       <select id="${id}"><option value="">${rot}</option>
       ${itens.map(([v,t])=>`<option value="${v}" ${atual===v?"selected":""}>${esc(t)}</option>`).join("")}</select>${zic("baixo",12)}</label>`;
   // a lista se repinta a cada 6 s: sem guardar a rolagem, ela voltava ao topo no meio da leitura
-  const rolLista = (document.querySelector(".zl-lista")||{}).scrollTop || 0;
-  document.querySelector(".zap-lado").innerHTML =
+  // F686 · no celular quem rola é a coluna .meio, não a .zl-lista: guarda as duas
+  const rolLista = (document.querySelector(".zl-lista")||{}).scrollTop || 0, meio = document.querySelector(".meio"), rolMeio = meio ? meio.scrollTop : 0;
+  const lado = document.querySelector(".zap-lado");
+  const html =
     `<div class="zl-cab">
        <div class="zl-topo"><h2>WhatsApp</h2>
          ${zapComProblema()?"":`<button class="zap-estado" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i>conectado</button>`}
@@ -1218,7 +1221,11 @@ function pintarListaZap(){
      </div>
      <div class="zl-lista">${lista || (zapAchados.length?"":`<p class="meio-sub" style="padding:8px 6px">Nenhuma conversa aqui.</p>`)}
        ${zapAchados.length?`<p class="zl-grupo">Nas mensagens (${zapAchados.length})</p>${zapAchados.map(achadoZap).join("")}`:""}</div>`;
+  // a volta de 6 s sem novidade não troca a lista debaixo do dedo (no iPhone a troca interrompia a rolagem e a devolvia ao topo)
+  if(lado._html === html) return;
+  lado.innerHTML = lado._html = html;
   const zl = document.querySelector(".zl-lista"); if(zl) zl.scrollTop = rolLista;
+  if(meio) meio.scrollTop = rolMeio;
   document.querySelectorAll("[data-zf]").forEach(b=>b.onclick=()=>{ zapFiltro=b.dataset.zf; pintarListaZap(); });
   document.querySelectorAll("[data-zch]").forEach(b=>b.onclick=()=>{ zapChips[b.dataset.zch]=!zapChips[b.dataset.zch]; pintarListaZap(); });
   const fs = document.getElementById("zf-setor"); if(fs) fs.onchange=()=>{ zapChips.setor=fs.value; pintarListaZap(); };
