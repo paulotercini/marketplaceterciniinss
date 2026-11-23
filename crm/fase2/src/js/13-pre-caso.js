@@ -328,6 +328,7 @@ function preCarregarFicha(cliId){
   if(preFicha.size>6) preFicha.delete(preFicha.keys().next().value);
 }
 async function abrirFicha(cliId){
+  if(_pcli) fecharPainelCli();   // F685 · ficha e painel lateral não ficam abertos juntos
   // F262 · a conversa ao lado acompanha a ficha nas abas (INSS, Conselho, Judicial); trocar de CLIENTE fecha a do anterior
   if(painelZapCli && painelZapCli!==cliId) fecharPainelPrazo();
   const c = D.cliPorId.get(cliId);
