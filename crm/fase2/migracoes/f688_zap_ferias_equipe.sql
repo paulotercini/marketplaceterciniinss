@@ -1,0 +1,3 @@
+-- F688 · aviso de férias (pedido do Paulo de 23.11.2026): não sai em conversa que outro colaborador atendeu nas
+-- últimas 12 horas (a Dra. Amanda conversava com o cliente e o aviso saiu). A mensagem do titular continua sem
+-- interromper o repasse (F679).
