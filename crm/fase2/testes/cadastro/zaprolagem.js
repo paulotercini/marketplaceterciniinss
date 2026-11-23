@@ -1,6 +1,6 @@
 const { chromium } = require("playwright");
 const http = require("http"), fs = require("fs"), path = require("path");
-// F686 · no celular a lista de conversas não volta ao topo na volta de 6 s; volta sem novidade não troca o DOM. Dados fictícios.
+// F687 · no celular a lista de conversas não volta ao topo na volta de 6 s; volta sem novidade não troca o DOM. Dados fictícios.
 const DIR = require("path").join(__dirname, "..", "..");
 const { FIX, SESSAO } = require(DIR + "/testes/cadastro/fixturas");
 const SUPA = "https://ficticio.supabase.co", agora = new Date().toISOString();

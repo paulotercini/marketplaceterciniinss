@@ -1184,7 +1184,7 @@ function pintarListaZap(){
       <select id="${id}"><option value="">${rot}</option>
       ${itens.map(([v,t])=>`<option value="${v}" ${atual===v?"selected":""}>${esc(t)}</option>`).join("")}</select>${zic("baixo",12)}</label>`;
   // a lista se repinta a cada 6 s: sem guardar a rolagem, ela voltava ao topo no meio da leitura
-  // F686 · no celular quem rola é a coluna .meio, não a .zl-lista: guarda as duas
+  // F687 · no celular quem rola é a coluna .meio, não a .zl-lista: guarda as duas
   const rolLista = (document.querySelector(".zl-lista")||{}).scrollTop || 0, meio = document.querySelector(".meio"), rolMeio = meio ? meio.scrollTop : 0;
   const lado = document.querySelector(".zap-lado");
   const html =
