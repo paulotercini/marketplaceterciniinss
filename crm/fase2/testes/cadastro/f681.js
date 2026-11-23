@@ -59,7 +59,8 @@ const T = { zap_conversas: [{ id: CONV, telefone: "5500000000001", chave: "00000
         const h = await p.$eval("#zap-txt", e => ({ h: e.getBoundingClientRect().height, o: getComputedStyle(e).overflowY }));
         conf("celular: o campo cresce até duas linhas e rola", h.h > 40 && h.h <= 49 && h.o === "auto");
       } else {
-        conf("computador: os ícones de IA continuam no campo", icones.includes("Ditar a mensagem") && icones.includes("Corrigir o texto com a IA"));
+        // F682 · auditoria de 23.11.2026: também no computador o campo fica com emoji e anexo, e o resto vai ao +
+        conf("computador: no campo apenas emoji e anexo, e o + à vista", !icones.includes("Ditar a mensagem") && !icones.includes("Corrigir o texto com a IA") && await p.$eval(".ze-mais", e => !!e.offsetParent));
       }
       await ctx.close();
     }

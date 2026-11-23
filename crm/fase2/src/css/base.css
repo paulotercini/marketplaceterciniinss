@@ -1307,6 +1307,23 @@
   .app.celular.fabs-on:has(.meio.zap-v) ~ #zap-ag{bottom:calc(216px + env(safe-area-inset-bottom))}
   .app.celular.zap-conv-aberta.fabs-on:has(.meio.zap-v) ~ #fab-sug,.app.celular.zap-conv-aberta.fabs-on:has(.meio.zap-v) ~ #fab-ajuda{display:flex;bottom:calc(180px + env(safe-area-inset-bottom))}
   .app.celular.zap-conv-aberta.fabs-on:has(.meio.zap-v) ~ #zap-ag{bottom:calc(228px + env(safe-area-inset-bottom))}
+  /* auditoria 23.11 · na ficha do celular os flutuantes também se recolhem no ⋯, acima do campo de escrever, para não cobrir o calendário */
+  .app.celular.detalhe-aberto:not(:has(.meio.zap-v)) ~ .fab-juntos{display:flex;align-items:center;justify-content:center;position:fixed;right:16px;
+    bottom:calc(132px + env(safe-area-inset-bottom));z-index:93;width:40px;height:40px;border-radius:50%;border:0;background:#54656f;color:#fff;
+    font-size:22px;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  .app.celular.detalhe-aberto.fabs-on ~ .fab-juntos{background:#1f2c34}
+  .app.celular.detalhe-aberto:not(.fabs-on) ~ :is(#fab-sug,#fab-ajuda,#fab-rapida,#zap-ag:has(>.zag-pilula)){display:none}
+  .app.celular.detalhe-aberto.fabs-on ~ :is(#fab-sug,#fab-ajuda){display:flex;bottom:calc(180px + env(safe-area-inset-bottom))}
+  .app.celular.detalhe-aberto.fabs-on ~ #zap-ag{bottom:calc(228px + env(safe-area-inset-bottom))}
+  /* auditoria 23.11 · no WhatsApp do computador Sugestões e ⚡ se recolhem no ⋯ e a agenda desce para o canto, para não cobrir a coluna da ficha */
+  .app:not(.celular):has(.meio.zap-v) ~ .fab-juntos{display:flex;align-items:center;justify-content:center;position:fixed;right:24px;bottom:24px;
+    z-index:93;width:44px;height:44px;border-radius:50%;border:0;background:#54656f;color:#fff;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  .app:not(.celular).fabs-on:has(.meio.zap-v) ~ .fab-juntos{background:#1f2c34}
+  .app:not(.celular):not(.fabs-on):has(.meio.zap-v) ~ :is(#fab-sug,#fab-ajuda,#fab-rapida){display:none}
+  .app:not(.celular):has(.meio.zap-v) ~ #zap-ag:has(>.zag-pilula){right:80px;bottom:26px}
+  .app:not(.celular) .zap-painel{padding-bottom:90px}
+  .app:not(.celular).fabs-on:has(.meio.zap-v) ~ #fab-rapida{bottom:80px}
+  .app:not(.celular).fabs-on:has(.meio.zap-v) ~ :is(#fab-sug,#fab-ajuda){bottom:136px}
   .app.celular.zap-conv-aberta ~ .aviso{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   /* F313 · ajuda: o "?" fixo à esquerda do ✎ Sugestões e o "?" pequeno das barras e quadros */
   .fab-ajuda{position:fixed;right:146px;bottom:72px;z-index:80;width:36px;height:36px;border-radius:50%;border:none;
@@ -2352,7 +2369,7 @@
   .app.celular .zap-b .pe{float:right;margin:7px 0 -3px 10px;line-height:1}
   .app.celular .zap-b.seguida .autor,.app.celular .zap-b:not(.toque) .virar{display:none}
   .app.celular .zap-desce{bottom:72px}
-  .app.celular .ze-modos,.app.celular .ze-so-pc{display:none}
+  .app.celular .ze-modos,.app .ze-so-pc{display:none}
   .app.celular .zap-escrever{padding:6px 8px;gap:0}
   .app.celular .zap-escrever>:not(.ze-linha){margin-bottom:4px}
   .app.celular .ze-linha{gap:6px}
@@ -2360,13 +2377,14 @@
   .app.celular .zap-escrever textarea#zap-txt{height:24px;align-self:center;font-size:16px;line-height:24px}
   /* F681 · o campo no celular: dentro dele só emoji e anexo (ditar, corrigir, sugerir e aprofundar no +); cresce até duas linhas e rola */
   .app.celular .zap-escrever textarea#zap-txt{max-height:48px!important;overflow-y:auto}
-  .app.celular .ze-ferr .ze-so-pc.gravando{display:inline-flex}
+  .app .ze-ferr .ze-so-pc.gravando{display:inline-flex}
   .app.celular .ze-ferr{flex:none;min-height:0}
-  .app.celular .ze-mais{display:block;position:relative;flex:none}
-  .app.celular .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
+  /* auditoria 23.11 · no computador também: só emoji e anexo no campo, o resto no + */
+  .app .ze-mais{display:block;position:relative;flex:none;align-self:flex-end}
+  .app .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
     font-size:28px;font-weight:300;color:#54656f;cursor:pointer}
   .ze-mais>summary::-webkit-details-marker{display:none}
-  .app.celular .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
+  .app .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
   .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:30px;margin-bottom:7px;padding:0 9px;border:1px solid var(--borda);
     border-radius:15px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
   .app.celular .ze-nota-cel.on{background:#fffbea;border-color:#e0b955;color:var(--prox,#8f5400)}

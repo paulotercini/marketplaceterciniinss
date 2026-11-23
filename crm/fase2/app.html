@@ -1316,6 +1316,23 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular.fabs-on:has(.meio.zap-v) ~ #zap-ag{bottom:calc(216px + env(safe-area-inset-bottom))}
   .app.celular.zap-conv-aberta.fabs-on:has(.meio.zap-v) ~ #fab-sug,.app.celular.zap-conv-aberta.fabs-on:has(.meio.zap-v) ~ #fab-ajuda{display:flex;bottom:calc(180px + env(safe-area-inset-bottom))}
   .app.celular.zap-conv-aberta.fabs-on:has(.meio.zap-v) ~ #zap-ag{bottom:calc(228px + env(safe-area-inset-bottom))}
+  /* auditoria 23.11 · na ficha do celular os flutuantes também se recolhem no ⋯, acima do campo de escrever, para não cobrir o calendário */
+  .app.celular.detalhe-aberto:not(:has(.meio.zap-v)) ~ .fab-juntos{display:flex;align-items:center;justify-content:center;position:fixed;right:16px;
+    bottom:calc(132px + env(safe-area-inset-bottom));z-index:93;width:40px;height:40px;border-radius:50%;border:0;background:#54656f;color:#fff;
+    font-size:22px;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  .app.celular.detalhe-aberto.fabs-on ~ .fab-juntos{background:#1f2c34}
+  .app.celular.detalhe-aberto:not(.fabs-on) ~ :is(#fab-sug,#fab-ajuda,#fab-rapida,#zap-ag:has(>.zag-pilula)){display:none}
+  .app.celular.detalhe-aberto.fabs-on ~ :is(#fab-sug,#fab-ajuda){display:flex;bottom:calc(180px + env(safe-area-inset-bottom))}
+  .app.celular.detalhe-aberto.fabs-on ~ #zap-ag{bottom:calc(228px + env(safe-area-inset-bottom))}
+  /* auditoria 23.11 · no WhatsApp do computador Sugestões e ⚡ se recolhem no ⋯ e a agenda desce para o canto, para não cobrir a coluna da ficha */
+  .app:not(.celular):has(.meio.zap-v) ~ .fab-juntos{display:flex;align-items:center;justify-content:center;position:fixed;right:24px;bottom:24px;
+    z-index:93;width:44px;height:44px;border-radius:50%;border:0;background:#54656f;color:#fff;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  .app:not(.celular).fabs-on:has(.meio.zap-v) ~ .fab-juntos{background:#1f2c34}
+  .app:not(.celular):not(.fabs-on):has(.meio.zap-v) ~ :is(#fab-sug,#fab-ajuda,#fab-rapida){display:none}
+  .app:not(.celular):has(.meio.zap-v) ~ #zap-ag:has(>.zag-pilula){right:80px;bottom:26px}
+  .app:not(.celular) .zap-painel{padding-bottom:90px}
+  .app:not(.celular).fabs-on:has(.meio.zap-v) ~ #fab-rapida{bottom:80px}
+  .app:not(.celular).fabs-on:has(.meio.zap-v) ~ :is(#fab-sug,#fab-ajuda){bottom:136px}
   .app.celular.zap-conv-aberta ~ .aviso{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   /* F313 · ajuda: o "?" fixo à esquerda do ✎ Sugestões e o "?" pequeno das barras e quadros */
   .fab-ajuda{position:fixed;right:146px;bottom:72px;z-index:80;width:36px;height:36px;border-radius:50%;border:none;
@@ -2361,7 +2378,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular .zap-b .pe{float:right;margin:7px 0 -3px 10px;line-height:1}
   .app.celular .zap-b.seguida .autor,.app.celular .zap-b:not(.toque) .virar{display:none}
   .app.celular .zap-desce{bottom:72px}
-  .app.celular .ze-modos,.app.celular .ze-so-pc{display:none}
+  .app.celular .ze-modos,.app .ze-so-pc{display:none}
   .app.celular .zap-escrever{padding:6px 8px;gap:0}
   .app.celular .zap-escrever>:not(.ze-linha){margin-bottom:4px}
   .app.celular .ze-linha{gap:6px}
@@ -2369,13 +2386,14 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular .zap-escrever textarea#zap-txt{height:24px;align-self:center;font-size:16px;line-height:24px}
   /* F681 · o campo no celular: dentro dele só emoji e anexo (ditar, corrigir, sugerir e aprofundar no +); cresce até duas linhas e rola */
   .app.celular .zap-escrever textarea#zap-txt{max-height:48px!important;overflow-y:auto}
-  .app.celular .ze-ferr .ze-so-pc.gravando{display:inline-flex}
+  .app .ze-ferr .ze-so-pc.gravando{display:inline-flex}
   .app.celular .ze-ferr{flex:none;min-height:0}
-  .app.celular .ze-mais{display:block;position:relative;flex:none}
-  .app.celular .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
+  /* auditoria 23.11 · no computador também: só emoji e anexo no campo, o resto no + */
+  .app .ze-mais{display:block;position:relative;flex:none;align-self:flex-end}
+  .app .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
     font-size:28px;font-weight:300;color:#54656f;cursor:pointer}
   .ze-mais>summary::-webkit-details-marker{display:none}
-  .app.celular .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
+  .app .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
   .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:30px;margin-bottom:7px;padding:0 9px;border:1px solid var(--borda);
     border-radius:15px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
   .app.celular .ze-nota-cel.on{background:#fffbea;border-color:#e0b955;color:var(--prox,#8f5400)}
@@ -4086,7 +4104,7 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
 html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
 @container (min-width:721px){
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;
-    grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr) minmax(0,1fr) 170px 64px 28px 24px 32px;column-gap:10px;align-items:center}
+    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 24px 32px;column-gap:10px;align-items:center}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1;min-width:0}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-lista{grid-column:2;display:block}
@@ -5727,7 +5745,7 @@ html[data-tema="v10"] .tr-l{padding-right:8px}
 html[data-tema="v10"] .jn-nome{min-width:0}
 html[data-tema="v10"] .jn-txt{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 html[data-tema="v10"] .app.celular .jn-f:not(.jn-par) .jn-nome::after{content:"✓";flex:none;margin-left:-2px;font-size:11px}
-html[data-tema="v10"] .app.celular .jn-n .jn-txt{text-decoration:line-through}
+html[data-tema="v10"] .app.celular .jn-n .jn-txt{text-decoration:none;color:#9A978F}
 html[data-tema="v10"] .app.celular .jn-b{padding:6px 6px}
 html[data-tema="v10"] .tr-l li[data-ex] .tr-sv .tr-b{background:#F3DDEC}
 html[data-tema="v10"] .tr-l{list-style:none;margin:0;padding:0;min-width:calc(var(--n) * 106px);display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:0 4px}
@@ -5748,7 +5766,7 @@ html[data-tema="v10"] .tr-grp.tr-sv .tr-b{background:transparent;border:1.5px da
 html[data-tema="v10"] .tr-et .tr-nm{font-size:12px;line-height:1.3;color:#67655F}
 html[data-tema="v10"] .tr-sf .tr-nm{color:#121212}
 html[data-tema="v10"] .tr-sa .tr-nm{color:var(--tt);font-weight:500}
-html[data-tema="v10"] .tr-et.tr-sn .tr-nm{text-decoration:line-through}
+html[data-tema="v10"] .tr-et.tr-sn .tr-nm{text-decoration:none}
 html[data-tema="v10"] .tr-grp .tr-nm{color:var(--tt)}
 html[data-tema="v10"] .tr-x{font-size:11px;color:var(--tt);line-height:1.25}
 html[data-tema="v10"] .tr-d{font-family:var(--f-mono);font-size:11px;color:#686660}
@@ -6629,7 +6647,7 @@ html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-f.jn-ver:not(.jn-
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-f:not(.jn-par) .jn-nome i{width:16px;height:16px;background:#B9B6AE;display:inline-grid;place-items:center}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-f:not(.jn-par) .jn-nome i::before{content:"✓";color:#FFFFFF;font-size:10px;font-style:normal;line-height:1}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-n{color:#8E8B84;border-style:dashed}
-html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-n .jn-txt{text-decoration:line-through;text-decoration-color:#B9B6AE}
+html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-n .jn-txt{text-decoration:none;color:#9A978F}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a{background:var(--ff)}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-b.jn-a .jn-txt{font-weight:500;color:var(--ft)}
 html[data-tema="v10"] .app:not(.celular) .tr-compacta .jn-a .jn-st::before{content:none}
@@ -7238,6 +7256,23 @@ html[data-tema="v10"] .ltc .jn-tudo{position:static;order:99;flex:none;align-sel
 /* F672 · a ▾ abre os casos sozinha: alvo de toque de 24 px */
 .cli-casos-seta[role=button]{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;cursor:pointer}
 .ma-d.ma-tem{border:0;padding:0;cursor:pointer;font:inherit;font-size:12px}
+/* ── auditoria visual de 23.11.2026 ── */
+/* 1 · caso no celular: o nome ganha a linha inteira (até duas linhas); os botões vão à linha da espécie */
+html[data-tema="v10"] .app.celular .det-topo .linha1 > .cli-bloco{flex:1 1 calc(100% - 50px)}
+html[data-tema="v10"] .app.celular .det-topo .linha1 > .resumo-lado{flex:1 1 0;min-width:0}
+html[data-tema="v10"] .app.celular .det-topo .cli-casos h2{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:clip}
+/* 7 · o microfone do Escrever no caso não cobre "Lembrete" */
+html[data-tema="v10"] .app:not(.celular) .escrever.esc-v12:not(.esc-aberto):has(.esc-grav){padding-right:52px}
+/* 13 · filtros do WhatsApp com alvo de 40 px no celular */
+html[data-tema="v10"] .app.celular :is(.zl-chip,.zl-sel){height:40px;border-radius:20px;padding:0 14px}
+/* 3 · cabeçalho da conversa no computador: o nome e o telefone ocupam a linha; os botões descem quando falta espaço */
+html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1{flex-wrap:wrap;row-gap:8px}
+html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-id{flex:1 1 240px}
+html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-acoes{margin-left:auto}
+/* 11 · caso no celular: o ⋯ do cartão do benefício não encosta na borda (a coluna corta 12 px do cartão sangrado) */
+html[data-tema="v10"] .app.celular .linha-caso.lc5.lc5.lc5 .lc5-cab{padding-right:20px}
+/* 12 · a hora da anotação fica ao lado do autor, e a coluna da esquerda guarda só o dia */
+html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.autor-nome+.tl-hora.tl-hora{position:static;width:auto;text-align:left;margin-left:8px}
 </style>
 </head>
 
@@ -7251,7 +7286,7 @@ html[data-tema="v10"] .ltc .jn-tudo{position:static;order:99;flex:none;align-sel
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.26</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.27</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8723,8 +8758,7 @@ function completarD(r){
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum (para o gestor, toda; para o colaborador, F362, a que tem mensagem não lida). O resto não precisa de contador piscando.
   // F594 · a conversa que a IA conduz não conta como nova
-  D.zapResumo = (r.zaps||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
-    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length;
+  D.zapResumo = contaZapResumo(r.zaps);
   // só guarda o que é da segunda leva (a primeira já está em _bruto1)
   D._bruto2 = Object.fromEntries(Object.keys(CARGA_2).map(k=>[k, r[k]]));
 }
@@ -9696,6 +9730,8 @@ function tituloLista(rot){
   else h.textContent = rot;
 }
 
+function contaZapResumo(zs){ return (zs||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
+    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length; }
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],
@@ -18273,7 +18309,8 @@ const chipSetor = s => `<span class="zap-setor" style="color:${esc(s.cor)}">${es
 
 function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
 
-async function renderWhats(){
+let zapAbaAuto = false;   // auditoria 23.11 · ao entrar, Novas vazia abre Pendentes, onde está o que o número do menu conta
+async function renderWhats(){ zapAbaAuto = true;
   tituloLista("💬 WhatsApp");
   document.getElementById("sub-lista").textContent=
     "As conversas do escritório. Quem responde assume a conversa — e o robô se cala na hora.";
@@ -18399,6 +18436,7 @@ const ZIC = {
   relogio:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
   seta:'<path d="M4 12h13m-4-5 5 5-5 5"/>',
   ok:'<path d="m5 12 5 5 9-10"/>',
+  carta:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="m3 8 9 6 9-6"/>',
   mais:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
   clipe:'<path d="m20 11-8.5 8.5a5 5 0 0 1-7-7L13 4a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4L14 7.6"/>',
   frases:'<path d="M5 5h14v10H9l-4 4z"/>',
@@ -18475,6 +18513,10 @@ function pintarListaZap(){
                        : f==="retornos" ? !!retornoDe(c) : aberta(c);
   const q = dsa(zapBusca.trim()), qd = zapBusca.replace(/\D/g,"");
   const visiveis = zapConvs.filter(zapVisivel);
+  // a conversa lida sai das Novas: o número do menu acompanha, em vez de ficar o da carga
+  if(zapAbaAuto && zapConvs.length){ zapAbaAuto = false;
+    if(zapFiltro==="novas" && !visiveis.some(c=>naAba("novas",c)) && visiveis.some(c=>naAba("sem",c))) zapFiltro = "sem"; }
+  const nRes = contaZapResumo(visiveis); if(nRes!==D.zapResumo){ D.zapResumo = nRes; montarSidebar(); marcarBarraCel(); }
   // F410 · com texto na busca, procura em todas as filas, encerradas inclusive (pedido do Paulo de 05.11.2026)
   const buscando = q.length>=2 || qd.length>=4;
   let cs = visiveis.filter(c=>(buscando || naAba(zapFiltro,c))
@@ -18525,7 +18567,7 @@ function pintarListaZap(){
            </span></details></div>
        ${zapComProblema()?`<button class="zap-estado ruim zl-faixa" onclick="abrirConexaoZap()" title="conexão do WhatsApp: ${esc(p.txt)}"><i style="background:${p.cor}"></i><span>${esc(p.txt)}</span><b>${cfgApp("zap_qr")?"Ler QR code":"Corrigir conexão"}</b></button>`:""}
        <label class="zl-busca">${zic("busca")}<input type="search" id="zl-busca" value="${esc(zapBusca)}"
-         placeholder="Buscar em todas: nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
+         placeholder="Nome, telefone ou mensagem" aria-label="Buscar em todas as conversas"></label>
        <div class="zl-filas${filtros.length>4?" cinco":""}" role="tablist" aria-label="Filas" style="grid-template-columns:repeat(${filtros.length},minmax(0,1fr))">${filtros.map(([f,r])=>{
           const n = visiveis.filter(c=>naAba(f,c)).length;
           return `<button role="tab" aria-selected="${zapFiltro===f}" class="${zapFiltro===f?"on":""} ${f}" data-zf="${f}">${r}${n?` <span class="n">${n}</span>`:""}</button>`;
@@ -18899,7 +18941,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            ${pode&&!fim?`<button class="zt-btn" onclick="iaZap('rascunho')" title="a IA escreve uma resposta no campo; confira antes de enviar" aria-label="Rascunho">✨<span class="lbl">Rascunho</span></button>`:""}`:""}
            ${fim||!pode?"":`<button class="zt-btn zt-trans" onclick="transferirConversa()" title="transferir para setor ou pessoa" aria-label="Transferir">${zic("seta")}<span class="lbl">Transferir</span></button>`}
            ${fim||pode||!deOutro?"":`<button class="zt-btn zt-trans" onclick="pedirTransferencia()" title="pedir a ${esc(at.nome)} e aos gestores que transfiram a conversa" aria-label="Pedir transferência">${zic("seta")}<span class="lbl">Pedir</span></button>`}
-           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}" aria-label="${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}"><span class="lbl">${c.nao_lidas?"Lida":"Desler"}</span></button>
+           <button class="zt-btn zt-desler" onclick="marcarNaoLida()" title="${c.nao_lidas?"Marcar como lida, sem responder":"Marcar como não lida"}" aria-label="${c.nao_lidas?"Marcar como lida":"Marcar como não lida"}">${zic("carta")}<span class="lbl">${c.nao_lidas?"Lida":"Desler"}</span></button>
            ${pode?`<button class="zt-btn pri zt-fim" aria-label="${fim?"Reabrir":"Encerrar"}" onclick="${fim?"reabrirConversa()":"encerrarConversa()"}">${fim?"Reabrir":`${zic("ok")}<span class="lbl">Encerrar</span>`}</button>`:""}
            <details class="zt-mais">
              <summary class="zt-btn ic" aria-label="Mais ações">${zic("mais")}</summary>
@@ -45272,7 +45314,7 @@ function faixaTrilha(k){
       <button class="tr-x-bt" aria-label="fechar" title="fechar" onclick="trEscolher('${k.id}','${rito}',null)">✕</button></span></div>`;
   }
   const leg = trAjuda ? `<div class="tr-leg" id="tr-leg"><span><i class="tr-lf"></i>cumprida</span><span><i class="tr-la"></i>atual</span><span><i class="tr-lv"></i>a vir</span>
-      <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i><s>não houve</s></span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
+      <span><i class="tr-lo"></i>só se houver</span><span><i class="tr-ln"></i>não houve</span>${ver==="judicial"?`<span><i class="tr-lx"></i>execução</span>`:""}
       <span>A data vem da anotação que cumpriu a etapa. Grupos cumpridos ficam recolhidos; clique para abrir.</span></div>` : "";
   // F243 · a faixa compacta (pedido do Paulo, 18.10.2026): as fases numa linha e as etapas logo abaixo; o nome da trilha, o
   // tipo de processo, a legenda e "esta fase não houve" ficam no "?", que ganha um ponto quando o tipo pede confirmação
