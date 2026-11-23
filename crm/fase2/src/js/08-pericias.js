@@ -208,7 +208,7 @@ function linhasCfgModelos(ms){
       <input data-m="nome" aria-label="nome do modelo" value="${esc(m.nome)}" style="width:180px" onchange="mudouModelo()">
       <textarea data-m="etapas" aria-label="etapas, uma por linha" rows="${Math.max(3, m.etapas.length)}" style="flex:1;min-width:220px" onchange="mudouModelo()">${esc(m.etapas.join("\n"))}</textarea>
       <button class="btn-mini" onclick="this.closest('.cfg-modelo').remove();mudouModelo()" aria-label="apagar o modelo" title="apagar o modelo">✕</button></div>`).join("")
-    + `<button class="btn-mini" onclick="novoModelo()">Modelo<span class="sr-only"> novo</span></button>`;
+    + `<button class="btn-mini" onclick="novoModeloEtapa()">Modelo<span class="sr-only"> novo</span></button>`;
 }
 function modelosDaTela(){
   return [...document.querySelectorAll(".cfg-modelo")].map(l=>({nome:(l.querySelector('[data-m="nome"]').value||"").trim(),
@@ -217,7 +217,7 @@ function modelosDaTela(){
 async function mudouModelo(){
   try{ await guardarCfgApp("modelos_etapas", JSON.stringify(modelosDaTela().filter(m=>m.nome && m.etapas.length))); aviso("Modelos guardados", false); }catch(e){ aviso("Não consegui guardar"); }
 }
-function novoModelo(){ const cx = document.getElementById("cfg-modelos"); if(cx) cx.innerHTML = linhasCfgModelos([...modelosDaTela(), {nome:"", etapas:[]}]); }
+function novoModeloEtapa(){ const cx = document.getElementById("cfg-modelos"); if(cx) cx.innerHTML = linhasCfgModelos([...modelosDaTela(), {nome:"", etapas:[]}]); }
 
 // ── F445 · as ideias do Trello, segunda leva (aprovadas pelo Paulo em 08.11.2026) ─────────
 // ▦ Tabela: os casos abertos numa planilha, com ordem pelo cabeçalho, filtro de texto e de fase, e a etapa (só do
