@@ -1098,3 +1098,6 @@ No celular, dentro do campo ficam apenas emoji e anexo; Ditar, Corrigir, Sugerir
 
 ## F682 · Auditoria visual: 13 correções de leitura (23.11.2026)
 Pedido do Paulo após a auditoria de 23.11 (relatório em project-files/auditoria-visual-2311). Caso no celular: o nome ocupa a linha inteira (até duas linhas), os flutuantes se recolhem no ⋯ acima do campo de escrever e o ⋯ do cartão do benefício não encosta na borda. WhatsApp: cabeçalho da conversa no computador com nome e telefone inteiros (botões descem quando falta espaço), botão Desler com ícone, número do menu recalculado quando a conversa é lida e entrada em Pendentes quando Novas está vazia, Sugestões e ⚡ no ⋯ e a agenda no canto, campo de escrever do computador como o do celular (emoji e anexo; o resto no +), busca "Nome, telefone ou mensagem", filtros de 40 px no celular. Caso no computador: microfone não cobre "Lembrete", etapa que não houve sem risco, hora da anotação ao lado do autor. Meu Dia: coluna do nome mais larga.
+
+## F683 · Aviso de férias sem cabeçalho e sem resposta a agradecimento (23.11.2026)
+- `zap_offline_gatilho` (migração f683): nas férias o aviso sai sem "*Nome:*", porque o texto fala do titular em terceira pessoa; mensagem que é apenas agradecimento (zap_conf_agradece) não recebe aviso nem abre cobertura. Testes f10 e f11 em testes/zap_ferias.sql.

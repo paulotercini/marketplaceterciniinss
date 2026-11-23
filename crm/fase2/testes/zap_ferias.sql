@@ -54,6 +54,17 @@ insert into r select 'f9 sem cobertura: sem aviso e sem repasse',
   not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v))
   and (select cobertura is null from zap_conversas where id = (select id from v));
 
+-- F683 · o aviso sai sem o cabeçalho do titular, e o simples agradecimento não o recebe
+update colaboradores set assinatura_zap = 'Titular t' where inicial = 'X';
+delete from v; insert into v select zap_abrir('5500000000014', 'Cliente Teste');
+update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'Obrigada!' from v;
+insert into r select 'f10 agradecimento: sem aviso',
+  not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'tenho uma dúvida do processo' from v;
+insert into r select 'f11 aviso sem o cabeçalho do titular',
+  exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v) and texto not like '*%');
+
 -- retorno automático
 update colaboradores set zap_ferias_ate = now() - interval '1 minute' where inicial = 'X';
 select zap_ferias_fim();
