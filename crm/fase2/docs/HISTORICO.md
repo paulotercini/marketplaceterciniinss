@@ -1115,3 +1115,6 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 
 ## F689 · IA não encaminha ao advogado em férias (23.11.2026)
 - zap_plantao: o contexto da IA lista quem está em férias (colaboradores.zap_ferias_ate) e manda encaminhar à substituta (zap_cobre_id), sem oferecer as datas do ausente e sem mencionar férias (a IA disse "Vou encaminhar a sua pergunta ao Dr. Paulo" em 23.11). Teste em testes/funcoes/zap_plantao.test.mjs.
+
+## F690 · IA indica um destino só ao passar adiante (23.11.2026)
+- zap_plantao: o exemplo "Vou encaminhar ao Dr. Paulo" saiu das regras; ao passar adiante a IA diz em uma frase que um colaborador vai verificar e responder, e nomeia o advogado só quando a conversa já é com ele (a IA disse "Vou encaminhar ao Dr. Paulo" e, na frase seguinte, que um colaborador responderia).
