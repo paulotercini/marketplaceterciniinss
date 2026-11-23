@@ -82,6 +82,7 @@ export function primeiraPessoa(a?: Atendente | null) {
 
 type Caso = { beneficio: string | null; fase: string; etapa: string | null };
 export type Contexto = {
+  ferias?: { nome: string; ate: string; cobre: string | null }[];   // F689 · advogados em férias no WhatsApp
   conversa_id?: string; contato: string; relacao?: string | null; advogado: string | null; advogados: string[] | null; modo: string; respostas: number;
   interativa?: boolean; horario: boolean; agenda: boolean; agora: string; mensagens: Msg[]; instrucoes?: string; pagamento?: string;
   atendente?: Atendente | null;
@@ -491,13 +492,16 @@ export function retomada(msgs: Msg[] = []) {
 }
 
 export function contexto(x: Contexto) {
+  // F689 · advogado em férias: a IA não o nomeia como quem vai responder nem oferece as datas dele (Paulo, 23.11.2026)
+  const ferias = (x.ferias || []).map((f) => `${f.nome} está ausente do WhatsApp até ${f.ate}: não diga que vai encaminhar a ele nem que ele vai responder ` +
+    `e não ofereça as datas dele; ${f.cobre ? `encaminhe a ${f.cobre}` : "encaminhe à equipe"}. Não mencione férias.\n`).join("");
   const advs = (x.advogados || []).join(", ") || "a equipe";
   const ficha = !x.cliente ? "O número não está ligado a nenhuma ficha de cliente do escritório."
     : `O número é de ${x.cliente.nome}, cliente do escritório.` + (x.cliente.mesmo_telefone
       ? ` Casos abertos: ${x.cliente.casos.map((k) => `${k.beneficio || "caso"} (fase ${k.fase}${k.etapa ? `, etapa: ${k.etapa}` : ""})`).join("; ") || "nenhum"}.`
       : " O número não é o telefone principal da ficha: não fale da situação de processo nenhum; os atendimentos agendados o Agendador consulta normalmente.")
       + (x.relacao && x.contato ? ` Quem escreve é ${x.contato} (${x.relacao} de ${x.cliente.nome}): chame pelo nome de quem escreve, e não pelo nome da ficha. Refira-se a ${x.cliente.nome.split(" ")[0]} apenas pelo primeiro nome, sem "senhor", "senhora" ou "dona".` : "");
-  return `Agora: ${x.agora} (horário de Brasília). ${x.horario ? "O escritório está no horário de atendimento." : "O escritório está fora do horário de atendimento."}\n` +
+  return ferias + `Agora: ${x.agora} (horário de Brasília). ${x.horario ? "O escritório está no horário de atendimento." : "O escritório está fora do horário de atendimento."}\n` +
     `Modo: ${x.interativa ? "conversa na hora (ninguém da equipe está na conversa)" : "plantão (a equipe está na conversa e ainda não respondeu)"}.\n` +
     `Advogados: ${advs}. As estagiárias (Ingrid, Meissa) também respondem, mas quem é avisado é o advogado.\n` +
     `Advogado indicado para esta conversa: ${x.advogado || "a equipe"}.\n${ficha}\n` +
@@ -790,6 +794,19 @@ async function atendenteDe(conversa?: string | null): Promise<(Atendente & { off
   const ia = c?.[0]?.plantao?.offline_ia;
   const iaAgenda = !!(k?.zap_offline_desde && ia && new Date(ia) >= new Date(k.zap_offline_desde));
   return k ? { nome: k.nome, cargo: k.cargo, offline: !!k.zap_offline_desde, iaAgenda } : null;
+}
+// F689 · quem está em férias agora e quem o cobre
+async function emFerias() {
+  const h = { apikey: SERVICO, Authorization: `Bearer ${SERVICO}` };
+  const ks = await (await fetch(`${URL_SB}/rest/v1/colaboradores?ativo=eq.true&select=id,nome,assinatura_zap,zap_ferias_ate,zap_cobre_id`, { headers: h })).json();
+  return feriasDe(Array.isArray(ks) ? ks : []);
+}
+export function feriasDe(ks: Record<string, any>[], agora = new Date()) {
+  const nome = (k?: Record<string, any>) => String(k?.assinatura_zap || k?.nome || "").replace(/:$/, "").trim();
+  return ks.filter((k) => k.zap_ferias_ate && new Date(k.zap_ferias_ate) > agora).map((k) => {
+    const c = ks.find((o) => o.id === k.zap_cobre_id);
+    return { nome: nome(k), ate: new Date(k.zap_ferias_ate).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" }), cobre: c ? nome(c) : null };
+  });
 }
 // F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência e na agenda (F521)
 
@@ -1590,6 +1607,7 @@ if (typeof Deno !== "undefined") {
       const x = await rpc("zap_plantao_pegar", { p_msg: msg });
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
+      x.ferias = await emFerias().catch(() => []);
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       if (x.pericia) x.pericia.atendido = await atendidoHaPouco(x.cliente?.nome).catch(() => null);   // F661

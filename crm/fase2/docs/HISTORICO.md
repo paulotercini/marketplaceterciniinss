@@ -1112,3 +1112,6 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 
 ## F688 · Aviso de férias não interrompe atendimento de colega (23.11.2026)
 - `zap_offline_gatilho` (migração f688): nas férias, conversa em que outro colaborador escreveu nas últimas 12 horas não recebe o aviso, não abre repasse e não chama a IA pelo Offline (a IA respondia ao pedido de dia e horário depois de a Dra. Amanda escrever). Teste f12 em testes/zap_ferias.sql.
+
+## F689 · IA não encaminha ao advogado em férias (23.11.2026)
+- zap_plantao: o contexto da IA lista quem está em férias (colaboradores.zap_ferias_ate) e manda encaminhar à substituta (zap_cobre_id), sem oferecer as datas do ausente e sem mencionar férias (a IA disse "Vou encaminhar a sua pergunta ao Dr. Paulo" em 23.11). Teste em testes/funcoes/zap_plantao.test.mjs.
