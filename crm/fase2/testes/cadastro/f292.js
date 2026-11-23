@@ -86,7 +86,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("a etapa do caso aparece na linha da ⭐ Importante", /Aguardando análise/.test(await p.textContent(`.ag-linha[data-cli="${cA.id}"]`)));
 
   // 2 · a data escrita na anotação do despacho escolhe a volta
-  await p.click(`.ag-linha[data-cli="${cA.id}"] .desp-circ`);
+  // F684 · o círculo saiu da linha; o despacho segue pelo ⋯ do caso
+  conf("F684 · a linha não tem mais o círculo de concluir", !(await p.$(`.ag-linha[data-cli="${cA.id}"] .desp-circ`)));
+  await p.evaluate(id => despachar(id, new MouseEvent("click")), kA.id);
   await p.waitForSelector(".desp-datas");
   await p.fill("#desp-nota", `Pedido de relatório entregue. Aguardar até ${br5(alvo)}.`);
   await p.waitForTimeout(150);

@@ -4247,6 +4247,79 @@ html[data-tema="v10"] .app.celular .linha-caso.lc5.lc5.lc5 .lc5-cab{padding-righ
 html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.autor-nome+.tl-hora.tl-hora{position:static;width:auto;text-align:left;margin-left:8px}
 /* 2 · caso no celular: o calendário recua da coluna dos flutuantes (F307), que fica como está */
 html[data-tema="v10"] .app.celular .caso-esq .ma{padding-right:56px}
+/* F684 · melhorias de design de 23.11.2026 (dez skills de design; pedido do Paulo) */
+:root{--borda-campo:#8C8A84;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-pill:999px}
+/* 1 · a inicial do contato do WhatsApp é quadrada, como em todo o CRM (F325); a foto segue redonda */
+html[data-tema="v10"] span.zap-av{border-radius:25%}
+html[data-tema="v10"] .fchip.fchip-ini{border-radius:var(--r-md)}
+/* 2 · espaço no fim da rolagem: a última linha sobe acima dos flutuantes, que ficam onde estão */
+html[data-tema="v10"] #conteudo-meio::after{content:"";display:block;height:150px}
+html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
+html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
+/* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
+@container (min-width:721px){
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 64px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 11px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
+  html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
+  html[data-tema="v10"] .ag-th > span:nth-child(5){grid-column:5}
+}
+html[data-tema="v10"] .ag-selos .ag-tipo:not(.pre-caso,.ag-velha,.ag-susp,.ag-etapa){border-color:transparent;background:var(--placa);color:var(--cinza)}
+/* 4 · campo vazio do Cadastro em cinza tracejado; o vermelho fica no contador e nos chips */
+.cad-preencher{background:#fff;border:1px dashed var(--borda-campo);color:var(--cinza)}
+.cad-preencher:hover{border-color:var(--azul);color:var(--azul)}
+.cad-preencher:focus-visible{outline-color:var(--azul)}
+/* 5 · verde do WhatsApp com contraste 5:1 (antes 3,09:1 e 1,98:1) */
+.zap-tela.wa .zap-conv.nova .l1 .hora{color:#15803D}
+.zap-tela.wa .zap-conv .bolha{background:#15803D}
+/* 6 · Quadro: coluna vazia estreita, avatar à direita da data, "Hoje" em âmbar, encaixe ao deslizar no celular */
+.coluna:not(:has(.kcard)){flex:0 0 150px;min-width:150px}
+.kcard .meta{align-items:center}
+.kcard .meta .avatar{margin-left:auto}
+.chip.prazo.hoje{color:var(--prox)}
+.app.celular .kanban{scroll-snap-type:x mandatory;scroll-padding-inline:12px;overscroll-behavior-x:contain}
+.app.celular .coluna{flex:0 0 84%;scroll-snap-align:start}
+.app.celular .coluna:not(:has(.kcard)){flex:0 0 auto;min-width:140px}
+/* 7 · Recebimentos: três números lado a lado */
+.rc-tot{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:4px 0 14px}
+.rc-tot>span{display:flex;flex-direction:column;gap:2px;padding:10px 12px;background:#fff;border:1px solid var(--borda);border-radius:var(--r-md)}
+.rc-tot small{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza-claro)}
+.rc-tot b{font:600 18px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--texto)}
+.rc-tot b.venc{color:var(--venc-tinta,#B3261E)}
+.rc-vazio{padding:16px;background:#fff;border:1px solid var(--borda);border-radius:var(--r-md)}
+/* 8 · Caso: faixa do tempo com margem, um anel só na fase aberta, rótulos de 11px, selo da espécie no formato das listas */
+html[data-tema="v10"] .ltc-faixa .ltc{padding:12px 16px 4px}
+html[data-tema="v10"] .ltc-a .ltc-r{outline:0}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b.jn-ver .ltc-r{box-shadow:0 0 0 2px var(--c)}
+html[data-tema="v10"] .ltc-bar{align-items:flex-start}
+html[data-tema="v10"] .ltc-k,html[data-tema="v10"] .ltc-n,html[data-tema="v10"] .app .tr-compacta .ltc .jn-nome{font-size:11px;letter-spacing:.04em}
+html[data-tema="v10"] .ltc-a .jn-nome{color:var(--c);font-weight:600}
+html .linha-caso.lc5.lc5.lc5 .lc5-esp{border-radius:var(--r-sm);font-family:var(--f-mono)}
+/* 9 · a ⭐ da ficha na cor das listas (o rosa estava fora da paleta) */
+.det-imp.on{color:var(--azul);border-color:var(--azul);background:var(--azul-fundo)}
+/* 11 · contorno dos campos com 3:1 e texto das vagas num tom mais escuro de cada cor (azul, verde sálvia e amarelo mantidos) */
+.pop-c input,.pop-c select,.pop-c textarea,.aq-campo input,.aq-inp,.ad-q-anot textarea,.atend-docs input,.atend-conv-nova textarea{border-color:var(--borda-campo)}
+.aq-vaga.p-paulo.t002,.zag-vaga.p-paulo.t002,.aq .aq-ev.p-paulo.t002{--tinta:#2F6FB8}
+.aq-vaga.p-marcos.t002,.zag-vaga.p-marcos.t002,.aq .aq-ev.p-marcos.t002{--tinta:#2E7D4A}
+.aq-vaga.p-amanda.t002,.zag-vaga.p-amanda.t002,.aq .aq-ev.p-amanda.t002{--tinta:#92690A}
+.aq .aq-ev.aq-ev-vaga[class*=" t00"],.aq-vaga[class*=" t00"],.aq-vaga[class*=" t00"] b,.zag-vaga{color:var(--tinta,var(--tom))}
+/* 13 · celular: resposta ao toque, Reagendar com área de toque maior, títulos de 24px e sem a borda do painel do computador */
+.app.celular .cartao{transition:background-color 100ms ease-out}
+.app.celular .cartao:active{background:var(--lateral-hover,#EFEEEB)}
+.app.celular .pl-grupo h3.secao .reag-bt{position:relative}
+.app.celular .pl-grupo h3.secao .reag-bt::after{content:"";position:absolute;inset:-8px -6px}
+html[data-tema="v10"] .app.celular .meio-topo h1,html[data-tema="v10"] .app.celular .meio.ag-v10 .meio-topo h1{font-size:24px;line-height:1.15;letter-spacing:-.01em}
+.app.celular .detalhe{border-left:0;background:var(--fundo)}
+/* 14 · sem faixa lateral colorida: borda fina inteira; o vencido se marca pela cor da data */
+.zp-rep{border:1px solid var(--borda);border-radius:10px}
+.kq .kcard.venceu{border-left:1px solid var(--borda)}
+.kq .kcard.venceu .chip.prazo,.kq .kcard.venceu time{color:var(--venc-tinta,#B3261E)}
+/* 9 · cabeçalho da ficha: CPF, Meu INSS, Responsável e situação começam na mesma linha */
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2,html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .resumo-lado{align-items:flex-start}
+/* 13 · celular: INSS, CRPS e Judicial no mesmo controle segmentado de Principal e Mais dados (as cores das abas ficam) */
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{gap:2px;padding:3px;background:var(--placa);border:0;border-radius:10px}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos > button{border-radius:7px}
 </style>
 </head>
 

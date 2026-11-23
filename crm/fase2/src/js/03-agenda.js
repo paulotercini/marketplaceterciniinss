@@ -725,7 +725,7 @@ function cartaoCliente(cli, casosMostrar){
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
-    <span class="ag-slot">${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||kP||ks[0])}</span>
+    <span class="ag-slot"></span>
     <span class="acoes">${ks[0]?`
       <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0].id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
       <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0].id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:estrelaDaLinha(null, null, cli)}</span>
@@ -736,7 +736,7 @@ function cartaoCliente(cli, casosMostrar){
   // linha. Era um convite falso, e ocupava a primeira coisa que o olho
   // encontra. Sem ele, todos os nomes começam na mesma coluna.
   return `<div class="cartao" data-cli="${cli.id}">
-    ${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||ks[0])}
+    ${/* F684 · o círculo de concluir por hoje saiu da linha (pedido do Paulo, 23.11.2026); fica no ⋯ do caso e na linha estendida */""}
     ${/* F22 · quem está com o caso, visível sem abrir: uma fita na borda
          esquerda com a cor de cada colaborador atribuído (até três). O
          avatar da direita continua; a fita é o que o olho varre na lista. */""}

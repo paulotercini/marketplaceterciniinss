@@ -53,7 +53,7 @@ const RETRATO = process.env.RETRATO_DIR;
   const chips = await p.$$eval(".idf-chip", bs => bs.map(b => ({ t: b.textContent.trim(), tag: b.tagName })));
   // F236 · uma régua só: a Identificação conta as lacunas da peça (rua, bairro, cidade, UF e CEP), num chip só de endereço
   conf(`cliente sem endereço: 50% completo, 5 lacunas e um chip (${JSON.stringify(falta)})`,
-    /Cadastro 50% completo · 5 lacunas nas peças/.test(comp) && falta.length === 5 && chips.length === 1 && chips[0].t === "endereço" && chips[0].tag === "BUTTON");
+    /Cadastro 50% completo · faltam 5 dados para as peças/.test(comp) && falta.length === 5 && chips.length === 1 && chips[0].t === "endereço" && chips[0].tag === "BUTTON");
   conf("a barra diz 50", (await p.getAttribute('.idf-comp [role="progressbar"]', "aria-valuenow")) === "50");
   const cartoes = await p.$$eval(".idf-card:not(.idf-transc):not(.idf-atend)", cs => cs.map(c => ({ h: c.querySelector("h3").textContent,
     rots: [...c.querySelectorAll(".cad-campo > label")].map(l => l.textContent.replace(/\s+/g, " ").trim()) })));
@@ -81,10 +81,10 @@ const RETRATO = process.env.RETRATO_DIR;
     const l = x.querySelector("label").getBoundingClientRect(), v = x.querySelector(".cad-v").getBoundingClientRect();
     return { lado: v.left > l.right - 1, mesmaLinha: Math.abs(l.top + l.height / 2 - (v.top + v.height / 2)) < 12 }; });
   conf("cada campo é uma linha: rótulo à esquerda, valor à direita", linha.lado && linha.mesmaLinha);
-  conf("campo em branco: botão preencher, tracejado e vermelho-claro",
+  conf("campo em branco: botão preencher, tracejado e branco (F684)",
     await p.evaluate(() => { const b = document.querySelector("#cad-nome_mae .cad-preencher");
       if (!b || b.tagName !== "BUTTON") return false; const st = getComputedStyle(b);
-      return st.borderStyle === "dashed" && st.backgroundColor === "rgb(253, 236, 236)" && b.getBoundingClientRect().height >= 40; }));
+      return st.borderStyle === "dashed" && st.backgroundColor === "rgb(255, 255, 255)" && b.getBoundingClientRect().height >= 40; }));
   conf("telefone com a marca WhatsApp, abrir conversa e + telefone",
     await p.evaluate(() => { const t = document.querySelector(".idf-card .cad-tel"); return /WhatsApp/.test(t.textContent) && /abrir conversa/.test(t.textContent)
       && /telefone/.test(document.querySelector('.idf-card button[onclick^="novoTelefone"]').textContent); }));
@@ -100,7 +100,7 @@ const RETRATO = process.env.RETRATO_DIR;
   const comp2 = await p.textContent(".idf-comp");
   const chips2 = await p.$$eval(".idf-chip", bs => bs.map(b => b.textContent.trim()));
   conf(`cliente vazio: 10% (9 lacunas) e cinco chips (${chips2.join(", ")})`,
-    /Cadastro 10% completo · 9 lacunas nas peças/.test(comp2) && chips2.join("|") === "CPF|nascimento|estado civil|profissão|endereço");
+    /Cadastro 10% completo · faltam 9 dados para as peças/.test(comp2) && chips2.join("|") === "CPF|nascimento|estado civil|profissão|endereço");
   await p.click('.idf-chip[data-falta="cpf"]');
   await p.waitForTimeout(300);
   conf("o chip CPF abre o editor do CPF", !!(await p.$("#campo-cpf #ed-campo")));

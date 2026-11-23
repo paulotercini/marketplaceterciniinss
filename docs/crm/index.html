@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta name="theme-color" content="#EDEFF2">
+<meta name="theme-color" content="#F8F8F6">
 <script>/* 11.92 · VCE-06: manifesto e ícone da tela de início, só no endereço publicado (no arquivo solto e nas provas eles não existem) */
 if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icone-180.png"><link rel="icon" href="icone-192.png"><meta name="apple-mobile-web-app-title" content="AdvPrev">');</script>
 <title>AdvPrev</title>
@@ -7272,6 +7272,79 @@ html[data-tema="v10"] .app.celular .linha-caso.lc5.lc5.lc5 .lc5-cab{padding-righ
 html[data-tema="v10"] body:not(.zap-aberto) .app:not(.celular) .painel[data-p="2"] .timeline .dia-itens>li.tl-card>.texto>.tl-cab>.autor-nome+.tl-hora.tl-hora{position:static;width:auto;text-align:left;margin-left:8px}
 /* 2 · caso no celular: o calendário recua da coluna dos flutuantes (F307), que fica como está */
 html[data-tema="v10"] .app.celular .caso-esq .ma{padding-right:56px}
+/* F684 · melhorias de design de 23.11.2026 (dez skills de design; pedido do Paulo) */
+:root{--borda-campo:#8C8A84;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-pill:999px}
+/* 1 · a inicial do contato do WhatsApp é quadrada, como em todo o CRM (F325); a foto segue redonda */
+html[data-tema="v10"] span.zap-av{border-radius:25%}
+html[data-tema="v10"] .fchip.fchip-ini{border-radius:var(--r-md)}
+/* 2 · espaço no fim da rolagem: a última linha sobe acima dos flutuantes, que ficam onde estão */
+html[data-tema="v10"] #conteudo-meio::after{content:"";display:block;height:150px}
+html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
+html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
+/* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
+@container (min-width:721px){
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 64px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 11px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
+  html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
+  html[data-tema="v10"] .ag-th > span:nth-child(5){grid-column:5}
+}
+html[data-tema="v10"] .ag-selos .ag-tipo:not(.pre-caso,.ag-velha,.ag-susp,.ag-etapa){border-color:transparent;background:var(--placa);color:var(--cinza)}
+/* 4 · campo vazio do Cadastro em cinza tracejado; o vermelho fica no contador e nos chips */
+.cad-preencher{background:#fff;border:1px dashed var(--borda-campo);color:var(--cinza)}
+.cad-preencher:hover{border-color:var(--azul);color:var(--azul)}
+.cad-preencher:focus-visible{outline-color:var(--azul)}
+/* 5 · verde do WhatsApp com contraste 5:1 (antes 3,09:1 e 1,98:1) */
+.zap-tela.wa .zap-conv.nova .l1 .hora{color:#15803D}
+.zap-tela.wa .zap-conv .bolha{background:#15803D}
+/* 6 · Quadro: coluna vazia estreita, avatar à direita da data, "Hoje" em âmbar, encaixe ao deslizar no celular */
+.coluna:not(:has(.kcard)){flex:0 0 150px;min-width:150px}
+.kcard .meta{align-items:center}
+.kcard .meta .avatar{margin-left:auto}
+.chip.prazo.hoje{color:var(--prox)}
+.app.celular .kanban{scroll-snap-type:x mandatory;scroll-padding-inline:12px;overscroll-behavior-x:contain}
+.app.celular .coluna{flex:0 0 84%;scroll-snap-align:start}
+.app.celular .coluna:not(:has(.kcard)){flex:0 0 auto;min-width:140px}
+/* 7 · Recebimentos: três números lado a lado */
+.rc-tot{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:4px 0 14px}
+.rc-tot>span{display:flex;flex-direction:column;gap:2px;padding:10px 12px;background:#fff;border:1px solid var(--borda);border-radius:var(--r-md)}
+.rc-tot small{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--cinza-claro)}
+.rc-tot b{font:600 18px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--texto)}
+.rc-tot b.venc{color:var(--venc-tinta,#B3261E)}
+.rc-vazio{padding:16px;background:#fff;border:1px solid var(--borda);border-radius:var(--r-md)}
+/* 8 · Caso: faixa do tempo com margem, um anel só na fase aberta, rótulos de 11px, selo da espécie no formato das listas */
+html[data-tema="v10"] .ltc-faixa .ltc{padding:12px 16px 4px}
+html[data-tema="v10"] .ltc-a .ltc-r{outline:0}
+html[data-tema="v10"] .app .tr-compacta .ltc .jn-b.jn-ver .ltc-r{box-shadow:0 0 0 2px var(--c)}
+html[data-tema="v10"] .ltc-bar{align-items:flex-start}
+html[data-tema="v10"] .ltc-k,html[data-tema="v10"] .ltc-n,html[data-tema="v10"] .app .tr-compacta .ltc .jn-nome{font-size:11px;letter-spacing:.04em}
+html[data-tema="v10"] .ltc-a .jn-nome{color:var(--c);font-weight:600}
+html .linha-caso.lc5.lc5.lc5 .lc5-esp{border-radius:var(--r-sm);font-family:var(--f-mono)}
+/* 9 · a ⭐ da ficha na cor das listas (o rosa estava fora da paleta) */
+.det-imp.on{color:var(--azul);border-color:var(--azul);background:var(--azul-fundo)}
+/* 11 · contorno dos campos com 3:1 e texto das vagas num tom mais escuro de cada cor (azul, verde sálvia e amarelo mantidos) */
+.pop-c input,.pop-c select,.pop-c textarea,.aq-campo input,.aq-inp,.ad-q-anot textarea,.atend-docs input,.atend-conv-nova textarea{border-color:var(--borda-campo)}
+.aq-vaga.p-paulo.t002,.zag-vaga.p-paulo.t002,.aq .aq-ev.p-paulo.t002{--tinta:#2F6FB8}
+.aq-vaga.p-marcos.t002,.zag-vaga.p-marcos.t002,.aq .aq-ev.p-marcos.t002{--tinta:#2E7D4A}
+.aq-vaga.p-amanda.t002,.zag-vaga.p-amanda.t002,.aq .aq-ev.p-amanda.t002{--tinta:#92690A}
+.aq .aq-ev.aq-ev-vaga[class*=" t00"],.aq-vaga[class*=" t00"],.aq-vaga[class*=" t00"] b,.zag-vaga{color:var(--tinta,var(--tom))}
+/* 13 · celular: resposta ao toque, Reagendar com área de toque maior, títulos de 24px e sem a borda do painel do computador */
+.app.celular .cartao{transition:background-color 100ms ease-out}
+.app.celular .cartao:active{background:var(--lateral-hover,#EFEEEB)}
+.app.celular .pl-grupo h3.secao .reag-bt{position:relative}
+.app.celular .pl-grupo h3.secao .reag-bt::after{content:"";position:absolute;inset:-8px -6px}
+html[data-tema="v10"] .app.celular .meio-topo h1,html[data-tema="v10"] .app.celular .meio.ag-v10 .meio-topo h1{font-size:24px;line-height:1.15;letter-spacing:-.01em}
+.app.celular .detalhe{border-left:0;background:var(--fundo)}
+/* 14 · sem faixa lateral colorida: borda fina inteira; o vencido se marca pela cor da data */
+.zp-rep{border:1px solid var(--borda);border-radius:10px}
+.kq .kcard.venceu{border-left:1px solid var(--borda)}
+.kq .kcard.venceu .chip.prazo,.kq .kcard.venceu time{color:var(--venc-tinta,#B3261E)}
+/* 9 · cabeçalho da ficha: CPF, Meu INSS, Responsável e situação começam na mesma linha */
+html[data-tema="v10"] .app:not(.celular) .det-topo .linha2,html[data-tema="v10"] .app:not(.celular) .det-topo .linha2 .resumo-lado{align-items:flex-start}
+/* 13 · celular: INSS, CRPS e Judicial no mesmo controle segmentado de Principal e Mais dados (as cores das abas ficam) */
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos{gap:2px;padding:3px;background:var(--placa);border:0;border-radius:10px}
+html[data-tema="v10"] .app.celular [data-cel-aba="casos"] .caso-dir > .sub-menu.menu-andamentos > button{border-radius:7px}
 </style>
 </head>
 
@@ -7285,7 +7358,7 @@ html[data-tema="v10"] .app.celular .caso-esq .ma{padding-right:56px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.27</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.28</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8936,7 +9009,8 @@ const dataQueCobra = ks => ks.map(k=>(agendaPorCaso().get(k.id)||{}).data || k.p
 function chipPrazo(prazo, motivo){
   if(!prazo) return "";
   const cls = prazo<hoje() ? "venc" : prazo===hoje() ? "hoje" : "ok";
-  return `<span class="chip prazo ${cls}"${motivo?` title="${esc(motivo)}"`:""}>🗓 ${prazo===hoje()?"Hoje":fmt(prazo)}</span>`;
+  // F684 · data curta, como nas listas (o ano só quando não é o corrente) e sem o emoji, que virava quadradinho
+  return `<span class="chip prazo ${cls}" title="${esc(motivo||fmt(prazo))}">${prazo===hoje()?"Hoje":prazo.slice(8,10)+"/"+prazo.slice(5,7)+(prazo.slice(0,4)===hoje().slice(0,4)?"":"/"+prazo.slice(2,4))}</span>`;
 }
 function diasAte(iso){ return Math.ceil((new Date(iso+"T12:00:00")-new Date(hoje()+"T12:00:00"))/864e5); }
 function chipExig(k){
@@ -11892,7 +11966,7 @@ function cartaoCliente(cli, casosMostrar){
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>
       `<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</span>
-    <span class="ag-slot">${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||kP||ks[0])}</span>
+    <span class="ag-slot"></span>
     <span class="acoes">${ks[0]?`
       <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0].id}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 3.2 4.5 5.4 4.5 10a4.5 4.5 0 0 1-9 0c0-2.3 1.2-3.7 2.2-4.8.4 1.6 1.2 2.6 2.3 2.8-.4-2.6-.6-5.4 0-8Z"/></svg></button>
       <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0].id}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9Z"/></svg></button>`:estrelaDaLinha(null, null, cli)}</span>
@@ -11903,7 +11977,7 @@ function cartaoCliente(cli, casosMostrar){
   // linha. Era um convite falso, e ocupava a primeira coisa que o olho
   // encontra. Sem ele, todos os nomes começam na mesma coluna.
   return `<div class="cartao" data-cli="${cli.id}">
-    ${(k0=>k0 && !ehPreCaso(k0) ? botaoDespacho(k0) : "")(ks.find(k=>k.importante)||ks[0])}
+    ${/* F684 · o círculo de concluir por hoje saiu da linha (pedido do Paulo, 23.11.2026); fica no ⋯ do caso e na linha estendida */""}
     ${/* F22 · quem está com o caso, visível sem abrir: uma fita na borda
          esquerda com a cor de cada colaborador atribuído (até três). O
          avatar da direita continua; a fita é o que o olho varre na lista. */""}
@@ -15873,7 +15947,7 @@ function renderAgendaV10(qual){
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
   const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
-  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Prazo</span></div>` : "")
+  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Tipo</span><span>Prazo</span></div>` : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
@@ -17392,7 +17466,7 @@ function renderQuadro(){
   const lim = (modo==="etapa"||modo==="responsavel") ? quadroLim() : 0, atr = {fase:"fase", etapa:"etapa", responsavel:"colab"}[modo];
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="kanban">`+colunasDoQuadro(modo).map(([id,rot,ks])=>
-      `<div class="coluna${lim && ks.length>lim?" acima":""}" ${atr?`data-${atr}="${esc(id)}"`:""}><h4>${esc(rot)}<span${lim && ks.length>lim?` title="acima do limite de ${lim}"`:""}>${ks.length}</span></h4>
+      `<div class="coluna${lim && ks.length>lim?" acima":""}" ${atr?`data-${atr}="${esc(id)}"`:""}><h4>${esc(semEmoji(rot))}<span${lim && ks.length>lim?` title="acima do limite de ${lim}"`:""}>${ks.length}</span></h4>
         ${ks.slice(0,60).map(kcardCaso).join("")}
         ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`).join("")+`</div>`;
   document.querySelectorAll("[data-agrupar]").forEach(b=>b.onclick=()=>{ guardar("crm_quadro_agrupar", b.dataset.agrupar); renderQuadro(); });
@@ -18123,7 +18197,7 @@ function renderQuadroN(n){
   let html = chipsQuadro();
   if(n===1){
     html += `<div class="kanban kq">`+hz.map(([id,rot,f])=>{ const g=ps.filter(p=>f(p.data));
-      return `<div class="coluna" data-hz="${id}"><h4>${rot}<span>${g.length}</span></h4>${g.map(kcardProv).join("")}</div>`; }).join("")+`</div>`;
+      return `<div class="coluna" data-hz="${id}"><h4>${semEmoji(rot)}<span>${g.length}</span></h4>${g.map(kcardProv).join("")}</div>`; }).join("")+`</div>`;
   } else if(n===2){
     const cols = [...eq, {id:null, nome:"Sem dono", inicial:"—", cor:"#9AA0B0"}].filter(c=>!quadroColab || c.id===quadroColab);
     const de = (c, g) => g.filter(p=> c.id ? p.donos.includes(c.id) : !p.donos.length);
@@ -18138,7 +18212,7 @@ function renderQuadroN(n){
       const faixas = [...eq.filter(c=>!quadroColab || c.id===quadroColab).map(c=>[c, g.filter(p=>p.donos.includes(c.id))]),
                       [{nome:"Sem dono", inicial:"—", cor:"#9AA0B0"}, quadroColab?[]:g.filter(p=>!p.donos.length)]]
         .filter(([,x])=>x.length);
-      return `<div class="coluna" data-hz="${id}"><h4>${rot}<span>${g.length}</span></h4>`
+      return `<div class="coluna" data-hz="${id}"><h4>${semEmoji(rot)}<span>${g.length}</span></h4>`
         + faixas.map(([c,x])=>`<div class="faixa"><span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome.split(" ")[0])} <span class="meio-sub">${x.length}</span></div>${x.map(kcardProv).join("")}`).join("")
         + `</div>`; }).join("")+`</div>`;
   }
@@ -18179,7 +18253,7 @@ function renderVendas(){
     ${taxa!=null?`<div class="meio-sub">Conversão até hoje: <b>${taxa}%</b> (${fech} fechados, ${perd} perdidos)</div>`:""}
     <div class="kanban">`+ETAPAS.map(([e,rot])=>{
       const ls=D.leads.filter(l=>l.etapa===e);
-      return `<div class="coluna" data-etapa="${e}"><h4>${rot}<span>${ls.length}</span></h4>
+      return `<div class="coluna" data-etapa="${e}"><h4>${semEmoji(rot)}<span>${ls.length}</span></h4>
         ${ls.slice(0,40).map(l=>`<div class="kcard" draggable="true" data-lead="${l.id}">
           <div class="nome">${esc(l.nome)}</div>
           <div class="meta">${l.beneficio_interesse?`<span class="chip ben">${esc(l.beneficio_interesse)}</span>`:""}
@@ -18357,7 +18431,7 @@ async function atualizarEstadoZap(){
   rs.forEach(r=>(D.config=D.config||new Map()).set(r.chave, r.valor));
   if(document.getElementById("zx-painel")) pintarConexaoZap();
 }
-const zapComProblema = () => estadoPonte().txt!=="ponte ligada";
+const zapComProblema = () => estadoPonte().txt!=="WhatsApp conectado";
 
 // F185 · Corrigir a conexão de dentro do CRM. O CRM não fala com o WhatsApp:
 // grava o pedido em zap_comando e a ponte (que lê a cada 10 s) obedece.
@@ -18378,7 +18452,7 @@ function pintarConexaoZap(){
   if(el.dataset.chave===chave) return;
   el.dataset.chave = chave;
   el.innerHTML = `<h3>Conexão do WhatsApp</h3>
-    <p class="zx-estado"><i style="background:${p.cor}"></i><b>${esc(p.txt==="ponte ligada"?"Conectado":p.txt)}</b>
+    <p class="zx-estado"><i style="background:${p.cor}"></i><b>${esc(p.txt==="WhatsApp conectado"?"Conectado":p.txt)}</b>
       ${visto?`<span class="meio-sub">· sinal de vida ${diaZap(visto)} às ${horaSP(visto)}</span>`:""}</p>
     ${morta?`<div class="zx-aviso">A ponte não dá sinal há mais de 2 minutos. Ela roda no computador do escritório:
         confira se ele está ligado e com internet. Quando o computador volta, a ponte volta sozinha.
@@ -18422,10 +18496,10 @@ function estadoPonte(){
   // 2 minutos sem bater ponto: a ponte morreu, e é melhor dizer isso do que
   // deixar todo mundo achando que ninguém escreveu hoje
   const morta = !visto || (Date.now() - new Date(visto).getTime() > 120000);
-  if(st==="ligado" && !morta) return {cor:"#0a7d43", txt:"ponte ligada"};
+  if(st==="ligado" && !morta) return {cor:"#0a7d43", txt:"WhatsApp conectado"};
   if(st.includes("QR")) return {cor:"#b06000", txt:"esperando leitura do QR"};
-  if(!st) return {cor:"var(--cinza)", txt:"ponte nunca subiu"};
-  return {cor:"#b00020", txt: morta ? "ponte sem sinal" : st};
+  if(!st) return {cor:"#b00020", txt:"WhatsApp desconectado"}   // F684 · vermelho e sem jargão: ao lado do "Online" o cinza parecia estar tudo bem;
+  return {cor:"#b00020", txt: morta ? "WhatsApp sem sinal" : st};
 }
 
 // Ícones desenhados da tela (traço, como os do menu lateral): emoji em botão
@@ -20029,7 +20103,7 @@ async function enviarZap(){
   }
   if(zapAberta===conv){ zapResponder = null; await abrirConversa(conv); focarCampoZap(); }
   if(zapNota) aviso("Anotado — só a equipe vê 🕵", false);
-  else if(estadoPonte().txt!=="ponte ligada")
+  else if(estadoPonte().txt!=="WhatsApp conectado")
     aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
 }
 
@@ -20946,7 +21020,7 @@ async function responderZapLado(convId, cliId){
       if(pend.tipo==="audio" && txt) await msg({texto: txt});
     }else await msg({texto: txt});
   }catch(e){ t.value = txt; return aviso(msgErro(e)); }
-  if(estadoPonte().txt!=="ponte ligada") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
+  if(estadoPonte().txt!=="WhatsApp conectado") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
   await verZapCliente(cliId);
   if(!matchMedia("(pointer:coarse)").matches) document.getElementById("pp-zap-txt")?.focus();   // F387
 }
@@ -27538,10 +27612,12 @@ function renderRecebimentos(){
     </div>`; };
   const casosPag = D.casos.filter(k=>k.fase==="pagamento" && !ab.some(p=>casoDoPgto(p)===k.id));
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="rc-tot"><span>Vencido: <b class="venc">${moeda(soma(venc))}</b> (${venc.length})</span><span>A vencer: <b>${moeda(soma(prox))}</b> (${prox.length})</span>
-      <span>Sem data: ${semData.length}</span>${conferir.length?`<span>Valor a conferir, fora dos totais: ${conferir.length}</span>`:""}</div>`
-    + `<h3 class="secao" style="color:var(--venc-tinta,#B3261E)">Vencidos (${venc.length})</h3>${venc.map(linha).join("") || "<p class='meio-sub'>Nada vencido.</p>"}`
-    + `<h3 class="secao">A vencer (${prox.length})</h3>${prox.map(linha).join("") || "<p class='meio-sub'>Nada a vencer com data.</p>"}`
+    // F684 · três números lado a lado; vermelho só quando há vencido; sem nada lançado, uma frase só
+    `<div class="rc-tot"><span><small>Vencido (${venc.length})</small><b${venc.length?' class="venc"':""}>${moeda(soma(venc))}</b></span><span><small>A vencer (${prox.length})</small><b>${moeda(soma(prox))}</b></span>
+      <span><small>Sem data</small><b>${semData.length}</b></span>${conferir.length?`<span><small>Valor a conferir, fora dos totais</small><b>${conferir.length}</b></span>`:""}</div>`
+    + (!venc.length && !prox.length && !semData.length && !conferir.length ? "<p class='meio-sub rc-vazio'>Nenhum honorário a receber. As parcelas aparecem aqui quando forem lançadas na aba Honorários do cliente.</p>"
+      : (venc.length ? `<h3 class="secao" style="color:var(--venc-tinta,#B3261E)">Vencidos (${venc.length})</h3>${venc.map(linha).join("")}` : "")
+      + `<h3 class="secao">A vencer${prox.length?` (${prox.length})`:""}</h3>${prox.map(linha).join("") || "<p class='meio-sub'>Nada a vencer com data.</p>"}`)
     + (semData.length ? `<details class="rc-grupo"><summary class="secao">Sem data de vencimento (${semData.length})</summary>${semData.slice(0,LIM).map(linha).join("")}${semData.length>LIM?`<p class="meio-sub">e mais ${semData.length-LIM}: veja na aba Honorários de cada cliente.</p>`:""}</details>` : "")
     + (conferir.length ? `<details class="rc-grupo"><summary class="secao">Valor a conferir (${conferir.length})</summary><p class="meio-sub">Valor acima de ${moeda(HON_VALOR_ABSURDO)} ou igual a um número do cliente (processo, benefício, protocolo): quase sempre leitura errada do To Do. Fica fora dos totais até alguém conferir.</p>${conferir.map(linha).join("")}</details>` : "")
     + (casosPag.length ? `<h3 class="secao">Em Pagamentos, sem nada lançado (${casosPag.length})</h3>${grupoClientes(casosPag).map(([c,ks])=>cartaoCliente(c,ks)).join("")}` : "");
@@ -44958,7 +45034,7 @@ function linhaCaso(k){
     (s=>s?`<button type="button" class="chip lc-susp" onclick="suspenderCaso('${k.id}')" title="${esc(tituloSusp(s))}: clique para alterar ou retomar">⏸ Suspenso · ${esc(rotSusp(s))}</button>`:"")(suspensaoDe(k)),
     (c=>c && !suspensaoDe(k) && k.fase!=="encerrado" ? `<span class="chip lc-susp lc-susp-conf" title="o movimento do ${esc(c.fonte)} fala em suspensão, mas não traz o número do tema">⏸ Suspensão sem tema · <button type="button" class="btn-mini" onclick="suspenderCaso('${k.id}')" title="Informar o tema da suspensão">Suspender<span class="sr-only"> informando o tema</span></button> <button type="button" class="btn-mini" onclick="suspConferirNao('${k.id}')" title="O caso não está suspenso por tema">Não<span class="sr-only"> está suspenso por tema</span></button></span>` : "")((k.ronda||{}).susp_conferir),
     semGratuidade(k)?`<span class="chip lc-sem-grat" title="a gratuidade da justiça não foi concedida neste processo: custas e honorários de sucumbência podem ser cobrados">Sem gratuidade</span>`:"",
-    prev ? `<span class="lc5-fase">Fase atual: <b>${esc(lugar)}</b></span>${k.etapa ? `<span class="lc5-etapa" role="button" tabindex="0" onclick="escolherEtapa('${k.id}')" title="etapa do caso: clique para mudar">${seloEtapaLista(k)}</span>` : ""}` : "",   // F666 · o quadro de etapas saiu do caso; a fase e a etapa ficam aqui
+    prev ? `${/* F684 · "Fase atual" só quando diz algo além do rótulo do cartão */ lugar && lugar!==NOME_FASE[faseEfetiva(k)] ? `<span class="lc5-fase">Fase atual: <b>${esc(lugar)}</b></span>` : ""}${k.etapa ? `<span class="lc5-etapa" role="button" tabindex="0" onclick="escolherEtapa('${k.id}')" title="etapa do caso: clique para mudar">${seloEtapaLista(k)}</span>` : ""}` : "",   // F666 · o quadro de etapas saiu do caso; a fase e a etapa ficam aqui
 ].filter(Boolean).join("");
   return `<section class="linha-caso lc5" data-n="${n}" aria-label="O caso" style="--lc-cor:${cor}">
     <div class="lc-topo">
@@ -55289,7 +55365,7 @@ function cadCampoSenha(c, tipo, rot, cr, colunas, extra){
       <button class="cad-mini" title="copiar — fica registrado quem copiou" onclick="copiarCred('${cr.id}')">${CAD_IC.copiar}copiar</button>
       <button class="cad-mini" title="ver — fica registrado" onclick="verCred('${cr.id}')">${CAD_IC.olho}ver</button>
       <button class="cad-mini" title="guardar uma senha nova no lugar desta" onclick="trocarSenha('${c.id}','${tipo}','${cr.id}')">${CAD_IC.lapis}trocar</button>`
-    :'<button type="button" class="cad-preencher">cadastrar</button>'}${tipo==="meu_inss" && (c.campos||{}).gov ? `<span class="cad-apoio">${esc(govTxt(c.campos.gov))}</span>` : ""}</div>
+    :'<button type="button" class="cad-preencher">preencher</button>'}${tipo==="meu_inss" && (c.campos||{}).gov ? `<span class="cad-apoio">${esc(govTxt(c.campos.gov))}</span>` : ""}</div>
   </div>`;
 }
 // a pasta do cliente fecha a grade: é onde o documento assinado vai parar
@@ -55423,7 +55499,7 @@ function fichaIdentificacao(c, creds){
   // uma linha por campo: rótulo à esquerda, valor ou ação à direita.
   return `<div class="cad-cartao idf">
     <section class="idf-comp" aria-label="Cadastro completo?">
-      <span class="cad-cont${falta.length?"":" cad-ok"}">${falta.length?`Cadastro ${pct}% completo · ${plu(falta.length, "lacuna", "lacunas")} nas peças`:"Cadastro completo"}</span>
+      <span class="cad-cont${falta.length?"":" cad-ok"}">${falta.length?`Cadastro ${pct}% completo · ${falta.length===1?"falta 1 dado":`faltam ${falta.length} dados`} para as peças`:"Cadastro completo"}</span>
       <span class="adr-barra" role="progressbar" aria-label="cadastro preenchido" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></span>
       ${falta.length?`<span class="idf-chips">${chipsFalta.map(([k, rot, tit])=>`<button type="button" class="idf-chip" data-falta="${k}"${tit ? ` title="${esc(tit)}"` : ""}
         onclick="abrirCampoFaltando('${k}','${c.id}')">${esc(rot)}</button>`).join("")}</span>`:""}

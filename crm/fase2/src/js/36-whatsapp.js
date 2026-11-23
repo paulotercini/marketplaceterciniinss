@@ -791,7 +791,7 @@ function cadCampoSenha(c, tipo, rot, cr, colunas, extra){
       <button class="cad-mini" title="copiar — fica registrado quem copiou" onclick="copiarCred('${cr.id}')">${CAD_IC.copiar}copiar</button>
       <button class="cad-mini" title="ver — fica registrado" onclick="verCred('${cr.id}')">${CAD_IC.olho}ver</button>
       <button class="cad-mini" title="guardar uma senha nova no lugar desta" onclick="trocarSenha('${c.id}','${tipo}','${cr.id}')">${CAD_IC.lapis}trocar</button>`
-    :'<button type="button" class="cad-preencher">cadastrar</button>'}${tipo==="meu_inss" && (c.campos||{}).gov ? `<span class="cad-apoio">${esc(govTxt(c.campos.gov))}</span>` : ""}</div>
+    :'<button type="button" class="cad-preencher">preencher</button>'}${tipo==="meu_inss" && (c.campos||{}).gov ? `<span class="cad-apoio">${esc(govTxt(c.campos.gov))}</span>` : ""}</div>
   </div>`;
 }
 // a pasta do cliente fecha a grade: é onde o documento assinado vai parar
@@ -925,7 +925,7 @@ function fichaIdentificacao(c, creds){
   // uma linha por campo: rótulo à esquerda, valor ou ação à direita.
   return `<div class="cad-cartao idf">
     <section class="idf-comp" aria-label="Cadastro completo?">
-      <span class="cad-cont${falta.length?"":" cad-ok"}">${falta.length?`Cadastro ${pct}% completo · ${plu(falta.length, "lacuna", "lacunas")} nas peças`:"Cadastro completo"}</span>
+      <span class="cad-cont${falta.length?"":" cad-ok"}">${falta.length?`Cadastro ${pct}% completo · ${falta.length===1?"falta 1 dado":`faltam ${falta.length} dados`} para as peças`:"Cadastro completo"}</span>
       <span class="adr-barra" role="progressbar" aria-label="cadastro preenchido" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></span>
       ${falta.length?`<span class="idf-chips">${chipsFalta.map(([k, rot, tit])=>`<button type="button" class="idf-chip" data-falta="${k}"${tit ? ` title="${esc(tit)}"` : ""}
         onclick="abrirCampoFaltando('${k}','${c.id}')">${esc(rot)}</button>`).join("")}</span>`:""}

@@ -174,7 +174,7 @@ async function enviarZap(){
   }
   if(zapAberta===conv){ zapResponder = null; await abrirConversa(conv); focarCampoZap(); }
   if(zapNota) aviso("Anotado — só a equipe vê 🕵", false);
-  else if(estadoPonte().txt!=="ponte ligada")
+  else if(estadoPonte().txt!=="WhatsApp conectado")
     aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
 }
 
@@ -1091,7 +1091,7 @@ async function responderZapLado(convId, cliId){
       if(pend.tipo==="audio" && txt) await msg({texto: txt});
     }else await msg({texto: txt});
   }catch(e){ t.value = txt; return aviso(msgErro(e)); }
-  if(estadoPonte().txt!=="ponte ligada") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
+  if(estadoPonte().txt!=="WhatsApp conectado") aviso("Guardado na fila: a ponte está fora do ar e envia quando voltar", false);
   await verZapCliente(cliId);
   if(!matchMedia("(pointer:coarse)").matches) document.getElementById("pp-zap-txt")?.focus();   // F387
 }
