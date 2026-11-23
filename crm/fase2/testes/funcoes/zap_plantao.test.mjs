@@ -837,3 +837,15 @@ console.log("F581 plantão ok");
 // F674 · ajustes da semana de 16 a 21.11.2026
 assert.match(regras(), /Remetente automático/);
 assert.match(regras(), /nunca copie o nome do ato do portal/);
+{
+  // F689 · advogado em férias: o contexto manda encaminhar à substituta e não oferecer as datas dele
+  const { feriasDe, contexto } = await import("../../zap_plantao/index.ts");
+  const ks = [{ id: "a", nome: "Titular", assinatura_zap: "Dr. Teste:", zap_ferias_ate: "2026-11-26T11:00:00Z", zap_cobre_id: "b" },
+    { id: "b", nome: "Substituta", assinatura_zap: "Dra. Teste", zap_ferias_ate: null }];
+  const f = feriasDe(ks, new Date("2026-11-23T12:00:00Z"));
+  assert.deepEqual(f, [{ nome: "Dr. Teste", ate: "26/11/2026", cobre: "Dra. Teste" }]);
+  assert.deepEqual(feriasDe(ks, new Date("2026-11-27T12:00:00Z")), []);
+  const c = contexto({ contato: "Cliente Teste", advogado: null, advogados: null, modo: "conversa", respostas: 0, horario: true, agenda: true,
+    agora: "x", mensagens: [], ferias: f });
+  assert.ok(c.startsWith("Dr. Teste está ausente do WhatsApp até 26/11/2026") && c.includes("encaminhe a Dra. Teste"));
+}
