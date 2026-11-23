@@ -515,7 +515,7 @@ async function verEdicoes(id){
   try{ ls = await api(`/rest/v1/andamentos_editados?andamento_id=eq.${id}&select=*&order=editado_em.desc`); }
   catch(e){ return aviso("O histórico das edições ainda não está disponível"); }
   const nome = c => ((D.colPorId.get(c)||{}).nome||"").split(" ")[0] || "alguém";
-  caixa(`<h3 style="margin:0 0 8px">Versões anteriores</h3>${(ls||[]).length ? `<ul class="apagadas">${ls.map(x=>`<li class="apagada">
+  caixa(`<h3 style="margin:0 0 8px">Versões anteriores</h3>${(ls||[]).length ? `<ul class="apagadas">${ls.map((x,i)=>`<li class="apagada">
     <div class="meio-sub">Substituída por <b>${esc(nome(x.editado_por))}</b> em ${esc(fmtTS(x.editado_em))}</div>
     <div class="apagada-txt">${esc(x.texto_antes||"")}</div></li>`).join("")}</ul>` : `<p class="meio-sub">Nenhuma versão anterior registrada.</p>`}`);
 }
@@ -529,6 +529,10 @@ async function verApagadas(casoId){
   const marcadas = (await api(`/rest/v1/andamentos?caso_id=eq.${casoId}&excluir=eq.true&select=id,autor_id,texto,criado_em&order=criado_em.desc`).catch(()=>[])||[])
     .map(x=>({...x, apagado_por:x.autor_id, apagado_em:null}));
   ls = [...marcadas, ...(ls||[])];
+  // restaurada volta a existir em andamentos; some daqui sem precisar apagar o histórico
+  const vivos = new Set(((await api(`/rest/v1/andamentos?caso_id=eq.${casoId}&excluir=eq.false&select=id`).catch(()=>[]))||[]).map(x=>x.id));
+  ls = ls.filter(x=>!x.andamento_id || !vivos.has(x.andamento_id));
+  window._apagadas = ls;
   const eds = (await api(`/rest/v1/andamentos_editados?caso_id=eq.${casoId}&select=*&order=editado_em.desc&limit=200`).catch(()=>[])) || [];
   const nome = id => ((D.colPorId.get(id)||{}).nome||"").split(" ")[0] || "alguém";
   const tfs = x => (x.tarefas||[]).map(t=>`${t.natureza==="fatal"?"prazo fatal":t.papel==="revisa"?"revisão":"tarefa"} de ${esc(nome(t.colaborador_id))}${t.lembrar_em?` para ${esc(fmt(t.lembrar_em))}`:""}${t.concluida_em?" (concluída)":""}`).join("; ");
@@ -536,11 +540,20 @@ async function verApagadas(casoId){
     <p class="meio-sub" style="margin:0 0 8px">Quem escreveu pode apagar a anotação ou o prazo. Ela sai das anotações e fica aqui.</p>
     ${(ls||[]).length ? `<ul class="apagadas">${ls.map(x=>`<li class="apagada">
       <div class="meio-sub">Escrita por <b>${esc(nome(x.autor_id))}</b> em ${esc(fmtTS(x.criado_em))} · apagada${x.apagado_por?` por <b>${esc(nome(x.apagado_por))}</b>`:""}${x.apagado_em ? ` em ${esc(fmtTS(x.apagado_em))} às ${esc(new Date(x.apagado_em).toLocaleTimeString("pt-BR",{timeZone:"America/Sao_Paulo",hour:"2-digit",minute:"2-digit"}))}` : "; o texto ainda consta no Microsoft To Do"}</div>
-      <div class="apagada-txt">${esc(x.texto||"")}</div>${tfs(x)?`<div class="meio-sub">Tinha: ${tfs(x)}</div>`:""}</li>`).join("")}</ul>`
+      <div class="apagada-txt">${esc(x.texto||"")}</div>${tfs(x)?`<div class="meio-sub">Tinha: ${tfs(x)}</div>`:""}${x.andamento_id && x.autor_id===eu.id ? `<button class="btn-mini" onclick="restaurarApagada(${i})" title="Restaurar: a anotação volta ao caso, sem as tarefas">Restaurar<span class="sr-only"> a anotação</span></button>` : ""}</li>`).join("")}</ul>`
       : `<p class="meio-sub">Nenhuma anotação apagada neste caso.</p>`}
     ${eds.length ? `<h3 style="margin:12px 0 4px">Anotações editadas</h3><ul class="apagadas">${eds.map(x=>`<li class="apagada">
       <div class="meio-sub">Versão anterior, substituída por <b>${esc(nome(x.editado_por))}</b> em ${esc(fmtTS(x.editado_em))}</div>
       <div class="apagada-txt">${esc(x.texto_antes||"")}</div></li>`).join("")}</ul>` : ""}`);
+}
+
+// a anotação apagada volta com o mesmo id, texto e data; as tarefas não voltam (o prazo se marca de novo)
+async function restaurarApagada(i){
+  const x = (window._apagadas||[])[i]; if(!x) return;
+  try{ await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({id:x.andamento_id, caso_id:x.caso_id,
+    autor_id:x.autor_id, origem:x.origem||"app", origem_id:x.origem_id, responde_a:x.responde_a, texto:x.texto, criado_em:x.criado_em})}); }
+  catch(e){ return aviso("Não restaurou: tente de novo"); }
+  fecharCaixa(); aviso("Anotação restaurada", false); abrirFicha(clienteAberto);
 }
 
 // Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)
