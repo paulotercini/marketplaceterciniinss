@@ -78,7 +78,7 @@ def levar_estrelas(casos, listas, graph_client, simular=False):
 
 
 def main(argv):
-    if os.environ.get("PONTE_DESPACHO") == "0":
+    if os.environ.get("PONTE_DESPACHO") != "1":  # escrita no To Do só com autorização expressa (24.11.2026)
         print("ponte do despacho desligada (PONTE_DESPACHO=0). Nada foi enviado.")
         return 0
     if not os.environ.get("SUPABASE_URL") or not os.environ.get("SUPABASE_SERVICE_KEY"):
