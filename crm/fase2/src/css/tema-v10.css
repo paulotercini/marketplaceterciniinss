@@ -4325,6 +4325,11 @@ html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f > *{flex:none}
 html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:var(--f-ui);font-weight:400;font-variant-numeric:tabular-nums;color:var(--texto)}
 /* F685 · "Ver anotações anteriores" do painel lateral como link, igual ao da linha estendida (saía como botão cru) */
 #pcli .ae-mais{display:block;margin:4px 0 0;background:none;border:0;padding:0;color:var(--azul);font:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline}
+/* F691 · nos cartões de Perícias e audiências a barra fica no rodapé, à vista (o sobreposto do F276 cobria o selo
+   e deslocava os botões), e o cartão com o ⋯ aberto sobe para o menu não ficar sob o cartão vizinho */
+html[data-tema="v10"] .timeline.tl-per li .tl-barra{position:static;margin-top:8px;pointer-events:auto;background:none}
+html[data-tema="v10"] .timeline.tl-per li .tl-barra :is(.tl-bt,.tl-barra-fim > *,.tl-sinal){opacity:1}
+html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
 </style>
 </head>
 

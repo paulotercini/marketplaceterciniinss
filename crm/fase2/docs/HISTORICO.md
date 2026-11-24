@@ -1118,3 +1118,6 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 
 ## F690 · IA indica um destino só ao passar adiante (23.11.2026)
 - zap_plantao: o exemplo "Vou encaminhar ao Dr. Paulo" saiu das regras; ao passar adiante a IA diz em uma frase que um colaborador vai verificar e responder, e nomeia o advogado só quando a conversa já é com ele (a IA disse "Vou encaminhar ao Dr. Paulo" e, na frase seguinte, que um colaborador responderia).
+
+## F691 · menu ⋯ e botões dos cartões de perícia (24.11.2026, v14.32)
+- Perícias e audiências da ficha: barra de ações no rodapé do cartão, sempre à vista; o ⋯ aberto fica acima do cartão vizinho.
