@@ -875,7 +875,7 @@ function montarExt(el, it){
   const atr = D.atrDoCaso.get(k.id)||[], resp = atr.map(id=>D.colPorId.get(id)).filter(Boolean);
   x.className = "ag-ext"; x._it = it; x._el = el; x._atual = atr[0] || "";
   x.innerHTML = `<div class="ae-topo"><span class="ae-quem"><span class="ae-resp">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}</span>${
-      it.selo==="Retorno" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
+      it.selo==="Prazo do Microsoft To Do" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
     <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
       <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS"><span class="ae-rot">Meu </span>INSS <span class="ae-senha">…</span></button>
       <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
@@ -1036,7 +1036,7 @@ async function extConcluir(x){
     t.concluida = true; plim(); repintaExt(k);
     return avisoDesfazer("Concluída", async ()=>{ await muda(false); t.concluida = false; repintaExt(k); aviso("Conclusão desfeita", false); }, 30000);
   }
-  if(it.selo==="Retorno" || it.selo==="Volta à fila"){
+  if(it.selo==="Prazo do Microsoft To Do" || it.selo==="Volta à fila"){
     // concluir o retorno tira a data do caso; o despacho marcado "concluido" leva a data apagada ao To Do (ponte_despacho.py)
     const antes = {prazo:k.prazo||null, ronda:k.ronda||{}};
     const muda = {prazo:null, ronda:{...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:null, concluido:true}}};
@@ -1061,7 +1061,7 @@ function itemDoCaso(k){
   if(!k) return null;
   const fatal = !!k.prazo && fatalAbertoDe(k)===k.prazo;
   return {k, cli:D.cliPorId.get(k.cliente_id), data:k.prazo||"", fatal, quem:[],
-    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Retorno"};
+    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Prazo do Microsoft To Do"};
 }
 // no navegador automatizado as provas antigas esperam a linha do tempo à vista; a nova liga com crm_dash_caso=1
 const dashLigado = () => temaV10() && (!navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_dash_caso")==="1"; }catch(e){ return false; } })());
@@ -1249,7 +1249,7 @@ async function pcliMontar(){
   const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
   const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
   const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
-  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Prazo do Microsoft To Do" : it.selo || "Prazo do Microsoft To Do";
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
     <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>

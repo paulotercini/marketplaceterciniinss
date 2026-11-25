@@ -622,7 +622,7 @@ function itensAgendaTodos(){
     const comTf = k.prazo && !volta ? (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo).map(t=>t.colaborador_id) : [];
     const donosPz = comTf.length ? (donos||[]).filter(d=>!comTf.includes(d)) : donos;
     if(k.prazo && !igual && (!comTf.length || donosPz.length)) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
-      : prazoEhRetorno(k) ? {data:k.prazo, k, cli, selo:"Retorno", resumo:k.lembrar_motivo||tituloCaso(k)}
+      : prazoEhRetorno(k) ? {data:k.prazo, k, cli, selo:"Prazo do Microsoft To Do", resumo:k.lembrar_motivo||tituloCaso(k)}
       : {data:k.prazo, k, cli, fatal:true, resumo:motivoDoPrazo(k)||tituloCaso(k), motivo:motivoDoPrazo(k)}, donosPz);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
     if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
@@ -980,7 +980,7 @@ function reagendavel(i){
   if(i.fatal || i.prazo || i.ev || i.evPassado || i.pg) return false;
   if(i.tc) return i.tc.natureza!=="fatal" && !i.tc.concluida_em;
   if(i.t) return !i.t.virtual && !!i.t.id;
-  return !!i.k && (i.selo==="Volta à fila" || i.selo==="Retorno");
+  return !!i.k && (i.selo==="Volta à fila" || i.selo==="Prazo do Microsoft To Do");
 }
 function reagendarVencidas(lote){
   const ms = _reagVenc.filter(reagendavel), fica = _reagVenc.length - ms.length;
@@ -1017,7 +1017,7 @@ async function aplicarReagendar(data){
     if(vistos.has(ch)) continue; vistos.add(ch);
     if(i.tc) nota(i.tc.caso_id || (i.k||{}).id, i.tc.natureza==="lembrete" ? "Lembrete" : "Tarefa", i.tc.lembrar_em);
     else if(i.t) nota(i.t.caso_id, "Tarefa", i.t.prazo);
-    else nota(i.k.id, i.selo==="Volta à fila" ? "Volta à fila" : "Retorno", i.k.prazo);
+    else nota(i.k.id, i.selo==="Volta à fila" ? "Volta à fila" : "Prazo do Microsoft To Do", i.k.prazo);
     const m = moverData(i, data); grava.push(m.p); volta.push(m.undo);
   }
   const r = await Promise.allSettled(grava), falhas = r.filter(x=>x.status==="rejected").length;
@@ -1150,7 +1150,7 @@ async function loteEstrela(){
 function loteData(){
   // a linha do Meu Dia e do Planejado leva o próprio item; a das listas, a volta à fila ou o retorno do To Do do caso
   _reagVenc = [..._sel.values()].flatMap(x=>x.it ? [x.it] : x.casos.map(id=>D.casoPorId.get(id)).filter(k=>k && k.prazo).map(k=>({k, data:k.prazo,
-    selo:((k.ronda||{}).despacho||{}).prazo===k.prazo ? "Volta à fila" : prazoEhRetorno(k) ? "Retorno" : null})));
+    selo:((k.ronda||{}).despacho||{}).prazo===k.prazo ? "Volta à fila" : prazoEhRetorno(k) ? "Prazo do Microsoft To Do" : null})));
   reagendarVencidas(true);
 }
 // F382 (12.40) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo

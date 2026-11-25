@@ -1134,3 +1134,5 @@ Rótulo "Responsável", nome e selo de contato em .cli-adv-l, sem quebra; a parc
 - Amparo: uma vez por conversa por dia. `zap_plantao_aplicar`: advogado em férias vira a substituta (zap_cobre_id).
 - zap_plantao: `semFerias` troca o ausente pela substituta no texto e no advogado; imagem do cliente que a IA deixaria sem resposta recebe "Recebemos a imagem" e vai à equipe; áudio entra como "[áudio transcrito]"; "Ok gratidão Bom dia" recebe "Bom dia! Em que posso ajudar?" e o agradecimento puro, nada; aviso do golpe na primeira resposta do dia também com perícia marcada (o `x.pericia` pulava). "1 mês e meio do laudo à sentença" vem de TEMPOS_MEDIDOS: mantido; regra reforçada de não estimar sem medição.
 - Tela: no ⋯ do WhatsApp, "Sem resposta há mais de 24 h" (cliente por último, sem despedida nem conta automática); o filtro de atendente dá o recorte por responsável.
+## F820 · "Retorno" passa a "Prazo do Microsoft To Do" (25.11.2026)
+Selo do painel lateral, Meu Dia, Planejado, aba Prazos (chip e legenda), WhatsApp e quadro do caso. O selo do painel não quebra linha.
