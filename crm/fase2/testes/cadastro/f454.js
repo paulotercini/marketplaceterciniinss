@@ -59,7 +59,7 @@ FIX.tarefas = [{ id: "t-f451", titulo: "Tarefa pessoal fictícia", concluida: fa
   await p.locator('section.pl-grupo[data-tom="venc"] .reag-bt').click(); await p.waitForTimeout(200);
   await p.locator('button.esp-it:has-text("Amanhã")').click(); await p.waitForTimeout(600);
   const n = posts.find(b => b.caso_id === RET);
-  conf(`o retorno reagendado anota no caso (${n && n.texto})`, n && /^Retorno levado de \d{2}\/\d{2}\/\d{4} para \d{2}\/\d{2}\/\d{4} por \S+ \(reagendado em lote\)\.$/.test(n.texto));
+  conf(`o retorno reagendado anota no caso (${n && n.texto})`, n && /^Prazo do Microsoft To Do levado de \d{2}\/\d{2}\/\d{4} para \d{2}\/\d{2}\/\d{4} por \S+ \(reagendado em lote\)\.$/.test(n.texto));
   conf("o prazo fatal não recebeu anotação", !posts.some(b => b.caso_id === FAT));
   const nd = posts.length;
   await p.locator("#aviso .aviso-bt").click(); await p.waitForTimeout(500);

@@ -81,7 +81,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   const r2 = mesmoMes ? r : await p.evaluate(() => { const m = document.querySelector(".ma");
     return { marcado: [...m.querySelectorAll(".ma-tem")].map(e => e.textContent), leg: (m.querySelector(".ma-leg") || {}).textContent || "" }; });
   conf("dia do prazo marcado na mini agenda", r2.marcado.includes(String(+iso(dRet).slice(8))));
-  conf("índice traz a data e o tipo", r2.leg.includes(iso(dRet).slice(8) + "/" + iso(dRet).slice(5, 7)) && /Retorno/.test(r2.leg));
+  conf("índice traz a data e o tipo", r2.leg.includes(iso(dRet).slice(8) + "/" + iso(dRet).slice(5, 7)) && /Prazo do Microsoft To Do/.test(r2.leg));
   await p.screenshot({ path: path.join(OUT, "mini-agenda.png"), clip: { x: 0, y: 0, width: 720, height: 900 } });
   await p.evaluate(d => { const b = [...document.querySelectorAll(".ma button.ma-tem")].find(e => e.textContent === String(+d.slice(8))); b.click(); }, iso(dRet));
   await p.waitForSelector("#pz-cli");
