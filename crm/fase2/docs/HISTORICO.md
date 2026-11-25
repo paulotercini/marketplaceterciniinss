@@ -1136,3 +1136,6 @@ Rótulo "Responsável", nome e selo de contato em .cli-adv-l, sem quebra; a parc
 - Tela: no ⋯ do WhatsApp, "Sem resposta há mais de 24 h" (cliente por último, sem despedida nem conta automática); o filtro de atendente dá o recorte por responsável.
 ## F820 · "Retorno" passa a "Prazo do Microsoft To Do" (25.11.2026)
 Selo do painel lateral, Meu Dia, Planejado, aba Prazos (chip e legenda), WhatsApp e quadro do caso. O selo do painel não quebra linha.
+
+## F821
+Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs de notificação (pedágio), de banco e de divulgação de aula que recebiam amparo e IA; conversas sem ficha que receberam esses textos nos últimos 30 dias ficam marcadas automática.
