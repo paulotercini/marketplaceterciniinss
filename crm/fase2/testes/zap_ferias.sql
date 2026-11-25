@@ -140,4 +140,10 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'p
 insert into r select 'f22 Offline: aviso sem cabeçalho',
   (select texto = 'Estou fora.' from zap_mensagens where por_bot and conversa_id = (select id from v));
 
+-- F822 · "A IA não responde esta conversa" cala também o aviso do Offline
+delete from v; insert into v select zap_abrir('5500000000022', 'Cliente Teste');
+update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333', sem_ia = true where id = (select id from v);
+insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'preciso de um documento' from v;
+insert into r select 'f23 Offline com a IA calada: sem aviso', not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
+
 select k, case when v then 'ok' else 'FALHOU' end from r;

@@ -1139,3 +1139,7 @@ Selo do painel lateral, Meu Dia, Planejado, aba Prazos (chip e legenda), WhatsAp
 
 ## F821
 Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs de notificação (pedágio), de banco e de divulgação de aula que recebiam amparo e IA; conversas sem ficha que receberam esses textos nos últimos 30 dias ficam marcadas automática.
+
+## F822 · "A IA não responde esta conversa" volta a funcionar (25.11.2026)
+- O onclick dos itens "A IA não responde esta conversa" e "A IA conversa com este número" lia `c`, que só existia no template: o clique falhava com "c is not defined" e nada gravava. O valor passa a ir pronto no HTML. Prova: `testes/cadastro/zap-sem-ia.js`.
+- `zap_offline_gatilho` (migração f822): conversa com `sem_ia` não recebe o aviso do Offline/férias nem o recado da cobertura. Teste f23 em `testes/zap_ferias.sql`.
