@@ -849,3 +849,27 @@ assert.match(regras(), /nunca copie o nome do ato do portal/);
     agora: "x", mensagens: [], ferias: f });
   assert.ok(c.startsWith("Dr. Teste está ausente do WhatsApp até 26/11/2026") && c.includes("encaminhe a Dra. Teste"));
 }
+{
+  // F819 · auditoria de 21 a 25.11.2026
+  const { semFerias, soImagem, cortesia, RECEBI_IMAGEM, transcricao, regras } = await import("../../zap_plantao/index.ts");
+  const f = [{ nome: "Dr. Teste Titular", cobre: "Dra. Teste Substituta" }];
+  assert.deepEqual(semFerias("Vou encaminhar a sua pergunta ao Dr. Teste.", "Dr. Teste Titular:", f),
+    { texto: "Vou encaminhar a sua pergunta à Dra. Teste.", advogado: "Dra. Teste Substituta" });
+  assert.equal(semFerias("O Dr. Teste Titular responde.", "", f).texto, "A Dra. Teste Substituta responde.");
+  assert.equal(semFerias("Olá.", "Dr. Outro", f).advogado, "Dr. Outro");
+  const m = (direcao, tipo, texto = null) => ({ direcao, por_bot: direcao === "saida", tipo, texto, momento: "2026-11-24T12:00:00Z" });
+  assert.ok(soImagem([m("saida", "texto", "Olá"), m("entrada", "imagem"), m("entrada", "imagem")]));
+  assert.ok(!soImagem([m("entrada", "texto", "segue o laudo"), m("entrada", "imagem")]));
+  assert.ok(soImagem([m("entrada", "imagem"), m("saida", "texto", "Recebido")]));
+  assert.ok(RECEBI_IMAGEM.includes("Recebemos a imagem"));
+  assert.equal(cortesia("Ok gratidão Bom dia"), "ola");
+  assert.equal(cortesia("Obrigada!"), "fim");
+  assert.equal(cortesia("👍"), "fim");
+  assert.equal(cortesia("Bom dia"), null);
+  assert.equal(cortesia("ok, mas quero remarcar"), null);
+  assert.equal(cortesia("obrigada, e o processo?"), null);
+  assert.ok(transcricao([m("entrada", "audio", "quero saber da perícia")]).includes("[áudio transcrito] quero saber da perícia"));
+  assert.match(regras(), /nunca diga que não ouviu/);
+  assert.match(regras(), /sem medição para a etapa, não estime/);
+  console.log("F819 ok");
+}
