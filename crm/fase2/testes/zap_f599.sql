@@ -59,7 +59,7 @@ insert into r select 'a9 respondida não envia', zap_amparo_vez('2026-11-10 13:4
 -- nova mensagem do cliente 1 hora depois do primeiro amparo: ainda não passaram 2 horas
 update zap_conversas set ultima_entrada_em = '2026-11-10 13:30:00+00' where id = (select id from v);
 insert into r select 'b1 intervalo de 2 horas', zap_amparo_vez('2026-11-10 14:40:00+00') = 0;
-insert into r select 'b2 segundo amparo depois de 2 horas', zap_amparo_vez('2026-11-10 15:05:00+00') = 1;
+insert into r select 'b2 F819: sem segundo amparo no mesmo dia', zap_amparo_vez('2026-11-10 15:05:00+00') = 0;
 -- terceira espera no mesmo dia: limite de 2
 update zap_conversas set ultima_entrada_em = '2026-11-10 15:30:00+00' where id = (select id from v);
 insert into r select 'b3 limite de 2 por dia', zap_amparo_vez('2026-11-10 18:00:00+00') = 0;

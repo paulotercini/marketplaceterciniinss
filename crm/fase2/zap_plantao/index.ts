@@ -48,7 +48,8 @@ type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | nu
 export function transcricao(msgs: Msg[]) {
   return msgs.map((m) => {
     const quem = m.direcao === "entrada" ? "Cliente" : m.por_bot ? "Assistente virtual" : "Escritório";
-    const corpo = m.texto ? mascarar(m.texto).slice(0, 600) : `[${m.tipo}]`;
+    // F819 · o áudio com texto vem transcrito: a IA dizia que não tinha ouvido
+    const corpo = m.texto ? (m.tipo === "audio" ? "[áudio transcrito] " : "") + mascarar(m.texto).slice(0, 600) : `[${m.tipo}]`;
     const enc = m.encaminhada ? (m.encaminhada >= 4 ? "[encaminhada com frequência] " : "[encaminhada] ") : "";
     return `${hora(m.momento)} ${quem}: ${enc}${corpo}`;
   }).join("\n");
@@ -182,6 +183,8 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Número sem ficha que diz ter atendimento agendado e não aparece em atendimentos_marcados: peça uma vez o nome completo da pessoa atendida ` +
   `e chame consultar_vagas com o campo nome; o sistema procura o atendimento por esse nome. Frase que não é nome ("estou indo agora") não é nome.\n` +
   // F469 · a IA faz as perguntas do menu do SMBot, em frase (pedido do Paulo de 09.11.2026)
+  `- Áudio marcado [áudio transcrito]: o texto é o que a pessoa falou; responda a ele e nunca diga que não ouviu ou não conseguiu ouvir o áudio (F819).\n` +
+  `- Prazo da Justiça ou do INSS: só os tempos medidos do contexto, quando houver; sem medição para a etapa, não estime prazo nenhum (F819).\n` +
   `- Quando a mensagem não disser o que a pessoa precisa (cumprimento, "preciso de ajuda", áudio ou arquivo sem explicação), pergunte em uma frase, ` +
   `sem lista numerada, se ela deseja agendar um atendimento, saber o andamento do processo ou do benefício, enviar documentos, tratar do financeiro ` +
   `ou tirar outra dúvida. Na dúvida, pergunte se o assunto é do INSS ou de outra área. Com a resposta, siga o caminho de cada assunto: agendamento ao Agendador; ` +
@@ -808,6 +811,49 @@ export function feriasDe(ks: Record<string, any>[], agora = new Date()) {
     return { nome: nome(k), ate: new Date(k.zap_ferias_ate).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" }), cobre: c ? nome(c) : null };
   });
 }
+// F819 · nas férias, quem cobre substitui o ausente no advogado indicado e no texto ao cliente ("Vou encaminhar ao Dr. Paulo")
+export function semFerias(texto: string, advogado: string, ferias: { nome: string; cobre: string | null }[] = []) {
+  const ART: Record<string, string> = { ao: "à", do: "da", o: "a", pelo: "pela", no: "na" };
+  for (const f of ferias) {
+    if (!f.cobre || !f.nome) continue;
+    // "ao Dr. Paulo" vira "à Dra. Amanda"
+    if (/^dra\b/i.test(f.cobre) && !/^dra\b/i.test(f.nome)) {
+      const n1 = f.nome.split(/\s+/).slice(0, 2).join(" ").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      texto = texto.replace(new RegExp(`\\b(ao|do|o|pelo|no) (?=${n1})`, "gi"), (_, a) => { const t = ART[a.toLowerCase()]; return (a[0] === a[0].toUpperCase() ? t[0].toUpperCase() + t.slice(1) : t) + " "; });
+    }
+    if (advogado.trim().replace(/:$/, "") === f.nome) advogado = f.cobre;
+    texto = texto.split(f.nome).join(f.cobre);
+    // a IA costuma abreviar ("Dr. Paulo"): troca também o tratamento com o primeiro nome
+    const curto = (n: string) => /^dra?\.?\s/i.test(n) ? n.split(/\s+/).slice(0, 2).join(" ") : "";
+    if (curto(f.nome) && curto(f.nome) !== f.nome) texto = texto.split(curto(f.nome)).join(curto(f.cobre) || f.cobre);
+  }
+  return { texto, advogado };
+}
+// F819 · a última rajada do cliente é só imagem (a IA deixava sem resposta)
+export const soImagem = (msgs: Msg[] = []) => {
+  const i = msgs.map((m) => m.direcao).lastIndexOf("entrada");
+  let j = i;
+  while (j >= 0 && msgs[j].direcao === "entrada") j--;
+  const r = msgs.slice(j + 1, i + 1);
+  return r.length > 0 && r.every((m) => m.tipo === "imagem" && !String(m.texto || "").trim());
+};
+export const RECEBI_IMAGEM = "Recebemos a imagem.\n\nUm colaborador do escritório vai verificar e responder em seguida.";
+// F819 · só cortesia: "ola" quando cumprimenta junto do agradecimento ("Ok gratidão Bom dia"), "fim" quando só agradece; senão null.
+// As palavras são as de zap_conf_agradece (F422ab/F819); o cumprimento sozinho segue para a IA.
+const CORTES = new Set(("ok okay obg muito valeu vlw beleza blz combinado certo ta tá bom está esta até ate lá la show perfeito isso sim amém amem " +
+  "deus abençoe abencoe graças gracas a o e confirmado entendi entendido doutor doutora dr dra então entao tchau dia tarde noite boa vou estarei eu " +
+  "tudo bem ótimo otimo legal joia jóia tranquilo abraço abraços abraco abracos de nada pela pelo atenção atencao").split(" "));
+const SAUDA = new Set(["bom", "boa", "dia", "tarde", "noite", "doutor", "doutora", "dr", "dra", "a", "o", "e"]);
+export function cortesia(texto: string | null | undefined): "ola" | "fim" | null {
+  const t = String(texto || "").toLowerCase().trim();
+  if (!t || t.length > 40 || t.includes("?")) return null;
+  const ws = t.replace(/[^\p{L}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
+  if (!ws.length) return "fim";   // só emoji ("👍")
+  if (!ws.every((w) => CORTES.has(w) || /^(grat|agradec|obrigad|brigad)/.test(w))) return null;
+  if (ws.every((w) => SAUDA.has(w))) return null;   // "Bom dia" sozinho abre conversa
+  return /\b(bom dia|boa tarde|boa noite)\b/.test(ws.join(" ")) ? "ola" : "fim";
+}
+
 // F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência e na agenda (F521)
 
 async function claude(texto: string | unknown[], esquema: unknown = ESQUEMA) {
@@ -1608,6 +1654,7 @@ if (typeof Deno !== "undefined") {
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.ferias = await emFerias().catch(() => []);
+      if (x.advogado) x.advogado = semFerias("", x.advogado, x.ferias).advogado;   // F819
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       if (x.pericia) x.pericia.atendido = await atendidoHaPouco(x.cliente?.nome).catch(() => null);   // F661
@@ -1638,7 +1685,15 @@ if (typeof Deno !== "undefined") {
         x.remarcar.duvida = intencao === "outro";
       }
       let r: Record<string, any>;
-      if (x.motor === "agentes") {
+      // F819 · "Ok gratidão Bom dia": cumprimento do horário ou nada, nunca o menu
+      const ultimaEnt = [...(x.mensagens || [])].reverse().find((m: Msg) => m.direcao === "entrada");
+      const cort = !x.remarcar && ultimaEnt?.tipo === "texto" ? cortesia(ultimaEnt.texto) : null;
+      if (cort) {
+        const h = Number(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo", hour: "numeric", hourCycle: "h23" }));
+        const ola = h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
+        r = cort === "ola" ? { acao: x.interativa ? "conversa" : "responder", resposta: `${ola}! Em que posso ajudar?`, advogado: "", urgente: false, assunto: "cumprimento", relato: "", nome: "" }
+          : { acao: "nada", resposta: "", advogado: "", urgente: false, assunto: "agradecimento", relato: "", nome: "" };
+      } else if (x.motor === "agentes") {
         // o Managed Agents falhou: a chamada direta responde no lugar, ainda dentro dos 90 s
         try {
           r = await decidirPorAgente(x);
@@ -1666,11 +1721,19 @@ if (typeof Deno !== "undefined") {
         r = { ...r, assunto: r.assunto || "mensagens que o CRM não exibe; ver no celular",
           resposta: jaAvisou ? "" : "Um colaborador do escritório vai verificar a sua mensagem e responder em seguida." };
       }
+      // F819 · imagem do cliente recebe o recebimento e vai ao responsável
+      if (acao === "nada" && soImagem(x.mensagens)) { acao = "equipe"; r = { ...r, resposta: RECEBI_IMAGEM, assunto: r.assunto || "enviou imagem" }; }
+      // F819 · advogado em férias: o texto e o aviso vão a quem cobre
+      const sf = semFerias(String(r.resposta || ""), String(r.advogado || ""), x.ferias);
+      r = { ...r, resposta: sf.texto, advogado: sf.advogado };
       const antes = enviadosAtuais(x.mensagens);
       // F564 · na conversa assumida a resposta é sugestão; na confirmação e no aviso da perícia o escritório já abriu a conversa
       // F634 · o aviso vai na primeira resposta de cada dia (Paulo, 17.11.2026)
-      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), enviadosHoje(x.mensagens),
-        acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia);
+      // F819 · a confirmação e o aviso da perícia dispensam o aviso só quando o escritório já escreveu hoje (o x.pericia vem
+      // para todo cliente com perícia marcada, e a primeira resposta do dia saía sem o aviso)
+      const hoje = enviadosHoje(x.mensagens);
+      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), hoje,
+        acao !== "nada" && !x.atendente && (!(x.remarcar || x.pericia) || !hoje.length));
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: resposta, p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
