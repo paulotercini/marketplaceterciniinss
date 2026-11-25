@@ -1121,3 +1121,6 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 
 ## F691 · menu ⋯ e botões dos cartões de perícia (24.11.2026, v14.32)
 - Perícias e audiências da ficha: barra de ações no rodapé do cartão, sempre à vista; o ⋯ aberto fica acima do cartão vizinho.
+
+## F817 · botão "Ver as N anotações mais antigas" oculto com o Escritório recolhido (25.11.2026)
+Com o painel recolhido o CSS escondia as listas da linha do tempo, mas não o botão, que abria uma lista ainda oculta. O botão agora some junto; "Ver anotações anteriores" abre tudo.
