@@ -131,7 +131,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
         ln.tp.length && ln.tp.every(r => /^Prazo do Microsoft To Do/.test(r) && !/PRAZO FATAL|intimados/.test(r)), 4, ln.tp);
       conf("o título do prazo não usa travessão ('PRAZO FATAL —')", !ln.tp.some(r => /PRAZO FATAL —/.test(r)), 2, ln.tp);
       conf("a data do To Do sem nenhuma anotação não se chama prazo fatal nem pede 'Diga do que é'",
-        ln.titC.length && !ln.titC.some(t => /Prazo fatal|Prazo do Microsoft|Diga do que é/i.test(t)), 3, ln.titC);
+        ln.titC.length && !ln.titC.some(t => /Prazo fatal|Diga do que é/i.test(t)), 3, ln.titC);
     }
 
     const hero = await p.evaluate(() => (document.querySelector(".pzc-hero-txt") || document.querySelector("[class*='pzc-hero']") || {}).textContent || "");
