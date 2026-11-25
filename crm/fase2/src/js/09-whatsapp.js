@@ -362,8 +362,8 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
                  ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?`<button onclick="alternarBot()">${c.bot_ativo?"Calar o robô nesta conversa":"Religar o robô nesta conversa"}</button>
                  ${!fim&&(zapAux.passos||[]).length?`<button onclick="levarRobo()" title="Levar o robô a um passo…"><span aria-hidden="true">Robô…</span><span class="sr-only">Levar o robô a um passo…</span></button>`:""}`:""}
                  <button onclick="pedirHistoricoZap()" title="${esc(c.historico_resultado||"pede ao celular as mensagens que faltam nesta conversa")}">${c.historico_pedido&&!c.historico_feito?"Buscando o histórico no celular…":"Buscar histórico no celular"}</button>
-                 ${cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:!c.ia_conversa})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>
-                 <button onclick="mudarConversa({sem_ia:!c.sem_ia})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
+                 ${cfgApp("zap_ia_plantao")==="sim"?`<button onclick="mudarConversa({ia_conversa:${!c.ia_conversa}})">${c.ia_conversa?"A IA deixa de conversar com este número":"A IA conversa com este número"}</button>
+                 <button onclick="mudarConversa({sem_ia:${!c.sem_ia}})">${c.sem_ia?"A IA volta a responder esta conversa":"A IA não responde esta conversa"}</button>`:""}
                </details>`:""}
              </div>
            </details>
