@@ -7250,6 +7250,8 @@ html[data-tema="v10"] .ltc .jn-tudo{position:static;order:99;flex:none;align-sel
 /* F672 · a parceria logo abaixo do Responsável (pedido do Paulo, 21.11.2026) */
 .cli-adv{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px}
 .cli-adv-parc .chip{margin:0}
+/* F818 · nome do responsável na mesma linha do rótulo (pedido do Paulo, 25.11.2026) */
+.cli-adv-l{white-space:nowrap}
 /* F672 · a ▾ abre os casos sozinha: alvo de toque de 24 px */
 .cli-casos-seta[role=button]{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;cursor:pointer}
 .ma-d.ma-tem{border:0;padding:0;cursor:pointer;font:inherit;font-size:12px}
@@ -51212,8 +51214,8 @@ function linhaAdvogado(c, parc=""){
   const id = advogadoDoCliente(c.id)[0], co = D.colPorId.get(id);
   // F254 · o "fora da lista" segue à vista; o botão de mudar foi ao ⋯ do cabeçalho (F274, itemNaoCliente)
   const nc = ehContato(c) ? ` · ${seloContato(c)}` : souAdmin() && !ehClienteDaLista(c) ? ` · <span class="chip neutro">fora da lista Clientes</span>` : "";
-  return `<span class="cli-adv">Responsável<span class="fp2-sr"> pelo cliente:</span> <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
-    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}${parc ? `<span class="cli-adv-parc">${parc}</span>` : ""}</span>`;
+  return `<span class="cli-adv"><span class="cli-adv-l">Responsável<span class="fp2-sr"> pelo cliente:</span> <button type="button" class="cli-adv-bt" onclick="escolherAdvogado('${c.id}')"
+    title="trocar o advogado responsável por este cliente: é quem a ⭐ e a movimentação avisam">${esc(co ? co.nome : "escolher")} ▾</button>${nc}</span>${parc ? `<span class="cli-adv-parc">${parc}</span>` : ""}</span>`;
 }
 function itemNaoCliente(c){
   if(!souAdmin()) return "";
