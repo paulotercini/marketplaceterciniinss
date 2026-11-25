@@ -1088,8 +1088,8 @@ function itensDoCalendario(){
     // F450 · o retorno e a volta à fila se arrastam a outro dia; o prazo fatal, arrastado, abre a janela do prazo
     const desp = (k.ronda||{}).despacho, pz = {pz:{casoId:k.id}};
     if(k.prazo && !igual) push(k.prazo, prazoEhRetorno(k) ? "lembre" : "prazo",
-      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "retorno" : "prazo fatal"})`, c.id,
-      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Retorno"}} : pz);
+      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "prazo do Microsoft To Do" : "prazo fatal"})`, c.id,
+      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Prazo do Microsoft To Do"}} : pz);
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id,pz);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome}: benefício cessa (pedir prorrogação)`,c.id);

@@ -58,7 +58,7 @@ function cartaoEscolha(cliId, k, i, meu, destaque, nb){
   const volta = k.prazo && ((k.ronda||{}).despacho||{}).prazo===k.prazo;
   const venc = k.prazo && k.prazo<hj;
   const selo = !k.prazo ? "" : volta || prazoEhRetorno(k)
-    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "retorno"} ${fmtBarra(k.prazo)}${venc?(volta?" · vencida":" · vencido"):""}</span>`
+    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "prazo do Microsoft To Do"} ${fmtBarra(k.prazo)}${venc?(volta?" · vencida":" · vencido"):""}</span>`
     : `<span class="esc-prz fatal${venc?" venc":""}" title="${esc(k.lembrar_motivo||"")}">prazo ${fmtBarra(k.prazo)}${venc?" · vencido":""}</span>`;
   const a = (D._andsFicha||[]).filter(x=>x.caso_id===k.id).sort((x,y)=>String(y.criado_em).localeCompare(String(x.criado_em)))[0];
   const quemAnd = a && (a.autor_id ? ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]

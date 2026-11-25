@@ -4133,7 +4133,7 @@ html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 #pcli .pcl-dados{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;margin-top:12px;border-top:1px solid #F0EFEB}
 #pcli .pcl-larga{grid-column:1/-1}
 #pcli .pcl-cop{cursor:copy}
-#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444}
+#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444;white-space:nowrap}
 #pcli .pcl-tipo.fatal{background:#B42318;color:#fff;border-color:#B42318}
 #pcli .pcl-mais{margin-left:auto;background:none;border:1px solid var(--borda,#E7E6E1);border-radius:6px;width:26px;height:26px;font-size:16px;cursor:pointer;color:#1D5C63}
 #pcli .pcl-n{margin-left:6px}

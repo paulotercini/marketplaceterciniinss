@@ -50,7 +50,7 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
+const ehRetornoPz = x => x.rotulo==="Prazo do Microsoft To Do" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
@@ -103,7 +103,7 @@ function calendarioPz(){
   }
   return `<aside class="pzm" aria-label="Mês"><div class="pzm-cab"><button type="button" class="pzm-nav" onclick="pzMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="pzMes(1)" aria-label="Mês seguinte">›</button></div>
     <div class="pzm-g">${h}</div>
-    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Retorno</span></div></aside>`;
+    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Prazo do Microsoft To Do</span></div></aside>`;
 }
 function pzConteudo(cliId){
   const hj = hoje(), em = n => somaDias(hj, n);
@@ -119,7 +119,7 @@ function pzConteudo(cliId){
   const fatais = _pzCli.filter(x=>x._nat==="fatal" && !x.aConfirmar);
   const heroX = fatais.find(x=>x.data>=hj) || fatais.find(pend) || null;
   const ferr = `<div class="pzc-ferr">
-    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Retorno"]]).map(([v, r])=>
+    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Prazo do Microsoft To Do"]]).map(([v, r])=>
       `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
     <div class="pzc-seg" role="group" aria-label="Agrupar os prazos">${[["data","Por data"],["caso","Por caso"]].map(([v, r])=>
       `<button type="button" aria-pressed="${_pzVer===v}" class="${_pzVer===v?"on":""}" onclick="pzVer('${v}')">${r}</button>`).join("")}</div>
@@ -276,7 +276,7 @@ function casoCurtoPz(k){
 }
 // F504 · o nome curto da linha: a natureza, e não o título (pedido do Paulo, 10.11.2026)
 function natRotPz(x){
-  if(ehRetornoPz(x)) return "Retorno";
+  if(ehRetornoPz(x)) return "Prazo do Microsoft To Do";
   const nat = natDaLinha(x);
   if(nat==="fatal" || x.prorrogDe) return "Prazo fatal";
   if(x.ico==="🩺" && !/prorroga/i.test(x.rotulo||"")){

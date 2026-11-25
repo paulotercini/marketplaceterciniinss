@@ -7158,7 +7158,7 @@ html .timeline.tl-fixos .tl-pz-pill{color:var(--dk-fatal,#B3261E)}
 #pcli .pcl-dados{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;margin-top:12px;border-top:1px solid #F0EFEB}
 #pcli .pcl-larga{grid-column:1/-1}
 #pcli .pcl-cop{cursor:copy}
-#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444}
+#pcli .pcl-tipo{font-size:11px;text-transform:none;letter-spacing:0;font-weight:600;border:1px solid var(--borda,#E7E6E1);border-radius:4px;padding:1px 6px;color:#444;white-space:nowrap}
 #pcli .pcl-tipo.fatal{background:#B42318;color:#fff;border-color:#B42318}
 #pcli .pcl-mais{margin-left:auto;background:none;border:1px solid var(--borda,#E7E6E1);border-radius:6px;width:26px;height:26px;font-size:16px;cursor:pointer;color:#1D5C63}
 #pcli .pcl-n{margin-left:6px}
@@ -12126,7 +12126,7 @@ function montarExt(el, it){
   const atr = D.atrDoCaso.get(k.id)||[], resp = atr.map(id=>D.colPorId.get(id)).filter(Boolean);
   x.className = "ag-ext"; x._it = it; x._el = el; x._atual = atr[0] || "";
   x.innerHTML = `<div class="ae-topo"><span class="ae-quem"><span class="ae-resp">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}</span>${
-      it.selo==="Retorno" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
+      it.selo==="Prazo do Microsoft To Do" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
     <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
       <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS"><span class="ae-rot">Meu </span>INSS <span class="ae-senha">…</span></button>
       <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
@@ -12287,7 +12287,7 @@ async function extConcluir(x){
     t.concluida = true; plim(); repintaExt(k);
     return avisoDesfazer("Concluída", async ()=>{ await muda(false); t.concluida = false; repintaExt(k); aviso("Conclusão desfeita", false); }, 30000);
   }
-  if(it.selo==="Retorno" || it.selo==="Volta à fila"){
+  if(it.selo==="Prazo do Microsoft To Do" || it.selo==="Volta à fila"){
     // concluir o retorno tira a data do caso; o despacho marcado "concluido" leva a data apagada ao To Do (ponte_despacho.py)
     const antes = {prazo:k.prazo||null, ronda:k.ronda||{}};
     const muda = {prazo:null, ronda:{...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:null, concluido:true}}};
@@ -12312,7 +12312,7 @@ function itemDoCaso(k){
   if(!k) return null;
   const fatal = !!k.prazo && fatalAbertoDe(k)===k.prazo;
   return {k, cli:D.cliPorId.get(k.cliente_id), data:k.prazo||"", fatal, quem:[],
-    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Retorno"};
+    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Prazo do Microsoft To Do"};
 }
 // no navegador automatizado as provas antigas esperam a linha do tempo à vista; a nova liga com crm_dash_caso=1
 const dashLigado = () => temaV10() && (!navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_dash_caso")==="1"; }catch(e){ return false; } })());
@@ -12500,7 +12500,7 @@ async function pcliMontar(){
   const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
   const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
   const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
-  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Prazo do Microsoft To Do" : it.selo || "Prazo do Microsoft To Do";
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
     <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
@@ -15655,7 +15655,7 @@ function itensAgendaTodos(){
     const comTf = k.prazo && !volta ? (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.natureza==="fatal" && !t.concluida_em && t.lembrar_em===k.prazo).map(t=>t.colaborador_id) : [];
     const donosPz = comTf.length ? (donos||[]).filter(d=>!comTf.includes(d)) : donos;
     if(k.prazo && !igual && (!comTf.length || donosPz.length)) por(volta ? {data:k.prazo, k, cli, selo:"Volta à fila", resumo:k.lembrar_motivo||tituloCaso(k)}
-      : prazoEhRetorno(k) ? {data:k.prazo, k, cli, selo:"Retorno", resumo:k.lembrar_motivo||tituloCaso(k)}
+      : prazoEhRetorno(k) ? {data:k.prazo, k, cli, selo:"Prazo do Microsoft To Do", resumo:k.lembrar_motivo||tituloCaso(k)}
       : {data:k.prazo, k, cli, fatal:true, resumo:motivoDoPrazo(k)||tituloCaso(k), motivo:motivoDoPrazo(k)}, donosPz);
     // a data de início do Planner: o prazo fatal entra na agenda também no dia de começar
     if(k.prazo && k.prazo_inicio && k.prazo_inicio<k.prazo) por({data:k.prazo_inicio<hj ? hj : k.prazo_inicio, k, cli, selo:"Começar",
@@ -16013,7 +16013,7 @@ function reagendavel(i){
   if(i.fatal || i.prazo || i.ev || i.evPassado || i.pg) return false;
   if(i.tc) return i.tc.natureza!=="fatal" && !i.tc.concluida_em;
   if(i.t) return !i.t.virtual && !!i.t.id;
-  return !!i.k && (i.selo==="Volta à fila" || i.selo==="Retorno");
+  return !!i.k && (i.selo==="Volta à fila" || i.selo==="Prazo do Microsoft To Do");
 }
 function reagendarVencidas(lote){
   const ms = _reagVenc.filter(reagendavel), fica = _reagVenc.length - ms.length;
@@ -16050,7 +16050,7 @@ async function aplicarReagendar(data){
     if(vistos.has(ch)) continue; vistos.add(ch);
     if(i.tc) nota(i.tc.caso_id || (i.k||{}).id, i.tc.natureza==="lembrete" ? "Lembrete" : "Tarefa", i.tc.lembrar_em);
     else if(i.t) nota(i.t.caso_id, "Tarefa", i.t.prazo);
-    else nota(i.k.id, i.selo==="Volta à fila" ? "Volta à fila" : "Retorno", i.k.prazo);
+    else nota(i.k.id, i.selo==="Volta à fila" ? "Volta à fila" : "Prazo do Microsoft To Do", i.k.prazo);
     const m = moverData(i, data); grava.push(m.p); volta.push(m.undo);
   }
   const r = await Promise.allSettled(grava), falhas = r.filter(x=>x.status==="rejected").length;
@@ -16183,7 +16183,7 @@ async function loteEstrela(){
 function loteData(){
   // a linha do Meu Dia e do Planejado leva o próprio item; a das listas, a volta à fila ou o retorno do To Do do caso
   _reagVenc = [..._sel.values()].flatMap(x=>x.it ? [x.it] : x.casos.map(id=>D.casoPorId.get(id)).filter(k=>k && k.prazo).map(k=>({k, data:k.prazo,
-    selo:((k.ronda||{}).despacho||{}).prazo===k.prazo ? "Volta à fila" : prazoEhRetorno(k) ? "Retorno" : null})));
+    selo:((k.ronda||{}).despacho||{}).prazo===k.prazo ? "Volta à fila" : prazoEhRetorno(k) ? "Prazo do Microsoft To Do" : null})));
   reagendarVencidas(true);
 }
 // F382 (12.40) · a carga de prazos por pessoa nos próximos 7 dias, no alto do Planejado (ideia do Lovable aprovada pelo
@@ -16463,7 +16463,7 @@ function barraPlanejado(){
 // a natureza de cada item da Lista, para os filtros do alto
 const PLAN_NAT = [["prazos","Prazos","prazos fatais, recursos, exigências e prazos dos tribunais"],["pericias","Perícias","perícias, audiências e julgamentos"],
   ["tarefas","Tarefas","tarefas das anotações e tarefas soltas"],["fila","Retornos","casos que voltam à fila (Concluir por hoje)"],["lembretes","Lembretes","lembretes, cards, honorários e o resto"]];
-const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Retorno" ? "fila"
+const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Prazo do Microsoft To Do" ? "fila"
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }
@@ -18146,7 +18146,7 @@ function providenciasComData(){
   const donos = k => (D.atrDoCaso.get(k.id)||[]);
   ativos().forEach(k=>{
     if(k.prazo){ const og = origemDoPrazo(k);
-      out.push({data:k.prazo, ico:prazoEhRetorno(k)?"↩":"⏰", tipo:prazoEhRetorno(k)?"Retorno":"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
+      out.push({data:k.prazo, ico:prazoEhRetorno(k)?"↩":"⏰", tipo:prazoEhRetorno(k)?"Prazo do Microsoft To Do":"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
     const pe = prorrogarEm(k);
     if(pe) out.push({data:pe, ico:"🩹", tipo:"Pedir prorrogação", txt:`DCB ${fmt(k.dcb)}`, nome:nomeC(k), cli:k.cliente_id, donos:donos(k)});
     (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.lembrar_em && !t.concluida_em).forEach(t=>
@@ -22250,8 +22250,8 @@ function itensDoCalendario(){
     // F450 · o retorno e a volta à fila se arrastam a outro dia; o prazo fatal, arrastado, abre a janela do prazo
     const desp = (k.ronda||{}).despacho, pz = {pz:{casoId:k.id}};
     if(k.prazo && !igual) push(k.prazo, prazoEhRetorno(k) ? "lembre" : "prazo",
-      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "retorno" : "prazo fatal"})`, c.id,
-      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Retorno"}} : pz);
+      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "prazo do Microsoft To Do" : "prazo fatal"})`, c.id,
+      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Prazo do Microsoft To Do"}} : pz);
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id,pz);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome}: benefício cessa (pedir prorrogação)`,c.id);
@@ -23672,7 +23672,7 @@ function cartaoEscolha(cliId, k, i, meu, destaque, nb){
   const volta = k.prazo && ((k.ronda||{}).despacho||{}).prazo===k.prazo;
   const venc = k.prazo && k.prazo<hj;
   const selo = !k.prazo ? "" : volta || prazoEhRetorno(k)
-    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "retorno"} ${fmtBarra(k.prazo)}${venc?(volta?" · vencida":" · vencido"):""}</span>`
+    ? `<span class="esc-prz fila">${volta ? "volta à fila" : "prazo do Microsoft To Do"} ${fmtBarra(k.prazo)}${venc?(volta?" · vencida":" · vencido"):""}</span>`
     : `<span class="esc-prz fatal${venc?" venc":""}" title="${esc(k.lembrar_motivo||"")}">prazo ${fmtBarra(k.prazo)}${venc?" · vencido":""}</span>`;
   const a = (D._andsFicha||[]).filter(x=>x.caso_id===k.id).sort((x,y)=>String(y.criado_em).localeCompare(String(x.criado_em)))[0];
   const quemAnd = a && (a.autor_id ? ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]
@@ -43262,7 +43262,7 @@ function linhasDeDatas(cliId){
     }
     // 02.11.2026 · o "Concluir em" do To Do fora do 🗓 Tarefas com Prazo é retorno, e não prazo fatal (prazoEhRetorno)
     else if(x.prazo && !igualA && prazoEhRetorno(x)){
-      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Retorno", todo:prazoDoTodo(x),
+      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Prazo do Microsoft To Do", todo:prazoDoTodo(x),
         resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):"", andId:og?og.id:null,
         rot:`<b>Retorno: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
                   <small class="qd-de">Data de voltar ao caso, o “Concluir em” do To Do${og?` · anotado por ${esc(og.quem)} em ${fmt(og.em)}`:""}</small>`,
@@ -43403,7 +43403,7 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
+const ehRetornoPz = x => x.rotulo==="Prazo do Microsoft To Do" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
@@ -43456,7 +43456,7 @@ function calendarioPz(){
   }
   return `<aside class="pzm" aria-label="Mês"><div class="pzm-cab"><button type="button" class="pzm-nav" onclick="pzMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="pzMes(1)" aria-label="Mês seguinte">›</button></div>
     <div class="pzm-g">${h}</div>
-    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Retorno</span></div></aside>`;
+    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Prazo do Microsoft To Do</span></div></aside>`;
 }
 function pzConteudo(cliId){
   const hj = hoje(), em = n => somaDias(hj, n);
@@ -43472,7 +43472,7 @@ function pzConteudo(cliId){
   const fatais = _pzCli.filter(x=>x._nat==="fatal" && !x.aConfirmar);
   const heroX = fatais.find(x=>x.data>=hj) || fatais.find(pend) || null;
   const ferr = `<div class="pzc-ferr">
-    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Retorno"]]).map(([v, r])=>
+    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Prazo do Microsoft To Do"]]).map(([v, r])=>
       `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
     <div class="pzc-seg" role="group" aria-label="Agrupar os prazos">${[["data","Por data"],["caso","Por caso"]].map(([v, r])=>
       `<button type="button" aria-pressed="${_pzVer===v}" class="${_pzVer===v?"on":""}" onclick="pzVer('${v}')">${r}</button>`).join("")}</div>
@@ -43629,7 +43629,7 @@ function casoCurtoPz(k){
 }
 // F504 · o nome curto da linha: a natureza, e não o título (pedido do Paulo, 10.11.2026)
 function natRotPz(x){
-  if(ehRetornoPz(x)) return "Retorno";
+  if(ehRetornoPz(x)) return "Prazo do Microsoft To Do";
   const nat = natDaLinha(x);
   if(nat==="fatal" || x.prorrogDe) return "Prazo fatal";
   if(x.ico==="🩺" && !/prorroga/i.test(x.rotulo||"")){

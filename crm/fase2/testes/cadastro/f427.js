@@ -111,7 +111,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
       ana: [...document.querySelectorAll(`.ag-linha[data-cli="${a}"]`)].map(l => ((l.querySelector(".ag-oque") || {}).textContent || "")),
       esps: [...document.querySelectorAll(".ag-linha .ag-esp")].map(e => e.textContent) }), [cB.id, cA.id]);
     conf(P + "a data do To Do de hoje é Retorno no Meu Dia, sem a frase do To Do e sem Prazo fatal (F429)",
-      md.bruno.length && md.bruno.some(x => /Retorno/.test(x.txt)) && !md.bruno.some(x => /Prazo fatal/.test(x.txt)), 4, md.bruno);   // F461: no celular a anotação do To Do pode ser a atribuição
+      md.bruno.length && md.bruno.some(x => /Prazo do Microsoft To Do/.test(x.txt)) && !md.bruno.some(x => /Prazo fatal/.test(x.txt)), 4, md.bruno);   // F461: no celular a anotação do To Do pode ser a atribuição
     conf(P + "o prazo fatal vencido diz do que é na linha do Meu Dia", md.ana.some(t => /manifestação sobre o laudo social/i.test(t)), 3, md.ana);
     conf(P + "a linha do caso da lista Tarefas com Prazo diz a fase verdadeira (Judicial), e nenhuma diz Outros", md.bruno.some(x => x.esp === "B41 · Judicial") && !md.esps.some(t => /Outros/.test(t)), 3, md.esps);
     if (nome === "cel") conf("celular · a linha do Meu Dia não passa da borda do cartão", md.bruno.length && md.bruno.every(x => x.cabe), 2, md.bruno);
@@ -128,7 +128,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
         ln.an.some(r => /^Pedir o LTCAT à empresa/.test(r)) && !ln.an.some(r => /^(Paulo|Amanda)\b.*:/.test(r) || /prazo adicional até/i.test(r)), 4, ln.an);
       conf("a revisão começa por 'Revisar:'", ln.an.some(r => /^Revisar: /.test(r)), 2, ln.an);
       conf("a data do To Do no Tarefas com Prazo é Retorno, sem a frase da anotação do To Do (F429)",
-        ln.tp.length && ln.tp.every(r => /^Retorno/.test(r) && !/PRAZO FATAL|intimados/.test(r)), 4, ln.tp);
+        ln.tp.length && ln.tp.every(r => /^Prazo do Microsoft To Do/.test(r) && !/PRAZO FATAL|intimados/.test(r)), 4, ln.tp);
       conf("o título do prazo não usa travessão ('PRAZO FATAL —')", !ln.tp.some(r => /PRAZO FATAL —/.test(r)), 2, ln.tp);
       conf("a data do To Do sem nenhuma anotação não se chama prazo fatal nem pede 'Diga do que é'",
         ln.titC.length && !ln.titC.some(t => /Prazo fatal|Prazo do Microsoft|Diga do que é/i.test(t)), 3, ln.titC);
@@ -161,7 +161,7 @@ const conf = (nome, v, peso, info) => { pts.push([nome, !!v, peso]); console.log
     await abreLinha("Microsoft To Do");
     await p.waitForSelector("#painel-prazo.aberto", { timeout: 3000 }).catch(() => {});
     const desc = await p.evaluate(() => { const j = document.querySelector("#painel-prazo.aberto"); return j ? { t: j.innerText.slice(0, 300) } : null; });
-    conf(P + "a janela da data do To Do diz Retorno e não Prazo fatal", desc && /Retorno/.test(desc.t) && !/Prazo fatal|PRAZO FATAL/.test(desc.t), 3, desc);
+    conf(P + "a janela da data do To Do diz Retorno e não Prazo fatal", desc && /Prazo do Microsoft To Do/.test(desc.t) && !/Prazo fatal|PRAZO FATAL/.test(desc.t), 3, desc);
     await foto("04-sem-descricao");
     await p.evaluate(() => fecharPainelPrazo());
 

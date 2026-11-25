@@ -223,7 +223,7 @@ function barraPlanejado(){
 // a natureza de cada item da Lista, para os filtros do alto
 const PLAN_NAT = [["prazos","Prazos","prazos fatais, recursos, exigências e prazos dos tribunais"],["pericias","Perícias","perícias, audiências e julgamentos"],
   ["tarefas","Tarefas","tarefas das anotações e tarefas soltas"],["fila","Retornos","casos que voltam à fila (Concluir por hoje)"],["lembretes","Lembretes","lembretes, cards, honorários e o resto"]];
-const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Retorno" ? "fila"
+const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Prazo do Microsoft To Do" ? "fila"
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }

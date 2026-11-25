@@ -39,7 +39,7 @@ const SUPA = "https://ficticio.supabase.co";
   // 1. F451 · o mês da aba Prazos (substituiu a linha dos 30 dias): um ponto por prazo na cor da natureza, o dia clicado filtra
   const l = await p.evaluate(() => {
     const hj = hoje(); _pzMes = null; _pzDia = null;
-    _pzCli = [{data: hj, _nat: "fatal", _titulo: "Recurso inominado"}, {data: hj, _nat: "lembrete", rotulo: "Retorno", _titulo: "Retorno"},
+    _pzCli = [{data: hj, _nat: "fatal", _titulo: "Recurso inominado"}, {data: hj, _nat: "lembrete", rotulo: "Prazo do Microsoft To Do", _titulo: "Retorno"},
       {data: hj, _nat: "fatal", _titulo: "A confirmar", aConfirmar: true}];
     const d = document.createElement("div"); d.innerHTML = calendarioPz();
     const h = d.querySelector(".pzm-hoje");
@@ -95,11 +95,11 @@ const SUPA = "https://ficticio.supabase.co";
   const cg = await p.evaluate(eu => {
     const hj = hoje(), its = [];
     for (let i = 0; i < 7; i++) its.push({data: somaDias(hj, i % 5), fatal: true, donos: [eu]});
-    its.push({data: somaDias(hj, 1), selo: "Retorno", donos: [eu]}, {data: somaDias(hj, 9), fatal: true, donos: [eu]}, {data: somaDias(hj, -1), fatal: true, donos: [eu]});
+    its.push({data: somaDias(hj, 1), selo: "Prazo do Microsoft To Do", donos: [eu]}, {data: somaDias(hj, 9), fatal: true, donos: [eu]}, {data: somaDias(hj, -1), fatal: true, donos: [eu]});
     const d = document.createElement("div"); d.innerHTML = blocoCarga(its);
     const b = d.querySelector(".carga-l");
     return {n: d.querySelectorAll(".carga-l").length, q: b && b.querySelector(".carga-q").textContent, alto: b && !!b.querySelector("i.alto"), col: b && b.dataset.agcol,
-      vazio: blocoCarga([{data: somaDias(hj, 1), selo: "Retorno", donos: [eu]}])};
+      vazio: blocoCarga([{data: somaDias(hj, 1), selo: "Prazo do Microsoft To Do", donos: [eu]}])};
   }, EU);
   conf("conta só os prazos da semana (7), sem o retorno, o de 9 dias e o vencido", cg.n === 1 && /^7/.test(cg.q));
   conf("acima de 6 a barra fica vermelha", cg.alto);

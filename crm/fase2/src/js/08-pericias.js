@@ -698,7 +698,7 @@ function providenciasComData(){
   const donos = k => (D.atrDoCaso.get(k.id)||[]);
   ativos().forEach(k=>{
     if(k.prazo){ const og = origemDoPrazo(k);
-      out.push({data:k.prazo, ico:prazoEhRetorno(k)?"↩":"⏰", tipo:prazoEhRetorno(k)?"Retorno":"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
+      out.push({data:k.prazo, ico:prazoEhRetorno(k)?"↩":"⏰", tipo:prazoEhRetorno(k)?"Prazo do Microsoft To Do":"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
     const pe = prorrogarEm(k);
     if(pe) out.push({data:pe, ico:"🩹", tipo:"Pedir prorrogação", txt:`DCB ${fmt(k.dcb)}`, nome:nomeC(k), cli:k.cliente_id, donos:donos(k)});
     (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.lembrar_em && !t.concluida_em).forEach(t=>
