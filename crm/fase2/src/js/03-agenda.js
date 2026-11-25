@@ -699,10 +699,10 @@ function cartaoCliente(cli, casosMostrar){
       .filter(x=>x.d && x.d!==x.k.prazo).sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:0)[0];
     const fila = ks.map(k=>k.fase==="judicial" && k.trf3 && k.trf3.ordem ? k.trf3 : null).filter(Boolean)[0];
     const selos = [
-      pDia ? (pDia.fatal ? `<span class="ag-fatal">Prazo fatal</span>` : pDia.selo && !pDia.ev ? `<span class="${pDia.prazo?"ag-prazo":"ag-tipo"}">${esc(pDia.selo)}</span>` : "")
-        : prazoMin && dataProx===prazoMin ? `<span class="ag-fatal">Prazo fatal</span>` : "",
+      // F820 · o tipo do prazo vai para a coluna Prazo, abaixo da data; aqui fica a lista (nas visões que misturam listas)
+      !String(visao).startsWith("fase:") && kP && NOME_FASE[kP.fase] ? `<span class="ag-tipo ag-lst">${esc(NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"")}</span>` : "",
       evFut && !(pDia && pDia.ev && pDia.ev.id===evFut.id) ? `<span class="ag-tipo" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${esc(evFut.tipo.split(" ")[0])} ${fmtBarra(dataSP(evFut.data_hora)).slice(0,5)} ${horaSP(evFut.data_hora)}</span>` : "",
-      pTrib && !(pDia && pDia.prazo && pDia.data===pTrib.d) ? `<span class="ag-prazo" title="prazo do tribunal">Prazo ${esc(pTrib.s)} ${pTrib.d.slice(8,10)}/${pTrib.d.slice(5,7)}</span>` : "",
+      pTrib && pTrib.d!==dataProx ? `<span class="ag-prazo" title="prazo do tribunal">Prazo ${esc(pTrib.s)} ${pTrib.d.slice(8,10)}/${pTrib.d.slice(5,7)}</span>` : "",
       (s=>s ? `<span class="ag-tipo ag-susp" title="${esc(tituloSusp(s))}">⏸ ${esc(rotSusp(s))}</span>` : "")(ks.map(suspensaoDe).find(Boolean)),   // F417
       kP ? seloParado(kP) : "",   // F441 · caso parado
       kP && kP.etapa ? seloEtapaLista(kP) : "",   // F236 · a desatualizada avisa; F292 · em todas as listas, como o objetivo da tarefa no To Do
@@ -714,13 +714,16 @@ function cartaoCliente(cli, casosMostrar){
       esp ? `<span class="ag-esp">${esc(esp)}</span>` : "",
     ].join("");
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
+    const tipo = !dataProx ? "" : pDia ? (pDia.fatal ? "Prazo fatal" : pDia.ev ? String(pDia.ev.tipo||"Perícia").split(" ")[0] : pDia.selo||"")
+      : prazoMin && dataProx===prazoMin ? "Prazo fatal" : pTrib && pTrib.d===dataProx ? "Prazo "+pTrib.s : "";
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}${dataProx.slice(0,4)!==hj.slice(0,4)?"/"+dataProx.slice(2,4):""}`;
     return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}" data-casos="${ks.map(k=>k.id).join(",")}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
-    <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
-    <div class="ag-txt"><b>${esc(cli.nome)}</b>${seloContato(cli)}${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
+    <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}${tipo?`<small class="ag-dtipo${/fatal/i.test(tipo)?" fatal":""}">${esc(tipo)}</small>`:""}</span>
+    <div class="ag-txt"${resumo?` title="${esc(resumo)}"`:""}><b>${esc(cli.nome)}</b>${seloContato(cli)}${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
       ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(kP ? NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"" : "")}</span>
+    <span class="ag-c-esp">${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}</span>
     <span class="ag-c-etapa">${kP && kP.etapa ? seloEtapaLista(kP) : ""}</span>
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>

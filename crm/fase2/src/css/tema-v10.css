@@ -1096,6 +1096,43 @@ html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-te
   /* a ⭐ fica à vista, como no artefato; conferir continua aparecendo ao passar o mouse */
   html #conteudo-meio .cartao.ag-linha .acoes .acao-card{opacity:1!important}
 }
+/* F820 · padrão das listas (pedido do Paulo, 25.11.2026, artefato aprovado): cinco colunas, Nome, Espécie, Prazo, Atribuição e ⭐,
+   com o cabeçalho que ordena; abaixo do nome, miúdo, a situação, a lista (quando a visão mistura listas) e os demais selos.
+   O nome da lista na linha e o texto da tarefa ao lado do nome saem (o texto fica no title). No celular nada muda. */
+html[data-tema="v10"] .ag-c-esp,html[data-tema="v10"] .ag-dtipo{display:none}
+@container (min-width:721px){
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{
+    grid-template-columns:minmax(0,1fr) 150px 110px 64px 24px 56px;row-gap:2px;padding-top:7px;padding-bottom:7px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1/3}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1;grid-row:1}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-selos{grid-column:1;grid-row:2;justify-content:flex-start;gap:0;overflow:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-selos:empty{display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-esp{grid-column:2;display:block;overflow:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-data{grid-column:3;display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.2}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .avatares{grid-column:4}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-slot{grid-column:5}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .acoes{grid-column:6;justify-content:flex-end}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > :is(.ag-c-lista,.ag-c-etapa){display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-txt :is(.ag-ben,.ag-res,.ag-oque){display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-c-esp .ag-ben{display:inline-block;margin:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-dtipo{display:block;font-size:11px;font-weight:400;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-dtipo.fatal{color:var(--venc-tinta);font-weight:600}
+  /* a linha de baixo é texto miúdo e cinza, separado por ·, sem caixinhas; a etapa desatualizada vira um ponto âmbar */
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos > span{display:inline;padding:0;border:0!important;background:none!important;color:var(--cinza)!important;font-size:12px;font-weight:400}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos > span + span::before{content:" · "}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos > :is(.ag-esp,.ag-fatal,.ag-dup){display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos .ag-etapa{display:inline}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-desat{font-size:0}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-desat::after{content:"";display:inline-block;width:7px;height:7px;margin-left:6px;border-radius:2px;background:var(--aviso,#D97706);vertical-align:1px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;padding:0 12px 0 16px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th > :nth-child(4){grid-column:4;text-align:left}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th > :nth-child(5){grid-column:6;justify-self:end}
+  html[data-tema="v10"] .ag-th button{all:unset;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;white-space:nowrap}
+  html[data-tema="v10"] .ag-th button:focus-visible{outline:2px solid var(--sist,#2457C5);outline-offset:2px}
+  html[data-tema="v10"] .ag-th button.ord{color:var(--texto)}
+  html[data-tema="v10"] .ag-th button.ord::after{content:" ↑"}
+  html[data-tema="v10"] .ag-th button[onclick*="imp"].ord::after{content:""}
+}
 html[data-tema="v10"] .ag-txt .ag-ben{font:500 11px var(--f-mono);background:#E9EEF0;color:#3E5660;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
 /* Visualizar · Cartões: cada linha num quadro, o nome inteiro e os selos embaixo */
 html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha{flex-wrap:wrap;margin:6px 0;border:1px solid var(--borda);border-radius:10px;padding:10px 12px;min-height:0;row-gap:6px}
@@ -4258,14 +4295,9 @@ html[data-tema="v10"] .fchip.fchip-ini{border-radius:var(--r-md)}
 html[data-tema="v10"] #conteudo-meio::after{content:"";display:block;height:150px}
 html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
 html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
-/* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
+/* 3 · cabeçalho das colunas em 11px (a variável --f não existe); as colunas são as do padrão das listas (F820) */
 @container (min-width:721px){
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 64px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 11px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
-  html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
-  html[data-tema="v10"] .ag-th > span:nth-child(5){grid-column:5}
 }
 html[data-tema="v10"] .ag-selos .ag-tipo:not(.pre-caso,.ag-velha,.ag-susp,.ag-etapa){border-color:transparent;background:var(--placa);color:var(--cinza)}
 /* 4 · campo vazio do Cadastro em cinza tracejado; o vermelho fica no contador e nos chips */

@@ -72,11 +72,11 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const xs = s => new Set(ls.map(c => c.querySelector(s)).filter(Boolean).map(e => Math.round(e.getBoundingClientRect().left)));
     const e = document.querySelector("#conteudo-meio .ag-linha [data-estrela]");
     return { n: ls.length, data: xs(".ag-data").size, est: xs(".acoes").size, op: e && getComputedStyle(e).opacity,
-      th: [...document.querySelectorAll("#conteudo-meio .ag-th span")].map(x => x.textContent).join(),
-      lista: (document.querySelector("#conteudo-meio .ag-linha .ag-c-lista") || {}).offsetWidth }; });
+      th: [...document.querySelectorAll("#conteudo-meio .ag-th > *")].map(x => x.textContent).join(),
+      esp: (document.querySelector("#conteudo-meio .ag-linha .ag-c-esp") || {}).offsetWidth }; });
   conf(`F444: data e ⭐ na mesma coluna em ${col.n} linhas (${col.data}, ${col.est})`, col.n > 2 && col.data === 1 && col.est === 1);
   conf(`F444: a ⭐ à vista sem o mouse (${col.op})`, col.op === "1");
-  conf(`F444: cabeçalho Cliente, Lista, Etapa, Tipo, Prazo e coluna da lista (${col.th})`, col.th === "Cliente,Lista,Etapa,Tipo,Prazo" && col.lista > 0);
+  conf(`F820: cabeçalho Nome, Espécie, Prazo, Atribuição, ★ e coluna da espécie (${col.th})`, col.th === "Nome,Espécie,Prazo,Atribuição,★" && col.esp > 0);
   if (process.env.SHOT) await p.screenshot({ path: process.env.SHOT });
   await ab();
   const menu = await p.evaluate(() => [...document.querySelectorAll("#lista-opc .lo-ln > span")].map(e => e.textContent));

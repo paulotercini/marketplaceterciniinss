@@ -423,6 +423,7 @@ function renderBase(){
     meio.innerHTML = chipsCol + (visao==="importante" ? blocoSinalizados() + blocoNovidadesTopo() : "")
       + (emAtend.length?`<h3 class="secao">🟡 Em atendimento — buscando documentos (${emAtend.length})</h3>`
           + emAtend.map(c=>cartaoCliente(c,[])).join(""):"")
+      + (temaV10() && casosSel.length ? cabLista() : "")
       + ((visao==="fase:escritorio" && casosSel.length)
           ?`<h3 class="secao">Pré-casos no escritório (${casosSel.length})</h3>`:"")
       + ((gs=>{ const agr = opcLista("agrupar");

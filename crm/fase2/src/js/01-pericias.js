@@ -912,7 +912,7 @@ const etapaEstaVelha = k => !!k.etapa && (!etapasAceitas(faseDaEtapa(k)).include
 function seloEtapaLista(k){
   const d = etapaDesmentida(k);
   const c = COR_FASE[faseDaTrilha(k)], cor = c ? ` ag-etapa" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}` : "";
-  return `<span class="ag-tipo${d?" ag-velha":""}${cor}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? " (desatualizada)" : ""}</span>`;
+  return `<span class="ag-tipo${d?" ag-velha":""}${cor}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? `<span class="ag-desat"> (desatualizada)</span>` : ""}</span>`;
 }
 // F236 · o clássico também vê e muda a etapa, que é o que o cliente lê no portal
 function linhaEtapaClassica(k){

@@ -210,12 +210,12 @@ const casoDe = id => T.casos.find(k => k.id === id);
   const linhaB = await p.evaluate(([cli, id]) => { const vis = visao; visao = "fase:inss"; D._andsFicha = [];
     try{ return cartaoCliente(D.cliPorId.get(cli), [D.casoPorId.get(id)]); } finally { visao = vis; } }, [B.cli, B.id]);
   conf("B1 fora da ficha, a marca da coleta (trilha.velha) faz a linha dizer '(desatualizada)', com o que os fatos dizem no title",
-    /aguardando perícia \(desatualizada\)/.test(linhaB) && /os fatos dizem decidido/.test(linhaB) && /ag-velha/.test(linhaB));
+    /aguardando perícia(<span class="ag-desat">)? \(desatualizada\)/.test(linhaB) && /os fatos dizem decidido/.test(linhaB) && /ag-velha/.test(linhaB));
   await abrir(B2);
   const linhaB2 = await p.evaluate(([cli, id]) => { const vis = visao; visao = "fase:inss";
     try{ return cartaoCliente(D.cliPorId.get(cli), [D.casoPorId.get(id)]); } finally { visao = vis; } }, [B2.cli, B2.id]);
   conf("B2 com os andamentos na memória, a proposta faz o mesmo: 'aguardando perícia (desatualizada)' e 'decidido · indeferido' no title",
-    /aguardando perícia \(desatualizada\)/.test(linhaB2) && /decidido · indeferido/.test(linhaB2));
+    /aguardando perícia(<span class="ag-desat">)? \(desatualizada\)/.test(linhaB2) && /decidido · indeferido/.test(linhaB2));
   conf("B3 a etapa de acordo com os fatos não ganha aviso",
     await p.evaluate(([cli, id]) => { const k = D.casoPorId.get(id), e = k.etapa; k.etapa = "decidido"; const vis = visao; visao = "fase:inss";
       try{ const h = cartaoCliente(D.cliPorId.get(cli), [k]); return /decidido/.test(h) && !/desatualizada/.test(h); } finally { k.etapa = e; visao = vis; } }, [B2.cli, B2.id]));

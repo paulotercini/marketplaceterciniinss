@@ -4121,6 +4121,43 @@ html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-te
   /* a ⭐ fica à vista, como no artefato; conferir continua aparecendo ao passar o mouse */
   html #conteudo-meio .cartao.ag-linha .acoes .acao-card{opacity:1!important}
 }
+/* F820 · padrão das listas (pedido do Paulo, 25.11.2026, artefato aprovado): cinco colunas, Nome, Espécie, Prazo, Atribuição e ⭐,
+   com o cabeçalho que ordena; abaixo do nome, miúdo, a situação, a lista (quando a visão mistura listas) e os demais selos.
+   O nome da lista na linha e o texto da tarefa ao lado do nome saem (o texto fica no title). No celular nada muda. */
+html[data-tema="v10"] .ag-c-esp,html[data-tema="v10"] .ag-dtipo{display:none}
+@container (min-width:721px){
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{
+    grid-template-columns:minmax(0,1fr) 150px 110px 64px 24px 56px;row-gap:2px;padding-top:7px;padding-bottom:7px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1/3}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1;grid-row:1}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-selos{grid-column:1;grid-row:2;justify-content:flex-start;gap:0;overflow:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-selos:empty{display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-esp{grid-column:2;display:block;overflow:hidden}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-data{grid-column:3;display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.2}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .avatares{grid-column:4}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-slot{grid-column:5}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .acoes{grid-column:6;justify-content:flex-end}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > :is(.ag-c-lista,.ag-c-etapa){display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-txt :is(.ag-ben,.ag-res,.ag-oque){display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-c-esp .ag-ben{display:inline-block;margin:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-dtipo{display:block;font-size:11px;font-weight:400;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-dtipo.fatal{color:var(--venc-tinta);font-weight:600}
+  /* a linha de baixo é texto miúdo e cinza, separado por ·, sem caixinhas; a etapa desatualizada vira um ponto âmbar */
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos > span{display:inline;padding:0;border:0!important;background:none!important;color:var(--cinza)!important;font-size:12px;font-weight:400}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos > span + span::before{content:" · "}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos > :is(.ag-esp,.ag-fatal,.ag-dup){display:none}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-selos .ag-etapa{display:inline}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-desat{font-size:0}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha .ag-desat::after{content:"";display:inline-block;width:7px;height:7px;margin-left:6px;border-radius:2px;background:var(--aviso,#D97706);vertical-align:1px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;padding:0 12px 0 16px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th > :nth-child(4){grid-column:4;text-align:left}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th > :nth-child(5){grid-column:6;justify-self:end}
+  html[data-tema="v10"] .ag-th button{all:unset;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;white-space:nowrap}
+  html[data-tema="v10"] .ag-th button:focus-visible{outline:2px solid var(--sist,#2457C5);outline-offset:2px}
+  html[data-tema="v10"] .ag-th button.ord{color:var(--texto)}
+  html[data-tema="v10"] .ag-th button.ord::after{content:" ↑"}
+  html[data-tema="v10"] .ag-th button[onclick*="imp"].ord::after{content:""}
+}
 html[data-tema="v10"] .ag-txt .ag-ben{font:500 11px var(--f-mono);background:#E9EEF0;color:#3E5660;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
 /* Visualizar · Cartões: cada linha num quadro, o nome inteiro e os selos embaixo */
 html[data-tema="v10"] #conteudo-meio.vis-cartoes .ag-linha{flex-wrap:wrap;margin:6px 0;border:1px solid var(--borda);border-radius:10px;padding:10px 12px;min-height:0;row-gap:6px}
@@ -7283,14 +7320,9 @@ html[data-tema="v10"] .fchip.fchip-ini{border-radius:var(--r-md)}
 html[data-tema="v10"] #conteudo-meio::after{content:"";display:block;height:150px}
 html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
 html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
-/* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
+/* 3 · cabeçalho das colunas em 11px (a variável --f não existe); as colunas são as do padrão das listas (F820) */
 @container (min-width:721px){
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 64px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 11px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
-  html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
-  html[data-tema="v10"] .ag-th > span:nth-child(5){grid-column:5}
 }
 html[data-tema="v10"] .ag-selos .ag-tipo:not(.pre-caso,.ag-velha,.ag-susp,.ag-etapa){border-color:transparent;background:var(--placa);color:var(--cinza)}
 /* 4 · campo vazio do Cadastro em cinza tracejado; o vermelho fica no contador e nos chips */
@@ -7370,7 +7402,7 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.33</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.34</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9621,7 +9653,7 @@ const etapaEstaVelha = k => !!k.etapa && (!etapasAceitas(faseDaEtapa(k)).include
 function seloEtapaLista(k){
   const d = etapaDesmentida(k);
   const c = COR_FASE[faseDaTrilha(k)], cor = c ? ` ag-etapa" style="--fc:${c.c};--ff:${c.f};--ft:${c.t}` : "";
-  return `<span class="ag-tipo${d?" ag-velha":""}${cor}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? " (desatualizada)" : ""}</span>`;
+  return `<span class="ag-tipo${d?" ag-velha":""}${cor}" title="${d ? `etapa do caso, desatualizada${d.sug ? `: os fatos dizem ${esc(d.sug)}` : ", de outra fase"} — abra o caso para aceitar a sugestão` : "etapa do caso"}">${esc(k.etapa)}${d ? `<span class="ag-desat"> (desatualizada)</span>` : ""}</span>`;
 }
 // F236 · o clássico também vê e muda a etapa, que é o que o cliente lê no portal
 function linhaEtapaClassica(k){
@@ -11952,10 +11984,10 @@ function cartaoCliente(cli, casosMostrar){
       .filter(x=>x.d && x.d!==x.k.prazo).sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:0)[0];
     const fila = ks.map(k=>k.fase==="judicial" && k.trf3 && k.trf3.ordem ? k.trf3 : null).filter(Boolean)[0];
     const selos = [
-      pDia ? (pDia.fatal ? `<span class="ag-fatal">Prazo fatal</span>` : pDia.selo && !pDia.ev ? `<span class="${pDia.prazo?"ag-prazo":"ag-tipo"}">${esc(pDia.selo)}</span>` : "")
-        : prazoMin && dataProx===prazoMin ? `<span class="ag-fatal">Prazo fatal</span>` : "",
+      // F820 · o tipo do prazo vai para a coluna Prazo, abaixo da data; aqui fica a lista (nas visões que misturam listas)
+      !String(visao).startsWith("fase:") && kP && NOME_FASE[kP.fase] ? `<span class="ag-tipo ag-lst">${esc(NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"")}</span>` : "",
       evFut && !(pDia && pDia.ev && pDia.ev.id===evFut.id) ? `<span class="ag-tipo" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${esc(evFut.tipo.split(" ")[0])} ${fmtBarra(dataSP(evFut.data_hora)).slice(0,5)} ${horaSP(evFut.data_hora)}</span>` : "",
-      pTrib && !(pDia && pDia.prazo && pDia.data===pTrib.d) ? `<span class="ag-prazo" title="prazo do tribunal">Prazo ${esc(pTrib.s)} ${pTrib.d.slice(8,10)}/${pTrib.d.slice(5,7)}</span>` : "",
+      pTrib && pTrib.d!==dataProx ? `<span class="ag-prazo" title="prazo do tribunal">Prazo ${esc(pTrib.s)} ${pTrib.d.slice(8,10)}/${pTrib.d.slice(5,7)}</span>` : "",
       (s=>s ? `<span class="ag-tipo ag-susp" title="${esc(tituloSusp(s))}">⏸ ${esc(rotSusp(s))}</span>` : "")(ks.map(suspensaoDe).find(Boolean)),   // F417
       kP ? seloParado(kP) : "",   // F441 · caso parado
       kP && kP.etapa ? seloEtapaLista(kP) : "",   // F236 · a desatualizada avisa; F292 · em todas as listas, como o objetivo da tarefa no To Do
@@ -11967,13 +11999,16 @@ function cartaoCliente(cli, casosMostrar){
       esp ? `<span class="ag-esp">${esc(esp)}</span>` : "",
     ].join("");
     const quem = [...quemProx, ...resp.filter(c=>!quemProx.includes(c))].slice(0,2);
+    const tipo = !dataProx ? "" : pDia ? (pDia.fatal ? "Prazo fatal" : pDia.ev ? String(pDia.ev.tipo||"Perícia").split(" ")[0] : pDia.selo||"")
+      : prazoMin && dataProx===prazoMin ? "Prazo fatal" : pTrib && pTrib.d===dataProx ? "Prazo "+pTrib.s : "";
     const dTxt = !dataProx ? "" : dataProx===hj ? "hoje" : `${dataProx.slice(8,10)}/${dataProx.slice(5,7)}${dataProx.slice(0,4)!==hj.slice(0,4)?"/"+dataProx.slice(2,4):""}`;
     return `<div class="cartao ag-linha${ks.some(k=>k.urgente)?" urg":""}" data-cli="${cli.id}" data-casos="${ks.map(k=>k.id).join(",")}"${ks.length===1 && ehPreCaso(ks[0]) ? ` data-pc="${esc((ks[0].precaso||{}).id||ks[0].id)}"` : ""}>
-    <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}</span>
-    <div class="ag-txt"><b>${esc(cli.nome)}</b>${seloContato(cli)}${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
+    <span class="ag-data${!dataProx?"":dataProx<hj?" venc":dataProx===hj?" hoje":""}"${dica?` title="${esc(dica)}"`:""}>${dTxt}${tipo?`<small class="ag-dtipo${/fatal/i.test(tipo)?" fatal":""}">${esc(tipo)}</small>`:""}</span>
+    <div class="ag-txt"${resumo?` title="${esc(resumo)}"`:""}><b>${esc(cli.nome)}</b>${seloContato(cli)}${/* teste 11.88, TRI-03: na coluna estreita os selos somem e dois pré-casos
       do mesmo cliente ficavam iguais; a espécie do pré-caso vai junto do nome */ ks.length===1 && ehPreCaso(ks[0])
       ? `<span class="ag-pc-esp"> · ${esc(ks[0].beneficio || (ks[0].precaso||{}).especie || "benefício a definir")}</span>` : ""}${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}${resumo?`<span class="ag-res">, ${esc(resumo)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(kP ? NOME_FASE[kP.fase==="outro" ? faseEfetiva(kP) : kP.fase]||"" : "")}</span>
+    <span class="ag-c-esp">${kP&&kP.especie?`<span class="ag-ben">${esc(kP.especie)}</span>`:""}</span>
     <span class="ag-c-etapa">${kP && kP.etapa ? seloEtapaLista(kP) : ""}</span>
     <span class="ag-selos">${selos}</span>
     <span class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${quem.map(c=>
@@ -12995,6 +13030,7 @@ function renderBase(){
     meio.innerHTML = chipsCol + (visao==="importante" ? blocoSinalizados() + blocoNovidadesTopo() : "")
       + (emAtend.length?`<h3 class="secao">🟡 Em atendimento — buscando documentos (${emAtend.length})</h3>`
           + emAtend.map(c=>cartaoCliente(c,[])).join(""):"")
+      + (temaV10() && casosSel.length ? cabLista() : "")
       + ((visao==="fase:escritorio" && casosSel.length)
           ?`<h3 class="secao">Pré-casos no escritório (${casosSel.length})</h3>`:"")
       + ((gs=>{ const agr = opcLista("agrupar");
@@ -15851,12 +15887,13 @@ function linhaAgenda(it){
   if(selK) _agIt.set(selK, it);
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
-    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
+    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}${it.fatal||it.selo?`<small class="ag-dtipo${it.fatal?" fatal":""}">${esc(it.fatal?"Prazo fatal":it.selo)}</small>`:""}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
     <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
-    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
-      it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
+    <span class="ag-c-esp">${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}</span>
+    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${k?`<span class="ag-tipo ag-lst">${esc(fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"")}</span>`:""}${k && k.etapa ? seloEtapaLista(k) : ""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
+      it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"} ag-dup">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
       tc&&tc.papel==="revisa"?`<span class="ag-tipo ag-revisa" title="revisa o que o executor fez">revisa</span>`:""}${
       esp?`<span class="ag-esp">${esc(esp)}</span>`:""}</span>
@@ -15961,7 +15998,7 @@ function renderAgendaV10(qual){
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
   const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
-  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Tipo</span><span>Prazo</span></div>` : "")
+  + (itens.length ? cabLista() : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
@@ -16272,6 +16309,17 @@ const OPC_LISTA = {
   per: ["crm_periodos", [["sim","Manhã e tarde"],["nao","Sem divisão"]]],
 };
 const opcLista = q => { const [ch, ops] = OPC_LISTA[q], v = ler(ch+":"+visao) || ler(ch); return ops.some(o=>o[0]===v) ? v : ops[0][0]; };
+// F820 · o cabeçalho das listas (pedido do Paulo, 25.11.2026): Nome, Espécie, Prazo, Atribuição e ⭐ nas mesmas colunas
+// em todas as listas; o clique no título ordena, com a mesma escolha do ⋯ Ordenar
+function cabLista(){
+  const o = opcLista("ordem"), b = (v, r, t) => `<button type="button"${o===v?` class="ord" aria-pressed="true"`:""} onclick="ordenarLista('${v}')" title="Ordenar por ${t}">${r}</button>`;
+  return `<div class="ag-th">${b("alfa","Nome","nome")}<span>Espécie</span>${b("prazo","Prazo","data")}<span>Atribuição</span>${b("imp","★","importante")}</div>`;
+}
+function ordenarLista(v){
+  guardar(OPC_LISTA.ordem[0]+":"+visao, v); guardar(OPC_LISTA.ordem[0], v);
+  const s = document.getElementById("ordem"); if(s) s.value = v;
+  limAg = {}; render();
+}
 function pintarOpcLista(){
   const el = document.getElementById("lista-opc"); if(!el) return;
   const agenda = visao==="meudia" || visao==="planejado", fase = String(visao).startsWith("fase:");

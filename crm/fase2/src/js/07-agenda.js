@@ -30,6 +30,17 @@ const OPC_LISTA = {
   per: ["crm_periodos", [["sim","Manhã e tarde"],["nao","Sem divisão"]]],
 };
 const opcLista = q => { const [ch, ops] = OPC_LISTA[q], v = ler(ch+":"+visao) || ler(ch); return ops.some(o=>o[0]===v) ? v : ops[0][0]; };
+// F820 · o cabeçalho das listas (pedido do Paulo, 25.11.2026): Nome, Espécie, Prazo, Atribuição e ⭐ nas mesmas colunas
+// em todas as listas; o clique no título ordena, com a mesma escolha do ⋯ Ordenar
+function cabLista(){
+  const o = opcLista("ordem"), b = (v, r, t) => `<button type="button"${o===v?` class="ord" aria-pressed="true"`:""} onclick="ordenarLista('${v}')" title="Ordenar por ${t}">${r}</button>`;
+  return `<div class="ag-th">${b("alfa","Nome","nome")}<span>Espécie</span>${b("prazo","Prazo","data")}<span>Atribuição</span>${b("imp","★","importante")}</div>`;
+}
+function ordenarLista(v){
+  guardar(OPC_LISTA.ordem[0]+":"+visao, v); guardar(OPC_LISTA.ordem[0], v);
+  const s = document.getElementById("ordem"); if(s) s.value = v;
+  limAg = {}; render();
+}
 function pintarOpcLista(){
   const el = document.getElementById("lista-opc"); if(!el) return;
   const agenda = visao==="meudia" || visao==="planejado", fase = String(visao).startsWith("fase:");

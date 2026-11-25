@@ -816,12 +816,13 @@ function linhaAgenda(it){
   if(selK) _agIt.set(selK, it);
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
-    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
+    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}${it.fatal||it.selo?`<small class="ag-dtipo${it.fatal?" fatal":""}">${esc(it.fatal?"Prazo fatal":it.selo)}</small>`:""}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
     <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
-    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
-      it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"}">${esc(it.selo)}</span>`:""}${
+    <span class="ag-c-esp">${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}</span>
+    <span class="ag-selos">${it.fatal?`<span class="ag-fatal">Prazo fatal</span>`:""}${k?`<span class="ag-tipo ag-lst">${esc(fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"")}</span>`:""}${k && k.etapa ? seloEtapaLista(k) : ""}${it.tc && it.tc.iniciada_em && !it.tc.concluida_em?`<span class="ag-tipo">em andamento</span>`:""}${it.tc && Array.isArray(it.tc.etapas) && it.tc.etapas.length?`<span class="ag-tipo">etapas ${it.tc.etapas.filter(e=>e.feito).length}/${it.tc.etapas.length}</span>`:""}${
+      it.selo?`<span class="${it.prazo?"ag-prazo":"ag-tipo"} ag-dup">${esc(it.selo)}</span>`:""}${
       it.extra?`<span class="ag-tipo" title="a menção que acompanha a tarefa ainda não foi lida">${esc(it.extra)}</span>`:""}${
       tc&&tc.papel==="revisa"?`<span class="ag-tipo ag-revisa" title="revisa o que o executor fez">revisa</span>`:""}${
       esp?`<span class="ag-esp">${esc(esp)}</span>`:""}</span>
@@ -926,7 +927,7 @@ function renderAgendaV10(qual){
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
   const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
-  + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Tipo</span><span>Prazo</span></div>` : "")
+  + (itens.length ? cabLista() : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
       + mencs.slice(0,8).map(linhaMencaoDia).join("")
