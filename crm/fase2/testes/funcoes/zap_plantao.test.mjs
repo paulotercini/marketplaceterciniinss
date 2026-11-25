@@ -850,7 +850,7 @@ assert.match(regras(), /nunca copie o nome do ato do portal/);
   assert.ok(c.startsWith("Dr. Teste está ausente do WhatsApp até 26/11/2026") && c.includes("encaminhe a Dra. Teste"));
 }
 {
-  // F818 · auditoria de 21 a 25.11.2026
+  // F819 · auditoria de 21 a 25.11.2026
   const { semFerias, soImagem, cortesia, RECEBI_IMAGEM, transcricao, regras } = await import("../../zap_plantao/index.ts");
   const f = [{ nome: "Dr. Teste Titular", cobre: "Dra. Teste Substituta" }];
   assert.deepEqual(semFerias("Vou encaminhar a sua pergunta ao Dr. Teste.", "Dr. Teste Titular:", f),
@@ -871,5 +871,5 @@ assert.match(regras(), /nunca copie o nome do ato do portal/);
   assert.ok(transcricao([m("entrada", "audio", "quero saber da perícia")]).includes("[áudio transcrito] quero saber da perícia"));
   assert.match(regras(), /nunca diga que não ouviu/);
   assert.match(regras(), /sem medição para a etapa, não estime/);
-  console.log("F818 ok");
+  console.log("F819 ok");
 }

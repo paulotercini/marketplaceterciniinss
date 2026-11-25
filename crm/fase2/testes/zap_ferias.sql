@@ -37,7 +37,7 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'a
 insert into r select 'f5 uma mensagem automática só',
   (select count(*) = 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
 
--- F818 · o titular escreveu há 2 minutos: a conversa segue com ele, sem aviso (antes a F679 abria o repasse)
+-- F819 · o titular escreveu há 2 minutos: a conversa segue com ele, sem aviso (antes a F679 abria o repasse)
 delete from v; insert into v select zap_abrir('5500000000012', 'Cliente Teste');
 update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);
 insert into zap_mensagens (conversa_id, direcao, texto, autor_id, criado_em)
@@ -74,7 +74,7 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'A
 insert into r select 'f12 colega atendendo: sem aviso',
   not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
 
--- F818 · a substituta escreveu há 20 horas, depois do início das férias: sem aviso
+-- F819 · a substituta escreveu há 20 horas, depois do início das férias: sem aviso
 update colaboradores set zap_offline_desde = now() - interval '2 days' where inicial = 'X';
 delete from v; insert into v select zap_abrir('5500000000016', 'Cliente Teste');
 update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);
@@ -84,7 +84,7 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'e
 insert into r select 'f13 substituta escreveu nas férias: sem aviso',
   not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v));
 
--- F818 · a IA agendou há 1 hora: sem aviso
+-- F819 · a IA agendou há 1 hora: sem aviso
 delete from v; insert into v select zap_abrir('5500000000017', 'Cliente Teste');
 update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);
 insert into zap_mensagens (conversa_id, direcao, por_bot, texto, criado_em)
@@ -93,13 +93,13 @@ insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'v
 insert into r select 'f14 logo depois do agendamento: sem aviso',
   not exists (select 1 from zap_mensagens where por_bot and conversa_id = (select id from v) and texto like '%férias%');
 
--- F818 · agradecimentos
+-- F819 · agradecimentos
 insert into r select 'f15 agradecimentos; "Bom dia" sozinho abre conversa', zap_despedida('texto', 'Ok gratidão Bom dia')
   and not zap_despedida('texto', 'Bom dia') and not zap_despedida('texto', 'boa tarde doutora') and zap_despedida('texto', 'valeu') and zap_conf_agradece('texto', 'Ok gratidão Bom dia') and zap_conf_agradece('texto', 'Grato!')
   and zap_conf_agradece('texto', '👍') and zap_conf_agradece('texto', 'Agradeço a atenção') and zap_conf_agradece('texto', 'Obrigadão')
   and not zap_conf_agradece('texto', 'ok, mas quero remarcar') and not zap_conf_agradece('texto', 'obrigada, e o processo?');
 
--- F818 · conta automática: texto de robô, ou resposta em 5 s a mensagem automática nossa; sem aviso
+-- F819 · conta automática: texto de robô, ou resposta em 5 s a mensagem automática nossa; sem aviso
 delete from v; insert into v select zap_abrir('5500000000018', 'Cliente Teste');
 update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);
 insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'Esta é uma mensagem automática. Sua fatura vence amanhã.' from v;
@@ -117,8 +117,8 @@ delete from v; insert into v select zap_abrir('5500000000020', 'Cliente Teste');
 insert into zap_mensagens (conversa_id, direcao, texto) select id, 'entrada', 'Bom dia, gostaria de saber do meu processo' from v;
 insert into r select 'f18 pessoa: não marcada', not (select automatica from zap_conversas where id = (select id from v));
 
--- F818 · amparo uma vez por dia; encaminhamento ao advogado em férias vai à substituta
-insert into r select 'f19 amparo uma vez por dia', position('F818' in pg_get_functiondef('public.zap_amparo_vez'::regproc)) > 0;
+-- F819 · amparo uma vez por dia; encaminhamento ao advogado em férias vai à substituta
+insert into r select 'f19 amparo uma vez por dia', position('F819' in pg_get_functiondef('public.zap_amparo_vez'::regproc)) > 0;
 insert into r select 'f20 plantão: férias vão à substituta',
   position('zap_cobre_id' in pg_get_functiondef('public.zap_plantao_aplicar(uuid,text,text,text,boolean,text,text,text)'::regprocedure)) > 0;
 
@@ -130,7 +130,7 @@ insert into r select 'f7 retorno: Online e sem férias', (select zap_offline_des
 insert into r select 'f8 retorno: coberturas encerradas',
   not exists (select 1 from zap_conversas where cobertura->>'titular' = '33333333-3333-3333-3333-333333333333');
 
--- F818 · Offline comum (sem férias): "Ok" sem aviso; o aviso sai sem o nome no cabeçalho
+-- F819 · Offline comum (sem férias): "Ok" sem aviso; o aviso sai sem o nome no cabeçalho
 update colaboradores set zap_offline_desde = now() - interval '1 hour', zap_offline_msg = '*Titular t:* Estou fora.' where inicial = 'X';
 delete from v; insert into v select zap_abrir('5500000000021', 'Cliente Teste');
 update zap_conversas set atendente_id = '33333333-3333-3333-3333-333333333333' where id = (select id from v);

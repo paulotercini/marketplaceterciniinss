@@ -1129,7 +1129,7 @@ function achadoZap(m){
       <span class="l1"><b>${esc(nomeDaConversa(c))}</b><span class="hora">${diaZap(m.momento)} ${horaSP(m.momento)}</span></span>
       <span class="l2">${m.direcao==="saida"?"Escritório: ":m.direcao==="interna"?"Nota: ":""}${trecho}</span></button>`;
 }
-// F818 · despedida ("ok", "obrigada", "grat*", "valeu", 👍): não pede resposta. Mesmas palavras de zap_conf_agradece no banco.
+// F819 · despedida ("ok", "obrigada", "grat*", "valeu", 👍): não pede resposta. Mesmas palavras de zap_conf_agradece no banco.
 const ZAP_CORTES = new Set(("ok okay obg muito valeu vlw beleza blz combinado certo ta tá bom está esta até ate lá la show perfeito isso sim amém amem "+
   "deus abençoe abencoe graças gracas a o e confirmado entendi entendido doutor doutora dr dra então entao tchau dia tarde noite boa vou estarei eu "+
   "tudo bem ótimo otimo legal joia jóia tranquilo abraço abraços abraco abracos de nada pela pelo atenção atencao").split(" "));
@@ -1139,7 +1139,7 @@ function despedidaZap(t){
   const ws = t.replace(/[^\p{L}\p{N}\s]/gu," ").split(/\s+/).filter(Boolean);
   return ws.every(w=>ZAP_CORTES.has(w) || /^(grat|agradec|obrigad|brigad)/.test(w));
 }
-// F818 · sem resposta há mais de 24 h: a última mensagem é do cliente, sem despedida e sem conta automática
+// F819 · sem resposta há mais de 24 h: a última mensagem é do cliente, sem despedida e sem conta automática
 // shortcut: ultimo_texto é a última mensagem da conversa (pode ser do robô); basta para separar a despedida
 const semResp24Zap = c => c.status!=="resolvida" && !c.automatica && !!c.ultima_entrada_em
   && c.ultima_entrada_em > (c.ultima_resposta_em||"") && Date.now()-Date.parse(c.ultima_entrada_em) > 864e5 && !despedidaZap(c.ultimo_texto);
@@ -1216,7 +1216,7 @@ function pintarListaZap(){
              <button class="tl-mais-it zl-hist" role="menuitem" onclick="historicoTodasZap()" title="pede ao celular as mensagens que faltam nas conversas dos últimos 3 dias">📥 Buscar histórico no celular</button>
              <button class="tl-mais-it zl-hora" role="menuitem" onclick="horarioAvisos()" title="das quantas às quantas o aviso chega no aparelho">🕘 Horário dos avisos: ${horaAvisosTxt()}</button>
              <button class="tl-mais-it zl-link ${zapFiltro==="fim"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="fim">Encerradas${zapFiltro==="fim"?` (${cs.length})`:""}</button>
-             ${visiveis.some(semResp24Zap)?`<button class="tl-mais-it zl-link ${zapFiltro==="24h"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="24h" title="a última mensagem é do cliente, há mais de 24 h; escolha o responsável no filtro de atendente (F818)">Sem resposta há mais de 24 h (${visiveis.filter(semResp24Zap).length})</button>`:""}
+             ${visiveis.some(semResp24Zap)?`<button class="tl-mais-it zl-link ${zapFiltro==="24h"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="24h" title="a última mensagem é do cliente, há mais de 24 h; escolha o responsável no filtro de atendente (F819)">Sem resposta há mais de 24 h (${visiveis.filter(semResp24Zap).length})</button>`:""}
              ${visiveis.some(c=>c.automatica)?`<button class="tl-mais-it zl-link ${zapFiltro==="auto"?"on":""}" role="menuitem" onclick="zapMaisAberto=false" data-zf="auto" title="robô de outra empresa (F272)">Automáticas${zapFiltro==="auto"?` (${cs.length})`:""}</button>`:""}
              ${gestor?`<button class="tl-mais-it zl-link ${zapPainelAberto?"on":""}" role="menuitem" onclick="abrirPainelZap()" title="Painel da equipe"><span aria-hidden="true">Equipe</span><span class="sr-only">Painel da equipe</span></button>`:""}
            </span></details></div>

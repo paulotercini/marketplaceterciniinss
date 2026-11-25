@@ -1125,8 +1125,10 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 ## F817 · botão "Ver as N anotações mais antigas" oculto com o Escritório recolhido (25.11.2026)
 Com o painel recolhido o CSS escondia as listas da linha do tempo, mas não o botão, que abria uma lista ainda oculta. O botão agora some junto; "Ver anotações anteriores" abre tudo.
 
-## F818 · auditoria do WhatsApp de 21 a 25.11.2026: férias, robôs, amparo, IA e fila de 24 h (25.11.2026, v14.33)
-- Migração `f818_zap_auditoria_ferias.sql`. `zap_conf_agradece` aceita "grat*", "agradec*", "obrigad*", "tudo bem", "ótimo" e afins; `zap_despedida` = agradecimento sem ser só cumprimento ("Bom dia" sozinho abre conversa).
+## F818 · nome do responsável na mesma linha do rótulo no cabeçalho da ficha (25.11.2026)
+Rótulo "Responsável", nome e selo de contato em .cli-adv-l, sem quebra; a parceria segue abaixo (F672).
+## F819 · auditoria do WhatsApp de 21 a 25.11.2026: férias, robôs, amparo, IA e fila de 24 h (25.11.2026, v14.33)
+- Migração `f819_zap_auditoria_ferias.sql`. `zap_conf_agradece` aceita "grat*", "agradec*", "obrigad*", "tudo bem", "ótimo" e afins; `zap_despedida` = agradecimento sem ser só cumprimento ("Bom dia" sozinho abre conversa).
 - Aviso de férias/Offline (`zap_offline_gatilho`): não sai se a equipe, o titular inclusive, escreveu desde o início das férias ou nas últimas 12 h (a F688 excluía o titular e olhava só 12 h), nem até 12 h depois de a IA agendar, nem em despedida (também no Offline comum: a ausência do Dr. Marcos respondia "Ok"); nunca leva o nome no cabeçalho, nem o salvo no texto.
 - Conta automática (`zap_filtro`): sem ficha e com texto de robô, ou respondendo duas vezes em até 5 s a mensagem automática nossa na mesma hora, fica `automatica` mesmo com a caixa zap_filtro_auto desligada (a caixa só decide se sai da fila): sem menu, aviso, amparo nem IA.
 - Amparo: uma vez por conversa por dia. `zap_plantao_aplicar`: advogado em férias vira a substituta (zap_cobre_id).

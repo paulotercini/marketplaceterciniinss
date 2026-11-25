@@ -1,4 +1,4 @@
-// node testes/funcoes/zap_tela_f818.test.mjs · F818 · fila "Sem resposta há mais de 24 h" do WhatsApp (src/js/08-pericias.js)
+// node testes/funcoes/zap_tela_f818.test.mjs · F819 · fila "Sem resposta há mais de 24 h" do WhatsApp (src/js/08-pericias.js)
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 const src = readFileSync(new URL("../../src/js/08-pericias.js", import.meta.url), "utf8");
@@ -13,4 +13,4 @@ assert.ok(!semResp24Zap({ status: "aberta", automatica: true, ultima_entrada_em:
 assert.ok(!semResp24Zap({ status: "aberta", ultima_entrada_em: nova, ultimo_texto: "e aí?" }));
 assert.ok(!semResp24Zap({ status: "aberta", ultima_entrada_em: velha, ultima_resposta_em: nova, ultimo_texto: "e aí?" }));
 assert.ok(!semResp24Zap({ status: "resolvida", ultima_entrada_em: velha, ultimo_texto: "e aí?" }));
-console.log("F818 tela ok");
+console.log("F819 tela ok");

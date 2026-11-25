@@ -1,4 +1,4 @@
--- F818 · auditoria do WhatsApp de 21 a 25.11.2026 (titular em férias, substituta cobrindo; aprovado pelo Paulo em 25.11.2026)
+-- F819 · auditoria do WhatsApp de 21 a 25.11.2026 (titular em férias, substituta cobrindo; aprovado pelo Paulo em 25.11.2026)
 -- 1. Agradecimento: "grat*", "agradeço", "tudo bem", "ótimo" e afins também contam ("Ok gratidão Bom dia").
 --    Vale para o aviso de férias, a ausência do Offline comum (a do Dr. Marcos respondia a "Ok" e "Obrigada") e o amparo.
 -- 2. Aviso de férias/Offline: não sai em conversa em que a equipe (o titular inclusive) escreveu desde o início das férias,
@@ -29,7 +29,7 @@ begin
       'tranquilo','abraço','abraços','abraco','abracos','agradeço','agradeco','de','nada','pela','pelo','atenção','atencao'));
 end $$;
 
--- F818 · despedida: agradecimento ou "ok" que encerra; o cumprimento sozinho ("Bom dia", "boa tarde, doutora") abre conversa
+-- F819 · despedida: agradecimento ou "ok" que encerra; o cumprimento sozinho ("Bom dia", "boa tarde, doutora") abre conversa
 create or replace function public.zap_despedida(p_tipo text, p_texto text)
 returns boolean language sql immutable as $$
   select zap_conf_agradece(p_tipo, p_texto) and (p_tipo <> 'texto' or exists (
@@ -57,7 +57,7 @@ begin
   if c.zap_ferias_ate is null and zap_equipe_escreveu(c.id, now() - make_interval(mins => coalesce(nullif((select valor from config_app where chave = 'zap_offline_min'), '')::int, 15))) is not null then
     return new;
   end if;
-  -- F818 · nas férias, conversa em que alguém da equipe (o titular inclusive) escreveu desde o início das férias ou nas
+  -- F819 · nas férias, conversa em que alguém da equipe (o titular inclusive) escreveu desde o início das férias ou nas
   -- últimas 12 horas segue com quem escreveu. A F688 excluía o titular e só olhava 12 horas, e o aviso saiu 18 minutos
   -- depois de o titular escrever e numa conversa que a substituta atendia havia mais tempo.
   if c.zap_ferias_ate is not null
@@ -112,9 +112,9 @@ begin
   end if;
   -- F679 · conversa marcada "sem cobertura" (pessoa que não é cliente) fica fora das férias: sem aviso e sem repasse
   if c.zap_ferias_ate is not null and coalesce(c.sem_cobertura, false) then return new; end if;
-  -- F683/F818 · o simples agradecimento ("ok", "obrigada", 👍) não recebe o aviso, nas férias e no Offline comum
+  -- F683/F819 · o simples agradecimento ("ok", "obrigada", 👍) não recebe o aviso, nas férias e no Offline comum
   if zap_despedida(new.tipo, new.texto) then return new; end if;
-  -- F818 · a IA acabou de agendar nesta conversa: o aviso não sai logo depois
+  -- F819 · a IA acabou de agendar nesta conversa: o aviso não sai logo depois
   -- (a marca plantao.agendado_em some com o modo; a mensagem do agendamento, não)
   if exists (select 1 from zap_mensagens m where m.conversa_id = c.id and m.direcao = 'saida' and m.por_bot
                and m.texto like '%está agendado para %' and m.criado_em > now() - interval '12 hours') then return new; end if;
@@ -123,7 +123,7 @@ begin
   if c.zap_ferias_ate is not null then
     v_txt := replace(v_txt, '{fim}', to_char(c.zap_ferias_ate at time zone 'America/Sao_Paulo', 'DD/MM'));
   end if;
-  -- F818 · aviso sem o nome no cabeçalho, também no Offline comum e quando o próprio texto salvo o trazia
+  -- F819 · aviso sem o nome no cabeçalho, também no Offline comum e quando o próprio texto salvo o trazia
   v_txt := regexp_replace(v_txt, '^\s*\*[^*\n]{1,60}:\*\s*', '');
   insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
   values (c.id, 'saida', true, v_txt, 'fila');
@@ -144,7 +144,7 @@ begin
   return new;
 end $function$;
 
--- F818 · conta automática marcada mesmo com a caixa zap_filtro_auto desligada; a caixa decide só se a conversa sai da fila
+-- F819 · conta automática marcada mesmo com a caixa zap_filtro_auto desligada; a caixa decide só se a conversa sai da fila
 create or replace function public.zap_filtro() returns trigger
 language plpgsql security definer set search_path = public as $$
 declare c zap_conversas;
@@ -187,20 +187,20 @@ end $$;
 do $$
 declare d text; n text;
 begin
-  -- F818 · amparo no máximo uma vez por conversa por dia
+  -- F819 · amparo no máximo uma vez por conversa por dia
   d := pg_get_functiondef('public.zap_amparo_vez'::regproc);
-  n := replace(d, 'coalesce((z.amparo->>''n'')::int, 0) < 2', 'false /* F818 · uma vez por dia */');
-  if n = d and position('F818' in d) = 0 then raise exception 'F818: trecho de zap_amparo_vez não encontrado'; end if;
+  n := replace(d, 'coalesce((z.amparo->>''n'')::int, 0) < 2', 'false /* F819 · uma vez por dia */');
+  if n = d and position('F819' in d) = 0 then raise exception 'F819: trecho de zap_amparo_vez não encontrado'; end if;
   execute n;
 
-  -- F818 · o encaminhamento ao advogado em férias vai à substituta
+  -- F819 · o encaminhamento ao advogado em férias vai à substituta
   d := pg_get_functiondef('public.zap_plantao_aplicar(uuid,text,text,text,boolean,text,text,text)'::regprocedure);
-  if position('F818' in d) = 0 then
+  if position('F819' in d) = 0 then
     n := replace(d, 'v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));',
       'v_adv := coalesce(v_adv, zap_advogado_da_conversa(c.id));' || E'\n' ||
-      '  -- F818 · advogado em férias: vai à substituta' || E'\n' ||
+      '  -- F819 · advogado em férias: vai à substituta' || E'\n' ||
       '  v_adv := coalesce((select k.zap_cobre_id from colaboradores k where k.id = v_adv and k.zap_ferias_ate > now()), v_adv);');
-    if n = d then raise exception 'F818: trecho de zap_plantao_aplicar não encontrado'; end if;
+    if n = d then raise exception 'F819: trecho de zap_plantao_aplicar não encontrado'; end if;
     execute n;
   end if;
 end $$;

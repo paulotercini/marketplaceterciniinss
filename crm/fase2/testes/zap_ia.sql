@@ -60,7 +60,7 @@ create temp table ped(k text, x jsonb);
 
 -- ══ Onda 2 · a mensagem automática de outra empresa ═══════════════════════
 select _diz('5511900000001','Olá! Este canal é utilizado exclusivamente para envio de mensagens.');
--- F818 · desligado, o robô de outra empresa fica marcado (sem menu, aviso, amparo nem IA) e segue na fila
+-- F819 · desligado, o robô de outra empresa fica marcado (sem menu, aviso, amparo nem IA) e segue na fila
 insert into r select 'a1 desligado, o robô de outra empresa fica marcado e na fila',
   (_conv('5511900000001')).automatica and _robo('5511900000001') = 0 and (_conv('5511900000001')).status <> 'resolvida';
 
