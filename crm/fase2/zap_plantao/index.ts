@@ -494,6 +494,7 @@ export function retomada(msgs: Msg[] = []) {
       `Não retome o assunto anterior (agendamento, horários, pedidos) nem repita horários já oferecidos, salvo se ela o mencionar.\n`;
 }
 
+const primeiro = (s?: string | null) => String(s || "").trim().split(/\s+/)[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 export function contexto(x: Contexto) {
   // F689 · advogado em férias: a IA não o nomeia como quem vai responder nem oferece as datas dele (Paulo, 23.11.2026)
   const ferias = (x.ferias || []).map((f) => `${f.nome} está ausente do WhatsApp até ${f.ate}: não diga que vai encaminhar a ele nem que ele vai responder ` +
@@ -503,6 +504,8 @@ export function contexto(x: Contexto) {
     : `O número é de ${x.cliente.nome}, cliente do escritório.` + (x.cliente.mesmo_telefone
       ? ` Casos abertos: ${x.cliente.casos.map((k) => `${k.beneficio || "caso"} (fase ${k.fase}${k.etapa ? `, etapa: ${k.etapa}` : ""})`).join("; ") || "nenhum"}.`
       : " O número não é o telefone principal da ficha: não fale da situação de processo nenhum; os atendimentos agendados o Agendador consulta normalmente.")
+      + (!x.relacao && x.contato && primeiro(x.contato) && primeiro(x.contato) !== primeiro(x.cliente.nome)
+        ? ` No WhatsApp o contato se chama ${x.contato}, e não ${x.cliente.nome}: cumprimente ${x.contato.split(" ")[0]}, e não ${x.cliente.nome.split(" ")[0]}, que é tratado(a) em terceira pessoa (F823).` : "")
       + (x.relacao && x.contato ? ` Quem escreve é ${x.contato} (${x.relacao} de ${x.cliente.nome}): chame pelo nome de quem escreve, e não pelo nome da ficha. Refira-se a ${x.cliente.nome.split(" ")[0]} apenas pelo primeiro nome, sem "senhor", "senhora" ou "dona".` : "");
   return ferias + `Agora: ${x.agora} (horário de Brasília). ${x.horario ? "O escritório está no horário de atendimento." : "O escritório está fora do horário de atendimento."}\n` +
     `Modo: ${x.interativa ? "conversa na hora (ninguém da equipe está na conversa)" : "plantão (a equipe está na conversa e ainda não respondeu)"}.\n` +
@@ -663,21 +666,34 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `do processo. Escreva a resposta que o colaborador conferirá e enviará; ela não sai sozinha.\n\n` +
     `Decida primeiro: sugerir = true só quando as últimas mensagens do cliente perguntam como está o processo, se houve novidade ou ` +
     `resposta do INSS ou do juiz. Pedido de documento, de agendamento ou outro assunto: sugerir = false.\n\n` +
-    `Com sugerir = true, leia os casos abaixo. A data do fato é a que vem no texto do andamento do portal ("em 28.09.2026"), e não a data ` +
-    `do registro. Quando a etapa declarada e a dos portais divergem, vale o andamento mais recente do portal. Com mais de um caso, fale do ` +
-    `que a conversa indica ou de cada um em uma frase. Diga em palavras simples onde o processo está e desde quando, com a data no negrito ` +
-    `do WhatsApp (*28/09/2026*), quanto costuma demorar e a previsão. Processo no TRF3 com a fila de julgamento: a previsão é a da fila ` +
-    `(diga o mês e o ano e que é estimativa pela posição do processo no gabinete). Nos demais, use o tempo que os processos do escritório ` +
-    `levaram (medição de 09.11.2026), contado da data do fato: ` + TEMPOS_MEDIDOS + ` ` +
-    `Perícia, audiência ou prazo do escritório com data: diga a data. Sem andamento que permita dizer onde o processo está, escreva que ` +
-    `o escritório vai conferir e retornar. Nunca afirme que não há decisão, resultado ou recurso julgado: o caso pode não trazer tudo; se o cliente fala em decisão que os casos não mostram, ou se os casos divergem entre si, escreva que o escritório vai verificar e retornar (F674, caso de 17.11.2026). Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
-    `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
-    `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
+    `Com sugerir = true, leia os casos abaixo como o advogado leria (F823, pedido do Paulo de 26.11.2026). Junte as anotações da equipe e os ` +
+    `andamentos do portal e descubra a situação real: qual foi o último fato decisivo (o que o escritório pediu, o que o INSS respondeu, o ` +
+    `que o juiz decidiu) e o que falta acontecer, e de quem depende o próximo passo. A anotação da equipe vale mais que o registro de rotina ` +
+    `do portal ("Expedição de informação", "Decorrido prazo", "Juntada", certidão), que só confirma a sequência. Exemplo do raciocínio: o ` +
+    `escritório pediu a correção do valor, o prazo do INSS terminou sem oposição e o processo aguarda o juiz mandar o INSS corrigir; a ` +
+    `resposta diz isso, e não a lista de registros. A data do fato é a que vem no texto ("em 28.09.2026"), e não a data do registro. ` +
+    `Quando a etapa declarada e a dos portais divergem, vale o fato mais recente. Com mais de um caso, fale do que a conversa indica. ` +
+    `Previsão somente se a pessoa perguntar quando sai: processo no TRF3 com a fila de julgamento, o mês e o ano da fila, como estimativa; ` +
+    `nos demais, o tempo que os processos do escritório levaram, com "em média": ` + TEMPOS_MEDIDOS + ` ` +
+    `Perícia, audiência ou prazo com data: diga a data. Sem fato que permita dizer onde o processo está, escreva que vai conferir e retornar. ` +
+    `Nunca afirme que não há decisão, resultado ou recurso julgado: o caso pode não trazer tudo; se o cliente fala em decisão que os casos não mostram, ` +
+    `ou se os casos divergem entre si, escreva que vai verificar e retornar (F674). Nunca prometa resultado nem valor.\n\n` +
+    `Quem escreve: cumprimente a pessoa que escreve neste número, indicada abaixo, e não o cliente da ficha quando forem pessoas diferentes; ` +
+    `o cliente da ficha, nesse caso, é tratado em terceira pessoa pelo primeiro nome ("o processo da Sueli"). Leia também as mensagens anteriores: ` +
+    `se elas mostram que quem escreve é outra pessoa (marido, filha), siga o que elas mostram.\n\n` +
+    `Forma: escreva como o Dr. Paulo escreve no WhatsApp, em linguagem simples e direta, como explicação de pessoa para pessoa. ` +
+    `Uma saudação curta com o primeiro nome de quem escreve, no máximo; depois o fato e o que se aguarda, em duas ou três frases; no fim, ` +
+    `o que o escritório fará ou quando dará notícia. Sem "Tudo bem?", sem asterisco nem negrito, sem lista, sem assinatura, sem emoji. ` +
+    `Proibido: "consultei o processo", "consultei o portal", "o último andamento que consta", "informação registrada pela vara", "ainda não consegui confirmar", ` +
+    `"não consigo informar uma previsão segura", e termo do portal (certidão, juntada, conclusos, expedição, ato ordinatório): diga o que aconteceu. ` +
+    `"a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
     primeiraPessoa(a.atendente) + `\n` +
-    `Modelo (processo concluso para julgamento):\nBom dia, Maria! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
-    `desde *28/09/2026*. Nos processos do escritório, a sentença tem saído em aproximadamente 1 mês e meio depois desse ponto. ` +
-    `Nossa previsão é que tenhamos uma resposta em novembro.\n\nSigo acompanhando e, assim que houver alguma novidade, entro em contato. ` +
-    `Se a senhora tiver alguma dúvida, fico à disposição.\n\n` +
+    `Exemplos do jeito do Dr. Paulo (outros clientes; imite o tom, não os fatos):\n` +
+    `- "O perito ainda não apresentou o laudo. Ele tem 30 dias para apresentar. Assim que sair, aviso você."\n` +
+    `- "O INSS informou que o primeiro pagamento será no dia 06/10. Preciso entregar os papéis para você."\n` +
+    `- "Infelizmente, ainda não tivemos novidade. O pedido continua aguardando a correção do sistema pelo INSS, enviada em 10/08/2026."\n` +
+    `- "O processo chegou às mãos do desembargador que irá julgar. Sigo acompanhando e aviso assim que houver decisão."\n` +
+    `- "Bom dia, José! O juiz já marcou a perícia para o dia 04/12, às 13h20, em Catanduva. Antes disso, conversamos sobre os documentos que vai levar."\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n` +
     `<casos>\n${casos || "sem casos abertos"}\n</casos>\n\n<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
 }

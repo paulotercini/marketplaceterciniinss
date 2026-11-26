@@ -1143,3 +1143,8 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 ## F822 · "A IA não responde esta conversa" volta a funcionar (25.11.2026)
 - O onclick dos itens "A IA não responde esta conversa" e "A IA conversa com este número" lia `c`, que só existia no template: o clique falhava com "c is not defined" e nada gravava. O valor passa a ir pronto no HTML. Prova: `testes/cadastro/zap-sem-ia.js`.
 - `zap_offline_gatilho` (migração f822): conversa com `sem_ia` não recebe o aviso do Offline/férias nem o recado da cobertura. Teste f23 em `testes/zap_ferias.sql`.
+
+## F823 · Sugestão do andamento no jeito do Dr. Paulo (26.11.2026)
+- `promptAndamento` (zap_plantao): lê anotações da equipe e portais para achar o último fato decisivo e o que falta; proíbe "consultei o portal", asterisco, "Tudo bem?" e termos do portal; exemplos anonimizados do estilo do Dr. Paulo.
+- Contato do WhatsApp diferente do titular da ficha (sem relação confirmada): a IA cumprimenta quem escreve e trata o titular em terceira pessoa (também no `contexto()`).
+- Migração f823: `zap_andamento_pegar` traz 12 registros por caso, sem as notas automáticas (✎, 🔎, "Etapa:").
