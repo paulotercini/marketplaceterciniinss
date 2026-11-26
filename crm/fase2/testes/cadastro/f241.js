@@ -83,8 +83,8 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   await abrir(cA, kA);
   let n = await notas();
   await p.screenshot({ path: path.join(OUT, "01-caso.png") });
-  conf(`a linha do tempo mostra as mais recentes (${n.vis.length} à vista, ${n.esc.length} guardadas)`, n.vis.length === 5 && n.esc.length === 13 && n.vis.some(t => /dia 1\b/.test(t)) && !n.vis.some(t => /dia 6\b/.test(t)));
-  conf(`o botão diz quantas estão guardadas (${n.bt})`, /as 13 anotações mais antigas/.test(n.bt));
+  conf(`a linha do tempo mostra as mais recentes (${n.vis.length} à vista, ${n.esc.length} guardadas)`, n.vis.length === 3 && n.esc.length === 15 && n.vis.some(t => /dia 1\b/.test(t)) && !n.vis.some(t => /dia 6\b/.test(t)));
+  conf(`o botão diz quantas estão guardadas (${n.bt})`, /^Ver anotações anteriores$/.test(n.bt.trim()));
   await p.click(".tl-antigos-bt");
   n = await notas();
   conf("o clique mostra todas, sem repintar", n.vis.length === 18 && !n.bt);
@@ -94,7 +94,7 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   // 2 · a não lida mais antiga continua à vista
   await abrir(cB, kB);
   n = await notas();
-  conf(`a anotação não lida fica à vista mesmo além das 5 (${n.vis.length} à vista)`, n.vis.some(t => /não lida/.test(t)) && n.vis.length === 8 && n.esc.length === 4);
+  conf(`à vista só as 3 últimas, mesmo com não lida antiga (${n.vis.length} à vista)`, n.vis.length === 3 && n.esc.length === 9);
 
   // 3 · Prazos e compromissos: à vista o vencido e o próximo; o resto num "mais N", na mesma ordem decrescente
   await abrir(cA, kA);

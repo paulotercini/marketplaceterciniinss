@@ -47921,14 +47921,13 @@ function linhaDoTempo(ands){
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
   // leitura, e a fronteira do "não lido" mostra até onde você precisa descer
   let corpo="", diaAtual=null, fronteira=false, passouNova=false, cortou=false;
-  // F241 · à vista os dias mais recentes, com ao menos TL_VISIVEIS anotações e todas as não lidas; os mais antigos num botão
-  const limite = Math.max(TL_VISIVEIS, ultimaNova + 1), aberto = !casoId || _tlAntigos.has(casoId);
+  // F241 · à vista as TL_VISIVEIS anotações mais recentes; as anteriores num botão (26.11: só as 3 últimas, pedido do Paulo)
+  const limite = TL_VISIVEIS, aberto = !casoId || _tlAntigos.has(casoId);
   for(const [i, a] of raiz.entries()){
     const d=dataSP(a.criado_em);
-    if(!aberto && !cortou && i>=limite && d!==diaAtual && raiz.length - i > 1){
+    if(!aberto && !cortou && i>=limite){
       if(diaAtual!==null){ corpo+=fecharDia(); diaAtual=null; }
-      const n = raiz.length - i;
-      corpo+=`</ul><button type="button" class="tl-bt tl-antigos-bt" onclick="tlVerAntigos(this,'${casoId}')">Ver ${n===1?"a anotação mais antiga":`as ${n} anotações mais antigas`}</button><ul class="timeline tl-antigos" hidden>`;
+      corpo+=`</ul><button type="button" class="tl-bt tl-antigos-bt" onclick="tlVerAntigos(this,'${casoId}')">Ver anotações anteriores</button><ul class="timeline tl-antigos" hidden>`;
       cortou=true;
     }
     // F236 · a linha vai depois da ÚLTIMA nova: abaixo dela não sobra nada por ler
@@ -47953,7 +47952,7 @@ function linhaDoTempo(ands){
   return banner + fixHtml + `<ul class="timeline">${corpo || fixHtml ? corpo
     : "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
-const TL_VISIVEIS = 5, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
+const TL_VISIVEIS = 3, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
 function tlVerAntigos(bt, casoId){
   _tlAntigos.add(casoId);
   const ul = bt.nextElementSibling; if(ul) ul.hidden = false;
