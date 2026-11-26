@@ -1083,6 +1083,7 @@ document.addEventListener("keydown",e=>{
     if(busca && busca.value){ busca.value=""; buscaTxt="";
       document.getElementById("busca-x").style.display="none"; return render(); }
     if(document.activeElement===busca) return busca.blur();
+    if(digitando()) return document.activeElement.blur();   // Esc no campo só tira o foco
     if(clienteAberto) return fecharFicha();
   }
 });

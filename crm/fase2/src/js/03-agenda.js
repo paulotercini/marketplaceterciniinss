@@ -1316,4 +1316,4 @@ async function pcliAcao(p, b, cli){
   }
 }
 async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !modalAberto()) fecharPainelCli(); });

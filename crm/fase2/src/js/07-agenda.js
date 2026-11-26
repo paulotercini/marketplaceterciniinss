@@ -277,7 +277,7 @@ function ligarArrastoFabs(){
   fabArrumar();
 }
 ligarArrastoFabs();
-function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
+function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); fecharPainelCli(); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções

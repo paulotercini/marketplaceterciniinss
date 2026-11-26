@@ -1062,7 +1062,7 @@ function pintarSel(){
     + bt("loteEstrela","Estrela","Marcar ou desmarcar a estrela dos casos selecionados") + bt("loteData","Data","Mudar a data dos retornos e lembretes selecionados")
     + `<button type="button" class="sel-x" onclick="limparSel()" title="Limpar a seleção (Esc)" aria-label="Limpar a seleção">✕</button>`;
 }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !document.querySelector("#modal[style*='block']")) limparSel(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !modalAberto()) limparSel(); });
 const casosDaSel = () => [...new Set([..._sel.values()].flatMap(x=>x.casos))].map(id=>D.casoPorId.get(id)).filter(k=>k && k.fase!=="encerrado");
 function loteConcluir(){ const n = casosDaSel().length; if(!n) return aviso("Nenhum caso aberto na seleção"); despachar(null, null, n); }
 async function gravarLote(s, nota){
