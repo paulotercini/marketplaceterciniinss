@@ -1151,3 +1151,6 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 
 ## F824 · Sugestão na hora na conversa assumida (26.11.2026)
 - `zap_plantao_vencidas` (migração f824): com atendente Online que já escreveu ao cliente, a mensagem em `plantao:espera` vai à IA em 1 minuto; a resposta é sugestão, não vai ao cliente. F629 (assumida sem mensagem da equipe) e Offline seguem os 20 minutos. Testes p33 e p34 em `testes/zap_plantao.sql`.
+
+## F825 · Trava de colaborador ativo em todas as tabelas (26.11.2026)
+- Migração f825: política RESTRICTIVE `so_colaborador_ativo` (sou_ativo()) em toda tabela pública com RLS, para authenticated. Fecha conta de cadastro aberto e de ex-colaborador. Testado: 6 contas ativas passam, a inativa não.
