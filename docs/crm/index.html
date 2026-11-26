@@ -2072,8 +2072,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-emo{position:relative}
   .ze-emo>summary{list-style:none;cursor:pointer}
   .ze-emo>summary::-webkit-details-marker{display:none}
-  .ze-emo-grade{position:absolute;bottom:calc(100% + 6px);right:0;left:auto;z-index:30;max-width:calc(100vw - 16px);overflow:auto;display:grid;grid-template-columns:repeat(8,34px);gap:2px;padding:8px;
+  .ze-emo-grade{position:absolute;bottom:calc(100% + 6px);left:0;z-index:30;display:grid;grid-template-columns:repeat(8,34px);gap:2px;padding:8px;
     background:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+  /* o ícone do campo principal fica na borda direita: o painel abre para a esquerda, dentro da tela */
+  .ze-ferr .ze-emo-grade{left:auto;right:0;max-width:calc(100vw - 16px);overflow:auto}
   .ze-emo-grade button{border:0;background:none;font-size:20px;width:34px;height:34px;border-radius:6px;cursor:pointer}
   @media (hover:hover){.ze-emo-grade button:hover{background:#f0f2f5}}
   .app.celular .ze-emo-grade{position:fixed;left:8px;right:8px;bottom:70px;grid-template-columns:repeat(8,1fr)}
