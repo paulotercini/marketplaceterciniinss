@@ -1148,3 +1148,6 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - `promptAndamento` (zap_plantao): lê anotações da equipe e portais para achar o último fato decisivo e o que falta; proíbe "consultei o portal", asterisco, "Tudo bem?" e termos do portal; exemplos anonimizados do estilo do Dr. Paulo.
 - Contato do WhatsApp diferente do titular da ficha (sem relação confirmada): a IA cumprimenta quem escreve e trata o titular em terceira pessoa (também no `contexto()`).
 - Migração f823: `zap_andamento_pegar` traz 12 registros por caso, sem as notas automáticas (✎, 🔎, "Etapa:").
+
+## F824 · Sugestão na hora na conversa assumida (26.11.2026)
+- `zap_plantao_vencidas` (migração f824): com atendente Online que já escreveu ao cliente, a mensagem em `plantao:espera` vai à IA em 1 minuto; a resposta é sugestão, não vai ao cliente. F629 (assumida sem mensagem da equipe) e Offline seguem os 20 minutos. Testes p33 e p34 em `testes/zap_plantao.sql`.
