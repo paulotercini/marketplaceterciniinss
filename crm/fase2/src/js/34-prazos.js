@@ -470,12 +470,12 @@ async function apagarAndamento(id, jaNoTodo){
     try{ await patchCaso(k.id, {prazo:null}); k.prazo = null; }catch(e){ return aviso("Não apagou: tente de novo"); }
   }
   if(jaNoTodo){
-    await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({excluir:true})});
+    try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({excluir:true})}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id) b.excluir = true;
     aviso("Apagado: o texto sai do To Do na próxima sincronização e fica no histórico do caso");
   }else{
-    await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"});
+    try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     // o banco apaga as tarefas junto (ON DELETE CASCADE); a memória acompanha, senão o Meu Dia e o Planejado as mostram até recarregar
     const ts = a && D.tarefasPorCaso.get(a.caso_id); if(ts) D.tarefasPorCaso.set(a.caso_id, ts.filter(t=>t.andamento_id!==id));
     if(D.and30) D.and30 = D.and30.filter(b=>b.id!==id);
@@ -1023,6 +1023,8 @@ async function novoPgto(){
 }
 function lembreteDoEvento(evId){
   const e=D.eventos.find(x=>x.id===evId); if(!e) return null;
+  // 00:00 é "hora não informada" (F624): o recado não afirma horário; corrija a hora antes
+  if(horaSP(e.data_hora)==="00:00"){ aviso("Hora não informada: corrija a hora no evento antes de avisar o cliente."); return null; }
   const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
   // F236 · o julgamento do CRPS não é perícia: o recado não fala em levar documento nem exame
   if(ehJulgamentoEv(e)) return {texto:`Olá, ${((c&&c.nome)||"").split(" ")[0]}! A sessão de julgamento do seu recurso está marcada para ${fmt(dataSP(e.data_hora))} às ${horaSP(e.data_hora)}${e.local?` (${e.local})`:""}. O escritório acompanha e avisa o resultado. Escritório Tercini.`, cli:c};

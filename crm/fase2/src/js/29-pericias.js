@@ -899,7 +899,7 @@ function portalDaPericia(k){
 // "Preparar" abre o seguimento com o roteiro da perícia (F89) já calculado
 function prepararPericia(evId){
   const e = D.eventos.find(x=>x.id===evId); if(!e) return;
-  const t = `${e.tipo||"Perícia"} agendada para ${fmt(dataSP(e.data_hora)).replace(/\./g,"/")} às ${horaSP(e.data_hora)}${e.local?` — ${e.local}`:""}`;
+  const t = `${e.tipo||"Perícia"} agendada para ${fmt(dataSP(e.data_hora)).replace(/\./g,"/")} ${horaSP(e.data_hora)==="00:00"?"(hora não informada)":"às "+horaSP(e.data_hora)}${e.local?` — ${e.local}`:""}`;
   segItens.push({casoId:e.caso_id, texto:t, andId:null, prep:true});
   abrirSeguimento(segItens.length-1);
 }
@@ -918,7 +918,7 @@ function cartaoPericia(e){
     : !futura ? ["aconteceu? confirme","venc"] : julg ? ["sessão marcada","prox"] : !pedeAviso(e) ? ["marcado","prox"]
     : av ? [`cliente avisado${av.quem?` · ${av.quem}${av.em?`, ${fmtBarra(av.em).slice(0,5)}`:""}`:""}`,"ok"] : ["avisar o cliente","prox"];
   const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
-    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
   const la = laudoDaPericia(e), lx = la ? null : laudoAnexoDaPericia(e);
   const prova = ag && !futura ? provaDoComparecimento(e, !!(la||lx)) : "";
   const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`

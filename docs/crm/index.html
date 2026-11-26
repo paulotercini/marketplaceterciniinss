@@ -7370,7 +7370,7 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.33</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.34</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12569,7 +12569,7 @@ async function pcliAcao(p, b, cli){
   }
 }
 async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !modalAberto()) fecharPainelCli(); });
 // F619 · a linha curta de cada quadro (INSS, CRPS, Judicial), calculada no banco por linha_curta(); a correção
 // da equipe (casos.ronda.linha_curta.<aba>) vale enquanto a linha calculada for a mesma de quando se corrigiu
 const _lc = new Map(), LC_ABA = {inss:"inss", crps:"crps", cnj:"judicial"};
@@ -16097,7 +16097,7 @@ function pintarSel(){
     + bt("loteEstrela","Estrela","Marcar ou desmarcar a estrela dos casos selecionados") + bt("loteData","Data","Mudar a data dos retornos e lembretes selecionados")
     + `<button type="button" class="sel-x" onclick="limparSel()" title="Limpar a seleção (Esc)" aria-label="Limpar a seleção">✕</button>`;
 }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !document.querySelector("#modal[style*='block']")) limparSel(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !modalAberto()) limparSel(); });
 const casosDaSel = () => [...new Set([..._sel.values()].flatMap(x=>x.casos))].map(id=>D.casoPorId.get(id)).filter(k=>k && k.fase!=="encerrado");
 function loteConcluir(){ const n = casosDaSel().length; if(!n) return aviso("Nenhum caso aberto na seleção"); despachar(null, null, n); }
 async function gravarLote(s, nota){
@@ -16519,7 +16519,7 @@ function ligarArrastoFabs(){
   fabArrumar();
 }
 ligarArrastoFabs();
-function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
+function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); fecharPainelCli(); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
@@ -23778,7 +23778,7 @@ function nomearCaso(cliId, casoId){
 }
 function escolhido(cliId, casoId){
   casoSel = casoId; subAba = "escritorio";   // F166
-  document.getElementById("modal").style.display="none";
+  const m = document.getElementById("modal"); m.style.display="none"; m.innerHTML="";
   if(cliId===clienteAberto) repintarFicha(); else abrirFicha(cliId);
 }
 // Caixa modal genérica, em cima do mesmo modal da escolha de processo: uma
@@ -23858,7 +23858,7 @@ function fecharCaixa(){
   m.style.display="none"; m.innerHTML="";
 }
 function fecharEscolha(){
-  document.getElementById("modal").style.display="none";
+  const m = document.getElementById("modal"); m.style.display="none"; m.innerHTML="";
   casoSel=null; fecharFicha();
 }
 
@@ -46929,7 +46929,7 @@ function portalDaPericia(k){
 // "Preparar" abre o seguimento com o roteiro da perícia (F89) já calculado
 function prepararPericia(evId){
   const e = D.eventos.find(x=>x.id===evId); if(!e) return;
-  const t = `${e.tipo||"Perícia"} agendada para ${fmt(dataSP(e.data_hora)).replace(/\./g,"/")} às ${horaSP(e.data_hora)}${e.local?` — ${e.local}`:""}`;
+  const t = `${e.tipo||"Perícia"} agendada para ${fmt(dataSP(e.data_hora)).replace(/\./g,"/")} ${horaSP(e.data_hora)==="00:00"?"(hora não informada)":"às "+horaSP(e.data_hora)}${e.local?` — ${e.local}`:""}`;
   segItens.push({casoId:e.caso_id, texto:t, andId:null, prep:true});
   abrirSeguimento(segItens.length-1);
 }
@@ -46948,7 +46948,7 @@ function cartaoPericia(e){
     : !futura ? ["aconteceu? confirme","venc"] : julg ? ["sessão marcada","prox"] : !pedeAviso(e) ? ["marcado","prox"]
     : av ? [`cliente avisado${av.quem?` · ${av.quem}${av.em?`, ${fmtBarra(av.em).slice(0,5)}`:""}`:""}`,"ok"] : ["avisar o cliente","prox"];
   const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
-    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
   const la = laudoDaPericia(e), lx = la ? null : laudoAnexoDaPericia(e);
   const prova = ag && !futura ? provaDoComparecimento(e, !!(la||lx)) : "";
   const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`
@@ -47508,7 +47508,7 @@ function comentario(a, resposta, reacoes, raiz){
       <button class="apaga" title="👍 ciente — um toque, sem texto" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
       <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
         onclick="armarResposta('${a.id}')">↩</button>
-      ${(a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
+      ${(a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
     </span>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -47802,9 +47802,9 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   const minha = abertas.find(t=>t.colaborador_id===eu.id), alvo = minha || abertas[0];
   // F182 · ciente, apagar, ⭐ e ⚡ saem da coluna da direita (que espremia o
   // texto) e entram no fim da barra; os vistos de leitura vão para o cabeçalho
-  const apagar = (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")
+  const apagar = (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
-  const editarResp = (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
+  const editarResp = (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt tl-bt-nota resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
       ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? ""
@@ -47820,8 +47820,8 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
           `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')" title="Copiar o texto">Copiar<span class="sr-only"> o texto</span></button>`,
           itemLevarAndamento(a),
           pzE && pzE.resp ? `<button class="tl-mais-it" role="menuitem" onclick="desfazerCumprimento('${pzE.resp.id}')" title="Desfazer o registro do prazo">Desfazer<span class="sr-only"> o registro do prazo</span></button>` : "",
-          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
-          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo") ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
+          (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
+          (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo")) ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
@@ -52641,12 +52641,12 @@ async function apagarAndamento(id, jaNoTodo){
     try{ await patchCaso(k.id, {prazo:null}); k.prazo = null; }catch(e){ return aviso("Não apagou: tente de novo"); }
   }
   if(jaNoTodo){
-    await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({excluir:true})});
+    try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({excluir:true})}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id) b.excluir = true;
     aviso("Apagado: o texto sai do To Do na próxima sincronização e fica no histórico do caso");
   }else{
-    await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"});
+    try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     // o banco apaga as tarefas junto (ON DELETE CASCADE); a memória acompanha, senão o Meu Dia e o Planejado as mostram até recarregar
     const ts = a && D.tarefasPorCaso.get(a.caso_id); if(ts) D.tarefasPorCaso.set(a.caso_id, ts.filter(t=>t.andamento_id!==id));
     if(D.and30) D.and30 = D.and30.filter(b=>b.id!==id);
@@ -53194,6 +53194,8 @@ async function novoPgto(){
 }
 function lembreteDoEvento(evId){
   const e=D.eventos.find(x=>x.id===evId); if(!e) return null;
+  // 00:00 é "hora não informada" (F624): o recado não afirma horário; corrija a hora antes
+  if(horaSP(e.data_hora)==="00:00"){ aviso("Hora não informada: corrija a hora no evento antes de avisar o cliente."); return null; }
   const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
   // F236 · o julgamento do CRPS não é perícia: o recado não fala em levar documento nem exame
   if(ehJulgamentoEv(e)) return {texto:`Olá, ${((c&&c.nome)||"").split(" ")[0]}! A sessão de julgamento do seu recurso está marcada para ${fmt(dataSP(e.data_hora))} às ${horaSP(e.data_hora)}${e.local?` (${e.local})`:""}. O escritório acompanha e avisa o resultado. Escritório Tercini.`, cli:c};
@@ -61867,6 +61869,7 @@ document.addEventListener("keydown",e=>{
     if(busca && busca.value){ busca.value=""; buscaTxt="";
       document.getElementById("busca-x").style.display="none"; return render(); }
     if(document.activeElement===busca) return busca.blur();
+    if(digitando()) return document.activeElement.blur();   // Esc no campo só tira o foco
     if(clienteAberto) return fecharFicha();
   }
 });

@@ -1154,3 +1154,10 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 
 ## F825 · Trava de colaborador ativo em todas as tabelas (26.11.2026)
 - Migração f825: política RESTRICTIVE `so_colaborador_ativo` (sou_ativo()) em toda tabela pública com RLS, para authenticated. Fecha conta de cadastro aberto e de ex-colaborador. Testado: 6 contas ativas passam, a inativa não.
+
+## F826 · sete defeitos inequívocos: perícia sem hora, celular, permissão, Esc, painel e apagar (26.11.2026, v14.34)
+- Perícia com 00:00 (hora não informada, F624): `lembreteDoEvento` trava o recado (copiar, WhatsApp, mensagem ao cliente) com aviso; cartão e "Preparar" dizem "hora não informada".
+- Celular: `escolhido` e `fecharEscolha` esvaziam o modal como `fecharCaixa`, e o Escrever não fica invisível.
+- Permissão: `a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo")` (antes o resumo do zap de outro autor podia ser apagado/editado).
+- Esc: painel do cliente e seleção usam `modalAberto()`; Esc no campo de escrever só tira o foco; `irPara` fecha o painel do cliente.
+- Apagar anotação: falha do PATCH/DELETE avisa "Não apagou: tente de novo". Prova `testes/cadastro/f826.js`.

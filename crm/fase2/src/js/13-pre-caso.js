@@ -147,7 +147,7 @@ function nomearCaso(cliId, casoId){
 }
 function escolhido(cliId, casoId){
   casoSel = casoId; subAba = "escritorio";   // F166
-  document.getElementById("modal").style.display="none";
+  const m = document.getElementById("modal"); m.style.display="none"; m.innerHTML="";
   if(cliId===clienteAberto) repintarFicha(); else abrirFicha(cliId);
 }
 // Caixa modal genérica, em cima do mesmo modal da escolha de processo: uma
@@ -227,7 +227,7 @@ function fecharCaixa(){
   m.style.display="none"; m.innerHTML="";
 }
 function fecharEscolha(){
-  document.getElementById("modal").style.display="none";
+  const m = document.getElementById("modal"); m.style.display="none"; m.innerHTML="";
   casoSel=null; fecharFicha();
 }
 
