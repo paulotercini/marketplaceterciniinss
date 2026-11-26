@@ -316,6 +316,9 @@ console.log("formal: ok");
   const c = cx({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } });
   assert.ok(c.includes("Refira-se a Cliente apenas pelo primeiro nome") && c.includes("o menu automático inclusive"));
   assert.ok(pd.includes("nunca para abrir uma pergunta"));
+  const c830 = cx({ ...base, contato: "João Teste", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } });
+  assert.ok(c830.includes("cumprimente João, e não Cliente"), "F823 · contato diferente sem relação");
+  assert.ok(!cx({ ...base, contato: "Cliente", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } }).includes("(F823)"));
   console.log("menu e representado: ok");
 }
 
@@ -507,7 +510,8 @@ console.log("formal: ok");
     new Date("2026-11-09T12:30:00Z"));
   assert.ok(p.includes("Conclusos para julgamento") && p.includes("aguardando sentença"), "o andamento e a etapa dos portais vão ao modelo");
   assert.ok(!p.includes("5001864"), "o número do processo vai mascarado");
-  assert.ok(p.includes("de 2 a 3 semanas") && p.includes("aproximadamente 9 meses") && !p.includes("aproximadamente 6 meses") && p.includes("*28/09/2026*"), "os tempos medidos e o negrito do WhatsApp");
+  assert.ok(p.includes("de 2 a 3 semanas") && p.includes("aproximadamente 9 meses") && !p.includes("aproximadamente 6 meses") && !p.includes("*28/09/2026*") && p.includes("sem asterisco"), "os tempos medidos, sem negrito (F823)");
+  assert.ok(p.includes('"consultei o portal"') && p.includes("último fato decisivo") && p.includes("anotação da equipe vale mais"), "F823 · leitura do caso e frases proibidas");
   assert.ok(p.includes("ação acidentária (TJSP)") && p.includes("cerca de 8 meses") && !p.includes("Justiça Estadual: sem medição, não estime"), "F496 · o tempo medido da ação acidentária estadual");
   const f = promptAndamento({ conversa_id: "c", contato: "Ana", casos: [{ beneficio: "B42", fase: "judicial", andamentos: [],
     trf3: { ordem: 1098, total: 3173, orgao: "10ª Turma", consultado_em: "2026-10-30", previsao: "2027-03-15" } }], mensagens: [] });
@@ -547,7 +551,9 @@ console.log("formal: ok");
   const cob = promptCobranca({ conversa_id: "x", msg_id: "y", dias: 3, contato: "Ana", mensagens: [], atendente: { nome: "Meissa", cargo: "recepcao" } });
   assert.ok(cob.includes("como Meissa") && cob.includes("para que eu possa verificar"), "a cobrança também");
   const and = promptAndamento({ conversa_id: "c", contato: "Maria", casos: [], mensagens: [] });
-  assert.ok(and.includes("Sigo acompanhando") && and.includes("fico à disposição") && !and.includes("estamos à disposição."), "o modelo do andamento");
+  assert.ok(and.includes("Sigo acompanhando") && and.includes("jeito do Dr. Paulo") && !and.includes("Tudo bem?\\n"), "o modelo do andamento");
+  const rel = promptAndamento({ conversa_id: "c", contato: "João Teste", cliente: "Maria Teste", casos: [], mensagens: [] });
+  assert.ok(rel.includes("Quem escreve neste número: João Teste") && rel.includes("terceira pessoa"), "F823 · contato diferente do titular");
   assert.ok(primeiraPessoa(null).includes("o colaborador que atende"));
   assert.equal(emLinhas("Agradeço.\n\nQualquer dúvida, fico à disposição.", ["Qualquer dúvida, estamos à disposição."]), "Agradeço.", "o fecho uma vez só");
   console.log("ok F485 primeira pessoa");
