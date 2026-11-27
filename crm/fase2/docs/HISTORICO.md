@@ -1190,3 +1190,8 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - **Encerrar** sem gerar caso: motivo obrigatório (Desistiu, Sem direito, Sem contato, Outro com texto), gravado em `precaso.arquivo = {em, origem: "crm", motivo, por}`, com Desfazer; o quadro do encerrado mostra motivo, quem e quando.
 - "Em qual caso registrar?": o apelido do caso aparece em destaque (`.esc-apel`), com a espécie embaixo.
 - Provas: `testes/cadastro/f830.js` e três casos em `tests/test_crm_fase2.py`. Sem migração (`precaso` é jsonb).
+
+## F831 · Piso de 12px na letra (27.11.2026, v14.39)
+- Ordem do Paulo de 27.11.2026 (etapa 1 da revisão da estrutura visual). Toda regra de estilo com letra de 10, 11 ou 11,5px passou a 12px (267 regras em `css/base.css`, `css/tema-v10.css` e dois estilos montados no JS). Nenhuma tela mudou de desenho.
+- Conferido e mantido como estava: realce de mouse já travado por `@media (hover:hover) and (pointer:fine)`, campo de 16px no toque (F136) e resposta ao pressionar (`button:active`, F134).
+- Prova: `testes/cadastro/f831.js` (nenhuma letra abaixo de 12px no `app.html`).
