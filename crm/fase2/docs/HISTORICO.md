@@ -1241,6 +1241,9 @@ Pedido do Paulo ("faça o que falta"). Paleta única: as 536 cores literais das 
 
 ## F840
 Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_ferias_fim`), conversa coberta cujo último texto é do cliente sem resposta da equipe gera menção ao titular "Pendente do período offline". `zap_eh_automatica` reconhece "insira uma resposta válida" e "de presente para você".
+## F841 · WhatsApp: painel de emojis, cabeçalho e flutuantes sobre os menus (27.11.2026)
+
+Pedido do Paulo (print do painel de emojis cortado a 1024 px; depois, "faça mais verificações de telas do WhatsApp"). Capturas em 1024, 1440 e 390 px com dados fictícios. Corrigido: o painel de emojis do campo principal se ancora ao rodapé da conversa, alinhado à direita e com a largura que couber (o da conversa ao lado da ficha continua como era); os botões do cabeçalho da conversa quebram linha na coluna estreita, em vez de empurrar o cabeçalho para o lado ao abrir o ⋯; os flutuantes Agenda e ⋯ somem enquanto o painel de emojis ou o menu + estão abertos.
 
 ## F842 · Mesmo NB em dois casos do cliente: o plano de organização junta sozinho (27.11.2026, v14.44)
 

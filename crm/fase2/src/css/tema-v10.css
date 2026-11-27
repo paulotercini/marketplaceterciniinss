@@ -1860,6 +1860,8 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .app.celular ~ #zap-ag{bottom:calc(165px + env(safe-area-inset-bottom))}
 .app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
 .app.celular.zap-conv-aberta ~ #zap-ag{z-index:calc(var(--z-painel) + 32);bottom:calc(176px + env(safe-area-inset-bottom))}
+/* os flutuantes (Agenda e ⋯) cobriam o painel de emojis e o menu + abertos */
+.app:has(.zap-escrever details[open]) ~ #zap-ag,.app:has(.zap-escrever details[open]) ~ #fab-juntos{visibility:hidden}
 .app.celular ~ #zap-ag .zag-cx{max-height:calc(100dvh - 260px)}
 .app.celular.zap-conv-aberta ~ #zap-ag .zag-cx{max-height:calc(100dvh - 300px)}
 /* no celular a pílula vira o botão redondo do tamanho do ⚡, com o calendário */
@@ -4242,7 +4244,7 @@ html[data-tema="v10"] .app.celular :is(.zl-chip,.zl-sel){height:40px;border-radi
 /* 3 · cabeçalho da conversa no computador: o nome e o telefone ocupam a linha; os botões descem quando falta espaço */
 html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1{flex-wrap:wrap;row-gap:8px}
 html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-id{flex:1 1 240px}
-html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-acoes{margin-left:auto}
+html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-acoes{margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
 /* 11 · caso no celular: o ⋯ do cartão do benefício não encosta na borda (a coluna corta 12 px do cartão sangrado) */
 html[data-tema="v10"] .app.celular .linha-caso.lc5.lc5.lc5 .lc5-cab{padding-right:20px}
 /* 12 · a hora da anotação fica ao lado do autor, e a coluna da esquerda guarda só o dia */

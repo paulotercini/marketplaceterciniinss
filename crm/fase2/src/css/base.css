@@ -2067,6 +2067,10 @@
   .ze-emo>summary::-webkit-details-marker{display:none}
   .ze-emo-grade{position:absolute;bottom:calc(100% + 6px);left:0;z-index:calc(var(--z-cabecalho) + 10);display:grid;grid-template-columns:repeat(8,34px);gap:2px;padding:8px;
     background:var(--p-branco);border-radius:10px;box-shadow:var(--sombra-janela)}
+  /* o ícone do campo fica na borda direita da coluna estreita: o painel se ancora ao rodapé da conversa, alinhado à direita e com a largura que couber */
+  .app:not(.celular) .ze-ferr .ze-emo{position:static}
+  .app:not(.celular) .ze-ferr .ze-emo-grade{left:auto;right:12px;bottom:100%;width:min(302px,calc(100% - 24px));box-sizing:border-box;
+    grid-template-columns:repeat(auto-fill,34px);justify-content:center;max-height:50vh;overflow:auto}
   .ze-emo-grade button{border:0;background:none;font-size:20px;width:34px;height:34px;border-radius:6px;cursor:pointer}
   @media (hover:hover){.ze-emo-grade button:hover{background:var(--p-azul-3)}}
   .app.celular .ze-emo-grade{position:fixed;left:8px;right:8px;bottom:70px;grid-template-columns:repeat(8,1fr)}
