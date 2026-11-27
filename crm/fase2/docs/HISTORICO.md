@@ -1118,3 +1118,5 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 
 ## F690 · IA indica um destino só ao passar adiante (23.11.2026)
 - zap_plantao: o exemplo "Vou encaminhar ao Dr. Paulo" saiu das regras; ao passar adiante a IA diz em uma frase que um colaborador vai verificar e responder, e nomeia o advogado só quando a conversa já é com ele (a IA disse "Vou encaminhar ao Dr. Paulo" e, na frase seguinte, que um colaborador responderia).
+
+- **F840** (27.11.2026) · Cliente de Matão: a IA não agenda presencial para quem mora em Matão ou cidade distante em qualquer assunto (inclusive Dr. Marcos) e passa ao advogado; Jaboticabal, Guariba, Taquaritinga, Pirangi e Vista Alegre agendam. Caso novo já agendado pela IA não cai mais no robô de horários na 8ª resposta. Resposta livre na escolha de horário recebe o endereço de Monte Alto. Migração f840_matao_agenda.sql; zap_plantao sem publicar (aguarda o ok do Paulo).
