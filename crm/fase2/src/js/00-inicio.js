@@ -194,7 +194,9 @@ let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 // 1.25 da extensão · o aviso de fim da rodada abre o CRM com ?ir=patinss, já no 📥 Importar
 // F420 · o Paulo confere só as Novidades: o aviso da extensão (?ir=patinss) abre nelas, e as coletas entram sozinhas
-let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "novidades" : "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
+var _telas = [], _telaAtual = null, _voltandoTela = false;   // F828 · a pilha das telas do voltar (ver marcarTela)
+const _hashIni = hashTela();   // F828 · a tela e a ficha do endereço, lidas antes de a primeira pintura reescrevê-lo
+let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "novidades" : (_hashIni.v || "meudia"), filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 // F236 · o Meu Dia tem filtro próprio e abre no dia de quem entrou; as listas (filtroColab) abrem na pessoa
 let filtroDia = null;
 let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobrevive às repinturas)
@@ -568,6 +570,9 @@ async function iniciar(){
   // não repinta por cima de quem está digitando num formulário da lista
   const digitandoNoMeio = document.querySelector("#conteudo-meio :is(input,textarea,select):focus");
   if(!digitandoNoMeio && !["novocliente","config"].includes(visao)) render();
+  // F828 · recarregar (ou o Ctrl+clique noutra aba) reabre a ficha do endereço
+  if(_hashIni.c && D.cliPorId.get(_hashIni.c) && !clienteAberto) abrirFicha(_hashIni.c);
+  _hashIni.c = null;
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS);
     // como o To Do ao voltar para a frente: a aba que reaparece busca o que mudou na hora, sem esperar a volta do relógio
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) vigiarMudancas(); });

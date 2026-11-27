@@ -465,21 +465,39 @@ async function apagarAndamento(id, jaNoTodo){
   if(!await confirmar(m ? "Apagar este prazo? Ele sai das anotações, do quadro Prazos e do Meu Dia, e fica no histórico do caso (⋯ do caso, Apagadas)."
     : "Apagar esta anotação? Ela sai das anotações e fica no histórico do caso (⋯ do caso, Apagadas).")) return;
   const k = a && D.casoPorId.get(a.caso_id), carimbo = m && m[0].trim();
+  let pzAntes = null;
   if(k && /^\d{4}-\d{2}-\d{2}$/.test(dPz||"") && k.prazo===dPz && !prazoDoTodo(k)
      && ![D._andsFicha, D.and30].some(l=>(l||[]).some(b=>b.id!==id && b.caso_id===k.id && !b.excluir && (b.texto||"").startsWith(carimbo)))){
     try{ await patchCaso(k.id, {prazo:null}); k.prazo = null; }catch(e){ return aviso("Não apagou: tente de novo"); }
+    pzAntes = dPz;
   }
+  // F828 · o apagar tem Desfazer, como o Concluir: volta o prazo do caso e regrava a anotação (com as tarefas, no DELETE)
+  const voltarPz = async ()=>{ if(pzAntes){ await patchCaso(k.id, {prazo:pzAntes}).catch(()=>{}); k.prazo = pzAntes; } };
   if(jaNoTodo){
     try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({excluir:true})}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id) b.excluir = true;
-    aviso("Apagado: o texto sai do To Do na próxima sincronização e fica no histórico do caso");
+    avisoDesfazer("Apagado: o texto sai do To Do na próxima sincronização e fica no histórico do caso", async ()=>{
+      await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({excluir:false})}).catch(()=>{});
+      for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id) b.excluir = false;
+      await voltarPz(); montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); });
   }else{
     try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     // o banco apaga as tarefas junto (ON DELETE CASCADE); a memória acompanha, senão o Meu Dia e o Planejado as mostram até recarregar
-    const ts = a && D.tarefasPorCaso.get(a.caso_id); if(ts) D.tarefasPorCaso.set(a.caso_id, ts.filter(t=>t.andamento_id!==id));
+    const ts = a && D.tarefasPorCaso.get(a.caso_id), suas = (ts||[]).filter(t=>t.andamento_id===id);
+    if(ts) D.tarefasPorCaso.set(a.caso_id, ts.filter(t=>t.andamento_id!==id));
     if(D.and30) D.and30 = D.and30.filter(b=>b.id!==id);
-    aviso(m ? "Prazo apagado: fica no histórico do caso" : "Anotação apagada: fica no histórico do caso");
+    const msg = m ? "Prazo apagado: fica no histórico do caso" : "Anotação apagada: fica no histórico do caso";
+    // sem o texto (linha só do and30) não há o que regravar
+    if(!(a && a.texto)) aviso(msg);
+    else avisoDesfazer(msg, async ()=>{
+      const {id:_i, caso_id, autor_id, criado_em, texto, publico, origem, responde_a, origem_id, zap_mensagem_id} = a;
+      try{ await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({id, caso_id, autor_id, criado_em, texto, publico, origem, responde_a, origem_id, zap_mensagem_id})}); }
+      catch(e){ return aviso("Não desfez: tente de novo"); }
+      for(const t of suas) await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(t)}).catch(()=>{});
+      if(suas.length) D.tarefasPorCaso.set(caso_id, [...(D.tarefasPorCaso.get(caso_id)||[]), ...suas]);
+      await voltarPz(); montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); aviso("Anotação de volta", false); });
   }
   abrirFicha(clienteAberto);
 }

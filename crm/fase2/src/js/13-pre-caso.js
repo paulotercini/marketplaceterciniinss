@@ -221,8 +221,17 @@ function abrirClaude(casoId, acao){
   if(onde==="app") location.href = url;          // esquema claude:// não abre em aba nova
   else window.open(url, "_blank", "noopener");
 }
+// F828 · o Descartar do Escrever no caso só aparece com texto; apaga o campo e o rascunho guardado
+function verDescartar(){ const b = document.getElementById("and-descartar"), t = document.getElementById("and-texto"); if(b) b.hidden = !(t && t.value.trim()); }
+function descartarEscrita(casoId){
+  const t = document.getElementById("and-texto"); limparRascunho(casoId);
+  if(t){ t.value = ""; if(t.oninput) t.oninput(); t.focus(); }
+  verDescartar();
+}
 function fecharCaixa(){
   setTimeout(armarVoltar, 0);   // F458
+  // F828 · Esc, voltar ou clique fora não perdem o texto da anotação rápida: fica guardado até gravar
+  { const ar = document.getElementById("ar-texto"); if(ar) guardarRascunho("ar", ar.value); }
   const m = document.getElementById("modal");
   m.style.display="none"; m.innerHTML="";
 }
@@ -797,7 +806,7 @@ function pintarFicha(){
       // meio do atendimento. Agora ele fica guardado por caso, na sessão, e
       // volta para a tela; some só quando o andamento é registrado.
       campoAnd.oninput=()=>{ crescer(); prazoCancelado=false;
-        guardarRascunho(kAtual.id, campoAnd.value);
+        guardarRascunho(kAtual.id, campoAnd.value); verDescartar();
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); folgaComposer(); };
       const rasc=lerRascunho(kAtual.id);
       if(rasc && !campoAnd.value){
@@ -805,7 +814,7 @@ function pintarFicha(){
         if(cxEsc) cxEsc.classList.add("esc-aberto");   // com texto, as ferramentas ficam à mão
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual);
       }
-      crescer();
+      verDescartar(); crescer();
     }
   }
   folgaComposer();

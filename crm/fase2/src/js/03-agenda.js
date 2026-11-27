@@ -1229,9 +1229,9 @@ function abrirPainelCli(el){
   if(clienteAberto) fecharFicha(false);
   fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
   _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};
-  pcliMontar();
+  pcliMontar(); setTimeout(armarVoltar, 0);   // F828 · o voltar fecha o painel
 }
-function fecharPainelCli(){ _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
+function fecharPainelCli(){ if(_pcli) setTimeout(armarVoltar, 0); _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
 async function pcliMontar(){
   if(!_pcli) return;
   // a linha pode ter sido redesenhada depois de uma ação: procura a mesma de novo
