@@ -2385,14 +2385,17 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .app.celular .zap-escrever textarea#zap-txt{max-height:48px!important;overflow-y:auto}
   .app .ze-ferr .ze-so-pc.gravando{display:inline-flex}
   .app.celular .ze-ferr{flex:none;min-height:0}
+  /* F827 · Emojis e Anexar com 40 px de altura no celular (eram 28); a caixa perde 2 px de folga para não crescer */
+  .app.celular .ze-ferr .zap-icone{min-height:40px;justify-content:center}
+  .app.celular .ze-caixa{padding-top:2px;padding-bottom:2px}
   /* auditoria 23.11 · no computador também: só emoji e anexo no campo, o resto no + */
   .app .ze-mais{display:block;position:relative;flex:none;align-self:flex-end}
   .app .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
     font-size:28px;font-weight:300;color:#54656f;cursor:pointer}
   .ze-mais>summary::-webkit-details-marker{display:none}
   .app .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
-  .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:30px;margin-bottom:7px;padding:0 9px;border:1px solid var(--borda);
-    border-radius:15px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
+  .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:40px;margin-bottom:2px;padding:0 11px;border:1px solid var(--borda);
+    border-radius:20px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
   .app.celular .ze-nota-cel.on{background:#fffbea;border-color:#e0b955;color:var(--prox,#8f5400)}
   .app.celular .zap-escrever.modo-nota .btn-rap.ze-enviar{height:44px;padding:0 12px}
   @media (max-width:1023px){
@@ -7370,7 +7373,7 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.34</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.35</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8656,7 +8659,7 @@ const CARGA_2 = {
     lembrarMotivos: ()=>todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
     rotinas: ()=>todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
     rotinasFeitas: ()=>todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
-    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status,plantao").catch(()=>[]),
+    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status,plantao,cobertura").catch(()=>[]),
     inssCal: ()=>todas("inss_calendario","select=*").catch(()=>[]),
     anals: ()=>todas("analises_direito","select=*&order=data_analise.desc").catch(()=>null),
       // ⭐/⚡ as anotações marcadas, de TODOS os clientes — é a lista ⭐
@@ -9815,8 +9818,9 @@ function tituloLista(rot){
   else h.textContent = rot;
 }
 
-function contaZapResumo(zs){ return (zs||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
-    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length; }
+// F827 · o menu conta o mesmo que a aba Novas (pintarListaZap): minhas ou que cubro, abertas, com não lida, fora da IA
+function contaZapResumo(zs){ return (zs||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z) && z.nao_lidas>0
+    && (z.atendente_id===eu.id || cobrindoZap(z))).length; }
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],
@@ -19370,9 +19374,11 @@ function novaTarefaZap(){
     if(!ti.value.trim()) return;
     const nat = dataNatural(ti.value.trim()), pz = document.getElementById("zt-prazo").value;
     const sel = document.getElementById("zt-caso");
-    const [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+    let linha;
+    try{ [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({titulo:nat.titulo, prazo:pz||nat.prazo||null, cliente_id:cli.id,
-        caso_id: sel ? sel.value : (ks[0]||{}).id || null})});
+        caso_id: sel ? sel.value : (ks[0]||{}).id || null})}); }
+    catch(e){ return aviso("Não consegui criar a tarefa: "+msgErro(e)); }
     D.tarefas.push(linha); fecharCaixa(); aviso("Tarefa criada ✔");
     pintarPainelZap(c);
   };
@@ -19619,7 +19625,8 @@ function bolhaZap(m, cli, seguida){
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : m.tipo==="contato" ? contatoZap(m.texto)
-    : m.texto ? textoZap(m.texto) : esc(`[${m.tipo}]`);
+    : m.texto ? textoZap(m.texto)
+    : m.tipo==="audio" ? `<span class="meio-sub">🎤 áudio antigo, não baixado — só no celular</span>` : esc(`[${m.tipo}]`);
   // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
   const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":m.alterar&&m.alterar.acao==="apagar"?`Apagada por ${esc((D.colPorId.get(m.alterar.por)||{}).nome||"escritório")}`:"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
   const lk = !m.apagada_em && !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
@@ -21007,8 +21014,9 @@ async function virarAndamento(msgId){
   if(!ks.length) return aviso("Este cliente ainda não tem processo");
   const gravar = async casoId => {
     fecharCaixa();
-    await api(`/rest/v1/rpc/zap_virar_andamento`,{method:"POST",
-      body:JSON.stringify({p_mensagem:msgId, p_caso:casoId, p_autor:eu.id})});
+    try{ await api(`/rest/v1/rpc/zap_virar_andamento`,{method:"POST",
+      body:JSON.stringify({p_mensagem:msgId, p_caso:casoId, p_autor:eu.id})}); }
+    catch(e){ return aviso("Não consegui registrar: "+msgErro(e)); }
     aviso("Registrado no histórico do processo ✔");
   };
   if(ks.length===1) return gravar(ks[0].id);
@@ -61871,6 +61879,8 @@ document.addEventListener("keydown",e=>{
     if(document.activeElement===busca) return busca.blur();
     if(digitando()) return document.activeElement.blur();   // Esc no campo só tira o foco
     if(clienteAberto) return fecharFicha();
+    // F827 · no computador, Esc com a conversa aberta fecha a conversa (o painel do cliente tem o próprio Esc)
+    if(zapAberta && !_pcli && !modalAberto() && document.getElementById("zap-dir") && !document.getElementById("app").classList.contains("celular")) return voltarListaZap();
   }
 });
 // ══════════════════════════════════════════════════════════════════════════

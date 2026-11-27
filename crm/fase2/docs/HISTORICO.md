@@ -1161,3 +1161,8 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - Permissão: `a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo")` (antes o resumo do zap de outro autor podia ser apagado/editado).
 - Esc: painel do cliente e seleção usam `modalAberto()`; Esc no campo de escrever só tira o foco; `irPara` fecha o painel do cliente.
 - Apagar anotação: falha do PATCH/DELETE avisa "Não apagou: tente de novo". Prova `testes/cadastro/f826.js`.
+
+## F827 · Amparo só na cobrança, aviso do golpe, nota duplicada, contador, botões, áudio, Esc e erros (27.11.2026, v14.35)
+- Ordem expressa do Paulo de 27.11.2026. Migração f827: `zap_amparo_vez` volta a "somente cobrança" (`zap_amparo_cobra`, F623), sem o "ou 2 horas" da F674; `zap_conf_agradece` reconhece o agradecimento no fim da frase curta ("avisei ele, obrigada"), salvo pedido ("quero remarcar, obrigada"); `zap_amparo_enviar` põe o aviso do golpe (texto de `AVISO_GOLPE`) na primeira mensagem do dia, como a IA principal, e não grava mais a nota interna com o mesmo texto. O zap_plantao não tinha a regra das 2 horas: não precisa ser publicado.
+- Tela: o menu do WhatsApp conta o mesmo que a aba Novas (minhas ou que cubro, abertas, com não lida, fora da IA; a carga traz `cobertura`); Emojis, Anexar e Nota com 40 px no celular; áudio sem arquivo diz "áudio antigo, não baixado — só no celular"; Esc com a conversa aberta no computador fecha a conversa (`modalAberto()` e painel do cliente à parte); `virarAndamento` e `novaTarefaZap` avisam a falha da gravação.
+- Provas: `testes/zap_f599.sql` (a3b, e7b, g1 a g4) e `testes/cadastro/f827.js`.

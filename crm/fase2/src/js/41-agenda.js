@@ -1085,6 +1085,8 @@ document.addEventListener("keydown",e=>{
     if(document.activeElement===busca) return busca.blur();
     if(digitando()) return document.activeElement.blur();   // Esc no campo só tira o foco
     if(clienteAberto) return fecharFicha();
+    // F827 · no computador, Esc com a conversa aberta fecha a conversa (o painel do cliente tem o próprio Esc)
+    if(zapAberta && !_pcli && !modalAberto() && document.getElementById("zap-dir") && !document.getElementById("app").classList.contains("celular")) return voltarListaZap();
   }
 });
 // ══════════════════════════════════════════════════════════════════════════

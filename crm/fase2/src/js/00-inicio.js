@@ -1165,7 +1165,7 @@ const CARGA_2 = {
     lembrarMotivos: ()=>todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
     rotinas: ()=>todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
     rotinasFeitas: ()=>todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
-    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status,plantao").catch(()=>[]),
+    zaps: ()=>todas("zap_conversas","select=id,nao_lidas,atendente_id,status,plantao,cobertura").catch(()=>[]),
     inssCal: ()=>todas("inss_calendario","select=*").catch(()=>[]),
     anals: ()=>todas("analises_direito","select=*&order=data_analise.desc").catch(()=>null),
       // ⭐/⚡ as anotações marcadas, de TODOS os clientes — é a lista ⭐

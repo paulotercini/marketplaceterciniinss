@@ -1042,8 +1042,9 @@ async function virarAndamento(msgId){
   if(!ks.length) return aviso("Este cliente ainda não tem processo");
   const gravar = async casoId => {
     fecharCaixa();
-    await api(`/rest/v1/rpc/zap_virar_andamento`,{method:"POST",
-      body:JSON.stringify({p_mensagem:msgId, p_caso:casoId, p_autor:eu.id})});
+    try{ await api(`/rest/v1/rpc/zap_virar_andamento`,{method:"POST",
+      body:JSON.stringify({p_mensagem:msgId, p_caso:casoId, p_autor:eu.id})}); }
+    catch(e){ return aviso("Não consegui registrar: "+msgErro(e)); }
     aviso("Registrado no histórico do processo ✔");
   };
   if(ks.length===1) return gravar(ks[0].id);
