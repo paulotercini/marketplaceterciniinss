@@ -4332,6 +4332,10 @@ html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:v
 html[data-tema="v10"] .timeline.tl-per li .tl-barra{position:static;margin-top:8px;pointer-events:auto;background:none}
 html[data-tema="v10"] .timeline.tl-per li .tl-barra :is(.tl-bt,.tl-barra-fim > *,.tl-sinal){opacity:1}
 html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
+/* F828 · o painel do cliente (#pcli, 460 px à direita) cobria os flutuantes: eles andam para a esquerda do painel, clicáveis e sem cobri-lo.
+   shortcut: o flutuante arrastado para a borda esquerda pode sair da tela com o painel aberto; se incomodar, deslocar por JS só quem cai sob o painel */
+@media (min-width:761px){body.pcli-aberto :is(.fab-rapida,.fab-sug,.fab-ajuda,#zap-ag,#fab-juntos){transform:translateX(-460px)}}
+.esc-desc[hidden]{display:none!important}
 </style>
 </head>
 

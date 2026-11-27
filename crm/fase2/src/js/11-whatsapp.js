@@ -345,7 +345,8 @@ async function renderConfig(){
 
   meio.innerHTML =
     // F151 · a agenda de quarta: o endereço do Apps Script e o token do Paulo
-    `<h3 class="secao">📅 Agenda de atendimentos</h3>${cardLigarAgenda()}`
+    `<h3 class="secao">📅 Agenda de atendimentos</h3>${agendaUrl() && agendaToken() ? cardLigarAgenda()   // F828 · sem ligar, o formulário fica recolhido
+      : `<details class="aq-ligar-d"><summary class="meio-sub">Agenda do Google não ligada. Ligar</summary>${cardLigarAgenda()}</details>`}`
     + cfgDuracoes()
     + cfgRegrasModelos()
     +     // ── quem atende ──────────────────────────────────────────────────────

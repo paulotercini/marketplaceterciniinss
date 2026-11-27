@@ -1177,7 +1177,7 @@
   /* a legenda é o filtro: clicar numa cor mostra só aquele tipo */
   .cal-leg{display:inline-flex;align-items:center;gap:5px;border:1px solid transparent;
     background:rgba(255,255,255,.7);border-radius:14px;padding:3px 10px;cursor:pointer;
-    font:inherit;color:var(--cinza)}
+    font:inherit;color:var(--cinza);min-height:24px}   /* F828 · alvo de toque de 24 px (o Calendário aparece também na Agenda sem o Google) */
   @media (hover:hover) and (pointer:fine){.cal-leg:hover{border-color:var(--borda)}}
   .cal-leg.on{border-color:var(--azul);color:var(--azul);font-weight:600;background:var(--branco)}
   .cal-leg.limpar{color:var(--vermelho)}

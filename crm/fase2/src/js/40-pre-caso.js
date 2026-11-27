@@ -100,7 +100,7 @@ async function salvarAnotacaoRapida(){
     D.clientes.push(novoCli); D.cliPorId.set(novoCli.id, novoCli);
     if(!D.casosDoCliente.has(novoCli.id)) D.casosDoCliente.set(novoCli.id, []);
     reindexarCliente(novoCli);
-    arNovo=null; fecharCaixa(); plim();
+    arNovo=null; fecharCaixa(); limparRascunho("ar"); plim();
     aviso(`Cliente novo cadastrado com a anotação${urg2?" 🔥":""} — complete a ficha`, false);
     montarSidebar(); abrirFicha(novoCli.id);
     return;
@@ -114,7 +114,7 @@ async function salvarAnotacaoRapida(){
           beneficio_interesse:t.slice(0,80), responsavel_id:eu.id})});
       if(l) D.leads.unshift(l);
     }catch(e){ return aviso("Não consegui criar o interessado — tente de novo"); }
-    arLead=null; fecharCaixa(); plim();
+    arLead=null; fecharCaixa(); limparRascunho("ar"); plim();
     aviso("Interessado no funil 💼 Vendas, com a anotação", false);
     montarSidebar(); render();
     return;
@@ -162,7 +162,7 @@ async function salvarAnotacaoRapida(){
     }
   }catch(e){ return aviso("Não consegui guardar — tente de novo"); }
   const cliId=arCliSel; arCliSel=null;
-  fecharCaixa(); plim();
+  fecharCaixa(); limparRascunho("ar"); plim();
   montarSidebar();
   if(clienteAberto===cliId) abrirFicha(cliId); else render();
 }

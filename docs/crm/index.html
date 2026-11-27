@@ -1186,7 +1186,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* a legenda é o filtro: clicar numa cor mostra só aquele tipo */
   .cal-leg{display:inline-flex;align-items:center;gap:5px;border:1px solid transparent;
     background:rgba(255,255,255,.7);border-radius:14px;padding:3px 10px;cursor:pointer;
-    font:inherit;color:var(--cinza)}
+    font:inherit;color:var(--cinza);min-height:24px}   /* F828 · alvo de toque de 24 px (o Calendário aparece também na Agenda sem o Google) */
   @media (hover:hover) and (pointer:fine){.cal-leg:hover{border-color:var(--borda)}}
   .cal-leg.on{border-color:var(--azul);color:var(--azul);font-weight:600;background:var(--branco)}
   .cal-leg.limpar{color:var(--vermelho)}
@@ -7360,6 +7360,10 @@ html[data-tema] .linha-caso.lc5.lc5.lc5 .lc5-grade > .lc-f .lc-num{font-family:v
 html[data-tema="v10"] .timeline.tl-per li .tl-barra{position:static;margin-top:8px;pointer-events:auto;background:none}
 html[data-tema="v10"] .timeline.tl-per li .tl-barra :is(.tl-bt,.tl-barra-fim > *,.tl-sinal){opacity:1}
 html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
+/* F828 · o painel do cliente (#pcli, 460 px à direita) cobria os flutuantes: eles andam para a esquerda do painel, clicáveis e sem cobri-lo.
+   shortcut: o flutuante arrastado para a borda esquerda pode sair da tela com o painel aberto; se incomodar, deslocar por JS só quem cai sob o painel */
+@media (min-width:761px){body.pcli-aberto :is(.fab-rapida,.fab-sug,.fab-ajuda,#zap-ag,#fab-juntos){transform:translateX(-460px)}}
+.esc-desc[hidden]{display:none!important}
 </style>
 </head>
 
@@ -7373,7 +7377,7 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.35</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.36</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7688,7 +7692,9 @@ let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 // 1.25 da extensão · o aviso de fim da rodada abre o CRM com ?ir=patinss, já no 📥 Importar
 // F420 · o Paulo confere só as Novidades: o aviso da extensão (?ir=patinss) abre nelas, e as coletas entram sozinhas
-let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "novidades" : "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
+var _telas = [], _telaAtual = null, _voltandoTela = false;   // F828 · a pilha das telas do voltar (ver marcarTela)
+const _hashIni = hashTela();   // F828 · a tela e a ficha do endereço, lidas antes de a primeira pintura reescrevê-lo
+let visao = new URLSearchParams(location.search).get("ir")==="patinss" ? "novidades" : (_hashIni.v || "meudia"), filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 // F236 · o Meu Dia tem filtro próprio e abre no dia de quem entrou; as listas (filtroColab) abrem na pessoa
 let filtroDia = null;
 let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobrevive às repinturas)
@@ -8062,6 +8068,9 @@ async function iniciar(){
   // não repinta por cima de quem está digitando num formulário da lista
   const digitandoNoMeio = document.querySelector("#conteudo-meio :is(input,textarea,select):focus");
   if(!digitandoNoMeio && !["novocliente","config"].includes(visao)) render();
+  // F828 · recarregar (ou o Ctrl+clique noutra aba) reabre a ficha do endereço
+  if(_hashIni.c && D.cliPorId.get(_hashIni.c) && !clienteAberto) abrirFicha(_hashIni.c);
+  _hashIni.c = null;
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS);
     // como o To Do ao voltar para a frente: a aba que reaparece busca o que mudou na hora, sem esperar a volta do relógio
     document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) vigiarMudancas(); });
@@ -12486,9 +12495,9 @@ function abrirPainelCli(el){
   if(clienteAberto) fecharFicha(false);
   fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
   _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};
-  pcliMontar();
+  pcliMontar(); setTimeout(armarVoltar, 0);   // F828 · o voltar fecha o painel
 }
-function fecharPainelCli(){ _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
+function fecharPainelCli(){ if(_pcli) setTimeout(armarVoltar, 0); _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
 async function pcliMontar(){
   if(!_pcli) return;
   // a linha pode ter sido redesenhada depois de uma ação: procura a mesma de novo
@@ -12803,6 +12812,7 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
+      if((e.ctrlKey || e.metaKey) && voltarLigado()) return void window.open(linkFicha(el.dataset.cli), "_blank");   // F828 · a ficha em outra aba
       if(!e.ctrlKey && !e.metaKey && pcliLigado()) return abrirPainelCli(el);   // F647 · o clique na linha de qualquer lista abre o painel lateral (a extensão F455 saiu)
       if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
       abrirDaLinha(el);
@@ -21532,7 +21542,8 @@ async function renderConfig(){
 
   meio.innerHTML =
     // F151 · a agenda de quarta: o endereço do Apps Script e o token do Paulo
-    `<h3 class="secao">📅 Agenda de atendimentos</h3>${cardLigarAgenda()}`
+    `<h3 class="secao">📅 Agenda de atendimentos</h3>${agendaUrl() && agendaToken() ? cardLigarAgenda()   // F828 · sem ligar, o formulário fica recolhido
+      : `<details class="aq-ligar-d"><summary class="meio-sub">Agenda do Google não ligada. Ligar</summary>${cardLigarAgenda()}</details>`}`
     + cfgDuracoes()
     + cfgRegrasModelos()
     +     // ── quem atende ──────────────────────────────────────────────────────
@@ -23860,8 +23871,17 @@ function abrirClaude(casoId, acao){
   if(onde==="app") location.href = url;          // esquema claude:// não abre em aba nova
   else window.open(url, "_blank", "noopener");
 }
+// F828 · o Descartar do Escrever no caso só aparece com texto; apaga o campo e o rascunho guardado
+function verDescartar(){ const b = document.getElementById("and-descartar"), t = document.getElementById("and-texto"); if(b) b.hidden = !(t && t.value.trim()); }
+function descartarEscrita(casoId){
+  const t = document.getElementById("and-texto"); limparRascunho(casoId);
+  if(t){ t.value = ""; if(t.oninput) t.oninput(); t.focus(); }
+  verDescartar();
+}
 function fecharCaixa(){
   setTimeout(armarVoltar, 0);   // F458
+  // F828 · Esc, voltar ou clique fora não perdem o texto da anotação rápida: fica guardado até gravar
+  { const ar = document.getElementById("ar-texto"); if(ar) guardarRascunho("ar", ar.value); }
   const m = document.getElementById("modal");
   m.style.display="none"; m.innerHTML="";
 }
@@ -24436,7 +24456,7 @@ function pintarFicha(){
       // meio do atendimento. Agora ele fica guardado por caso, na sessão, e
       // volta para a tela; some só quando o andamento é registrado.
       campoAnd.oninput=()=>{ crescer(); prazoCancelado=false;
-        guardarRascunho(kAtual.id, campoAnd.value);
+        guardarRascunho(kAtual.id, campoAnd.value); verDescartar();
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); folgaComposer(); };
       const rasc=lerRascunho(kAtual.id);
       if(rasc && !campoAnd.value){
@@ -24444,7 +24464,7 @@ function pintarFicha(){
         if(cxEsc) cxEsc.classList.add("esc-aberto");   // com texto, as ferramentas ficam à mão
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual);
       }
-      crescer();
+      verDescartar(); crescer();
     }
   }
   folgaComposer();
@@ -46196,6 +46216,7 @@ function composerCaso(k){
             title="solicitar documentos no meio do atendimento: marca na lista do benefício, entra na anotação e vira checklist — sem apagar o que você já digitou"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/></svg></button>
           <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
           <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
+          <button type="button" class="btn-rap esc-desc" id="and-descartar" hidden onclick="descartarEscrita('${k.id}')" title="Apagar o texto escrito e o rascunho guardado">Descartar</button>
           ${v10?"":`<button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>`}
         </span>`;
   // F38 · a anotação que É prazo processual: marca, dá a data fatal, e o
@@ -51818,11 +51839,27 @@ function voltarLigado(){ try{ return !navigator.webdriver || localStorage.getIte
 function inicioVoltar(){ return soIdentificacao() ? "agendaq" : "meudia"; }
 function modalAberto(){ const m = document.getElementById("modal"); return !!(m && m.innerHTML && m.style.display!=="none"); }
 function temVoltar(){
-  return !!(document.getElementById("proc-inteiro") || modalAberto() || painelPz || painelZapCli
-    || document.getElementById("app")?.classList.contains("zap-conv-aberta") || clienteAberto || visao!==inicioVoltar());
+  return !!(document.getElementById("proc-inteiro") || modalAberto() || painelPz || painelZapCli || _pcli
+    || document.getElementById("app")?.classList.contains("zap-conv-aberta") || clienteAberto || _telas.length || visao!==inicioVoltar());
+}
+// F828 · a tela e a ficha ficam no endereço (#planejado, #fase:inss, #meudia/<cliente>): recarregar mantém as duas, o
+// Ctrl+clique abre a ficha em outra aba, e as telas visitadas formam uma pilha para o voltar levar à anterior
+function hashLido(){ try{ return decodeURIComponent(location.hash||""); }catch(e){ return ""; } }   // function: lida na carga, antes desta linha
+function hashTela(){
+  if(!voltarLigado()) return {};
+  const m = /^#([a-z_]+(?::[a-z_0-9]+)?)(?:\/([0-9a-f-]{8,36}))?$/i.exec(hashLido());
+  return m ? {v:m[1], c:m[2]} : {};
+}
+const linkFicha = cliId => location.pathname + location.search + "#" + visao + "/" + cliId;
+function marcarTela(){
+  if(visao!==_telaAtual){ if(_telaAtual && !_voltandoTela && _telas.push(_telaAtual) > 30) _telas.shift(); _telaAtual = visao; _voltandoTela = false; }
+  const h = "#" + visao + (clienteAberto ? "/" + clienteAberto : "");
+  if(hashLido()!==h) try{ history.replaceState(history.state, "", h); }catch(e){}
 }
 function armarVoltar(){
-  if(!voltarLigado() || _voltarDesarmando) return;
+  if(!voltarLigado()) return;
+  marcarTela();
+  if(_voltarDesarmando) return;
   const armado = history.state && history.state.crm==="voltar";
   try{
     if(temVoltar() && !armado) history.pushState({crm:"voltar"}, "");
@@ -51833,13 +51870,17 @@ function armarVoltar(){
 function voltarUmPasso(){
   if(document.getElementById("proc-inteiro")) return fecharProcessoInteiro();
   if(modalAberto()) return fecharCaixa();
+  if(_pcli) return fecharPainelCli();   // F828 · o painel do cliente fecha antes de a tela mudar
   if(painelPz || painelZapCli) return fecharPainelPrazo();
   if(document.getElementById("app")?.classList.contains("zap-conv-aberta")) return voltarListaZap();
   if(clienteAberto){
     if(document.getElementById("detalhe")?.classList.contains("atend-tela")) return sairModoAtendimento(clienteAberto);
     return fecharFicha();
   }
+  _voltandoTela = true;
+  if(_telas.length) return irPara(_telas.pop());
   if(visao!==inicioVoltar()) return irPara(inicioVoltar());
+  _voltandoTela = false;
 }
 window.addEventListener("popstate", e=>{
   if(!voltarLigado()) return;
@@ -52644,21 +52685,39 @@ async function apagarAndamento(id, jaNoTodo){
   if(!await confirmar(m ? "Apagar este prazo? Ele sai das anotações, do quadro Prazos e do Meu Dia, e fica no histórico do caso (⋯ do caso, Apagadas)."
     : "Apagar esta anotação? Ela sai das anotações e fica no histórico do caso (⋯ do caso, Apagadas).")) return;
   const k = a && D.casoPorId.get(a.caso_id), carimbo = m && m[0].trim();
+  let pzAntes = null;
   if(k && /^\d{4}-\d{2}-\d{2}$/.test(dPz||"") && k.prazo===dPz && !prazoDoTodo(k)
      && ![D._andsFicha, D.and30].some(l=>(l||[]).some(b=>b.id!==id && b.caso_id===k.id && !b.excluir && (b.texto||"").startsWith(carimbo)))){
     try{ await patchCaso(k.id, {prazo:null}); k.prazo = null; }catch(e){ return aviso("Não apagou: tente de novo"); }
+    pzAntes = dPz;
   }
+  // F828 · o apagar tem Desfazer, como o Concluir: volta o prazo do caso e regrava a anotação (com as tarefas, no DELETE)
+  const voltarPz = async ()=>{ if(pzAntes){ await patchCaso(k.id, {prazo:pzAntes}).catch(()=>{}); k.prazo = pzAntes; } };
   if(jaNoTodo){
     try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({excluir:true})}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id) b.excluir = true;
-    aviso("Apagado: o texto sai do To Do na próxima sincronização e fica no histórico do caso");
+    avisoDesfazer("Apagado: o texto sai do To Do na próxima sincronização e fica no histórico do caso", async ()=>{
+      await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({excluir:false})}).catch(()=>{});
+      for(const l of [D._andsFicha, D.and30]) for(const b of (l||[])) if(b.id===id) b.excluir = false;
+      await voltarPz(); montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); });
   }else{
     try{ await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"}); }catch(e){ return aviso("Não apagou: tente de novo"); }
     // o banco apaga as tarefas junto (ON DELETE CASCADE); a memória acompanha, senão o Meu Dia e o Planejado as mostram até recarregar
-    const ts = a && D.tarefasPorCaso.get(a.caso_id); if(ts) D.tarefasPorCaso.set(a.caso_id, ts.filter(t=>t.andamento_id!==id));
+    const ts = a && D.tarefasPorCaso.get(a.caso_id), suas = (ts||[]).filter(t=>t.andamento_id===id);
+    if(ts) D.tarefasPorCaso.set(a.caso_id, ts.filter(t=>t.andamento_id!==id));
     if(D.and30) D.and30 = D.and30.filter(b=>b.id!==id);
-    aviso(m ? "Prazo apagado: fica no histórico do caso" : "Anotação apagada: fica no histórico do caso");
+    const msg = m ? "Prazo apagado: fica no histórico do caso" : "Anotação apagada: fica no histórico do caso";
+    // sem o texto (linha só do and30) não há o que regravar
+    if(!(a && a.texto)) aviso(msg);
+    else avisoDesfazer(msg, async ()=>{
+      const {id:_i, caso_id, autor_id, criado_em, texto, publico, origem, responde_a, origem_id, zap_mensagem_id} = a;
+      try{ await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({id, caso_id, autor_id, criado_em, texto, publico, origem, responde_a, origem_id, zap_mensagem_id})}); }
+      catch(e){ return aviso("Não desfez: tente de novo"); }
+      for(const t of suas) await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(t)}).catch(()=>{});
+      if(suas.length) D.tarefasPorCaso.set(caso_id, [...(D.tarefasPorCaso.get(caso_id)||[]), ...suas]);
+      await voltarPz(); montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); aviso("Anotação de volta", false); });
   }
   abrirFicha(clienteAberto);
 }
@@ -59123,7 +59182,14 @@ async function apagarNotaAtendimento(cliId, idx){
   c.campos={...(c.campos||{}), atendimento:notas};
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})}).catch(()=>{});
-  aviso("Anotação apagada", false); repintarFicha();
+  repintarFicha();
+  // F828 · Desfazer devolve a nota ao mesmo lugar
+  avisoDesfazer("Anotação apagada", async ()=>{
+    const at=[...((c.campos||{}).atendimento||[])]; at.splice(Math.min(idx, at.length), 0, n);
+    c.campos={...(c.campos||{}), atendimento:at};
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+    repintarFicha(); });
 }
 // checklist dentro da anotação: itens marcáveis, com autor no risco
 async function notaChecklistItem(cliId, idx){
@@ -59476,6 +59542,7 @@ function anotacaoRapida(pre, cliId){
       <button style="margin-left:auto" onclick="salvarAnotacaoRapida()" title="Guardar agora">Guardar<span class="sr-only"> agora</span></button>
     </div>`);
   const b=document.getElementById("ar-busca");
+  document.getElementById("ar-texto").value = lerRascunho("ar");   // F828
   if(cliId && D.cliPorId.get(cliId)){ arEscolher(cliId); return; }
   if(b){ b.focus(); if(pre&&String(pre).trim()){ b.value=String(pre); arProcurar(b.value); } }
 }
@@ -59677,7 +59744,7 @@ async function salvarAnotacaoRapida(){
     D.clientes.push(novoCli); D.cliPorId.set(novoCli.id, novoCli);
     if(!D.casosDoCliente.has(novoCli.id)) D.casosDoCliente.set(novoCli.id, []);
     reindexarCliente(novoCli);
-    arNovo=null; fecharCaixa(); plim();
+    arNovo=null; fecharCaixa(); limparRascunho("ar"); plim();
     aviso(`Cliente novo cadastrado com a anotação${urg2?" 🔥":""} — complete a ficha`, false);
     montarSidebar(); abrirFicha(novoCli.id);
     return;
@@ -59691,7 +59758,7 @@ async function salvarAnotacaoRapida(){
           beneficio_interesse:t.slice(0,80), responsavel_id:eu.id})});
       if(l) D.leads.unshift(l);
     }catch(e){ return aviso("Não consegui criar o interessado — tente de novo"); }
-    arLead=null; fecharCaixa(); plim();
+    arLead=null; fecharCaixa(); limparRascunho("ar"); plim();
     aviso("Interessado no funil 💼 Vendas, com a anotação", false);
     montarSidebar(); render();
     return;
@@ -59739,7 +59806,7 @@ async function salvarAnotacaoRapida(){
     }
   }catch(e){ return aviso("Não consegui guardar — tente de novo"); }
   const cliId=arCliSel; arCliSel=null;
-  fecharCaixa(); plim();
+  fecharCaixa(); limparRascunho("ar"); plim();
   montarSidebar();
   if(clienteAberto===cliId) abrirFicha(cliId); else render();
 }
@@ -60912,12 +60979,17 @@ async function salvarLigacaoAgenda(){
     aviso(`Agenda conectada como ${r.usuario}`, false); agq.disp=null; renderAgendaQuarta(); }
   catch(e){ if(q) q.textContent = e.message; }
 }
+// F828 · sem o Google ligado, a Agenda não prende no formulário: mostra o que o CRM tem com data (o Calendário) e um aviso discreto
+const avisoLigarAgenda = () => `<p class="meio-sub aq-semgoogle">Agenda do Google não ligada: aqui ficam os prazos e atendimentos do CRM. <button type="button" class="btn-mini" onclick="document.getElementById('conteudo-meio').innerHTML=cardLigarAgenda()" title="Ligar a agenda do Google">Ligar</button></p>`;
 function renderAgendaQuarta(){
+  if(!agendaUrl() || !agendaToken()){
+    renderCalendario(); tituloLista(temaV10() ? "Agenda" : "📅 Agenda");
+    document.getElementById("conteudo-meio").insertAdjacentHTML("afterbegin", avisoLigarAgenda()); return;
+  }
   tituloLista(temaV10() ? "Agenda" : "📅 Agenda");
   const meio = document.querySelector(".meio"); if(temaV10()) meio.classList.add("ag-v10");
   document.getElementById("sub-lista").textContent = "Atendimentos presenciais, das 08h00 às 12h30 e das 13h30 às 18h30. Cada profissional tem a sua cor.";
   const alvo = document.getElementById("conteudo-meio");
-  if(!agendaUrl() || !agendaToken()){ alvo.innerHTML = cardLigarAgenda(); return; }
   pintarTopoAgenda();
   carregarEspera(true).then(()=>{ if(visao==="agendaq" && agq.disp) pintarAgenda(); });   // F456
   agq.disp = agq.cache[agq.prof] || null;
