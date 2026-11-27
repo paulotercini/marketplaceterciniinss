@@ -1213,9 +1213,9 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - Conferido e mantido como estava: realce de mouse já travado por `@media (hover:hover) and (pointer:fine)`, campo de 16px no toque (F136) e resposta ao pressionar (`button:active`, F134).
 - Prova: `testes/cadastro/f833.js` (nenhuma letra abaixo de 12px no `app.html`).
 
-## F834 · Ficha do caso: linha do tempo compacta, Próximo prazo e estrela na linha das ações (27.11.2026, v14.41)
+## F834 · Ficha do caso: linha do tempo compacta e Próximo prazo (27.11.2026, v14.41)
 
-Etapa 2 da revisão de estrutura visual. A linha do tempo do caso (F670) passa a rótulo e total em uma linha, com os trechos futuros em cinza sólido. A mini agenda (F669) abre recolhida na linha "Próximo prazo" (data e tipo); a seta abre o calendário, e a escolha vale até trocar de tela. No computador a estrela fica na linha das ações do cabeçalho. Prova em `f669.js`.
+Etapa 2 da revisão de estrutura visual. A linha do tempo do caso (F670) passa a rótulo e total em uma linha, com os trechos futuros em cinza sólido. A mini agenda (F669) abre recolhida na linha "Próximo prazo" (data e tipo); a seta abre o calendário, e a escolha vale até trocar de tela. A estrela segue abaixo do Anotações (F373). Prova em `f669.js`.
 
 ## F835 · Lista em faixa com a ficha aberta (27.11.2026, v14.41)
 

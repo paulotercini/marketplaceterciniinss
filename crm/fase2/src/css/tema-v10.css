@@ -4359,7 +4359,6 @@ html[data-tema="v10"] .ltc-v .ltc-r{border:0;background:#E3E4E1}
 .ma-px-n,.ma-px-t{color:var(--cinza,#4A4944);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .ma-dt b{font-weight:600;font-variant-numeric:tabular-nums}
 .app.celular .ma-dt > summary{min-height:44px;align-items:center}
-.app:not(.celular) .det-mais-col > .det-imp:not(.det-notas,.det-grav){position:static;transform:none}
 /* F835 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
 .lista-alca{display:none}
 .app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca{all:unset;box-sizing:border-box;cursor:pointer;display:grid;place-items:center;width:28px;height:28px;margin-left:auto;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--cinza);font-size:16px;line-height:1}
