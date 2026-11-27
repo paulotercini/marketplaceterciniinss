@@ -2209,7 +2209,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   /* F259 · o acabamento do WhatsApp (ideia do Kapso): fundo bege, balão branco
      de quem escreve e verde do escritório, sem borda. Nota interna, agendada,
      rascunho e falha mantêm o seu desenho. Volta ao anterior nas Configurações. */
-  .zap-tela.wa .zap-msgs{background:var(--p-cinza-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' fill='none' stroke='%23000' stroke-opacity='.06' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M14 18h20a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H22l-6 5v-5h-2a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='82' cy='22' r='7'/%3E%3Cpath d='M76 70l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z'/%3E%3Cpath d='M22 78c4-6 10-6 14 0s10 6 14 0'/%3E%3Cpath d='M96 52l8 8m0-8l-8 8'/%3E%3Crect x='88' y='92' width='16' height='12' rx='2'/%3E%3Cpath d='M40 102a6 6 0 1 1 12 0'/%3E%3Cpath d='M60 34l6 6 10-12'/%3E%3C/svg%3E") repeat}
+  .zap-tela.wa .zap-msgs{background:var(--p-zap-fundo) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' fill='none' stroke='%23000' stroke-opacity='.06' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M14 18h20a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H22l-6 5v-5h-2a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z'/%3E%3Ccircle cx='82' cy='22' r='7'/%3E%3Cpath d='M76 70l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z'/%3E%3Cpath d='M22 78c4-6 10-6 14 0s10 6 14 0'/%3E%3Cpath d='M96 52l8 8m0-8l-8 8'/%3E%3Crect x='88' y='92' width='16' height='12' rx='2'/%3E%3Cpath d='M40 102a6 6 0 1 1 12 0'/%3E%3Cpath d='M60 34l6 6 10-12'/%3E%3C/svg%3E") repeat}
   .zap-tela.wa .zap-b:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:var(--p-branco);border-color:transparent;
     box-shadow:var(--sombra-painel);border-radius:8px;border-top-left-radius:0}
   .zap-tela.wa .zap-b.saida:not(.interna):not(.agendada):not(.rascunho):not(.ruim){background:var(--p-verde-4);
@@ -3803,7 +3803,7 @@ html[data-tema="v10"] .topo-extra{margin-left:auto}
 html[data-tema="v10"] .meio.ag-v10 .meio-topo h1{font-size:26px;line-height:1.2}
 html[data-tema="v10"] .meio.ag-v10 #btn-fundo,html[data-tema="v10"] .meio.ag-v10:not(.lista-opc) .ordenar{display:none}
 html[data-tema="v10"] .seg-colab{display:inline-flex;gap:2px;padding:2px;background:var(--placa);border-radius:10px}
-html[data-tema="v10"] .seg-colab button{border:0;background:none;padding:4px 12px;border-radius:7px;font:inherit;font-size:13px;color:var(--cinza);cursor:pointer}
+html[data-tema="v10"] .seg-colab button{border:0;background:none;padding:4px 12px;min-height:24px;border-radius:7px;font:inherit;font-size:13px;color:var(--cinza);cursor:pointer}
 html[data-tema="v10"] .seg-colab button.on{background:var(--p-branco);color:var(--texto);font-weight:600;box-shadow:var(--sombra-painel)}
 html[data-tema="v10"] .ag-venc{color:var(--venc-tinta);font-weight:600}
 /* a linha da agenda */
@@ -7442,6 +7442,8 @@ html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
 /* Meu Dia: a conta do dia continua a frase do alto, na mesma linha */
 #sub-lista .md-conta{display:inline-flex;margin:0 0 0 12px;vertical-align:middle;gap:6px 12px}
 /* F838 · cinco camadas nomeadas (os valores antigos viram a camada mais o degrau, na mesma ordem) e duas sombras de elevação */
+/* cor de marca do WhatsApp: valor exato, fora do agrupamento por proximidade */
+:root{--p-zap-fundo:#EFEAE2}
 :root{--z-pagina:1;--z-cabecalho:20;--z-painel:60;--z-flutuante:900;--z-janela:2000;
   --sombra-painel:0 1px 2px rgba(18,18,18,.08);--sombra-janela:0 8px 24px rgba(18,18,18,.16)}
 /* F838 · paleta única: toda cor da folha de estilo vem daqui (famílias da mais clara à mais escura).
