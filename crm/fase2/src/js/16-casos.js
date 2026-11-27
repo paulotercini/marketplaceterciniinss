@@ -235,6 +235,11 @@ function propostaHonorarios(c, k){
             nota:`≈ estimado: ${dias} dias × ${moedaTxt(rmi)} ÷ 30 = ${moedaTxt(atr)}, pela carta de concessão (DIB ${fmtBarra(dib)}, DIP ${fmtBarra(dip)}); vence no 1º crédito, em até 45 dias da concessão (${baseCred}): conferir no extrato`});
         }
       }
+      // F831 · sem requisição nem carta, a estimativa da calculadora de atrasados do caso (marcada "≈": confere-se antes de cobrar)
+      const ce = (k.calculo||{}).resultado;
+      if(!itens.some(x=>x.ch==="atr") && ce && ce.total > 0) itens.push({ch:"atr", alvo, desc:`Honorários · ${T.pctAtr}% dos atrasados (estimativa da calculadora do caso)`,
+        valor:Math.round(ce.total*T.pctAtr)/100, venc:null,
+        nota:`≈ estimado: ${T.pctAtr}% de ${moedaTxt(ce.total)}, atrasados desde ${fmtBarra(ce.termo)} calculados em ${fmtBarra(ce.em)} (estimativa para conferência); vence no pagamento da RPV ou do precatório`});
       if(!jaAtr && !itens.some(x=>x.ch==="atr")) itens.push({ch:"atr", alvo:null, desc:`Honorários · ${T.pctAtr}% dos atrasados`, valor:0, venc:null,
         nota:`a calcular: ${cc.pagaAdm || cc.via==="adm" ? "vence no crédito dos atrasados pelo INSS" : "vence no pagamento da RPV ou do precatório"}`});
     }

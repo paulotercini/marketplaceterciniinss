@@ -1179,7 +1179,7 @@ function porClienteDia(g){
     return `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
       + linhaAgenda(p) + `<details class="ag-mais-cli"><summary title="outros itens deste cliente">+${resto.length}</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
 }
-function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
+function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS() + blocoDecadenciaDia(filtroDia); }   // F831
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
 // clientes, e quem eu despachei, com a data de volta. Recolhido; abre no clique
 function ultimoDiaUtil(){ let d = somaDias(hoje(), -1); while(!ehDiaUtil(d)) d = somaDias(d, -1); return d; }
