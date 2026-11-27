@@ -879,7 +879,7 @@ let abaPedida = {}, abaDoCaso = {};
 // F405 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
 const esqOculta = () => ler("crm_caso_esq")==="0";
 function esqAlternar(){ guardar("crm_caso_esq", esqOculta() ? "" : "0"); trRepintar(); }
-// F835 · com a ficha aberta, a lista do meio vira faixa de 216px (nome e data); a escolha fica neste computador
+// F836 · com a ficha aberta, a lista do meio vira faixa de 216px (nome e data); a escolha fica neste computador
 const listaFaixa = () => ler("crm_lista_faixa")!=="0";
 function listaPintar(){ const f = listaFaixa(); document.getElementById("app").classList.toggle("lista-faixa", f); document.getElementById("lista-alca").setAttribute("aria-expanded", String(!f)); }
 function listaAlternar(){ guardar("crm_lista_faixa", listaFaixa() ? "0" : ""); listaPintar(); }

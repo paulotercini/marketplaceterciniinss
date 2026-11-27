@@ -1208,19 +1208,26 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - Repasse e recibo: líquido = bruto menos IR retido (RRA, Lei 7.713/1988, art. 12-A) menos honorários contratuais, salvo os destacados (`liquidoRepasse`); Recibo imprimível (`reciboRepasse`).
 - **Perícia judicial** (29-pericias.js, `laudoJudicial`): no cartão da perícia que passou, situação Aguardando laudo, Laudo juntado ou Manifestação feita; botões Laudo, Manifestação e Quesitos anexam o arquivo com o nome que o identifica (`anexarDaPericia`, sobre `anexarArquivo`, extraído do `anexar`). O expediente do PJe aberto pelo laudo (`prazoDoLaudo`, sobre `prazoTribunalDoAto`) aparece como aviso; Fatal o anota como prazo do caso (`usarPrazoDoTribunal`). Sem anotação, não há prazo fatal.
 - Provas: `testes/cadastro/f832.js`. Sem migração (`campos` é jsonb).
-## F833 · Piso de 12px na letra (27.11.2026, v14.41)
+
+## F833 · Auditoria 7 a 9: data do To Do ao lado da do CRM, inadimplência por mês e telefone de quem (27.11.2026, v14.41)
+- Ordem expressa do Paulo de 27.11.2026. Prazos: até 31/12/2026 o Microsoft To Do é a única fonte de datas e o CRM não escreve nele. `datasTodoHtml` (26-prazos.js) mostra a data do To Do (`casos.todo_prazo`) ao lado da do CRM (`casos.prazo`), com o alerta "As datas divergem: vale a do To Do" (`todoDiverge`), e o botão Abrir, que leva à tarefa pelo `todo_task_id` (`linkTodo`: `to-do.live.com/tasks/id/<id>/details`, a conta é pessoal). Aparece no topo da aba Prazos do cliente (`todoDatasCliente`) e no painel do cliente (seção Microsoft To Do). Limitação: o link depende do id da tarefa no Graph; a lista do To Do não tem id guardado no CRM.
+- Honorários: relatório mensal de inadimplência nos 💰 Recebimentos (`inadimplencia`, `inadimplenciaHtml` em 16-casos.js): vencido não recebido e não cancelado (status `cancelado` ou `cancelado_em` da F829), sem "a calcular" e "conferir valor"; por mês do vencimento, com total, soma por responsável (o primeiro atribuído do caso) e lista por cliente, que abre a aba Honorários.
+- WhatsApp: alerta "Cliente conhecido sem ficha?" na conversa sem cliente que fala de caso, benefício ou processo (`falaDeCaso`) ou cujo número aparece em anotação (`numeroNasNotas`, busca pelos 8 dígitos), com Vincular (já marcado o cliente da anotação). "Este telefone é de" no Editar telefone da ficha (próprio, mãe, filho(a), cônjuge, outro com nome obrigatório), gravado em `telefones[i].de/de_nome`, mostrado na ficha e no cabeçalho da conversa (`telDe`, `telDeTexto`). Ao gravar, as conversas do número com o cliente recebem `contato_nome/contato_relacao` (`telDeNasConversas`), que o zap_plantao já lê para tratar o titular em terceira pessoa: a função não mudou e não precisa ser publicada.
+- Migração f833 (não destrutiva): gatilho `zap_conversa_tel_de` preenche o quem conversa da conversa que nasce ou é ligada ao cliente depois, só quando vazio; erro na leitura da lista nunca derruba a conversa.
+- Provas: `testes/cadastro/auditoria7a9.js` e `testes/zap_telefone_de.sql`.
+## F834 · Piso de 12px na letra (27.11.2026, v14.42)
 - Ordem do Paulo de 27.11.2026 (etapa 1 da revisão da estrutura visual). Toda regra de estilo com letra de 10, 11 ou 11,5px passou a 12px (267 regras em `css/base.css`, `css/tema-v10.css` e dois estilos montados no JS). Nenhuma tela mudou de desenho.
 - Conferido e mantido como estava: realce de mouse já travado por `@media (hover:hover) and (pointer:fine)`, campo de 16px no toque (F136) e resposta ao pressionar (`button:active`, F134).
-- Prova: `testes/cadastro/f833.js` (nenhuma letra abaixo de 12px no `app.html`).
+- Prova: `testes/cadastro/f834.js` (nenhuma letra abaixo de 12px no `app.html`).
 
-## F834 · Ficha do caso: linha do tempo compacta e Próximo prazo (27.11.2026, v14.41)
+## F835 · Ficha do caso: linha do tempo compacta e Próximo prazo (27.11.2026, v14.42)
 
 Etapa 2 da revisão de estrutura visual. A linha do tempo do caso (F670) passa a rótulo e total em uma linha, com os trechos futuros em cinza sólido. A mini agenda (F669) abre recolhida na linha "Próximo prazo" (data e tipo); a seta abre o calendário, e a escolha vale até trocar de tela. A estrela segue abaixo do Anotações (F373). Prova em `f669.js`.
 
-## F835 · Lista em faixa com a ficha aberta (27.11.2026, v14.41)
+## F836 · Lista em faixa com a ficha aberta (27.11.2026, v14.42)
 
 Etapa 3. No computador, com a ficha aberta, a lista do meio passa de 380px a 216px e mostra nome e data; a alça ao lado do título devolve a largura, e a escolha fica em `crm_lista_faixa` neste computador. O menu lateral e a etiqueta dos ícones (já existente) não mudam. Prova em `f669.js`.
 
-## F836 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.41)
+## F837 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.42)
 
 Etapa 4. Os grupos Vencidas e Hoje ficam com fundo neutro e a cor apenas no título; Reagendar vai para junto da contagem; a data vencida diz "há N dias" (na lista larga; a coluna do prazo passou de 64px a 124px); o selo do tipo corta pela direita com reticências; o botão Sugestões troca o laranja pela cor do acento. Já existiam e não foram refeitos: o deslocamento dos flutuantes com o painel lateral, a folga de fim de rolagem e a coluna Etapa oculta quando vazia.

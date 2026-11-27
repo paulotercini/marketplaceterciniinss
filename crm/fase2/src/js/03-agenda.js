@@ -1263,6 +1263,7 @@ async function pcliMontar(){
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
       ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}<button type="button" class="esp-it pcl-outra" data-pc="outra" title="Escolher outra data">Outra</button></div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    ${k && datasTodoHtml(k) ? `<section class="pcl-cx pcl-todo"><h3>Microsoft To Do</h3>${datasTodoHtml(k)}</section>` : ""}
     ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}" title="${esc(c.nome.split(" ")[0])}" aria-label="${esc(c.nome.split(" ")[0])}" style="--av:${c.cor}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.inicial||c.nome[0])}</button>`).join("")}</div></section>
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="2" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>

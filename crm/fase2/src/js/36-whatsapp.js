@@ -379,15 +379,37 @@ function editarTelefone(cliId, i){
   caixa(`<h3>Editar telefone</h3>
     <input id="et-num" value="${esc(foneZap(t.numero))}" inputmode="tel" aria-label="Telefone com DDD" style="width:100%">
     <input id="et-obs" value="${esc(t.obs||"")}" placeholder="de quem é (recado, filha…)" aria-label="De quem é o telefone" style="width:100%;margin-top:8px">
+    <div class="form-linha" style="margin-top:8px"><label for="et-de">Este telefone é de</label>
+      <select id="et-de"><option value="">não informado</option>${TEL_DE.map(r=>`<option ${t.de===r?"selected":""}>${r}</option>`).join("")}</select>
+      <input id="et-denome" value="${esc(t.de_nome||"")}" placeholder="nome da pessoa" aria-label="Nome de quem usa o telefone" style="flex:1;min-width:140px"></div>
     <div class="form-linha" style="margin-top:10px"><button class="btn-sal" id="et-ok" title="Salvar o telefone">Salvar</button></div>`);
   const ok = () => {
     const num = document.getElementById("et-num").value.trim();
     if(!num) return aviso("Escreva o número");
-    const lista = telefonesDe(c).map((x,n)=> n===i ? {...x, numero:num, obs:document.getElementById("et-obs").value.trim()} : x);
+    const de = document.getElementById("et-de").value || null, deNome = de && de!=="próprio" ? document.getElementById("et-denome").value.trim() || null : null;
+    if(de==="outro" && !deNome) return aviso("Escreva o nome de quem usa o telefone");
+    const lista = telefonesDe(c).map((x,n)=> n===i ? {...x, numero:num, obs:document.getElementById("et-obs").value.trim(), de, de_nome:deNome} : x);
     fecharCaixa(); salvarTelefones(cliId, lista);
+    if((t.de||null)!==de || (t.de_nome||null)!==deNome) telDeNasConversas(cliId, num, de, deNome);
   };
   document.getElementById("et-ok").onclick = ok;
   ["et-num","et-obs"].forEach(id => document.getElementById(id).onkeydown = e => { if(e.key==="Enter") ok(); });
+}
+// item 9b (27.11.2026): o "Este telefone é de" vale também nas conversas deste número com o cliente, no quem conversa
+// (contato_nome, contato_relacao) que a IA do WhatsApp já lê para não se dirigir ao titular; a conversa que nascer
+// depois recebe o mesmo pelo gatilho do banco (migração f833)
+const relDoTelDe = de => de==="outro" ? "outra pessoa" : de;
+async function telDeNasConversas(cliId, numero, de, deNome){
+  const k = fim8(numero); if(k.length!==8) return;
+  const outro = de && de!=="próprio";
+  try{
+    const cs = await api(`/rest/v1/zap_conversas?select=id,nome_perfil&cliente_id=eq.${cliId}&chave=eq.${k}`);
+    for(const z of cs||[]){
+      const campos = outro ? {contato_nome:deNome || z.nome_perfil || de, contato_relacao:relDoTelDe(de)} : {contato_nome:null, contato_relacao:null};
+      await api(`/rest/v1/zap_conversas?id=eq.${z.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(campos)});
+      Object.assign(zapConvs.find(x=>x.id===z.id)||{}, campos);
+    }
+  }catch(e){ aviso("O telefone ficou na ficha, mas a conversa não foi atualizada: tente de novo"); }
 }
 // "Conversa" abre a conversa do número no WhatsApp do CRM (o SMBot e o WhatsApp Web saíram em 06.11.2026)
 async function zapDoTelefone(cliId, i){
@@ -983,6 +1005,7 @@ function fichaIdentificacao(c, creds){
             ${t.zap?`<span class="cad-tag">WhatsApp</span>`
               :`<button class="cad-mini" title="marcar como o WhatsApp do cliente" onclick="marcarZap('${c.id}',${i})">${CAD_IC.zap}é o WhatsApp</button>`}
             ${t.obs?`<span class="cad-tel-obs">${esc(t.obs)}</span>`:""}
+            ${t.de?`<span class="cad-tel-obs cad-tel-de">Este telefone é de: ${esc(telDeTexto(t))}</span>`:""}
             <button class="cad-mini" style="margin-left:auto" title="abrir a conversa no WhatsApp do CRM" onclick="zapDoTelefone('${c.id}',${i})"><span aria-hidden="true">Conversa</span><span class="sr-only">abrir conversa no WhatsApp do CRM</span></button>
             <button class="cad-lap" title="remover" aria-label="remover ${esc(t.numero||"")}" onclick="removerTelefone('${c.id}',${i})">${CAD_IC.fechar}</button>
           </div>`).join("") || `<div class="cad-v">nenhum telefone anotado</div>`}
