@@ -229,6 +229,23 @@ const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
 const prazoDoTodo = k => !!(k && k.prazo && k.todo_prazo===k.prazo);
 // 27.11.2026 · ordem do Paulo: até 31/12/2026 a data do Microsoft To Do é só leitura (o Corrigir gravava casos.prazo por cima)
 const editaPzTodo = (todo, ed) => todo && hoje()<="2026-12-31" ? "" : ed;
+// 27.11.2026 · ordem do Paulo (auditoria, item 7): a data do To Do (casos.todo_prazo) ao lado da do CRM (casos.prazo),
+// com alerta quando divergem, e o Abrir que leva à tarefa no To Do pelo id que a sincronização grava (todo_task_id).
+// A conta do escritório é pessoal (graph_refresh: /consumers), daí o to-do.live.com
+const linkTodo = k => k && k.todo_task_id ? `https://to-do.live.com/tasks/id/${encodeURIComponent(k.todo_task_id)}/details` : "";
+const todoDiverge = k => !!(k && k.todo_prazo && k.prazo && k.todo_prazo!==k.prazo);
+function datasTodoHtml(k){
+  if(!k || !k.todo_task_id || !k.todo_prazo) return "";
+  const dv = todoDiverge(k);
+  return `<div class="todo-dt${dv ? " diverge" : ""}"><span>Microsoft To Do: <b>${fmtBarra(k.todo_prazo)}</b></span>${k.prazo ? `<span>CRM: <b>${fmtBarra(k.prazo)}</b></span>` : ""}`
+    + `${dv ? `<span class="todo-alerta" role="note">As datas divergem: vale a do To Do</span>` : ""}`
+    + `<a class="btn-mini" href="${linkTodo(k)}" target="_blank" rel="noopener" title="Abrir a tarefa no Microsoft To Do">Abrir</a></div>`;
+}
+function todoDatasCliente(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && k.todo_task_id && k.todo_prazo);
+  return ks.length ? `<section class="todo-dts" aria-label="Datas do Microsoft To Do"><h3 class="pzc-gt"><span>Datas do Microsoft To Do</span></h3>`
+    + ks.map(k=>`<div class="todo-dt-l"><span class="todo-dt-c">${esc(tituloCaso(k))}</span>${datasTodoHtml(k)}</div>`).join("") + `</section>` : "";
+}
 // F429 · decisão do Paulo (07.11.2026): o prazo fatal nasceu no CRM e é a anotação de prazo fatal do CRM que o faz; o
 // "Concluir em" do To Do é retorno também no 🗓 Tarefas com Prazo, salvo com a tarefa fatal ou o carimbo da mesma data.
 // F530 (11.11.2026): o carimbo só vem de quem registra o prazo fatal no CRM; o do assistente deixou de existir

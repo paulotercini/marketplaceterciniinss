@@ -55,6 +55,35 @@ function nomeDaConversa(c){
 }
 
 const clienteDaConversa = c => c && c.cliente_id && D.cliPorId.get(c.cliente_id);
+// 27.11.2026 · ordem do Paulo (auditoria, item 9b): "Este telefone é de" na ficha (próprio, mãe, filho, cônjuge, outro
+// com nome), gravado no telefone da lista (de, de_nome) e mostrado no cabeçalho da conversa
+const TEL_DE = ["próprio","mãe","filho(a)","cônjuge","outro"];
+const fim8 = n => String(n||"").replace(/\D/g,"").slice(-8);
+function telDe(cli, tel){ const k = fim8(tel); const t = cli && k.length===8 && telefonesDe(cli).find(x=>fim8(x.numero)===k); return t && t.de ? t : null; }
+const telDeTexto = t => !t ? "" : t.de==="próprio" ? "o próprio cliente" : [t.de==="outro" ? "outra pessoa" : t.de, t.de_nome].filter(Boolean).join(" · ");
+// item 9a: a conversa sem ficha que fala de caso, benefício ou processo, ou cujo número já apareceu em anotação, é
+// quase sempre cliente conhecido escrevendo de outro número; o alerta oferece o Vincular
+const RE_ASSUNTO_CASO = /\b(processo|benef[ií]cio|aposentadori|aux[ií]lio|per[ií]cia|inss|bpc|loas|pens[aã]o|meu caso|requerimento|recurso)/i;
+const falaDeCaso = msgs => (msgs||[]).some(m=>m.direcao==="entrada" && RE_ASSUNTO_CASO.test(m.texto||""));
+const _zapNasNotas = new Map();   // os 8 dígitos → ids dos clientes cujas anotações citam o número (null enquanto busca)
+function numeroNasNotas(tel){
+  const k = fim8(tel); if(k.length!==8) return [];
+  if(_zapNasNotas.has(k)) return _zapNasNotas.get(k) || [];
+  _zapNasNotas.set(k, null);
+  api(`/rest/v1/andamentos?select=caso_id&excluir=not.is.true&or=(texto.ilike.*${k}*,texto.ilike.*${k.slice(0,4)}-${k.slice(4)}*)&limit=20`).catch(()=>[]).then(r=>{
+    _zapNasNotas.set(k, [...new Set((r||[]).map(a=>(D.casoPorId.get(a.caso_id)||{}).cliente_id).filter(Boolean))]);
+    if(zapAberta && visao==="whatsapp") pintarConversa(); });   // só a tela do WhatsApp; a conversa ao lado da ficha não repinta
+  return [];
+}
+function alertaSemFicha(c, msgs){
+  if(!c || clienteDaConversa(c) || c.automatica) return "";
+  const ids = numeroNasNotas(c.telefone), assunto = falaDeCaso(msgs);
+  if(!ids.length && !assunto) return "";
+  const nomes = ids.map(id=>D.cliPorId.get(id)).filter(Boolean);
+  return `<p class="zt-pergunta zt-semficha" role="note"><b>Cliente conhecido sem ficha?</b> ${nomes.length
+    ? `O número aparece em anotação de ${nomes.slice(0,2).map(x=>esc(x.nome)).join(" e ")}.` : "A conversa fala de caso, benefício ou processo."}
+    <button class="zl-link" onclick="vincularConversa(${nomes.length ? `'${nomes[0].id}'` : ""})" title="Vincular a conversa à ficha do cliente">Vincular</button></p>`;
+}
 // o advogado responsável pelo cliente da conversa (F245), ao lado do nome (pedido do Paulo, 25.10.2026)
 const advDaConversa = c => { const cli = clienteDaConversa(c); if(!cli) return "";
   return (D.colPorId.get((advogadoDoCliente(cli.id)||[])[0])||{}).nome || ""; };
@@ -276,6 +305,7 @@ function dadosDaConversaZap(c){
   const igual = !!cli && !c.contato_nome && nomeDaConversa(c)===cli.nome && !representadosDe(cli, String(c.telefone||"").replace(/\D/g,"").slice(-8)).length;
   return { sub: `             <span class="zt-fala${igual?" zt-fala-igual":""}">${clienteDaLinha(c)}</span>
              <span class="mono">${esc(foneZap(c.telefone))}</span>
+             ${(t=>t?`<span class="zt-telde">Este telefone é de: <b>${esc(t)}</b></span>`:"")(telDeTexto(telDe(cli, c.telefone)))}
              ${zapAgendHtml(c)}
              ${advDaConversa(c)?`<span>Adv. <b>${esc(advDaConversa(c))}</b></span>`:""}
              ${c.bot_ativo&&c.bot_passo?`<span class="zt-robo" title="o passo do robô nesta conversa">Robô: <b>${esc(rotPasso(c.bot_passo))}</b>${c.bot_desde?` desde ${diaZap(c.bot_desde)} ${horaSP(c.bot_desde)}`:""}</span>`:""}
@@ -369,6 +399,7 @@ ${dz.sub}             <button class="zt-curto zt-cli" onclick="${cli?"quemConver
            </details>
          </div>
        </div>
+       ${alertaSemFicha(c, zapMsgs)}
        ${c.sem_ia&&cfgApp("zap_ia_plantao")==="sim"?`<p class="zt-pergunta">A IA não responde esta conversa.
           <button class="zl-link" onclick="mudarConversa({sem_ia:false})" title="Voltar a responder"><span aria-hidden="true">Retomar</span><span class="sr-only">Voltar a responder</span></button></p>`:""}
        ${c.automatica?`<p class="zt-pergunta">Mensagem automática de outra empresa: a conversa fica fora da fila e o robô não responde.
