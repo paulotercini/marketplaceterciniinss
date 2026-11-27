@@ -74,7 +74,7 @@ function cartaoEscolha(cliId, k, i, meu, destaque, nb){
     <div class="esc-cab">
       <div class="esc-l0"><span class="esc-tecla" aria-hidden="true">${i<9?i+1:""}</span><span class="esc-nb"${nb&&nb.tit?` title="${esc(nb.tit)}"`:""}>${nb&&nb.nb?`NB ${esc(fmtNb(nb.nb))}`:"Sem NB"}</span></div>
       <span class="esc-fase ${faseCls}">${esc(NOME_FASE[fe]||fe||"")}</span>${ondeCorre(k)?`<span class="esc-onde">${esc(ondeCorre(k))}</span>`:""}
-      <div class="proc-nome esc-tit" data-tit="${k.id}">${esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso" aria-label="dar um nome próprio a este caso">✎</button></div>
+      <div class="proc-nome esc-tit" data-tit="${k.id}">${k.apelido ? `<span><span class="esc-apel">${esc(k.apelido)}</span><span class="esc-esp">${esc(tituloCaso(k))}</span></span>` : esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso" aria-label="dar um nome próprio a este caso">✎</button></div>
       <span class="esc-voce">${meu?`você escreveu aqui em ${fmtTS(meu)}`:""}</span>
     </div>
     <div class="esc-cel"><span class="esc-rot">Agora</span>${prox?`<div class="esc-agora${urg?" venc":""}">${esc(prox.txt)}</div>`:selo?"":`<span class="esc-ult">sem próximo passo</span>`}${selo}${k.exigencia_prazo?`<div>${chipExig(k)}</div>`:""}</div>
@@ -736,6 +736,9 @@ function pintarFicha(){
     gravarRetornoPc(id, (q("data-pc-ret")||{}).value, (q("data-pc-ret-mot")||{}).value); });
   document.querySelectorAll("[data-pc-proc-salvar]").forEach(b=>b.onclick=()=>{ const i = document.querySelector(`[data-pc-proc="${b.dataset.pcProcSalvar}"]`); gravarProcAnterior(b.dataset.pcProcSalvar, i ? i.value : ""); });
   document.querySelectorAll("[data-pc-mover]").forEach(b=>b.onclick=()=>{ const [id, e] = b.dataset.pcMover.split("|"); moverPreCaso(cliId, id, e); });
+  document.querySelectorAll("[data-pc-ass]").forEach(b=>b.onchange=()=>{ const [id, q] = b.dataset.pcAss.split("|"); marcarAssinadoPc(id, q, b.checked); });
+  document.querySelectorAll("[data-pc-gerar]").forEach(b=>b.onclick=()=>gerarCasoDoQuadro(cliId, b.dataset.pcGerar));
+  document.querySelectorAll("[data-pc-encerrar]").forEach(b=>b.onclick=()=>moverPreCaso(cliId, b.dataset.pcEncerrar, "arquivo"));
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.

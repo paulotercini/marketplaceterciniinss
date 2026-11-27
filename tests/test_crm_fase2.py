@@ -1336,3 +1336,40 @@ def test_sem_hora_dia_diferente_grava():
     assert migrar.sem_hora_ja_no_banco(m, banco) == 0 and len(m["eventos"]) == 1
     banco = [{"id": "velho", "caso_id": "k1", "tipo": "Perícia", "data_hora": "2026-11-17T01:00:00+00:00"}]
     assert migrar.sem_hora_ja_no_banco(m, banco) == 1
+
+
+# F830 · o caso gerado no CRM a partir do pré-caso: a sincronização não duplica nem reverte
+_GERADO = {"id": "pc-linha", "desfecho": {"tipo": "caso", "em": "2026-11-27"}}
+
+
+def test_caso_gerado_no_crm_nao_volta_a_precaso_com_a_tarefa_no_escritorio():
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Cliente Teste #00000000191", cpf="00000000191", id="a"),
+        t("🙋 Escritório", "Outro Teste #00000000272", cpf="00000000272", id="b", concluida=True,
+          concluida_em="2026-11-28"),
+    ]))
+    ka, kb = (next(k for k in m["casos"] if k["todo_task_id"] == x) for x in "ab")
+    movidos = [{"id": k["id"], "mover_para": "🌻 INSS", "fase": "inss", "precaso": _GERADO} for k in (ka, kb)]
+    limpar = migrar.respeitar_movidos(m, movidos)
+    for k in (ka, kb):   # aberta ou concluída no Escritório: o caso do CRM fica
+        assert (k["fase"], k["pre_caso"], k["origem_lista"], k["encerrado_em"]) == ("inss", False, "🌻 INSS", None)
+    assert limpar == []
+
+
+def test_caso_gerado_no_crm_entrega_ao_todo_quando_a_tarefa_chega_a_lista_de_fase():
+    m = migrar.mapear(crm_json([t("👪 Judicial", "Cliente Teste #00000000191", cpf="00000000191", id="a")]))
+    k = m["casos"][0]
+    limpar = migrar.respeitar_movidos(m, [{"id": k["id"], "mover_para": "🌻 INSS", "fase": "inss", "precaso": _GERADO}])
+    assert limpar == [k["id"]] and k["fase"] == "judicial"
+
+
+def test_tarefa_movida_no_todo_com_outro_titulo_adota_o_caso_gerado_no_crm():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Cliente Teste #00000000191 #B41", cpf="00000000191", id="tarefa-nova")]))
+    cli = m["clientes"][0]["id"]
+    banco = [{"id": "caso-crm", "todo_task_id": "tarefa-do-escritorio", "cliente_id": cli,
+              "titulo": "Cliente Teste", "fase": "inss", "pre_caso": False,
+              "origem_lista": "🌻 INSS", "precaso": _GERADO}]
+    ado, encerrar = migrar.casos_movidos(m, banco, minimo_seguro=1)
+    assert (ado, encerrar) == (1, [])
+    assert m["casos"][0]["id"] == "caso-crm", "abriu um segundo caso em vez de reconhecer o gerado no CRM"

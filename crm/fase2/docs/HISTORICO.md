@@ -1182,3 +1182,11 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - Migração f829 (não destrutiva): `pagamentos` ganha `cancelado_motivo/por/em` e `editado_por/em`; o gatilho `pagamentos_autoria` exige o motivo e grava quem (pelo login) e quando.
 - Parcelas do pré-caso (`sincronizarParcelasHon`) vão ao caso ligado ao pré-caso (`pc.caso_id` ou `k.precaso.id`), e só sem ele ao primeiro caso aberto.
 - Provas: `testes/colab_pagamentos_autoria.sql` e `testes/cadastro/auditoria829.js`.
+
+## F830 · Pré-caso: Gerar o caso no quadro, passos com quem e quando, Encerrar com motivo e apelido em destaque (27.11.2026, v14.38)
+- Ordem expressa do Paulo de 27.11.2026. Quadro do caso em formação (`quadroEmFormacao`): os passos vêm numerados (1 Identificação, 2 Primeiro atendimento, 3 Análise, 4 Documentos) com quem marcou e quando (`quemQuandoPc`, das `etapas` que o `concluirEtapa` grava).
+- **Gerar** (`gerarPcHtml`, `gerarCasoDoQuadro`): as caixas Procuração assinada e Contrato assinado gravam `casos.precaso.assinados.{proc,contr} = {em, por}` (`marcarAssinadoPc`); sem as duas, o botão fica desligado e a função recusa. Gerar pede o início e o número (`moverPreCaso(…, "caso")`) e converte a linha no CRM pelo `gerarCasoDoPre`. Nada vai ao To Do; `PC_MOVER_LIGADO` segue `false` (F602b).
+- Sincronização (`migrar.py`): `gerado_no_crm` reconhece o caso pelo `precaso.desfecho.tipo = "caso"`. Em `respeitar_movidos`, enquanto a tarefa segue no 🙋 Escritório (aberta ou concluída) vale o caso do CRM (fase, `pre_caso = false`, lista); quando ela chega a uma lista de fase, o `mover_para` sai e o To Do volta a mandar. Em `casos_movidos`, a tarefa movida com outro título adota o caso gerado, sem abrir um segundo.
+- **Encerrar** sem gerar caso: motivo obrigatório (Desistiu, Sem direito, Sem contato, Outro com texto), gravado em `precaso.arquivo = {em, origem: "crm", motivo, por}`, com Desfazer; o quadro do encerrado mostra motivo, quem e quando.
+- "Em qual caso registrar?": o apelido do caso aparece em destaque (`.esc-apel`), com a espécie embaixo.
+- Provas: `testes/cadastro/f830.js` e três casos em `tests/test_crm_fase2.py`. Sem migração (`precaso` é jsonb).
