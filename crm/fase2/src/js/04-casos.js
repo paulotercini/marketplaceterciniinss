@@ -511,7 +511,7 @@ function renderMeuDia(){
   const nHoje = hojeK.length + tHoje.length + apos.hoje.length + lemb.hoje.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
-    + avisoCRPS()
+    + avisoCRPS() + blocoDecadenciaDia(filtroColab)
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || `<p class='meio-sub'>Nada adicionado — ${celular()?"toque e segure":"clique com o botão direito"} num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>`)
     + secaoDiasAnteriores(filtroColab)

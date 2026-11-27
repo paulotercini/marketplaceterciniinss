@@ -2249,7 +2249,7 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .zl-filas button{height:auto;min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:1px;line-height:1.15;padding:5px 2px;min-width:0;overflow:hidden}
   .zl-filas .n{font-size:12px;font-variant-numeric:tabular-nums}
-  .zl-filas.cinco button{font-size:12px;letter-spacing:-.02em;padding:5px 0}   /* F831 · cinco filas a 12px: "Pendentes" cabia a 11px */
+  .zl-filas.cinco button{font-size:12px;letter-spacing:-.02em;padding:5px 0}   /* F833 · cinco filas a 12px: "Pendentes" cabia a 11px */
   .zl-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:1px 14px}
   .zl-chips::-webkit-scrollbar{display:none}
   .zl-chip,.zl-sel{flex:none;white-space:nowrap}
@@ -5341,9 +5341,9 @@ path.adp-car{stroke:var(--azul)}path.adp-ida{stroke:var(--prox,#8F5400)}
 .hon-vencidos{background:var(--venc-fundo,#FBEAE7);border:1px solid #F0C4BE;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
 .hon-vencidos .hon-venc-cab{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;color:var(--venc-tinta,#B3261E)}
 .hon-vencidos .hon-venc-cab b{font-size:18px}
-.hon-vencidos ul,.hon-prop ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.hon-vencidos li,.hon-prop ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
-.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
+.hon-vencidos ul,.hon-prop ul.hon-prop-itens,.hon-req ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hon-vencidos li,.hon-prop ul.hon-prop-itens li,.hon-req ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
+.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child,.hon-req ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
 .hon-prop{border-color:#EED6A8}
 .hon-prop li.condic{color:var(--cinza)}
 .hon-prop ul.hon-prop-info{margin:0;padding-left:18px;font-size:13px;color:var(--cinza);display:flex;flex-direction:column;gap:4px}
@@ -7369,7 +7369,14 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
    shortcut: o flutuante arrastado para a borda esquerda pode sair da tela com o painel aberto; se incomodar, deslocar por JS só quem cai sob o painel */
 @media (min-width:761px){body.pcli-aberto :is(.fab-rapida,.fab-sug,.fab-ajuda,#zap-ag,#fab-juntos){transform:translateX(-460px)}}
 .esc-desc[hidden]{display:none!important}
-/* ══ F832 · ficha do caso mais enxuta (27.11.2026): linha do tempo numa linha de texto, mini agenda recolhida em "Próximo prazo" e a ⭐ na linha das ações ══ */
+/* F831 · atrasados no caso */
+.atr-alerta{color:var(--vermelho);font-weight:600;margin:4px 0}
+.atr-total{font-size:15px;margin:6px 0}
+.atr-1124{margin:4px 0}
+.atr-1124-f{border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin:8px 0}
+.atr-1124-f legend{font-size:12px;font-weight:600;padding:0 4px}
+.atr-anos{margin:4px 0;padding-left:18px}
+/* ══ F834 · ficha do caso mais enxuta (27.11.2026): linha do tempo numa linha de texto, mini agenda recolhida em "Próximo prazo" e a ⭐ na linha das ações ══ */
 html[data-tema="v10"] .ltc-k,html[data-tema="v10"] .ltc-t{display:inline;font-size:13px;margin:0}
 html[data-tema="v10"] .ltc-k::after{content:" · "}
 html[data-tema="v10"] .ltc-t{font-weight:500}
@@ -7386,7 +7393,7 @@ html[data-tema="v10"] .ltc-v .ltc-r{border:0;background:#E3E4E1}
 .ma-dt b{font-weight:600;font-variant-numeric:tabular-nums}
 .app.celular .ma-dt > summary{min-height:44px;align-items:center}
 .app:not(.celular) .det-mais-col > .det-imp:not(.det-notas,.det-grav){position:static;transform:none}
-/* F833 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
+/* F835 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
 .lista-alca{display:none}
 .app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca{all:unset;box-sizing:border-box;cursor:pointer;display:grid;place-items:center;width:28px;height:28px;margin-left:auto;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--cinza);font-size:16px;line-height:1}
 .app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca::before{content:"\2039"}
@@ -7402,7 +7409,7 @@ body:not(.zap-aberto) .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .c
 .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .meio{min-width:0;padding-left:12px;padding-right:12px}
 html[data-tema="v10"] .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) #conteudo-meio .ag-linha .ag-txt{flex:1 1 0;max-width:none;min-width:0}
 .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .meio :is(.meio-sub,.md-conta,.ag-th,.ag-slot,.topo-extra,.topo-mais,.ajuda-bt,.avatares,.acoes,.secao button){display:none}
-/* F834 · Meu Dia: grupo de fundo neutro com a cor no título, Reagendar junto da contagem, atraso por extenso e Sugestões na cor do acento */
+/* F836 · Meu Dia: grupo de fundo neutro com a cor no título, Reagendar junto da contagem, atraso por extenso e Sugestões na cor do acento */
 html[data-tema="v10"] .pl-grupo:is([data-tom="venc"],[data-tom="hoje"]) h3.secao{background:var(--placa);border-bottom-color:var(--borda)}
 .pl-grupo h3.secao .reag-bt{float:none;margin:-4px 0 -4px 12px}
 .ag-ha{font:12px var(--f-txt,inherit);margin-left:4px}
@@ -7412,7 +7419,6 @@ html[data-tema="v10"] .fab-sug{background:var(--azul)}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .fab-sug:hover{background:var(--azul);filter:brightness(.92)}}
 </style>
 </head>
-
 <body>
 
 <div class="login" id="tela-login">
@@ -7423,7 +7429,7 @@ html[data-tema="v10"] .fab-sug{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.40</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.41</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7505,7 +7511,7 @@ html[data-tema="v10"] .fab-sug{background:var(--azul)}
       <h1 id="titulo-lista"></h1>
       <button class="ajuda-bt ajuda-tit" type="button" onclick="ajuda(null,event)" title="como usar esta tela" aria-label="Ajuda desta tela">?</button>
       <div class="topo-extra" id="topo-extra"></div>
-      <!-- F833 · com a ficha aberta a lista vira faixa (nome e data); a alça devolve a largura -->
+      <!-- F835 · com a ficha aberta a lista vira faixa (nome e data); a alça devolve a largura -->
       <button type="button" class="lista-alca" id="lista-alca" onclick="listaAlternar()" aria-label="Largura da lista" title="alargar ou estreitar a lista"></button>
       <!-- F274 · o fundo da lista e a ordem moram no ⋯ ao lado do título, como no To Do -->
       <details class="tl-mais mais-baixo topo-mais" id="topo-mais"><summary class="tl-bt tl-bt-ic" aria-label="Opções da lista" title="opções da lista: ordem e fundo"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></summary>
@@ -13144,7 +13150,7 @@ function renderMeuDia(){
   const nHoje = hojeK.length + tHoje.length + apos.hoje.length + lemb.hoje.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
-    + avisoCRPS()
+    + avisoCRPS() + blocoDecadenciaDia(filtroColab)
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || `<p class='meio-sub'>Nada adicionado — ${celular()?"toque e segure":"clique com o botão direito"} num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>`)
     + secaoDiasAnteriores(filtroColab)
@@ -15746,6 +15752,9 @@ function itensAgendaTodos(){
       por({data:d, k, cli, selo:`Aviso ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),   // F531 · aviso, não prazo
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
+    // F832 · a RPV registrada e ainda não paga: o tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art. 17)
+    for(const r of reqsDoCaso(k)){ const pz = !r.pago_em && prazoRpv(r);
+      if(pz) por({data:pz, k, cli, selo:"RPV", resumo:`${pz<hj ? "cobrar o pagamento" : "conferir o pagamento"} da RPV de ${moedaTxt(r.valor)}: 60 dias da ${r.entrega ? "entrega da requisição" : "expedição"} (Lei 10.259/2001, art. 17)`}, donos); }
     if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
@@ -16276,7 +16285,7 @@ function porClienteDia(g){
     return `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
       + linhaAgenda(p) + `<details class="ag-mais-cli"><summary title="outros itens deste cliente">+${resto.length}</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
 }
-function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
+function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS() + blocoDecadenciaDia(filtroDia); }   // F831
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
 // clientes, e quem eu despachei, com a data de volta. Recolhido; abre no clique
 function ultimoDiaUtil(){ let d = somaDias(hoje(), -1); while(!ehDiaUtil(d)) d = somaDias(d, -1); return d; }
@@ -27462,11 +27471,12 @@ function concessaoDoCaso(k){
     else if(/^(pje|esaj|eproc)$/.test(a.origem||"") && /\b(?:julgad[oa]|julgo)\s+(?:parcialmente\s+)?procedente\b|\bprocedente em parte\b|\bhomologad[oa] o acordo\b/i.test(t))
       s.push({em: dataSP(dataDoMovimento(a)), rot: /acordo/i.test(t) ? "acordo homologado" : "sentença de procedência", via:"rec"});
   }
-  const reqs = docs.filter(a=>a.texto && RX_REQUISICAO.test(a.nome||"") && !/comprovante|dep[óo]sito|alvar/i.test(a.nome||"")).map(requisicaoDoDoc);
+  const reqs = docs.filter(a=>a.texto && RX_REQUISICAO.test(a.nome||"") && !/comprovante|dep[óo]sito|alvar/i.test(a.nome||"")).map(requisicaoDoDoc)
+    .concat(reqsDoCaso(k).map(reqManual));   // F832 · e a registrada à mão
   const mc = (k.datajud||{}).marcos || {};
   const exped = reqs.map(r=>r.em).filter(Boolean).sort()[0] || (mc.requisitorio||{}).data || null;
   const comp = docs.find(a=>/comprovante de dep[óo]sito|alvar[áa]/i.test(a.nome||""));
-  const paga = (mc.pago||{}).data || (comp && dataDoAnexo(comp)) || null;
+  const paga = (mc.pago||{}).data || (comp && dataDoAnexo(comp)) || reqsDoCaso(k).map(r=>r.pago_em).filter(Boolean).sort()[0] || null;
   if(exped) s.push({em: exped, rot:"requisitório expedido", via:"rec"});
   else if(paga) s.push({em: paga, rot:"pagamento registrado nos autos", via:"rec"});
   if(!s.length && k.resultado==="deferido") s.push({em: k.decisao_em || null, rot:"resultado deferido", via: viaDoCaso(k)==="rec" ? "rec" : "adm"});
@@ -27556,6 +27566,11 @@ function propostaHonorarios(c, k){
             nota:`≈ estimado: ${dias} dias × ${moedaTxt(rmi)} ÷ 30 = ${moedaTxt(atr)}, pela carta de concessão (DIB ${fmtBarra(dib)}, DIP ${fmtBarra(dip)}); vence no 1º crédito, em até 45 dias da concessão (${baseCred}): conferir no extrato`});
         }
       }
+      // F831 · sem requisição nem carta, a estimativa da calculadora de atrasados do caso (marcada "≈": confere-se antes de cobrar)
+      const ce = (k.calculo||{}).resultado;
+      if(!itens.some(x=>x.ch==="atr") && ce && ce.total > 0) itens.push({ch:"atr", alvo, desc:`Honorários · ${T.pctAtr}% dos atrasados (estimativa da calculadora do caso)`,
+        valor:Math.round(ce.total*T.pctAtr)/100, venc:null,
+        nota:`≈ estimado: ${T.pctAtr}% de ${moedaTxt(ce.total)}, atrasados desde ${fmtBarra(ce.termo)} calculados em ${fmtBarra(ce.em)} (estimativa para conferência); vence no pagamento da RPV ou do precatório`});
       if(!jaAtr && !itens.some(x=>x.ch==="atr")) itens.push({ch:"atr", alvo:null, desc:`Honorários · ${T.pctAtr}% dos atrasados`, valor:0, venc:null,
         nota:`a calcular: ${cc.pagaAdm || cc.via==="adm" ? "vence no crédito dos atrasados pelo INSS" : "vence no pagamento da RPV ou do precatório"}`});
     }
@@ -28080,6 +28095,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
         <span class="adr-tile-sub">${prox ? `${esc(origemPgto(prox))} · ${pgSemValor(prox)?"a calcular":moeda(prox.valor)}` : vencidos.length ? "nada a vencer: os vencidos estão acima" : "nada em aberto com data"}</span></div>
     </section>
     ${props.map(cartaoProposta).join("")}
+    ${reais.filter(k=>k.fase!=="encerrado" && (["judicial","pagamento"].includes(k.fase) || reqsDoCaso(k).length)).map(cartaoRequisicoes).join("")}
     <div class="adr-colunas">
       <section class="adr-card adr-col-larga hon-lanc" aria-labelledby="hon-lanc-t">
         <div class="adr-cab"><h3 class="adr-h" id="hon-lanc-t">Lançamentos</h3></div>
@@ -28589,6 +28605,171 @@ function pintarPrazoDoTexto(k){
     + (achado && achado.iso>hoje() ? `
         <button type="button" class="btn-mini chip-desp${prazoDespachar?" on":""}" aria-pressed="${prazoDespachar}" onclick="chipDespachar()"
           title="ao registrar, conclui por hoje: a data vira o Concluir em e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : "");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F832 · RPV E PRECATÓRIO NO CASO JUDICIAL (ordem do Paulo, 27.11.2026, melhoria 5 da auditoria). A requisição
+// registrada à mão (tipo, valor, expedição e entrega) mora em clientes.campos.requisicoes[caso], como o destaque e a
+// proposta de honorários. Ela entra na concessão (concessaoDoCaso): a proposta de honorários lança o destaque e a
+// sucumbência sem duplicar. A RPV vence 60 dias depois da entrega da requisição (Lei 10.259/2001, art. 17), com
+// alerta no Meu Dia; o precatório segue o cronograma do tribunal. Situações: Expedida, Paga, Levantada, Repassada.
+// ══════════════════════════════════════════════════════════════════════════
+const reqsDoCaso = k => { const c = k && D.cliPorId.get(k.cliente_id); return ((((c||{}).campos||{}).requisicoes||{})[k.id]) || []; };
+const prazoRpv = r => r && r.tipo==="rpv" && (r.entrega || r.expedida) ? somaDias(r.entrega || r.expedida, 60) : null;
+const situacaoReq = r => r.repasse ? "Repassada" : r.levantado_em ? "Levantada" : r.pago_em ? "Paga" : "Expedida";
+const rotReq = r => r.tipo==="precatorio" ? "Precatório" : "RPV";
+// o líquido do cliente: o bruto levantado menos o IR retido na fonte (RRA, Lei 7.713/1988, art. 12-A) e os honorários
+// contratuais, salvo os destacados na requisição, que o tribunal pagou direto ao escritório e não saem do crédito dele
+const liquidoRepasse = x => (Math.round((+x.bruto||0)*100) - Math.round((+x.ir||0)*100) - (x.destacado ? 0 : Math.round((+x.honor||0)*100))) / 100;
+// a requisição registrada, no formato da lida do documento (requisicaoDoDoc)
+const reqManual = r => ({em:r.entrega || r.expedida, precatorio:r.tipo==="precatorio", bruto:+r.valor||0, destaque:+r.destaque||0,
+  semDestaque:false, sucumbencia:+r.sucumbencia||0, manual:true});
+function cartaoRequisicoes(k){
+  const rs = reqsDoCaso(k), hj = hoje();
+  const PROX = {Expedida:["Paga","pago"], Paga:["Levantada","levantado"], Levantada:["Repasse","repasse"]};
+  const linha = r => {
+    const sit = situacaoReq(r), pz = prazoRpv(r), venc = pz && !r.pago_em && pz < hj, prox = PROX[sit];
+    const nota = [`expedida em ${fmt(r.expedida)}`, r.entrega ? `entregue ao tribunal em ${fmt(r.entrega)}` : "",
+      r.tipo==="precatorio" && !r.pago_em ? "pago pelo cronograma do tribunal" : "",
+      pz && !r.pago_em ? `${venc ? "prazo vencido em" : "prazo de pagamento até"} ${fmt(pz)} (60 dias da ${r.entrega ? "entrega" : "expedição; confirme a data da entrega"}, Lei 10.259/2001, art. 17)` : "",
+      r.destaque ? `honorários destacados ${moeda(r.destaque)}` : "", r.sucumbencia ? `sucumbência ${moeda(r.sucumbencia)}` : "",
+      r.pago_em ? `paga em ${fmt(r.pago_em)}` : "", r.levantado_em ? `levantada em ${fmt(r.levantado_em)}${r.alvara ? ` (alvará ${r.alvara})` : ""}` : "",
+      r.repasse ? `repassados ${moeda(r.repasse.liquido)} ao cliente em ${fmt(r.repasse.em)}` : ""].filter(Boolean).join(" · ");
+    return `<li><span>${rotReq(r)}<small class="hon-nota">${esc(nota)}</small></span><b>${moeda(r.valor)}</b>
+      <span class="hon-sit hon-${sit==="Repassada" ? "ok" : venc ? "venc" : "prox"}">${sit}</span>
+      ${prox ? `<button class="adr-bt" onclick="passoReq('${k.id}','${r.id}','${prox[1]}')">${prox[0]}</button>` : ""}
+      ${r.repasse ? `<button class="adr-bt" onclick="reciboRepasse('${k.id}','${r.id}')" title="recibo do repasse, para imprimir">Recibo</button>` : ""}</li>`;
+  };
+  return `<section class="adr-card hon-req" aria-labelledby="hon-req-${k.id}">
+    <div class="adr-cab"><h3 class="adr-h" id="hon-req-${k.id}">RPV e precatório · ${esc(tituloCaso(k))}</h3></div>
+    ${rs.length ? `<ul class="hon-prop-itens">${rs.map(linha).join("")}</ul>` : `<p class="adr-nota">Nenhuma requisição registrada neste processo.</p>`}
+    <button class="adr-bt adr-primario" style="width:max-content" onclick="passoReq('${k.id}','','expedida')" title="registrar a expedição de RPV ou precatório">Registrar</button>
+  </section>`;
+}
+// cada passo numa caixa: a expedição, o pagamento, o levantamento (com o alvará) e o repasse ao cliente
+function passoReq(casoId, rid, passo){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id); if(!c) return;
+  const r = reqsDoCaso(k).find(x=>x.id===rid) || {};
+  const cp = (rot, id, tipo, v, extra="") => `<label class="adr-campo">${rot}<input type="${tipo}" id="rq-${id}" value="${esc(v==null ? "" : String(v))}"${tipo==="number" ? ' step="0.01" min="0" style="width:140px"' : ""}${extra}></label>`;
+  let tit, corpo, nota;
+  if(passo==="expedida"){
+    tit = "Registrar requisição";
+    corpo = `<label class="adr-campo">Tipo<select id="rq-tipo"><option value="rpv">RPV</option><option value="precatorio">Precatório</option></select></label>`
+      + cp("Valor requisitado", "valor", "number", "") + cp("Expedida em", "expedida", "date", hoje(), ` max="${hoje()}"`) + cp("Entregue ao tribunal em", "entrega", "date", "")
+      + cp("Honorários destacados", "destaque", "number", "") + cp("Sucumbência", "sucumbencia", "number", "");
+    nota = "A RPV é paga em até 60 dias da entrega da requisição ao tribunal (Lei 10.259/2001, art. 17); sem a data da entrega, o prazo conta da expedição. Os honorários destacados e a sucumbência vão à proposta de honorários do contrato.";
+  }else if(passo==="pago"){
+    tit = `${rotReq(r)} paga`; corpo = cp("Paga em", "pago_em", "date", hoje(), ` max="${hoje()}"`); nota = "O dia do depósito judicial.";
+  }else if(passo==="levantado"){
+    tit = "Levantamento"; corpo = cp("Levantada em", "levantado_em", "date", hoje(), ` max="${hoje()}"`) + cp("Alvará", "alvara", "text", "");
+    nota = "O dia do levantamento e o número do alvará, quando houver.";
+  }else{
+    const T = termosHon(c, k, "rec"), bruto = Math.round(((+r.valor||0) - (+r.destaque||0) - (+r.sucumbencia||0))*100)/100;
+    const honor = r.destaque ? +r.destaque : Math.round(bruto*(T.pctAtr||0))/100;
+    tit = "Repasse ao cliente";
+    corpo = cp("Valor bruto levantado", "bruto", "number", bruto, ' oninput="rqLiquido()"') + cp("Honorários contratuais", "honor", "number", honor, ' oninput="rqLiquido()"')
+      + `<label class="conta-ck" style="display:flex;align-items:center;gap:8px;min-height:40px"><input type="checkbox" id="rq-destacado" style="width:20px;height:20px" ${r.destaque ? "checked" : ""} onchange="rqLiquido()">destacados na requisição</label>`
+      + cp("IR retido (RRA)", "ir", "number", "", ' oninput="rqLiquido()"') + cp("Repassado em", "em", "date", hoje(), ` max="${hoje()}"`)
+      + `<p class="adr-nota" style="flex-basis:100%">Valor líquido ao cliente: <b id="rq-liq"></b></p>`;
+    nota = `Honorários pelo contrato: ${T.frase || "sem percentual dos atrasados"}. Os destacados foram pagos direto ao escritório e não saem do crédito do cliente; os demais entram como recebidos nos honorários, sem novo lançamento quando já houver um. O IR é o retido pelo banco no regime de rendimentos recebidos acumuladamente (Lei 7.713/1988, art. 12-A), quando houver.`;
+  }
+  caixa(`<h3 style="margin:0 0 6px">${esc(tit)} · ${esc(tituloCaso(k))}</h3><p class="adr-nota" style="margin:0 0 10px">${esc(nota)}</p>
+    <div class="form-linha" style="align-items:flex-end;flex-wrap:wrap;gap:10px">${corpo}
+      <button class="adr-bt adr-primario" onclick="gravarReq('${k.id}','${escJs(rid)}','${passo}')">Gravar</button></div>`);
+  if(passo==="repasse") rqLiquido();
+}
+const rqVal = id => (document.getElementById("rq-"+id)||{}).value || "";
+function rqLiquido(){
+  const el = document.getElementById("rq-liq");
+  if(el) el.textContent = moeda(liquidoRepasse({bruto:rqVal("bruto"), honor:rqVal("honor"), ir:rqVal("ir"), destacado:(document.getElementById("rq-destacado")||{}).checked}));
+}
+async function gravarReq(casoId, rid, passo){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id); if(!c) return;
+  const lista = reqsDoCaso(k), r = lista.find(x=>x.id===rid), hj = hoje();
+  let nova, texto;
+  if(passo==="expedida"){
+    const v = +rqVal("valor"), ex = rqVal("expedida"), en = rqVal("entrega") || null, tipo = rqVal("tipo")==="precatorio" ? "precatorio" : "rpv";
+    if(!(v > 0)) return aviso("Informe o valor requisitado");
+    if(!ex || ex > hj) return aviso("Informe a data da expedição");
+    if(en && en < ex) return aviso("A entrega não pode ser anterior à expedição");
+    const n = {id:crypto.randomUUID(), tipo, valor:v, expedida:ex, entrega:en, destaque:+rqVal("destaque")||0, sucumbencia:+rqVal("sucumbencia")||0, por:eu.id};
+    nova = [...lista, n];
+    texto = `${rotReq(n)} de ${moedaTxt(v)} expedida em ${fmt(ex)}${en ? ` e entregue ao tribunal em ${fmt(en)}` : ""}.${prazoRpv(n) ? ` Prazo de pagamento até ${fmt(prazoRpv(n))} (Lei 10.259/2001, art. 17).` : " Pagamento pelo cronograma do tribunal."}`;
+  }else{
+    if(!r) return;
+    const d = rqVal(passo==="repasse" ? "em" : passo+"_em");
+    if(!d || d > hj) return aviso("Informe a data, que não pode ser futura");
+    let m;
+    if(passo==="pago"){ m = {pago_em:d}; texto = `${rotReq(r)} de ${moedaTxt(r.valor)} paga em ${fmt(d)}.`; }
+    else if(passo==="levantado"){ m = {levantado_em:d, alvara:rqVal("alvara").trim() || null}; texto = `Levantamento da ${rotReq(r)} em ${fmt(d)}${m.alvara ? `, alvará ${m.alvara}` : ""}.`; }
+    else{
+      const x = {em:d, bruto:+rqVal("bruto")||0, honor:+rqVal("honor")||0, destacado:!!(document.getElementById("rq-destacado")||{}).checked, ir:+rqVal("ir")||0};
+      if(!(x.bruto > 0)) return aviso("Informe o valor bruto levantado");
+      x.liquido = liquidoRepasse(x);
+      if(x.liquido < 0) return aviso("O líquido ficou negativo: confira os valores");
+      m = {repasse:x};
+      texto = `Repasse ao cliente em ${fmt(d)}: bruto ${moedaTxt(x.bruto)}, honorários contratuais ${moedaTxt(x.honor)}${x.destacado ? " (destacados, não descontados)" : ""}${x.ir ? `, IR retido ${moedaTxt(x.ir)}` : ""}, líquido ${moedaTxt(x.liquido)}.`;
+    }
+    nova = lista.map(y=>y===r ? {...y, ...m} : y);
+  }
+  const antes = ((c.campos||{}).requisicoes)||{};
+  if(!await gravarCamposCli(c, {requisicoes:{...antes, [k.id]:nova}})) return;
+  fecharCaixa();
+  const pg = passo==="repasse" ? await honorariosDoRepasse(c, k, nova.find(y=>y.id===rid).repasse) : null;
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})}).catch(()=>{});
+  repintarFicha();
+  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo], async()=>{
+    await gravarCamposCli(c, {requisicoes:antes});
+    if(pg) await api(`/rest/v1/pagamentos?id=eq.${pg.p.id}`, pg.antes ? {method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(pg.antes)} : {method:"DELETE"}).catch(()=>{});
+    if(pg){ if(pg.antes) Object.assign(pg.p, pg.antes); else D.pagamentos = D.pagamentos.filter(y=>y!==pg.p); }
+    repintarFicha();
+  });
+}
+// os honorários retidos no repasse (não destacados) entram como recebidos: o lançamento dos atrasados que já existe é
+// baixado; sem ele, nasce um, com a marca da proposta (hon:caso:atr), e a proposta não o lança de novo
+async function honorariosDoRepasse(c, k, x){
+  if(x.destacado || !(x.honor > 0)) return null;
+  const conf = [{c:eu.id, em:new Date().toISOString()}];
+  const p = (D.pagamentos||[]).find(y=>y.status==="aberto" && casoDoPgto(y)===k.id && natPgto(y)==="contrato" && !ORD_BEN.test(y.descricao||"")
+    && (String(y.todo_item_id||"")===`hon:${k.id}:atr` || /atrasad|\brpv\b|precat/i.test(y.descricao||"")));
+  try{
+    if(p){
+      const antes = {status:p.status, pago_em:p.pago_em, valor:p.valor, descricao:p.descricao, conferencias:p.conferencias||[]};
+      const muda = {status:"recebido", pago_em:x.em, valor:x.honor, descricao:semNota(p.descricao), conferencias:[...(p.conferencias||[]), ...conf]};
+      await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(muda)});
+      Object.assign(p, muda);
+      return {p, antes};
+    }
+    const [n] = await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"}, body:JSON.stringify({caso_id:k.id, cliente_id:c.id,
+      descricao:"Honorários · atrasados retidos no repasse ao cliente", valor:x.honor, vencimento:x.em, pago_em:x.em, status:"recebido", conferencias:conf, todo_item_id:`hon:${k.id}:atr`})}) || [];
+    if(n) (D.pagamentos = D.pagamentos||[]).push(n);
+    return n ? {p:n, antes:null} : null;
+  }catch(e){ aviso("O repasse foi gravado, mas os honorários não: lance-os na tabela"); return null; }
+}
+// o recibo do repasse, simples, para imprimir e o cliente assinar
+function reciboRepasse(casoId, rid){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id), r = reqsDoCaso(k).find(x=>x.id===rid);
+  if(!c || !r || !r.repasse) return;
+  const x = r.repasse, w = window.open("", "_blank");
+  if(!w) return aviso("O navegador bloqueou a janela: libere os pop-ups deste site");
+  const lin = (rot, v, sinal="") => `<tr><td>${esc(rot)}</td><td class="v">${sinal}${esc(moedaTxt(v))}</td></tr>`;
+  const dataExt = new Date(x.em+"T12:00:00").toLocaleDateString(IDIOMA, {day:"numeric", month:"long", year:"numeric"});
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Recibo de repasse</title><style>
+    body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#111;line-height:1.6;font-size:15px}
+    h1{font-size:20px;text-align:center;margin:0 0 24px}table{width:100%;border-collapse:collapse;margin:18px 0}
+    td{padding:6px 4px;border-bottom:1px solid #ccc}td.v{text-align:right;white-space:nowrap}tr.t td{font-weight:bold;border-top:2px solid #111}
+    .ass{margin-top:64px;text-align:center}.ass span{display:block;border-top:1px solid #111;width:320px;margin:0 auto 4px}
+    @media print{body{margin:15mm}}</style></head><body>
+    <h1>Recibo de repasse</h1>
+    <p>Recebi do escritório Paulo R. Tercini Filho a importância líquida de <b>${esc(moedaTxt(x.liquido))}</b>, referente ao meu crédito na ${r.tipo==="precatorio" ? "requisição de precatório" : "requisição de pequeno valor (RPV)"} expedida em ${fmt(r.expedida)}${k.processo ? `, no processo nº ${esc(k.processo)}` : ""}${r.alvara ? `, levantada pelo alvará ${esc(r.alvara)}` : ""}, conforme discriminado:</p>
+    <table>${lin("Valor bruto levantado", x.bruto)}
+      ${x.destacado ? `<tr><td>Honorários contratuais destacados na requisição, pagos diretamente ao escritório e não descontados deste valor</td><td class="v">${esc(moedaTxt(x.honor))}</td></tr>`
+        : x.honor ? lin("Honorários contratuais, conforme o contrato", x.honor, "(−) ") : ""}
+      ${x.ir ? lin("Imposto de renda retido na fonte (rendimentos recebidos acumuladamente, Lei 7.713/1988, art. 12-A)", x.ir, "(−) ") : ""}
+      <tr class="t"><td>Valor líquido recebido</td><td class="v">${esc(moedaTxt(x.liquido))}</td></tr></table>
+    <p>Dou plena quitação quanto ao valor acima.</p><p>${esc(dataExt)}.</p>
+    <div class="ass"><span></span>${esc(c.nome||"")}${c.cpf ? `<br>CPF ${esc(fmtCpf(c.cpf))}` : ""}</div>
+    <script>window.print()<\/script></body></html>`);
+  w.document.close();
 }
 // o ⚡: a mesma leitura, mais livre (sem o verbo), e a data vira o lembrete do caso escolhido
 function pintarCapturaAr(){
@@ -40852,6 +41033,10 @@ async function anexar(casoId, cliId){
   const inp=document.getElementById("arq-inp"), arq=inp&&inp.files&&inp.files[0];
   if(!arq) return;
   inp.value="";                                   // permite mandar o mesmo de novo
+  await anexarArquivo(casoId, cliId, arq);
+}
+// F832 · o mesmo envio, com o nome que diz o que é (o laudo, a manifestação, os quesitos do cartão da perícia)
+async function anexarArquivo(casoId, cliId, arq, nome=arq.name){
   if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
   const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
   const caminho=`${cliId}/${stamp}-${nomeSeguro(arq.name)}`;
@@ -40860,9 +41045,9 @@ async function anexar(casoId, cliId){
     await subirArquivo(caminho, arq);
     const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({caso_id:casoId, cliente_id:cliId, autor_id:eu.id,
-        nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+        nome, caminho, tipo:arq.type||null, tamanho:arq.size})});
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${arq.name}`})});
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${nome}`})});
     if(an) (D.anexos=D.anexos||[]).unshift(an);
     aviso("📎 Arquivo anexado");
     if(clienteAberto) abrirFicha(clienteAberto);
@@ -42071,6 +42256,11 @@ const FATOS = {
                dica:"data do protocolo do Recurso Especial à Câmara de Julgamento"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
+  // F831 · as datas dos atrasados (migração f831)
+  dip:        {rot:"DIP",         tipo:"data",    dica:"Data de Início do Pagamento: os atrasados vão até a véspera dela"},
+  citado_em:  {rot:"Citação",     tipo:"data",    dica:"data da citação do INSS: com o Tema 1124/STJ marcado, os efeitos financeiros contam dela; os juros de mora também (Súmula 204/STJ)"},
+  ciencia_indeferimento_em:{rot:"Ciência do indeferimento", tipo:"data",
+               dica:"ciência da decisão indeferitória definitiva no processo administrativo: a decadência da revisão conta 10 anos deste dia (Lei 8.213/91, art. 103)"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
   dii:        {rot:"DII",         tipo:"data",    dica:"Data de Início da Incapacidade"},
   dat:        {rot:"DAT",         tipo:"data",    dica:"Data do Acidente de Trabalho"},
@@ -43071,7 +43261,7 @@ function decadenciasDoCliente(cliId){
   for(const ca of f.cartas){
     const dec = decadenciaDe(ca, f.extratos); if(!dec) continue;
     const ate = dec.cedo || dec.ate;
-    if(ate>=hj && diasAte(ate)<=730) out.push({ca, dec, ate});
+    if(ate>=hj && diasAte(ate)<=365) out.push({ca, dec, ate});   // F831 · decadência fatal só nos últimos 12 meses
   }
   return out;
 }
@@ -44764,7 +44954,7 @@ function nbsDoCaso(k){
 function miniAgenda(k){
   if(!k || !k.cliente_id) return "";
   if(k.cliente_id!==_pzCliId){ _pzCliId = k.cliente_id; _pzMes = null; _pzDia = null; }
-  // F832 · a mini agenda abre recolhida numa linha "Próximo prazo"; o mês inteiro fica a um clique e a escolha vale até fechar o CRM
+  // F834 · a mini agenda abre recolhida numa linha "Próximo prazo"; o mês inteiro fica a um clique e a escolha vale até fechar o CRM
   return `<section class="ma" aria-label="Agenda do cliente"><details class="ma-dt"${_maAberta ? " open" : ""} ontoggle="_maAberta=this.open"><summary>${maProximo(k.cliente_id)}</summary><div id="ma-cli">${maConteudo(k.cliente_id)}</div></details></section>`;
 }
 let _maAberta = false;
@@ -44864,7 +45054,8 @@ const lcFichaAberta = new Set();
 // F114 · todas as datas do caso, na ordem da leitura. A linha mostra as
 // essenciais da espécie e gestão do caso guarda o resto.
 const DATAS_SECUNDARIAS = ["der","dib","dii","dat","cat_em","dcb","dcb_prorrogar_em","did","grau_deficiencia",
-  "consolidacao_em","obito_em","prisao_em","parto_em","cadunico","primeiro_pagamento_em","decisao_em","ajuizado_em"];
+  "consolidacao_em","obito_em","prisao_em","parto_em","cadunico","primeiro_pagamento_em","decisao_em","ajuizado_em",
+  "dip","citado_em","ciencia_indeferimento_em"];   // F831
 function lcNovaData(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const faltam = DATAS_SECUNDARIAS.filter(c=>!k[c]);
@@ -44972,7 +45163,7 @@ const ESSENCIAL = {
   B80:["parto_em"],
   B87:["did","cadunico"], B88:["cadunico"],
   // revisões e serviços · o 1º pagamento é que conta a decadência do art. 103
-  REV:["primeiro_pagamento_em","dib"],
+  REV:["primeiro_pagamento_em","dib","?ciencia_indeferimento_em"],
   REST:["dcb"],
   IIR:["did"],
 };
@@ -45022,9 +45213,10 @@ function lcJanela(k, campo){
     return d<0 ? `<small class="lc-jan venc" title="o CadÚnico vence em 2 anos e o benefício é bloqueado sem atualização">venceu há ${-d} d</small>`
       : `<small class="lc-jan ${d<=60?"venc":""}" title="o CadÚnico vale 2 anos">vence em ${d} d</small>`;
   }
-  if(campo==="primeiro_pagamento_em" && k.primeiro_pagamento_em){
-    const lim = somaDias(k.primeiro_pagamento_em, 3653), d = diasAte(lim);
-    const t = "a decadência do art. 103 conta do dia primeiro do mês seguinte ao primeiro pagamento; a ação não a interrompe (Tema 975/STJ)";
+  // F831 · a mesma conta da decadência do caso (10 anos do dia 1º do mês seguinte; a ciência do indeferimento conta do dia)
+  if((campo==="primeiro_pagamento_em" || campo==="ciencia_indeferimento_em") && k[campo]){
+    const dc = decadenciaCaso({[campo]:k[campo]}), lim = dc.ate, d = dc.dias;
+    const t = `${dc.base} (Lei 8.213/91, art. 103); a ação não interrompe a decadência (Tema 975/STJ)`;
     return d<0 ? `<small class="lc-jan venc" title="${esc(t)}">decaiu há ${-Math.round(d/30)} meses</small>`
       : `<small class="lc-jan ${d<=365?"venc":""}" title="${esc(t)}">decai em ${fmtBarra(lim)}</small>`;
   }
@@ -45254,7 +45446,8 @@ function linhaCaso(k){
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
       ${filaTrf3(k)}
       ${recursoParado(k)}
-      ${avisoQuadro(k)}`}
+      ${avisoQuadro(k)}
+      ${chipsAtrasados(k)}`}
       </div>
       <button type="button" class="lc-mais lc-mais-pe lc-dobra" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
         title="${n?"fechar":"tramitação, etapa, números do caso (NB, e-Sisrec, processo judicial) e a gestão do caso"}"><span>Números do caso e gestão</span>${setaAlca(!n)}</button>
@@ -45675,7 +45868,7 @@ let abaPedida = {}, abaDoCaso = {};
 // F405 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
 const esqOculta = () => ler("crm_caso_esq")==="0";
 function esqAlternar(){ guardar("crm_caso_esq", esqOculta() ? "" : "0"); trRepintar(); }
-// F833 · com a ficha aberta, a lista do meio vira faixa de 216px (nome e data); a escolha fica neste computador
+// F835 · com a ficha aberta, a lista do meio vira faixa de 216px (nome e data); a escolha fica neste computador
 const listaFaixa = () => ler("crm_lista_faixa")!=="0";
 function listaPintar(){ const f = listaFaixa(); document.getElementById("app").classList.toggle("lista-faixa", f); document.getElementById("lista-alca").setAttribute("aria-expanded", String(!f)); }
 function listaAlternar(){ guardar("crm_lista_faixa", listaFaixa() ? "0" : ""); listaPintar(); }
@@ -46988,7 +47181,7 @@ function laudoAnexoDaPericia(e){
   if(e.status==="cancelada") return null;
   const d = dataSP(e.data_hora), prox = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.id!==e.id && x.status!=="cancelada" && dataSP(x.data_hora)>d)
     .map(x=>dataSP(x.data_hora)).sort()[0] || "9999";
-  return (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && !a.andamento_id && /laudo/i.test(a.nome||"") && dataSP(a.criado_em)>=d && dataSP(a.criado_em)<prox)
+  return (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && !a.andamento_id && /laudo/i.test(a.nome||"") && !/impugna|manifesta|quesito/i.test(a.nome||"") && dataSP(a.criado_em)>=d && dataSP(a.criado_em)<prox)
     .sort((x,y)=>String(x.criado_em).localeCompare(String(y.criado_em)))[0] || null;
 }
 // a conclusão e o CID do laudo do INSS, pelo leitor do dossiê; sem ele, o começo do texto
@@ -46997,6 +47190,43 @@ function resumoDoLaudo(x){
   if(!l) return x.texto ? ` · ${String(x.texto).replace(/\s+/g," ").slice(0,140)}` : "";
   return [l.resultado==="capaz" ? "sem incapacidade (capaz)" : l.resultado==="incapaz" ? `incapaz${l.grau?`, ${l.grau.toLowerCase()}`:""}` : "",
     l.cid ? `CID ${l.cid}${l.cidDesc?` (${l.cidDesc})`:""}` : "", l.dcb ? `DCB ${l.dcb}` : ""].filter(Boolean).map(s=>` · ${s}`).join("");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F832 · O LAUDO NO CARTÃO DA PERÍCIA JUDICIAL (ordem do Paulo, 27.11.2026, melhoria 6 da auditoria). O mesmo cartão
+// junta o laudo, a manifestação ou impugnação e os quesitos complementares (anexos do caso, pelo nome que o botão
+// dá), e liga o expediente do PJe aberto pelo laudo. O prazo do PJe segue como aviso; fatal é só o anotado no CRM.
+// Situações: Aguardando laudo, Laudo juntado, Manifestação feita.
+// ══════════════════════════════════════════════════════════════════════════
+const ROT_DOC_PERICIA = {laudo:"Laudo pericial", manifestacao:"Manifestação sobre a perícia", quesitos:"Quesitos complementares"};
+// o expediente do PJe que o laudo abriu: o ligado ao movimento do laudo; sem ele, o expedido até 7 dias depois do laudo,
+// ou o que fala de laudo ou de perícia
+function prazoDoLaudo(k, la, dL){
+  const mv = la && movimentoJudicial(la.texto), p = mv && prazoTribunalDoAto(la, mv, true);
+  if(p) return p;
+  const de = x => x.expedido_em || x.ciencia_em || "";
+  return (k.prazos_tribunal||[]).filter(x=>dataDoPrazo(x) && de(x)>=dL && (de(x)<=somaDias(dL, 7) || /laudo|per[íi]ci/i.test(`${x.ato||""} ${x.texto||""}`)))
+    .sort((x,y)=>de(x).localeCompare(de(y)))[0] || null;
+}
+function laudoJudicial(e, k, la, lx, pzSug){
+  const d0 = dataSP(e.data_hora), dL = la ? dataSP(la.criado_em) : lx ? dataSP(lx.criado_em) : null;
+  const prox = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.id!==e.id && x.status!=="cancelada" && dataSP(x.data_hora)>d0).map(x=>dataSP(x.data_hora)).sort()[0] || "9999";
+  const docs = re => (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && re.test(a.nome||"") && dataSP(a.criado_em)>=d0 && dataSP(a.criado_em)<prox);
+  const man = docs(/manifesta[çc][ãa]o sobre a per[íi]cia|impugna[çc][ãa]o ao laudo/i), ques = docs(/quesitos complementares/i);
+  const pz = dL ? prazoDoLaudo(k, la, dL) : null, feita = man.length || !!(pz && respostaAoPrazo(k, pz));
+  const sit = feita ? ["Manifestação feita","ok"] : dL ? ["Laudo juntado","venc"] : ["Aguardando laudo","prox"];
+  const linha = a => docRow(a.nome, `juntado em ${fmt(dataSP(a.criado_em))}`, `abrirAnexo('${escJs(a.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(a.id)}'])`, a.texto ? a.id : null);
+  const dPz = pz && dataDoPrazo(pz), fatal = pz && pz.fim && k.prazo===pz.fim;
+  const avisoPz = pz && !pzSug && !feita && pz.situacao!=="findo" ? `<span class="tl-prazo-sug per-prazo-pje">${IC_SVG.relogio}<span>Aviso do ${esc(ROT_PRAZO[pz.sistema]||"PJe")}: ${esc(pz.ato||"intimação")}${pz.dias?` (${pz.dias} dias)`:""} até <b>${fmt(dPz)}</b>${pz.fim?"":", ciência tácita"}. ${fatal ? "Anotado como prazo fatal no CRM." : "Vira prazo fatal só quando anotado no CRM."}</span>${pz.fim && !fatal ? `<button class="tl-bt forte" onclick="usarPrazoDoTribunal('${k.id}','${pz.fim}')" title="anotar o prazo do tribunal como prazo fatal do caso">Fatal</button>` : ""}</span>` : "";
+  const bt = (tipo, rot, tit) => `<button class="tl-bt" onclick="anexarDaPericia('${e.id}','${tipo}')" title="${tit}">${rot}</button>`;
+  return {chip:`<span class="per-est ${sit[1]}">${sit[0]}</span>`, html: man.map(linha).join("") + ques.map(linha).join("") + avisoPz,
+    acoes: dL ? bt("manifestacao", "Manifestação", "juntar a manifestação ou a impugnação ao laudo") + bt("quesitos", "Quesitos", "juntar os quesitos complementares")
+      : bt("laudo", "Laudo", "juntar o laudo pericial")};
+}
+function anexarDaPericia(evId, tipo){
+  const e = (D.eventos||[]).find(x=>x.id===evId), k = e && D.casoPorId.get(e.caso_id); if(!k) return;
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "application/pdf,image/*";
+  inp.onchange = () => { const f = inp.files && inp.files[0]; if(f) anexarArquivo(k.id, k.cliente_id, f, `${ROT_DOC_PERICIA[tipo]} · ${f.name}`); };
+  inp.click();
 }
 // o que diz que a perícia aconteceu: uma anotação depois da data ("foi à perícia", "compareceu"), o movimento
 // "perícia realizada" do processo (PJe ou CNJ) ou o laudo
@@ -47101,14 +47331,17 @@ function cartaoPericia(e){
     : e.status==="realizada" ? [julg ? "aconteceu" : "compareceu","ok"]
     : !futura ? ["aconteceu? confirme","venc"] : julg ? ["sessão marcada","prox"] : !pedeAviso(e) ? ["marcado","prox"]
     : av ? [`cliente avisado${av.quem?` · ${av.quem}${av.em?`, ${fmtBarra(av.em).slice(0,5)}`:""}`:""}`,"ok"] : ["avisar o cliente","prox"];
-  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
-    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
   const la = laudoDaPericia(e), lx = la ? null : laudoAnexoDaPericia(e);
+  const pzSug = la ? prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) : "";
+  // F832 · a perícia judicial que passou: o laudo, a manifestação e os quesitos complementares no mesmo cartão
+  const pj = ["judicial","pagamento"].includes(k.fase) && e.status!=="cancelada" && !futura && !julg ? laudoJudicial(e, k, la, lx, pzSug) : null;
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span>${pj ? pj.chip : ""}</span>`;
   const prova = ag && !futura ? provaDoComparecimento(e, !!(la||lx)) : "";
   const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`
     + (prova ? `<span class="tl-disp per-prova">${esc(capital(prova))}.</span>` : "");
   const laudo = la ? `<span class="tl-disp per-laudo"><b>Laudo juntado em ${fmt(dataSP(la.criado_em))}</b> · ${esc(andLimpo(la, k).texto.slice(0,140))}</span>`
-      + docsDoCartao(la) + prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) + feitoDoCartao(la)
+      + docsDoCartao(la) + pzSug + feitoDoCartao(la)
     // F236 · o laudo do PAT chega como documento, sem andamento: a conclusão e o CID vêm à vista
     : lx ? `<span class="tl-disp per-laudo"><b>Laudo de ${fmt(dataSP(lx.criado_em))}</b>${esc(resumoDoLaudo(lx))}</span>`
       + docRow(lx.nome, `${lx.paginas?`${lx.paginas} pág. · `:""}${lx.texto?"com texto":lx.tipo?"digitalizado":"texto em leitura"}`, `abrirAnexo('${escJs(lx.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(lx.id)}'])`, lx.texto ? lx.id : null) : "";
@@ -47120,6 +47353,7 @@ function cartaoPericia(e){
   else if(ag && !futura) acoes = bt(julg ? "Aconteceu" : "Compareceu", `compareceuEvento('${e.id}')`, true, julg ? "a sessão aconteceu" : "o cliente foi: registra no caso, marca a etapa e agenda a conferência do resultado")
       + (julg ? "" : bt("Não compareceu", `naoCompareceuEvento('${e.id}')`, false, "o cliente faltou: registra no caso e cria a tarefa de pedir nova data"))
       + bt(`Remarcad${o}`, `remarcarEvento('${e.id}')`, false, "ganhou outra data: a de agora fica no histórico e nasce a nova");
+  if(pj) acoes += pj.acoes;
   if(e.status!=="cancelada"){
     if(portal) acoes += `<a class="tl-bt tl-link" href="${urlOk(portal.href)}" target="_blank" rel="noopener">Abrir no ${esc(portal.rot)} ${IC_SVG.ir}</a>`;
     if(ag && futura) acoes += bt("Mensagem ao cliente", `msgPericia('${e.id}')`, false, "o lembrete pronto, para conferir e enviar");
@@ -47129,7 +47363,7 @@ function cartaoPericia(e){
     ag && futura ? `<button class="tl-mais-it" role="menuitem" onclick="copiarLembrete('${e.id}')" title="Copiar o lembrete">Copiar<span class="sr-only"> o lembrete</span></button>` : "",
     ag ? `<button class="tl-mais-it perigo" role="menuitem" onclick="cancelarEvento('${e.id}')">Cancelar ${evFem(e.tipo)?"a":"o"} ${esc((e.tipo||"perícia").toLowerCase())}</button>` : ""]);
   const barra = (acoes||menu) ? `<span class="tl-barra tl-barra-of">${acoes}<span class="tl-barra-fim">${menu}</span></span>` : "";
-  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${barra}</span></li>`;
+  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${pj ? pj.html : ""}${barra}</span></li>`;
 }
 // o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
 // (PAT, PJe, e-SAJ, eproc, aviso do CRPS) ou de um espelho sem linha (evento
@@ -62230,6 +62464,243 @@ function abrirPaleta(){
     if(e.key==="Enter"){ e.preventDefault(); usarPaleta(_palI); }
   };
   pintarPaleta("", 0); inp.focus();
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F831 · ATRASADOS NO CASO (ordem do Paulo, 27.11.2026, melhorias 1 a 4 da auditoria)
+// ══════════════════════════════════════════════════════════════════════════
+// 1 · DER, DIB, DIP, ajuizamento e citação no caso, com a prescrição quinquenal (Lei 8.213/91, art. 103, parágrafo
+//     único): o que venceu antes de 5 anos do ajuizamento está prescrito.
+// 2 · a decadência da revisão (art. 103, caput): 10 anos do dia 1º do mês seguinte ao primeiro pagamento, ou do dia
+//     da ciência da decisão indeferitória definitiva. Alerta no caso e no Meu Dia só nos últimos 12 meses. Não grava
+//     nada no Microsoft To Do (regra até 31/12/2026).
+// 3 · Tema 1124/STJ: a prova nova apresentada só em juízo leva o termo inicial dos efeitos financeiros à citação.
+// 4 · a calculadora: competências do termo inicial à véspera da DIP, 13º proporcional, INPC e juros da poupança até
+//     11/2021 (Manual de Cálculos da Justiça Federal) e Selic única desde 12/2021 (EC 113/2021, art. 3º). Os índices
+//     vêm da tabela indices_mensais (SGS do Banco Central); o mês sem índice entra como zero e marca "conferir".
+//     O resultado é estimativa para conferência e alimenta a proposta de honorários (destaque e sucumbência).
+const ehRevisaoCaso = k => !!k && (/^REV/.test(k.especie||"") || variantePorEspecie(especieDoCaso(k)||k.beneficio||"")==="revisao");
+const _ymMais = (ym, n) => somarMeses(ym + "-01", n).slice(0, 7);
+const _r2 = v => Math.round((v + Number.EPSILON) * 100) / 100;
+
+// a decadência mais cedo entre as duas bases que o caso tiver
+function decadenciaCaso(k){
+  const op = [];
+  if(k && k.primeiro_pagamento_em) op.push({ate: somarAnos(somarMeses(k.primeiro_pagamento_em.slice(0,7) + "-01", 1), 10),
+    base:`10 anos do dia 1º do mês seguinte ao primeiro pagamento, em ${fmtBarra(k.primeiro_pagamento_em)}`});
+  if(k && k.ciencia_indeferimento_em) op.push({ate: somarAnos(k.ciencia_indeferimento_em, 10),
+    base:`10 anos da ciência da decisão indeferitória definitiva, em ${fmtBarra(k.ciencia_indeferimento_em)}`});
+  if(!op.length) return null;
+  const d = op.sort((a, b)=>a.ate < b.ate ? -1 : 1)[0];
+  return {...d, dias: diasAte(d.ate)};
+}
+// o alerta vale só para a revisão e só nos últimos 12 meses (regra das memórias: decadência fatal no último ano)
+const alertaDecadencia = k => { if(!ehRevisaoCaso(k)) return null; const d = decadenciaCaso(k); return d && d.dias <= 365 ? d : null; };
+
+// o termo inicial dos atrasados: a DIB, a data da prescrição (5 anos antes do ajuizamento; sem ajuizamento, de hoje)
+// ou, com o Tema 1124 marcado, a citação
+function termoAtrasados(k, hj){
+  if(!k || !k.dib) return null;
+  const ref = k.ajuizado_em || hj || hoje(), limite = somarAnos(ref, -5), t1124 = !!((k.calculo||{}).tema1124||{}).marcado;
+  let termo = k.dib > limite ? k.dib : limite, motivo = k.dib > limite ? "DIB" : "prescrição quinquenal";
+  if(t1124 && k.citado_em && k.citado_em > termo){ termo = k.citado_em; motivo = "citação (Tema 1124/STJ)"; }
+  return {termo, motivo, limite, prescreve: k.dib < limite, projecao: !k.ajuizado_em, t1124, semCitacao: t1124 && !k.citado_em};
+}
+
+// os juros da poupança do mês (sem a TR): (1 + rendimento) / (1 + TR) - 1; antes de 07/2009, 1% ao mês (Manual)
+function jurosPoupanca(idx, ym){
+  if(ym < "2009-07") return {v:1};
+  const p = (idx.poup_nova||{})[ym] ?? (idx.poup_antiga||{})[ym], tr = (idx.tr||{})[ym];
+  if(p==null || tr==null) return {v:0, falta:true};
+  return {v: ((1 + p/100) / (1 + tr/100) - 1) * 100};
+}
+// o reajuste anual (Lei 8.213/91, art. 41-A): o informado; sem ele, o INPC acumulado do ano anterior, desde o mês da DIB
+// no primeiro reajuste. O derivado marca "conferir": vale a portaria do ano
+function reajusteDoAno(p, ano){
+  const inf = (p.reajustes||{})[ano];
+  if(inf!=null && inf!=="" && isFinite(+inf)) return {pct:+inf};
+  const dibY = +p.dib.slice(0, 4), de = ano-1===dibY ? p.dib.slice(0, 7) : `${ano-1}-01`;
+  let f = 1, falta = false;
+  for(let m = de; m <= `${ano-1}-12`; m = _ymMais(m, 1)){ const v = (p.idx.inpc||{})[m]; if(v==null) falta = true; else f *= 1 + v/100; }
+  return {pct: _r2((f - 1) * 100), derivado:true, falta};
+}
+// pura, para a prova: p = {inicio, fim, dib, rmi, reajustes, piso, decimo, citado, calcEm:"AAAA-MM", idx, sm(comp "MM/AAAA")}
+function calcAtrasados(p){
+  const conferir = new Set(), linhas = [], idx = p.idx || {};
+  if(!p.inicio || !p.fim || p.fim < p.inicio || !(p.rmi > 0)) return {linhas, total:0, nominal:0, conferir:[], rendaEm:()=>0};
+  const reaj = {};
+  const rendaEm = ym => {
+    let r = p.rmi;
+    for(let a = +p.dib.slice(0, 4) + 1; a <= +ym.slice(0, 4); a++){
+      if(!reaj[a]) reaj[a] = reajusteDoAno(p, a);
+      if(reaj[a].derivado) conferir.add(`reajuste de ${a} derivado do INPC${reaj[a].falta ? " (com mês sem índice)" : ""}: conferir com a portaria`);
+      r = _r2(r * (1 + reaj[a].pct/100));
+    }
+    if(p.piso){ const sm = p.sm(`${ym.slice(5)}/${ym.slice(0, 4)}`); if(sm && sm > r) r = sm; }
+    return r;
+  };
+  const selicAte = _ymMais(p.calcEm, -1);   // o mês do cálculo ainda não fechou: a Selic dele fica de fora
+  const atualiza = (valor, venc) => {
+    let v = valor, selDe = venc;
+    if(venc <= "2021-11"){
+      let f = 1;
+      for(let m = venc; m <= "2021-11"; m = _ymMais(m, 1)){ const i = (idx.inpc||{})[m]; if(i==null) conferir.add(`INPC de ${m} sem índice`); else f *= 1 + i/100; }
+      let j = 0;
+      const cit = p.citado ? p.citado.slice(0, 7) : null;
+      if(cit) for(let m = venc > cit ? venc : cit; m <= "2021-11"; m = _ymMais(m, 1)){ const x = jurosPoupanca(idx, m); if(x.falta) conferir.add(`juros da poupança de ${m} sem índice`); j += x.v; }
+      v = valor * f * (1 + j/100); selDe = "2021-12";
+    }
+    let s = 0;
+    for(let m = selDe; m <= selicAte; m = _ymMais(m, 1)){ const i = (idx.selic||{})[m]; if(i==null) conferir.add(`Selic de ${m} sem índice`); else s += i; }
+    return _r2(v * (1 + s/100));
+  };
+  const ini = p.inicio.slice(0, 7), fim = p.fim.slice(0, 7);
+  let mesesAno = 0;
+  for(let m = ini; m <= fim; m = _ymMais(m, 1)){
+    const ult = new Date(Date.UTC(+m.slice(0, 4), +m.slice(5), 0)).getUTCDate();
+    const d0 = m===ini ? +p.inicio.slice(8) : 1, d1 = m===fim ? +p.fim.slice(8) : ult, dias = d1 - d0 + 1;
+    const renda = rendaEm(m), devido = _r2(renda * (dias===ult ? 1 : dias/ult)), venc = _ymMais(m, 1);
+    linhas.push({comp:m, renda, dias, devido, atualizado: atualiza(devido, venc)});
+    if(dias >= 15) mesesAno++;
+    // o 13º proporcional vence com dezembro ou com a última competência (meses com 15 dias ou mais)
+    if(p.decimo && (m.slice(5)==="12" || m===fim) && mesesAno){
+      const ab = _r2(renda * mesesAno / 12);
+      linhas.push({comp:m, decimo:true, meses:mesesAno, renda, devido:ab, atualizado: atualiza(ab, venc)});
+    }
+    if(m.slice(5)==="12") mesesAno = 0;
+  }
+  const soma = c => _r2(linhas.reduce((a, l)=>a + l[c], 0));
+  return {linhas, total: soma("atualizado"), nominal: soma("devido"), conferir:[...conferir], rendaEm};
+}
+// o valor da causa no ajuizamento (vencidas mais 12 vincendas, Lei 10.259/2001, art. 3º, § 2º) contra 60 mínimos
+function alcadaJef(c, ajuiz, sm){
+  const ym = ajuiz.slice(0, 7), venc = _r2(c.linhas.filter(l=>l.comp < ym).reduce((a, l)=>a + l.devido, 0));
+  const vincendas = _r2(c.rendaEm(ym) * 12), limite = 60 * (sm(`${ym.slice(5)}/${ym.slice(0, 4)}`) || 0);
+  return {vencidas: venc, vincendas, causa: _r2(venc + vincendas), limite, acima: limite > 0 && venc + vincendas > limite};
+}
+
+// ── índices: lidos uma vez por sessão da tabela indices_mensais ──────────────
+let _idxAtr = null;
+async function indicesAtrasados(){
+  if(_idxAtr) return _idxAtr;
+  const idx = {inpc:{}, selic:{}, tr:{}, poup_antiga:{}, poup_nova:{}};
+  try{
+    const ls = await api(`/rest/v1/indices_mensais?select=serie,competencia,valor&order=competencia&limit=5000`);
+    for(const l of ls||[]) if(idx[l.serie]) idx[l.serie][l.competencia] = +l.valor;
+  }catch(e){ idx.erro = true; }
+  return (_idxAtr = idx);
+}
+// os parâmetros do caso para a conta (com ou sem o Tema 1124)
+function paramsAtrasados(k, idx, comTema){
+  const cal = k.calculo || {}, hj = hoje();
+  const t = termoAtrasados(comTema ? k : {...k, calculo:{...cal, tema1124:null}}, hj); if(!t) return null;
+  const fim = k.dip ? somaDias(k.dip, -1) : hj;
+  return {t, p:{inicio:t.termo, fim, dib:k.dib, rmi:+cal.rmi || 0, reajustes:cal.reajustes||{}, piso:cal.piso!==false, decimo:cal.decimo!==false,
+    citado:k.citado_em||null, calcEm:hj.slice(0, 7), idx, sm:salarioMinimo}};
+}
+function resultadoAtrasados(k, idx){
+  const a = paramsAtrasados(k, idx, true); if(!a) return null;
+  const c = calcAtrasados(a.p);
+  const b = a.t.t1124 ? calcAtrasados(paramsAtrasados(k, idx, false).p) : null;
+  // a alçada se mede pelo pedido (prescrição só), e não pelo que o Tema 1124 deixar
+  const pc = b || c, jef = alcadaJef(pc, k.ajuizado_em || hoje(), salarioMinimo);
+  return {t:a.t, p:a.p, c, semTema:b, jef};
+}
+
+// ── no cartão do caso: as datas, o alerta e o botão ──────────────────────────
+function chipsAtrasados(k){
+  if(!ehPrev(k)) return "";
+  const out = [], t = termoAtrasados(k), dec = alertaDecadencia(k), naLinha = new Set(camposEssenciais(k).map(soCampo));
+  // a data base na linha já mostra o "decai em" (lcJanela): o chip só aparece quando ela não está à vista
+  if(dec && !["primeiro_pagamento_em","ciencia_indeferimento_em"].some(c=>k[c] && naLinha.has(c))) out.push(`<span class="lc-f lc-dec" title="${esc(dec.base)} (Lei 8.213/91, art. 103)"><span class="lc-k">Decadência</span>
+    <span class="lc-jan venc">${dec.dias < 0 ? `decaiu em ${fmtBarra(dec.ate)}` : `até ${fmtBarra(dec.ate)}`}</span></span>`);
+  if(t && t.prescreve) out.push(`<span class="lc-f" title="parcelas anteriores a ${fmtBarra(t.limite)} prescritas: 5 anos ${t.projecao ? "contados de hoje (ainda sem ajuizamento)" : "do ajuizamento"} (Lei 8.213/91, art. 103, parágrafo único)">
+    <span class="lc-k">Atrasados desde</span><span class="lc-num">${fmtBarra(t.termo)}</span></span>`);
+  if(t && t.t1124) out.push(`<span class="chip" title="prova nova apresentada somente em juízo: efeitos financeiros desde a citação">Tema 1124</span>`);
+  const mostra = k.dib || faseEfetiva(k)==="judicial" || ehRevisaoCaso(k) || k.calculo;
+  if(mostra) out.push(`<button type="button" class="btn-mini lc-atr" onclick="abrirAtrasados('${k.id}')" title="prescrição, decadência, Tema 1124 e a estimativa dos atrasados">Atrasados</button>`);
+  return out.join("");
+}
+const _CAMPOS_ATR = [["der","DER"],["dib","DIB"],["dip","DIP"],["ajuizado_em","Ajuizamento"],["citado_em","Citação"]];
+const _CAMPOS_REV = [["primeiro_pagamento_em","1º pagamento"],["ciencia_indeferimento_em","Ciência do indeferimento"]];
+async function abrirAtrasados(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  caixa(`<div id="atr-cx"><p class="meio-sub">Carregando os índices…</p></div>`);
+  const idx = await indicesAtrasados();
+  const cx = document.getElementById("atr-cx"); if(cx) cx.innerHTML = htmlAtrasados(k, idx);
+}
+function htmlAtrasados(k, idx){
+  const cal = k.calculo || {}, t1124 = cal.tema1124 || {}, rev = ehRevisaoCaso(k), c = D.cliPorId.get(k.cliente_id);
+  const campo = ([f, r]) => `<label class="meio-sub atr-campo">${r} <input type="date" data-atr="${f}" value="${esc(k[f]||"")}"></label>`;
+  const dec = rev ? decadenciaCaso(k) : null, R = k.dib ? resultadoAtrasados(k, idx) : null;
+  const anos = R ? [...new Set(R.c.linhas.map(l=>+l.comp.slice(0, 4)))].filter(a=>a > +k.dib.slice(0, 4)) : [];
+  const pct = c && typeof termosHon==="function" ? (termosHon(c, k, "rec")||{}).pctAtr || 0 : 0;
+  let res = "";
+  if(!k.dib) res = `<p class="meio-sub">Informe a DIB para calcular.</p>`;
+  else if(!(+cal.rmi > 0)) res = `<p class="meio-sub">Informe a RMI para calcular.</p>`;
+  else{
+    const {t, c:cc, semTema, jef} = R, sm = salarioMinimo(`${hoje().slice(5, 7)}/${hoje().slice(0, 4)}`) || 0;
+    const porAno = new Map(); cc.linhas.forEach(l=>{ const a = l.comp.slice(0, 4); porAno.set(a, _r2((porAno.get(a)||0) + l.atualizado)); });
+    res = `<p class="atr-total"><b>Estimativa para conferência: ${moeda(cc.total)}</b> <small class="meio-sub">(${moeda(cc.nominal)} sem correção; ${cc.linhas.filter(l=>!l.decimo).length} competências de ${fmtBarra(t.termo)} a ${fmtBarra(R.p.fim)}${k.dip ? ", véspera da DIP" : ", hoje (sem DIP)"})</small></p>
+      <p class="meio-sub">Correção pelo INPC e juros da poupança${k.citado_em ? " desde a citação" : " (sem citação: juros não contados)"} até 11/2021 (Manual de Cálculos da Justiça Federal); Selic única desde 12/2021 (EC 113/2021, art. 3º), até ${fmtBarra(_ymMais(R.p.calcEm, -1) + "-01").slice(3)}.</p>
+      ${semTema ? `<p class="atr-1124">Sem o Tema 1124 seriam ${moeda(semTema.total)}: a prova só em juízo tira ${moeda(_r2(semTema.total - cc.total))} dos atrasados${pct ? ` e ${moeda(_r2((semTema.total - cc.total) * pct / 100))} do honorário de êxito (${pct}%)` : ""}.</p>` : ""}
+      <p class="${jef.acima ? "atr-alerta" : "meio-sub"}">Valor da causa ${jef.causa ? `${moeda(jef.causa)} (${moeda(jef.vencidas)} vencidas e ${moeda(jef.vincendas)} de 12 vincendas)` : "não calculado"}, ${k.ajuizado_em ? "no ajuizamento" : "se ajuizado hoje"}; 60 salários mínimos: ${moeda(jef.limite)} (Lei 10.259/2001, art. 3º, § 2º).${jef.acima
+        ? " Acima do limite: fora da competência do JEF, salvo renúncia expressa ao excedente (Tema 1030/STJ)." : ""}</p>
+      ${sm && cc.total > 60 * sm ? `<p class="atr-alerta">O total passa de 60 salários mínimos (${moeda(60 * sm)}): RPV só com renúncia ao excedente; sem ela, precatório (Lei 10.259/2001, art. 17, § 4º).</p>` : ""}
+      ${pct ? `<p class="meio-sub">Honorário contratual de ${pct}% sobre os atrasados: ${moeda(_r2(cc.total * pct / 100))}, a destacar na RPV ou no precatório (EAOAB, art. 22, § 4º). Sucumbência, se fixada em 10% das parcelas vencidas até a sentença (Súmula 111/STJ): cerca de ${moeda(_r2(cc.total * 0.1))}; no JEF de primeiro grau não há (Lei 9.099/95, art. 55).</p>` : ""}
+      ${cc.conferir.length ? `<p class="atr-alerta">Conferir: ${esc(cc.conferir.slice(0, 6).join("; "))}${cc.conferir.length > 6 ? ` e mais ${cc.conferir.length - 6}` : ""}.</p>` : ""}
+      ${idx.erro ? `<p class="atr-alerta">A tabela de índices não respondeu: todos os índices entraram como zero. Conferir.</p>` : ""}
+      <details><summary>Por ano</summary><ul class="atr-anos">${[...porAno].map(([a, v])=>`<li>${a}: ${moeda(v)}</li>`).join("")}</ul></details>`;
+  }
+  return `<h3 style="margin:0 0 4px">Atrasados <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
+    <div class="form-linha atr-datas" style="flex-wrap:wrap;gap:8px">${_CAMPOS_ATR.map(campo).join("")}${rev ? _CAMPOS_REV.map(campo).join("") : ""}</div>
+    ${R ? `<p class="meio-sub">${R.t.prescreve ? `Prescritas as parcelas anteriores a <b>${fmtBarra(R.t.limite)}</b>, 5 anos ${R.t.projecao ? "contados de hoje, ainda sem ajuizamento" : "antes do ajuizamento"} (Lei 8.213/91, art. 103, parágrafo único). ` : "Nenhuma parcela prescrita. "}Atrasados exigíveis desde <b>${fmtBarra(R.t.termo)}</b> (${esc(R.t.motivo)}).${R.t.semCitacao ? " Informe a citação: com o Tema 1124 marcado, é dela que contam os efeitos financeiros." : ""}</p>` : ""}
+    ${dec ? `<p class="${dec.dias <= 365 ? "atr-alerta" : "meio-sub"}">Decadência da revisão ${dec.dias < 0 ? "consumada em" : "em"} <b>${fmtBarra(dec.ate)}</b>: ${esc(dec.base)} (Lei 8.213/91, art. 103).</p>` : rev ? `<p class="meio-sub">Decadência: informe o 1º pagamento ou a ciência do indeferimento definitivo.</p>` : ""}
+    <fieldset class="atr-1124-f"><legend>Tema 1124/STJ</legend>
+      <label><input type="checkbox" id="atr-1124" ${t1124.marcado ? "checked" : ""}> Prova nova apresentada somente em juízo</label>
+      <input id="atr-prova" placeholder="qual prova" value="${esc(t1124.prova||"")}" style="width:100%;margin-top:4px">
+      <small class="meio-sub">Marcado, o termo inicial dos efeitos financeiros vai para a citação${k.citado_em ? ` (${fmtBarra(k.citado_em)})` : ""}.</small></fieldset>
+    <div class="form-linha" style="flex-wrap:wrap;gap:8px;align-items:center">
+      <label class="meio-sub">RMI <input id="atr-rmi" inputmode="decimal" value="${cal.rmi ? String(cal.rmi).replace(".", ",") : ""}" placeholder="0,00" style="width:110px"></label>
+      <label class="meio-sub"><input type="checkbox" id="atr-piso" ${cal.piso!==false ? "checked" : ""}> Piso do mínimo</label>
+      <label class="meio-sub"><input type="checkbox" id="atr-13" ${cal.decimo!==false ? "checked" : ""}> 13º</label></div>
+    ${anos.length ? `<div class="form-linha atr-reaj" style="flex-wrap:wrap;gap:6px"><span class="meio-sub">Reajustes (%):</span>${anos.map(a=>{
+      const r = reajusteDoAno(R.p, a);
+      return `<label class="meio-sub">${a} <input data-reaj="${a}" inputmode="decimal" value="${r.derivado ? "" : String(r.pct).replace(".", ",")}" placeholder="${String(r.pct).replace(".", ",")}" style="width:64px">${r.derivado ? ` <span class="lc-jan venc">conferir</span>` : ""}</label>`; }).join("")}</div>` : ""}
+    <div class="atr-res">${res}</div>
+    <div style="display:flex;gap:8px;margin-top:8px"><button class="adr-bt adr-primario" onclick="calcularAtrasados('${k.id}')">Calcular</button></div>`;
+}
+const _numBR = s => { const t = String(s||"").trim().replace(/\./g, "").replace(",", "."); return t && isFinite(+t) ? +t : null; };
+async function calcularAtrasados(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const corpo = {}, q = s => document.querySelector(s);
+  document.querySelectorAll("#atr-cx [data-atr]").forEach(i=>{ const v = i.value || null; if(v !== (k[i.dataset.atr]||null)) corpo[i.dataset.atr] = v; });
+  const reajustes = {}; document.querySelectorAll("#atr-cx [data-reaj]").forEach(i=>{ const v = _numBR(i.value); if(v!=null) reajustes[i.dataset.reaj] = v; });
+  const prova = (q("#atr-prova")||{}).value || "";
+  const cal = {...(k.calculo||{}), rmi:_numBR((q("#atr-rmi")||{}).value), piso:!!(q("#atr-piso")||{}).checked, decimo:!!(q("#atr-13")||{}).checked, reajustes,
+    tema1124:{marcado:!!(q("#atr-1124")||{}).checked, prova:prova.trim()}};
+  if(cal.tema1124.marcado && !cal.tema1124.prova) return aviso("Diga qual prova foi apresentada somente em juízo");
+  const kNovo = {...k, ...corpo, calculo:cal}, idx = await indicesAtrasados(), R = kNovo.dib && cal.rmi ? resultadoAtrasados(kNovo, idx) : null;
+  // o último resultado fica no caso: é ele que a proposta de honorários lê
+  cal.resultado = R ? {total:R.c.total, semTema:R.semTema ? R.semTema.total : null, termo:R.t.termo, em:hoje()} : null;
+  corpo.calculo = cal;
+  try{ await patchCaso(casoId, corpo); }catch(e){ return aviso("Não gravou: rode a migração f831 no Supabase"); }
+  Object.assign(k, corpo);
+  const cx = document.getElementById("atr-cx"); if(cx) cx.innerHTML = htmlAtrasados(k, idx);
+  aviso(R ? `Estimativa: ${moedaTxt(R.c.total)}` : "Datas gravadas", false);
+  repintarFicha();
+}
+
+// ── Meu Dia: as revisões com decadência nos próximos 12 meses ────────────────
+function blocoDecadenciaDia(col){
+  const it = ativos().filter(k=>!col || (D.atrDoCaso.get(k.id)||[]).includes(col))
+    .map(k=>({k, d:alertaDecadencia(k)})).filter(x=>x.d && x.d.dias >= 0).sort((a, b)=>a.d.ate < b.d.ate ? -1 : 1);
+  if(!it.length) return "";
+  return `<section class="pl-grupo" data-tom="dec"><h3 class="secao">Decadência em até 12 meses <span class="pl-n">${it.length}</span></h3>`
+    + it.map(({k, d})=>{ const c = D.cliPorId.get(k.cliente_id)||{};
+      return `<div class="ag-dec" style="display:flex;gap:8px;align-items:center;padding:6px 0"><b>${esc(c.nome||"")}</b><span>${esc(tituloCaso(k))}</span>
+        <span class="lc-jan venc" title="${esc(d.base)} (Lei 8.213/91, art. 103)">decai em ${fmtBarra(d.ate)}, ${d.dias} d</span>
+        <button class="btn-mini" style="margin-left:auto" onclick="abrirFicha('${k.cliente_id}')">Abrir</button></div>`; }).join("")
+    + `</section>`;
 }
 function pintarPaleta(q, i){
   _palIt = itensPaleta(q); _palI = i;

@@ -44,5 +44,6 @@ js/38-pre-caso.js
 js/39-pre-caso.js
 js/40-pre-caso.js
 js/41-agenda.js
+js/43-casos.js
 js/42-whatsapp.js
 html/fim.html

@@ -649,6 +649,9 @@ function itensAgendaTodos(){
       por({data:d, k, cli, selo:`Aviso ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),   // F531 · aviso, não prazo
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
+    // F832 · a RPV registrada e ainda não paga: o tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art. 17)
+    for(const r of reqsDoCaso(k)){ const pz = !r.pago_em && prazoRpv(r);
+      if(pz) por({data:pz, k, cli, selo:"RPV", resumo:`${pz<hj ? "cobrar o pagamento" : "conferir o pagamento"} da RPV de ${moedaTxt(r.valor)}: 60 dias da ${r.entrega ? "entrega da requisição" : "expedição"} (Lei 10.259/2001, art. 17)`}, donos); }
     if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
@@ -1179,7 +1182,7 @@ function porClienteDia(g){
     return `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
       + linhaAgenda(p) + `<details class="ag-mais-cli"><summary title="outros itens deste cliente">+${resto.length}</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
 }
-function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
+function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS() + blocoDecadenciaDia(filtroDia); }   // F831
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
 // clientes, e quem eu despachei, com a data de volta. Recolhido; abre no clique
 function ultimoDiaUtil(){ let d = somaDias(hoje(), -1); while(!ehDiaUtil(d)) d = somaDias(d, -1); return d; }

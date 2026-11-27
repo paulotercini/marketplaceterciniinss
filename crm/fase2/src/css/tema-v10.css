@@ -2308,9 +2308,9 @@ path.adp-car{stroke:var(--azul)}path.adp-ida{stroke:var(--prox,#8F5400)}
 .hon-vencidos{background:var(--venc-fundo,#FBEAE7);border:1px solid #F0C4BE;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
 .hon-vencidos .hon-venc-cab{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;color:var(--venc-tinta,#B3261E)}
 .hon-vencidos .hon-venc-cab b{font-size:18px}
-.hon-vencidos ul,.hon-prop ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.hon-vencidos li,.hon-prop ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
-.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
+.hon-vencidos ul,.hon-prop ul.hon-prop-itens,.hon-req ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hon-vencidos li,.hon-prop ul.hon-prop-itens li,.hon-req ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
+.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child,.hon-req ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
 .hon-prop{border-color:#EED6A8}
 .hon-prop li.condic{color:var(--cinza)}
 .hon-prop ul.hon-prop-info{margin:0;padding-left:18px;font-size:13px;color:var(--cinza);display:flex;flex-direction:column;gap:4px}
@@ -4336,7 +4336,14 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
    shortcut: o flutuante arrastado para a borda esquerda pode sair da tela com o painel aberto; se incomodar, deslocar por JS só quem cai sob o painel */
 @media (min-width:761px){body.pcli-aberto :is(.fab-rapida,.fab-sug,.fab-ajuda,#zap-ag,#fab-juntos){transform:translateX(-460px)}}
 .esc-desc[hidden]{display:none!important}
-/* ══ F832 · ficha do caso mais enxuta (27.11.2026): linha do tempo numa linha de texto, mini agenda recolhida em "Próximo prazo" e a ⭐ na linha das ações ══ */
+/* F831 · atrasados no caso */
+.atr-alerta{color:var(--vermelho);font-weight:600;margin:4px 0}
+.atr-total{font-size:15px;margin:6px 0}
+.atr-1124{margin:4px 0}
+.atr-1124-f{border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin:8px 0}
+.atr-1124-f legend{font-size:12px;font-weight:600;padding:0 4px}
+.atr-anos{margin:4px 0;padding-left:18px}
+/* ══ F834 · ficha do caso mais enxuta (27.11.2026): linha do tempo numa linha de texto, mini agenda recolhida em "Próximo prazo" e a ⭐ na linha das ações ══ */
 html[data-tema="v10"] .ltc-k,html[data-tema="v10"] .ltc-t{display:inline;font-size:13px;margin:0}
 html[data-tema="v10"] .ltc-k::after{content:" · "}
 html[data-tema="v10"] .ltc-t{font-weight:500}
@@ -4353,7 +4360,7 @@ html[data-tema="v10"] .ltc-v .ltc-r{border:0;background:#E3E4E1}
 .ma-dt b{font-weight:600;font-variant-numeric:tabular-nums}
 .app.celular .ma-dt > summary{min-height:44px;align-items:center}
 .app:not(.celular) .det-mais-col > .det-imp:not(.det-notas,.det-grav){position:static;transform:none}
-/* F833 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
+/* F835 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
 .lista-alca{display:none}
 .app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca{all:unset;box-sizing:border-box;cursor:pointer;display:grid;place-items:center;width:28px;height:28px;margin-left:auto;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--cinza);font-size:16px;line-height:1}
 .app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca::before{content:"\2039"}
@@ -4369,7 +4376,7 @@ body:not(.zap-aberto) .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .c
 .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .meio{min-width:0;padding-left:12px;padding-right:12px}
 html[data-tema="v10"] .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) #conteudo-meio .ag-linha .ag-txt{flex:1 1 0;max-width:none;min-width:0}
 .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .meio :is(.meio-sub,.md-conta,.ag-th,.ag-slot,.topo-extra,.topo-mais,.ajuda-bt,.avatares,.acoes,.secao button){display:none}
-/* F834 · Meu Dia: grupo de fundo neutro com a cor no título, Reagendar junto da contagem, atraso por extenso e Sugestões na cor do acento */
+/* F836 · Meu Dia: grupo de fundo neutro com a cor no título, Reagendar junto da contagem, atraso por extenso e Sugestões na cor do acento */
 html[data-tema="v10"] .pl-grupo:is([data-tom="venc"],[data-tom="hoje"]) h3.secao{background:var(--placa);border-bottom-color:var(--borda)}
 .pl-grupo h3.secao .reag-bt{float:none;margin:-4px 0 -4px 12px}
 .ag-ha{font:12px var(--f-txt,inherit);margin-left:4px}
@@ -4379,4 +4386,3 @@ html[data-tema="v10"] .fab-sug{background:var(--azul)}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .fab-sug:hover{background:var(--azul);filter:brightness(.92)}}
 </style>
 </head>
-

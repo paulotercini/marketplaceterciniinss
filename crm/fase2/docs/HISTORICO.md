@@ -1191,19 +1191,36 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - "Em qual caso registrar?": o apelido do caso aparece em destaque (`.esc-apel`), com a espécie embaixo.
 - Provas: `testes/cadastro/f830.js` e três casos em `tests/test_crm_fase2.py`. Sem migração (`precaso` é jsonb).
 
-## F831 · Piso de 12px na letra (27.11.2026, v14.39)
+## F831 · Atrasados no caso: prescrição, decadência, Tema 1124 e calculadora com índices do Banco Central (27.11.2026, v14.39)
+- Ordem expressa do Paulo de 27.11.2026 (melhorias 1 a 4 da auditoria). Módulo novo `src/js/43-casos.js` (antes do 42 no `modulos.txt`).
+- Datas: o caso já tinha DER, DIB, `ajuizado_em` e `primeiro_pagamento_em`; a migração f831 acrescenta `dip`, `citado_em`, `ciencia_indeferimento_em` e o jsonb `calculo` (RMI, reajustes, piso, 13º, `tema1124 {marcado, prova}` e o último `resultado`). As três datas entram em `FATOS` e nas datas da gestão do caso.
+- Prescrição (`termoAtrasados`): parcelas anteriores a 5 anos do ajuizamento (sem ajuizamento, de hoje) prescritas; o cartão do caso mostra "Atrasados desde". Tema 1124 marcado (com a prova obrigatória) leva o termo inicial à citação.
+- Decadência (`decadenciaCaso`, `alertaDecadencia`): 10 anos do dia 1º do mês seguinte ao primeiro pagamento ou da ciência do indeferimento definitivo, a mais cedo. Só revisão e só nos últimos 12 meses: chip no caso e seção "Decadência em até 12 meses" no Meu Dia (`blocoDecadenciaDia`). A linha "Revisão até" das cartas do dossiê passou de 730 para 365 dias. Nada vai ao Microsoft To Do.
+- Calculadora (`calcAtrasados`, botão Atrasados): do termo inicial à véspera da DIP, mês parcial pelos dias, 13º proporcional, piso do mínimo (`SAL_MIN`), reajuste informado ou derivado do INPC (marca "conferir"); INPC e juros da poupança (desde a citação) até 11/2021 e Selic única desde 12/2021. Mostra o total (estimativa), o valor da causa contra 60 mínimos (JEF, Tema 1030), o aviso da RPV, o destaque contratual, a sucumbência se fixada em 10% (Súmula 111) e o reflexo do Tema 1124. A proposta de honorários (`propostaHonorarios`) usa o `resultado` como "≈ estimado" quando não há requisição nem carta.
+- Índices: tabela `indices_mensais` (RLS de leitura para colaborador ativo e a RESTRICTIVE `so_colaborador_ativo`, sem escrita pelo navegador), com carga inicial baixada do SGS em 27.11.2026 (188 INPC, 4390 Selic, 7811 TR, 25 e 195 poupança) e renovação semanal por `indices_pedir`/`indices_gravar` (pg_net e pg_cron). Juros da poupança = (1 + rendimento) / (1 + TR) - 1.
+- Provas: `testes/cadastro/f831.js` e `testes/colab_indices_atrasados.sql`.
+
+## F832 · RPV e precatório no caso judicial, com repasse e recibo; laudo, manifestação e quesitos no cartão da perícia (27.11.2026, v14.40)
+- Ordem expressa do Paulo de 27.11.2026, melhorias 5 e 6 da auditoria.
+- **RPV e precatório** (16-casos.js): cartão "RPV e precatório" na aba Honorários de cada caso judicial ou em pagamento (`cartaoRequisicoes`). Registrar grava tipo, valor, expedição, entrega ao tribunal, honorários destacados e sucumbência em `clientes.campos.requisicoes[caso]` (`passoReq`/`gravarReq`); Paga, Levantada (com o alvará) e Repasse avançam a situação (Expedida, Paga, Levantada, Repassada), cada passo com andamento no caso e Desfazer.
+- Prazo da RPV (`prazoRpv`): 60 dias da entrega da requisição (Lei 10.259/2001, art. 17), da expedição quando falta a entrega; o precatório segue o cronograma do tribunal. Alerta "RPV" no Meu Dia (`itensAgendaTodos`) até a RPV ser paga.
+- Integração com honorários: a requisição registrada entra em `concessaoDoCaso` (`reqManual`) e a proposta lança destaque e sucumbência pela regra de antes, sem duplicar. No repasse, os honorários não destacados baixam o lançamento dos atrasados já existente; sem ele, nasce um recebido com a marca `hon:caso:atr` (`honorariosDoRepasse`).
+- Repasse e recibo: líquido = bruto menos IR retido (RRA, Lei 7.713/1988, art. 12-A) menos honorários contratuais, salvo os destacados (`liquidoRepasse`); Recibo imprimível (`reciboRepasse`).
+- **Perícia judicial** (29-pericias.js, `laudoJudicial`): no cartão da perícia que passou, situação Aguardando laudo, Laudo juntado ou Manifestação feita; botões Laudo, Manifestação e Quesitos anexam o arquivo com o nome que o identifica (`anexarDaPericia`, sobre `anexarArquivo`, extraído do `anexar`). O expediente do PJe aberto pelo laudo (`prazoDoLaudo`, sobre `prazoTribunalDoAto`) aparece como aviso; Fatal o anota como prazo do caso (`usarPrazoDoTribunal`). Sem anotação, não há prazo fatal.
+- Provas: `testes/cadastro/f832.js`. Sem migração (`campos` é jsonb).
+## F833 · Piso de 12px na letra (27.11.2026, v14.41)
 - Ordem do Paulo de 27.11.2026 (etapa 1 da revisão da estrutura visual). Toda regra de estilo com letra de 10, 11 ou 11,5px passou a 12px (267 regras em `css/base.css`, `css/tema-v10.css` e dois estilos montados no JS). Nenhuma tela mudou de desenho.
 - Conferido e mantido como estava: realce de mouse já travado por `@media (hover:hover) and (pointer:fine)`, campo de 16px no toque (F136) e resposta ao pressionar (`button:active`, F134).
-- Prova: `testes/cadastro/f831.js` (nenhuma letra abaixo de 12px no `app.html`).
+- Prova: `testes/cadastro/f833.js` (nenhuma letra abaixo de 12px no `app.html`).
 
-## F832 · Ficha do caso: linha do tempo compacta, Próximo prazo e estrela na linha das ações (27.11.2026, v14.40)
+## F834 · Ficha do caso: linha do tempo compacta, Próximo prazo e estrela na linha das ações (27.11.2026, v14.41)
 
 Etapa 2 da revisão de estrutura visual. A linha do tempo do caso (F670) passa a rótulo e total em uma linha, com os trechos futuros em cinza sólido. A mini agenda (F669) abre recolhida na linha "Próximo prazo" (data e tipo); a seta abre o calendário, e a escolha vale até trocar de tela. No computador a estrela fica na linha das ações do cabeçalho. Prova em `f669.js`.
 
-## F833 · Lista em faixa com a ficha aberta (27.11.2026, v14.40)
+## F835 · Lista em faixa com a ficha aberta (27.11.2026, v14.41)
 
 Etapa 3. No computador, com a ficha aberta, a lista do meio passa de 380px a 216px e mostra nome e data; a alça ao lado do título devolve a largura, e a escolha fica em `crm_lista_faixa` neste computador. O menu lateral e a etiqueta dos ícones (já existente) não mudam. Prova em `f669.js`.
 
-## F834 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.40)
+## F836 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.41)
 
 Etapa 4. Os grupos Vencidas e Hoje ficam com fundo neutro e a cor apenas no título; Reagendar vai para junto da contagem; a data vencida diz "há N dias" (na lista larga; a coluna do prazo passou de 64px a 124px); o selo do tipo corta pela direita com reticências; o botão Sugestões troca o laranja pela cor do acento. Já existiam e não foram refeitos: o deslocamento dos flutuantes com o painel lateral, a folga de fim de rolagem e a coluna Etapa oculta quando vazia.

@@ -98,6 +98,11 @@ const FATOS = {
                dica:"data do protocolo do Recurso Especial à Câmara de Julgamento"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
+  // F831 · as datas dos atrasados (migração f831)
+  dip:        {rot:"DIP",         tipo:"data",    dica:"Data de Início do Pagamento: os atrasados vão até a véspera dela"},
+  citado_em:  {rot:"Citação",     tipo:"data",    dica:"data da citação do INSS: com o Tema 1124/STJ marcado, os efeitos financeiros contam dela; os juros de mora também (Súmula 204/STJ)"},
+  ciencia_indeferimento_em:{rot:"Ciência do indeferimento", tipo:"data",
+               dica:"ciência da decisão indeferitória definitiva no processo administrativo: a decadência da revisão conta 10 anos deste dia (Lei 8.213/91, art. 103)"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
   dii:        {rot:"DII",         tipo:"data",    dica:"Data de Início da Incapacidade"},
   dat:        {rot:"DAT",         tipo:"data",    dica:"Data do Acidente de Trabalho"},
@@ -1098,7 +1103,7 @@ function decadenciasDoCliente(cliId){
   for(const ca of f.cartas){
     const dec = decadenciaDe(ca, f.extratos); if(!dec) continue;
     const ate = dec.cedo || dec.ate;
-    if(ate>=hj && diasAte(ate)<=730) out.push({ca, dec, ate});
+    if(ate>=hj && diasAte(ate)<=365) out.push({ca, dec, ate});   // F831 · decadência fatal só nos últimos 12 meses
   }
   return out;
 }

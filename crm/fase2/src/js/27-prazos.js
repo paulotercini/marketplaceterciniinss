@@ -1257,7 +1257,7 @@ function nbsDoCaso(k){
 function miniAgenda(k){
   if(!k || !k.cliente_id) return "";
   if(k.cliente_id!==_pzCliId){ _pzCliId = k.cliente_id; _pzMes = null; _pzDia = null; }
-  // F832 · a mini agenda abre recolhida numa linha "Próximo prazo"; o mês inteiro fica a um clique e a escolha vale até fechar o CRM
+  // F834 · a mini agenda abre recolhida numa linha "Próximo prazo"; o mês inteiro fica a um clique e a escolha vale até fechar o CRM
   return `<section class="ma" aria-label="Agenda do cliente"><details class="ma-dt"${_maAberta ? " open" : ""} ontoggle="_maAberta=this.open"><summary>${maProximo(k.cliente_id)}</summary><div id="ma-cli">${maConteudo(k.cliente_id)}</div></details></section>`;
 }
 let _maAberta = false;

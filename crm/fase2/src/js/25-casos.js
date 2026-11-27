@@ -155,6 +155,10 @@ async function anexar(casoId, cliId){
   const inp=document.getElementById("arq-inp"), arq=inp&&inp.files&&inp.files[0];
   if(!arq) return;
   inp.value="";                                   // permite mandar o mesmo de novo
+  await anexarArquivo(casoId, cliId, arq);
+}
+// F832 · o mesmo envio, com o nome que diz o que é (o laudo, a manifestação, os quesitos do cartão da perícia)
+async function anexarArquivo(casoId, cliId, arq, nome=arq.name){
   if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
   const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
   const caminho=`${cliId}/${stamp}-${nomeSeguro(arq.name)}`;
@@ -163,9 +167,9 @@ async function anexar(casoId, cliId){
     await subirArquivo(caminho, arq);
     const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({caso_id:casoId, cliente_id:cliId, autor_id:eu.id,
-        nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+        nome, caminho, tipo:arq.type||null, tamanho:arq.size})});
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${arq.name}`})});
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${nome}`})});
     if(an) (D.anexos=D.anexos||[]).unshift(an);
     aviso("📎 Arquivo anexado");
     if(clienteAberto) abrirFicha(clienteAberto);
