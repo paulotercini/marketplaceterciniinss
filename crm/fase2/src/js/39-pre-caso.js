@@ -155,7 +155,10 @@ async function sincronizarParcelasHon(c, pcId, h){
   const pref=`hon:${pcId}:`;
   const ja=(D.pagamentos||[]).filter(p=>String(p.todo_item_id||"").startsWith(pref));
   const ks=D.casosDoCliente.get(c.id)||[];
-  const casoId=(ks.find(k=>k.fase!=="encerrado")||{}).id||null;
+  // 27.11.2026 · o caso ligado ao pré-caso, quando houver (antes ia ao primeiro caso aberto, que podia ser outro benefício)
+  const pc=precasosDe(c).find(p=>p.id===pcId)||{};
+  const lig=(pc.caso_id && D.casoPorId.get(pc.caso_id)) || ks.find(k=>(k.precaso||{}).id===pcId);
+  const casoId=(lig || ks.find(k=>k.fase!=="encerrado")||{}).id||null;
   const novos=parcelasHon(h).filter(x=>x.venc);
   try{
     for(const x of novos){

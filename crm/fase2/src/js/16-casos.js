@@ -375,6 +375,59 @@ async function confirmarRecebido(pgId){
   await correnteConferencia(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} recebido em ${fmt(data)}`);
   abrirFicha(clienteAberto);
 }
+// 27.11.2026 · ordem do Paulo: o lançamento se edita (valor e vencimento) e se cancela com motivo; o cancelado fica
+// riscado, com quem e quando (o banco grava os dois pelo login, F829); o recebido e a conferência se desfazem, com confirmação
+async function gravarPgto(p, corpo, erro){
+  try{ await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
+  catch(e){ aviso(erro); return false; }
+  Object.assign(p, corpo); return true;
+}
+function editarPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="aberto") return;
+  caixa(`<h3 style="margin:0 0 6px">Editar · ${esc(origemPgto(p))}</h3>
+    <div class="form-linha" style="align-items:flex-end;flex-wrap:wrap;gap:10px">
+      <label class="adr-campo">Valor<input type="number" step="0.01" min="0" id="ed-valor" value="${p.valor==null?"":+p.valor}" style="width:140px"></label>
+      <label class="adr-campo">Vencimento<input type="date" id="ed-venc" value="${esc(p.vencimento||"")}"></label>
+      <button class="adr-bt adr-primario" onclick="salvarEdicaoPgto('${p.id}')">Guardar</button>
+    </div>`);
+}
+async function salvarEdicaoPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const valor = +((document.getElementById("ed-valor")||{}).value||0), venc = (document.getElementById("ed-venc")||{}).value || null;
+  if(!(valor>0)) return aviso("Informe o valor");
+  if(!await gravarPgto(p, {valor, vencimento:venc, editado_por:eu.id, editado_em:new Date().toISOString()}, "Não gravei a edição — tente de novo")) return;
+  fecharCaixa(); aviso("Lançamento editado", false); repintarFicha();
+}
+function cancelarPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="aberto") return;
+  caixa(`<h3 style="margin:0 0 6px">Cancelar · ${esc(origemPgto(p))}</h3>
+    <p class="adr-nota" style="margin:0 0 10px">O lançamento não some: fica riscado, com o motivo, quem cancelou e quando, e sai dos totais.</p>
+    <label class="adr-campo" style="display:block">Motivo<textarea id="cc-motivo" rows="2" style="width:100%"></textarea></label>
+    <div class="form-linha" style="margin-top:8px"><button class="adr-bt adr-primario" onclick="confirmarCancelPgto('${p.id}')">Cancelar</button></div>`);
+}
+async function confirmarCancelPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const motivo = ((document.getElementById("cc-motivo")||{}).value||"").trim();
+  if(!motivo) return aviso("Escreva o motivo do cancelamento");
+  if(!await gravarPgto(p, {status:"cancelado", cancelado_motivo:motivo, cancelado_por:eu.id, cancelado_em:new Date().toISOString()}, "Não cancelei — tente de novo")) return;
+  fecharCaixa();
+  await desligarLembreteCobranca(D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id), p.id);
+  aviso("Lançamento cancelado", false); repintarFicha();
+}
+async function desfazerPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="recebido") return;
+  const cfs = p.conferencias||[], minha = cfs.length>1 && cfs[cfs.length-1].c===eu.id;
+  if(minha){
+    if(!await confirmar("Desfazer a sua conferência deste recebimento?")) return;
+    if(!await gravarPgto(p, {conferencias:cfs.slice(0, -1)}, "Não desfiz a conferência — tente de novo")) return;
+    aviso("Conferência desfeita", false);
+  }else{
+    if(!await confirmar(`Desfazer o recebido de ${moeda(p.valor)}? O lançamento volta a receber e a corrente de conferência é apagada.`)) return;
+    if(!await gravarPgto(p, {status:"aberto", pago_em:null, vencimento:p.vencimento||p.pago_em, conferencias:[], editado_por:eu.id, editado_em:new Date().toISOString()}, "Não desfiz o recebido — tente de novo")) return;
+    aviso("Recebido desfeito: o lançamento voltou a receber", false);
+  }
+  repintarFicha();
+}
 // F236 · a parcela do 💰 Recebimentos abre a ficha já na aba Honorários, no caso dela
 async function abrirHonorariosDe(cliId, casoId){
   await abrirFicha(cliId);
@@ -717,19 +770,20 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             const jaConferi=cfs.some(cf=>cf.c===eu.id);
             const susp = p.status==="aberto" && valorSuspeito(p), nota = notaPgto(p);
             const [sit, cor] = susp ? ["conferir valor", "venc"] : situacaoPgto(p, prox && prox.id);
-            return `<tr class="pgto" data-pg="${p.id}">
-              <td class="hon-data">${dataDe(p) ? fmt(dataDe(p)) : "—"}</td>
-              <td class="desc">${(d=>d&&d!=="Recebimento"?esc(d):"Recebimento")(semNota(p.descricao))}${nota?`<small class="hon-nota">${esc(nota)}</small>`:""}${susp?`<small class="hon-nota">valor fora do comum (um número de processo ou de benefício lido como valor?): fica fora dos totais até alguém conferir
+            const canc = p.status==="cancelado", risca = t => canc ? `<s>${t}</s>` : t;
+            return `<tr class="pgto${canc?" hon-cancelado":""}" data-pg="${p.id}">
+              <td class="hon-data">${risca(dataDe(p) ? fmt(dataDe(p)) : "—")}</td>
+              <td class="desc">${risca((d=>d&&d!=="Recebimento"?esc(d):"Recebimento")(semNota(p.descricao)))}${canc?`<small class="hon-nota">Cancelado${p.cancelado_por?` por ${esc(((D.colPorId.get(p.cancelado_por)||{}).nome||"?").split(" ")[0])}`:""}${p.cancelado_em?` em ${fmtTS(p.cancelado_em)}`:""}${p.cancelado_motivo?`: ${esc(p.cancelado_motivo)}`:""}</small>`:""}${p.editado_em && !canc?`<small class="hon-nota">Editado${p.editado_por?` por ${esc(((D.colPorId.get(p.editado_por)||{}).nome||"?").split(" ")[0])}`:""} em ${fmtTS(p.editado_em)}</small>`:""}${nota?`<small class="hon-nota">${esc(nota)}</small>`:""}${susp?`<small class="hon-nota">valor fora do comum (um número de processo ou de benefício lido como valor?): fica fora dos totais até alguém conferir
                   <button class="btn-mini" onclick="conferirValor('${p.id}')" title="o valor está certo: ele volta aos totais"><span aria-hidden="true">Confirmar</span><span class="sr-only">o valor está certo</span></button></small>`:""}
                 <div class="hon-vinc">${vinculoDaParcela(p, ks)}
                 <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
                   return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
                     <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
                     <small>${i===0?"recebeu":"conferiu"} ${fmtTS(cf.em).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span></div></td>
-              <td class="valor hon-num">${p.status==="aberto" && pgSemValor(p) ? "a calcular" : `${pgEstimado(p)?"≈ ":""}${moeda(p.valor)}`}</td>
+              <td class="valor hon-num">${risca(p.status==="aberto" && pgSemValor(p) ? "a calcular" : `${pgEstimado(p)?"≈ ":""}${moeda(p.valor)}`)}</td>
               <td><span class="hon-sit hon-${cor}">${sit}</span></td>
-              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button>`:
-                p.status!=="cancelado" && !jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}</td>
+              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button><button class="adr-bt" onclick="editarPgto('${p.id}')" title="corrigir o valor ou o vencimento">Editar</button><button class="adr-bt" onclick="cancelarPgto('${p.id}')" title="cancelar este lançamento, com o motivo (ele fica riscado)">Cancelar</button>`:
+                canc ? "" : `${!jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}<button class="adr-bt" onclick="desfazerPgto('${p.id}')" title="${cfs.length>1 && cfs[cfs.length-1].c===eu.id ? "desfazer a sua conferência" : "desfazer o recebido: o lançamento volta a receber"}">Desfazer</button>`}</td>
             </tr>`;}).join("")}</tbody></table></div>`
           : "<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
         <details class="hon-novo" ${linhas.length?"":"open"}>
@@ -748,13 +802,15 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             <label class="adr-campo">Data<input type="date" id="np-data" value="${hoje()}"></label>
             <label class="adr-campo">Valor<input id="np-valor" type="number" step="0.01" placeholder="R$" style="width:120px"></label>
             <label class="adr-campo" style="flex:1;min-width:160px">Origem<input id="np-desc" placeholder="RPV, honorários, 1ª parcela…"></label>
-            <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="o honorário que já venceu e não entrou: a data vira o vencimento">
-              <input type="checkbox" id="np-aberto" style="width:18px;height:18px">ainda a receber</label>
+            <span role="radiogroup" aria-label="Situação do lançamento" style="display:flex;gap:12px">
+              <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="o dinheiro já entrou: a data é o dia do recebimento">
+                <input type="radio" name="np-sit" value="recebido" style="width:18px;height:18px">Recebido</label>
+              <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="ainda não entrou: a data é o vencimento">
+                <input type="radio" name="np-sit" value="aberto" style="width:18px;height:18px">A receber</label></span>
             <button class="adr-bt adr-primario" onclick="novoPgto()">Registrar</button>
           </div>
-          <p class="adr-nota">Data de hoje ou passada = dinheiro <strong>recebido</strong> (você entra como quem recebeu), a não ser que marque
-            <strong>ainda a receber</strong>: aí a data é o vencimento, como no honorário que venceu e não entrou.
-            Data futura = <strong>a receber</strong> (vencimento). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
+          <p class="adr-nota">Marque sempre: <strong>Recebido</strong> (a data é o dia em que entrou e você consta como quem recebeu) ou
+            <strong>A receber</strong> (a data é o vencimento, inclusive o do honorário que venceu e não entrou). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
             a corrente mostra quem recebeu e quem conferiu, com a data de cada um.</p>
         </details>
       </section>
