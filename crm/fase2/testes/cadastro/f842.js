@@ -1,6 +1,6 @@
-// F840 · o mesmo NB em dois casos do mesmo cliente: o plano de organização junta o caso do To Do ao mais adiantado,
+// F842 · o mesmo NB em dois casos do mesmo cliente: o plano de organização junta o caso do To Do ao mais adiantado,
 // e não junta quando o caso ficaria com dois NUP, quando o incorporado nasceu no CRM ou quando um é revisão e o outro não.
-// Banco simulado, dados fictícios (NB e processo com dígito inválido). Uso: node f840.js
+// Banco simulado, dados fictícios (NB e processo com dígito inválido). Uso: node f842.js
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");

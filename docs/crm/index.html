@@ -54596,12 +54596,12 @@ function planoOrganizar(cliId){
   const grupos = new Map();
   for(const it of itens) grupos.set(it.nb, [...(grupos.get(it.nb)||[]), it]);
   const saem = new Map();   // caso -> {n, para:Set}: números que deixam o caso
-  const juntados = new Set();   // F840 · casos que já se juntam pelo NB repetido
+  const juntados = new Set();   // F842 · casos que já se juntam pelo NB repetido
   const sai = (casoId, para) => { const x = saem.get(casoId) || {n:0, para:new Set()}; x.n++; x.para.add(para); saem.set(casoId, x); };
   for(const [nb, g] of grupos){
     const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
     if(donos.length>1){
-      // F840 · o mesmo NB em dois casos do cliente é o mesmo benefício que mudou de fase: os outros se juntam ao mais
+      // F842 · o mesmo NB em dois casos do cliente é o mesmo benefício que mudou de fase: os outros se juntam ao mais
       // adiantado (decisão do Paulo, 27.11.2026). Só a tarefa do To Do se junta (vira casca, e a fusão se desfaz); nunca
       // quando o caso ficaria com dois NUP ou dois processos principais, nem revisão com concessão. O resto segue na sugestão "repetido".
       const ord = [...donos].sort((x,y)=>(ORDEM_FASE_ORG[y.fase]||0)-(ORDEM_FASE_ORG[x.fase]||0) || (x.todo_task_id?1:0)-(y.todo_task_id?1:0)

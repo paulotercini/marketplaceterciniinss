@@ -1,6 +1,6 @@
 name: CRM — organizar casos em lote
 
-# F840 · roda o "Organizar todos pelos documentos" do próprio CRM (crm/fase2/lote/organizar_lote.js) no banco,
+# F842 · roda o "Organizar todos pelos documentos" do próprio CRM (crm/fase2/lote/organizar_lote.js) no banco,
 # só quando chamado à mão. Sem "escrever", apenas conta os passos. "clientes" limita a gravação (piloto).
 # O log é público: só contagens.
 on:
