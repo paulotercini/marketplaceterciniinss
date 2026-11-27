@@ -1348,6 +1348,15 @@ function blocoFatos(k){
 }
 // F670 · linha do tempo do caso (protótipo do Base44 aprovado pelo Paulo, 21.11.2026): total desde o 1º contato e a barra
 // das fases na cor de cada uma, com o ano em que começou. Tudo lido do que já está gravado; nada se digita aqui.
+// F674 · a fase em curso enche pelo tempo decorrido sobre a duração média medida (mín. 15%, teto 90%; sem média, 50% sem número)
+function pctFase(k, f, desde){
+  const esp = String(k.especie||"").replace(/\D/g,"").slice(0,2);
+  const med = f==="inss" ? (/^(31|32|91|92)$/.test(esp) ? 18 : /^(87|88)$/.test(esp) ? 30 : esp ? 45 : 0)
+    : f==="conselho" ? 425 : f==="judicial" ? (/^jef/.test(ritoDe(k, "judicial")||"") ? 274 : 0) : 0;
+  const dias = desde ? diasEntreIso(String(desde).slice(0,10), hoje()) : NaN;
+  if(!med || !(dias>=0)) return {p:50, mostra:false};
+  return {p: Math.round(Math.min(90, Math.max(15, dias/med*100))), mostra:true};
+}
 function linhaTempoCaso(k){
   if(!ehPrev(k) || ehPreCaso(k)) return "";
   const ano = s => (/^\d{4}/.exec(String(s||""))||[""])[0];
@@ -1357,6 +1366,7 @@ function linhaTempoCaso(k){
   const impl = !!k.dib || /^(pagamento|encerrado)$/.test(k.fase||"");
   const cli = D.cliPorId.get(k.cliente_id) || {}, ini = andsDoCaso(k).filter(a=>!a.excluir).map(a=>a.criado_em).filter(Boolean).sort()[0]   // F670b · o início é a primeira anotação
     || [cli.criado_em, k.criado_em].filter(Boolean).sort()[0];
+  const a0 = {escritorio:ini, inss:k.der, conselho:k.ro_protocolado_em, judicial:k.ajuizado_em};
   const segs = [
     ["escritorio", st("escritorio"), ano(ini), 2],
     ["inss", st("inss"), ano(k.der), 1.6],
@@ -1373,8 +1383,9 @@ function linhaTempoCaso(k){
   const resto = so.replace(/<button role="tab"[\s\S]*?<\/button>/g, "").replace(tudo, "");
   const bar = segs.filter(([f,s])=>s!=="n" || bt[f]).map(([f,s,a,fl])=>{
     const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v" || s==="n";
+    const pc = s==="a" ? pctFase(k, f, a0[f]) : null, fill = pc==null ? "" : `<i class="ltc-p" style="--p:${pc.p}%"></i>`;
     if(bt[f]) return bt[f].replace('class="jn-b ', `class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""} jn-b `).replace('style="', `style="flex:${fl};--c:${fut?"#B7BCC2":c};`)
-      .replace(/<\/button>$/, `<span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span></button>`);
+      .replace(/<\/button>$/, `<span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r">${fill}</span>${pc&&pc.mostra?`<span class="ltc-q">${pc.p}%</span>`:""}</button>`);
     return `<div class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""}" style="flex:${fl};--c:${fut?"#B7BCC2":c}" title="${esc(n)}${a&&!fut?` · desde ${a}`:""}">
       <span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span><span class="ltc-n">${esc(n)}</span></div>`; }).join("");
   let tot = "";
