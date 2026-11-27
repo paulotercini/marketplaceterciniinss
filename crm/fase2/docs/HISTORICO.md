@@ -1247,3 +1247,7 @@ Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_
 - "Conferir o caso" sai uma vez, no cabeçalho da anotação, e não mais em cada linha.
 - O que a equipe escreveu vai na primeira pessoa do singular, sem o nome do colaborador.
 - O alerta de 30 min (zap_alerta_sem_resposta) e o filtro "Sem resposta há mais de 24 h" ignoram "ok", agradecimento e cortesia (mais palavras: obga, igualmente, semana, todos, vocês).
+
+## F842 · Mesmo NB em dois casos do cliente: o plano de organização junta sozinho (27.11.2026, v14.44)
+
+Decisão do Paulo no plano de saneamento dos cadastros: casos do mesmo cliente com o mesmo NB são o mesmo benefício que mudou de fase. `planoOrganizar` (35-casos.js) deixava o NB repetido só na sugestão "repetido"; agora gera o passo "juntar" para o caso mais adiantado (`ORDEM_FASE_ORG`). Só a tarefa do To Do se junta (vira casca encerrada, a sincronização leva ao destino o que ela trouxer, e o Desfazer da organização a reabre). Não junta quando o caso ficaria com dois NUP ou dois processos principais, quando um é revisão e o outro não, quando o incorporado tem outro NB ou nasceu no CRM (a fusão o apagaria); esses seguem na sugestão. A fase Pagamento continua fora da organização. `lote/organizar_lote.js` aceita `CLIENTES` (grava só neles), acha o administrador sozinho e passa a deixar a fusão levar tarefas, pagamentos e Meu Dia; o workflow `crm-lote-organizar.yml` o roda à mão. Teste: `testes/cadastro/f842.js`.

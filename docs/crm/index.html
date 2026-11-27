@@ -7471,7 +7471,7 @@ html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.43</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.44</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -54597,10 +54597,27 @@ function planoOrganizar(cliId){
   const grupos = new Map();
   for(const it of itens) grupos.set(it.nb, [...(grupos.get(it.nb)||[]), it]);
   const saem = new Map();   // caso -> {n, para:Set}: números que deixam o caso
+  const juntados = new Set();   // F842 · casos que já se juntam pelo NB repetido
   const sai = (casoId, para) => { const x = saem.get(casoId) || {n:0, para:new Set()}; x.n++; x.para.add(para); saem.set(casoId, x); };
   for(const [nb, g] of grupos){
     const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
-    if(donos.length>1) continue;   // o mesmo NB em dois casos: a sugestão "repetido" pede a escolha
+    if(donos.length>1){
+      // F842 · o mesmo NB em dois casos do cliente é o mesmo benefício que mudou de fase: os outros se juntam ao mais
+      // adiantado (decisão do Paulo, 27.11.2026). Só a tarefa do To Do se junta (vira casca, e a fusão se desfaz); nunca
+      // quando o caso ficaria com dois NUP ou dois processos principais, nem revisão com concessão. O resto segue na sugestão "repetido".
+      const ord = [...donos].sort((x,y)=>(ORDEM_FASE_ORG[y.fase]||0)-(ORDEM_FASE_ORG[x.fase]||0) || (x.todo_task_id?1:0)-(y.todo_task_id?1:0)
+        || String(x.criado_em||"").localeCompare(String(y.criado_em||"")));
+      const dest = ord[0], nd = nums.get(dest.id), rev = k=>/revis/i.test(k.beneficio||"");
+      const sobra = (xs, ys) => xs.length && ys.length && xs.some(x=>!ys.includes(x));
+      for(const k of ord.slice(1)){
+        const n = nums.get(k.id);
+        if(!k.todo_task_id || n.nb.length!==1 || sobra(n.nup, nd.nup) || rev(k)!==rev(dest)
+          || (soDig(k.processo) && soDig(dest.processo) && soDig(k.processo)!==soDig(dest.processo))) continue;
+        juntados.add(k.id);
+        passos.push({acao:"juntar", de:k.id, para:dest.id, txt:`Juntar o caso ${rotCurtoCaso(k)} ao caso ${rotCurtoCaso(dest)}: os dois têm o NB ${fmtNb(nb)}`, fonte:"o mesmo NB nos dois casos"});
+      }
+      continue;
+    }
     const env = [...new Set([...g.map(x=>x.casoId), ...donos.map(k=>k.id)])].map(id=>D.casoPorId.get(id));
     if(env.length<2){
       const k = env[0];
@@ -54627,7 +54644,7 @@ function planoOrganizar(cliId){
   // o caso que entrega todos os seus números a um só destino junta-se a ele
   // (só o que veio do To Do: a casca fica encerrada e a fusão se desfaz)
   for(const k of ks){
-    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id) continue;
+    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id || juntados.has(k.id)) continue;
     const total = Object.values(nums.get(k.id)).reduce((s,v)=>s+v.length, 0);
     const para = D.casoPorId.get([...x.para][0]);
     if(total && x.n>=total && para) passos.push({acao:"juntar", de:k.id, para:para.id,
