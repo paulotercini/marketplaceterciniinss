@@ -649,6 +649,9 @@ function itensAgendaTodos(){
       por({data:d, k, cli, selo:`Aviso ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),   // F531 · aviso, não prazo
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
+    // F832 · a RPV registrada e ainda não paga: o tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art. 17)
+    for(const r of reqsDoCaso(k)){ const pz = !r.pago_em && prazoRpv(r);
+      if(pz) por({data:pz, k, cli, selo:"RPV", resumo:`${pz<hj ? "cobrar o pagamento" : "conferir o pagamento"} da RPV de ${moedaTxt(r.valor)}: 60 dias da ${r.entrega ? "entrega da requisição" : "expedição"} (Lei 10.259/2001, art. 17)`}, donos); }
     if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")

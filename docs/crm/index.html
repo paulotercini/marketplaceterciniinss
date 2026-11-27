@@ -5341,9 +5341,9 @@ path.adp-car{stroke:var(--azul)}path.adp-ida{stroke:var(--prox,#8F5400)}
 .hon-vencidos{background:var(--venc-fundo,#FBEAE7);border:1px solid #F0C4BE;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
 .hon-vencidos .hon-venc-cab{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;color:var(--venc-tinta,#B3261E)}
 .hon-vencidos .hon-venc-cab b{font-size:18px}
-.hon-vencidos ul,.hon-prop ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.hon-vencidos li,.hon-prop ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
-.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
+.hon-vencidos ul,.hon-prop ul.hon-prop-itens,.hon-req ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hon-vencidos li,.hon-prop ul.hon-prop-itens li,.hon-req ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
+.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child,.hon-req ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
 .hon-prop{border-color:#EED6A8}
 .hon-prop li.condic{color:var(--cinza)}
 .hon-prop ul.hon-prop-info{margin:0;padding-left:18px;font-size:13px;color:var(--cinza);display:flex;flex-direction:column;gap:4px}
@@ -7388,7 +7388,7 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.39</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.40</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15709,6 +15709,9 @@ function itensAgendaTodos(){
       por({data:d, k, cli, selo:`Aviso ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),   // F531 · aviso, não prazo
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
+    // F832 · a RPV registrada e ainda não paga: o tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art. 17)
+    for(const r of reqsDoCaso(k)){ const pz = !r.pago_em && prazoRpv(r);
+      if(pz) por({data:pz, k, cli, selo:"RPV", resumo:`${pz<hj ? "cobrar o pagamento" : "conferir o pagamento"} da RPV de ${moedaTxt(r.valor)}: 60 dias da ${r.entrega ? "entrega da requisição" : "expedição"} (Lei 10.259/2001, art. 17)`}, donos); }
     if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
@@ -27425,11 +27428,12 @@ function concessaoDoCaso(k){
     else if(/^(pje|esaj|eproc)$/.test(a.origem||"") && /\b(?:julgad[oa]|julgo)\s+(?:parcialmente\s+)?procedente\b|\bprocedente em parte\b|\bhomologad[oa] o acordo\b/i.test(t))
       s.push({em: dataSP(dataDoMovimento(a)), rot: /acordo/i.test(t) ? "acordo homologado" : "sentença de procedência", via:"rec"});
   }
-  const reqs = docs.filter(a=>a.texto && RX_REQUISICAO.test(a.nome||"") && !/comprovante|dep[óo]sito|alvar/i.test(a.nome||"")).map(requisicaoDoDoc);
+  const reqs = docs.filter(a=>a.texto && RX_REQUISICAO.test(a.nome||"") && !/comprovante|dep[óo]sito|alvar/i.test(a.nome||"")).map(requisicaoDoDoc)
+    .concat(reqsDoCaso(k).map(reqManual));   // F832 · e a registrada à mão
   const mc = (k.datajud||{}).marcos || {};
   const exped = reqs.map(r=>r.em).filter(Boolean).sort()[0] || (mc.requisitorio||{}).data || null;
   const comp = docs.find(a=>/comprovante de dep[óo]sito|alvar[áa]/i.test(a.nome||""));
-  const paga = (mc.pago||{}).data || (comp && dataDoAnexo(comp)) || null;
+  const paga = (mc.pago||{}).data || (comp && dataDoAnexo(comp)) || reqsDoCaso(k).map(r=>r.pago_em).filter(Boolean).sort()[0] || null;
   if(exped) s.push({em: exped, rot:"requisitório expedido", via:"rec"});
   else if(paga) s.push({em: paga, rot:"pagamento registrado nos autos", via:"rec"});
   if(!s.length && k.resultado==="deferido") s.push({em: k.decisao_em || null, rot:"resultado deferido", via: viaDoCaso(k)==="rec" ? "rec" : "adm"});
@@ -28048,6 +28052,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
         <span class="adr-tile-sub">${prox ? `${esc(origemPgto(prox))} · ${pgSemValor(prox)?"a calcular":moeda(prox.valor)}` : vencidos.length ? "nada a vencer: os vencidos estão acima" : "nada em aberto com data"}</span></div>
     </section>
     ${props.map(cartaoProposta).join("")}
+    ${reais.filter(k=>k.fase!=="encerrado" && (["judicial","pagamento"].includes(k.fase) || reqsDoCaso(k).length)).map(cartaoRequisicoes).join("")}
     <div class="adr-colunas">
       <section class="adr-card adr-col-larga hon-lanc" aria-labelledby="hon-lanc-t">
         <div class="adr-cab"><h3 class="adr-h" id="hon-lanc-t">Lançamentos</h3></div>
@@ -28557,6 +28562,171 @@ function pintarPrazoDoTexto(k){
     + (achado && achado.iso>hoje() ? `
         <button type="button" class="btn-mini chip-desp${prazoDespachar?" on":""}" aria-pressed="${prazoDespachar}" onclick="chipDespachar()"
           title="ao registrar, conclui por hoje: a data vira o Concluir em e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : "");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F832 · RPV E PRECATÓRIO NO CASO JUDICIAL (ordem do Paulo, 27.11.2026, melhoria 5 da auditoria). A requisição
+// registrada à mão (tipo, valor, expedição e entrega) mora em clientes.campos.requisicoes[caso], como o destaque e a
+// proposta de honorários. Ela entra na concessão (concessaoDoCaso): a proposta de honorários lança o destaque e a
+// sucumbência sem duplicar. A RPV vence 60 dias depois da entrega da requisição (Lei 10.259/2001, art. 17), com
+// alerta no Meu Dia; o precatório segue o cronograma do tribunal. Situações: Expedida, Paga, Levantada, Repassada.
+// ══════════════════════════════════════════════════════════════════════════
+const reqsDoCaso = k => { const c = k && D.cliPorId.get(k.cliente_id); return ((((c||{}).campos||{}).requisicoes||{})[k.id]) || []; };
+const prazoRpv = r => r && r.tipo==="rpv" && (r.entrega || r.expedida) ? somaDias(r.entrega || r.expedida, 60) : null;
+const situacaoReq = r => r.repasse ? "Repassada" : r.levantado_em ? "Levantada" : r.pago_em ? "Paga" : "Expedida";
+const rotReq = r => r.tipo==="precatorio" ? "Precatório" : "RPV";
+// o líquido do cliente: o bruto levantado menos o IR retido na fonte (RRA, Lei 7.713/1988, art. 12-A) e os honorários
+// contratuais, salvo os destacados na requisição, que o tribunal pagou direto ao escritório e não saem do crédito dele
+const liquidoRepasse = x => (Math.round((+x.bruto||0)*100) - Math.round((+x.ir||0)*100) - (x.destacado ? 0 : Math.round((+x.honor||0)*100))) / 100;
+// a requisição registrada, no formato da lida do documento (requisicaoDoDoc)
+const reqManual = r => ({em:r.entrega || r.expedida, precatorio:r.tipo==="precatorio", bruto:+r.valor||0, destaque:+r.destaque||0,
+  semDestaque:false, sucumbencia:+r.sucumbencia||0, manual:true});
+function cartaoRequisicoes(k){
+  const rs = reqsDoCaso(k), hj = hoje();
+  const PROX = {Expedida:["Paga","pago"], Paga:["Levantada","levantado"], Levantada:["Repasse","repasse"]};
+  const linha = r => {
+    const sit = situacaoReq(r), pz = prazoRpv(r), venc = pz && !r.pago_em && pz < hj, prox = PROX[sit];
+    const nota = [`expedida em ${fmt(r.expedida)}`, r.entrega ? `entregue ao tribunal em ${fmt(r.entrega)}` : "",
+      r.tipo==="precatorio" && !r.pago_em ? "pago pelo cronograma do tribunal" : "",
+      pz && !r.pago_em ? `${venc ? "prazo vencido em" : "prazo de pagamento até"} ${fmt(pz)} (60 dias da ${r.entrega ? "entrega" : "expedição; confirme a data da entrega"}, Lei 10.259/2001, art. 17)` : "",
+      r.destaque ? `honorários destacados ${moeda(r.destaque)}` : "", r.sucumbencia ? `sucumbência ${moeda(r.sucumbencia)}` : "",
+      r.pago_em ? `paga em ${fmt(r.pago_em)}` : "", r.levantado_em ? `levantada em ${fmt(r.levantado_em)}${r.alvara ? ` (alvará ${r.alvara})` : ""}` : "",
+      r.repasse ? `repassados ${moeda(r.repasse.liquido)} ao cliente em ${fmt(r.repasse.em)}` : ""].filter(Boolean).join(" · ");
+    return `<li><span>${rotReq(r)}<small class="hon-nota">${esc(nota)}</small></span><b>${moeda(r.valor)}</b>
+      <span class="hon-sit hon-${sit==="Repassada" ? "ok" : venc ? "venc" : "prox"}">${sit}</span>
+      ${prox ? `<button class="adr-bt" onclick="passoReq('${k.id}','${r.id}','${prox[1]}')">${prox[0]}</button>` : ""}
+      ${r.repasse ? `<button class="adr-bt" onclick="reciboRepasse('${k.id}','${r.id}')" title="recibo do repasse, para imprimir">Recibo</button>` : ""}</li>`;
+  };
+  return `<section class="adr-card hon-req" aria-labelledby="hon-req-${k.id}">
+    <div class="adr-cab"><h3 class="adr-h" id="hon-req-${k.id}">RPV e precatório · ${esc(tituloCaso(k))}</h3></div>
+    ${rs.length ? `<ul class="hon-prop-itens">${rs.map(linha).join("")}</ul>` : `<p class="adr-nota">Nenhuma requisição registrada neste processo.</p>`}
+    <button class="adr-bt adr-primario" style="width:max-content" onclick="passoReq('${k.id}','','expedida')" title="registrar a expedição de RPV ou precatório">Registrar</button>
+  </section>`;
+}
+// cada passo numa caixa: a expedição, o pagamento, o levantamento (com o alvará) e o repasse ao cliente
+function passoReq(casoId, rid, passo){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id); if(!c) return;
+  const r = reqsDoCaso(k).find(x=>x.id===rid) || {};
+  const cp = (rot, id, tipo, v, extra="") => `<label class="adr-campo">${rot}<input type="${tipo}" id="rq-${id}" value="${esc(v==null ? "" : String(v))}"${tipo==="number" ? ' step="0.01" min="0" style="width:140px"' : ""}${extra}></label>`;
+  let tit, corpo, nota;
+  if(passo==="expedida"){
+    tit = "Registrar requisição";
+    corpo = `<label class="adr-campo">Tipo<select id="rq-tipo"><option value="rpv">RPV</option><option value="precatorio">Precatório</option></select></label>`
+      + cp("Valor requisitado", "valor", "number", "") + cp("Expedida em", "expedida", "date", hoje(), ` max="${hoje()}"`) + cp("Entregue ao tribunal em", "entrega", "date", "")
+      + cp("Honorários destacados", "destaque", "number", "") + cp("Sucumbência", "sucumbencia", "number", "");
+    nota = "A RPV é paga em até 60 dias da entrega da requisição ao tribunal (Lei 10.259/2001, art. 17); sem a data da entrega, o prazo conta da expedição. Os honorários destacados e a sucumbência vão à proposta de honorários do contrato.";
+  }else if(passo==="pago"){
+    tit = `${rotReq(r)} paga`; corpo = cp("Paga em", "pago_em", "date", hoje(), ` max="${hoje()}"`); nota = "O dia do depósito judicial.";
+  }else if(passo==="levantado"){
+    tit = "Levantamento"; corpo = cp("Levantada em", "levantado_em", "date", hoje(), ` max="${hoje()}"`) + cp("Alvará", "alvara", "text", "");
+    nota = "O dia do levantamento e o número do alvará, quando houver.";
+  }else{
+    const T = termosHon(c, k, "rec"), bruto = Math.round(((+r.valor||0) - (+r.destaque||0) - (+r.sucumbencia||0))*100)/100;
+    const honor = r.destaque ? +r.destaque : Math.round(bruto*(T.pctAtr||0))/100;
+    tit = "Repasse ao cliente";
+    corpo = cp("Valor bruto levantado", "bruto", "number", bruto, ' oninput="rqLiquido()"') + cp("Honorários contratuais", "honor", "number", honor, ' oninput="rqLiquido()"')
+      + `<label class="conta-ck" style="display:flex;align-items:center;gap:8px;min-height:40px"><input type="checkbox" id="rq-destacado" style="width:20px;height:20px" ${r.destaque ? "checked" : ""} onchange="rqLiquido()">destacados na requisição</label>`
+      + cp("IR retido (RRA)", "ir", "number", "", ' oninput="rqLiquido()"') + cp("Repassado em", "em", "date", hoje(), ` max="${hoje()}"`)
+      + `<p class="adr-nota" style="flex-basis:100%">Valor líquido ao cliente: <b id="rq-liq"></b></p>`;
+    nota = `Honorários pelo contrato: ${T.frase || "sem percentual dos atrasados"}. Os destacados foram pagos direto ao escritório e não saem do crédito do cliente; os demais entram como recebidos nos honorários, sem novo lançamento quando já houver um. O IR é o retido pelo banco no regime de rendimentos recebidos acumuladamente (Lei 7.713/1988, art. 12-A), quando houver.`;
+  }
+  caixa(`<h3 style="margin:0 0 6px">${esc(tit)} · ${esc(tituloCaso(k))}</h3><p class="adr-nota" style="margin:0 0 10px">${esc(nota)}</p>
+    <div class="form-linha" style="align-items:flex-end;flex-wrap:wrap;gap:10px">${corpo}
+      <button class="adr-bt adr-primario" onclick="gravarReq('${k.id}','${escJs(rid)}','${passo}')">Gravar</button></div>`);
+  if(passo==="repasse") rqLiquido();
+}
+const rqVal = id => (document.getElementById("rq-"+id)||{}).value || "";
+function rqLiquido(){
+  const el = document.getElementById("rq-liq");
+  if(el) el.textContent = moeda(liquidoRepasse({bruto:rqVal("bruto"), honor:rqVal("honor"), ir:rqVal("ir"), destacado:(document.getElementById("rq-destacado")||{}).checked}));
+}
+async function gravarReq(casoId, rid, passo){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id); if(!c) return;
+  const lista = reqsDoCaso(k), r = lista.find(x=>x.id===rid), hj = hoje();
+  let nova, texto;
+  if(passo==="expedida"){
+    const v = +rqVal("valor"), ex = rqVal("expedida"), en = rqVal("entrega") || null, tipo = rqVal("tipo")==="precatorio" ? "precatorio" : "rpv";
+    if(!(v > 0)) return aviso("Informe o valor requisitado");
+    if(!ex || ex > hj) return aviso("Informe a data da expedição");
+    if(en && en < ex) return aviso("A entrega não pode ser anterior à expedição");
+    const n = {id:crypto.randomUUID(), tipo, valor:v, expedida:ex, entrega:en, destaque:+rqVal("destaque")||0, sucumbencia:+rqVal("sucumbencia")||0, por:eu.id};
+    nova = [...lista, n];
+    texto = `${rotReq(n)} de ${moedaTxt(v)} expedida em ${fmt(ex)}${en ? ` e entregue ao tribunal em ${fmt(en)}` : ""}.${prazoRpv(n) ? ` Prazo de pagamento até ${fmt(prazoRpv(n))} (Lei 10.259/2001, art. 17).` : " Pagamento pelo cronograma do tribunal."}`;
+  }else{
+    if(!r) return;
+    const d = rqVal(passo==="repasse" ? "em" : passo+"_em");
+    if(!d || d > hj) return aviso("Informe a data, que não pode ser futura");
+    let m;
+    if(passo==="pago"){ m = {pago_em:d}; texto = `${rotReq(r)} de ${moedaTxt(r.valor)} paga em ${fmt(d)}.`; }
+    else if(passo==="levantado"){ m = {levantado_em:d, alvara:rqVal("alvara").trim() || null}; texto = `Levantamento da ${rotReq(r)} em ${fmt(d)}${m.alvara ? `, alvará ${m.alvara}` : ""}.`; }
+    else{
+      const x = {em:d, bruto:+rqVal("bruto")||0, honor:+rqVal("honor")||0, destacado:!!(document.getElementById("rq-destacado")||{}).checked, ir:+rqVal("ir")||0};
+      if(!(x.bruto > 0)) return aviso("Informe o valor bruto levantado");
+      x.liquido = liquidoRepasse(x);
+      if(x.liquido < 0) return aviso("O líquido ficou negativo: confira os valores");
+      m = {repasse:x};
+      texto = `Repasse ao cliente em ${fmt(d)}: bruto ${moedaTxt(x.bruto)}, honorários contratuais ${moedaTxt(x.honor)}${x.destacado ? " (destacados, não descontados)" : ""}${x.ir ? `, IR retido ${moedaTxt(x.ir)}` : ""}, líquido ${moedaTxt(x.liquido)}.`;
+    }
+    nova = lista.map(y=>y===r ? {...y, ...m} : y);
+  }
+  const antes = ((c.campos||{}).requisicoes)||{};
+  if(!await gravarCamposCli(c, {requisicoes:{...antes, [k.id]:nova}})) return;
+  fecharCaixa();
+  const pg = passo==="repasse" ? await honorariosDoRepasse(c, k, nova.find(y=>y.id===rid).repasse) : null;
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})}).catch(()=>{});
+  repintarFicha();
+  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo], async()=>{
+    await gravarCamposCli(c, {requisicoes:antes});
+    if(pg) await api(`/rest/v1/pagamentos?id=eq.${pg.p.id}`, pg.antes ? {method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(pg.antes)} : {method:"DELETE"}).catch(()=>{});
+    if(pg){ if(pg.antes) Object.assign(pg.p, pg.antes); else D.pagamentos = D.pagamentos.filter(y=>y!==pg.p); }
+    repintarFicha();
+  });
+}
+// os honorários retidos no repasse (não destacados) entram como recebidos: o lançamento dos atrasados que já existe é
+// baixado; sem ele, nasce um, com a marca da proposta (hon:caso:atr), e a proposta não o lança de novo
+async function honorariosDoRepasse(c, k, x){
+  if(x.destacado || !(x.honor > 0)) return null;
+  const conf = [{c:eu.id, em:new Date().toISOString()}];
+  const p = (D.pagamentos||[]).find(y=>y.status==="aberto" && casoDoPgto(y)===k.id && natPgto(y)==="contrato" && !ORD_BEN.test(y.descricao||"")
+    && (String(y.todo_item_id||"")===`hon:${k.id}:atr` || /atrasad|\brpv\b|precat/i.test(y.descricao||"")));
+  try{
+    if(p){
+      const antes = {status:p.status, pago_em:p.pago_em, valor:p.valor, descricao:p.descricao, conferencias:p.conferencias||[]};
+      const muda = {status:"recebido", pago_em:x.em, valor:x.honor, descricao:semNota(p.descricao), conferencias:[...(p.conferencias||[]), ...conf]};
+      await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(muda)});
+      Object.assign(p, muda);
+      return {p, antes};
+    }
+    const [n] = await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"}, body:JSON.stringify({caso_id:k.id, cliente_id:c.id,
+      descricao:"Honorários · atrasados retidos no repasse ao cliente", valor:x.honor, vencimento:x.em, pago_em:x.em, status:"recebido", conferencias:conf, todo_item_id:`hon:${k.id}:atr`})}) || [];
+    if(n) (D.pagamentos = D.pagamentos||[]).push(n);
+    return n ? {p:n, antes:null} : null;
+  }catch(e){ aviso("O repasse foi gravado, mas os honorários não: lance-os na tabela"); return null; }
+}
+// o recibo do repasse, simples, para imprimir e o cliente assinar
+function reciboRepasse(casoId, rid){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id), r = reqsDoCaso(k).find(x=>x.id===rid);
+  if(!c || !r || !r.repasse) return;
+  const x = r.repasse, w = window.open("", "_blank");
+  if(!w) return aviso("O navegador bloqueou a janela: libere os pop-ups deste site");
+  const lin = (rot, v, sinal="") => `<tr><td>${esc(rot)}</td><td class="v">${sinal}${esc(moedaTxt(v))}</td></tr>`;
+  const dataExt = new Date(x.em+"T12:00:00").toLocaleDateString(IDIOMA, {day:"numeric", month:"long", year:"numeric"});
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Recibo de repasse</title><style>
+    body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#111;line-height:1.6;font-size:15px}
+    h1{font-size:20px;text-align:center;margin:0 0 24px}table{width:100%;border-collapse:collapse;margin:18px 0}
+    td{padding:6px 4px;border-bottom:1px solid #ccc}td.v{text-align:right;white-space:nowrap}tr.t td{font-weight:bold;border-top:2px solid #111}
+    .ass{margin-top:64px;text-align:center}.ass span{display:block;border-top:1px solid #111;width:320px;margin:0 auto 4px}
+    @media print{body{margin:15mm}}</style></head><body>
+    <h1>Recibo de repasse</h1>
+    <p>Recebi do escritório Paulo R. Tercini Filho a importância líquida de <b>${esc(moedaTxt(x.liquido))}</b>, referente ao meu crédito na ${r.tipo==="precatorio" ? "requisição de precatório" : "requisição de pequeno valor (RPV)"} expedida em ${fmt(r.expedida)}${k.processo ? `, no processo nº ${esc(k.processo)}` : ""}${r.alvara ? `, levantada pelo alvará ${esc(r.alvara)}` : ""}, conforme discriminado:</p>
+    <table>${lin("Valor bruto levantado", x.bruto)}
+      ${x.destacado ? `<tr><td>Honorários contratuais destacados na requisição, pagos diretamente ao escritório e não descontados deste valor</td><td class="v">${esc(moedaTxt(x.honor))}</td></tr>`
+        : x.honor ? lin("Honorários contratuais, conforme o contrato", x.honor, "(−) ") : ""}
+      ${x.ir ? lin("Imposto de renda retido na fonte (rendimentos recebidos acumuladamente, Lei 7.713/1988, art. 12-A)", x.ir, "(−) ") : ""}
+      <tr class="t"><td>Valor líquido recebido</td><td class="v">${esc(moedaTxt(x.liquido))}</td></tr></table>
+    <p>Dou plena quitação quanto ao valor acima.</p><p>${esc(dataExt)}.</p>
+    <div class="ass"><span></span>${esc(c.nome||"")}${c.cpf ? `<br>CPF ${esc(fmtCpf(c.cpf))}` : ""}</div>
+    <script>window.print()<\/script></body></html>`);
+  w.document.close();
 }
 // o ⚡: a mesma leitura, mais livre (sem o verbo), e a data vira o lembrete do caso escolhido
 function pintarCapturaAr(){
@@ -40820,6 +40990,10 @@ async function anexar(casoId, cliId){
   const inp=document.getElementById("arq-inp"), arq=inp&&inp.files&&inp.files[0];
   if(!arq) return;
   inp.value="";                                   // permite mandar o mesmo de novo
+  await anexarArquivo(casoId, cliId, arq);
+}
+// F832 · o mesmo envio, com o nome que diz o que é (o laudo, a manifestação, os quesitos do cartão da perícia)
+async function anexarArquivo(casoId, cliId, arq, nome=arq.name){
   if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
   const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
   const caminho=`${cliId}/${stamp}-${nomeSeguro(arq.name)}`;
@@ -40828,9 +41002,9 @@ async function anexar(casoId, cliId){
     await subirArquivo(caminho, arq);
     const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({caso_id:casoId, cliente_id:cliId, autor_id:eu.id,
-        nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+        nome, caminho, tipo:arq.type||null, tamanho:arq.size})});
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${arq.name}`})});
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${nome}`})});
     if(an) (D.anexos=D.anexos||[]).unshift(an);
     aviso("📎 Arquivo anexado");
     if(clienteAberto) abrirFicha(clienteAberto);
@@ -46950,7 +47124,7 @@ function laudoAnexoDaPericia(e){
   if(e.status==="cancelada") return null;
   const d = dataSP(e.data_hora), prox = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.id!==e.id && x.status!=="cancelada" && dataSP(x.data_hora)>d)
     .map(x=>dataSP(x.data_hora)).sort()[0] || "9999";
-  return (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && !a.andamento_id && /laudo/i.test(a.nome||"") && dataSP(a.criado_em)>=d && dataSP(a.criado_em)<prox)
+  return (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && !a.andamento_id && /laudo/i.test(a.nome||"") && !/impugna|manifesta|quesito/i.test(a.nome||"") && dataSP(a.criado_em)>=d && dataSP(a.criado_em)<prox)
     .sort((x,y)=>String(x.criado_em).localeCompare(String(y.criado_em)))[0] || null;
 }
 // a conclusão e o CID do laudo do INSS, pelo leitor do dossiê; sem ele, o começo do texto
@@ -46959,6 +47133,43 @@ function resumoDoLaudo(x){
   if(!l) return x.texto ? ` · ${String(x.texto).replace(/\s+/g," ").slice(0,140)}` : "";
   return [l.resultado==="capaz" ? "sem incapacidade (capaz)" : l.resultado==="incapaz" ? `incapaz${l.grau?`, ${l.grau.toLowerCase()}`:""}` : "",
     l.cid ? `CID ${l.cid}${l.cidDesc?` (${l.cidDesc})`:""}` : "", l.dcb ? `DCB ${l.dcb}` : ""].filter(Boolean).map(s=>` · ${s}`).join("");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F832 · O LAUDO NO CARTÃO DA PERÍCIA JUDICIAL (ordem do Paulo, 27.11.2026, melhoria 6 da auditoria). O mesmo cartão
+// junta o laudo, a manifestação ou impugnação e os quesitos complementares (anexos do caso, pelo nome que o botão
+// dá), e liga o expediente do PJe aberto pelo laudo. O prazo do PJe segue como aviso; fatal é só o anotado no CRM.
+// Situações: Aguardando laudo, Laudo juntado, Manifestação feita.
+// ══════════════════════════════════════════════════════════════════════════
+const ROT_DOC_PERICIA = {laudo:"Laudo pericial", manifestacao:"Manifestação sobre a perícia", quesitos:"Quesitos complementares"};
+// o expediente do PJe que o laudo abriu: o ligado ao movimento do laudo; sem ele, o expedido até 7 dias depois do laudo,
+// ou o que fala de laudo ou de perícia
+function prazoDoLaudo(k, la, dL){
+  const mv = la && movimentoJudicial(la.texto), p = mv && prazoTribunalDoAto(la, mv, true);
+  if(p) return p;
+  const de = x => x.expedido_em || x.ciencia_em || "";
+  return (k.prazos_tribunal||[]).filter(x=>dataDoPrazo(x) && de(x)>=dL && (de(x)<=somaDias(dL, 7) || /laudo|per[íi]ci/i.test(`${x.ato||""} ${x.texto||""}`)))
+    .sort((x,y)=>de(x).localeCompare(de(y)))[0] || null;
+}
+function laudoJudicial(e, k, la, lx, pzSug){
+  const d0 = dataSP(e.data_hora), dL = la ? dataSP(la.criado_em) : lx ? dataSP(lx.criado_em) : null;
+  const prox = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.id!==e.id && x.status!=="cancelada" && dataSP(x.data_hora)>d0).map(x=>dataSP(x.data_hora)).sort()[0] || "9999";
+  const docs = re => (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && re.test(a.nome||"") && dataSP(a.criado_em)>=d0 && dataSP(a.criado_em)<prox);
+  const man = docs(/manifesta[çc][ãa]o sobre a per[íi]cia|impugna[çc][ãa]o ao laudo/i), ques = docs(/quesitos complementares/i);
+  const pz = dL ? prazoDoLaudo(k, la, dL) : null, feita = man.length || !!(pz && respostaAoPrazo(k, pz));
+  const sit = feita ? ["Manifestação feita","ok"] : dL ? ["Laudo juntado","venc"] : ["Aguardando laudo","prox"];
+  const linha = a => docRow(a.nome, `juntado em ${fmt(dataSP(a.criado_em))}`, `abrirAnexo('${escJs(a.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(a.id)}'])`, a.texto ? a.id : null);
+  const dPz = pz && dataDoPrazo(pz), fatal = pz && pz.fim && k.prazo===pz.fim;
+  const avisoPz = pz && !pzSug && !feita && pz.situacao!=="findo" ? `<span class="tl-prazo-sug per-prazo-pje">${IC_SVG.relogio}<span>Aviso do ${esc(ROT_PRAZO[pz.sistema]||"PJe")}: ${esc(pz.ato||"intimação")}${pz.dias?` (${pz.dias} dias)`:""} até <b>${fmt(dPz)}</b>${pz.fim?"":", ciência tácita"}. ${fatal ? "Anotado como prazo fatal no CRM." : "Vira prazo fatal só quando anotado no CRM."}</span>${pz.fim && !fatal ? `<button class="tl-bt forte" onclick="usarPrazoDoTribunal('${k.id}','${pz.fim}')" title="anotar o prazo do tribunal como prazo fatal do caso">Fatal</button>` : ""}</span>` : "";
+  const bt = (tipo, rot, tit) => `<button class="tl-bt" onclick="anexarDaPericia('${e.id}','${tipo}')" title="${tit}">${rot}</button>`;
+  return {chip:`<span class="per-est ${sit[1]}">${sit[0]}</span>`, html: man.map(linha).join("") + ques.map(linha).join("") + avisoPz,
+    acoes: dL ? bt("manifestacao", "Manifestação", "juntar a manifestação ou a impugnação ao laudo") + bt("quesitos", "Quesitos", "juntar os quesitos complementares")
+      : bt("laudo", "Laudo", "juntar o laudo pericial")};
+}
+function anexarDaPericia(evId, tipo){
+  const e = (D.eventos||[]).find(x=>x.id===evId), k = e && D.casoPorId.get(e.caso_id); if(!k) return;
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "application/pdf,image/*";
+  inp.onchange = () => { const f = inp.files && inp.files[0]; if(f) anexarArquivo(k.id, k.cliente_id, f, `${ROT_DOC_PERICIA[tipo]} · ${f.name}`); };
+  inp.click();
 }
 // o que diz que a perícia aconteceu: uma anotação depois da data ("foi à perícia", "compareceu"), o movimento
 // "perícia realizada" do processo (PJe ou CNJ) ou o laudo
@@ -47063,14 +47274,17 @@ function cartaoPericia(e){
     : e.status==="realizada" ? [julg ? "aconteceu" : "compareceu","ok"]
     : !futura ? ["aconteceu? confirme","venc"] : julg ? ["sessão marcada","prox"] : !pedeAviso(e) ? ["marcado","prox"]
     : av ? [`cliente avisado${av.quem?` · ${av.quem}${av.em?`, ${fmtBarra(av.em).slice(0,5)}`:""}`:""}`,"ok"] : ["avisar o cliente","prox"];
-  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
-    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
   const la = laudoDaPericia(e), lx = la ? null : laudoAnexoDaPericia(e);
+  const pzSug = la ? prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) : "";
+  // F832 · a perícia judicial que passou: o laudo, a manifestação e os quesitos complementares no mesmo cartão
+  const pj = ["judicial","pagamento"].includes(k.fase) && e.status!=="cancelada" && !futura && !julg ? laudoJudicial(e, k, la, lx, pzSug) : null;
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span>${pj ? pj.chip : ""}</span>`;
   const prova = ag && !futura ? provaDoComparecimento(e, !!(la||lx)) : "";
   const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`
     + (prova ? `<span class="tl-disp per-prova">${esc(capital(prova))}.</span>` : "");
   const laudo = la ? `<span class="tl-disp per-laudo"><b>Laudo juntado em ${fmt(dataSP(la.criado_em))}</b> · ${esc(andLimpo(la, k).texto.slice(0,140))}</span>`
-      + docsDoCartao(la) + prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) + feitoDoCartao(la)
+      + docsDoCartao(la) + pzSug + feitoDoCartao(la)
     // F236 · o laudo do PAT chega como documento, sem andamento: a conclusão e o CID vêm à vista
     : lx ? `<span class="tl-disp per-laudo"><b>Laudo de ${fmt(dataSP(lx.criado_em))}</b>${esc(resumoDoLaudo(lx))}</span>`
       + docRow(lx.nome, `${lx.paginas?`${lx.paginas} pág. · `:""}${lx.texto?"com texto":lx.tipo?"digitalizado":"texto em leitura"}`, `abrirAnexo('${escJs(lx.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(lx.id)}'])`, lx.texto ? lx.id : null) : "";
@@ -47082,6 +47296,7 @@ function cartaoPericia(e){
   else if(ag && !futura) acoes = bt(julg ? "Aconteceu" : "Compareceu", `compareceuEvento('${e.id}')`, true, julg ? "a sessão aconteceu" : "o cliente foi: registra no caso, marca a etapa e agenda a conferência do resultado")
       + (julg ? "" : bt("Não compareceu", `naoCompareceuEvento('${e.id}')`, false, "o cliente faltou: registra no caso e cria a tarefa de pedir nova data"))
       + bt(`Remarcad${o}`, `remarcarEvento('${e.id}')`, false, "ganhou outra data: a de agora fica no histórico e nasce a nova");
+  if(pj) acoes += pj.acoes;
   if(e.status!=="cancelada"){
     if(portal) acoes += `<a class="tl-bt tl-link" href="${urlOk(portal.href)}" target="_blank" rel="noopener">Abrir no ${esc(portal.rot)} ${IC_SVG.ir}</a>`;
     if(ag && futura) acoes += bt("Mensagem ao cliente", `msgPericia('${e.id}')`, false, "o lembrete pronto, para conferir e enviar");
@@ -47091,7 +47306,7 @@ function cartaoPericia(e){
     ag && futura ? `<button class="tl-mais-it" role="menuitem" onclick="copiarLembrete('${e.id}')" title="Copiar o lembrete">Copiar<span class="sr-only"> o lembrete</span></button>` : "",
     ag ? `<button class="tl-mais-it perigo" role="menuitem" onclick="cancelarEvento('${e.id}')">Cancelar ${evFem(e.tipo)?"a":"o"} ${esc((e.tipo||"perícia").toLowerCase())}</button>` : ""]);
   const barra = (acoes||menu) ? `<span class="tl-barra tl-barra-of">${acoes}<span class="tl-barra-fim">${menu}</span></span>` : "";
-  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${barra}</span></li>`;
+  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${pj ? pj.html : ""}${barra}</span></li>`;
 }
 // o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
 // (PAT, PJe, e-SAJ, eproc, aviso do CRPS) ou de um espelho sem linha (evento
