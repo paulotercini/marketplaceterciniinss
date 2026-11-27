@@ -1076,7 +1076,7 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
 html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
 @container (min-width:721px){
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;
-    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 24px 32px;column-gap:10px;align-items:center}
+    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 124px 28px 24px 32px;column-gap:10px;align-items:center}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1;min-width:0}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-lista{grid-column:2;display:block}
@@ -4260,8 +4260,8 @@ html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
 html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
 /* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
 @container (min-width:721px){
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 64px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 64px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 124px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 124px 28px 0 32px}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 12px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
   html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
@@ -4336,6 +4336,47 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
    shortcut: o flutuante arrastado para a borda esquerda pode sair da tela com o painel aberto; se incomodar, deslocar por JS só quem cai sob o painel */
 @media (min-width:761px){body.pcli-aberto :is(.fab-rapida,.fab-sug,.fab-ajuda,#zap-ag,#fab-juntos){transform:translateX(-460px)}}
 .esc-desc[hidden]{display:none!important}
+/* ══ F832 · ficha do caso mais enxuta (27.11.2026): linha do tempo numa linha de texto, mini agenda recolhida em "Próximo prazo" e a ⭐ na linha das ações ══ */
+html[data-tema="v10"] .ltc-k,html[data-tema="v10"] .ltc-t{display:inline;font-size:13px;margin:0}
+html[data-tema="v10"] .ltc-k::after{content:" · "}
+html[data-tema="v10"] .ltc-t{font-weight:500}
+html[data-tema="v10"] .ltc-bar{margin-top:8px}
+html[data-tema="v10"] .ltc-v .ltc-r{border:0;background:#E3E4E1}
+.ma-dt > summary{display:flex;align-items:baseline;gap:8px;cursor:pointer;list-style:none;font-size:13px;min-height:24px}
+.ma-dt > summary::-webkit-details-marker{display:none}
+.ma-dt > summary::after{content:"▾";margin-left:auto;color:var(--cinza-claro,#686660)}
+.ma-dt[open] > summary::after{content:"▴"}
+.ma-dt[open] > summary{margin-bottom:6px}
+.ma-dt > summary:focus-visible{outline:2px solid var(--azul,#0E5C58);outline-offset:2px;border-radius:4px}
+.ma-px-r{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza-claro,#686660)}
+.ma-px-n,.ma-px-t{color:var(--cinza,#4A4944);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ma-dt b{font-weight:600;font-variant-numeric:tabular-nums}
+.app.celular .ma-dt > summary{min-height:44px;align-items:center}
+.app:not(.celular) .det-mais-col > .det-imp:not(.det-notas,.det-grav){position:static;transform:none}
+/* F833 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
+.lista-alca{display:none}
+.app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca{all:unset;box-sizing:border-box;cursor:pointer;display:grid;place-items:center;width:28px;height:28px;margin-left:auto;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--cinza);font-size:16px;line-height:1}
+.app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca::before{content:"\2039"}
+.app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca::before{content:"\203A"}
+.app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca:focus-visible{outline:2px solid #121212;outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.app.detalhe-aberto:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .lista-alca:hover{background:#F3F2EE}}
+.app.detalhe-aberto:not(.celular) .meio-topo .topo-mais{margin-left:0}
+/* abaixo de 1181px e com o WhatsApp ao lado a lista já some: a faixa não entra */
+@media (min-width:1181px){
+body:not(.zap-aberto) .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular){grid-template-columns:300px 216px minmax(560px,1fr)}
+body:not(.zap-aberto) .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)).mini-lateral:not(.celular){grid-template-columns:64px 216px minmax(560px,1fr)}
+}
+.app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .meio{min-width:0;padding-left:12px;padding-right:12px}
+html[data-tema="v10"] .app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) #conteudo-meio .ag-linha .ag-txt{flex:1 1 0;max-width:none;min-width:0}
+.app.detalhe-aberto.lista-faixa:not(:has(#conteudo-meio .cfg-cx)):not(.celular) .meio :is(.meio-sub,.md-conta,.ag-th,.ag-slot,.topo-extra,.topo-mais,.ajuda-bt,.avatares,.acoes,.secao button){display:none}
+/* F834 · Meu Dia: grupo de fundo neutro com a cor no título, Reagendar junto da contagem, atraso por extenso e Sugestões na cor do acento */
+html[data-tema="v10"] .pl-grupo:is([data-tom="venc"],[data-tom="hoje"]) h3.secao{background:var(--placa);border-bottom-color:var(--borda)}
+.pl-grupo h3.secao .reag-bt{float:none;margin:-4px 0 -4px 12px}
+.ag-ha{font:12px var(--f-txt,inherit);margin-left:4px}
+@container (max-width:620px){.ag-ha{display:none}}
+html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-selos > span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+html[data-tema="v10"] .fab-sug{background:var(--azul)}
+@media (hover:hover) and (pointer:fine){html[data-tema="v10"] .fab-sug:hover{background:var(--azul);filter:brightness(.92)}}
 </style>
 </head>
 

@@ -1257,7 +1257,16 @@ function nbsDoCaso(k){
 function miniAgenda(k){
   if(!k || !k.cliente_id) return "";
   if(k.cliente_id!==_pzCliId){ _pzCliId = k.cliente_id; _pzMes = null; _pzDia = null; }
-  return `<section class="ma" id="ma-cli" aria-label="Agenda do cliente">${maConteudo(k.cliente_id)}</section>`;
+  // F832 · a mini agenda abre recolhida numa linha "Próximo prazo"; o mês inteiro fica a um clique e a escolha vale até fechar o CRM
+  return `<section class="ma" aria-label="Agenda do cliente"><details class="ma-dt"${_maAberta ? " open" : ""} ontoggle="_maAberta=this.open"><summary>${maProximo(k.cliente_id)}</summary><div id="ma-cli">${maConteudo(k.cliente_id)}</div></details></section>`;
+}
+let _maAberta = false;
+function maProximo(cliId){
+  const hj = hoje(), x = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x)) && x.data>=hj).sort((a, b)=>a.data<b.data ? -1 : a.data>b.data ? 1 : 0)[0];
+  if(!x) return `<span class="ma-px-r">Próximo prazo</span><span class="ma-px-n">nenhum marcado</span>`;
+  prepPz(x, 0);
+  const quando = x.data===hj ? "hoje" : fmtBarra(x.data).slice(0,5);
+  return `<span class="ma-px-r">Próximo prazo</span><b>${quando}</b><span class="ma-px-t">${esc(ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete")}</span>`;
 }
 function maMes(n){
   const d = new Date((_pzMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7);

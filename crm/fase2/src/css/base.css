@@ -2240,7 +2240,7 @@
   .zl-filas button{height:auto;min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:1px;line-height:1.15;padding:5px 2px;min-width:0;overflow:hidden}
   .zl-filas .n{font-size:12px;font-variant-numeric:tabular-nums}
-  .zl-filas.cinco button{font-size:12px}
+  .zl-filas.cinco button{font-size:12px;letter-spacing:-.02em;padding:5px 0}   /* F831 · cinco filas a 12px: "Pendentes" cabia a 11px */
   .zl-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:1px 14px}
   .zl-chips::-webkit-scrollbar{display:none}
   .zl-chip,.zl-sel{flex:none;white-space:nowrap}

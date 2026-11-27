@@ -1195,3 +1195,15 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - Ordem do Paulo de 27.11.2026 (etapa 1 da revisão da estrutura visual). Toda regra de estilo com letra de 10, 11 ou 11,5px passou a 12px (267 regras em `css/base.css`, `css/tema-v10.css` e dois estilos montados no JS). Nenhuma tela mudou de desenho.
 - Conferido e mantido como estava: realce de mouse já travado por `@media (hover:hover) and (pointer:fine)`, campo de 16px no toque (F136) e resposta ao pressionar (`button:active`, F134).
 - Prova: `testes/cadastro/f831.js` (nenhuma letra abaixo de 12px no `app.html`).
+
+## F832 · Ficha do caso: linha do tempo compacta, Próximo prazo e estrela na linha das ações (27.11.2026, v14.40)
+
+Etapa 2 da revisão de estrutura visual. A linha do tempo do caso (F670) passa a rótulo e total em uma linha, com os trechos futuros em cinza sólido. A mini agenda (F669) abre recolhida na linha "Próximo prazo" (data e tipo); a seta abre o calendário, e a escolha vale até trocar de tela. No computador a estrela fica na linha das ações do cabeçalho. Prova em `f669.js`.
+
+## F833 · Lista em faixa com a ficha aberta (27.11.2026, v14.40)
+
+Etapa 3. No computador, com a ficha aberta, a lista do meio passa de 380px a 216px e mostra nome e data; a alça ao lado do título devolve a largura, e a escolha fica em `crm_lista_faixa` neste computador. O menu lateral e a etiqueta dos ícones (já existente) não mudam. Prova em `f669.js`.
+
+## F834 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.40)
+
+Etapa 4. Os grupos Vencidas e Hoje ficam com fundo neutro e a cor apenas no título; Reagendar vai para junto da contagem; a data vencida diz "há N dias" (na lista larga; a coluna do prazo passou de 64px a 124px); o selo do tipo corta pela direita com reticências; o botão Sugestões troca o laranja pela cor do acento. Já existiam e não foram refeitos: o deslocamento dos flutuantes com o painel lateral, a folga de fim de rolagem e a coluna Etapa oculta quando vazia.

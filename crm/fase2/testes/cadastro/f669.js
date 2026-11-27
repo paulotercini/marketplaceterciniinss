@@ -80,6 +80,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   if (!mesmoMes) await p.evaluate(() => maMes(1));
   const r2 = mesmoMes ? r : await p.evaluate(() => { const m = document.querySelector(".ma");
     return { marcado: [...m.querySelectorAll(".ma-tem")].map(e => e.textContent), leg: (m.querySelector(".ma-leg") || {}).textContent || "" }; });
+  // F832 · a mini agenda abre recolhida, com o próximo prazo na linha de cima
+  const px = await p.evaluate(() => { const d = document.querySelector(".ma details.ma-dt"); return d && { aberta: d.open, txt: d.querySelector("summary").textContent }; });
+  conf("F832: mini agenda recolhida com a linha Próximo prazo", px && !px.aberta && /Próximo prazo/.test(px.txt) && /\d\d\/\d\d|hoje/.test(px.txt));
+  // F833 · com a ficha aberta a lista do meio vira faixa; a alça devolve a largura
+  const larg = () => p.evaluate(() => Math.round(document.querySelector(".meio").getBoundingClientRect().width));
+  const lf = await larg(); await p.click("#lista-alca"); const ll = await larg(); await p.click("#lista-alca");
+  conf("F833: lista em faixa de 216px e alça que devolve os 380px", lf === 216 && ll === 380 && await larg() === 216);
   conf("dia do prazo marcado na mini agenda", r2.marcado.includes(String(+iso(dRet).slice(8))));
   conf("índice traz a data e o tipo", r2.leg.includes(iso(dRet).slice(8) + "/" + iso(dRet).slice(5, 7)) && /Prazo do Microsoft To Do/.test(r2.leg));
   await p.screenshot({ path: path.join(OUT, "mini-agenda.png"), clip: { x: 0, y: 0, width: 720, height: 900 } });
