@@ -1241,3 +1241,7 @@ Pedido do Paulo ("faça o que falta"). Paleta única: as 536 cores literais das 
 
 ## F840
 Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_ferias_fim`), conversa coberta cujo último texto é do cliente sem resposta da equipe gera menção ao titular "Pendente do período offline". `zap_eh_automatica` reconhece "insira uma resposta válida" e "de presente para você".
+
+## F841 · Coluna Tipo das listas sem corte (27.11.2026)
+
+No Meu Dia e no Planejado, o selo "Prazo do Microsoft To Do" saía cortado ("Prazo do Micros…") porque a coluna Tipo tinha 120px. A coluna passou a 168px (tema-v10.css, grade de `.ag-linha` e `.ag-th`). Achado no teste de tela de 27.11 (131 telas e suíte no GitHub após a F839).
