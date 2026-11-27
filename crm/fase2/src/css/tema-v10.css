@@ -4213,7 +4213,7 @@ html .linha-caso.lc5 .lc5-fase{font:500 12px/1.4 var(--f-ui);white-space:nowrap;
 .ltc-a .ltc-r{position:relative;overflow:hidden}
 html[data-tema="v10"] .app .ltc .ltc-a .ltc-r{background:#ECEBE6;outline:1.5px solid var(--c);outline-offset:1px}
 .ltc-p{position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--c);border-radius:3px 0 0 3px}
-.ltc-q{font-size:10px;color:var(--c);font-variant-numeric:tabular-nums;line-height:1}
+.ltc-q{font-size:12px;color:var(--c);font-variant-numeric:tabular-nums;line-height:1}
 @media (prefers-reduced-motion:no-preference){.ltc-p{animation:ltc-enche .8s ease-out both}}@keyframes ltc-enche{from{width:0}}
 .ltc-v .ltc-r{background:none;border:1px dashed var(--c)}
 html[data-tema="v10"] .app .tr-compacta .ltc .jn-b{all:unset;box-sizing:border-box;cursor:pointer;min-width:0;display:flex;flex-direction:column;gap:4px}
