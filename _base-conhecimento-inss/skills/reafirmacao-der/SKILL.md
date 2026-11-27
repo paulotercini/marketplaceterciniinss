@@ -103,6 +103,8 @@ Fundamento constitucional do direito ao melhor benefício. A TNU utiliza o Tema 
 
 Confirmado por pelo menos 7 julgados da TNU em 2025 (ver references/precedentes-reafirmacao.md).
 
+**Tema 1018 com reafirmação da DER (AgInt no REsp 2.269.424/RS, 1ª Turma do STJ, rel. Min. Herman Benjamin, j. 17/11/2026, DJEN 25/11/2026) [NÃO CONFIRMADO].** A concessão judicial mediante reafirmação da DER (Tema 995) não afasta o Tema 1018. Se o INSS conceder benefício mais vantajoso no curso da ação, o segurado mantém o administrativo e executa as parcelas do judicial até a implantação daquele. A Turma negou que a reafirmação seja distinção apta a afastar o repetitivo. Conferir no portal do STJ antes de citar; a fonte inicial foi publicação em rede social.
+
 ## 4. Os Quatro Cenários — Efeitos Financeiros, Juros e Honorários
 
 ### CENÁRIO A — Reafirmação durante o PA (antes da decisão do INSS)
