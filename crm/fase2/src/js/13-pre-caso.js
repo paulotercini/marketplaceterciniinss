@@ -564,6 +564,8 @@ function pintarFicha(){
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c, chipParceria(c, ks))}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
+      ${/* F839 · espécie e fase na linha dos botões, logo abaixo do nome (antes ficavam soltas sob os ícones) */""}
+      ${temaV10() && celular() ? (k=>k ? `<span class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</span>` : "")(casoSel && D.casoPorId.get(casoSel)) : ""}
       ${/* F403 · o ⋯ do cabeçalho saiu: no lugar, as Anotações rápidas do cliente; Separar e Não é cliente foram ao Cadastro (pedido do Paulo, 05.11.2026) */""}
       ${botaoGravarFicha(cliId)}<span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
@@ -608,7 +610,7 @@ function pintarFicha(){
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(n=>n?` (${n})`:"")(pgs.filter(p=>p.status==="aberto").length)}${/* F236 · o vencido na própria aba */""}${(v=>v?` <span class="mt-venc">· ${v} vencido${v>1?"s":""}</span>`:"")(pgs.filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length)}${pontoAba(casoSel && D.casoPorId.get(casoSel), "hon")}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()" title="⋯ mostrar tudo da ficha"><span aria-hidden="true">⋯ Tudo</span><span class="sr-only">⋯ mostrar tudo da ficha</span></button>
-    ${temaV10() && celular() ? (k=>`${k ? `<p class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</p>` : ""}${celAbasHtml(c, ks, k,
+    ${temaV10() && celular() ? (k=>`${celAbasHtml(c, ks, k,
       evs.some(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada"), !!(pagK.length || pgs.length))}`)(casoSel && D.casoPorId.get(casoSel)) : ""}
   </div>
 
