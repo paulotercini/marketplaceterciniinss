@@ -142,8 +142,9 @@ function resultadoAtrasados(k, idx){
 // ── no cartão do caso: as datas, o alerta e o botão ──────────────────────────
 function chipsAtrasados(k){
   if(!ehPrev(k)) return "";
-  const out = [], t = termoAtrasados(k), dec = alertaDecadencia(k);
-  if(dec) out.push(`<span class="lc-f lc-dec" title="${esc(dec.base)} (Lei 8.213/91, art. 103)"><span class="lc-k">Decadência</span>
+  const out = [], t = termoAtrasados(k), dec = alertaDecadencia(k), naLinha = new Set(camposEssenciais(k).map(soCampo));
+  // a data base na linha já mostra o "decai em" (lcJanela): o chip só aparece quando ela não está à vista
+  if(dec && !["primeiro_pagamento_em","ciencia_indeferimento_em"].some(c=>k[c] && naLinha.has(c))) out.push(`<span class="lc-f lc-dec" title="${esc(dec.base)} (Lei 8.213/91, art. 103)"><span class="lc-k">Decadência</span>
     <span class="lc-jan venc">${dec.dias < 0 ? `decaiu em ${fmtBarra(dec.ate)}` : `até ${fmtBarra(dec.ate)}`}</span></span>`);
   if(t && t.prescreve) out.push(`<span class="lc-f" title="parcelas anteriores a ${fmtBarra(t.limite)} prescritas: 5 anos ${t.projecao ? "contados de hoje (ainda sem ajuizamento)" : "do ajuizamento"} (Lei 8.213/91, art. 103, parágrafo único)">
     <span class="lc-k">Atrasados desde</span><span class="lc-num">${fmtBarra(t.termo)}</span></span>`);

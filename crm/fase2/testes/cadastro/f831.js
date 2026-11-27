@@ -112,7 +112,7 @@ const conf = (nome, v, x) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  "
   conf("Meu Dia mostra a revisão com decadência em 12 meses", await p.evaluate(() => /Decadência em até 12 meses/.test(document.getElementById("conteudo-meio").textContent)
     && document.getElementById("conteudo-meio").textContent.includes("Cliente Teste")));
   await p.evaluate(id => abrirFicha(id), cA.id); await p.waitForTimeout(900);
-  conf("o caso mostra Decadência, Atrasados desde e o botão Atrasados", await p.evaluate(() => !!document.querySelector(".lc-dec") && /Atrasados desde/.test(document.body.textContent)
+  conf("o caso mostra a decadência, Atrasados desde e o botão Atrasados", await p.evaluate(() => /decai em/.test(document.querySelector(".lc5-grade").textContent) && /Atrasados desde/.test(document.body.textContent)
     && !!document.querySelector(".lc-atr")));
   await p.evaluate(id => abrirAtrasados(id), kA.id); await p.waitForTimeout(700);
   conf("a caixa diz a prescrição e o início dos atrasados", await p.evaluate(() => /Prescritas as parcelas anteriores a\s*15\/06\/2016/.test(document.getElementById("atr-cx").textContent)));
