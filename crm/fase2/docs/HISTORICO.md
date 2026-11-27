@@ -1245,6 +1245,12 @@ Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_
 
 Pedido do Paulo (print do painel de emojis cortado a 1024 px; depois, "faça mais verificações de telas do WhatsApp"). Capturas em 1024, 1440 e 390 px com dados fictícios. Corrigido: o painel de emojis do campo principal se ancora ao rodapé da conversa, alinhado à direita e com a largura que couber (o da conversa ao lado da ficha continua como era); os botões do cabeçalho da conversa quebram linha na coluna estreita, em vez de empurrar o cabeçalho para o lado ao abrir o ⋯; os flutuantes Agenda e ⋯ somem enquanto o painel de emojis ou o menu + estão abertos.
 
+## F841 · Resumo do WhatsApp mais preciso e alerta sem as cortesias (27.11.2026)
+- O resumo diário recebe espécie, processo e último registro de cada caso; o modelo compara o assunto com eles antes de marcar dúvida.
+- "Conferir o caso" sai uma vez, no cabeçalho da anotação, e não mais em cada linha.
+- O que a equipe escreveu vai na primeira pessoa do singular, sem o nome do colaborador.
+- O alerta de 30 min (zap_alerta_sem_resposta) e o filtro "Sem resposta há mais de 24 h" ignoram "ok", agradecimento e cortesia (mais palavras: obga, igualmente, semana, todos, vocês).
+
 ## F842 · Mesmo NB em dois casos do cliente: o plano de organização junta sozinho (27.11.2026, v14.44)
 
 Decisão do Paulo no plano de saneamento dos cadastros: casos do mesmo cliente com o mesmo NB são o mesmo benefício que mudou de fase. `planoOrganizar` (35-casos.js) deixava o NB repetido só na sugestão "repetido"; agora gera o passo "juntar" para o caso mais adiantado (`ORDEM_FASE_ORG`). Só a tarefa do To Do se junta (vira casca encerrada, a sincronização leva ao destino o que ela trouxer, e o Desfazer da organização a reabre). Não junta quando o caso ficaria com dois NUP ou dois processos principais, quando um é revisão e o outro não, quando o incorporado tem outro NB ou nasceu no CRM (a fusão o apagaria); esses seguem na sugestão. A fase Pagamento continua fora da organização. `lote/organizar_lote.js` aceita `CLIENTES` (grava só neles), acha o administrador sozinho e passa a deixar a fusão levar tarefas, pagamentos e Meu Dia; o workflow `crm-lote-organizar.yml` o roda à mão. Teste: `testes/cadastro/f842.js`.

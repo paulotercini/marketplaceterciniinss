@@ -45,14 +45,19 @@ const { promptResumo, conferirResumo, ESQUEMA_RESUMO } = await import("../../zap
     { caso_id: "k1", texto: "  ", conferir: false },
   ] }, casos);
   assert.deepEqual([...g.keys()], ["k2", "k1"]);
-  assert.equal(g.get("k2")[0], "Cliente enviou o laudo , CPF [número]");
-  assert.deepEqual(g.get("k1"), ["Pendente: carteira de trabalho (conferir o caso)", "Informei a perícia (conferir o caso)"]);
-  assert.equal(conferirResumo({ itens: [{ caso_id: "", texto: "x", conferir: true }] }, [{ id: "k1" }]).get("k1")[0], "x");
+  assert.deepEqual(g.get("k2"), { linhas: ["Cliente enviou o laudo , CPF [número]"], conferir: false });
+  assert.deepEqual(g.get("k1"), { linhas: ["Pendente: carteira de trabalho", "Informei a perícia"], conferir: true });
+  assert.deepEqual(conferirResumo({ itens: [{ caso_id: "", texto: "x (conferir o caso)", conferir: true }] }, [{ id: "k1" }]).get("k1"), { linhas: ["x"], conferir: false });
   assert.equal(conferirResumo({ itens: [{ caso_id: "k1", texto: "x" }] }, []).size, 0);
 }
 {
   const p = promptResumo({ dia: "2026-11-23", casos: [{ id: "k1", beneficio: "B31" }], mensagens: [{ hora: "09:00", quem: "Cliente", texto: "oi" }] });
   assert.match(p, /Descarte o que não é do caso: agendamento/);
   assert.match(p, /\[09:00\] Cliente: oi/);
+  const p2 = promptResumo({ dia: "2026-11-27", casos: [{ id: "k9", beneficio: "Revisão", processo: "123", ultimo: "Perícia em 30/11" }],
+    mensagens: [{ hora: "10:00", quem: "Dr. Fulano", texto: "Sua perícia é dia 30" }] });
+  assert.match(p2, /k9: Revisão · processo 123 · último registro: Perícia em 30\/11/);
+  assert.match(p2, /Escritório \(Dr\. Fulano\): Sua perícia/);
+  assert.match(p2, /primeira pessoa do singular/);
   assert.ok(ESQUEMA_RESUMO.properties.itens);
 }

@@ -1132,7 +1132,8 @@ function achadoZap(m){
 // F819 · despedida ("ok", "obrigada", "grat*", "valeu", 👍): não pede resposta. Mesmas palavras de zap_conf_agradece no banco.
 const ZAP_CORTES = new Set(("ok okay obg muito valeu vlw beleza blz combinado certo ta tá bom está esta até ate lá la show perfeito isso sim amém amem "+
   "deus abençoe abencoe graças gracas a o e confirmado entendi entendido doutor doutora dr dra então entao tchau dia tarde noite boa vou estarei eu "+
-  "tudo bem ótimo otimo legal joia jóia tranquilo abraço abraços abraco abracos de nada pela pelo atenção atencao").split(" "));
+  "tudo bem ótimo otimo legal joia jóia tranquilo abraço abraços abraco abracos de nada pela pelo atenção atencao "+
+  "obga obgd igualmente semana todos vocês voces você voce para pra também tambem").split(" "));   // F841
 function despedidaZap(t){
   t = String(t||"").toLowerCase().trim();
   if(!t || t.length>40 || t.includes("?")) return false;

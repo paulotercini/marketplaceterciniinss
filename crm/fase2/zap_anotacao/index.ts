@@ -74,7 +74,7 @@ export const ESQUEMA = {
   },
 };
 
-type Caso = { id: string; beneficio?: string; fase?: string; etapa?: string; apelido?: string };
+type Caso = { id: string; beneficio?: string; fase?: string; etapa?: string; apelido?: string; especie?: string; processo?: string; ultimo?: string };
 
 export function prompt(x: { texto: string; data: string; autor?: string; casos: Caso[]; anterior?: string | null }) {
   const casos = x.casos.map((k) => `- ${k.id}: ${[k.apelido || k.beneficio, k.fase, k.etapa].filter(Boolean).join(" · ")}`).join("\n");
@@ -172,8 +172,11 @@ export const ESQUEMA_RESUMO = {
 type Msg = { hora: string; quem: string; texto: string };
 
 export function promptResumo(x: { dia: string; casos: Caso[]; mensagens: Msg[] }) {
-  const casos = x.casos.map((k) => `- ${k.id}: ${[k.apelido || k.beneficio, k.fase, k.etapa].filter(Boolean).join(" · ")}`).join("\n");
-  const conversa = x.mensagens.map((m) => `[${m.hora}] ${m.quem}: ${m.texto}`).join("\n");
+  // F841 · caso sem benefício nem apelido era indistinguível: vão espécie, processo e o último registro
+  const casos = x.casos.map((k) => `- ${k.id}: ${[k.apelido || k.beneficio, k.especie, k.fase, k.etapa, k.processo && `processo ${k.processo}`,
+    k.ultimo && `último registro: ${mascarar(k.ultimo)}`].filter(Boolean).join(" · ")}`).join("\n");
+  const quem = (q: string) => (q === "Cliente" || q === "Assistente automático" ? q : `Escritório (${q})`);
+  const conversa = x.mensagens.map((m) => `[${m.hora}] ${quem(m.quem)}: ${m.texto}`).join("\n");
   return `Você resume, para a anotação do caso de um escritório de advocacia previdenciária, a conversa de WhatsApp de ${x.dia} com um cliente.
 
 Leve somente o que é pertinente a um dos casos abaixo: documento pedido ou enviado, informação do processo dada ao cliente, fato novo do cliente que importa ao caso (saúde, trabalho, benefício, carta do INSS), providência combinada ou pendente.
@@ -181,10 +184,12 @@ Descarte o que não é do caso: agendamento ou remarcação de atendimento, paga
 
 Cada item:
 - Uma linha curta, um fato, apenas o que a conversa diz. Sem opinião, sem conselho, sem título, emoji ou travessão.
-- Diga quem fez: "Cliente enviou o laudo médico de 18/11.", "Informei ao cliente que a perícia é em 04/12 às 08h10min.", "Pendente: cliente enviar a carteira de trabalho."
+- O que o Escritório escreveu vai sempre na primeira pessoa do singular, sem o nome de quem escreveu: "Informei ao cliente que a perícia é em 04/12 às 08h10min.", "Solicitei o laudo médico atualizado." Nunca "Paulo informou", "Advogado perguntou" ou "Dr. Paulo confirmou".
+- O que o cliente fez vai na terceira pessoa: "Cliente enviou o laudo médico de 18/11.", "Pendente: cliente enviar a carteira de trabalho."
 - Data em dd/mm (dd/mm/aaaa se distante ou com efeito jurídico); sem CPF, senha, telefone nem e-mail.
 - caso_id: o id do caso de que o item trata; com um caso só, esse.
-- conferir: true apenas quando o item for pertinente a um caso mas não der para saber de qual entre dois ou mais; nesse caso, caso_id vazio.
+- Para escolher o caso, compare o assunto com o benefício, a fase, a etapa e o último registro de cada caso. Benefício, perícia, recurso ou processo citado aponta o caso.
+- conferir: true somente quando, depois dessa comparação, o item couber igualmente em dois ou mais casos; nesse caso, caso_id vazio. Na dúvida leve, escolha o caso mais provável com conferir false.
 No máximo 8 itens no total.
 
 Casos abertos do cliente (o primeiro é o mais recente):
@@ -198,7 +203,7 @@ ${conversa}
 
 // caso que não foi dado ou dúvida vão ao caso mais recente com a marca; o texto sai limpo; agrupa por caso
 export function conferirResumo(r: Record<string, any>, casos: Caso[]) {
-  const grupos = new Map<string, string[]>();
+  const grupos = new Map<string, { linhas: string[]; conferir: boolean }>();
   if (!casos.length) return grupos;
   for (const it of (Array.isArray(r?.itens) ? r.itens : []).slice(0, 8)) {
     let t = mascarar(String(it?.texto || "")).replace(/[—–]/g, ",").replace(/\*\*?/g, "").replace(/^[-•\s]+/, "").replace(/\s+/g, " ").trim();
@@ -206,8 +211,11 @@ export function conferirResumo(r: Record<string, any>, casos: Caso[]) {
     let id = String(it?.caso_id || "");
     const ok = casos.some((k) => k.id === id);
     if (!ok) id = casos[0].id;
-    if (casos.length > 1 && (!ok || it?.conferir)) t += " (conferir o caso)";
-    grupos.set(id, [...(grupos.get(id) || []), t]);
+    t = t.replace(/\s*\(conferir o caso\)\s*$/i, "");
+    const g = grupos.get(id) || { linhas: [], conferir: false };
+    g.linhas.push(t);
+    if (casos.length > 1 && (!ok || it?.conferir)) g.conferir = true;   // F841 · a marca vai uma vez, no cabeçalho
+    grupos.set(id, g);
   }
   return grupos;
 }
@@ -238,11 +246,11 @@ async function resumir(conversa: string, dia: string) {
   const mensagens: Msg[] = (Array.isArray(x.mensagens) ? x.mensagens : []).map((m: Msg) => ({ ...m, texto: mascarar(semAssinatura(String(m.texto || ""))) }));
   if (!casos.length || !mensagens.some((m) => m.quem === "Cliente" && !soCortesia(m.texto))) return { acao: "nada" };
   const grupos = conferirResumo(await claudeResumo(promptResumo({ dia, casos, mensagens })), casos);
-  for (const [caso_id, linhas] of grupos) {
+  for (const [caso_id, { linhas, conferir }] of grupos) {
     const r = await fetch(`${URL_SB}/rest/v1/andamentos`, {
       method: "POST",
       headers: { apikey: SERVICO, Authorization: `Bearer ${SERVICO}`, "Content-Type": "application/json", Prefer: "return=minimal" },
-      body: JSON.stringify({ caso_id, texto: `${SELO_RESUMO} (${brData(dia)})\n${linhas.join("\n")}`, origem: "zap_resumo",
+      body: JSON.stringify({ caso_id, texto: `${SELO_RESUMO} (${brData(dia)})${conferir ? " · conferir o caso" : ""}\n${linhas.join("\n")}`, origem: "zap_resumo",
         origem_id: `zap_resumo:${conversa}:${dia}:${caso_id}` }),
     });
     if (!r.ok && r.status !== 409) throw new Error(`andamentos: ${r.status} ${(await r.text()).slice(0, 200)}`);
