@@ -671,7 +671,8 @@ def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None, pares=None, e
 
     def com_escritorio(k, cands):
         return k.get("origem_lista") == "🙋 Escritório" or any(
-            c.get("pre_caso") or c.get("origem_lista") == "🙋 Escritório" for c in cands)
+            c.get("pre_caso") or c.get("origem_lista") == "🙋 Escritório" or gerado_no_crm(c)
+            for c in cands)
 
     def pelo_beneficio(k, cands):
         b = (k.get("beneficio") or "").strip()
@@ -745,6 +746,11 @@ def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None, pares=None, e
     return adotados, sobrou
 
 
+def gerado_no_crm(c):
+    """F830 · o pré-caso que virou caso no CRM (o gerarCasoDoPre grava precaso.desfecho.tipo = caso)."""
+    return ((c.get("precaso") or {}).get("desfecho") or {}).get("tipo") == "caso"
+
+
 def respeitar_movidos(mapa, movidos):
     """F220 · o caso movido no CRM não volta à fase da lista antiga.
 
@@ -760,6 +766,15 @@ def respeitar_movidos(mapa, movidos):
             continue
         alvo = m["mover_para"]
         pc = bool(m.get("precaso"))           # F602 · só o pré-caso tem a ponte que move a tarefa
+        # F830 · o caso gerado no CRM: enquanto a tarefa segue no 🙋 Escritório (aberta ou
+        # concluída), vale o caso; quando ela chega a uma lista de fase, o To Do volta a mandar
+        if gerado_no_crm(m):
+            if k.get("origem_lista") == "🙋 Escritório":
+                k.update(fase=m.get("fase") or LISTA_FASE.get(alvo) or k.get("fase"),
+                         pre_caso=False, origem_lista=alvo, encerrado_em=None)
+            else:
+                limpar.append(k["id"])
+            continue
         # o pré-caso mandado às Aposentadorias futuras fica Futuro até a ponte
         # mover a tarefa; quem limpa a marca é a ponte (ponte_precaso.py)
         if pc and alvo in APOS_LISTAS:

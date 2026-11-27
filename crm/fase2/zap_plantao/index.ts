@@ -625,7 +625,14 @@ export const ESQ_ANDAMENTO = {
 };
 type AndCaso = { beneficio?: string | null; fase: string; etapa?: string | null; etapa_sugerida?: string | null; etapa_sugerida_desde?: string | null;
   andamentos: { em: string; origem: string; texto: string }[];
+  expedientes?: Expediente[] | null;
   trf3?: { ordem?: number; total?: number; orgao?: string; consultado_em?: string; previsao?: string } | null };
+// F838 · expediente ABERTO do PJe (casos.ronda.expedientes, Fechado = NÃO): o prazo de quem foi intimado
+type Expediente = { grau?: string | null; ato?: string | null; destinatario?: string | null; ciencia_em?: string | null; prazo_dias?: string | number | null; limite?: string | null };
+const dataBR = (s?: string | null) => { const m = String(s || "").match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : String(s || ""); };
+export const linhaExpediente = (e: Expediente) => `${e.ato || "ato"} para ${mascarar(String(e.destinatario || "destinatário não informado"))}` +
+  `${e.ciencia_em ? `, ciência em ${dataBR(e.ciencia_em)}` : ""}${e.prazo_dias ? `, prazo de ${e.prazo_dias} dias` : ""}` +
+  `${e.limite ? `, termina em ${dataBR(e.limite)}` : ""}${e.grau ? ` (${e.grau})` : ""}`;
 export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[]; atendente?: Atendente | null };
 // o mascarar tomaria "28.09.2026 14:23" por número; a data do andamento é o que a resposta precisa dizer
 export const mascararMenosDatas = (s: string) => {
@@ -645,10 +652,13 @@ export const TEMPOS_MEDIDOS = `INSS: auxílio por incapacidade por análise docu
   `aproximadamente 2 anos e meio. Apelação no TRF3 sem fila conhecida, aproximadamente 7 meses. Mandado de segurança, aproximadamente 3 meses. ` +
   `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual, ação acidentária (TJSP): do ajuizamento à sentença ou ao acordo homologado, cerca de 8 meses (de 3 a 18 meses; metade termina em acordo); no Núcleo 4.0 de Acidentes do Trabalho há processos com mais de 15 meses sem sentença. Apelação, pagamento e RPV na Justiça Estadual: sem medição suficiente, não estime. Outras ações estaduais: não estime.`;
 // F633 · somente o que veio dos portais (a anotação da equipe é interna), os 12 mais recentes (a rotina do e-SAJ escondia a decisão), sem números
-export function andamentosPublicos(a: { casos?: AndCaso[] } | null) {
-  return (a?.casos || []).flatMap((k) => (k.andamentos || []).filter((x) => !ORIGEM_AND[x.origem])
+export function andamentosPublicos(a: { casos?: AndCaso[] } | null, agora = new Date()) {
+  // F838 · os prazos ainda abertos no PJe vêm à frente: o "Decorrido prazo" dos andamentos é de prazo encerrado
+  const exps = (a?.casos || []).flatMap((k) => (k.expedientes || []).map((e) => ({ em: agora.toISOString(),
+    beneficio: k.beneficio || "caso", texto: `prazo ainda aberto no processo judicial: ${linhaExpediente(e)}` })));
+  return exps.concat((a?.casos || []).flatMap((k) => (k.andamentos || []).filter((x) => !ORIGEM_AND[x.origem])
     .map((x) => ({ em: x.em, beneficio: k.beneficio || "caso", texto: mascararMenosDatas(String(x.texto || "")).slice(0, 300) })))
-    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 12);
+    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 12));
 }
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
@@ -660,7 +670,9 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     const t = k.trf3;   // F494 · a fila do gabinete no TRF3 (casos.trf3, crm/trf3_ordem.py)
     const fila = t && t.ordem ? `\n  - fila de julgamento no TRF3${t.orgao ? ` (${t.orgao})` : ""}: ${t.ordem}º${t.total ? ` de ${t.total}` : ""}` +
       `${t.consultado_em ? `, consulta de ${t.consultado_em}` : ""}${t.previsao ? `; previsão estimada de julgamento: ${t.previsao.slice(0, 7)}` : ""}` : "";
-    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.${fila}\n${ands || "  - sem andamentos"}`;
+    const exps = (k.expedientes || []).map((e) => `  - prazo em aberto: ${linhaExpediente(e)}`).join("\n");
+    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.${fila}\n${ands || "  - sem andamentos"}` +
+      (exps ? `\n  Expedientes do PJe ainda abertos (intimações com prazo correndo):\n${exps}` : "");
   }).join("\n\n");
   return `Você ajuda a equipe de um escritório de advocacia previdenciária a responder no WhatsApp. O cliente perguntou pelo andamento ` +
     `do processo. Escreva a resposta que o colaborador conferirá e enviará; ela não sai sozinha.\n\n` +
@@ -675,6 +687,9 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     `Quando a etapa declarada e a dos portais divergem, vale o fato mais recente. Com mais de um caso, fale do que a conversa indica. ` +
     `Previsão somente se a pessoa perguntar quando sai: processo no TRF3 com a fila de julgamento, o mês e o ano da fila, como estimativa; ` +
     `nos demais, o tempo que os processos do escritório levaram, com "em média": ` + TEMPOS_MEDIDOS + ` ` +
+    `Prazo de quem tem de cumprir (o INSS, a autoridade, a Procuradoria): vale o expediente do PJe ainda aberto, do ato mais recente ` +
+    `(a sentença prevalece sobre a liminar); o "Decorrido prazo" dos andamentos é de prazo já encerrado e não é o prazo atual. Exemplo: ` +
+    `sentença intimada em 03/11 com prazo da autoridade até 02/12: diga que o prazo para implantar vai até 02/12, e não que o prazo terminou (F838). ` +
     `Perícia, audiência ou prazo com data: diga a data. Sem fato que permita dizer onde o processo está, escreva que vai conferir e retornar. ` +
     `Nunca afirme que não há decisão, resultado ou recurso julgado: o caso pode não trazer tudo; se o cliente fala em decisão que os casos não mostram, ` +
     `ou se os casos divergem entre si, escreva que vai verificar e retornar (F674). Nunca prometa resultado nem valor.\n\n` +

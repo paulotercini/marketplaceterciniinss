@@ -1106,8 +1106,9 @@ function tituloLista(rot){
   else h.textContent = rot;
 }
 
-function contaZapResumo(zs){ return (zs||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z)
-    && ((z.atendente_id===eu.id && z.nao_lidas>0) || (!z.atendente_id && (zapGestor() || z.nao_lidas>0)))).length; }
+// F827 · o menu conta o mesmo que a aba Novas (pintarListaZap): minhas ou que cubro, abertas, com não lida, fora da IA
+function contaZapResumo(zs){ return (zs||[]).filter(z=>z.status!=="resolvida" && !comIaZap(z) && z.nao_lidas>0
+    && (z.atendente_id===eu.id || cobrindoZap(z))).length; }
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],

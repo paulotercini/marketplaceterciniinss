@@ -73,7 +73,7 @@ const SUPA = "https://ficticio.supabase.co";
     d.innerHTML = contaDoDia([{data: hj, resumo: "réplica"}, {data: hj, resumo: "conferir"}], [{atend: true, tipo: "001", hora: "09:00"}], eu);
     return {txt: d.textContent.replace(/\s+/g, " "), pct: d.querySelector("[role=progressbar]").getAttribute("aria-valuenow"), vazio: contaDoDia([], [], "ninguem")};
   }, EU);
-  conf("3 itens hoje e cerca de 2 h 50 min", /3 itens hoje/.test(conta.txt) && /2 h 50 min/.test(conta.txt));
+  conf("concluídos e cerca de 2 h 50 min, sem repetir os itens de hoje da frase do alto (F839)", /concluíd/.test(conta.txt) && /2 h 50 min/.test(conta.txt) && !/itens hoje/.test(conta.txt));
   conf("a barra diz a porcentagem concluída", /^\d+$/.test(conta.pct));
   conf("dia sem item nem concluído, sem conta", conta.vazio === "");
 

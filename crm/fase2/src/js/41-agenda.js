@@ -118,12 +118,17 @@ async function salvarLigacaoAgenda(){
     aviso(`Agenda conectada como ${r.usuario}`, false); agq.disp=null; renderAgendaQuarta(); }
   catch(e){ if(q) q.textContent = e.message; }
 }
+// F828 · sem o Google ligado, a Agenda não prende no formulário: mostra o que o CRM tem com data (o Calendário) e um aviso discreto
+const avisoLigarAgenda = () => `<p class="meio-sub aq-semgoogle">Agenda do Google não ligada: aqui ficam os prazos e atendimentos do CRM. <button type="button" class="btn-mini" onclick="document.getElementById('conteudo-meio').innerHTML=cardLigarAgenda()" title="Ligar a agenda do Google">Ligar</button></p>`;
 function renderAgendaQuarta(){
+  if(!agendaUrl() || !agendaToken()){
+    renderCalendario(); tituloLista(temaV10() ? "Agenda" : "📅 Agenda");
+    document.getElementById("conteudo-meio").insertAdjacentHTML("afterbegin", avisoLigarAgenda()); return;
+  }
   tituloLista(temaV10() ? "Agenda" : "📅 Agenda");
   const meio = document.querySelector(".meio"); if(temaV10()) meio.classList.add("ag-v10");
   document.getElementById("sub-lista").textContent = "Atendimentos presenciais, das 08h00 às 12h30 e das 13h30 às 18h30. Cada profissional tem a sua cor.";
   const alvo = document.getElementById("conteudo-meio");
-  if(!agendaUrl() || !agendaToken()){ alvo.innerHTML = cardLigarAgenda(); return; }
   pintarTopoAgenda();
   carregarEspera(true).then(()=>{ if(visao==="agendaq" && agq.disp) pintarAgenda(); });   // F456
   agq.disp = agq.cache[agq.prof] || null;
@@ -1083,7 +1088,10 @@ document.addEventListener("keydown",e=>{
     if(busca && busca.value){ busca.value=""; buscaTxt="";
       document.getElementById("busca-x").style.display="none"; return render(); }
     if(document.activeElement===busca) return busca.blur();
+    if(digitando()) return document.activeElement.blur();   // Esc no campo só tira o foco
     if(clienteAberto) return fecharFicha();
+    // F827 · no computador, Esc com a conversa aberta fecha a conversa (o painel do cliente tem o próprio Esc)
+    if(zapAberta && !_pcli && !modalAberto() && document.getElementById("zap-dir") && !document.getElementById("app").classList.contains("celular")) return voltarListaZap();
   }
 });
 // ══════════════════════════════════════════════════════════════════════════

@@ -57,6 +57,8 @@ Honorários sobre parcelas vencidas até a sentença.
 
 Honorários na execução individual de sentença proferida em ação coletiva, ainda que não embargada (Súmula 345 STJ). Nas demais execuções vale o art. 85, §1º, CPC, salvo a exceção do §7º para o precatório sem impugnação (auditoria 03/10/2026). A Súmula 443 STJ é matéria penal, não usar.
 
+**Tema 1018 com reafirmação da DER (AgInt no REsp 2.269.424/RS, 1ª Turma do STJ, rel. Min. Herman Benjamin, j. 17/11/2026, DJEN 25/11/2026) [NÃO CONFIRMADO].** A concessão judicial mediante reafirmação da DER (Tema 995) não afasta o Tema 1018. Se o INSS conceder benefício mais vantajoso no curso da ação, o segurado mantém o administrativo e executa as parcelas do judicial até a implantação daquele. A Turma negou que a reafirmação seja distinção apta a afastar o repetitivo. Conferir no portal do STJ antes de citar; a fonte inicial foi publicação em rede social.
+
 ## Espaço pró-segurado
 
 Primeiro, RPV é paga em até 60 dias após requisição, sem deságio, com teto de 60 SM por credor.

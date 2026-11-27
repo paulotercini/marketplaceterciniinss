@@ -74,7 +74,7 @@ function cartaoEscolha(cliId, k, i, meu, destaque, nb){
     <div class="esc-cab">
       <div class="esc-l0"><span class="esc-tecla" aria-hidden="true">${i<9?i+1:""}</span><span class="esc-nb"${nb&&nb.tit?` title="${esc(nb.tit)}"`:""}>${nb&&nb.nb?`NB ${esc(fmtNb(nb.nb))}`:"Sem NB"}</span></div>
       <span class="esc-fase ${faseCls}">${esc(NOME_FASE[fe]||fe||"")}</span>${ondeCorre(k)?`<span class="esc-onde">${esc(ondeCorre(k))}</span>`:""}
-      <div class="proc-nome esc-tit" data-tit="${k.id}">${esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso" aria-label="dar um nome próprio a este caso">✎</button></div>
+      <div class="proc-nome esc-tit" data-tit="${k.id}">${k.apelido ? `<span><span class="esc-apel">${esc(k.apelido)}</span><span class="esc-esp">${esc(tituloCaso(k))}</span></span>` : esc(tituloDaEscolha(k))}<button type="button" class="esc-ed" onclick="nomearCaso('${cliId}','${k.id}')" title="dar um nome próprio a este caso" aria-label="dar um nome próprio a este caso">✎</button></div>
       <span class="esc-voce">${meu?`você escreveu aqui em ${fmtTS(meu)}`:""}</span>
     </div>
     <div class="esc-cel"><span class="esc-rot">Agora</span>${prox?`<div class="esc-agora${urg?" venc":""}">${esc(prox.txt)}</div>`:selo?"":`<span class="esc-ult">sem próximo passo</span>`}${selo}${k.exigencia_prazo?`<div>${chipExig(k)}</div>`:""}</div>
@@ -147,7 +147,7 @@ function nomearCaso(cliId, casoId){
 }
 function escolhido(cliId, casoId){
   casoSel = casoId; subAba = "escritorio";   // F166
-  document.getElementById("modal").style.display="none";
+  const m = document.getElementById("modal"); m.style.display="none"; m.innerHTML="";
   if(cliId===clienteAberto) repintarFicha(); else abrirFicha(cliId);
 }
 // Caixa modal genérica, em cima do mesmo modal da escolha de processo: uma
@@ -221,13 +221,22 @@ function abrirClaude(casoId, acao){
   if(onde==="app") location.href = url;          // esquema claude:// não abre em aba nova
   else window.open(url, "_blank", "noopener");
 }
+// F828 · o Descartar do Escrever no caso só aparece com texto; apaga o campo e o rascunho guardado
+function verDescartar(){ const b = document.getElementById("and-descartar"), t = document.getElementById("and-texto"); if(b) b.hidden = !(t && t.value.trim()); }
+function descartarEscrita(casoId){
+  const t = document.getElementById("and-texto"); limparRascunho(casoId);
+  if(t){ t.value = ""; if(t.oninput) t.oninput(); t.focus(); }
+  verDescartar();
+}
 function fecharCaixa(){
   setTimeout(armarVoltar, 0);   // F458
+  // F828 · Esc, voltar ou clique fora não perdem o texto da anotação rápida: fica guardado até gravar
+  { const ar = document.getElementById("ar-texto"); if(ar) guardarRascunho("ar", ar.value); }
   const m = document.getElementById("modal");
   m.style.display="none"; m.innerHTML="";
 }
 function fecharEscolha(){
-  document.getElementById("modal").style.display="none";
+  const m = document.getElementById("modal"); m.style.display="none"; m.innerHTML="";
   casoSel=null; fecharFicha();
 }
 
@@ -555,6 +564,8 @@ function pintarFicha(){
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c, chipParceria(c, ks))}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
+      ${/* F839 · espécie e fase na linha dos botões, logo abaixo do nome (antes ficavam soltas sob os ícones) */""}
+      ${temaV10() && celular() ? (k=>k ? `<span class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</span>` : "")(casoSel && D.casoPorId.get(casoSel)) : ""}
       ${/* F403 · o ⋯ do cabeçalho saiu: no lugar, as Anotações rápidas do cliente; Separar e Não é cliente foram ao Cadastro (pedido do Paulo, 05.11.2026) */""}
       ${botaoGravarFicha(cliId)}<span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>
       ${/* F274 · a situação do cliente e o ✕ andam juntos no canto direito, mesmo quando a linha quebra */""}
@@ -599,7 +610,7 @@ function pintarFicha(){
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(n=>n?` (${n})`:"")(pgs.filter(p=>p.status==="aberto").length)}${/* F236 · o vencido na própria aba */""}${(v=>v?` <span class="mt-venc">· ${v} vencido${v>1?"s":""}</span>`:"")(pgs.filter(p=>p.status==="aberto" && p.vencimento && p.vencimento<hoje() && !pgSemValor(p) && !valorSuspeito(p)).length)}${pontoAba(casoSel && D.casoPorId.get(casoSel), "hon")}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()" title="⋯ mostrar tudo da ficha"><span aria-hidden="true">⋯ Tudo</span><span class="sr-only">⋯ mostrar tudo da ficha</span></button>
-    ${temaV10() && celular() ? (k=>`${k ? `<p class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</p>` : ""}${celAbasHtml(c, ks, k,
+    ${temaV10() && celular() ? (k=>`${celAbasHtml(c, ks, k,
       evs.some(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada"), !!(pagK.length || pgs.length))}`)(casoSel && D.casoPorId.get(casoSel)) : ""}
   </div>
 
@@ -727,6 +738,9 @@ function pintarFicha(){
     gravarRetornoPc(id, (q("data-pc-ret")||{}).value, (q("data-pc-ret-mot")||{}).value); });
   document.querySelectorAll("[data-pc-proc-salvar]").forEach(b=>b.onclick=()=>{ const i = document.querySelector(`[data-pc-proc="${b.dataset.pcProcSalvar}"]`); gravarProcAnterior(b.dataset.pcProcSalvar, i ? i.value : ""); });
   document.querySelectorAll("[data-pc-mover]").forEach(b=>b.onclick=()=>{ const [id, e] = b.dataset.pcMover.split("|"); moverPreCaso(cliId, id, e); });
+  document.querySelectorAll("[data-pc-ass]").forEach(b=>b.onchange=()=>{ const [id, q] = b.dataset.pcAss.split("|"); marcarAssinadoPc(id, q, b.checked); });
+  document.querySelectorAll("[data-pc-gerar]").forEach(b=>b.onclick=()=>gerarCasoDoQuadro(cliId, b.dataset.pcGerar));
+  document.querySelectorAll("[data-pc-encerrar]").forEach(b=>b.onclick=()=>moverPreCaso(cliId, b.dataset.pcEncerrar, "arquivo"));
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
@@ -797,7 +811,7 @@ function pintarFicha(){
       // meio do atendimento. Agora ele fica guardado por caso, na sessão, e
       // volta para a tela; some só quando o andamento é registrado.
       campoAnd.oninput=()=>{ crescer(); prazoCancelado=false;
-        guardarRascunho(kAtual.id, campoAnd.value);
+        guardarRascunho(kAtual.id, campoAnd.value); verDescartar();
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); folgaComposer(); };
       const rasc=lerRascunho(kAtual.id);
       if(rasc && !campoAnd.value){
@@ -805,7 +819,7 @@ function pintarFicha(){
         if(cxEsc) cxEsc.classList.add("esc-aberto");   // com texto, as ferramentas ficam à mão
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual);
       }
-      crescer();
+      verDescartar(); crescer();
     }
   }
   folgaComposer();

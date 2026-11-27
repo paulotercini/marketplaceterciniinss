@@ -73,6 +73,8 @@ Sentença ou acórdão transitado. Carta de Concessão. CNIS atualizado. Planilh
 
 ## 4. Pontos críticos pró-segurado
 
+Benefício administrativo mais vantajoso concedido no curso da ação, inclusive quando o judicial veio por reafirmação da DER: o segurado opta pelo administrativo e executa os atrasados do judicial até a implantação dele (Tema 1018/STJ; AgInt no REsp 2.269.424/RS, 1ª Turma, DJEN 25/11/2026 [NÃO CONFIRMADO]).
+
 INSS apresenta cálculo deficiente como regra. Cotejo independente é obrigatório.
 
 Cecalc tem tendência a importar cálculo do INSS sem cotejo. Impugnar com `impugnacao-cumprimento-concomitantes`.

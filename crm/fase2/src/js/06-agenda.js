@@ -649,6 +649,9 @@ function itensAgendaTodos(){
       por({data:d, k, cli, selo:`Aviso ${ROT_PRAZO[p.sistema]||p.sistema||""}`.trim(),   // F531 · aviso, não prazo
         resumo: p.situacao==="findo" ? `venceu sem resposta: ${p.ato||"intimação"}` : `${p.ato||"intimação"}${p.dias?` (${p.dias} dias)`:""}${p.fim?"":", ciência tácita"}`}, donos);
     }
+    // F832 · a RPV registrada e ainda não paga: o tribunal paga em até 60 dias da entrega da requisição (Lei 10.259/2001, art. 17)
+    for(const r of reqsDoCaso(k)){ const pz = !r.pago_em && prazoRpv(r);
+      if(pz) por({data:pz, k, cli, selo:"RPV", resumo:`${pz<hj ? "cobrar o pagamento" : "conferir o pagamento"} da RPV de ${moedaTxt(r.valor)}: 60 dias da ${r.entrega ? "entrega da requisição" : "expedição"} (Lei 10.259/2001, art. 17)`}, donos); }
     if(rec) por({data:rec, k, cli, prazo:true, avisa:true, fatal: igual==="rec", selo:"Prazo do recurso",
       resumo:`recorrer da decisão de ${fmt(k.decisao_em)} (recurso ${k.fase==="conselho"?"especial":"ordinário"})`}, donos);
     // F236 · a descrição da exigência cortada na palavra, com reticências (cortava no meio: "Tecelagem Fictícia São Jos")
@@ -816,7 +819,7 @@ function linhaAgenda(it){
   if(selK) _agIt.set(selK, it);
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
-    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
+    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}${d<hj?` <small class="ag-ha">há ${-diasAte(d)} ${diasAte(d)===-1?"dia":"dias"}</small>`:""}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
     <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
@@ -925,7 +928,8 @@ function renderAgendaV10(qual){
       + `</section>`;
   };
   const nDegNL = deleg.filter(i=>i.extra).length;
-  const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) + blocoOntem() : "")
+  if(meuDia && agrL==="data" && !celular()) document.getElementById("sub-lista").insertAdjacentHTML("beforeend", contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id));
+  const corpo = agrL!=="data" ? emGrupos(itens, i=>chaveGrupo(agrL, i.k, i.quem), linhaAgenda) : (meuDia ? (celular() ? contaDoDia(itens.filter(i=>i.data===hj), ats, eu.id) : "") + blocoOntem() : "")
   + (itens.length ? `<div class="ag-th" aria-hidden="true"><span>Cliente</span><span>Lista</span><span>Etapa</span><span>Tipo</span><span>Prazo</span></div>` : "")
   + secoes.slice(0,2).map(secao).join("")
   + (mencs.length ? `<section class="pl-grupo" data-tom="menc"><h3 class="secao">Menções a você <span class="pl-n">${mencs.length}</span></h3>`
@@ -1062,7 +1066,7 @@ function pintarSel(){
     + bt("loteEstrela","Estrela","Marcar ou desmarcar a estrela dos casos selecionados") + bt("loteData","Data","Mudar a data dos retornos e lembretes selecionados")
     + `<button type="button" class="sel-x" onclick="limparSel()" title="Limpar a seleção (Esc)" aria-label="Limpar a seleção">✕</button>`;
 }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !document.querySelector("#modal[style*='block']")) limparSel(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _sel.size && !modalAberto()) limparSel(); });
 const casosDaSel = () => [...new Set([..._sel.values()].flatMap(x=>x.casos))].map(id=>D.casoPorId.get(id)).filter(k=>k && k.fase!=="encerrado");
 function loteConcluir(){ const n = casosDaSel().length; if(!n) return aviso("Nenhum caso aberto na seleção"); despachar(null, null, n); }
 async function gravarLote(s, nota){
@@ -1179,7 +1183,7 @@ function porClienteDia(g){
     return `<div class="ag-grupo-cli"><div class="ag-cli-cab cartao" data-cli="${its[0].cli.id}"><b>${esc(its[0].cli.nome)}</b> <span class="pl-n">${its.length}</span></div>`
       + linhaAgenda(p) + `<details class="ag-mais-cli"><summary title="outros itens deste cliente">+${resto.length}</summary>${resto.map(linhaAgenda).join("")}</details></div>`; }).join("");
 }
-function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS(); }
+function avisoSeMeuDia(planej){ return planej ? "" : avisoCRPS() + blocoDecadenciaDia(filtroDia); }   // F831
 // F295 · o resumo de ontem (Onda D do fluxo do To Do): no último dia útil, quantas anotações eu fiz, em quantos
 // clientes, e quem eu despachei, com a data de volta. Recolhido; abre no clique
 function ultimoDiaUtil(){ let d = somaDias(hoje(), -1); while(!ehDiaUtil(d)) d = somaDias(d, -1); return d; }

@@ -130,10 +130,11 @@ function feitosHoje(quem){
   for(const ts of D.tarefasPorCaso.values()) ts.forEach(t=>{ if(t.colaborador_id===quem && t.concluida_em && dataSP(t.concluida_em)===hj) ids.add(t.id); });
   return ids.size + ativos().filter(k=>{ const d = (k.ronda||{}).despacho; return d && d.por===quem && d.em && dataSP(d.em)===hj; }).length;
 }
+// F839 · a conta entra na frase do alto (um resumo só): "N para hoje" já está na frase, aqui ficam concluídos, tempo e barra
 function contaDoDia(its, ats, quem){
   const feitos = feitosHoje(quem), n = its.length + ats.length; if(!n && !feitos) return "";
   const tab = durTabela(), min = [...its, ...ats].reduce((s, i)=>s + minutosDe(i, tab), 0), pct = Math.round(100*feitos/(feitos+n));
-  return `<div class="md-conta" role="group" aria-label="Conta do dia"><span><b>${n}</b> ${n===1?"item":"itens"} hoje</span><span><b>${feitos}</b> ${feitos===1?"concluído":"concluídos"}</span>`
+  return `<div class="md-conta" role="group" aria-label="Conta do dia"><span><b>${feitos}</b> ${feitos===1?"concluído":"concluídos"}</span>`
     + (min ? `<span title="estimativa pela natureza de cada item; a tabela fica nas Configurações">cerca de <b>${fmtMin(min)}</b></span>` : "")
     + `<span class="md-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="${pct}% do dia concluído"><i style="width:${pct}%"></i></span></div>`;
 }
@@ -277,7 +278,7 @@ function ligarArrastoFabs(){
   fabArrumar();
 }
 ligarArrastoFabs();
-function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
+function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); fecharPainelCli(); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções

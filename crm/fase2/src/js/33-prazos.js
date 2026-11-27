@@ -845,11 +845,27 @@ function voltarLigado(){ try{ return !navigator.webdriver || localStorage.getIte
 function inicioVoltar(){ return soIdentificacao() ? "agendaq" : "meudia"; }
 function modalAberto(){ const m = document.getElementById("modal"); return !!(m && m.innerHTML && m.style.display!=="none"); }
 function temVoltar(){
-  return !!(document.getElementById("proc-inteiro") || modalAberto() || painelPz || painelZapCli
-    || document.getElementById("app")?.classList.contains("zap-conv-aberta") || clienteAberto || visao!==inicioVoltar());
+  return !!(document.getElementById("proc-inteiro") || modalAberto() || painelPz || painelZapCli || _pcli
+    || document.getElementById("app")?.classList.contains("zap-conv-aberta") || clienteAberto || _telas.length || visao!==inicioVoltar());
+}
+// F828 · a tela e a ficha ficam no endereço (#planejado, #fase:inss, #meudia/<cliente>): recarregar mantém as duas, o
+// Ctrl+clique abre a ficha em outra aba, e as telas visitadas formam uma pilha para o voltar levar à anterior
+function hashLido(){ try{ return decodeURIComponent(location.hash||""); }catch(e){ return ""; } }   // function: lida na carga, antes desta linha
+function hashTela(){
+  if(!voltarLigado()) return {};
+  const m = /^#([a-z_]+(?::[a-z_0-9]+)?)(?:\/([0-9a-f-]{8,36}))?$/i.exec(hashLido());
+  return m ? {v:m[1], c:m[2]} : {};
+}
+const linkFicha = cliId => location.pathname + location.search + "#" + visao + "/" + cliId;
+function marcarTela(){
+  if(visao!==_telaAtual){ if(_telaAtual && !_voltandoTela && _telas.push(_telaAtual) > 30) _telas.shift(); _telaAtual = visao; _voltandoTela = false; }
+  const h = "#" + visao + (clienteAberto ? "/" + clienteAberto : "");
+  if(hashLido()!==h) try{ history.replaceState(history.state, "", h); }catch(e){}
 }
 function armarVoltar(){
-  if(!voltarLigado() || _voltarDesarmando) return;
+  if(!voltarLigado()) return;
+  marcarTela();
+  if(_voltarDesarmando) return;
   const armado = history.state && history.state.crm==="voltar";
   try{
     if(temVoltar() && !armado) history.pushState({crm:"voltar"}, "");
@@ -860,13 +876,17 @@ function armarVoltar(){
 function voltarUmPasso(){
   if(document.getElementById("proc-inteiro")) return fecharProcessoInteiro();
   if(modalAberto()) return fecharCaixa();
+  if(_pcli) return fecharPainelCli();   // F828 · o painel do cliente fecha antes de a tela mudar
   if(painelPz || painelZapCli) return fecharPainelPrazo();
   if(document.getElementById("app")?.classList.contains("zap-conv-aberta")) return voltarListaZap();
   if(clienteAberto){
     if(document.getElementById("detalhe")?.classList.contains("atend-tela")) return sairModoAtendimento(clienteAberto);
     return fecharFicha();
   }
+  _voltandoTela = true;
+  if(_telas.length) return irPara(_telas.pop());
   if(visao!==inicioVoltar()) return irPara(inicioVoltar());
+  _voltandoTela = false;
 }
 window.addEventListener("popstate", e=>{
   if(!voltarLigado()) return;

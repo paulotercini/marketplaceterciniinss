@@ -256,5 +256,20 @@ insert into r select 'p32 com o menu ligado, a conversa sem atendente é do rob�
 update config_app set valor = 'nao' where chave = 'zap_bot_ligado';
 update config_app set valor = 'nao' where chave = 'zap_ia_plantao';
 
+-- F824 · conversa assumida pela equipe: a sugestão sai em 1 minuto, sem esperar os 20 do plantão
+update config_app set valor = 'sim' where chave = 'zap_ia_plantao';
+update config_app set valor = 'nao' where chave = 'zap_bot_ligado';
+create temp table q824 as select zap_abrir('5500000000824', 'Cliente Teste') id;
+update zap_conversas set atendente_id = 'aaaaaaaa-0000-0000-0000-000000000001' where id = (select id from q824);
+create temp table m824 as select pg_temp.entra((select id from q824), 'alguma novidade?') id;
+update zap_mensagens set criado_em = now() - interval '2 minutes' where id = (select id from m824);
+select zap_plantao_vencidas();
+insert into r select 'p33 F824: assumida sem mensagem da equipe espera os 20 minutos', pg_temp.ia((select id from m824)) = 'plantao:espera';
+insert into zap_mensagens (conversa_id, direcao, texto, quando_wa, momento)
+  select id, 'saida', E'*Dr. Paulo Tercini:*\n\nBom dia', now() - interval '1 hour', now() - interval '1 hour' from q824;
+select zap_plantao_vencidas();
+insert into r select 'p34 F824: assumida com a equipe na conversa, a sugestão sai em 1 minuto', pg_temp.ia((select id from m824)) <> 'plantao:espera';
+update config_app set valor = 'nao' where chave = 'zap_ia_plantao';
+
 select k, case when v then 'ok' else 'FALHOU' end as resultado from r order by k;
 select count(*) filter (where not v) as falhas from r;

@@ -155,7 +155,10 @@ async function sincronizarParcelasHon(c, pcId, h){
   const pref=`hon:${pcId}:`;
   const ja=(D.pagamentos||[]).filter(p=>String(p.todo_item_id||"").startsWith(pref));
   const ks=D.casosDoCliente.get(c.id)||[];
-  const casoId=(ks.find(k=>k.fase!=="encerrado")||{}).id||null;
+  // 27.11.2026 · o caso ligado ao pré-caso, quando houver (antes ia ao primeiro caso aberto, que podia ser outro benefício)
+  const pc=precasosDe(c).find(p=>p.id===pcId)||{};
+  const lig=(pc.caso_id && D.casoPorId.get(pc.caso_id)) || ks.find(k=>(k.precaso||{}).id===pcId);
+  const casoId=(lig || ks.find(k=>k.fase!=="encerrado")||{}).id||null;
   const novos=parcelasHon(h).filter(x=>x.venc);
   try{
     for(const x of novos){
@@ -752,7 +755,14 @@ async function apagarNotaAtendimento(cliId, idx){
   c.campos={...(c.campos||{}), atendimento:notas};
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})}).catch(()=>{});
-  aviso("Anotação apagada", false); repintarFicha();
+  repintarFicha();
+  // F828 · Desfazer devolve a nota ao mesmo lugar
+  avisoDesfazer("Anotação apagada", async ()=>{
+    const at=[...((c.campos||{}).atendimento||[])]; at.splice(Math.min(idx, at.length), 0, n);
+    c.campos={...(c.campos||{}), atendimento:at};
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+    repintarFicha(); });
 }
 // checklist dentro da anotação: itens marcáveis, com autor no risco
 async function notaChecklistItem(cliId, idx){
@@ -1105,6 +1115,7 @@ function anotacaoRapida(pre, cliId){
       <button style="margin-left:auto" onclick="salvarAnotacaoRapida()" title="Guardar agora">Guardar<span class="sr-only"> agora</span></button>
     </div>`);
   const b=document.getElementById("ar-busca");
+  document.getElementById("ar-texto").value = lerRascunho("ar");   // F828
   if(cliId && D.cliPorId.get(cliId)){ arEscolher(cliId); return; }
   if(b){ b.focus(); if(pre&&String(pre).trim()){ b.value=String(pre); arProcurar(b.value); } }
 }
