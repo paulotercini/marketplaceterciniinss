@@ -7377,7 +7377,7 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.36</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.37</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -27645,6 +27645,59 @@ async function confirmarRecebido(pgId){
   await correnteConferencia(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} recebido em ${fmt(data)}`);
   abrirFicha(clienteAberto);
 }
+// 27.11.2026 · ordem do Paulo: o lançamento se edita (valor e vencimento) e se cancela com motivo; o cancelado fica
+// riscado, com quem e quando (o banco grava os dois pelo login, F829); o recebido e a conferência se desfazem, com confirmação
+async function gravarPgto(p, corpo, erro){
+  try{ await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
+  catch(e){ aviso(erro); return false; }
+  Object.assign(p, corpo); return true;
+}
+function editarPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="aberto") return;
+  caixa(`<h3 style="margin:0 0 6px">Editar · ${esc(origemPgto(p))}</h3>
+    <div class="form-linha" style="align-items:flex-end;flex-wrap:wrap;gap:10px">
+      <label class="adr-campo">Valor<input type="number" step="0.01" min="0" id="ed-valor" value="${p.valor==null?"":+p.valor}" style="width:140px"></label>
+      <label class="adr-campo">Vencimento<input type="date" id="ed-venc" value="${esc(p.vencimento||"")}"></label>
+      <button class="adr-bt adr-primario" onclick="salvarEdicaoPgto('${p.id}')">Guardar</button>
+    </div>`);
+}
+async function salvarEdicaoPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const valor = +((document.getElementById("ed-valor")||{}).value||0), venc = (document.getElementById("ed-venc")||{}).value || null;
+  if(!(valor>0)) return aviso("Informe o valor");
+  if(!await gravarPgto(p, {valor, vencimento:venc, editado_por:eu.id, editado_em:new Date().toISOString()}, "Não gravei a edição — tente de novo")) return;
+  fecharCaixa(); aviso("Lançamento editado", false); repintarFicha();
+}
+function cancelarPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="aberto") return;
+  caixa(`<h3 style="margin:0 0 6px">Cancelar · ${esc(origemPgto(p))}</h3>
+    <p class="adr-nota" style="margin:0 0 10px">O lançamento não some: fica riscado, com o motivo, quem cancelou e quando, e sai dos totais.</p>
+    <label class="adr-campo" style="display:block">Motivo<textarea id="cc-motivo" rows="2" style="width:100%"></textarea></label>
+    <div class="form-linha" style="margin-top:8px"><button class="adr-bt adr-primario" onclick="confirmarCancelPgto('${p.id}')">Cancelar</button></div>`);
+}
+async function confirmarCancelPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const motivo = ((document.getElementById("cc-motivo")||{}).value||"").trim();
+  if(!motivo) return aviso("Escreva o motivo do cancelamento");
+  if(!await gravarPgto(p, {status:"cancelado", cancelado_motivo:motivo, cancelado_por:eu.id, cancelado_em:new Date().toISOString()}, "Não cancelei — tente de novo")) return;
+  fecharCaixa();
+  await desligarLembreteCobranca(D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id), p.id);
+  aviso("Lançamento cancelado", false); repintarFicha();
+}
+async function desfazerPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="recebido") return;
+  const cfs = p.conferencias||[], minha = cfs.length>1 && cfs[cfs.length-1].c===eu.id;
+  if(minha){
+    if(!await confirmar("Desfazer a sua conferência deste recebimento?")) return;
+    if(!await gravarPgto(p, {conferencias:cfs.slice(0, -1)}, "Não desfiz a conferência — tente de novo")) return;
+    aviso("Conferência desfeita", false);
+  }else{
+    if(!await confirmar(`Desfazer o recebido de ${moeda(p.valor)}? O lançamento volta a receber e a corrente de conferência é apagada.`)) return;
+    if(!await gravarPgto(p, {status:"aberto", pago_em:null, vencimento:p.vencimento||p.pago_em, conferencias:[], editado_por:eu.id, editado_em:new Date().toISOString()}, "Não desfiz o recebido — tente de novo")) return;
+    aviso("Recebido desfeito: o lançamento voltou a receber", false);
+  }
+  repintarFicha();
+}
 // F236 · a parcela do 💰 Recebimentos abre a ficha já na aba Honorários, no caso dela
 async function abrirHonorariosDe(cliId, casoId){
   await abrirFicha(cliId);
@@ -27987,19 +28040,20 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             const jaConferi=cfs.some(cf=>cf.c===eu.id);
             const susp = p.status==="aberto" && valorSuspeito(p), nota = notaPgto(p);
             const [sit, cor] = susp ? ["conferir valor", "venc"] : situacaoPgto(p, prox && prox.id);
-            return `<tr class="pgto" data-pg="${p.id}">
-              <td class="hon-data">${dataDe(p) ? fmt(dataDe(p)) : "—"}</td>
-              <td class="desc">${(d=>d&&d!=="Recebimento"?esc(d):"Recebimento")(semNota(p.descricao))}${nota?`<small class="hon-nota">${esc(nota)}</small>`:""}${susp?`<small class="hon-nota">valor fora do comum (um número de processo ou de benefício lido como valor?): fica fora dos totais até alguém conferir
+            const canc = p.status==="cancelado", risca = t => canc ? `<s>${t}</s>` : t;
+            return `<tr class="pgto${canc?" hon-cancelado":""}" data-pg="${p.id}">
+              <td class="hon-data">${risca(dataDe(p) ? fmt(dataDe(p)) : "—")}</td>
+              <td class="desc">${risca((d=>d&&d!=="Recebimento"?esc(d):"Recebimento")(semNota(p.descricao)))}${canc?`<small class="hon-nota">Cancelado${p.cancelado_por?` por ${esc(((D.colPorId.get(p.cancelado_por)||{}).nome||"?").split(" ")[0])}`:""}${p.cancelado_em?` em ${fmtTS(p.cancelado_em)}`:""}${p.cancelado_motivo?`: ${esc(p.cancelado_motivo)}`:""}</small>`:""}${p.editado_em && !canc?`<small class="hon-nota">Editado${p.editado_por?` por ${esc(((D.colPorId.get(p.editado_por)||{}).nome||"?").split(" ")[0])}`:""} em ${fmtTS(p.editado_em)}</small>`:""}${nota?`<small class="hon-nota">${esc(nota)}</small>`:""}${susp?`<small class="hon-nota">valor fora do comum (um número de processo ou de benefício lido como valor?): fica fora dos totais até alguém conferir
                   <button class="btn-mini" onclick="conferirValor('${p.id}')" title="o valor está certo: ele volta aos totais"><span aria-hidden="true">Confirmar</span><span class="sr-only">o valor está certo</span></button></small>`:""}
                 <div class="hon-vinc">${vinculoDaParcela(p, ks)}
                 <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
                   return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
                     <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
                     <small>${i===0?"recebeu":"conferiu"} ${fmtTS(cf.em).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span></div></td>
-              <td class="valor hon-num">${p.status==="aberto" && pgSemValor(p) ? "a calcular" : `${pgEstimado(p)?"≈ ":""}${moeda(p.valor)}`}</td>
+              <td class="valor hon-num">${risca(p.status==="aberto" && pgSemValor(p) ? "a calcular" : `${pgEstimado(p)?"≈ ":""}${moeda(p.valor)}`)}</td>
               <td><span class="hon-sit hon-${cor}">${sit}</span></td>
-              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button>`:
-                p.status!=="cancelado" && !jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}</td>
+              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button><button class="adr-bt" onclick="editarPgto('${p.id}')" title="corrigir o valor ou o vencimento">Editar</button><button class="adr-bt" onclick="cancelarPgto('${p.id}')" title="cancelar este lançamento, com o motivo (ele fica riscado)">Cancelar</button>`:
+                canc ? "" : `${!jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}<button class="adr-bt" onclick="desfazerPgto('${p.id}')" title="${cfs.length>1 && cfs[cfs.length-1].c===eu.id ? "desfazer a sua conferência" : "desfazer o recebido: o lançamento volta a receber"}">Desfazer</button>`}</td>
             </tr>`;}).join("")}</tbody></table></div>`
           : "<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
         <details class="hon-novo" ${linhas.length?"":"open"}>
@@ -28018,13 +28072,15 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             <label class="adr-campo">Data<input type="date" id="np-data" value="${hoje()}"></label>
             <label class="adr-campo">Valor<input id="np-valor" type="number" step="0.01" placeholder="R$" style="width:120px"></label>
             <label class="adr-campo" style="flex:1;min-width:160px">Origem<input id="np-desc" placeholder="RPV, honorários, 1ª parcela…"></label>
-            <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="o honorário que já venceu e não entrou: a data vira o vencimento">
-              <input type="checkbox" id="np-aberto" style="width:18px;height:18px">ainda a receber</label>
+            <span role="radiogroup" aria-label="Situação do lançamento" style="display:flex;gap:12px">
+              <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="o dinheiro já entrou: a data é o dia do recebimento">
+                <input type="radio" name="np-sit" value="recebido" style="width:18px;height:18px">Recebido</label>
+              <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="ainda não entrou: a data é o vencimento">
+                <input type="radio" name="np-sit" value="aberto" style="width:18px;height:18px">A receber</label></span>
             <button class="adr-bt adr-primario" onclick="novoPgto()">Registrar</button>
           </div>
-          <p class="adr-nota">Data de hoje ou passada = dinheiro <strong>recebido</strong> (você entra como quem recebeu), a não ser que marque
-            <strong>ainda a receber</strong>: aí a data é o vencimento, como no honorário que venceu e não entrou.
-            Data futura = <strong>a receber</strong> (vencimento). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
+          <p class="adr-nota">Marque sempre: <strong>Recebido</strong> (a data é o dia em que entrou e você consta como quem recebeu) ou
+            <strong>A receber</strong> (a data é o vencimento, inclusive o do honorário que venceu e não entrou). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
             a corrente mostra quem recebeu e quem conferiu, com a data de cada um.</p>
         </details>
       </section>
@@ -42088,6 +42144,8 @@ const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
 // F408 · a data é o "Concluir em" da tarefa do Microsoft To Do (a sincronização grava os dois iguais); a data que
 // sai do To Do sai do CRM pela mesma sincronização (casos.todo_prazo, 31.10.2026)
 const prazoDoTodo = k => !!(k && k.prazo && k.todo_prazo===k.prazo);
+// 27.11.2026 · ordem do Paulo: até 31/12/2026 a data do Microsoft To Do é só leitura (o Corrigir gravava casos.prazo por cima)
+const editaPzTodo = (todo, ed) => todo && hoje()<="2026-12-31" ? "" : ed;
 // F429 · decisão do Paulo (07.11.2026): o prazo fatal nasceu no CRM e é a anotação de prazo fatal do CRM que o faz; o
 // "Concluir em" do To Do é retorno também no 🗓 Tarefas com Prazo, salvo com a tarefa fatal ou o carimbo da mesma data.
 // F530 (11.11.2026): o carimbo só vem de quem registra o prazo fatal no CRM; o do assistente deixou de existir
@@ -43312,7 +43370,7 @@ function linhasDeDatas(cliId){
         rot:`<b>Prazo do Microsoft To Do: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
                   <small class="qd-de">Data de voltar ao caso, o “Concluir em” do To Do${og?` · anotado por ${esc(og.quem)} em ${fmt(og.em)}`:""}</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:"",
-        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
+        edita:editaPzTodo(true, `onchange="qdMudarPrazo('${x.id}',this.value)"`)});
     }
     else if(x.prazo && !igualA){
       const txtOg = og ? `${esc(og.texto.slice(0,110))}${og.texto.length>110?"…":""}` : "";
@@ -43325,7 +43383,7 @@ function linhasDeDatas(cliId){
           : `<b>PRAZO FATAL: ${tit}</b>
                   <small class="qd-de qd-semmotivo">Sem descrição: clique para descrever este prazo</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:`onclick="explicarPrazo('${x.id}')"`,
-        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`,
+        edita:editaPzTodo(prazoDoTodo(x), `onchange="qdMudarPrazo('${x.id}',this.value)"`),
         acao:btCumprir, cumprir});
     }
     // F236 · o evento diz o tipo (julgamento não é perícia) e o que falta: avisar o cliente (ou quem já avisou),
@@ -43451,6 +43509,8 @@ function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12
 const ehRetornoPz = x => x.rotulo==="Prazo do Microsoft To Do" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
+// 27.11.2026 · só o que vem do To Do: a Volta à fila e o Retorno do pré-caso são do CRM e saem nesse modo
+const doTodoPz = x => !!x.todo || x.rotulo==="Prazo do Microsoft To Do";
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
 const corPz = x => ehRetornoPz(x) ? "ret" : x._nat==="fatal" ? "fatal" : x._nat==="compromisso" ? "comp" : "lemb";
 const pillPz = x => ehRetornoPz(x) ? `<span class="pz-pill pz-pill-lembrete"><i aria-hidden="true"></i>${esc(x.rotulo)}</span>${pillTodo(x)}` : pillNat(x._nat) + pillTodo(x);
@@ -43501,12 +43561,12 @@ function calendarioPz(){
   }
   return `<aside class="pzm" aria-label="Mês"><div class="pzm-cab"><button type="button" class="pzm-nav" onclick="pzMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="pzMes(1)" aria-label="Mês seguinte">›</button></div>
     <div class="pzm-g">${h}</div>
-    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Prazo do Microsoft To Do</span></div></aside>`;
+    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span>${PZ_SO_TODO ? "" : `<span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span>`}<span><i class="pzm-ret"></i>Prazo do Microsoft To Do</span></div></aside>`;
 }
 function pzConteudo(cliId){
   const hj = hoje(), em = n => somaDias(hj, n);
   _pzCliId = cliId;
-  _pzCli = prazosDoCliente(cliId).lista.filter(x=>!PZ_SO_TODO || ehRetornoPz(x) || x.todo);
+  _pzCli = prazosDoCliente(cliId).lista.filter(x=>!PZ_SO_TODO || doTodoPz(x));
   _pzCli.forEach((x, i)=>prepPz(x, i, "cli"));
   if(painelPz && painelPz.fonte==="cli"){ const j = _pzCli.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId && (x.rotulo||"")===painelPz.rotulo);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j, "cli")); }
@@ -44662,7 +44722,7 @@ function maMes(n){
 function maDia(iso){ _pzDia = iso; _pzMes = iso.slice(0,7); abaAtiva = 5; repintarFicha(); }
 function maConteudo(cliId){
   const hj = hoje(), m = _pzMes || hj.slice(0,7), [y, mm] = m.split("-").map(Number), off = new Date(y, mm-1, 1, 12).getDay(), nDias = new Date(y, mm, 0).getDate();
-  const its = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || ehRetornoPz(x) || x.todo) && x.data.slice(0,7)===m);
+  const its = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x)) && x.data.slice(0,7)===m);
   its.forEach((x, i)=>prepPz(x, i));
   const por = new Map(); for(const x of its){ if(!por.has(x.data)) por.set(x.data, []); por.get(x.data).push(x); }
   const tipo = x => ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete";
@@ -53242,8 +53302,11 @@ async function novoPgto(){
   if(!valor) return aviso("Informe o valor");
   const data=document.getElementById("np-data").value||hoje();
   const desc=document.getElementById("np-desc").value.trim();
-  // data futura = a receber (vencimento); F236 · "ainda a receber" lança o honorário que já venceu e não entrou
-  const recebido = data<=hoje() && !(document.getElementById("np-aberto")||{}).checked;
+  // 27.11.2026 · ordem do Paulo: Recebido ou A receber, escolhido sempre (antes a data de hoje gravava recebido em silêncio)
+  const sit = (document.querySelector('input[name="np-sit"]:checked')||{}).value;
+  if(!sit) return aviso("Marque Recebido ou A receber");
+  const recebido = sit==="recebido";
+  if(recebido && data>hoje()) return aviso("Recebido não tem data futura: marque A receber");
   // o dinheiro é do cliente: o caso é opcional (cliente sem processo lança
   // honorários do mesmo jeito), mas o cliente sempre acompanha a linha
   const linha={caso_id:casoId||null, cliente_id:clienteAberto||null,
@@ -53251,8 +53314,11 @@ async function novoPgto(){
     status:recebido?"recebido":"aberto",
     pago_em:recebido?data:null, vencimento:recebido?null:data,
     conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]};
-  const [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify(linha)});
+  let novo;
+  try{ [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(linha)})||[]; }
+  catch(e){ return aviso("Não gravei o lançamento — tente de novo"); }
+  if(!novo) return aviso("Não gravei o lançamento — tente de novo");
   D.pagamentos.push(novo);
   aviso(recebido?"Recebimento registrado 💵 — você consta como quem recebeu":"Lançado a receber 💰");
   if(recebido) await correnteConferencia(casoId,
@@ -58585,7 +58651,10 @@ async function sincronizarParcelasHon(c, pcId, h){
   const pref=`hon:${pcId}:`;
   const ja=(D.pagamentos||[]).filter(p=>String(p.todo_item_id||"").startsWith(pref));
   const ks=D.casosDoCliente.get(c.id)||[];
-  const casoId=(ks.find(k=>k.fase!=="encerrado")||{}).id||null;
+  // 27.11.2026 · o caso ligado ao pré-caso, quando houver (antes ia ao primeiro caso aberto, que podia ser outro benefício)
+  const pc=precasosDe(c).find(p=>p.id===pcId)||{};
+  const lig=(pc.caso_id && D.casoPorId.get(pc.caso_id)) || ks.find(k=>(k.precaso||{}).id===pcId);
+  const casoId=(lig || ks.find(k=>k.fase!=="encerrado")||{}).id||null;
   const novos=parcelasHon(h).filter(x=>x.venc);
   try{
     for(const x of novos){

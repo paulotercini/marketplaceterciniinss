@@ -1175,3 +1175,10 @@ Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs 
 - Painel do cliente em tela larga: os flutuantes (⚡, Sugestões, ?, Agenda, ⋯) andam 460 px para a esquerda, clicáveis e sem cobrir o painel.
 - Agenda sem o Google ligado mostra o Calendário do CRM (prazos, perícias, atendimentos) com aviso discreto e botão Ligar; em Configurações o formulário fica recolhido. A legenda do Calendário ganhou 24 px de altura (alvo de toque).
 - Prova `testes/cadastro/f828.js`.
+
+## F829 · Auditoria: To Do só leitura nos Prazos, honorários com escolha explícita, Editar, Cancelar e Desfazer (27.11.2026, v14.37)
+- Ordem expressa do Paulo de 27.11.2026. Prazos: até 31/12/2026 a data do Microsoft To Do é só leitura (`editaPzTodo` em 26-prazos.js zera o `edita` do "Prazo do Microsoft To Do" e do prazo fatal com `todo`), e some o Corrigir e o campo de data; no modo `PZ_SO_TODO` a aba e o mês mostram só o que vem do To Do (`doTodoPz`: sai a Volta à fila e o Retorno do pré-caso) e a legenda perde Compromisso e Lembrete.
+- Honorários: o + lançamento pede Recebido ou A receber (rádio sem padrão; Recebido com data futura é recusado) e a falha do POST avisa. Lançamento aberto ganha Editar (valor e vencimento) e Cancelar com motivo obrigatório; o cancelado fica riscado com quem, quando e o motivo, fora dos totais. Recebido ganha Desfazer, com confirmação: tira a minha conferência quando sou o último conferente, senão volta o lançamento a receber.
+- Migração f829 (não destrutiva): `pagamentos` ganha `cancelado_motivo/por/em` e `editado_por/em`; o gatilho `pagamentos_autoria` exige o motivo e grava quem (pelo login) e quando.
+- Parcelas do pré-caso (`sincronizarParcelasHon`) vão ao caso ligado ao pré-caso (`pc.caso_id` ou `k.precaso.id`), e só sem ele ao primeiro caso aberto.
+- Provas: `testes/colab_pagamentos_autoria.sql` e `testes/cadastro/auditoria829.js`.

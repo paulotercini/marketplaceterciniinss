@@ -1022,8 +1022,11 @@ async function novoPgto(){
   if(!valor) return aviso("Informe o valor");
   const data=document.getElementById("np-data").value||hoje();
   const desc=document.getElementById("np-desc").value.trim();
-  // data futura = a receber (vencimento); F236 · "ainda a receber" lança o honorário que já venceu e não entrou
-  const recebido = data<=hoje() && !(document.getElementById("np-aberto")||{}).checked;
+  // 27.11.2026 · ordem do Paulo: Recebido ou A receber, escolhido sempre (antes a data de hoje gravava recebido em silêncio)
+  const sit = (document.querySelector('input[name="np-sit"]:checked')||{}).value;
+  if(!sit) return aviso("Marque Recebido ou A receber");
+  const recebido = sit==="recebido";
+  if(recebido && data>hoje()) return aviso("Recebido não tem data futura: marque A receber");
   // o dinheiro é do cliente: o caso é opcional (cliente sem processo lança
   // honorários do mesmo jeito), mas o cliente sempre acompanha a linha
   const linha={caso_id:casoId||null, cliente_id:clienteAberto||null,
@@ -1031,8 +1034,11 @@ async function novoPgto(){
     status:recebido?"recebido":"aberto",
     pago_em:recebido?data:null, vencimento:recebido?null:data,
     conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]};
-  const [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify(linha)});
+  let novo;
+  try{ [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(linha)})||[]; }
+  catch(e){ return aviso("Não gravei o lançamento — tente de novo"); }
+  if(!novo) return aviso("Não gravei o lançamento — tente de novo");
   D.pagamentos.push(novo);
   aviso(recebido?"Recebimento registrado 💵 — você consta como quem recebeu":"Lançado a receber 💰");
   if(recebido) await correnteConferencia(casoId,

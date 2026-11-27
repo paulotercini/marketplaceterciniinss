@@ -22,6 +22,7 @@ const convs = Array.from({length:40},(_,i)=>({ id:`d3000000-0000-0000-0000-00000
   const p = await ctx.newPage();
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado.celular");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);   // espera de boot (LEIAME): sem ela, irPara corria antes do carregar()
   await p.evaluate(() => { zapFiltro = "todas"; irPara("whatsapp"); });
   await p.waitForSelector(".zap-conv");
   await p.waitForTimeout(500);

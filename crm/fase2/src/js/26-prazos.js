@@ -222,6 +222,8 @@ const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
 // F408 · a data é o "Concluir em" da tarefa do Microsoft To Do (a sincronização grava os dois iguais); a data que
 // sai do To Do sai do CRM pela mesma sincronização (casos.todo_prazo, 31.10.2026)
 const prazoDoTodo = k => !!(k && k.prazo && k.todo_prazo===k.prazo);
+// 27.11.2026 · ordem do Paulo: até 31/12/2026 a data do Microsoft To Do é só leitura (o Corrigir gravava casos.prazo por cima)
+const editaPzTodo = (todo, ed) => todo && hoje()<="2026-12-31" ? "" : ed;
 // F429 · decisão do Paulo (07.11.2026): o prazo fatal nasceu no CRM e é a anotação de prazo fatal do CRM que o faz; o
 // "Concluir em" do To Do é retorno também no 🗓 Tarefas com Prazo, salvo com a tarefa fatal ou o carimbo da mesma data.
 // F530 (11.11.2026): o carimbo só vem de quem registra o prazo fatal no CRM; o do assistente deixou de existir
@@ -1446,7 +1448,7 @@ function linhasDeDatas(cliId){
         rot:`<b>Prazo do Microsoft To Do: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
                   <small class="qd-de">Data de voltar ao caso, o “Concluir em” do To Do${og?` · anotado por ${esc(og.quem)} em ${fmt(og.em)}`:""}</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:"",
-        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
+        edita:editaPzTodo(true, `onchange="qdMudarPrazo('${x.id}',this.value)"`)});
     }
     else if(x.prazo && !igualA){
       const txtOg = og ? `${esc(og.texto.slice(0,110))}${og.texto.length>110?"…":""}` : "";
@@ -1459,7 +1461,7 @@ function linhasDeDatas(cliId){
           : `<b>PRAZO FATAL: ${tit}</b>
                   <small class="qd-de qd-semmotivo">Sem descrição: clique para descrever este prazo</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:`onclick="explicarPrazo('${x.id}')"`,
-        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`,
+        edita:editaPzTodo(prazoDoTodo(x), `onchange="qdMudarPrazo('${x.id}',this.value)"`),
         acao:btCumprir, cumprir});
     }
     // F236 · o evento diz o tipo (julgamento não é perícia) e o que falta: avisar o cliente (ou quem já avisou),
