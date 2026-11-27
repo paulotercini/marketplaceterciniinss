@@ -1231,3 +1231,7 @@ Etapa 3. No computador, com a ficha aberta, a lista do meio passa de 380px a 216
 ## F837 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.42)
 
 Etapa 4. Os grupos Vencidas e Hoje ficam com fundo neutro e a cor apenas no título; Reagendar vai para junto da contagem; a data vencida diz "há N dias" (na lista larga; a coluna do prazo passou de 64px a 124px); o selo do tipo corta pela direita com reticências; o botão Sugestões troca o laranja pela cor do acento. Já existiam e não foram refeitos: o deslocamento dos flutuantes com o painel lateral, a folga de fim de rolagem e a coluna Etapa oculta quando vazia.
+
+## F838 · sugestão do andamento lê os expedientes abertos do PJe (27.11.2026, zap_plantao)
+
+A sugestão de resposta sobre o andamento (e o contexto do plantão) dizia que o prazo do INSS "terminou em 19/11", tirado do "Decorrido prazo" da liminar. `zap_andamento_pegar` (migração f838) passa a devolver, por caso, os expedientes do PJe com Fechado = NÃO (`casos.ronda.expedientes`: ato, destinatário, ciência, prazo, limite). O prompt lista esses prazos em aberto e manda usar o do ato mais recente (sentença sobre liminar), sem tomar o "Decorrido prazo" como prazo atual. Teste em `testes/funcoes/zap_plantao.test.mjs`.
