@@ -155,7 +155,7 @@ function pzConteudo(cliId){
       <h3 class="pzc-gt"><span>${esc(o.rot)}</span> <span class="pzc-gn">${o.g.length}</span>${o.tom==="venc" ? `<button type="button" class="pzc-lk" onclick="pzReagendar()" title="Leva retornos, voltas à fila e lembretes vencidos a outra data. O prazo fatal fica.">Reagendar</button>` : ""}${o.k ? `<button type="button" class="pzc-g-abrir" onclick="casoSel='${o.k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso">Abrir<span class="sr-only"> o caso</span></button>` : ""}</h3>
       <ul class="pzc-lista">${o.g.map(linha).join("")}</ul></section>`).join("")
     : `<p class="pzc-nada">${_pzDia ? "Nenhum prazo neste dia." : "Nenhum prazo desta natureza."}</p>`);
-  return `${heroX ? pzHero(heroX) : ""}${ferr}<div class="pzc-grade"><div class="pzc-col">${lista}</div>${calendarioPz()}</div>`;
+  return `${todoDatasCliente(cliId)}${heroX ? pzHero(heroX) : ""}${ferr}<div class="pzc-grade"><div class="pzc-col">${lista}</div>${calendarioPz()}</div>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F104 · OS QUADROS DE PRAZO (tema v10). Um quadro por prazo, lado a lado,

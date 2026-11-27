@@ -4343,5 +4343,18 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
 .atr-1124-f{border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin:8px 0}
 .atr-1124-f legend{font-size:12px;font-weight:600;padding:0 4px}
 .atr-anos{margin:4px 0;padding-left:18px}
+/* auditoria de 27.11.2026, itens 7 a 9: a data do To Do ao lado da do CRM, a inadimplência por mês e o telefone de quem */
+.todo-dts{margin:0 0 12px}
+.todo-dt-l{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:6px 0;border-bottom:1px solid var(--borda)}
+.todo-dt-c{font-weight:600;min-width:160px}
+.todo-dt{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:13px}
+.todo-dt .btn-mini{min-height:32px;display:inline-flex;align-items:center;text-decoration:none}
+.todo-alerta{color:var(--venc-tinta,#B3261E);font-weight:600}
+.todo-dt.diverge b{color:var(--venc-tinta,#B3261E)}
+.rc-inad-m{margin:8px 0 12px}
+.rc-inad-m h4{margin:0 0 2px;font-size:14px}
+.rc-inad-m ul{margin:4px 0 0;padding-left:18px}
+.zt-telde{white-space:nowrap}
+.cad-tel-de{font-style:normal}
 </style>
 </head>

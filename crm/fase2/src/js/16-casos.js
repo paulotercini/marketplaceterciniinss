@@ -443,6 +443,31 @@ async function abrirHonorariosDe(cliId, casoId){
   else if(!casoSel || casoSel==="__auto__") casoSel = ((D.casosDoCliente.get(cliId)||[]).find(k=>k.fase!=="encerrado" && !ehPreCaso(k))||{}).id || null;
   abaAtiva = 4; repintarFicha();
 }
+// 27.11.2026 · ordem do Paulo (auditoria, item 8): relatório mensal de inadimplência. O vencido não recebido e não
+// cancelado (F829: status "cancelado" ou cancelado_em), sem os "a calcular" e "conferir valor" que já ficam fora dos
+// totais; por mês do vencimento, com o total, a soma por responsável e a lista por cliente.
+// shortcut: a parcela conta para o primeiro atribuído do caso (quemCobra); dividir entre os atribuídos, se pedirem
+function inadimplencia(pags, hj){
+  const meses = new Map();
+  for(const p of pags||[]){
+    if(p.status!=="aberto" || p.cancelado_em || !p.vencimento || p.vencimento>=hj || pgSemValor(p) || valorSuspeito(p)) continue;
+    const c = D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id); if(!c) continue;
+    const m = p.vencimento.slice(0,7), v = +p.valor||0, q = quemCobra(p)[0], qn = q ? q.nome.split(" ")[0] : "Sem responsável";
+    const o = meses.get(m) || {mes:m, total:0, n:0, resp:new Map(), cli:new Map()}; meses.set(m, o);
+    o.total += v; o.n++; o.resp.set(qn, (o.resp.get(qn)||0) + v);
+    const x = o.cli.get(c.id) || {c, total:0, n:0}; x.total += v; x.n++; o.cli.set(c.id, x);
+  }
+  const lista = [...meses.values()].sort((a,b)=>b.mes.localeCompare(a.mes));
+  return {meses:lista, total:lista.reduce((t,o)=>t+o.total, 0)};
+}
+function inadimplenciaHtml(pags, hj){
+  const r = inadimplencia(pags, hj); if(!r.meses.length) return "";
+  const mes = m => `${MES_LONGO[+m.slice(5,7)-1]} de ${m.slice(0,4)}`;
+  return `<details class="rc-grupo rc-inad"><summary class="secao">Inadimplência por mês: ${moeda(r.total)}</summary>
+    ${r.meses.map(o=>`<section class="rc-inad-m"><h4>${mes(o.mes)}: ${moeda(o.total)} <small>(${o.n} parcela${o.n>1?"s":""})</small></h4>
+      <p class="meio-sub">Por responsável: ${[...o.resp].sort((a,b)=>b[1]-a[1]).map(([n,v])=>`${esc(n)} ${moeda(v)}`).join(" · ")}</p>
+      <ul>${[...o.cli.values()].sort((a,b)=>b.total-a.total).map(x=>`<li><button type="button" class="zl-link" data-rc-inad="${x.c.id}">${esc(x.c.nome)}</button>: ${moeda(x.total)}${x.n>1?` (${x.n} parcelas)`:""}</li>`).join("")}</ul></section>`).join("")}</details>`;
+}
 // F236 · 💰 RECEBIMENTOS É O DINHEIRO, PARCELA POR PARCELA. Era a lista dos casos da fase Pagamentos, sem valor nem
 // vencimento e filtrada pela pessoa: o vencido de cliente com caso encerrado (1.021 parcelas no banco) não aparecia.
 // Vencidos primeiro, do mais antigo; depois a vencer; sem data e "conferir valor" por último, fora dos totais. Quem
@@ -472,6 +497,7 @@ function renderRecebimentos(){
     + (!venc.length && !prox.length && !semData.length && !conferir.length ? "<p class='meio-sub rc-vazio'>Nenhum honorário a receber. As parcelas aparecem aqui quando forem lançadas na aba Honorários do cliente.</p>"
       : (venc.length ? `<h3 class="secao" style="color:var(--venc-tinta,#B3261E)">Vencidos (${venc.length})</h3>${venc.map(linha).join("")}` : "")
       + `<h3 class="secao">A vencer${prox.length?` (${prox.length})`:""}</h3>${prox.map(linha).join("") || "<p class='meio-sub'>Nada a vencer com data.</p>"}`)
+    + inadimplenciaHtml(D.pagamentos, hj)
     + (semData.length ? `<details class="rc-grupo"><summary class="secao">Sem data de vencimento (${semData.length})</summary>${semData.slice(0,LIM).map(linha).join("")}${semData.length>LIM?`<p class="meio-sub">e mais ${semData.length-LIM}: veja na aba Honorários de cada cliente.</p>`:""}</details>` : "")
     + (conferir.length ? `<details class="rc-grupo"><summary class="secao">Valor a conferir (${conferir.length})</summary><p class="meio-sub">Valor acima de ${moeda(HON_VALOR_ABSURDO)} ou igual a um número do cliente (processo, benefício, protocolo): quase sempre leitura errada do To Do. Fica fora dos totais até alguém conferir.</p>${conferir.map(linha).join("")}</details>` : "")
     + (casosPag.length ? `<h3 class="secao">Em Pagamentos, sem nada lançado (${casosPag.length})</h3>${grupoClientes(casosPag).map(([c,ks])=>cartaoCliente(c,ks)).join("")}` : "");
@@ -480,6 +506,7 @@ function renderRecebimentos(){
     el.onkeydown = e=>{ if(e.key==="Enter" && e.target===el) el.click(); };
   });
   document.querySelectorAll("[data-rc-cob]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); abrirCobranca(b.dataset.rcCob); });
+  document.querySelectorAll("[data-rc-inad]").forEach(b=>b.onclick=()=>abrirHonorariosDe(b.dataset.rcInad, null));
   ligarCartoes();
 }
 // F236 · depois do pagamento da requisição, o destaque não se pede mais: o quadro diz o que vale agora
