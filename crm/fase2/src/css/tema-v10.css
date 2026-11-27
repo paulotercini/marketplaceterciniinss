@@ -1076,7 +1076,7 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
 html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
 @container (min-width:721px){
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;
-    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 124px 28px 24px 32px;column-gap:10px;align-items:center}
+    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 168px 124px 28px 24px 32px;column-gap:10px;align-items:center}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1;min-width:0}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-lista{grid-column:2;display:block}
@@ -4260,8 +4260,8 @@ html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
 html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
 /* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
 @container (min-width:721px){
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 124px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 124px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 168px 124px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 168px 124px 28px 0 32px}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 12px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
   html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
