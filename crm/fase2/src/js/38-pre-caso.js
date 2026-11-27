@@ -1030,7 +1030,7 @@ function pcDaFicha(c){
   const linhasArq = (D.casosDoCliente.get(c.id)||[]).filter(k=>k.pre_caso && k.fase==="encerrado" && (k.precaso||{}).arquivo)
     .map(k=>{ const p = k.precaso||{}, a = p.arquivo||{};
       return {...p, id:p.id||k.id, especie:k.beneficio||"", caso_id:k.id,
-        desfecho:{motivo:a.motivo || (a.origem==="todo" ? "concluída no To Do" : ""), em:a.em}}; });
+        desfecho:{motivo:a.motivo || (a.origem==="todo" ? "concluída no To Do" : ""), em:a.em, quem:a.por}}; });
   const ids = new Set([...vivos, ...linhasArq].map(p=>p.id));
   const arq = [...linhasArq, ...((c.campos||{}).pc_arquivados||[]).filter(p=>!ids.has(p.id))];
   return {lista:vivos, arq, vivos:vivos.filter(p=>!p.so_lembrete).length, n:vivos.length+arq.length};
@@ -1041,7 +1041,32 @@ function estadoPc(p, fora){ return fora ? "arquivo" : p.so_lembrete ? "futuro" :
 // F668 · onda 1 do caso em formação (aprovada pelo Paulo em 21.11.2026): a aba Pré-caso saiu do menu; o pré-caso
 // é o próprio caso, com o selo "Em formação" no Casos ▾ e este quadro no alto da tela do caso
 const nomePc = e => esc(e ? ((ESPECIES.find(([x])=>x===e)||[])[1] ? `${e} · ${ESPECIES.find(([x])=>x===e)[1]}` : e) : "Benefício a definir");
-const PC_PASSOS = [["identificacao","Identificação"],["pa","1º atendimento"],["analise","Análise de Direito"],["documentos","Documentos"]];
+const PC_PASSOS = [["identificacao","Identificação"],["pa","Primeiro atendimento"],["analise","Análise"],["documentos","Documentos"]];
+// F830 · quem marcou e quando (etapas, assinaturas e encerramento gravam {em, quem|por})
+const quemQuandoPc = o => o ? [((D.colPorId.get(o.quem||o.por)||{}).nome||"").split(" ")[0], o.em ? fmtTS(String(o.em)) : ""].filter(Boolean).join(", ") : "";
+// F830 · Gerar o caso no quadro (ordem do Paulo de 27.11.2026): exige a procuração e o contrato marcados; o caso
+// nasce no CRM (gerarCasoDoPre, pelo moverPreCaso) e nada vai ao To Do; o migrar.py reconhece o caso gerado
+function gerarPcHtml(k){
+  const as = (k.precaso||{}).assinados||{}, ok = as.proc && as.contr;
+  const caixa = (q, r) => `<label class="pcq-ass"><input type="checkbox" data-pc-ass="${esc(k.id)}|${q}"${as[q]?" checked":""}> ${r}${as[q]?` <span class="meio-sub">${esc(quemQuandoPc(as[q]))}</span>`:""}</label>`;
+  return `<div class="pcq-gerar">${caixa("proc", "Procuração assinada")}${caixa("contr", "Contrato assinado")}
+    <button class="btn-mini forte" data-pc-gerar="${esc(k.id)}"${ok?"":" disabled"} title="${ok ? "o pré-caso vira caso no CRM; nada vai ao Microsoft To Do" : "marque a procuração e o contrato assinados"}">Gerar<span class="sr-only"> o caso</span></button>
+    <button class="btn-mini" data-pc-encerrar="${esc(k.id)}" title="encerrar o pré-caso sem gerar caso, com o motivo">Encerrar<span class="sr-only"> o pré-caso</span></button></div>`;
+}
+async function marcarAssinadoPc(casoId, qual, on){
+  const k = D.casoPorId.get(casoId); if(!k || !/^(proc|contr)$/.test(qual)) return;
+  const precaso = {...(k.precaso||{})}, as = {...(precaso.assinados||{})};
+  if(on) as[qual] = {em:new Date().toISOString(), por:(eu||{}).id||null}; else delete as[qual];
+  precaso.assinados = as;
+  try { await patchCaso(casoId, {precaso}); k.precaso = precaso; } catch(e){ aviso("Não gravei: " + (e.message||e)); }
+  repintarFicha();
+}
+function gerarCasoDoQuadro(cliId, casoId){
+  const as = ((D.casoPorId.get(casoId)||{}).precaso||{}).assinados||{};
+  if(!(as.proc && as.contr)) return aviso("Marque a procuração e o contrato assinados antes de gerar o caso");
+  return moverPreCaso(cliId, casoId, "caso");
+}
+const PC_MOTIVOS_FIM = ["Desistiu", "Sem direito", "Sem contato", "Outro"];
 // F602b · até 31/12/2026 o estado vem só da lista do To Do (ordem do Paulo de 15.11.2026): sem botões de mover
 function botoesMoverPc(p, fora){
   if(!PC_MOVER_LIGADO) return "";
@@ -1059,14 +1084,14 @@ function quadroEmFormacao(c, k){
   const fora = !!pa, q = p || pa, d = q.desfecho||{}, et = (k.precaso||{}).etapas||{};
   const at = PC_PASSOS.findIndex(([x])=>!et[x]);
   const passos = fora || q.so_lembrete ? "" : `<ol class="pcq-passos" aria-label="Passos do atendimento">${PC_PASSOS.map(([x, r], i)=>
-    `<li class="${et[x] ? "ok" : i===at ? "at" : ""}"${i===at ? ' aria-current="step"' : ""}>${et[x] ? "✓ " : ""}${r}</li>`).join("")}</ol>`;
+    `<li class="${et[x] ? "ok" : i===at ? "at" : ""}"${i===at ? ' aria-current="step"' : ""}><b>${i+1}</b> ${r}${et[x] ? ` ✓<span class="pcq-quem">${esc(quemQuandoPc(et[x]))}</span>` : ""}</li>`).join("")}</ol>`;
   const est = fora ? "Pré-caso encerrado" : q.so_lembrete ? "Futuro · Aposentadorias futuras" : "Caso em formação";
   return `<section class="pc-quadro${fora ? " pc-arq" : ""}" aria-label="${est}">
     <div class="pcq-cab"><b>${est}</b> · ${nomePc(q.especie)}<span class="selo-form">${fora ? "Encerrado" : q.so_lembrete ? "Futuro" : "Em formação"}</span></div>
     <div class="pcq-corpo">${passos}
-      ${fora ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em?` · ${fmt(String(d.em).slice(0,10))}`:""}</div>`
+      ${fora ? `<div>${esc(d.motivo||"sem motivo registrado")}${d.em||d.quem?` · ${esc(quemQuandoPc(d))}`:""}</div>`
         : `<div>Lista no To Do: <b>${esc(listaDe(k)!=="—" ? listaDe(k) : q.so_lembrete ? "🙏 Aposentadorias Futuras" : "🙋 Escritório")}</b>${q.data_direito?` · direito provável em ${fmt(q.data_direito)}`:""}</div>`}
-      ${!fora && !q.so_lembrete && podeAtender() ? `<div><button class="btn-mini pcq-cont" data-pc-abrir="${esc(q.id)}">Continuar atendimento</button></div>` : ""}
+      ${!fora && !q.so_lembrete && podeAtender() ? `<div><button class="btn-mini pcq-cont" data-pc-abrir="${esc(q.id)}">Continuar atendimento</button></div>${gerarPcHtml(k)}` : ""}
       ${botoesMoverPc(q, fora)}</div>
     ${retornoPcHtml(q, k, fora)}
     ${procAnteriorHtml(q, k, fora)}
@@ -1153,11 +1178,15 @@ async function moverPreCaso(cliId, casoId, estado){
     if(p.lembrete_id) cardGravar(p.lembrete_id, cc=>{ cc.data_direito = v.data; cc.data_fonte = "informada no CRM"; });
     msg = "Pré-caso em Futuro (🙏 Aposentadorias Futuras)";
   } else if(estado==="arquivo"){
-    const v = await pedirPc("Arquivar o pré-caso", `<label>Motivo <input type="text" data-pcm="motivo" required placeholder="por que não segue"></label>`, "Arquivar");
+    // F830 · o motivo é obrigatório, de uma lista curta; Outro pede o texto; grava quem e quando
+    const v = await pedirPc("Encerrar o pré-caso sem gerar caso", `<label>Motivo <select data-pcm="motivo" required><option value="">escolha…</option>${PC_MOTIVOS_FIM.map(m=>`<option>${m}</option>`).join("")}</select></label>
+      <label>Qual (se Outro) <input type="text" data-pcm="outro" maxlength="200" placeholder="o motivo, por extenso"></label>`, "Encerrar");
     if(!v) return;
+    const motivo = v.motivo==="Outro" ? (v.outro ? `Outro: ${v.outro}` : "") : v.motivo;
+    if(!motivo) return aviso("Outro: escreva o motivo");
     muda = {fase:"encerrado", pre_caso:true, encerrado_em:new Date().toISOString(),
-      precaso:{...sem(p), arquivo:{em:hoje(), origem:"crm", motivo:v.motivo}}, mover_para:PC_MOVER_PARA.arquivo};
-    msg = "Pré-caso arquivado (concluído no To Do)";
+      precaso:{...sem(p), arquivo:{em:new Date().toISOString(), origem:"crm", motivo, por:(eu||{}).id||null}}, mover_para:PC_MOVER_PARA.arquivo};
+    msg = `Pré-caso encerrado: ${motivo}`;
   } else if(estado==="caso"){
     const v = await pedirPc("Gerar o caso", `<label>Início <select data-pcm="inicio">${Object.keys(INICIO_FASE).map(x=>
         `<option value="${x}">${{inss:"INSS",conselho:"Conselho de Recursos",judicial:"Judicial"}[x]}</option>`).join("")}</select></label>

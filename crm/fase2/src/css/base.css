@@ -260,6 +260,8 @@
   .esc-fase.jud{color:#5b3f8c} .esc-fase.cons{color:#8a5a00}
   .esc-onde{display:block;font-size:12px;color:var(--cinza)}
   .esc-tit{display:flex;gap:4px;align-items:baseline;margin:4px 0 0;font-size:14px;font-weight:700;min-width:0;overflow-wrap:anywhere}
+  .esc-apel{display:inline-block;font-size:16px;background:#FFF3C4;color:#5a4300;padding:0 6px;border-radius:4px}
+  .esc-esp{display:block;font-size:12px;font-weight:400;color:var(--cinza)}
   .esc-ed{font:400 13px var(--f-txt,inherit);color:var(--cinza);background:none;border:0;padding:0 4px;min-width:24px;min-height:24px;cursor:pointer}
   .esc-nome{font:inherit;font-size:14px;flex:1;min-width:0;padding:3px 6px}
   .esc-voce{display:block;min-height:16px;font-size:11px;font-weight:600;color:var(--verde,#1d5c4a)}
@@ -2996,6 +2998,9 @@ html[data-tema] .proc-mais[open] .tl-mais-menu{transform-origin:top right;transi
 .pcq-passos li{flex:1 1 110px;text-align:center;padding:5px 6px;border:1px solid var(--borda,#ddd);border-radius:6px;font-size:12px}
 .pcq-passos li.ok{background:#E6F2EA;color:#1E5A37;border-color:#B9DCC5}
 .pcq-passos li.at{border:2px solid #B7791F;font-weight:600}
+.pcq-quem{display:block;font-size:11px;font-weight:400;opacity:.85}
+.pcq-gerar{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:6px}
+.pcq-ass{display:inline-flex;gap:4px;align-items:center;font-size:13px}
 .mt.mt-novopc{color:var(--acento,#0E5C58)}
 .dossie-semcad{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;background:#FFF4D6;color:#7A5200;font-size:12px;font-weight:600}
 </style>
