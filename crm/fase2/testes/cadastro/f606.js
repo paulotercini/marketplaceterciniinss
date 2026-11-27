@@ -72,7 +72,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("entra no Meu Dia como Retorno do pré-caso, não prazo fatal", md.some(x => x[0] === dia && x[1] === "Retorno do pré-caso" && /CTPS/.test(x[2]) && !x[3]));
   await p.click('.mt[data-vv="5"]').catch(() => {}); await p.waitForTimeout(500);
   const pz = await p.$eval("#detalhe", e => e.textContent).catch(() => "");
-  conf("aparece na aba Prazos", /Retorno do pré-caso/.test(pz));
+  // F829 · no modo só To Do (até 31/12/2026) o retorno do pré-caso, que é do CRM, sai da aba Prazos
+  const soTodo = await p.evaluate(() => PZ_SO_TODO);
+  conf(soTodo ? "no modo só To Do, não aparece na aba Prazos" : "aparece na aba Prazos", /Retorno do pré-caso/.test(pz) !== soTodo);
   await p.screenshot({ path: path.join(OUT, "b-prazos.png") });
   // apagar
   await p.click("#btn-processos"); await p.click("#menu-processos .mp-pc"); await p.waitForTimeout(400);
