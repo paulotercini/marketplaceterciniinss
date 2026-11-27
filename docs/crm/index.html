@@ -18824,7 +18824,7 @@ function numeroNasNotas(tel){
   _zapNasNotas.set(k, null);
   api(`/rest/v1/andamentos?select=caso_id&excluir=not.is.true&or=(texto.ilike.*${k}*,texto.ilike.*${k.slice(0,4)}-${k.slice(4)}*)&limit=20`).catch(()=>[]).then(r=>{
     _zapNasNotas.set(k, [...new Set((r||[]).map(a=>(D.casoPorId.get(a.caso_id)||{}).cliente_id).filter(Boolean))]);
-    if(zapAberta) pintarConversa(); });
+    if(zapAberta && visao==="whatsapp") pintarConversa(); });   // só a tela do WhatsApp; a conversa ao lado da ficha não repinta
   return [];
 }
 function alertaSemFicha(c, msgs){
