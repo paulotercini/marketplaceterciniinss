@@ -1069,7 +1069,7 @@ Rótulo "Advogado" virou "Responsável"; clique no nome copia (a ▾ abre os cas
 - F670c (v14.24, 21.11.2026): a barra da linha do tempo é a fila das fases; Escritório, INSS, CRPS e Judicial são botões que abrem o cartão de cada fase, com o resumo da etapa atual logo abaixo, no mesmo quadro.
 
 - F673 (21.11.2026, v14.25): a mini agenda do Caso e o Mês da aba Prazos usam o mesmo mês (_pzMes); o dia marcado na mini agenda abre a aba Prazos filtrada nesse dia.
-- F674 (v14.44, 27.11.2026): na linha do tempo, a fase em curso enche pelo tempo decorrido sobre a duração média medida (INSS B31 18 dias, BPC 30, aposentadoria 45; CRPS 425; JEF 274), mínimo 15% e teto 90%; sem média, 50% sem número.
+- F674 (v14.46, 27.11.2026): na linha do tempo, a fase em curso enche pelo tempo decorrido sobre a duração média medida (INSS B31 18 dias, BPC 30, aposentadoria 45; CRPS 425; JEF 274), mínimo 15% e teto 90%; sem média, 50% sem número.
 
 ## F674 · ajustes da IA do WhatsApp pela leitura da semana (21.11.2026)
 - zap_smb_bot: com resposta da equipe nas últimas 3 horas a mensagem do cliente fica com a equipe, salvo pedido de agendamento.
@@ -1239,3 +1239,16 @@ A sugestão de resposta sobre o andamento (e o contexto do plantão) dizia que o
 ## F839 · Pontos restantes da estrutura visual: paleta única, camadas, espaçamento, etapas, celular e frase do Meu Dia (27.11.2026, v14.43)
 
 Pedido do Paulo ("faça o que falta"). Paleta única: as 536 cores literais das regras de `base.css` e `tema-v10.css` passaram a 260 variáveis `--p-família-n` em `:root` (fim do `tema-v10.css`), reunindo as que diferiam em menos de 3 de ΔE; cor nova entra nesse bloco. Camadas: `--z-pagina`, `--z-cabecalho`, `--z-painel`, `--z-flutuante`, `--z-janela`, com os valores antigos escritos como camada mais degrau (mesma ordem de antes). Sombras de elevação: `--sombra-painel` e `--sombra-janela` (as laterais e as de anel ficaram como estavam). Espaçamento em passos de 2px: 489 valores ímpares de `padding`, `margin` e `gap` desceram 1px. O teste `f839.js` barra cor literal, camada sem nome e espaçamento ímpar. Faixa de etapas com o total à esquerda da trilha (cerca de 20px mais baixa). No celular, espécie e fase na linha dos botões do cabeçalho, com botões de 44px. No Meu Dia do computador, a conta do dia continua a frase do alto e não repete os itens de hoje. A estrela da ficha permanece abaixo do Anotações (F373).
+
+## F840
+Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_ferias_fim`), conversa coberta cujo último texto é do cliente sem resposta da equipe gera menção ao titular "Pendente do período offline". `zap_eh_automatica` reconhece "insira uma resposta válida" e "de presente para você".
+## F841 · WhatsApp: painel de emojis, cabeçalho e flutuantes sobre os menus (27.11.2026)
+
+Pedido do Paulo (print do painel de emojis cortado a 1024 px; depois, "faça mais verificações de telas do WhatsApp"). Capturas em 1024, 1440 e 390 px com dados fictícios. Corrigido: o painel de emojis do campo principal se ancora ao rodapé da conversa, alinhado à direita e com a largura que couber (o da conversa ao lado da ficha continua como era); os botões do cabeçalho da conversa quebram linha na coluna estreita, em vez de empurrar o cabeçalho para o lado ao abrir o ⋯; os flutuantes Agenda e ⋯ somem enquanto o painel de emojis ou o menu + estão abertos.
+
+## F842 · Mesmo NB em dois casos do cliente: o plano de organização junta sozinho (27.11.2026, v14.44)
+
+Decisão do Paulo no plano de saneamento dos cadastros: casos do mesmo cliente com o mesmo NB são o mesmo benefício que mudou de fase. `planoOrganizar` (35-casos.js) deixava o NB repetido só na sugestão "repetido"; agora gera o passo "juntar" para o caso mais adiantado (`ORDEM_FASE_ORG`). Só a tarefa do To Do se junta (vira casca encerrada, a sincronização leva ao destino o que ela trouxer, e o Desfazer da organização a reabre). Não junta quando o caso ficaria com dois NUP ou dois processos principais, quando um é revisão e o outro não, quando o incorporado tem outro NB ou nasceu no CRM (a fusão o apagaria); esses seguem na sugestão. A fase Pagamento continua fora da organização. `lote/organizar_lote.js` aceita `CLIENTES` (grava só neles), acha o administrador sozinho e passa a deixar a fusão levar tarefas, pagamentos e Meu Dia; o workflow `crm-lote-organizar.yml` o roda à mão. Teste: `testes/cadastro/f842.js`.
+## F841 · Coluna Tipo das listas sem corte (27.11.2026, v14.45)
+
+No Meu Dia e no Planejado, o selo "Prazo do Microsoft To Do" saía cortado ("Prazo do Micros…") porque a coluna Tipo tinha 120px. A coluna passou a 168px (tema-v10.css, grade de `.ag-linha` e `.ag-th`). Achado no teste de tela de 27.11 (131 telas e suíte no GitHub após a F839).

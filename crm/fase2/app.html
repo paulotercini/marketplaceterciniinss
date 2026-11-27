@@ -2076,6 +2076,10 @@ if(/github\.io$/.test(location.hostname)) document.write('<link rel="manifest" h
   .ze-emo>summary::-webkit-details-marker{display:none}
   .ze-emo-grade{position:absolute;bottom:calc(100% + 6px);left:0;z-index:calc(var(--z-cabecalho) + 10);display:grid;grid-template-columns:repeat(8,34px);gap:2px;padding:8px;
     background:var(--p-branco);border-radius:10px;box-shadow:var(--sombra-janela)}
+  /* o ícone do campo fica na borda direita da coluna estreita: o painel se ancora ao rodapé da conversa, alinhado à direita e com a largura que couber */
+  .app:not(.celular) .ze-ferr .ze-emo{position:static}
+  .app:not(.celular) .ze-ferr .ze-emo-grade{left:auto;right:12px;bottom:100%;width:min(302px,calc(100% - 24px));box-sizing:border-box;
+    grid-template-columns:repeat(auto-fill,34px);justify-content:center;max-height:50vh;overflow:auto}
   .ze-emo-grade button{border:0;background:none;font-size:20px;width:34px;height:34px;border-radius:6px;cursor:pointer}
   @media (hover:hover){.ze-emo-grade button:hover{background:var(--p-azul-3)}}
   .app.celular .ze-emo-grade{position:fixed;left:8px;right:8px;bottom:70px;grid-template-columns:repeat(8,1fr)}
@@ -4109,7 +4113,7 @@ html[data-tema="v10"] #conteudo-meio .ag-linha > .acoes{order:6;width:auto}
 html[data-tema="v10"] .ag-c-lista,html[data-tema="v10"] .ag-c-etapa,html[data-tema="v10"] .ag-th,html[data-tema="v10"] .ag-txt .ag-ben{display:none}
 @container (min-width:721px){
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{display:grid;
-    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 124px 28px 24px 32px;column-gap:10px;align-items:center}
+    grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 168px 124px 28px 24px 32px;column-gap:10px;align-items:center}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > *{grid-row:1;min-width:0}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-txt{grid-column:1}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha > .ag-c-lista{grid-column:2;display:block}
@@ -4893,6 +4897,8 @@ html[data-tema="v10"] .tl-cab-fim .tl-barra-fim{margin-left:2px}
 .app.celular ~ #zap-ag{bottom:calc(165px + env(safe-area-inset-bottom))}
 .app.celular.detalhe-aberto ~ #zap-ag{bottom:180px}
 .app.celular.zap-conv-aberta ~ #zap-ag{z-index:calc(var(--z-painel) + 32);bottom:calc(176px + env(safe-area-inset-bottom))}
+/* os flutuantes (Agenda e ⋯) cobriam o painel de emojis e o menu + abertos */
+.app:has(.zap-escrever details[open]) ~ #zap-ag,.app:has(.zap-escrever details[open]) ~ #fab-juntos{visibility:hidden}
 .app.celular ~ #zap-ag .zag-cx{max-height:calc(100dvh - 260px)}
 .app.celular.zap-conv-aberta ~ #zap-ag .zag-cx{max-height:calc(100dvh - 300px)}
 /* no celular a pílula vira o botão redondo do tamanho do ⚡, com o calendário */
@@ -7280,7 +7286,7 @@ html[data-tema="v10"] .app.celular :is(.zl-chip,.zl-sel){height:40px;border-radi
 /* 3 · cabeçalho da conversa no computador: o nome e o telefone ocupam a linha; os botões descem quando falta espaço */
 html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1{flex-wrap:wrap;row-gap:8px}
 html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-id{flex:1 1 240px}
-html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-acoes{margin-left:auto}
+html[data-tema="v10"] .app:not(.celular) .zap-topo .zt-l1 .zt-acoes{margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
 /* 11 · caso no celular: o ⋯ do cartão do benefício não encosta na borda (a coluna corta 12 px do cartão sangrado) */
 html[data-tema="v10"] .app.celular .linha-caso.lc5.lc5.lc5 .lc5-cab{padding-right:20px}
 /* 12 · a hora da anotação fica ao lado do autor, e a coluna da esquerda guarda só o dia */
@@ -7298,8 +7304,8 @@ html[data-tema="v10"] .app.celular #conteudo-meio::after{height:190px}
 html[data-tema="v10"] .app:not(.celular) .det-rolagem::after{content:"";display:block;height:150px}
 /* 3 · cabeçalho das colunas em 11px (a variável --f não existe), coluna Tipo, selo discreto e Etapa recolhida quando ninguém tem etapa */
 @container (min-width:721px){
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 120px 124px 28px 0 32px}
-  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 120px 124px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) minmax(0,.9fr) 168px 124px 28px 0 32px}
+  html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-linha,html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th{grid-template-columns:minmax(0,2.2fr) minmax(0,.7fr) 0 168px 124px 28px 0 32px}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes):not(:has(.ag-c-etapa:not(:empty))) .ag-th > span:nth-child(3){visibility:hidden}
   html[data-tema="v10"] #conteudo-meio:not(.vis-cartoes) .ag-th{font:600 12px var(--f-ui);letter-spacing:.05em;color:var(--cinza-claro)}
   html[data-tema="v10"] .ag-th > span:nth-child(4){grid-column:4;text-align:right}
@@ -7476,7 +7482,7 @@ html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.44</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.46</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -54612,10 +54618,27 @@ function planoOrganizar(cliId){
   const grupos = new Map();
   for(const it of itens) grupos.set(it.nb, [...(grupos.get(it.nb)||[]), it]);
   const saem = new Map();   // caso -> {n, para:Set}: números que deixam o caso
+  const juntados = new Set();   // F842 · casos que já se juntam pelo NB repetido
   const sai = (casoId, para) => { const x = saem.get(casoId) || {n:0, para:new Set()}; x.n++; x.para.add(para); saem.set(casoId, x); };
   for(const [nb, g] of grupos){
     const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
-    if(donos.length>1) continue;   // o mesmo NB em dois casos: a sugestão "repetido" pede a escolha
+    if(donos.length>1){
+      // F842 · o mesmo NB em dois casos do cliente é o mesmo benefício que mudou de fase: os outros se juntam ao mais
+      // adiantado (decisão do Paulo, 27.11.2026). Só a tarefa do To Do se junta (vira casca, e a fusão se desfaz); nunca
+      // quando o caso ficaria com dois NUP ou dois processos principais, nem revisão com concessão. O resto segue na sugestão "repetido".
+      const ord = [...donos].sort((x,y)=>(ORDEM_FASE_ORG[y.fase]||0)-(ORDEM_FASE_ORG[x.fase]||0) || (x.todo_task_id?1:0)-(y.todo_task_id?1:0)
+        || String(x.criado_em||"").localeCompare(String(y.criado_em||"")));
+      const dest = ord[0], nd = nums.get(dest.id), rev = k=>/revis/i.test(k.beneficio||"");
+      const sobra = (xs, ys) => xs.length && ys.length && xs.some(x=>!ys.includes(x));
+      for(const k of ord.slice(1)){
+        const n = nums.get(k.id);
+        if(!k.todo_task_id || n.nb.length!==1 || sobra(n.nup, nd.nup) || rev(k)!==rev(dest)
+          || (soDig(k.processo) && soDig(dest.processo) && soDig(k.processo)!==soDig(dest.processo))) continue;
+        juntados.add(k.id);
+        passos.push({acao:"juntar", de:k.id, para:dest.id, txt:`Juntar o caso ${rotCurtoCaso(k)} ao caso ${rotCurtoCaso(dest)}: os dois têm o NB ${fmtNb(nb)}`, fonte:"o mesmo NB nos dois casos"});
+      }
+      continue;
+    }
     const env = [...new Set([...g.map(x=>x.casoId), ...donos.map(k=>k.id)])].map(id=>D.casoPorId.get(id));
     if(env.length<2){
       const k = env[0];
@@ -54642,7 +54665,7 @@ function planoOrganizar(cliId){
   // o caso que entrega todos os seus números a um só destino junta-se a ele
   // (só o que veio do To Do: a casca fica encerrada e a fusão se desfaz)
   for(const k of ks){
-    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id) continue;
+    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id || juntados.has(k.id)) continue;
     const total = Object.values(nums.get(k.id)).reduce((s,v)=>s+v.length, 0);
     const para = D.casoPorId.get([...x.para][0]);
     if(total && x.n>=total && para) passos.push({acao:"juntar", de:k.id, para:para.id,
