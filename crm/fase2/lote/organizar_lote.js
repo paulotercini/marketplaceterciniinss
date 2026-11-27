@@ -2,18 +2,23 @@
 // O app fala com um endereço fictício; cada pedido é repassado ao Supabase com a chave de serviço.
 // Ler é livre; gravar só nas tabelas que moverNumero, fundirCasos e aplicarPlano tocam, e só durante o
 // "Aplicar nos clientes marcados". O log é público: só contagens, nada de nome ou texto.
-// Uso: SUPABASE_URL=… SUPABASE_SERVICE_KEY=… AUTH_ID=… ESCREVER=1 node organizar_lote.js
+// Uso: SUPABASE_URL=… SUPABASE_SERVICE_KEY=… ESCREVER=1 CLIENTES=id,id node organizar_lote.js
+// AUTH_ID é opcional (sem ele entra o administrador ativo); CLIENTES limita a gravação a esses clientes (piloto).
 const { chromium } = require("playwright");
 const http = require("http"), fs = require("fs"), path = require("path");
 const URL0 = process.env.SUPABASE_URL.replace(/\/$/, ""), KEY = process.env.SUPABASE_SERVICE_KEY.trim();
-const AUTH = process.env.AUTH_ID, ESCREVER = process.env.ESCREVER === "1";
+let AUTH = process.env.AUTH_ID; const ESCREVER = process.env.ESCREVER === "1";
+const SO = (process.env.CLIENTES || "").split(",").map(x => x.trim()).filter(Boolean);
 const FALSO = "https://lote.invalid";
-const SESSAO = { access_token: "x", refresh_token: "x", expires_in: 3600, token_type: "bearer", user: { id: AUTH, email: "lote@invalid" } };
 const APP = path.join(__dirname, "..", "app.html");
 let gravando = false; const barrados = {}, gravados = {};
-const TABS = /^\/rest\/v1\/(casos|andamentos|anexos|andamento_tarefas|eventos|atribuicoes|clientes)(\?|$)/;
+const TABS = /^\/rest\/v1\/(casos|andamentos|anexos|andamento_tarefas|eventos|atribuicoes|clientes|tarefas|pagamentos|meu_dia)(\?|$)/;
 
 (async () => {
+  if (!AUTH) AUTH = ((await (await fetch(`${URL0}/rest/v1/colaboradores?papel=eq.admin&ativo=eq.true&auth_id=not.is.null&select=auth_id&limit=1`,
+    { headers: { apikey: KEY, authorization: `Bearer ${KEY}` } })).json())[0] || {}).auth_id;
+  if (!AUTH) throw new Error("sem administrador ativo");
+  const SESSAO = { access_token: "x", refresh_token: "x", expires_in: 3600, token_type: "bearer", user: { id: AUTH, email: "lote@invalid" } };
   const s = http.createServer((q, r) => { r.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); r.end(fs.readFileSync(APP)); }).listen(0, "127.0.0.1");
   await new Promise(r => s.on("listening", r));
   const nav = await chromium.launch();
@@ -53,13 +58,16 @@ const TABS = /^\/rest\/v1\/(casos|andamentos|anexos|andamento_tarefas|eventos|at
   console.log("entrou como", ini.eu, "admin", ini.admin, "· clientes de vários casos", ini.clientes);
   await p.evaluate(() => { organizarTodos(); });
   await p.waitForFunction(() => /clientes lidos/.test((document.getElementById("org-lote-st") || {}).textContent || ""), null, { timeout: 900000 });
-  const res = await p.evaluate(() => {
+  const res = await p.evaluate(so => {
     const L = _loteOrg, acoes = {};
-    for (const pl of L.planos) for (const x of pl.passos) acoes[x.acao] = (acoes[x.acao] || 0) + 1;
-    return { st: document.getElementById("org-lote-st").textContent.replace(/[^\d:,.()a-zà-ú ]/gi, ""), acoes,
-      duvidas: L.planos.reduce((s, pl) => s + pl.duvidas.length, 0), ids: L.planos.filter(pl => pl.passos.length).map(pl => pl.c.id) };
-  });
-  console.log(res.st); console.log("passos por ação", res.acoes, "· dúvidas", res.duvidas);
+    // CLIENTES: os demais ficam desmarcados e nada recebem
+    if (so.length) for (const ck of document.querySelectorAll(".org-lote-ck")) ck.checked = so.includes(L.planos[+ck.dataset.i].c.id);
+    const marc = new Set([...document.querySelectorAll(".org-lote-ck:checked")].map(ck => L.planos[+ck.dataset.i].c.id));
+    for (const pl of L.planos) for (const x of pl.passos) { const ch = x.acao + (x.fonte === "o mesmo NB nos dois casos" ? " (mesmo NB)" : ""); acoes[ch] = (acoes[ch] || 0) + 1; }
+    return { marcados: marc.size, passosMarcados: L.planos.filter(pl => marc.has(pl.c.id)).reduce((n, pl) => n + pl.passos.length, 0), st: document.getElementById("org-lote-st").textContent.replace(/[^\d:,.()a-zà-ú ]/gi, ""), acoes,
+      duvidas: L.planos.reduce((s, pl) => s + pl.duvidas.length, 0), ids: L.planos.filter(pl => pl.passos.length && marc.has(pl.c.id)).map(pl => pl.c.id) };
+  }, SO);
+  console.log(res.st); console.log("passos por ação", res.acoes, "· dúvidas", res.duvidas, "· clientes marcados", res.marcados, "com", res.passosMarcados, "passos");
   if (ESCREVER && res.ids.length) {
     gravando = true;
     await p.evaluate(() => { window.confirmar = async () => true; aplicarLoteOrg(); });
