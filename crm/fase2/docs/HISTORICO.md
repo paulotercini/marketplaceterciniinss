@@ -1241,3 +1241,9 @@ Pedido do Paulo ("faça o que falta"). Paleta única: as 536 cores literais das 
 
 ## F840
 Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_ferias_fim`), conversa coberta cujo último texto é do cliente sem resposta da equipe gera menção ao titular "Pendente do período offline". `zap_eh_automatica` reconhece "insira uma resposta válida" e "de presente para você".
+
+## F841 · Resumo do WhatsApp mais preciso e alerta sem as cortesias (27.11.2026)
+- O resumo diário recebe espécie, processo e último registro de cada caso; o modelo compara o assunto com eles antes de marcar dúvida.
+- "Conferir o caso" sai uma vez, no cabeçalho da anotação, e não mais em cada linha.
+- O que a equipe escreveu vai na primeira pessoa do singular, sem o nome do colaborador.
+- O alerta de 30 min (zap_alerta_sem_resposta) e o filtro "Sem resposta há mais de 24 h" ignoram "ok", agradecimento e cortesia (mais palavras: obga, igualmente, semana, todos, vocês).
