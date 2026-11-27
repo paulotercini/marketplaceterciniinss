@@ -1258,3 +1258,7 @@ Decisão do Paulo no plano de saneamento dos cadastros: casos do mesmo cliente c
 ## F841 · Coluna Tipo das listas sem corte (27.11.2026, v14.45)
 
 No Meu Dia e no Planejado, o selo "Prazo do Microsoft To Do" saía cortado ("Prazo do Micros…") porque a coluna Tipo tinha 120px. A coluna passou a 168px (tema-v10.css, grade de `.ag-linha` e `.ag-th`). Achado no teste de tela de 27.11 (131 telas e suíte no GitHub após a F839).
+
+## F843 · Fusão de casos: andamento repetido no destino não trava mais o histórico, e os documentos vão junto (27.11.2026, v14.47)
+
+Achado do piloto do saneamento dos cadastros. `fundirCasos` (35-casos.js) mudava os andamentos em um só PATCH por `caso_id`; quando o destino já tinha o mesmo andamento coletado (índice único `caso_id, origem, origem_id`, ou a mesma mensagem do WhatsApp), o banco recusava o lote inteiro e o histórico ficava na casca encerrada, sem aviso no modo em lote. Agora a fusão lê as chaves do destino, leva por id só o que ele não tem (lotes de 80) e deixa o repetido no incorporado. Os documentos (`anexos`) do caso incorporado passam ao destino e entram no registro do Desfazer. Teste: `testes/cadastro/f842.js` (11 itens).
