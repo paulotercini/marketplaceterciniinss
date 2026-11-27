@@ -37,6 +37,10 @@ T.casos.push(
   caso({ id: k(41), cliente_id: cli(4), fase: "inss", origem_lista: "🌻 INSS", beneficio: "Revisão", nb: NB(4), todo_task_id: "t41" }),
   caso({ id: k(42), cliente_id: cli(4), fase: "judicial", origem_lista: "👪 Judicial", beneficio: "Apos. por Idade", nb: NB(4), todo_task_id: "t42" }));
 T.andamentos.push({ id: "e0000000-0000-0000-0000-000000008401", caso_id: k(11), origem: "app", texto: "Anotação do caso do INSS", criado_em: "2026-01-05T12:00:00Z", autor_id: FIX.colaboradores[0].id });
+// F843 · o mesmo andamento coletado nos dois casos (o banco não deixa repetir no destino) e um documento do incorporado
+const and = (id, caso) => ({ id: `e0000000-0000-0000-0000-00000000840${id}`, caso_id: caso, origem: "pat", origem_id: "ev-1", texto: "Exigência cumprida", criado_em: "2026-01-06T12:00:00Z" });
+T.andamentos.push(and(2, k(11)), and(3, k(12)));
+T.anexos.push({ id: "a0000000-0000-0000-0000-000000008401", caso_id: k(11), cliente_id: cli(1), nome: "carta.pdf", caminho: "teste/f843/carta.pdf", origem: "app", criado_em: "2026-01-06T12:00:00Z" });
 
 const ok = [];
 const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : "FALHOU  ") + nome); };
@@ -77,7 +81,13 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     !!casca && !!casca.encerrado_em && ((casca.arquivados || {}).fundido || {}).para === k(12));
   conf("a anotação do caso incorporado passa ao destino, que mantém NB e processo",
     T.andamentos.find(a => a.id === "e0000000-0000-0000-0000-000000008401").caso_id === k(12) && dest.nb === NB(1) && !!dest.processo);
+  const andDe = n => T.andamentos.find(x => x.id === `e0000000-0000-0000-0000-00000000840${n}`).caso_id, anexo = () => T.anexos.find(x => x.caminho === "teste/f843/carta.pdf").caso_id;
+  conf("F843 · o andamento que o destino já tem fica no incorporado e não impede os outros de ir", andDe(2) === k(11) && andDe(3) === k(12) && andDe(1) === k(12));
+  conf("F843 · o documento do caso incorporado vai para o destino", anexo() === k(12));
   conf("o passo fica registrado no cliente, para o Desfazer", ((T.clientes.find(c => c.id === cli(1)).campos || {}).org_auto || []).some(l => l.passos.some(x => x.acao === "juntar" && x.reg)));
+
+  await p.evaluate(c => desfazerOrganizacao(c), cli(1));
+  conf("F843 · o Desfazer devolve a anotação e o documento ao caso reaberto", andDe(1) === k(11) && anexo() === k(11) && !T.casos.find(x => x.id === k(11)).encerrado_em);
 
   conf("sem erro de página", !p._erros.length);
   if (p._erros.length) console.log(p._erros.join("\n"));

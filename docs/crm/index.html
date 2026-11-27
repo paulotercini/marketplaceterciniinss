@@ -7482,7 +7482,7 @@ html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.46</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.47</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -54028,11 +54028,20 @@ async function fundirCasos(absorvidoId, destinoId, opts={}){
   const falhas=[];
   const t=async(rotulo,f)=>{ try{ await f(); }catch(e){ falhas.push(rotulo); } };
   const registro = {de:a.id, para:d.id, fase:a.fase, ids:{}};
-  for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia","eventos"])
+  for(const tab of ["tarefas","pagamentos","andamento_tarefas","meu_dia","eventos","anexos"])
     registro.ids[tab] = ((await api(`/rest/v1/${tab}?caso_id=eq.${absorvidoId}&select=id`).catch(()=>[]))||[]).map(r=>r.id);
+  // F843 · o andamento que o destino já tem (mesma origem e origem_id, ou a mesma mensagem: o banco não deixa repetir)
+  // fica no incorporado. Um só repetido derrubava o lote inteiro e o histórico não saía da casca.
+  const chAnd = x => [x.zap_mensagem_id && "zap|"+x.zap_mensagem_id, x.origem_id && x.origem+"|"+x.origem_id].filter(Boolean);
+  const andsDe = id => todas("andamentos", `select=id,origem,origem_id,zap_mensagem_id&caso_id=eq.${id}`).catch(()=>[]);
+  const jaTem = new Set((await andsDe(destinoId)).flatMap(chAnd));
+  registro.ids.andamentos = (await andsDe(absorvidoId)).filter(x=>!chAnd(x).some(c=>jaTem.has(c))).map(x=>x.id);
+  for(let i=0; i<registro.ids.andamentos.length; i+=80)
+    await t("andamentos", ()=>api(`/rest/v1/andamentos?id=in.(${registro.ids.andamentos.slice(i, i+80).join(",")})`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}));
 
-  // filhos em lote (id preservado — a sincronização não duplica depois)
-  for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia"])
+  // filhos em lote (id preservado — a sincronização não duplica depois); F843 · os documentos vão junto
+  for(const tab of ["tarefas","pagamentos","andamento_tarefas","meu_dia","anexos"])
     await t(tab, ()=>api(`/rest/v1/${tab}?caso_id=eq.${absorvidoId}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}));
   // eventos um a um: a trinca caso+tipo+data é única — o repetido no destino
@@ -54118,7 +54127,9 @@ async function fundirCasos(absorvidoId, destinoId, opts={}){
   if(opts.quieto){
     Object.assign(d, corpo);
     if(a.todo_task_id) Object.assign(a, {fase:"encerrado", encerrado_em:new Date().toISOString(), arquivados:{...(a.arquivados||{}), fundido:{para:d.id, por:eu.id}}});
-    for(const x of (D._andsFicha||[])) if(x.caso_id===a.id) x.caso_id = d.id;
+    const foram = new Set(registro.ids.andamentos);
+    for(const x of (D._andsFicha||[])) if(foram.has(x.id)) x.caso_id = d.id;
+    for(const x of (D.anexos||[])) if(x.caso_id===a.id) x.caso_id = d.id;
     return a.todo_task_id ? registro : null;
   }
   aviso(`⇄ Fundido em "${tituloCaso(d)}"${falhas.length?` (atenção: falhou em ${falhas.join(", ")})`:""}`);
