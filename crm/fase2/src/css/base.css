@@ -2376,14 +2376,17 @@
   .app.celular .zap-escrever textarea#zap-txt{max-height:48px!important;overflow-y:auto}
   .app .ze-ferr .ze-so-pc.gravando{display:inline-flex}
   .app.celular .ze-ferr{flex:none;min-height:0}
+  /* F827 · Emojis e Anexar com 40 px de altura no celular (eram 28); a caixa perde 2 px de folga para não crescer */
+  .app.celular .ze-ferr .zap-icone{min-height:40px;justify-content:center}
+  .app.celular .ze-caixa{padding-top:2px;padding-bottom:2px}
   /* auditoria 23.11 · no computador também: só emoji e anexo no campo, o resto no + */
   .app .ze-mais{display:block;position:relative;flex:none;align-self:flex-end}
   .app .ze-mais>summary{list-style:none;width:30px;height:44px;display:flex;align-items:center;justify-content:center;
     font-size:28px;font-weight:300;color:#54656f;cursor:pointer}
   .ze-mais>summary::-webkit-details-marker{display:none}
   .app .ze-mais .zt-menu{top:auto;bottom:calc(100% + 6px);left:0;right:auto;min-width:200px}
-  .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:30px;margin-bottom:7px;padding:0 9px;border:1px solid var(--borda);
-    border-radius:15px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
+  .app.celular .ze-nota-cel{display:inline-flex;align-items:center;flex:none;height:40px;margin-bottom:2px;padding:0 11px;border:1px solid var(--borda);
+    border-radius:20px;background:var(--branco);font:inherit;font-size:12px;font-weight:600;color:var(--cinza);cursor:pointer}
   .app.celular .ze-nota-cel.on{background:#fffbea;border-color:#e0b955;color:var(--prox,#8f5400)}
   .app.celular .zap-escrever.modo-nota .btn-rap.ze-enviar{height:44px;padding:0 12px}
   @media (max-width:1023px){

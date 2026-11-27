@@ -660,9 +660,11 @@ function novaTarefaZap(){
     if(!ti.value.trim()) return;
     const nat = dataNatural(ti.value.trim()), pz = document.getElementById("zt-prazo").value;
     const sel = document.getElementById("zt-caso");
-    const [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+    let linha;
+    try{ [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({titulo:nat.titulo, prazo:pz||nat.prazo||null, cliente_id:cli.id,
-        caso_id: sel ? sel.value : (ks[0]||{}).id || null})});
+        caso_id: sel ? sel.value : (ks[0]||{}).id || null})}); }
+    catch(e){ return aviso("Não consegui criar a tarefa: "+msgErro(e)); }
     D.tarefas.push(linha); fecharCaixa(); aviso("Tarefa criada ✔");
     pintarPainelZap(c);
   };
@@ -909,7 +911,8 @@ function bolhaZap(m, cli, seguida){
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${m.tipo==="audio"?"🎤 ":""}${esc(m.texto)}</div>`:"")
     : m.tipo==="contato" ? contatoZap(m.texto)
-    : m.texto ? textoZap(m.texto) : esc(`[${m.tipo}]`);
+    : m.texto ? textoZap(m.texto)
+    : m.tipo==="audio" ? `<span class="meio-sub">🎤 áudio antigo, não baixado — só no celular</span>` : esc(`[${m.tipo}]`);
   // F332 · apagada no WhatsApp: a equipe continua vendo o que foi escrito, riscado
   const apag = m.apagada_em ? `<div class="zap-apag">${zic("proibido",13)}${m.direcao==="entrada"?"O cliente apagou esta mensagem":m.alterar&&m.alterar.acao==="apagar"?`Apagada por ${esc((D.colPorId.get(m.alterar.por)||{}).nome||"escritório")}`:"Apagada no celular"} em ${diaZap(m.apagada_em)}, ${horaSP(m.apagada_em)}</div>` : "";
   const lk = !m.apagada_em && !m.midia_url && m.texto ? (m.texto.match(RX_LINK_ZAP)||[])[0] : null;
