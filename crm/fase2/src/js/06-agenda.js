@@ -819,7 +819,7 @@ function linhaAgenda(it){
   if(selK) _agIt.set(selK, it);
   // F437 · linha C: o nome à esquerda, a lista e a etapa, a data, o responsável e, à direita, o concluir e a ⭐
   return `<div class="cartao ag-linha${k&&k.urgente?" urg":""}"${cli?` data-cli="${cli.id}"`:""}${k?` data-casos="${k.id}"`:""}${t?` data-tarefa="${t.id}"`:""}${selK?` data-sel="${esc(selK)}"`:""}>
-    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}</span>
+    <span class="ag-data${d<hj?" venc":d===hj?" hoje":""}">${dTxt}${d<hj?` <small class="ag-ha">há ${-diasAte(d)} ${diasAte(d)===-1?"dia":"dias"}</small>`:""}</span>
     <div class="ag-txt"${cli&&resumo?` title="${esc(resumo)}"`:""}><b>${nome}</b>${k&&k.especie?`<span class="ag-ben">${esc(k.especie)}</span>`:""}${oque?`<span class="ag-oque"> · ${esc(oque)}</span>`:""}</div>
     <span class="ag-c-lista">${esc(k ? (fe!=="outro" ? NOME_FASE[fe]||"" : lst && lst!=="—" ? lst : NOME_FASE[fe]||"") : "")}</span>
     <span class="ag-c-etapa">${k && k.etapa ? seloEtapaLista(k) : ""}</span>
