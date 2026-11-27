@@ -4336,6 +4336,12 @@ html[data-tema="v10"] .timeline.tl-per li.tl-card:has(details[open]){z-index:5}
    shortcut: o flutuante arrastado para a borda esquerda pode sair da tela com o painel aberto; se incomodar, deslocar por JS só quem cai sob o painel */
 @media (min-width:761px){body.pcli-aberto :is(.fab-rapida,.fab-sug,.fab-ajuda,#zap-ag,#fab-juntos){transform:translateX(-460px)}}
 .esc-desc[hidden]{display:none!important}
+/* F831 · atrasados no caso */
+.atr-alerta{color:var(--vermelho);font-weight:600;margin:4px 0}
+.atr-total{font-size:15px;margin:6px 0}
+.atr-1124{margin:4px 0}
+.atr-1124-f{border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin:8px 0}
+.atr-1124-f legend{font-size:12px;font-weight:600;padding:0 4px}
+.atr-anos{margin:4px 0;padding-left:18px}
 </style>
 </head>
-
