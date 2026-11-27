@@ -564,7 +564,7 @@ function pintarFicha(){
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c, chipParceria(c, ks))}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}
-      ${/* F838 · espécie e fase na linha dos botões, logo abaixo do nome (antes ficavam soltas sob os ícones) */""}
+      ${/* F839 · espécie e fase na linha dos botões, logo abaixo do nome (antes ficavam soltas sob os ícones) */""}
       ${temaV10() && celular() ? (k=>k ? `<span class="cel-sub">${esc([k.especie, NOME_FASE[faseEfetiva(k)]||NOME_FASE[k.fase]].filter(Boolean).join(" · "))}</span>` : "")(casoSel && D.casoPorId.get(casoSel)) : ""}
       ${/* F403 · o ⋯ do cabeçalho saiu: no lugar, as Anotações rápidas do cliente; Separar e Não é cliente foram ao Cadastro (pedido do Paulo, 05.11.2026) */""}
       ${botaoGravarFicha(cliId)}<span class="det-mais-col">${botaoRapidas(c)}${botaoEstrelaFicha(cliId)}</span>

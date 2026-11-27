@@ -879,3 +879,16 @@ assert.match(regras(), /nunca copie o nome do ato do portal/);
   assert.match(regras(), /sem medição para a etapa, não estime/);
   console.log("F819 ok");
 }
+{
+  // F838 · o expediente aberto do PJe entra com o prazo certo; o "Decorrido prazo" da liminar não é o prazo atual
+  const m = await import("../../zap_plantao/index.ts");
+  const caso = { beneficio: "Aposentadoria", fase: "judicial", andamentos: [{ em: "2026-11-20T10:00:00Z", origem: "pje", texto: "Decorrido prazo de INSS em 19/11/2026" }],
+    expedientes: [{ grau: "1º grau", ato: "Sentença tipo A", destinatario: "Gerente Central de Análise de Benefícios", ciencia_em: "2026-11-03T10:00:00", prazo_dias: "20", limite: "2026-12-02T23:59:59" }] };
+  const p = m.promptAndamento({ conversa_id: "c", contato: "Cliente Teste", cliente: "Cliente Teste", casos: [caso], mensagens: [] });
+  assert.ok(p.includes("prazo em aberto: Sentença tipo A para Gerente Central de Análise de Benefícios, ciência em 03/11/2026, prazo de 20 dias, termina em 02/12/2026"));
+  assert.ok(p.includes("a sentença prevalece sobre a liminar"));
+  const pub = m.andamentosPublicos({ casos: [caso] });
+  assert.ok(pub[0].texto.includes("termina em 02/12/2026"));
+  assert.equal(pub.length, 2);
+  assert.ok(!m.promptAndamento({ conversa_id: "c", contato: "A", casos: [{ ...caso, expedientes: [] }], mensagens: [] }).includes("Expedientes do PJe"));
+}

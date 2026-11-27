@@ -4396,7 +4396,7 @@ html[data-tema="v10"] .pl-grupo:is([data-tom="venc"],[data-tom="hoje"]) h3.secao
 html[data-tema="v10"] #conteudo-meio .ag-linha > .ag-selos > span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 html[data-tema="v10"] .fab-sug{background:var(--azul)}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .fab-sug:hover{background:var(--azul);filter:brightness(.92)}}
-/* ── F838 · pontos restantes da revisão de estrutura visual (27.11.2026) ── */
+/* ── F839 · pontos restantes da revisão de estrutura visual (27.11.2026) ── */
 /* faixa de etapas mais baixa: o total desde o 1º contato sai de cima da trilha e vai à esquerda dela */
 html[data-tema="v10"] .app:not(.celular) .ltc{display:grid;grid-template-columns:128px minmax(0,1fr);column-gap:16px;align-items:center;padding:8px 16px 4px}
 html[data-tema="v10"] .app:not(.celular) .ltc > .ltc-k{display:block;align-self:end;line-height:1.25}
@@ -4408,13 +4408,13 @@ html[data-tema="v10"] .app:not(.celular) .ltc > .ltc-bar:first-child{grid-column
 html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
 /* Meu Dia: a conta do dia continua a frase do alto, na mesma linha */
 #sub-lista .md-conta{display:inline-flex;margin:0 0 0 12px;vertical-align:middle;gap:6px 12px}
-/* F838 · cinco camadas nomeadas (os valores antigos viram a camada mais o degrau, na mesma ordem) e duas sombras de elevação */
+/* F839 · cinco camadas nomeadas (os valores antigos viram a camada mais o degrau, na mesma ordem) e duas sombras de elevação */
 /* cor de marca do WhatsApp: valor exato, fora do agrupamento por proximidade */
 :root{--p-zap-fundo:#EFEAE2}
 :root{--z-pagina:1;--z-cabecalho:20;--z-painel:60;--z-flutuante:900;--z-janela:2000;
   --sombra-painel:0 1px 2px rgba(18,18,18,.08);--sombra-janela:0 8px 24px rgba(18,18,18,.16)}
-/* F838 · paleta única: toda cor da folha de estilo vem daqui (famílias da mais clara à mais escura).
-   Cor nova entra aqui com nome; o teste f838.js barra cor literal fora deste bloco e das variáveis de tema */
+/* F839 · paleta única: toda cor da folha de estilo vem daqui (famílias da mais clara à mais escura).
+   Cor nova entra aqui com nome; o teste f839.js barra cor literal fora deste bloco e das variáveis de tema */
 :root{
   --p-branco:#FFFFFF; --p-cinza-2:#E7E6E1; --p-cinza-3:#DDDDDD; --p-cinza-4:#D6D4CE; --p-cinza-5:#CCCCCC; --p-cinza-6:#C4C8CC; --p-cinza-7:#C9C6BF; --p-cinza-8:#B7C0C6; --p-cinza-9:#B9B6AE; --p-cinza-10:#A9A69E; --p-cinza-11:#9AA0A8; --p-cinza-12:#9A9890; --p-cinza-13:#8A90A0; --p-cinza-14:#8E8B84; --p-cinza-15:#888888; --p-cinza-16:#6E747E; --p-cinza-17:#667781; --p-cinza-18:#75726B; --p-cinza-19:#666677; --p-cinza-20:#6B7070; --p-cinza-21:#666B74; --p-cinza-22:#5D6675; --p-cinza-23:#666666; --p-cinza-24:#5B6B70; --p-cinza-25:#5F6B6A; --p-cinza-26:#686660; --p-cinza-27:#5D6862; --p-cinza-28:#5B6069; --p-cinza-29:#5B6060; --p-cinza-30:#5E5D58; --p-cinza-31:#555555; --p-cinza-32:#4A4F57; --p-cinza-33:#4A4E4E; --p-cinza-34:#4A4944; --p-cinza-35:#444444; --p-cinza-36:#3C4A42; --p-cinza-37:#3C3C4A; --p-cinza-38:#3B3A39; --p-cinza-39:#38363C; --p-cinza-40:#1F2424; --p-cinza-41:#1D2420; --p-cinza-42:#1F1E1B; --p-cinza-43:#121212; --p-cinza-44:#000000;
   --p-vermelho-1:#FDEEF0; --p-vermelho-2:#FBEAE7; --p-vermelho-3:#FBE3E3; --p-vermelho-4:#F1D5D0; --p-vermelho-5:#F3C1C8; --p-vermelho-6:#F0C4BE; --p-vermelho-7:#F0B4B4; --p-vermelho-8:#F1B6B0; --p-vermelho-9:#E8B4B8; --p-vermelho-10:#E8B4AE; --p-vermelho-11:#E39A9A; --p-vermelho-12:#E57373; --p-vermelho-13:#D9534F; --p-vermelho-14:#C2554A; --p-vermelho-15:#D92D20; --p-vermelho-16:#C0392B; --p-vermelho-17:#B22E2A; --p-vermelho-18:#9B3B3B; --p-vermelho-19:#B3261E; --p-vermelho-20:#A3332A; --p-vermelho-21:#B42318; --p-vermelho-22:#A8231B; --p-vermelho-23:#A3261D; --p-vermelho-24:#9A3626; --p-vermelho-25:#A50E0E; --p-vermelho-26:#B00020; --p-vermelho-27:#9A3412; --p-vermelho-28:#8B1D16; --p-vermelho-29:#6E1A14; --p-vermelho-30:#5A1D12; --p-vermelho-31:#5C130D;

@@ -1,5 +1,5 @@
-// F838 · paleta única, camadas nomeadas e espaçamento em passos: a folha de estilo não declara cor literal fora da paleta
-// (variáveis --p-* e de tema), camada sem nome nem espaçamento ímpar. Uso: node f838.js
+// F839 · paleta única, camadas nomeadas e espaçamento em passos: a folha de estilo não declara cor literal fora da paleta
+// (variáveis --p-* e de tema), camada sem nome nem espaçamento ímpar. Uso: node f839.js
 const fs = require("fs"), path = require("path");
 const css = ["base.css", "tema-v10.css"].map(f => { const t = fs.readFileSync(path.join(__dirname, "../../src/css", f), "utf8"); return t.slice(0, t.lastIndexOf("</style>")); }).join("\n").replace(/\/\*[\s\S]*?\*\//g, "");
 const provas = [
