@@ -2308,9 +2308,9 @@ path.adp-car{stroke:var(--azul)}path.adp-ida{stroke:var(--prox,#8F5400)}
 .hon-vencidos{background:var(--venc-fundo,#FBEAE7);border:1px solid #F0C4BE;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
 .hon-vencidos .hon-venc-cab{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;color:var(--venc-tinta,#B3261E)}
 .hon-vencidos .hon-venc-cab b{font-size:18px}
-.hon-vencidos ul,.hon-prop ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.hon-vencidos li,.hon-prop ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
-.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
+.hon-vencidos ul,.hon-prop ul.hon-prop-itens,.hon-req ul.hon-prop-itens{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hon-vencidos li,.hon-prop ul.hon-prop-itens li,.hon-req ul.hon-prop-itens li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0}
+.hon-vencidos li>span:first-child,.hon-prop ul.hon-prop-itens li>span:first-child,.hon-req ul.hon-prop-itens li>span:first-child{flex:1 1 220px;min-width:0}
 .hon-prop{border-color:#EED6A8}
 .hon-prop li.condic{color:var(--cinza)}
 .hon-prop ul.hon-prop-info{margin:0;padding-left:18px;font-size:13px;color:var(--cinza);display:flex;flex-direction:column;gap:4px}

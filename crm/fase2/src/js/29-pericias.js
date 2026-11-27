@@ -805,7 +805,7 @@ function laudoAnexoDaPericia(e){
   if(e.status==="cancelada") return null;
   const d = dataSP(e.data_hora), prox = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.id!==e.id && x.status!=="cancelada" && dataSP(x.data_hora)>d)
     .map(x=>dataSP(x.data_hora)).sort()[0] || "9999";
-  return (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && !a.andamento_id && /laudo/i.test(a.nome||"") && dataSP(a.criado_em)>=d && dataSP(a.criado_em)<prox)
+  return (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && !a.andamento_id && /laudo/i.test(a.nome||"") && !/impugna|manifesta|quesito/i.test(a.nome||"") && dataSP(a.criado_em)>=d && dataSP(a.criado_em)<prox)
     .sort((x,y)=>String(x.criado_em).localeCompare(String(y.criado_em)))[0] || null;
 }
 // a conclusão e o CID do laudo do INSS, pelo leitor do dossiê; sem ele, o começo do texto
@@ -814,6 +814,43 @@ function resumoDoLaudo(x){
   if(!l) return x.texto ? ` · ${String(x.texto).replace(/\s+/g," ").slice(0,140)}` : "";
   return [l.resultado==="capaz" ? "sem incapacidade (capaz)" : l.resultado==="incapaz" ? `incapaz${l.grau?`, ${l.grau.toLowerCase()}`:""}` : "",
     l.cid ? `CID ${l.cid}${l.cidDesc?` (${l.cidDesc})`:""}` : "", l.dcb ? `DCB ${l.dcb}` : ""].filter(Boolean).map(s=>` · ${s}`).join("");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F832 · O LAUDO NO CARTÃO DA PERÍCIA JUDICIAL (ordem do Paulo, 27.11.2026, melhoria 6 da auditoria). O mesmo cartão
+// junta o laudo, a manifestação ou impugnação e os quesitos complementares (anexos do caso, pelo nome que o botão
+// dá), e liga o expediente do PJe aberto pelo laudo. O prazo do PJe segue como aviso; fatal é só o anotado no CRM.
+// Situações: Aguardando laudo, Laudo juntado, Manifestação feita.
+// ══════════════════════════════════════════════════════════════════════════
+const ROT_DOC_PERICIA = {laudo:"Laudo pericial", manifestacao:"Manifestação sobre a perícia", quesitos:"Quesitos complementares"};
+// o expediente do PJe que o laudo abriu: o ligado ao movimento do laudo; sem ele, o expedido até 7 dias depois do laudo,
+// ou o que fala de laudo ou de perícia
+function prazoDoLaudo(k, la, dL){
+  const mv = la && movimentoJudicial(la.texto), p = mv && prazoTribunalDoAto(la, mv, true);
+  if(p) return p;
+  const de = x => x.expedido_em || x.ciencia_em || "";
+  return (k.prazos_tribunal||[]).filter(x=>dataDoPrazo(x) && de(x)>=dL && (de(x)<=somaDias(dL, 7) || /laudo|per[íi]ci/i.test(`${x.ato||""} ${x.texto||""}`)))
+    .sort((x,y)=>de(x).localeCompare(de(y)))[0] || null;
+}
+function laudoJudicial(e, k, la, lx, pzSug){
+  const d0 = dataSP(e.data_hora), dL = la ? dataSP(la.criado_em) : lx ? dataSP(lx.criado_em) : null;
+  const prox = (D.eventos||[]).filter(x=>x.caso_id===e.caso_id && x.id!==e.id && x.status!=="cancelada" && dataSP(x.data_hora)>d0).map(x=>dataSP(x.data_hora)).sort()[0] || "9999";
+  const docs = re => (D.anexos||[]).filter(a=>a.caso_id===e.caso_id && re.test(a.nome||"") && dataSP(a.criado_em)>=d0 && dataSP(a.criado_em)<prox);
+  const man = docs(/manifesta[çc][ãa]o sobre a per[íi]cia|impugna[çc][ãa]o ao laudo/i), ques = docs(/quesitos complementares/i);
+  const pz = dL ? prazoDoLaudo(k, la, dL) : null, feita = man.length || !!(pz && respostaAoPrazo(k, pz));
+  const sit = feita ? ["Manifestação feita","ok"] : dL ? ["Laudo juntado","venc"] : ["Aguardando laudo","prox"];
+  const linha = a => docRow(a.nome, `juntado em ${fmt(dataSP(a.criado_em))}`, `abrirAnexo('${escJs(a.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(a.id)}'])`, a.texto ? a.id : null);
+  const dPz = pz && dataDoPrazo(pz), fatal = pz && pz.fim && k.prazo===pz.fim;
+  const avisoPz = pz && !pzSug && !feita && pz.situacao!=="findo" ? `<span class="tl-prazo-sug per-prazo-pje">${IC_SVG.relogio}<span>Aviso do ${esc(ROT_PRAZO[pz.sistema]||"PJe")}: ${esc(pz.ato||"intimação")}${pz.dias?` (${pz.dias} dias)`:""} até <b>${fmt(dPz)}</b>${pz.fim?"":", ciência tácita"}. ${fatal ? "Anotado como prazo fatal no CRM." : "Vira prazo fatal só quando anotado no CRM."}</span>${pz.fim && !fatal ? `<button class="tl-bt forte" onclick="usarPrazoDoTribunal('${k.id}','${pz.fim}')" title="anotar o prazo do tribunal como prazo fatal do caso">Fatal</button>` : ""}</span>` : "";
+  const bt = (tipo, rot, tit) => `<button class="tl-bt" onclick="anexarDaPericia('${e.id}','${tipo}')" title="${tit}">${rot}</button>`;
+  return {chip:`<span class="per-est ${sit[1]}">${sit[0]}</span>`, html: man.map(linha).join("") + ques.map(linha).join("") + avisoPz,
+    acoes: dL ? bt("manifestacao", "Manifestação", "juntar a manifestação ou a impugnação ao laudo") + bt("quesitos", "Quesitos", "juntar os quesitos complementares")
+      : bt("laudo", "Laudo", "juntar o laudo pericial")};
+}
+function anexarDaPericia(evId, tipo){
+  const e = (D.eventos||[]).find(x=>x.id===evId), k = e && D.casoPorId.get(e.caso_id); if(!k) return;
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "application/pdf,image/*";
+  inp.onchange = () => { const f = inp.files && inp.files[0]; if(f) anexarArquivo(k.id, k.cliente_id, f, `${ROT_DOC_PERICIA[tipo]} · ${f.name}`); };
+  inp.click();
 }
 // o que diz que a perícia aconteceu: uma anotação depois da data ("foi à perícia", "compareceu"), o movimento
 // "perícia realizada" do processo (PJe ou CNJ) ou o laudo
@@ -918,14 +955,17 @@ function cartaoPericia(e){
     : e.status==="realizada" ? [julg ? "aconteceu" : "compareceu","ok"]
     : !futura ? ["aconteceu? confirme","venc"] : julg ? ["sessão marcada","prox"] : !pedeAviso(e) ? ["marcado","prox"]
     : av ? [`cliente avisado${av.quem?` · ${av.quem}${av.em?`, ${fmtBarra(av.em).slice(0,5)}`:""}`:""}`,"ok"] : ["avisar o cliente","prox"];
-  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
-    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span></span>`;
   const la = laudoDaPericia(e), lx = la ? null : laudoAnexoDaPericia(e);
+  const pzSug = la ? prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) : "";
+  // F832 · a perícia judicial que passou: o laudo, a manifestação e os quesitos complementares no mesmo cartão
+  const pj = ["judicial","pagamento"].includes(k.fase) && e.status!=="cancelada" && !futura && !julg ? laudoJudicial(e, k, la, lx, pzSug) : null;
+  const cab = `<span class="tl-cab"><span class="avatar mini tl-av av-fonte">${svgIc("🩺",12)||"🩺"}</span><b class="autor-nome">${esc(e.tipo||"Perícia")}</b>
+    <span class="tl-hora">${fmt(d)} · ${horaSP(e.data_hora)==="00:00"?"hora não informada":horaSP(e.data_hora)}</span><span class="per-est ${estado[1]}">${estado[0]}</span>${pj ? pj.chip : ""}</span>`;
   const prova = ag && !futura ? provaDoComparecimento(e, !!(la||lx)) : "";
   const corpo = `<span class="tl-corpo">${esc([e.local, tituloCaso(k)].filter(Boolean).join(" · "))}</span>`
     + (prova ? `<span class="tl-disp per-prova">${esc(capital(prova))}.</span>` : "");
   const laudo = la ? `<span class="tl-disp per-laudo"><b>Laudo juntado em ${fmt(dataSP(la.criado_em))}</b> · ${esc(andLimpo(la, k).texto.slice(0,140))}</span>`
-      + docsDoCartao(la) + prazoSugeridoHtml(la, segRegistrar(la.caso_id, la.texto, la.id)) + feitoDoCartao(la)
+      + docsDoCartao(la) + pzSug + feitoDoCartao(la)
     // F236 · o laudo do PAT chega como documento, sem andamento: a conclusão e o CID vêm à vista
     : lx ? `<span class="tl-disp per-laudo"><b>Laudo de ${fmt(dataSP(lx.criado_em))}</b>${esc(resumoDoLaudo(lx))}</span>`
       + docRow(lx.nome, `${lx.paginas?`${lx.paginas} pág. · `:""}${lx.texto?"com texto":lx.tipo?"digitalizado":"texto em leitura"}`, `abrirAnexo('${escJs(lx.id)}')`, `menuClaudeDocs('${escJs(e.caso_id)}',['anexo:${escJs(lx.id)}'])`, lx.texto ? lx.id : null) : "";
@@ -937,6 +977,7 @@ function cartaoPericia(e){
   else if(ag && !futura) acoes = bt(julg ? "Aconteceu" : "Compareceu", `compareceuEvento('${e.id}')`, true, julg ? "a sessão aconteceu" : "o cliente foi: registra no caso, marca a etapa e agenda a conferência do resultado")
       + (julg ? "" : bt("Não compareceu", `naoCompareceuEvento('${e.id}')`, false, "o cliente faltou: registra no caso e cria a tarefa de pedir nova data"))
       + bt(`Remarcad${o}`, `remarcarEvento('${e.id}')`, false, "ganhou outra data: a de agora fica no histórico e nasce a nova");
+  if(pj) acoes += pj.acoes;
   if(e.status!=="cancelada"){
     if(portal) acoes += `<a class="tl-bt tl-link" href="${urlOk(portal.href)}" target="_blank" rel="noopener">Abrir no ${esc(portal.rot)} ${IC_SVG.ir}</a>`;
     if(ag && futura) acoes += bt("Mensagem ao cliente", `msgPericia('${e.id}')`, false, "o lembrete pronto, para conferir e enviar");
@@ -946,7 +987,7 @@ function cartaoPericia(e){
     ag && futura ? `<button class="tl-mais-it" role="menuitem" onclick="copiarLembrete('${e.id}')" title="Copiar o lembrete">Copiar<span class="sr-only"> o lembrete</span></button>` : "",
     ag ? `<button class="tl-mais-it perigo" role="menuitem" onclick="cancelarEvento('${e.id}')">Cancelar ${evFem(e.tipo)?"a":"o"} ${esc((e.tipo||"perícia").toLowerCase())}</button>` : ""]);
   const barra = (acoes||menu) ? `<span class="tl-barra tl-barra-of">${acoes}<span class="tl-barra-fim">${menu}</span></span>` : "";
-  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${barra}</span></li>`;
+  return `<li class="tl-card tl-of tl-oficial tl-pericia${e.status==="cancelada"?" per-cancelada":""}" data-ev="${e.id}"><span class="texto">${cab}${corpo}${laudo}${pj ? pj.html : ""}${barra}</span></li>`;
 }
 // o que o cartão oficial precisa saber, venha de uma linha de `andamentos`
 // (PAT, PJe, e-SAJ, eproc, aviso do CRPS) ou de um espelho sem linha (evento
