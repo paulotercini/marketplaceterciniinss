@@ -1241,3 +1241,7 @@ Pedido do Paulo ("faça o que falta"). Paleta única: as 536 cores literais das 
 
 ## F840
 Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_ferias_fim`), conversa coberta cujo último texto é do cliente sem resposta da equipe gera menção ao titular "Pendente do período offline". `zap_eh_automatica` reconhece "insira uma resposta válida" e "de presente para você".
+
+## F842 · Mesmo NB em dois casos do cliente: o plano de organização junta sozinho (27.11.2026, v14.44)
+
+Decisão do Paulo no plano de saneamento dos cadastros: casos do mesmo cliente com o mesmo NB são o mesmo benefício que mudou de fase. `planoOrganizar` (35-casos.js) deixava o NB repetido só na sugestão "repetido"; agora gera o passo "juntar" para o caso mais adiantado (`ORDEM_FASE_ORG`). Só a tarefa do To Do se junta (vira casca encerrada, a sincronização leva ao destino o que ela trouxer, e o Desfazer da organização a reabre). Não junta quando o caso ficaria com dois NUP ou dois processos principais, quando um é revisão e o outro não, quando o incorporado tem outro NB ou nasceu no CRM (a fusão o apagaria); esses seguem na sugestão. A fase Pagamento continua fora da organização. `lote/organizar_lote.js` aceita `CLIENTES` (grava só neles), acha o administrador sozinho e passa a deixar a fusão levar tarefas, pagamentos e Meu Dia; o workflow `crm-lote-organizar.yml` o roda à mão. Teste: `testes/cadastro/f842.js`.
