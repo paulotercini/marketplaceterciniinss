@@ -1294,7 +1294,7 @@ async function cfg(chave: string) {
 }
 
 type Cenario = { contato?: string; relacao?: string; advogado?: string; cliente?: Contexto["cliente"]; marcados?: unknown[];
-  remarcar?: Contexto["remarcar"]; espera?: boolean; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number; atendente?: string; andamentos?: Contexto["andamentos"] };
+  remarcar?: Contexto["remarcar"]; agendar?: Contexto["agendar"]; espera?: boolean; horario?: boolean; interativa?: boolean; turnos: string[]; persona?: string; max?: number; atendente?: string; andamentos?: Contexto["andamentos"] };
 // F422u · o cliente simulado responde ao que a IA disse (persona), em vez de falas fixas que se desencontram da conversa
 export const ESQ_CLIENTE = { type: "object", additionalProperties: false, required: ["fala", "fim"],
   properties: { fala: { type: "string" }, fim: { type: "boolean" } } };
@@ -1313,6 +1313,7 @@ async function simular(s: Cenario) {
     conversa_id: undefined, contato: s.contato || "Paulo", relacao: s.relacao || null, advogado: s.advogado || null, advogados,
     modo: "", respostas: 0, interativa: s.interativa !== false, horario: s.horario !== false, agenda: true,
     agora: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }),
+    agendar: s.agendar || null,   // F845 · o pedido do botão Agendar no simulador
     mensagens: [], instrucoes: await cfg("zap_ia_txt_plantao"), pagamento: await cfg("zap_dados_pagamento"), atendente: s.atendente ? { nome: s.atendente } : null, cliente: s.cliente ? { mesmo_telefone: true, casos: [], ...s.cliente } : null, remarcar: s.remarcar || null, andamentos: s.andamentos,
     ma: { agente: await cfg("zap_ma_agente"), ambiente: await cfg("zap_ma_ambiente"), versao: await cfg("zap_ma_versao") },
   };
