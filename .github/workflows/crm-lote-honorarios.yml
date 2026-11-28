@@ -1,0 +1,34 @@
+name: CRM — honorários em lote
+
+# Saneamento dos cadastros, passada 5 (28.11.2026): a linha de pagamentos que não é honorário sai da lista
+# por estado (cancelado, com motivo), sem apagar e sem tocar no To Do. Só quando chamado à mão.
+# O log é público: só contagens e somas.
+on:
+  workflow_dispatch:
+    inputs:
+      escrever:
+        description: "Gravar no banco (1) ou apenas contar (0)"
+        default: "0"
+      lote:
+        description: "Nome do lote da cópia em _bkp_san"
+        default: ""
+
+concurrency:
+  group: crm-lote-honorarios
+  cancel-in-progress: false
+
+jobs:
+  honorarios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      ESCREVER: ${{ inputs.escrever }}
+      LOTE: ${{ inputs.lote }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 crm/fase2/lote/honorarios_lote.py
