@@ -10,13 +10,13 @@ Texto narrativo. Substituir os campos entre colchetes. Cabe em uma página A4.
 
 **Paciente:** [NOME COMPLETO]
 **CPF:** [000.000.000-00]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 **Data de emissão:** [DD/MM/AAAA]
 
 **Diagnósticos (CID-10)**
 
-[CID principal] — [Nome técnico]
-[CID secundário] — [Nome técnico]
+[CID principal]. [Nome técnico]
+[CID secundário]. [Nome técnico]
 [CID adicional, se houver]
 
 **Histórico clínico**

@@ -1,4 +1,4 @@
-# Tempo de Serviço Militar — Fundamentos e Cenários
+# Tempo de Serviço Militar. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,33 +40,33 @@ Tempo militar cômputado para tempo de contribuição e ausência de cômputo pa
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Segurado com serviço militar obrigatório prestado entre 1970 e 1971
+### Cenário A. Segurado com serviço militar obrigatório prestado entre 1970 e 1971
 
 Certificado de Reservista, certidão específica. Cômputo integral como tempo de contribuição.
 
-### Cenário B — Tiro de Guerra
+### Cenário B. Tiro de Guerra
 
 Equiparado ao serviço militar, cômputo cabível.
 
-### Cenário C — Militar temporário que migrou para o RGPS
+### Cenário C. Militar temporário que migrou para o RGPS
 
 Tempo de serviço militar, mesmo além da conscrição, cômputado por certidão militar.
 
-### Cenário D — Servidor público com tempo militar anterior
+### Cenário D. Servidor público com tempo militar anterior
 
 Contagem recíproca, via CTC da Força Armada.
 
-### Cenário E — Aluno de ESPCEX ou Colégio Militar
+### Cenário E. Aluno de ESPCEX ou Colégio Militar
 
 Quando houver caráter militar, cômputo possível. Analisar documentação.
 
 ## 6. Cenários limitados
 
-### Cenário F — Carência no RGPS
+### Cenário F. Carência no RGPS
 
 O tempo militar, em regra, não integra carência. O entendimento é consolidado.
 
-### Cenário G — Ausência de documentação oficial
+### Cenário G. Ausência de documentação oficial
 
 Sem certidão militar, pedido indefere.
 

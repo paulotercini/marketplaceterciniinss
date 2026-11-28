@@ -1,4 +1,4 @@
-# Calor — Fundamentos e Cenários
+# Calor. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -44,45 +44,45 @@ O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Siderurgia
+### Cenário A. Siderurgia
 
 Calor intenso. Especial.
 
-### Cenário B — Fundição
+### Cenário B. Fundição
 
 Calor intenso. Especial.
 
-### Cenário C — Padaria
+### Cenário C. Padaria
 
 Calor moderado. Especial.
 
-### Cenário D — Cozinha industrial
+### Cenário D. Cozinha industrial
 
 Calor moderado. Especial.
 
-### Cenário E — Vidraria
+### Cenário E. Vidraria
 
 Calor intenso. Especial.
 
-### Cenário F — Caldeiraria
+### Cenário F. Caldeiraria
 
 Calor intenso. Especial.
 
-### Cenário G — Forneiro
+### Cenário G. Forneiro
 
 Categoria pré-1995.
 
 ## 6. Cenários limitados
 
-### Cenário H — Sem habitualidade
+### Cenário H. Sem habitualidade
 
 Não enquadra.
 
-### Cenário I — Calor sazonal apenas
+### Cenário I. Calor sazonal apenas
 
 Análise específica.
 
-### Cenário J — Sem medição e sem categoria
+### Cenário J. Sem medição e sem categoria
 
 Análise difícil.
 

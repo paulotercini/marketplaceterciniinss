@@ -1,4 +1,4 @@
-# Eletricidade e Periculosidade — Fundamentos Normativos e Cenários
+# Eletricidade e Periculosidade. Fundamentos Normativos e Cenários
 
 ## 1. Marco normativo
 
@@ -30,35 +30,35 @@ Aplicação pró-segurado. Qualquer PPP que indique exposição a eletricidade a
 
 ## 3. Cenários concretos para o segurado
 
-### Cenário 1 — Eletricista de manutenção de rede aérea de distribuição
+### Cenário 1. Eletricista de manutenção de rede aérea de distribuição
 
 Enquadramento direto pelo código 1.1.8 do Decreto 53.831/64 e pela NR-10 SEP. Exposição habitual a tensão superior a 250 volts.
 
-### Cenário 2 — Eletricista de subestação
+### Cenário 2. Eletricista de subestação
 
 Exposição qualitativa direta. Subestações de distribuição e transmissão operam acima de 250 volts. Enquadramento automático.
 
-### Cenário 3 — Linha viva
+### Cenário 3. Linha viva
 
 Trabalho em linha energizada, com equipamentos isolantes. Mesmo com EPI, o risco de morte iminente permanece. Enquadramento direto.
 
-### Cenário 4 — Eletricista de manutenção industrial em alta-tensão
+### Cenário 4. Eletricista de manutenção industrial em alta-tensão
 
 Exposição a painéis elétricos, motores de média tensão, cabines primárias. Enquadramento pela NR-10.
 
-### Cenário 5 — Eletricista predial em cabine primária ou gerador
+### Cenário 5. Eletricista predial em cabine primária ou gerador
 
 Exposição a tensão acima de 250 volts, geradores, transformadores. Enquadramento direto, quando demonstrada a atividade em tensão acima do limite.
 
-### Cenário 6 — Manutenção de torre de transmissão
+### Cenário 6. Manutenção de torre de transmissão
 
 Exposição a altas tensões, risco constante. Enquadramento direto pela NR-10 SEP.
 
-### Cenário 7 — Atividade em rede de baixa tensão com contato direto
+### Cenário 7. Atividade em rede de baixa tensão com contato direto
 
 Quando a baixa tensão formal na tabela, porém acima de 250 volts em trechos específicos, é suficiente. Auditar PPP para identificar campo 15.3 com exposição real acima de 250 volts.
 
-### Cenário 8 — Operador de usina hidrelétrica, térmica ou eólica
+### Cenário 8. Operador de usina hidrelétrica, térmica ou eólica
 
 Exposição permanente a sistema elétrico de potência. Enquadramento direto.
 

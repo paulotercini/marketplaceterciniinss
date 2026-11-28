@@ -1,4 +1,4 @@
-# Seguro-Defeso — Fundamentos e Cenários
+# Seguro-Defeso. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -22,7 +22,7 @@ Lei 10.779/2003. Exigência de 12 meses de atividade pesqueira (auditoria 03/10/
 
 Instruções Normativas do IBAMA e portarias interministeriais. Fixam o defeso por espécie e por região.
 
-RGP — Registro Geral da Atividade Pesqueira.
+RGP. Registro Geral da Atividade Pesqueira.
 
 EC 103/2019. Sem alterações estruturais.
 
@@ -50,43 +50,43 @@ O INSS cruza automaticamente os dados com o CNIS e o RGP. Indeferimentos comuns 
 
 ## 5. Cenários operacionais pró-segurado
 
-### Cenário 1 — Pescador artesanal com 10 anos de RGP
+### Cenário 1. Pescador artesanal com 10 anos de RGP
 
 Defeso de 120 dias. 4 parcelas [NÃO CONFIRMADO] (auditoria 03/10/2026). Deferimento administrativo.
 
-### Cenário 2 — Pescadora esposa de pescador
+### Cenário 2. Pescadora esposa de pescador
 
 RGP há 18 meses. Colaboração na pesca em economia familiar. Deferimento pela perspectiva de gênero.
 
-### Cenário 3 — Pescador com CNIS indicando vínculo eventual
+### Cenário 3. Pescador com CNIS indicando vínculo eventual
 
 Pescador com 2 meses em MEI de peixaria. Discussão de exclusividade. Tese pró-segurado defende manutenção da qualidade.
 
-### Cenário 4 — Defeso prorrogado por portaria
+### Cenário 4. Defeso prorrogado por portaria
 
 Defeso de 120 dias prorrogado para 150. Direito à parcela adicional proporcional.
 
-### Cenário 5 — Região com múltiplo defeso
+### Cenário 5. Região com múltiplo defeso
 
 Pescador opera duas espécies com defesos sobrepostos. Discussão de cumulação de parcelas conforme portarias específicas.
 
-### Cenário 6 — Pescadora grávida no defeso
+### Cenário 6. Pescadora grávida no defeso
 
 Pescadora em salário-maternidade durante o defeso. Acumulação controversa. Estratégia pró-segurada invoca naturezas distintas dos benefícios.
 
-### Cenário 7 — Pescador com auxílio-acidente
+### Cenário 7. Pescador com auxílio-acidente
 
 Acumulação autorizada pelo art. 2º, §2º Lei 10.779/2003.
 
-### Cenário 8 — RGP suspenso por atraso
+### Cenário 8. RGP suspenso por atraso
 
 Regularizar retroativamente e reapresentar o pedido.
 
-### Cenário 9 — Pescador boia-fria esporádico
+### Cenário 9. Pescador boia-fria esporádico
 
 Exige reconhecimento da condição de segurado especial previamente. Documentação robusta.
 
-### Cenário 10 — Pesca embarcada assalariada
+### Cenário 10. Pesca embarcada assalariada
 
 Pescador com registro como empregado em embarcação. Não é pescador artesanal. Não cabe seguro-defeso.
 

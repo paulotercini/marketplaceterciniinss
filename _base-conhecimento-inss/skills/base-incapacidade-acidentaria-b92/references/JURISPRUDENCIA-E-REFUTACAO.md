@@ -1,4 +1,4 @@
-# B92 — Jurisprudência Verificada e Refutação
+# B92. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -66,49 +66,49 @@ Aplicação pró-segurado. Fortalece o NTEP.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Ausência de CAT
+### Argumento 1. Ausência de CAT
 
 Argumento adversário. Sem CAT emitida pela empresa, não há nexo acidentário.
 
 Refutação. CAT pode ser emitida pelo segurado, sindicato, médico assistente ou autoridade pública (art. 22, §2º, da Lei 8.213/91) (auditoria 03/10/2026). A ausência de CAT da empresa não afasta nexo. Nexo pode ser comprovado por NTEP, laudo ocupacional, PGR, PPP e outros documentos.
 
-### Argumento 2 — Doença degenerativa inerente
+### Argumento 2. Doença degenerativa inerente
 
 Argumento adversário. Trata-se de doença degenerativa ou inerente a grupo etário, excluída pelo art. 20 §1º.
 
 Refutação. Exclusão não é absoluta. O próprio §1º admite reconhecimento em situações específicas. O art. 21, I, reconhece a concausa quando o trabalho contribui para o agravamento (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). Mesmo em doença degenerativa, se o trabalho acelerou ou agravou o quadro, há nexo acidentário.
 
-### Argumento 3 — Ausência de correspondência CID-CNAE
+### Argumento 3. Ausência de correspondência CID-CNAE
 
 Argumento adversário. Não há NTEP para o caso.
 
 Refutação. Ausência de NTEP não afasta nexo. Cabe comprovação por nexo individual com perícia técnica, laudos de engenharia do trabalho, PGR e LTCAT. NTEP é apenas uma das vias.
 
-### Argumento 4 — Acidente de trajeto não é acidente de trabalho
+### Argumento 4. Acidente de trajeto não é acidente de trabalho
 
 Argumento adversário. Acidente no percurso residência-trabalho não é equiparado após MP 905.
 
 Refutação. MP 905/2019 foi revogada. Art. 21, IV, d, Lei 8.213/91 em pleno vigor. Acidente de trajeto continua equiparado a acidente de trabalho.
 
-### Argumento 5 — Doença mental não é ocupacional
+### Argumento 5. Doença mental não é ocupacional
 
 Argumento adversário. Transtornos mentais não têm nexo com o trabalho.
 
 Refutação. Portaria MTE 1.419/2024 atualizou a NR-1 para incluir riscos psicossociais. CID-11 reconhece burnout como fenômeno ocupacional. OMS, Nota Técnica SIT/MTb e doutrina especializada confirmam nexo em casos concretos.
 
-### Argumento 6 — Segurado concorreu para o acidente
+### Argumento 6. Segurado concorreu para o acidente
 
 Argumento adversário. O segurado foi culpado pelo acidente.
 
 Refutação. Legislação previdenciária não exige culpa exclusiva do empregador. Art. 21, I, da Lei 8.213/91 reconhece concausa (auditoria 03/10/2026). Culpa exclusiva da vítima é excepcional e exige prova robusta.
 
-### Argumento 7 — Desclassificação pela perícia
+### Argumento 7. Desclassificação pela perícia
 
 Argumento adversário. A perícia concluiu que a incapacidade não tem nexo com o trabalho.
 
 Refutação. Perícia administrativa não vincula juízo, que valora a prova pericial com as demais (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirada a Súmula 77/TNU, que trata da dispensa do exame das condições pessoais). Perícia judicial especializada em medicina do trabalho ou engenharia do trabalho pode reverter a conclusão.
 
-### Argumento 8 — Doença anterior ao vínculo
+### Argumento 8. Doença anterior ao vínculo
 
 Argumento adversário. A doença é preexistente ao vínculo atual, incabível B92.
 

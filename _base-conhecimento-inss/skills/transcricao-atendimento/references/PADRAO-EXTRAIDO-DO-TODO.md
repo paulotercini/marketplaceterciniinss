@@ -159,7 +159,7 @@ Confirmação independente. O cabeçalho estruturado do escritório já emprega 
 
 Exemplos colhidos no próprio backup. Abertura `10.07.2026 (D):`, conteúdo `Verificar em 02/07`, `Prazo é 10/10` e `agenda horário para o dia 15/07`.
 
-## A voz real da anotação (Onda 128, 09/09/2026) — CORREÇÃO da Onda 126
+## A voz real da anotação (Onda 128, 09/09/2026). CORREÇÃO da Onda 126
 
 Medição sobre as **15.147 entradas datadas** com conteúdo na mesma linha.
 
@@ -189,7 +189,7 @@ Medição sobre as **15.147 entradas datadas** com conteúdo na mesma linha.
 
 Lição para a manutenção da base. Contagem de rótulo isolada não prova padrão de forma. Antes de converter um achado numérico em regra, conferir em QUE POSIÇÃO do texto o achado aparece.
 
-## Dois gêneros distintos de entrada (Onda 129, 09/09/2026) — CORREÇÃO da Onda 128
+## Dois gêneros distintos de entrada (Onda 129, 09/09/2026). CORREÇÃO da Onda 128
 
 A Onda 128 acertou ao derrubar os rótulos, e errou ao aplicar à transcrição de atendimento a estatística das notas de andamento. São gêneros diferentes.
 
@@ -209,7 +209,7 @@ Medição sobre as 482 entradas longas.
 | Fecho com data de retorno | 34 | 7,1% | Sustentado |
 | Aspas na fala do cliente | 15 | 3,1% | Sustentado |
 | Marca em caixa alta abrindo bloco, `ALERTA.`, `ATENÇÃO.` | 6 | 1,2% | Sustentado, e `ALERTA` aparece 473 vezes no acervo inteiro |
-| Ênfase por caixa alta na palavra, `NÃO` | 118 no acervo | — | Sustentado |
+| Ênfase por caixa alta na palavra, `NÃO` | 118 no acervo | - | Sustentado |
 | Abertura "Trata-se de" | 1 | 0,2% | NÃO sustentado pelo acervo |
 | Verbo de relato, "Refere que" | 4 | 0,8% | NÃO sustentado pelo acervo |
 

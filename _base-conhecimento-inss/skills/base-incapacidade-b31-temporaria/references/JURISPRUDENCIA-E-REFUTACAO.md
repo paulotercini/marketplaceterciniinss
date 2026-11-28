@@ -1,4 +1,4 @@
-# B31 — Jurisprudência Verificada e Refutação
+# B31. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -64,49 +64,49 @@ Aplicação. Súmula adversa. Sem incapacidade para a atividade habitual reconhe
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Perícia administrativa concluiu pela capacidade
+### Argumento 1. Perícia administrativa concluiu pela capacidade
 
 Argumento adversário. A perícia administrativa é prova suficiente e afasta a concessão.
 
 Refutação. A perícia administrativa não tem caráter vinculante sobre o juízo, que valora a prova pericial com as demais (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirado o Tema 246/TNU, que trata da data de cessação). Documentação médica robusta pode ser suficiente para obter o B31 em sede judicial.
 
-### Argumento 2 — Ausência de carência
+### Argumento 2. Ausência de carência
 
 Argumento adversário. O segurado não cumpriu as 12 contribuições mínimas.
 
 Refutação. Art. 26, II, e art. 151 da Lei 8.213/91 (auditoria 25/07/2026). Se a doença é do rol do art. 151 ou equivalente, há isenção total de carência. Em caso de acidente, a isenção também é automática.
 
-### Argumento 3 — Doença preexistente
+### Argumento 3. Doença preexistente
 
 Argumento adversário. A doença é preexistente à filiação, incabível o benefício.
 
 Refutação. Art. 59, §1º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B31 é devido (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído, e ajustado o dispositivo, pois o art. 42, §2º, rege o B32).
 
-### Argumento 4 — Perícia documental desfavorável
+### Argumento 4. Perícia documental desfavorável
 
 Argumento adversário. O parecer de verossimilhança concluiu pela capacidade.
 
 Refutação. Portaria Conjunta 13/2026 não afasta a perícia judicial. Na via administrativa, com ciência a partir de 06/11/2026, a reanálise do art. 8º-A (redação da Portaria Conjunta 54/2026) permite levar documento novo à PMF sem perder a DER. O parecer de verossimilhança é triagem documental, não substitui a perícia médica pericial. Acionar `analise-documental-incapacidade`.
 
-### Argumento 5 — Cessação por alta programada
+### Argumento 5. Cessação por alta programada
 
 Argumento adversário. A cessação antecipada é legítima por alta programada.
 
 Refutação. A cessação sem perícia médica específica viola o direito ao contraditório e ampla defesa. Cabe P1 e recurso ou MS, com tutela de urgência para a implantação (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
-### Argumento 6 — Trava dos dois indeferimentos
+### Argumento 6. Trava dos dois indeferimentos
 
 Argumento adversário. O segurado não pode requerer novo benefício pelos próximos 180 dias.
 
 Refutação. A trava não é absoluta. Em caso de novo quadro ou agravamento comprovado, novo requerimento é admitido. Em caso de barreira ilegal, MS ou ação judicial com base no direito ao requerimento administrativo (art. 5º, XXXIV, da CF).
 
-### Argumento 7 — Perda da qualidade de segurado
+### Argumento 7. Perda da qualidade de segurado
 
 Argumento adversário. O segurado perdeu a qualidade antes da DII.
 
 Refutação. Acionar `periodo-graca-qualidade-segurado`. Art. 15 da Lei 8.213/91 garante período de graça que pode ser prorrogado por 12 meses em caso de desemprego involuntário (Súmula 27 TNU). Tema 255 TNU e Tema 1360 STJ.
 
-### Argumento 8 — DIB na DER, não na DII
+### Argumento 8. DIB na DER, não na DII
 
 Argumento adversário. A DIB deve ser fixada na DER, não na DII.
 

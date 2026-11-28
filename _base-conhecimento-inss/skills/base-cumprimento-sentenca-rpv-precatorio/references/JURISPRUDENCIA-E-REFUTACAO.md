@@ -1,4 +1,4 @@
-# Cumprimento — Jurisprudência e Refutação
+# Cumprimento. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -50,79 +50,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Cálculo excessivo
+### Argumento 1. Cálculo excessivo
 
 Argumento adversário. Inflação de valores.
 
 Refutação. Planilha conforme Manual da AGU ou resoluções CJF.
 
-### Argumento 2 — Prescrição
+### Argumento 2. Prescrição
 
 Argumento adversário. Parcelas prescritas.
 
 Refutação. Súmula 85 STJ, prescrição quinquenal somente sobre parcelas anteriores.
 
-### Argumento 3 — Honorários mal calculados
+### Argumento 3. Honorários mal calculados
 
 Argumento adversário. Base incorreta.
 
 Refutação. Súmula 111 STJ. Tema 1050 STJ. Proveito econômico.
 
-### Argumento 4 — Precatório preterido
+### Argumento 4. Precatório preterido
 
 Argumento adversário. Calendário.
 
 Refutação. Art. 100 §3º CF, preferência idoso/doente.
 
-### Argumento 5 — RRA negada
+### Argumento 5. RRA negada
 
 Argumento adversário. Retenção acumulada.
 
 Refutação. Art. 12-A Lei 7.713/1988. Tema 368 STF.
 
-### Argumento 6 — Juros antes da citação
+### Argumento 6. Juros antes da citação
 
 Argumento adversário. Marco.
 
 Refutação. Súmula 204 STJ, juros da citação.
 
-### Argumento 7 — Dialeticidade na impugnação
+### Argumento 7. Dialeticidade na impugnação
 
 Argumento adversário. Genérica.
 
 Refutação. Rejeição da impugnação não dialética.
 
-### Argumento 8 — Deságio imposto
+### Argumento 8. Deságio imposto
 
 Argumento adversário. Desconto.
 
 Refutação. Deságio é operação voluntária do credor. INSS não pode impor.
 
-### Argumento 9 — Atraso no pagamento
+### Argumento 9. Atraso no pagamento
 
 Argumento adversário. Agenda orçamentária.
 
 Refutação. Multa e juros pelo atraso. MS por mora.
 
-### Argumento 10 — Retenção de tributos
+### Argumento 10. Retenção de tributos
 
 Argumento adversário. Alíquota máxima.
 
 Refutação. RRA por número de meses. Isenção por doença grave. Acionar `tributacao-beneficios-previdenciarios`.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, execução contra INSS.
-
-Hugo Goes, execução.
-
-Marco Aurélio Serau Junior, execução previdenciária.
-
-Daniel Pulino, cumprimento.
-
-Jane Berwanger, execução.
-
-IBDP, advocacia previdenciária.
 
 ## 5. Estratégia integrada
 

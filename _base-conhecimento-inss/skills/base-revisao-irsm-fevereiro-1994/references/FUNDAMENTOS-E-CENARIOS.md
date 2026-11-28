@@ -1,4 +1,4 @@
-# Revisão IRSM/1994 — Fundamentos e Cenários
+# Revisão IRSM/1994. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -32,33 +32,33 @@ Prescrição quinquenal das parcelas.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Benefício concedido entre março de 1994 e fevereiro de 1998
+### Cenário A. Benefício concedido entre março de 1994 e fevereiro de 1998
 
 Período em que a distorção do IRSM foi mais relevante. Verificar Carta de Concessão e memória de cálculo.
 
-### Cenário B — Benefício com salários de contribuição relevantes entre 1989 e fevereiro de 1994
+### Cenário B. Benefício com salários de contribuição relevantes entre 1989 e fevereiro de 1994
 
 Esses salários precisam ter o IRSM de 39,67% aplicado. Verificar planilha.
 
-### Cenário C — Pensão por morte derivada
+### Cenário C. Pensão por morte derivada
 
 Revisão reflexa após procedência no benefício originário. Decadência autônoma para os dependentes.
 
-### Cenário D — Revisão administrativa parcial
+### Cenário D. Revisão administrativa parcial
 
 Hipótese em que o INSS aplicou IRSM em alguns salários e não em outros. Recálculo independente para verificar.
 
 ## 6. Cenários a evitar
 
-### Cenário E — Benefício com IRSM já aplicado
+### Cenário E. Benefício com IRSM já aplicado
 
 Após a Lei 10.999/2004, aplicação administrativa tornou-se rotineira (auditoria 03/10/2026). Em regra, sem distorção.
 
-### Cenário F — Decadência consumada
+### Cenário F. Decadência consumada
 
 Benefícios com mais de 10 anos do primeiro pagamento. Decadência extingue o direito de revisão.
 
-### Cenário G — Benefício sem salários pré-março de 1994
+### Cenário G. Benefício sem salários pré-março de 1994
 
 Nada a corrigir. Verificar CNIS antes.
 

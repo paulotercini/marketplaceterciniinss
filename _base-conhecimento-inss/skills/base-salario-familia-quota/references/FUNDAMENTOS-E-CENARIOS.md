@@ -1,4 +1,4 @@
-# Salário-Família — Fundamentos e Cenários
+# Salário-Família. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -78,43 +78,43 @@ Quinto, menor sob tutela judicial equiparado a filho para fins previdenciários.
 
 ## 6. Cenários operacionais pró-segurado
 
-### Cenário 1 — Empregado com 4 filhos menores
+### Cenário 1. Empregado com 4 filhos menores
 
 Empregado com 4 filhos, remuneração R$ 1.700. 4 quotas cumulativas por mês.
 
-### Cenário 2 — Filho inválido de 18 anos
+### Cenário 2. Filho inválido de 18 anos
 
 Filho com paralisia cerebral, invalidez anterior aos 14 anos. Quota continua após os 14 anos, enquanto perdurar a invalidez.
 
-### Cenário 3 — Empregado em auxílio-doença
+### Cenário 3. Empregado em auxílio-doença
 
 Empregado recebe B31. Quota mantida (art. 69).
 
-### Cenário 4 — Empregada em salário-maternidade
+### Cenário 4. Empregada em salário-maternidade
 
 Empregada em B80. Quota mantida.
 
-### Cenário 5 — Casal de empregados
+### Cenário 5. Casal de empregados
 
 Marido e mulher, ambos empregados. Cada um recebe quota por cada filho (art. 70).
 
-### Cenário 6 — Aposentado rural por idade
+### Cenário 6. Aposentado rural por idade
 
 Aposentado rural com filho menor. Direito à quota (exceção dentro das aposentadorias por idade).
 
-### Cenário 7 — Aposentado por incapacidade permanente
+### Cenário 7. Aposentado por incapacidade permanente
 
 B32 ou B92 com filho menor. Quota devida.
 
-### Cenário 8 — Supressão por ausência de frequência escolar
+### Cenário 8. Supressão por ausência de frequência escolar
 
 Empregado deixou de apresentar comprovante. Quota suspensa. Apresentação posterior gera restabelecimento retroativo.
 
-### Cenário 9 — Filho com deficiência mental
+### Cenário 9. Filho com deficiência mental
 
 Invalidez reconhecida. Quota mantida mesmo após 14 anos.
 
-### Cenário 10 — Aposentado por tempo de contribuição
+### Cenário 10. Aposentado por tempo de contribuição
 
 Não recebe salário-família. Exclusão expressa.
 

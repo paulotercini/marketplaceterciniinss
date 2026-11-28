@@ -1,4 +1,4 @@
-# Agentes Químicos — Jurisprudência Verificada e Refutação
+# Agentes Químicos. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -56,49 +56,49 @@ Fonte oficial em https://www.cjf.jus.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Ausência de medição quantitativa
+### Argumento 1. Ausência de medição quantitativa
 
 Argumento adversário. O PPP não quantifica o agente, logo não há como reconhecer a especialidade.
 
 Refutação. Para agentes do Anexo 13 da NR-15 e da LINACH, a avaliação é qualitativa. A exigência de medição quantitativa para esses agentes contraria o próprio regramento do MTE. Aplicação do Tema 170/TNU, que dispensa a avaliação quantitativa para agentes cancerígenos, e da remissão legal expressa do Decreto 3.048/99 à NR-15 (auditoria 03/10/2026, retirados o Tema 298/TNU, que exige a especificação do agente, e o Tema 1090/STJ, que trata do EPI).
 
-### Argumento 2 — Exposição esporádica
+### Argumento 2. Exposição esporádica
 
 Argumento adversário. A exposição não se deu em todos os momentos da jornada, logo falta habitualidade.
 
 Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço, e a exposição inerente à função atende a esse critério. O Tema 211 TNU vale só para agentes biológicos (auditoria 03/10/2026).
 
-### Argumento 3 — Frentista pós Lei 9.032/95
+### Argumento 3. Frentista pós Lei 9.032/95
 
 Argumento adversário. O Tema 157 TNU afastou a especialidade genérica da função de frentista.
 
 Refutação. O Tema 157 exige demonstração de exposição a hidrocarbonetos aromáticos. Em postos de combustíveis, tal exposição é inerente e demonstrável por função, documentação da empresa e contracheques. Acionar `retificacao-ppp` para obtenção de PPP detalhado.
 
-### Argumento 4 — EPI eficaz declarado no PPP
+### Argumento 4. EPI eficaz declarado no PPP
 
 Argumento adversário. O PPP declara EPI eficaz, logo a nocividade estaria neutralizada.
 
 Refutação. Para cancerígenos LINACH, absorção cutânea e benzeno, o EPI não neutraliza, por determinação do Tema 1090 STJ e das próprias fichas técnicas dos equipamentos. Acionar `base-especial-epi` para fundamentação completa.
 
-### Argumento 5 — Rol taxativo do Anexo IV
+### Argumento 5. Rol taxativo do Anexo IV
 
 Argumento adversário. O agente do PPP não consta do Anexo IV do Decreto 3.048/99.
 
 Refutação. O rol é exemplificativo, jamais taxativo, sob pena de esvaziar a proteção previdenciária. A jurisprudência é pacífica nesse sentido. Invocar a Lei 8.213/91 em combinação com a remissão à NR-15.
 
-### Argumento 6 — Concentração abaixo do limite da NR-15
+### Argumento 6. Concentração abaixo do limite da NR-15
 
 Argumento adversário. A medição indica concentração abaixo do limite de tolerância, logo não há nocividade.
 
 Refutação. Para agentes cancerígenos LINACH, não há limite seguro. O reconhecimento da nocividade é qualitativo e independente da concentração. Para agentes com absorção cutânea, a concentração do ar não esgota a exposição real. Para o Anexo 13, a avaliação é qualitativa por definição.
 
-### Argumento 7 — PPP indica apenas o agente sem detalhamento
+### Argumento 7. PPP indica apenas o agente sem detalhamento
 
 Argumento adversário. O PPP é vago, logo não permite reconhecimento.
 
 Refutação. Acionar `retificacao-ppp` para detalhamento pela empresa. Em juízo, se a prova continuar insuficiente, o Tema 629 STJ leva à extinção sem resolução do mérito, e não à improcedência (auditoria 03/10/2026). Pedir perícia por similaridade ou juntada do LTCAT integral. A regra de cooperação impõe ao INSS colaborar com a instrução.
 
-### Argumento 8 — Ausência do LTCAT de origem
+### Argumento 8. Ausência do LTCAT de origem
 
 Argumento adversário. O LTCAT não foi apresentado, logo a exposição não está demonstrada.
 

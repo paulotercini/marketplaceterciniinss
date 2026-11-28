@@ -1,4 +1,4 @@
-# Perícia Médica Federal e Teleperícia — Fundamentos e Cenários
+# Perícia Médica Federal e Teleperícia. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -26,7 +26,7 @@ Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/
 
 Resoluções CFM 2.314/2022 e 2.378/2024. Ética em telemedicina.
 
-## 2. Teleperícia — requisitos técnicos e procedimentais
+## 2. Teleperícia. requisitos técnicos e procedimentais
 
 Primeiro, equipamento com câmera, microfone, tela adequada.
 
@@ -62,7 +62,7 @@ Sexta, suspeita de dissimulação ou simulação que exija avaliação presencia
 
 Sétima, casos complexos com múltiplos CIDs.
 
-## 4. Análise documental — limitações
+## 4. Análise documental. limitações
 
 Primeira, é triagem, não substitui perícia com exame clínico.
 
@@ -78,35 +78,35 @@ Sexta, em ação judicial, cabe perícia judicial.
 
 ## 5. Cenários operacionais pró-segurado
 
-### Cenário 1 — Teleperícia inadequada
+### Cenário 1. Teleperícia inadequada
 
 Segurado com lesão de joelho e limitação de marcha. A Teleperícia não permitiu exame físico. Laudo concluiu capacidade. Recurso ao CRPS com pedido de perícia presencial ou ação judicial com perícia judicial.
 
-### Cenário 2 — Análise documental negativa
+### Cenário 2. Análise documental negativa
 
 Segurado com documentação médica robusta teve B31 indeferido por análise documental. Recurso ao CRPS com novos elementos ou ação judicial.
 
-### Cenário 3 — Perícia presencial superficial
+### Cenário 3. Perícia presencial superficial
 
 Segurado teve perícia presencial de 5 minutos. Laudo genérico sem exame detalhado. Impugnação por cerceamento e superficialidade.
 
-### Cenário 4 — Teleperícia sem acessibilidade
+### Cenário 4. Teleperícia sem acessibilidade
 
 Segurado surdo, sem intérprete de Libras na Teleperícia. Violação do direito à acessibilidade. Nulidade.
 
-### Cenário 5 — Reavaliação sem exame específico
+### Cenário 5. Reavaliação sem exame específico
 
 Segurado em B32 cessado em reavaliação com laudo que apenas repete o anterior. Impugnação com argumento de ausência de exame real.
 
-### Cenário 6 — Perícia domiciliar negada
+### Cenário 6. Perícia domiciliar negada
 
 Segurado acamado com negativa de PMF externa. Violação do direito à perícia acessível. MS.
 
-### Cenário 7 — Laudo sem CID e sem fundamentação
+### Cenário 7. Laudo sem CID e sem fundamentação
 
 Laudo da PMF sem CID explícito e sem fundamentação técnica. Impugnação por ausência de fundamentação.
 
-### Cenário 8 — BPC com avaliação incompleta
+### Cenário 8. BPC com avaliação incompleta
 
 BPC indeferido com avaliação biopsicossocial superficial. Impugnação com base na Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026).
 

@@ -1,4 +1,4 @@
-# Aposentadoria Especial Pós EC 103/2019 — Fundamentos e Cenários
+# Aposentadoria Especial Pós EC 103/2019. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -26,38 +26,37 @@ Risco baixo (25 anos de efetiva exposição, agentes de menor nocividade relativ
 
 **CORREÇÃO DE AUDITORIA (Onda 121, 04/09/2026).** A redação anterior deste arquivo afirmava que a pontuação do art. 21 "progredia 1 ponto por ano". Isso é FALSO e foi corrigido após apontamento do escritório, conferido no texto da EC 103/2019 no Planalto. O art. 21 tem apenas os incisos I a III, com 66, 76 e 86 pontos, e os §§ 1º a 3º, que tratam da apuração de idade e tempo em dias, do valor do benefício e dos servidores estaduais. Não existe dispositivo de progressão no art. 21. A pontuação da aposentadoria especial de transição é FIXA, e o PRISMA confirma ("Pontuação exigida: 86 anos" em DER de 2026). A progressão anual de 1 ponto pertence ao art. 15 (regra de pontos da aposentadoria por tempo de contribuição, até 100 pontos para a mulher e 105 para o homem), e a progressão de 6 meses ao art. 16 (idade progressiva). Confundir os regimes leva a exigir do segurado pontos que a Constituição não exige e a adiar indevidamente a DER.
 
-
 ## 3. Cenários operacionais pró-segurado
 
-### Cenário 1 — Metalúrgico com 25 anos de ruído em 13/11/2019
+### Cenário 1. Metalúrgico com 25 anos de ruído em 13/11/2019
 
 Direito adquirido à aposentadoria especial pré-reforma. Acionar `base-aposentadoria-direito-adquirido` e `base-especial-ruido`.
 
-### Cenário 2 — Metalúrgico com 22 anos em 13/11/2019
+### Cenário 2. Metalúrgico com 22 anos em 13/11/2019
 
 Se continuar exposto até 25 anos e atingir 86 pontos (idade mais tempo), elegível pela transição por pontos. Se preferir, converte em comum pelo fator 1,40 só os 22 anos cumpridos até 13/11/2019; os anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras (auditoria 03/10/2026). Comparação obrigatória.
 
-### Cenário 3 — Enfermeira com 18 anos de exposição a biológicos em 13/11/2019
+### Cenário 3. Enfermeira com 18 anos de exposição a biológicos em 13/11/2019
 
 Tempo especial de risco médio (20 anos). Para transição por pontos, precisa de 20 anos de exposição mais 76 pontos. Se atingir em 2024, elegível. Se não, converter períodos pré-reforma e aposentar por regra comum. Acionar `base-especial-agentes-biologicos`.
 
-### Cenário 4 — Eletricitário com 10 anos em 13/11/2019
+### Cenário 4. Eletricitário com 10 anos em 13/11/2019
 
 Insuficiente para direito adquirido. Se continuar exposto até 15 anos (risco alto) e atingir 66 pontos, elegível pela transição. Acionar `base-especial-eletricidade-periculosidade`.
 
-### Cenário 5 — Operador de motosserra com 20 anos em 13/11/2019
+### Cenário 5. Operador de motosserra com 20 anos em 13/11/2019
 
 Exposição a vibração como risco médio. Transição por 76 pontos. Acionar `base-especial-vibracao`.
 
-### Cenário 6 — Químico industrial exposto a hidrocarbonetos
+### Cenário 6. Químico industrial exposto a hidrocarbonetos
 
 Agente classificado como de alto risco (cancerígeno se ativo na LINACH). Acionar `base-especial-agentes-quimicos` e `base-especial-epi` para refutação.
 
-### Cenário 7 — Frentista exposto a benzeno
+### Cenário 7. Frentista exposto a benzeno
 
 Agente cancerígeno LINACH. Aposentadoria especial qualitativa. Tema 1090 STJ afasta neutralização por EPI. Acionar `base-especial-agentes-quimicos`.
 
-### Cenário 8 — Conversão de tempo especial em comum
+### Cenário 8. Conversão de tempo especial em comum
 
 Segurado com 18 anos de atividade especial (risco baixo) em 13/11/2019. Conversão em comum pelo fator 1,40 = 25 anos e 2 meses de tempo comum equivalente. Agrega à transição comum ou à regra permanente comum.
 

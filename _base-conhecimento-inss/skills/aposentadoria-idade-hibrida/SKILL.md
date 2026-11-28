@@ -3,7 +3,7 @@ name: aposentadoria-idade-hibrida
 description: "Skill de aposentadoria por idade urbana, rural e híbrida (art. 48, Lei 8.213/91). Use SEMPRE que mencionar aposentadoria por idade, aposentadoria híbrida, aposentadoria mista, art. 48 §3º, carência rural, Tema 1007 STJ, Tema 168 TNU, Tema 131 TNU, Tema 1125 STF, IN 188/2025, art. 257 IN 128, multiplicador carência rural, Lei 11.718/2008, contribuição presumida segurado especial, tempo rural pós-1991 carência, intercalação auxílio-doença carência, Súmula 73 TNU, Súmula 102 TRF4, TRU inexigência mínimo urbano, qualidade segurado DER híbrida, CI prestador contribuição atraso aposentadoria idade. Acionar AUTOMATICAMENTE com peticao-previdenciaria, segurado-especial-rural, precedentes-previdenciarios, triagem-caso-novo, indenizacao-contribuicoes-atraso quando envolver aposentadoria por idade. NÃO use para aposentadoria por tempo de contribuição, aposentadoria especial, aposentadoria por deficiência ou BPC/LOAS."
 ---
 
-# Aposentadoria por Idade — Urbana, Rural e Híbrida
+# Aposentadoria por Idade. Urbana, Rural e Híbrida
 
 ## Fonte normativa primária
 
@@ -12,7 +12,7 @@ description: "Skill de aposentadoria por idade urbana, rural e híbrida (art. 48
 - Lei 8.213/91, art. 48 e §§1º a 4º (aposentadoria por idade urbana, rural e híbrida)
 - Lei 8.213/91, arts. 25, II, e 142 (carência e tabela de transição)
 - Lei 8.213/91, arts. 26, III, e 39, I (dispensa de carência para segurado especial)
-- Lei 8.213/91, art. 55, §2º (vedação de cômputo para carência na aposentadoria por tempo de contribuição — inaplicável à híbrida)
+- Lei 8.213/91, art. 55, §2º (vedação de cômputo para carência na aposentadoria por tempo de contribuição, inaplicável à híbrida)
 - Lei 8.213/91, art. 34, I (contribuições devidas pelo empregador)
 - Lei 11.718/2008, art. 3º (multiplicador de carência para empregado rural)
 - EC 103/2019, art. 18 (regra de transição)
@@ -20,7 +20,7 @@ description: "Skill de aposentadoria por idade urbana, rural e híbrida (art. 48
 - IN PRES/INSS 128/2022, arts. 215, 256 a 260 (aposentadoria por idade geral e rural)
 - IN PRES/INSS 128/2022, art. 257 (aposentadoria híbrida, alterado pelas INs 141/2022, 151/2023 e 188/2025; o art. 257-A foi revogado pela IN 188/2025) (auditoria 03/10/2026)
 - IN PRES/INSS 188/2025 (dispensa de qualidade de segurado e exercício de atividade na DER para híbrida)
-- ACP 5038261-15.2015.4.04.7100/RS (efeitos nacionais — INSS obrigado a conceder híbrida sem exigir contribuição para período rural)
+- ACP 5038261-15.2015.4.04.7100/RS (efeitos nacionais. INSS obrigado a conceder híbrida sem exigir contribuição para período rural)
 
 Vigência verificada em março de 2026.
 
@@ -46,7 +46,7 @@ Mulher 60 anos, homem 65 anos, carência conforme tabela do art. 142 da Lei 8.21
 
 ### Requisitos
 
-Mulher 55 anos, homem 60 anos (art. 48, §1º, Lei 8.213/91 — a EC 103/2019 não alterou a idade do trabalhador rural). Carência de 180 meses de atividade rural (art. 25, II, c/c art. 48, §2º). Valor equivalente a um salário mínimo para o segurado especial (art. 39, I) (auditoria 03/10/2026).
+Mulher 55 anos, homem 60 anos (art. 48, §1º, Lei 8.213/91, a EC 103/2019 não alterou a idade do trabalhador rural). Carência de 180 meses de atividade rural (art. 25, II, c/c art. 48, §2º). Valor equivalente a um salário mínimo para o segurado especial (art. 39, I) (auditoria 03/10/2026).
 
 ### Segurado especial
 
@@ -56,7 +56,7 @@ Art. 39, I, da Lei 8.213/91 garante aposentadoria por idade mediante comprovaç�
 
 Contribuição é devida pelo empregador (art. 34, I, Lei 8.213/91). Inadimplência patronal não prejudica o segurado.
 
-### Multiplicador de carência — Lei 11.718/2008, art. 3º
+### Multiplicador de carência. Lei 11.718/2008, art. 3º
 
 Na aposentadoria por idade rural (valor equivalente ao salário mínimo), cada mês comprovado de emprego rural é multiplicado para efeito de carência, nos seguintes períodos
 
@@ -80,7 +80,7 @@ Art. 48, §3º, da Lei 8.213/91 (incluído pela Lei 11.718/2008). Permite ao seg
 
 ### Requisitos
 
-**Idade.** 65 anos (homem) ou 62 anos (mulher) — segue a regra da aposentadoria por idade urbana, inclusive a regra de transição da EC 103/2019 (60→62 para mulheres). A TNU (Tema 131) confirmou que a idade é a urbana, não a rural.
+**Idade.** 65 anos (homem) ou 62 anos (mulher), segue a regra da aposentadoria por idade urbana, inclusive a regra de transição da EC 103/2019 (60→62 para mulheres). A TNU (Tema 131) confirmou que a idade é a urbana, não a rural.
 
 **Carência.** 180 contribuições (ou conforme tabela do art. 142 para filiados antes de 25/07/1991), podendo ser compostas por períodos rurais e urbanos.
 
@@ -90,7 +90,7 @@ Art. 48, §3º, da Lei 8.213/91 (incluído pela Lei 11.718/2008). Permite ao seg
 
 ### Valor do benefício
 
-Segue a regra de cálculo geral (art. 29, I, Lei 8.213/91 ou EC 103/2019), não se limitando ao salário mínimo. Período rural sem contribuição entra na carência, mas NÃO gera salários de contribuição para o cálculo da RMI — a média é feita apenas sobre os meses com contribuição registrada.
+Segue a regra de cálculo geral (art. 29, I, Lei 8.213/91 ou EC 103/2019), não se limitando ao salário mínimo. Período rural sem contribuição entra na carência, mas NÃO gera salários de contribuição para o cálculo da RMI, a média é feita apenas sobre os meses com contribuição registrada.
 
 ---
 
@@ -104,19 +104,19 @@ Segue a regra de cálculo geral (art. 29, I, Lei 8.213/91 ou EC 103/2019), não 
 
 **Tema 131/TNU** (PEDILEF 5009416-32.2013.4.04.7200/SC, trânsito em julgado em 01/09/2017). Irrelevância da natureza rural ou urbana da atividade exercida na DER.
 
-**STF — RE 1.281.909/SP.** Decidiu em 21/09/2020 que a matéria do Tema 1007 não tem repercussão geral (infraconstitucional). A tese do STJ é definitiva.
+**STF. RE 1.281.909/SP.** Decidiu em 21/09/2020 que a matéria do Tema 1007 não tem repercussão geral (infraconstitucional). A tese do STJ é definitiva.
 
 ### Período posterior a novembro de 1991 (pós-Lei 8.213/91)
 
 **Não há tese vinculante do STJ específica para o pós-1991 na aposentadoria híbrida.** O Tema 1007 é textualmente restrito ao pré-1991. Esta é uma lacuna.
 
-**TNU — PEDILEF 1008411-25.2020.4.01.3500** (Rel. Juiz Federal Neian Milhomem Cruz, j. 08/02/2024) (auditoria 03/10/2026). Decisão paradigmática que firmou expressamente ser irrelevante se o período rural foi prestado antes ou depois da Lei 8.213/91, para fins de carência na aposentadoria por idade híbrida.
+**TNU. PEDILEF 1008411-25.2020.4.01.3500** (Rel. Juiz Federal Neian Milhomem Cruz, j. 08/02/2024) (auditoria 03/10/2026). Decisão paradigmática que firmou expressamente ser irrelevante se o período rural foi prestado antes ou depois da Lei 8.213/91, para fins de carência na aposentadoria por idade híbrida.
 
 **TRF4.** Posição consolidada de que a aposentadoria híbrida dispensa contribuição para período rural pós-1991, distinguindo da aposentadoria por tempo de contribuição (que exige indenização). ACP 5038261-15.2015.4.04.7100/RS com efeitos nacionais reforça essa posição.
 
 **TRF3.** 9ª Turma Recursal aplica a mesma orientação, dispensando contribuição para rural pós-1991 na aposentadoria híbrida.
 
-**INSS — IN 128/2022, art. 257, §1º, I e II** (redação da IN 188/2025). Assegura a híbrida independentemente de o segurado exercer atividade rural ou urbana e de possuir qualidade de segurado ao tempo do requerimento ou do implemento dos requisitos. O art. 257-A, cujo inciso II dispensava as contribuições do tempo rural, foi revogado pela IN 188/2025. Para o rural pós-1991 sem contribuição, o fundamento é a jurisprudência acima (auditoria 03/10/2026).
+**INSS. IN 128/2022, art. 257, §1º, I e II** (redação da IN 188/2025). Assegura a híbrida independentemente de o segurado exercer atividade rural ou urbana e de possuir qualidade de segurado ao tempo do requerimento ou do implemento dos requisitos. O art. 257-A, cujo inciso II dispensava as contribuições do tempo rural, foi revogado pela IN 188/2025. Para o rural pós-1991 sem contribuição, o fundamento é a jurisprudência acima (auditoria 03/10/2026).
 
 ### Tratamento por categoria de segurado rural (pós-1991)
 
@@ -164,7 +164,7 @@ Essa posição vincula os JEFs da 4ª Região. Nos demais, fundamentar por analo
 
 ---
 
-## 7. CI prestador de serviços — contribuições em atraso
+## 7. CI prestador de serviços. contribuições em atraso
 
 **TRF1, 9ª Turma, processo 1002203-88.2021.4.01.9999** (Rel. Juiz Federal Nelson Liu Pitanga). Decidiu que, a partir da Lei 10.666/2003 (art. 4º), a responsabilidade pelo recolhimento das contribuições do CI prestador de serviços à pessoa jurídica é da empresa tomadora. O tempo de prestação deve ser reconhecido independentemente de recolhimento pela empresa, viabilizando aposentadoria por idade.
 
@@ -223,19 +223,7 @@ Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria rural e Apos
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Juízo de Catanduva (Onda 179)
 

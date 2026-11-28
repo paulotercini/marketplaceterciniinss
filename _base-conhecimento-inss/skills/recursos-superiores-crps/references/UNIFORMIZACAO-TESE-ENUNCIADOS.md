@@ -1,4 +1,4 @@
-# Uniformização em Tese, Enunciados e Resoluções do Conselho Pleno – Arts. 120, 124, 125 e 126
+# Uniformização em Tese, Enunciados e Resoluções do Conselho Pleno. Arts. 120, 124, 125 e 126
 
 ## Uniformização em Tese (Art. 120)
 

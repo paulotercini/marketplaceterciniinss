@@ -1,4 +1,4 @@
-# Regra Permanente EC 103/2019 — Fundamentos e Cenários
+# Regra Permanente EC 103/2019. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -16,35 +16,35 @@ Decreto 3.048/99, art. 51 e seguintes. Regulamentação da aposentadoria por ida
 
 ## 2. Cenários operacionais pró-segurado
 
-### Cenário 1 — Segurada com filiação após a reforma
+### Cenário 1. Segurada com filiação após a reforma
 
 Segurada que começou a contribuir em 2021 aos 45 anos. Aos 62 anos (2038), terá 17 anos de contribuição, cumprindo o tempo mínimo de 15 anos. Carência de 180 já cumprida desde 2036. Elegível pela regra permanente.
 
-### Cenário 2 — Segurado filiado antes da reforma sem transição vantajosa
+### Cenário 2. Segurado filiado antes da reforma sem transição vantajosa
 
 Segurado que contribuiu esporadicamente entre 1985 e 2019, com 16 anos de contribuição efetivos. Em 2024 aos 60 anos, continua contribuindo. Aos 65 anos com 21 anos de contribuição, elegível pela transição por idade do art. 18 da EC 103, que exige 15 anos de contribuição de quem era filiado até 13/11/2019, e não pela regra permanente (auditoria 03/10/2026). As transições por tempo de contribuição exigiriam 35 anos, inviáveis.
 
-### Cenário 3 — Facultativa de baixa renda
+### Cenário 3. Facultativa de baixa renda
 
 Dona de casa com renda familiar até 2 salários mínimos e família inscrita no CadÚnico. Contribui com alíquota de 5% sobre salário mínimo pelo art. 21 §2º II b da Lei 8.212/91. Aos 62 anos e 15 anos de contribuição, elegível pela regra permanente. Carência deve estar cumprida.
 
-### Cenário 4 — Segurado rural
+### Cenário 4. Segurado rural
 
 Rural com 60 anos (homem) em 2024 e 18 anos de atividade rural comprovada. Aposentadoria rural urbana pelo art. 48 da Lei 8.213/91. Não se aplica a regra permanente urbana do art. 19 da EC 103. Prova material complementada por testemunhal.
 
-### Cenário 5 — Aposentadoria híbrida
+### Cenário 5. Aposentadoria híbrida
 
 Segurado com 5 anos de atividade rural e 10 anos de atividade urbana. Aos 65 anos, elegível pela aposentadoria híbrida do art. 48 §3º da Lei 8.213/91. A reforma não alterou a híbrida.
 
-### Cenário 6 — Maximização da RMI
+### Cenário 6. Maximização da RMI
 
 Segurado que completará 20 anos de contribuição aos 65 anos. Pode optar por continuar contribuindo para elevar a RMI em 2% por ano excedente. Análise estratégica.
 
-### Cenário 7 — Cenário híbrido com contribuinte individual
+### Cenário 7. Cenário híbrido com contribuinte individual
 
 Segurado com 10 anos de contribuinte individual não recolhido, com indenização viável. Recolher em atraso e somar à carência pode viabilizar a regra permanente. Acionar `indenizacao-contribuicoes-atraso`.
 
-### Cenário 8 — Segurado sem elegibilidade para transição ou direito adquirido
+### Cenário 8. Segurado sem elegibilidade para transição ou direito adquirido
 
 Perfil esporádico, sem tempo mínimo para transição. Regra permanente torna-se a única via. O planejamento deve maximizar contribuições nos últimos anos para elevar a RMI.
 

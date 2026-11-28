@@ -1,4 +1,4 @@
-# Regra Permanente EC 103/2019 — Jurisprudência Verificada e Refutação
+# Regra Permanente EC 103/2019. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -52,49 +52,49 @@ Aplicação pró-segurado. Reforço para rural e híbrida.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Aplicação automática da regra permanente sem comparativo
+### Argumento 1. Aplicação automática da regra permanente sem comparativo
 
 Argumento adversário. O segurado tem 65 anos, então aplica-se a regra permanente, sem necessidade de análise comparativa com transições.
 
 Refutação. Tema 334 STF. O comparativo é obrigatório. O direito ao melhor benefício impõe análise de todas as regras aplicáveis na mesma data. Lei 13.460/2017 art. 5º consolida o dever de informação.
 
-### Argumento 2 — Exigência de tempo contínuo para carência na regra permanente
+### Argumento 2. Exigência de tempo contínuo para carência na regra permanente
 
 Argumento adversário. A carência de 180 contribuições deve ser contínua.
 
 Refutação. Art. 25 da Lei 8.213/91. A carência é cômputo simples de contribuições mensais, sem exigência de continuidade. Descontinuidade é admitida desde que somadas as contribuições efetivas.
 
-### Argumento 3 — Descaracterização do tempo rural para regra permanente urbana
+### Argumento 3. Descaracterização do tempo rural para regra permanente urbana
 
 Argumento adversário. O segurado teve tempo rural, não pode se aposentar pela regra urbana.
 
 Refutação. Tema 1007 STJ. Tempo rural é aproveitável para carência na híbrida (art. 48 §3º). A regra permanente urbana e a rural não se excluem. O segurado escolhe a mais vantajosa.
 
-### Argumento 4 — Negativa de carência por perda da qualidade
+### Argumento 4. Negativa de carência por perda da qualidade
 
 Argumento adversário. O segurado perdeu a qualidade de segurado, deve cumprir nova carência integral.
 
 Refutação. Art. 3º, §1º, da Lei 10.666/2003. Na aposentadoria por idade, a perda da qualidade de segurado não é considerada quando cumprida a carência na data do requerimento, e a carência acumulada se preserva (auditoria 03/10/2026, retirado o Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé). Acionar `periodo-graca-qualidade-segurado`.
 
-### Argumento 5 — Exigência de CNIS sem pendências
+### Argumento 5. Exigência de CNIS sem pendências
 
 Argumento adversário. A regra permanente exige CNIS sem qualquer pendência.
 
 Refutação. As pendências do CNIS não extinguem direito ao benefício. São meras pendências operacionais que podem ser saneadas por acerto ou justificação. Acionar `cnis-acerto-indicadores`.
 
-### Argumento 6 — Impossibilidade de indenização para carência
+### Argumento 6. Impossibilidade de indenização para carência
 
 Argumento adversário. A indenização de contribuições não gera carência, apenas tempo.
 
 Refutação. Art. 96 IV da Lei 8.213/91 e Tema 609 STJ. A indenização de contribuições gera tempo computável. A jurisprudência admite o cômputo para carência quando a atividade era sujeita à filiação obrigatória. Acionar `indenizacao-contribuicoes-atraso`.
 
-### Argumento 7 — Necessidade de DER na data exata do preenchimento
+### Argumento 7. Necessidade de DER na data exata do preenchimento
 
 Argumento adversário. A DIB é fixada na DER, sem possibilidade de anteceder.
 
 Refutação. Tema 334 STF. A tese manda calcular a RMI pelo quadro mais favorável, respeitadas a decadência e a prescrição; trata do cálculo e não antecipa a DIB para antes da DER [NÃO CONFIRMADO] (auditoria 03/10/2026). Efeitos financeiros retroagem à DER ou à data indicada judicialmente, conforme Tema 995 STJ.
 
-### Argumento 8 — Aplicação do fator previdenciário
+### Argumento 8. Aplicação do fator previdenciário
 
 Argumento adversário. Na regra permanente, aplicar-se-ia o fator previdenciário.
 

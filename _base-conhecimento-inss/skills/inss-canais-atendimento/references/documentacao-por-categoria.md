@@ -7,7 +7,7 @@
 
 Documentos devem ser contemporâneos ao período que se pretende comprovar.
 Cópias devem ser autenticadas em cartório ou conferidas pelo servidor do INSS com o original.
-O INSS não pode exigir documentos que já constem nos sistemas públicos — somente pedirá ao segurado o que não puder obter diretamente de outro órgão (art. 11, parágrafo único, IN 128/2022).
+O INSS não pode exigir documentos que já constem nos sistemas públicos, somente pedirá ao segurado o que não puder obter diretamente de outro órgão (art. 11, parágrafo único, IN 128/2022).
 
 ---
 
@@ -58,11 +58,11 @@ O INSS não pode exigir documentos que já constem nos sistemas públicos — so
 
 **Documentos complementares:**
 - Escala de trabalho com identificação do trabalhador
-- Declaração de confirmação de envio pelo eSocial (Anexo II-A da IN 128/2022 — para avulso)
+- Declaração de confirmação de envio pelo eSocial (Anexo II-A da IN 128/2022, para avulso)
 
 ---
 
-## 4. Contribuinte Individual (CI) — urbano
+## 4. Contribuinte Individual (CI). urbano
 
 **Modalidade: presta serviço a pessoa física**
 - GPS quitadas com código correto para o período
@@ -84,13 +84,13 @@ O INSS não pode exigir documentos que já constem nos sistemas públicos — so
 
 ## 5. Contribuinte Individual rural
 
-**Modalidade plano simplificado (11%) — presta serviço a pessoa física:**
+**Modalidade plano simplificado (11%), presta serviço a pessoa física:**
 - GPS com código 1236 (mensal) ou 1228 (trimestral)
 - Declaração de IR
 - Contratos de prestação de serviços rurais
 - Inscrição no INCRA ou documentos que identifiquem imóvel rural
 
-**Modalidade com dedução de 45% (20% sobre o bruto) — presta serviço a PJ:**
+**Modalidade com dedução de 45% (20% sobre o bruto), presta serviço a PJ:**
 - GPS com código 1805 (mensal) ou 1813 (trimestral)
 - Contrato com empresa rural
 - NF de serviços / RPA com retenção
@@ -160,19 +160,19 @@ O INSS não pode exigir documentos que já constem nos sistemas públicos — so
 
 - Prova exclusivamente testemunhal (sem nenhum documento material)
 - Declaração de próprio punho do segurado sem corroboração documental
-- Registro público de casamento, nascimento ou óbito (quando o fato a comprovar exige esse tipo de registro — ex: provar data de nascimento exige certidão, não testemunhas)
+- Registro público de casamento, nascimento ou óbito (quando o fato a comprovar exige esse tipo de registro, ex: provar data de nascimento exige certidão, não testemunhas)
 
 ---
 
-## Tabela resumo — documentos mínimos por categoria
+## Tabela resumo. documentos mínimos por categoria
 
 | Categoria | Documento principal | Documento complementar mínimo |
 |---|---|---|
 | Empregado CLT | CTPS ou TRCT | Holerite ou extrato FGTS |
 | Doméstico | CTPS ou contrato | Comprovante de recolhimento |
 | Avulso | Declaração OGMO/sindicato | Escala de trabalho |
-| CI — presta a PF | GPS + código correto | Contrato ou NF |
-| CI — presta a PJ | Declaração da contratante | GFIP/eSocial da empresa |
+| CI, presta a PF | GPS + código correto | Contrato ou NF |
+| CI, presta a PJ | Declaração da contratante | GFIP/eSocial da empresa |
 | CI rural plano simples | GPS código 1236/1228 | Contrato ou DAP |
 | CI rural presta a PJ | GPS código 1805/1813 | Contrato com empresa |
 | Segurado especial | Documento rural contemporâneo | Pode ser de familiar |

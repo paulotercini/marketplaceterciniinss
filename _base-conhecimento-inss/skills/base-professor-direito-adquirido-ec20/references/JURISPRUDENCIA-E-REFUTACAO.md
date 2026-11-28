@@ -1,4 +1,4 @@
-# Direito Adquirido Professor EC 20 — Jurisprudência e Refutação
+# Direito Adquirido Professor EC 20. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,81 +36,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Bônus não é direito adquirido
+### Argumento 1. Bônus não é direito adquirido
 
 Argumento adversário. Reforma.
 
 Refutação. Art. 5º XXXVI CF e Súmula 359 STF preservam.
 
-### Argumento 2 — Bônus aplica-se somente a aposentadoria integral
+### Argumento 2. Bônus aplica-se somente a aposentadoria integral
 
 Argumento adversário. Restrição.
 
 Sem refutação: o bônus vale só na integral, com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (EC 20, art. 9º, §2º; IN 128, art. 251, §1º). O caminho do segurado é provar a exclusividade e invocar o próprio art. 251, §1º, que dispensa idade e período adicional (auditoria 03/10/2026).
 
-### Argumento 3 — Fator previdenciário incide
+### Argumento 3. Fator previdenciário incide
 
 Argumento adversário. Lei 9.876.
 
 Tese adversa: o fator incide quando os requisitos se completam após a Lei 9.876/99 (Tema 1011/STJ; Tema 149/TNU; Tema 960/STF). O caminho do segurado é provar que reuniu os requisitos antes dela; a Súmula 726 não trata do fator (auditoria 03/10/2026).
 
-### Argumento 4 — Coordenação não conta
+### Argumento 4. Coordenação não conta
 
 Argumento adversário. Restrição.
 
 Refutação. ADI 3772 e Lei 11.301.
 
-### Argumento 5 — Universitário também goza
+### Argumento 5. Universitário também goza
 
 Argumento favorável ao segurado (auditoria 03/10/2026). Ampliativo.
 
 Sem refutação: o argumento procede e favorece o segurado, pois a IN 128, art. 251, §1º, estende o acréscimo ao professor, inclusive o universitário (auditoria 03/10/2026).
 
-### Argumento 6 — Bônus somente para aposentadoria sob a EC 20
+### Argumento 6. Bônus somente para aposentadoria sob a EC 20
 
 Argumento adversário. Revogação tácita.
 
 Refutação. Direito adquirido se preenchido antes.
 
-### Argumento 7 — Bônus não migra para nova regra
+### Argumento 7. Bônus não migra para nova regra
 
 Argumento adversário. Migração.
 
 Refutação. Opção pela lei mais vantajosa assegurada.
 
-### Argumento 8 — Tempo rural pré-98 não conta
+### Argumento 8. Tempo rural pré-98 não conta
 
 Argumento adversário. Exclusão.
 
 Refutação. Magistério rural admite prova.
 
-### Argumento 9 — Prova formal exigida
+### Argumento 9. Prova formal exigida
 
 Argumento adversário. Forma.
 
 Refutação. Prova material e testemunhal.
 
-### Argumento 10 — Exigência de aposentadoria imediata pós-98
+### Argumento 10. Exigência de aposentadoria imediata pós-98
 
 Argumento adversário. Temporalidade.
 
 Refutação. Direito adquirido não decai. CF/88 art. 5º XXXVI.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Wladimir Novaes Martinez.
-
-Daniel Pulino.
-
-Jane Berwanger.
-
-Marco Aurélio Serau Junior.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

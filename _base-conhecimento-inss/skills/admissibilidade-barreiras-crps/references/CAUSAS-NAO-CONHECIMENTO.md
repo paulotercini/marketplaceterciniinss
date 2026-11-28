@@ -1,10 +1,10 @@
-# Causas de Não Conhecimento do Recurso – Art. 112 e Dispositivos Correlatos
+# Causas de Não Conhecimento do Recurso. Art. 112 e Dispositivos Correlatos
 
 ## Rol Taxativo (Art. 112)
 
 O art. 112 lista as causas de não conhecimento do recurso. O não conhecimento é decisão sem resolução de mérito que pode ser proferida monocraticamente com homologação do Presidente da UJ (art. 110, VII).
 
-## I – Intempestividade (Art. 112, I)
+## I. Intempestividade (Art. 112, I)
 
 ### Regra
 
@@ -22,7 +22,7 @@ O recurso interposto fora do prazo de 30 dias (art. 77) é intempestivo.
 
 **e) Fungibilidade recursal (art. 87, §1º).** Se o recurso foi interposto na instância errada mas é de natureza semelhante, o CRPS pode adequar o trâmite sem prejudicar a tempestividade.
 
-## II – Ilegitimidade das Partes (Art. 112, II)
+## II. Ilegitimidade das Partes (Art. 112, II)
 
 ### Regra
 
@@ -36,7 +36,7 @@ O recurso interposto por parte sem legitimidade para recorrer é inadmissível.
 
 **c) Representação por genitor, curador ou tutor (art. 107, §4º).** Aplica-se o mesmo tratamento do segurado desacompanhado quando o representante for genitor, curador ou tutor.
 
-## III – Renúncia Tácita por Ação Judicial (Art. 112, III c/c Art. 86)
+## III. Renúncia Tácita por Ação Judicial (Art. 112, III c/c Art. 86)
 
 ### Regra
 
@@ -58,7 +58,7 @@ Exige-se tríplice identidade entre o recurso administrativo e a ação judicial
 
 **e) Questionamento da caracterização.** A certificação da ação judicial deve ser feita pela UJ, que proferirá decisão de não conhecimento (art. 86, §3º). Se a UJ aplicou a renúncia indevidamente, configura-se hipótese de anulação por não conhecimento em desacordo com requisitos legais (art. 91, §1º, III).
 
-## IV – Desistência Voluntária (Art. 112, IV c/c Art. 85)
+## IV. Desistência Voluntária (Art. 112, IV c/c Art. 85)
 
 ### Regra
 
@@ -72,7 +72,7 @@ O descumprimento de exigência ou providência pelo interessado NÃO constitui d
 
 Se a UJ tratou a inércia do segurado como desistência, impugnar com base no art. 85, §2º. A única desistência válida é a expressa. Qualquer outra interpretação viola o texto regimental.
 
-## V – Perda do Objeto (Art. 112, V)
+## V. Perda do Objeto (Art. 112, V)
 
 ### Regra
 
@@ -82,7 +82,7 @@ Quando o motivo que originou o recurso deixa de existir. Por exemplo, se o INSS 
 
 Verificar se a reforma foi integral ou parcial. Em caso de reforma parcial, o processo tem seguimento quanto à controvérsia remanescente (art. 82, parágrafo único). Verificar também se a concessão posterior do benefício atende integralmente ao pedido do recurso (mesma DIB, mesmo coeficiente, mesmo período).
 
-## VI – Preclusão (Art. 112, VI)
+## VI. Preclusão (Art. 112, VI)
 
 ### Regra
 

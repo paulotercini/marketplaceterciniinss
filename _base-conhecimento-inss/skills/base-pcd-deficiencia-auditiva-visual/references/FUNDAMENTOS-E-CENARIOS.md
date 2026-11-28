@@ -1,4 +1,4 @@
-# Deficiência Auditiva e Visual — Fundamentos e Cenários
+# Deficiência Auditiva e Visual. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -58,45 +58,45 @@ Campo visual igual ou menor 60 graus.
 
 ## 7. Cenários pró-segurado
 
-### Cenário A — Surdez bilateral profunda
+### Cenário A. Surdez bilateral profunda
 
 PCD grave.
 
-### Cenário B — Surdez unilateral
+### Cenário B. Surdez unilateral
 
 Lei 14.768.
 
-### Cenário C — Baixa visão progressiva
+### Cenário C. Baixa visão progressiva
 
 Múltiplas DIDs.
 
-### Cenário D — Cegueira
+### Cenário D. Cegueira
 
 PCD grave ou BPC.
 
-### Cenário E — Implante coclear
+### Cenário E. Implante coclear
 
 Não exclui.
 
-### Cenário F — AASI
+### Cenário F. AASI
 
 Não exclui.
 
-### Cenário G — Comorbidade auditiva e visual
+### Cenário G. Comorbidade auditiva e visual
 
 Acumulam.
 
 ## 8. Cenários limitados
 
-### Cenário H — Perda leve unilateral
+### Cenário H. Perda leve unilateral
 
 Sem repercussão. Não enquadra.
 
-### Cenário I — Acuidade próxima da normalidade
+### Cenário I. Acuidade próxima da normalidade
 
 Não enquadra.
 
-### Cenário J — Sem prova audiométrica ou oftalmológica
+### Cenário J. Sem prova audiométrica ou oftalmológica
 
 Diligência.
 

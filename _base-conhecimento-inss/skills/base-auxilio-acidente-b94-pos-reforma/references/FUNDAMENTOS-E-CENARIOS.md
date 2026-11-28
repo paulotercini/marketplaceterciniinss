@@ -1,4 +1,4 @@
-# B94 Auxílio-Acidente — Fundamentos e Cenários
+# B94 Auxílio-Acidente. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -46,35 +46,35 @@ Quinto, nexo entre acidente e sequela.
 
 ## 4. Cenários operacionais pró-segurado
 
-### Cenário 1 — Segurado com amputação de dedo
+### Cenário 1. Segurado com amputação de dedo
 
 Segurado de serraria amputa dois dedos. Após consolidação, B94 com base na Súmula 88 TNU e no Anexo III.
 
-### Cenário 2 — Perda auditiva ocupacional
+### Cenário 2. Perda auditiva ocupacional
 
 Segurado exposto a ruído com perda auditiva leve a moderada. Art. 86, §4º, da Lei 8.213/91, Tema 22 STJ e Súmula 44 STJ (auditoria 03/10/2026, no lugar do Tema 322 TNU). Redução de capacidade para a função habitual. B94 cabível.
 
-### Cenário 3 — Sequela fora do Anexo III
+### Cenário 3. Sequela fora do Anexo III
 
 Segurado com lesão de joelho que, embora não descrita no Anexo III, reduz a capacidade para atividade de pedreiro. Súmula 89 TNU confirma caráter exemplificativo do rol.
 
-### Cenário 4 — Acidente de trânsito
+### Cenário 4. Acidente de trânsito
 
 Segurado sofre acidente de carro, fratura exposta, com sequela funcional permanente. Auxílio-acidente previdenciário (espécie 36), na Justiça Federal, independente de ser acidente de trabalho (auditoria 03/10/2026).
 
-### Cenário 5 — B94 após cessação de B31
+### Cenário 5. B94 após cessação de B31
 
 Segurado em B31 por 18 meses, com consolidação e sequela. Conversão automática em B94. Se o INSS não converte, cabe recurso ou ação.
 
-### Cenário 6 — Acumulação com aposentadoria posterior a 11/11/1997
+### Cenário 6. Acumulação com aposentadoria posterior a 11/11/1997
 
 Segurado com B94 desde 2015 e aposentadoria em 2018. Não acumula, porque lesão e aposentadoria são posteriores a 11/11/1997 (Tema 555 STJ e Súmula 507 STJ). O B94 cessa na véspera da aposentadoria e seu valor integra o salário-de-contribuição para o cálculo dela (art. 31 da Lei 8.213/91) (auditoria 03/10/2026).
 
-### Cenário 7 — Cessação indevida de B94
+### Cenário 7. Cessação indevida de B94
 
 INSS cessa B94 sem que o segurado tenha se aposentado. Violação do art. 86 §3º. Restabelecimento imediato com tutela.
 
-### Cenário 8 — Revisão de RMI
+### Cenário 8. Revisão de RMI
 
 Segurado com B94 calculado sem inclusão de verbas salariais. Art. 31 da Lei 8.213/91. Revisão para incluir.
 

@@ -1,4 +1,4 @@
-# BPC/LOAS — Jurisprudência Verificada e Refutação
+# BPC/LOAS. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -60,61 +60,61 @@ Aplicação pró-segurado.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Renda per capita excedente
+### Argumento 1. Renda per capita excedente
 
 Argumento adversário. Renda per capita ultrapassou 1/4 do SM por poucos reais.
 
 Refutação. Tema 27 STF e REsp 1.112.557 STJ. Flexibilização pela análise concreta. Deduções de saúde e educação.
 
-### Argumento 2 — CadÚnico desatualizado
+### Argumento 2. CadÚnico desatualizado
 
 Argumento adversário. CadÚnico vencido afasta o direito.
 
 Refutação. Condição regularizável. Lei 13.460/2017, art. 5º, veda formalismo excessivo. Atualização gera eficácia retroativa à DER.
 
-### Argumento 3 — Acúmulo com pensão especial
+### Argumento 3. Acúmulo com pensão especial
 
 Argumento adversário. Beneficiário de pensão especial indenizatória não pode receber BPC.
 
 Refutação. Natureza indenizatória excluída do rol de benefícios da Seguridade Social. Não há acúmulo vedado.
 
-### Argumento 4 — Estrangeiro não tem direito
+### Argumento 4. Estrangeiro não tem direito
 
 Argumento adversário. Estrangeiro residente não tem direito ao BPC.
 
 Refutação. Tema 173 STF. Estrangeiro residente tem direito.
 
-### Argumento 5 — Impedimento não é de longo prazo
+### Argumento 5. Impedimento não é de longo prazo
 
 Argumento adversário. Doença recente não configura impedimento de longo prazo.
 
 Refutação. Prognóstico de 2 anos é estimativa, não necessita efetivação. Prognóstico médico robusto basta.
 
-### Argumento 6 — Grupo familiar amplo afasta direito
+### Argumento 6. Grupo familiar amplo afasta direito
 
 Argumento adversário. Inclusão de todos os moradores na renda.
 
 Refutação. Rol taxativo do art. 20 §1º LOAS. Requerente, cônjuge ou companheiro, pais e, na ausência de um deles, madrasta ou padrasto, irmãos solteiros, filhos e enteados solteiros e menores tutelados, desde que vivam sob o mesmo teto (auditoria 03/10/2026). Não inclui cunhados, tios, sobrinhos.
 
-### Argumento 7 — Revisão bienal que cessa benefício
+### Argumento 7. Revisão bienal que cessa benefício
 
 Argumento adversário. Nova avaliação concluiu por cessação.
 
 Refutação. Contraditório prévio. Recurso ao CRPS. Lei 15.157/2025 em caso de impedimento permanente.
 
-### Argumento 8 — Idade não comprovada
+### Argumento 8. Idade não comprovada
 
 Argumento adversário. Documentos insuficientes para 65 anos.
 
 Refutação. Justificação administrativa. Documentos pretéritos (certidão de batismo, registros escolares antigos, CNIS).
 
-### Argumento 9 — Perda da qualidade por aposentadoria do familiar
+### Argumento 9. Perda da qualidade por aposentadoria do familiar
 
 Argumento adversário. Aposentadoria de familiar impede BPC.
 
 Refutação. Aposentadoria de outro idoso ou PCD no mesmo grupo familiar é excluída da renda pelo art. 20 §14 LOAS.
 
-### Argumento 10 — Renda de estágio do filho
+### Argumento 10. Renda de estágio do filho
 
 Argumento adversário. Bolsa de estágio conta como renda.
 
@@ -133,22 +133,6 @@ Quarto, em indeferimento, recurso ao CRPS ou ação judicial.
 Quinto, em cessação, restabelecimento retroativo.
 
 Sexto, em MS por mora, competência Federal ou JEF.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado sustenta leitura ampla.
-
-Hugo Goes detalha os requisitos.
-
-Fábio Zambitte Ibrahim defende interpretação constitucional.
-
-Wladimir Novaes Martinez analisa a evolução.
-
-Daniel Pulino aprofunda o conceito de miserabilidade.
-
-Marco Aurélio Serau Junior analisa a proteção social.
-
-O IBDP sustenta a proteção integral.
 
 ## 5. Diligência de atualização
 

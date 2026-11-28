@@ -1,4 +1,4 @@
-# BPC/LOAS — Impedimento de Longo Prazo — Fundamentos e Cenários
+# BPC/LOAS. Impedimento de Longo Prazo. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -50,13 +50,13 @@ Sensoriais. Comunicação e relacionamento interpessoal. Mobilidade. Cuidados pe
 
 ## 5. Qualificadores
 
-0 — Sem dificuldade.
-1 — Leve.
-2 — Moderada.
-3 — Grave.
-4 — Completa.
-L — Leve, na escala em letras da Portaria Conjunta MDS/INSS nº 2/2015.
-N — Nenhuma, na mesma escala, que usa ainda M (moderada), G (grave) e C (completa) (auditoria 03/10/2026).
+0. Sem dificuldade.
+1. Leve.
+2. Moderada.
+3. Grave.
+4. Completa.
+L. Leve, na escala em letras da Portaria Conjunta MDS/INSS nº 2/2015.
+N. Nenhuma, na mesma escala, que usa ainda M (moderada), G (grave) e C (completa) (auditoria 03/10/2026).
 
 ## 6. Gatilhos de elevação
 
@@ -78,43 +78,43 @@ Particularidades. TEA, Síndrome de Down, paralisia cerebral, cardiopatia congê
 
 ## 8. Cenários operacionais pró-segurado
 
-### Cenário 1 — Esquizofrenia com internações recorrentes
+### Cenário 1. Esquizofrenia com internações recorrentes
 
 Diagnóstico CID F20. Relatórios psiquiátricos. Impedimento grave. TCQ favorável. Deferimento.
 
-### Cenário 2 — Autismo grave em menor
+### Cenário 2. Autismo grave em menor
 
 TEA grau 3. Avaliação considerando desenvolvimento. Dispensa reavaliação pela Lei 15.157/2025.
 
-### Cenário 3 — Cegueira bilateral
+### Cenário 3. Cegueira bilateral
 
 Impedimento sensorial grave. Qualificador 4 no domínio sensorial. Deferimento.
 
-### Cenário 4 — Fibromialgia severa
+### Cenário 4. Fibromialgia severa
 
 Lei 15.176/2025. Deficiência reconhecida. Análise biopsicossocial favorável. Deferimento.
 
-### Cenário 5 — Paralisia cerebral
+### Cenário 5. Paralisia cerebral
 
 Impedimento múltiplo (motor, comunicação, cuidados pessoais). TCQ favorável.
 
-### Cenário 6 — Idoso com Alzheimer
+### Cenário 6. Idoso com Alzheimer
 
 Opção pelo BPC idoso dispensa avaliação PCD. Se houver impedimento, Lei 15.157/2025.
 
-### Cenário 7 — HIV avançado
+### Cenário 7. HIV avançado
 
 AIDS com infecções recorrentes. Impedimento grave. Deferimento.
 
-### Cenário 8 — Lesão medular
+### Cenário 8. Lesão medular
 
 Paraplegia. Qualificador 4 em mobilidade e cuidados. Deferimento.
 
-### Cenário 9 — Cardiopatia grave congênita
+### Cenário 9. Cardiopatia grave congênita
 
 Menor com cardiopatia severa. Documentação médica robusta. Deferimento.
 
-### Cenário 10 — Doença progressiva (ELA, Parkinson avançado)
+### Cenário 10. Doença progressiva (ELA, Parkinson avançado)
 
 Prognóstico desfavorável. Deferimento. Lei 15.157/2025 cabível.
 

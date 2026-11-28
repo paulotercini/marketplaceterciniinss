@@ -1,4 +1,4 @@
-# Aposentadoria PCD LC 142 — Fundamentos e Cenários
+# Aposentadoria PCD LC 142. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -24,7 +24,7 @@ Primeira, aposentadoria por tempo de contribuição PCD.
 
 Segunda, aposentadoria por idade PCD.
 
-## 3. Requisitos — Tempo de contribuição
+## 3. Requisitos. Tempo de contribuição
 
 Deficiência grave. Homem 25 anos, Mulher 20 anos.
 
@@ -32,7 +32,7 @@ Deficiência moderada. Homem 29 anos, Mulher 24 anos.
 
 Deficiência leve. Homem 33 anos, Mulher 28 anos.
 
-## 4. Requisitos — Idade
+## 4. Requisitos. Idade
 
 Homem 60 anos com 15 anos de contribuição na condição de PCD.
 
@@ -82,43 +82,43 @@ Acionar `deficiencia-auditiva-previdenciaria`.
 
 ## 11. Cenários operacionais pró-segurado
 
-### Cenário 1 — Mulher com paralisia cerebral desde o nascimento
+### Cenário 1. Mulher com paralisia cerebral desde o nascimento
 
 DID na infância. Tempo PCD desde o primeiro vínculo. Deficiência grave. 20 anos de contribuição. Deferimento.
 
-### Cenário 2 — Homem com deficiência visual severa
+### Cenário 2. Homem com deficiência visual severa
 
 Cegueira bilateral. DID comprovada. Grave. 25 anos de contribuição. Deferimento.
 
-### Cenário 3 — Mulher com fibromialgia severa
+### Cenário 3. Mulher com fibromialgia severa
 
 Lei 15.176/2025. DID fixada pela primeira constatação médica. Grau moderado. Conversão de tempo. Deferimento.
 
-### Cenário 4 — Homem com perda auditiva bilateral severa
+### Cenário 4. Homem com perda auditiva bilateral severa
 
 Lei 14.768/2023. IF-BrA com sensibilidade à surdez. Grau moderado ou grave. Conversão.
 
-### Cenário 5 — Mulher com esclerose múltipla progressiva
+### Cenário 5. Mulher com esclerose múltipla progressiva
 
 DID fixada em fase inicial da doença. Conversão de tempo posterior à DID. Deferimento.
 
-### Cenário 6 — Homem com diabetes severa com complicações
+### Cenário 6. Homem com diabetes severa com complicações
 
 DID fixada na constatação de cegueira diabética e neuropatia grave. Deferimento.
 
-### Cenário 7 — Mulher com cardiopatia congênita
+### Cenário 7. Mulher com cardiopatia congênita
 
 DID no nascimento. Tempo integral como PCD. Deferimento.
 
-### Cenário 8 — Homem com cegueira monocular
+### Cenário 8. Homem com cegueira monocular
 
 Lei 14.126/2021 [NÃO CONFIRMADO] classifica a visão monocular como deficiência visual; a Súmula 377 STJ trata só de vagas em concurso (auditoria 03/10/2026). Graus variam. Deferimento conforme IF-BrA.
 
-### Cenário 9 — Mulher com sequela de AVC
+### Cenário 9. Mulher com sequela de AVC
 
 DID no AVC. Conversão do tempo posterior. Deferimento.
 
-### Cenário 10 — Aposentadoria por idade 55 mulher com HIV
+### Cenário 10. Aposentadoria por idade 55 mulher com HIV
 
 DID em data diagnóstica. 15 anos como PCD. Deferimento.
 

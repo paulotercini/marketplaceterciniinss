@@ -1,4 +1,4 @@
-# Diligências e Instrução Processual no CRPS – Art. 75
+# Diligências e Instrução Processual no CRPS. Art. 75
 
 ## Processo Eletrônico (Art. 71)
 
@@ -28,9 +28,9 @@ As diligências podem ser requeridas ao Serviço de Colaboradores em Diligência
 
 ## Prazos para Cumprimento pelo INSS (Art. 75, §6º)
 
-**Recursos das alíneas "a" a "d"** – 30 dias, prorrogáveis por igual prazo
+**Recursos das alíneas "a" a "d".** 30 dias, prorrogáveis por igual prazo
 
-**Processos da alínea "e" (RPPS)** – 90 dias, prorrogáveis por igual prazo
+**Processos da alínea "e" (RPPS).** 90 dias, prorrogáveis por igual prazo
 
 É VEDADO ao INSS, à entidade ou órgão de origem escusar-se de cumprir integralmente as diligências (art. 75, §6º, caput).
 

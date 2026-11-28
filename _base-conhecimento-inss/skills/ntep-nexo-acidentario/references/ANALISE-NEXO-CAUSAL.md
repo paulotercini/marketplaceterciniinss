@@ -1,4 +1,4 @@
-# Metodologia de Análise do Nexo Causal — 4 Espécies
+# Metodologia de Análise do Nexo Causal. 4 Espécies
 
 ## Visão Geral
 
@@ -10,52 +10,52 @@ A caracterização correta da situação de acidente do trabalho é o primeiro p
 
 ### Situações CONSIDERADAS acidente do trabalho
 
-**Art. 19, caput — Acidente no exercício do trabalho**
+**Art. 19, caput. Acidente no exercício do trabalho**
 Evento que ocorre pelo exercício do trabalho a serviço de empresa ou de empregador doméstico (LC 150/2015), provocando lesão corporal ou perturbação funcional que cause a morte, a perda ou redução, permanente ou temporária, da capacidade para o trabalho. Abrange o acidente típico com data e circunstâncias definidas.
 
-**Art. 20, I — Doença profissional**
+**Art. 20, I. Doença profissional**
 Produzida ou desencadeada pelo exercício do trabalho peculiar a determinada atividade, constante da relação elaborada pelo Ministério do Trabalho e Previdência Social (Lista A, Anexo II, Decreto 3.048/99). Exemplo clássico é a silicose no minerador.
 
-**Art. 20, II — Doença do trabalho**
+**Art. 20, II. Doença do trabalho**
 Adquirida ou desencadeada em função de condições especiais em que o trabalho é realizado e com ele se relacione diretamente, constante da relação elaborada pelo Ministério do Trabalho e Previdência Social (Lista B, Anexo II, Decreto 3.048/99). Difere da doença profissional porque não é exclusiva da atividade, mas resulta das condições concretas em que o trabalho é executado.
 
-**Art. 20, §1º — Exclusões expressas**
-Não são consideradas como doença do trabalho a doença degenerativa (alínea "a"), a inerente a grupo etário (alínea "b"), a que não produza incapacidade laborativa (alínea "c") e a doença endêmica adquirida por segurado habitante de região em que ela se desenvolva, salvo comprovação de que resultou de exposição ou contato direto determinado pela natureza do trabalho (alínea "d"). **ALERTA ESTRATÉGICO** — a exclusão da doença degenerativa (alínea "a") é a defesa mais frequente do INSS e dos peritos para negar o nexo. O art. 21, I (concausa) é a resposta direta, pois não exige que o trabalho seja causa exclusiva.
+**Art. 20, §1º. Exclusões expressas**
+Não são consideradas como doença do trabalho a doença degenerativa (alínea "a"), a inerente a grupo etário (alínea "b"), a que não produza incapacidade laborativa (alínea "c") e a doença endêmica adquirida por segurado habitante de região em que ela se desenvolva, salvo comprovação de que resultou de exposição ou contato direto determinado pela natureza do trabalho (alínea "d"). **ALERTA ESTRATÉGICO**, a exclusão da doença degenerativa (alínea "a") é a defesa mais frequente do INSS e dos peritos para negar o nexo. O art. 21, I (concausa) é a resposta direta, pois não exige que o trabalho seja causa exclusiva.
 
-**Art. 20, §2º — Rol exemplificativo**
+**Art. 20, §2º. Rol exemplificativo**
 Em caso excepcional, constatando-se que a doença não incluída na relação oficial resultou das condições especiais em que o trabalho é executado e com ele se relaciona diretamente, a Previdência Social deve considerá-la acidente do trabalho. Esse dispositivo impede que o INSS trate o Anexo II como rol taxativo.
 
 ### Situações EQUIPARADAS a acidente do trabalho
 
 Todas as hipóteses do art. 21 produzem os mesmos efeitos jurídicos do acidente considerado (art. 19). Não se trata de categoria inferior. A equiparação é plena para todos os fins previdenciários, trabalhistas e tributários.
 
-**Art. 21, I — Concausa**
+**Art. 21, I. Concausa**
 O acidente ligado ao trabalho que, embora não tenha sido a causa única, haja contribuído diretamente para a morte do segurado, para redução ou perda da sua capacidade para o trabalho, ou produzido lesão que exija atenção médica para a sua recuperação. Instrumento transversal a todas as espécies de nexo. A contribuição não precisa ser predominante, bastando que seja direta (não remota nem hipotética).
 
-**Art. 21, II — Evento no local e horário de trabalho**
+**Art. 21, II. Evento no local e horário de trabalho**
 Cinco hipóteses taxativas de eventos ocorridos no local e horário de trabalho que se equiparam a acidente do trabalho, mesmo sem nexo direto com a atividade laboral em si.
 
-- Alínea "a" — ato de agressão, sabotagem ou terrorismo praticado por terceiro ou companheiro de trabalho
-- Alínea "b" — ofensa física intencional, inclusive de terceiro, por motivo de disputa relacionada ao trabalho
-- Alínea "c" — ato de imprudência, de negligência ou de imperícia de terceiro ou de companheiro de trabalho
-- Alínea "d" — ato de pessoa privada do uso da razão
-- Alínea "e" — desabamento, inundação, incêndio e outros casos fortuitos ou decorrentes de força maior
+- Alínea "a", ato de agressão, sabotagem ou terrorismo praticado por terceiro ou companheiro de trabalho
+- Alínea "b", ofensa física intencional, inclusive de terceiro, por motivo de disputa relacionada ao trabalho
+- Alínea "c", ato de imprudência, de negligência ou de imperícia de terceiro ou de companheiro de trabalho
+- Alínea "d", ato de pessoa privada do uso da razão
+- Alínea "e", desabamento, inundação, incêndio e outros casos fortuitos ou decorrentes de força maior
 
-**Art. 21, III — Contaminação acidental**
+**Art. 21, III. Contaminação acidental**
 Contaminação acidental do empregado no exercício de sua atividade. Abrange exposição involuntária a agentes biológicos, químicos ou radioativos durante o trabalho. Exemplo prático é a contaminação de profissional de saúde por agente patogênico (hepatite, HIV, COVID-19) durante procedimento.
 
-**Art. 21, IV — Acidente fora do local e horário de trabalho**
+**Art. 21, IV. Acidente fora do local e horário de trabalho**
 Quatro hipóteses de acidentes ocorridos fora do local e horário habitual que mantêm a equiparação.
 
-- Alínea "a" — na execução de ordem ou na realização de serviço sob a autoridade da empresa
-- Alínea "b" — na prestação espontânea de qualquer serviço à empresa para lhe evitar prejuízo ou proporcionar proveito
-- Alínea "c" — em viagem a serviço da empresa, inclusive para estudo quando financiada por esta dentro de seus planos para melhor capacitação da mão de obra, independentemente do meio de locomoção utilizado, inclusive veículo de propriedade do segurado
-- Alínea "d" — no percurso da residência para o local de trabalho ou deste para aquela, qualquer que seja o meio de locomoção, inclusive veículo de propriedade do segurado (acidente de trajeto)
+- Alínea "a", na execução de ordem ou na realização de serviço sob a autoridade da empresa
+- Alínea "b", na prestação espontânea de qualquer serviço à empresa para lhe evitar prejuízo ou proporcionar proveito
+- Alínea "c", em viagem a serviço da empresa, inclusive para estudo quando financiada por esta dentro de seus planos para melhor capacitação da mão de obra, independentemente do meio de locomoção utilizado, inclusive veículo de propriedade do segurado
+- Alínea "d", no percurso da residência para o local de trabalho ou deste para aquela, qualquer que seja o meio de locomoção, inclusive veículo de propriedade do segurado (acidente de trajeto)
 
-**ALERTA — Acidente de trajeto e a MP 905/2019**
+**ALERTA. Acidente de trajeto e a MP 905/2019**
 A MP 905/2019 (art. 51) tentou excluir o acidente de trajeto da equiparação. A MP caducou em 20/04/2020 sem conversão em lei, o que significa que o art. 21, IV, "d" permanece plenamente vigente. Qualquer indeferimento do INSS fundado na suposta exclusão do trajeto é ilegal.
 
-**Art. 21, §1º — Presunção de exercício do trabalho**
+**Art. 21, §1º. Presunção de exercício do trabalho**
 Nos períodos destinados a refeição ou descanso, ou por ocasião da satisfação de outras necessidades fisiológicas, no local de trabalho ou durante este, o empregado é considerado no exercício do trabalho. Essa presunção legal impede que o INSS ou a empresa neguem a natureza acidentária de evento ocorrido em refeitório, banheiro, área de descanso ou fumódromo.
 
 ### Aplicação prática do mapa de enquadramento
@@ -64,7 +64,7 @@ O mapa acima deve ser consultado como primeira etapa de toda análise de nexo. A
 
 Erros frequentes do INSS e de peritos na aplicação deste enquadramento incluem negar natureza acidentária em evento ocorrido durante o trajeto (art. 21, IV, "d"), ignorar a concausa em doença degenerativa agravada pelo trabalho (art. 21, I versus art. 20, §1º, "a"), tratar o Anexo II como rol taxativo quando o art. 20, §2º expressamente o amplia, negar equiparação em contaminação acidental por agente biológico (art. 21, III) sem CAT, e desconsiderar eventos ocorridos em período de refeição ou descanso (art. 21, §1º).
 
-## Espécie 1 — NTEP (Nexo Técnico Epidemiológico Previdenciário)
+## Espécie 1. NTEP (Nexo Técnico Epidemiológico Previdenciário)
 
 ### O que é
 Presunção legal relativa de nexo entre o trabalho e a doença, estabelecida pela correlação estatística entre o CNAE do empregador e o CID da patologia incapacitante, conforme a Lista C do Anexo II do Decreto 3.048/99.
@@ -73,28 +73,28 @@ Presunção legal relativa de nexo entre o trabalho e a doença, estabelecida pe
 Sempre que o CID do segurado estiver correlacionado ao CNAE do empregador na Lista C. A aplicação é automática pelo perito do INSS (art. 21-A, Lei 8.213/91; art. 337, §4º, Decreto 3.048/99).
 
 ### Efeito jurídico
-Inversão do ônus da prova. O nexo é presumido. Cabe ao INSS ou à empresa demonstrar a inexistência do nexo. O segurado não precisa provar que a doença decorre do trabalho — esta é a presunção legal.
+Inversão do ônus da prova. O nexo é presumido. Cabe ao INSS ou à empresa demonstrar a inexistência do nexo. O segurado não precisa provar que a doença decorre do trabalho, esta é a presunção legal.
 
 ### Verificação prática
 
-**Passo 1** — Identificar o CNAE do empregador
+**Passo 1.** Identificar o CNAE do empregador
 Fontes primárias, pela ordem de confiabilidade
-- PPP (campo 1 — CNAE)
+- PPP (campo 1. CNAE)
 - CNIS (indicação de atividade econômica do empregador)
 - CTPS ou contrato de trabalho
 - Consulta ao CNPJ no site da Receita Federal
 
-**Passo 2** — Identificar o CID-10 da patologia
+**Passo 2.** Identificar o CID-10 da patologia
 Fontes primárias
 - Atestado médico ou laudo do médico assistente
 - Laudo pericial (judicial ou administrativo)
 - Carta de concessão do benefício (se já concedido)
 - Prontuário médico
 
-**Passo 3** — Consultar a Lista C do Anexo II do Decreto 3.048/99
+**Passo 3.** Consultar a Lista C do Anexo II do Decreto 3.048/99
 A Lista C está organizada por agrupamentos CID. Verificar se o agrupamento CID do segurado contém o CNAE do empregador. Se contém, o NTEP se aplica.
 
-**ALERTA** — O INSS frequentemente deixa de aplicar o NTEP mesmo quando a correlação existe. Quando isso ocorre, a concessão como B31 é um erro administrativo corrigível por revisão ou via judicial.
+**ALERTA.** O INSS frequentemente deixa de aplicar o NTEP mesmo quando a correlação existe. Quando isso ocorre, a concessão como B31 é um erro administrativo corrigível por revisão ou via judicial.
 
 ### Quando o NTEP é afastado
 O perito do INSS pode afastar o NTEP quando dispuser de elementos que demonstrem a inexistência do nexo (art. 21-A, §1º). A empresa também pode contestar (art. 337, §7º, Decreto 3.048/99, prazo de 15 dias). Em ambos os casos, a fundamentação deve ser expressa e circunstanciada. O mero registro de que "a doença é degenerativa" não é suficiente para afastar o NTEP quando o trabalho pode atuar como concausa (art. 21, I, Lei 8.213/91).
@@ -107,7 +107,7 @@ O perito do INSS pode afastar o NTEP quando dispuser de elementos que demonstrem
 5. Ignorar o NTEP quando não há CAT (a CAT é irrelevante para o NTEP)
 6. Aplicar o NTEP mas não converter a espécie para acidentária
 
-## Espécie 2 — Nexo Profissional (NP)
+## Espécie 2. Nexo Profissional (NP)
 
 ### O que é
 Correlação direta entre um agente patogênico ou fator de risco e a doença do segurado, conforme as Listas A e B do Anexo II do Decreto 3.048/99.
@@ -128,7 +128,7 @@ Quando a documentação demonstra exposição a agente patogênico constante da 
 ### Efeito jurídico
 O nexo profissional confere presunção de natureza ocupacional à doença. Quando o agente está na Lista A, a presunção é mais forte (doença profissional stricto sensu). Quando está na Lista B, a presunção depende da demonstração das condições especiais de trabalho.
 
-## Espécie 3 — Nexo Individual (NI)
+## Espécie 3. Nexo Individual (NI)
 
 ### O que é
 Nexo estabelecido pela perícia médica caso a caso, sem correlação em listas, pela avaliação clínica individualizada. O perito identifica que a doença do segurado tem relação com o trabalho com base em elementos específicos do caso concreto.
@@ -151,7 +151,7 @@ No nexo individual, o ônus é do segurado. Diferentemente do NTEP, não há inv
 ### Estratégia
 O nexo individual é o caminho quando NTEP e NP não se aplicam. A estratégia probatória deve ser mais robusta, incluindo laudo do médico assistente detalhado, assistente técnico em perícia judicial, e documentação do ambiente de trabalho. Se possível, requisitar o PGR da empresa (skill pgr-nr1-prova-especial) para demonstrar que o risco existia.
 
-## Espécie 4 — Acidente Típico
+## Espécie 4. Acidente Típico
 
 ### O que é
 Evento único, identificável, com data certa, ocorrido no exercício do trabalho (art. 19, Lei 8.213/91), incluindo o acidente de trajeto (art. 21, IV, "d").
@@ -165,7 +165,7 @@ No acidente típico, a CAT é o instrumento natural de comunicação. A ausênci
 ### Prova
 O acidente típico é a espécie com prova mais direta. Boletim de ocorrência, laudo de corpo de delito, registro de atendimento de emergência, relato de testemunhas e a própria CAT são suficientes.
 
-## Concausa — Transversal a Todas as Espécies
+## Concausa. Transversal a Todas as Espécies
 
 ### Conceito
 A concausa (art. 21, I, Lei 8.213/91) equipara a acidente de trabalho a situação em que o trabalho não é a causa exclusiva, mas contribuiu diretamente para o resultado. Aplica-se em todas as espécies de nexo.
@@ -185,7 +185,7 @@ Não se exige que o trabalho seja a causa exclusiva nem a causa principal. Basta
 
 ## Protocolo de Análise Completo
 
-### Fase 1 — Coleta de dados
+### Fase 1. Coleta de dados
 1. CID-10 da patologia incapacitante (todos os CIDs, se houver comorbidades)
 2. CNAE do empregador (ou dos empregadores, se mais de um vínculo)
 3. Atividade efetivamente exercida (pode divergir do CNAE)
@@ -196,20 +196,20 @@ Não se exige que o trabalho seja a causa exclusiva nem a causa principal. Basta
 8. PPP e LTCAT (se disponíveis)
 9. PGR/PPRA/PCMSO (se disponíveis)
 
-### Fase 2 — Verificação de NTEP
+### Fase 2. Verificação de NTEP
 Cruzar todos os CIDs com todos os CNAEs na Lista C. Se houver correlação em pelo menos um par, registrar como NTEP aplicável.
 
-### Fase 3 — Verificação de NP
+### Fase 3. Verificação de NP
 Verificar se os agentes de exposição descritos no PPP, LTCAT ou na atividade habitual constam nas Listas A e B para os CIDs diagnosticados. Se constam, registrar como NP aplicável.
 
-### Fase 4 — Verificação de NI
+### Fase 4. Verificação de NI
 Se NTEP e NP não se aplicam, avaliar se a documentação médica e ocupacional demonstra nexo individual. Identificar os elementos probatórios disponíveis e as lacunas.
 
-### Fase 5 — Verificação de acidente típico
+### Fase 5. Verificação de acidente típico
 Se há evento específico com data certa, classificar como acidente típico e verificar documentação comprobatória.
 
-### Fase 6 — Avaliação de concausa
+### Fase 6. Avaliação de concausa
 Em todas as fases, verificar se o trabalho pode atuar como concausa quando a patologia tem componente degenerativo, genético ou multifatorial.
 
-### Fase 7 — Relatório de conclusão
+### Fase 7. Relatório de conclusão
 Apresentar ao usuário o resultado da análise com a recomendação de espécie e a estratégia probatória correspondente. Se o benefício já foi concedido como B31 e há fundamento para B91, alertar e recomendar conversão.

@@ -1,4 +1,4 @@
-# DID Retroativa — Fundamentos e Cenários
+# DID Retroativa. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -52,45 +52,45 @@ Pericial (perícia retrospectiva).
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Documentação antiga robusta
+### Cenário A. Documentação antiga robusta
 
 DID na origem.
 
-### Cenário B — Agravamento gradual
+### Cenário B. Agravamento gradual
 
 Múltiplas DIDs por grau.
 
-### Cenário C — Sem prontuário
+### Cenário C. Sem prontuário
 
 Reconstrução por médico assistente.
 
-### Cenário D — Tratamento intermitente
+### Cenário D. Tratamento intermitente
 
 Testemunho e fotos.
 
-### Cenário E — Tratamento contínuo
+### Cenário E. Tratamento contínuo
 
 Prontuário e exames.
 
-### Cenário F — Doença degenerativa
+### Cenário F. Doença degenerativa
 
 Presunção de continuidade.
 
-### Cenário G — Sequela de acidente
+### Cenário G. Sequela de acidente
 
 DID na consolidação.
 
 ## 7. Cenários limitados
 
-### Cenário H — Sem qualquer prova
+### Cenário H. Sem qualquer prova
 
 DID na DER.
 
-### Cenário I — Diagnóstico recente
+### Cenário I. Diagnóstico recente
 
 DID próxima da DER.
 
-### Cenário J — Sem repercussão funcional
+### Cenário J. Sem repercussão funcional
 
 Não enquadra.
 

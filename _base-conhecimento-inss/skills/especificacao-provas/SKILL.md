@@ -3,7 +3,7 @@ name: especificacao-provas
 description: "Skill de manifestação estratégica na fase de especificação de provas em processos previdenciários. Use SEMPRE que o usuário mencionar especificação de provas, intimação para provas, 'quais provas deseja produzir', 'nada a requerer', 'sem provas a produzir', fase probatória, encerramento da instrução, art. 348 CPC, art. 350 CPC, art. 355 CPC, julgamento antecipado, fatos incontroversos, prova documental suficiente, manifestação sobre provas, despacho para especificação, ou qualquer situação em que o juiz intimar a parte autora para dizer se tem provas a produzir. Use também quando a skill peticao-previdenciaria for acionada para gerar manifestação em fase de instrução processual. Esta skill substitui integralmente o hábito de responder com simples 'nada a requerer' e impõe a técnica de fixação de fatos incontroversos vinculados a documentos por ID. NUNCA responder 'nada a requerer' ou 'sem provas a produzir' sem antes aplicar esta skill."
 ---
 
-# Skill de Especificação de Provas — Fixação Estratégica de Fatos Incontroversos
+# Skill de Especificação de Provas. Fixação Estratégica de Fatos Incontroversos
 
 ## Objetivo
 
@@ -25,11 +25,11 @@ O art. 371 do CPC consagra o livre convencimento motivado. O juiz deve apreciar 
 
 A técnica opera em três camadas simultâneas.
 
-**Camada 1 — Fixação de incontroversos.** Ao explicitar quais fatos são incontroversos e já comprovados, a manifestação cria um ônus de resposta para o INSS. Se a autarquia não impugna, os fatos se tornam incontroversos por preclusão lógica.
+**Camada 1. Fixação de incontroversos.** Ao explicitar quais fatos são incontroversos e já comprovados, a manifestação cria um ônus de resposta para o INSS. Se a autarquia não impugna, os fatos se tornam incontroversos por preclusão lógica.
 
-**Camada 2 — Direcionamento da valoração probatória.** Ao vincular cada documento a um fato específico, o advogado direciona a leitura do juiz e reduz a margem de discricionariedade na apreciação da prova. Se a sentença ignorar um documento expressamente vinculado a um fato, configura omissão.
+**Camada 2. Direcionamento da valoração probatória.** Ao vincular cada documento a um fato específico, o advogado direciona a leitura do juiz e reduz a margem de discricionariedade na apreciação da prova. Se a sentença ignorar um documento expressamente vinculado a um fato, configura omissão.
 
-**Camada 3 — Registro formal de suficiência.** Se o juiz indeferir o pedido por insuficiência de provas após a parte autora declarar suficiência probatória sem impugnação do INSS, o recurso ganha fundamento concreto de cerceamento de defesa invertido ou de error in procedendo na valoração da prova.
+**Camada 3. Registro formal de suficiência.** Se o juiz indeferir o pedido por insuficiência de provas após a parte autora declarar suficiência probatória sem impugnação do INSS, o recurso ganha fundamento concreto de cerceamento de defesa invertido ou de error in procedendo na valoração da prova.
 
 ## Regra Absoluta do Escritório
 
@@ -168,19 +168,7 @@ Antes de finalizar a manifestação, verificar.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Juízo de Catanduva (Onda 179)
 

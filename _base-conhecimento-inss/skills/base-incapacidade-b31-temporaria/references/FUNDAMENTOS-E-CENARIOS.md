@@ -1,4 +1,4 @@
-# B31 Auxílio por Incapacidade Temporária — Fundamentos e Cenários
+# B31 Auxílio por Incapacidade Temporária. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -26,35 +26,35 @@ Portaria Conjunta MPS/INSS 13/2026. Disciplina o regime de análise documental d
 
 ## 2. Cenários operacionais pró-segurado
 
-### Cenário 1 — Segurado empregado com afastamento
+### Cenário 1. Segurado empregado com afastamento
 
 Segurado empregado afastado em 01/03/2026 por doença. Requerimento em 10/03/2026. DIB na DII (primeira data do afastamento) com pagamento a partir do 16º dia.
 
-### Cenário 2 — Segurado com doença do art. 151
+### Cenário 2. Segurado com doença do art. 151
 
 Segurado com neoplasia diagnosticada em 02/2026. Cinco contribuições apenas. Isenção de carência pelo art. 26, II, combinado com art. 151. Direito ao B31 imediato.
 
-### Cenário 3 — Acidente de qualquer natureza
+### Cenário 3. Acidente de qualquer natureza
 
 Segurado com 3 meses de contribuição sofre acidente de trânsito e fica incapacitado. Isenção de carência pelo art. 26, II. Direito ao B31.
 
-### Cenário 4 — Segurado especial rural
+### Cenário 4. Segurado especial rural
 
 Segurada rural com incapacidade. Carência pela atividade rural nos 12 meses anteriores. B31 no valor de um salário mínimo conforme art. 39, I, Lei 8.213/91.
 
-### Cenário 5 — Cessação antecipada
+### Cenário 5. Cessação antecipada
 
 Segurado com B31 concedido até 01/05/2026. Cessado antecipadamente por alta programada em 10/04/2026 sem perícia. Cabe P1 com documentação médica atualizada. Se indeferido, ação judicial com pedido de restabelecimento e perícia judicial.
 
-### Cenário 6 — Trava dos dois indeferimentos
+### Cenário 6. Trava dos dois indeferimentos
 
 Segurado com dois requerimentos indeferidos por análise documental (três, para indeferimento com ciência anterior a 06/11/2026; art. 8º da Portaria Conjunta 13/2026, redação da 54/2026). O pedido seguinte vai à perícia presencial; a espera de 180 dias da Portaria Conjunta 13/2026, art. 6º, V [CONFERIDO], vale para nova análise documental após prorrogação indeferida e não nasce do art. 60, §11-A (auditoria 03/10/2026). Em caso de agravamento, MS pela urgência e direito ao requerimento.
 
-### Cenário 7 — Perícia documental inconclusiva
+### Cenário 7. Perícia documental inconclusiva
 
 Segurado com B31 indeferido no exame médico-pericial, presencial, por telemedicina ou por análise documental (art. 60, §11-A, da Lei 8.213/91; auditoria 03/10/2026). Indeferido por análise documental com ciência a partir de 06/11/2026, cabe primeiro a reanálise em dez dias com documento novo (art. 8º-A), e o recurso conta da ciência da decisão da reanálise (art. 9º, § 2º, II). Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
 
-### Cenário 8 — Limbo previdenciário-trabalhista
+### Cenário 8. Limbo previdenciário-trabalhista
 
 INSS cessa B31 por alta, mas empresa recusa retorno por entender incapacidade persistente. Limbo previdenciário-trabalhista.
 

@@ -1,4 +1,4 @@
-# Pensão por Morte — Jurisprudência Verificada e Refutação
+# Pensão por Morte. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -76,61 +76,61 @@ Aplicação pró-segurado. Orientação regional relevante.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Perda da qualidade de segurado
+### Argumento 1. Perda da qualidade de segurado
 
 Argumento adversário. O instituidor havia perdido a qualidade antes do óbito.
 
 Refutação. Súmula 416 STJ. Direito adquirido à aposentadoria antes da perda da qualidade preserva a pensão. Ainda, acionar `periodo-graca-qualidade-segurado` para verificar prorrogação.
 
-### Argumento 2 — Ausência de prova da união estável
+### Argumento 2. Ausência de prova da união estável
 
 Argumento adversário. A união estável não foi comprovada documentalmente.
 
 Refutação. Tema 81 TNU. Provas materiais podem ser complementadas por prova testemunhal. Lei 13.846/2019 não exclui a complementação. Conjunto probatório robusto prevalece.
 
-### Argumento 3 — Ex-cônjuge sem direito
+### Argumento 3. Ex-cônjuge sem direito
 
 Argumento adversário. Ex-cônjuge não tem direito à pensão após separação.
 
 Refutação. Art. 76, §2º, da Lei 8.213/91. Ex-cônjuge que recebia alimentos concorre em igualdade com os dependentes do art. 16, I, e, sem alimentos, o Tema 45 TNU admite a pensão com prova de dependência econômica superveniente à separação (auditoria 03/10/2026). A dependência é mantida pela percepção dos alimentos.
 
-### Argumento 4 — Filho maior sem invalidez atestada
+### Argumento 4. Filho maior sem invalidez atestada
 
 Argumento adversário. Filho maior de 21 anos sem invalidez não é dependente.
 
 Refutação. Art. 16, I, e art. 77, §2º, II, da Lei 8.213/91 (auditoria 03/10/2026). Filho com invalidez ou deficiência mantém pensão além dos 21. A prova médica é fundamental. Acionar `aposentadoria-deficiencia` para conceito de deficiência.
 
-### Argumento 5 — Menor sob guarda excluído por MP 1.523/96
+### Argumento 5. Menor sob guarda excluído por MP 1.523/96
 
 Argumento adversário. Menor sob guarda foi excluído do rol de dependentes.
 
 Refutação. Tema 732/STJ, o menor sob guarda tem direito à pensão comprovada a dependência econômica. Atenção (auditoria 25/07/2026), a matéria pós-EC 103 está afetada no Tema 1271/STF (RE 1.442.021), com suspensão nacional desde 21/01/2025.
 
-### Argumento 6 — Redução drástica da RMI
+### Argumento 6. Redução drástica da RMI
 
 Argumento adversário. A nova regra da EC 103/2019 reduziu a RMI para 50% + 10% por dependente.
 
 Refutação. A redução é constitucional mas exige aplicação correta. Direito adquirido preserva regra anterior para óbitos anteriores a 13/11/2019. Na pensão acidentária (B93), a cota do art. 23 incide sobre aposentadoria-base de 100% da média (EC 103, art. 26, §3º, II) (auditoria 03/10/2026).
 
-### Argumento 7 — Cessação pela duração da tabela
+### Argumento 7. Cessação pela duração da tabela
 
 Argumento adversário. Cônjuge jovem terá pensão por prazo limitado.
 
 Refutação. Cônjuge com 45 anos ou mais na DO tem pensão vitalícia em óbito desde 01/01/2021, e com 44 anos ou mais em óbito até 31/12/2020 (auditoria 03/10/2026). Cônjuge inválido mantém enquanto durar a invalidez. Cônjuge com filho menor pode pedir reanálise quando da maioridade do filho para reavaliação.
 
-### Argumento 8 — Concubinato impuro não gera direito
+### Argumento 8. Concubinato impuro não gera direito
 
 Argumento adversário. Concubinato paralelo ao casamento não gera pensão.
 
 Refutação. Tese em reconstrução no STJ. Concubinato de longa duração com dependência econômica comprovada permite argumentação pró-dependente. Caso a caso.
 
-### Argumento 9 — Ausência de carência
+### Argumento 9. Ausência de carência
 
 Argumento adversário. O instituidor não havia cumprido carência.
 
 Refutação. Art. 26, I, da Lei 8.213/91. Pensão por morte é isenta de carência. Argumento inaplicável.
 
-### Argumento 10 — DIB no requerimento e não na DO
+### Argumento 10. DIB no requerimento e não na DO
 
 Argumento adversário. A DIB deve ser no requerimento, não na DO.
 

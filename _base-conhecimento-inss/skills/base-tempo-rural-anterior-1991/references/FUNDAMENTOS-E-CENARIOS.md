@@ -1,4 +1,4 @@
-# Tempo Rural Pré-1991 — Fundamentos e Cenários
+# Tempo Rural Pré-1991. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -50,41 +50,41 @@ Perspectiva de gênero.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Trabalhador rural dos anos 1970 e 1980
+### Cenário A. Trabalhador rural dos anos 1970 e 1980
 
 Cômputo integral para tempo de contribuição.
 
-### Cenário B — Mulher rural com documentação em nome do marido
+### Cenário B. Mulher rural com documentação em nome do marido
 
 Perspectiva de gênero. Flexibilização probatória (Tema 327 TNU).
 
-### Cenário C — Boia-fria e diarista
+### Cenário C. Boia-fria e diarista
 
 Prova documental mais diluída. Juntada de registros sindicais, certidões, notas de produtor.
 
-### Cenário D — Menor rural
+### Cenário D. Menor rural
 
 Cômputo possível a partir de idade compatível com a realidade rural brasileira, com prova robusta.
 
-### Cenário E — Aposentadoria híbrida
+### Cenário E. Aposentadoria híbrida
 
 Mescla tempo rural e urbano (art. 48, §3º).
 
-### Cenário F — Contagem recíproca com indenização
+### Cenário F. Contagem recíproca com indenização
 
 Para servidor público que busca averbar o tempo rural no RPPS.
 
 ## 6. Cenários limitados
 
-### Cenário G — Carência sem indenização
+### Cenário G. Carência sem indenização
 
 Regra geral, carência não alcançada pelo tempo rural pré-1991.
 
-### Cenário H — Prova documental inexistente
+### Cenário H. Prova documental inexistente
 
 Sem início de prova material, pedido indefere.
 
-### Cenário I — Descaracterização por CNPJ ou renda alta
+### Cenário I. Descaracterização por CNPJ ou renda alta
 
 Segurado especial descaracterizado perde a condição. Analisar.
 

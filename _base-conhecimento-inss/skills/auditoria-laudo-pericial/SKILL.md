@@ -33,7 +33,7 @@ Todos os fundamentos normativos citados devem ser verificados. Nunca invente art
 ### Tom e Estilo
 A análise deve ser contundente, técnica e persuasiva. Opiniões firmes sem hesitação. Parágrafos curtos. Organização lógica.
 
-### Trava de Verificação — DII, Carência e Preexistência
+### Trava de Verificação. DII, Carência e Preexistência
 Antes de formular QUALQUER argumento sobre DII, isenção de carência ou contradição com benefício anterior, executar obrigatoriamente três checagens na seguinte ordem. Primeira, contar as contribuições válidas até a data da DII fixada pelo perito e registrar o número exato. Segunda, se a doença é anterior à filiação, verificar se há prova de agravamento posterior à filiação antes de invocar qualquer exceção (art. 59, parágrafo único, Lei 8.213/91). Terceira, se houver benefício anterior concedido para a mesma condição, verificar o rito de concessão (análise documental ou perícia presencial) antes de alegar contradição. Somente após essas três checagens é permitido formular argumentos sobre DII, carência ou contradição com decisão anterior.
 
 ## Tipos de Laudo
@@ -46,16 +46,16 @@ Utilizado em processos de Benefício de Prestação Continuada. A avaliação se
 
 ## Modos de Operação
 
-### Modo 1 – Varredura Técnica (laudo isolado)
+### Modo 1. Varredura Técnica (laudo isolado)
 Quando o usuário fornece apenas o laudo pericial, sem documentos médicos de confronto. A auditoria foca em contradições internas, omissões formais, falhas metodológicas e vícios de fundamentação.
 
-### Modo 2 – Cruzamento Completo (laudo + documentos médicos)
+### Modo 2. Cruzamento Completo (laudo + documentos médicos)
 Quando o usuário fornece o laudo pericial E documentos médicos particulares (atestados, laudos de especialistas, exames complementares, prontuários). A auditoria inclui tudo do Modo 1, acrescido do confronto entre as conclusões do perito e a prova documental médica.
 
-### Modo 3 – Impugnação Dirigida em 9 Blocos (Onda 84)
+### Modo 3. Impugnação Dirigida em 9 Blocos (Onda 84)
 Modo padrão sempre que o objetivo declarado for impugnar o laudo, pedir esclarecimentos, complementação ou nova perícia. Executa o roteiro operacional completo de `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`, em dupla camada (assistente técnico conforme a natureza do laudo e advogado previdenciário do segurado), na ordem fixa. Falhas metodológicas com página exata, contradições internas no formato trecho A contra trecho B, confronto documental por ID, padrão técnico com norma nomeável por número, ano e órgão (sem certeza, "não localizado, verificar em fonte primária"), vícios jurídicos traduzidos para o CPC com marcação [CONFERIDO] ou [NÃO CONFIRMADO], verificações obrigatórias de carência, qualidade de segurado e DII, cinco a oito quesitos cirúrgicos vinculados às falhas, estrutura da peça com alternativa para cada negativa do juiz, e análise de risco com a resposta esperada do INSS. A saída segue as regras do roteiro (sem travessão, sem dois-pontos introduzindo lista, sem a estrutura "não é X, é Y", parágrafos de três a quatro linhas, linha final de auditoria anti-IA). Este modo se combina com o Modo 2 quando houver documentos médicos e com os critérios de Teleperícia quando o laudo for remoto.
 
-### Modo 3-A – Quesitos Negados e Laudo Insuficiente (Onda 107)
+### Modo 3-A. Quesitos Negados e Laudo Insuficiente (Onda 107)
 
 Variante do Modo 3 para o cenário recorrente na Justiça Federal em que o juízo INDEFERE os quesitos antes da perícia, dizendo que os quesitos do Juízo suprem a extensão da prova, e depois indefere também os esclarecimentos e julga. Executa o arsenal de `references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`, com seis argumentos ancorados no CPC (celeridade não substitui contraditório, incapacidade não é conceito exclusivamente médico, o perito não define a extensão do contraditório, o laudo judicial não tem presunção absoluta, diagnóstico não é avaliação de capacidade, e o conjunto probatório prevalece sobre conclusão isolada) e a escada processual de cinco degraus, do protesto no primeiro indeferimento ao prequestionamento.
 
@@ -126,7 +126,7 @@ A presença de qualquer desses vícios fundamenta impugnação por cerceamento d
 
 Antes de realizar a auditoria, leia obrigatoriamente o seguinte arquivo.
 
-- `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md` – Roteiro operacional completo do Modo 3, com os 9 blocos, as regras de saída e a linha final de auditoria anti-IA (Onda 84)
+- `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`. Roteiro operacional completo do Modo 3, com os 9 blocos, as regras de saída e a linha final de auditoria anti-IA (Onda 84)
 
 Nota de manutenção (auditoria 25/07/2026). Os arquivos CHECKLIST.md e FUNDAMENTOS.md antes listados aqui nunca existiram na pasta references e a menção foi removida. A base normativa por tipo de vício vive nas skills `base-cpc-prova-pericial-arts464-480` (dispositivos do CPC), `base-validacao-formal-laudo-medico-checklist-ab` (regime CFM e checklists A e B) e `base-pericia-medica-federal-telepericia` (PMF e Teleperícia), que devem ser consultadas em conjunto.
 
@@ -171,19 +171,7 @@ O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Cadeia de cada pedido (regra permanente, 12/10/2026)
 

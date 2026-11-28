@@ -1,4 +1,4 @@
-# Ação Rescisória Previdenciária — Jurisprudência e Refutação
+# Ação Rescisória Previdenciária. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -50,61 +50,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Prova não é nova
+### Argumento 1. Prova não é nova
 
 Argumento adversário. Documento conhecido.
 
 Refutação. Documento novo, descoberto, com eficácia modificativa. Art. 966 VII.
 
-### Argumento 2 — Prazo decadencial
+### Argumento 2. Prazo decadencial
 
 Argumento adversário. Biênio.
 
 Refutação. Art. 975 §2º conta da descoberta, até 5 anos.
 
-### Argumento 3 — Súmula 343 STF
+### Argumento 3. Súmula 343 STF
 
 Argumento adversário. Interpretação divergente.
 
 Refutação. Matéria constitucional afasta. Tema 100 STF.
 
-### Argumento 4 — Depósito prévio
+### Argumento 4. Depósito prévio
 
 Argumento adversário. Art. 968.
 
 Refutação. Justiça gratuita afasta (art. 98 CPC).
 
-### Argumento 5 — Falta de pertinência
+### Argumento 5. Falta de pertinência
 
 Argumento adversário. Segurado não tem interesse.
 
 Refutação. Coisa julgada desfavorável. Interesse presente.
 
-### Argumento 6 — Ausência de violação manifesta
+### Argumento 6. Ausência de violação manifesta
 
 Argumento adversário. Interpretação razoável.
 
 Refutação. Violação de norma jurídica (art. 966, V, do CPC) (auditoria 25/07/2026).
 
-### Argumento 7 — Erro de fato exige documento
+### Argumento 7. Erro de fato exige documento
 
 Argumento adversário. Rigor.
 
 Refutação. Erro de fato pode decorrer da própria sentença. Art. 966 VIII.
 
-### Argumento 8 — Coisa julgada é intocável
+### Argumento 8. Coisa julgada é intocável
 
 Argumento adversário. Segurança jurídica.
 
 Refutação. Art. 966 prevê desconstituição.
 
-### Argumento 9 — JEF não admite
+### Argumento 9. JEF não admite
 
 Argumento adversário. Rito sumário.
 
 Refutação. Tese adversa: o Enunciado 44 FONAJEF e o art. 59 da Lei 9.099/1995 vedam a rescisória no JEF. O caminho do segurado é o procedimento comum, com rescisória no TRF, art. 966 do CPC (auditoria 03/10/2026).
 
-### Argumento 10 — Cumulação com revisão
+### Argumento 10. Cumulação com revisão
 
 Argumento adversário. Incompatível.
 

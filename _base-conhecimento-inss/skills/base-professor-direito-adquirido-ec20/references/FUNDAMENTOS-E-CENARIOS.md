@@ -1,4 +1,4 @@
-# Direito Adquirido Professor EC 20 — Fundamentos e Cenários
+# Direito Adquirido Professor EC 20. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -52,41 +52,41 @@ Quarto, usar o bônus só na aposentadoria integral, com 35 anos (homem) ou 30 a
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Professora com muito tempo antigo
+### Cenário A. Professora com muito tempo antigo
 
 15 anos até 16/12/1998. Bônus de 3 anos (20%). Total 18 + pós (auditoria 03/10/2026).
 
-### Cenário B — Professor com tempo antigo
+### Cenário B. Professor com tempo antigo
 
 10 anos até 16/12/1998. Bônus 2 anos. Total 12 + pós.
 
-### Cenário C — Requisitos antes da EC 103
+### Cenário C. Requisitos antes da EC 103
 
 Direito adquirido pleno.
 
-### Cenário D — Coordenadora pedagógica pré-98
+### Cenário D. Coordenadora pedagógica pré-98
 
 Conta se exercia função de magistério.
 
-### Cenário E — Diretora escolar pré-98
+### Cenário E. Diretora escolar pré-98
 
 Conta.
 
-### Cenário F — Educação infantil pré-98
+### Cenário F. Educação infantil pré-98
 
 Conta com prova.
 
 ## 7. Cenários limitados
 
-### Cenário G — Ingresso posterior
+### Cenário G. Ingresso posterior
 
 Não se aplica.
 
-### Cenário H — Professor universitário
+### Cenário H. Professor universitário
 
 Aplica-se. O universitário também tem o acréscimo, desde que se aposente com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (IN 128, art. 251, §1º) (auditoria 03/10/2026).
 
-### Cenário I — Tempo não exclusivo em magistério
+### Cenário I. Tempo não exclusivo em magistério
 
 Bônus aplica-se ao magistério efetivo.
 

@@ -4,10 +4,10 @@
 
 O requisito central destes benefícios é a incapacidade para o trabalho, e não apenas a existência da doença. O perito vai avaliar se a patologia, no momento da perícia, impede o exercício da atividade habitual do segurado.
 
-- B31 (auxílio por incapacidade temporária previdenciária) — incapacidade temporária para o trabalho habitual, sem relação com acidente de trabalho.
-- B91 (auxílio por incapacidade temporária acidentária) — incapacidade temporária com nexo com o trabalho, acidente típico ou doença ocupacional.
-- B32 (aposentadoria por incapacidade permanente previdenciária) — incapacidade total e permanente para qualquer atividade que garanta subsistência. O perito deve considerar idade, escolaridade e condições pessoais (Súmula 47/TNU).
-- B92 (aposentadoria por incapacidade permanente acidentária) — mesma incapacidade total e permanente, com nexo acidentário.
+- B31 (auxílio por incapacidade temporária previdenciária), incapacidade temporária para o trabalho habitual, sem relação com acidente de trabalho.
+- B91 (auxílio por incapacidade temporária acidentária), incapacidade temporária com nexo com o trabalho, acidente típico ou doença ocupacional.
+- B32 (aposentadoria por incapacidade permanente previdenciária), incapacidade total e permanente para qualquer atividade que garanta subsistência. O perito deve considerar idade, escolaridade e condições pessoais (Súmula 47/TNU).
+- B92 (aposentadoria por incapacidade permanente acidentária), mesma incapacidade total e permanente, com nexo acidentário.
 
 A orientação precisa diferenciar os dois cenários. No B31 e B91, o cliente demonstra que atualmente não consegue trabalhar. No B32 e B92, o cliente demonstra ainda que a recuperação ou reabilitação é inviável, seja pela patologia, seja pelas condições pessoais.
 

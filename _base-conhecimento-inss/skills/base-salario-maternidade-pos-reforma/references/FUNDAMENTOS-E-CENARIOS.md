@@ -1,4 +1,4 @@
-# Salário-Maternidade — Fundamentos e Cenários
+# Salário-Maternidade. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -54,43 +54,43 @@ Em óbito da mãe. Transferência ao cônjuge pela duração restante.
 
 ## 4. Cenários operacionais pró-segurada
 
-### Cenário 1 — Empregada gestante demitida
+### Cenário 1. Empregada gestante demitida
 
 Empregada demitida antes do parto. Manteve qualidade. Pagamento direto pelo INSS.
 
-### Cenário 2 — Segurada especial rural
+### Cenário 2. Segurada especial rural
 
 Trabalhadora rural em economia familiar. 12 meses de atividade comprovada (autodeclaração + CAF + ITR). 1 salário mínimo por 120 dias.
 
-### Cenário 3 — CI/MEI com qualidade de segurada (auditoria 03/10/2026)
+### Cenário 3. CI/MEI com qualidade de segurada (auditoria 03/10/2026)
 
 MEI com qualidade de segurada no parto, ainda que com poucas contribuições, desde que pagas até o vencimento da competência (Enunciado 19/CRPS, § 2º) (auditoria 03/10/2026). Direito ao B80 no valor do salário-de-benefício.
 
-### Cenário 4 — Facultativa baixa renda
+### Cenário 4. Facultativa baixa renda
 
 Dona de casa de baixa renda com código 1929, sem carência, com contribuição paga e filiação regular antes do parto (Enunciado 19/CRPS, IV). Salário-mínimo (auditoria 03/10/2026).
 
-### Cenário 5 — Desempregada em período de graça
+### Cenário 5. Desempregada em período de graça
 
 Última contribuição há 8 meses. Qualidade mantida. B80 devido.
 
-### Cenário 6 — Adoção
+### Cenário 6. Adoção
 
 Mãe adota criança de 3 anos. Sentença de guarda. B82 por 120 dias.
 
-### Cenário 7 — Óbito da mãe no parto
+### Cenário 7. Óbito da mãe no parto
 
 Mãe falece no parto. Pai assume com transferência do salário-maternidade pela LC 146/2014. 120 dias.
 
-### Cenário 8 — Natimorto
+### Cenário 8. Natimorto
 
 Natimorto com mais de 22 semanas de gestação. B81 com duração de 120 dias (posição mais favorável).
 
-### Cenário 9 — Aborto espontâneo
+### Cenário 9. Aborto espontâneo
 
 Aborto espontâneo até 22 semanas. B81 com duração de 14 dias.
 
-### Cenário 10 — Gravidez de risco
+### Cenário 10. Gravidez de risco
 
 Gestante com hipertensão grave afastada 30 dias antes do parto. B80 antecipado (28 dias pelo art. 93 §3º Decreto 3.048/99). Se exceder 28 dias, B31 até a data do parto com conversão.
 

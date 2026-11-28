@@ -1,4 +1,4 @@
-# Atividades Concomitantes — Jurisprudência e Refutação
+# Atividades Concomitantes. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,61 +36,61 @@ Revisão de benefício. Fonte oficial em https://www.stj.jus.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Revisão limitada a pós-Lei 9.876/99
+### Argumento 1. Revisão limitada a pós-Lei 9.876/99
 
 Argumento adversário. Período anterior é imutável.
 
 Refutação. Tema 1.070 STJ admite revisão também de benefícios anteriores.
 
-### Argumento 2 — Atividade autônoma não conta
+### Argumento 2. Atividade autônoma não conta
 
 Argumento adversário. Sem registro CTPS, sem cômputo.
 
 Refutação. Art. 32 Lei 8.213 admite todas as contribuições. CNIS comprova.
 
-### Argumento 3 — Divisor 12 fixo
+### Argumento 3. Divisor 12 fixo
 
 Argumento adversário. Cálculo padronizado.
 
 Refutação. Divisor é o número de contribuições efetivas.
 
-### Argumento 4 — Sem distinção principal e secundária
+### Argumento 4. Sem distinção principal e secundária
 
 Argumento adversário. Antiga regra ainda vincula.
 
 Refutação. Lei 13.846/2019 eliminou a distinção. Tema 1.070 STJ aplicou retroativamente.
 
-### Argumento 5 — Limite do teto
+### Argumento 5. Limite do teto
 
 Argumento adversário. Soma é proporcional ao teto.
 
 Refutação. Soma integral até o teto, com correção pelos Temas 327 STF e 102 TNU.
 
-### Argumento 6 — Cooperativa não é vínculo
+### Argumento 6. Cooperativa não é vínculo
 
 Argumento adversário. Cooperado não tem direito.
 
 Refutação. Cooperado é segurado obrigatório (art. 11 Lei 8.213).
 
-### Argumento 7 — Câmara Municipal não conta
+### Argumento 7. Câmara Municipal não conta
 
 Argumento adversário. Vereador não soma.
 
 Refutação. Vínculo eletivo é segurado obrigatório.
 
-### Argumento 8 — Decadência absoluta
+### Argumento 8. Decadência absoluta
 
 Argumento adversário. Prazo de 10 anos esgotado.
 
 Refutação. Aferir caso a caso. Súmula 85 STJ alcança parcelas dos 5 anos anteriores.
 
-### Argumento 9 — MEI não soma
+### Argumento 9. MEI não soma
 
 Argumento adversário. Contribuição mínima exclui.
 
 Refutação. MEI é segurado obrigatório. Soma admitida.
 
-### Argumento 10 — Concomitância irrelevante
+### Argumento 10. Concomitância irrelevante
 
 Argumento adversário. Soma não influi no benefício.
 

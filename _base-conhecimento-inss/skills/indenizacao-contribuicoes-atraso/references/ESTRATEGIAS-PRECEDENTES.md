@@ -2,24 +2,24 @@
 
 ## SUMÁRIO
 
-0. Comprovação prévia da atividade — fluxo seguro antes do pagamento
-1. Estratégia administrativa — solicitação de guias
-2. Mandado de segurança — recusa de guias e Comunicado DIVBEN3
-3. Depósito judicial — mecânica e fundamentação
-4. Impugnação de cálculo — base de cálculo e encargos
+0. Comprovação prévia da atividade, fluxo seguro antes do pagamento
+1. Estratégia administrativa, solicitação de guias
+2. Mandado de segurança, recusa de guias e Comunicado DIVBEN3
+3. Depósito judicial, mecânica e fundamentação
+4. Impugnação de cálculo, base de cálculo e encargos
 5. Argumentação sobre carência
 6. Quadro comparativo de precedentes
 7. Alertas estratégicos
 
 ---
 
-## 0. COMPROVAÇÃO PRÉVIA DA ATIVIDADE — FLUXO SEGURO
+## 0. COMPROVAÇÃO PRÉVIA DA ATIVIDADE. FLUXO SEGURO
 
 ### 0.1 Armadilha prática
 
-Erro comum entre advogados previdenciaristas — gerar as GPS pelo SAL (Sistema de Acréscimo Legal) e mandar o cliente pagar antes de resolver a comprovação da atividade. O INSS pode indeferir o benefício por falta de prova material (Enunciado 5 do CRPS) e o dinheiro fica retido.
+Erro comum entre advogados previdenciaristas, gerar as GPS pelo SAL (Sistema de Acréscimo Legal) e mandar o cliente pagar antes de resolver a comprovação da atividade. O INSS pode indeferir o benefício por falta de prova material (Enunciado 5 do CRPS) e o dinheiro fica retido.
 
-### 0.2 Art. 92 da IN 128/2022 — presunção de continuidade
+### 0.2 Art. 92 da IN 128/2022. presunção de continuidade
 
 A IN 128/2022 estabelece que, havendo contribuição recolhida em dia como CI e ausência de comunicação de encerramento da atividade, o INSS presume a continuidade do exercício. Isso significa que, na prática, basta UMA contribuição em dia no passado para que o INSS reconheça todo o período subsequente sem necessidade de prova mês a mês.
 
@@ -37,25 +37,25 @@ Nessas hipóteses, a comprovação segue pelo art. 94 da IN 128/2022, com docume
 
 ### 0.4 Fluxo seguro completo
 
-Passo 1 — Analisar CNIS. Identificar se há contribuição como CI recolhida em dia e se há atividade cadastrada.
+Passo 1. Analisar CNIS. Identificar se há contribuição como CI recolhida em dia e se há atividade cadastrada.
 
-Passo 2 — Se há contribuição em dia e ausência de baixa, invocar art. 92 e preencher RAC (Anexo I-E, item 2.5).
+Passo 2. Se há contribuição em dia e ausência de baixa, invocar art. 92 e preencher RAC (Anexo I-E, item 2.5).
 
-Passo 3 — Se NÃO há contribuição em dia, reunir documentos contemporâneos conforme art. 94 e protocolar no INSS com o RAC completo.
+Passo 3. Se NÃO há contribuição em dia, reunir documentos contemporâneos conforme art. 94 e protocolar no INSS com o RAC completo.
 
-Passo 4 — Aguardar o INSS processar o RAC e reconhecer o período de atividade no CNIS.
+Passo 4. Aguardar o INSS processar o RAC e reconhecer o período de atividade no CNIS.
 
-Passo 5 — Somente após reconhecimento da atividade, solicitar emissão das GPS para indenização e orientar o pagamento.
+Passo 5. Somente após reconhecimento da atividade, solicitar emissão das GPS para indenização e orientar o pagamento.
 
-Passo 6 — Ao solicitar as guias, documentar o pedido com protocolo (Meu INSS ou 135) para configurar interesse obstado em caso de omissão.
+Passo 6. Ao solicitar as guias, documentar o pedido com protocolo (Meu INSS ou 135) para configurar interesse obstado em caso de omissão.
 
-### 0.5 Argumento da contradição — uso em MS
+### 0.5 Argumento da contradição. uso em MS
 
 Se o INSS exigir comprovação documental mês a mês apesar da presunção do art. 92, invocar a contradição reconhecida pelo TRF4 (6ª Turma, AG 5005184-28.2022.4.04.0000/RS, Relatora Taís Schilling Ferraz, 15/06/2022). A autarquia não pode presumir continuidade para fins de cobrança e negar a mesma presunção para fins de reconhecimento de direito.
 
 ---
 
-## 1. ESTRATÉGIA ADMINISTRATIVA — SOLICITAÇÃO DE GUIAS
+## 1. ESTRATÉGIA ADMINISTRATIVA. SOLICITAÇÃO DE GUIAS
 
 ### 1.1 Procedimento obrigatório
 
@@ -78,7 +78,7 @@ Em petição administrativa (cumprimento de exigência ou manifestação), inclu
 
 ---
 
-## 2. MANDADO DE SEGURANÇA — RECUSA DE GUIAS E COMUNICADO DIVBEN3
+## 2. MANDADO DE SEGURANÇA. RECUSA DE GUIAS E COMUNICADO DIVBEN3
 
 ### 2.1 Cabimento
 
@@ -107,18 +107,18 @@ MS é cabível quando
 
 ---
 
-## 3. DEPÓSITO JUDICIAL — MECÂNICA E FUNDAMENTAÇÃO
+## 3. DEPÓSITO JUDICIAL. MECÂNICA E FUNDAMENTAÇÃO
 
 ### 3.1 Situação fática típica
 
 O segurado ajuíza ação de concessão de aposentadoria alegando tempo de contribuinte individual. Durante a instrução, o juízo reconhece a atividade e determina ao INSS o cálculo da indenização. O INSS apresenta GPS com valor elevado. O juízo indefere o recolhimento durante o processo, condicionando à prolação da sentença ou ao trânsito em julgado.
 
-### 3.2 Agravo de instrumento — fundamentos
+### 3.2 Agravo de instrumento. fundamentos
 
-1. **Cabimento** — Tema 988/STJ (taxatividade mitigada do rol do art. 1.015 CPC, com urgência demonstrada) (auditoria 03/10/2026), pois a decisão que indefere o depósito gera inutilidade do julgamento da apelação
-2. **Tutela recursal** — art. 1.019, I, CPC (efeito suspensivo ou antecipação)
-3. **Risco de dano** — art. 995, parágrafo único, CPC (sentença condicionada a evento futuro e incerto viola art. 492, parágrafo único, CPC)
-4. **Probabilidade de direito** — atividade já reconhecida, indenização já calculada pelo INSS, segurado disposto a pagar
+1. **Cabimento.** Tema 988/STJ (taxatividade mitigada do rol do art. 1.015 CPC, com urgência demonstrada) (auditoria 03/10/2026), pois a decisão que indefere o depósito gera inutilidade do julgamento da apelação
+2. **Tutela recursal**, art. 1.019, I, CPC (efeito suspensivo ou antecipação)
+3. **Risco de dano**, art. 995, parágrafo único, CPC (sentença condicionada a evento futuro e incerto viola art. 492, parágrafo único, CPC)
+4. **Probabilidade de direito**, atividade já reconhecida, indenização já calculada pelo INSS, segurado disposto a pagar
 
 ### 3.3 Mecânica do depósito
 
@@ -138,7 +138,7 @@ O segurado ajuíza ação de concessão de aposentadoria alegando tempo de contr
 
 ---
 
-## 4. IMPUGNAÇÃO DE CÁLCULO — BASE DE CÁLCULO E ENCARGOS
+## 4. IMPUGNAÇÃO DE CÁLCULO. BASE DE CÁLCULO E ENCARGOS
 
 ### 4.1 Períodos anteriores a 11/10/1996
 
@@ -148,7 +148,7 @@ Impugnar qualquer cobrança de juros e multa. Fundamento direto no Tema 1103/STJ
 
 Para períodos anteriores à inclusão do art. 45-A pela LC 128/2008, os §§1º e 2º do art. 45-A não se aplicam retroativamente. A base de cálculo segue a legislação vigente à época (salário mínimo para labor rural, remuneração da época para contribuinte individual).
 
-### 4.3 Cálculo do INSS — conferência obrigatória
+### 4.3 Cálculo do INSS. conferência obrigatória
 
 O cálculo apresentado pelo INSS deve ser conferido nos seguintes pontos
 
@@ -162,7 +162,7 @@ O cálculo apresentado pelo INSS deve ser conferido nos seguintes pontos
 
 ## 5. ARGUMENTAÇÃO SOBRE CARÊNCIA
 
-### 5.1 Contribuições em atraso e carência — regras
+### 5.1 Contribuições em atraso e carência. regras
 
 | Situação | Conta para carência? | Fundamento |
 |----------|---------------------|------------|
@@ -182,7 +182,7 @@ O cálculo apresentado pelo INSS deve ser conferido nos seguintes pontos
 
 ## 6. QUADRO COMPARATIVO DE PRECEDENTES
 
-### 6.1 Decreto 10.410/2020 — cômputo de tempo após recolhimento extemporâneo
+### 6.1 Decreto 10.410/2020. cômputo de tempo após recolhimento extemporâneo
 
 | Processo | Turma | Relator | Tese |
 |----------|-------|---------|------|

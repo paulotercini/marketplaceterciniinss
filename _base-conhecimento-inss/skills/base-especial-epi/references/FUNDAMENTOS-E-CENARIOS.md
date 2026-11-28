@@ -1,4 +1,4 @@
-# EPI — Fundamentos Normativos e Cenários de Defesa
+# EPI. Fundamentos Normativos e Cenários de Defesa
 
 ## 1. Evolução normativa
 
@@ -52,45 +52,45 @@ Súmula 87 TNU, vigente, conferida na página oficial do CJF em 25/07/2026 e res
 
 ## 7. Cenários concretos para o segurado
 
-### Cenário 1 — Exposição a ruído
+### Cenário 1. Exposição a ruído
 
 A exceção do Tema 555 STF é expressa. Independentemente do preenchimento do campo 15.7 do PPP, a especialidade se mantém para ruído acima do limite.
 
 Linha argumentativa. Citar diretamente o Tema 555, apresentando o acórdão no ARE 664.335. Não admitir recuo nesse ponto.
 
-### Cenário 2 — Exposição a agentes cancerígenos da LINACH
+### Cenário 2. Exposição a agentes cancerígenos da LINACH
 
 A hipótese excepcional foi reconhecida pelo STJ nos EDcl no REsp 2.116.343/RJ, do Tema 1090. A exposição a cancerígeno listado dispensa a verificação quantitativa (art. 68, §§ 2º e 4º, do Decreto 3.048/99). Na redação do Decreto 10.410/2020, porém, o §4º descaracteriza a exposição quando medidas de controle eliminam a nocividade, texto adverso diante do qual o segurado exige do LTCAT a prova de que a nocividade foi eliminada, e não só reduzida (auditoria 03/10/2026).
 
 Linha argumentativa. Trazer a lista LINACH em vigor, confirmada em https://www.gov.br/trabalho-e-emprego, e demonstrar que o agente do PPP consta da lista.
 
-### Cenário 3 — Exposição a agentes biológicos
+### Cenário 3. Exposição a agentes biológicos
 
 Hipótese sustentável pela lista aberta do Tema 1090 STJ, conforme os EDcl no REsp 2.080.584/PR (auditoria 03/10/2026). O EPI, ainda que certificado, não neutraliza a exposição a agentes biológicos em atividades de risco, como profissionais de saúde, laboratório, coleta de lixo, agentes funerários, tratamento de esgoto, entre outras.
 
 Linha argumentativa. Combinação do Tema 1090 com o Tema 211 TNU sobre habitualidade. Base em NR-32 para profissionais da saúde.
 
-### Cenário 4 — Agentes químicos com absorção cutânea
+### Cenário 4. Agentes químicos com absorção cutânea
 
 Conforme Anexo 13 da NR-15 e Tema 298 TNU. Quando o agente químico admite absorção cutânea ou é cancerígeno, o EPI respiratório não neutraliza.
 
 Linha argumentativa. Acionar `base-especial-agentes-quimicos` e levar à peça os fundamentos sobre absorção cutânea e cancerogenicidade.
 
-### Cenário 5 — Ausência de documentação suporte
+### Cenário 5. Ausência de documentação suporte
 
 Quando o PPP declara EPI eficaz mas a empresa não apresenta ficha técnica, comprovante de troca periódica, registros de treinamento, ou atestados de certificação vigente, essas faltas correspondem aos caminhos (ii) a (iv) do item II do Tema 1090/STJ, cujo ônus é do autor, e sustentam a impugnação específica do PPP admitida no Tema 213/TNU (auditoria 03/10/2026, retirada a inversão do ônus, que nenhum dos dois temas prevê).
 
 Linha argumentativa. Solicitar formalmente à empresa, via `retificacao-ppp`, os documentos de suporte. Na ausência, requerer em juízo a exibição dos documentos (arts. 396 e 401 do CPC) e a perícia técnica, sem pedir inversão do ônus, rejeitada na razão de decidir do Tema 1090/STJ (auditoria 03/10/2026).
 
-### Cenário 6 — Exposição descontínua e intermitência
+### Cenário 6. Exposição descontínua e intermitência
 
 Quando a atividade envolve exposição intermitente mas habitual, a lógica do EPI eficaz se fragiliza. O EPI cobre momentos específicos, mas a exposição em momentos de retirada do equipamento é suficiente para configurar especialidade. Aplicação combinada do IRDR 15 TRF4 e, para agentes biológicos, do Tema 211 TNU (auditoria 03/10/2026).
 
-### Cenário 7 — Treinamento inexistente ou precário
+### Cenário 7. Treinamento inexistente ou precário
 
 A eficácia do EPI depende do uso correto. Sem treinamento formal registrado, a presunção de eficácia cai. NR-06 exige treinamento documentado. Ausência de registro corresponde ao caminho (iv) do item II do Tema 1090 STJ e sustenta a impugnação específica do PPP, sem pedido de inversão do ônus (auditoria 03/10/2026).
 
-### Cenário 8 — Fiscalização da utilização
+### Cenário 8. Fiscalização da utilização
 
 Mesmo com treinamento, se não houver fiscalização documentada, a eficácia é meramente teórica. Linha argumentativa combina NR-06 com IRDR 15 TRF4.
 

@@ -1,4 +1,4 @@
-# Coisa Julgada Progressiva — Fundamentos e Cenários
+# Coisa Julgada Progressiva. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -48,41 +48,41 @@ Revisão por concomitantes.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Apelação parcial do INSS
+### Cenário A. Apelação parcial do INSS
 
 Implantação imediata.
 
-### Cenário B — Tempo especial em discussão
+### Cenário B. Tempo especial em discussão
 
 Execução do tempo comum.
 
-### Cenário C — Juros discutidos
+### Cenário C. Juros discutidos
 
 Benefício implantado.
 
-### Cenário D — Julgamento parcial art. 356
+### Cenário D. Julgamento parcial art. 356
 
 Implantação do incontroverso.
 
-### Cenário E — RPV parcial
+### Cenário E. RPV parcial
 
 Recebimento da parte transitada.
 
-### Cenário F — Revisão por concomitantes
+### Cenário F. Revisão por concomitantes
 
 Parte incontroversa executada.
 
 ## 6. Cenários limitados
 
-### Cenário G — Recurso devolve integralmente
+### Cenário G. Recurso devolve integralmente
 
 Refutar com arts. 1.013 §1º CPC e IRDR 18.
 
-### Cenário H — Cumprimento provisório
+### Cenário H. Cumprimento provisório
 
 Restrito contra Fazenda. A parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28 STF) [CONFERIDO] (auditoria 03/10/2026).
 
-### Cenário I — JEF e dialeticidade
+### Cenário I. JEF e dialeticidade
 
 Exigência reforçada.
 

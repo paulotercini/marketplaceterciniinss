@@ -1,4 +1,4 @@
-# Agravo Interno e Conflito de Competência no CRPS – Arts. 93 e 115
+# Agravo Interno e Conflito de Competência no CRPS. Arts. 93 e 115
 
 ## Agravo Interno (Art. 93)
 
@@ -29,7 +29,7 @@ A Presidência do Conselho Pleno decide por despacho fundamentado, podendo acolh
 - PUJ ou Reclamação acolhidos, o processo é distribuído a conselheiro do Pleno para análise
 - Declaração de não impedimento acolhida, o processo volta à UJ de origem
 
-**Se rejeitado** – notificação do agravante e devolução à origem, sem possibilidade de novo recurso
+**Se rejeitado**, notificação do agravante e devolução à origem, sem possibilidade de novo recurso
 
 ### Caráter Definitivo (Art. 93, §4º)
 
@@ -51,9 +51,9 @@ O Presidente da UJ pode suscitar conflito de competência em relação aos proce
 
 ### Competência para Dirimir
 
-**Entre Juntas de Recursos** – Presidentes das Câmaras de Julgamento, segundo distribuição alternada (art. 115, §1º)
+**Entre Juntas de Recursos.** Presidentes das Câmaras de Julgamento, segundo distribuição alternada (art. 115, §1º)
 
-**Demais casos** – Presidência do CRPS (art. 115, §1º in fine e art. 44, XIX)
+**Demais casos.** Presidência do CRPS (art. 115, §1º in fine e art. 44, XIX)
 
 ### Forma da Decisão (Art. 115, §2º)
 

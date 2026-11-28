@@ -1,4 +1,4 @@
-# Competência e Autoridade Coatora MS — Fundamentos e Cenários
+# Competência e Autoridade Coatora MS. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,41 +40,41 @@ Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha d
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Demora PA
+### Cenário A. Demora PA
 
 Gerente CEAB.
 
-### Cenário B — Exigência abusiva
+### Cenário B. Exigência abusiva
 
 Gerente APS.
 
-### Cenário C — Arquivamento
+### Cenário C. Arquivamento
 
 Gerente da área.
 
-### Cenário D — Demora CRPS
+### Cenário D. Demora CRPS
 
 Presidente do órgão.
 
-### Cenário E — Cumprimento
+### Cenário E. Cumprimento
 
 Gerência do INSS.
 
-### Cenário F — Ato complexo
+### Cenário F. Ato complexo
 
 Preponderante.
 
 ## 6. Cenários limitados
 
-### Cenário G — Múltiplas autoridades
+### Cenário G. Múltiplas autoridades
 
 Atos sucessivos.
 
-### Cenário H — Erro na autoridade
+### Cenário H. Erro na autoridade
 
 Emenda art. 6º §3º.
 
-### Cenário I — Foro do impetrante
+### Cenário I. Foro do impetrante
 
 Opção pró-segurado.
 

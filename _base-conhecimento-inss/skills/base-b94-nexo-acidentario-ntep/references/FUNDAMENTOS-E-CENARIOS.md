@@ -1,4 +1,4 @@
-# Nexo Acidentário B94 — Fundamentos e Cenários
+# Nexo Acidentário B94. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,45 +40,45 @@ Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da L
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — LER por esforço repetitivo
+### Cenário A. LER por esforço repetitivo
 
 NTEP. B91 e B94.
 
-### Cenário B — Acidente típico
+### Cenário B. Acidente típico
 
 CAT. B91 e B94.
 
-### Cenário C — Doença ocupacional
+### Cenário C. Doença ocupacional
 
 B91 e B94.
 
-### Cenário D — Acidente trajeto
+### Cenário D. Acidente trajeto
 
 B91 e B94.
 
-### Cenário E — Agressão no trabalho
+### Cenário E. Agressão no trabalho
 
 Equiparação. B91.
 
-### Cenário F — Contaminação acidental
+### Cenário F. Contaminação acidental
 
 Equiparação. B91.
 
-### Cenário G — Viagem a serviço
+### Cenário G. Viagem a serviço
 
 Equiparação. B91.
 
 ## 6. Cenários limitados
 
-### Cenário H — Doença degenerativa pura
+### Cenário H. Doença degenerativa pura
 
 Sem nexo direto.
 
-### Cenário I — Sem CAT e sem NTEP
+### Cenário I. Sem CAT e sem NTEP
 
 Análise específica.
 
-### Cenário J — Acidente fora do trabalho
+### Cenário J. Acidente fora do trabalho
 
 Sem nexo.
 

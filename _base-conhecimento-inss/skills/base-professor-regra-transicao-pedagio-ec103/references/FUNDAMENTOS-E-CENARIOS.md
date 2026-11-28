@@ -1,4 +1,4 @@
-# Regra de Pedágio do Professor — Fundamentos e Cenários
+# Regra de Pedágio do Professor. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -52,45 +52,45 @@ Quarto, pedágio de 100 por cento do faltante em 13/11/2019.
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Mulher próxima em 2019
+### Cenário A. Mulher próxima em 2019
 
 24 anos em 13/11/2019. Faltava 1 ano. Pedágio 1 ano. Total 26 anos. Idade 52. Aposenta.
 
-### Cenário B — Homem próximo em 2019
+### Cenário B. Homem próximo em 2019
 
 29 anos em 13/11/2019. Faltava 1 ano. Pedágio 1 ano. Total 31 anos. Idade 55.
 
-### Cenário C — Coordenadora pedagógica
+### Cenário C. Coordenadora pedagógica
 
 Conta. Lei 11.301 e ADI 3772.
 
-### Cenário D — Diretora escolar
+### Cenário D. Diretora escolar
 
 Conta.
 
-### Cenário E — Assessora pedagógica
+### Cenário E. Assessora pedagógica
 
 Conta.
 
-### Cenário F — Educação infantil
+### Cenário F. Educação infantil
 
 Lei 15.326/2026.
 
-### Cenário G — Cargo híbrido
+### Cenário G. Cargo híbrido
 
 Aplicar Lei 15.326/2026.
 
 ## 7. Cenários limitados
 
-### Cenário H — Ingresso após 13/11/2019
+### Cenário H. Ingresso após 13/11/2019
 
 Não se aplica.
 
-### Cenário I — Idade inferior
+### Cenário I. Idade inferior
 
 Não cabe. Aguardar idade ou migrar para outra regra.
 
-### Cenário J — Professor universitário
+### Cenário J. Professor universitário
 
 Não se enquadra. O texto limita a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 20, §1º) (auditoria 03/10/2026).
 

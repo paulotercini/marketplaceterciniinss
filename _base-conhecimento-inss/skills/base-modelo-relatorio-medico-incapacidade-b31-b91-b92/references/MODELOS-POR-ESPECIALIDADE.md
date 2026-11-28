@@ -7,12 +7,12 @@
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia ortopédica principal, ex. M51.1 hérnia discal lombar com radiculopatia]
-[CID] — [Patologia secundária, ex. M54.4 lumbalgia com ciática]
+[CID]. [Patologia ortopédica principal, ex. M51.1 hérnia discal lombar com radiculopatia]
+[CID]. [Patologia secundária, ex. M54.4 lumbalgia com ciática]
 [CID adicional, se houver]
 
 **Histórico clínico**
@@ -73,12 +73,12 @@ Nota para deficiência (aposentadoria PCD e BPC). A artrose avançada pode funda
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Transtorno principal, ex. F32.2 episódio depressivo grave sem sintomas psicóticos]
-[CID] — [Transtorno secundário, ex. F41.1 transtorno de ansiedade generalizada]
+[CID]. [Transtorno principal, ex. F32.2 episódio depressivo grave sem sintomas psicóticos]
+[CID]. [Transtorno secundário, ex. F41.1 transtorno de ansiedade generalizada]
 [CID adicional, se houver]
 
 **Histórico clínico**
@@ -113,11 +113,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia reumatológica, ex. M79.7 fibromialgia / M05 artrite reumatoide / M32 lúpus]
+[CID]. [Patologia reumatológica, ex. M79.7 fibromialgia / M05 artrite reumatoide / M32 lúpus]
 [CID secundário, se houver]
 [CID adicional, se houver]
 
@@ -155,12 +155,12 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia principal, ex. E11 diabetes mellitus tipo 2 complicado]
-[CID] — [Patologia secundária, ex. I10 hipertensão arterial sistêmica]
+[CID]. [Patologia principal, ex. E11 diabetes mellitus tipo 2 complicado]
+[CID]. [Patologia secundária, ex. I10 hipertensão arterial sistêmica]
 [CID adicional, se houver]
 
 **Histórico clínico**
@@ -195,11 +195,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia oftalmológica, ex. H35.0 retinopatia diabética proliferativa / H40 glaucoma / H54 cegueira e baixa visão]
+[CID]. [Patologia oftalmológica, ex. H35.0 retinopatia diabética proliferativa / H40 glaucoma / H54 cegueira e baixa visão]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -234,11 +234,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia cardiológica, ex. I50 insuficiência cardíaca congestiva / I25 cardiopatia isquêmica crônica / I48 fibrilação atrial]
+[CID]. [Patologia cardiológica, ex. I50 insuficiência cardíaca congestiva / I25 cardiopatia isquêmica crônica / I48 fibrilação atrial]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -274,7 +274,7 @@ Todos os modelos seguem o padrão narrativo enxuto (cabe em 1 folha).
 
 DII (data de início da incapacidade) é OBRIGATÓRIA.
 
-DID (data de início da doença) é importante quando há doença preexistente (art. 42 §2º da Lei 8.213/91 — agravamento).
+DID (data de início da doença) é importante quando há doença preexistente (art. 42 §2º da Lei 8.213/91, agravamento).
 
 Permanente (B32 ou B92). Insuscetibilidade de reabilitação é OBRIGATÓRIA.
 

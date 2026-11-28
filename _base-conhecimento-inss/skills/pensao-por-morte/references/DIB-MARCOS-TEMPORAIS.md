@@ -1,4 +1,4 @@
-# DIB da Pensão por Morte — Marcos Temporais por Data do Óbito
+# DIB da Pensão por Morte. Marcos Temporais por Data do Óbito
 
 ## 1. Óbitos até 10/11/1997 (antes da Lei 9.528/1997)
 
@@ -18,15 +18,15 @@ B) DIB na DER, quando requerida após 90 dias.
 
 C) DIB na data da decisão judicial, no caso de morte presumida.
 
-## 4. Óbitos a partir de 18/01/2019 (MP 871/2019 e Lei 13.846/2019 — redação atual do art. 74)
+## 4. Óbitos a partir de 18/01/2019 (MP 871/2019 e Lei 13.846/2019. redação atual do art. 74)
 
-A) Dependente menor de 16 anos — DIB na data do óbito, se requerida em até 180 dias após a morte.
+A) Dependente menor de 16 anos. DIB na data do óbito, se requerida em até 180 dias após a morte.
 
-B) Demais dependentes — DIB na data do óbito, se requerida em até 90 dias.
+B) Demais dependentes. DIB na data do óbito, se requerida em até 90 dias.
 
-C) Fora dos prazos acima — DIB na DER (data do requerimento administrativo).
+C) Fora dos prazos acima. DIB na DER (data do requerimento administrativo).
 
-D) Morte presumida — DIB na data da decisão judicial.
+D) Morte presumida. DIB na data da decisão judicial.
 
 ## 5. Regra especial para menores e incapazes
 
@@ -42,17 +42,17 @@ O STJ redefiniu o entendimento, distinguindo as dimensões do art. 74 (DIB) e do
 
 Se o menor/incapaz requerer fora do prazo do art. 74, a DIB é a DER. Mas não corre prescrição quinquenal contra ele para cobrar as parcelas desde a DIB.
 
-**Implicação prática** — a decisão do STJ reconhece que não há parcelas antes da DER quando o requerimento é tardio, mas todas as parcelas a partir da DIB/DER são exigíveis sem limitação temporal.
+**Implicação prática**, a decisão do STJ reconhece que não há parcelas antes da DER quando o requerimento é tardio, mas todas as parcelas a partir da DIB/DER são exigíveis sem limitação temporal.
 
-**Alcance** — decisão de Turma (1ª Turma do STJ), não repetitivo. Persuasivo, não vinculante sobre TRFs e JEFs. Diversos tribunais ainda aplicam o entendimento anterior (DIB no óbito para incapaz).
+**Alcance**, decisão de Turma (1ª Turma do STJ), não repetitivo. Persuasivo, não vinculante sobre TRFs e JEFs. Diversos tribunais ainda aplicam o entendimento anterior (DIB no óbito para incapaz).
 
 ### 5.3 Estratégia por rito
 
-**No JEF** — invocar Tema 81/TNU para obter DIB no óbito. A vinculação do JEF à TNU é direta. O REsp 2.103.603/PB não é aplicável como precedente vinculante no JEF.
+**No JEF**, invocar Tema 81/TNU para obter DIB no óbito. A vinculação do JEF à TNU é direta. O REsp 2.103.603/PB não é aplicável como precedente vinculante no JEF.
 
-**No rito ordinário (Vara Federal)** — a tendência é que o REsp 2.103.603/PB passe a ser seguido. Sustentar DIB no óbito com base no art. 103, parágrafo único, da Lei 8.213/91 (o art. 79, que também afastava a prescrição contra o pensionista menor, foi revogado pela MP 871/2019, convertida na Lei 13.846/2019), c/c art. 198, I, do Código Civil, argumentando que o art. 74 contém regra prescricional material inaplicável a incapaz. Alternativamente, se a DIB for fixada na DER, explorar a imprescritibilidade para garantir todas as parcelas desde então.
+**No rito ordinário (Vara Federal)**, a tendência é que o REsp 2.103.603/PB passe a ser seguido. Sustentar DIB no óbito com base no art. 103, parágrafo único, da Lei 8.213/91 (o art. 79, que também afastava a prescrição contra o pensionista menor, foi revogado pela MP 871/2019, convertida na Lei 13.846/2019), c/c art. 198, I, do Código Civil, argumentando que o art. 74 contém regra prescricional material inaplicável a incapaz. Alternativamente, se a DIB for fixada na DER, explorar a imprescritibilidade para garantir todas as parcelas desde então.
 
-**No CRPS** — o INSS aplica literalmente o art. 74, fixando DIB na DER se fora do prazo. Recurso ao CRPS terá dificuldade de reverter. MS pode ser alternativa.
+**No CRPS**, o INSS aplica literalmente o art. 74, fixando DIB na DER se fora do prazo. Recurso ao CRPS terá dificuldade de reverter. MS pode ser alternativa.
 
 ## 6. Quadro-resumo de prazos
 

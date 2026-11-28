@@ -1,4 +1,4 @@
-# LBI — Barreiras, Dispositivos Literais e Aplicação Previdenciária
+# LBI. Barreiras, Dispositivos Literais e Aplicação Previdenciária
 
 Criado na Onda 89 (26/07/2026) a partir do texto consolidado da Lei 13.146/2015 (Planalto), fornecido ao escritório e lido integralmente.
 

@@ -1,4 +1,4 @@
-# Revisão de Acórdão no CRPS – Art. 116
+# Revisão de Acórdão no CRPS. Art. 116
 
 ## Natureza e Finalidade
 
@@ -10,19 +10,19 @@ Não há prazo específico para o requerimento. A revisão é admitida enquanto 
 
 ## Hipóteses Taxativas (Art. 116, I a IV)
 
-### I – Violação de literal disposição de lei ou decreto
+### I. Violação de literal disposição de lei ou decreto
 
 O acórdão contraria diretamente o texto de lei ou decreto vigente. Não se exige interpretação extensiva, basta a incompatibilidade entre a decisão e a norma.
 
-### II – Divergência com pareceres vinculantes
+### II. Divergência com pareceres vinculantes
 
 O acórdão diverge dos pareceres da Consultoria Jurídica do MPS (ou Ministérios predecessores), vigentes e aprovados pelo Ministro de Estado, e dos pareceres da AGU aprovados pelo Presidente da República (LC 73/1993, art. 40).
 
-### III – Divergência com enunciado do Conselho Pleno
+### III. Divergência com enunciado do Conselho Pleno
 
 O acórdão diverge de enunciado editado pelo Conselho Pleno, que tem força vinculante no âmbito do CRPS (art. 124).
 
-### IV – Vício insanável
+### IV. Vício insanável
 
 Rol do art. 116, §1º, incisos I a V, detalhado abaixo.
 

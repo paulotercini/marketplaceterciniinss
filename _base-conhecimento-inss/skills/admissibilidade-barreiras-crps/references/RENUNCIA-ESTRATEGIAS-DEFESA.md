@@ -1,6 +1,6 @@
 # Estratégias de Defesa Contra Renúncia Tácita Indevida
 
-## Estratégia 1 – Afastar a identidade de causa de pedir
+## Estratégia 1. Afastar a identidade de causa de pedir
 
 A causa de pedir no Regimento é definida como o conjunto de FATOS (art. 86, §1º, II), não de fundamentos jurídicos. Se os fatos narrados na ação judicial forem distintos dos que fundamentam o recurso, a identidade não existe, ainda que o benefício pretendido seja o mesmo.
 
@@ -12,7 +12,7 @@ A causa de pedir no Regimento é definida como o conjunto de FATOS (art. 86, §1
 - Recurso discutindo DII fixada pelo INSS; ação judicial discutindo nexo causal acidentário com base em laudo particular
 - Recurso contestando cálculo da RMI; ação judicial pedindo revisão pelo art. 29, II da Lei 8.213/91 com base em período básico de cálculo diverso
 
-## Estratégia 2 – Afastar a identidade de pedido
+## Estratégia 2. Afastar a identidade de pedido
 
 Se o recurso administrativo e a ação judicial buscam efeitos jurídicos distintos, os pedidos são diferentes.
 
@@ -23,7 +23,7 @@ Se o recurso administrativo e a ação judicial buscam efeitos jurídicos distin
 - Recurso pede reconhecimento de tempo especial para aposentadoria, ação pede averbação de tempo rural para contagem recíproca
 - Recurso pede restabelecimento de benefício cessado, ação pede concessão de novo benefício
 
-## Estratégia 3 – Invocar novos elementos (art. 86, §2º in fine)
+## Estratégia 3. Invocar novos elementos (art. 86, §2º in fine)
 
 A juntada de novos elementos na ação judicial afasta a identidade, mesmo que os fatos base sejam os mesmos.
 
@@ -40,7 +40,7 @@ A juntada de novos elementos na ação judicial afasta a identidade, mesmo que o
 - Decisão judicial que reconheceu fato relevante (tempo especial, tempo rural)
 - Qualquer prova produzida exclusivamente na via judicial
 
-## Estratégia 4 – Invocar exceção de celeridade (art. 86, §5º)
+## Estratégia 4. Invocar exceção de celeridade (art. 86, §5º)
 
 A ação judicial com objetivo de dar celeridade ao recurso NÃO configura renúncia. Inclusive ação ordinária.
 
@@ -55,7 +55,7 @@ A ação judicial com objetivo de dar celeridade ao recurso NÃO configura renú
 
 **Estratégia preventiva.** Ao ajuizar ação judicial enquanto o recurso administrativo está pendente, o advogado deve consignar expressamente na petição inicial que o objetivo é dar celeridade ao recurso administrativo, não substituí-lo. Essa menção expressa blinda o recurso contra a renúncia tácita.
 
-## Estratégia 5 – Invocar objeto parcial (art. 86, §7º)
+## Estratégia 5. Invocar objeto parcial (art. 86, §7º)
 
 Se a ação judicial versa sobre parte do objeto do recurso, o CRPS julga as matérias remanescentes.
 
@@ -63,7 +63,7 @@ Se a ação judicial versa sobre parte do objeto do recurso, o CRPS julga as mat
 
 **Exemplo prático.** Recurso administrativo com três pedidos (reconhecimento de tempo especial 1985-1995, reconhecimento de tempo rural 1975-1985, reafirmação da DER). Ação judicial com pedido único (reconhecimento de tempo especial 1985-1995). Matérias remanescentes no CRPS são tempo rural e reafirmação da DER.
 
-## Estratégia 6 – Solicitar sustentação oral para converter monocrática em colegiada
+## Estratégia 6. Solicitar sustentação oral para converter monocrática em colegiada
 
 A renúncia tácita é hipótese de decisão monocrática (art. 110, I). A solicitação de sustentação oral obriga a UJ a converter em colegiada (art. 81, §13).
 
@@ -75,7 +75,7 @@ A renúncia tácita é hipótese de decisão monocrática (art. 110, I). A solic
 
 **Alternativa.** Se a sustentação já foi requerida nas razões recursais (art. 81, I), a conversão em colegiada é automática quando o processo for pautado monocraticamente.
 
-## Estratégia 7 – Impugnar a insuficiência dos elementos apresentados pelo INSS
+## Estratégia 7. Impugnar a insuficiência dos elementos apresentados pelo INSS
 
 O art. 86, §4º exige que o INSS apresente "os elementos necessários à caracterização da renúncia tácita". Se o INSS se limitar a informar a existência da ação judicial sem demonstrar a tríplice identidade, a renúncia não se configura.
 
@@ -83,7 +83,7 @@ O art. 86, §4º exige que o INSS apresente "os elementos necessários à caract
 
 **Argumento.** A renúncia tácita é exceção ao direito fundamental de petição (art. 5º, XXXIV, CF) e ao duplo grau administrativo. Sua aplicação exige demonstração robusta da identidade, não mera alegação do INSS. O ônus da prova da identidade é de quem a alega.
 
-## Estratégia 8 – Recurso contra declaração indevida de renúncia
+## Estratégia 8. Recurso contra declaração indevida de renúncia
 
 Se a UJ declarou renúncia tácita indevidamente, cabem todos os recursos do art. 110, §2º.
 

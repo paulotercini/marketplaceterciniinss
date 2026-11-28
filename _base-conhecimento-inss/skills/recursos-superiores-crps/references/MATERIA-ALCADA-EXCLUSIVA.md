@@ -1,4 +1,4 @@
-# Matéria de Alçada Exclusiva das Juntas de Recursos – Art. 89, §3º
+# Matéria de Alçada Exclusiva das Juntas de Recursos. Art. 89, §3º
 
 ## Regra Geral
 
@@ -46,10 +46,10 @@ O conselheiro (e não a PMF) realizará a análise da exposição a fatores de r
 
 Quando a decisão for de alçada exclusiva da JR, NÃO cabe recurso especial, MAS cabem
 
-1. **Embargos de Declaração** (art. 92) – para omissão, obscuridade, contradição ou erro material
-2. **Revisão de Acórdão** (art. 116) – quando o acórdão viola lei, decreto, parecer vinculante, enunciado do CP ou contém vício insanável
-3. **Pedido de Uniformização de Jurisprudência ao Conselho Pleno** (art. 121, II) – quando houver divergência entre acórdãos de JRs em matéria de alçada
-4. **Reclamação ao Conselho Pleno** (art. 123) – quando o acórdão da JR em matéria de alçada infringir pareceres vinculantes, súmulas vinculantes, enunciados ou normas vinculantes do CRPS
+1. **Embargos de Declaração** (art. 92), para omissão, obscuridade, contradição ou erro material
+2. **Revisão de Acórdão** (art. 116), quando o acórdão viola lei, decreto, parecer vinculante, enunciado do CP ou contém vício insanável
+3. **Pedido de Uniformização de Jurisprudência ao Conselho Pleno** (art. 121, II), quando houver divergência entre acórdãos de JRs em matéria de alçada
+4. **Reclamação ao Conselho Pleno** (art. 123), quando o acórdão da JR em matéria de alçada infringir pareceres vinculantes, súmulas vinculantes, enunciados ou normas vinculantes do CRPS
 
 ## Análise Estratégica para o Advogado
 

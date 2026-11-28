@@ -1,4 +1,4 @@
-# Tópico de Relevância no REsp Previdenciário — Moldura Doutrinária e Modelo
+# Tópico de Relevância no REsp Previdenciário. Moldura Doutrinária e Modelo
 
 Onda 91 (26/07/2026). Reúne a moldura teórica do filtro, a posição do escritório e o modelo de redação do tópico próprio.
 

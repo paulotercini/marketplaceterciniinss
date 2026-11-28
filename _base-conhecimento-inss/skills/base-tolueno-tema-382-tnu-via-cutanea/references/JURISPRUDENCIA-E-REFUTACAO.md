@@ -22,8 +22,6 @@ A versão anterior sustentava que a ratio do Tema 382 dispensaria a quantificaç
 
 O Tema 382 rejeitou essa tese, que não pode ser usada em peça (auditoria 03/10/2026).
 
-
-
 ## 2. Outros precedentes da TNU
 
 ### 2.1. Súmula 9/TNU e Tema 555/STF
@@ -35,10 +33,6 @@ Aplicação subsidiária à eficácia do EPI no tolueno com medição acima do l
 ### 2.2. Precedentes não localizados
 
 Os dois PEDILEFs antes citados nesta seção não foram localizados no acervo da TNU nem em fonte oficial e foram retirados (auditoria 03/10/2026).
-
-
-
-
 
 ## 3. Jurisprudência do STJ
 

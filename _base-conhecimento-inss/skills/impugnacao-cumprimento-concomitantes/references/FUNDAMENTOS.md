@@ -1,6 +1,6 @@
 # Fundamentos Jurídicos para Impugnação ao Cumprimento de Revisão por Atividades Concomitantes
 
-## 1. Tema 1.070/STJ — Tese Vinculante
+## 1. Tema 1.070/STJ. Tese Vinculante
 
 REsp 1.870.793/RS, 1.870.815/PR e 1.870.891/PR
 Primeira Seção, Rel. Min. Sérgio Kukina
@@ -24,7 +24,7 @@ Redação vigente (a partir de 18/06/2019, pela Lei 13.846/2019). Incisos I, II 
 
 Ponto crucial. O art. 32 nunca distinguiu categorias de segurado. Refere-se genericamente ao "segurado que contribuir em razão de atividades concomitantes".
 
-## 3. EC 103/2019 — Inaplicabilidade Retroativa
+## 3. EC 103/2019. Inaplicabilidade Retroativa
 
 Art. 195, §14, CF (incluído pela EC 103/2019). Exige contribuição mínima mensal para cômputo como tempo de contribuição ao RGPS.
 
@@ -34,7 +34,7 @@ Aplicação temporal. A regra vale somente para competências a partir de 13/11/
 
 Direito adquirido. Art. 3º da EC 103/2019 garante que benefícios cujos requisitos foram cumpridos antes da Emenda são calculados pela legislação vigente à época. STF, Súmula 359 e ADI 3.104/DF.
 
-## 4. Tema 349/TNU — Contribuição Abaixo do Mínimo
+## 4. Tema 349/TNU. Contribuição Abaixo do Mínimo
 
 PEDILEF 0504017-94.2022.4.05.8400/RN
 Rel. Juiz Federal Neian Milhomem Cruz
@@ -80,7 +80,7 @@ A Cecalc possui opção de excluir competências abaixo do mínimo, mas essa op�
 
 A "Origem: Cálculo INSS" no demonstrativo indica que os salários foram importados dos dados já processados pelo INSS, sem cotejo independente com o CNIS. Essa informação é crucial para demonstrar que a Contadoria não dirimiu a controvérsia.
 
-## 10. Tema 1.207/STJ — Compensação de Benefício Inacumulável (Tese Vinculante Nacional)
+## 10. Tema 1.207/STJ. Compensação de Benefício Inacumulável (Tese Vinculante Nacional)
 
 REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria
 Julgamento em 28/06/2024, por unanimidade. Trânsito em julgado em fevereiro/2025.
@@ -95,7 +95,7 @@ Aplicação prática. Em todo cumprimento de sentença previdenciária em que ho
 
 **Consequência operacional.** Se a CEAB-DJ ou a Cecalc computar saldo negativo em qualquer competência (valor do benefício administrativo maior que o judicial), o excedente NÃO pode ser transportado para outras competências nem deduzido do montante global. Naquela competência, o crédito do segurado é simplesmente zero.
 
-## 11. IRDR 14/TRF4 — Compensação por Competência (Precedente Regional)
+## 11. IRDR 14/TRF4. Compensação por Competência (Precedente Regional)
 
 IRDR 5023872-14.2017.4.04.0000
 3ª Seção do TRF4, Rel. Des. Fed. Jorge Antonio Maurique
@@ -119,7 +119,7 @@ Tese fixada (representativo de controvérsia)
 
 Diferença de escopo em relação ao IRDR 14 e ao Tema 1.207. O Tema 195/TNU adota a compensação pelo total dos valores (soma global de créditos e débitos), com vedação apenas do saldo final negativo. O IRDR 14 e o Tema 1.207/STJ são mais protetivos, pois impedem saldo negativo em cada competência individualmente (compensação competência a competência). Para o segurado, a tese mais favorável é a do Tema 1.207/STJ, que prevalece como repetitivo nacional.
 
-## 13. RCIJEF 5001446-98.2024.4.04.7004 — Extensão a Benefícios Administrativos
+## 13. RCIJEF 5001446-98.2024.4.04.7004. Extensão a Benefícios Administrativos
 
 3ª Turma Recursal do Paraná, Rel. João Batista Brito Osório
 Julgamento em 14/04/2025.

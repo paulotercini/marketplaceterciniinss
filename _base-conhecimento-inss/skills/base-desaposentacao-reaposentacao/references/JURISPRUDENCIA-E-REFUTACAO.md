@@ -1,4 +1,4 @@
-# Desaposentação — Jurisprudência e Refutação
+# Desaposentação. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -46,79 +46,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Desaposentação vedada em todo caso
+### Argumento 1. Desaposentação vedada em todo caso
 
 Argumento adversário. Tema 503 STF.
 
 Refutação. Honestidade radical. Tese isolada rejeitada. Alternativas existem. Reafirmação da DER, revisão por melhor benefício, revisão por vínculos ou salários omitidos.
 
-### Argumento 2 — Devolução de valores
+### Argumento 2. Devolução de valores
 
 Argumento adversário. Exigência em caso de renúncia.
 
 Refutação. Boa-fé afasta devolução, conforme os embargos de declaração do RE 661.256 (Tema 503 STF) [NÃO CONFIRMADO] (auditoria 03/10/2026, retirado o Tema 381 STF).
 
-### Argumento 3 — Contribuição pós-DIB sem efeito
+### Argumento 3. Contribuição pós-DIB sem efeito
 
 Argumento adversário. Apenas salário-família e reabilitação.
 
 Refutação. Realidade atual. Alertar cliente sobre limites. Buscar alternativas via revisão.
 
-### Argumento 4 — Coisa julgada em ação anterior
+### Argumento 4. Coisa julgada em ação anterior
 
 Argumento adversário. Já decidido.
 
 Refutação. Tema 629 STJ em rural pode ser análogo. Acionar `coisa-julgada-previdenciaria`.
 
-### Argumento 5 — Reafirmação da DER em caso de benefício já implantado
+### Argumento 5. Reafirmação da DER em caso de benefício já implantado
 
 Argumento adversário. Descabida.
 
 Refutação. Tema 995 STJ. Regra geral exige que não tenha havido implantação. Analisar caso.
 
-### Argumento 6 — EC 103/2019 encerrou a tese
+### Argumento 6. EC 103/2019 encerrou a tese
 
 Argumento adversário. Reforma definitiva.
 
 Refutação. Vedação reforçada, porém não obstáculo a alternativas.
 
-### Argumento 7 — Revisão por direito adquirido inaplicável
+### Argumento 7. Revisão por direito adquirido inaplicável
 
 Argumento adversário. Benefício concedido.
 
 Refutação. Tema 334 STF admite direito adquirido em casos específicos. Analisar DIB.
 
-### Argumento 8 — Desnecessidade de devolução reduz vantagem
+### Argumento 8. Desnecessidade de devolução reduz vantagem
 
 Argumento adversário. Cálculo.
 
 Refutação. Valor líquido preserva o benefício (auditoria 03/10/2026, retirado o Tema 381 STF).
 
-### Argumento 9 — Demandas em aberto
+### Argumento 9. Demandas em aberto
 
 Argumento adversário. Jurisprudência definitiva.
 
 Refutação. Mudança legislativa pode abrir caminho. Reserva estratégica em casos pontuais.
 
-### Argumento 10 — Substituição de benefício vedada
+### Argumento 10. Substituição de benefício vedada
 
 Argumento adversário. Impossibilidade.
 
 Refutação. Confirmar Tema 503 e buscar revisão ou reafirmação.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, desaposentação.
-
-Hugo Goes, benefícios.
-
-Marco Aurélio Serau Junior, desaposentação.
-
-Daniel Pulino, aposentadoria.
-
-Jane Berwanger, planejamento.
-
-IBDP, advocacia previdenciária.
 
 ## 5. Estratégia integrada
 

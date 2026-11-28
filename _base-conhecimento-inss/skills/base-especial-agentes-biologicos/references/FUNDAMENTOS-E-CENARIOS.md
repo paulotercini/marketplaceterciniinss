@@ -1,4 +1,4 @@
-# Agentes Biológicos — Fundamentos Normativos e Cenários
+# Agentes Biológicos. Fundamentos Normativos e Cenários
 
 ## 1. Marco normativo
 
@@ -26,35 +26,35 @@ Aplicação pró-segurado. Qualquer PPP que indique atividade em ambiente hospit
 
 ## 3. Cenários concretos para o segurado
 
-### Cenário 1 — Profissional de enfermagem em hospital ou UBS
+### Cenário 1. Profissional de enfermagem em hospital ou UBS
 
 Enquadramento qualitativo direto. Enfermeiro, técnico de enfermagem e auxiliar de enfermagem com atuação em hospital, UBS ou UTI enquadram-se pelo Anexo 14 e pela NR-32.
 
-### Cenário 2 — Cirurgião-dentista e auxiliar de saúde bucal
+### Cenário 2. Cirurgião-dentista e auxiliar de saúde bucal
 
 Exposição a saliva, sangue, aerossóis, materiais contaminados, enquadra-se qualitativa e permanentemente. A TNU firmou a especialidade para cirurgião-dentista em julgamento reconhecido na jurisprudência.
 
-### Cenário 3 — Motorista e socorrista de SAMU ou ambulância
+### Cenário 3. Motorista e socorrista de SAMU ou ambulância
 
 Exposição a pacientes, fluidos e emergências caracteriza nocividade qualitativa. O Tema 211 TNU afasta a tese de exposição eventual. A presença integra o curso normal da jornada, com higienização do veículo e apoio em emergências.
 
-### Cenário 4 — Médico em hospital, pronto-socorro ou serviço domiciliar
+### Cenário 4. Médico em hospital, pronto-socorro ou serviço domiciliar
 
 Enquadramento qualitativo direto. Atuação em hospital, ambulatório, atenção domiciliar, transporte de pacientes ou serviços de emergência encontra amparo no Anexo 14 e na NR-32.
 
-### Cenário 5 — Laboratorista, biomédico e técnico de laboratório
+### Cenário 5. Laboratorista, biomédico e técnico de laboratório
 
 Contato com material biológico, cultura de microrganismos, preparo de lâminas, coleta. Enquadramento qualitativo direto.
 
-### Cenário 6 — Lavanderia hospitalar, limpeza hospitalar, copa hospitalar
+### Cenário 6. Lavanderia hospitalar, limpeza hospitalar, copa hospitalar
 
 Atividades listadas expressamente no Anexo 14. Enquadramento qualitativo direto, independentemente do vínculo com prestadora terceirizada, desde que a execução ocorra no ambiente de saúde.
 
-### Cenário 7 — Agente funerário, necropsista, coveiro em hospital ou IML
+### Cenário 7. Agente funerário, necropsista, coveiro em hospital ou IML
 
 Trabalho em contato com cadáveres, fluidos corporais, biologia post mortem. Enquadramento qualitativo direto.
 
-### Cenário 8 — Coleta e tratamento de lixo hospitalar ou urbano
+### Cenário 8. Coleta e tratamento de lixo hospitalar ou urbano
 
 Manipulação de resíduos infectocontagiosos, presunção de nocividade. Enquadramento qualitativo direto, com reforço do Tema 211 TNU quando a tese adversária alegar exposição eventual.
 

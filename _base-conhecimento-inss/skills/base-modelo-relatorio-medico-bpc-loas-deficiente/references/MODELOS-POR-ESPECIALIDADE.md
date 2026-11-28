@@ -5,11 +5,11 @@
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Deficiência física, ex. G82.2 paraplegia / Q05 espinha bífida / S14.1 lesão medular sequelar / Z89 amputação]
+[CID]. [Deficiência física, ex. G82.2 paraplegia / Q05 espinha bífida / S14.1 lesão medular sequelar / Z89 amputação]
 
 **Histórico clínico**
 
@@ -47,13 +47,13 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10/CID-11/DSM-5-TR)**
 
-[CID-10] — [Ex. F20 esquizofrenia / F71 retardo mental moderado]
-[CID-11] — [Para autismo. 6A02 Transtorno do Espectro Autista, nível de suporte (1, 2 ou 3)]
-[DSM-5-TR] — [Para autismo. Transtorno do Espectro do Autismo]
+[CID-10]. [Ex. F20 esquizofrenia / F71 retardo mental moderado]
+[CID-11]. [Para autismo. 6A02 Transtorno do Espectro Autista, nível de suporte (1, 2 ou 3)]
+[DSM-5-TR]. [Para autismo. Transtorno do Espectro do Autismo]
 
 **Histórico clínico**
 
@@ -95,11 +95,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-M79.7 — Fibromialgia (Lei 15.176/2025)
+M79.7. Fibromialgia (Lei 15.176/2025)
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -140,11 +140,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia multissistêmica, ex. E10 DM tipo 1 complicado / G35 esclerose múltipla / B20-B24 HIV/AIDS / C00-C97 câncer]
+[CID]. [Patologia multissistêmica, ex. E10 DM tipo 1 complicado / G35 esclerose múltipla / B20-B24 HIV/AIDS / C00-C97 câncer]
 
 **Histórico clínico**
 
@@ -182,11 +182,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Deficiência visual, ex. H54.0 cegueira em ambos os olhos / H54.4 cegueira em um olho (Súmula 377/STJ) / H54.6 baixa visão]
+[CID]. [Deficiência visual, ex. H54.0 cegueira em ambos os olhos / H54.4 cegueira em um olho (Súmula 377/STJ) / H54.6 baixa visão]
 
 **Histórico clínico**
 
@@ -228,11 +228,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Cardiopatia, ex. Q24 cardiopatia congênita / I50 insuficiência cardíaca crônica / I42 cardiomiopatia dilatada]
+[CID]. [Cardiopatia, ex. Q24 cardiopatia congênita / I50 insuficiência cardíaca crônica / I42 cardiomiopatia dilatada]
 
 **Histórico clínico**
 

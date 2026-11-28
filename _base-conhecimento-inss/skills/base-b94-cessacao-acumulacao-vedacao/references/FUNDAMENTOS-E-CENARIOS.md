@@ -1,4 +1,4 @@
-# Cessação e Acumulação B94 — Fundamentos e Cenários
+# Cessação e Acumulação B94. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,45 +40,45 @@ Tese literal, conferida na página oficial do STJ em 18/09/2026. "O termo inicia
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — B94 desde 1995
+### Cenário A. B94 desde 1995
 
 Acumulação só se a aposentadoria também for anterior a 11/11/1997 (Súmula 507 STJ). Com aposentadoria posterior, não acumula e resta a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
-### Cenário B — B94 cessado indevidamente
+### Cenário B. B94 cessado indevidamente
 
 Restabelecimento.
 
-### Cenário C — B94 desde 2010
+### Cenário C. B94 desde 2010
 
 Integração ao SB.
 
-### Cenário D — Dúvida sobre DIB
+### Cenário D. Dúvida sobre DIB
 
 Pesquisa documental.
 
-### Cenário E — B94 com majoração
+### Cenário E. B94 com majoração
 
 Revisão.
 
-### Cenário F — Atrasados
+### Cenário F. Atrasados
 
 Cinco anos pretéritos.
 
-### Cenário G — Aposentadoria por invalidez
+### Cenário G. Aposentadoria por invalidez
 
 Análise específica.
 
 ## 6. Cenários limitados
 
-### Cenário H — DIB confirmada após 11/11/1997
+### Cenário H. DIB confirmada após 11/11/1997
 
 Sem acumulação.
 
-### Cenário I — Decadência consumada
+### Cenário I. Decadência consumada
 
 Direito perdido.
 
-### Cenário J — Coisa julgada
+### Cenário J. Coisa julgada
 
 Análise específica.
 

@@ -1,4 +1,4 @@
-# Honorários de Sucumbência — Jurisprudência e Refutação
+# Honorários de Sucumbência. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -44,79 +44,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Base sobre valor da causa
+### Argumento 1. Base sobre valor da causa
 
 Argumento adversário. Uniformidade.
 
 Refutação. Súmula 111 STJ. Parcelas vencidas.
 
-### Argumento 2 — Fixação equitativa
+### Argumento 2. Fixação equitativa
 
 Argumento adversário. Art. 85 §8º.
 
 Refutação. Tema 1076 STJ. Excepcional.
 
-### Argumento 3 — Sem honorários em reafirmação
+### Argumento 3. Sem honorários em reafirmação
 
 Argumento adversário. Fato superveniente.
 
 Refutação. Tema 995 STJ reconhece.
 
-### Argumento 4 — Majoração recursal vedada
+### Argumento 4. Majoração recursal vedada
 
 Argumento adversário. Dupla condenação.
 
 Refutação. Art. 85 §11 autoriza.
 
-### Argumento 5 — Acordo dispensa
+### Argumento 5. Acordo dispensa
 
 Argumento adversário. Autonomia.
 
 Refutação. Art. 85 §2º aplicável.
 
-### Argumento 6 — Gratuidade afasta
+### Argumento 6. Gratuidade afasta
 
 Argumento adversário. Isenção.
 
 Refutação. Suspende exigibilidade. Não afasta condenação.
 
-### Argumento 7 — Juros e correção fora
+### Argumento 7. Juros e correção fora
 
 Argumento adversário. Principal.
 
 Refutação. Integram base.
 
-### Argumento 8 — Cumprimento não gera honorários
+### Argumento 8. Cumprimento não gera honorários
 
 Argumento adversário. Fase única.
 
 Refutação. Honorários próprios no cumprimento.
 
-### Argumento 9 — Destaque vedado
+### Argumento 9. Destaque vedado
 
 Argumento adversário. RPV.
 
 Refutação. Art. 22 §4º EAOAB assegura.
 
-### Argumento 10 — Recurso do segurado reduz base
+### Argumento 10. Recurso do segurado reduz base
 
 Argumento adversário. Redução.
 
 Refutação. Base pelo proveito obtido.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Fredie Didier Jr, Leonardo Carneiro da Cunha, Fazenda em Juízo.
-
-Paulo Henrique dos Santos Lucon.
-
-Luiz Rodrigues Wambier, Teresa Arruda Alvim.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

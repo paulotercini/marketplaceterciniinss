@@ -3,7 +3,7 @@ name: segurado-especial-rural
 description: "Skill do segurado especial rural (art. 11, VII, Lei 8.213/91). Use SEMPRE que mencionar segurado especial, trabalhador rural, aposentadoria rural, aposentadoria por idade rural, economia familiar, boia-fria, CNPJ segurado especial, MEI rural, faturamento alto rural, notas fiscais segurado especial, descaracterização, módulo fiscal, autodeclaração rural, DAP, CAF, PRONAF, bloco de notas, Sintegra, SNCR, Ofício-Circular 46/2019, art. 106 Lei 8.213, art. 116 IN 128, prova rural, labor infantil rural, Tema 219 TNU, Enunciado 8 CRPS, período de graça segurado especial, Tema 348 TNU, Tema 629 STJ repropositura, Tema 327 TNU cônjuge, Enunciado 15 CRPS, art. 109 IN 128. Acionar AUTOMATICAMENTE com peticao-previdenciaria, documentos-comprobatorios-in128, perspectiva-genero-previdenciario quando envolver segurado especial ou atividade rural. Hub temático. NÃO use para aposentadoria especial por agente nocivo, BPC/LOAS ou incapacidade sem componente rural."
 ---
 
-# Segurado Especial Rural — Regime Jurídico e Estratégia
+# Segurado Especial Rural. Regime Jurídico e Estratégia
 
 ## Fonte normativa primária
 
@@ -15,7 +15,7 @@ description: "Skill do segurado especial rural (art. 11, VII, Lei 8.213/91). Use
 - IN PRES/INSS 128/2022, Seção XV, arts. 109 a 118
 - Portaria DIRBEN/INSS 990/2022, Capítulo III, arts. 75 a 102
 - Ofício-Circular DIRBEN/INSS 46/2019 (manual do servidor para análise de atividade rural)
-- Portaria DIRBEN/INSS 1.094/2022 (Guia CNIS — ratificação automática)
+- Portaria DIRBEN/INSS 1.094/2022 (Guia CNIS, ratificação automática)
 - Portaria Conjunta INSS/PFE 7/2020 (ACP trabalho rural de menor)
 - Ofício-Circular DIRBEN/INSS 46/2019, Anexos (atividades MEI permitidas)
 
@@ -74,7 +74,7 @@ O art. 112 da IN 128/2022 lista, em 11 incisos, hipóteses que NÃO descaracteri
 ## O que DESCARACTERIZA o segurado especial
 
 1. Contratação de empregados permanentes (art. 11, §§ 1º e 7º, Lei 8.213/91; o §7º admite contratados por prazo determinado até 120 pessoas/dia no ano civil) (auditoria 03/10/2026)
-2. Propriedade ou posse de área superior a 4 módulos fiscais — **ATENÇÃO: Tema 1115/STJ** (REsp 1.947.404/RS, Primeira Seção, Rel. Min. Benedito Gonçalves, j. 23/11/2022, vinculante) fixou que a área superior a 4 módulos fiscais, por si só, NÃO descaracteriza o segurado especial, desde que comprovados os demais requisitos legais (regime de economia familiar, indispensabilidade, ausência de empregados permanentes). Alinhado à Súmula 30/TNU. O INSS frequentemente descaracteriza automaticamente pela extensão da propriedade no SNCR/INCRA. O advogado deve produzir prova robusta de regime de economia familiar para afastar a presunção administrativa. Quando descaracterizado, o produtor migra para CI rural (art. 90, I, IN 128/2022), consultar skill `contribuinte-individual-in128`.
+2. Propriedade ou posse de área superior a 4 módulos fiscais. **ATENÇÃO: Tema 1115/STJ** (REsp 1.947.404/RS, Primeira Seção, Rel. Min. Benedito Gonçalves, j. 23/11/2022, vinculante) fixou que a área superior a 4 módulos fiscais, por si só, NÃO descaracteriza o segurado especial, desde que comprovados os demais requisitos legais (regime de economia familiar, indispensabilidade, ausência de empregados permanentes). Alinhado à Súmula 30/TNU. O INSS frequentemente descaracteriza automaticamente pela extensão da propriedade no SNCR/INCRA. O advogado deve produzir prova robusta de regime de economia familiar para afastar a presunção administrativa. Quando descaracterizado, o produtor migra para CI rural (art. 90, I, IN 128/2022), consultar skill `contribuinte-individual-in128`.
 3. Exercício de atividade urbana com rendimento que torne dispensável a atividade rural
 4. Aposentadoria por outro regime (RPPS ou pelo RGPS em outra categoria)
 5. Atividade remunerada em período superior ao permitido no art. 11, §9º
@@ -87,7 +87,7 @@ O art. 112 da IN 128/2022 lista, em 11 incisos, hipóteses que NÃO descaracteri
 
 CTPS, registro de imóvel rural, contrato de arrendamento/parceria/comodato, DAP/CAF, bloco de notas do produtor rural, notas fiscais de entrada, documentos fiscais de entrega à cooperativa, licença de ocupação do INCRA, certidão do INCRA.
 
-### Documentos da IN 128/2022 (art. 116 — 36 incisos)
+### Documentos da IN 128/2022 (art. 116. 36 incisos)
 
 Autodeclaração (art. 115) + documentos complementares do art. 116, incluindo certidão de casamento com profissão rural, histórico escolar de escola rural, ITR, comprovante de PRONAF, carteira de vacinação animal, entre 36 opções. O rol é exemplificativo.
 
@@ -111,8 +111,8 @@ Essas bases são as mesmas consultadas pelo INSS no procedimento de ratificaçã
 
 1. **Róis exemplificativos.** Todos os róis (art. 106 da Lei, art. 116 da IN) são exemplificativos; o art. 116 da IN 128 usa a expressão "dentre outros" (auditoria 03/10/2026)
 2. **Contemporaneidade flexibilizada.** Quando a ausência de documentos contemporâneos decorrer de informalidade rural ou invisibilização do trabalho feminino (Protocolo de Gênero)
-3. **Prova emprestada do cônjuge.** Tema 327/TNU — documentos do cônjuge constituem início de prova material
-4. **Prova emprestada dos pais.** PUIL 5009034-30.2021.4.03.6119 [localizado no MCP TNU, a conferir na fonte oficial] (auditoria 03/10/2026) — documentos dos pais como prova para filhos do mesmo núcleo. Tese já consolidada na jurisprudência da TNU e do STJ por via do Tema 18/TNU e da Súmula 6/TNU, independentemente deste PUIL específico.
+3. **Prova emprestada do cônjuge.** Tema 327/TNU, documentos do cônjuge constituem início de prova material
+4. **Prova emprestada dos pais.** PUIL 5009034-30.2021.4.03.6119 [localizado no MCP TNU, a conferir na fonte oficial] (auditoria 03/10/2026), documentos dos pais como prova para filhos do mesmo núcleo. Tese já consolidada na jurisprudência da TNU e do STJ por via do Tema 18/TNU e da Súmula 6/TNU, independentemente deste PUIL específico.
 5. **Instrumento ratificador vale para todo o grupo familiar** (art. 116, §3º, I, IN 128) (auditoria 03/10/2026)
 6. **Autodeclaração ratificada automaticamente** pelo cruzamento de bases governamentais (Guia CNIS, Portaria 1.094/2022)
 
@@ -142,7 +142,7 @@ Na via administrativa, invocar a Portaria Conjunta 7/2020 e o Enunciado 8. Na vi
 
 ## Período de graça
 
-**Tema 348/TNU** (PEDILEF 0504229-18.2022.4.05.8400/RN, Rel. Juiz Federal Neian Milhomem Cruz, afetação 14/12/2023, julgado em 14/05/2025, acórdão publicado 15/05/2025, trânsito em julgado 17/06/2025, por unanimidade). Tese firmada — "O segurado especial tem direito à prorrogação do período de graça por inatividade involuntária, aplicando-se por analogia o art. 15, §2º, da Lei nº 8.213/91."
+**Tema 348/TNU** (PEDILEF 0504229-18.2022.4.05.8400/RN, Rel. Juiz Federal Neian Milhomem Cruz, afetação 14/12/2023, julgado em 14/05/2025, acórdão publicado 15/05/2025, trânsito em julgado 17/06/2025, por unanimidade). Tese firmada, "O segurado especial tem direito à prorrogação do período de graça por inatividade involuntária, aplicando-se por analogia o art. 15, §2º, da Lei nº 8.213/91."
 
 **Fundamento central do voto condutor.** A atividade dos segurados especiais guarda relação indissociável com questões climáticas e ambientais. Estiagem prolongada, enchentes, eventos extremos e degradação ambiental comprometem a produção rural, a pesca artesanal e o extrativismo, configurando "inatividade involuntária" análoga ao desemprego involuntário do segurado urbano.
 
@@ -178,7 +178,7 @@ Consultar skill `auditoria-ppp` quando houver PPP de empregador rural.
 
 ---
 
-## Coisa julgada e repropositura — Tema 629/STJ
+## Coisa julgada e repropositura. Tema 629/STJ
 
 Quando a improcedência em ação anterior decorreu de ausência de início de prova material (e não de juízo exauriente sobre as provas), a extinção se dá sem resolução do mérito. O segurado pode ajuizar nova ação com novos documentos, sem necessidade de ação rescisória.
 
@@ -254,13 +254,13 @@ Enunciados 8 (labor infantil) e 15 (tempo especial) são as bases. Quando o INSS
 
 6. **Aposentadoria híbrida.** O segurado que combina períodos rurais e urbanos pode requerer aposentadoria por idade urbana com cômputo de período rural. Atentar ao Tema 1007/STJ (aposentadoria híbrida) e verificar se o caso não se enquadra nessa hipótese.
 
-7. **CÓDIGO GPS DO SEGURADO ESPECIAL — ERRO GRAVE COM CÓDIGO 1163.** O segurado especial que contribui facultativamente (art. 39, II, Lei 8.213/91 c/c art. 25, §1º, Lei 8.212/91 c/c art. 200, §2º, Decreto 3.048/99) deve usar EXCLUSIVAMENTE o código 1503 (mensal, 20%) ou 1554 (trimestral, 20%). O uso do código 1163 (CI simplificado, 11%) registra o segurado como contribuinte individual urbano no CNIS, podendo comprometer a aposentadoria rural por idade e gerar questionamento sobre a condição de segurado especial. A contribuição facultativa do segurado especial não altera seu enquadramento como segurado especial. Correção exige RAC Anexo I-F + RetGPS + complementação de 9% (diferença entre 11% e 20%) com juros e multa. Na via judicial, jurisprudência consolidada (TRF3, TRF4, TNU) protege o segurado de boa-fé contra descaracterização por código errado. Para procedimento completo de correção, acionar a skill `contribuicoes-complementacao-ec103`.
+7. **CÓDIGO GPS DO SEGURADO ESPECIAL. ERRO GRAVE COM CÓDIGO 1163.** O segurado especial que contribui facultativamente (art. 39, II, Lei 8.213/91 c/c art. 25, §1º, Lei 8.212/91 c/c art. 200, §2º, Decreto 3.048/99) deve usar EXCLUSIVAMENTE o código 1503 (mensal, 20%) ou 1554 (trimestral, 20%). O uso do código 1163 (CI simplificado, 11%) registra o segurado como contribuinte individual urbano no CNIS, podendo comprometer a aposentadoria rural por idade e gerar questionamento sobre a condição de segurado especial. A contribuição facultativa do segurado especial não altera seu enquadramento como segurado especial. Correção exige RAC Anexo I-F + RetGPS + complementação de 9% (diferença entre 11% e 20%) com juros e multa. Na via judicial, jurisprudência consolidada (TRF3, TRF4, TNU) protege o segurado de boa-fé contra descaracterização por código errado. Para procedimento completo de correção, acionar a skill `contribuicoes-complementacao-ec103`.
 
 ## Arquivos de referência
 
 Antes de concluir análise ou peça com base nesta skill, leia também, conforme o caso concreto:
 
-- `references/precedentes-rurais.md` — material complementar desta skill
+- `references/precedentes-rurais.md`, material complementar desta skill
 
 ## Redação da peça neste tema
 
@@ -274,16 +274,4 @@ Entram só os documentos em nome do cliente e do imóvel da tese, e nenhum docum
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

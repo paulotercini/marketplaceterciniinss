@@ -1,4 +1,4 @@
-# BPC e Aposentadoria PCD — Procedimentos — Fundamentos e Cenários
+# BPC e Aposentadoria PCD. Procedimentos. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -104,43 +104,43 @@ JEF até 60 SM. Vara Federal acima. Tutela de urgência com prova pré-constitu�
 
 ## 8. Cenários operacionais pró-segurado
 
-### Cenário 1 — Indeferimento BPC por renda
+### Cenário 1. Indeferimento BPC por renda
 
 Requerente em miserabilidade concreta. Recurso ao CRPS. Se mantido, ação judicial com flexibilização (Tema 27 STF).
 
-### Cenário 2 — Indeferimento BPC por TCQ desfavorável
+### Cenário 2. Indeferimento BPC por TCQ desfavorável
 
 Impugnação técnica da TCQ. Assistente técnico em perícia judicial.
 
-### Cenário 3 — Indeferimento aposentadoria PCD por DID tardia
+### Cenário 3. Indeferimento aposentadoria PCD por DID tardia
 
 Reconstrução documental. Skill `formacao-documentacao-did-pcd`.
 
-### Cenário 4 — Perícia Teleperícia inadequada
+### Cenário 4. Perícia Teleperícia inadequada
 
 Solicitação de perícia presencial. Cerceamento registrado.
 
-### Cenário 5 — Cessação por reavaliação bienal
+### Cenário 5. Cessação por reavaliação bienal
 
 Recurso ao CRPS. MS em impedimento permanente. Lei 15.157/2025.
 
-### Cenário 6 — CadÚnico desatualizado
+### Cenário 6. CadÚnico desatualizado
 
 Atualização imediata. Retroatividade à DER.
 
-### Cenário 7 — Mora no PA
+### Cenário 7. Mora no PA
 
 MS por mora. Competência JEF se valor até 60 SM.
 
-### Cenário 8 — Cessação indevida por Bolsa Família
+### Cenário 8. Cessação indevida por Bolsa Família
 
 MS com arguição incidental de inconstitucionalidade do Decreto 12.534/2025.
 
-### Cenário 9 — Aposentadoria PCD com grau subestimado
+### Cenário 9. Aposentadoria PCD com grau subestimado
 
 Recurso ao CRPS. Impugnação técnica.
 
-### Cenário 10 — Revisão de aposentadoria comum para PCD
+### Cenário 10. Revisão de aposentadoria comum para PCD
 
 Verificar decadência (art. 103). Revisão administrativa. Se negada, ação judicial.
 

@@ -52,7 +52,6 @@ Artigos centrais para recursos.
 - Art. 118. Estabilidade.
 - **Art. 126.** Recurso ao CRPS. Prazo de 30 dias no art. 77 do RICRPS; o art. 127 foi revogado pela Lei 9.711/98 (auditoria 03/10/2026).
 
-
 **Lei 8.212/91.** Custeio da Seguridade Social. Última alteração Lei 15.363/2026.
 
 Artigos centrais.

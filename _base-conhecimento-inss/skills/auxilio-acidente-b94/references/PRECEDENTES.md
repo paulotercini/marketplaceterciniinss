@@ -1,4 +1,4 @@
-# Mapa de Precedentes — Auxílio-Acidente (B94)
+# Mapa de Precedentes. Auxílio-Acidente (B94)
 
 ## Sumário
 1. Precedentes vinculantes (STJ repetitivo)
@@ -10,7 +10,7 @@
 
 ---
 
-## 1. Precedentes Vinculantes — STJ (Repetitivo)
+## 1. Precedentes Vinculantes. STJ (Repetitivo)
 
 ### Tema 416/STJ
 - **Tese:** O grau da lesão não interfere na concessão do auxílio-acidente, bastando a existência de sequela que imponha maior esforço ao segurado para o desempenho de sua atividade laborativa habitual.
@@ -90,7 +90,7 @@
 
 ## 6. Precedentes Relevantes dos TRFs
 
-### TRF3 — ApCiv 5007232-91.2024.4.03.6183
+### TRF3. ApCiv 5007232-91.2024.4.03.6183
 - **Turma:** 7ª Turma
 - **Relator para acórdão:** Des. Federal Marcus Orione
 - **Caso:** Motorista de carreta com limitação mínima da mobilidade do punho direito após fratura de rádio e ulna
@@ -99,41 +99,41 @@
 - **Correção monetária:** EC 113/2021
 - **Relevância:** diretamente aplicável na 36ª Subseção de Catanduva (TRF3)
 
-### TRF3 — ApCiv 5013553-90.2021.4.03.6105
+### TRF3. ApCiv 5013553-90.2021.4.03.6105
 - **Turma:** 7ª Turma
 - **Relator:** Des. Jean Marcos Ferreira
 - **Julgamento:** 17/05/2024
 - **Tese:** Anexo III do Decreto 3.048/99 é exemplificativo. MS viável quando questão é de direito.
 
-### TRF4 — AI 5029923-60.2025.4.04.0000/RS
+### TRF4. AI 5029923-60.2025.4.04.0000/RS
 - **Turma:** 6ª Turma
 - **Relator:** Des. Fernando Quadros da Silva
 - **Julgamento:** 11/03/2026
 - **Tese:** RMI do B94 = 50% do salário de benefício, não da RMI do auxílio-doença. Lei prevalece sobre IN 128/2022 (art. 233, X).
 
-### TRF4 — AC 5059859-24.2021.4.04.7000
+### TRF4. AC 5059859-24.2021.4.04.7000
 - **Relatora:** Cláudia Cristina Cristofani
 - **Julgamento:** 14/02/2022
 - **Tese:** Anexo III exemplificativo. Viabilidade de MS.
 
-### TRF5 — AC 0004352-48.2025.4.05.0000-CE
+### TRF5. AC 0004352-48.2025.4.05.0000-CE
 - **Caso:** Agricultor com acidente de trajeto
 - **Tese:** Sequela não precisa ser irreversível. A irreversibilidade da moléstia é irrelevante para B94.
 
-### TRF1 — ApCiv 1009673912021401330
+### TRF1. ApCiv 1009673912021401330
 - **Turma:** 9ª Turma
 - **Relatora:** Des. Nilza Reis
 - **Julgamento:** 15/12/2023
 - **Tese:** Anexo III exemplificativo.
 
-## 7. Precedentes do STJ (Não Repetitivos) — Divergência sobre CI
+## 7. Precedentes do STJ (Não Repetitivos). Divergência sobre CI
 
 ### Linha restritiva
-- **AgInt no REsp 2.077.714/SC** — Min. Gurgel de Faria, 1ª Turma, j. 24/06/2024, DJe 03/07/2024
-- **REsp 2.199.012** — Min. Teodoro Silva Santos, DJe 03/11/2025
+- **AgInt no REsp 2.077.714/SC.** Min. Gurgel de Faria, 1ª Turma, j. 24/06/2024, DJe 03/07/2024
+- **REsp 2.199.012.** Min. Teodoro Silva Santos, DJe 03/11/2025
 
 ### Linha protetiva
-- **REsp 2.217.297** — Min. Sérgio Kukina, DJe 06/08/2025 (decisão monocrática). Reconhece que a categoria preservada do vínculo anterior prevalece quando a migração para CI ocorre dentro do período de graça.
+- **REsp 2.217.297.** Min. Sérgio Kukina, DJe 06/08/2025 (decisão monocrática). Reconhece que a categoria preservada do vínculo anterior prevalece quando a migração para CI ocorre dentro do período de graça.
 
 **Status:** sem afetação como repetitivo até março/2026. Monitorar.
 

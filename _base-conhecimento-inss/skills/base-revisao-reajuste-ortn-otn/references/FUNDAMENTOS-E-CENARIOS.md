@@ -1,4 +1,4 @@
-# Revisão por Reajustes ORTN e OTN — Fundamentos e Cenários
+# Revisão por Reajustes ORTN e OTN. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,33 +46,33 @@ Decadência decenal.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Benefício em manutenção com distorção documentada
+### Cenário A. Benefício em manutenção com distorção documentada
 
 Benefício que, excepcionalmente, esteja dentro do prazo decadencial. Verificar.
 
-### Cenário B — Ação em curso
+### Cenário B. Ação em curso
 
 Ação ajuizada antes do exaurimento do prazo.
 
-### Cenário C — Pensão derivada com decadência autônoma
+### Cenário C. Pensão derivada com decadência autônoma
 
 Dependentes com prazo próprio. Verificar.
 
-### Cenário D — Execução em andamento
+### Cenário D. Execução em andamento
 
 Reconhecimento administrativo ou judicial prévio em fase de cumprimento. Aplicar a Súmula 85 STJ para atualização das parcelas.
 
 ## 6. Cenários a evitar
 
-### Cenário E — Decadência consumada
+### Cenário E. Decadência consumada
 
 Regra geral. Benefícios concedidos antes de 2015 estão com decadência consumada. Honestidade radical obriga alertar o cliente.
 
-### Cenário F — Ausência de distorção concreta
+### Cenário F. Ausência de distorção concreta
 
 Sem diferença na RMI, pedido é infundado.
 
-### Cenário G — Bis in idem com revisões já implementadas
+### Cenário G. Bis in idem com revisões já implementadas
 
 Cautela para não duplicar a aplicação de índices já computados.
 

@@ -1,4 +1,4 @@
-# União Estável e Pensão por Morte — Jurisprudência e Refutação
+# União Estável e Pensão por Morte. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -6,7 +6,7 @@
 
 Concubinato impuro. Fonte oficial em https://portal.stf.jus.br
 
-### Súmula 63/TNU (redação de 18/09/2025, fatos geradores até a MP 871/2019 — auditoria 25/07/2026)
+### Súmula 63/TNU (redação de 18/09/2025, fatos geradores até a MP 871/2019. auditoria 25/07/2026)
 
 Para fatos geradores ocorridos até a entrada em vigor da MP 871/2019, a comprovação de união estável para concessão de pensão por morte prescinde de início de prova material (auditoria 03/10/2026). Fonte oficial em https://www.cjf.jus.br
 
@@ -32,77 +32,65 @@ União homoafetiva. Fonte oficial em https://portal.stf.jus.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Exigência de escritura pública
+### Argumento 1. Exigência de escritura pública
 
 Argumento adversário. Sem escritura, sem união.
 
 Refutação. CC art. 1.723; Súmula 63/TNU para fatos até 18/01/2019.
 
-### Argumento 2 — Recusa de prova testemunhal
+### Argumento 2. Recusa de prova testemunhal
 
 Argumento adversário. Apenas prova material.
 
 Refutação. Súmula 63/TNU autoriza testemunhas para fatos até 18/01/2019; após, art. 16, §5º, da Lei 8.213/91.
 
-### Argumento 3 — Falta de contemporaneidade
+### Argumento 3. Falta de contemporaneidade
 
 Argumento adversário. Prova mês a mês.
 
 Refutação. Continuidade demonstrada por documentos pontuais.
 
-### Argumento 4 — Concomitância com cônjuge
+### Argumento 4. Concomitância com cônjuge
 
 Argumento adversário. Concubinato impuro afasta.
 
 Refutação. O Tema 526/STF não admite exceção, mas a separação de fato afasta o próprio concubinato e permite a união estável (CC, art. 1.723, §1º; Tema 529/STF) (auditoria 03/10/2026).
 
-### Argumento 5 — Início de prova material insuficiente
+### Argumento 5. Início de prova material insuficiente
 
 Argumento adversário. Documento isolado não vale.
 
 Refutação. Composição plural.
 
-### Argumento 6 — União homoafetiva não reconhecida
+### Argumento 6. União homoafetiva não reconhecida
 
 Argumento adversário. Sem direito.
 
 Refutação. RE 477.554. Equiparação plena.
 
-### Argumento 7 — Dependência econômica não comprovada
+### Argumento 7. Dependência econômica não comprovada
 
 Argumento adversário. Sem dependência.
 
 Refutação. Presunção juris tantum (art. 16 §4º Lei 8.213).
 
-### Argumento 8 — Falta de filhos comuns
+### Argumento 8. Falta de filhos comuns
 
 Argumento adversário. Sem filhos, sem união.
 
 Refutação. Filhos não são essenciais.
 
-### Argumento 9 — Residência separada
+### Argumento 9. Residência separada
 
 Argumento adversário. Casal não morava junto.
 
 Refutação. Cabe análise da continuidade.
 
-### Argumento 10 — Justificação administrativa indeferida
+### Argumento 10. Justificação administrativa indeferida
 
 Argumento adversário. JA é discricionária.
 
 Refutação. Art. 142 IN 128/2022 obriga.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira reconhece o caráter alimentar.
-
-Frederico Amado defende interpretação ampliativa.
-
-Hugo Goes admite prova flexível.
-
-Marco Aurélio Serau Junior critica formalismo do INSS.
-
-IBDP sustenta presunção de dependência.
 
 ## 4. Estratégia integrada
 

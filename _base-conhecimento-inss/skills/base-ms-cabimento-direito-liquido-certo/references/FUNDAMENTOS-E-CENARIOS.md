@@ -1,4 +1,4 @@
-# Cabimento do MS Previdenciário — Fundamentos e Cenários
+# Cabimento do MS Previdenciário. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -56,45 +56,45 @@ Segue as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, 
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Demora injustificada
+### Cenário A. Demora injustificada
 
 acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
-### Cenário B — Exigência abusiva
+### Cenário B. Exigência abusiva
 
 Lei 13.460/2017.
 
-### Cenário C — Arquivamento sem fundamentação
+### Cenário C. Arquivamento sem fundamentação
 
 Súmula 628 STJ, teoria da encampação, útil se houver erro na indicação da autoridade coatora (auditoria 03/10/2026).
 
-### Cenário D — Negativa por vício formal
+### Cenário D. Negativa por vício formal
 
 MS contra ato.
 
-### Cenário E — Descumprimento CRPS
+### Cenário E. Descumprimento CRPS
 
 MS por omissão.
 
-### Cenário F — Reabertura de PA
+### Cenário F. Reabertura de PA
 
 Súmula 628 STJ, teoria da encampação, útil se houver erro na indicação da autoridade coatora (auditoria 03/10/2026).
 
-### Cenário G — Complementação de contribuição
+### Cenário G. Complementação de contribuição
 
 MS pró-segurado.
 
 ## 6. Cenários limitados
 
-### Cenário H — Mérito técnico
+### Cenário H. Mérito técnico
 
 Ação ordinária.
 
-### Cenário I — Perícia necessária
+### Cenário I. Perícia necessária
 
 MS inadequado.
 
-### Cenário J — Fato controverso
+### Cenário J. Fato controverso
 
 Exige instrução.
 

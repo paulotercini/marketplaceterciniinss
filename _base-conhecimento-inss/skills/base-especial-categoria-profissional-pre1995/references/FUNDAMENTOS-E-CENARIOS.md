@@ -1,4 +1,4 @@
-# Categoria Profissional pré-1995 — Fundamentos e Cenários
+# Categoria Profissional pré-1995. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,45 +46,45 @@ Conversão.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Motorista pré-1995
+### Cenário A. Motorista pré-1995
 
 Categoria.
 
-### Cenário B — Frentista pré-1995
+### Cenário B. Frentista pré-1995
 
 Categoria.
 
-### Cenário C — Telefonista pré-1995
+### Cenário C. Telefonista pré-1995
 
 Categoria.
 
-### Cenário D — Metalúrgico pré-1995
+### Cenário D. Metalúrgico pré-1995
 
 Categoria.
 
-### Cenário E — Mineiro pré-1995
+### Cenário E. Mineiro pré-1995
 
 Categoria.
 
-### Cenário F — Auxiliar de enfermagem pré-1995
+### Cenário F. Auxiliar de enfermagem pré-1995
 
 Categoria.
 
-### Cenário G — Petroleiro pré-1995
+### Cenário G. Petroleiro pré-1995
 
 Categoria.
 
 ## 6. Cenários limitados
 
-### Cenário H — Atividade pós-1995 sem PPP
+### Cenário H. Atividade pós-1995 sem PPP
 
 Análise específica.
 
-### Cenário I — Função administrativa pré-1995
+### Cenário I. Função administrativa pré-1995
 
 Sem nocividade.
 
-### Cenário J — Sem comprovação de função
+### Cenário J. Sem comprovação de função
 
 Análise difícil.
 

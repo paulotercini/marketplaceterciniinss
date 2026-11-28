@@ -1,4 +1,4 @@
-# Direito Adquirido Pré EC 103/2019 — Jurisprudência Verificada e Refutação
+# Direito Adquirido Pré EC 103/2019. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -54,49 +54,49 @@ Aplicação pró-segurado. Fundamento para revisão e reapreciação administrat
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Tempus regit actum pela DER
+### Argumento 1. Tempus regit actum pela DER
 
 Argumento adversário. A regra aplicável é a vigente na data do requerimento (DER).
 
 Refutação. Súmula 359 STF e Tema 334 STF. A regra aplicável é a vigente na data em que os requisitos foram preenchidos, não na DER. O direito adquirido ao benefício se incorpora ao patrimônio jurídico no momento em que os requisitos são implementados, e a protelação do requerimento não extingue o direito.
 
-### Argumento 2 — Necessidade de requerimento antes da reforma
+### Argumento 2. Necessidade de requerimento antes da reforma
 
 Argumento adversário. Para ter direito adquirido, o segurado deveria ter requerido o benefício antes de 13 de novembro de 2019.
 
 Refutação. O direito adquirido é materialmente constituído com o preenchimento dos requisitos, independentemente do ato de requerimento. Art. 3º da EC 103. Súmula 359 STF. O requerimento é ato declaratório, não constitutivo.
 
-### Argumento 3 — Perda do direito por continuidade laboral
+### Argumento 3. Perda do direito por continuidade laboral
 
 Argumento adversário. O segurado continuou trabalhando após implementar requisitos, portanto teria renunciado ao direito pela regra antiga.
 
 Refutação. Não há renúncia tácita a direito adquirido pela simples continuidade da atividade. Pelo contrário, o tempo adicional pode gerar direito ao melhor benefício pela soma do acervo contributivo, conforme Tema 334 STF, preservando o direito à regra mais vantajosa.
 
-### Argumento 4 — Aplicação automática da regra de transição
+### Argumento 4. Aplicação automática da regra de transição
 
 Argumento adversário. Após a reforma, todo segurado migra automaticamente para regra de transição ou permanente.
 
 Refutação. Art. 3º da EC 103 é cláusula de salvaguarda. Quem tinha direito adquirido antes de 13 de novembro de 2019 mantém integralmente o direito à regra pré-reforma, com RMI calculada pela regra pré-reforma, independentemente do momento em que exerceu o pedido.
 
-### Argumento 5 — Decadência do art. 103 para invocar direito adquirido
+### Argumento 5. Decadência do art. 103 para invocar direito adquirido
 
 Argumento adversário. Após 10 anos, o segurado não pode mais invocar o direito adquirido à regra pré-reforma.
 
 Refutação. Sem benefício concedido, não há prazo decadencial para a concessão inicial (Tema 313/STF, item I), e o direito adquirido à regra anterior pode ser exercido a qualquer tempo; já a revisão de benefício concedido para alcançar regra mais vantajosa se sujeita ao prazo do art. 103 (Tema 966/STJ e Tema 334/STF), tese adversa (auditoria 03/10/2026, retirada a atribuição ao Tema 350/STF, que trata do prévio requerimento). Acionar `decadencia-revisao-previdenciaria`.
 
-### Argumento 6 — Negativa de melhor benefício por vinculação à DER
+### Argumento 6. Negativa de melhor benefício por vinculação à DER
 
 Argumento adversário. O segurado requereu benefício em determinada DER, portanto estaria vinculado àquela data.
 
 Refutação. Tema 334 STF (RE 630.501). O direito ao melhor benefício permite calcular a RMI em cada data em que os requisitos já estavam reunidos e adotar a mais favorável, respeitadas a decadência e a prescrição; a DIB e os efeitos financeiros seguem a DER [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
-### Argumento 7 — Exigência de idade mínima retroativa
+### Argumento 7. Exigência de idade mínima retroativa
 
 Argumento adversário. Mesmo com 35 anos de contribuição antes da reforma, a aposentadoria integral exigiria idade mínima sob nova sistemática.
 
 Refutação. A aposentadoria por tempo de contribuição integral pré-reforma não exigia idade mínima. Art. 201, §7º, I, da CF na redação vigente até 13 de novembro de 2019. A exigência de idade mínima é inovação da EC 103 e não retroage para quem já tinha direito adquirido.
 
-### Argumento 8 — Inaplicabilidade da regra 85/95 após reforma
+### Argumento 8. Inaplicabilidade da regra 85/95 após reforma
 
 Argumento adversário. A regra 85/95 progressiva foi extinta pela EC 103, sendo inaplicável a qualquer caso pós-reforma.
 

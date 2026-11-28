@@ -1,4 +1,4 @@
-# Radiação Ionizante — Jurisprudência e Refutação
+# Radiação Ionizante. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -42,77 +42,65 @@ Fonte oficial em https://www.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Dose abaixo do limite
+### Argumento 1. Dose abaixo do limite
 
 Argumento adversário. Quantitativo.
 
 Refutação. Avaliação qualitativa pelo Anexo IV.
 
-### Argumento 2 — EPI eficaz
+### Argumento 2. EPI eficaz
 
 Argumento adversário. Neutralização.
 
 Refutação. Tema 1090 STJ admite exceções.
 
-### Argumento 3 — Sem habitualidade
+### Argumento 3. Sem habitualidade
 
 Argumento adversário. Tempo.
 
 Refutação. Atividade contínua afasta.
 
-### Argumento 4 — Sem categoria literal
+### Argumento 4. Sem categoria literal
 
 Argumento adversário. Restrição.
 
 Refutação. Súmula 198 TFR.
 
-### Argumento 5 — Sem PPP
+### Argumento 5. Sem PPP
 
 Argumento adversário. Forma.
 
 Refutação. LTCAT, perícia, similar.
 
-### Argumento 6 — Empresa extinta
+### Argumento 6. Empresa extinta
 
 Argumento adversário. Prova.
 
 Refutação. Súmula 198 TFR.
 
-### Argumento 7 — Profissional administrativo
+### Argumento 7. Profissional administrativo
 
 Argumento adversário. Função.
 
 Refutação. Realidade da função.
 
-### Argumento 8 — Dosimetria controlada
+### Argumento 8. Dosimetria controlada
 
 Argumento adversário. Mitigação.
 
 Refutação. Mitigação não elimina nocividade.
 
-### Argumento 9 — Setor blindado
+### Argumento 9. Setor blindado
 
 Argumento adversário. Estrutura.
 
 Refutação. Blindagem é parcial.
 
-### Argumento 10 — Plantão eventual
+### Argumento 10. Plantão eventual
 
 Argumento adversário. Habitualidade.
 
 Refutação. Conferir frequência real.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira.
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

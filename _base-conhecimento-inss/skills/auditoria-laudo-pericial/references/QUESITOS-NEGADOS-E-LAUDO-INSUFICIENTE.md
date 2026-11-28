@@ -1,4 +1,4 @@
-# Quesitos Negados e Laudo Insuficiente — Arsenal de Impugnação
+# Quesitos Negados e Laudo Insuficiente. Arsenal de Impugnação
 
 Onda 107 (11/08/2026). Arsenal argumentativo para o cenário recorrente na Justiça Federal em que o juízo indefere os quesitos antes da perícia, condiciona a manifestação à vinda do laudo e, apresentados os quesitos de esclarecimento, indefere e julga. Construído a partir de material de FE Wirth sobre Processo Civil Previdenciário, ancorado nos dispositivos do CPC já verificados na base.
 

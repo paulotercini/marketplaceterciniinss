@@ -1,4 +1,4 @@
-# Frio — Fundamentos e Cenários
+# Frio. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -44,45 +44,45 @@ Metodologia.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Açougueiro
+### Cenário A. Açougueiro
 
 Câmara fria. Especial.
 
-### Cenário B — Balconista de açougue
+### Cenário B. Balconista de açougue
 
 Câmara fria. Especial.
 
-### Cenário C — Abatedor frigorífico
+### Cenário C. Abatedor frigorífico
 
 Especial.
 
-### Cenário D — Operador câmara fria
+### Cenário D. Operador câmara fria
 
 Especial.
 
-### Cenário E — Atividade pré-1995
+### Cenário E. Atividade pré-1995
 
 Categoria profissional.
 
-### Cenário F — Panificação refrigerada
+### Cenário F. Panificação refrigerada
 
 Análise específica.
 
-### Cenário G — Sorveteria industrial
+### Cenário G. Sorveteria industrial
 
 Análise específica.
 
 ## 6. Cenários limitados
 
-### Cenário H — Sem habitualidade
+### Cenário H. Sem habitualidade
 
 Não enquadra.
 
-### Cenário I — Frio sazonal apenas
+### Cenário I. Frio sazonal apenas
 
 Análise específica.
 
-### Cenário J — Sem medição e sem categoria
+### Cenário J. Sem medição e sem categoria
 
 Análise difícil.
 

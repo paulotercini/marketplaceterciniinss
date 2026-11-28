@@ -59,20 +59,20 @@ O item 1.4 estipula pagamento de 95% dos atrasados (deságio de 5%). O item 2.1 
 
 Ao redigir impugnação ao cumprimento deficiente, seguir esta estrutura.
 
-**Fase 1 — Primeira impugnação (logo após a revisão pelo INSS)**
+**Fase 1. Primeira impugnação (logo após a revisão pelo INSS)**
 
 1. Apresentar a divergência entre CNIS e Carta de Concessão revisada, competência a competência.
 2. Demonstrar que o acordo excluiu apenas segurado facultativo e RPPS.
 3. Juntar planilha comparativa e nova Carta de Concessão.
 4. Requerer que o INSS proceda à correta revisão.
 
-**Fase 2 — Réplica à defesa do INSS**
+**Fase 2. Réplica à defesa do INSS**
 
 O INSS geralmente apresenta dois argumentos. O primeiro é a limitação ao teto (procedente para poucas competências). O segundo é o PREC-MENOR-MIN (improcedente para benefícios com DIB anterior à EC 103/2019).
 
 A réplica deve separar os grupos de contribuições, demonstrar que contribuições de empregado público (Câmara, Prefeitura concomitante) não possuem PREC-MENOR-MIN e foram igualmente excluídas, invocar o art. 32 da Lei 8.213/91, o Tema 1.070/STJ, o tempus regit actum e a inaplicabilidade da EC 103/2019, e citar o Tema 349/TNU (com a ressalva do RE pendente no STF).
 
-**Fase 3 — Manifestação sobre a Cecalc**
+**Fase 3. Manifestação sobre a Cecalc**
 
 Se a Cecalc validar o cálculo do INSS, verificar se importou dados do INSS. Se sim, demonstrar que não houve cotejo independente com o CNIS. Requerer novo cálculo a partir dos dados brutos.
 
@@ -110,16 +110,4 @@ Ao analisar qualquer cálculo de revisão por atividades concomitantes, seguir e
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

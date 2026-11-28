@@ -53,7 +53,7 @@ O Código de Processo Civil admite prova pericial extrajudicial (art. 369 e art.
 
 ## Modos de Operação
 
-### Modo 1 – Diagnóstico Documental do Caso
+### Modo 1. Diagnóstico Documental do Caso
 
 O usuário apresenta um caso em que o cliente alega não ter documentos médicos pretéritos. A skill executa o seguinte diagnóstico antes de planejar a estratégia.
 
@@ -69,19 +69,19 @@ Quinto passo. Mapear as fontes documentais pretéritas que o cliente provavelmen
 
 Sexto passo. Ranquear os documentos a produzir por impacto probatório (`references/HIERARQUIA-PROBATORIA.md`).
 
-### Modo 2 – Geração de Plano de Formação Documental
+### Modo 2. Geração de Plano de Formação Documental
 
 A partir do diagnóstico, gerar plano estruturado com quatro camadas.
 
-Camada 1 — Busca estruturada em fontes existentes. Lista de destinos de requerimentos (UBS, convênio, farmácias, empregadores, hospitais, SUS), com base legal e prazos. Cliente executa mediante orientação.
+Camada 1. Busca estruturada em fontes existentes. Lista de destinos de requerimentos (UBS, convênio, farmácias, empregadores, hospitais, SUS), com base legal e prazos. Cliente executa mediante orientação.
 
-Camada 2 — Produção de documentos novos de alto impacto. Relatório médico circunstanciado do ortopedista/especialista assistente, laudo pericial extrajudicial quando pertinente, autodeclaração assistida da segurada.
+Camada 2. Produção de documentos novos de alto impacto. Relatório médico circunstanciado do ortopedista/especialista assistente, laudo pericial extrajudicial quando pertinente, autodeclaração assistida da segurada.
 
-Camada 3 — Construção do nexo com atividade laboral. Cruzamento do PPP com patologias atuais, laudo afirmando nexo causal entre condições de trabalho e deficiência, o que potencialmente recua a DID para o início da exposição.
+Camada 3. Construção do nexo com atividade laboral. Cruzamento do PPP com patologias atuais, laudo afirmando nexo causal entre condições de trabalho e deficiência, o que potencialmente recua a DID para o início da exposição.
 
-Camada 4 — Prova complementar robustecedora. Fotografias, receituários, comprovantes de compra de órteses, declaração de médicos que tenham atendido pontualmente.
+Camada 4. Prova complementar robustecedora. Fotografias, receituários, comprovantes de compra de órteses, declaração de médicos que tenham atendido pontualmente.
 
-### Modo 3 – Redação de Peças Instrumentais
+### Modo 3. Redação de Peças Instrumentais
 
 A skill gera três tipos de peças sob demanda. Cada peça usa modelo em `assets/` como base, adaptada ao caso concreto.
 
@@ -114,35 +114,35 @@ Riscos, fragilidades, limites probatórios do caso. Exposição franca dos ponto
 
 Esta skill é complementar, não substitutiva. Acionar em conjunto com as seguintes.
 
-**aposentadoria-deficiencia** — Para o enquadramento no IF-BrA e para a aplicação correta do art. 70-F, §1º, do Decreto 3.048/99 na conversão de tempo especial. O roteiro do relatório médico circunstanciado deve alimentar os domínios do IF-BrA.
+**aposentadoria-deficiencia.** Para o enquadramento no IF-BrA e para a aplicação correta do art. 70-F, §1º, do Decreto 3.048/99 na conversão de tempo especial. O roteiro do relatório médico circunstanciado deve alimentar os domínios do IF-BrA.
 
-**auditoria-ppp** — Sempre que houver PPP do período em que se pretende ancorar a DID ou em período contemporâneo. O PPP pode fundamentar nexo causal entre atividade e deficiência, o que potencialmente recua a DID ao início da exposição.
+**auditoria-ppp.** Sempre que houver PPP do período em que se pretende ancorar a DID ou em período contemporâneo. O PPP pode fundamentar nexo causal entre atividade e deficiência, o que potencialmente recua a DID ao início da exposição.
 
-**documentos-comprobatorios-in128** — Para o mapeamento de documentos aceitos pelo INSS em processos administrativos.
+**documentos-comprobatorios-in128.** Para o mapeamento de documentos aceitos pelo INSS em processos administrativos.
 
-**requerimento-administrativo-inss** — Quando a estratégia envolver requerimento administrativo com pedido de avaliação biopsicossocial.
+**requerimento-administrativo-inss.** Quando a estratégia envolver requerimento administrativo com pedido de avaliação biopsicossocial.
 
-**peticao-previdenciaria** — Quando a estratégia for judicial e a DID precisar ser fundamentada em petição inicial.
+**peticao-previdenciaria.** Quando a estratégia for judicial e a DID precisar ser fundamentada em petição inicial.
 
-**tema-1124-instrucao-administrativa** — Para evitar extinção sem mérito por ausência de instrução administrativa prévia.
+**tema-1124-instrucao-administrativa.** Para evitar extinção sem mérito por ausência de instrução administrativa prévia.
 
-**perspectiva-genero-previdenciario** — Quando a segurada for mulher em contexto de trabalho doméstico ou rural informal, cenário em que a ausência de documentação é estrutural e pode ser superada por flexibilização probatória.
+**perspectiva-genero-previdenciario.** Quando a segurada for mulher em contexto de trabalho doméstico ou rural informal, cenário em que a ausência de documentação é estrutural e pode ser superada por flexibilização probatória.
 
 ## Referências
 
 Antes de executar a skill, leia os seguintes arquivos conforme o modo de operação.
 
-- `references/HIERARQUIA-PROBATORIA.md` — Hierarquia de impacto probatório de cada tipo de documento, ordem estratégica de produção, jurisprudência sobre valoração de laudos particulares
-- `references/FISIOPATOLOGIA-TEMPORAL.md` — Parâmetros médicos de evolução das patologias mais comuns em aposentadoria PCD (osteoartrose, condropatia, fasceíte plantar, fibromialgia, hérnia de disco, síndrome do túnel do carpo, neuropatias)
-- `references/FONTES-DOCUMENTAIS.md` — Mapa completo de fontes de documentação preexistente com base legal, contatos típicos e estratégias de acesso
+- `references/HIERARQUIA-PROBATORIA.md`. Hierarquia de impacto probatório de cada tipo de documento, ordem estratégica de produção, jurisprudência sobre valoração de laudos particulares
+- `references/FISIOPATOLOGIA-TEMPORAL.md`. Parâmetros médicos de evolução das patologias mais comuns em aposentadoria PCD (osteoartrose, condropatia, fasceíte plantar, fibromialgia, hérnia de disco, síndrome do túnel do carpo, neuropatias)
+- `references/FONTES-DOCUMENTAIS.md`. Mapa completo de fontes de documentação preexistente com base legal, contatos típicos e estratégias de acesso
 
 ## Modelos em Assets
 
-- `assets/requerimento-prontuario-UBS.md` — Modelo de requerimento de cópia de prontuário para UBS
-- `assets/requerimento-prontuario-convenio.md` — Modelo de requerimento para operadoras de planos de saúde
-- `assets/oficio-empregador-medicina-trabalho.md` — Modelo de ofício ao empregador para ficha clínica de medicina do trabalho
-- `assets/roteiro-relatorio-medico.md` — Roteiro de orientação ao médico assistente para redação do relatório circunstanciado
-- `assets/autodeclaracao-assistida.md` — Modelo de autodeclaração da segurada sobre histórico de queixas e limitações
+- `assets/requerimento-prontuario-UBS.md`. Modelo de requerimento de cópia de prontuário para UBS
+- `assets/requerimento-prontuario-convenio.md`. Modelo de requerimento para operadoras de planos de saúde
+- `assets/oficio-empregador-medicina-trabalho.md`. Modelo de ofício ao empregador para ficha clínica de medicina do trabalho
+- `assets/roteiro-relatorio-medico.md`. Roteiro de orientação ao médico assistente para redação do relatório circunstanciado
+- `assets/autodeclaracao-assistida.md`. Modelo de autodeclaração da segurada sobre histórico de queixas e limitações
 
 ---
 
@@ -152,16 +152,4 @@ A ausência de documentação médica pretérita NÃO inviabiliza a aposentadori
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

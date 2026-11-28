@@ -1,4 +1,4 @@
-# CRPS Panorama Geral — Fundamentos e Cenários
+# CRPS Panorama Geral. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -28,41 +28,41 @@ Pareceres vinculantes da CONJUR/AGU.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Indeferimento de aposentadoria
+### Cenário A. Indeferimento de aposentadoria
 
 Recurso ordinário à JR.
 
-### Cenário B — Cessação de benefício
+### Cenário B. Cessação de benefício
 
 Recurso ordinário com pedido de restabelecimento.
 
-### Cenário C — Revisão negada
+### Cenário C. Revisão negada
 
 Recurso ordinário, seguido de recurso especial se for o caso.
 
-### Cenário D — Matéria com súmula do CRPS
+### Cenário D. Matéria com súmula do CRPS
 
 Recurso especial, se a JR a ignorar.
 
-### Cenário E — Reclamação ao Pleno
+### Cenário E. Reclamação ao Pleno
 
 Em casos de afronta a súmula do Pleno.
 
-### Cenário F — Execução de acórdão
+### Cenário F. Execução de acórdão
 
 Protocolo com pedido de cumprimento.
 
 ## 6. Cenários limitados
 
-### Cenário G — Decisão sem preparo recursal
+### Cenário G. Decisão sem preparo recursal
 
 Inadmitida, salvo hipóteses.
 
-### Cenário H — Demanda simultânea no Judiciário
+### Cenário H. Demanda simultânea no Judiciário
 
 Sobrestamento do recurso administrativo.
 
-### Cenário I — Matéria não suscitada
+### Cenário I. Matéria não suscitada
 
 Não conhecimento do recurso.
 

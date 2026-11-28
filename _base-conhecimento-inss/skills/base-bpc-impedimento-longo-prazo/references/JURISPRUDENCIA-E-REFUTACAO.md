@@ -1,4 +1,4 @@
-# BPC — Impedimento de Longo Prazo — Jurisprudência Verificada
+# BPC. Impedimento de Longo Prazo. Jurisprudência Verificada
 
 ## 1. Precedentes vinculantes
 
@@ -18,13 +18,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado (renda, mas aplicável por analogia ao conceito de impedimento).
 
-
-
 Retirado o Tema 74/TNU, que não trata de avaliação biopsicossocial (auditoria 03/10/2026).
-
-
-
-
 
 ### Tema 173 TNU
 
@@ -34,11 +28,7 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado em releitura.
 
-
-
 Retirada a Súmula 37/TNU, que trata da pensão do filho até 21 anos e não da prova emprestada (auditoria 03/10/2026).
-
-
 
 ### Lei 15.157/2025
 
@@ -54,61 +44,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Impedimento não alcança 2 anos
+### Argumento 1. Impedimento não alcança 2 anos
 
 Argumento adversário. Prognóstico de cura em menos de 2 anos afasta o direito.
 
 Refutação. Prognóstico é estimativa, não efetivação. Em doenças crônicas, reavaliação contínua. Documentação médica de longa duração basta.
 
-### Argumento 2 — Perito concluiu pela aptidão
+### Argumento 2. Perito concluiu pela aptidão
 
 Argumento adversário. Perito INSS concluiu pela aptidão para trabalho.
 
 Refutação. Impedimento de longo prazo não é incapacidade laboral. São conceitos diversos. Retomar o conceito biopsicossocial.
 
-### Argumento 3 — Domínios com qualificadores baixos
+### Argumento 3. Domínios com qualificadores baixos
 
 Argumento adversário. TCQ indica qualificadores 1 e 2 apenas.
 
 Refutação. Gatilhos de elevação. Agravantes. Barreiras ambientais. Impugnação técnica do laudo. Assistente técnico.
 
-### Argumento 4 — Avaliação social não foi considerada
+### Argumento 4. Avaliação social não foi considerada
 
 Argumento adversário. Ausência de avaliação social adequada.
 
 Refutação. A avaliação social é componente obrigatório. Sua ausência ou deficiência gera nulidade da avaliação biopsicossocial.
 
-### Argumento 5 — Fibromialgia não é deficiência
+### Argumento 5. Fibromialgia não é deficiência
 
 Argumento adversário. INSS alega que fibromialgia não configura deficiência.
 
 Refutação. Lei 15.176/2025. Reconhecimento expresso. Aplicação imediata.
 
-### Argumento 6 — Menor de 16 anos sem critérios próprios
+### Argumento 6. Menor de 16 anos sem critérios próprios
 
 Argumento adversário. Avaliação sem particularidades etárias.
 
 Refutação. Portaria 34/2025 e jurisprudência TNU exigem critérios diferenciados. Cerceamento de defesa. Nulidade.
 
-### Argumento 7 — Teleperícia em caso complexo
+### Argumento 7. Teleperícia em caso complexo
 
 Argumento adversário. Avaliação realizada por videoconferência.
 
 Refutação. Teleperícia com limitações. Casos complexos exigem presencial. Cerceamento de defesa. Portaria DPMF/INSS 19/2026, art. específico sobre complexidade.
 
-### Argumento 8 — Reavaliação cessou benefício
+### Argumento 8. Reavaliação cessou benefício
 
 Argumento adversário. Reavaliação bienal concluiu pela cessação.
 
 Refutação. Lei 15.157/2025. Dispensa de reavaliação em impedimento permanente. MS contra cessação. Contraditório prévio.
 
-### Argumento 9 — Impedimento estabilizado afasta direito
+### Argumento 9. Impedimento estabilizado afasta direito
 
 Argumento adversário. Segurada já está tratada, impedimento estabilizado.
 
 Refutação. Estabilização não é cura. Impedimento permanece se as limitações continuam. Análise concreta.
 
-### Argumento 10 — Deficiência leve não configura impedimento
+### Argumento 10. Deficiência leve não configura impedimento
 
 Argumento adversário. Qualificadores moderados afastam o direito.
 
@@ -131,22 +121,6 @@ Sexto, em impedimento permanente, invocar Lei 15.157/2025.
 Sétimo, em fibromialgia, invocar Lei 15.176/2025.
 
 Oitavo, em MS por mora, competência Federal ou JEF.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado sustenta leitura biopsicossocial.
-
-Hugo Goes detalha o impedimento.
-
-Fábio Zambitte Ibrahim defende interpretação ampla.
-
-Wladimir Novaes Martinez analisa a evolução.
-
-Daniel Pulino aprofunda o conceito de impedimento.
-
-Marco Aurélio Serau Junior analisa a proteção social.
-
-O IBDP sustenta a proteção integral.
 
 ## 5. Diligência de atualização
 

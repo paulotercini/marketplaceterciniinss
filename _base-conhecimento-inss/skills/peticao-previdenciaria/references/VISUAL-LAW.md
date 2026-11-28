@@ -37,7 +37,7 @@ Quinta, o teste do relance fecha todo componente. Olhar a tabela por dez segundo
 
 Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na linha do tempo, 8 linhas no pedido x fundamento) são TETO. O alvo é sempre o menor número de linhas que preserve o sentido.
 
-### Componente 1 — Linha do Tempo (timelineTable)
+### Componente 1. Linha do Tempo (timelineTable)
 
 **Quando usar.** Obrigatória em toda petição inicial de concessão, restabelecimento e revisão de benefício. Obrigatória em mandados de segurança. Opcional em recursos e embargos, a critério do caso.
 
@@ -53,14 +53,14 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 **Marcadores semânticos.**
 
-- `[FAVORÁVEL]` — fatos que fortalecem a pretensão (admissão, contribuições, alta médica favorável, laudo positivo)
-- `[DESFAVORÁVEL]` — atos do INSS contra o segurado (indeferimento, cessação, perícia administrativa negativa)
-- `[PROCESSUAL]` — marcos processuais (DER, ajuizamento, citação, audiência, sentença, decisão monocrática)
-- `[PROVA]` — provas produzidas (laudo particular, exames, PPP retificado, CTPS, certidões)
+- `[FAVORÁVEL]`, fatos que fortalecem a pretensão (admissão, contribuições, alta médica favorável, laudo positivo)
+- `[DESFAVORÁVEL]`, atos do INSS contra o segurado (indeferimento, cessação, perícia administrativa negativa)
+- `[PROCESSUAL]`, marcos processuais (DER, ajuizamento, citação, audiência, sentença, decisão monocrática)
+- `[PROVA]`, provas produzidas (laudo particular, exames, PPP retificado, CTPS, certidões)
 
 **Limite de eventos (apertado na Onda 118).** Entre 4 e 6 eventos. Linha do tempo com mais de seis marcos vira lista e perde a função. Se o caso tiver mais, selecionar os que decidem, e o critério é perguntar de cada evento se a sua remoção mudaria a compreensão da controvérsia. Não mudando, sai.
 
-### Componente 2 — Quadro-Resumo (caseSummaryBox) [REFORMADO NA ONDA 104]
+### Componente 2. Quadro-Resumo (caseSummaryBox) [REFORMADO NA ONDA 104]
 
 **Finalidade única.** Dizer ao julgador, em segundos, DUAS coisas. Qual é o ponto controvertido e o que se pede. Nada além disso.
 
@@ -95,7 +95,7 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Contraexemplo (proibido).** Quadro com oito linhas listando segurado, NB, DER, CID, carência e regra aplicável. Isso é ficha cadastral, não síntese, e cansa o leitor exatamente onde a peça precisava ganhá-lo.
 
-### Componente 3 — Fatos Incontroversos (undisputedFactsTable)
+### Componente 3. Fatos Incontroversos (undisputedFactsTable)
 
 **Quando usar.** Obrigatória em toda petição inicial em que houver pelo menos dois fatos incontroversos identificáveis. Obrigatória em mandados de segurança. Opcional em recursos.
 
@@ -112,9 +112,9 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Classificação obrigatória.**
 
-- `[INCONTROVERSO]` — fato que o INSS reconheceu na decisão administrativa ou que decorre de documento objetivo. O INSS não pode contestar sem produzir contraprova.
-- `[CONTROVERTIDO]` — fato que o INSS negou expressamente ou que depende de prova pericial ou testemunhal ainda não produzida.
-- `[PARCIAL]` — fato com reconhecimento parcial pelo INSS ou prova que admite mais de uma interpretação.
+- `[INCONTROVERSO]`, fato que o INSS reconheceu na decisão administrativa ou que decorre de documento objetivo. O INSS não pode contestar sem produzir contraprova.
+- `[CONTROVERTIDO]`, fato que o INSS negou expressamente ou que depende de prova pericial ou testemunhal ainda não produzida.
+- `[PARCIAL]`, fato com reconhecimento parcial pelo INSS ou prova que admite mais de uma interpretação.
 
 **Vinculação a provas.** Cada fato DEVE referenciar o documento comprobatório por ID. Nunca classificar fato como incontroverso sem indicar a prova.
 
@@ -122,7 +122,7 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Efeito estratégico.** Fixa para o julgador o campo de decisão, reduzindo a controvérsia ao ponto realmente disputado. Especialmente eficaz no JEF, onde o juiz precisa decidir rapidamente.
 
-### Componente 4 — Tabela Comparativa (comparisonTable)
+### Componente 4. Tabela Comparativa (comparisonTable)
 
 **Quando usar.** Obrigatória em toda petição inicial em que o INSS tenha fundamentado expressamente o indeferimento. Obrigatória em impugnação a laudo pericial. Opcional em recursos quando a sentença tiver fundamentação específica a ser confrontada.
 
@@ -142,7 +142,7 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Limite de pontos (apertado na Onda 118).** Entre 2 e 4 pontos de confronto, agrupando por eixo temático o que exceder. Em confronto testemunhal, entre 2 e 3 contradições. O confronto ganha pela precisão do golpe, não pela quantidade, e o quarto ponto fraco desvaloriza os três fortes.
 
-### Componente 5 — Tabela-Resumo Pedido x Fundamento (requestSummaryTable)
+### Componente 5. Tabela-Resumo Pedido x Fundamento (requestSummaryTable)
 
 **Quando usar.** Obrigatória em petições iniciais com dois ou mais pedidos autônomos (ex. reconhecimento de tempo especial + conversão + concessão, ou concessão de benefício + indenização por dano moral). Recomendada em réplicas e memoriais com múltiplos pontos. Opcional em peças com pedido único simples.
 

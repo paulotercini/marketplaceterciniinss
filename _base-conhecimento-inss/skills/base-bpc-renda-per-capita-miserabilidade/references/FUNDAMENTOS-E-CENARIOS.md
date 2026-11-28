@@ -1,4 +1,4 @@
-# BPC/LOAS — Renda e Miserabilidade — Fundamentos e Cenários
+# BPC/LOAS. Renda e Miserabilidade. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -52,7 +52,7 @@ Portaria Conjunta MDS/INSS 34/2025, art. 8º, §4º. Medicamentos, tratamentos d
 
 Impacto. Subtração da renda familiar bruta.
 
-## 5. Decreto 12.534/2025 — Bolsa Família
+## 5. Decreto 12.534/2025. Bolsa Família
 
 Até 30/06/2025, Bolsa Família era excluído da renda por força do art. 4º §2º do Decreto 6.214/2007. Desde o Decreto 12.534/2025, passou a compor a renda.
 
@@ -72,43 +72,43 @@ Tema 640/STJ (REsp 1.355.052/SP). Benefício previdenciário de 1 salário míni
 
 ## 7. Cenários operacionais pró-segurado
 
-### Cenário 1 — Idoso com excesso marginal de R$ 50
+### Cenário 1. Idoso com excesso marginal de R$ 50
 
 Flexibilização pelo Tema 27 STF. Deferimento judicial.
 
-### Cenário 2 — Grupo familiar com irmão casado
+### Cenário 2. Grupo familiar com irmão casado
 
 Irmão casado mora na mesma residência. Excluído do grupo pelo rol taxativo.
 
-### Cenário 3 — Grupo com sobrinho
+### Cenário 3. Grupo com sobrinho
 
 Sobrinho residindo com o requerente. Excluído do rol.
 
-### Cenário 4 — Cunhado com renda alta
+### Cenário 4. Cunhado com renda alta
 
 Cunhado na mesma casa. Irrelevante para renda. Excluído do rol.
 
-### Cenário 5 — Idosa com aposentadoria do marido de 1 SM
+### Cenário 5. Idosa com aposentadoria do marido de 1 SM
 
 Art. 20, §14. Aposentadoria do marido idoso fica excluída. Renda zero. Deferimento.
 
-### Cenário 6 — PCD com custos de saúde altos
+### Cenário 6. PCD com custos de saúde altos
 
 Despesas com medicamentos documentadas pela Portaria 34/2025. Deduções na renda. Deferimento.
 
-### Cenário 7 — Bolsa Família no grupo
+### Cenário 7. Bolsa Família no grupo
 
 Após Decreto 12.534/2025, o INSS inclui Bolsa Família. Ação para afastar a inclusão como inconstitucional.
 
-### Cenário 8 — Estagiário na família
+### Cenário 8. Estagiário na família
 
 Estudante de engenharia com bolsa de estágio de R$ 1.200. Bolsa excluída da renda pelo conceito de estipêndio.
 
-### Cenário 9 — Pensão de hanseniano
+### Cenário 9. Pensão de hanseniano
 
 Hanseniano com pensão especial indenizatória. Excluída do rol de renda.
 
-### Cenário 10 — Trabalho eventual
+### Cenário 10. Trabalho eventual
 
 Renda de bicos esporádicos. Exclusão por natureza eventual. Prova por declaração e cruzamento com CNIS.
 

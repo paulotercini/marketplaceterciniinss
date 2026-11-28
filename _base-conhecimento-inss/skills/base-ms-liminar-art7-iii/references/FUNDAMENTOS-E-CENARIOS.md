@@ -1,4 +1,4 @@
-# Liminar em MS — Fundamentos e Cenários
+# Liminar em MS. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,41 +46,41 @@ Devolução obrigatória com teto de 30 por cento; pesar o risco antes de pedir 
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Implantação liminar
+### Cenário A. Implantação liminar
 
 Benefício pronto.
 
-### Cenário B — Restabelecimento
+### Cenário B. Restabelecimento
 
 Cessação ilegal.
 
-### Cenário C — Cumprimento CRPS
+### Cenário C. Cumprimento CRPS
 
 Omissão do INSS.
 
-### Cenário D — Reabertura PA
+### Cenário D. Reabertura PA
 
 Arquivamento sem fundamento.
 
-### Cenário E — Exigência abusiva
+### Cenário E. Exigência abusiva
 
 Liminar para afastar.
 
-### Cenário F — Cessação por demora
+### Cenário F. Cessação por demora
 
 Perícia pendente.
 
 ## 6. Cenários limitados
 
-### Cenário G — Vedação legal
+### Cenário G. Vedação legal
 
 Art. 7º §2º Lei 12.016.
 
-### Cenário H — Suspensão de segurança
+### Cenário H. Suspensão de segurança
 
 Lei 8.437/92.
 
-### Cenário I — Ação com perícia
+### Cenário I. Ação com perícia
 
 Via ordinária.
 

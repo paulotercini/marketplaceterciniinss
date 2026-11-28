@@ -1,4 +1,4 @@
-# Revisão da Vida Toda — Fundamentos e Cenários
+# Revisão da Vida Toda. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,37 +46,37 @@ Trata de reenquadramento de servidor; a modulação da RVT está nas ADIs 2110 e
 
 ## 5. Cenários residuais pró-segurado
 
-### Cenário A — Benefício concedido antes de novembro de 1999
+### Cenário A. Benefício concedido antes de novembro de 1999
 
 Neste caso, o segurado pode ter direito adquirido à regra originária do art. 29, sem aplicação da Lei 9.876/1999. Verificar a DIB. Aferir vantagem por simulação.
 
-### Cenário B — Direito adquirido consolidado antes de 13/11/2019
+### Cenário B. Direito adquirido consolidado antes de 13/11/2019
 
 O segurado que implementou os requisitos antes da EC 103/2019 tem direito às regras vigentes à época do implemento. Se tinha direito adquirido antes da Lei 9.876/1999, incorporação da regra originária pode ser arguida.
 
-### Cenário C — Coisa julgada formada antes do julgamento das ADIs
+### Cenário C. Coisa julgada formada antes do julgamento das ADIs
 
 Caso em que sentença transitada em julgado reconheceu a RVT antes de 2024. A modulação das ADIs, em regra, não desconstitui coisa julgada.
 
-### Cenário D — Ação ajuizada antes do julgamento das ADIs
+### Cenário D. Ação ajuizada antes do julgamento das ADIs
 
 A modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da RVT [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar o direito à revisão; decisão que afirme o contrário precisa de conferência na fonte oficial (auditoria 03/10/2026). Verificar na jurisprudência recente de cada Região.
 
-### Cenário E — Segurado com contribuições elevadas pré-PBC
+### Cenário E. Segurado com contribuições elevadas pré-PBC
 
 Quando o segurado teve salários de contribuição mais altos antes de julho de 1994 do que depois, a simulação pela regra originária pode revelar renda superior. Verificar vantagem concretamente, documento por documento.
 
 ## 6. Cenários a evitar
 
-### Cenário F — Benefício concedido após novembro de 1999 sem direito adquirido
+### Cenário F. Benefício concedido após novembro de 1999 sem direito adquirido
 
 Regra geral. A Lei 9.876/1999 se aplica integralmente. Sem espaço para RVT após as ADIs 2110 e 2111, salvo hipóteses residuais.
 
-### Cenário G — Benefício concedido após EC 103/2019
+### Cenário G. Benefício concedido após EC 103/2019
 
 A EC 103/2019 criou nova regra de cálculo, com média de todos os salários, sem desprezo. A RVT perde sentido prático, pois a nova regra já resolve o problema do PBC truncado.
 
-### Cenário H — Decadência consumada
+### Cenário H. Decadência consumada
 
 Benefícios concedidos há mais de 10 anos do primeiro pagamento. Prazo decadencial extinguiu o direito de revisão.
 

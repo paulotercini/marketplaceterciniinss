@@ -1,4 +1,4 @@
-# Desaposentação — Fundamentos e Cenários
+# Desaposentação. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,37 +46,37 @@ Melhor benefício e direito adquirido.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Segurado com contribuições posteriores à DIB
+### Cenário A. Segurado com contribuições posteriores à DIB
 
 Honestidade radical. Via direta da desaposentação rejeitada. Avaliar reafirmação da DER se ainda não implantado benefício.
 
-### Cenário B — Segurado que voltou a trabalhar por anos
+### Cenário B. Segurado que voltou a trabalhar por anos
 
 Contribuições geram salário-família e reabilitação, não nova RMI.
 
-### Cenário C — Revisão por melhor benefício
+### Cenário C. Revisão por melhor benefício
 
 Avaliar direito adquirido não aplicado na DIB.
 
-### Cenário D — Revisão da RMI por vínculos omitidos
+### Cenário D. Revisão da RMI por vínculos omitidos
 
 Acionar revisão ordinária.
 
-### Cenário E — Segurado com ganho de direito adquirido pré-EC 103
+### Cenário E. Segurado com ganho de direito adquirido pré-EC 103
 
 Revisão específica.
 
 ## 6. Cenários limitados
 
-### Cenário F — Desaposentação judicial isolada
+### Cenário F. Desaposentação judicial isolada
 
 Honestidade radical. Probabilidade mínima de êxito. Tema 503 STF.
 
-### Cenário G — Devolução de valores
+### Cenário G. Devolução de valores
 
 A modulação nos embargos do Tema 503 STF afasta a devolução do recebido de boa-fé até aquele julgamento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
-### Cenário H — Cômputo de contribuições pós-DIB
+### Cenário H. Cômputo de contribuições pós-DIB
 
 Sem base normativa atual para nova RMI.
 

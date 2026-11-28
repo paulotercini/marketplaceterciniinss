@@ -44,9 +44,9 @@ A primeira página exibe cabeçalho timbrado em tabela de duas colunas, sem bord
 
 **Texto de identificação (coluna 2), centralizado.**
 - Linha em branco (Bell MT, 8pt, espaçador superior)
-- "ADVOCACIA PREVIDENCIÁRIA" — Bell MT, negrito, **24pt** (48 half-points)
-- "DR. PAULO ROBERTO TERCINI FILHO" — Arial Unicode MS, espaçamento exato 240
-- "OAB/SP 331.110" — Arial Unicode MS, espaçamento exato 240
+- "ADVOCACIA PREVIDENCIÁRIA". Bell MT, negrito, **24pt** (48 half-points)
+- "DR. PAULO ROBERTO TERCINI FILHO". Arial Unicode MS, espaçamento exato 240
+- "OAB/SP 331.110". Arial Unicode MS, espaçamento exato 240
 
 **Linha horizontal separadora.** Parágrafo vazio após a tabela com borda inferior `single, sz=6, color=auto` (preto).
 
@@ -59,8 +59,8 @@ A partir da segunda página, o header é vazio (apenas um parágrafo em branco c
 Apenas na primeira página, com linha horizontal acima e endereço/contatos centralizados.
 
 - Parágrafo vazio com borda inferior `single, sz=6, color=auto` (separador superior)
-- "Rua Rui Barbosa, nº. 663, Centro, Monte Alto – SP" — Arial Unicode MS, centralizado
-- "Tel: 16-3242-2908 – Cel: 16-98140-9271" — Arial Unicode MS, centralizado
+- "Rua Rui Barbosa, nº. 663, Centro, Monte Alto – SP". Arial Unicode MS, centralizado
+- "Tel: 16-3242-2908 – Cel: 16-98140-9271". Arial Unicode MS, centralizado
 
 ### Footer das Demais Páginas
 
@@ -101,7 +101,7 @@ Forma do titular (Onda 174, `METODO-PETICAO-TERCINI.md`), em três blocos com re
 
 Nas peças intermediárias o parágrafo de qualificação é "**[NOME DA PARTE AUTORA]**, já qualificada nos autos do processo em epígrafe, que move em face do **INSTITUTO NACIONAL DO SEGURO SOCIAL (INSS)**, por seu advogado que esta subscreve, vem, respeitosamente, à presença de Vossa Excelência", seguido do nome da peça.
 
-### Títulos de Seção — Tabela Preta
+### Títulos de Seção. Tabela Preta
 
 **Padrão visual obrigatório do escritório.** Cada título de seção é renderizado como uma **tabela de uma célula com fundo preto e texto branco em negrito**, alinhado à esquerda. Esse é o elemento visual mais identificável das peças do escritório e substitui qualquer outra formatação de cabeçalho.
 
@@ -162,7 +162,6 @@ Recurso Inominado, Pedido de Uniformização à TNU, Agravo Interno e Recurso Es
 3. **Razões recursais** com cabeçalho próprio centralizado em caixa alta (`# RAZÕES DO RECURSO INOMINADO`, seguido de "EGRÉGIA TURMA RECURSAL" ou "COLENDA TURMA, EMÉRITOS JULGADORES"), identificação das partes (Recorrente/Apelante/Agravante e Recorrido/Apelado/Agravado) e desenvolvimento da fundamentação com os títulos pretos numerados
 
 ---
-
 
 ## Implementação Técnica em docx-js
 
@@ -429,7 +428,7 @@ function tituloSecaoPreto(numero, texto) {
 // Uso: tituloSecaoPreto("3.1", "Da Impugnação Objetiva da Pontuação")
 ```
 
-### Visual Law — Cabeçalho de Tabela Preto
+### Visual Law. Cabeçalho de Tabela Preto
 
 Helper para cabeçalho preto em qualquer tabela Visual Law. Bordas e alinhamento vertical são definidos em cada célula para garantir renderização idêntica no Microsoft Word e no LibreOffice.
 
@@ -457,7 +456,7 @@ function cabecalhoPreto(textos, larguras) {
 }
 ```
 
-### Visual Law — Célula de Corpo com Zebra
+### Visual Law. Célula de Corpo com Zebra
 
 ```javascript
 function celulaCorpo(texto, largura, opts = {}) {
@@ -506,7 +505,6 @@ O logo do escritório deve estar disponível no ambiente de geração. Se não e
 Dimensões do logo no header (EMU): cx=791210, cy=712470. Em pixels a 96 DPI, aproximadamente 83×75. O parâmetro `transformation: { width: 83, height: 75 }` no `ImageRun` reproduz fielmente o tamanho original.
 
 ---
-
 
 ## Trava do cabeçalho, logo com fundo branco (Onda 116)
 

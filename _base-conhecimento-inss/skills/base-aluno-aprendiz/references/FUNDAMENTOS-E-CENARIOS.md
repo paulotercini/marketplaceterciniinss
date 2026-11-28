@@ -1,4 +1,4 @@
-# Tempo de Aluno-Aprendiz — Fundamentos e Cenários
+# Tempo de Aluno-Aprendiz. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -44,33 +44,33 @@ Interesse de agir. Aplica-se ao requerimento administrativo.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Ex-aluno de Escola Técnica Federal de 1945 a 1950
+### Cenário A. Ex-aluno de Escola Técnica Federal de 1945 a 1950
 
 Com certificado, histórico escolar e declaração de remuneração indireta. Tempo plenamente cômputável.
 
-### Cenário B — Ex-aluno de Escola Agrícola Federal
+### Cenário B. Ex-aluno de Escola Agrícola Federal
 
 Na modalidade aluno-aprendiz, com retribuição por alojamento, alimentação e material. Tempo cômputável.
 
-### Cenário C — Contagem recíproca
+### Cenário C. Contagem recíproca
 
 Ex-aluno que tornou-se servidor público pode levar o tempo para o RPPS por CTC.
 
-### Cenário D — Complementação de tempo para aposentadoria RGPS
+### Cenário D. Complementação de tempo para aposentadoria RGPS
 
 Soma com demais períodos contributivos para fechar tempo necessário.
 
 ## 6. Cenários limitados
 
-### Cenário E — Aluno comum sem atividade
+### Cenário E. Aluno comum sem atividade
 
 Mero estudante regular, sem caráter aluno-aprendiz, não gera tempo.
 
-### Cenário F — Retribuição inexistente
+### Cenário F. Retribuição inexistente
 
 Sem prova de remuneração direta ou indireta, pedido indefere.
 
-### Cenário G — Escola privada
+### Cenário G. Escola privada
 
 O regime aluno-aprendiz reconhecido é o federal.
 

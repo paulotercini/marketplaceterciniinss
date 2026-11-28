@@ -1,4 +1,4 @@
-# Perícia Médica e Teleperícia — Jurisprudência Verificada e Refutação
+# Perícia Médica e Teleperícia. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -60,49 +60,49 @@ Aplicação pró-segurado. Fundamento para MS contra demora em perícia.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Perícia documental é suficiente
+### Argumento 1. Perícia documental é suficiente
 
 Argumento adversário. A análise documental é suficiente para concluir pela capacidade.
 
 Refutação. Análise documental é triagem, não substitui perícia com exame clínico. Cerceamento quando o quadro exige exame físico. Em juízo, a documentação médica é valorada com a perícia (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirado o Tema 246/TNU, que trata da data de cessação).
 
-### Argumento 2 — Teleperícia equivale a perícia presencial
+### Argumento 2. Teleperícia equivale a perícia presencial
 
 Argumento adversário. A Teleperícia é modalidade equivalente à presencial.
 
 Refutação. Teleperícia não substitui exame físico quando este é necessário. Resoluções CFM 2.314/2022 e 2.378/2024 preservam o direito do paciente à avaliação presencial em casos complexos. Cerceamento quando imposta em quadro inadequado.
 
-### Argumento 3 — Laudo da PMF é técnico e vinculante
+### Argumento 3. Laudo da PMF é técnico e vinculante
 
 Argumento adversário. O laudo da PMF é prova técnica e vincula a decisão.
 
 Refutação. Laudo da PMF é uma das provas. Em juízo, a perícia judicial e a documentação médica são valoradas em conjunto (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirados a Súmula 77/TNU e o Tema 246/TNU, que não tratam dessa prevalência).
 
-### Argumento 4 — Segurado recusou Teleperícia sem motivo
+### Argumento 4. Segurado recusou Teleperícia sem motivo
 
 Argumento adversário. A recusa da Teleperícia equivale à recusa da perícia, gerando indeferimento.
 
 Refutação. A recusa motivada, quando a Teleperícia é inadequada ao quadro, é legítima. Cabe pedir perícia presencial. Violação se o INSS indeferir por recusa sem oferecer alternativa.
 
-### Argumento 5 — Perícia breve é suficiente
+### Argumento 5. Perícia breve é suficiente
 
 Argumento adversário. A perícia de 5 minutos foi suficiente para o diagnóstico.
 
 Refutação. Tempo insuficiente é cerceamento em quadros complexos. Direito ao exame adequado. Impugnação do laudo por superficialidade.
 
-### Argumento 6 — Ausência de CID não invalida
+### Argumento 6. Ausência de CID não invalida
 
 Argumento adversário. Laudo sem CID explícito é válido.
 
 Refutação. Fundamentação exige identificação da patologia. Laudo sem CID é impreciso e impugnável.
 
-### Argumento 7 — Não há direito a acompanhante
+### Argumento 7. Não há direito a acompanhante
 
 Argumento adversário. Perícia é individual e não admite acompanhante.
 
 Refutação. Direito ao acompanhante em casos de vulnerabilidade (deficiência, menor, idoso, paciente psiquiátrico). Lei 13.146/2015 (Estatuto da PCD). Direito à acessibilidade. Nulidade em caso de negativa injustificada.
 
-### Argumento 8 — Reavaliação pode ser documental
+### Argumento 8. Reavaliação pode ser documental
 
 Argumento adversário. A reavaliação do B32 pode ser feita por análise documental.
 

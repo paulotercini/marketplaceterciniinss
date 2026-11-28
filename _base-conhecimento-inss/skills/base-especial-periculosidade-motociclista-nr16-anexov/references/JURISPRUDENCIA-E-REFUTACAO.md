@@ -1,8 +1,6 @@
-# Periculosidade Motociclista — Jurisprudência e Refutação
+# Periculosidade Motociclista. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
-
-
 
 O Tema 132 STJ, antes listado aqui, trata de ISS bancário e foi retirado (auditoria 03/10/2026).
 
@@ -36,61 +34,61 @@ Mototaxistas. Fonte oficial em https://www.planalto.gov.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Motociclista não consta no Anexo IV do Decreto 3.048/99
+### Argumento 1. Motociclista não consta no Anexo IV do Decreto 3.048/99
 
 Argumento adversário. Sem rol, sem reconhecimento.
 
 Refutação. O art. 193, §4º, da CLT qualifica a atividade como perigosa, fora do rol regulamentar previdenciário (auditoria 03/10/2026). A NR-16 Anexo V supre.
 
-### Argumento 2 — Lei 12.997/2014 não retroage
+### Argumento 2. Lei 12.997/2014 não retroage
 
 Argumento adversário. Período anterior não é especial.
 
 Refutação. A Lei apenas explicitou direito preexistente. Súmula 198 TFR e Decreto 53.831/64 reconhecem por analogia.
 
-### Argumento 3 — EPI neutraliza periculosidade
+### Argumento 3. EPI neutraliza periculosidade
 
 Argumento adversário. Capacete elimina risco.
 
 Refutação. Tema 555 STF e Tema 1090 STJ não se aplicam à periculosidade. Risco de acidente é inerente e não eliminável.
 
-### Argumento 4 — Falta de habitualidade
+### Argumento 4. Falta de habitualidade
 
 Argumento adversário. Uso eventual da moto descaracteriza.
 
 Refutação. No profissional de motocicleta, a exposição ao risco da via pública é indissociável da prestação do serviço, o que caracteriza a permanência (art. 65 do Decreto 3.048/99). A Súmula 49 TNU não serve aqui, pois apenas dispensa a permanência antes de 29/4/1995 (auditoria 03/10/2026). Cabe ao INSS provar a eventualidade.
 
-### Argumento 5 — Sem LTCAT específico
+### Argumento 5. Sem LTCAT específico
 
 Argumento adversário. Periculosidade demanda LTCAT.
 
 Refutação. Os arts. 281 e 282 IN 128/2022 admitem PPP como prova suficiente.
 
-### Argumento 6 — Empresa sem registro
+### Argumento 6. Empresa sem registro
 
 Argumento adversário. Sem PPP, sem reconhecimento.
 
 Refutação. Súmula 198 TFR autoriza prova indireta.
 
-### Argumento 7 — Plataforma digital descaracteriza vínculo
+### Argumento 7. Plataforma digital descaracteriza vínculo
 
 Argumento adversário. Autônomo não tem direito a especial.
 
 Refutação. A Lei 8.213/91 admite contribuinte individual com tempo especial. Periculosidade independe da modalidade contratual.
 
-### Argumento 8 — Periculosidade trabalhista não vincula INSS
+### Argumento 8. Periculosidade trabalhista não vincula INSS
 
 Argumento adversário. Norma de outra esfera.
 
 Refutação. A NR-16 é norma técnica integradora. O caput do art. 193 da CLT remete a essa regulamentação (auditoria 03/10/2026).
 
-### Argumento 9 — Portaria MTE 2.021/2025 restringiu
+### Argumento 9. Portaria MTE 2.021/2025 restringiu
 
 Argumento adversário. Atualização excluiu motociclistas.
 
 Refutação. A Portaria manteve o reconhecimento, excluindo apenas deslocamentos eventuais.
 
-### Argumento 10 — Concomitância com outros adicionais
+### Argumento 10. Concomitância com outros adicionais
 
 Argumento adversário. Periculosidade exclui insalubridade.
 
@@ -99,8 +97,6 @@ Refutação. Para fins previdenciários, podem coexistir critérios distintos. T
 ## 3. Cláusulas doutrinárias de apoio
 
 Sebastião Geraldo de Oliveira reconhece o motociclista como profissional em risco extremo.
-
-
 
 Hugo Goes admite a conversão por periculosidade na NR-16 Anexo V.
 

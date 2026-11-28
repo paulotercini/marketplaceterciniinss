@@ -1,4 +1,4 @@
-# Facultativo Baixa Renda — Jurisprudência e Refutação
+# Facultativo Baixa Renda. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -18,10 +18,6 @@ Permite complementação. Fonte oficial em https://www.planalto.gov.br
 
 Estabilizou o regime FBR. Fonte oficial em https://www.planalto.gov.br
 
-
-
-
-
 ### Tema 327 TNU
 
 Cônjuge segurado especial. Fonte oficial em https://www.cjf.jus.br
@@ -36,61 +32,61 @@ Procedimento. Fonte oficial em https://www.gov.br/inss
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Inscrição no CadÚnico em momento da contribuição
+### Argumento 1. Inscrição no CadÚnico em momento da contribuição
 
 Argumento adversário. Sem inscrição, sem direito.
 
 Refutação. Cabe regularização e complementação.
 
-### Argumento 2 — Atividade remunerada exclui
+### Argumento 2. Atividade remunerada exclui
 
 Argumento adversário. Qualquer renda descaracteriza.
 
 Refutação. Análise da efetiva renda. Bolsa Família e auxílios assistenciais não excluem.
 
-### Argumento 3 — Indicador PFBR-AT-INVAL
+### Argumento 3. Indicador PFBR-AT-INVAL
 
 Argumento adversário. Sem fundamentação.
 
 Refutação. Cabe impugnação por art. 199-A Decreto 3.048.
 
-### Argumento 4 — Exclusão temporária do CadÚnico
+### Argumento 4. Exclusão temporária do CadÚnico
 
 Argumento adversário. Exclusão zera histórico.
 
 Refutação. Reinclusão preserva contribuições anteriores.
 
-### Argumento 5 — Atividade externa eventual
+### Argumento 5. Atividade externa eventual
 
 Argumento adversário. Pequeno serviço descaracteriza.
 
 Refutação. Atividade eventual não desqualifica dedicação exclusiva.
 
-### Argumento 6 — Cuidadora não se enquadra
+### Argumento 6. Cuidadora não se enquadra
 
 Argumento adversário. Cuidadora é trabalho remunerado.
 
 Refutação. Cuidado familiar sem remuneração configura dedicação exclusiva.
 
-### Argumento 7 — Falta de comprovação documental
+### Argumento 7. Falta de comprovação documental
 
 Argumento adversário. Sem documentos, sem direito.
 
 Refutação. Declaração e prova testemunhal são admitidas.
 
-### Argumento 8 — Decadência
+### Argumento 8. Decadência
 
 Argumento adversário. Prazo esgotado.
 
 Refutação. Súmula 85 STJ alcança parcelas.
 
-### Argumento 9 — Carência mínima
+### Argumento 9. Carência mínima
 
 Argumento adversário. Sem 180 contribuições.
 
 Refutação. Análise da carência conforme benefício.
 
-### Argumento 10 — Pensão por morte FBR
+### Argumento 10. Pensão por morte FBR
 
 Argumento adversário. Sem direito a pensão.
 
@@ -99,14 +95,6 @@ Refutação. Pensão é direito dos dependentes.
 ## 3. Cláusulas doutrinárias de apoio
 
 Nenhuma posição doutrinária entra aqui sem obra e página conferidas (auditoria 03/10/2026).
-
-
-
-
-
-
-
-
 
 ## 4. Estratégia integrada
 

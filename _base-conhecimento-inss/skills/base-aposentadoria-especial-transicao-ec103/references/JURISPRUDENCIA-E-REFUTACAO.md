@@ -1,4 +1,4 @@
-# Aposentadoria Especial Pós EC 103/2019 — Jurisprudência Verificada e Refutação
+# Aposentadoria Especial Pós EC 103/2019. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -70,12 +70,6 @@ Aplicação pró-segurado. Tese adversa; pelo item II, a DIB é a DER mesmo que 
 
 A ADI 4827, antes citada aqui, trata de lei de Alagoas sobre o efetivo da Polícia Militar e não de aposentadoria especial; o retorno à atividade especial está no Tema 709 acima (auditoria 03/10/2026).
 
-
-
-
-
-
-
 ### Tema 1083 STJ
 
 Tese. O ruído com níveis variados se afere pelo Nível de Exposição Normalizado (NEN); ausente essa informação, adota-se o nível máximo (pico de ruído), com perícia judicial que comprove habitualidade e permanência (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a doença preexistente agravada).
@@ -86,61 +80,61 @@ Aplicação pró-segurado. Sem NEN no PPP, o pico de ruído serve de critério, 
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Exigência de exposição contínua na transição
+### Argumento 1. Exigência de exposição contínua na transição
 
 Argumento adversário. A atividade especial exige exposição contínua ao agente nocivo.
 
 Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço. Em agentes biológicos, o Tema 211 TNU exige a probabilidade da exposição ocupacional (auditoria 03/10/2026).
 
-### Argumento 2 — Neutralização por EPI
+### Argumento 2. Neutralização por EPI
 
 Argumento adversário. O EPI eficaz neutraliza o risco e descaracteriza o tempo especial.
 
 Refutação. Tema 1090 STJ e Tema 555 STF. Em hipóteses excepcionais, especialmente para cancerígenos, biológicos e eletricidade, o EPI não neutraliza o risco. Acionar `base-especial-epi`.
 
-### Argumento 3 — Recusa de conversão pós-EC 103
+### Argumento 3. Recusa de conversão pós-EC 103
 
 Argumento adversário. A conversão de tempo especial em comum foi totalmente vedada após a reforma.
 
 Refutação. Art. 25, §2º, da EC 103/2019 (auditoria 25/07/2026, retirado o Tema 942/STJ, que trata de cheque). A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma. A ADI 6309 confirmou a validade da regra e registrou na ementa que a EC 103 "assegurou a possibilidade de conversão do tempo de trabalho anterior à sua edição" (item 6).
 
-### Argumento 4 — Aplicação de regra permanente em quem tinha direito adquirido
+### Argumento 4. Aplicação de regra permanente em quem tinha direito adquirido
 
 Argumento adversário. Quem completou 25/20/15 anos após a reforma se submete à regra permanente, mesmo que parte fosse pré-reforma.
 
 Refutação. Art. 3º da EC 103. Quem completou o tempo mínimo antes de 13 de novembro de 2019 tem direito adquirido à regra anterior. Acionar `base-aposentadoria-direito-adquirido`.
 
-### Argumento 5 — Pontuação da transição aplicada sem o tempo mínimo
+### Argumento 5. Pontuação da transição aplicada sem o tempo mínimo
 
 Argumento adversário. A transição por pontos dispensa o tempo mínimo de 15, 20 ou 25 anos.
 
 Refutação. Art. 21 da EC 103. A transição exige simultaneamente o tempo mínimo e a pontuação. São requisitos cumulativos, não alternativos.
 
-### Argumento 6 — Negativa por PPP deficiente
+### Argumento 6. Negativa por PPP deficiente
 
 Argumento adversário. PPP sem preenchimento completo impede reconhecimento do tempo especial.
 
 Refutação. A comprovação da atividade especial admite meios alternativos de prova técnica (Súmula 198 do TFR). Acionar `retificacao-ppp` e `defesa-probatoria-especial` (auditoria 25/07/2026, retirado o Tema 709/STJ, que é de execução penal).
 
-### Argumento 7 — Exigência de dosimetria de ruído
+### Argumento 7. Exigência de dosimetria de ruído
 
 Argumento adversário. Ruído exige medição por NEN (nível de exposição normalizado), não basta NPS (nível de pressão sonora).
 
 Refutação. Tema 174 TNU e metodologia consolidada. A NHO-01 aceita dosimetria com LAVG quando compatível. Acionar `base-especial-ruido`.
 
-### Argumento 8 — Aplicação da regra permanente sem comparativo com transição
+### Argumento 8. Aplicação da regra permanente sem comparativo com transição
 
 Argumento adversário. A regra permanente é aplicada automaticamente após 13 de novembro de 2019.
 
 Refutação. Tema 334 do STF (quadro mais favorável ao beneficiário), usado por analogia, porque trata do cálculo da renda e não da escolha entre regras de acesso, e Decreto 3.048/99, art. 188-P, caput, que ressalva ao filiado até 13/11/2019 o direito de opção pela aposentadoria do art. 64. Comparativo obrigatório com a transição por pontos (art. 21) é direito do segurado (Onda 170, retirada a menção ao art. 4º da EC 103, que trata da transição do servidor público).
 
-### Argumento 9 — Exigência de idade mínima após a ADI 6309
+### Argumento 9. Exigência de idade mínima após a ADI 6309
 
 Argumento adversário. O Decreto 3.048/99, art. 64, I a III, e a IN 128/2022, art. 260, I a III, exigem 55, 58 ou 60 anos de idade.
 
 Refutação. As idades reproduzem o art. 19, §1º, I, alíneas a, b e c, da EC 103, declarado inconstitucional na ADI 6309. A declaração tem eficácia contra todos e efeito vinculante sobre a Administração Pública federal (Lei 9.868/1999, art. 28, parágrafo único) [CONFERIDO, Planalto, 04/10/2026]. Sustentar que as idades do decreto e da IN perderam fundamento, porque o art. 57 da Lei 8.213/91 não prevê idade mínima (texto transcrito no voto do Min. Alexandre de Moraes, p. 105) e a regra constitucional que elas repetiam foi invalidada. O STF não declarou, por arrastamento, a inconstitucionalidade do art. 64 do Decreto nem do art. 260 da IN, e por isso o fundamento principal é o efeito vinculante.
 
-### Argumento 10 — Filiado até 13/11/2019 só se aposenta pelos pontos do art. 21
+### Argumento 10. Filiado até 13/11/2019 só se aposenta pelos pontos do art. 21
 
 Argumento adversário. A IN 128/2022, art. 262, aplica ao filiado até 13/11/2019 apenas a pontuação de 66, 76 ou 86 pontos.
 

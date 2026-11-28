@@ -1,4 +1,4 @@
-# Reclamatória Trabalhista — Jurisprudência e Refutação
+# Reclamatória Trabalhista. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,77 +36,65 @@ Anotação na CTPS. Fonte oficial em https://www.planalto.gov.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Sentença trabalhista não vincula
+### Argumento 1. Sentença trabalhista não vincula
 
 Argumento adversário. INSS é terceiro.
 
 Refutação. Tema 1188/STJ. Sentença fundada em elementos probatórios contemporâneos constitui início de prova material válida.
 
-### Argumento 2 — Súmula 149 STJ afasta sentença
+### Argumento 2. Súmula 149 STJ afasta sentença
 
 Argumento adversário. Sem prova material.
 
 Refutação. Súmula 149 exige início, não exclusividade.
 
-### Argumento 3 — Acordo é fraude
+### Argumento 3. Acordo é fraude
 
 Argumento adversário. Acordo sem prova.
 
 Refutação. Acordo homologado é início de prova.
 
-### Argumento 4 — INSS não participou
+### Argumento 4. INSS não participou
 
 Argumento adversário. Sem contraditório.
 
 Refutação. Tema 1188/STJ. A eficácia probatória independe da participação do INSS na reclamatória, desde que haja elementos contemporâneos.
 
-### Argumento 5 — Tríplice identidade
+### Argumento 5. Tríplice identidade
 
 Argumento adversário. Sem identidade, sem efeito.
 
 Refutação. Art. 506 CPC.
 
-### Argumento 6 — CTPS por sentença
+### Argumento 6. CTPS por sentença
 
 Argumento adversário. Anotação artificial.
 
 Refutação. Fé pública após trânsito.
 
-### Argumento 7 — Diferenças salariais não integram
+### Argumento 7. Diferenças salariais não integram
 
 Argumento adversário. Sem repercussão previdenciária.
 
 Refutação. Tema 1.188 STF.
 
-### Argumento 8 — Verbas indenizatórias
+### Argumento 8. Verbas indenizatórias
 
 Argumento adversário. Tudo é indenizatório.
 
 Refutação. Distinguir conforme natureza.
 
-### Argumento 9 — Acordo simulado
+### Argumento 9. Acordo simulado
 
 Argumento adversário. Suspeita.
 
 Refutação. Cabe ao INSS provar fraude.
 
-### Argumento 10 — Vínculo declarado tardiamente
+### Argumento 10. Vínculo declarado tardiamente
 
 Argumento adversário. Declaração tardia é frágil.
 
 Refutação. O Tema 1188/STJ não impõe limite temporal ao vínculo, exige apenas elementos probatórios contemporâneos aptos a demonstrar o período.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira sustenta a aceitação plena.
-
-Frederico Amado defende interpretação favorável.
-
-Hugo Goes admite a sentença como prova.
-
-Marco Aurélio Serau Junior critica recusa sistemática.
-
-IBDP sustenta vinculação.
 
 ## 4. Estratégia integrada
 

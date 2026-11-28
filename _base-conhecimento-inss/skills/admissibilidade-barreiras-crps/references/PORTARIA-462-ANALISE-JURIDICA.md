@@ -1,10 +1,10 @@
-# Análise Jurídica — Art. 112, §7º e §8º (Portaria MPS 462/2026)
+# Análise Jurídica. Art. 112, §7º e §8º (Portaria MPS 462/2026)
 
 ## 1. Ilegalidade por Violação ao Art. 126 da Lei 8.213/91
 
 O art. 126, caput, da Lei 8.213/91 dispõe que "das decisões do Instituto Nacional do Seguro Social nos processos de interesse dos beneficiários e dos contribuintes da Seguridade Social caberá recurso para o Conselho de Recursos da Previdência Social, conforme dispuser o regulamento."
 
-A norma legal confere direito de recurso contra "decisões do INSS" sem qualquer distinção quanto à natureza da decisão — se originária, em revisão, em cumprimento, em reanálise. A decisão proferida em pedido de revisão de ato de indeferimento é, indiscutivelmente, uma "decisão do INSS". A portaria ministerial não pode restringir o alcance da lei criando exceção não prevista no texto legal.
+A norma legal confere direito de recurso contra "decisões do INSS" sem qualquer distinção quanto à natureza da decisão, se originária, em revisão, em cumprimento, em reanálise. A decisão proferida em pedido de revisão de ato de indeferimento é, indiscutivelmente, uma "decisão do INSS". A portaria ministerial não pode restringir o alcance da lei criando exceção não prevista no texto legal.
 
 O Decreto 3.048/99, art. 305, §1º, também não prevê essa restrição. O regulamento assegura recurso ao CRPS contra decisões do INSS nos processos de interesse dos beneficiários.
 
@@ -14,7 +14,7 @@ O art. 56 da Lei 9.784/99 é expresso ao garantir que "das decisões administrat
 
 A exigência de "documentos ou elementos novos" como condição de conhecimento equivale a uma caução probatória não prevista em lei. O recurso administrativo, por definição, questiona a legalidade e o mérito da decisão. A reapreciação jurídica da mesma base probatória é função essencial do recurso. Condicionar o conhecimento à inovação documental desnatura o recurso e o transforma em mero pedido de reapreciação fática.
 
-## 3. Inconstitucionalidade — Art. 5º, LV, CF
+## 3. Inconstitucionalidade. Art. 5º, LV, CF
 
 O art. 5º, LV, da Constituição Federal garante "aos litigantes, em processo judicial ou administrativo, e aos acusados em geral (...) o contraditório e ampla defesa, com os meios e recursos a ela inerentes."
 
@@ -34,7 +34,7 @@ A inserção deveria, no mínimo, ter sido feita como novo inciso do caput do ar
 
 ## 6. Esvaziamento do Duplo Grau Administrativo
 
-O duplo grau de jurisdição administrativa é garantia fundamental do processo administrativo previdenciário. O segurado tem direito de ter a decisão reexaminada por instância superior (JR do CRPS). O §7º esvazia esse direito para uma categoria específica de casos — os pedidos de revisão de ato de indeferimento — quando inexistem provas novas.
+O duplo grau de jurisdição administrativa é garantia fundamental do processo administrativo previdenciário. O segurado tem direito de ter a decisão reexaminada por instância superior (JR do CRPS). O §7º esvazia esse direito para uma categoria específica de casos, os pedidos de revisão de ato de indeferimento, quando inexistem provas novas.
 
 O problema central é que o erro do INSS pode ser exclusivamente jurídico (interpretação normativa incorreta, enquadramento equivocado, não reconhecimento de direito comprovado nos autos) e não fático. Exigir prova nova para revisar erro jurídico é logicamente absurdo, porque o vício está na interpretação, não na prova.
 
@@ -46,13 +46,13 @@ O Tema 350/STF exige prévio requerimento administrativo como condição da aç�
 
 O STF, na ADI 6096, declarou inconstitucional a incidência de prazo decadencial sobre atos negativos do INSS (indeferimentos). A lógica subjacente é que o segurado não pode ser prejudicado por ato negativo da administração que viola seu direito. O §7º cria obstáculo processual ao exercício de direito cuja proteção o STF expressamente reforçou na ADI 6096.
 
-## 9. Análise do §8º — Vedação de Diligência na Relevação
+## 9. Análise do §8º. Vedação de Diligência na Relevação
 
 O §8º veda diligências no procedimento de relevação de intempestividade. O art. 112, §§1º e 2º exigem demonstração "inequívoca" de liquidez e certeza para a relevação. Se a prova dessa liquidez depender de consulta a bases de dados, atualização de CNIS, obtenção de PPP ou qualquer complementação, o conselheiro não poderá obtê-la.
 
 A vedação é especialmente prejudicial quando combinada com o art. 112, §2º, "b", que define liquidez inequívoca quando as "informações necessárias estiverem disponíveis nas bases de dados governamentais acessíveis ao conselheiro." Se o conselheiro não pode realizar diligência para consultar essas bases, a própria alínea "b" se torna letra morta na prática.
 
-## 10. Fundamentos para Impugnação — Síntese
+## 10. Fundamentos para Impugnação. Síntese
 
 ### Em preliminar de recurso ao CRPS
 

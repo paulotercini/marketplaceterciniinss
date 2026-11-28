@@ -1,4 +1,4 @@
-# Fato Superveniente Art. 493 — Jurisprudência e Refutação
+# Fato Superveniente Art. 493. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -40,61 +40,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Fato posterior não computa
+### Argumento 1. Fato posterior não computa
 
 Argumento adversário. Inércia da jurisdição.
 
 Refutação. Art. 493 CPC impõe consideração.
 
-### Argumento 2 — Reafirmação exige novo requerimento administrativo
+### Argumento 2. Reafirmação exige novo requerimento administrativo
 
 Argumento adversário. Tema 350 STF.
 
 Refutação. Tema 995 STJ dispensa quando no curso do processo.
 
-### Argumento 3 — Juros a partir da DIB reafirmada
+### Argumento 3. Juros a partir da DIB reafirmada
 
 Argumento adversário. Sem resistência, sem juros.
 
 Refutação. Pelos EDcl no REsp 1.727.063/SP (Tema 995/STJ), na reafirmação posterior ao ajuizamento os juros correm se o INSS não implantar o benefício em 45 dias da intimação; quando os requisitos se completam antes do ajuizamento, os juros correm da citação, conforme `reafirmacao-der` (auditoria 03/10/2026).
 
-### Argumento 4 — PPP retificado extemporaneamente não vale
+### Argumento 4. PPP retificado extemporaneamente não vale
 
 Argumento adversário. Art. 279 IN 128.
 
 Refutação. Documento novo aceito em juízo. Tema 132 TST análogo.
 
-### Argumento 5 — Nova lei benéfica não retroage
+### Argumento 5. Nova lei benéfica não retroage
 
 Argumento adversário. Tempus regit actum.
 
 Refutação. Lei benéfica pode aplicar-se a fato em curso se não houver direito adquirido em sentido contrário.
 
-### Argumento 6 — Decisão sem contraditório
+### Argumento 6. Decisão sem contraditório
 
 Argumento adversário. Nulidade.
 
 Refutação. Art. 10 CPC exige contraditório. Peticionar com oitiva.
 
-### Argumento 7 — Impossibilidade em JEF
+### Argumento 7. Impossibilidade em JEF
 
 Argumento adversário. Rito sumário.
 
 Refutação. TNU admite reafirmação com concordância.
 
-### Argumento 8 — Fato superveniente não rompe coisa julgada
+### Argumento 8. Fato superveniente não rompe coisa julgada
 
 Argumento adversário. Rigidez.
 
 Refutação. Coisa julgada é rebus sic stantibus em relação continuada. Art. 505 II CPC.
 
-### Argumento 9 — Superveniência só até sentença
+### Argumento 9. Superveniência só até sentença
 
 Argumento adversário. Rigor temporal.
 
 Refutação. Precedentes admitem até o julgamento em segunda instância.
 
-### Argumento 10 — Sem concordância do INSS, impossível
+### Argumento 10. Sem concordância do INSS, impossível
 
 Argumento adversário. Requisito formal.
 

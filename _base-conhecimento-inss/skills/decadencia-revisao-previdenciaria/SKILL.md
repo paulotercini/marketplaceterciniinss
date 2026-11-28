@@ -3,7 +3,7 @@ name: decadencia-revisao-previdenciaria
 description: "Skill de decadência do art. 103 da Lei 8.213/91, prazos decadenciais autônomos e alerta de esgotamento de prazo. Use SEMPRE que mencionar decadência, art. 103, prazo decadencial, 10 anos para revisar, Tema 975/STJ, Tema 256/TNU, Tema 1370/STJ, IAC 11/TRF4, ADI 6096/STF, pedido de revisão administrativa, interrupção de decadência, prazos autônomos, revisão de benefício concedido há mais de 10 anos, perda do direito de revisão, ou análise de viabilidade de revisão com contagem de prazo. Use quando informar data de concessão (DIB, DER, primeiro pagamento) para verificar esgotamento. Use quando qualquer skill de petição ou auditoria envolver revisão de benefício já concedido. SEMPRE alertar quando prazo estiver a menos de 12 meses. Fonte primária sobre estratégia contra decadência."
 ---
 
-# Decadência Revisional Previdenciária – Art. 103 da Lei 8.213/91
+# Decadência Revisional Previdenciária. Art. 103 da Lei 8.213/91
 
 ## Finalidade
 
@@ -15,13 +15,13 @@ Esta skill consolida as regras de decadência aplicáveis à revisão de benefí
 
 SEMPRE que o usuário informar dados de um caso concreto envolvendo revisão de benefício já concedido, a skill deve calcular automaticamente o prazo decadencial e emitir alerta visual conforme a seguinte classificação
 
-**ALERTA VERMELHO – PRAZO CRÍTICO (menos de 6 meses para o esgotamento)**
+**ALERTA VERMELHO. PRAZO CRÍTICO (menos de 6 meses para o esgotamento)**
 Informar que o prazo decadencial está em situação crítica. Recomendar ajuizamento imediato e, simultaneamente, protocolo de pedido de revisão administrativa como cautela adicional. Indicar que qualquer atraso pode resultar em perda irreversível do direito.
 
-**ALERTA LARANJA – PRAZO EM RISCO (entre 6 e 12 meses para o esgotamento)**
+**ALERTA LARANJA. PRAZO EM RISCO (entre 6 e 12 meses para o esgotamento)**
 Informar que o prazo decadencial está em zona de risco. Recomendar providências urgentes para instrução documental e definição de estratégia (administrativa ou judicial). Não postergar decisão sobre judicialização.
 
-**ALERTA AMARELO – PRAZO EM ATENÇÃO (entre 12 e 24 meses para o esgotamento)**
+**ALERTA AMARELO. PRAZO EM ATENÇÃO (entre 12 e 24 meses para o esgotamento)**
 Informar que o prazo decadencial exige atenção. Recomendar início de instrução documental e análise de viabilidade revisional.
 
 **SEM ALERTA (mais de 24 meses)**
@@ -45,7 +45,7 @@ Se houve pedido de revisão administrativa dentro dos 10 anos, verificar a situa
 
 Se o usuário não informar todos os dados, solicitar expressamente antes de prosseguir.
 
-## REGRA GERAL – DECADÊNCIA DECENAL
+## REGRA GERAL. DECADÊNCIA DECENAL
 
 O art. 103, caput, da Lei 8.213/91 estabelece prazo decadencial de 10 anos para revisão do ato de concessão de benefício previdenciário. A tese firmada pelo Tema 975/STJ (REsp 1.648.336/RS e REsp 1.644.191/RS, rel. Min. Herman Benjamin, j. 11/12/2019) ampliou a incidência da decadência mesmo para questões não apreciadas no ato originário de concessão.
 
@@ -75,7 +75,7 @@ Se a pretensão do segurado é a concessão de benefício diverso (por exemplo, 
 
 A decadência não se aplica a revisões impostas por determinação legal (ex. art. 26 da Lei 8.870/94). Esse entendimento constava expressamente da IN 45/2010 do INSS.
 
-## CONTROVÉRSIA SOBRE PRAZOS AUTÔNOMOS – SITUAÇÃO CRÍTICA EM 2025-2026
+## CONTROVÉRSIA SOBRE PRAZOS AUTÔNOMOS. SITUAÇÃO CRÍTICA EM 2025-2026
 
 ### O que diz o Tema 256 da TNU (posição favorável ao segurado)
 
@@ -91,7 +91,7 @@ Julgado em 26/06/2024 pela 3ª Seção do TRF4 (processo 5031598-97.2021.4.04.00
 
 O STJ, por decisões monocráticas, vem negando a existência do segundo prazo autônomo. O precedente mais relevante é o REsp 2.199.944/RS (Min. Francisco Falcão, decisão monocrática de 17/03/2025), que afirmou que a tese dos prazos autônomos equivale a uma "verdadeira interrupção do prazo decadencial decorrente do pedido de revisão administrativa", incompatível com o art. 207 do Código Civil e com a lógica do Tema 975/STJ.
 
-### O Tema Repetitivo 1370 do STJ (pendente – definirá a questão)
+### O Tema Repetitivo 1370 do STJ (pendente. definirá a questão)
 
 Afetado em 12/08/2025 pela 1ª Seção do STJ (REsp 2.178.138/SC e REsp 2.205.049/RS, rel. Min. Gurgel de Faria). Suspensão nacional de todos os recursos sobre a matéria. Questão submetida a julgamento, na literalidade
 
@@ -169,16 +169,4 @@ Ao auditar sentenças ou acórdãos que reconheceram ou negaram decadência, ver
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

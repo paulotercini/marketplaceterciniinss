@@ -1,4 +1,4 @@
-# Cumprimento de Sentença — Fundamentos e Cenários
+# Cumprimento de Sentença. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -50,45 +50,45 @@ Honorários em execução contra a Fazenda; a Súmula 345 STJ alcança a execuç
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Atrasados até 60 SM
+### Cenário A. Atrasados até 60 SM
 
 RPV com prazo de 60 dias.
 
-### Cenário B — Atrasados acima de 60 SM
+### Cenário B. Atrasados acima de 60 SM
 
 Precatório, calendário anual.
 
-### Cenário C — Renúncia ao excedente
+### Cenário C. Renúncia ao excedente
 
 Para obter RPV mesmo com atrasados maiores.
 
-### Cenário D — RRA
+### Cenário D. RRA
 
 Diferimento tributário em atrasados.
 
-### Cenário E — Isenção por doença grave
+### Cenário E. Isenção por doença grave
 
 Tema 1373 STF, Súmula 627 STJ.
 
-### Cenário F — Dialeticidade em impugnação
+### Cenário F. Dialeticidade em impugnação
 
 Combate técnico.
 
-### Cenário G — Honorários destacados
+### Cenário G. Honorários destacados
 
 Arts. 22 §4º, 23 e 24 EAOAB.
 
 ## 6. Cenários limitados
 
-### Cenário H — Prescrição quinquenal
+### Cenário H. Prescrição quinquenal
 
 Em cumprimento, prescreve crédito não requerido em 5 anos.
 
-### Cenário I — Deságio em precatório
+### Cenário I. Deságio em precatório
 
 Operação financeira, avaliar.
 
-### Cenário J — Abatimento de valores administrativos
+### Cenário J. Abatimento de valores administrativos
 
 Se DIP anterior, compensar.
 

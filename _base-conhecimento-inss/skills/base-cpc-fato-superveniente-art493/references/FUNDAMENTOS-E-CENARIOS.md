@@ -1,4 +1,4 @@
-# Fato Superveniente Art. 493 — Fundamentos e Cenários
+# Fato Superveniente Art. 493. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,41 +46,41 @@ Prévio requerimento e fato superveniente administrativo.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Completou tempo durante o processo
+### Cenário A. Completou tempo durante o processo
 
 Reafirmação da DER. Tema 995 STJ.
 
-### Cenário B — Completou idade durante o processo
+### Cenário B. Completou idade durante o processo
 
 DIB na data do implemento.
 
-### Cenário C — PPP retificado no curso do processo
+### Cenário C. PPP retificado no curso do processo
 
 Agente nocivo comprovado. Fato superveniente probatório.
 
-### Cenário D — Nova lei benéfica
+### Cenário D. Nova lei benéfica
 
 Aplicação imediata (salvo restrição constitucional).
 
-### Cenário E — Laudo pericial judicial altera quadro
+### Cenário E. Laudo pericial judicial altera quadro
 
 Implementação de incapacidade pós-ajuizamento.
 
-### Cenário F — Indenização contributiva paga
+### Cenário F. Indenização contributiva paga
 
 Regulariza período. Fato superveniente.
 
 ## 6. Cenários limitados
 
-### Cenário G — Fato posterior à sentença
+### Cenário G. Fato posterior à sentença
 
 Exige ação própria ou recurso.
 
-### Cenário H — Ausência de contraditório
+### Cenário H. Ausência de contraditório
 
 Decisão nula. Art. 10 CPC.
 
-### Cenário I — Cumprimento de sentença
+### Cenário I. Cumprimento de sentença
 
 Fato superveniente gera novas DIBs se admitido.
 

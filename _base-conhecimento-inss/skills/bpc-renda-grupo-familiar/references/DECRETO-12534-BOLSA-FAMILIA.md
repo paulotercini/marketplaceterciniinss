@@ -44,17 +44,17 @@ O BPC e o Bolsa Família atendem a funções distintas e complementares. Nenhum 
 
 ### 3. Conflito com Temas Vinculantes
 
-**Tema 312/STF** — O STF declarou a inconstitucionalidade por omissão parcial do parágrafo único do art. 34 do Estatuto do Idoso, que exclui do cálculo de renda apenas o BPC de idoso, quando deveria excluir também benefícios de valor mínimo de natureza previdenciária ou assistencial (auditoria 03/10/2026). O Decreto 12.534 vai na direção diametralmente oposta, incluindo na renda o que o STF mandou excluir.
+**Tema 312/STF.** O STF declarou a inconstitucionalidade por omissão parcial do parágrafo único do art. 34 do Estatuto do Idoso, que exclui do cálculo de renda apenas o BPC de idoso, quando deveria excluir também benefícios de valor mínimo de natureza previdenciária ou assistencial (auditoria 03/10/2026). O Decreto 12.534 vai na direção diametralmente oposta, incluindo na renda o que o STF mandou excluir.
 
-**Tema 27/STF** — O critério de ¼ do salário mínimo não é absoluto. A vulnerabilidade pode ser demonstrada por outros meios. O Decreto, ao incluir Bolsa Família na renda, pode levar a renda per capita para acima de ¼ SM sem que a família tenha efetivamente saído da miserabilidade.
+**Tema 27/STF.** O critério de ¼ do salário mínimo não é absoluto. A vulnerabilidade pode ser demonstrada por outros meios. O Decreto, ao incluir Bolsa Família na renda, pode levar a renda per capita para acima de ¼ SM sem que a família tenha efetivamente saído da miserabilidade.
 
-**Tema 640/STJ** — Benefício previdenciário de valor mínimo recebido por idoso deve ser excluído da renda, por analogia ao art. 34 do Estatuto do Idoso. A lógica protetiva é a mesma que deve se estender ao Bolsa Família.
+**Tema 640/STJ.** Benefício previdenciário de valor mínimo recebido por idoso deve ser excluído da renda, por analogia ao art. 34 do Estatuto do Idoso. A lógica protetiva é a mesma que deve se estender ao Bolsa Família.
 
-**Tema 185/STJ** — Mesmo acima de ¼ SM, a miserabilidade pode ser comprovada por outros meios. Argumento subsidiário.
+**Tema 185/STJ.** Mesmo acima de ¼ SM, a miserabilidade pode ser comprovada por outros meios. Argumento subsidiário.
 
 ## Estratégia Processual
 
-### Via Principal — Ação com Tutela Antecipada (JEF ou Vara Federal)
+### Via Principal. Ação com Tutela Antecipada (JEF ou Vara Federal)
 
 **Pedidos**
 1. Restabelecimento imediato do BPC (em caso de cessação) ou concessão (em caso de indeferimento)
@@ -71,7 +71,7 @@ CadÚnico atualizado. Relatório do CRAS. Despesas contínuas comprovadas (medic
 **Argumento subsidiário**
 Mesmo que o juiz entenda pela legalidade do cômputo do Bolsa Família, o critério de ¼ SM não é absoluto (Temas 27/STF e 185/STJ). Superação da renda não equivale a afastamento automático da vulnerabilidade social.
 
-### Via Alternativa — Mandado de Segurança
+### Via Alternativa. Mandado de Segurança
 
 O MS é a via adequada quando concorrerem três condições cumulativas. Primeiro, ato claro de cessação com fundamento exclusivo ou predominante na inclusão do Bolsa Família na renda. Segundo, prova documental pré-constituída (carta de cessação do INSS, CadÚnico, comprovantes de renda). Terceiro, discussão predominantemente jurídica (ilegalidade do decreto).
 
@@ -84,11 +84,11 @@ Em regra, o MS não é via própria para cobrança de atrasados. Parcelas vencid
 **Autoridade coatora**
 Gerente Executivo da APS ou Gerente da CEAB responsável pelo ato de cessação. Consultar a skill `ms-competencia-autoridade-coatora` para definição precisa.
 
-### Via Administrativa — Recurso ao CRPS
+### Via Administrativa. Recurso ao CRPS
 
 O recurso administrativo pode ser interposto, mas possui limitações relevantes nesse contexto. O CRPS não tem competência para declarar a inconstitucionalidade do Decreto. Contudo, pode reconhecer que o cômputo do Bolsa Família viola o art. 20, §4º da LOAS por excesso regulamentar, com base no Enunciado 1 do CRPS (melhor benefício) e no art. 109 da Portaria MPS 125/2026 (precedentes judiciais como fonte normativa).
 
-### Renúncia ao Bolsa Família — Último Recurso
+### Renúncia ao Bolsa Família. Último Recurso
 
 A renúncia ao Bolsa Família é uma alternativa pragmática em casos excepcionais. NUNCA recomendar como primeira opção. Só cogitar se todas as vias jurídicas falharem e o beneficiário preferir o BPC ao Bolsa Família. A orientação ao cliente deve incluir a análise comparativa de valores (BPC = 1 SM vs Bolsa Família = valor variável) e os efeitos colaterais da renúncia (perda de acesso a programas vinculados ao Bolsa Família).
 
@@ -107,15 +107,15 @@ Notícia publicada pelo TRF3 confirmando decisão do JEF de Registro/SP sobre a 
 
 Ao atuar em caso envolvendo Decreto 12.534/2025, acionar automaticamente as seguintes skills conforme pertinência
 
-- `analise-bpc-loas` — Para análise completa do IFBrM e da avaliação biopsicossocial
-- `bpc-renda-grupo-familiar` — Para verificação da composição do grupo familiar e exclusões de renda
-- `peticao-previdenciaria` — Para geração da petição no padrão do escritório
-- `ms-competencia-autoridade-coatora` — Se a via eleita for mandado de segurança
-- `regras-tutela-urgencia` — Para verificação da política do escritório sobre tutela antecipada
-- `tema-1124-instrucao-administrativa` — Para verificação de prévio requerimento administrativo
-- `precedentes-previdenciarios` — Para fundamentação jurisprudencial vinculante
-- `Enunciado 17 do CRPS` — Se houver cobrança de devolução de valores pelo INSS
+- `analise-bpc-loas`. Para análise completa do IFBrM e da avaliação biopsicossocial
+- `bpc-renda-grupo-familiar`. Para verificação da composição do grupo familiar e exclusões de renda
+- `peticao-previdenciaria`. Para geração da petição no padrão do escritório
+- `ms-competencia-autoridade-coatora`. Se a via eleita for mandado de segurança
+- `regras-tutela-urgencia`. Para verificação da política do escritório sobre tutela antecipada
+- `tema-1124-instrucao-administrativa`. Para verificação de prévio requerimento administrativo
+- `precedentes-previdenciarios`. Para fundamentação jurisprudencial vinculante
+- `Enunciado 17 do CRPS`. Se houver cobrança de devolução de valores pelo INSS
 
-## Alerta Especial — Vigência do Decreto
+## Alerta Especial. Vigência do Decreto
 
 Em março de 2026, o Decreto 12.534/2025 permanece vigente. Não foi identificada ADI formal no STF, revogação ou suspensão. A contestação é exclusivamente pela via difusa (ação individual com controle incidental) ou por MS. Monitorar eventual proposição de ADPF ou ADI concentrada.

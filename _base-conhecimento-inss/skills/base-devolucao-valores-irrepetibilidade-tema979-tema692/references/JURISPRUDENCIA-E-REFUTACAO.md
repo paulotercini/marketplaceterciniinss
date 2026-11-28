@@ -1,4 +1,4 @@
-# Devolução de Valores — Jurisprudência e Refutação
+# Devolução de Valores. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -32,61 +32,61 @@ Mora administrativa. Fonte oficial em https://portal.stf.jus.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Reforma de tutela autoriza devolução
+### Argumento 1. Reforma de tutela autoriza devolução
 
 Argumento adversário. Tutela revogada exige restituição.
 
 Refutação. Tese adversa: o Tema 692/STJ ampara a cobrança e obriga a devolução, com desconto de até 30% do benefício. O caminho do segurado é a distinção, quando o valor cobrado não decorreu da tutela revogada, e o teto de 30% (auditoria 03/10/2026).
 
-### Argumento 2 — Erro administrativo permite cobrança
+### Argumento 2. Erro administrativo permite cobrança
 
 Argumento adversário. INSS pode corrigir.
 
 Refutação. O Tema 979/STJ admite a cobrança, com desconto de até 30%, salvo se o segurado comprovar boa-fé objetiva. A defesa produz essa prova e verifica se o pagamento decorreu de interpretação errônea da lei, hipótese fora da tese (auditoria 03/10/2026).
 
-### Argumento 3 — Desconto integral
+### Argumento 3. Desconto integral
 
 Argumento adversário. Pode descontar 100%.
 
 Refutação. Art. 115 Lei 8.213 limita a 30%.
 
-### Argumento 4 — Presunção de má-fé
+### Argumento 4. Presunção de má-fé
 
 Argumento adversário. Recebimento indevido demonstra má-fé.
 
 Refutação. Presunção juris tantum de boa-fé. Súmula 34/AGU, por analogia, pois trata de servidor público (auditoria 03/10/2026).
 
-### Argumento 5 — Sem contraditório prévio
+### Argumento 5. Sem contraditório prévio
 
 Argumento adversário. Desconto direto.
 
 Refutação. O art. 5º, LV, da Constituição exige contraditório (auditoria 03/10/2026).
 
-### Argumento 6 — Natureza não alimentar
+### Argumento 6. Natureza não alimentar
 
 Argumento adversário. Atraso na devolução.
 
 Refutação. Benefício previdenciário é alimentar.
 
-### Argumento 7 — Súmula 34/AGU não vincula
+### Argumento 7. Súmula 34/AGU não vincula
 
 Argumento adversário. Súmula é interna.
 
 Refutação. STJ adota orientação. AGU vinculou seus órgãos jurídicos, mas o enunciado trata de servidor público e no RGPS serve só por analogia, ao lado do Tema 979/STJ (auditoria 03/10/2026).
 
-### Argumento 8 — Tema 692 STJ afasta a boa-fé
+### Argumento 8. Tema 692 STJ afasta a boa-fé
 
 Argumento adversário. Na tutela revogada, a boa-fé não impede a devolução.
 
 Refutação. Tese adversa, correta na tutela revogada. O segurado exige o teto de 30% e a prova de que cada parcela decorreu da tutela; a boa-fé objetiva pesa no erro administrativo, pelo Tema 979/STJ (auditoria 03/10/2026).
 
-### Argumento 9 — Acúmulo indevido
+### Argumento 9. Acúmulo indevido
 
 Argumento adversário. Acúmulo gera devolução.
 
 Refutação. Análise individualizada.
 
-### Argumento 10 — Reforma em segundo grau
+### Argumento 10. Reforma em segundo grau
 
 Argumento adversário. Devolução automática.
 

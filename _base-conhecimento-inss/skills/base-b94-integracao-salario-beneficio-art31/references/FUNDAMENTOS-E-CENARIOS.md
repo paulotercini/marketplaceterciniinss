@@ -1,4 +1,4 @@
-# Integração B94 ao SB — Fundamentos e Cenários
+# Integração B94 ao SB. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -54,45 +54,45 @@ Cálculo RMI.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — B94 desde 1995
+### Cenário A. B94 desde 1995
 
 Acumulação. Súmula 507 STJ.
 
-### Cenário B — B94 desde 2010
+### Cenário B. B94 desde 2010
 
 Integração ao salário-de-benefício pelo art. 31 da Lei 8.213/91.
 
-### Cenário C — B94 desde 1996, aposentadoria 2020
+### Cenário C. B94 desde 1996, aposentadoria 2020
 
 Direito adquirido à acumulação preservado.
 
-### Cenário D — Sequela majorada
+### Cenário D. Sequela majorada
 
 Revisão com recálculo do SB.
 
-### Cenário E — Aposentadoria com fator
+### Cenário E. Aposentadoria com fator
 
 Discussão sobre afastamento do fator.
 
-### Cenário F — RMI errada
+### Cenário F. RMI errada
 
 Revisão administrativa ou judicial.
 
-### Cenário G — Atrasados
+### Cenário G. Atrasados
 
 Cinco anos pretéritos.
 
 ## 6. Cenários limitados
 
-### Cenário H — Sem B94 reconhecido
+### Cenário H. Sem B94 reconhecido
 
 Sem integração possível.
 
-### Cenário I — Decadência consumada
+### Cenário I. Decadência consumada
 
 Direito perdido.
 
-### Cenário J — Aposentadoria por invalidez
+### Cenário J. Aposentadoria por invalidez
 
 Lógica diversa.
 

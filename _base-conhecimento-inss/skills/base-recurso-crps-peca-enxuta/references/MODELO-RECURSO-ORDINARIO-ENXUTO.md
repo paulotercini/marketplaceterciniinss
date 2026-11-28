@@ -8,7 +8,6 @@ Modelo de estrutura mínima de recurso ordinário à Junta de Recursos do CRPS, 
 EXCELENTÍSSIMO SENHOR PRESIDENTE DA [X]ª JUNTA DE RECURSOS DO
 CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL
 
-
 [Nome do Recorrente], CPF [XXX.XXX.XXX-XX], nos autos do processo
 administrativo nº [protocolo], referente ao benefício nº [NB], vem,
 respeitosamente, interpor RECURSO ORDINÁRIO contra a decisão de
@@ -29,7 +28,6 @@ Regimento Interno do CRPS). O Recorrente tem legitimidade e interesse na
 reforma, porque não renunciou ao recurso nem ajuizou ação judicial sobre
 a mesma matéria.
 
-
 2. DOS FATOS
 
 Em DD/MM/AAAA, o Recorrente requereu [benefício] no NB [número], conforme
@@ -41,7 +39,6 @@ declarado na comunicação de decisão, folha __].
 O CNIS de DD/MM/AAAA (folha __) registra [X] contribuições, a última em
 MM/AAAA, e [o vínculo ou o benefício que mantém a qualidade de segurado,
 com as datas].
-
 
 3. DO MÉRITO
 
@@ -63,7 +60,6 @@ Decreto 3.048/99 e a IN 128/2022 entram apenas quando a decisão
 contrariou dispositivo deles, por remissão curta, e nunca como lista de
 normas que confirmam a hipótese.]
 
-
 3.2. DO ENUNCIADO DO CRPS CONTRARIADO
 
 [Tópico apenas quando a decisão contrariou Enunciado. É a única
@@ -78,7 +74,6 @@ Enunciado.
 precedente vinculante do art. 109 do Regimento Interno do CRPS, sem
 transcrição de ementa.]
 
-
 3.3. DA EXIGÊNCIA SEM PREVISÃO NORMATIVA
 
 A decisão recorrida exigiu [documento ou requisito] (folha __), que
@@ -86,7 +81,6 @@ nenhuma norma prevê para o [benefício]. O [documento já apresentado],
 de DD/MM/AAAA (folha __), comprova o mesmo fato, razão pela qual a
 exigência deve ser afastada (art. 5º, IV, XI, XIII e XV, da Lei
 13.460/2017).
-
 
 4. DOS PEDIDOS
 
@@ -99,9 +93,7 @@ Requer ainda a juntada dos documentos relacionados ao fim, cada um com a
 indicação da folha, como reforço da demonstração já feita na via
 administrativa.
 
-
 [Cidade], [data].
-
 
 [Assinatura]
 Paulo Roberto Tercini Filho

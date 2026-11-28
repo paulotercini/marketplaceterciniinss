@@ -1,4 +1,4 @@
-# Agentes Químicos — Fundamentos Normativos e Cenários
+# Agentes Químicos. Fundamentos Normativos e Cenários
 
 ## 1. Marco normativo
 
@@ -62,35 +62,35 @@ Sílica livre cristalina é cancerígena da LINACH. Outras poeiras minerais requ
 
 ## 7. Cenários concretos para o segurado
 
-### Cenário 1 — PPP indica agente do Anexo 13 com exposição habitual
+### Cenário 1. PPP indica agente do Anexo 13 com exposição habitual
 
 Tese direta. Enquadramento qualitativo imediato. Não se admite exigência de medição.
 
-### Cenário 2 — PPP indica agente do Anexo 11 sem medição quantitativa
+### Cenário 2. PPP indica agente do Anexo 11 sem medição quantitativa
 
 Tese. Acionar `retificacao-ppp` para obtenção de medição. Em juízo, requerer perícia técnica e a produção de prova pelos arts. 369 e 370 do CPC (auditoria 03/10/2026, retirada a inversão do ônus sob o Tema 213/TNU, que trata da eficácia do EPI). Se o LTCAT tiver medição, juntá-la ao processo.
 
-### Cenário 3 — Cancerígeno LINACH presente
+### Cenário 3. Cancerígeno LINACH presente
 
 Tese direta. Enquadramento automático. EPI irrelevante. Citar Tema 1090 STJ e lista LINACH atualizada.
 
-### Cenário 4 — Atividade de frentista pós Lei 9.032/95
+### Cenário 4. Atividade de frentista pós Lei 9.032/95
 
 Tese. Atender ao Tema 298 TNU, tese adversa que exige a especificação do agente, com prova de exposição habitual a hidrocarbonetos aromáticos nominados no PPP (auditoria 03/10/2026). Se o PPP não detalhar, acionar `retificacao-ppp`.
 
-### Cenário 5 — Fumos metálicos de solda
+### Cenário 5. Fumos metálicos de solda
 
 Fumos de solda, especialmente oxicorte e inox, incluem cromo hexavalente e níquel, cancerígenos LINACH. Tese de enquadramento qualitativo automático.
 
-### Cenário 6 — Contato com óleos e graxas
+### Cenário 6. Contato com óleos e graxas
 
 Óleos minerais e OLUC, óleo lubrificante usado ou contaminado, contêm hidrocarbonetos policíclicos aromáticos HPA, cancerígenos LINACH. Mecânicos, operadores de torno, lubrificadores, tratoristas, enquadram-se por exposição habitual.
 
-### Cenário 7 — Absorção cutânea
+### Cenário 7. Absorção cutânea
 
 Para agentes que admitem absorção cutânea, como benzeno, tolueno, tricloroetileno, nicotina, chumbo orgânico, o EPI respiratório não neutraliza. Tese de ineficácia do EPI em qualquer circunstância, combinada com o Tema 1090 STJ.
 
-### Cenário 8 — Exposição descontínua
+### Cenário 8. Exposição descontínua
 
 O Tema 211 TNU vale só para agentes biológicos e exige a probabilidade da exposição ocupacional, avaliada pelo caráter indissociável da produção do bem ou da prestação do serviço (auditoria 03/10/2026). Para agentes químicos, a exposição inerente à função se sustenta no art. 65 do Decreto 3.048/99, que define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço.
 

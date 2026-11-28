@@ -1,4 +1,4 @@
-# Pensão por Morte Pós EC 103/2019 — Fundamentos e Cenários
+# Pensão por Morte Pós EC 103/2019. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -59,43 +59,43 @@ A existência de um dependente da classe superior exclui os inferiores.
 
 ## 4. Cenários operacionais pró-segurado
 
-### Cenário 1 — Cônjuge com direito vitalício
+### Cenário 1. Cônjuge com direito vitalício
 
 Cônjuge com 50 anos na DO. Casamento de 15 anos. Instituidor com 30 contribuições. Pensão vitalícia pela tabela.
 
-### Cenário 2 — Companheiro em união estável
+### Cenário 2. Companheiro em união estável
 
 Companheiro por 7 anos. Prova por declaração IR conjunta, conta bancária conjunta, fotos, testemunhas. Direito à pensão reconhecido.
 
-### Cenário 3 — Filho inválido
+### Cenário 3. Filho inválido
 
 Filho com esquizofrenia grave desde os 17 anos, 25 anos na DO. Pensão devida além dos 21 (art. 16, I, e art. 77, §2º, II, da Lei 8.213/91) (auditoria 03/10/2026).
 
-### Cenário 4 — Menor sob guarda
+### Cenário 4. Menor sob guarda
 
 Menor sob guarda judicial do falecido avô. Equiparação a filho para fins previdenciários (orientação consolidada em favor do segurado).
 
-### Cenário 5 — Ex-cônjuge pensionista
+### Cenário 5. Ex-cônjuge pensionista
 
 Ex-cônjuge com alimentos fixados em separação. Direito à pensão por morte do instituidor (art. 76, §2º e §3º, da Lei 8.213/91) (auditoria 03/10/2026).
 
-### Cenário 6 — Concubinato de longa duração
+### Cenário 6. Concubinato de longa duração
 
 Relação paralela ao casamento por mais de 20 anos com dependência econômica. Tese pró-segurada em reconstrução no STJ. Avaliação caso a caso.
 
-### Cenário 7 — Óbito sem qualidade
+### Cenário 7. Óbito sem qualidade
 
 Instituidor havia perdido qualidade, porém completara requisitos de aposentadoria antes da perda. Pensão devida (Súmula 416 STJ).
 
-### Cenário 8 — Prorrogação do período de graça
+### Cenário 8. Prorrogação do período de graça
 
 Instituidor desempregado com prorrogação de 12 meses. Óbito ocorreu durante a prorrogação. Pensão devida.
 
-### Cenário 9 — Complementação post mortem de contribuições
+### Cenário 9. Complementação post mortem de contribuições
 
 Instituidor CI com recolhimentos irregulares. Dependentes podem indenizar contribuições em atraso para completar tempo/carência. Acionar `indenizacao-contribuicoes-atraso`.
 
-### Cenário 10 — Pensão acidentária (B93)
+### Cenário 10. Pensão acidentária (B93)
 
 Óbito por acidente de trabalho ou doença ocupacional. Pensão B93 também segue o art. 23 da EC 103 (cota familiar de 50% mais 10 pontos por dependente), mas a base é a aposentadoria por incapacidade permanente acidentária, de 100% da média (EC 103, art. 26, §3º, II) (auditoria 03/10/2026).
 

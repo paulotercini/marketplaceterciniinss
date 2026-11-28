@@ -1,4 +1,4 @@
-# Revisão do Teto — Jurisprudência Verificada e Refutação
+# Revisão do Teto. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -58,61 +58,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Decadência consumada
+### Argumento 1. Decadência consumada
 
 Argumento adversário. Benefício com mais de 10 anos do primeiro pagamento não admite revisão.
 
 Refutação. Verificar data exata do primeiro pagamento. Considerar pedidos administrativos que tenham interrompido prazo. Em caso limite, acionar `decadencia-revisao-previdenciaria`.
 
-### Argumento 2 — Inexistência de glosa
+### Argumento 2. Inexistência de glosa
 
 Argumento adversário. Benefício não foi limitado pelo teto.
 
 Refutação. Apresentar Carta de Concessão com Salário de Benefício registrado acima do teto vigente à época. Exigir memória administrativa completa.
 
-### Argumento 3 — Coisa julgada em revisão anterior
+### Argumento 3. Coisa julgada em revisão anterior
 
 Argumento adversário. Revisão do teto já foi julgada.
 
 Refutação. Verificar causa de pedir. Se a ação anterior tratou apenas de uma das ECs, a outra pode ser objeto de nova ação. Acionar `coisa-julgada-previdenciaria`.
 
-### Argumento 4 — Aplicação automática pelo INSS
+### Argumento 4. Aplicação automática pelo INSS
 
 Argumento adversário. O INSS já aplicou o Tema 76 STF administrativamente.
 
 Refutação. Verificar extrato de pagamento e memória de cálculo. Na prática, aplicações parciais são frequentes. Recálculo independente obrigatório.
 
-### Argumento 5 — Pensão por morte sem direito à revisão
+### Argumento 5. Pensão por morte sem direito à revisão
 
 Argumento adversário. Pensão derivada não se submete à revisão do benefício instituidor.
 
 Refutação. Revisão reflexa é direito dos dependentes. Decadência autônoma, art. 103, parágrafo único. Leitura do STJ.
 
-### Argumento 6 — Revisão do buraco negro já aplicada
+### Argumento 6. Revisão do buraco negro já aplicada
 
 Argumento adversário. O art. 144 da Lei 8.213/91 foi aplicado.
 
 Refutação. Conferir planilha de recomposição. Em regra, aplicações administrativas do buraco negro foram truncadas. Recálculo é imperativo.
 
-### Argumento 7 — Revisão do buraco verde não existe em lei
+### Argumento 7. Revisão do buraco verde não existe em lei
 
 Argumento adversário. Inexistência de previsão legal expressa.
 
 Refutação. Fundamento é a correção integral do Salário de Benefício e a jurisprudência. O art. 26 da Lei 8.870/1994 operou congelamento que gerou distorção. Jurisprudência consolidada reconheceu o direito à correção integral.
 
-### Argumento 8 — Súmula 260 ex-TFR não se aplica
+### Argumento 8. Súmula 260 ex-TFR não se aplica
 
 Argumento adversário. Revogada tacitamente.
 
 Refutação. Supletivamente válida, até a Lei 6.423/1977 ou para indexar a correção quando a legislação superveniente foi omissa. Relevante em recomposições anteriores.
 
-### Argumento 9 — Tutela de urgência negada
+### Argumento 9. Tutela de urgência negada
 
 Argumento adversário. Negativa genérica.
 
 Refutação. Diferenças mensais acumuladas caracterizam perigo de dano. Cálculo demonstrativo como prova pré-constituída.
 
-### Argumento 10 — Honorários sucumbenciais contra o segurado
+### Argumento 10. Honorários sucumbenciais contra o segurado
 
 Argumento adversário. Risco financeiro alto.
 

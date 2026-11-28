@@ -5,11 +5,11 @@
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia ortopédica, ex. G82.2 paraplegia / G81 hemiplegia / S82.3 fratura consolidada com encurtamento]
+[CID]. [Patologia ortopédica, ex. G82.2 paraplegia / G81 hemiplegia / S82.3 fratura consolidada com encurtamento]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -54,13 +54,13 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10/CID-11/DSM-5-TR)**
 
-[CID-10] — [Transtorno principal, ex. F20 esquizofrenia / F71 retardo mental moderado / F84 autismo]
-[CID-11] — [Para autismo: 6A02 Transtorno do Espectro Autista com nível de suporte (1, 2 ou 3)]
-[DSM-5-TR] — [Para autismo: dupla codificação. Transtorno do Espectro do Autismo]
+[CID-10]. [Transtorno principal, ex. F20 esquizofrenia / F71 retardo mental moderado / F84 autismo]
+[CID-11]. [Para autismo: 6A02 Transtorno do Espectro Autista com nível de suporte (1, 2 ou 3)]
+[DSM-5-TR]. [Para autismo: dupla codificação. Transtorno do Espectro do Autismo]
 
 **Histórico clínico**
 
@@ -104,11 +104,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-M79.7 — Fibromialgia (Lei 15.176/2025)
+M79.7. Fibromialgia (Lei 15.176/2025)
 [CID secundário, se houver, ex. M50.1 discopatia / F32 depressão]
 
 **Histórico clínico**
@@ -155,11 +155,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia multissistêmica, ex. E10/E11 diabetes mellitus complicado / G35 esclerose múltipla / N18 doença renal crônica avançada]
+[CID]. [Patologia multissistêmica, ex. E10/E11 diabetes mellitus complicado / G35 esclerose múltipla / N18 doença renal crônica avançada]
 [CID secundário]
 
 **Histórico clínico**
@@ -204,11 +204,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Deficiência visual, ex. H54.0 cegueira em ambos os olhos / H54.4 cegueira em um olho (Súmula 377/STJ) / H54.6 visão subnormal]
+[CID]. [Deficiência visual, ex. H54.0 cegueira em ambos os olhos / H54.4 cegueira em um olho (Súmula 377/STJ) / H54.6 visão subnormal]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -257,11 +257,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Cardiopatia, ex. I50 insuficiência cardíaca crônica / I42 cardiomiopatia dilatada / Q24 cardiopatia congênita]
+[CID]. [Cardiopatia, ex. I50 insuficiência cardíaca crônica / I42 cardiomiopatia dilatada / Q24 cardiopatia congênita]
 [CID secundário]
 
 **Histórico clínico**

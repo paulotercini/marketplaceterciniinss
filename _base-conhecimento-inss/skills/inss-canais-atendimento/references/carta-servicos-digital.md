@@ -1,11 +1,11 @@
-# Referência — Serviços Digitais da Carta de Serviços INSS (março de 2025)
+# Referência. Serviços Digitais da Carta de Serviços INSS (março de 2025)
 
 Todos os serviços abaixo constam expressamente na Carta de Serviços INSS de março de 2025.
 Fonte primária: documento oficial gerado em 14/03/2025 pelo próprio INSS.
 
 ---
 
-## Grupo A — Alterações e Atualizações Cadastrais
+## Grupo A. Alterações e Atualizações Cadastrais
 
 **Alterar Local ou Forma de Pagamento**
 - Canal: Meu INSS (100% digital)
@@ -31,7 +31,7 @@ Fonte primária: documento oficial gerado em 14/03/2025 pelo próprio INSS.
 
 ---
 
-## Grupo B — Benefícios por Incapacidade
+## Grupo B. Benefícios por Incapacidade
 
 **Solicitar Auxílio por Incapacidade Temporária (auxílio-doença)**
 - Canal de início: Meu INSS ou 135
@@ -55,7 +55,7 @@ Fonte primária: documento oficial gerado em 14/03/2025 pelo próprio INSS.
 
 ---
 
-## Grupo C — Aposentadorias
+## Grupo C. Aposentadorias
 
 Todas as aposentadorias urbanas podem ser solicitadas pelo Meu INSS.
 A seguir, as principais modalidades listadas na Carta de Serviços:
@@ -65,13 +65,13 @@ A seguir, as principais modalidades listadas na Carta de Serviços:
 - Aposentadoria Especial
 - Aposentadoria da PCD por Tempo de Contribuição
 - Aposentadoria da PCD por Idade
-- Aposentadoria da PCD por Tempo de Contribuição — Acordo Internacional
-- Aposentadoria da PCD por Idade — Acordo Internacional
+- Aposentadoria da PCD por Tempo de Contribuição. Acordo Internacional
+- Aposentadoria da PCD por Idade. Acordo Internacional
 - Aposentadoria Rural (pode exigir agendamento presencial)
 
 ---
 
-## Grupo D — BPC / LOAS
+## Grupo D. BPC / LOAS
 
 **Solicitar BPC à Pessoa com Deficiência**
 - Canal de início: Meu INSS
@@ -89,7 +89,7 @@ A seguir, as principais modalidades listadas na Carta de Serviços:
 
 ---
 
-## Grupo E — Pensão por Morte e Dependentes
+## Grupo E. Pensão por Morte e Dependentes
 
 **Pedir Pensão por Morte**
 - Canal: Meu INSS ou 135 (100% digital na maioria dos casos)
@@ -105,7 +105,7 @@ A seguir, as principais modalidades listadas na Carta de Serviços:
 
 ---
 
-## Grupo F — Salário-Maternidade e Salário-Família
+## Grupo F. Salário-Maternidade e Salário-Família
 
 **Salário-Maternidade Urbano**
 - Canal: Meu INSS ou 135 (100% digital)
@@ -119,7 +119,7 @@ A seguir, as principais modalidades listadas na Carta de Serviços:
 
 ---
 
-## Grupo G — Benefícios Especiais e Seguro-Defeso
+## Grupo G. Benefícios Especiais e Seguro-Defeso
 
 **Solicitar Seguro-Defeso (Pescador Artesanal)**
 - Canal: Meu INSS (100% digital)
@@ -128,7 +128,7 @@ A seguir, as principais modalidades listadas na Carta de Serviços:
 
 ---
 
-## Grupo H — Documentos e Extratos
+## Grupo H. Documentos e Extratos
 
 Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 
@@ -138,9 +138,9 @@ Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 - Certidão de Tempo de Contribuição (pedido e cancelamento)
 - Declaração de Atividade
 - Declaração de Benefício (consta / nada consta)
-- Declaração de Filiação ao RGPS — Acordo Internacional
+- Declaração de Filiação ao RGPS. Acordo Internacional
 - Declaração de Regularidade da Situação do CI (DRSCI)
-- Extrato de Contribuição (CNIS) — apenas consulta; correção exige RAC
+- Extrato de Contribuição (CNIS), apenas consulta; correção exige RAC
 - Extrato de Empréstimo Consignado
 - Extrato de Pagamento de Benefício
 - Extrato para Imposto de Renda
@@ -149,7 +149,7 @@ Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 
 ---
 
-## Grupo I — Recursos e Revisões
+## Grupo I. Recursos e Revisões
 
 **Recurso Ordinário (Inicial)**
 - Canal: Meu INSS (100% digital)
@@ -167,7 +167,7 @@ Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 
 ---
 
-## Grupo J — Ajustes de Contribuição e Salário-Mínimo
+## Grupo J. Ajustes de Contribuição e Salário-Mínimo
 
 **Realizar Ajustes para Alcance do Salário-Mínimo de Contribuição**
 - Canal: Meu INSS (100% digital)
@@ -175,7 +175,7 @@ Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 
 ---
 
-## Grupo K — Bloqueios e Consignações
+## Grupo K. Bloqueios e Consignações
 
 **Bloquear ou Desbloquear Benefício para Empréstimo Consignado**
 - Canal: Meu INSS (100% digital) ou 135
@@ -186,7 +186,7 @@ Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 
 ---
 
-## Grupo L — CAT (Comunicação de Acidente de Trabalho)
+## Grupo L. CAT (Comunicação de Acidente de Trabalho)
 
 **Cadastrar CAT**
 - Canal: Meu INSS (100% digital)
@@ -200,14 +200,14 @@ Todos emitidos pelo Meu INSS de forma imediata ou em até 45 dias corridos:
 
 ---
 
-## Grupo M — Devolução e Prova de Vida
+## Grupo M. Devolução e Prova de Vida
 
 **Devolver Documentos ou Processos no INSS**
 - Canal de início: Meu INSS ou 135
 - Conclusão: entrega presencial obrigatória na APS
 
 **Realizar Prova de Vida**
-- Canal: Meu INSS (reconhecimento facial digital) — a ida à agência é exceção, não regra
+- Canal: Meu INSS (reconhecimento facial digital), a ida à agência é exceção, não regra
 
 ---
 

@@ -1,4 +1,4 @@
-# IF-BrA — Jurisprudência e Refutação
+# IF-BrA. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -38,79 +38,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Avaliação isolada física
+### Argumento 1. Avaliação isolada física
 
 Argumento adversário. Restrição clínica.
 
 Refutação. Avaliação biopsicossocial é obrigatória (LC 142/2013, art. 4º, e Portaria Interministerial 1/2014; auditoria 25/07/2026).
 
-### Argumento 2 — Pontuação binária
+### Argumento 2. Pontuação binária
 
 Argumento adversário. Sim ou não.
 
 Refutação. Lógica fuzzy é exigência da Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
-### Argumento 3 — Sem assistente social
+### Argumento 3. Sem assistente social
 
 Argumento adversário. Suficiência médica.
 
 Refutação. Avaliação requer dois profissionais. Vício metodológico.
 
-### Argumento 4 — Domínios genéricos
+### Argumento 4. Domínios genéricos
 
 Argumento adversário. Sem detalhe.
 
 Refutação. Cada domínio deve ser pontuado especificamente.
 
-### Argumento 5 — Pontuação alta em recidivas
+### Argumento 5. Pontuação alta em recidivas
 
 Argumento adversário. Estabilização.
 
 Refutação. Crônica e progressiva exige histórico.
 
-### Argumento 6 — Sem reavaliação
+### Argumento 6. Sem reavaliação
 
 Argumento adversário. Imutabilidade.
 
 Refutação. Reavaliação periódica é direito.
 
-### Argumento 7 — DID na DER
+### Argumento 7. DID na DER
 
 Argumento adversário. Limitação.
 
 Refutação. DID retroativa permitida com prova.
 
-### Argumento 8 — Categorização rígida
+### Argumento 8. Categorização rígida
 
 Argumento adversário. Leve apenas.
 
 Refutação. Lógica fuzzy permite gradação.
 
-### Argumento 9 — Negação de fibromialgia
+### Argumento 9. Negação de fibromialgia
 
 Argumento adversário. Subjetividade.
 
 Refutação. Lei 15.176/2025 reconhece.
 
-### Argumento 10 — Recusa de prova testemunhal
+### Argumento 10. Recusa de prova testemunhal
 
 Argumento adversário. Forma.
 
 Refutação. Avaliação social admite testemunho.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Jane Berwanger.
-
-Marco Aurélio Serau Junior.
-
-Daniel Pulino.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

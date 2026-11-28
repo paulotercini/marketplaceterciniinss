@@ -1,4 +1,4 @@
-# Planejamento Previdenciário — Fundamentos e Cenários
+# Planejamento Previdenciário. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,53 +40,53 @@ Prévio requerimento.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Direito adquirido pré-EC 103
+### Cenário A. Direito adquirido pré-EC 103
 
 Sempre preferir quando for melhor.
 
-### Cenário B — Pedágio 50% ou 100%
+### Cenário B. Pedágio 50% ou 100%
 
 Avaliar o encurtamento do tempo.
 
-### Cenário C — Regra por pontos ou idade progressiva
+### Cenário C. Regra por pontos ou idade progressiva
 
 Comparar com pedágio.
 
-### Cenário D — Reafirmação da DER
+### Cenário D. Reafirmação da DER
 
 Quando houver melhora do benefício.
 
-### Cenário E — Complementação EC 103 para salário mínimo
+### Cenário E. Complementação EC 103 para salário mínimo
 
 Ajustes de contribuições.
 
-### Cenário F — Contribuinte individual estratégico
+### Cenário F. Contribuinte individual estratégico
 
 Planejar 20% sobre teto para elevar SB.
 
-### Cenário G — Segurado especial pré-aposentadoria
+### Cenário G. Segurado especial pré-aposentadoria
 
 Documentar amplamente.
 
-### Cenário H — Contagem recíproca RPPS/RGPS
+### Cenário H. Contagem recíproca RPPS/RGPS
 
 Planejar migração.
 
-### Cenário I — Revisão preventiva
+### Cenário I. Revisão preventiva
 
 Identificar vícios no benefício antes da decadência.
 
 ## 6. Cenários limitados
 
-### Cenário J — Benefício já concedido sob regra menos vantajosa
+### Cenário J. Benefício já concedido sob regra menos vantajosa
 
 Se decadente, vedado.
 
-### Cenário K — Contribuições não recolhidas sem possibilidade de indenização
+### Cenário K. Contribuições não recolhidas sem possibilidade de indenização
 
 Limitar expectativa.
 
-### Cenário L — Dados incompletos no CNIS
+### Cenário L. Dados incompletos no CNIS
 
 Primeiro corrigir.
 

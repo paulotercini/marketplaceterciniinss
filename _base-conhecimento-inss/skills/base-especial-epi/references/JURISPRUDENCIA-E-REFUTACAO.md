@@ -1,4 +1,4 @@
-# EPI — Jurisprudência Verificada e Refutação ao INSS
+# EPI. Jurisprudência Verificada e Refutação ao INSS
 
 ## 1. Precedentes vinculantes
 
@@ -46,7 +46,7 @@ CORREÇÃO DE AUDITORIA. A versão anterior desta reference atribuía à Súmula
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — PPP declara EPI eficaz no campo 15.7
+### Argumento 1. PPP declara EPI eficaz no campo 15.7
 
 Argumento adversário. O INSS afirma que a própria empresa declara que o EPI é eficaz, logo há presunção de neutralização.
 
@@ -54,43 +54,43 @@ Refutação. A presunção é afastada em todas as hipóteses do Tema 1090 STJ. 
 
 Precedentes. Tema 555 STF, Tema 1090 STJ, Tema 213 TNU e, para períodos anteriores a 03/12/1998, Súmula 87 TNU.
 
-### Argumento 2 — Tema 555 STF exige eficácia declarada
+### Argumento 2. Tema 555 STF exige eficácia declarada
 
 Argumento adversário. O INSS invoca o Tema 555 afirmando que a declaração de eficácia neutraliza a nocividade, salvo para ruído.
 
 Refutação. O STF, no próprio acórdão do ARE 664.335, ressalvou que outras exceções podem ser firmadas em situações concretas. O STJ, nos EDcl no REsp 2.116.343/RJ do Tema 1090, reconheceu os agentes cancerígenos como hipótese excepcional, e os EDcl no REsp 2.080.584/PR deixaram a lista aberta (auditoria 03/10/2026). Logo, a exceção não se limita a ruído.
 
-### Argumento 3 — Ausência de impugnação específica
+### Argumento 3. Ausência de impugnação específica
 
 Argumento adversário. O segurado teria de impugnar especificamente a eficácia do EPI para o ônus ser invertido.
 
 Refutação. A impugnação específica é atendida quando o segurado apresenta agente nocivo enquadrado em hipótese excepcional, ou quando indica a ausência de documentação de suporte. Pelo item II do Tema 1090 STJ, tese adversa, cabe ao segurado provar a ineficácia, e a prova documental desses vícios, ou a perícia, cumpre esse ônus e leva a dúvida ao item III (auditoria 03/10/2026).
 
-### Argumento 4 — Tema 1090 STJ não alcança o caso
+### Argumento 4. Tema 1090 STJ não alcança o caso
 
 Argumento adversário. O INSS afirma que as hipóteses do Tema 1090 são taxativas e que o caso concreto não se enquadra.
 
 Refutação. O próprio Tema 1090 firmou que a lista não é exaustiva. O IRDR 15 TRF4 traz lista mais ampla. A jurisprudência pode e deve firmar novas hipóteses quando a eficácia real não se demonstrar.
 
-### Argumento 5 — Certificado de Aprovação CA vigente
+### Argumento 5. Certificado de Aprovação CA vigente
 
 Argumento adversário. A apresentação do CA do EPI seria suficiente para demonstrar eficácia.
 
 Refutação. O CA comprova apenas a aprovação teórica do equipamento. A eficácia real depende do uso correto, da troca periódica, da fiscalização e da adequação ao agente específico. Nenhum desses elementos se demonstra por simples apresentação do CA.
 
-### Argumento 6 — Ausência de prova documental pelo segurado
+### Argumento 6. Ausência de prova documental pelo segurado
 
 Argumento adversário. O segurado não apresentou documentação técnica sobre a ineficácia.
 
 Refutação. O ônus de demonstrar a ineficácia do EPI é do autor (Tema 1090/STJ, item II), mas a divergência ou dúvida razoável favorece o segurado (Tema 213/TNU, item II, e Tema 1090/STJ, item III), e o indeferimento da prova técnica requerida para cumprir esse ônus configura cerceamento de defesa, impugnável por `defesa-probatoria-especial` (auditoria 03/10/2026).
 
-### Argumento 7 — Segurado não pediu perícia
+### Argumento 7. Segurado não pediu perícia
 
 Argumento adversário. O segurado teria perdido a oportunidade de produzir prova técnica.
 
 Refutação. Pelo item II do Tema 1090 STJ, tese adversa, o ônus de provar a ineficácia é do autor, o que torna a prova técnica indispensável ao segurado. Requerida a perícia, o indeferimento caracteriza cerceamento de defesa (auditoria 03/10/2026). Acionar `defesa-probatoria-especial` para impugnação técnica da decisão.
 
-### Argumento 8 — Neutralização por EPC ainda que precária
+### Argumento 8. Neutralização por EPC ainda que precária
 
 Argumento adversário. A empresa forneceu algum EPC, logo a exposição é neutralizada.
 

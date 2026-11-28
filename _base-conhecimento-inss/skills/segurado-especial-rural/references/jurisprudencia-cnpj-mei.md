@@ -1,4 +1,4 @@
-# Jurisprudência — CNPJ/MEI e Segurado Especial
+# Jurisprudência. CNPJ/MEI e Segurado Especial
 
 ## Compilação de julgados verificados
 
@@ -6,7 +6,7 @@ Todos os julgados abaixo foram verificados quanto à existência e conteúdo. Ut
 
 ---
 
-### TRF3 — Jurisdição do escritório
+### TRF3. Jurisdição do escritório
 
 **TRF3, ApCiv 5031028802022403999, 9ª Turma, Rel. Des. Cristina Nascimento de Melo, j. 22/02/2024, pub. 28/02/2024.**
 
@@ -48,7 +48,7 @@ Tese. O fato de segurado especial haver tido CNPJ não o impede de obter aposent
 
 ### TRF6
 
-**TRF6, AC 10053654820244069999, 2ª Turma — PREV/SERV, Rel. Flavio Boson Gambogi, j. 28/05/2025, pub. 30/05/2025.**
+**TRF6, AC 10053654820244069999, 2ª Turma. PREV/SERV, Rel. Flavio Boson Gambogi, j. 28/05/2025, pub. 30/05/2025.**
 
 Tese. Simples posse de CNPJ não descaracteriza a condição de segurado especial, sobretudo quando o sustento provém da atividade rural prestada com prioridade de ocupação. Citação expressa do art. 112, §4º, da IN 128/2022.
 

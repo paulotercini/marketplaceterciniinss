@@ -48,9 +48,9 @@ A doença descrita impede [o gesto central da atividade, como erguer peso acima 
 
 [Narrar em ordem cronológica, com a data de cada fato: quando a Parte Autora deixou de trabalhar, quando procurou atendimento, quando fez cada exame e quando requereu o benefício.]
 
-O Relatório Médico emitido pelo Dr. [nome] – CRM nº [__], datado de [dd/mm/aaaa], demonstra que a Parte Autora apresenta o seguinte diagnóstico: ***"[trecho literal do relatório]"***
+O Relatório Médico emitido pelo Dr. [nome]. CRM nº [__], datado de [dd/mm/aaaa], demonstra que a Parte Autora apresenta o seguinte diagnóstico: ***"[trecho literal do relatório]"***
 
-Por sua vez, o Relatório Médico emitido pelo Dr. [nome] – CRM nº [__], datado de [dd/mm/aaaa], revela: ***"[trecho literal do relatório]"***
+Por sua vez, o Relatório Médico emitido pelo Dr. [nome]. CRM nº [__], datado de [dd/mm/aaaa], revela: ***"[trecho literal do relatório]"***
 
 Os relatórios médicos estão acompanhados de exames de imagem que comprovam a incapacidade da Parte Autora. O exame de [Raio-X / Ressonância Magnética / Tomografia] do [segmento do corpo], datado de [dd/mm/aaaa], teve a seguinte conclusão: ***"[somente a conclusão do exame]"***
 
@@ -86,15 +86,15 @@ Deste modo, Excelência, comprovado que a Parte Autora é segurada da Previdênc
 
 Ante o exposto, requer:
 
-1. A citação do Instituto Nacional do Seguro Social – INSS, na pessoa do seu representante legal, para que responda a presente demanda, no prazo legal, sob pena de revelia;
+1. A citação do Instituto Nacional do Seguro Social. INSS, na pessoa do seu representante legal, para que responda a presente demanda, no prazo legal, sob pena de revelia;
 
 2. A concessão do benefício da justiça gratuita, em virtude de a Parte Autora não poder arcar com o pagamento das custas processuais e honorários advocatícios sem prejuízo do seu sustento ou de sua família, condição que expressamente declara, na forma dos arts. 98 e 99 do Código de Processo Civil;
 
-3. A condenação do Instituto Nacional do Seguro Social – INSS a conceder o benefício por **incapacidade permanente**, com o termo inicial em [dd/mm/aaaa], com as parcelas vencidas monetariamente corrigidas desde o respectivo vencimento e acrescidas de juros moratórios, na forma do Manual de Cálculos da Justiça Federal, ambos incidentes até a data do efetivo pagamento;
+3. A condenação do Instituto Nacional do Seguro Social. INSS a conceder o benefício por **incapacidade permanente**, com o termo inicial em [dd/mm/aaaa], com as parcelas vencidas monetariamente corrigidas desde o respectivo vencimento e acrescidas de juros moratórios, na forma do Manual de Cálculos da Justiça Federal, ambos incidentes até a data do efetivo pagamento;
 
 3.1. Caso não entenda ser possível o benefício por incapacidade permanente, requer seja [concedido/restabelecido] o benefício por **incapacidade temporária**, com o termo inicial em [dd/mm/aaaa / na data da indevida cessação (dd/mm/aaaa)];
 
-4. [Somente no rito ordinário] A condenação do Instituto Nacional do Seguro Social – INSS ao pagamento das custas processuais e dos honorários advocatícios, nos termos do art. 85, § 3º, do CPC, observada a Súmula 111/STJ [no JEF, retirar o item, porque não há custas nem honorários em primeiro grau, art. 55 da Lei 9.099/95];
+4. [Somente no rito ordinário] A condenação do Instituto Nacional do Seguro Social. INSS ao pagamento das custas processuais e dos honorários advocatícios, nos termos do art. 85, § 3º, do CPC, observada a Súmula 111/STJ [no JEF, retirar o item, porque não há custas nem honorários em primeiro grau, art. 55 da Lei 9.099/95];
 
 5. Provar o alegado por todos os meios de prova admitidos em direito, especialmente pela via documental anexa e mediante a realização de perícia judicial com médico especializado em [especialidade], a ser designado por Vossa Excelência.
 

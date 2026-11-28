@@ -1,20 +1,20 @@
-# Metodologia do Cotejo Analítico — Passo a Passo
+# Metodologia do Cotejo Analítico. Passo a Passo
 
 ## Três Etapas Não Negociáveis
 
 O cotejo analítico se desenvolve em três etapas concatenadas e não substituíveis.
 
-**Etapa 1 — Identidade nuclear dos fatos.** Confrontar os fatos examinados pelo acórdão recorrido e pelo acórdão paradigma. A similitude não exige identidade total, exige identidade nos elementos nucleares. Exemplo, em tempo especial por ruído, os elementos nucleares são (i) existência de PPP, (ii) nível de ruído mensurado, (iii) metodologia aplicada, (iv) uso ou não de EPI, (v) período trabalhado, (vi) atividade. Elementos periféricos (nome da empresa, CNAE exato, região) não desfazem a similitude.
+**Etapa 1. Identidade nuclear dos fatos.** Confrontar os fatos examinados pelo acórdão recorrido e pelo acórdão paradigma. A similitude não exige identidade total, exige identidade nos elementos nucleares. Exemplo, em tempo especial por ruído, os elementos nucleares são (i) existência de PPP, (ii) nível de ruído mensurado, (iii) metodologia aplicada, (iv) uso ou não de EPI, (v) período trabalhado, (vi) atividade. Elementos periféricos (nome da empresa, CNAE exato, região) não desfazem a similitude.
 
-**Etapa 2 — Identidade da questão jurídica.** Demonstrar que ambos os acórdãos analisaram a mesma questão de direito material sob o mesmo dispositivo legal. Exemplo, ambos decidiram se "ruído variável acima de 85 dB sem NEN específico caracteriza atividade especial após 18/11/2003" à luz do art. 57 da Lei 8.213/91 e do Tema 174/TNU.
+**Etapa 2. Identidade da questão jurídica.** Demonstrar que ambos os acórdãos analisaram a mesma questão de direito material sob o mesmo dispositivo legal. Exemplo, ambos decidiram se "ruído variável acima de 85 dB sem NEN específico caracteriza atividade especial após 18/11/2003" à luz do art. 57 da Lei 8.213/91 e do Tema 174/TNU.
 
-**Etapa 3 — Inconciliabilidade das soluções jurídicas.** Demonstrar que, aplicada ao caso do paradigma a tese do recorrido (ou vice-versa), a solução seria diferente. Não basta dizer "divergem", é preciso mostrar por que divergem e qual seria a solução correta.
+**Etapa 3. Inconciliabilidade das soluções jurídicas.** Demonstrar que, aplicada ao caso do paradigma a tese do recorrido (ou vice-versa), a solução seria diferente. Não basta dizer "divergem", é preciso mostrar por que divergem e qual seria a solução correta.
 
 ## Modelo Tabular Obrigatório
 
 Toda peça de PEDILEF em favor do segurado deve incluir, no tópico da demonstração da divergência, um quadro comparativo estruturado paradigma por paradigma, no seguinte formato.
 
-### Tabela Comparativa — Modelo para Um Paradigma
+### Tabela Comparativa. Modelo para Um Paradigma
 
 | Elemento | Acórdão Recorrido | Acórdão Paradigma |
 |----------|-------------------|-------------------|
@@ -25,7 +25,7 @@ Toda peça de PEDILEF em favor do segurado deve incluir, no tópico da demonstra
 | Conclusão | Resultado do recorrido (procedência/improcedência/parcial) | Resultado do paradigma |
 | Divergência | Ponto exato do conflito entre as rationes | Solução diversa que seria aplicável se adotada a tese do paradigma |
 
-### Tabela Comparativa — Múltiplos Paradigmas
+### Tabela Comparativa. Múltiplos Paradigmas
 
 Quando houver mais de um paradigma, repetir o quadro inteiro para cada um. Vedada a fusão de paradigmas distintos em uma única tabela, porque isso viola o princípio da análise individualizada (posição da QO 59/TNU, aprovada em 15/04/2026, e posição já consolidada pela QO 22/TNU) (auditoria 03/10/2026).
 
@@ -41,7 +41,7 @@ Antes de redigir o bloco de fatos, responder internamente a cada uma destas ques
 
 ## Checklist da Etapa 3 (Divergência)
 
-(i) As soluções são antagônicas ou apenas diversas? (ii) Aplicada ao caso em julgamento a tese do paradigma, qual seria a conclusão? (iii) O dispositivo do recorrido seria revertido? (iv) Qual o pedido concreto ao se acolher o PEDILEF — reforma ou anulação (QO 38/TNU e QO 20/TNU)?
+(i) As soluções são antagônicas ou apenas diversas? (ii) Aplicada ao caso em julgamento a tese do paradigma, qual seria a conclusão? (iii) O dispositivo do recorrido seria revertido? (iv) Qual o pedido concreto ao se acolher o PEDILEF, reforma ou anulação (QO 38/TNU e QO 20/TNU)?
 
 ## Seleção Estratégica do Paradigma
 
@@ -67,7 +67,7 @@ Em rito recursal TNU, com destaque argumentativo denso, conforme padrão do escr
 
 **III. Prequestionamento.** Demonstração de que a matéria foi suscitada e apreciada (ou, se omissa, que houve impugnação em embargos de declaração, com invocação da QO 47 para fins de anulação).
 
-**IV. Paradigma(s) — Identificação e Validade.** Juntada ou indicação de link (QO 3). Verificação de não superação (QO 12). Verificação de validade subjetiva (QO 48 — não STF; QO 5 — STJ apenas em modalidades admitidas).
+**IV. Paradigma(s). Identificação e Validade.** Juntada ou indicação de link (QO 3). Verificação de não superação (QO 12). Verificação de validade subjetiva (QO 48, não STF; QO 5. STJ apenas em modalidades admitidas).
 
 **V. Cotejo Analítico.** Quadro comparativo paradigma por paradigma, precedido de introdução textual que antecipa a divergência e sucedido por síntese que integra os elementos. Obrigatório o formato tabular explícito, conforme a QO 59/TNU (auditoria 03/10/2026).
 
@@ -75,7 +75,7 @@ Em rito recursal TNU, com destaque argumentativo denso, conforme padrão do escr
 
 **VII. Pedido.** (a) conhecimento; (b) provimento para reformar (QO 38) ou anular (QO 20) o acórdão recorrido; (c) aplicação da tese ao caso, se cabível; (d) condenação em honorários.
 
-## Articulação com o Acórdão Recorrido — Enfrentamento Integral (QO 18)
+## Articulação com o Acórdão Recorrido. Enfrentamento Integral (QO 18)
 
 Antes de protocolar, mapear todos os fundamentos suficientes do recorrido. Um acórdão pode ter dois fundamentos autônomos, cada um suficiente à conclusão. Atacar apenas um deles atrai a QO 18 e conduz ao não conhecimento. O enfrentamento deve ser individualizado por fundamento, ainda que as teses sejam convergentes.
 

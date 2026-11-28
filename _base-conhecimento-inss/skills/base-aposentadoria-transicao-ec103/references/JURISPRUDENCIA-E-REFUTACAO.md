@@ -1,4 +1,4 @@
-# Transição EC 103/2019 — Jurisprudência Verificada e Refutação
+# Transição EC 103/2019. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -52,49 +52,49 @@ Aplicação pró-segurado. Legitima a reafirmação em todas as instâncias, jud
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Aplicação automática pela DER
+### Argumento 1. Aplicação automática pela DER
 
 Argumento adversário. A regra aplicável é aquela cujos requisitos estão completos na DER, sem análise comparativa.
 
 Refutação. Tema 334 STF. O direito ao melhor benefício impõe análise comparativa de todas as regras aplicáveis. O INSS tem dever de informação e comparação obrigatória, com fundamento no art. 4º da Lei 13.460/2017 (Código de Defesa do Usuário do Serviço Público).
 
-### Argumento 2 — Vedação de escolha após concessão
+### Argumento 2. Vedação de escolha após concessão
 
 Argumento adversário. Concedido o benefício por uma regra, é vedada a mudança para outra.
 
 Refutação. Tema 334/STF, observado o Tema 966/STJ (auditoria 03/10/2026, corrigido o número, antes indicado como Tema 350/STF). O direito ao melhor benefício persiste mesmo após a concessão, desde que não consumada a decadência de 10 anos. Acionar `decadencia-revisao-previdenciaria`.
 
-### Argumento 3 — Impossibilidade de reafirmação da DER
+### Argumento 3. Impossibilidade de reafirmação da DER
 
 Argumento adversário. A reafirmação da DER é incabível em via judicial.
 
 Refutação. Tema 995 STJ. A reafirmação é plenamente cabível em juízo, inclusive para fatos supervenientes ao ajuizamento. Art. 493 do CPC.
 
-### Argumento 4 — Não aplicação do pedágio de 50% por falta de previsão
+### Argumento 4. Não aplicação do pedágio de 50% por falta de previsão
 
 Argumento adversário. O segurado não se enquadra no pedágio de 50% por questões formais.
 
 Refutação. Art. 17 da EC 103. A regra se aplica automaticamente a quem estava a menos de 2 anos do tempo mínimo em 13 de novembro de 2019. Não há exigência adicional. Negativa por falta de previsão é indeferimento ilegal.
 
-### Argumento 5 — Idade progressiva como única regra aplicável
+### Argumento 5. Idade progressiva como única regra aplicável
 
 Argumento adversário. A regra da idade progressiva é aplicável a todos, dispensando análise de outras.
 
 Refutação. Os arts. 15, 16, 17 e 20 da EC 103 asseguram ao filiado até 13/11/2019 regras de transição alternativas; o art. 4º trata do servidor público federal (auditoria 03/10/2026). O segurado escolhe a regra mais vantajosa. A opção é direito subjetivo, não faculdade do INSS.
 
-### Argumento 6 — Conversão de tempo especial não aplicável após 13/11/2019
+### Argumento 6. Conversão de tempo especial não aplicável após 13/11/2019
 
 Argumento adversário. A conversão de tempo especial em comum cessa integralmente com a reforma.
 
 Refutação. Art. 25, §2º, da EC 103. A conversão é garantida para o tempo especial cumprido até 13 de novembro de 2019, inclusive para composição do tempo de contribuição da transição.
 
-### Argumento 7 — Exigência de idade mínima nos pontos
+### Argumento 7. Exigência de idade mínima nos pontos
 
 Argumento adversário. Mesmo na regra dos pontos, haveria exigência de idade mínima implícita.
 
 Refutação. Art. 15 da EC 103. A regra dos pontos não exige idade mínima autônoma, bastando atingir a pontuação progressiva. A exigência é apenas de tempo mínimo de contribuição (35/30) e pontos.
 
-### Argumento 8 — RMI reduzida na transição sem direito à integralidade
+### Argumento 8. RMI reduzida na transição sem direito à integralidade
 
 Argumento adversário. A RMI de 60% mais 2% por ano excedente é aplicável a toda transição, sem exceção.
 

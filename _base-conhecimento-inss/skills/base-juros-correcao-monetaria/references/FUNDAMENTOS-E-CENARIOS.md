@@ -1,4 +1,4 @@
-# Juros e Correção — Fundamentos e Cenários
+# Juros e Correção. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -38,41 +38,41 @@ Correção desde o vencimento.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Concessão retroativa
+### Cenário A. Concessão retroativa
 
 Correção desde cada vencimento. Juros da citação.
 
-### Cenário B — Revisão de RMI
+### Cenário B. Revisão de RMI
 
 Idem.
 
-### Cenário C — Benefício cessado
+### Cenário C. Benefício cessado
 
 Juros da citação.
 
-### Cenário D — RRA
+### Cenário D. RRA
 
 Aplicação do art. 12-A Lei 7.713/1988 sobre o total atualizado.
 
-### Cenário E — Período antes do Tema 810
+### Cenário E. Período antes do Tema 810
 
 Critérios próprios até a modulação.
 
-### Cenário F — Após 09/12/2021
+### Cenário F. Após 09/12/2021
 
 SELIC unificada.
 
 ## 6. Cenários limitados
 
-### Cenário G — Aplicação do TR
+### Cenário G. Aplicação do TR
 
 Vedada pelo Tema 810. Combater.
 
-### Cenário H — Juros antes da citação
+### Cenário H. Juros antes da citação
 
 Súmula 204 STJ. Termo específico.
 
-### Cenário I — Prescrição
+### Cenário I. Prescrição
 
 Cinco anos anteriores ao ajuizamento.
 

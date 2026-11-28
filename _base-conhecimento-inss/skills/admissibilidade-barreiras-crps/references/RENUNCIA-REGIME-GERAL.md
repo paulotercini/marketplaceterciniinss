@@ -1,4 +1,4 @@
-# Regime Geral da Renúncia Tácita – Art. 86
+# Regime Geral da Renúncia Tácita. Art. 86
 
 ## Fundamento Legal
 
@@ -55,7 +55,7 @@ Essa ampliação vai além da tríplice identidade do §1º. A ação que discut
 
 **Opinião técnica.** Em praticamente toda ação judicial há elementos probatórios que não constavam do processo administrativo. O advogado diligente que documentar essa diferença afasta a identidade com segurança.
 
-## Exceção 1 – Ação para dar celeridade (Art. 86, §5º)
+## Exceção 1. Ação para dar celeridade (Art. 86, §5º)
 
 Não se aplica a renúncia nos casos de ação judicial, inclusive ordinária, com objetivo de dar celeridade ao recurso.
 
@@ -69,7 +69,7 @@ A expressão "inclusive ordinária" é significativa. Não apenas mandados de se
 
 **Estratégia preventiva.** O advogado deve deixar explícito, na petição inicial da ação judicial, que o objetivo é dar celeridade ao recurso administrativo pendente, não substituí-lo.
 
-## Exceção 2 – Objeto parcial (Art. 86, §7º)
+## Exceção 2. Objeto parcial (Art. 86, §7º)
 
 Na hipótese de ação judicial sobre parte do objeto do recurso, o Conselho julgará apenas as matérias remanescentes, vedada a rediscussão do mérito decidido em juízo.
 
@@ -77,7 +77,7 @@ A renúncia é parcial, limitada ao objeto da ação judicial. O CRPS permanece 
 
 **Aplicação prática.** Se o recurso versa sobre reconhecimento de tempo especial (1985-1995) e sobre reafirmação da DER, e a ação judicial discute apenas o tempo especial, o CRPS permanece competente para julgar a reafirmação.
 
-## Exceção 3 – Novos elementos (Art. 86, §2º in fine)
+## Exceção 3. Novos elementos (Art. 86, §2º in fine)
 
 Se a ação judicial apresentou provas não constantes do processo administrativo, a identidade não se configura. Ver análise completa na seção sobre o §2º acima.
 

@@ -28,26 +28,26 @@ Todo recurso ao CRPS passa por juízo de admissibilidade antes da análise de m�
 
 O art. 112 prevê rol taxativo
 
-**I.** Intempestividade — superável pela relevação (art. 112, §§1º-6º)
-**II.** Ilegitimidade das partes — verificar habilitação de sucessores, procuração
-**III.** Renúncia tácita por ação judicial idêntica (art. 86) — verificar identidade e exceções
-**IV.** Desistência voluntária expressa (art. 85) — somente expressa, nunca tácita por inércia (art. 85, §2º)
-**V.** Perda do objeto — verificar se reforma foi integral ou parcial
-**VI.** Preclusão — superável por documentos ou elementos novos (art. 73, §7º)
-**VII.** Recurso contra revisão de indeferimento sem elemento novo (art. 112, §7º — Portaria 462/2026) — impugnável por ilegalidade
+**I.** Intempestividade, superável pela relevação (art. 112, §§1º-6º)
+**II.** Ilegitimidade das partes, verificar habilitação de sucessores, procuração
+**III.** Renúncia tácita por ação judicial idêntica (art. 86), verificar identidade e exceções
+**IV.** Desistência voluntária expressa (art. 85), somente expressa, nunca tácita por inércia (art. 85, §2º)
+**V.** Perda do objeto, verificar se reforma foi integral ou parcial
+**VI.** Preclusão, superável por documentos ou elementos novos (art. 73, §7º)
+**VII.** Recurso contra revisão de indeferimento sem elemento novo (art. 112, §7º. Portaria 462/2026), impugnável por ilegalidade
 
-## Relevação de Intempestividade — Síntese
+## Relevação de Intempestividade. Síntese
 
-Demonstrada de forma inequívoca a liquidez e certeza do direito, o conselheiro DEVERÁ (verbo imperativo) propor à UJ a relevação (art. 112, §1º). Conceito de liquidez inequívoca no art. 112, §2º. Aplica-se apenas a recursos das alíneas "a" e "c" do art. 1º, I, e somente para provimento integral (art. 112, §5º). NÃO se aplica a incidentes processuais nem ao Conselho Pleno (art. 112, §3º). A Portaria 462/2026, §8º, veda diligências na relevação — instruir maximamente antes da interposição.
+Demonstrada de forma inequívoca a liquidez e certeza do direito, o conselheiro DEVERÁ (verbo imperativo) propor à UJ a relevação (art. 112, §1º). Conceito de liquidez inequívoca no art. 112, §2º. Aplica-se apenas a recursos das alíneas "a" e "c" do art. 1º, I, e somente para provimento integral (art. 112, §5º). NÃO se aplica a incidentes processuais nem ao Conselho Pleno (art. 112, §3º). A Portaria 462/2026, §8º, veda diligências na relevação, instruir maximamente antes da interposição.
 
-## Renúncia Tácita por Ação Judicial — Síntese
+## Renúncia Tácita por Ação Judicial. Síntese
 
 A propositura de ação judicial com objeto idêntico importa renúncia tácita (art. 86, caput, c/c art. 126, §3º da Lei 8.213/91). A identidade exige cumulativamente mesmas partes, causa de pedir (conjunto de FATOS) e pedido (art. 86, §1º). A definição exclusivamente fática da causa de pedir é o ponto mais explorável para o segurado.
 
 ### Três exceções expressas
 
 1. Ação para dar celeridade ao recurso, inclusive ordinária (art. 86, §5º)
-2. Ação sobre parte do objeto — CRPS julga matérias remanescentes (art. 86, §7º)
+2. Ação sobre parte do objeto. CRPS julga matérias remanescentes (art. 86, §7º)
 3. Novos elementos na via judicial (art. 86, §2º in fine)
 
 ### Risco no cumprimento (art. 117, §4º)
@@ -58,13 +58,13 @@ O INSS pode recusar cumprimento de decisão favorável do CRPS se existir ação
 
 INSS não pode reavaliar unilateralmente período já validado no processo administrativo. Recurso especial ou revisão intempestivos do INSS não suspendem cumprimento de decisão definitiva do CRPS.
 
-## Portaria MPS 462/2026 — Restrição Recursal (Art. 112, §7º e §8º)
+## Portaria MPS 462/2026. Restrição Recursal (Art. 112, §7º e §8º)
 
 ### Dados normativos
 
 Portaria MPS nº 462, de 19/03/2026. DOU 20/03/2026, Edição 54, Seção 1, p. 138. Vigência a partir de 25/03/2026. Processo SEI 10128.003464/2026-32.
 
-### Art. 112, §7º — Não conhecimento de recurso contra revisão de indeferimento
+### Art. 112, §7º. Não conhecimento de recurso contra revisão de indeferimento
 
 Não será conhecido o recurso contra decisão do INSS em pedido de revisão do segurado, referente ao indeferimento do requerimento inicial, quando a decisão mantiver o resultado ou inexistirem documentos ou elementos novos.
 
@@ -80,11 +80,11 @@ O segurado que opta por revisão administrativa (IN 128/2022, arts. 578-590) ao 
 
 Em todo atendimento de indeferimento, alertar o cliente. O recurso ordinário direto ao CRPS é a via preferencial. Revisão administrativa na APS somente quando houver documentação nova concreta.
 
-### Vícios do §7º — 10 defeitos jurídicos identificados
+### Vícios do §7º. 10 defeitos jurídicos identificados
 
 1. Ilegalidade por violação ao art. 126 da Lei 8.213/91
 2. Violação ao art. 56 da Lei 9.784/99 (recurso por legalidade e mérito sem caução)
-3. Inconstitucionalidade — art. 5º, LV, CF (ampla defesa com recursos)
+3. Inconstitucionalidade, art. 5º, LV, CF (ampla defesa com recursos)
 4. Violação da legalidade estrita (art. 37, caput, CF)
 5. Incoerência interna com o art. 112, caput, do Regimento (rol taxativo de não conhecimento) (auditoria 03/10/2026)
 6. Esvaziamento do duplo grau administrativo
@@ -93,11 +93,11 @@ Em todo atendimento de indeferimento, alertar o cliente. O recurso ordinário di
 9. Vedação de diligência na relevação (§8º) esvazia o art. 112, §2º, "b"
 10. Desnaturação do recurso em mero pedido de reapreciação fática
 
-### Art. 112, §8º — Vedação de diligência na relevação
+### Art. 112, §8º. Vedação de diligência na relevação
 
 A relevação de intempestividade não admite diligências. Instruir recurso com toda documentação possível antes da interposição. Indicar expressamente as bases governamentais consultáveis pelo conselheiro.
 
-## Prazos Recursais — Síntese
+## Prazos Recursais. Síntese
 
 Prazo geral para recurso e contrarrazões é de 30 dias (art. 77). Prazos contínuos, excluindo-se o dia do início e incluindo-se o do vencimento (art. 78). Prorrogação automática para primeiro dia útil seguinte em dia sem expediente (art. 78, §4º). Atos eletrônicos tempestivos até 23h59 do último dia (art. 78, §5º). Indisponibilidade comprovada dos canais prorroga prazo (art. 78, §6º). Feriado local deve ser comprovado na interposição (art. 78, §7º).
 
@@ -111,14 +111,14 @@ NÃO é causa de não conhecimento. O conselheiro deve prosseguir com a análise
 
 ## Referências
 
-- `references/CAUSAS-NAO-CONHECIMENTO.md` — Análise detalhada de cada causa com estratégias de superação
-- `references/RELEVACAO-INTEMPESTIVIDADE.md` — Requisitos, limitações e estratégia da relevação
-- `references/PRAZOS-INTIMACOES.md` — Contagem de prazos, formas de intimação e regras de tempestividade
-- `references/RENUNCIA-REGIME-GERAL.md` — Regras completas do art. 86, identidade, exceções e procedimento
-- `references/RENUNCIA-ESTRATEGIAS-DEFESA.md` — 8 estratégias de defesa contra renúncia tácita indevida
-- `references/RENUNCIA-REGIMES-ESPECIAIS-CUMPRIMENTO.md` — FAP, COMPREV e impacto no cumprimento
-- `references/PORTARIA-462-ANALISE-JURIDICA.md` — Análise completa de ilegalidade e inconstitucionalidade do §7º e §8º
-- `references/PORTARIA-462-ESTRATEGIAS-DEFESA.md` — Estratégias de prevenção e enfrentamento da Portaria 462
+- `references/CAUSAS-NAO-CONHECIMENTO.md`. Análise detalhada de cada causa com estratégias de superação
+- `references/RELEVACAO-INTEMPESTIVIDADE.md`. Requisitos, limitações e estratégia da relevação
+- `references/PRAZOS-INTIMACOES.md`. Contagem de prazos, formas de intimação e regras de tempestividade
+- `references/RENUNCIA-REGIME-GERAL.md`. Regras completas do art. 86, identidade, exceções e procedimento
+- `references/RENUNCIA-ESTRATEGIAS-DEFESA.md`. 8 estratégias de defesa contra renúncia tácita indevida
+- `references/RENUNCIA-REGIMES-ESPECIAIS-CUMPRIMENTO.md`. FAP, COMPREV e impacto no cumprimento
+- `references/PORTARIA-462-ANALISE-JURIDICA.md`. Análise completa de ilegalidade e inconstitucionalidade do §7º e §8º
+- `references/PORTARIA-462-ESTRATEGIAS-DEFESA.md`. Estratégias de prevenção e enfrentamento da Portaria 462
 
 Sempre leia os arquivos de referência pertinentes antes de analisar admissibilidade recursal perante o CRPS.
 
@@ -136,18 +136,6 @@ Regra do escritório. Lançar a data limite de trinta dias na agenda no momento 
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

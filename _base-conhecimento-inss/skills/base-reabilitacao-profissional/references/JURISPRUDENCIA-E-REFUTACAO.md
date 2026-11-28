@@ -1,4 +1,4 @@
-# Reabilitação Profissional — Jurisprudência e Refutação
+# Reabilitação Profissional. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -46,79 +46,65 @@ Fonte oficial em https://www.in.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Alta sem certificado de reabilitação
+### Argumento 1. Alta sem certificado de reabilitação
 
 Argumento adversário. Alta programada.
 
 Refutação. Art. 62 Lei 8.213, art. 101 Decreto 3.048. Sem certificado não há alta regular. Tema 177 TNU.
 
-### Argumento 2 — Ausência de capacidade residual
+### Argumento 2. Ausência de capacidade residual
 
 Argumento adversário. Segurado irrecuperável.
 
 Refutação. Súmula 47 TNU. Avaliação conjunta de idade, grau de instrução e condição social. Se irrecuperável, B32.
 
-### Argumento 3 — Segurado com idade avançada
+### Argumento 3. Segurado com idade avançada
 
 Argumento adversário. Passível de reabilitação.
 
 Refutação. Realidade do mercado exclui recolocação. Acionar jurisprudência TRF4 sobre idade e perfil.
 
-### Argumento 4 — Empregador recusa readaptação
+### Argumento 4. Empregador recusa readaptação
 
 Argumento adversário. Sem vaga compatível.
 
 Refutação. Art. 93 Lei 8.213 impõe cota de PCD. Direito à manutenção do benefício até inserção.
 
-### Argumento 5 — PRP inconcluso com alta
+### Argumento 5. PRP inconcluso com alta
 
 Argumento adversário. Concluído pelo INSS.
 
 Refutação. Sem certificado, nulidade da alta. Impugnar judicialmente.
 
-### Argumento 6 — Limbo previdenciário-trabalhista
+### Argumento 6. Limbo previdenciário-trabalhista
 
 Argumento adversário. Ausência de benefício e de emprego.
 
 Refutação. Obrigação do INSS de restabelecer B26 ou B91. TRF4 fixou solução pró-segurado.
 
-### Argumento 7 — Recusa do segurado ao PRP
+### Argumento 7. Recusa do segurado ao PRP
 
 Argumento adversário. Cessação automática art. 101.
 
 Refutação. Justificativa plausível afasta cessação. Motivos de saúde, familiares ou impossibilidade logística.
 
-### Argumento 8 — Certificado sem inserção real
+### Argumento 8. Certificado sem inserção real
 
 Argumento adversário. Formalidade cumprida.
 
 Refutação. Reabilitação pressupõe inserção efetiva no mercado. Sem ela, retorno do benefício.
 
-### Argumento 9 — PRP restrito à função única
+### Argumento 9. PRP restrito à função única
 
 Argumento adversário. Reabilitação em qualquer atividade.
 
 Refutação. Lei 8.213/91, art. 62, §2º. Atividade compatível com a condição do segurado.
 
-### Argumento 10 — Perda da qualidade de segurado durante PRP
+### Argumento 10. Perda da qualidade de segurado durante PRP
 
 Argumento adversário. Prazo de graça esgotado.
 
 Refutação. Art. 15 §1º Lei 8.213. Período de graça mantido enquanto houver benefício ativo.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, reabilitação.
-
-Hugo Goes, reabilitação.
-
-Marco Aurélio Serau Junior, incapacidade e reabilitação.
-
-Daniel Pulino, benefícios por incapacidade.
-
-Jane Berwanger, reabilitação.
-
-IBDP, advocacia previdenciária.
 
 ## 5. Estratégia integrada
 

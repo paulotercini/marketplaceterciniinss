@@ -1,4 +1,4 @@
-# BPC/LOAS — Fundamentos e Cenários
+# BPC/LOAS. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -48,43 +48,43 @@ Um salário mínimo vigente na data do pagamento. Sem 13º. Sem pensão por mort
 
 ## 5. Cenários operacionais pró-segurado
 
-### Cenário 1 — Idoso 65 anos em miserabilidade
+### Cenário 1. Idoso 65 anos em miserabilidade
 
 Idoso com 65 anos completos. Renda zero. Requerimento deferido com DIB na DER.
 
-### Cenário 2 — PCD com transtorno mental
+### Cenário 2. PCD com transtorno mental
 
 Pessoa com esquizofrenia. Impedimento longo prazo comprovado. Avaliação biopsicossocial favorável. Deferimento.
 
-### Cenário 3 — Idoso com esposa trabalhadora
+### Cenário 3. Idoso com esposa trabalhadora
 
 Idoso com 65, esposa com salário mínimo. Cálculo per capita. Excesso de renda marginal. Flexibilização pelo Tema 27 STF.
 
-### Cenário 4 — Menor com autismo
+### Cenário 4. Menor com autismo
 
 Menor com TEA. Avaliação biopsicossocial para menor de 16 usa critérios diferenciados. Deferimento.
 
-### Cenário 5 — Cessação por revisão bienal
+### Cenário 5. Cessação por revisão bienal
 
 BPC cessado em revisão. Restabelecimento retroativo quando o motivo da cessação não se confirmar.
 
-### Cenário 6 — PCD com impedimento permanente
+### Cenário 6. PCD com impedimento permanente
 
 Lei 15.157/2025 dispensa reavaliação. Pedir dispensa administrativa.
 
-### Cenário 7 — Indeferimento por CadÚnico desatualizado
+### Cenário 7. Indeferimento por CadÚnico desatualizado
 
 Requerente com CadÚnico vencido. Atualizar e requerer com boa-fé retroativa.
 
-### Cenário 8 — Acumulação indevida segundo o INSS
+### Cenário 8. Acumulação indevida segundo o INSS
 
 Pensão especial indenizatória do ente público. Não conta como benefício da Seguridade. Pode acumular.
 
-### Cenário 9 — Estrangeiro residente
+### Cenário 9. Estrangeiro residente
 
 Estrangeiro PCD com residência no Brasil. Direito pela jurisprudência e pelo Estatuto da PCD. Tema 173 STF (Tema da cidadania).
 
-### Cenário 10 — Idoso indígena
+### Cenário 10. Idoso indígena
 
 Idoso indígena em aldeia. CadÚnico facilitado pelo FUNAI. Deferimento.
 

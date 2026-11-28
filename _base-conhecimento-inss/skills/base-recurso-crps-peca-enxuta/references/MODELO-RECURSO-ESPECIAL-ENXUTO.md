@@ -8,7 +8,6 @@ Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado
 EXCELENTÍSSIMO SENHOR PRESIDENTE DA [X]ª CÂMARA DE JULGAMENTO DO
 CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL
 
-
 [Nome do Recorrente], CPF [XXX.XXX.XXX-XX], nos autos do processo
 administrativo nº [protocolo], referente ao benefício nº [NB], vem,
 respeitosamente, interpor RECURSO ESPECIAL contra o acórdão [número], de
@@ -26,7 +25,6 @@ O Recorrente tomou ciência do acórdão recorrido em DD/MM/AAAA, conforme
 [aviso ou consulta ao e-Recursos], e apresenta este recurso especial em
 DD/MM/AAAA, dentro do prazo de 30 dias (art. 77 do Regimento Interno do
 CRPS).
-
 
 2. DO CABIMENTO
 
@@ -66,13 +64,11 @@ O acórdão recorrido contrariou a Súmula [número], que dispõe: "[trecho
 literal da súmula]". O acórdão decidiu em sentido oposto ao afirmar que
 "[trecho literal do acórdão]", embora [fato do caso, com a folha].
 
-
 3. DOS FATOS RELEVANTES PARA O RECURSO ESPECIAL
 
 [Apenas os fatos que pertencem ao núcleo da controvérsia, em ordem de
 data, com o documento e a folha. Sem repetir fatos já consolidados na
 Junta de Recursos.]
-
 
 4. DO MÉRITO
 
@@ -88,13 +84,11 @@ examinou.
 norma expressa ou quando o pedido depende dela. O dispositivo já citado
 no cabimento não se repete aqui.]
 
-
 4.2. DA CONSEQUÊNCIA PARA O BENEFÍCIO
 
 Desse modo, o Recorrente cumpre [o requisito] desde DD/MM/AAAA, e o
 [benefício] é devido desde a DER, porque [consequência com o número,
 como o tempo, a carência ou a data de início da incapacidade].
-
 
 5. DOS PEDIDOS
 
@@ -108,9 +102,7 @@ expressamente o pronunciamento sobre cada fundamento deste recurso,
 para fins de eventuais embargos de declaração por omissão (art. 92,
 III, do Regimento Interno do CRPS) (auditoria 03/10/2026).
 
-
 [Cidade], [data].
-
 
 [Assinatura]
 Paulo Roberto Tercini Filho

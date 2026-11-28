@@ -1,4 +1,4 @@
-# Portaria Conjunta MDS/MPS/INSS nº 37, de 1º/04/2026 — Conferência no DOU
+# Portaria Conjunta MDS/MPS/INSS nº 37, de 1º/04/2026. Conferência no DOU
 
 Onda 90 (26/07/2026). A pendência de conferência estava aberta porque o in.gov.br bloqueia acesso automatizado do sandbox e a portaria constava apenas de fontes secundárias convergentes. A conferência foi feita AGORA, no inteiro teor da fonte oficial, pelo navegador do usuário.
 

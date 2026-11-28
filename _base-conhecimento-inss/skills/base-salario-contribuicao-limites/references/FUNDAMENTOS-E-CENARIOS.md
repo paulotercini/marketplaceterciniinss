@@ -1,4 +1,4 @@
-# Salário-de-Contribuição — Fundamentos e Cenários
+# Salário-de-Contribuição. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -28,41 +28,41 @@ Vale-transporte, vale-alimentação PAT, diárias até 50% do salário, PLR Lei 
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Verba remuneratória tributada indevidamente fora
+### Cenário A. Verba remuneratória tributada indevidamente fora
 
 Pleitear cômputo e reflexos.
 
-### Cenário B — Verba indevidamente tributada e computada erroneamente
+### Cenário B. Verba indevidamente tributada e computada erroneamente
 
 Discutir natureza indenizatória.
 
-### Cenário C — Empregador omitiu SC no CNIS
+### Cenário C. Empregador omitiu SC no CNIS
 
 RAC e judicial.
 
-### Cenário D — Contribuinte individual com SC baixo
+### Cenário D. Contribuinte individual com SC baixo
 
 Complementação EC 103.
 
-### Cenário E — Facultativo no teto para maximizar SB
+### Cenário E. Facultativo no teto para maximizar SB
 
 Planejamento.
 
-### Cenário F — 13º na soma do SC anual
+### Cenário F. 13º na soma do SC anual
 
 Cômputo correto.
 
 ## 7. Cenários limitados
 
-### Cenário G — Contribuições acima do teto
+### Cenário G. Contribuições acima do teto
 
 Não refletem em SB acima do teto.
 
-### Cenário H — Verbas de caráter esporádico
+### Cenário H. Verbas de caráter esporádico
 
 Podem não integrar.
 
-### Cenário I — Diárias acima de 50% do salário
+### Cenário I. Diárias acima de 50% do salário
 
 Tributam conforme legislação.
 

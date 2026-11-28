@@ -1,28 +1,28 @@
-# Matriz Temporal de Comprovação — Arts. 94 e 95 da IN 128/2022
+# Matriz Temporal de Comprovação. Arts. 94 e 95 da IN 128/2022
 
 ## Índice
 
 1. Visão geral das 4 eras
 2. Matriz por subcategoria de CI
-3. Dossiê probatório do empresário (art. 94, V) — Detalhamento
-4. Plano B probatório para prestadores (art. 94, §7º) — Detalhamento
-5. Resolução de conflitos eSocial (art. 97) — Detalhamento
+3. Dossiê probatório do empresário (art. 94, V). Detalhamento
+4. Plano B probatório para prestadores (art. 94, §7º). Detalhamento
+5. Resolução de conflitos eSocial (art. 97). Detalhamento
 6. Regras transversais
 
 ---
 
 ## 1. Visão geral das 4 eras
 
-**Era 1 — Pré-Lei 9.876 (até novembro/1999)**
+**Era 1. Pré-Lei 9.876 (até novembro/1999)**
 Regime anterior à unificação. Comprovação centrada no status jurídico (contrato social, inscrição em conselho, registro profissional). A existência legal da atividade presume o exercício.
 
-**Era 2 — Transição (novembro/1999 a março/2003)**
+**Era 2. Transição (novembro/1999 a março/2003)**
 Lei 9.876/1999 unificou empresário, autônomo e equiparado em CI. A exigência de comprovação do recebimento financeiro passa a se impor para empresários (art. 92, §1º). Para demais CI, mantém-se contrato/RPA.
 
-**Era 3 — Lei 10.666/03 (abril/2003 até eSocial) — Retenção presumida**
+**Era 3. Lei 10.666/03 (abril/2003 até eSocial). Retenção presumida**
 Art. 4º da Lei 10.666/03 transfere responsabilidade pelo recolhimento para a empresa contratante. O CI prestador de serviço a empresa não precisa mais gerar GPS individual. A comprovação migra para o comprovante de retenção (CNPJ, valor pago, valor retido).
 
-**Era 4 — eSocial**
+**Era 4, eSocial**
 Eventos eletrônicos (S-1200, S-2300) transmitidos pela empresa são incorporados automaticamente ao CNIS. A comprovação é digital e centralizada. Conflitos resolvidos pelo art. 97 da IN 128/2022.
 
 ---
@@ -79,31 +79,31 @@ Para nomeados até 20/11/1994, ato de nomeação + documentos de exercício. Par
 
 ---
 
-## 3. Dossiê probatório do empresário (art. 94, V) — Detalhamento
+## 3. Dossiê probatório do empresário (art. 94, V). Detalhamento
 
-### Até 28/11/1999 — O império do contrato social
+### Até 28/11/1999. O império do contrato social
 
 A comprovação é baseada exclusivamente nos atos constitutivos.
 
-**Documentos exigidos** — Atos de constituição, alteração e baixa da empresa.
+**Documentos exigidos.** Atos de constituição, alteração e baixa da empresa.
 
-**Alvo** — Atuação na gestão, direção ou com retirada documentada de pró-labore. A existência legal da empresa presume a atividade. Não é necessário comprovar o recebimento financeiro mês a mês.
+**Alvo.** Atuação na gestão, direção ou com retirada documentada de pró-labore. A existência legal da empresa presume a atividade. Não é necessário comprovar o recebimento financeiro mês a mês.
 
-**Implicação prática** — Para períodos anteriores a 29/11/1999, o advogado precisa apenas dos atos constitutivos averbados na Junta Comercial para comprovar toda a extensão do vínculo como CI empresário.
+**Implicação prática.** Para períodos anteriores a 29/11/1999, o advogado precisa apenas dos atos constitutivos averbados na Junta Comercial para comprovar toda a extensão do vínculo como CI empresário.
 
-### A partir de 29/11/1999 — A exigência da remuneração
+### A partir de 29/11/1999. A exigência da remuneração
 
 A continuidade do exercício fica estritamente condicionada ao recebimento financeiro (art. 92, §1º).
 
-**Documentos exigidos** — Documentos contemporâneos que comprovem recebimento de remuneração. Pró-labore documentado ou distribuição tributável.
+**Documentos exigidos.** Documentos contemporâneos que comprovem recebimento de remuneração. Pró-labore documentado ou distribuição tributável.
 
-**A partir de abril/2003 (Lei 10.666/03)** — A responsabilidade pelo recolhimento transfere-se para a empresa (art. 4º). A comprovação passa a ser documental sobre o repasse, exigindo DIRPF ou comprovante de pró-labore. O INSS não pode exigir do sócio prova de recolhimento que era obrigação da empresa.
+**A partir de abril/2003 (Lei 10.666/03).** A responsabilidade pelo recolhimento transfere-se para a empresa (art. 4º). A comprovação passa a ser documental sobre o repasse, exigindo DIRPF ou comprovante de pró-labore. O INSS não pode exigir do sócio prova de recolhimento que era obrigação da empresa.
 
-**Implicação prática** — Para períodos pós-29/11/1999, o advogado precisa de prova financeira contemporânea. A mera existência da empresa não basta. Se o sócio não retirou pró-labore documentado em determinado mês, não há filiação naquele mês, independentemente de a empresa estar ativa.
+**Implicação prática.** Para períodos pós-29/11/1999, o advogado precisa de prova financeira contemporânea. A mera existência da empresa não basta. Se o sócio não retirou pró-labore documentado em determinado mês, não há filiação naquele mês, independentemente de a empresa estar ativa.
 
 ---
 
-## 4. Plano B probatório para prestadores (art. 94, §7º) — Detalhamento
+## 4. Plano B probatório para prestadores (art. 94, §7º). Detalhamento
 
 Aplicável quando o recibo original (RPA, contrato, comprovante de retenção) não existe, para períodos anteriores ao eSocial.
 
@@ -111,28 +111,28 @@ Aplicável quando o recibo original (RPA, contrato, comprovante de retenção) n
 
 Documentos contemporâneos originais (contrato, RPA, recibo com retenção, DIRPF da época).
 
-### Caminho alternativo — Declaração da empresa
+### Caminho alternativo. Declaração da empresa
 
-**Passo 1** — Aceita-se declaração fornecida pela empresa devidamente assinada.
+**Passo 1.** Aceita-se declaração fornecida pela empresa devidamente assinada.
 
-**Passo 2** — Requisitos cumulativos da declaração. Todos devem estar presentes simultaneamente.
+**Passo 2.** Requisitos cumulativos da declaração. Todos devem estar presentes simultaneamente.
 - Identificação completa do contratante (CNPJ)
 - Identificação do prestador (CPF)
 - Discriminação mensal dos valores pagos
 - Valores de base de cálculo e desconto
 - Afirmação expressa de extração de registros existentes (contábeis ou de RH)
 
-**Passo 3** — Elemento corroborador obrigatório. A declaração deve vir acompanhada de prova de depósitos ou transferências bancárias da época.
+**Passo 3.** Elemento corroborador obrigatório. A declaração deve vir acompanhada de prova de depósitos ou transferências bancárias da época.
 
 ### Pesquisa externa obrigatória (art. 94, §8º)
 
 A apresentação de declaração isolada (sem o elemento corroborador bancário) dispara obrigatoriamente a emissão de Pesquisa Externa pelo INSS para confirmar os registros físicos e contábeis da empresa. Essa diligência atrasa significativamente o processo.
 
-**Estratégia do advogado** — SEMPRE instruir o requerimento com os extratos bancários corroborativos, mesmo que pareçam redundantes. Evitar a Pesquisa Externa economiza meses de tramitação.
+**Estratégia do advogado.** SEMPRE instruir o requerimento com os extratos bancários corroborativos, mesmo que pareçam redundantes. Evitar a Pesquisa Externa economiza meses de tramitação.
 
 ---
 
-## 5. Resolução de conflitos eSocial (art. 97) — Detalhamento
+## 5. Resolução de conflitos eSocial (art. 97). Detalhamento
 
 ### Contexto
 
@@ -142,9 +142,9 @@ Na era eSocial, o INSS acata automaticamente os eventos eletrônicos enviados pe
 
 Quando o CNIS não reflete a remuneração que efetivamente foi paga, ou quando o evento eSocial foi omitido pela empresa, o advogado deve protocolar no INSS um dos seguintes conjuntos documentais.
 
-**Opção A** — Comprovante contendo o número do recibo eletrônico do eSocial (prova de que o evento foi transmitido) + Declaração de Confirmação (Anexo II da IN 128/2022) assinada pelos responsáveis da empresa.
+**Opção A.** Comprovante contendo o número do recibo eletrônico do eSocial (prova de que o evento foi transmitido) + Declaração de Confirmação (Anexo II da IN 128/2022) assinada pelos responsáveis da empresa.
 
-**Opção B** — Documento expedido por órgão competente comprovando a prestação de serviço e a remuneração (decisão judicial trabalhista, fiscalização do MTE etc.).
+**Opção B.** Documento expedido por órgão competente comprovando a prestação de serviço e a remuneração (decisão judicial trabalhista, fiscalização do MTE etc.).
 
 ### Protocolo de extemporaneidade (§2º)
 
@@ -168,9 +168,9 @@ Se o CI possui atividade cadastrada no CNIS e contribuição recolhida, presume-
 
 A existência de vínculo empregatício concomitante NÃO impede o reconhecimento da atividade como CI. O segurado pode ser empregado CLT e CI simultaneamente.
 
-### RAC — Ferramenta de atualização (art. 92, §6º)
+### RAC. Ferramenta de atualização (art. 92, §6º)
 
-O formulário RAC (Anexo I-E, item 2.5 — Reconhecimento de Filiação e Atualização de Atividade) é o instrumento oficial para inclusão e atualização de dados no CNIS. Deve ser preenchido ANTES de qualquer pedido de benefício ou geração de guias.
+O formulário RAC (Anexo I-E, item 2.5. Reconhecimento de Filiação e Atualização de Atividade) é o instrumento oficial para inclusão e atualização de dados no CNIS. Deve ser preenchido ANTES de qualquer pedido de benefício ou geração de guias.
 
 ### Contemporaneidade
 

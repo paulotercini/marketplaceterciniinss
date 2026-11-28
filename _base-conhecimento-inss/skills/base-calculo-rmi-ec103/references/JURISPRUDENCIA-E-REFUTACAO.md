@@ -1,4 +1,4 @@
-# Cálculo da RMI Pós EC 103/2019 — Jurisprudência Verificada e Refutação
+# Cálculo da RMI Pós EC 103/2019. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -64,49 +64,49 @@ Aplicação pró-segurado. Revisão do teto das EC 20/98 e 41/03 continua viva p
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Aplicação automática do percentual sem análise do tempo excedente
+### Argumento 1. Aplicação automática do percentual sem análise do tempo excedente
 
 Argumento adversário. O percentual aplicado é o vigente na data do requerimento, sem análise de tempo excedente.
 
 Refutação. Art. 26, §§ 2º e 5º, da EC 103. A RMI cresce em 2% a cada ano excedente a 20 (homem) ou 15 (mulher). O cálculo deve incorporar cada ano adicional comprovado, inclusive com tempo especial convertido e reconhecimento judicial.
 
-### Argumento 2 — Desconsideração de salários de contribuição concomitantes
+### Argumento 2. Desconsideração de salários de contribuição concomitantes
 
 Argumento adversário. Apenas as contribuições principais são consideradas no cálculo.
 
 Refutação. Tema 1070 STJ. Todas as contribuições concomitantes devem ser somadas. Acionar `impugnacao-cumprimento-concomitantes`.
 
-### Argumento 3 — Média reduzida por contribuições mínimas
+### Argumento 3. Média reduzida por contribuições mínimas
 
 Argumento adversário. As contribuições mínimas integram o cálculo, reduzindo a média.
 
 Refutação. Art. 195, §14, da CF, com redação da EC 103. Contribuições abaixo do mínimo devem ser complementadas. Em caso de complementação, o valor elevado integra a média. Acionar `contribuicoes-complementacao-ec103`.
 
-### Argumento 4 — Impossibilidade de inclusão de contribuições anteriores a julho de 1994
+### Argumento 4. Impossibilidade de inclusão de contribuições anteriores a julho de 1994
 
 Argumento adversário. Salários de contribuição anteriores a julho de 1994 não integram a média.
 
 Refutação. Tese adversa desde as ADIs 2110 e 2111, que declararam constitucional o art. 3º da Lei 9.876/99; a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149]. O caminho do segurado é a análise caso a caso em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
 
-### Argumento 5 — Desconsideração do caráter acidentário na B92
+### Argumento 5. Desconsideração do caráter acidentário na B92
 
 Argumento adversário. A B32 ou B92 é sempre calculada em 60% + 2% por ano excedente, sem integralidade.
 
 Refutação. Art. 26, §3º, II, da EC 103 (ressalva expressa do §2º, III). B92 acidentária tem RMI de 100% da média. Acionar `ntep-nexo-acidentario` para conversão e `auditoria-laudo-pericial`.
 
-### Argumento 6 — Pensão por morte com RMI fixa de 60%
+### Argumento 6. Pensão por morte com RMI fixa de 60%
 
 Argumento adversário. Pensão por morte é sempre 60%, independentemente de dependentes.
 
 Refutação. Art. 23 da EC 103. RMI = 50% + 10% por dependente, limitado a 100%. Incluir todos os dependentes elegíveis. Acionar `pensao-por-morte`.
 
-### Argumento 7 — Desconsideração do auxílio-acidente no cálculo
+### Argumento 7. Desconsideração do auxílio-acidente no cálculo
 
 Argumento adversário. O auxílio-acidente não integra a média de aposentadoria.
 
 Refutação. Art. 31 da Lei 8.213/91. O auxílio-acidente integra o salário-de-contribuição e é considerado na média, observada a legislação vigente. Acionar `auxilio-acidente-b94`.
 
-### Argumento 8 — Aplicação do teto atualizado retroativamente de forma adversa
+### Argumento 8. Aplicação do teto atualizado retroativamente de forma adversa
 
 Argumento adversário. O teto vigente na DIB limita a RMI, sem revisão posterior.
 

@@ -86,7 +86,6 @@ A peça é escrita em linguagem formal e jurídica, mas simples, no estilo que o
 
 ---
 
-
 ## Limite de Jurisprudência na Petição
 
 Jurisprudência não deve ocupar mais de uma página em toda a petição. A técnica é transcrever apenas o precedente mais forte (o mais recente, objetivo e que melhor se enquadra na tese) e enumerar os demais de forma organizada.
@@ -124,11 +123,11 @@ A proteção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial d
 
 1. Classificar expressamente cada documento essencial em uma das três categorias, identificando-o pelo emitente e pela data (na inicial o documento segue "em anexo").
 
-   a) **Já apresentado ao INSS na DER** — documento que integrava o processo administrativo desde o requerimento. Enquadra o caso no cenário 2.1 do Tema 1124 (DIB na DER)
+   a) **Já apresentado ao INSS na DER**, documento que integrava o processo administrativo desde o requerimento. Enquadra o caso no cenário 2.1 do Tema 1124 (DIB na DER)
 
-   b) **Complementar a prova já existente** — documento não essencial ou prova técnica judicial que apenas confirma, detalha ou reforça o conjunto probatório já suficiente na via administrativa. Enquadra o caso no item 2.1 do Tema 1124 e na exceção final do item 1.6, com DIB na DER. Os embargos de declaração de 09/09/2026 confirmaram que a perícia judicial que confirma o PPP apresentado ao INSS leva a DIB à DER quando o INSS não ofertou a complementação da prova, desde que a prova em juízo solucione a controvérsia sobre o fato. No TRF3, a perícia que decide a especialidade sem documento do processo administrativo que já indicasse o agente tende a levar à citação, e por isso a peça aponta esse documento
+   b) **Complementar a prova já existente**, documento não essencial ou prova técnica judicial que apenas confirma, detalha ou reforça o conjunto probatório já suficiente na via administrativa. Enquadra o caso no item 2.1 do Tema 1124 e na exceção final do item 1.6, com DIB na DER. Os embargos de declaração de 09/09/2026 confirmaram que a perícia judicial que confirma o PPP apresentado ao INSS leva a DIB à DER quando o INSS não ofertou a complementação da prova, desde que a prova em juízo solucione a controvérsia sobre o fato. No TRF3, a perícia que decide a especialidade sem documento do processo administrativo que já indicasse o agente tende a levar à citação, e por isso a peça aponta esse documento
 
-   c) **Surgido depois do ajuizamento ou impossível de obter antes** — documento que só pôde existir em juízo. Enquadra o caso no item 2.3, com DIB na citação, e exige a demonstração da impossibilidade material. O documento que já existia e não foi levado ao INSS, como um novo PPP, NÃO entra nesta categoria, porque os embargos de 09/09/2026 determinam a extinção sem mérito nesse caso, e o caminho é o novo requerimento antes da ação
+   c) **Surgido depois do ajuizamento ou impossível de obter antes**, documento que só pôde existir em juízo. Enquadra o caso no item 2.3, com DIB na citação, e exige a demonstração da impossibilidade material. O documento que já existia e não foi levado ao INSS, como um novo PPP, NÃO entra nesta categoria, porque os embargos de 09/09/2026 determinam a extinção sem mérito nesse caso, e o caminho é o novo requerimento antes da ação
 
 2. Fundamentar expressamente que a DIB deve ser fixada na DER (ou na data do preenchimento dos requisitos, se posterior à DER), invocando o cenário aplicável do Tema 1124/STJ, e pedir que a DIB e os efeitos financeiros coincidam, porque parte do TRF3 fixa a DIB na DER e os atrasados desde a citação
 
@@ -144,7 +143,7 @@ A proteção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial d
 
 ---
 
-## Gratuidade de Justiça — Técnica de Demonstração Objetiva
+## Gratuidade de Justiça. Técnica de Demonstração Objetiva
 
 O pedido de gratuidade de justiça não deve ser genérico. A hipossuficiência é evidenciada com dados concretos e documentos vinculados.
 
@@ -178,7 +177,7 @@ Quando a petição envolver indeferimento ou não cômputo de período por pend�
 1. Identificação precisa do indicador (sigla e descrição oficial da Portaria DIRBEN/INSS 990/2022, alterada pela 1.316/2025)
 2. Demonstração de que o indicador opera como presunção relativa (juris tantum), ilidível por prova
 3. Confronto entre o indicador e a documentação comprobatória do segurado, referenciando cada documento por ID no PJe
-4. Fundamentação normativa (art. 19, Lei 8.213/91 — direito ao cômputo; art. 29-A — responsabilidade do empregador pelo recolhimento; princípios do art. 5º, IV e XI, Lei 13.460/2017)
+4. Fundamentação normativa (art. 19, Lei 8.213/91, direito ao cômputo; art. 29-A, responsabilidade do empregador pelo recolhimento; princípios do art. 5º, IV e XI, Lei 13.460/2017)
 5. Se aplicável, invocação dos princípios transversais de defesa (vedação de punir segurado por omissão do empregador; primazia da realidade; caráter informativo e não constitutivo do CNIS)
 
 **Passo 4.** Na seção "DOS EFEITOS FINANCEIROS", classificar os documentos que suprem o indicador nas categorias do Tema 1124/STJ, demonstrando que a prova já existia na DER.
@@ -187,13 +186,13 @@ Quando a petição envolver indeferimento ou não cômputo de período por pend�
 
 ## Política de Tutela de Urgência e Liminar
 
-### Regra Geral — Petições Iniciais (JEF e Rito Ordinário)
+### Regra Geral. Petições Iniciais (JEF e Rito Ordinário)
 
 **NÃO incluir pedido de tutela de urgência** nas petições iniciais. A petição contém apenas os pedidos de mérito. Esta é a conduta padrão do escritório para todas as ações previdenciárias (concessão, restabelecimento, revisão, conversão, pensão por morte, BPC/LOAS, aposentadoria especial, etc.).
 
 **Exceção.** Somente incluir se o usuário expressamente solicitar ("inclua tutela de urgência", "quero tutela antecipada", "faça com liminar", "com pedido de urgência" ou equivalente inequívoco).
 
-### Regra Especial — Mandado de Segurança
+### Regra Especial. Mandado de Segurança
 
 No mandado de segurança, o pedido de **medida liminar SEMPRE deve ser incluído** (art. 7º, III, Lei 12.016/2009), salvo pedido expresso em contrário. Fundamentar com relevância do fundamento (fumus boni iuris) e risco de ineficácia (periculum in mora). Seção própria após fundamentação jurídica e antes dos pedidos.
 
@@ -207,7 +206,6 @@ No mandado de segurança, o pedido de **medida liminar SEMPRE deve ser incluído
 | Recursos, embargos, agravos | Não se aplica | Avaliar caso a caso |
 
 ---
-
 
 ## Regras de Qualidade Redacional
 
@@ -243,13 +241,13 @@ Em vez de dizer que é urgente, demonstrar a urgência. A técnica exige três e
 
 Quando a peça solicitada for réplica (art. 350 do CPC), seguir a estrutura abaixo em vez do formato tradicional de "contestação da contestação". No esqueleto do método, as seções 1 e 2 abaixo formam "1. DA CONTESTAÇÃO" e "2. DAS RAZÕES PARA REJEITAR A DEFESA", e o pedido de prova entra nos REQUERIMENTOS.
 
-**Seção 1 — Delimitação dos pontos controvertidos e incontroversos.** Tabela de três colunas no padrão Visual Law preto/branco. Coluna 1, "Fato alegado na inicial". Coluna 2, "Impugnação pelo INSS". Coluna 3, "Situação processual" com rótulo `[INCONTROVERSO]` ou `[CONTROVERTIDO]`. Cada fato relevante da inicial é classificado com base na contestação. Fatos não impugnados especificamente presumem-se verdadeiros (art. 341 CPC). Essa tabela coloca o autor no controle da narrativa e orienta a leitura do juiz.
+**Seção 1. Delimitação dos pontos controvertidos e incontroversos.** Tabela de três colunas no padrão Visual Law preto/branco. Coluna 1, "Fato alegado na inicial". Coluna 2, "Impugnação pelo INSS". Coluna 3, "Situação processual" com rótulo `[INCONTROVERSO]` ou `[CONTROVERTIDO]`. Cada fato relevante da inicial é classificado com base na contestação. Fatos não impugnados especificamente presumem-se verdadeiros (art. 341 CPC). Essa tabela coloca o autor no controle da narrativa e orienta a leitura do juiz.
 
-**Seção 2 — Réplica apenas aos pontos controvertidos.** Trabalhar exclusivamente sobre os pontos classificados como controvertidos. Cada ponto recebe subseção própria com argumento direto, referência a documento por ID e confronto específico com a impugnação do INSS. Compartimentalizar evita digressões e mostra ao juiz exatamente onde está o conflito.
+**Seção 2. Réplica apenas aos pontos controvertidos.** Trabalhar exclusivamente sobre os pontos classificados como controvertidos. Cada ponto recebe subseção própria com argumento direto, referência a documento por ID e confronto específico com a impugnação do INSS. Compartimentalizar evita digressões e mostra ao juiz exatamente onde está o conflito.
 
-**Seção 3 — Reconsideração do pedido de tutela (quando aplicável).** Se houve tutela de urgência na inicial que foi indeferida, a réplica pode ser o momento de pedir reconsideração com nova roupagem de evidência.
+**Seção 3. Reconsideração do pedido de tutela (quando aplicável).** Se houve tutela de urgência na inicial que foi indeferida, a réplica pode ser o momento de pedir reconsideração com nova roupagem de evidência.
 
-**Seção 4 — Pedidos de prova relevantes.** Reiterar apenas os pedidos de prova ainda relevantes à luz da contestação, de maneira específica e direcionada. Aplicar a técnica da skill `especificacao-provas`.
+**Seção 4. Pedidos de prova relevantes.** Reiterar apenas os pedidos de prova ainda relevantes à luz da contestação, de maneira específica e direcionada. Aplicar a técnica da skill `especificacao-provas`.
 
 A regra central é que a réplica NÃO responde a cada linha da contestação. Falar demais sobre a contestação incha a peça, dá luz ao que tem menos impacto e pode até fortalecer a narrativa contrária. A réplica eficaz entrega foco ao juiz sobre o que é necessário, o que já está resolvido e o que ainda está pendente.
 
@@ -283,26 +281,24 @@ Quando a peça (alegações finais, memoriais pós-audiência, recurso inominado
 
 ---
 
-
 ## Referências Cruzadas com Outras Skills
 
 Antes de gerar qualquer petição, esta skill aciona automaticamente as skills complementares.
 
-- `precedentes-previdenciarios` — para fundamentação jurisprudencial
-- `base-revisao-peticao-aprofundada` — para auditoria automática após geração
-- `triagem-caso-novo` — quando o caso não está enquadrado
-- `cnis-acerto-indicadores` — quando houver pendência de CNIS
-- `tema-1124-instrucao-administrativa` — para seção de efeitos financeiros
-- `decadencia-revisao-previdenciaria` — em revisões
-- `documentos-comprobatorios-in128` — para checklist documental
-- `mandado-seguranca-previdenciario` + `ms-competencia-autoridade-coatora` — em MS
-- `auditoria-laudo-pericial`, `auditoria-ppp` — quando houver laudo/PPP para auditar
-- `printscreen-impacto` — para inserção de documentos reais com destaque
-- MCP `acervo` — na Fase 0, para ler o que o escritório já sustentou, e MCP `normas` pela `base-legislacao-fontes-primarias` quando for citar dispositivo
-- `reafirmacao-der`, `tutela-urgencia` (interna) — conforme política
+- `precedentes-previdenciarios`, para fundamentação jurisprudencial
+- `base-revisao-peticao-aprofundada`, para auditoria automática após geração
+- `triagem-caso-novo`, quando o caso não está enquadrado
+- `cnis-acerto-indicadores`, quando houver pendência de CNIS
+- `tema-1124-instrucao-administrativa`, para seção de efeitos financeiros
+- `decadencia-revisao-previdenciaria`, em revisões
+- `documentos-comprobatorios-in128`, para checklist documental
+- `mandado-seguranca-previdenciario` + `ms-competencia-autoridade-coatora`, em MS
+- `auditoria-laudo-pericial`, `auditoria-ppp`, quando houver laudo/PPP para auditar
+- `printscreen-impacto`, para inserção de documentos reais com destaque
+- MCP `acervo`, na Fase 0, para ler o que o escritório já sustentou, e MCP `normas` pela `base-legislacao-fontes-primarias` quando for citar dispositivo
+- `reafirmacao-der`, `tutela-urgencia` (interna), conforme política
 
 A revisão final do conteúdo da petição é responsabilidade da skill `base-revisao-peticao-aprofundada`, acionada automaticamente após esta skill concluir a geração, na ordem única de execução dela. A `revisao-peticao` é apenas redirecionamento para ela desde a Onda 139.
-
 
 ## Extensão de referência declarada antes da redação (Onda 120, revista na Onda 181)
 
@@ -314,16 +310,4 @@ A referência por tipo de peça e a passada de enxugamento sem meta estão na Ca
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

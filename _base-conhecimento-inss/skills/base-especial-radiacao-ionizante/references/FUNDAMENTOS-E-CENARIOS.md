@@ -1,4 +1,4 @@
-# Radiação Ionizante — Fundamentos e Cenários
+# Radiação Ionizante. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -42,45 +42,45 @@ Metodologia.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Técnico raios X
+### Cenário A. Técnico raios X
 
 Especial.
 
-### Cenário B — Médico radiologista
+### Cenário B. Médico radiologista
 
 Especial.
 
-### Cenário C — Medicina nuclear
+### Cenário C. Medicina nuclear
 
 Especial.
 
-### Cenário D — Radioterapia
+### Cenário D. Radioterapia
 
 Especial.
 
-### Cenário E — Tomografia
+### Cenário E. Tomografia
 
 Especial.
 
-### Cenário F — Densitometria
+### Cenário F. Densitometria
 
 Análise específica.
 
-### Cenário G — Auxiliar de radiologia
+### Cenário G. Auxiliar de radiologia
 
 Especial.
 
 ## 6. Cenários limitados
 
-### Cenário H — Sem exposição habitual
+### Cenário H. Sem exposição habitual
 
 Não enquadra.
 
-### Cenário I — Profissional administrativo
+### Cenário I. Profissional administrativo
 
 Sem nocividade.
 
-### Cenário J — Sem comprovação
+### Cenário J. Sem comprovação
 
 Análise difícil.
 

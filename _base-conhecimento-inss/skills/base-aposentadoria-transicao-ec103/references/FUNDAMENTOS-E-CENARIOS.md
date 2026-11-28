@@ -1,4 +1,4 @@
-# Transição EC 103/2019 — Fundamentos e Cenários
+# Transição EC 103/2019. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -22,35 +22,35 @@ EC 103/2019, art. 20, §1º (auditoria 03/10/2026). Pedágio de 100% do professo
 
 ## 3. Cenários operacionais pró-segurado
 
-### Cenário 1 — Regra dos pontos (art. 15)
+### Cenário 1. Regra dos pontos (art. 15)
 
 Segurado homem com 35 anos de contribuição em 2024 e 61 anos de idade, totalizando 96 pontos. Em 2024 a pontuação exigida do homem é 101, e sobe 1 ponto por ano até 105 em 2028 (auditoria 03/10/2026). Contribuindo, ele soma 2 pontos por ano e alcança 105 em cerca de 4 anos e 6 meses; ou avaliar outra porta.
 
-### Cenário 2 — Idade progressiva (art. 16)
+### Cenário 2. Idade progressiva (art. 16)
 
 Segurada mulher com 30 anos de contribuição e 57 anos em 2024. Idade exigida para o ano é 58 anos e 6 meses, com mais 6 meses a cada ano (auditoria 03/10/2026). Aguardar de 2 anos e 6 meses a 3 anos ou avaliar pedágio de 50%, se elegível.
 
-### Cenário 3 — Pedágio de 50% (art. 17)
+### Cenário 3. Pedágio de 50% (art. 17)
 
 Segurada mulher que em 13 de novembro de 2019 tinha 28 anos e 6 meses de contribuição. Faltavam 1 ano e 6 meses para 30 anos. Pedágio de 50% equivale a 9 meses adicionais. Tempo exigido após a reforma é 2 anos e 3 meses. Acesso antecipado, mas deve observar idade mínima alternativa se exigida.
 
-### Cenário 4 — Pedágio de 100% (art. 20)
+### Cenário 4. Pedágio de 100% (art. 20)
 
 Segurado homem com 60 anos em 2024 e 35 anos de contribuição completados em 13 de novembro de 2019. Caso tenha faltado, ex., 1 ano, soma-se 2 anos adicionais. Mas com 60 anos e 35 anos já na reforma, aproveita idade e tempo mínimos já cumpridos. Vantagem na RMI integral (100% da média).
 
-### Cenário 5 — Comparativo professor
+### Cenário 5. Comparativo professor
 
 Professora com 25 anos de magistério e 54 anos em 2025. Pela idade progressiva do professor (art. 16, §2º), exige 51 anos mais progressão de 6 meses por ano a partir de 2020. Em 2025, exige 54 anos, e ela já cumpre o requisito (auditoria 03/10/2026).
 
-### Cenário 6 — Comparação simultânea
+### Cenário 6. Comparação simultânea
 
 Segurado homem com 36 anos de contribuição e 58 anos em 2026. Elegível pelos pontos (requer 103 pontos, tem 94) ainda não atingido. Elegível pela idade progressiva (requer 64 anos e 6 meses em 2026, não atingido) (auditoria 03/10/2026). Elegível pelo pedágio 50% se faltava menos de 2 anos em 13/11/2019. Avaliar caso a caso.
 
-### Cenário 7 — Conversão de tempo especial na transição
+### Cenário 7. Conversão de tempo especial na transição
 
 Segurado que em 13 de novembro de 2019 tinha 20 anos de atividade comum e 10 anos de atividade especial. Converte o tempo especial em comum pela regra do art. 25, §2º, da EC 103 (conversão limitada ao tempo já cumprido até a reforma). Agrega ao tempo comum para fins de transição.
 
-### Cenário 8 — Diferença de RMI entre transições
+### Cenário 8. Diferença de RMI entre transições
 
 Em mesmo acervo contributivo, a RMI do pedágio 100% (100% da média) pode superar a dos pontos ou idade progressiva (60% + 2% por ano excedente). Vantagem financeira precisa ser calculada em cada caso. Acionar `base-calculo-rmi-ec103`.
 

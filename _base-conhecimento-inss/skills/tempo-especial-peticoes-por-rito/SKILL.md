@@ -27,22 +27,22 @@ O erro mais grave que um advogado pode cometer ao peticionar tempo especial é t
 
 ## Princípios Fundamentais da Transposição
 
-### Princípio 1 – Conhecer o interlocutor
+### Princípio 1. Conhecer o interlocutor
 Antes de redigir qualquer argumento, o advogado deve saber QUEM vai ler a petição. O conselheiro do CRPS é servidor administrativo vinculado a pareceres e enunciados. O juiz do JEF é magistrado federal com cultura de informalidade processual e contato direto com as partes. O desembargador do TRF3 é magistrado de segunda instância que analisa o processo com base no acervo probatório já produzido.
 
-### Princípio 2 – Adaptar a linguagem normativa
+### Princípio 2. Adaptar a linguagem normativa
 O CRPS decide com base no Decreto 3.048/99, na IN 128/2022, nos enunciados do CRPS e nos pareceres vinculantes. A fundamentação primária deve ser administrativa. A jurisprudência judicial é argumento subsidiário.
 
 O JEF e o rito ordinário decidem com base na CF, na Lei 8.213/91, no Decreto 3.048/99 e na jurisprudência do STF, STJ, TNU e TRF3. A IN 128/2022 é referência interpretativa, mas não vincula o juízo. Enunciados do CRPS não vinculam o Judiciário.
 
-### Princípio 3 – Adequar a estratégia probatória
+### Princípio 3. Adequar a estratégia probatória
 No CRPS, a prova é essencialmente documental. Não há perícia. O PPP e o LTCAT são praticamente as únicas provas técnicas disponíveis.
 
 No JEF, a perícia indireta é corriqueira, a prova testemunhal é colhida em audiência e o juiz tem amplo poder instrutório. O PPP é ponto de partida, não ponto final.
 
 No rito ordinário, a instrução é mais formal, com prazo para perícia, laudos escritos, quesitos das partes e possibilidade de assistente técnico.
 
-### Princípio 4 – Antecipar a contestação do ente
+### Princípio 4. Antecipar a contestação do ente
 O INSS apresenta contestações padronizadas, mas com ênfases diferentes conforme o rito. No CRPS, a contraparte é a própria estrutura administrativa do INSS. No JEF e no rito ordinário, a AGU contesta com teses específicas. Cada arquivo de referência mapeia as contestações típicas por agente nocivo e por rito.
 
 ## Regras Críticas
@@ -96,10 +96,10 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 
 ## Referências Obrigatórias
 
-- `references/CRPS-TEMPO-ESPECIAL.md` – Posicionamento e estratégia perante o CRPS
-- `references/JEF-TEMPO-ESPECIAL.md` – Posicionamento e estratégia perante o JEF e Turma Recursal
-- `references/RITO-COMUM-TRF3-TEMPO-ESPECIAL.md` – Posicionamento e estratégia perante Varas Federais e TRF3
-- `references/EPI-ESTRATEGIA-POR-ORGAO.md` – Tratamento da questão do EPI conforme o órgão julgador
+- `references/CRPS-TEMPO-ESPECIAL.md`. Posicionamento e estratégia perante o CRPS
+- `references/JEF-TEMPO-ESPECIAL.md`. Posicionamento e estratégia perante o JEF e Turma Recursal
+- `references/RITO-COMUM-TRF3-TEMPO-ESPECIAL.md`. Posicionamento e estratégia perante Varas Federais e TRF3
+- `references/EPI-ESTRATEGIA-POR-ORGAO.md`. Tratamento da questão do EPI conforme o órgão julgador
 - skill `base-especial-ruido`, com as teses de defesa do segurado em aposentadoria especial por ruído (auditoria 03/10/2026, a remissão anterior apontava arquivo inexistente)
 
 ## Extensão
@@ -112,19 +112,7 @@ Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Juízo de Catanduva (Onda 179)
 

@@ -8,7 +8,7 @@ Nem todo documento tem o mesmo peso probatório na fixação da DID. A estratég
 
 Documento contemporâneo à época dos fatos tem peso superior a documento retrospectivo. Documento assinado por profissional habilitado tem peso superior a documento unilateral. Documento que cruza fonte com finalidade declarada tem peso superior a documento isolado. Documento que descreve achado clínico objetivo tem peso superior a documento que apenas relata queixa subjetiva.
 
-## Camada 1 — Peso Probatório Máximo
+## Camada 1. Peso Probatório Máximo
 
 ### 1.1. Prontuário Médico Retroativo Autenticado
 
@@ -38,7 +38,7 @@ Comunicação de Acidente de Trabalho (CAT), mesmo sem afastamento. Registros de
 
 Fundamento. Documentos produzidos pelo próprio INSS são prova forte contra o próprio INSS no sentido de reconhecimento de patologia.
 
-## Camada 2 — Peso Probatório Alto
+## Camada 2. Peso Probatório Alto
 
 ### 2.1. Relatório Médico Circunstanciado Atual
 
@@ -64,7 +64,7 @@ Impacto estratégico. Permite argumentar que a DID coincide com o início da exp
 
 Base normativa correlata. NTEP (Nexo Técnico Epidemiológico Previdenciário), art. 21-A da Lei 8.213/91, Decreto 6.042/2007.
 
-## Camada 3 — Peso Probatório Médio
+## Camada 3. Peso Probatório Médio
 
 ### 3.1. Receitas Médicas Antigas
 
@@ -84,7 +84,7 @@ Notas fiscais de compras em lojas ortopédicas, farmácias ou casas especializad
 
 Fundamento. Documento fiscal com data e descrição do produto. Prova indireta de limitação.
 
-## Camada 4 — Peso Probatório Complementar
+## Camada 4. Peso Probatório Complementar
 
 ### 4.1. Autodeclaração Assistida da Segurada
 
@@ -108,19 +108,19 @@ Vedação. Art. 6º, §2º, LC 142/2013 impede prova exclusivamente testemunhal 
 
 A sequência ideal de execução respeita critério de custo-benefício e tempo de retorno.
 
-Semana 1 — Peças instrumentais
+Semana 1. Peças instrumentais
 Advogado redige e entrega ao cliente os requerimentos de prontuário para UBS, convênio, hospitais, farmácias, empregadores. Roteiro de orientação ao médico assistente entregue com agendamento de consulta. Autodeclaração iniciada.
 
-Semana 2 a 4 — Execução pelo cliente
+Semana 2 a 4. Execução pelo cliente
 Cliente protocola requerimentos, consulta médico assistente, busca exames antigos em casa, junto a familiares, em arquivos pessoais.
 
-Semana 5 a 8 — Coleta dos retornos
+Semana 5 a 8. Coleta dos retornos
 Prazo legal típico para resposta dos requerimentos. Busca ativa em caso de silêncio. Reiteração com ameaça de habeas data e representação no PROCON se houver recusa.
 
-Semana 8 a 12 — Produção de peças de alto impacto
+Semana 8 a 12. Produção de peças de alto impacto
 Relatório médico circunstanciado pronto. Análise do que efetivamente foi recuperado da documentação existente. Decisão sobre laudo pericial extrajudicial, que deve ser o último passo porque depende do conjunto já formado.
 
-Semana 12+ — Requerimento administrativo ou ação judicial
+Semana 12+. Requerimento administrativo ou ação judicial
 Instrução pronta para o INSS ou para o Judiciário.
 
 ## Jurisprudência Relevante

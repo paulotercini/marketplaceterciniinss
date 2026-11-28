@@ -1,4 +1,4 @@
-# RPPS na ótica do RGPS — Jurisprudência e Refutação
+# RPPS na ótica do RGPS. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -32,77 +32,65 @@ Procedimento. Fonte oficial em https://www.gov.br/inss
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Negativa de CTC
+### Argumento 1. Negativa de CTC
 
 Argumento adversário. CTC é discricionária.
 
 Refutação. Art. 96 Lei 8.213 obriga a emissão.
 
-### Argumento 2 — Tempo concomitante
+### Argumento 2. Tempo concomitante
 
 Argumento adversário. Conta apenas um.
 
 Refutação. Análise individualizada do tempo efetivo.
 
-### Argumento 3 — Recusa de averbação
+### Argumento 3. Recusa de averbação
 
 Argumento adversário. RGPS não aceita.
 
 Refutação. Art. 201 §9º CF garante.
 
-### Argumento 4 — Fator previdenciário
+### Argumento 4. Fator previdenciário
 
 Argumento adversário. Tempo RPPS sofre fator.
 
 Refutação. Cálculo respeita regime.
 
-### Argumento 5 — Desaverbação negada
+### Argumento 5. Desaverbação negada
 
 Argumento adversário. Tempo é definitivo.
 
 Refutação. Direito potestativo, salvo benefício concedido.
 
-### Argumento 6 — RPPS extinto
+### Argumento 6. RPPS extinto
 
 Argumento adversário. Tempo perdido.
 
 Refutação. Tempo retorna ao RGPS.
 
-### Argumento 7 — Servidor demitido
+### Argumento 7. Servidor demitido
 
 Argumento adversário. Tempo perdido.
 
 Refutação. Direito ao tempo de contribuição.
 
-### Argumento 8 — Sem CTC
+### Argumento 8. Sem CTC
 
 Argumento adversário. Sem documento, sem averbação.
 
 Refutação. MS contra ente público.
 
-### Argumento 9 — Compensação financeira
+### Argumento 9. Compensação financeira
 
 Argumento adversário. Compensação afeta segurado.
 
 Refutação. Compensação é entre entes (Lei 9.796).
 
-### Argumento 10 — Carência específica
+### Argumento 10. Carência específica
 
 Argumento adversário. Tempo RPPS sem carência.
 
 Refutação. Tempo é cômputo unificado.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira reconhece o direito à contagem.
-
-Frederico Amado defende a unidade contributiva.
-
-Hugo Goes admite a desaverbação.
-
-Marco Aurélio Serau Junior critica entraves.
-
-IBDP sustenta interpretação ampla.
 
 ## 4. Estratégia integrada
 

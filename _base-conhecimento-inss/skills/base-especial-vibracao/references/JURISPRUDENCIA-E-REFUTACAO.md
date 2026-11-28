@@ -1,4 +1,4 @@
-# Vibração — Jurisprudência Verificada e Refutação
+# Vibração. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -42,49 +42,49 @@ Fonte oficial em https://www.trf4.jus.br
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Ausência de limite no Decreto 2.172/97 e no Decreto 3.048/99
+### Argumento 1. Ausência de limite no Decreto 2.172/97 e no Decreto 3.048/99
 
 Argumento adversário. A vibração só seria enquadrável com limite expresso em decreto previdenciário.
 
 Refutação. A Lei 8.213/91, art. 58 §3º, remete à NR-15. A NR-15 remete à NHO-09 e à NHO-10. O Parecer 00212/2024 CONJUR-MTP consolida esse entendimento. Não existe lacuna real, apenas integração normativa.
 
-### Argumento 2 — Ausência de medição no PPP
+### Argumento 2. Ausência de medição no PPP
 
 Argumento adversário. O PPP não traz aren, VDV ou A(8), logo faltaria prova.
 
 Refutação. Acionar `retificacao-ppp` para obrigar a empresa a complementar. Aplicar Tema 213 TNU para inverter o ônus probatório. Em juízo, pedir perícia por similaridade ou exibição compulsória do PGR e do laudo ambiental.
 
-### Argumento 3 — Exposição intermitente
+### Argumento 3. Exposição intermitente
 
 Argumento adversário. O motorista ou operador estaria vibrando apenas parcialmente na jornada.
 
 Refutação. Tema 211 TNU é expresso. A habitualidade não exige continuidade ininterrupta. A exposição inerente à função basta.
 
-### Argumento 4 — EPI eficaz declarado no PPP
+### Argumento 4. EPI eficaz declarado no PPP
 
 Argumento adversário. Luvas antivibração ou assento com amortecimento neutralizariam a nocividade.
 
 Refutação. A eficácia real em campo é contestada. Tema 1090 STJ autoriza afastar a neutralização. Exigir documentação de manutenção, troca e monitoramento. Combinar com `base-especial-epi`.
 
-### Argumento 5 — Superação de tese anterior desfavorável
+### Argumento 5. Superação de tese anterior desfavorável
 
 Argumento adversário. Jurisprudência anterior exigia limite previdenciário expresso.
 
 Refutação. Houve superação pelo Parecer 00212/2024 CONJUR-MTP e pela jurisprudência posterior. Jurisprudência superada não é fundamento legítimo. Acionar `precedentes-previdenciarios` para atualização.
 
-### Argumento 6 — Vibração abaixo do nível de ação
+### Argumento 6. Vibração abaixo do nível de ação
 
 Argumento adversário. A medição do PPP estaria abaixo do limite.
 
 Refutação. Averiguar se a medição foi feita em condição representativa. Em muitos casos, a medição isolada não reflete a jornada real. Pedir perícia judicial com medição em condições reais e com dosímetro homologado.
 
-### Argumento 7 — Ausência de LTCAT
+### Argumento 7. Ausência de LTCAT
 
 Argumento adversário. Sem o LTCAT, não há prova técnica.
 
 Refutação. O PPP goza de presunção de veracidade quando emitido por profissional habilitado. O LTCAT é documento interno da empresa, cabe à autarquia ou à empresa juntá-lo. A Súmula 68 TNU admite laudo extemporâneo.
 
-### Argumento 8 — Impossibilidade de aposentadoria especial para motorista
+### Argumento 8. Impossibilidade de aposentadoria especial para motorista
 
 Argumento adversário. A profissão de motorista não estaria no rol.
 

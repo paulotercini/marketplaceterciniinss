@@ -1,4 +1,4 @@
-# B32 — Jurisprudência Verificada e Refutação
+# B32. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -60,49 +60,49 @@ Aplicação. Regra de cálculo da conversão do auxílio-doença em B32 sem reto
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Ausência de incapacidade total e permanente
+### Argumento 1. Ausência de incapacidade total e permanente
 
 Argumento adversário. A perícia entende que ainda há capacidade laboral ou que a incapacidade é temporária.
 
 Refutação. Documentação médica robusta com laudo especializado, histórico clínico, exames e prognóstico desfavorável afasta conclusão superficial. Em juízo, a perícia judicial é valorada com as demais provas (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirados o Tema 246/TNU e a Súmula 77/TNU, que não tratam da prevalência da perícia judicial).
 
-### Argumento 2 — Possibilidade de reabilitação
+### Argumento 2. Possibilidade de reabilitação
 
 Argumento adversário. O segurado pode ser reabilitado para outra atividade e não faz jus ao B32.
 
 Refutação. O art. 42 exige que a insuscetibilidade seja para atividade que garanta a subsistência, não para qualquer atividade. Avaliação realista do mercado de trabalho, idade, grau de instrução e contexto social. Parecer de inviabilidade do próprio programa de reabilitação é prova definitiva.
 
-### Argumento 3 — Doença preexistente
+### Argumento 3. Doença preexistente
 
 Argumento adversário. A doença é anterior à filiação, incabível o B32.
 
 Refutação. Art. 42, §2º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B32 é devido. Havendo contribuição do trabalho para o agravamento, cabe conversão em acidentário pela concausa do art. 21, I (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído).
 
-### Argumento 4 — Ausência de acidentariedade
+### Argumento 4. Ausência de acidentariedade
 
 Argumento adversário. A doença não tem nexo com o trabalho, RMI de 60% + 2%.
 
 Refutação. NTEP, nexo técnico individual ou laudo ocupacional podem estabelecer a acidentariedade, convertendo B32 em B92 com RMI de 100%. Acionar `ntep-nexo-acidentario`.
 
-### Argumento 5 — Cessação por reavaliação
+### Argumento 5. Cessação por reavaliação
 
 Argumento adversário. A perícia de reavaliação entende que houve recuperação da capacidade.
 
 Refutação. Art. 47 Lei 8.213/91 exige gradualidade no caso de recuperação parcial. Cessação sem exame específico e sem contraditório é impugnável. Restabelecimento via ação judicial ou MS, sem novo requerimento administrativo (exceção do Tema 350/STF) (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
-### Argumento 6 — Negativa do acréscimo de 25%
+### Argumento 6. Negativa do acréscimo de 25%
 
 Argumento adversário. O INSS não reconhece a necessidade de assistência permanente.
 
 Refutação. Rol do Anexo I do Decreto 3.048/99 não é taxativo. Prova médica e social da assistência permanente é suficiente. O acréscimo é intrínseco ao B32 quando comprovada a grande invalidez.
 
-### Argumento 7 — Perda da qualidade de segurado
+### Argumento 7. Perda da qualidade de segurado
 
 Argumento adversário. O segurado perdeu a qualidade antes da DII.
 
 Refutação. Acionar `periodo-graca-qualidade-segurado`. Em doença progressiva, DII pode retroagir a momento em que havia qualidade. Prova médica contemporânea é fundamental.
 
-### Argumento 8 — Trava da análise documental
+### Argumento 8. Trava da análise documental
 
 Argumento adversário. O parecer de verossimilhança da análise documental afasta o B32.
 

@@ -3,7 +3,7 @@ name: bpc-renda-grupo-familiar
 description: "Dona do GRUPO FAMILIAR e das exclusões de renda no BPC/LOAS, com irrepetibilidade e Decreto 12.534/2025 (Bolsa Família na renda). Use SEMPRE que mencionar grupo familiar BPC, quem entra na renda, rol taxativo art. 20 §1º LOAS, irmão casado, cunhado sobrinho, avó com guarda, exclusão de renda, benefício excluído, renda conjuntural temporária, trabalho informal, auxílio-inclusão, devolução valores, irrepetibilidade Enunciado 17 CRPS, herdeiros parcelas vencidas, deduções despesas saúde Anexo I Portaria 34, Decreto 12.534, Bolsa Família renda BPC, cessação por Bolsa Família, revogação art. 4º §2º Decreto 6.214, retrocesso social, MS cessação BPC, Tema 73 312 640 369 TNU STF STJ. Para o critério JUDICIAL de miserabilidade (1/4 do salário mínimo, Tema 27 STF, RE 567985, flexibilização), ver base-bpc-renda-per-capita-miserabilidade. Acionar com analise-bpc-loas e peticao-previdenciaria. NÃO use para IFBrM isoladamente nem aposentadoria PCD."
 ---
 
-# BPC/LOAS — Grupo Familiar, Renda Per Capita, Exclusões e Irrepetibilidade
+# BPC/LOAS. Grupo Familiar, Renda Per Capita, Exclusões e Irrepetibilidade
 
 ## Visão Geral
 
@@ -19,7 +19,7 @@ O rol do §1º do art. 20 da LOAS é taxativo. Parentes fora do rol não integra
 
 ---
 
-## 1. COMPOSIÇÃO DO GRUPO FAMILIAR — ROL TAXATIVO
+## 1. COMPOSIÇÃO DO GRUPO FAMILIAR. ROL TAXATIVO
 
 ### Base Legal
 Art. 20, §1º da Lei 8.742/93. Art. 7º da Portaria Conjunta MDS/INSS nº 34/2025. Art. 4º, V do Decreto 6.214/2007.
@@ -32,21 +32,21 @@ Avós. Netos. Tios. Sobrinhos. Primos. Genros e noras. Cunhados. Irmãos casados
 
 ### Jurisprudência Vinculante sobre Taxatividade
 
-**Tema 73/TNU** — O grupo familiar deve ser definido a partir da interpretação restrita do §1º do art. 20 da LOAS. Parentes não listados ficam excluídos do cômputo.
+**Tema 73/TNU.** O grupo familiar deve ser definido a partir da interpretação restrita do §1º do art. 20 da LOAS. Parentes não listados ficam excluídos do cômputo.
 
-**PUIL 0016896-32.2022.4.05.8000/AL (TNU)** — Tese de julgamento: "O conceito de grupo familiar para fins de concessão de benefício assistencial deve ser interpretado de forma restritiva, excluindo do cálculo da renda per capita aqueles que não residem sob o mesmo teto." O caso envolvia irmã, sem indicação de ser solteira, e sobrinhos, e o pedido foi provido para a Turma Recursal adequar o julgado, nos termos da Questão de Ordem 20 (Rel. Ivana Mafra Marinho, D.E. 24/02/2026) (auditoria 03/10/2026).
+**PUIL 0016896-32.2022.4.05.8000/AL (TNU).** Tese de julgamento: "O conceito de grupo familiar para fins de concessão de benefício assistencial deve ser interpretado de forma restritiva, excluindo do cálculo da renda per capita aqueles que não residem sob o mesmo teto." O caso envolvia irmã, sem indicação de ser solteira, e sobrinhos, e o pedido foi provido para a Turma Recursal adequar o julgado, nos termos da Questão de Ordem 20 (Rel. Ivana Mafra Marinho, D.E. 24/02/2026) (auditoria 03/10/2026).
 
-**PEDILEF 5001885-13.2023.4.04.7209/SC (TNU, dez/2025)** — Proveu o pedido contra acórdão de Turma Recursal que incluiu irmã casada (curadora) e seu núcleo familiar (cunhado e sobrinhos) na renda per capita. A TNU reafirmou o rol taxativo do art. 20, §1º, e devolveu os autos à Turma Recursal para adequação, nos termos da Questão de Ordem 20, sem determinar ela mesma a exclusão integral. Renda total havia sido calculada em R$ 5.750,00 para per capita de R$ 1.150,00. Com a exclusão dos membros fora do rol, o beneficiário ficaria isolado para fins de cálculo (auditoria 03/10/2026).
+**PEDILEF 5001885-13.2023.4.04.7209/SC (TNU, dez/2025).** Proveu o pedido contra acórdão de Turma Recursal que incluiu irmã casada (curadora) e seu núcleo familiar (cunhado e sobrinhos) na renda per capita. A TNU reafirmou o rol taxativo do art. 20, §1º, e devolveu os autos à Turma Recursal para adequação, nos termos da Questão de Ordem 20, sem determinar ela mesma a exclusão integral. Renda total havia sido calculada em R$ 5.750,00 para per capita de R$ 1.150,00. Com a exclusão dos membros fora do rol, o beneficiário ficaria isolado para fins de cálculo (auditoria 03/10/2026).
 
-**Portaria Conjunta nº 3/2018, art. 8º, §1º (mantido pela Portaria 34/2025)** — Não compõem o grupo familiar o irmão, filho ou enteado divorciado, viúvo ou separado de fato, ainda que vivam sob o mesmo teto do requerente.
+**Portaria Conjunta nº 3/2018, art. 8º, §1º (mantido pela Portaria 34/2025).** Não compõem o grupo familiar o irmão, filho ou enteado divorciado, viúvo ou separado de fato, ainda que vivam sob o mesmo teto do requerente.
 
 ### Exceções e Situações Especiais
 
-**Avó com guarda judicial** — A avó não integra naturalmente o rol do §1º. Contudo, o menor sob guarda judicial é equiparado a "menor tutelado" para fins do grupo familiar. A Lei 15.108/2025 reforçou essa equiparação ao alterar o §2º do art. 16 da Lei 8.213/91.
+**Avó com guarda judicial.** A avó não integra naturalmente o rol do §1º. Contudo, o menor sob guarda judicial é equiparado a "menor tutelado" para fins do grupo familiar. A Lei 15.108/2025 reforçou essa equiparação ao alterar o §2º do art. 16 da Lei 8.213/91.
 
-**Avó sem guarda — administrador temporário** — Na ausência de tutela, curatela ou guarda, o art. 527, §§6º-8º da IN PRES/INSS 128/2022 permite que a avó (ou outro herdeiro necessário) requeira o BPC como administradora temporária por até 6 meses, firmando compromisso do Anexo XXIX. Após esse prazo, deve comprovar evolução do processo de representação civil.
+**Avó sem guarda, administrador temporário.** Na ausência de tutela, curatela ou guarda, o art. 527, §§6º-8º da IN PRES/INSS 128/2022 permite que a avó (ou outro herdeiro necessário) requeira o BPC como administradora temporária por até 6 meses, firmando compromisso do Anexo XXIX. Após esse prazo, deve comprovar evolução do processo de representação civil.
 
-**Subsidirariedade estatal — ALERTA DE DIVERGÊNCIA**
+**Subsidirariedade estatal. ALERTA DE DIVERGÊNCIA**
 PEDILEF 0517397-48.2012.4.05.8300 (TNU, 2017) firmou que o BPC pode ser indeferido se devedores legais de alimentos (art. 1.697 CC) puderem prestá-los sem prejuízo próprio. O PEDILEF 0068530-58.2014.4.03.6301 não foi conhecido pela TNU, nos termos da Questão de Ordem 13 (D.E. 17/03/2020) (auditoria 03/10/2026).
 PORÉM, em 2024 (1005191-76.2021.4.01.3502/GO), a TNU distinguiu que esse entendimento só vale para devedores no rol do Código Civil. Auxílio de cunhado, amigos, vizinhos ou parentes fora do rol alimentar é mera liberalidade e não afasta o BPC.
 Atenção redobrada quando o caso envolver essa polêmica. A defesa deve sempre argumentar que a ajuda é liberalidade, não obrigação alimentar.
@@ -63,15 +63,15 @@ Art. 20, §3º da LOAS. Renda per capita igual ou inferior a ¼ do salário mín
 
 ### Flexibilização do Critério (Temas Vinculantes)
 
-**Tema 27/STF (RE 567.985/MT)** — O critério de ¼ SM não é absoluto. Declarada a inconstitucionalidade parcial, sem pronúncia de nulidade, do §3º do art. 20 da LOAS. O juiz pode analisar a realidade fática e admitir renda de até ½ SM per capita como parâmetro alternativo.
+**Tema 27/STF (RE 567.985/MT).** O critério de ¼ SM não é absoluto. Declarada a inconstitucionalidade parcial, sem pronúncia de nulidade, do §3º do art. 20 da LOAS. O juiz pode analisar a realidade fática e admitir renda de até ½ SM per capita como parâmetro alternativo.
 
-**Tema 185/STJ (REsp 1.112.557/MG)** — Renda per capita inferior a ¼ SM presume absolutamente a miserabilidade. Acima desse patamar, admitem-se outros meios de prova da vulnerabilidade.
+**Tema 185/STJ (REsp 1.112.557/MG).** Renda per capita inferior a ¼ SM presume absolutamente a miserabilidade. Acima desse patamar, admitem-se outros meios de prova da vulnerabilidade.
 
-**Tema 312/STF (RE 580.963/PR)** — Inconstitucionalidade por omissão parcial por não excluir benefícios assistenciais e previdenciários de valor mínimo de idosos e PCD da renda per capita.
+**Tema 312/STF (RE 580.963/PR).** Inconstitucionalidade por omissão parcial por não excluir benefícios assistenciais e previdenciários de valor mínimo de idosos e PCD da renda per capita.
 
-**Tema 640/STJ (REsp 1.355.052/SP)** — Benefício previdenciário de até 1 SM recebido por idoso deve ser excluído da renda, por analogia ao art. 34 do Estatuto do Idoso.
+**Tema 640/STJ (REsp 1.355.052/SP).** Benefício previdenciário de até 1 SM recebido por idoso deve ser excluído da renda, por analogia ao art. 34 do Estatuto do Idoso.
 
-**Tema 369/TNU** — Benefício de idoso ou de pessoa com deficiência superior a 1 SM não entra integralmente na renda. Exclui-se o valor de 1 SM, e só o excedente entra na divisão per capita, nos termos do parágrafo único do art. 34 do Estatuto do Idoso e do art. 20, §14, da LOAS (auditoria 03/10/2026).
+**Tema 369/TNU.** Benefício de idoso ou de pessoa com deficiência superior a 1 SM não entra integralmente na renda. Exclui-se o valor de 1 SM, e só o excedente entra na divisão per capita, nos termos do parágrafo único do art. 34 do Estatuto do Idoso e do art. 20, §14, da LOAS (auditoria 03/10/2026).
 
 ### Exclusões Legais de Renda (art. 8º, I, Portaria 34/2025)
 BPC de outro membro idoso ou PCD do grupo familiar. Benefício previdenciário de até 1 SM concedido a idoso 65+ ou PCD. Auxílio-inclusão e remuneração do beneficiário do auxílio-inclusão. Bolsas de estágio e contrato de aprendizagem. Auxílio financeiro por rompimento de barragem.
@@ -80,22 +80,22 @@ BPC de outro membro idoso ou PCD do grupo familiar. Benefício previdenciário d
 Gastos com saúde não cobertos pelo SUS podem ser deduzidos da renda bruta, uma vez por categoria, pelo valor médio do Anexo I da Portaria Conjunta MDS/INSS 34/2025 (art. 8º, §6º).
 
 **Valores dedutíveis por categoria, na redação da Portaria Conjunta MDS/INSS 45/2026 (DOU de 30/09/2026, em vigor na publicação)** [CONFERIDO, DOU, 04/10/2026]
-Medicamentos não disponíveis no SUS — R$ 56,00
-Consultas e tratamentos médicos não disponíveis no SUS — R$ 110,00
-Fraldas não disponíveis no SUS — R$ 120,00
-Alimentação especial não disponível no SUS — R$ 147,00
-Centro-dia não disponível no SUAS — R$ 40,00
+Medicamentos não disponíveis no SUS. R$ 56,00
+Consultas e tratamentos médicos não disponíveis no SUS. R$ 110,00
+Fraldas não disponíveis no SUS. R$ 120,00
+Alimentação especial não disponível no SUS. R$ 147,00
+Centro-dia não disponível no SUAS. R$ 40,00
 
 Até 29/09/2026 valiam os valores da redação original do Anexo I (DOU de 10/10/2025), R$ 45,00, R$ 90,00, R$ 99,00, R$ 121,00 e R$ 32,00, na mesma ordem. A Portaria 45/2026 não traz regra de transição. Para requerimento com DER anterior ainda em análise ou em revisão, sustentar a aplicação dos valores novos, por expressarem a média atualizada do gasto que a norma manda deduzir, e tratar o ponto como tese.
 
 Se os gastos reais superarem os valores médios, o interessado pode comprová-los com recibos dos 12 meses anteriores ao requerimento (§7º).
 
-**ALERTA ESTRATÉGICO** — Esses valores são irrisórios. R$ 56,00 para medicamentos e R$ 120,00 para fraldas não refletem a realidade de famílias com PCD grave. Em juízo, requerer a dedução pelos valores reais comprovados, não pelos valores médios. Fundamentar no art. 20, §11, e no art. 20-B, III e §4º, da LOAS, que admite comprovar gastos efetivos acima dos valores médios (auditoria 03/10/2026, retirado o Tema 38/TNU, que trata de incapacidade preexistente).
+**ALERTA ESTRATÉGICO.** Esses valores são irrisórios. R$ 56,00 para medicamentos e R$ 120,00 para fraldas não refletem a realidade de famílias com PCD grave. Em juízo, requerer a dedução pelos valores reais comprovados, não pelos valores médios. Fundamentar no art. 20, §11, e no art. 20-B, III e §4º, da LOAS, que admite comprovar gastos efetivos acima dos valores médios (auditoria 03/10/2026, retirado o Tema 38/TNU, que trata de incapacidade preexistente).
 
 ### Renda na Data do Requerimento (art. 11, §2º, Portaria 34/2025)
 Para fins de concessão, o INSS deve considerar unicamente a renda identificada na data do requerimento (DER). Afasta a prática abusiva de considerar rendas de períodos anteriores.
 
-### Regra de Manutenção — Média dos 12 Meses (art. 29, Portaria 34/2025)
+### Regra de Manutenção. Média dos 12 Meses (art. 29, Portaria 34/2025)
 Na revisão periódica, o BPC é mantido se a renda per capita do último mês OU a média dos últimos 12 meses for igual ou inferior a ¼ SM. Seleciona-se o menor valor entre ambos. Essa regra protege contra variações temporárias de renda.
 
 ---
@@ -118,7 +118,7 @@ A TRF4 firmou que a atividade laborativa temporária não enseja devolução de 
 
 ---
 
-## 4. IRREPETIBILIDADE — ENUNCIADO 17 DO CRPS
+## 4. IRREPETIBILIDADE. ENUNCIADO 17 DO CRPS
 
 ### Regra
 O Enunciado 17, inciso II, do CRPS (Resolução 29/2023, DOU 27/07/2023) estabelece que os pagamentos indevidos decorrentes do BPC/LOAS somente são repetíveis quando comprovada a má-fé do beneficiário, nos termos do art. 49 do Decreto 6.214/2007.
@@ -172,7 +172,7 @@ BPC, aposentadoria, pensão por morte, seguro-desemprego.
 
 ---
 
-## 7. DECRETO 12.534/2025 — BOLSA FAMÍLIA NA RENDA DO BPC
+## 7. DECRETO 12.534/2025. BOLSA FAMÍLIA NA RENDA DO BPC
 
 ### O Que Mudou
 
@@ -182,22 +182,22 @@ O Decreto 12.534, de 25/06/2025, revogou os incisos I e II do §2º do art. 4º 
 
 O Decreto é inconstitucional por excesso de poder regulamentar e violação ao mínimo existencial, dignidade humana e vedação ao retrocesso social. O art. 20, §4º da LOAS autoriza expressamente a acumulação do BPC com programas de transferência de renda. Decreto não pode esvaziar direito assegurado por lei.
 
-### Fundamentos para Impugnação — Síntese
+### Fundamentos para Impugnação. Síntese
 
-1. Excesso de poder regulamentar — art. 84, IV da CF; art. 20, §4º da LOAS
-2. Vedação ao retrocesso social — arts. 1º, III, e 6º da CF
+1. Excesso de poder regulamentar, art. 84, IV da CF; art. 20, §4º da LOAS
+2. Vedação ao retrocesso social, arts. 1º, III, e 6º da CF
 3. Conflito com Temas 312/STF (exclusão de benefícios de valor mínimo), 27/STF (¼ SM não absoluto), 640/STJ (exclusão de previdenciário mínimo de idoso)
 4. Conflito com ADI 6096/STF (proteção contra atos negativos)
 
 ### Precedentes Favoráveis
 
-JEF Registro/SP (TRF3), Juiz Maycon Michelon Zanin, 28/08/2025 — declarou incidentalmente a inconstitucionalidade. TRF5, Ap. Cív. 0800250-80.2024.4.05.8504 — manteve BPC afastando a DCB.
+JEF Registro/SP (TRF3), Juiz Maycon Michelon Zanin, 28/08/2025, declarou incidentalmente a inconstitucionalidade. TRF5, Ap. Cív. 0800250-80.2024.4.05.8504, manteve BPC afastando a DCB.
 
 ### Irrepetibilidade (Enunciado 17/CRPS)
 
 Cessação por mudança de critério regulamentar NÃO configura má-fé. Valores recebidos de boa-fé são irrepetíveis.
 
-### ALERTA — Vigência
+### ALERTA. Vigência
 
 Em março de 2026, o Decreto permanece vigente. Não há ADI formal. Contestação exclusivamente pela via difusa ou MS.
 
@@ -207,29 +207,17 @@ Consulte `references/DECRETO-12534-BOLSA-FAMILIA.md` para fundamentação comple
 
 ## Cruzamento com Outras Skills
 
-- `analise-bpc-loas` — Análise do IFBrM e avaliação biopsicossocial
-- `peticao-previdenciaria` — Geração de petição
-- `precedentes-previdenciarios` — Fundamentação jurisprudencial
-- `documentos-comprobatorios-in128` — Documentação exigível
-- `ms-competencia-autoridade-coatora` — Quando a via eleita for mandado de segurança
-- `triagem-caso-novo` — Roteamento inicial do caso
+- `analise-bpc-loas`. Análise do IFBrM e avaliação biopsicossocial
+- `peticao-previdenciaria`. Geração de petição
+- `precedentes-previdenciarios`. Fundamentação jurisprudencial
+- `documentos-comprobatorios-in128`. Documentação exigível
+- `ms-competencia-autoridade-coatora`. Quando a via eleita for mandado de segurança
+- `triagem-caso-novo`. Roteamento inicial do caso
 
 ## Referências
 
-- `references/DECRETO-12534-BOLSA-FAMILIA.md` — Fundamentação completa de impugnação do Decreto 12.534/2025, estratégia por rito e precedentes
+- `references/DECRETO-12534-BOLSA-FAMILIA.md`. Fundamentação completa de impugnação do Decreto 12.534/2025, estratégia por rito e precedentes
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

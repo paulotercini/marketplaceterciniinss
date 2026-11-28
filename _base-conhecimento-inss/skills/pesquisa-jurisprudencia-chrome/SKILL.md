@@ -109,7 +109,7 @@ Legislação em texto compilado sai do Planalto. Norma infralegal do INSS sai do
 
 [CONFERIDO] só depois de abrir a fonte oficial e ler a ementa e o dispositivo. Registrar data da conferência.
 
-[NÃO CONFIRMADO] para tudo que veio de busca indireta, de portal jurídico, de resumo ou de memória. Item nesse estado não entra no corpo da peça, fica na quarentena "A CONFERIR — NÃO USAR" do Modelo Ouro.
+[NÃO CONFIRMADO] para tudo que veio de busca indireta, de portal jurídico, de resumo ou de memória. Item nesse estado não entra no corpo da peça, fica na quarentena "A CONFERIR. NÃO USAR" do Modelo Ouro.
 
 Precedente cancelado, suspenso, superado ou sem tese firmada não se cita como vigente, e a situação vai anotada mesmo quando o julgado for citado por contexto histórico.
 

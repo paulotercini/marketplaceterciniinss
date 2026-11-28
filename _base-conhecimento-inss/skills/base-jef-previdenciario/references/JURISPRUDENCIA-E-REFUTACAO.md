@@ -1,4 +1,4 @@
-# JEF Previdenciário — Jurisprudência e Refutação
+# JEF Previdenciário. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -38,79 +38,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Causa não se enquadra no JEF
+### Argumento 1. Causa não se enquadra no JEF
 
 Argumento adversário. Excede alçada.
 
 Refutação. Renúncia ao excedente. Tema 1030 STJ.
 
-### Argumento 2 — Perícia complexa
+### Argumento 2. Perícia complexa
 
 Argumento adversário. JEF não comporta.
 
 Refutação. Prova técnica simplificada, art. 12 Lei 10.259, e Enunciado 225 do XVIII FONAJEF [NÃO CONFIRMADO]. O Enunciado 91 FONAJEF é tese adversa, pois afasta do JEF a perícia complexa ou onerosa que não se enquadre no conceito de exame técnico; o caminho do segurado é demonstrar que a prova pedida é exame técnico (auditoria 03/10/2026).
 
-### Argumento 3 — Dispensa de reexame indevida
+### Argumento 3. Dispensa de reexame indevida
 
 Argumento adversário. Controle necessário.
 
 Refutação. Lei 10.259 afasta reexame no JEF. Fim.
 
-### Argumento 4 — Citação por carta
+### Argumento 4. Citação por carta
 
 Argumento adversário. Formalismo.
 
 Refutação. Rito sumaríssimo, ampla aceitação, sem prejuízo à ampla defesa.
 
-### Argumento 5 — Intervenção de terceiros
+### Argumento 5. Intervenção de terceiros
 
 Argumento adversário. Vários entes.
 
 Refutação. JEF não admite, salvo hipóteses restritas.
 
-### Argumento 6 — Ausência de prévio requerimento
+### Argumento 6. Ausência de prévio requerimento
 
 Argumento adversário. Tema 350 STF.
 
 Refutação. Demonstrar resistência ou indeferimento administrativo. Acionar `tema-1124-instrucao-administrativa`.
 
-### Argumento 7 — Prova testemunhal excessiva
+### Argumento 7. Prova testemunhal excessiva
 
 Argumento adversário. Limitar.
 
 Refutação. Até três testemunhas por parte é usual. Tempo rural pode exigir mais, por realidade local.
 
-### Argumento 8 — Demora na execução
+### Argumento 8. Demora na execução
 
 Argumento adversário. Prazo superado.
 
 Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
-### Argumento 9 — Valor excedente em revisão
+### Argumento 9. Valor excedente em revisão
 
 Argumento adversário. Revisão alta.
 
 Refutação. Renúncia ou Vara Federal. Analisar.
 
-### Argumento 10 — Dispensa de advogado
+### Argumento 10. Dispensa de advogado
 
 Argumento adversário. Até 60 SM dispensa advogado.
 
 Refutação. Lei 10.259 permite, mas presença do advogado é vantajosa ao segurado. Orientar o cliente.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, processo previdenciário.
-
-Hugo Goes, JEF.
-
-Marco Aurélio Serau Junior, processo previdenciário.
-
-Daniel Pulino, procedimento.
-
-Jane Berwanger, processo previdenciário.
-
-IBDP, advocacia previdenciária.
 
 ## 5. Estratégia integrada
 

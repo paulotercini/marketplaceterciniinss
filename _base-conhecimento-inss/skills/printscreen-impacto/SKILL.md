@@ -3,7 +3,7 @@ name: printscreen-impacto
 description: "Componente Visual Law #5. Processa documentos reais (PPP, CNIS, indeferimento, laudo, exames, decisões) gerando printscreens com destaques automáticos (grifo, borda, seta, caixa de anotação) e insere no .docx da petição junto ao argumento. Use SEMPRE que peticao-previdenciaria for acionada com documentos reais anexados. Use SEMPRE que mencionar printscreen de impacto, destaque visual, grifo no PPP, grifo no indeferimento, destaque no CNIS, seta no laudo, prova visual na petição, Visual Law com documento real. Acionar AUTOMATICAMENTE quando auditoria-ppp, auditoria-laudo-pericial, analise-documental-incapacidade, analise-bpc-loas ou cnis-acerto-indicadores identificarem pontos críticos. NÃO use sem documento real."
 ---
 
-# Skill Printscreen de Impacto — Componente Visual Law #5
+# Skill Printscreen de Impacto. Componente Visual Law #5
 
 ## Visão Geral
 
@@ -17,13 +17,13 @@ O printscreen de impacto NÃO é um anexo. É um elemento argumentativo integrad
 
 O fluxo de processamento tem quatro etapas obrigatórias executadas em sequência.
 
-### Etapa 1 — Extração
+### Etapa 1. Extração
 
 Extrair a página ou região relevante do documento original. Para PDFs, converter a página em imagem com resolução mínima de 200 DPI usando `pdftoppm`. Para imagens já enviadas pelo usuário, usar diretamente. Para documentos extensos, recortar apenas a região relevante com Pillow (crop).
 
 Consultar `references/PROCESSING.md` para o código completo de extração.
 
-### Etapa 2 — Identificação Automática
+### Etapa 2. Identificação Automática
 
 Identificar os pontos a destacar com base na auditoria técnica já realizada pelas skills complementares. A identificação segue regras por tipo de documento.
 
@@ -64,15 +64,15 @@ Identificar os pontos a destacar com base na auditoria técnica já realizada pe
 - Omissão de fundamentação sobre ponto essencial
 - Erro material em dados do segurado
 
-### Etapa 3 — Aplicação de Destaques
+### Etapa 3. Aplicação de Destaques
 
 Aplicar os destaques visuais sobre a imagem do documento usando Pillow. O sistema de destaques segue uma paleta fixa integrada ao Visual Law do escritório.
 
 **Paleta de cores**
-- Vermelho (rgba 255,0,0,60) — fundamento superado, erro técnico, valor acima do limite, contradição
-- Verde (rgba 144,238,144,100) — ponto que favorece a tese, dado correto, fato incontroverso
-- Âmbar/Amarelo (rgba 255,255,0,100) — alerta, EPI sem comprovação, dado que exige atenção
-- Azul (rgba 0,100,255,60) — marco processual, dado informativo neutro
+- Vermelho (rgba 255,0,0,60), fundamento superado, erro técnico, valor acima do limite, contradição
+- Verde (rgba 144,238,144,100), ponto que favorece a tese, dado correto, fato incontroverso
+- Âmbar/Amarelo (rgba 255,255,0,100), alerta, EPI sem comprovação, dado que exige atenção
+- Azul (rgba 0,100,255,60), marco processual, dado informativo neutro
 
 **Tipos de destaque**
 - Grifo semi-transparente (retângulo com fill RGBA sobre o texto)
@@ -88,7 +88,7 @@ Aplicar os destaques visuais sobre a imagem do documento usando Pillow. O sistem
 
 Consultar `references/PROCESSING.md` para o código completo de processamento.
 
-### Etapa 4 — Inserção no .docx
+### Etapa 4. Inserção no .docx
 
 Inserir o printscreen processado no .docx da petição usando a função `printscreenImpacto()` disponível em `references/DOCX-INTEGRATION.js`.
 
@@ -122,12 +122,12 @@ No JEF, limitar a 2 printscreens por petição para manter concisão. No rito or
 
 Esta skill é acionada automaticamente pelas seguintes skills quando identificam pontos críticos em documentos reais.
 
-- **auditoria-ppp** — Campos com vícios, valores acima dos limites, EPI sem eficácia comprovada
-- **auditoria-laudo-pericial** — Contradições, quesitos evasivos, omissões
-- **analise-documental-incapacidade** — Requisitos documentais das Portarias 13/14/15-2026
-- **analise-bpc-loas** — Domínios subpontuados no IFBrM, divergências funcionais
-- **cnis-acerto-indicadores** — Indicadores bloqueantes, competências problemáticas
-- **peticao-previdenciaria** — Integra os printscreens no .docx final como Componente Visual Law #5
+- **auditoria-ppp.** Campos com vícios, valores acima dos limites, EPI sem eficácia comprovada
+- **auditoria-laudo-pericial.** Contradições, quesitos evasivos, omissões
+- **analise-documental-incapacidade.** Requisitos documentais das Portarias 13/14/15-2026
+- **analise-bpc-loas.** Domínios subpontuados no IFBrM, divergências funcionais
+- **cnis-acerto-indicadores.** Indicadores bloqueantes, competências problemáticas
+- **peticao-previdenciaria.** Integra os printscreens no .docx final como Componente Visual Law #5
 
 ## Fluxo de Trabalho Completo
 
@@ -143,21 +143,9 @@ Esta skill é acionada automaticamente pelas seguintes skills quando identificam
 
 ## Referências
 
-- `references/PROCESSING.md` — Código Python completo para extração, recorte e aplicação de destaques com Pillow
-- `references/DOCX-INTEGRATION.js` — Função JavaScript para inserção do printscreen no .docx via docx-js, compatível com TEMPLATE.js da peticao-previdenciaria
+- `references/PROCESSING.md`. Código Python completo para extração, recorte e aplicação de destaques com Pillow
+- `references/DOCX-INTEGRATION.js`. Função JavaScript para inserção do printscreen no .docx via docx-js, compatível com TEMPLATE.js da peticao-previdenciaria
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

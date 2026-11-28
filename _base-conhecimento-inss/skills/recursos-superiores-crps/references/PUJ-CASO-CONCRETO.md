@@ -1,4 +1,4 @@
-# Pedido de Uniformização de Jurisprudência em Caso Concreto – Arts. 121 e 122
+# Pedido de Uniformização de Jurisprudência em Caso Concreto. Arts. 121 e 122
 
 ## Hipóteses de Cabimento (Art. 121)
 

@@ -1,4 +1,4 @@
-# Sustentação Oral no CRPS – Art. 81
+# Sustentação Oral no CRPS. Art. 81
 
 ## Formas de Requerer a Sustentação (Art. 81, I a III)
 
@@ -10,11 +10,11 @@
 
 ## Modalidades Admitidas (Art. 81, §1º)
 
-**Memoriais escritos** – sustentação por escrito, sem limite de tamanho definido no Regimento
+**Memoriais escritos**, sustentação por escrito, sem limite de tamanho definido no Regimento
 
-**Sustentação oral ao vivo** – na sessão de julgamento (presencial ou virtual)
+**Sustentação oral ao vivo**, na sessão de julgamento (presencial ou virtual)
 
-**Gravação por link não listado** – duração máxima de 8 minutos. Será desconsiderada a gravação que exceder o tempo (art. 81, §5º)
+**Gravação por link não listado**, duração máxima de 8 minutos. Será desconsiderada a gravação que exceder o tempo (art. 81, §5º)
 
 ## Representação Processual (Art. 81, §§2º e 3º)
 
@@ -48,7 +48,7 @@ NÃO há sustentação oral em embargos de declaração e revisão de acórdão.
 
 **Exceções (Arts. 92, §16 e 116, §9º).** Admite-se sustentação quando, no julgamento do recurso originário (ordinário, especial, PUJ ou reclamação ao CP), a sustentação oral não tenha sido oportunizada, desde que solicitada no prazo regimental.
 
-## Sustentação em Decisão Monocrática – Conversão Automática em Colegiada (Art. 81, §13)
+## Sustentação em Decisão Monocrática. Conversão Automática em Colegiada (Art. 81, §13)
 
 Se houver solicitação de sustentação oral para processo incluído em sessão de julgamento de decisão monocrática, o processo DEVE ser retirado de pauta e incluído na próxima sessão ordinária, submetido ao colegiado. A sustentação oral converte o julgamento monocrático em colegiado. Essa é a regra mais impactante do Regimento para o advogado do segurado no campo das decisões monocráticas.
 

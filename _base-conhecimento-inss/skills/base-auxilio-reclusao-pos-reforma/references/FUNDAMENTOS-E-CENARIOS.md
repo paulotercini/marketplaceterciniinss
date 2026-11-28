@@ -1,4 +1,4 @@
-# Auxílio-Reclusão (B25) — Fundamentos e Cenários
+# Auxílio-Reclusão (B25). Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -40,35 +40,35 @@ B25 dura enquanto o segurado permanecer em regime fechado. Cessa com a progress�
 
 ## 5. Cenários operacionais pró-segurado
 
-### Cenário 1 — Prisão anterior à MP 871/2019 (18/01/2019)
+### Cenário 1. Prisão anterior à MP 871/2019 (18/01/2019)
 
 Segurado preso em 05/2018. Aplica regra anterior (Lei 10.666/2003). Admite regime semiaberto. Sem exigência de 24 contribuições como carência rígida. Tempus regit actum.
 
-### Cenário 2 — Segurado desempregado
+### Cenário 2. Segurado desempregado
 
 Segurado preso em 2021, desempregado há 8 meses na prisão. Como a prisão é posterior à MP 871/2019, vale a média dos salários de contribuição dos 12 meses anteriores, com divisor igual ao número de salários existentes (Tema 310/TNU); baixa renda automática só sem nenhum salário de contribuição no período (art. 383, §5º, da IN 128/2022). O Tema 896/STJ rege apenas prisões anteriores à MP (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
-### Cenário 3 — Renda ligeiramente acima do teto
+### Cenário 3. Renda ligeiramente acima do teto
 
 Segurado com último salário R$ 200 acima do teto. A flexibilização só cabe em prisão anterior à MP 871/2019 com excedente ínfimo (Tema 1162/STJ, item i); depois da MP é vedada, salvo falta de correção anual do limite (item ii) (auditoria 03/10/2026, retirado o Tema 896/STJ, que trata da renda zero do desempregado).
 
-### Cenário 4 — Progressão de regime
+### Cenário 4. Progressão de regime
 
 Segurado em regime fechado há 2 anos, progride para semiaberto. Discussão sobre manutenção do B25. Tese pró-dependente sustenta direito adquirido.
 
-### Cenário 5 — Tornozeleira eletrônica isolada
+### Cenário 5. Tornozeleira eletrônica isolada
 
 Segurado com monitoramento eletrônico substitutivo da prisão. Discussão sobre equiparação. Corrente pró-segurado defende manutenção enquanto houver restrição efetiva à liberdade.
 
-### Cenário 6 — Dependente menor de 16
+### Cenário 6. Dependente menor de 16
 
 DIB na data da prisão se requerida em 180 dias.
 
-### Cenário 7 — Fiança impossibilitada por hipossuficiência
+### Cenário 7. Fiança impossibilitada por hipossuficiência
 
 Segurado preso por impossibilidade de pagar fiança. Situação de baixa renda evidente. B25 devido.
 
-### Cenário 8 — Segurado que completou aposentadoria antes da prisão
+### Cenário 8. Segurado que completou aposentadoria antes da prisão
 
 Já aposentado. Se o segurado está em gozo de aposentadoria, não cabe B25 (art. 80, caput, da Lei 8.213/91); a vedação não alcança quem só reunia os requisitos, sem aposentadoria concedida (auditoria 03/10/2026).
 

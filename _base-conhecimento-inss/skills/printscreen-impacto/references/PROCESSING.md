@@ -1,4 +1,4 @@
-# PROCESSING.md — Pipeline de Processamento de Printscreens de Impacto
+# PROCESSING.md. Pipeline de Processamento de Printscreens de Impacto
 
 ## Dependências
 
@@ -87,7 +87,6 @@ def crop_region(image_path, box, output_path, padding=20):
     cropped.save(output_path, "PNG", dpi=(300, 300))
     return output_path
 
-
 def crop_percentage(image_path, top_pct, bottom_pct, output_path):
     """
     Recorta uma faixa horizontal da imagem por porcentagem.
@@ -170,7 +169,6 @@ def get_font(size, bold=False):
             return ImageFont.truetype(p, size)
     return ImageFont.load_default()
 
-
 def apply_highlight(img, box, color_name="vermelho"):
     """
     Aplica grifo semi-transparente sobre uma região da imagem.
@@ -188,7 +186,6 @@ def apply_highlight(img, box, color_name="vermelho"):
     draw.rectangle(box, fill=COLORS[color_name])
     return Image.alpha_composite(img, overlay)
 
-
 def apply_border(img, box, color_name="vermelho", width=2):
     """
     Aplica borda colorida ao redor de uma região.
@@ -202,7 +199,6 @@ def apply_border(img, box, color_name="vermelho", width=2):
     draw = ImageDraw.Draw(img)
     draw.rectangle(box, outline=BORDER_COLORS[color_name], width=width)
     return img
-
 
 def apply_arrow(img, start, end, color_name="vermelho", width=3):
     """
@@ -236,7 +232,6 @@ def apply_arrow(img, start, end, color_name="vermelho", width=3):
     
     draw.polygon([p1, p2, p3], fill=color)
     return img
-
 
 def apply_annotation_box(img, position, title, lines, color_name="vermelho"):
     """
@@ -283,14 +278,13 @@ def apply_annotation_box(img, position, title, lines, color_name="vermelho"):
     
     return img
 
-
 def apply_source_footer(img, source_text):
     """
     Adiciona rodapé com referência ao documento fonte.
     
     Args:
         img: Imagem PIL (RGB)
-        source_text: Texto da referência (ex. "Fonte: PPP — Doc. ID 04")
+        source_text: Texto da referência (ex. "Fonte: PPP, Doc. ID 04")
     
     Returns:
         Nova imagem com rodapé adicionado
@@ -419,7 +413,6 @@ def get_image_dimensions_for_docx(image_path, max_width_points=540):
     
     return (int(w_pts), int(h_pts))
 
-
 def identify_highlights_from_audit(audit_results, document_type):
     """
     Converte resultados de auditoria em lista de destaques para o compose_printscreen.
@@ -468,7 +461,7 @@ def identify_highlights_from_audit(audit_results, document_type):
 
 ## 6. Exemplos de Uso por Tipo de Documento
 
-### PPP — Aposentadoria Especial
+### PPP. Aposentadoria Especial
 
 ```python
 # Após auditoria do PPP identificar ruído de 92,3 dB(A) no campo 15.3
@@ -484,13 +477,13 @@ printscreen = compose_printscreen(
         {"type": "annotation", "color": "vermelho", "position": (690, 220),
          "title": "ACIMA DO LIMITE", "lines": ["92,3 dB(A) > 85 dB", "(NR-15, Anexo 1)"]},
     ],
-    source_text="Fonte: PPP emitido em 20/09/2023 — Doc. ID 04 (Evento 1, PROCADM4)",
+    source_text="Fonte: PPP emitido em 20/09/2023, Doc. ID 04 (Evento 1, PROCADM4)",
     output_path="/tmp/ppp_printscreen.png",
     crop_pct=(0.35, 0.70),
 )
 ```
 
-### Carta de Indeferimento — Fundamento Superado
+### Carta de Indeferimento. Fundamento Superado
 
 ```python
 page_img = extract_pdf_page("despacho_inss.pdf", 1, "/tmp/indef_page")
@@ -502,12 +495,12 @@ printscreen = compose_printscreen(
         {"type": "annotation", "color": "vermelho", "position": (770, 270),
          "title": "FUNDAMENTO IMPUGNÁVEL", "lines": ["Tema 1090/STJ, III: dúvida", "sobre o EPI favorece o autor"]},  # auditoria 03/10/2026, o Tema 1090/STJ não afasta a neutralização por EPI (item I)
     ],
-    source_text="Fonte: Despacho decisório INSS — Doc. ID 02 (Evento 1, PROCADM2)",
+    source_text="Fonte: Despacho decisório INSS, Doc. ID 02 (Evento 1, PROCADM2)",
     output_path="/tmp/indeferimento_printscreen.png",
 )
 ```
 
-### CNIS — Indicador Bloqueante
+### CNIS. Indicador Bloqueante
 
 ```python
 page_img = extract_pdf_page("cnis.pdf", 1, "/tmp/cnis_page")
@@ -523,12 +516,12 @@ printscreen = compose_printscreen(
         {"type": "annotation", "color": "amarelo", "position": (790, 240),
          "title": "LACUNA", "lines": ["6 meses sem vínculo", "Risco à qualidade"]},
     ],
-    source_text="Fonte: CNIS emitido em 15/03/2024 — Doc. ID 01 (Evento 1, PROCADM1)",
+    source_text="Fonte: CNIS emitido em 15/03/2024, Doc. ID 01 (Evento 1, PROCADM1)",
     output_path="/tmp/cnis_printscreen.png",
 )
 ```
 
-### Laudo Pericial — Contradição Interna
+### Laudo Pericial. Contradição Interna
 
 ```python
 page_img = extract_pdf_page("laudo_pericial.pdf", 3, "/tmp/laudo_page")
@@ -543,7 +536,7 @@ printscreen = compose_printscreen(
         {"type": "annotation", "color": "vermelho", "position": (710, 340),
          "title": "CONTRADIÇÃO", "lines": ["Conclusão nega", "incapacidade apesar", "do achado acima"]},
     ],
-    source_text="Fonte: Laudo pericial judicial — Doc. ID 12 (Evento 28, LAUDO1)",
+    source_text="Fonte: Laudo pericial judicial, Doc. ID 12 (Evento 28, LAUDO1)",
     output_path="/tmp/laudo_printscreen.png",
 )
 ```

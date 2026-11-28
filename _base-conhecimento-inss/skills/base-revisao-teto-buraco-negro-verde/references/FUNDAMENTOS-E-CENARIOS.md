@@ -1,4 +1,4 @@
-# Revisão do Teto — Fundamentos e Cenários
+# Revisão do Teto. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -52,7 +52,7 @@ ERRO corrigido na Onda 173. É leading case do Tema 999 STJ (revisão da vida to
 
 [CONFERIDO, portal do STF, 04/10/2026] Os benefícios concedidos entre 05.10.1988 e 05.04.1991 (período do buraco negro) não estão, em tese, excluídos da possibilidade de readequação segundo os tetos instituídos pelas EC´s nº 20/1998 e 41/2003, a ser aferida caso a caso, conforme os parâmetros definidos no julgamento do RE 564.354, em regime de repercussão geral.
 
-## 5. Buraco negro — outubro de 1988 a abril de 1991
+## 5. Buraco negro. outubro de 1988 a abril de 1991
 
 O art. 144 da Lei 8.213/91 determinou revisão dos benefícios concedidos nesse período. Muitos benefícios não tiveram essa revisão aplicada integralmente.
 
@@ -60,7 +60,7 @@ Cenário A. Benefício concedido nesse período sem a revisão do art. 144. Veri
 
 Cenário B. Pensão derivada de instituidor falecido após 1991, mas com benefício originário concedido no buraco negro. Revisão reflexa.
 
-## 6. Buraco verde — DIB de 05/04/1991 a 31/12/1993
+## 6. Buraco verde. DIB de 05/04/1991 a 31/12/1993
 
 Benefícios concedidos nesse período sofreram distorções decorrentes do art. 26 da Lei 8.870/1994 e da conversão para URV. A tese busca a recomposição do Salário de Benefício e a readequação ao teto.
 

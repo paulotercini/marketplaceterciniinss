@@ -1,4 +1,4 @@
-# B92 Incapacidade Permanente Acidentária — Fundamentos e Cenários
+# B92 Incapacidade Permanente Acidentária. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -40,35 +40,35 @@ Quarta (subsidiária), Nexo Individual. Perícia técnica demonstra o nexo no ca
 
 ## 3. Cenários operacionais pró-segurado
 
-### Cenário 1 — LER/DORT em operário de linha de montagem
+### Cenário 1. LER/DORT em operário de linha de montagem
 
 Segurado com 10 anos em montadora. CID M65.3 (dedo em gatilho), M70 (bursite), M75 (síndrome do manguito rotador). CNAE 29.10 ou similar tem correspondência. NTEP automático. B92 com RMI integral.
 
-### Cenário 2 — Transtorno mental ocupacional
+### Cenário 2. Transtorno mental ocupacional
 
 Segurado em call center com depressão (CID F32) e transtorno de ansiedade (CID F41). Assédio moral, metas abusivas, sobrecarga. NR-1 atualizada (Portaria MTE 1.419/2024) exige gestão de riscos psicossociais. Nexo ocupacional reconhecível.
 
-### Cenário 3 — Burnout
+### Cenário 3. Burnout
 
 Segurado com esgotamento profissional (CID Z73.0 na CID-10 ou QD85 na CID-11). OMS reconhece como fenômeno ocupacional. Portaria MTE 1.419/2024 e NR-1 atualizada. B91 ou B92 se houver incapacidade.
 
-### Cenário 4 — Acidente de trajeto
+### Cenário 4. Acidente de trajeto
 
 Segurado em trajeto residência-trabalho sofre acidente com incapacidade permanente. Art. 21, IV, d, Lei 8.213/91. B92 com RMI 100%. MP 905/2019 que restringiu trajeto foi revogada.
 
-### Cenário 5 — Doença preexistente agravada
+### Cenário 5. Doença preexistente agravada
 
 Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Art. 21, I, da Lei 8.213/91 (concausa) (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). B92 com conversão do B32 para acidentário.
 
-### Cenário 6 — Acidente com perda de membro
+### Cenário 6. Acidente com perda de membro
 
 Trabalhador de serraria amputa dedos em acidente. B91 acidentário inicial. Incapacidade residual definitiva. B94 (auxílio-acidente) ou B92 conforme grau de incapacidade.
 
-### Cenário 7 — Câncer ocupacional
+### Cenário 7. Câncer ocupacional
 
 Segurado exposto a benzeno ou amianto por longos anos desenvolve leucemia ou mesotelioma. Doença profissional da Lista B. B92 com RMI integral. Isenção de carência (art. 26, II, combinado com art. 151).
 
-### Cenário 8 — Cobertura por CAT tardia
+### Cenário 8. Cobertura por CAT tardia
 
 Segurado descobre doença ocupacional 3 anos após afastamento. Emite CAT tardia pelo sindicato. Nexo comprovado por PGR, PPP e LTCAT. B92 retroativo à DII.
 

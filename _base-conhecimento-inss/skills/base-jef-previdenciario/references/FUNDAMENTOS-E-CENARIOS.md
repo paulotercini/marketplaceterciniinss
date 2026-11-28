@@ -1,4 +1,4 @@
-# JEF Previdenciário — Fundamentos e Cenários
+# JEF Previdenciário. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -38,37 +38,37 @@ Justiça Estadual onde não houver Vara Federal ou JEF. Recurso ao TRF.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Concessão de B32 com atrasados moderados
+### Cenário A. Concessão de B32 com atrasados moderados
 
 Ação direta no JEF, valor estimado até o teto.
 
-### Cenário B — Revisão de RMI com impacto até o teto
+### Cenário B. Revisão de RMI com impacto até o teto
 
 JEF com renúncia ao excedente se necessário.
 
-### Cenário C — BPC/LOAS
+### Cenário C. BPC/LOAS
 
 Em regra, JEF.
 
-### Cenário D — Aposentadoria por idade urbana com atrasados de poucos anos
+### Cenário D. Aposentadoria por idade urbana com atrasados de poucos anos
 
 JEF é adequado.
 
-### Cenário E — Pensão por morte recente
+### Cenário E. Pensão por morte recente
 
 JEF se atrasados dentro do teto.
 
 ## 6. Cenários limitados
 
-### Cenário F — Atrasados superiores a 60 salários-mínimos
+### Cenário F. Atrasados superiores a 60 salários-mínimos
 
 Vara Federal comum. Se houver vantagem, renunciar ao excedente.
 
-### Cenário G — Ações coletivas
+### Cenário G. Ações coletivas
 
 Vara Federal comum. JEF não admite ações coletivas.
 
-### Cenário H — Causas contra entes distintos do INSS
+### Cenário H. Causas contra entes distintos do INSS
 
 Verificar competência específica.
 

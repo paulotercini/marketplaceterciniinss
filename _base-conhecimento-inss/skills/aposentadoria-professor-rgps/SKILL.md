@@ -7,19 +7,19 @@ description: Aposentadoria do professor no RGPS, regras de transição EC 103/20
 
 Skill para análise, planejamento e peticionamento da aposentadoria do professor vinculado ao RGPS (INSS), abrangendo direito adquirido, regras de transição da EC 103/2019, regra definitiva, acréscimo do art. 9º §2º da EC 20/98, Lei 15.326/2026 (educação infantil como magistério) e cômputo de tempo diverso do magistério no cálculo.
 
-## 1. CONCEITO DE MAGISTÉRIO — ABRANGÊNCIA
+## 1. CONCEITO DE MAGISTÉRIO. ABRANGÊNCIA
 
 ### 1.1 Regra geral (art. 201, §8º, CF + art. 54, §2º, Decreto 3.048/99 + art. 250 IN 128/2022) (auditoria 03/10/2026)
 
 A aposentadoria diferenciada do professor exige tempo de contribuição exclusivamente em funções de magistério na educação infantil, ensino fundamental e ensino médio. Professor universitário perdeu a regra diferenciada com a EC 20/98 (16/12/1998), salvo direito adquirido e a regra de transição do art. 9º §2º.
 
-### 1.2 Funções de magistério — ADI 3772/STF e Lei 11.301/2006
+### 1.2 Funções de magistério. ADI 3772/STF e Lei 11.301/2006
 
 O STF, na ADI 3772 (Plenário, j. 29/10/2008, Rel. p/ acórdão Min. Ricardo Lewandowski, DJe 27/03/2009, republicado em 29/10/2009), julgou parcialmente procedente a ação, com interpretação conforme ao art. 1º da Lei 11.301/2006 (que acrescentou o § 2º ao art. 67 da Lei 9.394/1996), para assentar que as funções de direção, coordenação e assessoramento pedagógico integram a carreira do magistério, desde que exercidas, em estabelecimentos de ensino básico, por professores de carreira, excluídos os especialistas em educação (auditoria 03/10/2026).
 
 Enquadram-se, portanto, não apenas a regência de classe em sala de aula, mas também a preparação de aulas, correção de provas, atendimento a pais e alunos, coordenação pedagógica e direção de unidade escolar.
 
-### 1.3 Lei 15.326/2026 — Professores da educação infantil
+### 1.3 Lei 15.326/2026. Professores da educação infantil
 
 A Lei 15.326, de 06/01/2026, alterou a Lei 11.738/2008 (Lei do Piso) e a Lei 9.394/1996 (LDB), incluindo expressamente os professores da educação infantil como profissionais do magistério, com reconhecimento do princípio da integralidade entre cuidar, brincar e educar.
 
@@ -38,9 +38,9 @@ Auxiliar de educação infantil, auxiliar de creche, técnico em desenvolvimento
 
 **Impacto previdenciário direto**
 
-(a) Ações de concessão — seguradas que exerceram efetivamente magistério na educação infantil podem pleitear aposentadoria pelas regras diferenciadas do professor, desde que comprovem os requisitos do regime (RGPS ou RPPS) e demonstrem o exercício de magistério.
+(a) Ações de concessão, seguradas que exerceram efetivamente magistério na educação infantil podem pleitear aposentadoria pelas regras diferenciadas do professor, desde que comprovem os requisitos do regime (RGPS ou RPPS) e demonstrem o exercício de magistério.
 
-(b) Ações de revisão — benefícios já concedidos sem cômputo do tempo como magistério podem ser revisados, desde que dentro do prazo decadencial (verificar automaticamente com a skill `decadencia-revisao-previdenciaria`).
+(b) Ações de revisão, benefícios já concedidos sem cômputo do tempo como magistério podem ser revisados, desde que dentro do prazo decadencial (verificar automaticamente com a skill `decadencia-revisao-previdenciaria`).
 
 **Prova do enquadramento**
 
@@ -48,27 +48,27 @@ Auxiliar de educação infantil, auxiliar de creche, técnico em desenvolvimento
 - Atividades efetivamente realizadas (rotina pedagógica)
 - Local de exercício (unidade escolar de educação básica)
 - Regime previdenciário (RGPS ou RPPS)
-- Documentos fortalecedores — participação em planejamento pedagógico, atuação contínua no cuidar-brincar-educar, suporte direto às atividades docentes
+- Documentos fortalecedores, participação em planejamento pedagógico, atuação contínua no cuidar-brincar-educar, suporte direto às atividades docentes
 
-**ALERTA — INSS vs. RPPS.** A Lei 15.326 vale para ambos os regimes, mas as regras de aposentadoria do professor diferem substancialmente entre RGPS e RPPS. Ao orientar cliente, identificar primeiro o regime de vinculação.
+**ALERTA. INSS vs. RPPS.** A Lei 15.326 vale para ambos os regimes, mas as regras de aposentadoria do professor diferem substancialmente entre RGPS e RPPS. Ao orientar cliente, identificar primeiro o regime de vinculação.
 
-## 2. DIREITO ADQUIRIDO — REGRA ANTERIOR À EC 103/2019
+## 2. DIREITO ADQUIRIDO. REGRA ANTERIOR À EC 103/2019
 
 Quem completou os requisitos antes de 13/11/2019 (data de vigência da EC 103) tem direito adquirido.
 
-- **Professor (homem)** — 30 anos de contribuição exclusivamente em magistério + 180 meses de carência
-- **Professora (mulher)** — 25 anos de contribuição exclusivamente em magistério + 180 meses de carência
+- **Professor (homem).** 30 anos de contribuição exclusivamente em magistério + 180 meses de carência
+- **Professora (mulher).** 25 anos de contribuição exclusivamente em magistério + 180 meses de carência
 - Sem exigência de idade mínima
 - Cálculo da RMI pela regra vigente à época do preenchimento dos requisitos
 
 ## 3. REGRA DEFINITIVA PÓS-EC 103/2019 (art. 19, §1º, EC 103)
 
-- **Professor (homem)** — 25 anos de contribuição em magistério + 60 anos de idade + 180 meses de carência
-- **Professora (mulher)** — 25 anos de contribuição em magistério + 57 anos de idade + 180 meses de carência
+- **Professor (homem).** 25 anos de contribuição em magistério + 60 anos de idade + 180 meses de carência
+- **Professora (mulher).** 25 anos de contribuição em magistério + 57 anos de idade + 180 meses de carência
 
-ATENÇÃO — A EC 103/2019 reduziu o tempo de contribuição do professor homem de 30 para 25 anos na regra definitiva. As regras de transição mantêm os 30 anos para o homem.
+ATENÇÃO. A EC 103/2019 reduziu o tempo de contribuição do professor homem de 30 para 25 anos na regra definitiva. As regras de transição mantêm os 30 anos para o homem.
 
-Cálculo da RMI (art. 26, EC 103) — 60% da média de todos os salários de contribuição desde julho/1994 + 2% por ano que exceder 20 anos de contribuição (homem) ou 15 anos (mulher, art. 26, §5º); a professora com 25 anos recebe 80% (auditoria 03/10/2026). NÃO há fator previdenciário na regra definitiva (o fator é substituído pelo coeficiente de 60%+2%).
+Cálculo da RMI (art. 26, EC 103). 60% da média de todos os salários de contribuição desde julho/1994 + 2% por ano que exceder 20 anos de contribuição (homem) ou 15 anos (mulher, art. 26, §5º); a professora com 25 anos recebe 80% (auditoria 03/10/2026). NÃO há fator previdenciário na regra definitiva (o fator é substituído pelo coeficiente de 60%+2%).
 
 ## 4. REGRAS DE TRANSIÇÃO (EC 103/2019)
 
@@ -76,21 +76,21 @@ Aplicam-se a quem já era filiado ao RGPS antes de 13/11/2019 mas não havia com
 
 ### 4.1 Regra de transição por pontos (art. 15, §3º, EC 103/2019)
 
-- **Professor (homem)** — 30 anos de TC em magistério + 91 pontos em 2019, mais 1 ponto por ano desde 2020 até 100 (98 em 2026) + 180 meses de carência
-- **Professora (mulher)** — 25 anos de TC em magistério + 81 pontos em 2019, mais 1 ponto por ano desde 2020 até 92 (88 em 2026) + 180 meses de carência
+- **Professor (homem).** 30 anos de TC em magistério + 91 pontos em 2019, mais 1 ponto por ano desde 2020 até 100 (98 em 2026) + 180 meses de carência
+- **Professora (mulher).** 25 anos de TC em magistério + 81 pontos em 2019, mais 1 ponto por ano desde 2020 até 92 (88 em 2026) + 180 meses de carência
 
 Pontos = idade + tempo de contribuição total. A pontuação progride 1 ponto por ano desde 01/01/2020, como na regra geral, com limites de 92 (mulher) e 100 (homem) (EC 103, art. 15, §3º; IN 128, art. 252) (auditoria 03/10/2026).
 
-**Cômputo de tempo diverso na pontuação — art. 257, parágrafo único, Portaria 991.** Para obtenção da pontuação, considera-se todo o tempo de contribuição, inclusive aquele não exercido em funções de magistério, desde que o segurado tenha o mínimo de 25 anos (mulher) ou 30 anos (homem) de magistério exclusivo.
+**Cômputo de tempo diverso na pontuação, art. 257, parágrafo único, Portaria 991.** Para obtenção da pontuação, considera-se todo o tempo de contribuição, inclusive aquele não exercido em funções de magistério, desde que o segurado tenha o mínimo de 25 anos (mulher) ou 30 anos (homem) de magistério exclusivo.
 
 Isso significa que períodos em atividades diversas (comércio, indústria, serviço público fora do magistério) entram no cômputo dos pontos, embora não sirvam para atingir o requisito de tempo mínimo exclusivo em magistério.
 
 ### 4.2 Regra de transição por idade mínima progressiva (art. 16, §2º, EC 103/2019)
 
-- **Professor (homem)** — 30 anos de TC em magistério + idade mínima progressiva + 180 meses de carência
-- **Professora (mulher)** — 25 anos de TC em magistério + idade mínima progressiva + 180 meses de carência
+- **Professor (homem).** 30 anos de TC em magistério + idade mínima progressiva + 180 meses de carência
+- **Professora (mulher).** 25 anos de TC em magistério + idade mínima progressiva + 180 meses de carência
 
-Idade mínima inicial em 2019 — 56 anos (homem) e 51 anos (mulher), com acréscimo de 6 meses a cada ano.
+Idade mínima inicial em 2019. 56 anos (homem) e 51 anos (mulher), com acréscimo de 6 meses a cada ano.
 
 **Tabela progressiva atualizada**
 
@@ -109,16 +109,16 @@ Idade mínima inicial em 2019 — 56 anos (homem) e 51 anos (mulher), com acrés
 | 2030 | 60a     | 56a6m   |
 | 2031 | 60a     | 57a     |
 
-Teto — 60 anos (homem) e 57 anos (mulher). A partir desses limites, a idade da transição se iguala à da regra definitiva. O tempo não se iguala para o homem, que segue com 30 anos de magistério na transição, enquanto a regra definitiva exige 25 anos para ambos os sexos (auditoria 03/10/2026).
+Teto. 60 anos (homem) e 57 anos (mulher). A partir desses limites, a idade da transição se iguala à da regra definitiva. O tempo não se iguala para o homem, que segue com 30 anos de magistério na transição, enquanto a regra definitiva exige 25 anos para ambos os sexos (auditoria 03/10/2026).
 
 ### 4.3 Regra de transição por pedágio de 100% (art. 20, §1º, EC 103/2019)
 
-- **Professor (homem)** — 30 anos de TC em magistério + 55 anos de idade (auditoria 03/10/2026) + pedágio de 100% + 180 meses de carência
-- **Professora (mulher)** — 25 anos de TC em magistério + 52 anos de idade + pedágio de 100% + 180 meses de carência
+- **Professor (homem).** 30 anos de TC em magistério + 55 anos de idade (auditoria 03/10/2026) + pedágio de 100% + 180 meses de carência
+- **Professora (mulher).** 25 anos de TC em magistério + 52 anos de idade + pedágio de 100% + 180 meses de carência
 
 Pedágio = período adicional de 100% do tempo que faltava em 13/11/2019 para atingir 25 ou 30 anos de contribuição em magistério.
 
-Vantagem — Nesta regra, a RMI corresponde a 100% da média de todos os salários de contribuição desde julho/1994, sem fator previdenciário (EC 103, art. 26, §3º, I, c/c art. 20, §2º, II) (auditoria 03/10/2026). É a única regra de transição que permite afastar o coeficiente de 60%+2%.
+Vantagem. Nesta regra, a RMI corresponde a 100% da média de todos os salários de contribuição desde julho/1994, sem fator previdenciário (EC 103, art. 26, §3º, I, c/c art. 20, §2º, II) (auditoria 03/10/2026). É a única regra de transição que permite afastar o coeficiente de 60%+2%.
 
 ## 5. ACRÉSCIMO DO ART. 9º, §2º, EC 20/98 (art. 251, §1º, IN 128/2022)
 
@@ -135,13 +135,13 @@ O professor (inclusive universitário) que não implementou as condições para 
 
 ## 6. FATOR PREVIDENCIÁRIO E CÔMPUTO DE TEMPO DIVERSO NO CÁLCULO
 
-### 6.1 Incidência do fator previdenciário — Tema 1011/STJ e Tema 1091/STF
+### 6.1 Incidência do fator previdenciário. Tema 1011/STJ e Tema 1091/STF
 
 O fator previdenciário incide no cálculo da RMI da aposentadoria por tempo de contribuição de professor. O STJ firmou esta tese no Tema 1011, para requisitos completados após a Lei 9.876/99. A constitucionalidade dessa incidência sobre o professor é a tese registrada no Tema 960/STF (RE 1.029.608), que teve repercussão geral negada por ser matéria infraconstitucional, com trânsito em 26/09/2017 [CONFERIDO no portal do STF]. Tese desfavorável, que não alcança quem reuniu os requisitos antes da Lei 9.876/99 nem as regras de transição do professor da EC 103/2019, calculadas pelo art. 26 da emenda; o Tema 1091 (RE 1.221.630/SC, Rel. Min. Dias Toffoli) trata do fator previdenciário em geral (auditoria 03/10/2026).
 
 O fator não incide quando os requisitos se completaram antes da Lei 9.876/99, ressalva da própria tese do Tema 1011/STJ. Depois dela, a via para afastá-lo é a regra 85/95 (Lei 13.183/2015), quando os pontos são atingidos. Para professores, o art. 29, §9º, da Lei 8.213/91 prevê acréscimo de 5 anos ao professor (inciso II) e de 10 anos à professora (inciso III) no tempo de contribuição, exclusivamente para fins de cálculo do fator (auditoria 03/10/2026).
 
-### 6.2 Precedente TRF4 — Cômputo de tempo diverso no fator e na regra de pontos
+### 6.2 Precedente TRF4. Cômputo de tempo diverso no fator e na regra de pontos
 
 TRF4, 9ª Turma, Apelação Cível nº 5000515-77.2024.4.04.7204/SC. Relator Des. Federal Sebastião Ogê Muniz. Julgado em 20/08/2025, por maioria (vencidos o relator e o Des. Celso Kipper).
 
@@ -149,7 +149,7 @@ TRF4, 9ª Turma, Apelação Cível nº 5000515-77.2024.4.04.7204/SC. Relator Des
 
 **Dispositivos.** Lei 8.213/91, art. 29, §9º, II e III, e art. 29-C, §3º; Lei 13.183/2015.
 
-**ALERTA — Precedente persuasivo, não vinculante.** Decisão isolada de turma do TRF4, por maioria. Não é tema repetitivo. Uso como argumento persuasivo, especialmente perante o TRF4, com indicação expressa dos dispositivos legais que fundamentam a tese. Lógica convergente com a Portaria 991, art. 257, parágrafo único (tempo diverso na pontuação das regras de transição).
+**ALERTA. Precedente persuasivo, não vinculante.** Decisão isolada de turma do TRF4, por maioria. Não é tema repetitivo. Uso como argumento persuasivo, especialmente perante o TRF4, com indicação expressa dos dispositivos legais que fundamentam a tese. Lógica convergente com a Portaria 991, art. 257, parágrafo único (tempo diverso na pontuação das regras de transição).
 
 ## 7. CARÊNCIA
 
@@ -167,32 +167,32 @@ Acionar skill `documentos-comprobatorios-in128` como fonte complementar.
 
 Ao analisar caso de aposentadoria do professor, verificar automaticamente:
 
-1. **Regime previdenciário** — RGPS ou RPPS. Esta skill cobre apenas RGPS.
-2. **Exclusividade do magistério** — o tempo mínimo exigido deve ser integralmente em funções de magistério na educação básica.
-3. **Direito adquirido** — verificar se os requisitos foram preenchidos antes de 13/11/2019 ou de 16/12/1998.
-4. **Decadência** — em ações de revisão, acionar `decadencia-revisao-previdenciaria`.
-5. **Tema 1124/STJ** — em ações de concessão, verificar prévio requerimento administrativo.
-6. **Regra mais vantajosa** — comparar todas as regras aplicáveis (direito adquirido, transição por pontos, idade progressiva, pedágio 100%, regra definitiva) e identificar a mais favorável ao segurado.
-7. **Reafirmação da DER** — se o segurado não preenche requisitos na DER, avaliar reafirmação (skill `reafirmacao-der`).
+1. **Regime previdenciário.** RGPS ou RPPS. Esta skill cobre apenas RGPS.
+2. **Exclusividade do magistério**, o tempo mínimo exigido deve ser integralmente em funções de magistério na educação básica.
+3. **Direito adquirido**, verificar se os requisitos foram preenchidos antes de 13/11/2019 ou de 16/12/1998.
+4. **Decadência**, em ações de revisão, acionar `decadencia-revisao-previdenciaria`.
+5. **Tema 1124/STJ**, em ações de concessão, verificar prévio requerimento administrativo.
+6. **Regra mais vantajosa**, comparar todas as regras aplicáveis (direito adquirido, transição por pontos, idade progressiva, pedágio 100%, regra definitiva) e identificar a mais favorável ao segurado.
+7. **Reafirmação da DER**, se o segurado não preenche requisitos na DER, avaliar reafirmação (skill `reafirmacao-der`).
 
 ## 10. INTERSEÇÃO COM OUTRAS SKILLS
 
-- `peticao-previdenciaria` — geração da peça processual
-- `precedentes-previdenciarios` — Temas 1011/STJ, 1091/STF, ADI 3772
-- `triagem-caso-novo` — roteamento inicial
-- `reafirmacao-der` — quando requisitos não preenchidos na DER
-- `documentos-comprobatorios-in128` — prova do magistério
-- `contribuicoes-complementacao-ec103` — complementação de contribuições
-- `decadencia-revisao-previdenciaria` — prazo para revisão
-- `periodo-graca-qualidade-segurado` — qualidade na DER
-- `aposentadoria-idade-hibrida` — distinguir da aposentadoria do professor (são benefícios distintos)
-- `honorarios-contrato-previdenciario` — honorários sobre atrasados
+- `peticao-previdenciaria`, geração da peça processual
+- `precedentes-previdenciarios`. Temas 1011/STJ, 1091/STF, ADI 3772
+- `triagem-caso-novo`, roteamento inicial
+- `reafirmacao-der`, quando requisitos não preenchidos na DER
+- `documentos-comprobatorios-in128`, prova do magistério
+- `contribuicoes-complementacao-ec103`, complementação de contribuições
+- `decadencia-revisao-previdenciaria`, prazo para revisão
+- `periodo-graca-qualidade-segurado`, qualidade na DER
+- `aposentadoria-idade-hibrida`, distinguir da aposentadoria do professor (são benefícios distintos)
+- `honorarios-contrato-previdenciario`, honorários sobre atrasados
 
-## 11. DECRETO 12.773/2025 — EDUCAÇÃO ESPECIAL INCLUSIVA (REFERÊNCIA TANGENCIAL)
+## 11. DECRETO 12.773/2025. EDUCAÇÃO ESPECIAL INCLUSIVA (REFERÊNCIA TANGENCIAL)
 
 O Decreto 12.773/2025 (08/12/2025) atualizou a Política Nacional de Educação Especial Inclusiva (Decreto 12.686/2025), ampliando o público atendido para crianças de 0 a 3 anos, reforçando adaptações pedagógicas, acessibilidade e participação efetiva de estudantes com deficiência, TEA e altas habilidades. Aumentou a carga horária de formação dos professores de AEE para mínimo de 360 horas. A oferta de profissional de apoio escolar independe de laudo médico.
 
-Relevância previdenciária indireta — o decreto reforça o conceito de professor que atua no AEE como exercente de função de magistério, o que pode fortalecer teses de enquadramento como professor para fins previdenciários, especialmente quando combinado com a Lei 15.326/2026 e a ADI 3772/STF.
+Relevância previdenciária indireta, o decreto reforça o conceito de professor que atua no AEE como exercente de função de magistério, o que pode fortalecer teses de enquadramento como professor para fins previdenciários, especialmente quando combinado com a Lei 15.326/2026 e a ADI 3772/STF.
 
 ## Redação da peça neste tema
 
@@ -200,16 +200,4 @@ Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria do professor
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

@@ -296,7 +296,6 @@ Para benefícios concedidos por sentença transitada em julgado.
 - Art. 5º XXXVI CF.
 - Art. 502 e art. 503 CPC (auditoria 03/10/2026, retirada a Súmula 343/STF, que trata de ação rescisória).
 
-
 **Estratégia.** Em caso de reavaliação que aplique critério diferente da sentença, IMPETRAR MS por descumprimento de coisa julgada.
 
 ## CRUZAMENTO COM SKILLS

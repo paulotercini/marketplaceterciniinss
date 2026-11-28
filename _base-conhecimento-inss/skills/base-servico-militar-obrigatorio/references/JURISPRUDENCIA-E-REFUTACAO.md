@@ -1,4 +1,4 @@
-# Tempo de Serviço Militar — Jurisprudência Verificada e Refutação
+# Tempo de Serviço Militar. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -44,81 +44,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Ausência de contribuição
+### Argumento 1. Ausência de contribuição
 
 Argumento adversário. Sem recolhimento, sem tempo de contribuição.
 
 Refutação. Tempo militar é tempo ficto reconhecido em lei. Não exige recolhimento específico.
 
-### Argumento 2 — Carência
+### Argumento 2. Carência
 
 Argumento adversário. Tempo militar não computa carência.
 
 Refutação. Correto em regra. Resguardar no pedido apenas o tempo de contribuição, não a carência.
 
-### Argumento 3 — Certidão insuficiente
+### Argumento 3. Certidão insuficiente
 
 Argumento adversário. Certidão sem detalhamento.
 
 Refutação. Requerer à Força Armada certidão complementar com datas exatas, períodos de afastamento e detalhamento de movimentação.
 
-### Argumento 4 — Tempo Tiro de Guerra
+### Argumento 4. Tempo Tiro de Guerra
 
 Argumento adversário. Não é serviço militar.
 
 Refutação. Lei 4.375/1964 e Decreto 57.654/1966 consideram Tiro de Guerra como forma de prestação do serviço militar.
 
-### Argumento 5 — Tempo ESPCEX
+### Argumento 5. Tempo ESPCEX
 
 Argumento adversário. Aluno não é militar.
 
 Refutação. Aluno da ESPCEX tem status de militar ativo. Analisar regulamento específico e documentação.
 
-### Argumento 6 — Sobreposição com tempo RPPS
+### Argumento 6. Sobreposição com tempo RPPS
 
 Argumento adversário. Período já cômputado em outro regime.
 
 Refutação. Vedado o cômputo duplicado. Compete verificar se houve aproveitamento anterior. Se não houve, cabe cômputo no RGPS.
 
-### Argumento 7 — Carteira de Reservista insuficiente
+### Argumento 7. Carteira de Reservista insuficiente
 
 Argumento adversário. Documento incompleto.
 
 Refutação. Juntar certidão específica da Força Armada para complementação.
 
-### Argumento 8 — Decadência
+### Argumento 8. Decadência
 
 Argumento adversário. Prazo esgotado.
 
 Refutação. Decadência conta do primeiro pagamento do benefício. Se o benefício ainda não foi concedido, o prazo não corre.
 
-### Argumento 9 — Ausência de CNIS
+### Argumento 9. Ausência de CNIS
 
 Argumento adversário. Sem CNIS, não cômputa.
 
 Refutação. Tempo anterior a 1998 tem prova documental e não por CNIS. Tempo militar tem regime próprio.
 
-### Argumento 10 — Contagem recíproca negada
+### Argumento 10. Contagem recíproca negada
 
 Argumento adversário. RPPS nega reconhecimento.
 
 Refutação. Art. 96 da Lei 8.213 e art. 201, §9º, CF. Direito líquido e certo. Mandado de segurança cabível. Acionar `mandado-seguranca-previdenciario`.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, tempo militar.
-
-Hugo Goes, cômputo.
-
-Fábio Zambitte Ibrahim, tempo ficto.
-
-Wladimir Novaes Martinez, contagem recíproca.
-
-Daniel Pulino, contagem recíproca.
-
-Marco Aurélio Serau Junior, regras de transição.
-
-IBDP, defesa.
 
 ## 5. Estratégia integrada
 

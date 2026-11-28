@@ -1,4 +1,4 @@
-# Sequela Mínima B94 — Jurisprudência e Refutação
+# Sequela Mínima B94. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,77 +36,65 @@ Fonte oficial em https://www.in.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Insignificância afasta
+### Argumento 1. Insignificância afasta
 
 Argumento adversário. Severidade.
 
 Refutação. Súmula 88 TNU e Tema 416 STJ admitem a sequela mínima (auditoria 03/10/2026).
 
-### Argumento 2 — Sem severidade
+### Argumento 2. Sem severidade
 
 Argumento adversário. Subjetivo.
 
 Refutação. Lei não exige severidade.
 
-### Argumento 3 — Sequela transitória
+### Argumento 3. Sequela transitória
 
 Argumento adversário. Forma.
 
 Refutação. Permanência demonstrada.
 
-### Argumento 4 — Sem CID específico
+### Argumento 4. Sem CID específico
 
 Argumento adversário. Forma.
 
 Refutação. Sequela funcional importa.
 
-### Argumento 5 — Sem incapacidade total
+### Argumento 5. Sem incapacidade total
 
 Argumento adversário. Severidade.
 
 Refutação. B94 é parcial.
 
-### Argumento 6 — Sequela estética não conta
+### Argumento 6. Sequela estética não conta
 
 Argumento adversário. Função.
 
 Refutação. Ofensa permanente conta.
 
-### Argumento 7 — Sem nexo
+### Argumento 7. Sem nexo
 
 Argumento adversário. Espécie.
 
 Refutação. NTEP e prova material.
 
-### Argumento 8 — Doença degenerativa
+### Argumento 8. Doença degenerativa
 
 Argumento adversário. Origem.
 
 Refutação. Concausa admite B94.
 
-### Argumento 9 — Cessou tratamento
+### Argumento 9. Cessou tratamento
 
 Argumento adversário. Estabilização.
 
 Refutação. Sequela permanente.
 
-### Argumento 10 — Perícia desfavorável
+### Argumento 10. Perícia desfavorável
 
 Argumento adversário. Prova.
 
 Refutação. Impugnação técnica.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

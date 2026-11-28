@@ -50,7 +50,7 @@ Art. 42, §2º, da Lei 8.213/91 (agravamento de doença preexistente) (auditoria
 
 Arts. 19 a 21 Lei 8.213/91. NTEP art. 21-A Lei 8.213/91. ADI 3931 STF.
 
-RMI EC 103/2019 art. 26 §3º II — para B92 a regra é 100% da média.
+RMI EC 103/2019 art. 26 §3º II, para B92 a regra é 100% da média.
 
 Lista B Anexo II Decreto 3.048/99 (NTEP por CID e CNAE). Burnout QD85 (Portaria MTE 1.419/2024). Riscos psicossociais NR-1 atualizada.
 
@@ -120,7 +120,7 @@ Tema 27 STF (RE 567985, flexibilização do critério de renda). Enunciado 17 CR
 
 Mesma base da LOAS. Idade 65 anos. Sem perícia médica.
 
-Estatuto do Idoso (Lei 10.741/2003) — exclusão do BPC e da aposentadoria de até 1 SM de outro idoso da família do cômputo.
+Estatuto do Idoso (Lei 10.741/2003), exclusão do BPC e da aposentadoria de até 1 SM de outro idoso da família do cômputo.
 
 ### Pensão por Morte B21/B93
 

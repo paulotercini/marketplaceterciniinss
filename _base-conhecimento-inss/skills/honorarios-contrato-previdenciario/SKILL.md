@@ -15,17 +15,17 @@ O art. 22 do EAOAB assegura três espécies de honorários (convencionados, arbi
 
 O **CDC não se aplica** à relação advogado-cliente (REsp 532.377/RJ, 2003). O art. 49 do CDC (arrependimento em 7 dias) não incide sobre contratos de honorários.
 
-## 2. Cálculo dos honorários sucumbenciais — Tema 1050/STJ
+## 2. Cálculo dos honorários sucumbenciais. Tema 1050/STJ
 
-Para detalhamento completo dos precedentes, divergência TRF4 × STJ e remissões cruzadas, consultar a skill `precedentes-previdenciarios` (seção "Honorários advocatícios sucumbenciais — base de cálculo").
+Para detalhamento completo dos precedentes, divergência TRF4 × STJ e remissões cruzadas, consultar a skill `precedentes-previdenciarios` (seção "Honorários advocatícios sucumbenciais, base de cálculo").
 
 ### 2.1 Regra geral de cálculo em três etapas
 
-**Etapa 1 — Período.** Da DER (ou DIB) até a data da sentença de procedência, ou do acórdão se a sentença foi de improcedência (Súmula 76/TRF4, aplicável por analogia no TRF3).
+**Etapa 1. Período.** Da DER (ou DIB) até a data da sentença de procedência, ou do acórdão se a sentença foi de improcedência (Súmula 76/TRF4, aplicável por analogia no TRF3).
 
-**Etapa 2 — Base.** Valor integral de todas as parcelas do benefício concedido judicialmente nesse período, **sem excluir** pagamentos administrativos feitos após a citação válida (Tema 1050/STJ). Valores pagos administrativamente antes da citação podem ser excluídos (interpretação temporal do STJ).
+**Etapa 2. Base.** Valor integral de todas as parcelas do benefício concedido judicialmente nesse período, **sem excluir** pagamentos administrativos feitos após a citação válida (Tema 1050/STJ). Valores pagos administrativamente antes da citação podem ser excluídos (interpretação temporal do STJ).
 
-**Etapa 3 — Percentual.** Aplicar o percentual fixado na sentença sobre a base integral. No TRF3, a 7ª Turma aplica 10% e a 10ª Turma aplica 15% sobre o valor da condenação. Nos JEFs, honorários somente em grau de recurso (art. 55, Lei 9.099/95).
+**Etapa 3. Percentual.** Aplicar o percentual fixado na sentença sobre a base integral. No TRF3, a 7ª Turma aplica 10% e a 10ª Turma aplica 15% sobre o valor da condenação. Nos JEFs, honorários somente em grau de recurso (art. 55, Lei 9.099/95).
 
 ### 2.2 Compensação na liquidação
 
@@ -37,11 +37,11 @@ O art. 22, §4º do EAOAB autoriza o juiz a determinar pagamento direto ao advog
 
 ## 3. Cláusulas essenciais para o contrato previdenciário
 
-### 3.1 Base de cálculo — valor bruto
+### 3.1 Base de cálculo. valor bruto
 
 A Tabela da OAB/SP, a jurisprudência do TRF3 e o STJ (REsp 1.437.413/RS) confirmam que os honorários incidem sobre o **proveito econômico bruto**, sem dedução de IR retido na fonte ou contribuições previdenciárias. Cláusula obrigatória expressa sobre incidência em valor bruto.
 
-### 3.2 Proveito econômico — parcelas vencidas + vincendas
+### 3.2 Proveito econômico. parcelas vencidas + vincendas
 
 A base não se limita aos atrasados pagos em RPV/precatório, mas inclui até **12 prestações vincendas** (art. 292, CPC). O contrato deve reproduzir essa definição para evitar discussão posterior.
 
@@ -59,7 +59,7 @@ Cláusula prevendo que a composição amigável enseja exigibilidade imediata do
 
 ### 3.6 Sucumbência como receita autônoma
 
-O art. 23 do EAOAB garante que honorários sucumbenciais pertencem ao advogado. Separar expressamente honorários contratuais dos sucumbenciais, prevendo que estes não se compensam com aqueles (salvo estipulação diversa), respeitando o **teto ético do art. 50 do CED — contratuais + sucumbenciais não podem superar as vantagens obtidas pelo cliente**.
+O art. 23 do EAOAB garante que honorários sucumbenciais pertencem ao advogado. Separar expressamente honorários contratuais dos sucumbenciais, prevendo que estes não se compensam com aqueles (salvo estipulação diversa), respeitando o **teto ético do art. 50 do CED, contratuais + sucumbenciais não podem superar as vantagens obtidas pelo cliente**.
 
 ### 3.7 Renúncia do benefício pelo cliente
 
@@ -77,39 +77,39 @@ Cláusula expressa sobre responsabilidade pelas despesas (custas, diligências, 
 
 Para o escritório em Monte Alto/SP, fixar o foro da Comarca de Monte Alto ou Catanduva para eventuais disputas sobre o contrato.
 
-## 4. ALERTA CRÍTICO — Cláusulas penais por desistência são ilegais
+## 4. ALERTA CRÍTICO. Cláusulas penais por desistência são ilegais
 
 As cláusulas progressivas de desistência amplamente divulgadas em redes sociais (70% do contrato se desistir após protocolo, 100% após audiência) **são nulas conforme jurisprudência pacífica do STJ**.
 
-**REsp 1.346.171/PR** (4ª Turma, Rel. Min. Luis Felipe Salomão, Info 593, 2016) — não é possível estipular multa no contrato de honorários para hipóteses de renúncia ou revogação unilateral do mandato, independentemente de motivação.
+**REsp 1.346.171/PR** (4ª Turma, Rel. Min. Luis Felipe Salomão, Info 593, 2016), não é possível estipular multa no contrato de honorários para hipóteses de renúncia ou revogação unilateral do mandato, independentemente de motivação.
 
-**REsp 1.882.117/MS** (3ª Turma, Rel. Min. Nancy Andrighi, 2020) — anulação de cláusula que exigia pagamento integral em caso de revogação, por criar vinculação permanente do cliente.
+**REsp 1.882.117/MS** (3ª Turma, Rel. Min. Nancy Andrighi, 2020), anulação de cláusula que exigia pagamento integral em caso de revogação, por criar vinculação permanente do cliente.
 
-**TED OAB/SP E-4.141/2012** — inteiramente incabível a fixação de multa ante o exercício do direito de revogação.
+**TED OAB/SP E-4.141/2012**, inteiramente incabível a fixação de multa ante o exercício do direito de revogação.
 
-A razão é dogmática. A relação advogado-cliente é fiduciária, fundada na confiança pessoal. A revogação do mandato é direito potestativo do cliente (arts. 16 e 17 do CED/OAB; art. 682, I, CC) que não pode ser penalizado. O art. 14 do CED garante que a revogação não extingue o direito do advogado aos honorários — mas **proporcionais aos serviços efetivamente prestados**, não ao valor integral do contrato.
+A razão é dogmática. A relação advogado-cliente é fiduciária, fundada na confiança pessoal. A revogação do mandato é direito potestativo do cliente (arts. 16 e 17 do CED/OAB; art. 682, I, CC) que não pode ser penalizado. O art. 14 do CED garante que a revogação não extingue o direito do advogado aos honorários, mas **proporcionais aos serviços efetivamente prestados**, não ao valor integral do contrato.
 
 ## 5. Estrutura lícita de proteção contra desistência
 
 Em vez de cláusulas penais escalonadas (ilegais), o advogado previdenciário deve estruturar proteção em três camadas lícitas.
 
-### 5.1 Primeira camada — valor fixo de contratação (não restituível)
+### 5.1 Primeira camada. valor fixo de contratação (não restituível)
 
 Honorário inicial correspondente ao trabalho de análise do caso, planejamento jurídico e elaboração de peças preparatórias. Deve refletir o valor real do serviço prestado (não uma multa disfarçada) e respeitar a Tabela de Honorários da OAB/SP.
 
-### 5.2 Segunda camada — honorários proporcionais ao trabalho realizado
+### 5.2 Segunda camada. honorários proporcionais ao trabalho realizado
 
 Em caso de rescisão, o advogado tem direito à remuneração proporcional. Discriminar no contrato as etapas do serviço com percentuais atribuídos
 
-- Análise documental e planejamento — 15%
-- Elaboração e protocolo da petição inicial — 20%
-- Acompanhamento processual e manifestações — 25%
-- Audiência e sustentações — 20%
-- Cumprimento de sentença — 20%
+- Análise documental e planejamento. 15%
+- Elaboração e protocolo da petição inicial. 20%
+- Acompanhamento processual e manifestações. 25%
+- Audiência e sustentações. 20%
+- Cumprimento de sentença. 20%
 
 Se o cliente desiste após a audiência, o advogado cobra proporcionalmente pelas etapas cumpridas (80% do total contratado).
 
-### 5.3 Terceira camada — cláusula penal exclusivamente por inadimplemento
+### 5.3 Terceira camada. cláusula penal exclusivamente por inadimplemento
 
 A multa moratória é perfeitamente válida (arts. 408-413, CC). O que é vedado é a multa por exercício do direito de revogação. Pode-se prever multa de 2% sobre o valor em atraso, juros de 1% ao mês, correção monetária (INPC ou IPCA), e cláusula de honorários advocatícios de 20% para cobrança judicial.
 
@@ -141,7 +141,7 @@ Atuação administrativa deve ser objeto de contratação separada ou cláusula 
 
 Honorários sucumbenciais de 10% (7ª Turma) a 15% (10ª Turma) sobre o valor da condenação. Destaque de honorários contratuais limitado a 30% conforme Tabela da OAB/SP. Recomendação do Fórum Interinstitucional Previdenciário (junho/2023) favorável ao deferimento do destaque.
 
-### 7.4 Rito ordinário vs. JEF — impacto na estrutura contratual
+### 7.4 Rito ordinário vs. JEF. impacto na estrutura contratual
 
 No rito ordinário, a sucumbência garante receita adicional independente do contrato. Nos JEFs, toda a remuneração depende do contrato. Contratos para ações de JEF devem ter valor fixo de entrada maior ou percentual contratual superior (ex. 25-30%) para compensar a ausência de sucumbência em primeira instância.
 
@@ -153,9 +153,9 @@ Ao redigir ou revisar contrato de honorários previdenciário, verificar
 2. Proveito econômico inclui parcelas vencidas + até 12 vincendas
 3. Cláusula sobre implantação administrativa (Tema 1050)
 4. Cláusula sobre tutela antecipada / liminar
-5. Cláusula sobre acordo judicial — exigibilidade imediata
+5. Cláusula sobre acordo judicial, exigibilidade imediata
 6. Separação expressa entre contratuais e sucumbenciais
-7. Teto ético respeitado (art. 50 CED — contratuais + sucumbenciais ≤ vantagens do cliente)
+7. Teto ético respeitado (art. 50 CED, contratuais + sucumbenciais ≤ vantagens do cliente)
 8. Ausência de cláusula penal por desistência/revogação (ilegal)
 9. Etapas do serviço discriminadas com percentuais (proteção proporcional)
 10. Multa moratória apenas por inadimplemento de pagamento
@@ -166,25 +166,13 @@ Ao redigir ou revisar contrato de honorários previdenciário, verificar
 
 ## 9. Remissões cruzadas
 
-- `precedentes-previdenciarios` — Tema 1050/STJ, Súmula 111/STJ, Tema 1105/STJ, Tema 1207/STJ (compensação inacumulável), divergência TRF4 × STJ
-- `peticao-previdenciaria` — pedido de destaque de honorários contratuais na petição inicial
-- `revisao-peticao` — verificação de pedido de honorários na revisão automática
-- `impugnacao-cumprimento-concomitantes` — cálculo da base sucumbencial em revisão por concomitantes
-- `tributacao-beneficios-previdenciarios` — IR sobre honorários, RRA em atrasados
-- `triagem-caso-novo` — avaliação de viabilidade econômica para definição do contrato
+- `precedentes-previdenciarios`. Tema 1050/STJ, Súmula 111/STJ, Tema 1105/STJ, Tema 1207/STJ (compensação inacumulável), divergência TRF4 × STJ
+- `peticao-previdenciaria`, pedido de destaque de honorários contratuais na petição inicial
+- `revisao-peticao`, verificação de pedido de honorários na revisão automática
+- `impugnacao-cumprimento-concomitantes`, cálculo da base sucumbencial em revisão por concomitantes
+- `tributacao-beneficios-previdenciarios`. IR sobre honorários, RRA em atrasados
+- `triagem-caso-novo`, avaliação de viabilidade econômica para definição do contrato
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

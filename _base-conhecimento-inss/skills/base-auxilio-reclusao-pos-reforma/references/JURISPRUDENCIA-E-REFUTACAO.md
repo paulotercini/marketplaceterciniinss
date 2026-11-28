@@ -1,4 +1,4 @@
-# Auxílio-Reclusão — Jurisprudência Verificada e Refutação
+# Auxílio-Reclusão. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -68,49 +68,49 @@ Aplicação. Citar o Tema 1421/STJ como fundamento principal (auditoria 03/10/20
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Renda acima do teto
+### Argumento 1. Renda acima do teto
 
 Argumento adversário. Último salário do segurado estava acima do teto de baixa renda.
 
 Refutação. Em prisão posterior à MP 871/2019, conferir a média dos salários de contribuição dos 12 meses anteriores ao mês da prisão (art. 80, §4º, da Lei 8.213/91), com divisor igual ao número de salários existentes (Tema 310/TNU); em prisão anterior, o excedente ínfimo admite flexibilização (Tema 1162/STJ, item i) (auditoria 03/10/2026, retirados o Tema 357/TNU e o Tema 896/STJ, que tratam de progressão de regime e de renda zero).
 
-### Argumento 2 — Desempregado não tem direito
+### Argumento 2. Desempregado não tem direito
 
 Argumento adversário. Segurado desempregado na prisão não recebeu salário, logo não atende o critério.
 
 Refutação. Em prisão anterior à MP 871/2019, o desempregado sem renda atende o critério (Tema 896/STJ e Tema 31/TNU); em prisão posterior, sem salário de contribuição nos 12 meses anteriores o segurado é de baixa renda (art. 383, §5º, da IN 128/2022) (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
-### Argumento 3 — Ausência de 24 contribuições
+### Argumento 3. Ausência de 24 contribuições
 
 Argumento adversário. Segurado não cumpriu 24 contribuições exigidas pela Lei 13.846/2019.
 
 Refutação. Verificar data da prisão. Se anterior a 18/01/2019 (vigência da MP 871), regra antiga aplicável. Tempus regit actum.
 
-### Argumento 4 — Regime semiaberto exclui
+### Argumento 4. Regime semiaberto exclui
 
 Argumento adversário. Segurado está em semiaberto, sem direito ao B25.
 
 Refutação. Verificar data da prisão. Se anterior à Lei 13.846/2019, regime semiaberto admitido. Direito adquirido à regra anterior.
 
-### Argumento 5 — Progressão cessa o B25
+### Argumento 5. Progressão cessa o B25
 
 Argumento adversário. Progressão para semiaberto cessa o benefício.
 
 Refutação. Em prisão anterior a 18/01/2019, o B25 permanece na progressão para o semiaberto, inclusive com monitoramento eletrônico (Tema 357/TNU e art. 383, §4º, da IN 128/2022); em prisão posterior, o art. 80 exige regime fechado (auditoria 03/10/2026).
 
-### Argumento 6 — Monitoramento eletrônico não é prisão
+### Argumento 6. Monitoramento eletrônico não é prisão
 
 Argumento adversário. Tornozeleira não equivale à prisão para fins de B25.
 
 Refutação. Em situação de restrição efetiva de liberdade equiparável à prisão, argumentação pró-segurado é cabível. Discussão viva.
 
-### Argumento 7 — DIB na DER e não na prisão
+### Argumento 7. DIB na DER e não na prisão
 
 Argumento adversário. DIB deve ser no requerimento.
 
 Refutação. Art. 80 c/c art. 74, I. Se requerimento em 180 dias (dependente menor de 16) ou 90 dias (demais), DIB na data da prisão.
 
-### Argumento 8 — Ausência de atestado trimestral
+### Argumento 8. Ausência de atestado trimestral
 
 Argumento adversário. Falta de atestado cessa o benefício.
 

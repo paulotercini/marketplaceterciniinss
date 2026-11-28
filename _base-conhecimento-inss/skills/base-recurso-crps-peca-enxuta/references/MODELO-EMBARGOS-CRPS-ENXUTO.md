@@ -13,7 +13,6 @@ ou
 EXCELENTÍSSIMO SENHOR PRESIDENTE DA [X]ª CÂMARA DE JULGAMENTO DO
 CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL
 
-
 [Nome do Embargante], CPF [XXX.XXX.XXX-XX], nos autos do processo
 administrativo nº [protocolo], referente ao benefício nº [NB], vem,
 respeitosamente, opor EMBARGOS DE DECLARAÇÃO ao acórdão [número], de
@@ -30,7 +29,6 @@ O corpo foi revisto na auditoria de 03/10/2026 e na Onda 184, que alinhou a form
 O Embargante tomou ciência do acórdão embargado em DD/MM/AAAA e opõe
 estes embargos em DD/MM/AAAA, dentro do prazo de 30 dias (art. 92, § 2º,
 do Regimento Interno do CRPS).
-
 
 2. DO VÍCIO
 
@@ -75,16 +73,13 @@ O acórdão embargado registra [data, valor, NB, CPF ou nome] na folha [__],
 enquanto o documento da folha [__] indica [dado correto]. O erro decorre
 de [origem do equívoco] e deve ser corrigido para [correção pretendida].
 
-
 3. DO PEDIDO
 
 Pelo exposto, requer o conhecimento e provimento dos presentes
 embargos para [sanar o vício específico] e, se cabível, emprestar
 efeito infringente em razão de [justificativa].
 
-
 [Cidade], [data].
-
 
 [Assinatura]
 Paulo Roberto Tercini Filho

@@ -1,4 +1,4 @@
-# Fibromialgia Lei 15.176/2025 — Fundamentos e Cenários
+# Fibromialgia Lei 15.176/2025. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -44,45 +44,45 @@ ACR 2010 e 2016. WPI e SS scores. Dor difusa por mais de 3 meses. Sintomas assoc
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Fibromialgia crônica
+### Cenário A. Fibromialgia crônica
 
 Lei 15.176 reconhece. Aposentadoria PCD ou BPC.
 
-### Cenário B — Múltiplos domínios
+### Cenário B. Múltiplos domínios
 
 Dor, fadiga, fog. IF-BrA.
 
-### Cenário C — Idosa baixa renda
+### Cenário C. Idosa baixa renda
 
 BPC.
 
-### Cenário D — Perda de emprego
+### Cenário D. Perda de emprego
 
 Lei 15.176 e CF/88.
 
-### Cenário E — Sequela após COVID
+### Cenário E. Sequela após COVID
 
 Pós-COVID com fibromialgia.
 
-### Cenário F — Comorbidade depressão
+### Cenário F. Comorbidade depressão
 
 Múltiplos domínios.
 
-### Cenário G — Mulher segurada
+### Cenário G. Mulher segurada
 
 Protocolo de gênero.
 
 ## 7. Cenários limitados
 
-### Cenário H — Diagnóstico recente
+### Cenário H. Diagnóstico recente
 
 Anterior a 3 meses. Pode não atender critério ACR.
 
-### Cenário I — Sem repercussão funcional
+### Cenário I. Sem repercussão funcional
 
 Não enquadra.
 
-### Cenário J — Apenas dor localizada
+### Cenário J. Apenas dor localizada
 
 Não atende ACR.
 

@@ -1,4 +1,4 @@
-# Educação Infantil Lei 15.326/2026 — Fundamentos e Cenários
+# Educação Infantil Lei 15.326/2026. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,45 +40,45 @@ Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Professora de pré-escola
+### Cenário A. Professora de pré-escola
 
 Magistério pleno.
 
-### Cenário B — Auxiliar de creche com função pedagógica
+### Cenário B. Auxiliar de creche com função pedagógica
 
 Lei 15.326/2026 garante.
 
-### Cenário C — Monitora pedagógica
+### Cenário C. Monitora pedagógica
 
 Enquadra-se.
 
-### Cenário D — Berçarista com atuação pedagógica
+### Cenário D. Berçarista com atuação pedagógica
 
 Conta.
 
-### Cenário E — Cargo híbrido docente apoio
+### Cenário E. Cargo híbrido docente apoio
 
 Tempo efetivo de função pedagógica conta.
 
-### Cenário F — Direção de creche
+### Cenário F. Direção de creche
 
 Lei 11.301 e ADI 3772.
 
-### Cenário G — Coordenação em educação infantil
+### Cenário G. Coordenação em educação infantil
 
 Conta.
 
 ## 6. Cenários limitados
 
-### Cenário H — Função exclusivamente de cuidado
+### Cenário H. Função exclusivamente de cuidado
 
 Não conta. Sem componente pedagógico.
 
-### Cenário I — Serviço administrativo sem docência
+### Cenário I. Serviço administrativo sem docência
 
 Não conta.
 
-### Cenário J — Professor universitário
+### Cenário J. Professor universitário
 
 Não aplicável. O texto limita a aposentadoria do professor à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º) (auditoria 03/10/2026).
 

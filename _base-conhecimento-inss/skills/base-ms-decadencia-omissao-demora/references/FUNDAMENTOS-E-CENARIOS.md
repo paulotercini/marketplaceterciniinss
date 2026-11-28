@@ -1,4 +1,4 @@
-# Decadência e Omissão MS — Fundamentos e Cenários
+# Decadência e Omissão MS. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -38,41 +38,41 @@ Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha d
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Ato comissivo
+### Cenário A. Ato comissivo
 
 120 dias da ciência.
 
-### Cenário B — Omissão
+### Cenário B. Omissão
 
 Prazo renovado.
 
-### Cenário C — Arquivamento
+### Cenário C. Arquivamento
 
 Da ciência.
 
-### Cenário D — Cumprimento CRPS
+### Cenário D. Cumprimento CRPS
 
 Omissão.
 
-### Cenário E — Exigência abusiva persistente
+### Cenário E. Exigência abusiva persistente
 
 Trato continuado.
 
-### Cenário F — PA pendente
+### Cenário F. PA pendente
 
 Sem decadência.
 
 ## 6. Cenários limitados
 
-### Cenário G — Ato transitório
+### Cenário G. Ato transitório
 
 Alta acuidade na contagem.
 
-### Cenário H — Prorrogação PA
+### Cenário H. Prorrogação PA
 
 Cautela.
 
-### Cenário I — MS preventivo
+### Cenário I. MS preventivo
 
 Requer iminência.
 

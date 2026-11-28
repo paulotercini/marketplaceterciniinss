@@ -1,4 +1,4 @@
-# Reabilitação Profissional 1.310/2025 e 1.333/2026 — Jurisprudência e Refutação
+# Reabilitação Profissional 1.310/2025 e 1.333/2026. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -32,61 +32,61 @@ Veda barreiras administrativas abusivas. Fonte oficial em https://www.planalto.g
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Falta única encerra o PRP
+### Argumento 1. Falta única encerra o PRP
 
 Argumento adversário. Falta sem justificativa autoriza encerramento.
 
 Refutação. As Portarias DIRBEN 1.310/2025 e 1.333/2026 garantem prazo de 7 dias para justificativa. Encerramento prematuro sem oportunizar justificativa viola o devido processo administrativo (art. 5º LV CF) e o art. 12 das Portarias.
 
-### Argumento 2 — Recusa enseja cancelamento imediato
+### Argumento 2. Recusa enseja cancelamento imediato
 
 Argumento adversário. Recusa equivale a abandono e gera cancelamento.
 
 Refutação. As Portarias estabelecem suspensão de 60 dias, não cancelamento. O ato de cessação direta é nulo (art. 13 das Portarias).
 
-### Argumento 3 — Reclusão cancela o PRP
+### Argumento 3. Reclusão cancela o PRP
 
 Argumento adversário. Reclusão extingue a reabilitação.
 
 Refutação. Os arts. 14 e 29 §2º A e B das Portarias garantem suspensão de 60 dias. O cancelamento imediato é nulo.
 
-### Argumento 4 — Não necessita de RP afasta B32
+### Argumento 4. Não necessita de RP afasta B32
 
 Argumento adversário. Conclusão de não necessidade afasta conversão em aposentadoria.
 
 Refutação. A conclusão exige fundamentação multidisciplinar do art. 89 da Lei 8.213/91. Em ato exclusivamente médico, há nulidade. Sem reabilitação, deve haver conversão em B32 (art. 62 §2º Lei 8.213/91).
 
-### Argumento 5 — Cessação antes do PRP concluído
+### Argumento 5. Cessação antes do PRP concluído
 
 Argumento adversário. Alta médica encerra o benefício mesmo sem reabilitação.
 
 Refutação. O art. 62 da Lei 8.213/91 e o STJ exigem conclusão do PRP. Cessação prematura gera limbo e configura ato ilegal.
 
-### Argumento 6 — Encerramento sem certificado
+### Argumento 6. Encerramento sem certificado
 
 Argumento adversário. Encerramento dispensa certificado de reabilitação.
 
 Refutação. O art. 53 das Portarias DIRBEN exige certificado quando houver retorno ao trabalho. Sem certificado, o segurado não pode comprovar habilitação no mercado.
 
-### Argumento 7 — Negativa de reagendamento
+### Argumento 7. Negativa de reagendamento
 
 Argumento adversário. Reagendamento é discricionário.
 
 Refutação. A Portaria 1.333/2026 admite reagendamento excepcional em até 30 dias. A negativa sem motivação viola a Lei 13.460/2017.
 
-### Argumento 8 — Exigência de novo DER
+### Argumento 8. Exigência de novo DER
 
 Argumento adversário. Conversão de B31 em B32 demanda novo requerimento.
 
 Refutação. O Tema 1124 STJ vedou a exigência de prévio requerimento administrativo quando o INSS já analisou a incapacidade. Conversão é dever de cooperação.
 
-### Argumento 9 — Função compatível em qualquer mercado
+### Argumento 9. Função compatível em qualquer mercado
 
 Argumento adversário. Mercado nacional autoriza alta.
 
 Refutação. A função compatível deve ser real e localizada na região do segurado. Realocação geográfica forçada viola a dignidade do trabalhador.
 
-### Argumento 10 — Súmula 47/TNU não se aplica
+### Argumento 10. Súmula 47/TNU não se aplica
 
 Argumento adversário. Sequela mínima afasta reabilitação.
 

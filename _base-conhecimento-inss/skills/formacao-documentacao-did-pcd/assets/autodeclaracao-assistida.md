@@ -20,19 +20,19 @@ Eu, [NOME COMPLETO DA SEGURADA], brasileira, [ESTADO CIVIL], [PROFISSÃO ATUAL O
 
 ## Sobre o Início dos Sintomas
 
-Os sintomas que hoje me incapacitam começaram gradualmente. Lembro que por volta de [ANO APROXIMADO] comecei a sentir [DESCREVER OS PRIMEIROS SINTOMAS — dor em joelhos, dor nos pés, dificuldade para andar, dor na coluna, fadiga, etc.]. No início, pensei que era apenas cansaço normal do trabalho e não procurei atendimento médico imediatamente.
+Os sintomas que hoje me incapacitam começaram gradualmente. Lembro que por volta de [ANO APROXIMADO] comecei a sentir [DESCREVER OS PRIMEIROS SINTOMAS, dor em joelhos, dor nos pés, dificuldade para andar, dor na coluna, fadiga, etc.]. No início, pensei que era apenas cansaço normal do trabalho e não procurei atendimento médico imediatamente.
 
-Com o passar dos anos, os sintomas foram piorando. A dor em [LOCALIZAÇÃO] ficou mais frequente. Percebi que não conseguia mais [CITAR ATIVIDADES ESPECÍFICAS — subir escadas, ficar em pé muito tempo, andar longas distâncias, agachar, etc.] como antes.
+Com o passar dos anos, os sintomas foram piorando. A dor em [LOCALIZAÇÃO] ficou mais frequente. Percebi que não conseguia mais [CITAR ATIVIDADES ESPECÍFICAS, subir escadas, ficar em pé muito tempo, andar longas distâncias, agachar, etc.] como antes.
 
 ## Sobre a Atividade Laboral
 
-Durante o período em que trabalhei em [NOME DA EMPRESA], de [DATA DE ADMISSÃO] a [DATA DE DESLIGAMENTO], exerci a função de [FUNÇÃO]. As atividades incluíam [DESCREVER ATIVIDADES FÍSICAS — ficar em pé, carregar peso, movimentos repetitivos, trabalho em pé prolongado, postura inadequada, etc.].
+Durante o período em que trabalhei em [NOME DA EMPRESA], de [DATA DE ADMISSÃO] a [DATA DE DESLIGAMENTO], exerci a função de [FUNÇÃO]. As atividades incluíam [DESCREVER ATIVIDADES FÍSICAS, ficar em pé, carregar peso, movimentos repetitivos, trabalho em pé prolongado, postura inadequada, etc.].
 
-Essas atividades contribuíram para o meu quadro de saúde. Sentia dores após os turnos de trabalho e precisava tomar analgésicos para conseguir continuar. [DESCREVER SITUAÇÕES CONCRETAS — ida à enfermaria da empresa, conversas com médico da empresa, pedidos de ajuda a colegas, etc.]
+Essas atividades contribuíram para o meu quadro de saúde. Sentia dores após os turnos de trabalho e precisava tomar analgésicos para conseguir continuar. [DESCREVER SITUAÇÕES CONCRETAS, ida à enfermaria da empresa, conversas com médico da empresa, pedidos de ajuda a colegas, etc.]
 
 ## Sobre os Tratamentos Tentados
 
-Ao longo dos anos, tentei diversos tratamentos. [LISTAR TRATAMENTOS COM APROXIMAÇÃO DE DATAS — uso de anti-inflamatórios, fisioterapia, consultas médicas, exames realizados, uso de palmilhas ortopédicas, joelheiras, outros tratamentos caseiros, medicação para dor comprada em farmácia.]
+Ao longo dos anos, tentei diversos tratamentos. [LISTAR TRATAMENTOS COM APROXIMAÇÃO DE DATAS, uso de anti-inflamatórios, fisioterapia, consultas médicas, exames realizados, uso de palmilhas ortopédicas, joelheiras, outros tratamentos caseiros, medicação para dor comprada em farmácia.]
 
 Em [ANO], procurei o Dr(a). [NOME SE LEMBRAR] em [LOCAL]. Em [OUTRO ANO], fiz exame de [TIPO] que mostrou [RESULTADO SE LEMBRAR].
 
@@ -40,27 +40,27 @@ Em [ANO], procurei o Dr(a). [NOME SE LEMBRAR] em [LOCAL]. Em [OUTRO ANO], fiz ex
 
 Atualmente, minhas limitações são as seguintes.
 
-Para andar. [DESCREVER — distância máxima sem dor, necessidade de pausas, uso de bengala ou muletas, dificuldade em terrenos irregulares.]
+Para andar. [DESCREVER, distância máxima sem dor, necessidade de pausas, uso de bengala ou muletas, dificuldade em terrenos irregulares.]
 
 Para subir e descer escadas. [DESCREVER LIMITAÇÃO ESPECÍFICA.]
 
 Para ficar em pé. [DESCREVER TEMPO MÁXIMO.]
 
-Para realizar tarefas domésticas. [DESCREVER — limpeza, preparo de refeições, lavar roupa, carregar compras.]
+Para realizar tarefas domésticas. [DESCREVER, limpeza, preparo de refeições, lavar roupa, carregar compras.]
 
-Para cuidar de mim mesma. [DESCREVER — banho, vestir-se, uso do banheiro.]
+Para cuidar de mim mesma. [DESCREVER, banho, vestir-se, uso do banheiro.]
 
 Para trabalhar. [DESCREVER IMPACTO NA CAPACIDADE LABORAL.]
 
-Para vida social. [DESCREVER — frequência a igreja, encontros familiares, eventos sociais, transporte público.]
+Para vida social. [DESCREVER, frequência a igreja, encontros familiares, eventos sociais, transporte público.]
 
 ## Sobre Adaptações Necessárias
 
-Tive que fazer várias adaptações na minha vida. [EXEMPLOS — uso palmilhas ortopédicas desde ano X, mudei o sapato que uso, diminuí o esforço físico em casa, peço ajuda para atividades que antes fazia sozinha, instalei apoio no banheiro, etc.]
+Tive que fazer várias adaptações na minha vida. [EXEMPLOS, uso palmilhas ortopédicas desde ano X, mudei o sapato que uso, diminuí o esforço físico em casa, peço ajuda para atividades que antes fazia sozinha, instalei apoio no banheiro, etc.]
 
 ## Sobre o Impacto Emocional e Social
 
-Essa condição impacta muito minha vida. [DESCREVER — sinto dor diariamente, evito sair de casa porque sei que vou sentir dor, dependo de ajuda de familiares para tarefas que antes fazia sozinha, sinto-me limitada em atividades que fazia com naturalidade.]
+Essa condição impacta muito minha vida. [DESCREVER, sinto dor diariamente, evito sair de casa porque sei que vou sentir dor, dependo de ajuda de familiares para tarefas que antes fazia sozinha, sinto-me limitada em atividades que fazia com naturalidade.]
 
 ## Declaração Final
 

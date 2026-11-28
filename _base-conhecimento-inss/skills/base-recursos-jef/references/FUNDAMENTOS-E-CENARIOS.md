@@ -1,4 +1,4 @@
-# Recursos no JEF Previdenciário — Fundamentos e Cenários
+# Recursos no JEF Previdenciário. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -36,45 +36,45 @@ Uniformização em tese.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Sentença desfavorável no JEF
+### Cenário A. Sentença desfavorável no JEF
 
 Recurso inominado à Turma Recursal.
 
-### Cenário B — Acórdão da TR com omissão
+### Cenário B. Acórdão da TR com omissão
 
 Embargos de declaração.
 
-### Cenário C — Divergência entre TRs da mesma Região
+### Cenário C. Divergência entre TRs da mesma Região
 
 IUJEF.
 
-### Cenário D — Divergência entre TRs de Regiões diversas ou com Súmula
+### Cenário D. Divergência entre TRs de Regiões diversas ou com Súmula
 
 PUIL à TNU.
 
-### Cenário E — Acórdão TNU com divergência STJ
+### Cenário E. Acórdão TNU com divergência STJ
 
 REsp excepcional. Regra geral, PUIL bloqueia REsp (Súmula 203 STJ), mas art. 14 §4º Lei 10.259 permite em caso específico.
 
-### Cenário F — Matéria constitucional
+### Cenário F. Matéria constitucional
 
 RE ao STF.
 
-### Cenário G — Ato ilegal de TR sem recurso
+### Cenário G. Ato ilegal de TR sem recurso
 
 MS.
 
 ## 6. Cenários limitados
 
-### Cenário H — Embargos como sucedâneo
+### Cenário H. Embargos como sucedâneo
 
 Vedado.
 
-### Cenário I — RE sem matéria constitucional
+### Cenário I. RE sem matéria constitucional
 
 Inadmissível.
 
-### Cenário J — REsp contra TR sem PUIL
+### Cenário J. REsp contra TR sem PUIL
 
 Inadmissível (Súmula 203 STJ).
 

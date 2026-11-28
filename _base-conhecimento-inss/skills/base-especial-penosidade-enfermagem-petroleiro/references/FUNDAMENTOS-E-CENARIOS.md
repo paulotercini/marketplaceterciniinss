@@ -1,4 +1,4 @@
-# Penosidade, Enfermagem e Petroleiro — Fundamentos e Cenários
+# Penosidade, Enfermagem e Petroleiro. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,45 +46,45 @@ O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Técnico de enfermagem
+### Cenário A. Técnico de enfermagem
 
 Hospital. Especial.
 
-### Cenário B — Auxiliar de enfermagem
+### Cenário B. Auxiliar de enfermagem
 
 Hospital. Especial.
 
-### Cenário C — Petroleiro plataforma
+### Cenário C. Petroleiro plataforma
 
 Especial.
 
-### Cenário D — Vigilante armado
+### Cenário D. Vigilante armado
 
 Especial.
 
-### Cenário E — Eletricista alta tensão
+### Cenário E. Eletricista alta tensão
 
 Especial.
 
-### Cenário F — Motorista rodoviário
+### Cenário F. Motorista rodoviário
 
 Categoria pré-1995.
 
-### Cenário G — Frentista
+### Cenário G. Frentista
 
 Hidrocarbonetos.
 
 ## 6. Cenários limitados
 
-### Cenário H — Médico administrativo
+### Cenário H. Médico administrativo
 
 Sem nocividade.
 
-### Cenário I — Vigilante desarmado pós-1995
+### Cenário I. Vigilante desarmado pós-1995
 
 Análise específica.
 
-### Cenário J — Profissional sem habitualidade
+### Cenário J. Profissional sem habitualidade
 
 Não enquadra.
 

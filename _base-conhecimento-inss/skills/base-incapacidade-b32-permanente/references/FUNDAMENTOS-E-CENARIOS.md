@@ -1,4 +1,4 @@
-# B32 Aposentadoria por Incapacidade Permanente — Fundamentos e Cenários
+# B32 Aposentadoria por Incapacidade Permanente. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -24,35 +24,35 @@ Lei 8.213/91, art. 25, I. Carência de 12 contribuições, salvo isenção pelo 
 
 ## 2. Cenários operacionais pró-segurado
 
-### Cenário 1 — Segurado em B31 com quadro agravado
+### Cenário 1. Segurado em B31 com quadro agravado
 
 Segurado com B31 concedido há 2 anos, com quadro degenerativo progressivo. Laudo especializado atesta incapacidade total e definitiva. Conversão em B32 com DIB na data da consolidação do quadro irreversível.
 
-### Cenário 2 — Segurada com neoplasia maligna metastática
+### Cenário 2. Segurada com neoplasia maligna metastática
 
 Segurada com 8 contribuições e diagnóstico de câncer avançado com metástases. Isenção de carência pelo art. 26, II. Prognóstico desfavorável com incapacidade total. B32 direto.
 
-### Cenário 3 — Acidente com incapacidade permanente
+### Cenário 3. Acidente com incapacidade permanente
 
 Segurado com 5 meses de contribuição sofre acidente com lesão medular e tetraplegia. Isenção de carência. Aposentadoria acidentária (B92) com RMI de 100% da média.
 
-### Cenário 4 — Grande invalidez com necessidade de assistência permanente
+### Cenário 4. Grande invalidez com necessidade de assistência permanente
 
 Segurado com esclerose múltipla avançada, cadeirante, com necessidade de cuidador. Acréscimo de 25% pelo art. 45 da Lei 8.213/91, mesmo que ultrapasse o teto do RGPS.
 
-### Cenário 5 — Cessação indevida após reavaliação
+### Cenário 5. Cessação indevida após reavaliação
 
 Segurado com B32 desde 2015 é cessado em 2026 por perícia do Programa Revisão, sem exame específico e com quadro mantido. Restabelecimento com pedido de implantação imediata.
 
-### Cenário 6 — Reabilitação inviável
+### Cenário 6. Reabilitação inviável
 
 Segurado em programa de reabilitação profissional com parecer de inviabilidade. Conversão em B32 pelo art. 62, §1º, da Lei 8.213/91. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação (auditoria 03/10/2026).
 
-### Cenário 7 — Doença preexistente com agravamento
+### Cenário 7. Doença preexistente com agravamento
 
 Segurado com artrose lombar prévia à filiação, porém com agravamento por atividade laboral pesada. Art. 42, §2º, da Lei 8.213/91 e, para o acidentário, concausa do art. 21, I (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). B32 devido com eventual conversão em acidentário.
 
-### Cenário 8 — Conversão retroativa com efeitos financeiros
+### Cenário 8. Conversão retroativa com efeitos financeiros
 
 Segurado com B31 mantido indevidamente quando já fazia jus ao B32. Pedido de conversão retroativa, com DIB do B32 na data da consolidação do quadro permanente, para assegurar efeitos financeiros corretos.
 

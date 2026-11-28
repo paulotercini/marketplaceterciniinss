@@ -1,4 +1,4 @@
-# IF-BrA — Fundamentos e Cenários
+# IF-BrA. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -44,45 +44,45 @@ Sensorial, comunicação, mobilidade, cuidados pessoais, vida doméstica, educa�
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Cegueira monocular
+### Cenário A. Cegueira monocular
 
 Domínio sensorial parcial. Pode integrar com vida econômica.
 
-### Cenário B — Fibromialgia
+### Cenário B. Fibromialgia
 
 Lei 15.176/2025. Avaliação biopsicossocial.
 
-### Cenário C — Transtorno mental
+### Cenário C. Transtorno mental
 
 Múltiplos domínios.
 
-### Cenário D — Paraplegia
+### Cenário D. Paraplegia
 
 Mobilidade severa.
 
-### Cenário E — Surdez bilateral
+### Cenário E. Surdez bilateral
 
 Sensorial e comunicação. Lei 14.768/2023.
 
-### Cenário F — Autismo
+### Cenário F. Autismo
 
 Lei 12.764/2012. Múltiplos domínios.
 
-### Cenário G — Deficiência intelectual
+### Cenário G. Deficiência intelectual
 
 Domínios sensíveis Vida Doméstica e Socialização, com a questão "não pode ficar sozinho em segurança" (Portaria Interministerial 1/2014, Quadro 2) (auditoria 03/10/2026, retirado o Tema 173/TNU, que trata do BPC).
 
 ## 7. Cenários limitados
 
-### Cenário H — Pontuação alta em todos
+### Cenário H. Pontuação alta em todos
 
 Não enquadra. Reavaliar.
 
-### Cenário I — Avaliação binária
+### Cenário I. Avaliação binária
 
 Vício metodológico. Anular.
 
-### Cenário J — Sem assistente social
+### Cenário J. Sem assistente social
 
 Vício metodológico. Refazer.
 

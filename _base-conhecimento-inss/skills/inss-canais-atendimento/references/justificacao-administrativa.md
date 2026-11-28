@@ -5,7 +5,7 @@
 
 ## O que é
 
-A JA é procedimento administrativo gratuito destinado a suprir a falta ou insuficiência de documentos, ou produzir prova de fato ou circunstância de interesse do segurado perante o INSS, por meio da oitiva de testemunhas. Não é processo autônomo — integra o processo de atualização do CNIS ou de reconhecimento de direitos.
+A JA é procedimento administrativo gratuito destinado a suprir a falta ou insuficiência de documentos, ou produzir prova de fato ou circunstância de interesse do segurado perante o INSS, por meio da oitiva de testemunhas. Não é processo autônomo, integra o processo de atualização do CNIS ou de reconhecimento de direitos.
 
 ---
 
@@ -18,18 +18,18 @@ A JA é procedimento administrativo gratuito destinado a suprir a falta ou insuf
 - Excluir dependente em favor de outro de ordem preferencial
 - Comprovar atividade especial quando a empresa está legalmente extinta e não há formulário disponível
 
-**Não serve para:** fatos que exigem registro público (casamento, óbito, nascimento) — nesses casos, a certidão é insubstituível.
+**Não serve para:** fatos que exigem registro público (casamento, óbito, nascimento), nesses casos, a certidão é insubstituível.
 
 ---
 
-## Requisito fundamental — início de prova material
+## Requisito fundamental. início de prova material
 
 A JA só produz efeitos quando baseada em início de prova material contemporânea aos fatos alegados (art. 568, IN 128/2022; art. 143, Decreto 3.048/1999).
 
 Prova exclusivamente testemunhal não é admitida.
 
 **O que é início de prova material:**
-Qualquer documento contemporâneo ao período que, ainda que não comprove sozinho o fato, indica que ele pode ter ocorrido. Não precisa ser definitivo — basta ser indiciário.
+Qualquer documento contemporâneo ao período que, ainda que não comprove sozinho o fato, indica que ele pode ter ocorrido. Não precisa ser definitivo, basta ser indiciário.
 
 **Exemplos de início de prova material:**
 - Holerites ou recibos de pagamento (mesmo que incompletos)
@@ -43,8 +43,8 @@ Qualquer documento contemporâneo ao período que, ainda que não comprove sozin
 - Fotos ou documentos que identifiquem o local de trabalho
 - Histórico escolar de filhos em escola rural
 
-**Exceção — dispensa de início de prova material:**
-Quando houver motivo de força maior ou caso fortuito — incêndio, inundação, desmoronamento que atingiu a empresa ou a propriedade onde o segurado trabalhava. A ocorrência deve ser comprovada por boletim de ocorrência ou documento contemporâneo ao fato (art. 568, §§ 2º e 3º, IN 128/2022).
+**Exceção, dispensa de início de prova material:**
+Quando houver motivo de força maior ou caso fortuito, incêndio, inundação, desmoronamento que atingiu a empresa ou a propriedade onde o segurado trabalhava. A ocorrência deve ser comprovada por boletim de ocorrência ou documento contemporâneo ao fato (art. 568, §§ 2º e 3º, IN 128/2022).
 
 ---
 
@@ -67,44 +67,44 @@ Quando houver motivo de força maior ou caso fortuito — incêndio, inundação
 
 ## Rito do procedimento
 
-**Passo 1 — Requerimento:**
+**Passo 1. Requerimento:**
 O segurado apresenta requerimento por escrito expondo os fatos que pretende comprovar e indica as testemunhas. O pedido é gratuito e pode ser feito a qualquer tempo.
 
-**Passo 2 — Análise de admissibilidade pelo INSS:**
+**Passo 2. Análise de admissibilidade pelo INSS:**
 O INSS verifica se há início de prova material, se os fatos são passíveis de JA e se o número e perfil das testemunhas está correto. Se admitir, agenda a oitiva.
 
 Se não houver início de prova material suficiente, o INSS cientifica o segurado com prazo de 30 dias para complementação (art. 576 original da IN 77/2015, incorporado na IN 128/2022).
 
-**Passo 3 — Oitiva das testemunhas:**
+**Passo 3. Oitiva das testemunhas:**
 Realizada presencialmente na APS. O servidor do INSS conduz os depoimentos e lavra termo. As testemunhas são ouvidas separadamente.
 
-**Passo 4 — Parecer conclusivo:**
+**Passo 4. Parecer conclusivo:**
 O servidor analisa os depoimentos em conjunto com a prova material e emite parecer. A JA pode ser declarada eficaz (período reconhecido) ou ineficaz (período negado).
 
-**Passo 5 — Decisão:**
-A decisão sobre a eficácia da JA é definitiva na via administrativa. Não cabe recurso administrativo contra ela (art. 595, IN 128/2022 — incorporado da IN 77/2015).
+**Passo 5. Decisão:**
+A decisão sobre a eficácia da JA é definitiva na via administrativa. Não cabe recurso administrativo contra ela (art. 595, IN 128/2022, incorporado da IN 77/2015).
 
 ---
 
-## Limite crítico — sem recurso administrativo da JA declarada ineficaz
+## Limite crítico. sem recurso administrativo da JA declarada ineficaz
 
 A decisão que considera a JA ineficaz não comporta recurso ao CRPS.
 
 Isso é uma armadilha grave para a advocacia previdenciária. O segurado que teve a JA negada tem duas opções:
 
-**Opção 1 — Apresentar novos documentos de início de prova material:**
+**Opção 1. Apresentar novos documentos de início de prova material:**
 Se surgirem documentos novos que não foram apresentados na JA original, é possível requerer nova JA para o mesmo objeto. A vedação de nova JA só se aplica quando a anterior foi concluída sem novos elementos.
 
-**Opção 2 — Via judicial:**
+**Opção 2. Via judicial:**
 Ação de reconhecimento de tempo de serviço ou benefício previdenciário perante o Juizado Especial Federal. A Justificação Judicial (JJ) pode ser pedida nesse contexto, com oitiva de testemunhas perante o juízo.
 
 ---
 
 ## JA em fase recursal
 
-A JA pode ser requerida durante a fase de recurso administrativo (CRPS). Nesse caso, o INSS deve processá-la independentemente da existência de início de prova material (art. 596, IN 128/2022 — incorporado).
+A JA pode ser requerida durante a fase de recurso administrativo (CRPS). Nesse caso, o INSS deve processá-la independentemente da existência de início de prova material (art. 596, IN 128/2022, incorporado).
 
-Esse é um ponto estratégico importante: se o segurado perdeu o benefício por insuficiência de prova, pode requerer JA na fase de recurso ao CRPS — e o INSS é obrigado a processar mesmo sem início de prova material.
+Esse é um ponto estratégico importante: se o segurado perdeu o benefício por insuficiência de prova, pode requerer JA na fase de recurso ao CRPS, e o INSS é obrigado a processar mesmo sem início de prova material.
 
 ---
 
@@ -117,7 +117,7 @@ A decisão sobre eficácia é da Perícia Médica Federal, não apenas do servid
 
 ## JA e trabalho rural
 
-Para o segurado especial rural, a JA é frequentemente o único meio de comprovar períodos antigos sem documentação. A entrevista rural é procedimento distinto — é obrigatória para qualquer categoria de trabalhador rural, enquanto a JA é subsidiária.
+Para o segurado especial rural, a JA é frequentemente o único meio de comprovar períodos antigos sem documentação. A entrevista rural é procedimento distinto, é obrigatória para qualquer categoria de trabalhador rural, enquanto a JA é subsidiária.
 
 **Documentos rurais que servem como início de prova material (art. 571, IN 128/2022):**
 - Contrato de arrendamento, parceria, meação ou comodato rural (com firma reconhecida)

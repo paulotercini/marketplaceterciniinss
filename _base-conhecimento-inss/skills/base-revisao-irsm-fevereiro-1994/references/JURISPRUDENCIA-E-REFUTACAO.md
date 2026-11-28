@@ -1,4 +1,4 @@
-# Revisão IRSM/1994 — Jurisprudência Verificada e Refutação
+# Revisão IRSM/1994. Jurisprudência Verificada e Refutação
 
 ## 1. Fundamento e precedentes
 
@@ -34,61 +34,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Aplicação administrativa completa
+### Argumento 1. Aplicação administrativa completa
 
 Argumento adversário. O INSS já aplicou o IRSM a todos os benefícios.
 
 Refutação. Aplicações administrativas frequentemente truncadas. Exigir memória detalhada de cálculo. Conferir benefício a benefício.
 
-### Argumento 2 — Decadência consumada
+### Argumento 2. Decadência consumada
 
 Argumento adversário. Benefício com mais de 10 anos não cabe revisão.
 
 Refutação. Confirmar data do primeiro pagamento. Em benefícios mais recentes, o prazo ainda está em curso. Para benefícios antigos, verificar pedidos administrativos que podem ter interrompido o prazo. Acionar `decadencia-revisao-previdenciaria`.
 
-### Argumento 3 — Coisa julgada em ação anterior
+### Argumento 3. Coisa julgada em ação anterior
 
 Argumento adversário. Revisão já foi discutida.
 
 Refutação. Verificar causa de pedir específica. Se o objeto da ação anterior não foi o IRSM, cabe nova ação. Acionar `coisa-julgada-previdenciaria`.
 
-### Argumento 4 — Inexistência de salários pré-URV
+### Argumento 4. Inexistência de salários pré-URV
 
 Argumento adversário. Segurado não tinha salários de contribuição antes de março de 1994.
 
 Refutação. Verificar CNIS completo. Em alguns casos, períodos antigos foram omitidos. Autoatualização pode faltar.
 
-### Argumento 5 — Índice aplicado em percentual inferior
+### Argumento 5. Índice aplicado em percentual inferior
 
 Argumento adversário. INSS aplicou índice parcial.
 
 Refutação. O IRSM de fevereiro de 1994 é de 39,67%, e a correção do art. 21, §1º, da Lei 8.880/1994 o alcança por inteiro (auditoria 03/10/2026). Qualquer aplicação inferior é incompleta. Pedido de diferença é cabível.
 
-### Argumento 6 — Revisão não cabe em pensão por morte
+### Argumento 6. Revisão não cabe em pensão por morte
 
 Argumento adversário. Dependentes não têm direito à revisão do benefício originário.
 
 Refutação. Revisão reflexa é direito pacífico. Decadência autônoma do parágrafo único do art. 103.
 
-### Argumento 7 — Bis in idem com reajustes posteriores
+### Argumento 7. Bis in idem com reajustes posteriores
 
 Argumento adversário. A aplicação do IRSM seria dupla correção.
 
 Refutação. Após o IRSM aplicado sobre o SC, os reajustes subsequentes operam em camadas distintas. Não há bis in idem.
 
-### Argumento 8 — Tutela de urgência negada
+### Argumento 8. Tutela de urgência negada
 
 Argumento adversário. Negativa genérica.
 
 Refutação. Diferenças mensais acumuladas. Perigo de dano. Prova pré-constituída por cálculo.
 
-### Argumento 9 — Segurado não é competente para discutir cálculo
+### Argumento 9. Segurado não é competente para discutir cálculo
 
 Argumento adversário. Contraditório técnico.
 
 Refutação. Assistência profissional de calculista. Direito à igualdade de armas.
 
-### Argumento 10 — Efeito retroativo limitado
+### Argumento 10. Efeito retroativo limitado
 
 Argumento adversário. Efeitos financeiros somente do ajuizamento.
 

@@ -1,4 +1,4 @@
-# Eletricidade e Periculosidade — Jurisprudência Verificada e Refutação
+# Eletricidade e Periculosidade. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -48,49 +48,49 @@ Fundamento normativo histórico. Reconhece a especialidade da atividade em siste
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Exigência de tempo mínimo de exposição
+### Argumento 1. Exigência de tempo mínimo de exposição
 
 Argumento adversário. O segurado deveria comprovar exposição contínua.
 
 Refutação. Tema 210 TNU é categórico. Não há tempo mínimo. O risco de eletroplessão é qualitativo, pois um único contato acidental causa morte. Citar diretamente o PEDILEF 0000896-82.2018.4.01.3804/MG.
 
-### Argumento 2 — Ausência de menção no Decreto 2.172/97 ou 3.048/99
+### Argumento 2. Ausência de menção no Decreto 2.172/97 ou 3.048/99
 
 Argumento adversário. A eletricidade não estaria no rol vigente.
 
 Refutação. O código 1.1.8 do Decreto 53.831/64 continua eficaz para o período anterior à vigência dos decretos posteriores. Para períodos posteriores, a remissão à NR-10 e à legislação da periculosidade mantém o enquadramento, conforme jurisprudência consolidada.
 
-### Argumento 3 — EPI eficaz declarado no PPP
+### Argumento 3. EPI eficaz declarado no PPP
 
 Argumento adversário. Luva isolante e capacete neutralizariam o risco.
 
 Refutação. O EPI em eletricidade protege em caso de acidente, não neutraliza o risco. O Tema 1090 STJ permite enfrentar a tese. Combinar com `base-especial-epi`. O risco de eletroplessão é qualitativo.
 
-### Argumento 4 — Atividade em baixa tensão
+### Argumento 4. Atividade em baixa tensão
 
 Argumento adversário. O eletricista atua em baixa tensão, abaixo de 250 volts.
 
 Refutação. Auditar o PPP com cuidado. Em muitos casos, o segurado atua em baixa tensão formal, mas com acesso a trechos de média ou alta tensão, ou em subestações. Retificar o PPP via `retificacao-ppp` quando o campo 15.3 estiver impreciso.
 
-### Argumento 5 — Atividade esporádica
+### Argumento 5. Atividade esporádica
 
 Argumento adversário. O eletricista não atua todos os dias em alta tensão.
 
 Refutação. Tema 210 e Tema 211 TNU. Não se exige exposição contínua. A natureza da função integra o risco ao curso da jornada.
 
-### Argumento 6 — Certificado de Aprovação CA vigente do EPI
+### Argumento 6. Certificado de Aprovação CA vigente do EPI
 
 Argumento adversário. O CA validaria a eficácia.
 
 Refutação. O CA comprova aprovação teórica. A eficácia real depende do uso correto, da troca e da fiscalização. Em eletricidade, o EPI é paliativo, não neutralizante.
 
-### Argumento 7 — Ausência de periculosidade reconhecida pelo empregador
+### Argumento 7. Ausência de periculosidade reconhecida pelo empregador
 
 Argumento adversário. A empresa não paga adicional de periculosidade, logo não haveria periculosidade.
 
 Refutação. A ausência de pagamento do adicional não descaracteriza o risco, podendo configurar inadimplemento trabalhista paralelo. O enquadramento previdenciário é autônomo e baseia-se na realidade da exposição, não no pagamento do adicional pela empresa.
 
-### Argumento 8 — Suposta revogação do código 1.1.8
+### Argumento 8. Suposta revogação do código 1.1.8
 
 Argumento adversário. O código 1.1.8 teria sido revogado após 1995.
 

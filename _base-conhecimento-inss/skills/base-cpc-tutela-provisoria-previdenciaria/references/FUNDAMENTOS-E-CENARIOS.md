@@ -1,4 +1,4 @@
-# Tutela Provisória Previdenciária — Fundamentos e Cenários
+# Tutela Provisória Previdenciária. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -62,45 +62,45 @@ Revisão do teto, tese firmada.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Concessão de aposentadoria
+### Cenário A. Concessão de aposentadoria
 
 DER, documentos completos, negativa administrativa. Tutela antecipada cabível.
 
-### Cenário B — Restabelecimento de B31
+### Cenário B. Restabelecimento de B31
 
 Cessação sem perícia idônea. Tutela para retomar.
 
-### Cenário C — Implantação de B32
+### Cenário C. Implantação de B32
 
 Laudo judicial favorável. Tutela para implantar.
 
-### Cenário D — Tutela de evidência
+### Cenário D. Tutela de evidência
 
 Tese repetitiva firmada. Art. 311 II CPC.
 
-### Cenário E — Tutela antecipada antecedente
+### Cenário E. Tutela antecipada antecedente
 
 Extrema urgência. Art. 303 CPC. Estabilização.
 
-### Cenário F — Tutela no JEF
+### Cenário F. Tutela no JEF
 
 Art. 4º Lei 10.259/2001. Cabível.
 
-### Cenário G — Tutela em MS
+### Cenário G. Tutela em MS
 
 Liminar art. 7º III Lei 12.016/2009. Regime próprio.
 
 ## 6. Cenários limitados
 
-### Cenário H — Reversibilidade discutida
+### Cenário H. Reversibilidade discutida
 
 Se o INSS recorrer com sucesso, o segurado devolve (Tema 692/STJ, desconto de até 30 por cento); a boa-fé não afasta essa devolução (auditoria 25/07/2026).
 
-### Cenário I — Suspensão de segurança
+### Cenário I. Suspensão de segurança
 
 Presidência do TRF pode suspender liminar coletiva (Lei 8.437/92). Preparar contrarrazões.
 
-### Cenário J — Incapacidade sem laudo
+### Cenário J. Incapacidade sem laudo
 
 Arriscado sem perícia. Aguardar instrução.
 

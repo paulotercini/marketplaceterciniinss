@@ -15,7 +15,7 @@ Reference probatório compartilhado entre `base-limbo-previdenciario-tema300` e 
 | Código | Descrição | Status |
 |---|---|---|
 | 10 | Acidente do trabalho típico (que ocorre no exercício de atividades profissionais a serviço da empresa). | `[CONFERIDO]` |
-| 20 | Acidente do trabalho de trajeto (ocorrido no trajeto residência – trabalho – residência). | `[CONFERIDO]` |
+| 20 | Acidente do trabalho de trajeto (ocorrido no trajeto residência, trabalho, residência). | `[CONFERIDO]` |
 | 30 | Doença relacionada ao trabalho. | `[CONFERIDO]` |
 | 40 | Doença não relacionada ao trabalho. | `[CONFERIDO]` |
 | 50 | Licença-maternidade. | `[CONFERIDO]` |

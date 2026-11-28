@@ -9,7 +9,7 @@ description: "Análise técnica de BPC/LOAS pela Portaria Conjunta MDS/INSS 2/20
 
 Esta skill realiza análise técnico-jurídica completa de requerimentos, indeferimentos e avaliações biopsicossociais do Benefício de Prestação Continuada da Assistência Social (BPC/LOAS), com foco na verificação dos qualificadores atribuídos pela Portaria Conjunta MDS/INSS nº 2/2015, na análise domínio a domínio dos três componentes (Fatores Ambientais, Atividades e Participação, Funções do Corpo), na verificação dos gatilhos de elevação de Funções do Corpo, na confrontação com a Tabela Conclusiva de Qualificadores (TCQ), na aferição dos requisitos de renda e grupo familiar, e na fundamentação da estratégia administrativa ou judicial. O objetivo é sempre defender a tese mais favorável ao requerente, identificando erros na avaliação funcional e fundamentando a revisão judicial ou administrativa.
 
-**ALERTA CRÍTICO — O método linguístico Fuzzy NÃO se aplica ao BPC/LOAS.** O Fuzzy é componente exclusivo do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado), instrumento da aposentadoria da pessoa com deficiência pela LC 142/2013, regulamentado pela Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1/2014. O instrumento do BPC utiliza qualificadores CIF (0-4) processados pela TCQ, sem escala MIF (25/50/75/100) e sem domínios sensíveis por tipo de impedimento. A confusão entre os instrumentos é um erro técnico grave. Se o caso envolver aposentadoria PCD, acionar a skill `aposentadoria-deficiencia`.
+**ALERTA CRÍTICO. O método linguístico Fuzzy NÃO se aplica ao BPC/LOAS.** O Fuzzy é componente exclusivo do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado), instrumento da aposentadoria da pessoa com deficiência pela LC 142/2013, regulamentado pela Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1/2014. O instrumento do BPC utiliza qualificadores CIF (0-4) processados pela TCQ, sem escala MIF (25/50/75/100) e sem domínios sensíveis por tipo de impedimento. A confusão entre os instrumentos é um erro técnico grave. Se o caso envolver aposentadoria PCD, acionar a skill `aposentadoria-deficiencia`.
 
 ## Fluxo de Trabalho
 
@@ -54,13 +54,13 @@ O art. 16 estabelece que a avaliação da deficiência é composta de avaliaçã
 ### Portaria Conjunta MDS/INSS nº 34, de 9 de outubro de 2025
 Esta é a norma operacional vigente do BPC, que revogou as Portarias Conjuntas anteriores (nº 3/2018, nº 7/2020, nº 14/2021, nº 18/2021, nº 22/2022 e nº 28/2024). Principais disposições relevantes para a análise funcional
 
-### Lei 15.157/2025 – Dispensa de reavaliação periódica
+### Lei 15.157/2025. Dispensa de reavaliação periódica
 Incluiu o §5º no art. 21 da LOAS, dispensando o beneficiário do BPC de avaliação médico-pericial periódica quando o impedimento for permanente, irreversível ou irrecuperável, salvo fundamentada suspeita de fraude ou erro. Também incluiu §§5º-6º no art. 43 e §§15-16 no art. 60 da Lei 8.213/91 (dispensa de reavaliação para segurados do RGPS com incapacidade permanente/irreversível/irrecuperável e para portadores de HIV/AIDS, Alzheimer, Parkinson e ELA).
 
 ### Portaria Conjunta MDS/MPS/INSS nº 37, de 1º de abril de 2026
 Alterou a Portaria 2/2015 em três eixos. Primeiro, obrigou o perito médico a informar se o impedimento é permanente, irreversível ou irrecuperável (novo art. 7º, IV e §§1º-2º), com definições operacionais de cada conceito em perspectiva interacional e multidimensional. Segundo, suprimiu os incisos I e II do art. 8º, eliminando o indeferimento automático por qualificador N (Nenhum) ou L (Leve) em Funções do Corpo ou Atividades e Participação, mantendo apenas o parágrafo único (indeferimento por resolução em menos de 2 anos). Terceiro, incluiu campo binário (Sim/Não) nos Anexos I e II sobre impedimento permanente/irreversível/irrecuperável, nos termos do §5º do art. 21 da LOAS.
 
-### Portaria Conjunta DPMF/INSS nº 19, de 31 de março de 2026 — Teleperícia no BPC
+### Portaria Conjunta DPMF/INSS nº 19, de 31 de março de 2026. Teleperícia no BPC
 Publicada no DOU de 09/04/2026 (republicação), com vigência em 13/04/2026. Regulamenta o atendimento remoto do SAT Central para realização da avaliação médico-pericial inicial e da reavaliação do BPC por videoconferência (Teleperícia). O segurado é convocado a comparecer presencialmente na APS, mas o perito médico federal atua remotamente.
 
 A norma atinge diretamente a parte médica da avaliação biopsicossocial do BPC, sem alterar a avaliação social. A presença física do segurado em APS continua exigida, com triagem, coleta de Termo de Consentimento Livre e Esclarecido para Teleavaliação, digitalização e anexação dos documentos antes da chamada do perito.
@@ -101,49 +101,49 @@ O instrumento vigente para avaliação da deficiência no BPC é o previsto nos 
 
 ### Os 3 Componentes e Seus Domínios
 
-**Componente 1 — Fatores Ambientais (avaliação social, competência do assistente social)**
+**Componente 1. Fatores Ambientais (avaliação social, competência do assistente social)**
 
-e1 — Produtos e Tecnologia (7 unidades de classificação)
-e2 — Condições de Habitabilidade e Mudanças Ambientais (2 unidades)
-e3 — Apoio e Relacionamentos (5 unidades)
-e4 — Atitudes (3 unidades)
-e5 — Serviços, Sistemas e Políticas (12 unidades)
+e1. Produtos e Tecnologia (7 unidades de classificação)
+e2. Condições de Habitabilidade e Mudanças Ambientais (2 unidades)
+e3. Apoio e Relacionamentos (5 unidades)
+e4. Atitudes (3 unidades)
+e5. Serviços, Sistemas e Políticas (12 unidades)
 
-**Componente 2 — Atividades e Participação (dividido entre assistente social e perito médico)**
+**Componente 2. Atividades e Participação (dividido entre assistente social e perito médico)**
 
 Avaliação social (d6-d9)
-d6 — Vida Doméstica (6 unidades)
-d7 — Relações e Interações Interpessoais (6 unidades)
-d8 — Áreas Principais da Vida (4 unidades)
-d9 — Vida Comunitária, Social e Cívica (3 unidades)
+d6. Vida Doméstica (6 unidades)
+d7. Relações e Interações Interpessoais (6 unidades)
+d8. Áreas Principais da Vida (4 unidades)
+d9. Vida Comunitária, Social e Cívica (3 unidades)
 
 Avaliação médica (d1-d5)
-d1 — Aprendizagem e Aplicação de Conhecimento (9 unidades)
-d2 — Tarefas e Demandas Gerais (2 unidades)
-d3 — Comunicação (8 unidades)
-d4 — Mobilidade (5 unidades)
-d5 — Cuidado Pessoal (4 unidades)
+d1. Aprendizagem e Aplicação de Conhecimento (9 unidades)
+d2. Tarefas e Demandas Gerais (2 unidades)
+d3. Comunicação (8 unidades)
+d4. Mobilidade (5 unidades)
+d5. Cuidado Pessoal (4 unidades)
 
-**Componente 3 — Funções do Corpo (avaliação médica, competência exclusiva do perito)**
+**Componente 3. Funções do Corpo (avaliação médica, competência exclusiva do perito)**
 
-b1 — Funções Mentais (17 unidades)
-b2 — Funções Sensoriais (Visão + Audição + Adicionais e Dor, 3 subdomínios)
-b3 — Funções da Voz e Fala (3 unidades)
-b4 — Funções Cardiovascular, Hematológico, Imunológico, Respiratório (4 subdomínios)
-b5 — Funções Digestivo, Metabólico e Endócrino (2 subdomínios)
-b6 — Funções Geniturinárias e Reprodutivas (3 unidades)
-b7 — Funções Neuromusculoesqueléticas e Movimento (4 unidades)
-b8 — Funções da Pele e Estruturas Relacionadas (1 unidade)
+b1. Funções Mentais (17 unidades)
+b2. Funções Sensoriais (Visão + Audição + Adicionais e Dor, 3 subdomínios)
+b3. Funções da Voz e Fala (3 unidades)
+b4. Funções Cardiovascular, Hematológico, Imunológico, Respiratório (4 subdomínios)
+b5. Funções Digestivo, Metabólico e Endócrino (2 subdomínios)
+b6. Funções Geniturinárias e Reprodutivas (3 unidades)
+b7. Funções Neuromusculoesqueléticas e Movimento (4 unidades)
+b8. Funções da Pele e Estruturas Relacionadas (1 unidade)
 
 ### Escala de Qualificadores (CIF 0-4)
 
 A pontuação de cada unidade de classificação segue a escala padrão da CIF
 
-**0 — Nenhuma alteração/barreira/dificuldade** (0 a 4%)
-**1 — Alteração/barreira/dificuldade Leve** (5 a 24%)
-**2 — Alteração/barreira/dificuldade Moderada** (25 a 49%)
-**3 — Alteração/barreira/dificuldade Grave** (50 a 95%)
-**4 — Alteração/barreira/dificuldade Completa** (96 a 100%)
+**0. Nenhuma alteração/barreira/dificuldade** (0 a 4%)
+**1. Alteração/barreira/dificuldade Leve** (5 a 24%)
+**2. Alteração/barreira/dificuldade Moderada** (25 a 49%)
+**3. Alteração/barreira/dificuldade Grave** (50 a 95%)
+**4. Alteração/barreira/dificuldade Completa** (96 a 100%)
 
 Quando o perito atribui qualificador 0 a um domínio de Funções do Corpo, o sistema exige justificativa, que pode ser "Não foram observadas alterações ou as alterações no domínio como um todo são mínimas (de 0 a 4%)" ou "Ausência de elementos de convicção para qualificar". A segunda opção é particularmente impugnável quando há documentação médica demonstrando alterações no domínio.
 
@@ -151,17 +151,17 @@ A pontuação deve refletir o desempenho real do indivíduo em seu ambiente habi
 
 ### Cálculo dos Qualificadores Finais
 
-**Fatores Ambientais** — Qualificador final resulta da combinação dos 5 domínios (e1-e5), calculado pelo sistema e expresso como N, L, M, G ou C.
+**Fatores Ambientais.** Qualificador final resulta da combinação dos 5 domínios (e1-e5), calculado pelo sistema e expresso como N, L, M, G ou C.
 
-**Atividades e Participação** — Qualificador final corresponde à média ponderada dos 9 domínios, calculada pela fórmula [(d1+d2+d3+d4+d5+d6+d7+d8+d9) x 2,777777777777780] – 0,1. O cálculo é automático e resulta em N, L, M, G ou C. Não há gatilho de elevação para este componente.
+**Atividades e Participação.** Qualificador final corresponde à média ponderada dos 9 domínios, calculada pela fórmula [(d1+d2+d3+d4+d5+d6+d7+d8+d9) x 2,777777777777780]. 0,1. O cálculo é automático e resulta em N, L, M, G ou C. Não há gatilho de elevação para este componente.
 
-**Funções do Corpo** — Qualificador final resulta da combinação dos 8 domínios (b1-b8), calculado pelo sistema. Resulta em N, L, M, G ou C. SUJEITO A GATILHOS DE ELEVAÇÃO (ver seção específica abaixo).
+**Funções do Corpo.** Qualificador final resulta da combinação dos 8 domínios (b1-b8), calculado pelo sistema. Resulta em N, L, M, G ou C. SUJEITO A GATILHOS DE ELEVAÇÃO (ver seção específica abaixo).
 
 ### Gatilhos de Elevação de Funções do Corpo
 
 O instrumento do BPC prevê dois quesitos que podem elevar o qualificador final de Funções do Corpo em UM nível. Ambos são de competência exclusiva do perito médico, previstos no art. 7º, incisos I e II, da Portaria 2/2015.
 
-**Gatilho 1 — Agravante de Estrutura do Corpo (art. 7º, I)**
+**Gatilho 1. Agravante de Estrutura do Corpo (art. 7º, I)**
 
 O perito responde ao quesito "Existem alterações na Estrutura do Corpo que configurem maiores limitações e restrições ao avaliado do que as alterações observadas em Funções do Corpo?"
 
@@ -169,32 +169,32 @@ A resposta afirmativa eleva o qualificador final de Funções do Corpo em um ní
 
 A lógica é que os domínios de Funções do Corpo (b1-b8) captam alterações fisiológicas, mas NÃO captam diretamente alterações anatômicas estruturais. Quando a lesão estrutural (perda de membro, deformidade óssea, destruição articular, amputação) gera mais limitação do que a fisiologia sozinha reflete, o perito deve acionar esse gatilho.
 
-**Gatilho 2 — Prognóstico Desfavorável (art. 7º, II)**
+**Gatilho 2. Prognóstico Desfavorável (art. 7º, II)**
 
 O perito responde ao quesito "As alterações observadas em Função e/ou Estrutura do Corpo configuram prognóstico desfavorável?"
 
 A resposta afirmativa TAMBÉM eleva o qualificador final de Funções do Corpo em um nível, MAS de forma NÃO CUMULATIVA com o Gatilho 1. Se ambos forem afirmativos, a elevação é de apenas um nível.
 
-As opções de resposta são três — "Não", "Não é possível prognosticar" e "Sim". A resposta "Não é possível prognosticar" NÃO aciona o gatilho.
+As opções de resposta são três, "Não", "Não é possível prognosticar" e "Sim". A resposta "Não é possível prognosticar" NÃO aciona o gatilho.
 
-**Regra de ouro para a advocacia** — Em TODA análise, verificar se os gatilhos foram acionados e se DEVERIAM ter sido acionados à luz da documentação médica. A não ativação de gatilho quando há evidência clínica de alteração estrutural significativa ou prognóstico claramente desfavorável é ponto de impugnação central, especialmente porque a elevação de um nível em Funções do Corpo pode inverter o resultado da TCQ de NÃO FAVORÁVEL para FAVORÁVEL.
+**Regra de ouro para a advocacia.** Em TODA análise, verificar se os gatilhos foram acionados e se DEVERIAM ter sido acionados à luz da documentação médica. A não ativação de gatilho quando há evidência clínica de alteração estrutural significativa ou prognóstico claramente desfavorável é ponto de impugnação central, especialmente porque a elevação de um nível em Funções do Corpo pode inverter o resultado da TCQ de NÃO FAVORÁVEL para FAVORÁVEL.
 
-**Terceiro quesito — Resolução em menos de 2 anos (art. 7º, III)**
+**Terceiro quesito. Resolução em menos de 2 anos (art. 7º, III)**
 
 O perito responde ao quesito "É possível afirmar que as alterações em Funções e/ou Estruturas do Corpo serão resolvidas em menos de dois anos?" Este NÃO é gatilho de elevação, mas sim gatilho de indeferimento autônomo nos termos do art. 8º, III (mantido pela Portaria 37/2026). Se o perito responde "Sim", o benefício é indeferido independentemente do resultado da TCQ.
 
-### Distinção do Método Fuzzy (IF-BrA) — NÃO APLICÁVEL AO BPC
+### Distinção do Método Fuzzy (IF-BrA). NÃO APLICÁVEL AO BPC
 
 O Método Linguístico Fuzzy é componente exclusivo do IF-BrA (Portaria Interministerial 1/2014), usado na aposentadoria PCD (LC 142/2013). Utiliza escala MIF (25/50/75/100 pontos por atividade), domínios sensíveis por tipo de impedimento (auditivo, intelectual, motor, visual), condições emblemáticas e Formulário 4 específico. A pontuação total varia de 2.050 a 8.200 e classifica a deficiência em Grave, Moderada ou Leve.
 
 NENHUM desses elementos existe no instrumento do BPC (Portaria 2/2015). A confusão entre os dois instrumentos é frequente na doutrina e na prática, mas tecnicamente insustentável. Se o caso envolver aposentadoria PCD, acionar a skill `aposentadoria-deficiencia`.
 
 ### Faixas Etárias e Variações
-O instrumento do BPC possui duas versões — Anexo I (16 anos ou mais) e Anexo II (menor de 16 anos). Os domínios e unidades de classificação variam conforme a faixa etária. É fundamental verificar se o avaliador usou o formulário correto.
+O instrumento do BPC possui duas versões. Anexo I (16 anos ou mais) e Anexo II (menor de 16 anos). Os domínios e unidades de classificação variam conforme a faixa etária. É fundamental verificar se o avaliador usou o formulário correto.
 
 ## Modos de Operação
 
-### Modo 1 – Análise de Avaliação Biopsicossocial
+### Modo 1. Análise de Avaliação Biopsicossocial
 Quando o usuário fornece o laudo/formulário de avaliação biopsicossocial do INSS. A análise verifica, domínio a domínio, a pontuação atribuída pelo perito médico e pelo assistente social, a correta aplicação dos gatilhos de elevação de Funções do Corpo, e a coerência com a documentação médica.
 
 Roteiro de verificação obrigatório (seguir na ordem)
@@ -231,7 +231,7 @@ Conferir a soma das pontuações por domínio. Verificar a pontuação total. Co
 **5. CONFRONTO COM DOCUMENTAÇÃO MÉDICA**
 Se houver documentos médicos particulares, confrontar as pontuações com a realidade documentada. Atentar especialmente para CIDs divergentes, limitações documentadas mas não refletidas na pontuação, histórico de internações e tratamentos que demonstrem gravidade, e relatórios de profissionais de saúde assistentes.
 
-### Modo 2 – Análise de Caso para Requerimento
+### Modo 2. Análise de Caso para Requerimento
 Quando o usuário apresenta dados do requerente para orientar o requerimento administrativo ou a ação judicial. A análise deve projetar o enquadramento provável, identificar a documentação necessária, verificar os requisitos de renda e grupo familiar, e orientar a estratégia.
 
 Verificar especialmente
@@ -242,7 +242,7 @@ c) As exclusões e deduções aplicáveis (art. 8º)
 d) A existência de impedimento de longo prazo documentado
 e) A viabilidade da tese de deficiência com base na documentação médica disponível
 
-### Modo 3 – Análise de Indeferimento ou Decisão
+### Modo 3. Análise de Indeferimento ou Decisão
 Quando o usuário apresenta uma decisão de indeferimento do INSS, sentença ou acórdão para identificar fundamentos de recurso. A análise foca em
 
 a) Erros na avaliação (pontuação incompatível com documentação, omissão de domínios, não acionamento dos gatilhos de elevação de Funções do Corpo quando cabível)
@@ -292,7 +292,7 @@ O autista é pessoa com deficiência por presunção legal absoluta, fundamento 
 
 A consequência jurídica é direta. Para o BPC, o autista não precisa provar que o TEA é deficiência, isso é dado pela lei. Precisa provar **impedimento de longo prazo** (art. 20, §10, LOAS) e **renda familiar per capita igual ou inferior a 1/4 do salário mínimo**, flexibilizado pelo Tema 27/STF (RE 567.985 e RE 580.963) e Tema 185/STJ (REsp 1.112.557/MG).
 
-### Alerta crítico — Tema 376/TNU com tese fixada
+### Alerta crítico. Tema 376/TNU com tese fixada
 
 O **Tema 376/TNU** (PEDILEF 5006875-14.2022.4.04.7005/PR), afetado em fevereiro de 2025, fixou a tese de que o diagnóstico de TEA não dispensa a avaliação biopsicossocial para caracterizar a pessoa com deficiência no BPC (auditoria 03/10/2026). O alerta operacional é direto. Apesar da equiparação legal automática, **o INSS continuará exigindo prova de impedimentos de longo prazo e seu impacto social via avaliação biopsicossocial**, e o diagnóstico isolado não basta. Preparar o caso de autista para BPC sempre com documentação funcional robusta, não apenas com a CIPTEA.
 
@@ -304,7 +304,7 @@ A tabela de equivalência aplicável é a seguinte. Os subtipos **F84.0 (Autismo
 
 A CID-11 traz dois eixos descritivos do TEA. O primeiro é a presença ou ausência de **Transtorno do Desenvolvimento Intelectual** (cruzamento com 6A00). O segundo é o **comprometimento da linguagem funcional**, em três níveis (preservada ou leve, prejudicada, ausente). A combinação 2×3 produz seis subcódigos clínicos (6A02.0 a 6A02.5), mais 6A02.Y (outro especificado) e 6A02.Z (não especificado).
 
-### Correção técnica importante — eixos da CID-11 ≠ níveis de suporte do DSM-5-TR
+### Correção técnica importante. eixos da CID-11 ≠ níveis de suporte do DSM-5-TR
 
 Erro frequente em laudos médicos e em material de divulgação. Os **três níveis de suporte (1, 2 e 3)** são especificadores do **DSM-5/DSM-5-TR da Associação Americana de Psiquiatria**, não da CID-11 da OMS. A CID-11 não possui especificador de gravidade que indique grau de suporte necessário (Kamp-Becker, *Molecular Psychiatry*, 2024). Laudo do médico assistente que misture nomenclaturas pode ser invalidado por perito do INSS sob alegação de imprecisão técnica. **A boa prática é registrar separadamente o subcódigo CID-11 (6A02.x) e o nível de suporte do DSM-5-TR (1, 2 ou 3)**, tratando-os como classificações complementares e não fundidas.
 
@@ -320,7 +320,7 @@ A consequência prática é clara. Avaliação biopsicossocial de autista que ig
 
 ### Lei 15.157/2025 e Portaria Conjunta 37/2026 aplicadas ao TEA
 
-O TEA é condição vitalícia, estrutural e neurodesenvolvimental, sem cura e sem reversão biológica. Por essa razão, encaixa-se com clareza nas três categorias da Portaria Conjunta MDS/MPS/INSS nº 37/2026 (artigo 7º, IV) — impedimento **permanente, irreversível e irrecuperável**.
+O TEA é condição vitalícia, estrutural e neurodesenvolvimental, sem cura e sem reversão biológica. Por essa razão, encaixa-se com clareza nas três categorias da Portaria Conjunta MDS/MPS/INSS nº 37/2026 (artigo 7º, IV), impedimento **permanente, irreversível e irrecuperável**.
 
 A consequência aplicada é a **dispensa de reavaliação periódica** do BPC do autista (Lei 15.157/2025, que incluiu o §5º no art. 21 da LOAS). O laudo médico deve registrar expressamente que o impedimento do autista é permanente, irreversível e irrecuperável, com fundamentação na natureza neurodesenvolvimental e vitalícia do TEA. Em recurso administrativo ou ação judicial, requerer reconhecimento expresso da dispensa, encerrando o desgaste cíclico das perícias bienais. **Verificar se o perito marcou "Sim" no campo correspondente (novo Anexo I e II da Portaria 2/2015)**. Se marcou "Não" sem justificativa técnica, é ponto impugnável central.
 
@@ -328,21 +328,21 @@ A consequência aplicada é a **dispensa de reavaliação periódica** do BPC do
 
 Manter, simultaneamente, três conjuntos de documentos. **Primeiro**, a CIPTEA vigente, válida independentemente da versão da CID utilizada (Lei 13.977/2020 não exige versão específica). **Segundo**, laudos médicos com **dupla codificação CID-10 (F84.x) e CID-11 (6A02.x)** durante toda a transição, acrescidos do nível de suporte do DSM-5-TR e de descrição funcional detalhada por domínio biopsicossocial. **Terceiro**, relatórios cumulativos de fonoaudiologia, terapia ocupacional, psicologia, ABA, psicopedagogia e neuropsicologia, somados a relatórios escolares (PEI, AEE, mediador) e declarações do CRAS/CREAS.
 
-### Impedimento de longo prazo no TEA — natureza vitalícia
+### Impedimento de longo prazo no TEA. natureza vitalícia
 
-O requisito do art. 20, §10, da LOAS (mínimo de 2 anos) é cumprido com folga absoluta no TEA, dada sua natureza vitalícia. **O INSS não pode confundir impedimento de longo prazo com incapacidade laboral permanente** — são institutos distintos. Impedimento de longo prazo é estrutural, perceptivo, funcional, e sua duração é ditada pela natureza do quadro. No TEA, impedimento existe desde o nascimento e perdura por toda a vida. Indeferimento por suposta ausência de longo prazo em diagnóstico de TEA é tecnicamente insustentável e ponto óbvio de impugnação.
+O requisito do art. 20, §10, da LOAS (mínimo de 2 anos) é cumprido com folga absoluta no TEA, dada sua natureza vitalícia. **O INSS não pode confundir impedimento de longo prazo com incapacidade laboral permanente**, são institutos distintos. Impedimento de longo prazo é estrutural, perceptivo, funcional, e sua duração é ditada pela natureza do quadro. No TEA, impedimento existe desde o nascimento e perdura por toda a vida. Indeferimento por suposta ausência de longo prazo em diagnóstico de TEA é tecnicamente insustentável e ponto óbvio de impugnação.
 
 ### Domínios biopsicossociais tipicamente afetados pelo TEA
 
 Em avaliações biopsicossociais de autistas, os domínios mais frequentemente impactados (e mais frequentemente subavaliados pelo INSS) são os seguintes.
 
-**Funções do Corpo (avaliação médica).** **b1 — Funções Mentais** é o domínio nuclear, com unidades de classificação afetadas em Funções Mentais Globais (b110 consciência, b117 intelectuais, b122 psicossociais globais, b125 disposições e funções intrapessoais), e em Funções Mentais Específicas (b140 atenção, b144 memória, b147 psicomotoras, b152 emocionais, b156 percepção, b164 cognitivas superiores, b167 mentais de linguagem, b176 sequenciamento de movimentos complexos). Em casos com comorbidades sensoriais, **b2 — Funções Sensoriais** pode ser pontuado. Em casos com epilepsia (30 a 35% dos autistas), **b1** pode ter agravamento por crises e prognóstico desfavorável.
+**Funções do Corpo (avaliação médica).** **b1. Funções Mentais** é o domínio nuclear, com unidades de classificação afetadas em Funções Mentais Globais (b110 consciência, b117 intelectuais, b122 psicossociais globais, b125 disposições e funções intrapessoais), e em Funções Mentais Específicas (b140 atenção, b144 memória, b147 psicomotoras, b152 emocionais, b156 percepção, b164 cognitivas superiores, b167 mentais de linguagem, b176 sequenciamento de movimentos complexos). Em casos com comorbidades sensoriais, **b2. Funções Sensoriais** pode ser pontuado. Em casos com epilepsia (30 a 35% dos autistas), **b1** pode ter agravamento por crises e prognóstico desfavorável.
 
-**Atividades e Participação Médica (d1 a d5).** **d1 — Aprendizagem e Aplicação de Conhecimento** afetado, especialmente quando há DI ou prejuízo de linguagem. **d3 — Comunicação** é frequentemente afetado, sendo nuclear em autistas com 6A02.2 a 6A02.5 (linguagem prejudicada ou ausente). **d5 — Cuidado Pessoal** afetado em quadros com suporte intenso ou DI associada.
+**Atividades e Participação Médica (d1 a d5).** **d1. Aprendizagem e Aplicação de Conhecimento** afetado, especialmente quando há DI ou prejuízo de linguagem. **d3. Comunicação** é frequentemente afetado, sendo nuclear em autistas com 6A02.2 a 6A02.5 (linguagem prejudicada ou ausente). **d5. Cuidado Pessoal** afetado em quadros com suporte intenso ou DI associada.
 
-**Atividades e Participação Social (d6 a d9).** **d7 — Relações e Interações Interpessoais** é nuclear, déficit core do TEA. **d8 — Áreas Principais da Vida** (educação, trabalho, vida econômica) frequentemente afetado, especialmente em adultos autistas com diagnóstico tardio. **d9 — Vida Comunitária, Social e Cívica** afetado por dificuldades de socialização. **d6 — Vida Doméstica** afetado em quadros com déficit de autonomia.
+**Atividades e Participação Social (d6 a d9).** **d7. Relações e Interações Interpessoais** é nuclear, déficit core do TEA. **d8. Áreas Principais da Vida** (educação, trabalho, vida econômica) frequentemente afetado, especialmente em adultos autistas com diagnóstico tardio. **d9. Vida Comunitária, Social e Cívica** afetado por dificuldades de socialização. **d6. Vida Doméstica** afetado em quadros com déficit de autonomia.
 
-**Fatores Ambientais (e1 a e5).** **e3 — Apoio e Relacionamentos** essencial documentar a dependência do cuidador. **e4 — Atitudes** essencial documentar barreiras atitudinais (capacitismo, estigma). **e5 — Serviços, Sistemas e Políticas** documentar dificuldades de acesso a terapias, ABA, AEE, mediador.
+**Fatores Ambientais (e1 a e5).** **e3. Apoio e Relacionamentos** essencial documentar a dependência do cuidador. **e4. Atitudes** essencial documentar barreiras atitudinais (capacitismo, estigma). **e5. Serviços, Sistemas e Políticas** documentar dificuldades de acesso a terapias, ABA, AEE, mediador.
 
 ### Gatilhos de elevação aplicados ao TEA
 
@@ -352,13 +352,13 @@ Em avaliações biopsicossociais de autistas, os domínios mais frequentemente i
 
 A elevação combinada (cumulativa-limite-de-um-nível) frequentemente inverte resultado da TCQ de NÃO FAVORÁVEL para FAVORÁVEL.
 
-### Particularidades em criança autista — Anexo II
+### Particularidades em criança autista. Anexo II
 
-Em BPC para menor de 16 anos com TEA (situação muito frequente), aplicar o **Anexo II da Portaria 2/2015** com atenção especial aos seguintes pontos. Os domínios de Atividades e Participação são adaptados à faixa etária (trabalho, vida econômica e relações íntimas substituídos ou adaptados). **Não confundir limitações naturais da idade com limitações do impedimento** — o autismo limita acima do que seria esperado pela idade. Os domínios educacionais e de socialização ganham peso proporcional. Aplicar o **Tema 299/TNU** (análise social do núcleo familiar para menor de 16). Verificar se o avaliador usou o formulário correto. Cruzar com o **Tema 173/TNU** (o impedimento de longo prazo exige duração mínima de 2 anos) (auditoria 03/10/2026).
+Em BPC para menor de 16 anos com TEA (situação muito frequente), aplicar o **Anexo II da Portaria 2/2015** com atenção especial aos seguintes pontos. Os domínios de Atividades e Participação são adaptados à faixa etária (trabalho, vida econômica e relações íntimas substituídos ou adaptados). **Não confundir limitações naturais da idade com limitações do impedimento**, o autismo limita acima do que seria esperado pela idade. Os domínios educacionais e de socialização ganham peso proporcional. Aplicar o **Tema 299/TNU** (análise social do núcleo familiar para menor de 16). Verificar se o avaliador usou o formulário correto. Cruzar com o **Tema 173/TNU** (o impedimento de longo prazo exige duração mínima de 2 anos) (auditoria 03/10/2026).
 
 ### Síntese da jurisprudência aplicável ao TEA no BPC
 
-**Tema 27/STF** (RE 567.985 e RE 580.963, j. 18/04/2013) flexibiliza o critério de 1/4 do salário mínimo para miserabilidade. **Tema 185/STJ** (REsp 1.112.557/MG, j. 28/10/2009) admite prova ampla da miserabilidade. **Súmula 79/TNU** exige laudo de assistente social ou auto de constatação e, inviabilizados esses meios, admite prova testemunhal (auditoria 03/10/2026). **Súmula 80/TNU** exige avaliação social por assistente social "ou outras providências aptas a revelar a efetiva condição vivida no meio social" (fonte: lista oficial de súmulas da TNU [CONFERIDO em 03/10/2026, https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php]; o PUIL 1005655-57.2022.4.01.3602 apenas a transcreve) (auditoria 03/10/2026). **Tema 173/TNU** exige impedimento de longo prazo com duração mínima de 2 anos (auditoria 03/10/2026). **Tema 299/TNU** trata da análise social do núcleo familiar para menor de 16. **Tema 376/TNU** fixou que o diagnóstico de TEA não dispensa a avaliação biopsicossocial (auditoria 03/10/2026). **TRF3, ApCiv 5000875-90.2025.4.03.6141** (7ª Turma, Rel. Des. Federal Inês Virgínia Prado Soares, j. 07/11/2025) declarou ilegal a negativa de BPC com fundamento genérico de que "autismo não é deficiência". **Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre o efeito da migração CID-10 → CID-11 em direito previdenciário ou assistencial já constituído** — direito adquirido sob CID-10 deve ser sustentado por argumentação principiológica (CF art. 5º XXXVI, LINDB art. 6º).
+**Tema 27/STF** (RE 567.985 e RE 580.963, j. 18/04/2013) flexibiliza o critério de 1/4 do salário mínimo para miserabilidade. **Tema 185/STJ** (REsp 1.112.557/MG, j. 28/10/2009) admite prova ampla da miserabilidade. **Súmula 79/TNU** exige laudo de assistente social ou auto de constatação e, inviabilizados esses meios, admite prova testemunhal (auditoria 03/10/2026). **Súmula 80/TNU** exige avaliação social por assistente social "ou outras providências aptas a revelar a efetiva condição vivida no meio social" (fonte: lista oficial de súmulas da TNU [CONFERIDO em 03/10/2026, https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php]; o PUIL 1005655-57.2022.4.01.3602 apenas a transcreve) (auditoria 03/10/2026). **Tema 173/TNU** exige impedimento de longo prazo com duração mínima de 2 anos (auditoria 03/10/2026). **Tema 299/TNU** trata da análise social do núcleo familiar para menor de 16. **Tema 376/TNU** fixou que o diagnóstico de TEA não dispensa a avaliação biopsicossocial (auditoria 03/10/2026). **TRF3, ApCiv 5000875-90.2025.4.03.6141** (7ª Turma, Rel. Des. Federal Inês Virgínia Prado Soares, j. 07/11/2025) declarou ilegal a negativa de BPC com fundamento genérico de que "autismo não é deficiência". **Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre o efeito da migração CID-10 → CID-11 em direito previdenciário ou assistencial já constituído**, direito adquirido sob CID-10 deve ser sustentado por argumentação principiológica (CF art. 5º XXXVI, LINDB art. 6º).
 
 ## Estrutura do Relatório de Análise
 
@@ -375,7 +375,7 @@ Resumo objetivo contendo a natureza do requerimento (concessão, manutenção, r
 ### 2. ANÁLISE DOS REQUISITOS DE RENDA E GRUPO FAMILIAR
 Composição do grupo familiar identificada. Renda familiar bruta mensal. Exclusões aplicáveis (art. 8º, I, da Portaria 34/2025). Deduções aplicáveis (art. 8º, §4º). Renda familiar per capita final. Enquadramento no critério de 1/4 do salário mínimo ou argumentos para flexibilização.
 
-### 3. ANÁLISE DOS QUALIFICADORES – DOMÍNIO A DOMÍNIO
+### 3. ANÁLISE DOS QUALIFICADORES. DOMÍNIO A DOMÍNIO
 Para cada domínio, apresentar
 
 a) Nome do domínio e número de atividades aplicáveis
@@ -411,14 +411,14 @@ Lista de quesitos direcionados aos pontos controvertidos, redigidos de forma a e
 
 Em TODA análise de avaliação biopsicossocial, a skill DEVE realizar a verificação pela TCQ. O procedimento é obrigatório
 
-1. Identificar o qualificador final de Fatores Ambientais (Q1 – N, L, M, G ou C)
-2. Identificar o qualificador final de Atividades e Participação (Q2 – N, L, M, G ou C), calculado pela fórmula [(d1+d2+d3+d4+d5+d6+d7+d8+d9) x 2,777777777777780] – 0,1
-3. Identificar o qualificador final de Funções do Corpo (Q3 – N, L, M, G ou C), ANTES da aplicação dos gatilhos
+1. Identificar o qualificador final de Fatores Ambientais (Q1. N, L, M, G ou C)
+2. Identificar o qualificador final de Atividades e Participação (Q2. N, L, M, G ou C), calculado pela fórmula [(d1+d2+d3+d4+d5+d6+d7+d8+d9) x 2,777777777777780]. 0,1
+3. Identificar o qualificador final de Funções do Corpo (Q3. N, L, M, G ou C), ANTES da aplicação dos gatilhos
 4. Verificar se o Gatilho 1 (Agravante de Estrutura) ou Gatilho 2 (Prognóstico Desfavorável) foi acionado. Se sim, elevar Q3 em um nível (não cumulativo)
 5. Confrontar a combinação Q1 | Q2 | Q3 (após eventual elevação) com a TCQ (Anexo IV da Portaria 2/2015)
 6. Verificar se o resultado é FAVORÁVEL ou NÃO FAVORÁVEL
 7. Se NÃO FAVORÁVEL, identificar quais domínios precisariam ser elevados para inverter o resultado. SIMULAR especialmente o impacto do acionamento dos gatilhos quando não acionados pelo perito
-8. **ALERTA PORTARIA 37/2026** – Se o resultado NF decorrer de qualificadores N ou L em Funções do Corpo ou Atividades e Participação, registrar expressamente que os incisos I e II do art. 8º da Portaria 2/2015 foram suprimidos pela Portaria 37/2026, e que o indeferimento por qualificador N ou L isolado carece de base normativa vigente. A TCQ (Anexo IV) não foi alterada, mas a norma que sustentava esses NFs foi revogada, configurando argumento de conflito normativo interno.
+8. **ALERTA PORTARIA 37/2026.** Se o resultado NF decorrer de qualificadores N ou L em Funções do Corpo ou Atividades e Participação, registrar expressamente que os incisos I e II do art. 8º da Portaria 2/2015 foram suprimidos pela Portaria 37/2026, e que o indeferimento por qualificador N ou L isolado carece de base normativa vigente. A TCQ (Anexo IV) não foi alterada, mas a norma que sustentava esses NFs foi revogada, configurando argumento de conflito normativo interno.
 9. Verificar se o perito registrou a resposta ao campo de impedimento permanente/irreversível/irrecuperável (Portaria 37/2026). Se marcou "Sim", registrar a dispensa de reavaliação periódica (§5º art. 21 LOAS, Lei 15.157/2025). Se marcou "Não" em caso de impedimento evidentemente permanente, identificar como ponto impugnável.
 
 ## Diferenciação Menor de 16 Anos
@@ -432,7 +432,7 @@ d) Domínios educacionais e de socialização ganham relevância proporcional
 e) A mesma TCQ é utilizada, mas os domínios de entrada são diferentes
 f) Verificar se o avaliador usou o formulário correto (Anexo II e não Anexo I)
 
-## Parecer de Subavaliação – Análise Obrigatória
+## Parecer de Subavaliação. Análise Obrigatória
 
 Em TODA análise, a skill DEVE identificar os domínios subavaliados, separando o que foi subavaliado pelo perito médico e o que foi subavaliado pelo assistente social.
 
@@ -450,18 +450,18 @@ Este parecer é a ferramenta central para impugnar a avaliação, seja no CRPS, 
 
 Antes de realizar qualquer análise, leia obrigatoriamente os seguintes arquivos
 
-- `references/LEGISLACAO-BPC.md` – Quadro normativo completo com Lei 8.742/93, Lei 13.146/2015, Decreto 6.214/2007, Portaria Conjunta MDS/INSS nº 34/2025, e jurisprudência relevante da TNU, TRF3 e TRF4 sobre BPC
-- `references/PORTARIA-2-2015-TCQ.md` – Portaria Conjunta MDS/INSS nº 2/2015 completa com estrutura da avaliação, os 3 componentes da CIF, divisão de competências entre assistente social e perito médico, qualificadores 0-4, todos os domínios de Fatores Ambientais (e1-e5), Atividades e Participação (d1-d9), Funções do Corpo (b1-b8), fórmula de cálculo dos qualificadores finais, Tabela Conclusiva de Qualificadores (TCQ) completa com todas as 125 combinações, diferenciação por faixa etária (16+ e menor de 16), gatilhos de elevação de Funções do Corpo (Agravante de Estrutura e Prognóstico Desfavorável), e método detalhado de identificação de subavaliação por profissional
+- `references/LEGISLACAO-BPC.md`. Quadro normativo completo com Lei 8.742/93, Lei 13.146/2015, Decreto 6.214/2007, Portaria Conjunta MDS/INSS nº 34/2025, e jurisprudência relevante da TNU, TRF3 e TRF4 sobre BPC
+- `references/PORTARIA-2-2015-TCQ.md`. Portaria Conjunta MDS/INSS nº 2/2015 completa com estrutura da avaliação, os 3 componentes da CIF, divisão de competências entre assistente social e perito médico, qualificadores 0-4, todos os domínios de Fatores Ambientais (e1-e5), Atividades e Participação (d1-d9), Funções do Corpo (b1-b8), fórmula de cálculo dos qualificadores finais, Tabela Conclusiva de Qualificadores (TCQ) completa com todas as 125 combinações, diferenciação por faixa etária (16+ e menor de 16), gatilhos de elevação de Funções do Corpo (Agravante de Estrutura e Prognóstico Desfavorável), e método detalhado de identificação de subavaliação por profissional
 
 ## Skills Complementares (acionar conforme pertinência)
 
-- `bpc-renda-grupo-familiar` — Composição do grupo familiar (taxatividade), exclusões de renda, deduções de despesas, renda estrutural vs conjuntural, Enunciado 17/CRPS (no BPC, repetição só com má-fé comprovada, inciso II; auditoria 03/10/2026), legitimidade de herdeiros e auxílio-inclusão
-- `decreto-12534-bolsa-familia-bpc` — Quando o caso envolver indeferimento ou cessação por inclusão do Bolsa Família na renda (Decreto 12.534/2025)
-- `fibromialgia-deficiencia` — Quando o impedimento for fibromialgia (Lei 15.176/2025)
-- `avaliacao-cnj-630` — Instrumento biopsicossocial unificado do CNJ (Resolução 630/2025, obrigatório desde 02/03/2026)
-- `deficiencia-auditiva-previdenciaria` — Quando o impedimento for deficiência auditiva
-- `aposentadoria-deficiencia` — Quando o caso puder ser redirecionado para aposentadoria PCD (LC 142/2013)
-- `direitos-pcd-previdenciarios` — Para orientação sobre direitos extraprevidenciários da PCD
+- `bpc-renda-grupo-familiar`. Composição do grupo familiar (taxatividade), exclusões de renda, deduções de despesas, renda estrutural vs conjuntural, Enunciado 17/CRPS (no BPC, repetição só com má-fé comprovada, inciso II; auditoria 03/10/2026), legitimidade de herdeiros e auxílio-inclusão
+- `decreto-12534-bolsa-familia-bpc`. Quando o caso envolver indeferimento ou cessação por inclusão do Bolsa Família na renda (Decreto 12.534/2025)
+- `fibromialgia-deficiencia`. Quando o impedimento for fibromialgia (Lei 15.176/2025)
+- `avaliacao-cnj-630`. Instrumento biopsicossocial unificado do CNJ (Resolução 630/2025, obrigatório desde 02/03/2026)
+- `deficiencia-auditiva-previdenciaria`. Quando o impedimento for deficiência auditiva
+- `aposentadoria-deficiencia`. Quando o caso puder ser redirecionado para aposentadoria PCD (LC 142/2013)
+- `direitos-pcd-previdenciarios`. Para orientação sobre direitos extraprevidenciários da PCD
 
 ## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
 
@@ -498,19 +498,7 @@ O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Juízo de Catanduva (Onda 179)
 

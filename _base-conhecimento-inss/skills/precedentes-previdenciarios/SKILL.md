@@ -15,9 +15,9 @@ Base de precedentes vinculantes e qualificados em Direito Previdenciário da Adv
 
 401 precedentes catalogados (343 em arquivos de referência reconstruídos + 8 precedentes honorários inline + 9 precedentes em `references/acumulacao_ec103.md` + precedentes dispersos no SKILL.md), organizados por matéria, abrangendo três esferas
 
-- STJ — 87 Temas Repetitivos (Tema 18 ao Tema 1341, incluindo Tema 1011, Tema 1090, Tema 1115, Tema 1207 e Tema 1291)
-- STF — 89 Temas de Repercussão Geral (Tema 3 ao Tema 1370, incluindo Tema 1091 e ADI 3772)
-- TNU — 193 Temas Representativos de Controvérsia (Tema 1 ao Tema 378, incluindo PUILs e PEDILEFs 2024-2026)
+- STJ. 87 Temas Repetitivos (Tema 18 ao Tema 1341, incluindo Tema 1011, Tema 1090, Tema 1115, Tema 1207 e Tema 1291)
+- STF. 89 Temas de Repercussão Geral (Tema 3 ao Tema 1370, incluindo Tema 1091 e ADI 3772)
+- TNU. 193 Temas Representativos de Controvérsia (Tema 1 ao Tema 378, incluindo PUILs e PEDILEFs 2024-2026)
 
 ## Estrutura e consulta
 
@@ -37,9 +37,9 @@ Os precedentes estão organizados em arquivos temáticos na pasta `references/`.
 | `references/auxilioreclusao_defeso_outros.md` | Auxílio-reclusão, seguro-defeso, salário-maternidade, período de graça, qualidade de segurado, contribuinte individual, empregada doméstica | 30 |
 | `references/suspensos_pendentes.md` | Todos os temas suspensos e pendentes de julgamento com determinação de sobrestamento nacional | 16 |
 | `references/sem_repercussao_geral.md` | Temas do STF com repercussão geral negada (matéria infraconstitucional), utilidade defensiva para barrar RE do INSS | 18 |
-| `references/novos_especial_2025_2026.md` | **NOVO** — Precedentes de aposentadoria especial 2025-2026 (Tema 1090/STJ, Tema 1291/STJ, Tema 132/TST, PUILs TNU periculosidade/benzeno/vibração, Comunicado 99/2025, Resoluções 16 e 29/2024 CRPS, cerceamento de defesa, agentes biológicos, agentes químicos) | 30 |
-| `references/professor_rgps.md` | **NOVO** — Aposentadoria do professor RGPS (Tema 1011/STJ fator previdenciário, Tema 1091/STF constitucionalidade fator, ADI 3772 funções de magistério, TRF4 9ª Turma cômputo tempo diverso no cálculo) | 4 |
-| `references/acumulacao_ec103.md` | **NOVO** — Acumulação de benefícios sob a EC 103/2019 (art. 24 §§ 1º a 4º, redutores progressivos, ADI 7051, Tema 1300, Tema 359, Temas 377 e 384, Tema 627, RE 1.510.285, Súmula 359/STF, controvérsia da Primeira Turma sobre direito adquirido em aposentadoria pré-reforma) | 9 |
+| `references/novos_especial_2025_2026.md` | **NOVO.** Precedentes de aposentadoria especial 2025-2026 (Tema 1090/STJ, Tema 1291/STJ, Tema 132/TST, PUILs TNU periculosidade/benzeno/vibração, Comunicado 99/2025, Resoluções 16 e 29/2024 CRPS, cerceamento de defesa, agentes biológicos, agentes químicos) | 30 |
+| `references/professor_rgps.md` | **NOVO.** Aposentadoria do professor RGPS (Tema 1011/STJ fator previdenciário, Tema 1091/STF constitucionalidade fator, ADI 3772 funções de magistério, TRF4 9ª Turma cômputo tempo diverso no cálculo) | 4 |
+| `references/acumulacao_ec103.md` | **NOVO.** Acumulação de benefícios sob a EC 103/2019 (art. 24 §§ 1º a 4º, redutores progressivos, ADI 7051, Tema 1300, Tema 359, Temas 377 e 384, Tema 627, RE 1.510.285, Súmula 359/STF, controvérsia da Primeira Turma sobre direito adquirido em aposentadoria pré-reforma) | 9 |
 
 ## Instruções de uso
 
@@ -68,11 +68,11 @@ Os precedentes estão organizados em arquivos temáticos na pasta `references/`.
 
 Consultar obrigatoriamente `references/bpc_loas.md`. Os seguintes temas são frequentemente aplicáveis em conjunto
 
-- Tema 185/STJ — presunção relativa de miserabilidade
-- Tema 27/STF — inconstitucionalidade do critério de 1/4 do SM
-- Tema 312/STF — inconstitucionalidade parcial do art. 34 do Estatuto do Idoso
-- Tema 640/STJ — exclusão analógica de benefício de idoso da renda per capita
-- Temas TNU 34, 70, 122, 173, 187 — condições pessoais, HIV, impedimento de longo prazo
+- Tema 185/STJ, presunção relativa de miserabilidade
+- Tema 27/STF, inconstitucionalidade do critério de 1/4 do SM
+- Tema 312/STF, inconstitucionalidade parcial do art. 34 do Estatuto do Idoso
+- Tema 640/STJ, exclusão analógica de benefício de idoso da renda per capita
+- Temas TNU 34, 70, 122, 173, 187, condições pessoais, HIV, impedimento de longo prazo
 
 ### Ao trabalhar com aposentadoria da pessoa com deficiência (skill aposentadoria-deficiencia)
 
@@ -107,8 +107,8 @@ Estas são as conexões mais importantes entre temas de diferentes tribunais
 ### Prova de atividade rural
 - Temas STJ 297, 554, 638 ↔ Temas TNU 2, 3, 37, 153
 
-### Segurado especial × contribuinte individual rural — fronteira de enquadramento
-- Tema STJ 1115 (REsp 1.947.404/RS, Primeira Seção, Rel. Min. Benedito Gonçalves, j. 23/11/2022) — área superior a 4 módulos fiscais, por si só, NÃO descaracteriza o segurado especial. Alinhado à Súmula 30/TNU. Impacto direto na definição de enquadramento como CI rural (art. 90, I, IN 128/2022) versus segurado especial (art. 11, VII, Lei 8.213/91). Acionar skills `segurado-especial-rural` e `contribuinte-individual-in128`.
+### Segurado especial × contribuinte individual rural. fronteira de enquadramento
+- Tema STJ 1115 (REsp 1.947.404/RS, Primeira Seção, Rel. Min. Benedito Gonçalves, j. 23/11/2022), área superior a 4 módulos fiscais, por si só, NÃO descaracteriza o segurado especial. Alinhado à Súmula 30/TNU. Impacto direto na definição de enquadramento como CI rural (art. 90, I, IN 128/2022) versus segurado especial (art. 11, VII, Lei 8.213/91). Acionar skills `segurado-especial-rural` e `contribuinte-individual-in128`.
 
 ### Período de graça e qualidade de segurado
 - Temas STJ 1352, 1360 ↔ Temas TNU 239, 245, 255, 348, 349, 365 ↔ Tema STF 1421 ↔ Súmula 27 TNU
@@ -134,53 +134,53 @@ O Tema 317/TNU (julgado 18/09/2025, após anulação do julgamento anterior) fix
 
 ### Reafirmação da DER
 - Tema STJ 995 (julgado 22/10/2019, trânsito 29/10/2020) ↔ Tema STF 334 (direito ao melhor benefício) ↔ Tema STJ 1124 (fixação de DIB conforme origem da prova)
-- TNU — Tese consolidada (PUIL 5001623-70.2022.4.02.5005/ES, Rel. João Carlos Cabrelon de Oliveira, julgado em 04/12/2024) (auditoria 03/10/2026) — reafirmação da DER administrativa para melhor benefício, afastada equiparação com desaposentação (Tema 503/STF)
-- TNU — Juros na reafirmação pré-ajuizamento (Processo 0003337-85.2017.4.03.6303, Rel. Giovani Bigolin, 25/06/2025) — juros desde a citação
-- TNU — 6 precedentes confirmando tese em 2025 (PUILs 5010957-87, 0504516-58, 5001603-94, 5011229-93, 0107628-06, Processo 0002826-46), além do PEDILEF 5053159-26, provido em 07/08/2024 (auditoria 03/10/2026)
-- TRF3 — ApelRemNec 5007016-49.2019.4.03.6105 (10ª Turma, Rel. Leila Paiva Morrison, 10/05/2023) — MS, reafirmação administrativa para aposentadoria especial
-- TRF4 — AC 5011644-55.2019.4.04.7204/SC — reafirmação "obrigatória" para 95 pontos
+- TNU. Tese consolidada (PUIL 5001623-70.2022.4.02.5005/ES, Rel. João Carlos Cabrelon de Oliveira, julgado em 04/12/2024) (auditoria 03/10/2026), reafirmação da DER administrativa para melhor benefício, afastada equiparação com desaposentação (Tema 503/STF)
+- TNU. Juros na reafirmação pré-ajuizamento (Processo 0003337-85.2017.4.03.6303, Rel. Giovani Bigolin, 25/06/2025), juros desde a citação
+- TNU. 6 precedentes confirmando tese em 2025 (PUILs 5010957-87, 0504516-58, 5001603-94, 5011229-93, 0107628-06, Processo 0002826-46), além do PEDILEF 5053159-26, provido em 07/08/2024 (auditoria 03/10/2026)
+- TRF3. ApelRemNec 5007016-49.2019.4.03.6105 (10ª Turma, Rel. Leila Paiva Morrison, 10/05/2023). MS, reafirmação administrativa para aposentadoria especial
+- TRF4. AC 5011644-55.2019.4.04.7204/SC, reafirmação "obrigatória" para 95 pontos
 - Para detalhamento completo dos cenários, efeitos financeiros e juros, consultar a skill `reafirmacao-der`
 
 ### Atividades concomitantes
 - Tema STJ 1070
 
-### Honorários advocatícios sucumbenciais — base de cálculo (Tema 1050) e Súmula 111
-- Tema STJ 1050 (REsp 1.847.731/RS, 1.847.860/RS, 1.847.766/SC e 1.847.848/SC, 1ª Seção, Rel. Des. Federal Manoel Erhardt — convocado TRF5, j. 28/04/2021, DJe 05/05/2021, trânsito 30/11/2021) — "O eventual pagamento de benefício previdenciário na via administrativa, seja ele total ou parcial, após a citação válida, não tem o condão de alterar a base de cálculo para os honorários advocatícios fixados na ação de conhecimento, que será composta pela totalidade dos valores devidos." Fundamento central na distinção entre proveito econômico (art. 85, §2º, CPC) e valor a ser executado, com base no princípio da causalidade. Pagamentos administrativos pós-citação são compensados apenas do crédito principal na liquidação, sem reduzir a base dos honorários.
-- Súmula 111/STJ — "Os honorários advocatícios, nas ações previdenciárias, não incidem sobre as prestações vencidas após a sentença." Ratificada pelo Tema 1105/STJ (REsp 1.880.529/SP, 1ª Seção, Rel. Min. Sérgio Kukina, j. 15/03/2023), que confirmou vigência sob o CPC/2015. Define o termo final da base (sentença ou acórdão concessório), complementando o Tema 1050 que define a composição.
-- Tema STJ 1105 (REsp 1.880.529/SP, 1ª Seção, Rel. Min. Sérgio Kukina, j. 15/03/2023) — manutenção da Súmula 111 no CPC/2015
-- Súmula 76/TRF4 — quando sentença improcedente e acórdão concessório, termo final dos honorários é a data do acórdão (aplicável por analogia no TRF3)
+### Honorários advocatícios sucumbenciais. base de cálculo (Tema 1050) e Súmula 111
+- Tema STJ 1050 (REsp 1.847.731/RS, 1.847.860/RS, 1.847.766/SC e 1.847.848/SC, 1ª Seção, Rel. Des. Federal Manoel Erhardt, convocado TRF5, j. 28/04/2021, DJe 05/05/2021, trânsito 30/11/2021), "O eventual pagamento de benefício previdenciário na via administrativa, seja ele total ou parcial, após a citação válida, não tem o condão de alterar a base de cálculo para os honorários advocatícios fixados na ação de conhecimento, que será composta pela totalidade dos valores devidos." Fundamento central na distinção entre proveito econômico (art. 85, §2º, CPC) e valor a ser executado, com base no princípio da causalidade. Pagamentos administrativos pós-citação são compensados apenas do crédito principal na liquidação, sem reduzir a base dos honorários.
+- Súmula 111/STJ, "Os honorários advocatícios, nas ações previdenciárias, não incidem sobre as prestações vencidas após a sentença." Ratificada pelo Tema 1105/STJ (REsp 1.880.529/SP, 1ª Seção, Rel. Min. Sérgio Kukina, j. 15/03/2023), que confirmou vigência sob o CPC/2015. Define o termo final da base (sentença ou acórdão concessório), complementando o Tema 1050 que define a composição.
+- Tema STJ 1105 (REsp 1.880.529/SP, 1ª Seção, Rel. Min. Sérgio Kukina, j. 15/03/2023), manutenção da Súmula 111 no CPC/2015
+- Súmula 76/TRF4, quando sentença improcedente e acórdão concessório, termo final dos honorários é a data do acórdão (aplicável por analogia no TRF3)
 
 **Divergência TRF4 × STJ sobre "citação válida" como marco**
 
 O TRF4 desenvolveu a tese da citação como "marco qualitativo" (não temporal), servindo para angularizar a relação processual. Pagamentos administrativos de benefício diverso do pleiteado não reduziriam a base, mesmo que anteriores à citação. O STJ rejeitou expressamente essa leitura, mantendo a citação como marco temporal objetivo.
 
 Precedentes TRF4 (leitura qualitativa, favorável ao advogado)
-- AG 5025093-90.2021.4.04.0000 (6ª Turma, Rel. Des. Julio Guilherme Berezoski Schattschneider, 11/09/2021) — origem da tese qualitativa
-- AG 5046160-77.2022.4.04.0000 (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) — citação como vocatio, finalidade de angularizar relação processual, referência não temporal mas qualitativa
-- AG 5046190-15.2022.4.04.0000 (6ª Turma, Rel. Des. João Batista Pinto Silveira, 16/12/2022) — distinguishing para benefício inacumulável preexistente, proveito econômico = diferença entre benefícios
+- AG 5025093-90.2021.4.04.0000 (6ª Turma, Rel. Des. Julio Guilherme Berezoski Schattschneider, 11/09/2021), origem da tese qualitativa
+- AG 5046160-77.2022.4.04.0000 (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023), citação como vocatio, finalidade de angularizar relação processual, referência não temporal mas qualitativa
+- AG 5046190-15.2022.4.04.0000 (6ª Turma, Rel. Des. João Batista Pinto Silveira, 16/12/2022), distinguishing para benefício inacumulável preexistente, proveito econômico = diferença entre benefícios
 
 Precedentes STJ (leitura temporal, restritiva)
-- AgInt no REsp 2.088.158/PR (2ª Turma, Rel. Min. Francisco Falcão, j. 04/12/2023) — vedação de inclusão de valores pré-citação na base
-- AgInt no REsp 2.097.977/RS (2ª Turma, Rel. Min. Francisco Falcão, j. 26/02/2024) — mesmo sentido, interpretação a contrario sensu do Tema 1050
-- REsp 2.192.331/RS (2ª Turma, Rel. Min. Maria Thereza de Assis Moura, j. 10/12/2025) — confirmação expressa de que citação = marco temporal objetivo, rejeitando tese qualitativa do TRF4
+- AgInt no REsp 2.088.158/PR (2ª Turma, Rel. Min. Francisco Falcão, j. 04/12/2023), vedação de inclusão de valores pré-citação na base
+- AgInt no REsp 2.097.977/RS (2ª Turma, Rel. Min. Francisco Falcão, j. 26/02/2024), mesmo sentido, interpretação a contrario sensu do Tema 1050
+- REsp 2.192.331/RS (2ª Turma, Rel. Min. Maria Thereza de Assis Moura, j. 10/12/2025), confirmação expressa de que citação = marco temporal objetivo, rejeitando tese qualitativa do TRF4
 
 **Regra operacional para o escritório.** Na 36ª Subseção (TRF3), adotar a posição conservadora do STJ (marco temporal) nos cálculos de execução. Reservar a tese qualitativa do TRF4 como argumento subsidiário. Consultar a skill `honorarios-contrato-previdenciario` para cálculo prático e interação com honorários contratuais.
 
 ### Compensação de benefício inacumulável em cumprimento de sentença
-- Tema STJ 1207 (REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria, j. 28/06/2024, trânsito fev/2025) — compensação mês a mês, limitada ao valor do título judicial por competência, vedado saldo negativo, vedada execução invertida ou restituição indevida
-- IRDR 14/TRF4 (5023872-14.2017.4.04.0000, 3ª Seção, Rel. Jorge Antonio Maurique, j. 28/05/2018, trânsito 17/11/2021) — mesma tese do Tema 1.207, origem regional da tese com trânsito anterior
-- Tema TNU 195 (PEDILEF 5068010-43.2016.4.04.7100, Rel. Isadora Segalla Afanasieff, j. 18/09/2020) — compensação pelo total dos valores recebidos em período concomitante, vedado saldo negativo para o segurado
-- RCIJEF 5001446-98.2024.4.04.7004 (3ª TR Paraná, Rel. João Batista Brito Osório, j. 14/04/2025) — estende a vedação de saldo negativo também a benefícios concedidos administrativamente em que a compensação traga prejuízo ao segurado
+- Tema STJ 1207 (REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria, j. 28/06/2024, trânsito fev/2025), compensação mês a mês, limitada ao valor do título judicial por competência, vedado saldo negativo, vedada execução invertida ou restituição indevida
+- IRDR 14/TRF4 (5023872-14.2017.4.04.0000, 3ª Seção, Rel. Jorge Antonio Maurique, j. 28/05/2018, trânsito 17/11/2021), mesma tese do Tema 1.207, origem regional da tese com trânsito anterior
+- Tema TNU 195 (PEDILEF 5068010-43.2016.4.04.7100, Rel. Isadora Segalla Afanasieff, j. 18/09/2020), compensação pelo total dos valores recebidos em período concomitante, vedado saldo negativo para o segurado
+- RCIJEF 5001446-98.2024.4.04.7004 (3ª TR Paraná, Rel. João Batista Brito Osório, j. 14/04/2025), estende a vedação de saldo negativo também a benefícios concedidos administrativamente em que a compensação traga prejuízo ao segurado
 
 ### Adicional de 25%
 - Tema STJ 982 ↔ Tema STF 1095
 
 ### Devolução de valores de tutela revogada
 - Tema STJ 692 ↔ Tema STF 799
-- AR 5020232-32.2019.4.04.0000 (TRF4, 3ª Seção, Rel. Roger Raupp Rios) — balizas do Tema 692 para proteger o mínimo existencial. Desconto limitado a 30% do benefício ativo (item 3). Obrigação de ressarcir subsiste com base no art. 15, III, da Lei 8.213/91 (item 4). Liquidação nos próprios autos conforme art. 302, parágrafo único, do CPC (item 5). Preservação de montantes capazes de garantir dignidade do devedor e família, com manifestação prévia obrigatória antes de decisão sobre desconto, possibilidade de afastamento total da pretensão de devolução se demonstrada imprescindibilidade para subsistência digna (item 6). Impossibilidade absoluta de desconto quando benefício for de valor mínimo (item 7). Se não houver benefício ativo, aplicam-se regras gerais de impenhorabilidade.
+- AR 5020232-32.2019.4.04.0000 (TRF4, 3ª Seção, Rel. Roger Raupp Rios), balizas do Tema 692 para proteger o mínimo existencial. Desconto limitado a 30% do benefício ativo (item 3). Obrigação de ressarcir subsiste com base no art. 15, III, da Lei 8.213/91 (item 4). Liquidação nos próprios autos conforme art. 302, parágrafo único, do CPC (item 5). Preservação de montantes capazes de garantir dignidade do devedor e família, com manifestação prévia obrigatória antes de decisão sobre desconto, possibilidade de afastamento total da pretensão de devolução se demonstrada imprescindibilidade para subsistência digna (item 6). Impossibilidade absoluta de desconto quando benefício for de valor mínimo (item 7). Se não houver benefício ativo, aplicam-se regras gerais de impenhorabilidade.
 
 ### Gratuidade da justiça e critérios objetivos
-- Tema STJ 1178 (julgado 17/09/2025) — vedação de indeferimento automático por critérios objetivos, presunção relativa da declaração de hipossuficiência, uso suplementar após procedimento do art. 99 §2º CPC
+- Tema STJ 1178 (julgado 17/09/2025), vedação de indeferimento automático por critérios objetivos, presunção relativa da declaração de hipossuficiência, uso suplementar após procedimento do art. 99 §2º CPC
 
 ### Pensão por morte e menor sob guarda
 - Tema STJ 732 ↔ Tema STF 1271
@@ -191,7 +191,7 @@ Precedentes STJ (leitura temporal, restritiva)
 ### Acumulação de benefícios e redutor do art. 24 da EC 103/2019
 - ADI 7051/STF (cálculo da pensão, art. 23) ↔ Tema 1300/STF (cálculo aposentadoria por invalidez, art. 26, § 2º, III) ↔ Tema 359/STF (teto sobre soma) ↔ Temas 377 e 384/STF (cada vínculo isolado em cargos acumuláveis) ↔ Tema 627/STF (cargos constitucionalmente acumuláveis fora da vedação do art. 11 da EC 20/98, uso por analogia) (auditoria 03/10/2026) ↔ RE 1.510.285/DF AgR (redutor pós-óbito 13/11/2019)
 - **Controvérsia em construção na Primeira Turma do STF.** Aplicação do redutor sobre aposentadoria pré-reforma quando a pensão é posterior à EC 103/2019. Tese A (Min. Flávio Dino, atribuída) sustenta proteção do § 4º do art. 24. Tese B (Min. Alexandre de Moraes, atribuída) sustenta atração da sistemática integral pelo fato gerador novo. **Ambos os ARE divulgados em redes sociais (1.587.588/PB e 1.475.653/SE) NÃO localizados em fonte primária oficial até maio/2026.** Verificar inteiro teor antes de citar.
-- Súmula 359/STF — instrumento doutrinário central na sustentação do direito adquirido em matéria previdenciária
+- Súmula 359/STF, instrumento doutrinário central na sustentação do direito adquirido em matéria previdenciária
 - Para detalhamento completo, consultar `references/acumulacao_ec103.md`
 
 ### Contribuinte individual atividade especial
@@ -211,65 +211,65 @@ Precedentes STJ (leitura temporal, restritiva)
 
 ## Temas com modulação de efeitos conhecida
 
-- Tema STJ 692 — modulação aplicável apenas a processos distribuídos após publicação do acórdão (DJe 23/04/2021)
-- Tema STJ 1162 — modulação aplicável a recolhimentos à prisão a partir de 27/11/2024. Sem devolução de valores pagos por decisões anteriores.
-- Tema STF 1209 — vigilante especial, julgado em 6-4, SEM modulação de efeitos (ver estudo técnico do escritório na skill sustentacao-diligencias-crps)
-- Tema STF 1300 — aposentadoria por invalidez integral, julgado em 6-4, SEM modulação de efeitos
-- Tema STF 1370 — violência doméstica, SEM modulação de efeitos
+- Tema STJ 692, modulação aplicável apenas a processos distribuídos após publicação do acórdão (DJe 23/04/2021)
+- Tema STJ 1162, modulação aplicável a recolhimentos à prisão a partir de 27/11/2024. Sem devolução de valores pagos por decisões anteriores.
+- Tema STF 1209, vigilante especial, julgado em 6-4, SEM modulação de efeitos (ver estudo técnico do escritório na skill sustentacao-diligencias-crps)
+- Tema STF 1300, aposentadoria por invalidez integral, julgado em 6-4, SEM modulação de efeitos
+- Tema STF 1370, violência doméstica, SEM modulação de efeitos
 
 ## Status dos precedentes
 
 Cada entrada nos arquivos de referência possui um dos seguintes marcadores
 
-- Sem marcador — tese firmada e vigente
-- **[SUSPENSO]** — tema com determinação de suspensão nacional, verificar sobrestamento
-- **[EM JULGAMENTO]** — julgamento iniciado, suspenso por pedido de vista, acompanhar retomada
-- **[PENDENTE]** — aguardando julgamento
-- **[SOBRESTADO]** — aguardando decisão de tribunal superior
-- **[CANCELADO]** — tema cancelado, verificar tema substituto
-- **[SUPERADO]** — tema superado por novo entendimento
-- **[SEM TESE]** — tema sem tese firmada
+- Sem marcador, tese firmada e vigente
+- **[SUSPENSO]**, tema com determinação de suspensão nacional, verificar sobrestamento
+- **[EM JULGAMENTO]**, julgamento iniciado, suspenso por pedido de vista, acompanhar retomada
+- **[PENDENTE]**, aguardando julgamento
+- **[SOBRESTADO]**, aguardando decisão de tribunal superior
+- **[CANCELADO]**, tema cancelado, verificar tema substituto
+- **[SUPERADO]**, tema superado por novo entendimento
+- **[SEM TESE]**, tema sem tese firmada
 
 ## Atualização
 
 Este acervo foi atualizado em março/2026 com base em pesquisa web em fontes primárias. Incorpora os seguintes julgamentos recentes não constantes do material original.
 
 Temas julgados e incorporados
-- Tema 1124/STJ (08/10/2025) — interesse de agir, requerimento apto e fixação de DIB
-- Tema 1140/STJ (14/08/2024) — cálculo de RMI para adequação aos tetos EC 20/98 e 41/2003
-- Tema 1162/STJ (12/11/2025) — flexibilização do auxílio-reclusão com modulação de efeitos
-- Tema 1178/STJ (17/09/2025) — vedação de critérios objetivos para indeferimento imediato de gratuidade judiciária de pessoa natural
-- Tema 1291/STJ (10/09/2025) — atividade especial do contribuinte individual não cooperado
-- Tema 1115/STJ (23/11/2022) — área superior a 4 módulos fiscais não descaracteriza segurado especial
-- Tema 1209/STF (06-13/02/2026) — vigilante NÃO é atividade especial, sem modulação
-- Tema 1300/STF (18/12/2025) — constitucionalidade do cálculo reduzido da aposentadoria por invalidez
-- Tema 1370/STF (16/12/2025) — violência doméstica, natureza previdenciária/assistencial
-- Tema 353/TNU (2025) — contribuição única, ausência de divisor mínimo entre EC 103 e Lei 14.331
+- Tema 1124/STJ (08/10/2025), interesse de agir, requerimento apto e fixação de DIB
+- Tema 1140/STJ (14/08/2024), cálculo de RMI para adequação aos tetos EC 20/98 e 41/2003
+- Tema 1162/STJ (12/11/2025), flexibilização do auxílio-reclusão com modulação de efeitos
+- Tema 1178/STJ (17/09/2025), vedação de critérios objetivos para indeferimento imediato de gratuidade judiciária de pessoa natural
+- Tema 1291/STJ (10/09/2025), atividade especial do contribuinte individual não cooperado
+- Tema 1115/STJ (23/11/2022), área superior a 4 módulos fiscais não descaracteriza segurado especial
+- Tema 1209/STF (06-13/02/2026), vigilante NÃO é atividade especial, sem modulação
+- Tema 1300/STF (18/12/2025), constitucionalidade do cálculo reduzido da aposentadoria por invalidez
+- Tema 1370/STF (16/12/2025), violência doméstica, natureza previdenciária/assistencial
+- Tema 353/TNU (2025), contribuição única, ausência de divisor mínimo entre EC 103 e Lei 14.331
 
 Novos temas pendentes adicionados
-- Tema 1390/STF — aposentadoria compulsória de empregados públicos aos 75 anos
-- Tema 1421/STF — limbo previdenciário e período de graça
-- Tema 1435/STF — licença-maternidade para homem em união homoafetiva
-- Tema 382/TNU — atividade especial por exposição cutânea a tolueno
+- Tema 1390/STF, aposentadoria compulsória de empregados públicos aos 75 anos
+- Tema 1421/STF, limbo previdenciário e período de graça
+- Tema 1435/STF, licença-maternidade para homem em união homoafetiva
+- Tema 382/TNU, atividade especial por exposição cutânea a tolueno
 
 Temas com tese firmada adicionados ou atualizados nesta revisão (março/2026)
-- Tema 1050/STJ (28/04/2021, trânsito 30/11/2021) — base de cálculo dos honorários sucumbenciais = totalidade dos valores devidos, sem exclusão de pagamentos administrativos pós-citação. REsp 1.847.731/RS e conexos, 1ª Seção, Rel. Des. Federal Manoel Erhardt (convocado TRF5), por unanimidade. Citação válida = marco temporal objetivo (STJ) vs. marco qualitativo (TRF4, rejeitado pelo STJ no REsp 2.192.331/RS, 10/12/2025)
-- Tema 1105/STJ (15/03/2023) — manutenção da Súmula 111/STJ sob o CPC/2015, termo final dos honorários na sentença/acórdão concessório
-- Tema 1083/STJ (18/11/2021, trânsito 13/08/2022) — NEN como parâmetro obrigatório para ruído variável, pico como critério subsidiário
-- Tema 1207/STJ (28/06/2024, trânsito fev/2025) — compensação de benefício inacumulável mês a mês, vedado saldo negativo, vedada execução invertida. REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria, por unanimidade
-- Tema 195/TNU (18/09/2020) — compensação pelo total dos valores concomitantes, vedado saldo negativo para o segurado
-- IRDR 14/TRF4 (28/05/2018, trânsito 17/11/2021) — compensação por competência, limitada ao valor da mensalidade do julgado, vedada dedução de valores a maior na memória de cálculo
-- AR 5020232-32.2019.4.04.0000 (TRF4, 3ª Seção, Rel. Roger Raupp Rios) — 7 balizas de proteção ao segurado no Tema 692 (mínimo existencial, contraditório prévio, vedação de desconto em benefício mínimo)
-- Tema 317/TNU (18/09/2025) — mera menção a "dosimetria" no PPP não presume observância da NHO-01 ou NR-15, exige indicação expressa da norma
-- PUIL 5001623-70.2022.4.02.5005/ES (TNU, julgado em 04/12/2024) — tese consolidada de reafirmação da DER administrativa para melhor benefício, com ao menos 6 precedentes TNU de 2025 confirmando (auditoria 03/10/2026)
-- Processo 0003337-85.2017.4.03.6303 (TNU, 25/06/2025) — juros moratórios a partir da citação na reafirmação pré-ajuizamento
+- Tema 1050/STJ (28/04/2021, trânsito 30/11/2021), base de cálculo dos honorários sucumbenciais = totalidade dos valores devidos, sem exclusão de pagamentos administrativos pós-citação. REsp 1.847.731/RS e conexos, 1ª Seção, Rel. Des. Federal Manoel Erhardt (convocado TRF5), por unanimidade. Citação válida = marco temporal objetivo (STJ) vs. marco qualitativo (TRF4, rejeitado pelo STJ no REsp 2.192.331/RS, 10/12/2025)
+- Tema 1105/STJ (15/03/2023), manutenção da Súmula 111/STJ sob o CPC/2015, termo final dos honorários na sentença/acórdão concessório
+- Tema 1083/STJ (18/11/2021, trânsito 13/08/2022). NEN como parâmetro obrigatório para ruído variável, pico como critério subsidiário
+- Tema 1207/STJ (28/06/2024, trânsito fev/2025), compensação de benefício inacumulável mês a mês, vedado saldo negativo, vedada execução invertida. REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria, por unanimidade
+- Tema 195/TNU (18/09/2020), compensação pelo total dos valores concomitantes, vedado saldo negativo para o segurado
+- IRDR 14/TRF4 (28/05/2018, trânsito 17/11/2021), compensação por competência, limitada ao valor da mensalidade do julgado, vedada dedução de valores a maior na memória de cálculo
+- AR 5020232-32.2019.4.04.0000 (TRF4, 3ª Seção, Rel. Roger Raupp Rios). 7 balizas de proteção ao segurado no Tema 692 (mínimo existencial, contraditório prévio, vedação de desconto em benefício mínimo)
+- Tema 317/TNU (18/09/2025), mera menção a "dosimetria" no PPP não presume observância da NHO-01 ou NR-15, exige indicação expressa da norma
+- PUIL 5001623-70.2022.4.02.5005/ES (TNU, julgado em 04/12/2024), tese consolidada de reafirmação da DER administrativa para melhor benefício, com ao menos 6 precedentes TNU de 2025 confirmando (auditoria 03/10/2026)
+- Processo 0003337-85.2017.4.03.6303 (TNU, 25/06/2025), juros moratórios a partir da citação na reafirmação pré-ajuizamento
 
 Fontes primárias para atualização
-- STJ — https://processo.stj.jus.br/repetitivos/temas_repetitivos/
-- STF — https://portal.stf.jus.br/jurisprudenciaRepercussao/
-- TNU — https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/
+- STJ, https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+- STF, https://portal.stf.jus.br/jurisprudenciaRepercussao/
+- TNU, https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/
 
-## Módulo adicional (maio/2026) — Acumulação de Benefícios e EC 103/2019
+## Módulo adicional (maio/2026). Acumulação de Benefícios e EC 103/2019
 
 Criado em maio/2026 o arquivo `references/acumulacao_ec103.md`, dedicado integralmente à acumulação de benefícios sob a Reforma da Previdência. Cobre o art. 24, caput e §§ 1º a 4º, da EC 103/2019, incluindo redutores progressivos, hipóteses fáticas (6 cenários), ADI 7051, Tema 1300, Tema 359, Temas 377 e 384, Tema 627, RE 1.510.285/DF AgR, Súmula 359/STF e controvérsia atualmente em construção na Primeira Turma do STF sobre direito adquirido em aposentadoria pré-reforma com pensão pós-reforma. Acionar este módulo sempre que o caso envolver acumulação de aposentadoria com pensão, acumulação de aposentadorias por cargos acumuláveis, ou aplicação de redutor pelo INSS em benefícios anteriores a 13/11/2019.
 
@@ -279,16 +279,4 @@ Nenhuma petição, recurso ou peça processual previdenciária pode ser finaliza
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

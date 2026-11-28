@@ -1,4 +1,4 @@
-# Revisão do Art. 29, II, e Melhor Benefício — Fundamentos e Cenários
+# Revisão do Art. 29, II, e Melhor Benefício. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -42,37 +42,37 @@ Prescrição quinquenal das parcelas.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Aposentadoria por invalidez precedida de auxílio-doença
+### Cenário A. Aposentadoria por invalidez precedida de auxílio-doença
 
 Verificar se o cálculo da invalidez considerou os salários de contribuição reais ou apenas o valor do auxílio-doença intercalado, conforme a regra do art. 29, §5º. Em caso de distorção, revisão cabível.
 
-### Cenário B — Auxílio-doença com média truncada
+### Cenário B. Auxílio-doença com média truncada
 
 Cálculo limitado a período contributivo reduzido. Verificar se a média incluiu todos os maiores salários cabíveis.
 
-### Cenário C — Aposentadoria concedida entre 1999 e 2019 com requisitos anteriores a novembro de 1999
+### Cenário C. Aposentadoria concedida entre 1999 e 2019 com requisitos anteriores a novembro de 1999
 
 Direito adquirido à regra originária do art. 29. Acionar `base-aposentadoria-direito-adquirido`.
 
-### Cenário D — Aposentadoria concedida após EC 103/2019 com requisitos implementados antes
+### Cenário D. Aposentadoria concedida após EC 103/2019 com requisitos implementados antes
 
 Direito adquirido à regra vigente antes da reforma. Possibilidade de congelamento da DIB em data pretérita mais vantajosa.
 
-### Cenário E — Benefício com RMI em patamar inferior ao ideal
+### Cenário E. Benefício com RMI em patamar inferior ao ideal
 
 Simulação por profissional de cálculo para identificar momentos pretéritos em que a renda seria maior.
 
 ## 6. Cenários a evitar
 
-### Cenário F — Benefício sem implementação de requisitos em data pretérita
+### Cenário F. Benefício sem implementação de requisitos em data pretérita
 
 Sem direito adquirido anterior à DER, não há espaço para melhor benefício.
 
-### Cenário G — Decadência consumada
+### Cenário G. Decadência consumada
 
 Mais de 10 anos do primeiro pagamento. Extinção do direito de revisão.
 
-### Cenário H — Benefício programado sem distorção de cálculo
+### Cenário H. Benefício programado sem distorção de cálculo
 
 Sem diferença concreta, pedido improcede.
 

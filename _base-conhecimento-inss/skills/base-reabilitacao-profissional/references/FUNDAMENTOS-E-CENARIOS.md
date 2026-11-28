@@ -1,4 +1,4 @@
-# Reabilitação Profissional — Fundamentos e Cenários
+# Reabilitação Profissional. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -36,41 +36,41 @@ Razoável duração do processo.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Segurado em B31 com prognóstico de reabilitação
+### Cenário A. Segurado em B31 com prognóstico de reabilitação
 
 Conversão para B26.
 
-### Cenário B — B32 com possibilidade de reabilitação
+### Cenário B. B32 com possibilidade de reabilitação
 
 Conversão para B26.
 
-### Cenário C — PRP inconcluso
+### Cenário C. PRP inconcluso
 
 Manutenção do B26.
 
-### Cenário D — Alta sem certificado
+### Cenário D. Alta sem certificado
 
 Revisão judicial.
 
-### Cenário E — Empregador não readapta
+### Cenário E. Empregador não readapta
 
 Retorno do benefício ou art. 118 estabilidade.
 
-### Cenário F — Cota de PCD
+### Cenário F. Cota de PCD
 
 Inserção ao mercado sob Lei 8.213 art. 93.
 
 ## 6. Cenários limitados
 
-### Cenário G — Idade ou perfil incompatíveis
+### Cenário G. Idade ou perfil incompatíveis
 
 Aposentadoria por incapacidade permanente.
 
-### Cenário H — Certificado emitido e recolocação efetiva
+### Cenário H. Certificado emitido e recolocação efetiva
 
 Alta regular.
 
-### Cenário I — Segurado que se recusa ao PRP sem justificativa
+### Cenário I. Segurado que se recusa ao PRP sem justificativa
 
 Cessação do benefício, art. 101 Lei 8.213.
 

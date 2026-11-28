@@ -1,4 +1,4 @@
-# Recursos no JEF — Jurisprudência e Refutação
+# Recursos no JEF. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,79 +36,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Recurso intempestivo
+### Argumento 1. Recurso intempestivo
 
 Argumento adversário. Fora do prazo.
 
 Refutação. Comprovar tempestividade. Contagem a partir da intimação, art. 219 CPC.
 
-### Argumento 2 — Embargos protelatórios
+### Argumento 2. Embargos protelatórios
 
 Argumento adversário. Multa.
 
 Refutação. Embargos com fundamentação clara em omissão, contradição, obscuridade ou erro material. Efeito modificativo excepcional.
 
-### Argumento 3 — Ausência de dialeticidade
+### Argumento 3. Ausência de dialeticidade
 
 Argumento adversário. Repetição de inicial.
 
 Refutação. Reescrever o recurso combatendo cada fundamento da sentença. Art. 1.010, III, CPC.
 
-### Argumento 4 — PUIL não conhecido
+### Argumento 4. PUIL não conhecido
 
 Argumento adversário. Paradigma inadequado.
 
 Refutação. Apresentar acórdãos paradigmas adequados, com cotejo analítico.
 
-### Argumento 5 — Súmula 203 STJ
+### Argumento 5. Súmula 203 STJ
 
 Argumento adversário. REsp não cabe.
 
 Refutação. Se houve PUIL à TNU, art. 14, §4º, Lei 10.259, REsp é cabível em hipótese específica.
 
-### Argumento 6 — RE sem matéria constitucional
+### Argumento 6. RE sem matéria constitucional
 
 Argumento adversário. Matéria infraconstitucional.
 
 Refutação. Demonstrar o fundamento constitucional direto. Súmula 640 STF.
 
-### Argumento 7 — MS inadequado
+### Argumento 7. MS inadequado
 
 Argumento adversário. Há recurso.
 
 Refutação. Cabível somente em ausência de recurso.
 
-### Argumento 8 — Recurso sem preparo
+### Argumento 8. Recurso sem preparo
 
 Argumento adversário. Deserção.
 
 Refutação. Segurado em demanda previdenciária é dispensado de preparo.
 
-### Argumento 9 — Sentença transitada
+### Argumento 9. Sentença transitada
 
 Argumento adversário. Preclusão.
 
 Refutação. Verificar intimação, prazo e eventual embargo.
 
-### Argumento 10 — Negativa de seguimento monocrático
+### Argumento 10. Negativa de seguimento monocrático
 
 Argumento adversário. Decisão monocrática do relator.
 
 Refutação. Agravo interno. Art. 1.021 CPC aplicado por analogia.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, recursos JEF.
-
-Hugo Goes, JEF.
-
-Marco Aurélio Serau Junior, TNU.
-
-Daniel Pulino, procedimento.
-
-Jane Berwanger, processo previdenciário.
-
-IBDP, advocacia previdenciária.
 
 ## 5. Estratégia integrada
 

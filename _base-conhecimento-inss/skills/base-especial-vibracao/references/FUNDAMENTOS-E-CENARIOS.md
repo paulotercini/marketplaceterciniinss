@@ -1,4 +1,4 @@
-# Vibração — Fundamentos Normativos e Cenários
+# Vibração. Fundamentos Normativos e Cenários
 
 ## 1. Marco normativo
 
@@ -10,11 +10,11 @@ Ambos tratam da aposentadoria especial, mas não trazem limite numérico express
 
 O Anexo 8 da NR-15 trata da vibração, remetendo às Normas de Higiene Ocupacional da Fundacentro. Para vibração de corpo inteiro, aplica-se a NHO-09. Para vibração mão-braço, aplica-se a NHO-10.
 
-### NHO-09 — Vibração de Corpo Inteiro
+### NHO-09. Vibração de Corpo Inteiro
 
 A NHO-09 define parâmetros de aren (aceleração resultante normalizada) e VDV (Valor da Dose de Vibração) como métricas. A exposição é aferida por dosímetro ao longo da jornada. Os limites são fixados em tabela específica. A ultrapassagem do nível de ação impõe medidas e, persistente, caracteriza a nocividade para fins previdenciários.
 
-### NHO-10 — Vibração Mão-Braço
+### NHO-10. Vibração Mão-Braço
 
 A NHO-10 fixa o A(8), valor equivalente à exposição contínua de 8 horas, como parâmetro principal. A ultrapassagem do limite de exposição caracteriza a nocividade.
 
@@ -42,35 +42,35 @@ Métrica principal. A(8).
 
 ## 3. Cenários concretos para o segurado
 
-### Cenário 1 — Motorista profissional de caminhão ou ônibus
+### Cenário 1. Motorista profissional de caminhão ou ônibus
 
 Vibração de corpo inteiro. Enquadramento viável quando o PPP mede aren superior ao nível de ação da NHO-09. Em PPP omisso, acionar `retificacao-ppp` e requerer perícia técnica (art. 58, §§ 1º e 4º, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 213/TNU, que trata da eficácia do EPI e não inverte o ônus da prova).
 
-### Cenário 2 — Tratorista rural ou de movimentação de terra
+### Cenário 2. Tratorista rural ou de movimentação de terra
 
 Exposição de corpo inteiro. Terreno irregular, jornada prolongada, vibração multi-eixo. Enquadramento pela NHO-09 com apoio em perícia similar quando a empresa for extinta ou omissa.
 
-### Cenário 3 — Operador de máquina pesada em mineração e construção
+### Cenário 3. Operador de máquina pesada em mineração e construção
 
 Escavadeira, retroescavadeira, pá-carregadeira, rolo compactador. Vibração intensa e prolongada. Enquadramento pela NHO-09.
 
-### Cenário 4 — Operador de britadeira ou rompedor pneumático
+### Cenário 4. Operador de britadeira ou rompedor pneumático
 
 Vibração mão-braço severa. Enquadramento pela NHO-10 com enquadramento adicional por poeira mineral quando houver, via `base-especial-agentes-quimicos` para sílica.
 
-### Cenário 5 — Operador de motosserra
+### Cenário 5. Operador de motosserra
 
 Vibração mão-braço contínua. Enquadramento pela NHO-10. Associar com ruído via `base-especial-ruido` e com agentes químicos por óleo combustível via `base-especial-agentes-quimicos`.
 
-### Cenário 6 — Bate-estacas e demolição
+### Cenário 6. Bate-estacas e demolição
 
 Vibração de corpo inteiro e mão-braço simultâneas. Enquadramento cumulativo pelas NHO-09 e NHO-10.
 
-### Cenário 7 — Operador de rolo compactador
+### Cenário 7. Operador de rolo compactador
 
 Vibração de corpo inteiro, em regra acima do nível de ação. Enquadramento direto pela NHO-09.
 
-### Cenário 8 — Motorista de transporte urbano de passageiros
+### Cenário 8. Motorista de transporte urbano de passageiros
 
 Vibração de corpo inteiro. Enquadramento viável com PPP que meça aren ou VDV. Em ausência, pedir retificação ou perícia por similaridade.
 

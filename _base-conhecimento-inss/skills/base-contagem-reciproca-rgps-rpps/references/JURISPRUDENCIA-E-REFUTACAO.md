@@ -1,4 +1,4 @@
-# Contagem Recíproca RGPS e RPPS — Jurisprudência e Refutação
+# Contagem Recíproca RGPS e RPPS. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -50,81 +50,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS e do ente público
 
-### Argumento 1 — Demora na emissão da CTC
+### Argumento 1. Demora na emissão da CTC
 
 Argumento adversário. Prazo indefinido.
 
 Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Razoável duração do processo.
 
-### Argumento 2 — Recusa de averbação
+### Argumento 2. Recusa de averbação
 
 Argumento adversário. Tempo não aceito.
 
 Refutação. Direito líquido e certo. Mandado de segurança. Acionar `mandado-seguranca-previdenciario`.
 
-### Argumento 3 — Sobreposição alegada indevidamente
+### Argumento 3. Sobreposição alegada indevidamente
 
 Argumento adversário. Dupla contagem.
 
 Refutação. Demonstrar desaverbação prévia ou ausência de sobreposição concreta.
 
-### Argumento 4 — Tempo rural sem indenização
+### Argumento 4. Tempo rural sem indenização
 
 Argumento adversário. Tempo rural pós-1991 sem recolhimento.
 
 Refutação. Possível indenização das contribuições (auditoria 03/10/2026; o Tema 609 STJ, antes citado aqui, trata do tempo rural anterior a 1991 e é adverso). Acionar `indenizacao-contribuicoes-atraso`.
 
-### Argumento 5 — Vedação de conversão especial no RPPS
+### Argumento 5. Vedação de conversão especial no RPPS
 
 Argumento adversário. Tempo especial não cômputa.
 
 Refutação. Jurisprudência admite em hipóteses específicas. Analisar regulamento do ente e decisões recentes.
 
-### Argumento 6 — CTC incompleta
+### Argumento 6. CTC incompleta
 
 Argumento adversário. Certidão sem detalhes.
 
 Refutação. Retificação da CTC pelo regime de origem. Requerimento formal.
 
-### Argumento 7 — Tempo militar sem CTC
+### Argumento 7. Tempo militar sem CTC
 
 Argumento adversário. Sem certidão militar.
 
 Refutação. Requerer à Força Armada. Direito à certidão.
 
-### Argumento 8 — Ausência de compensação financeira
+### Argumento 8. Ausência de compensação financeira
 
 Argumento adversário. Tempo rejeitado.
 
 Refutação. Compensação financeira é dever dos entes, não condição ao segurado.
 
-### Argumento 9 — EC 103/2019 limitou contagem
+### Argumento 9. EC 103/2019 limitou contagem
 
 Argumento adversário. Reforma restringiu direitos.
 
 Refutação. Garantia constitucional do art. 201, §9º, permanece. Restrições específicas para servidores federais.
 
-### Argumento 10 — Ausência de prévio requerimento
+### Argumento 10. Ausência de prévio requerimento
 
 Argumento adversário. Sem interesse de agir.
 
 Refutação. Protocolar requerimento administrativo com CTC e aguardar manifestação.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, contagem recíproca.
-
-Hugo Goes, cômputo.
-
-Fábio Zambitte Ibrahim, regimes.
-
-Wladimir Novaes Martinez, direito à contagem.
-
-Daniel Pulino, direito constitucional.
-
-Marco Aurélio Serau Junior, reforma.
-
-IBDP, defesa.
 
 ## 5. Estratégia integrada
 
@@ -141,7 +125,5 @@ Quinto, em caso de recusa, via judicial.
 ## 6. Diligência de atualização
 
 Acompanhar acórdãos do STJ sobre Tema 609.
-
-
 
 Revisar IN 128/2022 e regulamentos dos entes públicos.

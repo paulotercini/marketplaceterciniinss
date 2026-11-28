@@ -1,4 +1,4 @@
-# Sequela Mínima B94 — Fundamentos e Cenários
+# Sequela Mínima B94. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,45 +40,45 @@ Redução parcial.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Dedo com perda parcial
+### Cenário A. Dedo com perda parcial
 
 Mínima funcional.
 
-### Cenário B — Joelho com sequela leve
+### Cenário B. Joelho com sequela leve
 
 Permanente.
 
-### Cenário C — Perda auditiva discreta
+### Cenário C. Perda auditiva discreta
 
 Funcional.
 
-### Cenário D — Ofensa estética leve
+### Cenário D. Ofensa estética leve
 
 Permanente.
 
-### Cenário E — Coluna com sequela leve
+### Cenário E. Coluna com sequela leve
 
 Funcional.
 
-### Cenário F — Membro superior com perda parcial
+### Cenário F. Membro superior com perda parcial
 
 Funcional.
 
-### Cenário G — Sequela neurológica leve
+### Cenário G. Sequela neurológica leve
 
 Funcional.
 
 ## 6. Cenários limitados
 
-### Cenário H — Sem permanência
+### Cenário H. Sem permanência
 
 Não enquadra.
 
-### Cenário I — Cura total
+### Cenário I. Cura total
 
 Sem residual.
 
-### Cenário J — Doença não acidentária
+### Cenário J. Doença não acidentária
 
 Outra espécie.
 

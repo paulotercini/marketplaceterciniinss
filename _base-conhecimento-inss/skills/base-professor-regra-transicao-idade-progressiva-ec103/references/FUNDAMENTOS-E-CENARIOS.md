@@ -1,4 +1,4 @@
-# Idade Progressiva Professor — Fundamentos e Cenários
+# Idade Progressiva Professor. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -52,45 +52,45 @@ Quarto, exclusividade em magistério.
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Professora com tempo antigo
+### Cenário A. Professora com tempo antigo
 
 25 anos de magistério em 2026. 54 anos e 6 meses de idade, o mínimo exigido em 2026. Aposenta (auditoria 03/10/2026).
 
-### Cenário B — Professor com tempo longo
+### Cenário B. Professor com tempo longo
 
 30 anos em 2026. 59 anos e 6 meses de idade, o mínimo exigido em 2026. Aposenta (auditoria 03/10/2026).
 
-### Cenário C — Coordenadora pedagógica
+### Cenário C. Coordenadora pedagógica
 
 Conta. ADI 3772.
 
-### Cenário D — Diretora escolar
+### Cenário D. Diretora escolar
 
 Conta.
 
-### Cenário E — Assessora pedagógica
+### Cenário E. Assessora pedagógica
 
 Conta.
 
-### Cenário F — Educação infantil
+### Cenário F. Educação infantil
 
 Aplicar Lei 15.326/2026.
 
-### Cenário G — Cargo híbrido
+### Cenário G. Cargo híbrido
 
 Lei 15.326/2026.
 
 ## 7. Cenários limitados
 
-### Cenário H — Ingresso após 13/11/2019
+### Cenário H. Ingresso após 13/11/2019
 
 Não se aplica.
 
-### Cenário I — Tempo insuficiente de magistério
+### Cenário I. Tempo insuficiente de magistério
 
 Regra geral.
 
-### Cenário J — Professor universitário
+### Cenário J. Professor universitário
 
 Não se enquadra. O texto limita a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 16, §2º) (auditoria 03/10/2026).
 

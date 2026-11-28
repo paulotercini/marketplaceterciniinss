@@ -15,7 +15,7 @@ A lei NÃO é principiológica abstrata. Contém vedações expressas, direitos 
 
 ## Dispositivos com Aplicação Direta na Prática Previdenciária
 
-### Art. 5º, IV – Vedação de exigências não previstas em lei
+### Art. 5º, IV. Vedação de exigências não previstas em lei
 
 Texto normativo (síntese funcional). O usuário tem direito à adequação entre meios e fins, vedada a imposição de exigências, obrigações, restrições e sanções não previstas na legislação.
 
@@ -29,7 +29,7 @@ Situações típicas em que se aplica
 - INSS cria exigência de comparecimento pessoal quando o serviço poderia ser prestado por meio eletrônico
 - INSS impõe prazo ou condição não prevista em norma para apresentação de documentos
 
-### Art. 5º, XI – Eliminação de formalidades desproporcionais
+### Art. 5º, XI. Eliminação de formalidades desproporcionais
 
 Texto normativo (síntese funcional). Deve-se proceder à eliminação de formalidades e exigências cujo custo econômico ou social seja superior ao risco envolvido.
 
@@ -42,7 +42,7 @@ Situações típicas em que se aplica
 - Exigência de novo agendamento e novo deslocamento para apresentação de documento único que poderia ter sido indicado previamente
 - Formalismo excessivo na aceitação de procurações e declarações de segurados analfabetos ou em situação de fragilidade
 
-### Art. 5º, XIII – Dever de aplicação de soluções tecnológicas
+### Art. 5º, XIII. Dever de aplicação de soluções tecnológicas
 
 Texto normativo (síntese funcional). A administração deve aplicar soluções tecnológicas que visem simplificar processos e procedimentos de atendimento ao usuário e propiciar melhores condições para o compartilhamento das informações.
 
@@ -55,7 +55,7 @@ Situações típicas em que se aplica
 - INSS exige apresentação de documentos que já constam em processo administrativo anterior do mesmo segurado
 - INSS não utiliza convênios de compartilhamento de dados com outros órgãos quando a informação está disponível por essa via
 
-### Art. 5º, XV – Vedação de nova prova sobre fato já comprovado
+### Art. 5º, XV. Vedação de nova prova sobre fato já comprovado
 
 Texto normativo (síntese funcional). É vedada a exigência de nova prova sobre fato já comprovado em documentação válida apresentada.
 
@@ -72,7 +72,7 @@ Situações típicas em que se aplica
 - INSS solicita novos documentos de comprovação de atividade rural quando o segurado já apresentou início de prova material suficiente
 - INSS exige reavaliação social quando já existe laudo social válido no processo
 
-### Art. 6º, III – Acesso a informações pessoais
+### Art. 6º, III. Acesso a informações pessoais
 
 Texto normativo (síntese funcional). São direitos básicos do usuário o acesso e a obtenção de informações relativas à sua pessoa constantes de registros ou bancos de dados.
 
@@ -86,7 +86,7 @@ Situações típicas em que se aplica
 - Obtenção de cópia integral do CNIS detalhado
 - Acesso a informações sobre o andamento do requerimento administrativo
 
-### Art. 7º – Carta de Serviços ao Usuário
+### Art. 7º. Carta de Serviços ao Usuário
 
 Texto normativo (síntese funcional). Os órgãos e entidades abrangidos pela lei devem divulgar Carta de Serviços ao Usuário com informações claras e precisas sobre cada serviço prestado, incluindo requisitos, documentos, formas de prestação, prazo máximo para atendimento e formas de manifestação do usuário.
 
@@ -98,7 +98,7 @@ Situações típicas em que se aplica
 - Não observância do compromisso de atendimento definido para determinado serviço
 - Ausência de informação clara sobre requisitos documentais antes do atendimento
 
-### Art. 11 – Vedação de recusa de manifestações
+### Art. 11. Vedação de recusa de manifestações
 
 Texto normativo (síntese funcional). Em nenhuma hipótese será recusado o recebimento de manifestações formuladas nos termos da lei, sob pena de responsabilidade do agente público.
 
@@ -110,7 +110,7 @@ Situações típicas em que se aplica
 - Servidor se recusa a receber recurso administrativo ou complementação documental
 - INSS condiciona o protocolo de requerimento a agendamento prévio quando o segurado comparece presencialmente com urgência justificada
 
-### Art. 12 – Eficiência e celeridade na análise
+### Art. 12. Eficiência e celeridade na análise
 
 Texto normativo (síntese funcional). Os procedimentos administrativos relativos à análise das manifestações observarão os princípios da eficiência e da celeridade, visando a sua efetiva resolução.
 
@@ -163,14 +163,14 @@ Quando o INSS formular exigência documental em qualquer fase (administrativa ou
 
 A Lei 13.460/2017 potencializa argumentos quando combinada com
 
-- **Art. 37, caput, CF/88** – princípio da eficiência administrativa
-- **Art. 37, §3º, I, CF/88** – regulamentado pela própria Lei 13.460/2017
-- **Art. 347, §4º, Decreto 3.048/99** – dever de cooperação do INSS na instrução do requerimento
-- **Tema 1124/STJ** – interesse de agir e instrução administrativa adequada
-- **Tema 350/STF** – necessidade de prévio requerimento administrativo
-- **Lei 9.784/99** – processo administrativo federal (norma geral, Lei 13.460 é norma especial do usuário)
-- **Lei 12.527/2011** (LAI) – acesso a informações, referenciada pelo art. 6º, III da Lei 13.460
-- **Decreto 9.094/2017** – simplificação do atendimento ao usuário, regulamenta dispositivos da Lei 13.460
+- **Art. 37, caput, CF/88**, princípio da eficiência administrativa
+- **Art. 37, §3º, I, CF/88**, regulamentado pela própria Lei 13.460/2017
+- **Art. 347, §4º, Decreto 3.048/99**, dever de cooperação do INSS na instrução do requerimento
+- **Tema 1124/STJ**, interesse de agir e instrução administrativa adequada
+- **Tema 350/STF**, necessidade de prévio requerimento administrativo
+- **Lei 9.784/99**, processo administrativo federal (norma geral, Lei 13.460 é norma especial do usuário)
+- **Lei 12.527/2011** (LAI), acesso a informações, referenciada pelo art. 6º, III da Lei 13.460
+- **Decreto 9.094/2017**, simplificação do atendimento ao usuário, regulamenta dispositivos da Lei 13.460
 
 ## Jurisprudência Aplicável
 
@@ -194,16 +194,4 @@ ALERTA. A jurisprudência específica sobre a Lei 13.460/2017 em matéria previd
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

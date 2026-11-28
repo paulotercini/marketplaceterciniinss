@@ -1,4 +1,4 @@
-# Ação Rescisória Previdenciária — Fundamentos e Cenários
+# Ação Rescisória Previdenciária. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -50,41 +50,41 @@ Rural, prova nova.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — PPP retificado
+### Cenário A. PPP retificado
 
 Prova nova.
 
-### Cenário B — Laudo novo sobre DID
+### Cenário B. Laudo novo sobre DID
 
 Erro de fato.
 
-### Cenário C — Tema 1102 STF [retirado em 13/10/2026]
+### Cenário C. Tema 1102 STF [retirado em 13/10/2026]
 
 Não cabe rescisória do segurado, porque a tese vigente é adversa. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
-### Cenário D — Documento falso
+### Cenário D. Documento falso
 
 Art. 966 VI.
 
-### Cenário E — Coisa julgada violada
+### Cenário E. Coisa julgada violada
 
 Art. 966 IV.
 
-### Cenário F — Erro de cômputo
+### Cenário F. Erro de cômputo
 
 Art. 966 VIII.
 
 ## 6. Cenários limitados
 
-### Cenário G — Interpretação divergente
+### Cenário G. Interpretação divergente
 
 Súmula 343 STF limita.
 
-### Cenário H — Prova nova não contemporânea
+### Cenário H. Prova nova não contemporânea
 
 Avaliar admissibilidade.
 
-### Cenário I — Prazo esgotado
+### Cenário I. Prazo esgotado
 
 Decadência rígida.
 

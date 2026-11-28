@@ -90,9 +90,9 @@ O art. 51, parágrafo único, confirma essa lógica ao determinar que, diante de
 
 Mandado de segurança para compelir o INSS ao cumprimento de decisão administrativa do CRPS. Apelação e remessa oficial desprovidas. Duas teses firmadas com aplicação direta na prática do escritório.
 
-**Tese 4 — Vedação de reavaliação unilateral de período já validado.** O INSS não pode simplesmente reavaliar e desconsiderar período de atividade rural que já havia sido expressamente validado no processo administrativo, sem possibilidade de manifestação ou participação do segurado quanto à reavaliação. O poder de autotutela da Administração não é absoluto e exige comprovação de vícios que tornem o ato ilegal, não bastando mera reavaliação interpretativa ou de prova, sob pena de violação da segurança jurídica e da coisa julgada administrativa.
+**Tese 4. Vedação de reavaliação unilateral de período já validado.** O INSS não pode simplesmente reavaliar e desconsiderar período de atividade rural que já havia sido expressamente validado no processo administrativo, sem possibilidade de manifestação ou participação do segurado quanto à reavaliação. O poder de autotutela da Administração não é absoluto e exige comprovação de vícios que tornem o ato ilegal, não bastando mera reavaliação interpretativa ou de prova, sob pena de violação da segurança jurídica e da coisa julgada administrativa.
 
-**Tese 7 — Recurso intempestivo do INSS não suspende cumprimento.** A interposição intempestiva de recurso especial ou pedido de revisão de acórdão pelo INSS não suspende o cumprimento de decisão definitiva do CRPS.
+**Tese 7. Recurso intempestivo do INSS não suspende cumprimento.** A interposição intempestiva de recurso especial ou pedido de revisão de acórdão pelo INSS não suspende o cumprimento de decisão definitiva do CRPS.
 
 ### Aplicação estratégica
 

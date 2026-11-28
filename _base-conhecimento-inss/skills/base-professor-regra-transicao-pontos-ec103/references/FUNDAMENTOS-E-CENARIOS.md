@@ -1,4 +1,4 @@
-# Regra de Pontos do Professor — Fundamentos e Cenários
+# Regra de Pontos do Professor. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -60,49 +60,49 @@ Limite, 92 mulher, 100 homem.
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Professora com 25 anos de magistério em 2026
+### Cenário A. Professora com 25 anos de magistério em 2026
 
 Idade 63, pontos 88, o mínimo exigido em 2026. Aposenta-se (auditoria 03/10/2026).
 
-### Cenário B — Professor com 30 anos em 2026
+### Cenário B. Professor com 30 anos em 2026
 
 Idade 68, pontos 98, o mínimo exigido em 2026. Aposenta-se (auditoria 03/10/2026).
 
-### Cenário C — Coordenadora pedagógica
+### Cenário C. Coordenadora pedagógica
 
 Funções de magistério contam. Lei 11.301 e ADI 3772.
 
-### Cenário D — Diretora escolar
+### Cenário D. Diretora escolar
 
 Contam. ADI 3772 confirma.
 
-### Cenário E — Assessora pedagógica
+### Cenário E. Assessora pedagógica
 
 Contam.
 
-### Cenário F — Cargo híbrido em educação infantil
+### Cenário F. Cargo híbrido em educação infantil
 
 Aplicar Lei 15.326/2026.
 
-### Cenário G — Professora com tempo misto magistério e outras atividades
+### Cenário G. Professora com tempo misto magistério e outras atividades
 
 Somente magistério conta para regra de pontos. Outras atividades em regra geral.
 
-### Cenário H — Professor universitário
+### Cenário H. Professor universitário
 
 Não se enquadra. O texto limita a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 15, §3º) (auditoria 03/10/2026).
 
 ## 7. Cenários limitados
 
-### Cenário I — Ingresso após 13/11/2019
+### Cenário I. Ingresso após 13/11/2019
 
 Não se aplica regra de transição.
 
-### Cenário J — Tempo insuficiente de magistério
+### Cenário J. Tempo insuficiente de magistério
 
 Aplicar regra geral da EC 103.
 
-### Cenário K — Tempo rural ou outro
+### Cenário K. Tempo rural ou outro
 
 Não conta para regra de pontos do professor.
 

@@ -3,15 +3,15 @@ name: inss-canais-atendimento
 description: Skill de canais de atendimento e protocolos do INSS para advocacia previdenciária. Use SEMPRE que o usuário mencionar canal de atendimento, Meu INSS, agência presencial APS, telefone 135, protocolo no INSS, Carta de Serviços INSS, atendimento simplificado, atendimento específico, reabilitação profissional, justificação administrativa, perícia médica, avaliação social, retificação de CAT, recurso ordinário, recurso especial CRPS, BPC CadÚnico, reativação de BPC, protocolo de documentos, prazo de resposta do INSS, silêncio administrativo, checklist pré-atendimento, ou qualquer situação em que o advogado precise saber ONDE e COMO protocolar ou resolver uma demanda perante o INSS. Esta skill é a fonte primária antes de qualquer orientação de canal ao segurado.
 ---
 
-# Skill — Canais de Atendimento e Serviços do INSS
+# Skill. Canais de Atendimento e Serviços do INSS
 
 ## Fontes desta skill
 
-- Carta de Serviços INSS (março de 2025) — documento oficial
+- Carta de Serviços INSS (março de 2025), documento oficial
 - IN PRES/INSS nº 128/2022 e nº 164/2024
 - Portaria DIRBEN/INSS nº 990/2022, nº 1.240/2024 e nº 1.251/2025
 - Portaria Conjunta MPS/INSS nº 13/2026, nº 14/2026 e nº 15/2026 (análise documental B31/B91/B94), e nº 54/2026 (altera a 13/2026: reanálise em 10 dias, dois indeferimentos, prazo do recurso)
-- Comunicado oficial do INSS — Agência Gov (novembro de 2023)
+- Comunicado oficial do INSS. Agência Gov (novembro de 2023)
 - Portal gov.br/inss e gov.br/receitafederal
 
 **Vigência verificada:** março de 2026.
@@ -30,7 +30,7 @@ Antes de qualquer orientação, identificar três variáveis.
 
 ---
 
-## Parte 1 — Serviços 100% digitais (Carta de Serviços 2025)
+## Parte 1. Serviços 100% digitais (Carta de Serviços 2025)
 
 Todos os itens abaixo constam expressamente na Carta de Serviços INSS de março de 2025.
 Podem ser realizados pelo Meu INSS (site ou app), sem necessidade de ir à agência.
@@ -60,25 +60,25 @@ Lista resumida dos serviços digitais da Carta:
 17. Emitir Certificado da Pessoa com Deficiência
 18. Emitir Declaração de Atividade
 19. Emitir Declaração de Benefício (consta / nada consta)
-20. Emitir Declaração de Filiação ao RGPS — Acordo Internacional
+20. Emitir Declaração de Filiação ao RGPS. Acordo Internacional
 21. Emitir Declaração de Regularidade da Situação do CI (DRSCI)
-22. Emitir Extrato de Contribuição (CNIS) — apenas consulta, não correção
+22. Emitir Extrato de Contribuição (CNIS), apenas consulta, não correção
 23. Emitir Extrato de Empréstimo Consignado
 24. Emitir Extrato de Pagamento de Benefício
 25. Emitir Extrato para Imposto de Renda
 26. Pedir Aposentadoria (todas as modalidades urbanas)
-27. Pedir Aposentadoria da PCD — Acordo Internacional
+27. Pedir Aposentadoria da PCD. Acordo Internacional
 28. Pedir Aposentadoria por Incapacidade Permanente (início online; perícia presencial)
-29. Pedir Auxílio por Incapacidade Temporária / Atestmed (início online; análise documental pela PMF — Portaria Conjunta MPS/INSS nº 13/2026; perícia presencial quando ultrapassado teto de 30/90 dias ou após 2 indeferimentos documentais, Portaria Conjunta MPS/INSS nº 54/2026; reanálise da documentação médica em 10 dias da ciência do indeferimento, antes do recurso)
-30. Pedir Auxílio-Acidente (início pelo Meu INSS ou 135; análise documental prévia obrigatória pela PMF — Portaria Conjunta MPS/INSS nº 15/2026; perícia presencial somente se aprovado na triagem documental)
+29. Pedir Auxílio por Incapacidade Temporária / Atestmed (início online; análise documental pela PMF. Portaria Conjunta MPS/INSS nº 13/2026; perícia presencial quando ultrapassado teto de 30/90 dias ou após 2 indeferimentos documentais, Portaria Conjunta MPS/INSS nº 54/2026; reanálise da documentação médica em 10 dias da ciência do indeferimento, antes do recurso)
+30. Pedir Auxílio-Acidente (início pelo Meu INSS ou 135; análise documental prévia obrigatória pela PMF. Portaria Conjunta MPS/INSS nº 15/2026; perícia presencial somente se aprovado na triagem documental)
 31. Pedir BPC à Pessoa com Deficiência (início online; avaliação social presencial)
 32. Pedir BPC ao Idoso
-33. Pedir Benefício Exclusivo do País Acordante — Acordo Internacional
+33. Pedir Benefício Exclusivo do País Acordante. Acordo Internacional
 34. Pedir Certidão de Tempo de Contribuição
 35. Pedir Pensão por Morte
 36. Pedir Salário-Família
 37. Pedir Salário-Maternidade (urbano)
-38. Pedir Salário-Maternidade (rural — pode exigir agendamento)
+38. Pedir Salário-Maternidade (rural, pode exigir agendamento)
 39. Pedir Seguro-Defeso (Pescador Artesanal)
 40. Realizar Ajustes para Alcance do Salário-Mínimo de Contribuição
 41. Realizar Prova de Vida
@@ -95,23 +95,23 @@ Lista resumida dos serviços digitais da Carta:
 
 **Atenção aos itens 28, 29, 30 e 45:** o pedido inicia digitalmente, mas a perícia médica presencial pode ser convocada pelo INSS.
 
-**ALERTA — Portaria Conjunta MPS/INSS nº 13/2026 (vigência 30/03/2026):** requerimento de auxílio por incapacidade temporária (B31/B91) pelo telefone 135 fica PENDENTE DE EXIGÊNCIA para anexação da documentação médica (art. 1º, §3º). O segurado precisará acessar o Meu INSS para anexar os documentos. Orientar SEMPRE o uso do Meu INSS como canal preferencial para B31/B91, pois permite a anexação imediata da documentação no momento do requerimento, evitando a etapa adicional de cumprimento de exigência.
+**ALERTA. Portaria Conjunta MPS/INSS nº 13/2026 (vigência 30/03/2026):** requerimento de auxílio por incapacidade temporária (B31/B91) pelo telefone 135 fica PENDENTE DE EXIGÊNCIA para anexação da documentação médica (art. 1º, §3º). O segurado precisará acessar o Meu INSS para anexar os documentos. Orientar SEMPRE o uso do Meu INSS como canal preferencial para B31/B91, pois permite a anexação imediata da documentação no momento do requerimento, evitando a etapa adicional de cumprimento de exigência.
 
-**ALERTA — Portaria Conjunta MPS/INSS nº 15/2026 (vigência imediata 24/03/2026):** requerimento de auxílio-acidente (B94) agora passa por análise documental prévia obrigatória. O INSS pode indeferir sem agendar perícia presencial se a documentação não atender os requisitos do art. 2º. Orientar o segurado a apresentar documentação médica robusta desde o requerimento inicial. Consultar skill analise-documental-incapacidade para requisitos mínimos e checagem documental.
+**ALERTA. Portaria Conjunta MPS/INSS nº 15/2026 (vigência imediata 24/03/2026):** requerimento de auxílio-acidente (B94) agora passa por análise documental prévia obrigatória. O INSS pode indeferir sem agendar perícia presencial se a documentação não atender os requisitos do art. 2º. Orientar o segurado a apresentar documentação médica robusta desde o requerimento inicial. Consultar skill analise-documental-incapacidade para requisitos mínimos e checagem documental.
 
 ---
 
-## Parte 2 — Protocolar Documentos Administrativos Gerais
+## Parte 2. Protocolar Documentos Administrativos Gerais
 
 Serviço ausente da Carta mas com regulamentação própria.
 
 **Canal exclusivo:** portal Protocolo.GOV.BR, e-mail protocologeral@inss.gov.br ou telefone (61) 3313-4438.
 
-**Atenção:** esse canal serve apenas para documentos administrativos internos do INSS. É vedado para requerimentos de benefícios, pensão, auxílio, BPC e perícias — esses devem ir pelo Meu INSS.
+**Atenção:** esse canal serve apenas para documentos administrativos internos do INSS. É vedado para requerimentos de benefícios, pensão, auxílio, BPC e perícias, esses devem ir pelo Meu INSS.
 
 ---
 
-## Parte 3 — Serviços que exigem início pelo 135 ou APS
+## Parte 3. Serviços que exigem início pelo 135 ou APS
 
 Esses serviços não constam da Carta de Serviços de março de 2025 e não têm botão próprio no Meu INSS. O requerimento é aberto pelo 135 ou na APS, e o segurado acessa o Meu INSS apenas para anexar documentos depois.
 
@@ -123,7 +123,7 @@ Esses serviços não constam da Carta de Serviços de março de 2025 e não têm
 
 **Canal:** ligar para o 135 ou comparecer à APS para abrir o requerimento. Depois o segurado junta documentos no Meu INSS.
 
-**Formulários RAC aplicáveis:** Anexo I-B (2.2) — Empregado e Empregado Doméstico; Anexo I-C (2.3) — Trabalhador Avulso; Anexo I-D (2.4) — CI Prestador de Serviço.
+**Formulários RAC aplicáveis:** Anexo I-B (2.2). Empregado e Empregado Doméstico; Anexo I-C (2.3). Trabalhador Avulso; Anexo I-D (2.4). CI Prestador de Serviço.
 
 **Atenção prática:** alguns servidores negam abertura do pedido sem requerimento de benefício em curso. Isso é ilegal. O acerto independe de benefício. Citar o art. 12 da IN 128/2022.
 
@@ -133,7 +133,7 @@ Esses serviços não constam da Carta de Serviços de março de 2025 e não têm
 
 **Base normativa:** Anexo I-F (2.6) da IN PRES/INSS nº 164/2024; art. 25, Portaria DIRBEN/INSS nº 1.240/2024.
 
-**Canal:** mesmo fluxo do 3.1 — início pelo 135 ou APS; complementação pelo Meu INSS.
+**Canal:** mesmo fluxo do 3.1, início pelo 135 ou APS; complementação pelo Meu INSS.
 
 **Aplicação ao caso GPS:** quando o segurado recolhe no código errado, a retificação usa o RAC seção 2.4 (EXCLUIR/ADA + INCLUIR). Não recolher nova guia.
 
@@ -141,7 +141,7 @@ Esses serviços não constam da Carta de Serviços de março de 2025 e não têm
 
 ### 3.3 Reconhecimento de Filiação e Atualização de Atividade
 
-**O que faz:** regulariza períodos de atividade sem registro — trabalho rural, CI sem lançamento, períodos de segurado especial.
+**O que faz:** regulariza períodos de atividade sem registro, trabalho rural, CI sem lançamento, períodos de segurado especial.
 
 **Formulário:** Anexo I-E (2.5) da IN 164/2024.
 
@@ -157,7 +157,7 @@ Esses serviços não constam da Carta de Serviços de março de 2025 e não têm
 
 ---
 
-## Parte 4 — Serviços exclusivamente presenciais
+## Parte 4. Serviços exclusivamente presenciais
 
 Esses serviços exigem comparecimento físico à APS. Nenhum tem equivalente digital no Meu INSS.
 
@@ -171,7 +171,7 @@ Esses serviços exigem comparecimento físico à APS. Nenhum tem equivalente dig
 | Pensão Especial às Vítimas da Hemodiálise de Caruaru | Sem canal digital |
 | Protocolo de requerimentos para segurados sem acesso digital | Atendimento espontâneo na APS |
 
-### 4.2 Atendimento Específico — alta complexidade
+### 4.2 Atendimento Específico. alta complexidade
 
 | Serviço | Observação |
 |---|---|
@@ -183,7 +183,7 @@ Esses serviços exigem comparecimento físico à APS. Nenhum tem equivalente dig
 
 ---
 
-## Parte 5 — Serviços presenciais por natureza
+## Parte 5. Serviços presenciais por natureza
 
 ### 5.1 Reabilitação Profissional
 
@@ -191,7 +191,7 @@ Prevista no art. 89, Lei 8.213/1991 e art. 136, Decreto 3.048/1999.
 
 **Como funciona:** encaminhamento pela perícia médica ou por requerimento espontâneo. O segurado é acompanhado por equipe multidisciplinar. Ao final, emissão de Certificado de Reabilitação Profissional. O benefício por incapacidade é mantido durante todo o programa.
 
-**Regras de falta e abandono:** Portaria DIRBEN/INSS nº 1.310/2025 — 7 dias para justificar ausência; 60 dias para defesa em caso de recusa ou abandono caracterizado.
+**Regras de falta e abandono:** Portaria DIRBEN/INSS nº 1.310/2025. 7 dias para justificar ausência; 60 dias para defesa em caso de recusa ou abandono caracterizado.
 
 **Não consta da Carta de Serviços e não tem canal digital.**
 
@@ -212,23 +212,23 @@ Aplicável ao auxílio por incapacidade temporária, aposentadoria por incapacid
 
 **Regime de análise documental (Portarias Conjuntas MPS/INSS nº 13 e 15/2026):**
 
-Para auxílio por incapacidade temporária (B31/B91), a análise documental pela PMF é a porta de entrada. A perícia presencial é obrigatória apenas quando (a) o teto de 30/90 dias for ultrapassado (art. 6º, II), (b) após dois indeferimentos documentais sucessivos (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026), ou (c) na prorrogação (art. 5º). Posição do escritório — o segurado tem direito à perícia presencial desde o primeiro requerimento; o art. 8º é norma de garantia, não barreira. Consultar skill analise-documental-incapacidade.
+Para auxílio por incapacidade temporária (B31/B91), a análise documental pela PMF é a porta de entrada. A perícia presencial é obrigatória apenas quando (a) o teto de 30/90 dias for ultrapassado (art. 6º, II), (b) após dois indeferimentos documentais sucessivos (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026), ou (c) na prorrogação (art. 5º). Posição do escritório, o segurado tem direito à perícia presencial desde o primeiro requerimento; o art. 8º é norma de garantia, não barreira. Consultar skill analise-documental-incapacidade.
 
 Para auxílio-acidente (B94), a análise documental prévia é etapa obrigatória anterior ao agendamento de perícia presencial (Portaria 15/2026). A PMF pode indeferir sem exame presencial se a documentação for insuficiente. A perícia presencial só é agendada quando a triagem documental constatar os requisitos legais mínimos (art. 4º, I).
 
 ---
 
-## Parte 6 — Complementação de Contribuição
+## Parte 6. Complementação de Contribuição
 
 ### Para contribuições a partir de 13/11/2019
 
 O próprio segurado gera a GPS pelo Meu INSS ou emite manualmente.
 
-- CI — Complementação 9% mensal: código 1295
-- CI — Complementação 9% trimestral: código 1198
-- Facultativo — Complementação 9% mensal: código 1686
-- Facultativo — Complementação 9% trimestral: código 1694
-- Facultativo Baixa Renda — Complementação 15% mensal: código 1945
+- CI. Complementação 9% mensal: código 1295
+- CI. Complementação 9% trimestral: código 1198
+- Facultativo. Complementação 9% mensal: código 1686
+- Facultativo. Complementação 9% trimestral: código 1694
+- Facultativo Baixa Renda. Complementação 15% mensal: código 1945
 
 ### Para contribuições anteriores a 13/11/2019
 
@@ -258,11 +258,11 @@ Exige requerimento específico ao INSS, via 135 ou APS, por meio do acerto de v�
 
 | Arquivo | Conteúdo |
 |---|---|
-| `references/carta-servicos-digital.md` | Lista completa dos serviços digitais — Carta de Serviços INSS 2025 |
+| `references/carta-servicos-digital.md` | Lista completa dos serviços digitais. Carta de Serviços INSS 2025 |
 | `references/documentacao-por-categoria.md` | Documentação probatória por categoria de segurado |
-| `references/justificacao-administrativa.md` | JA — rito completo, requisitos, testemunhas, limites e estratégia judicial |
+| `references/justificacao-administrativa.md` | JA, rito completo, requisitos, testemunhas, limites e estratégia judicial |
 | `references/recursos-prazos-checklists.md` | Recursos ao CRPS, prazos legais do INSS e checklists por tipo de caso |
-| `references/checklists-por-beneficio.md` | Checklists técnicos por benefício — requisitos, documentos e alertas |
+| `references/checklists-por-beneficio.md` | Checklists técnicos por benefício, requisitos, documentos e alertas |
 
 ---
 
@@ -280,16 +280,4 @@ Exige requerimento específico ao INSS, via 135 ou APS, por meio do acerto de v�
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

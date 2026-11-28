@@ -1,4 +1,4 @@
-# Cumprimento MS — Fundamentos e Cenários
+# Cumprimento MS. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -44,41 +44,41 @@ Duração razoável.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Ordem cumprida
+### Cenário A. Ordem cumprida
 
 Implantação.
 
-### Cenário B — Demora
+### Cenário B. Demora
 
 Multa.
 
-### Cenário C — Cumprimento parcial
+### Cenário C. Cumprimento parcial
 
 Novo ofício.
 
-### Cenário D — Omissão dolosa
+### Cenário D. Omissão dolosa
 
 Crime.
 
-### Cenário E — Cobrança pretérita
+### Cenário E. Cobrança pretérita
 
 Ordinária autônoma.
 
-### Cenário F — Concurso com ação ordinária
+### Cenário F. Concurso com ação ordinária
 
 Combinação estratégica.
 
 ## 6. Cenários limitados
 
-### Cenário G — Efeitos patrimoniais vedados
+### Cenário G. Efeitos patrimoniais vedados
 
 Súmula 269.
 
-### Cenário H — Descumprimento reiterado
+### Cenário H. Descumprimento reiterado
 
 MS de cumprimento.
 
-### Cenário I — Agravo
+### Cenário I. Agravo
 
 Decisões de cumprimento.
 

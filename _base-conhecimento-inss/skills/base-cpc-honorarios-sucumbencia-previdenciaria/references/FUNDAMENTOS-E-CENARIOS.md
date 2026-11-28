@@ -1,4 +1,4 @@
-# Honorários de Sucumbência — Fundamentos e Cenários
+# Honorários de Sucumbência. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -38,41 +38,41 @@ Reafirmação.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Concessão de benefício
+### Cenário A. Concessão de benefício
 
 Base Súmula 111 até a sentença.
 
-### Cenário B — Reafirmação da DER
+### Cenário B. Reafirmação da DER
 
 Tema 995 STJ.
 
-### Cenário C — Revisão
+### Cenário C. Revisão
 
 Base parcelas vencidas.
 
-### Cenário D — Majoração recursal
+### Cenário D. Majoração recursal
 
 Art. 85 §11.
 
-### Cenário E — Cumprimento
+### Cenário E. Cumprimento
 
 Honorários próprios.
 
-### Cenário F — Acordo
+### Cenário F. Acordo
 
 Respeitar percentuais.
 
 ## 6. Cenários limitados
 
-### Cenário G — JEF em primeira instância
+### Cenário G. JEF em primeira instância
 
 Sem honorários. Art. 55 Lei 9.099.
 
-### Cenário H — MS
+### Cenário H. MS
 
 Súmula 105 STJ.
 
-### Cenário I — Gratuidade
+### Cenário I. Gratuidade
 
 Suspensão da exigibilidade.
 

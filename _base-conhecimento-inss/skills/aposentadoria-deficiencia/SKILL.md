@@ -122,7 +122,7 @@ Sexto passo. Comparar o resultado com cenários alternativos (aposentadoria comu
 
 ## Modos de Operação
 
-### Modo 1 – Análise de Laudo Funcional do INSS (IF-BrA)
+### Modo 1. Análise de Laudo Funcional do INSS (IF-BrA)
 Quando o usuário fornece o laudo/formulário de avaliação funcional do INSS (Formulários 1 a 4 da Portaria Interministerial 1/2014). A análise verifica, domínio a domínio, a pontuação atribuída pelo perito médico e pelo assistente social, a correta aplicação do método Fuzzy, e o enquadramento no grau de deficiência.
 
 Roteiro de verificação obrigatório (seguir na ordem)
@@ -146,10 +146,10 @@ Roteiro de verificação obrigatório (seguir na ordem)
 5. CONFRONTO COM DOCUMENTAÇÃO MÉDICA
    Se houver documentos médicos particulares, confrontar as pontuações atribuídas com a realidade documentada. Atentar especialmente para CIDs divergentes, limitações documentadas mas não refletidas na pontuação, e histórico de tratamentos que demonstrem gravidade.
 
-### Modo 2 – Análise de Caso para Requerimento
+### Modo 2. Análise de Caso para Requerimento
 Quando o usuário apresenta dados do segurado para orientar o requerimento administrativo ou a ação judicial. A análise projeta o provável enquadramento, identifica a documentação necessária, e orienta a estratégia.
 
-### Modo 3 – Revisão de Decisão Administrativa ou Judicial
+### Modo 3. Revisão de Decisão Administrativa ou Judicial
 Quando o usuário apresenta uma decisão (indeferimento do INSS, sentença, acórdão) para identificar fundamentos de recurso. A análise foca em erros de aplicação do IF-BrA, desconsideração do Fuzzy, e inobservância da Portaria Interministerial 1/2014.
 
 ## Pontos Críticos de Atenção na Advocacia da PCD
@@ -216,13 +216,13 @@ Lista de quesitos direcionados aos pontos controvertidos, redigidos de forma a e
 
 Antes de realizar qualquer análise, leia obrigatoriamente os seguintes arquivos.
 
-- `references/IF-BRA.md` – Estrutura completa do IF-BrA com domínios, atividades, escala de pontuação, método Fuzzy, critérios de classificação e tabela de domínios sensíveis por tipo de deficiência
-- `references/LEGISLACAO.md` – Quadro normativo completo com LC 142/2013, Portaria Interministerial 1/2014, Lei 13.146/2015, Decreto 3.048/99 (arts. 70-A a 70-I), IN 128/2022, e jurisprudência relevante da TNU, TRF3 e TRF4
-- `references/FIBROMIALGIA-LEI-15176.md` – Fibromialgia como deficiência pela Lei 15.176/2025, CID M79.7/MG30.01, domínios sensíveis, estratégias de prova e particularidades do IF-BrA
+- `references/IF-BRA.md`. Estrutura completa do IF-BrA com domínios, atividades, escala de pontuação, método Fuzzy, critérios de classificação e tabela de domínios sensíveis por tipo de deficiência
+- `references/LEGISLACAO.md`. Quadro normativo completo com LC 142/2013, Portaria Interministerial 1/2014, Lei 13.146/2015, Decreto 3.048/99 (arts. 70-A a 70-I), IN 128/2022, e jurisprudência relevante da TNU, TRF3 e TRF4
+- `references/FIBROMIALGIA-LEI-15176.md`. Fibromialgia como deficiência pela Lei 15.176/2025, CID M79.7/MG30.01, domínios sensíveis, estratégias de prova e particularidades do IF-BrA
 
 ---
 
-## Fibromialgia como Deficiência — Lei 15.176/2025
+## Fibromialgia como Deficiência. Lei 15.176/2025
 
 ### Marco Legal
 
@@ -254,7 +254,7 @@ O autista é pessoa com deficiência por presunção legal absoluta, fundamento 
 
 A consequência prática para a aposentadoria PCD é central. **A equiparação legal automática dispensa o autista de provar que o TEA é deficiência, mas NÃO dispensa o IF-BrA**. O autista É deficiente por presunção legal, mas o **GRAU** (leve, moderado, grave) é necessariamente aferido pelo IF-BrA. Confundir esses dois planos é erro técnico frequente. Em peça processual, sustentar que a avaliação biopsicossocial não pode questionar a existência da deficiência (ela é dada por lei), apenas mensurar seu grau funcional para fins de definição da carência aplicável.
 
-### Tipo de deficiência no IF-BrA — mental, intelectual ou múltipla
+### Tipo de deficiência no IF-BrA. mental, intelectual ou múltipla
 
 O IF-BrA classifica a deficiência em auditiva, mental, intelectual, motora, visual ou múltipla. **A classificação correta para o autismo varia conforme o quadro**.
 
@@ -268,9 +268,9 @@ O IF-BrA classifica a deficiência em auditiva, mental, intelectual, motora, vis
 
 A adoção da CID-11 no Brasil está prevista para **1º de janeiro de 2027**, conforme Nota Técnica nº 91/2024-CGIAE/DAENT/SVSA/MS. A CID-10 versão 2019 permanece vigente até a efetiva implementação sistêmica do INSS.
 
-A tabela de equivalência aplicável à aposentadoria PCD é a seguinte. Os subtipos **F84.0, F84.1, F84.3, F84.5, F84.8 e F84.9** unificam-se sob **6A02**, com especificadores dimensionais. **F84.2 (Rett) migra para LD90.4** (anomalias do desenvolvimento). A CID-11 traz dois eixos descritivos do TEA — presença ou ausência de Transtorno do Desenvolvimento Intelectual (cruzamento com 6A00) e três níveis de comprometimento da linguagem funcional (preservada/leve, prejudicada, ausente). A combinação 2×3 produz seis subcódigos clínicos (6A02.0 a 6A02.5).
+A tabela de equivalência aplicável à aposentadoria PCD é a seguinte. Os subtipos **F84.0, F84.1, F84.3, F84.5, F84.8 e F84.9** unificam-se sob **6A02**, com especificadores dimensionais. **F84.2 (Rett) migra para LD90.4** (anomalias do desenvolvimento). A CID-11 traz dois eixos descritivos do TEA, presença ou ausência de Transtorno do Desenvolvimento Intelectual (cruzamento com 6A00) e três níveis de comprometimento da linguagem funcional (preservada/leve, prejudicada, ausente). A combinação 2×3 produz seis subcódigos clínicos (6A02.0 a 6A02.5).
 
-A estrutura dimensional da CID-11 **favorece o segurado autista no IF-BrA** porque fornece ao perito substrato objetivo direto para acionar gatilhos Fuzzy. Subcódigos 6A02.1, 6A02.3 ou 6A02.5 (com DI associada) ou 6A02.2 a 6A02.5 (com comprometimento de linguagem) sustentam o rebaixamento Fuzzy nos domínios de Vida Doméstica e Socialização, os sensíveis da deficiência intelectual e mental no Quadro 2; Comunicação é domínio sensível da auditiva (auditoria 03/10/2026). O laudo deve **explicitar o subcódigo CID-11** e, em paralelo, o nível de suporte do DSM-5-TR (1, 2 ou 3), tratando-os como classificações complementares e não fundidas. **Os "níveis de suporte" são do DSM-5-TR da Associação Americana de Psiquiatria, não da CID-11 da OMS** — confundir os dois é erro técnico que pode invalidar o laudo.
+A estrutura dimensional da CID-11 **favorece o segurado autista no IF-BrA** porque fornece ao perito substrato objetivo direto para acionar gatilhos Fuzzy. Subcódigos 6A02.1, 6A02.3 ou 6A02.5 (com DI associada) ou 6A02.2 a 6A02.5 (com comprometimento de linguagem) sustentam o rebaixamento Fuzzy nos domínios de Vida Doméstica e Socialização, os sensíveis da deficiência intelectual e mental no Quadro 2; Comunicação é domínio sensível da auditiva (auditoria 03/10/2026). O laudo deve **explicitar o subcódigo CID-11** e, em paralelo, o nível de suporte do DSM-5-TR (1, 2 ou 3), tratando-os como classificações complementares e não fundidas. **Os "níveis de suporte" são do DSM-5-TR da Associação Americana de Psiquiatria, não da CID-11 da OMS**, confundir os dois é erro técnico que pode invalidar o laudo.
 
 ### Domínios sensíveis do TEA no IF-BrA
 
@@ -308,15 +308,15 @@ Ponto sensível e estrategicamente decisivo. O TEA é congênito ou de manifesta
 
 ### Estratégia documental para aposentadoria PCD do autista
 
-**Primeiro pilar — diagnóstico atual com dupla codificação.** Laudo médico recente com CID-10 (F84.x), CID-11 (6A02.x) e nível de suporte do DSM-5-TR (1, 2 ou 3). Descrição funcional detalhada por domínio do IF-BrA. Indicação expressa de comorbidades com seus respectivos CIDs. Indicação de classificação como deficiência mental, intelectual ou múltipla (preferência por múltipla quando há comorbidade ou DI).
+**Primeiro pilar, diagnóstico atual com dupla codificação.** Laudo médico recente com CID-10 (F84.x), CID-11 (6A02.x) e nível de suporte do DSM-5-TR (1, 2 ou 3). Descrição funcional detalhada por domínio do IF-BrA. Indicação expressa de comorbidades com seus respectivos CIDs. Indicação de classificação como deficiência mental, intelectual ou múltipla (preferência por múltipla quando há comorbidade ou DI).
 
-**Segundo pilar — CIPTEA.** Carteira atualizada (Lei 13.977/2020), válida independentemente da versão da CID utilizada, prova oficial da equiparação legal a PCD.
+**Segundo pilar. CIPTEA.** Carteira atualizada (Lei 13.977/2020), válida independentemente da versão da CID utilizada, prova oficial da equiparação legal a PCD.
 
-**Terceiro pilar — documentação retroativa para DID.** Relatórios escolares, AEE, PEI, prontuários SUS antigos, CAPSi, declarações de profissionais que acompanharam o segurado desde a infância, históricos de tratamentos.
+**Terceiro pilar, documentação retroativa para DID.** Relatórios escolares, AEE, PEI, prontuários SUS antigos, CAPSi, declarações de profissionais que acompanharam o segurado desde a infância, históricos de tratamentos.
 
-**Quarto pilar — documentação funcional cumulativa.** Relatórios de fonoaudiologia, terapia ocupacional, psicologia, ABA, neuropsicologia, com indicação cronológica do impacto funcional ao longo da vida do segurado.
+**Quarto pilar, documentação funcional cumulativa.** Relatórios de fonoaudiologia, terapia ocupacional, psicologia, ABA, neuropsicologia, com indicação cronológica do impacto funcional ao longo da vida do segurado.
 
-**Quinto pilar — prova trabalhista.** CNIS detalhado, vínculos curtos e fragmentados, demissões por inadaptação, declarações de empregadores anteriores, relatos do próprio segurado e da família.
+**Quinto pilar, prova trabalhista.** CNIS detalhado, vínculos curtos e fragmentados, demissões por inadaptação, declarações de empregadores anteriores, relatos do próprio segurado e da família.
 
 ### Quesitos suplementares para perícia funcional do IF-BrA em autista
 
@@ -334,9 +334,9 @@ Ponto sensível e estrategicamente decisivo. O TEA é congênito ou de manifesta
 
 ### Síntese da jurisprudência aplicável ao TEA na aposentadoria PCD
 
-**Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre TEA em aposentadoria PCD da LC 142/2013** (a maior parte da jurisprudência recente concentra-se em BPC, Tema 376/TNU). A defesa apoia-se em fundamentação legal direta — Lei 12.764/2012, Lei 13.146/2015, LC 142/2013, Portaria Interministerial 1/2014. **TRF4, AC 5009827-05.2022.4.04.9999** (6ª Turma, Rel. Des. João Batista Pinto Silveira, j. 30/09/2022) firmou a tese de que "a deficiência, em casos como o dos autos, é explícita e, portanto, desnecessária se faz a análise da incapacidade x deficiência" para o autista. Em fundamentação principiológica, invocar o **Decreto 6.949/2009** (Convenção da ONU sobre Direitos das Pessoas com Deficiência, status constitucional pelo art. 5º, §3º, da CF), especialmente os arts. 1º, 5º (igualdade), 27 (trabalho) e 28 (padrão de vida adequado).
+**Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre TEA em aposentadoria PCD da LC 142/2013** (a maior parte da jurisprudência recente concentra-se em BPC, Tema 376/TNU). A defesa apoia-se em fundamentação legal direta. Lei 12.764/2012, Lei 13.146/2015, LC 142/2013, Portaria Interministerial 1/2014. **TRF4, AC 5009827-05.2022.4.04.9999** (6ª Turma, Rel. Des. João Batista Pinto Silveira, j. 30/09/2022) firmou a tese de que "a deficiência, em casos como o dos autos, é explícita e, portanto, desnecessária se faz a análise da incapacidade x deficiência" para o autista. Em fundamentação principiológica, invocar o **Decreto 6.949/2009** (Convenção da ONU sobre Direitos das Pessoas com Deficiência, status constitucional pelo art. 5º, §3º, da CF), especialmente os arts. 1º, 5º (igualdade), 27 (trabalho) e 28 (padrão de vida adequado).
 
-## Vigilância Normativa — Teleperícia
+## Vigilância Normativa. Teleperícia
 
 A Portaria Conjunta DPMF/INSS 19/2026 introduziu a Teleperícia (videoconferência com presença do segurado na APS) para perícia médica inicial, BPC inicial e reavaliação de BPC, com vigência em 13/04/2026. Embora a norma não cite expressamente a avaliação biopsicossocial da LC 142/2013, há risco de extensão futura por ato administrativo. Acompanhar atos posteriores do DPMF e do INSS sobre essa eventual ampliação. Em caso de extensão, aplicar os mesmos critérios de recusa e impugnação tratados nas skills `analise-bpc-loas` e `auditoria-laudo-pericial`.
 
@@ -381,16 +381,4 @@ O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

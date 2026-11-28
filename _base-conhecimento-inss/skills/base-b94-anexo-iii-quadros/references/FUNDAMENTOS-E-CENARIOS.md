@@ -1,4 +1,4 @@
-# Anexo III B94 — Fundamentos e Cenários
+# Anexo III B94. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -40,45 +40,45 @@ Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da L
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Dedo parcial
+### Cenário A. Dedo parcial
 
 Súmula 88.
 
-### Cenário B — Perda auditiva parcial
+### Cenário B. Perda auditiva parcial
 
 Funcional.
 
-### Cenário C — Neurológico leve
+### Cenário C. Neurológico leve
 
 Permanente.
 
-### Cenário D — Ofensa estética
+### Cenário D. Ofensa estética
 
 Grave.
 
-### Cenário E — Joelho com sequela
+### Cenário E. Joelho com sequela
 
 Anexo III.
 
-### Cenário F — Coluna lombar
+### Cenário F. Coluna lombar
 
 Sequela.
 
-### Cenário G — Membro superior
+### Cenário G. Membro superior
 
 Quadros.
 
 ## 6. Cenários limitados
 
-### Cenário H — Sem sequela permanente
+### Cenário H. Sem sequela permanente
 
 Não enquadra.
 
-### Cenário I — Sequela com cura total
+### Cenário I. Sequela com cura total
 
 Sem residual.
 
-### Cenário J — Doença não acidentária
+### Cenário J. Doença não acidentária
 
 Outra espécie.
 

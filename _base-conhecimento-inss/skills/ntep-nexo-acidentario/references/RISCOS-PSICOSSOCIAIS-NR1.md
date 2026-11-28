@@ -17,13 +17,13 @@ Os principais CIDs relevantes são F32 e F33 (episódios e transtorno depressivo
 
 ## Estratégias Probatórias
 
-### 1. PGR que Reconhece Riscos Psicossociais — Prova Pré-Constituída
+### 1. PGR que Reconhece Riscos Psicossociais. Prova Pré-Constituída
 
 Se o PGR da empresa identifica riscos psicossociais (sobrecarga de trabalho, metas abusivas, assédio, isolamento, jornadas excessivas), esse documento é prova técnica pré-constituída a favor do segurado. O reconhecimento formal pelo próprio empregador de que o ambiente apresenta riscos à saúde mental elimina a controvérsia sobre o nexo causal.
 
 A requisição judicial do PGR (art. 396 do CPC) passa a ser estratégia obrigatória em toda ação de benefício por incapacidade decorrente de transtorno mental. Se a empresa se recusar a apresentar, aplica-se a presunção do art. 400 do CPC.
 
-### 2. PGR que Omite Riscos Psicossociais — Prova de Negligência
+### 2. PGR que Omite Riscos Psicossociais. Prova de Negligência
 
 A partir da vigência plena da Portaria MTE 1.419/2024 (maio/2026), a empresa que não incluir riscos psicossociais no PGR estará em descumprimento normativo. Essa omissão não beneficia a empresa, pelo contrário. A ausência de mapeamento demonstra negligência na gestão de riscos e impossibilita a empresa de alegar que adotou medidas preventivas.
 
@@ -41,7 +41,7 @@ Quando o CNAE do empregador está correlacionado ao CID do transtorno mental na 
 
 Se o INSS deixar de aplicar o NTEP apesar da correlação CNAE-CID, o benefício concedido como B31 (previdenciário) pode ser revisado para B91 (acidentário) na via administrativa ou judicial.
 
-### 5. Burnout (CID-11 QD85) — Particularidades
+### 5. Burnout (CID-11 QD85). Particularidades
 
 A síndrome de burnout foi classificada pela OMS na CID-11 como fenômeno exclusivamente ocupacional. Não se trata de doença genérica, mas de esgotamento vinculado especificamente ao trabalho. Essa classificação fortalece o nexo causal de forma praticamente irrefutável quando o PGR reconhece riscos psicossociais no ambiente.
 

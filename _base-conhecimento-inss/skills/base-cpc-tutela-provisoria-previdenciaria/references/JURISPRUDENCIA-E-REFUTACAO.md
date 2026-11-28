@@ -1,4 +1,4 @@
-# Tutela Provisória Previdenciária — Jurisprudência e Refutação
+# Tutela Provisória Previdenciária. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -62,61 +62,61 @@ Art. 4º. Tutela no JEF.
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Ausência de fumus boni iuris
+### Argumento 1. Ausência de fumus boni iuris
 
 Argumento adversário. Dúvida quanto ao direito.
 
 Refutação. Documentos anexados e tese consolidada conferem probabilidade. Art. 300 CPC.
 
-### Argumento 2 — Irreversibilidade
+### Argumento 2. Irreversibilidade
 
 Argumento adversário. Art. 300 §3º CPC.
 
 Atenção (auditoria 25/07/2026). O Tema 692/STJ impõe a devolução na tutela revogada (teto de 30 por cento); a tese alcança também o BPC, e o caminho do segurado é a distinção, quando o valor não decorreu da tutela revogada (auditoria 03/10/2026).
 
-### Argumento 3 — Ausência de perigo de dano
+### Argumento 3. Ausência de perigo de dano
 
 Argumento adversário. Não demonstrado.
 
 Refutação. Benefício alimentar presume urgência (art. 300 do CPC) (auditoria 25/07/2026).
 
-### Argumento 4 — Julgamento antecipado resolve
+### Argumento 4. Julgamento antecipado resolve
 
 Argumento adversário. Dispensa tutela.
 
 Refutação. Demora impõe dano alimentar. Tutela exigível.
 
-### Argumento 5 — Tutela de evidência inaplicável
+### Argumento 5. Tutela de evidência inaplicável
 
 Argumento adversário. Tese não firmada.
 
 Refutação. Art. 311, II, CPC, quando os fatos se provarem só por documento e houver tese firmada em casos repetitivos ou súmula vinculante aplicável (auditoria 03/10/2026, retirados o Tema 1102 STF, da revisão da vida toda, e o Tema 327 STF, ausente do catálogo).
 
-### Argumento 6 — ADC 4 veda
+### Argumento 6. ADC 4 veda
 
 Argumento adversário. A decisão na ADC 4 veda tutela contra a Fazenda.
 
 Refutação. A Súmula 729 STF afasta a ADC 4 da antecipação de tutela em causa previdenciária (auditoria 03/10/2026).
 
-### Argumento 7 — Estabilização inaplicável
+### Argumento 7. Estabilização inaplicável
 
 Argumento adversário. Art. 304.
 
 Refutação. Cabível em tutela antecedente art. 303 se INSS não recorrer.
 
-### Argumento 8 — Devolução em revogação
+### Argumento 8. Devolução em revogação
 
 Argumento adversário. Enriquecimento sem causa.
 
 Atenção (auditoria 25/07/2026). Devolução devida pelo Tema 692/STJ, que alcança também o BPC; o segurado invoca a distinção, quando o valor não decorreu da tutela revogada, e o teto de 30% (auditoria 03/10/2026).
 
-### Argumento 9 — Suspensão de segurança
+### Argumento 9. Suspensão de segurança
 
 Argumento adversário. Periculum ao Erário.
 
 Refutação. Lei 8.437/1992 art. 4º exige lesão grave concreta. Segurado individual não causa.
 
-### Argumento 10 — JEF não admite tutela
+### Argumento 10. JEF não admite tutela
 
 Argumento adversário. Rito sumário.
 

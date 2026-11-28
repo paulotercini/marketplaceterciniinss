@@ -3,7 +3,7 @@ name: recursos-superiores-crps
 description: "Recurso Especial às Câmaras de Julgamento, PUJ, Reclamação ao Conselho Pleno, uniformização em tese, enunciados e resoluções do CRPS. Use SEMPRE que mencionar recurso especial CRPS, CAJ, anulação acórdão JR, art. 91, efeito devolutivo CRPS, alçada exclusiva art. 89 §3º, arts. 90-91, precedentes judiciais art. 109, normas vinculantes art. 114, distinguishing overruling overriding, pareceres vinculantes art. 108, PUJ, uniformização jurisprudência CRPS, Conselho Pleno, Reclamação CP, divergência entre Câmaras, divergência JRs alçada, enunciado CRPS, resolução CRPS, súmula vinculante CRPS, arts. 120-124, acórdão paradigma, agravo ao Pleno, admissibilidade PUJ. Complementar a admissibilidade-barreiras-crps e incidentes-instrucao-crps. NÃO use para embargos, revisão de acórdão ou recurso ordinário isoladamente."
 ---
 
-# Recursos Superiores no CRPS — Recurso Especial, PUJ e Reclamação
+# Recursos Superiores no CRPS. Recurso Especial, PUJ e Reclamação
 
 ## Visão Geral
 
@@ -22,13 +22,13 @@ Esta skill consolida o Recurso Especial às Câmaras de Julgamento (arts. 90-91)
 6. Leia `references/RECLAMACAO-CONSELHO-PLENO.md` para a Reclamação
 7. Leia `references/UNIFORMIZACAO-TESE-ENUNCIADOS.md` para uniformização em tese e enunciados
 
-## PARTE I — RECURSO ESPECIAL (Arts. 90-91)
+## PARTE I. RECURSO ESPECIAL (Arts. 90-91)
 
 ### Regra Geral
 
 Cabível contra decisões das JRs em Recurso Ordinário, dirigido às CAJs (art. 90). Prazo de 30 dias. Efeito devolutivo amplo, abrangendo toda a matéria (art. 90, §1º; art. 146, §2º). NÃO cabe contra decisão de diligência (art. 90, §2º). NÃO cabe em matéria de alçada exclusiva das JRs (art. 89, §3º).
 
-### Hipóteses de Anulação (Art. 91, §1º) — 8 hipóteses, sem prejuízo de outras
+### Hipóteses de Anulação (Art. 91, §1º). 8 hipóteses, sem prejuízo de outras
 
 I. Falta de fundamentação (auditoria 03/10/2026)
 II. Ausência de análise da documentação e dos pedidos, salvo não conhecimento
@@ -47,8 +47,8 @@ Em matéria de alçada exclusiva, mesmo sem recurso especial, cabem PUJ (art. 12
 
 ### Observância de Precedentes (Art. 109)
 
-**Obrigatórios** — Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP, decisões do STF transitadas em julgado em controle concentrado (ADI, ADC e ADPF) e súmulas vinculantes do STF (art. 109, §2º) (auditoria 03/10/2026).
-**Facultativos** — STF em repercussão geral, após o trânsito em julgado, e súmulas do STF em matéria constitucional (art. 109, §3º); STJ em repetitivo transitado em julgado, IAC, IRDR e súmulas em matéria infraconstitucional, desde que não tenham sido objeto de recurso extraordinário, ainda que superveniente, nem estejam suspensos pelo STF (art. 109, §4º) (auditoria 03/10/2026).
+**Obrigatórios.** Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP, decisões do STF transitadas em julgado em controle concentrado (ADI, ADC e ADPF) e súmulas vinculantes do STF (art. 109, §2º) (auditoria 03/10/2026).
+**Facultativos.** STF em repercussão geral, após o trânsito em julgado, e súmulas do STF em matéria constitucional (art. 109, §3º); STJ em repetitivo transitado em julgado, IAC, IRDR e súmulas em matéria infraconstitucional, desde que não tenham sido objeto de recurso extraordinário, ainda que superveniente, nem estejam suspensos pelo STF (art. 109, §4º) (auditoria 03/10/2026).
 
 A vedação do art. 109, caput, impede as UJs de afastarem lei ou decreto vigente. A violação dessa regra é hipótese de Revisão de Acórdão por violação literal de lei ou decreto (art. 116, I) (auditoria 03/10/2026).
 
@@ -69,7 +69,7 @@ Pareceres da Consultoria Jurídica do MPS aprovados pelo Ministro vinculam as UJ
 5. Pedido subsidiário de apreciação definitiva pela Câmara (art. 91, §3º)
 6. Sustentação oral (art. 81)
 
-## PARTE II — CONSELHO PLENO
+## PARTE II. CONSELHO PLENO
 
 ### PUJ em Caso Concreto (Arts. 121-122)
 
@@ -93,30 +93,18 @@ Provocação restrita a autoridades internas (Presidente do CRPS, CJ, CGT, Presi
 
 ## Referências
 
-- `references/REGRAS-RECURSO-ESPECIAL.md` — Regras processuais detalhadas do RE
-- `references/HIPOTESES-ANULACAO.md` — As 8 hipóteses do art. 91, §1º
-- `references/MATERIA-ALCADA-EXCLUSIVA.md` — Art. 89, §3º
-- `references/PRECEDENTES-VINCULANTES.md` — Precedentes judiciais e pareceres vinculantes
-- `references/PUJ-CASO-CONCRETO.md` — PUJ, admissibilidade e agravo
-- `references/RECLAMACAO-CONSELHO-PLENO.md` — Reclamação ao CP
-- `references/UNIFORMIZACAO-TESE-ENUNCIADOS.md` — Uniformização em tese, enunciados e resoluções
+- `references/REGRAS-RECURSO-ESPECIAL.md`. Regras processuais detalhadas do RE
+- `references/HIPOTESES-ANULACAO.md`. As 8 hipóteses do art. 91, §1º
+- `references/MATERIA-ALCADA-EXCLUSIVA.md`. Art. 89, §3º
+- `references/PRECEDENTES-VINCULANTES.md`. Precedentes judiciais e pareceres vinculantes
+- `references/PUJ-CASO-CONCRETO.md`. PUJ, admissibilidade e agravo
+- `references/RECLAMACAO-CONSELHO-PLENO.md`. Reclamação ao CP
+- `references/UNIFORMIZACAO-TESE-ENUNCIADOS.md`. Uniformização em tese, enunciados e resoluções
 
 Sempre leia os arquivos de referência pertinentes antes de analisar ou redigir recurso às instâncias superiores do CRPS.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

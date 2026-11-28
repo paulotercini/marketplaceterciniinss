@@ -1,4 +1,4 @@
-# Precedentes Vinculantes e Qualificados — Atividade Rural
+# Precedentes Vinculantes e Qualificados. Atividade Rural
 
 ## Precedentes verificados e catalogados nesta skill
 
@@ -6,7 +6,7 @@ Esta referência complementa a skill `precedentes-previdenciarios` com precedent
 
 ---
 
-## STJ — Temas Repetitivos
+## STJ. Temas Repetitivos
 
 ### Tema 297/STJ [BASE]
 Tese adversa. A prova exclusivamente testemunhal não basta para comprovar a atividade rurícola (Súmula 149/STJ). O caminho do segurado é o início de prova material, e o art. 116 da IN 128 admite documentos além dos listados ("dentre outros") (auditoria 03/10/2026).
@@ -23,7 +23,7 @@ Certidão de casamento ou óbito com profissão de lavrador do cônjuge ou genit
 
 ---
 
-## TNU — Temas Representativos de Controvérsia
+## TNU. Temas Representativos de Controvérsia
 
 ### Tema 219/TNU [BASE]
 Trabalho rural antes dos 12 anos. (1) Mesmos meios de prova. (2) Exige participação efetiva e indispensabilidade (art. 11, §§1º e 6º). (3) Vedada negativa por fundamentação genérica.
@@ -37,9 +37,9 @@ PEDILEF 0504229-18.2022.4.05.8400/RN.
 
 ---
 
-## TNU — PUILs (verificar se catalogados na base principal)
+## TNU. PUILs (verificar se catalogados na base principal)
 
-### PUIL 1001293-53.2020.4.01.3805/MG [VERIFICADO — CATALOGADO]
+### PUIL 1001293-53.2020.4.01.3805/MG [VERIFICADO. CATALOGADO]
 **Tese.** O reconhecimento do tempo rural em regime de economia familiar não se limita à subsistência, nem a determinado tipo de cultura, podendo incluir a produção para comercialização, desde que comprovada a atividade em condições de mútua dependência e colaboração, sem utilização de empregados permanentes.
 **Publicação.** D.E. 23/10/2025 (auditoria 03/10/2026).
 **Relevância.** Bloqueia o argumento do INSS de que notas fiscais de valor alto ou produção comercial descaracterizam o segurado especial. Alinhado ao art. 109, §1º, da IN 128/2022.

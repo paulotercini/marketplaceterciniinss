@@ -1,4 +1,4 @@
-# RVT — Jurisprudência Verificada e Refutação
+# RVT. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -66,61 +66,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Inconstitucionalidade da RVT
+### Argumento 1. Inconstitucionalidade da RVT
 
 Argumento adversário. Não cabe a RVT porque o art. 3º é constitucional.
 
 Refutação. Tese adversa: as ADIs 2110 e 2111 declararam constitucional o art. 3º, e a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149] (auditoria 03/10/2026). Verificar a situação concreta do segurado.
 
-### Argumento 2 — Fim da RVT com as ADIs
+### Argumento 2. Fim da RVT com as ADIs
 
 Argumento adversário. RVT não cabe mais após 2024.
 
 Refutação. Tese adversa em regra, pois a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão (auditoria 03/10/2026). Coisa julgada, direito adquirido e vantagem concreta devem ser analisados caso a caso.
 
-### Argumento 3 — Decadência
+### Argumento 3. Decadência
 
 Argumento adversário. Benefício com mais de 10 anos não pode ser revisado.
 
 Refutação. Verificar data do primeiro pagamento. Se houver prazo remanescente, pleito tempestivo. Se houver ação anterior protocolada, interrupção pode ter ocorrido.
 
-### Argumento 4 — Coisa julgada
+### Argumento 4. Coisa julgada
 
 Argumento adversário. RVT já foi discutida em ação anterior e julgada improcedente.
 
 Refutação. Verificar causa de pedir específica. Se não houve discussão sobre direito adquirido ou sobre a regra originária, possível repropositura. Acionar `coisa-julgada-previdenciaria`.
 
-### Argumento 5 — Não há vantagem concreta
+### Argumento 5. Não há vantagem concreta
 
 Argumento adversário. Simulação não mostra renda maior.
 
 Refutação. Se o INSS fez a simulação, exigir memória de cálculo detalhada. Refazer cálculo independente. Verificar se todos os salários anteriores a julho de 1994 foram considerados com correção monetária adequada.
 
-### Argumento 6 — Modulação bloqueia ação ajuizada antes do julgamento
+### Argumento 6. Modulação bloqueia ação ajuizada antes do julgamento
 
 Argumento adversário. Ação deve ser extinta.
 
 Refutação. Verificar critérios da modulação, que só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149] (auditoria 03/10/2026). Sustentar segurança jurídica e boa-fé.
 
-### Argumento 7 — Benefício pós EC 103/2019
+### Argumento 7. Benefício pós EC 103/2019
 
 Argumento adversário. Segurado não tem direito à RVT.
 
 Refutação. Em tese está correto. Mas verificar se houve direito adquirido anterior à EC 103, com pedido de melhor benefício. Acionar `base-aposentadoria-direito-adquirido`.
 
-### Argumento 8 — Honorários de sucumbência
+### Argumento 8. Honorários de sucumbência
 
 Argumento adversário. Negativa vai gerar honorários contra o segurado.
 
 Refutação. Justiça gratuita sob suspensão de exigibilidade (art. 98 CPC). Análise prévia rigorosa para reduzir risco.
 
-### Argumento 9 — RVT e aposentadoria por idade
+### Argumento 9. RVT e aposentadoria por idade
 
 Argumento adversário. RVT não se aplica a aposentadoria por idade.
 
 Refutação. Tecnicamente, a RVT pode impactar qualquer benefício cujo cálculo dependa do PBC. Verificar enquadramento.
 
-### Argumento 10 — RVT e pensão por morte derivada
+### Argumento 10. RVT e pensão por morte derivada
 
 Argumento adversário. Pensão derivada de benefício concedido antes de 1999 não pode ser revisada.
 

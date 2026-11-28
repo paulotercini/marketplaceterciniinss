@@ -1,18 +1,18 @@
-# Embargos de Declaração no CRPS – Art. 92
+# Embargos de Declaração no CRPS. Art. 92
 
 ## Hipóteses de Cabimento (Art. 92, caput)
 
 Cabem embargos quando constatados nos acórdãos dos Órgãos Colegiados
 
-**I. Obscuridade** – falta de clareza que gera dúvidas ou duplo sentido, não permitindo compreensão do decidido
+**I. Obscuridade**, falta de clareza que gera dúvidas ou duplo sentido, não permitindo compreensão do decidido
 
-**II. Contradição** – incompatibilidade entre a decisão e seus fundamentos
+**II. Contradição**, incompatibilidade entre a decisão e seus fundamentos
 
-**III. Omissão** – falta de pronunciamento sobre pontos que exigiam manifestação expressa da UJ
+**III. Omissão**, falta de pronunciamento sobre pontos que exigiam manifestação expressa da UJ
 
-**IV. Erro material** – erros de grafia, numéricos, de cálculos ou equívocos semelhantes que não afetam o mérito, o fundamento ou a conclusão do voto, nem dizem respeito a interpretações jurídicas, acolhimento de opiniões técnicas ou valoração de provas
+**IV. Erro material**, erros de grafia, numéricos, de cálculos ou equívocos semelhantes que não afetam o mérito, o fundamento ou a conclusão do voto, nem dizem respeito a interpretações jurídicas, acolhimento de opiniões técnicas ou valoração de provas
 
-**Ambiguidade** – embora listada no caput, não possui inciso próprio. Deve ser tratada em conjunto com a obscuridade, por ser espécie do mesmo gênero (falta de clareza).
+**Ambiguidade**, embora listada no caput, não possui inciso próprio. Deve ser tratada em conjunto com a obscuridade, por ser espécie do mesmo gênero (falta de clareza).
 
 ## Prazo (Art. 92, §2º)
 
@@ -30,7 +30,7 @@ A oposição tempestiva dos embargos INTERROMPE (não suspende) o prazo para cum
 
 Analisados os embargos, o conselheiro inclui o processo em pauta para juízo de admissibilidade e julgamento do mérito conjuntamente (art. 92, §7º).
 
-## Erro Material – Procedimento Especial (Art. 92, §6º)
+## Erro Material. Procedimento Especial (Art. 92, §6º)
 
 Na hipótese de erro material, o juízo de admissibilidade, a análise e o saneamento são realizados MONOCRATICAMENTE. O conselheiro encaminha o acórdão corrigido para homologação pela Presidência da UJ. Não vai ao colegiado.
 

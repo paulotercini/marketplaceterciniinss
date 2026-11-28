@@ -4,7 +4,7 @@
 
 Clientes frequentemente afirmam não ter documentação médica pretérita. A experiência mostra que a maioria dessas afirmações é literal apenas no sentido de "não guardei em casa". Existe, em arquivos de terceiros, documentação relevante que o cliente desconhece ou não lembra. Este mapa orienta a busca estruturada em cada fonte, com base legal, destinatário correto, conteúdo esperado e estratégias de superação de recusa.
 
-## Fonte 1 — Unidades Básicas de Saúde (UBS)
+## Fonte 1. Unidades Básicas de Saúde (UBS)
 
 ### O que existe
 
@@ -30,7 +30,7 @@ Reiteração com ameaça de habeas data (Lei 9.507/97). Representação no Minis
 
 Solicitar PRONTUÁRIO COMPLETO, incluindo fichas antigas em papel (muitas UBS não digitalizaram documentação anterior a 2010-2015). Especificar o período do qual se pretende resgatar. Incluir pedido de cópia de SISREG (encaminhamentos a especialistas), SIA/SUS e qualquer sistema de informação utilizado.
 
-## Fonte 2 — Hospitais Públicos e Privados
+## Fonte 2. Hospitais Públicos e Privados
 
 ### O que existe
 
@@ -48,7 +48,7 @@ Serviço de Arquivo Médico (SAME) do hospital. Ouvidoria hospitalar. SAC em hos
 
 Listar com o cliente todos os hospitais em que foi atendido ao longo dos anos, mesmo para pronto-socorros pontuais. Incluir maternidades se houve partos (prontuário obstétrico frequentemente contém anamnese geral).
 
-## Fonte 3 — Operadoras de Plano de Saúde (Convênios)
+## Fonte 3. Operadoras de Plano de Saúde (Convênios)
 
 ### O que existe
 
@@ -74,7 +74,7 @@ Em caso de recusa, reclamação na ANS (canal de reclamações regulado) e no PR
 
 No caso concreto da paciente atendida pelo convênio Sistema Vida (identificado nos exames de 23/05/2024), solicitar expressamente histórico dos últimos 10 anos, por CPF, com listagem de todas as autorizações, consultas e exames utilizados.
 
-## Fonte 4 — Farmácias (incluindo Farmácia Popular)
+## Fonte 4. Farmácias (incluindo Farmácia Popular)
 
 ### O que existe
 
@@ -96,7 +96,7 @@ Solicitar listagem de compras por CPF com datas, nomes de medicamentos e receitu
 
 Mesmo medicamentos de venda livre (dipirona, ibuprofeno, diclofenaco) comprados regularmente em farmácias cadastradas podem demonstrar uso crônico de analgésicos e anti-inflamatórios, compatível com quadro doloroso pretérito.
 
-## Fonte 5 — Antigos Empregadores (Medicina do Trabalho)
+## Fonte 5. Antigos Empregadores (Medicina do Trabalho)
 
 ### O que existe
 
@@ -118,7 +118,7 @@ Ofício formal com fundamentação legal completa. Prazo de resposta de 15 dias.
 
 Este é o documento de maior potencial transformador do caso. Se houver exame periódico entre 2003 e 2011 com registro de queixa articular, dor em joelhos, limitação funcional, a DID recua automaticamente para a data daquele registro, e a ligação com a atividade especial fica estabelecida. Não é mero período contributivo reduzido. É etiologia da deficiência.
 
-## Fonte 6 — INSS (Benefícios Anteriores e Perícias)
+## Fonte 6. INSS (Benefícios Anteriores e Perícias)
 
 ### O que existe
 
@@ -136,7 +136,7 @@ Meu INSS (portal oficial). Protocolo em agência presencial. Requerimento via Fa
 
 Mesmo requerimentos indeferidos contêm laudos que registram patologias. Mesmo indeferimento por ausência de carência registra CID atual à época. Prova valiosa para DID.
 
-## Fonte 7 — CNIS e Documentos Próprios do Segurado
+## Fonte 7. CNIS e Documentos Próprios do Segurado
 
 ### O que existe
 
@@ -146,7 +146,7 @@ Indicadores do CNIS podem sinalizar afastamentos breves, benefícios B31 em vig�
 
 Cruzar o CNIS com a narrativa do cliente para identificar lacunas ou afastamentos que sugiram adoecimento pretérito mesmo sem documentação médica formal.
 
-## Fonte 8 — Clínicas e Consultórios Privados
+## Fonte 8. Clínicas e Consultórios Privados
 
 ### O que existe
 
@@ -160,7 +160,7 @@ Consultório específico. Nos casos de médicos falecidos ou aposentados, o CRM 
 
 Pedir ao cliente lista completa de médicos consultados ao longo dos anos, mesmo em consultas isoladas. Muitos clientes lembram após serem estimulados ("consultou algum clínico antes de 2015?", "fez check-up em alguma clínica?", "passou em ortopedista ao menos uma vez?").
 
-## Fonte 9 — Arquivos Pessoais Domésticos
+## Fonte 9. Arquivos Pessoais Domésticos
 
 ### O que existe
 
@@ -174,7 +174,7 @@ Solicitar ao cliente busca domiciliar estruturada. Procurar em armários, pastas
 
 Clientes idosos frequentemente guardam documentos em locais inesperados. Pedir para revisar com calma por alguns dias.
 
-## Fonte 10 — Cartão SUS, SISREG e Histórico Digital
+## Fonte 10. Cartão SUS, SISREG e Histórico Digital
 
 ### O que existe
 
@@ -184,7 +184,7 @@ Histórico digital federal de atendimentos SUS, encaminhamentos a especialistas,
 
 Meu SUS Digital (aplicativo). Secretaria Municipal de Saúde.
 
-## Fonte 11 — Exames Realizados em Laboratórios
+## Fonte 11. Exames Realizados em Laboratórios
 
 ### O que existe
 
@@ -194,7 +194,7 @@ Laboratórios mantêm histórico de exames por CPF. Ultrassonografias, tomografi
 
 Laboratórios em que a paciente já realizou exames. Incluir laboratórios públicos (Fundação Pró-Sangue, Instituto Adolfo Lutz em SP, laboratório municipal).
 
-## Fonte 12 — Declarações e Laudos de Terceiros (Apoio Limitado)
+## Fonte 12. Declarações e Laudos de Terceiros (Apoio Limitado)
 
 ### O que existe
 

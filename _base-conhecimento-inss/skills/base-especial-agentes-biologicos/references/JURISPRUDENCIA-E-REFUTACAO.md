@@ -1,4 +1,4 @@
-# Agentes Biológicos — Jurisprudência Verificada e Refutação
+# Agentes Biológicos. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -46,49 +46,49 @@ Aplicação pró-segurado. Em socorristas e motoristas de ambulância, instruir 
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Exposição eventual
+### Argumento 1. Exposição eventual
 
 Argumento adversário. A exposição a agente biológico não seria contínua, logo faltaria habitualidade.
 
 Refutação. Tema 211 TNU e Tema 205 TNU afastam de modo direto essa tese. A habitualidade em biológicos é configurada pela natureza da função, ainda que em momentos específicos da jornada.
 
-### Argumento 2 — Ausência de contato direto
+### Argumento 2. Ausência de contato direto
 
 Argumento adversário. O segurado não manipula pacientes ou fluidos em todos os momentos da jornada.
 
 Refutação. O Tema 205 TNU dispensa contato direto permanente. A presença em ambiente contaminado, integrada à função, é suficiente. A NR-32 reforça o risco presumido em serviços de saúde.
 
-### Argumento 3 — EPI eficaz declarado no PPP
+### Argumento 3. EPI eficaz declarado no PPP
 
 Argumento adversário. O campo 15.7 do PPP declara EPI eficaz.
 
 Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e com o Tema 213/TNU, que admite desafiar judicialmente a informação de EPI eficaz, sem pedir inversão do ônus, rejeitada na razão de decidir do Tema 1090/STJ (auditoria 03/10/2026).
 
-### Argumento 4 — Rol taxativo do Anexo IV
+### Argumento 4. Rol taxativo do Anexo IV
 
 Argumento adversário. A atividade específica do segurado não consta do Anexo IV do Decreto 3.048/99.
 
 Refutação. O rol é exemplificativo, jamais taxativo. O Anexo 14 da NR-15 complementa e o art. 58, §3º da Lei 8.213/91 autoriza a análise por NR-15.
 
-### Argumento 5 — Ausência de PPP específico
+### Argumento 5. Ausência de PPP específico
 
 Argumento adversário. O PPP não é preciso ou não foi apresentado.
 
 Refutação. Acionar `retificacao-ppp` para obtenção junto à empresa. Em juízo, a flexibilização probatória do Tema 629 STJ autoriza suprir a insuficiência. A atividade pode ser comprovada por registros hospitalares, escalas, termos de posse, declarações funcionais e prova testemunhal.
 
-### Argumento 6 — Terceirização da atividade de limpeza ou lavanderia
+### Argumento 6. Terceirização da atividade de limpeza ou lavanderia
 
 Argumento adversário. O segurado é funcionário de empresa terceirizada, logo não faria jus.
 
 Refutação. A especialidade não decorre do vínculo formal com hospital, mas da execução concreta em ambiente hospitalar. O Anexo 14 lista expressamente lavanderia hospitalar, copa, limpeza, coleta. A prestação do serviço no ambiente insalubre é suficiente.
 
-### Argumento 7 — SAMU com atendimentos esporádicos
+### Argumento 7. SAMU com atendimentos esporádicos
 
 Argumento adversário. O motorista do SAMU não está exposto permanentemente.
 
 Refutação. Higienização do veículo, apoio em emergências, contato com pacientes em atendimento pré-hospitalar e transporte de material biológico caracterizam a exposição inerente à função. Tema 211 TNU aplicado diretamente.
 
-### Argumento 8 — Cirurgião-dentista e contato só com saliva
+### Argumento 8. Cirurgião-dentista e contato só com saliva
 
 Argumento adversário. A exposição é restrita a saliva sem potencial infeccioso.
 

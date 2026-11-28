@@ -1,4 +1,4 @@
-# Contagem Recíproca RGPS e RPPS — Fundamentos e Cenários
+# Contagem Recíproca RGPS e RPPS. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,37 +46,37 @@ O Enunciado 6 do CRPS, conforme redação oficial publicada no DOU de 12/11/2019
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Servidor público com tempo privado anterior
+### Cenário A. Servidor público com tempo privado anterior
 
 Tempo no RGPS averbado no RPPS por CTC. Compensação financeira entre INSS e ente público.
 
-### Cenário B — Ex-servidor público migra para o RGPS
+### Cenário B. Ex-servidor público migra para o RGPS
 
 Tempo no RPPS averbado no RGPS por CTC do ente.
 
-### Cenário C — Tempo militar aproveitado no RPPS
+### Cenário C. Tempo militar aproveitado no RPPS
 
 Via CTC militar.
 
-### Cenário D — Tempo rural pré-1991 no RPPS
+### Cenário D. Tempo rural pré-1991 no RPPS
 
 Via indenização de contribuições, exigida pelo Tema 609 STJ, tese adversa. Antes, comparar com a aposentadoria no próprio RGPS, em que esse tempo conta sem indenização (auditoria 03/10/2026).
 
-### Cenário E — Aluno-aprendiz para contagem recíproca
+### Cenário E. Aluno-aprendiz para contagem recíproca
 
 Após reconhecimento, CTC do INSS para o RPPS.
 
 ## 6. Cenários limitados
 
-### Cenário F — Sobreposição
+### Cenário F. Sobreposição
 
 Vedada a contagem dupla. Desaverbar antes.
 
-### Cenário G — Conversão especial no RPPS
+### Cenário G. Conversão especial no RPPS
 
 Controvertida. Em muitos entes, vedada. Em alguns, admitida por decisão judicial.
 
-### Cenário H — Cômputo sem CTC
+### Cenário H. Cômputo sem CTC
 
 Vedado. Exige instrumento formal.
 

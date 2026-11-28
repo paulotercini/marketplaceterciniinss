@@ -22,7 +22,7 @@ A avaliação social avalia o contexto. Como o cliente vive, onde mora, com quem
 
 Cliente precisa chegar preparado para ambas. As perguntas são diferentes e o foco também é diferente. Mesma pessoa, dois ângulos de avaliação.
 
-## TCQ — Tabela Conclusiva de Qualificadores
+## TCQ. Tabela Conclusiva de Qualificadores
 
 A avaliação administrativa é estruturada pela Tabela Conclusiva de Qualificadores, que classifica cada domínio da CIF em gravidade. Cliente não precisa conhecer a TCQ. Advogado precisa conhecer para orientar em quais domínios o cliente deve demonstrar maior restrição, conforme o impedimento principal.
 

@@ -1,4 +1,4 @@
-# BPC e Aposentadoria PCD — Procedimentos — Jurisprudência Verificada
+# BPC e Aposentadoria PCD. Procedimentos. Jurisprudência Verificada
 
 ## 1. Precedentes vinculantes
 
@@ -64,61 +64,61 @@ Fonte oficial em https://www.gov.br/inss
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Teleperícia em caso complexo
+### Argumento 1. Teleperícia em caso complexo
 
 Argumento adversário. Avaliação por videoconferência.
 
 Refutação. Limites na Portaria 19/2026. Casos complexos exigem presencial. Cerceamento de defesa.
 
-### Argumento 2 — CadÚnico vencido
+### Argumento 2. CadÚnico vencido
 
 Argumento adversário. Indeferimento por CadÚnico desatualizado.
 
 Refutação. Lei 13.460/2017. Formalismo excessivo vedado. Atualização gera retroatividade.
 
-### Argumento 3 — Mora administrativa sem resposta
+### Argumento 3. Mora administrativa sem resposta
 
 Argumento adversário. PA sem decisão por meses.
 
 Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Razoável duração do processo.
 
-### Argumento 4 — Reavaliação bienal cessou benefício
+### Argumento 4. Reavaliação bienal cessou benefício
 
 Argumento adversário. Cessação por reavaliação.
 
 Refutação. Contraditório prévio. Lei 15.157/2025 em impedimento permanente.
 
-### Argumento 5 — Recurso CRPS intempestivo
+### Argumento 5. Recurso CRPS intempestivo
 
 Argumento adversário. Não conhecimento por intempestividade.
 
 Refutação. Verificar data de intimação. Relevação de intempestividade (art. 112 LGBP). Skill `admissibilidade-barreiras-crps`.
 
-### Argumento 6 — Perícia com perito suspeito
+### Argumento 6. Perícia com perito suspeito
 
 Argumento adversário. Perito INSS sem credibilidade específica.
 
 Refutação. Requerimento de nova perícia. Assistente técnico. Laudos complementares.
 
-### Argumento 7 — PA extraviado
+### Argumento 7. PA extraviado
 
 Argumento adversário. INSS alega extravio.
 
 Refutação. MS para reabertura do PA. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
-### Argumento 8 — Indeferimento sem motivação
+### Argumento 8. Indeferimento sem motivação
 
 Argumento adversário. Indeferimento genérico.
 
 Refutação. Dever de motivação (art. 5º XXXIII CF). Nulidade por ausência de motivação.
 
-### Argumento 9 — Tutela de urgência negada sem análise
+### Argumento 9. Tutela de urgência negada sem análise
 
 Argumento adversário. Negativa genérica.
 
 Refutação. Prova pré-constituída. Perigo de dano. Fumus boni iuris.
 
-### Argumento 10 — Implantação não cumprida
+### Argumento 10. Implantação não cumprida
 
 Argumento adversário. INSS descumpre ordem judicial.
 
@@ -137,22 +137,6 @@ Quarto, em mora ou recusa, MS ou ação.
 Quinto, em cessação, restabelecimento com tutela.
 
 Sexto, em Teleperícia inadequada, cerceamento arguido.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado sustenta acesso à justiça.
-
-Hugo Goes detalha recursos.
-
-Fábio Zambitte Ibrahim analisa instrução.
-
-Wladimir Novaes Martinez critica formalismos.
-
-Daniel Pulino aprofunda processo.
-
-Marco Aurélio Serau Junior analisa proteção processual.
-
-O IBDP sustenta proteção integral.
 
 ## 5. Diligência de atualização
 

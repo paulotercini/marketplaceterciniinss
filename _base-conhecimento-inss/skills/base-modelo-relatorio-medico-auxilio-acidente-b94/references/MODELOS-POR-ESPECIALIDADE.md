@@ -5,13 +5,13 @@
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela ortopédica principal, ex. S82.3 fratura consolidada da tíbia com osteossíntese definitiva]
-[CID] — [Sequela secundária, ex. M21.7 desigualdade de comprimento dos membros inferiores]
-[CID] — [Complicação biomecânica, ex. M19.0 artrose secundária]
+[CID]. [Sequela ortopédica principal, ex. S82.3 fratura consolidada da tíbia com osteossíntese definitiva]
+[CID]. [Sequela secundária, ex. M21.7 desigualdade de comprimento dos membros inferiores]
+[CID]. [Complicação biomecânica, ex. M19.0 artrose secundária]
 
 **Histórico clínico**
 
@@ -47,11 +47,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela psiquiátrica, ex. F07 transtornos de personalidade pós-traumatismo cranioencefálico / F43.1 transtorno de estresse pós-traumático]
+[CID]. [Sequela psiquiátrica, ex. F07 transtornos de personalidade pós-traumatismo cranioencefálico / F43.1 transtorno de estresse pós-traumático]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -90,11 +90,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela LER/DORT, ex. M75.1 síndrome do manguito rotador / M77.1 epicondilite lateral consolidada]
+[CID]. [Sequela LER/DORT, ex. M75.1 síndrome do manguito rotador / M77.1 epicondilite lateral consolidada]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -131,11 +131,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela sistêmica, ex. J84 fibrose pulmonar pós-pneumoconiose / N18 doença renal crônica pós-intoxicação]
+[CID]. [Sequela sistêmica, ex. J84 fibrose pulmonar pós-pneumoconiose / N18 doença renal crônica pós-intoxicação]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -170,11 +170,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela visual, ex. H54.4 cegueira monocular / H54.6 visão subnormal / H33 descolamento de retina sequelar]
+[CID]. [Sequela visual, ex. H54.4 cegueira monocular / H54.6 visão subnormal / H33 descolamento de retina sequelar]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -211,11 +211,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela cardíaca, ex. I25.2 infarto do miocárdio antigo / I50 insuficiência cardíaca sequelar / I42 cardiomiopatia]
+[CID]. [Sequela cardíaca, ex. I25.2 infarto do miocárdio antigo / I50 insuficiência cardíaca sequelar / I42 cardiomiopatia]
 [CID secundário, se houver]
 
 **Histórico clínico**

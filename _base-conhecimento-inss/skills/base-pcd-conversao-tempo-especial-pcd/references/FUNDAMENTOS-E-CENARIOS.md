@@ -1,4 +1,4 @@
-# Conversão Tempo PCD — Fundamentos e Cenários
+# Conversão Tempo PCD. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,45 +46,45 @@ Homem (destino Para 25, 29, 33 e 35). De 25 anos, 1,00, 1,16, 1,32, 1,40. De 29 
 
 ## 6. Cenários pró-segurado
 
-### Cenário A — Maioria do tempo grave
+### Cenário A. Maioria do tempo grave
 
 Aplicação direta.
 
-### Cenário B — Tempo segmentado por grau
+### Cenário B. Tempo segmentado por grau
 
 Cálculo segmentado.
 
-### Cenário C — PCD em ambiente nocivo
+### Cenário C. PCD em ambiente nocivo
 
 Comparação entre PCD e especial.
 
-### Cenário D — Agravamento progressivo
+### Cenário D. Agravamento progressivo
 
 Múltiplas DIDs.
 
-### Cenário E — Tempo militar
+### Cenário E. Tempo militar
 
 Conta como comum.
 
-### Cenário F — Aluno-aprendiz
+### Cenário F. Aluno-aprendiz
 
 Conta como comum.
 
-### Cenário G — Tempo rural pré-1991
+### Cenário G. Tempo rural pré-1991
 
 Conta como comum.
 
 ## 7. Cenários limitados
 
-### Cenário H — Tempo posterior à EC 103 sem direito adquirido
+### Cenário H. Tempo posterior à EC 103 sem direito adquirido
 
 Aplicação atual.
 
-### Cenário I — Sem prova de grau específico
+### Cenário I. Sem prova de grau específico
 
 Aplicação do menor grau provado.
 
-### Cenário J — Sem documentação retroativa
+### Cenário J. Sem documentação retroativa
 
 DID na DER.
 

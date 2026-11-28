@@ -1,4 +1,4 @@
-# Anexo III B94 — Jurisprudência e Refutação
+# Anexo III B94. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -38,77 +38,65 @@ Fonte oficial em https://www.in.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Anexo é taxativo
+### Argumento 1. Anexo é taxativo
 
 Argumento adversário. Restrição.
 
 Refutação. Súmula 88 TNU exemplificativo.
 
-### Argumento 2 — Sem incapacidade total
+### Argumento 2. Sem incapacidade total
 
 Argumento adversário. Severidade.
 
 Refutação. B94 é redução parcial. Tema 416 STJ.
 
-### Argumento 3 — Sem CID específico
+### Argumento 3. Sem CID específico
 
 Argumento adversário. Forma.
 
 Refutação. Sequela funcional importa.
 
-### Argumento 4 — Perda parcial mínima não enquadra
+### Argumento 4. Perda parcial mínima não enquadra
 
 Argumento adversário. Insignificância.
 
 Refutação. Tema 416 STJ aceita pequena redução.
 
-### Argumento 5 — Sequela estética não conta
+### Argumento 5. Sequela estética não conta
 
 Argumento adversário. Função intacta.
 
 Refutação. Ofensa estética grave conta.
 
-### Argumento 6 — Exigência de cura definitiva
+### Argumento 6. Exigência de cura definitiva
 
 Argumento adversário. Definitivo.
 
 Refutação. Súmula 89 TNU sequela permanente.
 
-### Argumento 7 — Sem CAT, sem B94
+### Argumento 7. Sem CAT, sem B94
 
 Argumento adversário. Forma.
 
 Refutação. CAT pode ser emitida posteriormente.
 
-### Argumento 8 — Sem nexo acidentário
+### Argumento 8. Sem nexo acidentário
 
 Argumento adversário. Espécie.
 
 Refutação. NTEP e prova material.
 
-### Argumento 9 — Sequela em outro membro
+### Argumento 9. Sequela em outro membro
 
 Argumento adversário. Restrição.
 
 Refutação. Anexo III amplo.
 
-### Argumento 10 — Cessou tratamento
+### Argumento 10. Cessou tratamento
 
 Argumento adversário. Estabilização.
 
 Refutação. Sequela permanente independe de tratamento.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

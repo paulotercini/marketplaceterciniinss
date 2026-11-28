@@ -1,4 +1,4 @@
-# Conversão Tempo PCD — Jurisprudência e Refutação
+# Conversão Tempo PCD. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -38,79 +38,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Aplicação de grau único
+### Argumento 1. Aplicação de grau único
 
 Argumento adversário. Linearidade.
 
 Refutação. Segmentação por grau é direito do segurado.
 
-### Argumento 2 — Tempo especial não converte para PCD
+### Argumento 2. Tempo especial não converte para PCD
 
 Argumento adversário. Restrição.
 
 Refutação. Tema 422 STJ admite conversão.
 
-### Argumento 3 — Multiplicador não retroage
+### Argumento 3. Multiplicador não retroage
 
 Argumento adversário. EC 103.
 
 Refutação. Direito adquirido pré-EC 103.
 
-### Argumento 4 — Sem prova de grau
+### Argumento 4. Sem prova de grau
 
 Argumento adversário. Sem segmentação.
 
 Refutação. Prova mista admite segmentação.
 
-### Argumento 5 — Tempo rural pré-1991 não conta
+### Argumento 5. Tempo rural pré-1991 não conta
 
 Argumento adversário. Restrição.
 
 Refutação. Conta como comum.
 
-### Argumento 6 — Aluno-aprendiz não conta
+### Argumento 6. Aluno-aprendiz não conta
 
 Argumento adversário. Forma.
 
 Refutação. Súmula 96 TCU.
 
-### Argumento 7 — Militar não conta
+### Argumento 7. Militar não conta
 
 Argumento adversário. Regime.
 
 Refutação. Contagem recíproca.
 
-### Argumento 8 — Multiplicador deve ser único
+### Argumento 8. Multiplicador deve ser único
 
 Argumento adversário. Linearidade.
 
 Refutação. Aplicação por período de cada grau.
 
-### Argumento 9 — Conversão somente até EC 103
+### Argumento 9. Conversão somente até EC 103
 
 Argumento adversário. Limitação temporal.
 
 Refutação. O Decreto 3.048/99, art. 70-F, §1º, não traz limite temporal. A IN 128, art. 310, §1º, restringe a conversão a períodos até 13/11/2019, e a tese contrária deve ser sustentada de forma expressa (auditoria 03/10/2026).
 
-### Argumento 10 — Sem direito adquirido
+### Argumento 10. Sem direito adquirido
 
 Argumento adversário. Reforma.
 
 Refutação. CF/88 art. 5º XXXVI preserva.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Jane Berwanger.
-
-Daniel Pulino.
-
-Marco Aurélio Serau Junior.
-
-IBDP.
 
 ## 5. Estratégia integrada
 
@@ -127,8 +113,6 @@ Quinto, recurso ou ação.
 Sexto, monitoramento.
 
 ## 6. Diligência de atualização
-
-
 
 ADI 5760 conferida; trata da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 e não serve a esta skill (auditoria 03/10/2026).
 

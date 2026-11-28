@@ -2,7 +2,7 @@
 
 Todas as teses abaixo foram verificadas em fontes primárias oficiais. Quando o precedente não se aplicar ao caso concreto, descartar a citação.
 
-## 1. Tema 174 TNU — NHO-01 e NR-15 como metodologias válidas
+## 1. Tema 174 TNU. NHO-01 e NR-15 como metodologias válidas
 
 Tese firmada. A partir de 19/11/2003, a aferição do ruído contínuo ou intermitente deve usar a NHO-01 da FUNDACENTRO ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma. Havendo omissão ou dúvida sobre a metodologia, o PPP não basta e deve ser apresentado o LTCAT (auditoria 03/10/2026).
 
@@ -10,7 +10,7 @@ Fonte oficial. Turma Nacional de Uniformização. Pesquisa no sistema de jurispr
 
 Aplicação prática para o segurado. Em todo recurso administrativo ou inicial, invocar o Tema 174 para afastar indeferimento baseado na mera ausência da NHO-01. A tese vale para períodos a partir de 19/11/2003; para os anteriores, a referência administrativa é o inciso II do Enunciado 13 do CRPS (auditoria 03/10/2026).
 
-## 2. Tema 317 TNU — Indicação da norma técnica
+## 2. Tema 317 TNU. Indicação da norma técnica
 
 Tese firmada. A simples menção a "dosimetria" ou "dosímetro" no PPP, sem indicação expressa da norma técnica aplicada, não é suficiente para caracterizar o atendimento à NHO-01 ou à NR-15 para fins de reconhecimento da especialidade por ruído.
 
@@ -34,7 +34,7 @@ Fonte oficial. Ata da sessão do Conselho Pleno do CRPS. Acessar em https://www.
 
 Aplicação prática para o segurado. Em todo recurso ordinário a Junta de Recursos e em recurso especial a Câmara de Julgamento, citar expressamente a revogação do inciso III do Enunciado 13. Se o órgão julgador invocar a redação anterior do Enunciado 13 para manter indeferimento, cabe embargos com pedido de atualização normativa.
 
-## 5. Comunicado CRPS 99/2025 — Quatro cenários para ruído
+## 5. Comunicado CRPS 99/2025. Quatro cenários para ruído
 
 O Comunicado 99/2025 do CRPS consolidou a sistemática de aceitação de quatro cenários para aferição de ruído a partir de 19/11/2003.
 
@@ -48,7 +48,7 @@ Cenário 4, NR-15 com NEN expresso.
 
 Fonte oficial. Comunicado CRPS. Acessar em https://www.gov.br/previdencia/pt-br/acesso-a-informacao/conselhos-e-orgaos-colegiados/crps
 
-## 6. Tema 555 STF — EPI e ruído
+## 6. Tema 555 STF. EPI e ruído
 
 Tese firmada. O uso de EPI eficaz afasta a nocividade, mas há exceção expressa para exposição a ruído acima do limite, em que a especialidade se mantém mesmo com EPI certificado, dadas as limitações da proteção auricular em condições reais.
 
@@ -56,7 +56,7 @@ Fonte oficial. STF, ARE 664.335, Tema 555. Acessar em https://portal.stf.jus.br
 
 Aplicação prática para o segurado. Não admitir que a anotação no campo 15.7 do PPP afirmando EPI eficaz seja motivo de indeferimento para ruído. A exceção é expressa no próprio precedente do STF.
 
-## 7. Súmula 68 TNU — Laudo extemporâneo
+## 7. Súmula 68 TNU. Laudo extemporâneo
 
 Tese firmada. O laudo técnico pericial utilizado para reconhecimento de tempo especial pode ser extemporâneo quando demonstrar que as condições ambientais se mantiveram estáveis no período laborado.
 
@@ -64,7 +64,7 @@ Fonte oficial. Turma Nacional de Uniformização.
 
 Aplicação prática para o segurado. Em caso de PPP baseado em LTCAT posterior ao período, invocar a Súmula 68 para afastar a tese do INSS de extemporaneidade.
 
-## 8. Art. 25, §2º, da EC 103/2019 — Conversão de tempo especial em comum
+## 8. Art. 25, §2º, da EC 103/2019. Conversão de tempo especial em comum
 
 Regra constitucional. A conversão de tempo especial em comum é assegurada para atividades exercidas até 13/11/2019, data de publicação da EC 103/2019, e vedada para o tempo posterior (auditoria 03/10/2026).
 

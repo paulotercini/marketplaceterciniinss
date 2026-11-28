@@ -1,4 +1,4 @@
-# Conversão de Tempo Especial — Jurisprudência Verificada e Refutação
+# Conversão de Tempo Especial. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -52,61 +52,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Vedação total após EC 103
+### Argumento 1. Vedação total após EC 103
 
 Argumento adversário. A EC 103 vedou toda a conversão.
 
 Refutação. A vedação alcança apenas períodos posteriores a 13/11/2019. Períodos anteriores conservam o direito à conversão, conforme interpretação do §2º do art. 25 da EC 103.
 
-### Argumento 2 — Fator desatualizado
+### Argumento 2. Fator desatualizado
 
 Argumento adversário. O fator mudou com a reforma.
 
 Refutação. O fator de 1,4 para homem e 1,2 para mulher permanece aplicável para os períodos anteriores a 13/11/2019.
 
-### Argumento 3 — Enquadramento por categoria não cabe
+### Argumento 3. Enquadramento por categoria não cabe
 
 Argumento adversário. Sem PPP, sem especial.
 
 Refutação. Até 28/04/1995, enquadramento por categoria profissional era admitido. Nesse período, a exposição também não precisa ser permanente, conforme a Súmula 49 TNU (auditoria 03/10/2026, retirado o Tema 694 STJ, que trata do limite de ruído).
 
-### Argumento 4 — EPI eficaz bloqueia conversão
+### Argumento 4. EPI eficaz bloqueia conversão
 
 Argumento adversário. EPI neutralizou o agente nocivo.
 
 Refutação. Tema 555 STF e Tema 1090 STJ. EPI não neutraliza ruído, agentes cancerígenos e biológicos. Acionar `defesa-probatoria-especial`.
 
-### Argumento 5 — Ausência de prova
+### Argumento 5. Ausência de prova
 
 Argumento adversário. Sem PPP, sem prova.
 
 Refutação. LTCAT, formulários SB-40, DSS-8030 admitidos para períodos antigos. Prova documental e testemunhal.
 
-### Argumento 6 — Conversão só com aposentadoria especial pura
+### Argumento 6. Conversão só com aposentadoria especial pura
 
 Argumento adversário. Só se converte se faltar tempo especial.
 
 Refutação. Conversão é técnica de cômputo para aproveitamento em tempo comum, independentemente de a aposentadoria pretendida ser especial.
 
-### Argumento 7 — Período fragmentado não converte
+### Argumento 7. Período fragmentado não converte
 
 Argumento adversário. Converte só se for contínuo.
 
 Refutação. Períodos fragmentados somam-se e convertem-se normalmente.
 
-### Argumento 8 — PPP sem valor
+### Argumento 8. PPP sem valor
 
 Argumento adversário. Campo 15 incompleto.
 
 Refutação. Retificação-ppp. Enquadramento por categoria. Prova técnica alternativa.
 
-### Argumento 9 — Ausência de requerimento administrativo
+### Argumento 9. Ausência de requerimento administrativo
 
 Argumento adversário. Extinção sem mérito.
 
 Refutação. Tema 1124 STJ. Protocolar requerimento antes do ajuizamento com todos os documentos.
 
-### Argumento 10 — Coisa julgada em ação anterior
+### Argumento 10. Coisa julgada em ação anterior
 
 Argumento adversário. Conversão já discutida.
 

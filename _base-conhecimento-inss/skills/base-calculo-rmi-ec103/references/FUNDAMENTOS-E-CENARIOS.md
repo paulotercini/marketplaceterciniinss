@@ -1,4 +1,4 @@
-# Cálculo da RMI Pós EC 103/2019 — Fundamentos e Cenários
+# Cálculo da RMI Pós EC 103/2019. Fundamentos e Cenários
 
 ## 1. Fundamentos normativos
 
@@ -32,35 +32,35 @@ Passo 6. Resultado é o salário-de-benefício, que corresponde à RMI quando n�
 
 ## 3. Cenários de cálculo
 
-### Cenário 1 — Regra dos pontos com 38 anos de contribuição (homem)
+### Cenário 1. Regra dos pontos com 38 anos de contribuição (homem)
 
 Média = R$ 5.000,00 (exemplo). Tempo excedente a 20 anos = 18 anos. RMI = 60% + 2% × 18 = 96%. RMI = R$ 4.800,00 (desde que abaixo do teto).
 
-### Cenário 2 — Regra permanente (art. 19) com 15 anos de contribuição (mulher, filiada pós-reforma)
+### Cenário 2. Regra permanente (art. 19) com 15 anos de contribuição (mulher, filiada pós-reforma)
 
 Média = R$ 3.000,00. Tempo excedente a 15 anos = 0. RMI = 60%. RMI = R$ 1.800,00. O cenário é o da regra permanente, pois a idade progressiva do art. 16 exige filiação até 13/11/2019 e 30 anos de contribuição (auditoria 03/10/2026).
 
-### Cenário 3 — Pedágio de 100%
+### Cenário 3. Pedágio de 100%
 
 Média = R$ 8.000,00. RMI = 100%. Se abaixo do teto, RMI = R$ 8.000,00. Se acima, teto vigente.
 
-### Cenário 4 — B32 não acidentária
+### Cenário 4. B32 não acidentária
 
 Segurado com 22 anos de contribuição (homem). Média = R$ 4.000,00. RMI = 60% + 2% × 2 = 64%. RMI = R$ 2.560,00. Verificar possibilidade de conversão para B92 acidentária pela concausa do art. 21, I, da Lei 8.213/91, quando a atividade agravou incapacidade preexistente (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído).
 
-### Cenário 5 — B92 acidentária
+### Cenário 5. B92 acidentária
 
 Mesmo cenário anterior, mas com caráter acidentário reconhecido (doença profissional ou acidente de trabalho). RMI = 100% = R$ 4.000,00. Vantagem expressiva.
 
-### Cenário 6 — Pensão por morte com cônjuge e 2 filhos menores
+### Cenário 6. Pensão por morte com cônjuge e 2 filhos menores
 
 RMI = 50% + 10% × 3 = 80% da aposentadoria que o falecido recebia ou teria direito. Acionar `pensao-por-morte`.
 
-### Cenário 7 — Análise crítica do divisor mínimo
+### Cenário 7. Análise crítica do divisor mínimo
 
 Segurado com 400 contribuições desde 1994, mas 100 delas em valor mínimo. Média computa todas, inclusive as mínimas, reduzindo a média. Verificar se contribuições mínimas foram complementadas (art. 195 §14 CF).
 
-### Cenário 8 — Contribuição acima do teto
+### Cenário 8. Contribuição acima do teto
 
 Segurado contribuiu sobre remuneração de R$ 12.000,00, mas o salário de contribuição foi limitado ao teto de R$ 7.786,02 (2024). Apenas o teto entra no cálculo da média. Revisão do teto em cada ano conforme portaria vigente.
 

@@ -1,4 +1,4 @@
-# Revisão do Art. 29, II, e Melhor Benefício — Jurisprudência Verificada e Refutação
+# Revisão do Art. 29, II, e Melhor Benefício. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -34,61 +34,61 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Preclusão da DER
+### Argumento 1. Preclusão da DER
 
 Argumento adversário. A DER não pode retroagir.
 
 Refutação. Tema 334 STF reconheceu expressamente o direito adquirido ao melhor benefício com congelamento em data pretérita. Aplicação direta.
 
-### Argumento 2 — Decadência consumada
+### Argumento 2. Decadência consumada
 
 Argumento adversário. Benefício com mais de 10 anos não admite revisão.
 
 Refutação. Verificar data do primeiro pagamento. Pedidos administrativos anteriores podem ter interrompido o prazo. Acionar `decadencia-revisao-previdenciaria`.
 
-### Argumento 3 — Ausência de implementação dos requisitos em data pretérita
+### Argumento 3. Ausência de implementação dos requisitos em data pretérita
 
 Argumento adversário. Segurado só implementou os requisitos na DER atual.
 
 Refutação. Documentar cumulativamente tempo de contribuição, idade e, se for o caso, tempo especial. Auditoria minuciosa do CNIS e documentos comprobatórios.
 
-### Argumento 4 — Inexistência de distorção no cálculo do art. 29, II
+### Argumento 4. Inexistência de distorção no cálculo do art. 29, II
 
 Argumento adversário. Cálculo está correto.
 
 Refutação. Exigir memória detalhada. Recalcular independentemente com maiores salários de contribuição. Verificar se 80% do período contributivo foi considerado.
 
-### Argumento 5 — Auxílio-doença não gera melhor benefício
+### Argumento 5. Auxílio-doença não gera melhor benefício
 
 Argumento adversário. Tempo em gozo de auxílio-doença intercalado não conta.
 
 Refutação. Tempo em gozo de auxílio-doença intercalado com atividade conta para a aposentadoria, conforme entendimento consolidado.
 
-### Argumento 6 — Coisa julgada
+### Argumento 6. Coisa julgada
 
 Argumento adversário. Revisão já foi analisada.
 
 Refutação. Verificar causa de pedir específica. Se o melhor benefício não foi o objeto anterior, cabe nova ação. Acionar `coisa-julgada-previdenciaria`.
 
-### Argumento 7 — EC 103/2019 fechou o espaço
+### Argumento 7. EC 103/2019 fechou o espaço
 
 Argumento adversário. Após 13/11/2019, não cabe melhor benefício.
 
 Refutação. Direito adquirido até 13/11/2019 é protegido. Acionar `base-aposentadoria-direito-adquirido`.
 
-### Argumento 8 — Ausência de interesse de agir
+### Argumento 8. Ausência de interesse de agir
 
 Argumento adversário. Sem prévio requerimento.
 
 Refutação. Tema 1124 STJ. Protocolar requerimento antes do ajuizamento.
 
-### Argumento 9 — Pensão derivada sem revisão
+### Argumento 9. Pensão derivada sem revisão
 
 Argumento adversário. Dependente não tem direito.
 
 Refutação. Revisão reflexa. Decadência autônoma do parágrafo único do art. 103.
 
-### Argumento 10 — Honorários de sucumbência
+### Argumento 10. Honorários de sucumbência
 
 Argumento adversário. Risco alto para o segurado.
 

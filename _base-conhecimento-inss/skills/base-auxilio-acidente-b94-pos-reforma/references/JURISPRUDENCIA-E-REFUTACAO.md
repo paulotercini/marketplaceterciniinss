@@ -1,4 +1,4 @@
-# B94 — Jurisprudência Verificada e Refutação
+# B94. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -90,49 +90,49 @@ Aplicação. Não rege o B94 nem a implantação imediata; só interessa ao B94 
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Sequela leve
+### Argumento 1. Sequela leve
 
 Argumento adversário. A sequela é leve e não justifica o B94.
 
 Refutação. Tema 416 STJ e Súmula 89 TNU. Basta a redução real da capacidade, independente da gravidade.
 
-### Argumento 2 — Sequela fora do Anexo III
+### Argumento 2. Sequela fora do Anexo III
 
 Argumento adversário. A sequela não está descrita no Anexo III.
 
 Refutação. Súmula 89 TNU. Rol é exemplificativo. Cabe perícia para atestar redução da capacidade.
 
-### Argumento 3 — Acidente não é de trabalho
+### Argumento 3. Acidente não é de trabalho
 
 Argumento adversário. O acidente foi doméstico ou de trânsito, não de trabalho.
 
 Refutação. Art. 86 fala em acidente de qualquer natureza. O auxílio-acidente é devido independentemente do local ou natureza do acidente; sem nexo com o trabalho, a espécie é a 36, na Justiça Federal, e não o B94 acidentário (auditoria 03/10/2026, retirado o Tema 201 TNU, que trata da exclusão do contribuinte individual).
 
-### Argumento 4 — Perda auditiva não gera B94
+### Argumento 4. Perda auditiva não gera B94
 
 Argumento adversário. Perda auditiva leve não justifica B94.
 
 Refutação. Art. 86, §4º, da Lei 8.213/91, Tema 22 STJ e Súmula 44 STJ (auditoria 03/10/2026, no lugar da Súmula 507 STJ e do Tema 322 TNU). Basta a redução real da capacidade para a profissão específica.
 
-### Argumento 5 — Acumulação vedada com aposentadoria
+### Argumento 5. Acumulação vedada com aposentadoria
 
 Argumento adversário. O art. 86, §§1º a 3º, da Lei 8.213/91, na redação da MP 1.596-14/1997, convertida na Lei 9.528/97, veda acumulação com aposentadoria (auditoria 03/10/2026, no lugar da Lei 13.846/2019).
 
 Refutação. Tema 555 STJ e Súmula 507 STJ. A acumulação subsiste quando a lesão incapacitante e a aposentadoria são anteriores a 11/11/1997. Fora disso, o B94 cessa na véspera da aposentadoria e seu valor integra o salário-de-contribuição pelo art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
-### Argumento 6 — Cessação por cessação de B31
+### Argumento 6. Cessação por cessação de B31
 
 Argumento adversário. O B94 cessou junto com o B31.
 
 Refutação. Art. 86, §3º. Cessação apenas pela aposentadoria. Conversão obrigatória do B31 em B94 quando houver sequela consolidada.
 
-### Argumento 7 — RMI sem integração de verbas
+### Argumento 7. RMI sem integração de verbas
 
 Argumento adversário. A RMI foi calculada sem verbas remuneratórias.
 
 Refutação. Art. 31 da Lei 8.213/91. Cabe revisão para incluir todas as verbas legítimas no salário-de-contribuição.
 
-### Argumento 8 — Ausência de qualidade de segurado
+### Argumento 8. Ausência de qualidade de segurado
 
 Argumento adversário. O segurado não tinha qualidade na DIB.
 

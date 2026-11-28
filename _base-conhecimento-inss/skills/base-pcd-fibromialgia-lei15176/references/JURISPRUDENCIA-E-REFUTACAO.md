@@ -1,4 +1,4 @@
-# Fibromialgia Lei 15.176/2025 — Jurisprudência e Refutação
+# Fibromialgia Lei 15.176/2025. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,77 +36,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Sem exame objetivo
+### Argumento 1. Sem exame objetivo
 
 Argumento adversário. Subjetividade.
 
 Refutação. Critério ACR é clínico. Lei 15.176 reconhece.
 
-### Argumento 2 — Sintomas crônicos não causam deficiência
+### Argumento 2. Sintomas crônicos não causam deficiência
 
 Argumento adversário. Estabilização.
 
 Refutação. Lei 15.176 reconhece como deficiência.
 
-### Argumento 3 — Fibromialgia causa apenas incapacidade temporária
+### Argumento 3. Fibromialgia causa apenas incapacidade temporária
 
 Argumento adversário. Restrição.
 
 Refutação. Repercussão funcional permanente.
 
-### Argumento 4 — Sem perícia psiquiátrica
+### Argumento 4. Sem perícia psiquiátrica
 
 Argumento adversário. Forma.
 
 Refutação. Avaliação multidisciplinar é direito.
 
-### Argumento 5 — Fadiga é subjetiva
+### Argumento 5. Fadiga é subjetiva
 
 Argumento adversário. Desqualificação.
 
 Refutação. Sintoma reconhecido pela ACR.
 
-### Argumento 6 — Fog mental sem teste neuropsicológico
+### Argumento 6. Fog mental sem teste neuropsicológico
 
 Argumento adversário. Forma.
 
 Refutação. Sintoma clínico.
 
-### Argumento 7 — Sem repercussão social
+### Argumento 7. Sem repercussão social
 
 Argumento adversário. Função preservada.
 
 Refutação. Lei 15.176 reconhece deficiência.
 
-### Argumento 8 — Comorbidade não conta
+### Argumento 8. Comorbidade não conta
 
 Argumento adversário. Foco isolado.
 
 Refutação. Avaliação biopsicossocial integrada.
 
-### Argumento 9 — DID na DER
+### Argumento 9. DID na DER
 
 Argumento adversário. Limitação.
 
 Refutação. DID retroativa permitida.
 
-### Argumento 10 — Concessão somente como B31
+### Argumento 10. Concessão somente como B31
 
 Argumento adversário. Espécie.
 
 Refutação. Lei 15.176 abre PCD e BPC.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Jane Berwanger.
-
-Frederico Amado.
-
-Marco Aurélio Serau Junior.
-
-Daniel Pulino.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

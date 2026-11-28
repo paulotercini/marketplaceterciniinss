@@ -1,4 +1,4 @@
-# Relevação de Intempestividade – Art. 112, §§1º a 6º
+# Relevação de Intempestividade. Art. 112, §§1º a 6º
 
 ## Natureza Jurídica
 

@@ -1,4 +1,4 @@
-# Cessação e Acumulação B94 — Jurisprudência e Refutação
+# Cessação e Acumulação B94. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -36,77 +36,65 @@ Conversão da MP.
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Vedação alcança B94 antigo
+### Argumento 1. Vedação alcança B94 antigo
 
 Argumento adversário. Retroatividade.
 
 Refutação. Súmula 507 STJ veda retroatividade.
 
-### Argumento 2 — Cessação automática
+### Argumento 2. Cessação automática
 
 Argumento adversário. Operacional.
 
 Refutação. Direito adquirido protege.
 
-### Argumento 3 — Sem direito adquirido
+### Argumento 3. Sem direito adquirido
 
 Argumento adversário. Negação.
 
 Refutação. Súmula 507 e Tema 555.
 
-### Argumento 4 — Lei nova prevalece
+### Argumento 4. Lei nova prevalece
 
 Argumento adversário. Tempus regit actum invertido.
 
 Refutação. CF/88, art. 5º XXXVI.
 
-### Argumento 5 — Coisa julgada
+### Argumento 5. Coisa julgada
 
 Argumento adversário. Eficácia.
 
 Refutação. Causa de pedir diversa.
 
-### Argumento 6 — Sem documentação
+### Argumento 6. Sem documentação
 
 Argumento adversário. Forma.
 
 Refutação. CNIS supre.
 
-### Argumento 7 — Sequela superada
+### Argumento 7. Sequela superada
 
 Argumento adversário. Cessação.
 
 Refutação. Sequela permanente.
 
-### Argumento 8 — Aposentadoria absorve
+### Argumento 8. Aposentadoria absorve
 
 Argumento adversário. Absorção.
 
 Refutação. Direito adquirido.
 
-### Argumento 9 — Reabilitação afasta
+### Argumento 9. Reabilitação afasta
 
 Argumento adversário. Compensação.
 
 Refutação. Não afasta sequela.
 
-### Argumento 10 — Decadência
+### Argumento 10. Decadência
 
 Argumento adversário. Tempo.
 
 Refutação. Verificar prazo de cada parcela.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

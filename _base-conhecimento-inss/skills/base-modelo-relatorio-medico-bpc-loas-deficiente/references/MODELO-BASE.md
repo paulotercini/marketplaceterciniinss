@@ -10,13 +10,13 @@ Texto narrativo. Substituir os campos entre colchetes. Cabe em uma página A4.
 
 **Paciente:** [NOME COMPLETO]
 **CPF:** [000.000.000-00]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 **Data de emissão:** [DD/MM/AAAA]
 
 **Diagnósticos (CID-10/CID-11/DSM-5-TR)**
 
-[CID principal] — [Nome técnico]
-[CID secundário, se houver] — [Nome técnico]
+[CID principal]. [Nome técnico]
+[CID secundário, se houver]. [Nome técnico]
 [Para autismo. CID-11 6A02 + DSM-5-TR Transtorno do Espectro do Autismo com nível de suporte (1, 2 ou 3)]
 
 **Histórico clínico**

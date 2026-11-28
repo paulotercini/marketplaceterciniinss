@@ -1,4 +1,4 @@
-# Guideline SBR 2026 de Fibromialgia — Atualizações Clínicas e Uso Previdenciário
+# Guideline SBR 2026 de Fibromialgia. Atualizações Clínicas e Uso Previdenciário
 
 Incorporado na Onda 85 (25/07/2026) a partir de carrossel da colega Dra. Bárbara Pimenta (@dra.barbarapimenta). ATUALIZADO na Onda 86 (26/07/2026) com a leitura do TEXTO INTEGRAL das duas partes do guideline, obtida via Comet. Os rótulos provisórios da Onda 85 foram substituídos pelos consensos literais.
 

@@ -63,11 +63,11 @@ Os efeitos financeiros do Tema 1124/STJ ficam protegidos de dois modos. Quando t
 
 **[N]. REQUERIMENTOS.** Título literal, sem DA/DO, por ser a forma do titular. "Ante o exposto, requer:" e itens numerados, cada um em parágrafo próprio.
 
-1. A citação do Instituto Nacional do Seguro Social – INSS, na pessoa do seu representante legal, para que responda a presente demanda, no prazo legal, sob pena de revelia;
+1. A citação do Instituto Nacional do Seguro Social. INSS, na pessoa do seu representante legal, para que responda a presente demanda, no prazo legal, sob pena de revelia;
 2. A concessão do benefício da justiça gratuita, em virtude de a Parte Autora não poder arcar com o pagamento das custas processuais e honorários advocatícios sem prejuízo do seu sustento ou de sua família, condição que expressamente declara, na forma dos arts. 98 e 99 do Código de Processo Civil;
-3. A condenação do Instituto Nacional do Seguro Social – INSS a conceder o benefício de **[benefício]**, com o termo inicial em [dd/mm/aaaa], com as parcelas vencidas monetariamente corrigidas desde o respectivo vencimento e acrescidas de juros moratórios, na forma do Manual de Cálculos da Justiça Federal, ambos incidentes até a data do efetivo pagamento;
+3. A condenação do Instituto Nacional do Seguro Social. INSS a conceder o benefício de **[benefício]**, com o termo inicial em [dd/mm/aaaa], com as parcelas vencidas monetariamente corrigidas desde o respectivo vencimento e acrescidas de juros moratórios, na forma do Manual de Cálculos da Justiça Federal, ambos incidentes até a data do efetivo pagamento;
 3.1. Caso não entenda ser possível [o principal], requer seja [concedido/restabelecido] o benefício de [subsidiário], com o termo inicial em [dd/mm/aaaa];
-4. [Somente no rito ordinário] A condenação do Instituto Nacional do Seguro Social – INSS ao pagamento das custas processuais e dos honorários advocatícios (art. 85, § 3º, do CPC, observada a Súmula 111/STJ). No JEF o item sai, porque não há custas nem honorários em primeiro grau (art. 55 da Lei 9.099/95);
+4. [Somente no rito ordinário] A condenação do Instituto Nacional do Seguro Social. INSS ao pagamento das custas processuais e dos honorários advocatícios (art. 85, § 3º, do CPC, observada a Súmula 111/STJ). No JEF o item sai, porque não há custas nem honorários em primeiro grau (art. 55 da Lei 9.099/95);
 5. Provar o alegado por todos os meios de prova admitidos em direito, especialmente pela via documental anexa e mediante a realização de [perícia judicial com médico especializado / perícia técnica / prova testemunhal / avaliação social], a ser designada por Vossa Excelência.
 
 Itens opcionais, entre colchetes, só quando cabíveis: a prioridade na tramitação (art. 1.048, I, do CPC), a renúncia ao excedente de sessenta salários mínimos no JEF, a intimação para complementar prova administrativa (Tema 1124/STJ, itens 1.4 e 2.2). Tutela de urgência só entra por decisão expressa do titular.

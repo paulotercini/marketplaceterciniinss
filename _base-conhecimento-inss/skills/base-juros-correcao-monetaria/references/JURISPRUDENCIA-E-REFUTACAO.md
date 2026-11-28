@@ -1,4 +1,4 @@
-# Juros e Correção — Jurisprudência e Refutação
+# Juros e Correção. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -46,79 +46,65 @@ Fonte oficial em https://www.planalto.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Aplicação do TR
+### Argumento 1. Aplicação do TR
 
 Argumento adversário. Lei 11.960.
 
 Refutação. Inconstitucional. Tema 810 STF. IPCA-E.
 
-### Argumento 2 — Juros ínfimos
+### Argumento 2. Juros ínfimos
 
 Argumento adversário. Poupança reduzida.
 
 Refutação. Poupança simples 0,5% mensal ou remuneração vigente. Tema 905 STJ.
 
-### Argumento 3 — SELIC antes de 12/2021
+### Argumento 3. SELIC antes de 12/2021
 
 Argumento adversário. Unificação.
 
 Refutação. EC 113/2021, vigência 09/12/2021. Antes, IPCA-E e poupança.
 
-### Argumento 4 — Juros anteriores à citação
+### Argumento 4. Juros anteriores à citação
 
 Argumento adversário. Termo inicial.
 
 Refutação. Súmula 204 STJ. Juros da citação.
 
-### Argumento 5 — Correção sem índice adequado
+### Argumento 5. Correção sem índice adequado
 
 Argumento adversário. TR.
 
 Refutação. IPCA-E.
 
-### Argumento 6 — Cálculo contra segurado
+### Argumento 6. Cálculo contra segurado
 
 Argumento adversário. INSS corrige em desfavor.
 
 Refutação. Cotejar com Manual CJF.
 
-### Argumento 7 — Prescrição quinquenal
+### Argumento 7. Prescrição quinquenal
 
 Argumento adversário. Parcelas antigas.
 
 Refutação. Súmula 85 STJ, quinquênio anterior ao ajuizamento.
 
-### Argumento 8 — Juros sobre honorários
+### Argumento 8. Juros sobre honorários
 
 Argumento adversário. Dispensa.
 
 Refutação. Juros sobre honorários devidos. Fixados em quantia certa, incidem desde o trânsito em julgado da decisão (art. 85, §16, CPC) (auditoria 03/10/2026, retirada a Súmula 362 STJ, que trata de correção do dano moral).
 
-### Argumento 9 — Fixação de juros remuneratórios
+### Argumento 9. Fixação de juros remuneratórios
 
 Argumento adversário. Percentual livre.
 
 Refutação. Vedação. Critério legal.
 
-### Argumento 10 — Cálculo paralelo do INSS
+### Argumento 10. Cálculo paralelo do INSS
 
 Argumento adversário. Perícia contábil.
 
 Refutação. Apresentar planilha conforme Manual CJF e refutar divergências.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, correção.
-
-Hugo Goes, juros.
-
-Marco Aurélio Serau Junior, cálculo previdenciário.
-
-Daniel Pulino, execução.
-
-Jane Berwanger, execução.
-
-IBDP, advocacia previdenciária.
 
 ## 5. Estratégia integrada
 

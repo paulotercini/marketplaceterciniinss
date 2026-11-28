@@ -1,4 +1,4 @@
-# Método Fuzzy — Verificação Obrigatória em Todo Caso de Deficiência
+# Método Fuzzy. Verificação Obrigatória em Todo Caso de Deficiência
 
 Onda 106 (11/08/2026). Mecânica operacional do Modelo Linguístico Fuzzy na avaliação biopsicossocial, incorporada de artigo do IEPREV (Laura dos Santos Brum, OAB/RS 127.086, publicado em 03/08/2026). Aplica-se à aposentadoria da pessoa com deficiência da LC 142/2013, por tempo de contribuição e por idade, e ao BPC no que couber.
 

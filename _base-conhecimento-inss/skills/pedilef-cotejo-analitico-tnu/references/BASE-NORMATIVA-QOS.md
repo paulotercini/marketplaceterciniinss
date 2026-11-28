@@ -4,19 +4,19 @@
 
 **Lei 10.259/2001, art. 14.** Prevê o PEDILEF.
 
-Art. 14, caput — Caberá pedido de uniformização de interpretação de lei federal quando houver divergência entre decisões sobre questões de direito material proferidas por turmas recursais na interpretação da lei.
+Art. 14, caput. Caberá pedido de uniformização de interpretação de lei federal quando houver divergência entre decisões sobre questões de direito material proferidas por turmas recursais na interpretação da lei.
 
-Art. 14, §1º — O pedido fundado em divergência entre turmas da mesma região será julgado em reunião conjunta das turmas em conflito, sob a presidência do juiz coordenador.
+Art. 14, §1º. O pedido fundado em divergência entre turmas da mesma região será julgado em reunião conjunta das turmas em conflito, sob a presidência do juiz coordenador.
 
-Art. 14, §2º — O pedido fundado em divergência entre decisões de turmas de diferentes regiões ou da proferida em contrariedade a súmula ou jurisprudência dominante do STJ será julgado por Turma de Uniformização.
+Art. 14, §2º. O pedido fundado em divergência entre decisões de turmas de diferentes regiões ou da proferida em contrariedade a súmula ou jurisprudência dominante do STJ será julgado por Turma de Uniformização.
 
-Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização contrariar súmula ou jurisprudência dominante do STJ, a parte interessada poderá provocar a manifestação deste.
+Art. 14, §4º. Quando a orientação acolhida pela Turma de Uniformização contrariar súmula ou jurisprudência dominante do STJ, a parte interessada poderá provocar a manifestação deste.
 
 **Resolução CJF 586/2019 (RITNU), art. 14, V, "c".** Não se admite o PEDILEF quando não demonstrada a existência de similitude, mediante cotejo analítico dos julgados.
 
 ## Taxonomia Operacional das QOs
 
-### Grupo A — Forma e Paradigma
+### Grupo A. Forma e Paradigma
 
 **QO 3/TNU (alterada em 17/04/2024).** (1) Juntada obrigatória do paradigma ou indicação de link válido; (2) para paradigma da TNU no Eproc pós-08/2017, aceita-se o número do processo; (3) providência dispensada para tese da TNU firmada em representativo de controvérsia e para teses firmadas em repetitivo, IRDR, IAC, embargos de divergência, PUIL/STJ, súmula ou jurisprudência dominante do STJ (auditoria 03/10/2026).
 
@@ -30,13 +30,13 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 26/TNU.** Acórdão paradigma não conhecido que afirma tese jurídica contrária ao recorrido serve para caracterizar divergência.
 
-### Grupo B — Similitude e Cotejo Analítico
+### Grupo B. Similitude e Cotejo Analítico
 
 **QO 22/TNU.** Autoriza não conhecimento monocrático quando o recorrido não guarda similitude fática e jurídica com o paradigma.
 
 **QO 59/TNU.** Aprovada por maioria em 15/04/2026 (precedente 5007086-55.2020.4.02.5104), disponibilizada no DJeN em 30/04/2026 e publicada em 04/05/2026. A mera transcrição de ementas não basta; exige descrição comparativa individualizada paradigma por paradigma, confrontando fatos em julgamento e fundamentos determinantes (auditoria 03/10/2026). Ver discussão no SKILL.md principal.
 
-### Grupo C — Prequestionamento e Impugnação
+### Grupo C. Prequestionamento e Impugnação
 
 **QO 10/TNU.** Não cabe PEDILEF com tese inovadora, não ventilada nas fases anteriores e não enfrentada pelo acórdão recorrido.
 
@@ -50,7 +50,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 47/TNU.** Omissão expressamente impugnada em embargos na origem autoriza anulação do acórdão via PEDILEF (QO 17), desde que apresentado paradigma válido.
 
-### Grupo D — Filtros Prejudiciais
+### Grupo D. Filtros Prejudiciais
 
 **QO 13/TNU (alterada em 18/09/2019).** Não se admite PEDILEF quando a jurisprudência da TNU está no mesmo sentido do acórdão recorrido.
 
@@ -60,7 +60,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 14/TNU (alterada em 04/09/2024).** Questões tratadas em voto vencido, ainda que não enfrentadas pelo voto condutor, satisfazem prequestionamento (art. 941, §3º, CPC/2015).
 
-### Grupo E — Prazo, Pauta e Intervenção
+### Grupo E. Prazo, Pauta e Intervenção
 
 **QO 32/TNU.** Prazo único para incidente regional e nacional. Vedado PEDILEF nacional contra acórdão de TRU que mantém o recursal pelos mesmos fundamentos.
 
@@ -76,7 +76,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 55/TNU (20/08/2025).** Desistência, abandono ou perda superveniente de PEDILEF representativo de controvérsia não impede julgamento de mérito.
 
-### Grupo F — Recursos Internos e Adequação
+### Grupo F. Recursos Internos e Adequação
 
 **QO 40/TNU (alterada em 18/09/2019).** Agravo contra inadmissão por Súmulas 42 e 43 deve ser interposto nos próprios autos e dirigido à TNU, não como agravo interno à turma de origem.
 
@@ -90,7 +90,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 44/TNU.** Na TNU, não cabe mandado de segurança contra decisão transitada em julgado, salvo decisão irrecorrível teratológica, no prazo de 5 dias.
 
-### Grupo G — Conteúdo do Julgamento
+### Grupo G. Conteúdo do Julgamento
 
 **QO 2/TNU.** Acolhimento do PEDILEF reforma a decisão recursal, implica a estipulação de honorários advocatícios, se for o caso, e gera prejudicialidade do recurso extraordinário, se interposto (auditoria 03/10/2026).
 
@@ -104,7 +104,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 6/TNU.** Se a turma recursal não reconheceu início de prova material e a TNU contrariar esse juízo, a TNU só prossegue se a instância ordinária aprofundou o exame da prova testemunhal. Se apenas proclamar a existência do início de prova, devolve à origem.
 
-### Grupo H — Rito Interno
+### Grupo H. Rito Interno
 
 **QO 1/TNU.** O PEDILEF tem natureza jurídica de recurso; seu julgado substitui a decisão ensejadora.
 
@@ -132,7 +132,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 54/TNU (09/04/2025).** Incabível PEDILEF contra acórdão em recurso de medida cautelar que aprecia tutela provisória, por natureza precária.
 
-## Súmulas 42 e 43/TNU — Armadilhas Centrais
+## Súmulas 42 e 43/TNU. Armadilhas Centrais
 
 **Súmula 42/TNU.** Não se conhece de incidente de uniformização que implique reexame de matéria de fato.
 
@@ -152,4 +152,4 @@ Primeiro, a Constituição Federal e a Lei 10.259/2001 (base legal). Segundo, a 
 
 ## Referência Oficial para Verificação
 
-Portal oficial do CJF — https://www.cjf.jus.br/phpdoc/virtus/questoesdeordem.php — verificação obrigatória antes de citação em peça.
+Portal oficial do CJF, https://www.cjf.jus.br/phpdoc/virtus/questoesdeordem.php, verificação obrigatória antes de citação em peça.

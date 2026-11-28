@@ -1,4 +1,4 @@
-# Nexo Acidentário B94 — Jurisprudência e Refutação
+# Nexo Acidentário B94. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -38,77 +38,65 @@ Fonte oficial em https://www.in.gov.br
 
 ## 3. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — NTEP inconstitucional
+### Argumento 1. NTEP inconstitucional
 
 Argumento adversário. Negação.
 
 Refutação. ADI 3931 STF afirma constitucionalidade.
 
-### Argumento 2 — Sem CAT, sem nexo
+### Argumento 2. Sem CAT, sem nexo
 
 Argumento adversário. Forma.
 
 Refutação. CAT pode ser emitida posteriormente.
 
-### Argumento 3 — Doença degenerativa exclui
+### Argumento 3. Doença degenerativa exclui
 
 Argumento adversário. Origem.
 
 Refutação. Concausa admite.
 
-### Argumento 4 — Sem CNAE específico
+### Argumento 4. Sem CNAE específico
 
 Argumento adversário. Forma.
 
 Refutação. NTEP por correlação.
 
-### Argumento 5 — Trajeto não conta
+### Argumento 5. Trajeto não conta
 
 Argumento adversário. Restrição.
 
 Refutação. Art. 21 IV d Lei 8.213.
 
-### Argumento 6 — Agressão fora do nexo
+### Argumento 6. Agressão fora do nexo
 
 Argumento adversário. Restrição.
 
 Refutação. Art. 21 II Lei 8.213.
 
-### Argumento 7 — Contaminação fortuita
+### Argumento 7. Contaminação fortuita
 
 Argumento adversário. Restrição.
 
 Refutação. Art. 21 III Lei 8.213.
 
-### Argumento 8 — Refutação NTEP pelo INSS
+### Argumento 8. Refutação NTEP pelo INSS
 
 Argumento adversário. Procedimento.
 
 Refutação. Refutação exige fundamentação técnica.
 
-### Argumento 9 — Sequela transitória
+### Argumento 9. Sequela transitória
 
 Argumento adversário. Forma.
 
 Refutação. Súmula 89 TNU.
 
-### Argumento 10 — Sem perícia
+### Argumento 10. Sem perícia
 
 Argumento adversário. Prova.
 
 Refutação. Perícia judicial supre.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
 
 ## 5. Estratégia integrada
 

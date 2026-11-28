@@ -1,4 +1,4 @@
-# Rito Ordinário TRF — Fundamentos e Cenários
+# Rito Ordinário TRF. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -46,37 +46,37 @@ Prévio requerimento administrativo.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Atrasados altos (mais de 60 SM)
+### Cenário A. Atrasados altos (mais de 60 SM)
 
 Rito ordinário em Vara Federal, com tutela.
 
-### Cenário B — Ação rescisória
+### Cenário B. Ação rescisória
 
 Rito ordinário, no TRF.
 
-### Cenário C — Mandado de segurança coletivo previdenciário
+### Cenário C. Mandado de segurança coletivo previdenciário
 
 Rito próprio, Vara Federal.
 
-### Cenário D — Aposentadoria especial complexa
+### Cenário D. Aposentadoria especial complexa
 
 Rito ordinário, com perícia técnica ampla.
 
-### Cenário E — Revisões com impacto sistêmico
+### Cenário E. Revisões com impacto sistêmico
 
 Rito ordinário.
 
 ## 6. Cenários limitados
 
-### Cenário F — Valor baixo
+### Cenário F. Valor baixo
 
 JEF adequado.
 
-### Cenário G — Provimento simples
+### Cenário G. Provimento simples
 
 JEF adequado.
 
-### Cenário H — Matéria pacificada em repetitivo
+### Cenário H. Matéria pacificada em repetitivo
 
 Rito ordinário com aplicação imediata.
 

@@ -1,4 +1,4 @@
-# PPP Mudanças de Layout — Jurisprudência e Refutação
+# PPP Mudanças de Layout. Jurisprudência e Refutação
 
 ## 1. Precedentes relevantes
 
@@ -24,7 +24,7 @@ O Tema 297/TNU real trata de auxílio emergencial e não pertence à matéria de
 
 ### Tema 1031 STJ
 
-Vigilantes — extensível ao histórico de formulários. Fonte oficial em https://www.stj.jus.br
+Vigilantes, extensível ao histórico de formulários. Fonte oficial em https://www.stj.jus.br
 
 ### IN INSS 128/2022
 
@@ -36,61 +36,61 @@ Instituiu o PPP no formato moderno. Fonte oficial em https://www.gov.br/inss
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — SB-40 é obsoleto
+### Argumento 1. SB-40 é obsoleto
 
 Argumento adversário. Documento antigo é inválido.
 
 Refutação. Tempus regit actum. SB-40 é válido para período até 1995.
 
-### Argumento 2 — DSS-8030 não cobre período pré-1995
+### Argumento 2. DSS-8030 não cobre período pré-1995
 
 Argumento adversário. Período antigo demanda SB-40.
 
 Refutação. DSS-8030 supre SB-40 quando contém os mesmos elementos.
 
-### Argumento 3 — PPP atual sem campo antigo
+### Argumento 3. PPP atual sem campo antigo
 
 Argumento adversário. Formulário moderno não comprova período antigo.
 
 Refutação. A migração de dados é admitida quando fundada em LTCAT contemporâneo.
 
-### Argumento 4 — eSocial não substitui PPP
+### Argumento 4. eSocial não substitui PPP
 
 Argumento adversário. Documento digital é insuficiente.
 
 Refutação. IN 128/2022 reconhece eSocial como fonte primária.
 
-### Argumento 5 — Falta de carimbo
+### Argumento 5. Falta de carimbo
 
 Argumento adversário. Carimbo é obrigatório.
 
 Refutação. A IN 128/2022 dispensa carimbo quando há assinatura digital ICP-Brasil.
 
-### Argumento 6 — PPP retificado após o requerimento
+### Argumento 6. PPP retificado após o requerimento
 
 Argumento adversário. Retificação tardia é fraude.
 
 Refutação. A retificação é direito da empresa e não macula o documento.
 
-### Argumento 7 — Empresa extinta
+### Argumento 7. Empresa extinta
 
 Argumento adversário. Sem PPP, sem reconhecimento.
 
 Refutação. Súmula 198 TFR autoriza prova indireta.
 
-### Argumento 8 — Formulário em branco
+### Argumento 8. Formulário em branco
 
 Argumento adversário. Falta de informação descaracteriza.
 
 Refutação. Cabe complementação com LTCAT, GFIP e prova testemunhal.
 
-### Argumento 9 — Mudança de layout altera direito adquirido
+### Argumento 9. Mudança de layout altera direito adquirido
 
 Argumento adversário. Novo layout afasta exposição.
 
 Refutação. Direito ao tempo especial é regido pelo regime vigente à época da prestação.
 
-### Argumento 10 — PPP sem registro de habitualidade
+### Argumento 10. PPP sem registro de habitualidade
 
 Argumento adversário. Sem habitualidade, sem reconhecimento.
 

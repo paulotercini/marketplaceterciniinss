@@ -1,4 +1,4 @@
-# Conversão de Tempo Especial — Fundamentos e Cenários
+# Conversão de Tempo Especial. Fundamentos e Cenários
 
 ## 1. Conceito operacional
 
@@ -50,37 +50,37 @@ Tese. Para reconhecimento de condição especial de trabalho antes de 29/4/1995,
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Trabalhador com 20 anos especiais e 10 anos comuns, homem
+### Cenário A. Trabalhador com 20 anos especiais e 10 anos comuns, homem
 
 20 × 1,4 = 28 anos comuns. Somados aos 10 anos comuns, totaliza 38 anos de tempo comum. Possibilita enquadramento em regras de transição ou direito adquirido.
 
-### Cenário B — Trabalhadora com 15 anos especiais e 10 anos comuns, mulher
+### Cenário B. Trabalhadora com 15 anos especiais e 10 anos comuns, mulher
 
 15 × 1,2 = 18 anos comuns. Somados aos 10 anos comuns, totaliza 28 anos comuns.
 
-### Cenário C — Períodos especiais até 13/11/2019
+### Cenário C. Períodos especiais até 13/11/2019
 
 Podem ser convertidos integralmente, independentemente da data do requerimento.
 
-### Cenário D — Combinação de regras de transição
+### Cenário D. Combinação de regras de transição
 
 Segurado em regime pedágio 50% ou pedágio 100% pode aproveitar o tempo especial convertido.
 
-### Cenário E — Direito adquirido
+### Cenário E. Direito adquirido
 
 Segurado que, com conversão, completa os requisitos antes de 13/11/2019 tem direito adquirido à regra anterior.
 
 ## 6. Cenários vedados
 
-### Cenário F — Períodos após 13/11/2019
+### Cenário F. Períodos após 13/11/2019
 
 Vedada a conversão. Período só é útil para aposentadoria especial pura.
 
-### Cenário G — Tempo comum convertido em especial após Lei 9.032/1995
+### Cenário G. Tempo comum convertido em especial após Lei 9.032/1995
 
 Vedada.
 
-### Cenário H — Enquadramento por categoria após 28/04/1995
+### Cenário H. Enquadramento por categoria após 28/04/1995
 
 Vedada. A partir dessa data, exige-se comprovação individualizada do agente nocivo.
 

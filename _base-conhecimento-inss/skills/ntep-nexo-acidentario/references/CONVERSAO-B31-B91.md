@@ -8,7 +8,7 @@ A conversão de espécie é o procedimento para alterar a classificação do ben
 
 ### 2.1. Requerimento de Revisão ao INSS
 
-**Fundamento** — Art. 126 da Lei 8.213/91 combinado com art. 347 do Decreto 3.048/99. O segurado pode requerer revisão do ato concessório a qualquer tempo enquanto o benefício estiver ativo, ou dentro do prazo decadencial do art. 103 da Lei 8.213/91 se já cessado.
+**Fundamento.** Art. 126 da Lei 8.213/91 combinado com art. 347 do Decreto 3.048/99. O segurado pode requerer revisão do ato concessório a qualquer tempo enquanto o benefício estiver ativo, ou dentro do prazo decadencial do art. 103 da Lei 8.213/91 se já cessado.
 
 **Procedimento**
 - Protocolar requerimento administrativo no Meu INSS ou na APS
@@ -22,7 +22,7 @@ A conversão de espécie é o procedimento para alterar a classificação do ben
 - PPP demonstrando a atividade e os agentes de exposição
 - Eventuais exames complementares que demonstrem a patologia e sua relação com o trabalho
 
-**⚠️ ALERTA — Armadilha da Portaria 462/2026**
+**⚠️ ALERTA. Armadilha da Portaria 462/2026**
 A skill portaria-462-restricao-recursal é de consulta obrigatória antes de orientar revisão administrativa. Se o segurado requerer revisão do ato concessório e o INSS indeferir, o recurso ao CRPS contra essa decisão de revisão está sujeito às restrições do art. 112, §7º e §8º da Portaria MPS 462/2026. Exige-se "elemento novo" para recurso e veda-se diligência na fase de relevação. Avaliar cuidadosamente se a via administrativa é a melhor opção ou se convém judicializar diretamente.
 
 ### 2.2. Recurso ao CRPS
@@ -37,30 +37,30 @@ Se o INSS indeferir a revisão, cabe recurso à Junta de Recursos (JR) no prazo 
 
 ### 2.3. Momento da revisão
 
-**Durante o benefício ativo** — A conversão pode ser requerida a qualquer momento enquanto o segurado estiver em gozo do B31. A vantagem é imediata porque a conversão gera depósito de FGTS retroativo e contagem de estabilidade.
+**Durante o benefício ativo.** A conversão pode ser requerida a qualquer momento enquanto o segurado estiver em gozo do B31. A vantagem é imediata porque a conversão gera depósito de FGTS retroativo e contagem de estabilidade.
 
-**Após a cessação** — A conversão pode ser requerida após a alta, dentro do prazo decadencial de 10 anos (art. 103, Lei 8.213/91; skill decadencia-revisao-previdenciaria). O efeito principal é o reconhecimento retroativo do direito à estabilidade provisória e ao FGTS, com reflexos em eventual reclamatória trabalhista.
+**Após a cessação.** A conversão pode ser requerida após a alta, dentro do prazo decadencial de 10 anos (art. 103, Lei 8.213/91; skill decadencia-revisao-previdenciaria). O efeito principal é o reconhecimento retroativo do direito à estabilidade provisória e ao FGTS, com reflexos em eventual reclamatória trabalhista.
 
 ## 3. Via Judicial
 
 ### 3.1. Competência
 
-**Ação acidentária** — Competência da Justiça Estadual (art. 109, I, CF, que exclui da Justiça Federal as causas de acidentes de trabalho). Aplica-se quando o pedido é de conversão de espécie com fundamento em acidente de trabalho ou doença ocupacional.
+**Ação acidentária.** Competência da Justiça Estadual (art. 109, I, CF, que exclui da Justiça Federal as causas de acidentes de trabalho). Aplica-se quando o pedido é de conversão de espécie com fundamento em acidente de trabalho ou doença ocupacional.
 
-**Súmula 501/STF** — Compete à Justiça Ordinária Estadual o processo e o julgamento, em ambas as instâncias, das causas de acidente do trabalho, ainda que promovidas contra a União, suas autarquias, empresas públicas ou sociedades de economia mista.
+**Súmula 501/STF.** Compete à Justiça Ordinária Estadual o processo e o julgamento, em ambas as instâncias, das causas de acidente do trabalho, ainda que promovidas contra a União, suas autarquias, empresas públicas ou sociedades de economia mista.
 
-**Súmula 15/STJ** — Compete à Justiça Estadual processar e julgar os litígios decorrentes de acidente do trabalho.
+**Súmula 15/STJ.** Compete à Justiça Estadual processar e julgar os litígios decorrentes de acidente do trabalho.
 
-**Exceção importante** — Se o segurado cumula pedido de natureza acidentária com pedido previdenciário puro (por exemplo, revisão de RMI por outros fundamentos), a competência pode ser da Justiça Federal se o pedido previdenciário for preponderante. A jurisprudência não é uniforme. A recomendação é separar as pretensões quando possível.
+**Exceção importante.** Se o segurado cumula pedido de natureza acidentária com pedido previdenciário puro (por exemplo, revisão de RMI por outros fundamentos), a competência pode ser da Justiça Federal se o pedido previdenciário for preponderante. A jurisprudência não é uniforme. A recomendação é separar as pretensões quando possível.
 
-**Foro** — Domicílio do segurado (Vara Cível ou Vara de Acidentes do Trabalho, conforme a organização judiciária local). Nas comarcas do interior de SP onde não há Vara especializada, a competência é da Vara Cível. Na Capital de SP, há Varas de Acidentes do Trabalho especializadas.
+**Foro.** Domicílio do segurado (Vara Cível ou Vara de Acidentes do Trabalho, conforme a organização judiciária local). Nas comarcas do interior de SP onde não há Vara especializada, a competência é da Vara Cível. Na Capital de SP, há Varas de Acidentes do Trabalho especializadas.
 
-**⚠️ ALERTA — Não confundir com competência do JEF**
+**⚠️ ALERTA. Não confundir com competência do JEF**
 A conversão de espécie de B31 para B91, quando fundada em acidente de trabalho, é matéria de competência da Justiça Estadual. O JEF (Juizado Especial Federal) não é competente para ações acidentárias. Se a petição for distribuída no JEF, haverá declinação de competência.
 
 ### 3.2. Ação Judicial Cabível
 
-**Ação de conversão de espécie** — Pedido principal de reconhecimento da natureza acidentária e conversão de B31 para B91.
+**Ação de conversão de espécie.** Pedido principal de reconhecimento da natureza acidentária e conversão de B31 para B91.
 
 **Pedidos cumuláveis na esfera previdenciária**
 - Conversão de espécie
@@ -74,11 +74,11 @@ A conversão de espécie de B31 para B91, quando fundada em acidente de trabalho
 - Indenização por danos materiais e morais (art. 7º, XXVIII, CF; arts. 186 e 927, CC)
 - Reintegração se houve demissão durante o período estabilitário
 
-**Estratégia** — A ação acidentária na Justiça Estadual e a reclamatória trabalhista podem correr em paralelo. A decisão da Justiça Estadual que reconhece o nexo causal pode ser usada como prova na Justiça do Trabalho. A reclamatória trabalhista é contra o empregador; a ação acidentária é contra o INSS.
+**Estratégia.** A ação acidentária na Justiça Estadual e a reclamatória trabalhista podem correr em paralelo. A decisão da Justiça Estadual que reconhece o nexo causal pode ser usada como prova na Justiça do Trabalho. A reclamatória trabalhista é contra o empregador; a ação acidentária é contra o INSS.
 
 ### 3.3. Prova Pericial Judicial
 
-**Perícia médica** — Fundamental para estabelecer o nexo causal em juízo. O perito judicial deve analisar o nexo sob todas as perspectivas (NTEP, NP, NI, concausa).
+**Perícia médica.** Fundamental para estabelecer o nexo causal em juízo. O perito judicial deve analisar o nexo sob todas as perspectivas (NTEP, NP, NI, concausa).
 
 **Quesitos estratégicos obrigatórios**
 Todo conjunto de quesitos em ação de conversão ou reconhecimento de natureza acidentária deve incluir
@@ -91,9 +91,9 @@ Todo conjunto de quesitos em ação de conversão ou reconhecimento de natureza 
 6. A incapacidade guarda nexo de causalidade ou concausalidade com a atividade laboral
 7. Fixar a data de início da doença (DID) e a data de início da incapacidade (DII)
 
-**Assistente técnico** — Altamente recomendável. O assistente técnico pode acompanhar a perícia, formular quesitos complementares e elaborar parecer divergente (art. 477, §1º, CPC). O parecer técnico do assistente é prova autônoma e pode superar o laudo pericial em robustez (auditoria 03/10/2026, retirado o Tema 339/STJ, que trata de liberação de veículo retido, e corrigido o art. 472).
+**Assistente técnico.** Altamente recomendável. O assistente técnico pode acompanhar a perícia, formular quesitos complementares e elaborar parecer divergente (art. 477, §1º, CPC). O parecer técnico do assistente é prova autônoma e pode superar o laudo pericial em robustez (auditoria 03/10/2026, retirado o Tema 339/STJ, que trata de liberação de veículo retido, e corrigido o art. 472).
 
-### 3.4. Tema 1124/STJ — Interesse de Agir
+### 3.4. Tema 1124/STJ. Interesse de Agir
 
 Verificar se o segurado apresentou ao INSS os documentos que fundamentam o nexo. Se a prova do nexo é nova e não foi apresentada administrativamente, os efeitos financeiros podem ser fixados a partir da citação (e não da DER). A skill tema-1124-instrucao-administrativa deve ser consultada.
 
@@ -101,8 +101,8 @@ Verificar se o segurado apresentou ao INSS os documentos que fundamentam o nexo.
 
 A tutela antecipada em ação de conversão de espécie enfrenta resistência judicial porque o juiz normalmente aguarda a perícia para verificar o nexo. Os cenários mais efetivos de tutela são
 
-- **Estabilidade em risco** — Quando o segurado está prestes a ser demitido ou já foi demitido e precisa do reconhecimento da natureza acidentária para obstar/reverter a dispensa
-- **Benefício cessado com nexo evidente** — Quando o B31 foi cessado e há documentação robusta de nexo (NTEP aplicável + laudos médicos), a conversão com restabelecimento como B91 pode ser antecipada
+- **Estabilidade em risco.** Quando o segurado está prestes a ser demitido ou já foi demitido e precisa do reconhecimento da natureza acidentária para obstar/reverter a dispensa
+- **Benefício cessado com nexo evidente.** Quando o B31 foi cessado e há documentação robusta de nexo (NTEP aplicável + laudos médicos), a conversão com restabelecimento como B91 pode ser antecipada
 
 ## 4. Efeitos Financeiros e Trabalhistas da Conversão
 
@@ -112,11 +112,11 @@ A empresa deve depositar FGTS durante todo o período de afastamento por B91 (ar
 
 ### 4.2. Estabilidade Provisória
 
-Art. 118, Lei 8.213/91 — 12 meses após a cessação do B91, independentemente de percepção de auxílio-acidente. Não se aplica ao B31. Se o segurado foi demitido nesse período, tem direito à reintegração ou indenização substitutiva.
+Art. 118, Lei 8.213/91. 12 meses após a cessação do B91, independentemente de percepção de auxílio-acidente. Não se aplica ao B31. Se o segurado foi demitido nesse período, tem direito à reintegração ou indenização substitutiva.
 
 ### 4.3. Auxílio-Acidente (B94)
 
-Art. 86, Lei 8.213/91 — Devido quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que impliquem redução da capacidade. Corresponde a 50% do salário de benefício. O B94 é consequência natural do B91 quando há sequela.
+Art. 86, Lei 8.213/91. Devido quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que impliquem redução da capacidade. Corresponde a 50% do salário de benefício. O B94 é consequência natural do B91 quando há sequela.
 
 ### 4.4. Base de Cálculo
 
@@ -142,7 +142,7 @@ Parcelas vencidas há mais de 5 anos da data da ação estão prescritas (art. 1
 
 ### 5.3. Reflexos trabalhistas
 
-A pretensão de FGTS e estabilidade deve ser exercida na Justiça do Trabalho, com prazo prescricional próprio (art. 7º, XXIX, CF — 5 anos na vigência do contrato, até 2 anos após a extinção).
+A pretensão de FGTS e estabilidade deve ser exercida na Justiça do Trabalho, com prazo prescricional próprio (art. 7º, XXIX, CF. 5 anos na vigência do contrato, até 2 anos após a extinção).
 
 ## 6. Conversão de Espécie em Benefícios Já Cessados
 

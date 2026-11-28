@@ -10,13 +10,13 @@ Texto narrativo. Substituir os campos entre colchetes. Cabe em uma página A4.
 
 **Paciente:** [NOME COMPLETO]
 **CPF:** [000.000.000-00]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 **Data de emissão:** [DD/MM/AAAA]
 
 **Diagnósticos (CID-10)**
 
-[CID principal] — [Nome técnico da sequela, ex. S82.3 fratura consolidada da extremidade distal da tíbia com osteossíntese definitiva]
-[CID secundário] — [Sequela biomecânica decorrente, ex. M21.7 desigualdade de comprimento dos membros inferiores]
+[CID principal]. [Nome técnico da sequela, ex. S82.3 fratura consolidada da extremidade distal da tíbia com osteossíntese definitiva]
+[CID secundário]. [Sequela biomecânica decorrente, ex. M21.7 desigualdade de comprimento dos membros inferiores]
 [CID adicional, se houver]
 
 **Histórico clínico**

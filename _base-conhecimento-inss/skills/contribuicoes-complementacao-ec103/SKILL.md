@@ -7,34 +7,34 @@ description: "Skill de contribuições previdenciárias, complementação EC103,
 
 ## Fontes normativas primárias
 
-- CF/88, art. 195, §14 (incluído pela EC 103/2019) — contribuição mínima mensal
-- EC 103/2019, art. 29 — regra de transição (complementação, utilização, agrupamento)
-- Lei 8.213/91, art. 15 — período de graça
-- Lei 8.213/91, art. 39, II — contribuição facultativa do segurado especial
-- Lei 8.212/91, art. 21, §§2º e 3º — plano simplificado e exclusão de TC
-- Lei 8.212/91, art. 25, §1º — contribuição facultativa do segurado especial
-- Decreto 3.048/99, art. 19-E (incluído pelo Decreto 10.410/2020) — regulamentação EC103
-- Decreto 3.048/99, art. 200, §2º — contribuição facultativa do segurado especial
-- Decreto 3.048/99, art. 216, §15 — recolhimento trimestral
-- IN PRES/INSS 128/2022, art. 21 — presunção contribuições 04/1973 a 02/1994
-- IN PRES/INSS 128/2022, art. 190, §2º — data pagamento presumida
-- Portaria DIRBEN/INSS 990/2022, Anexo V — indicadores EC103 do CNIS
-- Portaria DIRBEN/INSS 991/2022, arts. 44, 53, 54 — qualidade de segurado e período de graça
-- Portaria DIRBEN/INSS 991/2022, art. 89, VII — carência contribuições anteriores a 07/1994
-- Portaria DIRBEN/INSS 991/2022, arts. 99 par. único e 103, §2º — presunção tempestividade
-- Portaria DIRBEN/INSS 1.005/2022 — serviço ajustes EC103 no Meu INSS
-- Portaria DIRBEN/INSS 1.121/2023 — Anexo V e art. 8º-A (classificação indicadores)
-- Portaria DIRBEN/INSS 1.316/2025 — consolidação vigente do Anexo V
-- Portaria PRES/INSS 1.553/2023 — serviço GPS diferença valor devido
-- ADE CODAC/RFB 05/2020 — código DARF 1872 e 1873
-- IN RFB 2.110/2022, art. 238 — valor mínimo GPS R$ 10,00
-- Parecer CONJUR/MPS 57/2009 — presunção tempestividade contribuições antigas
+- CF/88, art. 195, §14 (incluído pela EC 103/2019), contribuição mínima mensal
+- EC 103/2019, art. 29, regra de transição (complementação, utilização, agrupamento)
+- Lei 8.213/91, art. 15, período de graça
+- Lei 8.213/91, art. 39, II, contribuição facultativa do segurado especial
+- Lei 8.212/91, art. 21, §§2º e 3º, plano simplificado e exclusão de TC
+- Lei 8.212/91, art. 25, §1º, contribuição facultativa do segurado especial
+- Decreto 3.048/99, art. 19-E (incluído pelo Decreto 10.410/2020), regulamentação EC103
+- Decreto 3.048/99, art. 200, §2º, contribuição facultativa do segurado especial
+- Decreto 3.048/99, art. 216, §15, recolhimento trimestral
+- IN PRES/INSS 128/2022, art. 21, presunção contribuições 04/1973 a 02/1994
+- IN PRES/INSS 128/2022, art. 190, §2º, data pagamento presumida
+- Portaria DIRBEN/INSS 990/2022, Anexo V, indicadores EC103 do CNIS
+- Portaria DIRBEN/INSS 991/2022, arts. 44, 53, 54, qualidade de segurado e período de graça
+- Portaria DIRBEN/INSS 991/2022, art. 89, VII, carência contribuições anteriores a 07/1994
+- Portaria DIRBEN/INSS 991/2022, arts. 99 par. único e 103, §2º, presunção tempestividade
+- Portaria DIRBEN/INSS 1.005/2022, serviço ajustes EC103 no Meu INSS
+- Portaria DIRBEN/INSS 1.121/2023. Anexo V e art. 8º-A (classificação indicadores)
+- Portaria DIRBEN/INSS 1.316/2025, consolidação vigente do Anexo V
+- Portaria PRES/INSS 1.553/2023, serviço GPS diferença valor devido
+- ADE CODAC/RFB 05/2020, código DARF 1872 e 1873
+- IN RFB 2.110/2022, art. 238, valor mínimo GPS R$ 10,00
+- Parecer CONJUR/MPS 57/2009, presunção tempestividade contribuições antigas
 
 Vigência verificada em março de 2026.
 
 ---
 
-## SEÇÃO 1 — Regime da EC 103/2019 para contribuições abaixo do salário mínimo
+## SEÇÃO 1. Regime da EC 103/2019 para contribuições abaixo do salário mínimo
 
 ### Regra constitucional
 
@@ -44,35 +44,35 @@ O art. 195, §14, da CF (EC 103/2019) exclui do cômputo como "tempo de contribu
 
 O segurado pode regularizar competências abaixo do mínimo por três mecanismos, limitados ao mesmo ano civil.
 
-**Complementação (inciso I)** — O segurado recolhe a diferença entre o valor pago e o mínimo, via DARF (código 1872 para empregado/doméstico/avulso/CI a serviço de empresa, código 1873 para outros) ou GPS (para CI autônomo, facultativo e segurado especial facultativo). Indicadores CNIS gerados após o ajuste são ICOMPL-VR-SM-EC103 e IVLR-DARF-LIMITADO.
+**Complementação (inciso I).** O segurado recolhe a diferença entre o valor pago e o mínimo, via DARF (código 1872 para empregado/doméstico/avulso/CI a serviço de empresa, código 1873 para outros) ou GPS (para CI autônomo, facultativo e segurado especial facultativo). Indicadores CNIS gerados após o ajuste são ICOMPL-VR-SM-EC103 e IVLR-DARF-LIMITADO.
 
-**Utilização de excedente (inciso II)** — Valor que excede o mínimo em uma competência pode ser transferido para outra do mesmo ano civil que esteja abaixo. Indicadores gerados são IUTILIZ-EXC-EC103 (favorecida que atingiu SM), IUTILIZ-EXC-MN-SM-EC103 (favorecida que permaneceu abaixo) e ICED-VR-EXC-EC103 (cedente desfavorecida).
+**Utilização de excedente (inciso II).** Valor que excede o mínimo em uma competência pode ser transferido para outra do mesmo ano civil que esteja abaixo. Indicadores gerados são IUTILIZ-EXC-EC103 (favorecida que atingiu SM), IUTILIZ-EXC-MN-SM-EC103 (favorecida que permaneceu abaixo) e ICED-VR-EXC-EC103 (cedente desfavorecida).
 
-**Agrupamento (inciso III)** — Duas ou mais competências abaixo do mínimo podem ser agrupadas no mesmo ano civil. A competência cedente fica zerada ou com resíduo (IAGRUP-ZER-EC103, IAGRUP-VR-EC103), a favorecida recebe o valor (IAGRUP-SM-EC103 se atingiu SM, IAGRUP-MN-SM-EC103 se permaneceu abaixo).
+**Agrupamento (inciso III).** Duas ou mais competências abaixo do mínimo podem ser agrupadas no mesmo ano civil. A competência cedente fica zerada ou com resíduo (IAGRUP-ZER-EC103, IAGRUP-VR-EC103), a favorecida recebe o valor (IAGRUP-SM-EC103 se atingiu SM, IAGRUP-MN-SM-EC103 se permaneceu abaixo).
 
 Os ajustes são irreversíveis e irrenunciáveis após processados (art. 19-E, §2º, Decreto 3.048/99). Prazo para complementação sem encargos é até o dia 15 do mês seguinte à competência.
 
-### Controvérsia central — alcance do art. 195, §14
+### Controvérsia central. alcance do art. 195, §14
 
 O Decreto 10.410/2020 (art. 13, §8º, art. 19-E, e art. 26 do RPS) ampliou a restrição do art. 195, §14, para qualidade de segurado e carência, além do tempo de contribuição. A jurisprudência dominante nos JEFs considera essa extensão inconstitucional por extrapolar o poder regulamentar.
 
-**Tema 349/TNU** (PEDILEF 0504017-94.2022.4.05.8400/RN, Rel. Juiz Federal Neian Milhomem Cruz, j. 16/10/2024, por unanimidade) — tese firmada. O recolhimento de contribuição previdenciária em valor inferior ao mínimo mensal da categoria, à míngua de previsão legal, não impede o reconhecimento da qualidade de segurado obrigatório, inclusive após o advento da EC 103/2019. Fundamento — o art. 195, §14, da CF restringe apenas o cômputo como "tempo de contribuição", não mencionando qualidade de segurado nem carência.
+**Tema 349/TNU** (PEDILEF 0504017-94.2022.4.05.8400/RN, Rel. Juiz Federal Neian Milhomem Cruz, j. 16/10/2024, por unanimidade), tese firmada. O recolhimento de contribuição previdenciária em valor inferior ao mínimo mensal da categoria, à míngua de previsão legal, não impede o reconhecimento da qualidade de segurado obrigatório, inclusive após o advento da EC 103/2019. Fundamento, o art. 195, §14, da CF restringe apenas o cômputo como "tempo de contribuição", não mencionando qualidade de segurado nem carência.
 
-**ALERTA — RE ao STF admitido em março de 2025.** Enquanto o STF não julgar, a tese pode enfrentar resistência administrativa. A eventual reversão pelo STF impactaria milhões de segurados com contribuições fracionadas (trabalhadores intermitentes, empregados demitidos no meio do mês).
+**ALERTA. RE ao STF admitido em março de 2025.** Enquanto o STF não julgar, a tese pode enfrentar resistência administrativa. A eventual reversão pelo STF impactaria milhões de segurados com contribuições fracionadas (trabalhadores intermitentes, empregados demitidos no meio do mês).
 
-**Tese do não agravamento** — desdobramento lógico do Tema 349. Se as contribuições abaixo do mínimo não servem para garantir qualidade de segurado (posição do INSS), tampouco podem ser utilizadas como marco temporal de início da contagem do período de graça contra o segurado. A última contribuição válida, para fins de início do período de graça, deve ser a última que atingiu o valor mínimo. Fundamento no venire contra factum proprium. Suporte indireto no RE 593.068/STF e na TRU/4ª Região (5000078-47.2022.4.04.7126, j. 15/12/2023). Tese predominantemente doutrinária e advocatícia, sem julgamento específico pela TNU ou STJ.
+**Tese do não agravamento**, desdobramento lógico do Tema 349. Se as contribuições abaixo do mínimo não servem para garantir qualidade de segurado (posição do INSS), tampouco podem ser utilizadas como marco temporal de início da contagem do período de graça contra o segurado. A última contribuição válida, para fins de início do período de graça, deve ser a última que atingiu o valor mínimo. Fundamento no venire contra factum proprium. Suporte indireto no RE 593.068/STF e na TRU/4ª Região (5000078-47.2022.4.04.7126, j. 15/12/2023). Tese predominantemente doutrinária e advocatícia, sem julgamento específico pela TNU ou STJ.
 
 > Para aplicação completa no período de graça, consultar skill `periodo-graca-qualidade-segurado`.
 
 ---
 
-## SEÇÃO 2 — Serviços de complementação no Meu INSS
+## SEÇÃO 2. Serviços de complementação no Meu INSS
 
-### Serviço 1 — Ajustes para Alcance do Salário Mínimo (EC 103/2019)
+### Serviço 1. Ajustes para Alcance do Salário Mínimo (EC 103/2019)
 
 Criado pela Portaria DIRBEN/INSS 1.005/2022. Destinado a empregado, empregado doméstico, trabalhador avulso e CI prestador de serviço a empresa. Permite complementação, utilização de excedente e agrupamento. Gera DARF com código 1872 ou 1873. Procedimento 100% remoto pelo Meu INSS. O sistema sugere ajustes otimizados para minimizar o valor a pagar.
 
-### Serviço 2 — GPS Diferença de Valor Devido (Contribuição Inferior ao SM)
+### Serviço 2. GPS Diferença de Valor Devido (Contribuição Inferior ao SM)
 
 Criado pela Portaria PRES/INSS 1.553/2023. Destinado a CI autônomo (GPS), segurado facultativo e segurado especial com contribuição facultativa. Gera GPS com a diferença. Conforme art. 4º da Portaria, o servidor que constatar contribuições abaixo do mínimo durante análise de benefício deve emitir exigência orientando o segurado.
 
@@ -86,7 +86,7 @@ Quando os serviços do Meu INSS não processarem o ajuste, o segurado deve ligar
 
 ---
 
-## SEÇÃO 3 — Recolhimento trimestral
+## SEÇÃO 3. Recolhimento trimestral
 
 ### Base normativa e condição
 
@@ -102,11 +102,11 @@ CI trimestral 20% = 1104. CI trimestral 11% (simplificado) = 1180. Facultativo t
 
 ### Alertas operacionais para o advogado
 
-O atraso de um único pagamento trimestral equivale a perder três competências de uma vez. No campo "competência" da GPS, informar o último mês do trimestre. Não misturar meses de trimestres diferentes. Para segurado facultativo, o período de graça é de apenas 6 meses — o atraso no trimestral pode causar perda da qualidade antes do vencimento do próximo trimestre. A carência conta a partir do mês de inscrição, não do pagamento, desde que a primeira contribuição seja quitada no prazo.
+O atraso de um único pagamento trimestral equivale a perder três competências de uma vez. No campo "competência" da GPS, informar o último mês do trimestre. Não misturar meses de trimestres diferentes. Para segurado facultativo, o período de graça é de apenas 6 meses, o atraso no trimestral pode causar perda da qualidade antes do vencimento do próximo trimestre. A carência conta a partir do mês de inscrição, não do pagamento, desde que a primeira contribuição seja quitada no prazo.
 
 ---
 
-## SEÇÃO 4 — Contribuições abaixo do mínimo para empregado e doméstico
+## SEÇÃO 4. Contribuições abaixo do mínimo para empregado e doméstico
 
 ### Tese jurídica central
 
@@ -114,19 +114,19 @@ O art. 195, §14, da CF restringe apenas "tempo de contribuição". O Decreto 10
 
 ### Precedentes verificados
 
-**Tema 349 TNU** — PEDILEF 0504017-94.2022.4.05.8400/RN. Julgado em 16/10/2024, relator Juiz Federal Neian Milhomem Cruz, por unanimidade. Tese firmada como representativo de controvérsia. O recolhimento de contribuição previdenciária em valor inferior ao mínimo mensal da categoria, à míngua de previsão legal, não impede o reconhecimento da qualidade de segurado obrigatório, inclusive após a EC 103/2019. RE ao STF admitido em março/2025, pendente.
+**Tema 349 TNU.** PEDILEF 0504017-94.2022.4.05.8400/RN. Julgado em 16/10/2024, relator Juiz Federal Neian Milhomem Cruz, por unanimidade. Tese firmada como representativo de controvérsia. O recolhimento de contribuição previdenciária em valor inferior ao mínimo mensal da categoria, à míngua de previsão legal, não impede o reconhecimento da qualidade de segurado obrigatório, inclusive após a EC 103/2019. RE ao STF admitido em março/2025, pendente.
 
-**PUIL 5000078-47.2022.4.04.7126 — TRU/TRF4.** Julgado em 15/12/2023, relatora Juíza Federal Erika Giovanini Reupke. Em se tratando de segurado empregado e empregado doméstico, recolhimentos com base em remuneração inferior ao limite mínimo não impedem manutenção da qualidade de segurado nem cômputo como carência para benefício por incapacidade. Decreto 10.410/2020 extrapolou função regulamentar.
+**PUIL 5000078-47.2022.4.04.7126. TRU/TRF4.** Julgado em 15/12/2023, relatora Juíza Federal Erika Giovanini Reupke. Em se tratando de segurado empregado e empregado doméstico, recolhimentos com base em remuneração inferior ao limite mínimo não impedem manutenção da qualidade de segurado nem cômputo como carência para benefício por incapacidade. Decreto 10.410/2020 extrapolou função regulamentar.
 
-**PUIL 1001783-60.2024.4.01.3506/GO — TNU.** Julgado em sessão virtual de 03 a 10/12/2025, D.E. 12/12/2025 (auditoria 03/10/2026), relator Juiz Federal João Carlos Cabrelon de Oliveira, por unanimidade. Contribuição com código incorreto (1007 em vez de 1163) mas valor correto de 11% vale para qualidade de segurado e carência. Erro formal não prejudica o segurado. Analogia com Tema 349 TNU.
+**PUIL 1001783-60.2024.4.01.3506/GO. TNU.** Julgado em sessão virtual de 03 a 10/12/2025, D.E. 12/12/2025 (auditoria 03/10/2026), relator Juiz Federal João Carlos Cabrelon de Oliveira, por unanimidade. Contribuição com código incorreto (1007 em vez de 1163) mas valor correto de 11% vale para qualidade de segurado e carência. Erro formal não prejudica o segurado. Analogia com Tema 349 TNU.
 
 ### Estratégia advocatícia
 
-Em petição, alegar inconstitucionalidade do art. 13, §8º, Decreto 3.048/99, por extrapolação do poder regulamentar (art. 84, VI, CF). Invocar Tema 349 TNU como precedente vinculante nos JEFs. Para erro de código, demonstrar que valor efetivamente pago corresponde a alíquota válida. Cautela obrigatória — o RE ao STF está pendente; o INSS continuará negando administrativamente.
+Em petição, alegar inconstitucionalidade do art. 13, §8º, Decreto 3.048/99, por extrapolação do poder regulamentar (art. 84, VI, CF). Invocar Tema 349 TNU como precedente vinculante nos JEFs. Para erro de código, demonstrar que valor efetivamente pago corresponde a alíquota válida. Cautela obrigatória, o RE ao STF está pendente; o INSS continuará negando administrativamente.
 
 ---
 
-## SEÇÃO 5 — Código GPS do segurado especial — 1503 e não 1163
+## SEÇÃO 5. Código GPS do segurado especial. 1503 e não 1163
 
 ### Regra
 
@@ -142,11 +142,11 @@ O TRF4 decidiu que contribuições como CI não descaracterizam por si só a con
 
 ### Procedimento de correção
 
-Via INSS — Central 135, serviço "Alteração de Código de Pagamento". Formulário RAC Anexo I-F (Acerto de Contribuições). Anexar GPS pagas com código errado, prova da atividade rural e o formulário preenchido. Prazo estimado 10 dias úteis. Via Receita Federal — RetGPS (IN RFB 1.265/2012). Retifica código sem alterar valor total. Limitação temporal de 5 anos da data do pagamento. Para competências anteriores a 5 anos, resta apenas a via administrativa no INSS. Complementação financeira obrigatória (9% por competência + encargos).
+Via INSS. Central 135, serviço "Alteração de Código de Pagamento". Formulário RAC Anexo I-F (Acerto de Contribuições). Anexar GPS pagas com código errado, prova da atividade rural e o formulário preenchido. Prazo estimado 10 dias úteis. Via Receita Federal. RetGPS (IN RFB 1.265/2012). Retifica código sem alterar valor total. Limitação temporal de 5 anos da data do pagamento. Para competências anteriores a 5 anos, resta apenas a via administrativa no INSS. Complementação financeira obrigatória (9% por competência + encargos).
 
 ---
 
-## SEÇÃO 6 — Presunção de tempestividade de contribuições antigas (04/1973 a 02/1994)
+## SEÇÃO 6. Presunção de tempestividade de contribuições antigas (04/1973 a 02/1994)
 
 ### Regra administrativa do próprio INSS
 
@@ -154,7 +154,7 @@ Art. 21 da IN 128/2022, com fundamento no Parecer CONJUR/MPS 57/2009. Contribui�
 
 Art. 190, §2º, IN 128/2022. Contribuições desse período sem data de pagamento registrada no CNIS devem ser consideradas como recolhidas sem atraso.
 
-Arts. 99, parágrafo único, e 103, §2º, da Portaria 991/2022 — mesma regra, para CI e facultativo respectivamente.
+Arts. 99, parágrafo único, e 103, §2º, da Portaria 991/2022, mesma regra, para CI e facultativo respectivamente.
 
 ### Explicação técnica
 
@@ -166,7 +166,7 @@ INSS indefere aposentadoria por "não comprovação de tempestividade" de contri
 
 ---
 
-## SEÇÃO 7 — Qualidade de segurado e período de graça
+## SEÇÃO 7. Qualidade de segurado e período de graça
 
 > Para regime jurídico completo do período de graça, incluindo todas as teses, precedentes e checklist de verificação, consultar skill `periodo-graca-qualidade-segurado`.
 
@@ -176,43 +176,43 @@ Art. 44 da Portaria 991/2022. Segurado em gozo de benefício mantém qualidade s
 
 ### Prorrogações cumuláveis
 
-Art. 53 Portaria 991/2022 — prorrogação de +12 meses quando mais de 120 contribuições sem interrupção que acarrete perda da qualidade. Art. 54 — prorrogação adicional de +12 meses por desemprego involuntário comprovado (seguro-desemprego, inscrição no SINE ou outros eventos no CNIS). As prorrogações são cumuláveis.
+Art. 53 Portaria 991/2022, prorrogação de +12 meses quando mais de 120 contribuições sem interrupção que acarrete perda da qualidade. Art. 54, prorrogação adicional de +12 meses por desemprego involuntário comprovado (seguro-desemprego, inscrição no SINE ou outros eventos no CNIS). As prorrogações são cumuláveis.
 
-### IN 188/2025 — cessação antecipada da prorrogação por desemprego
+### IN 188/2025. cessação antecipada da prorrogação por desemprego
 
 A IN PRES/INSS 188/2025 (DOU 10/07/2025) deu nova redação ao §8º do art. 184 da IN 128/2022 (auditoria 03/10/2026) com três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego. Retorno à atividade remunerada (com salário de contribuição mínimo, conforme Portaria 1301/2025), recebimento de benefício por incapacidade ou recebimento de salário-maternidade. A cessação é imediata, mas inicia novo período de graça pelo art. 15, II.
 
 ### Prazos máximos por situação
 
-Cessação de atividade remunerada — base 12 meses + 12 (se +120 contribuições) + 12 (se desempregado) = até 36 meses. Segurado em gozo de benefício (exceto B94) — ilimitado. Segurado facultativo — 6 meses, sem prorrogação. A perda efetiva ocorre no dia seguinte ao término do prazo para recolhimento da contribuição do mês subsequente ao final do período de graça (§4º art. 15), o que concede aproximadamente 1 mês e 15 dias adicionais ao prazo nominal.
+Cessação de atividade remunerada, base 12 meses + 12 (se +120 contribuições) + 12 (se desempregado) = até 36 meses. Segurado em gozo de benefício (exceto B94), ilimitado. Segurado facultativo. 6 meses, sem prorrogação. A perda efetiva ocorre no dia seguinte ao término do prazo para recolhimento da contribuição do mês subsequente ao final do período de graça (§4º art. 15), o que concede aproximadamente 1 mês e 15 dias adicionais ao prazo nominal.
 
 ### Precedentes vinculantes aplicáveis
 
-**Tema 255/TNU** (j. 16/10/2020) — direito à prorrogação por 120 contribuições se incorpora ao patrimônio jurídico. **ALERTA — Tema 1352/STJ [PENDENTE]** pode restringir ao uso único.
+**Tema 255/TNU** (j. 16/10/2020), direito à prorrogação por 120 contribuições se incorpora ao patrimônio jurídico. **ALERTA. Tema 1352/STJ [PENDENTE]** pode restringir ao uso único.
 
-**Tema 365/TNU** (j. 12/11/2025, auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF) — benefício por incapacidade intercalado NÃO conta para as 120 contribuições.
+**Tema 365/TNU** (j. 12/11/2025, auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF), benefício por incapacidade intercalado NÃO conta para as 120 contribuições.
 
-**Tema 1360/STJ** (j. 11/03/2026, repetitivo, vinculante) — prova do desemprego por qualquer meio admitido em Direito. Mera ausência de CTPS/CNIS não basta. Prova testemunhal isolada é suficiente (Súmula 27/TNU).
+**Tema 1360/STJ** (j. 11/03/2026, repetitivo, vinculante), prova do desemprego por qualquer meio admitido em Direito. Mera ausência de CTPS/CNIS não basta. Prova testemunhal isolada é suficiente (Súmula 27/TNU).
 
-**Tema 239/TNU** (j. 28/04/2021) — prorrogação por desemprego estendida ao contribuinte individual. Incorporado na IN 128/2022 art. 184 §10.
+**Tema 239/TNU** (j. 28/04/2021), prorrogação por desemprego estendida ao contribuinte individual. Incorporado na IN 128/2022 art. 184 §10.
 
-**Tema 245/TNU** (j. 19/06/2020) — benefício irregular de boa-fé mantém qualidade durante a fruição (art. 15, I, c/c LINDB art. 21).
+**Tema 245/TNU** (j. 19/06/2020), benefício irregular de boa-fé mantém qualidade durante a fruição (art. 15, I, c/c LINDB art. 21).
 
-**Tema 349/TNU** (j. 16/10/2024) — contribuição abaixo do mínimo não impede qualidade de segurado. RE ao STF admitido em março/2025.
+**Tema 349/TNU** (j. 16/10/2024), contribuição abaixo do mínimo não impede qualidade de segurado. RE ao STF admitido em março/2025.
 
-**PEDILEF 0002300-36.2024.4.05.8109/CE** (D.E. 17/12/2025) — a TNU só anulou o acórdão e devolveu o caso à Turma Recursal, sem fixar tese. A prorrogação para o dia útil seguinte, quando o fim do período de graça cai em dia sem expediente bancário, decorre do art. 15, §4º, da Lei 8.213/91 c/c o art. 30, §2º, I, da Lei 8.212/91 (auditoria 03/10/2026).
+**PEDILEF 0002300-36.2024.4.05.8109/CE** (D.E. 17/12/2025), a TNU só anulou o acórdão e devolveu o caso à Turma Recursal, sem fixar tese. A prorrogação para o dia útil seguinte, quando o fim do período de graça cai em dia sem expediente bancário, decorre do art. 15, §4º, da Lei 8.213/91 c/c o art. 30, §2º, I, da Lei 8.212/91 (auditoria 03/10/2026).
 
 ---
 
-## SEÇÃO 8 — Indicadores EC103 no CNIS (referência completa)
+## SEÇÃO 8. Indicadores EC103 no CNIS (referência completa)
 
-### Indicadores de alerta (CsAlerta) — ajustes processados
+### Indicadores de alerta (CsAlerta). ajustes processados
 
-ICOMPL-VR-SM-EC103 — competência com complementação via DARF que atingiu o SM. IVLR-DARF-LIMITADO — valor do DARF limitado pelo sistema para não ultrapassar o SM. IAGRUP-ZER-EC103 — cedente zerada (não computada). IAGRUP-VR-EC103 — cedente com resíduo abaixo do SM (não computável). IAGRUP-SM-EC103 — favorecida que atingiu o SM (computada). IAGRUP-MN-SM-EC103 — favorecida que permaneceu abaixo do SM. IUTILIZ-EXC-EC103 — favorecida que recebeu excedente e atingiu o SM. IUTILIZ-EXC-MN-SM-EC103 — favorecida por excedente mas permanece abaixo. ICED-VR-EXC-EC103 — cedente com valor acima do SM que cedeu excedente (desfavorecida). IREL-PREV-POSSUI-COMP-AJUST — relação previdenciária com ao menos uma competência ajustada. IREM-INDPEND — remunerações com indicadores/pendências diferentes de EC103.
+ICOMPL-VR-SM-EC103, competência com complementação via DARF que atingiu o SM. IVLR-DARF-LIMITADO, valor do DARF limitado pelo sistema para não ultrapassar o SM. IAGRUP-ZER-EC103, cedente zerada (não computada). IAGRUP-VR-EC103, cedente com resíduo abaixo do SM (não computável). IAGRUP-SM-EC103, favorecida que atingiu o SM (computada). IAGRUP-MN-SM-EC103, favorecida que permaneceu abaixo do SM. IUTILIZ-EXC-EC103, favorecida que recebeu excedente e atingiu o SM. IUTILIZ-EXC-MN-SM-EC103, favorecida por excedente mas permanece abaixo. ICED-VR-EXC-EC103, cedente com valor acima do SM que cedeu excedente (desfavorecida). IREL-PREV-POSSUI-COMP-AJUST, relação previdenciária com ao menos uma competência ajustada. IREM-INDPEND, remunerações com indicadores/pendências diferentes de EC103.
 
-### Indicadores de pendência (CsPendência) — bloqueantes
+### Indicadores de pendência (CsPendência). bloqueantes
 
-PSC-MEN-SM-EC103 — competência com SC menor que o mínimo, não tratada. Bloqueia cômputo. PREM-BLOQ-EC103 — bloqueio de remuneração para ajuste. PDESFAZ-AJ-EC103 — desfazimento de ajuste. PMOV-INCONSIST — inconsistência em movimentação entre competências.
+PSC-MEN-SM-EC103, competência com SC menor que o mínimo, não tratada. Bloqueia cômputo. PREM-BLOQ-EC103, bloqueio de remuneração para ajuste. PDESFAZ-AJ-EC103, desfazimento de ajuste. PMOV-INCONSIST, inconsistência em movimentação entre competências.
 
 ### Cadeia normativa
 
@@ -237,16 +237,4 @@ CF art. 195, §14 → EC 103/2019, art. 29 → Decreto 10.410/2020 (art. 19-E do
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

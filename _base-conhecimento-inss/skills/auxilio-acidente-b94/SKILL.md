@@ -7,8 +7,7 @@ description: Skill do auxílio-acidente (B94). Use SEMPRE que mencionar auxílio
 
 Citações desta skill conferidas em fonte oficial. Súmulas 88 e 89 da TNU vigentes, aprovadas por unanimidade na Sessão Ordinária da TNU de 17/04/2024 (DJeN 24/04/2024), teores literais na reference PRECEDENTES.md, citar sem paráfrase. Tema 201/TNU corretamente aplicado nesta skill (contribuinte individual não faz jus ao B94, com exceção jurisprudencial no período de graça). Redação da Súmula 507/STJ complementada com a parte final sobre o art. 23 da Lei 8.213/91. Em acidentária estadual, vale também a Súmula 89/STJ (dispensa de exaurimento da via administrativa), que não se confunde com a Súmula 89/TNU.
 
-
-# Auxílio-Acidente (B94) — Regime Jurídico Completo
+# Auxílio-Acidente (B94). Regime Jurídico Completo
 
 ## 1. Conceito e Natureza Jurídica
 
@@ -22,18 +21,18 @@ Características essenciais:
 - Acumula com salário da atividade laboral
 - Seu valor integra o salário-de-contribuição para cálculo de qualquer aposentadoria (art. 31)
 
-**DIB** — dia seguinte ao da cessação do auxílio por incapacidade temporária (art. 86, §2º). Se não houve benefício prévio, coincide com a consolidação.
+**DIB**, dia seguinte ao da cessação do auxílio por incapacidade temporária (art. 86, §2º). Se não houve benefício prévio, coincide com a consolidação.
 
 ## 2. Categorias de Segurados com Direito
 
-Art. 18, §1º, Lei 8.213/91 — rol restrito:
+Art. 18, §1º, Lei 8.213/91, rol restrito:
 
 | Categoria | Direito | Observação |
 |-----------|---------|------------|
-| Empregado (I) | SIM | — |
+| Empregado (I) | SIM | - |
 | Empregado doméstico (II) | SIM | Apenas fatos geradores a partir de 02/06/2015 (LC 150/2015) |
-| Trabalhador avulso (VI) | SIM | — |
-| Segurado especial (VII) | SIM | — |
+| Trabalhador avulso (VI) | SIM | - |
+| Segurado especial (VII) | SIM | - |
 | Contribuinte individual (V) | NÃO | Tema 201/TNU. Exceção: período de graça (ver Seção 6) |
 | Facultativo | NÃO | Art. 18, §1º |
 
@@ -45,7 +44,7 @@ Marco temporal em que a sequela é considerada estabilizada. Não se confunde co
 ### 3.2. Redução da capacidade laborativa
 Requisito central. Qualquer grau de redução, ainda que mínimo, é suficiente, desde que impacte a atividade habitual.
 
-- **Tema 416/STJ (repetitivo)** — grau da lesão é irrelevante. Basta sequela que imponha maior esforço.
+- **Tema 416/STJ (repetitivo)**, grau da lesão é irrelevante. Basta sequela que imponha maior esforço.
 - **Súmula 88/TNU c/c Tema 416/STJ.** Limitação, ainda que leve, para o trabalho habitual enseja a concessão. Benefício devido ainda que mínima a lesão.
 - **Súmula 89/TNU (limite negativo).** Sem redução da capacidade laborativa habitual e sem maior esforço na execução da atividade habitual, benefício indevido.
 
@@ -69,13 +68,13 @@ O art. 104 do RPS elenca situações que dão direito ao B94 em nove quadros. **
 
 A caracterização acidentária do B94 gera consequências adicionais (estabilidade provisória art. 118, FGTS durante afastamento). O NTEP (art. 21-A Lei 8.213/91, art. 337 §3º Decreto 3.048/99) é ferramenta probatória de presunção relativa de nexo CNAE/CID, independente de CAT.
 
-**Hierarquia probatória** — o NTEP, baseado em dados epidemiológicos agregados, ocupa posição superior ao parecer individual do perito na pirâmide de evidências. Explorar essa hierarquia quando perito negar nexo sem fundamentação epidemiológica.
+**Hierarquia probatória**, o NTEP, baseado em dados epidemiológicos agregados, ocupa posição superior ao parecer individual do perito na pirâmide de evidências. Explorar essa hierarquia quando perito negar nexo sem fundamentação epidemiológica.
 
-Ferramentas combinadas para nexo causal — tabela NTEP (Lista B/C, Anexo II, Decreto 3.048/99), tabela RAT, Anexo 1 NR-4, Medicina Baseada em Evidências, publicações epidemiológicas da CID.
+Ferramentas combinadas para nexo causal, tabela NTEP (Lista B/C, Anexo II, Decreto 3.048/99), tabela RAT, Anexo 1 NR-4, Medicina Baseada em Evidências, publicações epidemiológicas da CID.
 
 > Para protocolo completo de NTEP, acionar a skill `ntep-nexo-acidentario`.
 
-## 6. Período de Graça e CI — Tese Nova da TNU
+## 6. Período de Graça e CI. Tese Nova da TNU
 
 **Maior novidade jurisprudencial sobre B94 dos últimos anos.** A tese anterior (PUIL 5002615-35.2020.4.04.7207/SC, 29/04/2022, julgado regional da TRU da 4ª Região, não da TNU) que negava B94 ao CI em período de graça foi expressamente superada (auditoria 03/10/2026).
 
@@ -87,13 +86,13 @@ Ferramentas combinadas para nexo causal — tabela NTEP (Lista B/C, Anexo II, De
 O segurado refiliado como CI ou facultativo pode utilizar o período de graça do vínculo anterior como empregado, doméstico, avulso ou segurado especial para fins de concessão do B94, se mais favorável.
 
 **Reafirmação (PUIL 5026380-43.2022.4.02.5001/ES, j. 21/10/2025, unanimidade)**
-Reafirmou ambas as teses — período de graça + reabilitação profissional configura redução da capacidade.
+Reafirmou ambas as teses, período de graça + reabilitação profissional configura redução da capacidade.
 
-**Vinculação** — vinculante para Turmas Recursais (JEF). No rito ordinário (TRFs), cenário mais incerto — monitorar eventual afetação como repetitivo pelo STJ.
+**Vinculação**, vinculante para Turmas Recursais (JEF). No rito ordinário (TRFs), cenário mais incerto, monitorar eventual afetação como repetitivo pelo STJ.
 
-**ALERTA — Divergência no STJ**
-- Linha restritiva — AgInt REsp 2.077.714/SC (Min. Gurgel de Faria, 1ª T., j. 24/06/2024); REsp 2.199.012 (Min. Teodoro Silva Santos, DJe 03/11/2025)
-- Linha protetiva — REsp 2.217.297 (Min. Sérgio Kukina, DJe 06/08/2025, monocrática)
+**ALERTA. Divergência no STJ**
+- Linha restritiva. AgInt REsp 2.077.714/SC (Min. Gurgel de Faria, 1ª T., j. 24/06/2024); REsp 2.199.012 (Min. Teodoro Silva Santos, DJe 03/11/2025)
+- Linha protetiva. REsp 2.217.297 (Min. Sérgio Kukina, DJe 06/08/2025, monocrática)
 
 ## 7. Cálculo da RMI do B94
 
@@ -101,17 +100,17 @@ O INSS erra sistematicamente o cálculo, aplicando 50% sobre a RMI do auxílio-d
 
 > Para análise detalhada do erro de cálculo e precedente do TRF4, ler `references/CALCULO-RMI.md`.
 
-**Regra legal** — art. 86, §1º, Lei 8.213/91 e art. 104, §1º, Decreto 3.048/99. RMI = 50% do salário de benefício que deu origem ao auxílio-doença, corrigido até o mês anterior ao início do B94.
+**Regra legal**, art. 86, §1º, Lei 8.213/91 e art. 104, §1º, Decreto 3.048/99. RMI = 50% do salário de benefício que deu origem ao auxílio-doença, corrigido até o mês anterior ao início do B94.
 
 ## 8. Integração ao Salário-de-Contribuição (Art. 31)
 
-**Art. 31, Lei 8.213/91** — o valor do B94 integra o salário-de-contribuição mês a mês para cálculo de qualquer aposentadoria. **Tema 322/TNU** — pode incrementar inclusive aposentadoria por idade rural do segurado especial.
+**Art. 31, Lei 8.213/91**, o valor do B94 integra o salário-de-contribuição mês a mês para cálculo de qualquer aposentadoria. **Tema 322/TNU**, pode incrementar inclusive aposentadoria por idade rural do segurado especial.
 
 B94 reconhecido tardiamente (com atrasados prescritos) ainda impacta o cálculo da aposentadoria. A prescrição limita o pagamento de parcelas, não extingue o direito. O reconhecimento do período como devido sustenta a revisão da RMI da aposentadoria (art. 31 da Lei 8.213/91).
 
-**Cumulação vedada** — Súmula 507/STJ + Tema 555/STJ. B94 não acumula com aposentadoria (salvo lesão incapacitante e aposentadoria ambas anteriores a 11/11/1997, marco da MP 1.596-14/1997, convertida na Lei 9.528/97) (auditoria 03/10/2026).
+**Cumulação vedada.** Súmula 507/STJ + Tema 555/STJ. B94 não acumula com aposentadoria (salvo lesão incapacitante e aposentadoria ambas anteriores a 11/11/1997, marco da MP 1.596-14/1997, convertida na Lei 9.528/97) (auditoria 03/10/2026).
 
-## 9. Qualidade de Segurado — Tema 350/TNU
+## 9. Qualidade de Segurado. Tema 350/TNU
 
 Segurado em gozo de B94, ou com consolidação até 17/06/2019, mantém qualidade por 12 meses a partir da vigência da Lei 13.846/2019, com prorrogações do art. 15 §§1º e 2º. Regulamentado pela Portaria DIRBEN/INSS 991/2022, arts. 44 §1º, 53 e 54.
 
@@ -119,11 +118,11 @@ Segurado em gozo de B94, ou com consolidação até 17/06/2019, mantém qualidad
 
 Viável quando presentes cumulativamente: documentação robusta (sequela + redução funcional comprovadas) e questão de direito (Anexo III exemplificativo, período de graça, enquadramento legal).
 
-**Vantagens** — sem perícia judicial, liminar em poucos dias, implantação imediata. Sempre requerer liminar (art. 7º, III, Lei 12.016/2009), conforme política do escritório.
+**Vantagens**, sem perícia judicial, liminar em poucos dias, implantação imediata. Sempre requerer liminar (art. 7º, III, Lei 12.016/2009), conforme política do escritório.
 
-**Competência** — Vara Cível Federal (não JEF). Autoridade coatora conforme skill `ms-competencia-autoridade-coatora`.
+**Competência.** Vara Cível Federal (não JEF). Autoridade coatora conforme skill `ms-competencia-autoridade-coatora`.
 
-Jurisprudência sobre Anexo III exemplificativo em MS — TRF3, 7ª Turma, ApCiv 5013553-90.2021.4.03.6105 (Rel. Des. Jean Marcos Ferreira, j. 17/05/2024); TRF4, AC 5059859-24.2021.4.04.7000 (Rel. Cláudia Cristina Cristofani, 14/02/2022); TRF1, ApCiv 1009673912021401330 (Rel. Des. Nilza Reis, 9ª Turma, 15/12/2023).
+Jurisprudência sobre Anexo III exemplificativo em MS. TRF3, 7ª Turma, ApCiv 5013553-90.2021.4.03.6105 (Rel. Des. Jean Marcos Ferreira, j. 17/05/2024); TRF4, AC 5059859-24.2021.4.04.7000 (Rel. Cláudia Cristina Cristofani, 14/02/2022); TRF1, ApCiv 1009673912021401330 (Rel. Des. Nilza Reis, 9ª Turma, 15/12/2023).
 
 ## 11. Checklist de Auditoria de Laudo Pericial em B94
 
@@ -136,7 +135,7 @@ Ao auditar laudo pericial que negue B94, verificar OBRIGATORIAMENTE:
 5. Há documentação médica particular que contradiga o laudo?
 6. O NTEP indica correlação CNAE/CID que o perito ignorou?
 7. O perito confundiu incapacidade com redução da capacidade?
-8. O perito exigiu irreversibilidade (erro — TRF5 AC 0004352)?
+8. O perito exigiu irreversibilidade (erro. TRF5 AC 0004352)?
 
 ## 12. Fluxo Decisório para Triagem de B94
 
@@ -161,9 +160,9 @@ O segurado tem sequela consolidada após acidente?
 > Para tabela completa de precedentes com número de processo, relator, data e tese, ler `references/PRECEDENTES.md`.
 
 ### Precedentes de citação obrigatória em petição de B94
-- **Tema 416/STJ** — grau da lesão irrelevante
+- **Tema 416/STJ**, grau da lesão irrelevante
 - **Súmula 88/TNU c/c Tema 416/STJ** (limitação leve basta)
-- **Art. 86, Lei 8.213/91** — conceito legal
+- **Art. 86, Lei 8.213/91**, conceito legal
 
 ### Precedentes adicionais conforme o caso
 - Período de graça CI → PUIL 5000733/SC + PUIL 5026380/ES
@@ -175,19 +174,7 @@ O segurado tem sequela consolidada após acidente?
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Juízo de Catanduva (Onda 179)
 
