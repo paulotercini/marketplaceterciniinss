@@ -98,6 +98,11 @@ const FATOS = {
                dica:"data do protocolo do Recurso Especial à Câmara de Julgamento"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
+  // F831 · as datas dos atrasados (migração f831)
+  dip:        {rot:"DIP",         tipo:"data",    dica:"Data de Início do Pagamento: os atrasados vão até a véspera dela"},
+  citado_em:  {rot:"Citação",     tipo:"data",    dica:"data da citação do INSS: com o Tema 1124/STJ marcado, os efeitos financeiros contam dela; os juros de mora também (Súmula 204/STJ)"},
+  ciencia_indeferimento_em:{rot:"Ciência do indeferimento", tipo:"data",
+               dica:"ciência da decisão indeferitória definitiva no processo administrativo: a decadência da revisão conta 10 anos deste dia (Lei 8.213/91, art. 103)"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
   dii:        {rot:"DII",         tipo:"data",    dica:"Data de Início da Incapacidade"},
   dat:        {rot:"DAT",         tipo:"data",    dica:"Data do Acidente de Trabalho"},
@@ -222,6 +227,25 @@ const prazoCarimbado = k => { const c = `[PRAZO ${fmt(k.prazo)}]`;
 // F408 · a data é o "Concluir em" da tarefa do Microsoft To Do (a sincronização grava os dois iguais); a data que
 // sai do To Do sai do CRM pela mesma sincronização (casos.todo_prazo, 31.10.2026)
 const prazoDoTodo = k => !!(k && k.prazo && k.todo_prazo===k.prazo);
+// 27.11.2026 · ordem do Paulo: até 31/12/2026 a data do Microsoft To Do é só leitura (o Corrigir gravava casos.prazo por cima)
+const editaPzTodo = (todo, ed) => todo && hoje()<="2026-12-31" ? "" : ed;
+// 27.11.2026 · ordem do Paulo (auditoria, item 7): a data do To Do (casos.todo_prazo) ao lado da do CRM (casos.prazo),
+// com alerta quando divergem, e o Abrir que leva à tarefa no To Do pelo id que a sincronização grava (todo_task_id).
+// A conta do escritório é pessoal (graph_refresh: /consumers), daí o to-do.live.com
+const linkTodo = k => k && k.todo_task_id ? `https://to-do.live.com/tasks/id/${encodeURIComponent(k.todo_task_id)}/details` : "";
+const todoDiverge = k => !!(k && k.todo_prazo && k.prazo && k.todo_prazo!==k.prazo);
+function datasTodoHtml(k){
+  if(!k || !k.todo_task_id || !k.todo_prazo) return "";
+  const dv = todoDiverge(k);
+  return `<div class="todo-dt${dv ? " diverge" : ""}"><span>Microsoft To Do: <b>${fmtBarra(k.todo_prazo)}</b></span>${k.prazo ? `<span>CRM: <b>${fmtBarra(k.prazo)}</b></span>` : ""}`
+    + `${dv ? `<span class="todo-alerta" role="note">As datas divergem: vale a do To Do</span>` : ""}`
+    + `<a class="btn-mini" href="${linkTodo(k)}" target="_blank" rel="noopener" title="Abrir a tarefa no Microsoft To Do">Abrir</a></div>`;
+}
+function todoDatasCliente(cliId){
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && k.todo_task_id && k.todo_prazo);
+  return ks.length ? `<section class="todo-dts" aria-label="Datas do Microsoft To Do"><h3 class="pzc-gt"><span>Datas do Microsoft To Do</span></h3>`
+    + ks.map(k=>`<div class="todo-dt-l"><span class="todo-dt-c">${esc(tituloCaso(k))}</span>${datasTodoHtml(k)}</div>`).join("") + `</section>` : "";
+}
 // F429 · decisão do Paulo (07.11.2026): o prazo fatal nasceu no CRM e é a anotação de prazo fatal do CRM que o faz; o
 // "Concluir em" do To Do é retorno também no 🗓 Tarefas com Prazo, salvo com a tarefa fatal ou o carimbo da mesma data.
 // F530 (11.11.2026): o carimbo só vem de quem registra o prazo fatal no CRM; o do assistente deixou de existir
@@ -1096,7 +1120,7 @@ function decadenciasDoCliente(cliId){
   for(const ca of f.cartas){
     const dec = decadenciaDe(ca, f.extratos); if(!dec) continue;
     const ate = dec.cedo || dec.ate;
-    if(ate>=hj && diasAte(ate)<=730) out.push({ca, dec, ate});
+    if(ate>=hj && diasAte(ate)<=365) out.push({ca, dec, ate});   // F831 · decadência fatal só nos últimos 12 meses
   }
   return out;
 }
@@ -1441,12 +1465,12 @@ function linhasDeDatas(cliId){
     }
     // 02.11.2026 · o "Concluir em" do To Do fora do 🗓 Tarefas com Prazo é retorno, e não prazo fatal (prazoEhRetorno)
     else if(x.prazo && !igualA && prazoEhRetorno(x)){
-      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Retorno", todo:prazoDoTodo(x),
+      linhas.push({data:x.prazo, ico:"↩", natureza:"lembrete", casoId:x.id, cru:true, rotulo:"Prazo do Microsoft To Do", todo:prazoDoTodo(x),
         resumo:og?cortaFrase(fraseDaData(og.texto, x.prazo), 70):"", andId:og?og.id:null,
-        rot:`<b>Retorno: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
+        rot:`<b>Prazo do Microsoft To Do: ${og ? esc(og.texto.slice(0,110))+(og.texto.length>110?"…":"") : tit}</b>
                   <small class="qd-de">Data de voltar ao caso, o “Concluir em” do To Do${og?` · anotado por ${esc(og.quem)} em ${fmt(og.em)}`:""}</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:"",
-        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`});
+        edita:editaPzTodo(true, `onchange="qdMudarPrazo('${x.id}',this.value)"`)});
     }
     else if(x.prazo && !igualA){
       const txtOg = og ? `${esc(og.texto.slice(0,110))}${og.texto.length>110?"…":""}` : "";
@@ -1459,7 +1483,7 @@ function linhasDeDatas(cliId){
           : `<b>PRAZO FATAL: ${tit}</b>
                   <small class="qd-de qd-semmotivo">Sem descrição: clique para descrever este prazo</small>`,
         clique:og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`:`onclick="explicarPrazo('${x.id}')"`,
-        edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`,
+        edita:editaPzTodo(prazoDoTodo(x), `onchange="qdMudarPrazo('${x.id}',this.value)"`),
         acao:btCumprir, cumprir});
     }
     // F236 · o evento diz o tipo (julgamento não é perícia) e o que falta: avisar o cliente (ou quem já avisou),

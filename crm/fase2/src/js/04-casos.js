@@ -227,6 +227,7 @@ function ligarCartoes(){
       if(e.target.dataset.estrela!==undefined) return;
       if(e.shiftKey || (_sel.size && el._toque)){ e.preventDefault(); return alternarSel(el); }   // F443 · seleção múltipla
       clearTimeout(el._ult); esconderUltAnot();
+      if((e.ctrlKey || e.metaKey) && voltarLigado()) return void window.open(linkFicha(el.dataset.cli), "_blank");   // F828 · a ficha em outra aba
       if(!e.ctrlKey && !e.metaKey && pcliLigado()) return abrirPainelCli(el);   // F647 · o clique na linha de qualquer lista abre o painel lateral (a extensão F455 saiu)
       if(el.dataset.casos && extLigada() && !e.ctrlKey && !e.metaKey) return alternarExt(el);   // F455 · a linha se estende
       abrirDaLinha(el);
@@ -510,7 +511,7 @@ function renderMeuDia(){
   const nHoje = hojeK.length + tHoje.length + apos.hoje.length + lemb.hoje.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
-    + avisoCRPS()
+    + avisoCRPS() + blocoDecadenciaDia(filtroColab)
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || `<p class='meio-sub'>Nada adicionado — ${celular()?"toque e segure":"clique com o botão direito"} num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>`)
     + secaoDiasAnteriores(filtroColab)

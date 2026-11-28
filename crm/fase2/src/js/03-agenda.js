@@ -875,7 +875,7 @@ function montarExt(el, it){
   const atr = D.atrDoCaso.get(k.id)||[], resp = atr.map(id=>D.colPorId.get(id)).filter(Boolean);
   x.className = "ag-ext"; x._it = it; x._el = el; x._atual = atr[0] || "";
   x.innerHTML = `<div class="ae-topo"><span class="ae-quem"><span class="ae-resp">${resp.length ? "Com "+esc(resp.map(c=>c.nome.split(" ")[0]).join(", ")) : "Sem responsável"}</span>${
-      it.selo==="Retorno" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
+      it.selo==="Prazo do Microsoft To Do" && prazoDoTodo(k) ? `<span class="ae-todo">Prazo do Microsoft To Do · última anotação do caso</span>` : ""}</span>
     <span class="ae-cop">${cli && cli.cpf ? `<span class="cop" data-cop="${esc(cli.cpf)}" data-cop-msg="CPF copiado" title="Copiar o CPF">CPF ${esc(fmtCpf(cli.cpf))}</span>` : ""}
       <button type="button" class="ae-mini" data-ae="senha" title="Copiar a senha do Meu INSS"><span class="ae-rot">Meu </span>INSS <span class="ae-senha">…</span></button>
       <button type="button" class="ae-mini ae-zap" data-ae="zap" title="Abrir a conversa do WhatsApp ao lado">${iconeFonte("zap")}<span class="sr-only">WhatsApp</span></button></span></div>
@@ -1036,7 +1036,7 @@ async function extConcluir(x){
     t.concluida = true; plim(); repintaExt(k);
     return avisoDesfazer("Concluída", async ()=>{ await muda(false); t.concluida = false; repintaExt(k); aviso("Conclusão desfeita", false); }, 30000);
   }
-  if(it.selo==="Retorno" || it.selo==="Volta à fila"){
+  if(it.selo==="Prazo do Microsoft To Do" || it.selo==="Volta à fila"){
     // concluir o retorno tira a data do caso; o despacho marcado "concluido" leva a data apagada ao To Do (ponte_despacho.py)
     const antes = {prazo:k.prazo||null, ronda:k.ronda||{}};
     const muda = {prazo:null, ronda:{...(k.ronda||{}), despacho:{em:new Date().toISOString(), por:eu.id, prazo:null, concluido:true}}};
@@ -1061,7 +1061,7 @@ function itemDoCaso(k){
   if(!k) return null;
   const fatal = !!k.prazo && fatalAbertoDe(k)===k.prazo;
   return {k, cli:D.cliPorId.get(k.cliente_id), data:k.prazo||"", fatal, quem:[],
-    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Retorno"};
+    selo: fatal ? "" : k.prazo && (k.ronda||{}).despacho?.prazo===k.prazo ? "Volta à fila" : "Prazo do Microsoft To Do"};
 }
 // no navegador automatizado as provas antigas esperam a linha do tempo à vista; a nova liga com crm_dash_caso=1
 const dashLigado = () => temaV10() && (!navigator.webdriver || (()=>{ try{ return localStorage.getItem("crm_dash_caso")==="1"; }catch(e){ return false; } })());
@@ -1229,9 +1229,9 @@ function abrirPainelCli(el){
   if(clienteAberto) fecharFicha(false);
   fecharExt(); _ext = null; clearTimeout(el._ult); esconderUltAnot();
   _pcli = {el, cliId:el.dataset.cli, casos:el.dataset.casos||"", sel:el.dataset.sel||""};
-  pcliMontar();
+  pcliMontar(); setTimeout(armarVoltar, 0);   // F828 · o voltar fecha o painel
 }
-function fecharPainelCli(){ _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
+function fecharPainelCli(){ if(_pcli) setTimeout(armarVoltar, 0); _pcli = null; document.body.classList.remove("pcli-aberto"); document.getElementById("pcli")?.remove(); document.querySelectorAll(".cartao.pcli-on").forEach(x=>x.classList.remove("pcli-on")); }
 async function pcliMontar(){
   if(!_pcli) return;
   // a linha pode ter sido redesenhada depois de uma ação: procura a mesma de novo
@@ -1249,7 +1249,7 @@ async function pcliMontar(){
   const venc = it && it.data && it.data < hoje(), mov = it && reagendavel(it);
   const lista = k ? (listaDe(k)!=="—" ? listaDe(k).replace(/^\S+\s/,"") : NOME_FASE[k.fase]||"") : "";
   const dado = (rot, val, extra="") => `<div class="pcl-d"><span class="pcl-r">${rot}</span><span class="pcl-v">${val}</span>${extra}</div>`;
-  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Retorno" : it.selo || "Retorno";
+  const tipo = !it ? "" : it.fatal ? "Prazo fatal" : it.selo==="Volta à fila" ? "Prazo do Microsoft To Do" : it.selo || "Prazo do Microsoft To Do";
   const op = [["Hoje", hoje()], ["Amanhã", proxDiaUtil(somaDias(hoje(),1))]];
   p.innerHTML = `<div class="pcl-topo"><button type="button" class="pcl-x" data-pc="fechar" aria-label="Fechar o painel">×</button></div>
     <section class="pcl-cx pcl-cab"><div class="pcl-nl"><span class="avatar pcl-av" style="--av:${corDoNome(cli.nome)}">${esc(cli.nome[0])}</span><button type="button" class="pcl-nome" data-pc="nome" title="Copiar o nome">${esc(cli.nome)}</button>
@@ -1263,6 +1263,7 @@ async function pcliMontar(){
     ${it ? `<section class="pcl-cx"><h3>Prazo${tipo ? `<span class="pcl-tipo${it.fatal ? " fatal" : ""}">${esc(tipo)}</span>` : ""}</h3>
       <p class="pcl-venc${venc ? " venc" : ""}">${it.data ? esc(fmtBarra(it.data)) : "Sem data"}</p>
       ${mov ? `<div class="pcl-dias"><span class="pcl-rot">Reagendar para:</span>${op.map(([r,d])=>`<button type="button" class="esp-it" data-pc="dia" data-data="${d}" title="${fmtBarra(d)}">${r}</button>`).join("")}<button type="button" class="esp-it pcl-outra" data-pc="outra" title="Escolher outra data">Outra</button></div>${miniCal(hoje(), it.data)}` : ""}</section>` : ""}
+    ${k && datasTodoHtml(k) ? `<section class="pcl-cx pcl-todo"><h3>Microsoft To Do</h3>${datasTodoHtml(k)}</section>` : ""}
     ${k ? `<section class="pcl-cx"><h3>Atribuição</h3><div class="pcl-seg" role="group" aria-label="Atribuir a">${equipeAtiva().filter(c=>c.nome!=="Todos").map(c=>`<button type="button" data-pc="para" data-id="${c.id}" title="${esc(c.nome.split(" ")[0])}" aria-label="${esc(c.nome.split(" ")[0])}" style="--av:${c.cor}"${c.id===atr[0] ? ` class="on" aria-pressed="true"` : ` aria-pressed="false"`}>${esc(c.inicial||c.nome[0])}</button>`).join("")}</div></section>
     <section class="pcl-cx"><h3>Anotações</h3><textarea class="ae-nota" rows="2" placeholder="Escrever no caso…" aria-label="Escrever no caso"></textarea>
       <div class="pcl-fim"><button type="button" class="btn-mini forte" data-pc="anotar">Anotar</button></div>
@@ -1316,4 +1317,4 @@ async function pcliAcao(p, b, cli){
   }
 }
 async function pcliReagendar(p, d){ await extReagendar(p, d); pcliMontar(); }
-document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !document.querySelector("#modal[style*='block']")) fecharPainelCli(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && _pcli && !modalAberto()) fecharPainelCli(); });

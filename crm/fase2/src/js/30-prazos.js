@@ -226,7 +226,7 @@ function comentario(a, resposta, reacoes, raiz){
       <button class="apaga" title="👍 ciente — um toque, sem texto" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
       <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
         onclick="armarResposta('${a.id}')">↩</button>
-      ${(a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
+      ${(a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
     </span>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
@@ -520,9 +520,9 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
   const minha = abertas.find(t=>t.colaborador_id===eu.id), alvo = minha || abertas[0];
   // F182 · ciente, apagar, ⭐ e ⚡ saem da coluna da direita (que espremia o
   // texto) e entram no fim da barra; os vistos de leitura vão para o cabeçalho
-  const apagar = (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")
+  const apagar = (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))
     ? `<button class="tl-bt tl-bt-ic tl-apaga" title="apagar este meu comentário" aria-label="apagar" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>` : "";
-  const editarResp = (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
+  const editarResp = (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))&&!rp ? `<button class="tl-bt tl-bt-ic tl-edita" title="editar esta minha resposta; a versão anterior fica no histórico" aria-label="editar" onclick="editarAndamento('${a.id}')">✎</button>` : "";   // F622
   const barra = raiz ? `<span class="tl-barra">
       <button class="tl-bt tl-bt-nota resp-liga" onclick="abrirRespInline('${a.id}')" title="responder a este comentário — a resposta fica grudada nele">Responder</button>
       ${pzE && (pzE.est==="vivo" || pzE.est==="vencido") ? ""
@@ -538,8 +538,8 @@ function comentarioV12(a, resposta, reacoes, raiz, co, cor){
           `<button class="tl-mais-it" role="menuitem" onclick="copiar(${esc(JSON.stringify(corpo))},'Texto copiado')" title="Copiar o texto">Copiar<span class="sr-only"> o texto</span></button>`,
           itemLevarAndamento(a),
           pzE && pzE.resp ? `<button class="tl-mais-it" role="menuitem" onclick="desfazerCumprimento('${pzE.resp.id}')" title="Desfazer o registro do prazo">Desfazer<span class="sr-only"> o registro do prazo</span></button>` : "",
-          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo")&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
-          (a.autor_id===eu.id&&a.origem==="app"||a.origem==="zap_resumo") ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
+          (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo"))&&!rp ? `<button class="tl-mais-it" role="menuitem" onclick="editarAndamento('${a.id}')" title="Editar este comentário; a versão anterior fica no histórico">Editar<span class="sr-only"> este comentário</span></button>` : "",
+          (a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo")) ? `<button class="tl-mais-it perigo" role="menuitem" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})" title="Apagar este comentário">Apagar<span class="sr-only"> este comentário</span></button>` : "",
         ])}</span>
     </span>` : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
@@ -661,14 +661,13 @@ function linhaDoTempo(ands){
   // a linha do tempo vem do mais novo para o mais velho: os dias separam a
   // leitura, e a fronteira do "não lido" mostra até onde você precisa descer
   let corpo="", diaAtual=null, fronteira=false, passouNova=false, cortou=false;
-  // F241 · à vista os dias mais recentes, com ao menos TL_VISIVEIS anotações e todas as não lidas; os mais antigos num botão
-  const limite = Math.max(TL_VISIVEIS, ultimaNova + 1), aberto = !casoId || _tlAntigos.has(casoId);
+  // F241 · à vista as TL_VISIVEIS anotações mais recentes; as anteriores num botão (26.11: só as 3 últimas, pedido do Paulo)
+  const limite = TL_VISIVEIS, aberto = !casoId || _tlAntigos.has(casoId);
   for(const [i, a] of raiz.entries()){
     const d=dataSP(a.criado_em);
-    if(!aberto && !cortou && i>=limite && d!==diaAtual && raiz.length - i > 1){
+    if(!aberto && !cortou && i>=limite){
       if(diaAtual!==null){ corpo+=fecharDia(); diaAtual=null; }
-      const n = raiz.length - i;
-      corpo+=`</ul><button type="button" class="tl-bt tl-antigos-bt" onclick="tlVerAntigos(this,'${casoId}')">Ver ${n===1?"a anotação mais antiga":`as ${n} anotações mais antigas`}</button><ul class="timeline tl-antigos" hidden>`;
+      corpo+=`</ul><button type="button" class="tl-bt tl-antigos-bt" onclick="tlVerAntigos(this,'${casoId}')">Ver anotações anteriores</button><ul class="timeline tl-antigos" hidden>`;
       cortou=true;
     }
     // F236 · a linha vai depois da ÚLTIMA nova: abaixo dela não sobra nada por ler
@@ -693,7 +692,7 @@ function linhaDoTempo(ands){
   return banner + fixHtml + `<ul class="timeline">${corpo || fixHtml ? corpo
     : "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
-const TL_VISIVEIS = 5, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
+const TL_VISIVEIS = 3, _tlAntigos = new Set();   // F241 · os casos em que se abriu a linha do tempo inteira, na sessão
 function tlVerAntigos(bt, casoId){
   _tlAntigos.add(casoId);
   const ul = bt.nextElementSibling; if(ul) ul.hidden = false;

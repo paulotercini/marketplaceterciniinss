@@ -40,7 +40,7 @@ const SUPA = "https://ficticio.supabase.co";
     const hj = hoje(), cli = D.clientes[0].id;
     window._pzOrig = window._pzOrig || prazosDoCliente;
     prazosDoCliente = () => ({lista: [
-      {data: somaDias(hj, -3), natureza: "lembrete", rotulo: "Retorno", rot: "Retorno", todo: true},
+      {data: somaDias(hj, -3), natureza: "lembrete", rotulo: "Prazo do Microsoft To Do", rot: "Prazo do Microsoft To Do", todo: true},
       {data: somaDias(hj, -2), natureza: "lembrete", rot: "Ligar ao cliente"},
       {data: somaDias(hj, 4), natureza: "fatal", ehPrazo: true, rot: "Recurso inominado"},
       {data: somaDias(hj, 12), natureza: "compromisso", rot: "Perícia médica"}]});
@@ -53,16 +53,16 @@ const SUPA = "https://ficticio.supabase.co";
     chips: [...document.querySelectorAll(".pzc-chip")].map(b => b.textContent.replace(/\s+/g, " ").trim()),
     grupos: [...document.querySelectorAll(".pzc-gt > span:first-child")].map(x => x.textContent),
     reag: !!document.querySelector(".pzc-g-venc .pzc-lk"), mes: !!document.querySelector(".pzc-grade .pzm"),
-    todo: [...document.querySelectorAll(".pzc-lin")].some(l => /Retorno/.test(l.textContent) && /Microsoft To Do/.test(l.textContent)),
+    todo: [...document.querySelectorAll(".pzc-lin")].some(l => /Microsoft To Do/.test(l.textContent)),
     cor: (document.querySelector(".pzc-lin[data-nat='fatal']") || {}).className || ""}));
   conf("a faixa abre pelo próximo prazo fatal, com o número de dias úteis", a.hero === "Recurso inominado" && /^\d+$/.test(a.n || ""));
-  conf("os chips da natureza trazem o Retorno à parte", a.chips.join("|") === "Todos 4|Prazo fatal 1|Compromisso 1|Lembrete 1|Retorno 1" || (console.log(a.chips), false));
+  conf("os chips da natureza trazem o Retorno à parte", a.chips.join("|") === "Todos 4|Prazo fatal 1|Compromisso 1|Lembrete 1|Prazo do Microsoft To Do 1" || (console.log(a.chips), false));
   conf("os vencidos vêm primeiro, com Reagendar", a.grupos[0] === "Vencidos" && a.reag);
   conf("a lista fica ao lado do mês", a.mes);
   conf("o retorno do To Do leva o selo Microsoft To Do", a.todo);
   conf("a linha do prazo fatal leva a cor dele", /pzc-c-fatal/.test(a.cor));
   await p.evaluate(() => pzNat("retorno"));
-  conf("o chip Retorno deixa só o retorno", await p.evaluate(() => { const ls = [...document.querySelectorAll(".pzc-lin")]; return ls.length === 1 && /Retorno/.test(ls[0].textContent); }));
+  conf("o chip Retorno deixa só o retorno", await p.evaluate(() => { const ls = [...document.querySelectorAll(".pzc-lin")]; return ls.length === 1 && /Prazo do Microsoft To Do/.test(ls[0].textContent); }));
   await p.evaluate(() => pzNat("todos"));
   const d = await p.evaluate(() => { const iso = somaDias(hoje(), 12); _pzMes = iso.slice(0, 7); pzPintar(); document.querySelector(`.pzm-d[onclick="pzDia('${iso}')"]`).click();
     return {n: document.querySelectorAll(".pzc-lin").length, t: (document.querySelector(".pzc-lin .pzc-t") || {}).textContent, sel: !!document.querySelector(".pzm-sel"),

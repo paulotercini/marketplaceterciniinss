@@ -141,11 +141,12 @@ function concessaoDoCaso(k){
     else if(/^(pje|esaj|eproc)$/.test(a.origem||"") && /\b(?:julgad[oa]|julgo)\s+(?:parcialmente\s+)?procedente\b|\bprocedente em parte\b|\bhomologad[oa] o acordo\b/i.test(t))
       s.push({em: dataSP(dataDoMovimento(a)), rot: /acordo/i.test(t) ? "acordo homologado" : "sentença de procedência", via:"rec"});
   }
-  const reqs = docs.filter(a=>a.texto && RX_REQUISICAO.test(a.nome||"") && !/comprovante|dep[óo]sito|alvar/i.test(a.nome||"")).map(requisicaoDoDoc);
+  const reqs = docs.filter(a=>a.texto && RX_REQUISICAO.test(a.nome||"") && !/comprovante|dep[óo]sito|alvar/i.test(a.nome||"")).map(requisicaoDoDoc)
+    .concat(reqsDoCaso(k).map(reqManual));   // F832 · e a registrada à mão
   const mc = (k.datajud||{}).marcos || {};
   const exped = reqs.map(r=>r.em).filter(Boolean).sort()[0] || (mc.requisitorio||{}).data || null;
   const comp = docs.find(a=>/comprovante de dep[óo]sito|alvar[áa]/i.test(a.nome||""));
-  const paga = (mc.pago||{}).data || (comp && dataDoAnexo(comp)) || null;
+  const paga = (mc.pago||{}).data || (comp && dataDoAnexo(comp)) || reqsDoCaso(k).map(r=>r.pago_em).filter(Boolean).sort()[0] || null;
   if(exped) s.push({em: exped, rot:"requisitório expedido", via:"rec"});
   else if(paga) s.push({em: paga, rot:"pagamento registrado nos autos", via:"rec"});
   if(!s.length && k.resultado==="deferido") s.push({em: k.decisao_em || null, rot:"resultado deferido", via: viaDoCaso(k)==="rec" ? "rec" : "adm"});
@@ -235,6 +236,11 @@ function propostaHonorarios(c, k){
             nota:`≈ estimado: ${dias} dias × ${moedaTxt(rmi)} ÷ 30 = ${moedaTxt(atr)}, pela carta de concessão (DIB ${fmtBarra(dib)}, DIP ${fmtBarra(dip)}); vence no 1º crédito, em até 45 dias da concessão (${baseCred}): conferir no extrato`});
         }
       }
+      // F831 · sem requisição nem carta, a estimativa da calculadora de atrasados do caso (marcada "≈": confere-se antes de cobrar)
+      const ce = (k.calculo||{}).resultado;
+      if(!itens.some(x=>x.ch==="atr") && ce && ce.total > 0) itens.push({ch:"atr", alvo, desc:`Honorários · ${T.pctAtr}% dos atrasados (estimativa da calculadora do caso)`,
+        valor:Math.round(ce.total*T.pctAtr)/100, venc:null,
+        nota:`≈ estimado: ${T.pctAtr}% de ${moedaTxt(ce.total)}, atrasados desde ${fmtBarra(ce.termo)} calculados em ${fmtBarra(ce.em)} (estimativa para conferência); vence no pagamento da RPV ou do precatório`});
       if(!jaAtr && !itens.some(x=>x.ch==="atr")) itens.push({ch:"atr", alvo:null, desc:`Honorários · ${T.pctAtr}% dos atrasados`, valor:0, venc:null,
         nota:`a calcular: ${cc.pagaAdm || cc.via==="adm" ? "vence no crédito dos atrasados pelo INSS" : "vence no pagamento da RPV ou do precatório"}`});
     }
@@ -375,6 +381,59 @@ async function confirmarRecebido(pgId){
   await correnteConferencia(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} recebido em ${fmt(data)}`);
   abrirFicha(clienteAberto);
 }
+// 27.11.2026 · ordem do Paulo: o lançamento se edita (valor e vencimento) e se cancela com motivo; o cancelado fica
+// riscado, com quem e quando (o banco grava os dois pelo login, F829); o recebido e a conferência se desfazem, com confirmação
+async function gravarPgto(p, corpo, erro){
+  try{ await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}); }
+  catch(e){ aviso(erro); return false; }
+  Object.assign(p, corpo); return true;
+}
+function editarPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="aberto") return;
+  caixa(`<h3 style="margin:0 0 6px">Editar · ${esc(origemPgto(p))}</h3>
+    <div class="form-linha" style="align-items:flex-end;flex-wrap:wrap;gap:10px">
+      <label class="adr-campo">Valor<input type="number" step="0.01" min="0" id="ed-valor" value="${p.valor==null?"":+p.valor}" style="width:140px"></label>
+      <label class="adr-campo">Vencimento<input type="date" id="ed-venc" value="${esc(p.vencimento||"")}"></label>
+      <button class="adr-bt adr-primario" onclick="salvarEdicaoPgto('${p.id}')">Guardar</button>
+    </div>`);
+}
+async function salvarEdicaoPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const valor = +((document.getElementById("ed-valor")||{}).value||0), venc = (document.getElementById("ed-venc")||{}).value || null;
+  if(!(valor>0)) return aviso("Informe o valor");
+  if(!await gravarPgto(p, {valor, vencimento:venc, editado_por:eu.id, editado_em:new Date().toISOString()}, "Não gravei a edição — tente de novo")) return;
+  fecharCaixa(); aviso("Lançamento editado", false); repintarFicha();
+}
+function cancelarPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="aberto") return;
+  caixa(`<h3 style="margin:0 0 6px">Cancelar · ${esc(origemPgto(p))}</h3>
+    <p class="adr-nota" style="margin:0 0 10px">O lançamento não some: fica riscado, com o motivo, quem cancelou e quando, e sai dos totais.</p>
+    <label class="adr-campo" style="display:block">Motivo<textarea id="cc-motivo" rows="2" style="width:100%"></textarea></label>
+    <div class="form-linha" style="margin-top:8px"><button class="adr-bt adr-primario" onclick="confirmarCancelPgto('${p.id}')">Cancelar</button></div>`);
+}
+async function confirmarCancelPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p) return;
+  const motivo = ((document.getElementById("cc-motivo")||{}).value||"").trim();
+  if(!motivo) return aviso("Escreva o motivo do cancelamento");
+  if(!await gravarPgto(p, {status:"cancelado", cancelado_motivo:motivo, cancelado_por:eu.id, cancelado_em:new Date().toISOString()}, "Não cancelei — tente de novo")) return;
+  fecharCaixa();
+  await desligarLembreteCobranca(D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id), p.id);
+  aviso("Lançamento cancelado", false); repintarFicha();
+}
+async function desfazerPgto(pgId){
+  const p = (D.pagamentos||[]).find(x=>x.id===pgId); if(!p || p.status!=="recebido") return;
+  const cfs = p.conferencias||[], minha = cfs.length>1 && cfs[cfs.length-1].c===eu.id;
+  if(minha){
+    if(!await confirmar("Desfazer a sua conferência deste recebimento?")) return;
+    if(!await gravarPgto(p, {conferencias:cfs.slice(0, -1)}, "Não desfiz a conferência — tente de novo")) return;
+    aviso("Conferência desfeita", false);
+  }else{
+    if(!await confirmar(`Desfazer o recebido de ${moeda(p.valor)}? O lançamento volta a receber e a corrente de conferência é apagada.`)) return;
+    if(!await gravarPgto(p, {status:"aberto", pago_em:null, vencimento:p.vencimento||p.pago_em, conferencias:[], editado_por:eu.id, editado_em:new Date().toISOString()}, "Não desfiz o recebido — tente de novo")) return;
+    aviso("Recebido desfeito: o lançamento voltou a receber", false);
+  }
+  repintarFicha();
+}
 // F236 · a parcela do 💰 Recebimentos abre a ficha já na aba Honorários, no caso dela
 async function abrirHonorariosDe(cliId, casoId){
   await abrirFicha(cliId);
@@ -383,6 +442,31 @@ async function abrirHonorariosDe(cliId, casoId){
   if(casoId) casoSel = casoId;
   else if(!casoSel || casoSel==="__auto__") casoSel = ((D.casosDoCliente.get(cliId)||[]).find(k=>k.fase!=="encerrado" && !ehPreCaso(k))||{}).id || null;
   abaAtiva = 4; repintarFicha();
+}
+// 27.11.2026 · ordem do Paulo (auditoria, item 8): relatório mensal de inadimplência. O vencido não recebido e não
+// cancelado (F829: status "cancelado" ou cancelado_em), sem os "a calcular" e "conferir valor" que já ficam fora dos
+// totais; por mês do vencimento, com o total, a soma por responsável e a lista por cliente.
+// shortcut: a parcela conta para o primeiro atribuído do caso (quemCobra); dividir entre os atribuídos, se pedirem
+function inadimplencia(pags, hj){
+  const meses = new Map();
+  for(const p of pags||[]){
+    if(p.status!=="aberto" || p.cancelado_em || !p.vencimento || p.vencimento>=hj || pgSemValor(p) || valorSuspeito(p)) continue;
+    const c = D.cliPorId.get(p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id); if(!c) continue;
+    const m = p.vencimento.slice(0,7), v = +p.valor||0, q = quemCobra(p)[0], qn = q ? q.nome.split(" ")[0] : "Sem responsável";
+    const o = meses.get(m) || {mes:m, total:0, n:0, resp:new Map(), cli:new Map()}; meses.set(m, o);
+    o.total += v; o.n++; o.resp.set(qn, (o.resp.get(qn)||0) + v);
+    const x = o.cli.get(c.id) || {c, total:0, n:0}; x.total += v; x.n++; o.cli.set(c.id, x);
+  }
+  const lista = [...meses.values()].sort((a,b)=>b.mes.localeCompare(a.mes));
+  return {meses:lista, total:lista.reduce((t,o)=>t+o.total, 0)};
+}
+function inadimplenciaHtml(pags, hj){
+  const r = inadimplencia(pags, hj); if(!r.meses.length) return "";
+  const mes = m => `${MES_LONGO[+m.slice(5,7)-1]} de ${m.slice(0,4)}`;
+  return `<details class="rc-grupo rc-inad"><summary class="secao">Inadimplência por mês: ${moeda(r.total)}</summary>
+    ${r.meses.map(o=>`<section class="rc-inad-m"><h4>${mes(o.mes)}: ${moeda(o.total)} <small>(${o.n} parcela${o.n>1?"s":""})</small></h4>
+      <p class="meio-sub">Por responsável: ${[...o.resp].sort((a,b)=>b[1]-a[1]).map(([n,v])=>`${esc(n)} ${moeda(v)}`).join(" · ")}</p>
+      <ul>${[...o.cli.values()].sort((a,b)=>b.total-a.total).map(x=>`<li><button type="button" class="zl-link" data-rc-inad="${x.c.id}">${esc(x.c.nome)}</button>: ${moeda(x.total)}${x.n>1?` (${x.n} parcelas)`:""}</li>`).join("")}</ul></section>`).join("")}</details>`;
 }
 // F236 · 💰 RECEBIMENTOS É O DINHEIRO, PARCELA POR PARCELA. Era a lista dos casos da fase Pagamentos, sem valor nem
 // vencimento e filtrada pela pessoa: o vencido de cliente com caso encerrado (1.021 parcelas no banco) não aparecia.
@@ -413,6 +497,7 @@ function renderRecebimentos(){
     + (!venc.length && !prox.length && !semData.length && !conferir.length ? "<p class='meio-sub rc-vazio'>Nenhum honorário a receber. As parcelas aparecem aqui quando forem lançadas na aba Honorários do cliente.</p>"
       : (venc.length ? `<h3 class="secao" style="color:var(--venc-tinta,#B3261E)">Vencidos (${venc.length})</h3>${venc.map(linha).join("")}` : "")
       + `<h3 class="secao">A vencer${prox.length?` (${prox.length})`:""}</h3>${prox.map(linha).join("") || "<p class='meio-sub'>Nada a vencer com data.</p>"}`)
+    + inadimplenciaHtml(D.pagamentos, hj)
     + (semData.length ? `<details class="rc-grupo"><summary class="secao">Sem data de vencimento (${semData.length})</summary>${semData.slice(0,LIM).map(linha).join("")}${semData.length>LIM?`<p class="meio-sub">e mais ${semData.length-LIM}: veja na aba Honorários de cada cliente.</p>`:""}</details>` : "")
     + (conferir.length ? `<details class="rc-grupo"><summary class="secao">Valor a conferir (${conferir.length})</summary><p class="meio-sub">Valor acima de ${moeda(HON_VALOR_ABSURDO)} ou igual a um número do cliente (processo, benefício, protocolo): quase sempre leitura errada do To Do. Fica fora dos totais até alguém conferir.</p>${conferir.map(linha).join("")}</details>` : "")
     + (casosPag.length ? `<h3 class="secao">Em Pagamentos, sem nada lançado (${casosPag.length})</h3>${grupoClientes(casosPag).map(([c,ks])=>cartaoCliente(c,ks)).join("")}` : "");
@@ -421,6 +506,7 @@ function renderRecebimentos(){
     el.onkeydown = e=>{ if(e.key==="Enter" && e.target===el) el.click(); };
   });
   document.querySelectorAll("[data-rc-cob]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); abrirCobranca(b.dataset.rcCob); });
+  document.querySelectorAll("[data-rc-inad]").forEach(b=>b.onclick=()=>abrirHonorariosDe(b.dataset.rcInad, null));
   ligarCartoes();
 }
 // F236 · depois do pagamento da requisição, o destaque não se pede mais: o quadro diz o que vale agora
@@ -706,6 +792,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
         <span class="adr-tile-sub">${prox ? `${esc(origemPgto(prox))} · ${pgSemValor(prox)?"a calcular":moeda(prox.valor)}` : vencidos.length ? "nada a vencer: os vencidos estão acima" : "nada em aberto com data"}</span></div>
     </section>
     ${props.map(cartaoProposta).join("")}
+    ${reais.filter(k=>k.fase!=="encerrado" && (["judicial","pagamento"].includes(k.fase) || reqsDoCaso(k).length)).map(cartaoRequisicoes).join("")}
     <div class="adr-colunas">
       <section class="adr-card adr-col-larga hon-lanc" aria-labelledby="hon-lanc-t">
         <div class="adr-cab"><h3 class="adr-h" id="hon-lanc-t">Lançamentos</h3></div>
@@ -717,19 +804,20 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             const jaConferi=cfs.some(cf=>cf.c===eu.id);
             const susp = p.status==="aberto" && valorSuspeito(p), nota = notaPgto(p);
             const [sit, cor] = susp ? ["conferir valor", "venc"] : situacaoPgto(p, prox && prox.id);
-            return `<tr class="pgto" data-pg="${p.id}">
-              <td class="hon-data">${dataDe(p) ? fmt(dataDe(p)) : "—"}</td>
-              <td class="desc">${(d=>d&&d!=="Recebimento"?esc(d):"Recebimento")(semNota(p.descricao))}${nota?`<small class="hon-nota">${esc(nota)}</small>`:""}${susp?`<small class="hon-nota">valor fora do comum (um número de processo ou de benefício lido como valor?): fica fora dos totais até alguém conferir
+            const canc = p.status==="cancelado", risca = t => canc ? `<s>${t}</s>` : t;
+            return `<tr class="pgto${canc?" hon-cancelado":""}" data-pg="${p.id}">
+              <td class="hon-data">${risca(dataDe(p) ? fmt(dataDe(p)) : "—")}</td>
+              <td class="desc">${risca((d=>d&&d!=="Recebimento"?esc(d):"Recebimento")(semNota(p.descricao)))}${canc?`<small class="hon-nota">Cancelado${p.cancelado_por?` por ${esc(((D.colPorId.get(p.cancelado_por)||{}).nome||"?").split(" ")[0])}`:""}${p.cancelado_em?` em ${fmtTS(p.cancelado_em)}`:""}${p.cancelado_motivo?`: ${esc(p.cancelado_motivo)}`:""}</small>`:""}${p.editado_em && !canc?`<small class="hon-nota">Editado${p.editado_por?` por ${esc(((D.colPorId.get(p.editado_por)||{}).nome||"?").split(" ")[0])}`:""} em ${fmtTS(p.editado_em)}</small>`:""}${nota?`<small class="hon-nota">${esc(nota)}</small>`:""}${susp?`<small class="hon-nota">valor fora do comum (um número de processo ou de benefício lido como valor?): fica fora dos totais até alguém conferir
                   <button class="btn-mini" onclick="conferirValor('${p.id}')" title="o valor está certo: ele volta aos totais"><span aria-hidden="true">Confirmar</span><span class="sr-only">o valor está certo</span></button></small>`:""}
                 <div class="hon-vinc">${vinculoDaParcela(p, ks)}
                 <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
                   return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
                     <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
                     <small>${i===0?"recebeu":"conferiu"} ${fmtTS(cf.em).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span></div></td>
-              <td class="valor hon-num">${p.status==="aberto" && pgSemValor(p) ? "a calcular" : `${pgEstimado(p)?"≈ ":""}${moeda(p.valor)}`}</td>
+              <td class="valor hon-num">${risca(p.status==="aberto" && pgSemValor(p) ? "a calcular" : `${pgEstimado(p)?"≈ ":""}${moeda(p.valor)}`)}</td>
               <td><span class="hon-sit hon-${cor}">${sit}</span></td>
-              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button>`:
-                p.status!=="cancelado" && !jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}</td>
+              <td class="hon-acao">${p.status==="aberto"?`<button class="adr-bt" data-recebe="${p.id}">recebido</button><button class="adr-bt" onclick="editarPgto('${p.id}')" title="corrigir o valor ou o vencimento">Editar</button><button class="adr-bt" onclick="cancelarPgto('${p.id}')" title="cancelar este lançamento, com o motivo (ele fica riscado)">Cancelar</button>`:
+                canc ? "" : `${!jaConferi?`<button class="adr-bt" data-confere="${p.id}">conferi</button>`:""}<button class="adr-bt" onclick="desfazerPgto('${p.id}')" title="${cfs.length>1 && cfs[cfs.length-1].c===eu.id ? "desfazer a sua conferência" : "desfazer o recebido: o lançamento volta a receber"}">Desfazer</button>`}</td>
             </tr>`;}).join("")}</tbody></table></div>`
           : "<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
         <details class="hon-novo" ${linhas.length?"":"open"}>
@@ -748,13 +836,15 @@ function painelPagamentosFicha(ks, ands, pgs, pagK, c){
             <label class="adr-campo">Data<input type="date" id="np-data" value="${hoje()}"></label>
             <label class="adr-campo">Valor<input id="np-valor" type="number" step="0.01" placeholder="R$" style="width:120px"></label>
             <label class="adr-campo" style="flex:1;min-width:160px">Origem<input id="np-desc" placeholder="RPV, honorários, 1ª parcela…"></label>
-            <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="o honorário que já venceu e não entrou: a data vira o vencimento">
-              <input type="checkbox" id="np-aberto" style="width:18px;height:18px">ainda a receber</label>
+            <span role="radiogroup" aria-label="Situação do lançamento" style="display:flex;gap:12px">
+              <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="o dinheiro já entrou: a data é o dia do recebimento">
+                <input type="radio" name="np-sit" value="recebido" style="width:18px;height:18px">Recebido</label>
+              <label class="conta-ck" style="display:flex;align-items:center;gap:6px;min-height:40px" title="ainda não entrou: a data é o vencimento">
+                <input type="radio" name="np-sit" value="aberto" style="width:18px;height:18px">A receber</label></span>
             <button class="adr-bt adr-primario" onclick="novoPgto()">Registrar</button>
           </div>
-          <p class="adr-nota">Data de hoje ou passada = dinheiro <strong>recebido</strong> (você entra como quem recebeu), a não ser que marque
-            <strong>ainda a receber</strong>: aí a data é o vencimento, como no honorário que venceu e não entrou.
-            Data futura = <strong>a receber</strong> (vencimento). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
+          <p class="adr-nota">Marque sempre: <strong>Recebido</strong> (a data é o dia em que entrou e você consta como quem recebeu) ou
+            <strong>A receber</strong> (a data é o vencimento, inclusive o do honorário que venceu e não entrou). Quem pegar o dinheiro depois clica <strong>conferi</strong>:
             a corrente mostra quem recebeu e quem conferiu, com a data de cada um.</p>
         </details>
       </section>
@@ -1212,4 +1302,169 @@ function pintarPrazoDoTexto(k){
     + (achado && achado.iso>hoje() ? `
         <button type="button" class="btn-mini chip-desp${prazoDespachar?" on":""}" aria-pressed="${prazoDespachar}" onclick="chipDespachar()"
           title="ao registrar, conclui por hoje: a data vira o Concluir em e o cliente sai do seu Meu Dia"><span aria-hidden="true">✔ Concluir</span><span class="sr-only">✔ e concluir por hoje</span></button>` : "");
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F832 · RPV E PRECATÓRIO NO CASO JUDICIAL (ordem do Paulo, 27.11.2026, melhoria 5 da auditoria). A requisição
+// registrada à mão (tipo, valor, expedição e entrega) mora em clientes.campos.requisicoes[caso], como o destaque e a
+// proposta de honorários. Ela entra na concessão (concessaoDoCaso): a proposta de honorários lança o destaque e a
+// sucumbência sem duplicar. A RPV vence 60 dias depois da entrega da requisição (Lei 10.259/2001, art. 17), com
+// alerta no Meu Dia; o precatório segue o cronograma do tribunal. Situações: Expedida, Paga, Levantada, Repassada.
+// ══════════════════════════════════════════════════════════════════════════
+const reqsDoCaso = k => { const c = k && D.cliPorId.get(k.cliente_id); return ((((c||{}).campos||{}).requisicoes||{})[k.id]) || []; };
+const prazoRpv = r => r && r.tipo==="rpv" && (r.entrega || r.expedida) ? somaDias(r.entrega || r.expedida, 60) : null;
+const situacaoReq = r => r.repasse ? "Repassada" : r.levantado_em ? "Levantada" : r.pago_em ? "Paga" : "Expedida";
+const rotReq = r => r.tipo==="precatorio" ? "Precatório" : "RPV";
+// o líquido do cliente: o bruto levantado menos o IR retido na fonte (RRA, Lei 7.713/1988, art. 12-A) e os honorários
+// contratuais, salvo os destacados na requisição, que o tribunal pagou direto ao escritório e não saem do crédito dele
+const liquidoRepasse = x => (Math.round((+x.bruto||0)*100) - Math.round((+x.ir||0)*100) - (x.destacado ? 0 : Math.round((+x.honor||0)*100))) / 100;
+// a requisição registrada, no formato da lida do documento (requisicaoDoDoc)
+const reqManual = r => ({em:r.entrega || r.expedida, precatorio:r.tipo==="precatorio", bruto:+r.valor||0, destaque:+r.destaque||0,
+  semDestaque:false, sucumbencia:+r.sucumbencia||0, manual:true});
+function cartaoRequisicoes(k){
+  const rs = reqsDoCaso(k), hj = hoje();
+  const PROX = {Expedida:["Paga","pago"], Paga:["Levantada","levantado"], Levantada:["Repasse","repasse"]};
+  const linha = r => {
+    const sit = situacaoReq(r), pz = prazoRpv(r), venc = pz && !r.pago_em && pz < hj, prox = PROX[sit];
+    const nota = [`expedida em ${fmt(r.expedida)}`, r.entrega ? `entregue ao tribunal em ${fmt(r.entrega)}` : "",
+      r.tipo==="precatorio" && !r.pago_em ? "pago pelo cronograma do tribunal" : "",
+      pz && !r.pago_em ? `${venc ? "prazo vencido em" : "prazo de pagamento até"} ${fmt(pz)} (60 dias da ${r.entrega ? "entrega" : "expedição; confirme a data da entrega"}, Lei 10.259/2001, art. 17)` : "",
+      r.destaque ? `honorários destacados ${moeda(r.destaque)}` : "", r.sucumbencia ? `sucumbência ${moeda(r.sucumbencia)}` : "",
+      r.pago_em ? `paga em ${fmt(r.pago_em)}` : "", r.levantado_em ? `levantada em ${fmt(r.levantado_em)}${r.alvara ? ` (alvará ${r.alvara})` : ""}` : "",
+      r.repasse ? `repassados ${moeda(r.repasse.liquido)} ao cliente em ${fmt(r.repasse.em)}` : ""].filter(Boolean).join(" · ");
+    return `<li><span>${rotReq(r)}<small class="hon-nota">${esc(nota)}</small></span><b>${moeda(r.valor)}</b>
+      <span class="hon-sit hon-${sit==="Repassada" ? "ok" : venc ? "venc" : "prox"}">${sit}</span>
+      ${prox ? `<button class="adr-bt" onclick="passoReq('${k.id}','${r.id}','${prox[1]}')">${prox[0]}</button>` : ""}
+      ${r.repasse ? `<button class="adr-bt" onclick="reciboRepasse('${k.id}','${r.id}')" title="recibo do repasse, para imprimir">Recibo</button>` : ""}</li>`;
+  };
+  return `<section class="adr-card hon-req" aria-labelledby="hon-req-${k.id}">
+    <div class="adr-cab"><h3 class="adr-h" id="hon-req-${k.id}">RPV e precatório · ${esc(tituloCaso(k))}</h3></div>
+    ${rs.length ? `<ul class="hon-prop-itens">${rs.map(linha).join("")}</ul>` : `<p class="adr-nota">Nenhuma requisição registrada neste processo.</p>`}
+    <button class="adr-bt adr-primario" style="width:max-content" onclick="passoReq('${k.id}','','expedida')" title="registrar a expedição de RPV ou precatório">Registrar</button>
+  </section>`;
+}
+// cada passo numa caixa: a expedição, o pagamento, o levantamento (com o alvará) e o repasse ao cliente
+function passoReq(casoId, rid, passo){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id); if(!c) return;
+  const r = reqsDoCaso(k).find(x=>x.id===rid) || {};
+  const cp = (rot, id, tipo, v, extra="") => `<label class="adr-campo">${rot}<input type="${tipo}" id="rq-${id}" value="${esc(v==null ? "" : String(v))}"${tipo==="number" ? ' step="0.01" min="0" style="width:140px"' : ""}${extra}></label>`;
+  let tit, corpo, nota;
+  if(passo==="expedida"){
+    tit = "Registrar requisição";
+    corpo = `<label class="adr-campo">Tipo<select id="rq-tipo"><option value="rpv">RPV</option><option value="precatorio">Precatório</option></select></label>`
+      + cp("Valor requisitado", "valor", "number", "") + cp("Expedida em", "expedida", "date", hoje(), ` max="${hoje()}"`) + cp("Entregue ao tribunal em", "entrega", "date", "")
+      + cp("Honorários destacados", "destaque", "number", "") + cp("Sucumbência", "sucumbencia", "number", "");
+    nota = "A RPV é paga em até 60 dias da entrega da requisição ao tribunal (Lei 10.259/2001, art. 17); sem a data da entrega, o prazo conta da expedição. Os honorários destacados e a sucumbência vão à proposta de honorários do contrato.";
+  }else if(passo==="pago"){
+    tit = `${rotReq(r)} paga`; corpo = cp("Paga em", "pago_em", "date", hoje(), ` max="${hoje()}"`); nota = "O dia do depósito judicial.";
+  }else if(passo==="levantado"){
+    tit = "Levantamento"; corpo = cp("Levantada em", "levantado_em", "date", hoje(), ` max="${hoje()}"`) + cp("Alvará", "alvara", "text", "");
+    nota = "O dia do levantamento e o número do alvará, quando houver.";
+  }else{
+    const T = termosHon(c, k, "rec"), bruto = Math.round(((+r.valor||0) - (+r.destaque||0) - (+r.sucumbencia||0))*100)/100;
+    const honor = r.destaque ? +r.destaque : Math.round(bruto*(T.pctAtr||0))/100;
+    tit = "Repasse ao cliente";
+    corpo = cp("Valor bruto levantado", "bruto", "number", bruto, ' oninput="rqLiquido()"') + cp("Honorários contratuais", "honor", "number", honor, ' oninput="rqLiquido()"')
+      + `<label class="conta-ck" style="display:flex;align-items:center;gap:8px;min-height:40px"><input type="checkbox" id="rq-destacado" style="width:20px;height:20px" ${r.destaque ? "checked" : ""} onchange="rqLiquido()">destacados na requisição</label>`
+      + cp("IR retido (RRA)", "ir", "number", "", ' oninput="rqLiquido()"') + cp("Repassado em", "em", "date", hoje(), ` max="${hoje()}"`)
+      + `<p class="adr-nota" style="flex-basis:100%">Valor líquido ao cliente: <b id="rq-liq"></b></p>`;
+    nota = `Honorários pelo contrato: ${T.frase || "sem percentual dos atrasados"}. Os destacados foram pagos direto ao escritório e não saem do crédito do cliente; os demais entram como recebidos nos honorários, sem novo lançamento quando já houver um. O IR é o retido pelo banco no regime de rendimentos recebidos acumuladamente (Lei 7.713/1988, art. 12-A), quando houver.`;
+  }
+  caixa(`<h3 style="margin:0 0 6px">${esc(tit)} · ${esc(tituloCaso(k))}</h3><p class="adr-nota" style="margin:0 0 10px">${esc(nota)}</p>
+    <div class="form-linha" style="align-items:flex-end;flex-wrap:wrap;gap:10px">${corpo}
+      <button class="adr-bt adr-primario" onclick="gravarReq('${k.id}','${escJs(rid)}','${passo}')">Gravar</button></div>`);
+  if(passo==="repasse") rqLiquido();
+}
+const rqVal = id => (document.getElementById("rq-"+id)||{}).value || "";
+function rqLiquido(){
+  const el = document.getElementById("rq-liq");
+  if(el) el.textContent = moeda(liquidoRepasse({bruto:rqVal("bruto"), honor:rqVal("honor"), ir:rqVal("ir"), destacado:(document.getElementById("rq-destacado")||{}).checked}));
+}
+async function gravarReq(casoId, rid, passo){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id); if(!c) return;
+  const lista = reqsDoCaso(k), r = lista.find(x=>x.id===rid), hj = hoje();
+  let nova, texto;
+  if(passo==="expedida"){
+    const v = +rqVal("valor"), ex = rqVal("expedida"), en = rqVal("entrega") || null, tipo = rqVal("tipo")==="precatorio" ? "precatorio" : "rpv";
+    if(!(v > 0)) return aviso("Informe o valor requisitado");
+    if(!ex || ex > hj) return aviso("Informe a data da expedição");
+    if(en && en < ex) return aviso("A entrega não pode ser anterior à expedição");
+    const n = {id:crypto.randomUUID(), tipo, valor:v, expedida:ex, entrega:en, destaque:+rqVal("destaque")||0, sucumbencia:+rqVal("sucumbencia")||0, por:eu.id};
+    nova = [...lista, n];
+    texto = `${rotReq(n)} de ${moedaTxt(v)} expedida em ${fmt(ex)}${en ? ` e entregue ao tribunal em ${fmt(en)}` : ""}.${prazoRpv(n) ? ` Prazo de pagamento até ${fmt(prazoRpv(n))} (Lei 10.259/2001, art. 17).` : " Pagamento pelo cronograma do tribunal."}`;
+  }else{
+    if(!r) return;
+    const d = rqVal(passo==="repasse" ? "em" : passo+"_em");
+    if(!d || d > hj) return aviso("Informe a data, que não pode ser futura");
+    let m;
+    if(passo==="pago"){ m = {pago_em:d}; texto = `${rotReq(r)} de ${moedaTxt(r.valor)} paga em ${fmt(d)}.`; }
+    else if(passo==="levantado"){ m = {levantado_em:d, alvara:rqVal("alvara").trim() || null}; texto = `Levantamento da ${rotReq(r)} em ${fmt(d)}${m.alvara ? `, alvará ${m.alvara}` : ""}.`; }
+    else{
+      const x = {em:d, bruto:+rqVal("bruto")||0, honor:+rqVal("honor")||0, destacado:!!(document.getElementById("rq-destacado")||{}).checked, ir:+rqVal("ir")||0};
+      if(!(x.bruto > 0)) return aviso("Informe o valor bruto levantado");
+      x.liquido = liquidoRepasse(x);
+      if(x.liquido < 0) return aviso("O líquido ficou negativo: confira os valores");
+      m = {repasse:x};
+      texto = `Repasse ao cliente em ${fmt(d)}: bruto ${moedaTxt(x.bruto)}, honorários contratuais ${moedaTxt(x.honor)}${x.destacado ? " (destacados, não descontados)" : ""}${x.ir ? `, IR retido ${moedaTxt(x.ir)}` : ""}, líquido ${moedaTxt(x.liquido)}.`;
+    }
+    nova = lista.map(y=>y===r ? {...y, ...m} : y);
+  }
+  const antes = ((c.campos||{}).requisicoes)||{};
+  if(!await gravarCamposCli(c, {requisicoes:{...antes, [k.id]:nova}})) return;
+  fecharCaixa();
+  const pg = passo==="repasse" ? await honorariosDoRepasse(c, k, nova.find(y=>y.id===rid).repasse) : null;
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})}).catch(()=>{});
+  repintarFicha();
+  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo], async()=>{
+    await gravarCamposCli(c, {requisicoes:antes});
+    if(pg) await api(`/rest/v1/pagamentos?id=eq.${pg.p.id}`, pg.antes ? {method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(pg.antes)} : {method:"DELETE"}).catch(()=>{});
+    if(pg){ if(pg.antes) Object.assign(pg.p, pg.antes); else D.pagamentos = D.pagamentos.filter(y=>y!==pg.p); }
+    repintarFicha();
+  });
+}
+// os honorários retidos no repasse (não destacados) entram como recebidos: o lançamento dos atrasados que já existe é
+// baixado; sem ele, nasce um, com a marca da proposta (hon:caso:atr), e a proposta não o lança de novo
+async function honorariosDoRepasse(c, k, x){
+  if(x.destacado || !(x.honor > 0)) return null;
+  const conf = [{c:eu.id, em:new Date().toISOString()}];
+  const p = (D.pagamentos||[]).find(y=>y.status==="aberto" && casoDoPgto(y)===k.id && natPgto(y)==="contrato" && !ORD_BEN.test(y.descricao||"")
+    && (String(y.todo_item_id||"")===`hon:${k.id}:atr` || /atrasad|\brpv\b|precat/i.test(y.descricao||"")));
+  try{
+    if(p){
+      const antes = {status:p.status, pago_em:p.pago_em, valor:p.valor, descricao:p.descricao, conferencias:p.conferencias||[]};
+      const muda = {status:"recebido", pago_em:x.em, valor:x.honor, descricao:semNota(p.descricao), conferencias:[...(p.conferencias||[]), ...conf]};
+      await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(muda)});
+      Object.assign(p, muda);
+      return {p, antes};
+    }
+    const [n] = await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"}, body:JSON.stringify({caso_id:k.id, cliente_id:c.id,
+      descricao:"Honorários · atrasados retidos no repasse ao cliente", valor:x.honor, vencimento:x.em, pago_em:x.em, status:"recebido", conferencias:conf, todo_item_id:`hon:${k.id}:atr`})}) || [];
+    if(n) (D.pagamentos = D.pagamentos||[]).push(n);
+    return n ? {p:n, antes:null} : null;
+  }catch(e){ aviso("O repasse foi gravado, mas os honorários não: lance-os na tabela"); return null; }
+}
+// o recibo do repasse, simples, para imprimir e o cliente assinar
+function reciboRepasse(casoId, rid){
+  const k = D.casoPorId.get(casoId), c = k && D.cliPorId.get(k.cliente_id), r = reqsDoCaso(k).find(x=>x.id===rid);
+  if(!c || !r || !r.repasse) return;
+  const x = r.repasse, w = window.open("", "_blank");
+  if(!w) return aviso("O navegador bloqueou a janela: libere os pop-ups deste site");
+  const lin = (rot, v, sinal="") => `<tr><td>${esc(rot)}</td><td class="v">${sinal}${esc(moedaTxt(v))}</td></tr>`;
+  const dataExt = new Date(x.em+"T12:00:00").toLocaleDateString(IDIOMA, {day:"numeric", month:"long", year:"numeric"});
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Recibo de repasse</title><style>
+    body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#111;line-height:1.6;font-size:15px}
+    h1{font-size:20px;text-align:center;margin:0 0 24px}table{width:100%;border-collapse:collapse;margin:18px 0}
+    td{padding:6px 4px;border-bottom:1px solid #ccc}td.v{text-align:right;white-space:nowrap}tr.t td{font-weight:bold;border-top:2px solid #111}
+    .ass{margin-top:64px;text-align:center}.ass span{display:block;border-top:1px solid #111;width:320px;margin:0 auto 4px}
+    @media print{body{margin:15mm}}</style></head><body>
+    <h1>Recibo de repasse</h1>
+    <p>Recebi do escritório Paulo R. Tercini Filho a importância líquida de <b>${esc(moedaTxt(x.liquido))}</b>, referente ao meu crédito na ${r.tipo==="precatorio" ? "requisição de precatório" : "requisição de pequeno valor (RPV)"} expedida em ${fmt(r.expedida)}${k.processo ? `, no processo nº ${esc(k.processo)}` : ""}${r.alvara ? `, levantada pelo alvará ${esc(r.alvara)}` : ""}, conforme discriminado:</p>
+    <table>${lin("Valor bruto levantado", x.bruto)}
+      ${x.destacado ? `<tr><td>Honorários contratuais destacados na requisição, pagos diretamente ao escritório e não descontados deste valor</td><td class="v">${esc(moedaTxt(x.honor))}</td></tr>`
+        : x.honor ? lin("Honorários contratuais, conforme o contrato", x.honor, "(−) ") : ""}
+      ${x.ir ? lin("Imposto de renda retido na fonte (rendimentos recebidos acumuladamente, Lei 7.713/1988, art. 12-A)", x.ir, "(−) ") : ""}
+      <tr class="t"><td>Valor líquido recebido</td><td class="v">${esc(moedaTxt(x.liquido))}</td></tr></table>
+    <p>Dou plena quitação quanto ao valor acima.</p><p>${esc(dataExt)}.</p>
+    <div class="ass"><span></span>${esc(c.nome||"")}${c.cpf ? `<br>CPF ${esc(fmtCpf(c.cpf))}` : ""}</div>
+    <script>window.print()<\/script></body></html>`);
+  w.document.close();
 }

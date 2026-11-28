@@ -48,7 +48,8 @@ type Msg = { direcao: string; por_bot: boolean; tipo: string; texto: string | nu
 export function transcricao(msgs: Msg[]) {
   return msgs.map((m) => {
     const quem = m.direcao === "entrada" ? "Cliente" : m.por_bot ? "Assistente virtual" : "Escritório";
-    const corpo = m.texto ? mascarar(m.texto).slice(0, 600) : `[${m.tipo}]`;
+    // F819 · o áudio com texto vem transcrito: a IA dizia que não tinha ouvido
+    const corpo = m.texto ? (m.tipo === "audio" ? "[áudio transcrito] " : "") + mascarar(m.texto).slice(0, 600) : `[${m.tipo}]`;
     const enc = m.encaminhada ? (m.encaminhada >= 4 ? "[encaminhada com frequência] " : "[encaminhada] ") : "";
     return `${hora(m.momento)} ${quem}: ${enc}${corpo}`;
   }).join("\n");
@@ -161,7 +162,7 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Prioridade (urgente) somente em benefício cortado, prazo correndo, perícia ou audiência nos próximos dias, golpe ou reclamação. Dúvida vaga não é urgente.\n` +
   `- Pergunta direta primeiro: responda o que a pessoa perguntou antes de seguir. Atendimento por vídeo ou telefone é possível quando a pessoa pede (remoto). ` +
   `O escritório não atende aos sábados, domingos e feriados: ofereça a data mais próxima. O atendimento é presencial, em Monte Alto; não ofereça nem pergunte sobre o remoto, que vale somente quando a própria pessoa pede ou mora longe.\n` +
-  // F840 · Matão (Paulo, 27.11.2026): o Dr. Paulo mora lá e muitos ligam de lá, mas o escritório fica só em Monte Alto
+  // F846 · Matão (Paulo, 27.11.2026): o Dr. Paulo mora lá e muitos ligam de lá, mas o escritório fica só em Monte Alto
   `- Cidade da pessoa: o escritório fica somente em Monte Alto; não há escritório em Matão. Pirangi, Vista Alegre do Alto, Jaboticabal, Guariba, Taquaritinga e as demais cidades vizinhas de Monte Alto agendam presencial normalmente. Quando a própria pessoa disser, a qualquer momento e em qualquer assunto (inclusive com o Dr. Marcos), que mora em Matão, Araraquara, Ribeirão Preto ou outra cidade distante, ou perguntar se o atendimento é em Matão, não agende nem confirme atendimento presencial: diga em uma frase que o escritório fica em Monte Alto e que o advogado dará continuidade pelo WhatsApp, e passe à equipe (acao "equipe", sem urgente), com a cidade no assunto. Se já houver atendimento agendado, avise no assunto que ele deve ser revisto pela equipe; não o cancele.\n` +
   `- Remarcar, cancelar ou saber o dia de um atendimento: encaminhe sempre ao Agendador, que consulta os atendimentos agendados do número; nunca use acao "equipe" antes da resposta dele. ` +
   `Dois atendimentos no mesmo dia, um depois do outro: o Agendador oferece dois horários seguidos com o mesmo advogado, sem passar à equipe. ` +
@@ -184,6 +185,8 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Número sem ficha que diz ter atendimento agendado e não aparece em atendimentos_marcados: peça uma vez o nome completo da pessoa atendida ` +
   `e chame consultar_vagas com o campo nome; o sistema procura o atendimento por esse nome. Frase que não é nome ("estou indo agora") não é nome.\n` +
   // F469 · a IA faz as perguntas do menu do SMBot, em frase (pedido do Paulo de 09.11.2026)
+  `- Áudio marcado [áudio transcrito]: o texto é o que a pessoa falou; responda a ele e nunca diga que não ouviu ou não conseguiu ouvir o áudio (F819).\n` +
+  `- Prazo da Justiça ou do INSS: só os tempos medidos do contexto, quando houver; sem medição para a etapa, não estime prazo nenhum (F819).\n` +
   `- Quando a mensagem não disser o que a pessoa precisa (cumprimento, "preciso de ajuda", áudio ou arquivo sem explicação), pergunte em uma frase, ` +
   `sem lista numerada, se ela deseja agendar um atendimento, saber o andamento do processo ou do benefício, enviar documentos, tratar do financeiro ` +
   `ou tirar outra dúvida. Na dúvida, pergunte se o assunto é do INSS ou de outra área. Com a resposta, siga o caminho de cada assunto: agendamento ao Agendador; ` +
@@ -493,6 +496,7 @@ export function retomada(msgs: Msg[] = []) {
       `Não retome o assunto anterior (agendamento, horários, pedidos) nem repita horários já oferecidos, salvo se ela o mencionar.\n`;
 }
 
+const primeiro = (s?: string | null) => String(s || "").trim().split(/\s+/)[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 export function contexto(x: Contexto) {
   // F689 · advogado em férias: a IA não o nomeia como quem vai responder nem oferece as datas dele (Paulo, 23.11.2026)
   const ferias = (x.ferias || []).map((f) => `${f.nome} está ausente do WhatsApp até ${f.ate}: não diga que vai encaminhar a ele nem que ele vai responder ` +
@@ -502,6 +506,8 @@ export function contexto(x: Contexto) {
     : `O número é de ${x.cliente.nome}, cliente do escritório.` + (x.cliente.mesmo_telefone
       ? ` Casos abertos: ${x.cliente.casos.map((k) => `${k.beneficio || "caso"} (fase ${k.fase}${k.etapa ? `, etapa: ${k.etapa}` : ""})`).join("; ") || "nenhum"}.`
       : " O número não é o telefone principal da ficha: não fale da situação de processo nenhum; os atendimentos agendados o Agendador consulta normalmente.")
+      + (!x.relacao && x.contato && primeiro(x.contato) && primeiro(x.contato) !== primeiro(x.cliente.nome)
+        ? ` No WhatsApp o contato se chama ${x.contato}, e não ${x.cliente.nome}: cumprimente ${x.contato.split(" ")[0]}, e não ${x.cliente.nome.split(" ")[0]}, que é tratado(a) em terceira pessoa (F823).` : "")
       + (x.relacao && x.contato ? ` Quem escreve é ${x.contato} (${x.relacao} de ${x.cliente.nome}): chame pelo nome de quem escreve, e não pelo nome da ficha. Refira-se a ${x.cliente.nome.split(" ")[0]} apenas pelo primeiro nome, sem "senhor", "senhora" ou "dona".` : "");
   return ferias + `Agora: ${x.agora} (horário de Brasília). ${x.horario ? "O escritório está no horário de atendimento." : "O escritório está fora do horário de atendimento."}\n` +
     `Modo: ${x.interativa ? "conversa na hora (ninguém da equipe está na conversa)" : "plantão (a equipe está na conversa e ainda não respondeu)"}.\n` +
@@ -621,7 +627,14 @@ export const ESQ_ANDAMENTO = {
 };
 type AndCaso = { beneficio?: string | null; fase: string; etapa?: string | null; etapa_sugerida?: string | null; etapa_sugerida_desde?: string | null;
   andamentos: { em: string; origem: string; texto: string }[];
+  expedientes?: Expediente[] | null;
   trf3?: { ordem?: number; total?: number; orgao?: string; consultado_em?: string; previsao?: string } | null };
+// F838 · expediente ABERTO do PJe (casos.ronda.expedientes, Fechado = NÃO): o prazo de quem foi intimado
+type Expediente = { grau?: string | null; ato?: string | null; destinatario?: string | null; ciencia_em?: string | null; prazo_dias?: string | number | null; limite?: string | null };
+const dataBR = (s?: string | null) => { const m = String(s || "").match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : String(s || ""); };
+export const linhaExpediente = (e: Expediente) => `${e.ato || "ato"} para ${mascarar(String(e.destinatario || "destinatário não informado"))}` +
+  `${e.ciencia_em ? `, ciência em ${dataBR(e.ciencia_em)}` : ""}${e.prazo_dias ? `, prazo de ${e.prazo_dias} dias` : ""}` +
+  `${e.limite ? `, termina em ${dataBR(e.limite)}` : ""}${e.grau ? ` (${e.grau})` : ""}`;
 export type Andamento = { conversa_id: string; contato: string; relacao?: string | null; cliente?: string | null; casos: AndCaso[]; mensagens: Msg[]; atendente?: Atendente | null };
 // o mascarar tomaria "28.09.2026 14:23" por número; a data do andamento é o que a resposta precisa dizer
 export const mascararMenosDatas = (s: string) => {
@@ -641,10 +654,13 @@ export const TEMPOS_MEDIDOS = `INSS: auxílio por incapacidade por análise docu
   `aproximadamente 2 anos e meio. Apelação no TRF3 sem fila conhecida, aproximadamente 7 meses. Mandado de segurança, aproximadamente 3 meses. ` +
   `Do trânsito em julgado ao pagamento da RPV, aproximadamente 7 meses. Justiça Estadual, ação acidentária (TJSP): do ajuizamento à sentença ou ao acordo homologado, cerca de 8 meses (de 3 a 18 meses; metade termina em acordo); no Núcleo 4.0 de Acidentes do Trabalho há processos com mais de 15 meses sem sentença. Apelação, pagamento e RPV na Justiça Estadual: sem medição suficiente, não estime. Outras ações estaduais: não estime.`;
 // F633 · somente o que veio dos portais (a anotação da equipe é interna), os 12 mais recentes (a rotina do e-SAJ escondia a decisão), sem números
-export function andamentosPublicos(a: { casos?: AndCaso[] } | null) {
-  return (a?.casos || []).flatMap((k) => (k.andamentos || []).filter((x) => !ORIGEM_AND[x.origem])
+export function andamentosPublicos(a: { casos?: AndCaso[] } | null, agora = new Date()) {
+  // F838 · os prazos ainda abertos no PJe vêm à frente: o "Decorrido prazo" dos andamentos é de prazo encerrado
+  const exps = (a?.casos || []).flatMap((k) => (k.expedientes || []).map((e) => ({ em: agora.toISOString(),
+    beneficio: k.beneficio || "caso", texto: `prazo ainda aberto no processo judicial: ${linhaExpediente(e)}` })));
+  return exps.concat((a?.casos || []).flatMap((k) => (k.andamentos || []).filter((x) => !ORIGEM_AND[x.origem])
     .map((x) => ({ em: x.em, beneficio: k.beneficio || "caso", texto: mascararMenosDatas(String(x.texto || "")).slice(0, 300) })))
-    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 12);
+    .sort((p, q) => Date.parse(q.em) - Date.parse(p.em)).slice(0, 12));
 }
 export function promptAndamento(a: Andamento, agora = new Date()) {
   const hoje = agora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "full", timeStyle: "short" });
@@ -656,27 +672,45 @@ export function promptAndamento(a: Andamento, agora = new Date()) {
     const t = k.trf3;   // F494 · a fila do gabinete no TRF3 (casos.trf3, crm/trf3_ordem.py)
     const fila = t && t.ordem ? `\n  - fila de julgamento no TRF3${t.orgao ? ` (${t.orgao})` : ""}: ${t.ordem}º${t.total ? ` de ${t.total}` : ""}` +
       `${t.consultado_em ? `, consulta de ${t.consultado_em}` : ""}${t.previsao ? `; previsão estimada de julgamento: ${t.previsao.slice(0, 7)}` : ""}` : "";
-    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.${fila}\n${ands || "  - sem andamentos"}`;
+    const exps = (k.expedientes || []).map((e) => `  - prazo em aberto: ${linhaExpediente(e)}`).join("\n");
+    return `Caso ${i + 1}: ${k.beneficio || "benefício não informado"}, fase ${k.fase}, etapa declarada "${k.etapa || "sem etapa"}"${sug}.${fila}\n${ands || "  - sem andamentos"}` +
+      (exps ? `\n  Expedientes do PJe ainda abertos (intimações com prazo correndo):\n${exps}` : "");
   }).join("\n\n");
   return `Você ajuda a equipe de um escritório de advocacia previdenciária a responder no WhatsApp. O cliente perguntou pelo andamento ` +
     `do processo. Escreva a resposta que o colaborador conferirá e enviará; ela não sai sozinha.\n\n` +
     `Decida primeiro: sugerir = true só quando as últimas mensagens do cliente perguntam como está o processo, se houve novidade ou ` +
     `resposta do INSS ou do juiz. Pedido de documento, de agendamento ou outro assunto: sugerir = false.\n\n` +
-    `Com sugerir = true, leia os casos abaixo. A data do fato é a que vem no texto do andamento do portal ("em 28.09.2026"), e não a data ` +
-    `do registro. Quando a etapa declarada e a dos portais divergem, vale o andamento mais recente do portal. Com mais de um caso, fale do ` +
-    `que a conversa indica ou de cada um em uma frase. Diga em palavras simples onde o processo está e desde quando, com a data no negrito ` +
-    `do WhatsApp (*28/09/2026*), quanto costuma demorar e a previsão. Processo no TRF3 com a fila de julgamento: a previsão é a da fila ` +
-    `(diga o mês e o ano e que é estimativa pela posição do processo no gabinete). Nos demais, use o tempo que os processos do escritório ` +
-    `levaram (medição de 09.11.2026), contado da data do fato: ` + TEMPOS_MEDIDOS + ` ` +
-    `Perícia, audiência ou prazo do escritório com data: diga a data. Sem andamento que permita dizer onde o processo está, escreva que ` +
-    `o escritório vai conferir e retornar. Nunca afirme que não há decisão, resultado ou recurso julgado: o caso pode não trazer tudo; se o cliente fala em decisão que os casos não mostram, ou se os casos divergem entre si, escreva que o escritório vai verificar e retornar (F674, caso de 17.11.2026). Nunca prometa resultado nem prazo certo; nunca cite número de processo, NB ou protocolo.\n\n` +
-    `Forma, como no modelo: o cumprimento do período do dia com o primeiro nome de quem escreve e "Tudo bem?", linha em branco, a situação, ` +
-    `linha em branco, o fecho. Português formal, sem emoji, sem lista, sem assinatura, "a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
+    `Com sugerir = true, leia os casos abaixo como o advogado leria (F823, pedido do Paulo de 26.11.2026). Junte as anotações da equipe e os ` +
+    `andamentos do portal e descubra a situação real: qual foi o último fato decisivo (o que o escritório pediu, o que o INSS respondeu, o ` +
+    `que o juiz decidiu) e o que falta acontecer, e de quem depende o próximo passo. A anotação da equipe vale mais que o registro de rotina ` +
+    `do portal ("Expedição de informação", "Decorrido prazo", "Juntada", certidão), que só confirma a sequência. Exemplo do raciocínio: o ` +
+    `escritório pediu a correção do valor, o prazo do INSS terminou sem oposição e o processo aguarda o juiz mandar o INSS corrigir; a ` +
+    `resposta diz isso, e não a lista de registros. A data do fato é a que vem no texto ("em 28.09.2026"), e não a data do registro. ` +
+    `Quando a etapa declarada e a dos portais divergem, vale o fato mais recente. Com mais de um caso, fale do que a conversa indica. ` +
+    `Previsão somente se a pessoa perguntar quando sai: processo no TRF3 com a fila de julgamento, o mês e o ano da fila, como estimativa; ` +
+    `nos demais, o tempo que os processos do escritório levaram, com "em média": ` + TEMPOS_MEDIDOS + ` ` +
+    `Prazo de quem tem de cumprir (o INSS, a autoridade, a Procuradoria): vale o expediente do PJe ainda aberto, do ato mais recente ` +
+    `(a sentença prevalece sobre a liminar); o "Decorrido prazo" dos andamentos é de prazo já encerrado e não é o prazo atual. Exemplo: ` +
+    `sentença intimada em 03/11 com prazo da autoridade até 02/12: diga que o prazo para implantar vai até 02/12, e não que o prazo terminou (F838). ` +
+    `Perícia, audiência ou prazo com data: diga a data. Sem fato que permita dizer onde o processo está, escreva que vai conferir e retornar. ` +
+    `Nunca afirme que não há decisão, resultado ou recurso julgado: o caso pode não trazer tudo; se o cliente fala em decisão que os casos não mostram, ` +
+    `ou se os casos divergem entre si, escreva que vai verificar e retornar (F674). Nunca prometa resultado nem valor.\n\n` +
+    `Quem escreve: cumprimente a pessoa que escreve neste número, indicada abaixo, e não o cliente da ficha quando forem pessoas diferentes; ` +
+    `o cliente da ficha, nesse caso, é tratado em terceira pessoa pelo primeiro nome ("o processo da Sueli"). Leia também as mensagens anteriores: ` +
+    `se elas mostram que quem escreve é outra pessoa (marido, filha), siga o que elas mostram.\n\n` +
+    `Forma: escreva como o Dr. Paulo escreve no WhatsApp, em linguagem simples e direta, como explicação de pessoa para pessoa. ` +
+    `Uma saudação curta com o primeiro nome de quem escreve, no máximo; depois o fato e o que se aguarda, em duas ou três frases; no fim, ` +
+    `o que o escritório fará ou quando dará notícia. Sem "Tudo bem?", sem asterisco nem negrito, sem lista, sem assinatura, sem emoji. ` +
+    `Proibido: "consultei o processo", "consultei o portal", "o último andamento que consta", "informação registrada pela vara", "ainda não consegui confirmar", ` +
+    `"não consigo informar uma previsão segura", e termo do portal (certidão, juntada, conclusos, expedição, ato ordinatório): diga o que aconteceu. ` +
+    `"a senhora" ou "o senhor" só quando o nome deixar claro.\n` +
     primeiraPessoa(a.atendente) + `\n` +
-    `Modelo (processo concluso para julgamento):\nBom dia, Maria! Tudo bem?\n\nConsultei o processo e ele está aguardando a decisão do juiz ` +
-    `desde *28/09/2026*. Nos processos do escritório, a sentença tem saído em aproximadamente 1 mês e meio depois desse ponto. ` +
-    `Nossa previsão é que tenhamos uma resposta em novembro.\n\nSigo acompanhando e, assim que houver alguma novidade, entro em contato. ` +
-    `Se a senhora tiver alguma dúvida, fico à disposição.\n\n` +
+    `Exemplos do jeito do Dr. Paulo (outros clientes; imite o tom, não os fatos):\n` +
+    `- "O perito ainda não apresentou o laudo. Ele tem 30 dias para apresentar. Assim que sair, aviso você."\n` +
+    `- "O INSS informou que o primeiro pagamento será no dia 06/10. Preciso entregar os papéis para você."\n` +
+    `- "Infelizmente, ainda não tivemos novidade. O pedido continua aguardando a correção do sistema pelo INSS, enviada em 10/08/2026."\n` +
+    `- "O processo chegou às mãos do desembargador que irá julgar. Sigo acompanhando e aviso assim que houver decisão."\n` +
+    `- "Bom dia, José! O juiz já marcou a perícia para o dia 04/12, às 13h20, em Catanduva. Antes disso, conversamos sobre os documentos que vai levar."\n\n` +
     `Agora: ${hoje}. Quem escreve neste número: ${quem}. Cliente da ficha: ${a.cliente || "não informado"}.\n\n` +
     `<casos>\n${casos || "sem casos abertos"}\n</casos>\n\n<conversa>\n${transcricao(a.mensagens || [])}\n</conversa>`;
 }
@@ -810,6 +844,49 @@ export function feriasDe(ks: Record<string, any>[], agora = new Date()) {
     return { nome: nome(k), ate: new Date(k.zap_ferias_ate).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" }), cobre: c ? nome(c) : null };
   });
 }
+// F819 · nas férias, quem cobre substitui o ausente no advogado indicado e no texto ao cliente ("Vou encaminhar ao Dr. Paulo")
+export function semFerias(texto: string, advogado: string, ferias: { nome: string; cobre: string | null }[] = []) {
+  const ART: Record<string, string> = { ao: "à", do: "da", o: "a", pelo: "pela", no: "na" };
+  for (const f of ferias) {
+    if (!f.cobre || !f.nome) continue;
+    // "ao Dr. Paulo" vira "à Dra. Amanda"
+    if (/^dra\b/i.test(f.cobre) && !/^dra\b/i.test(f.nome)) {
+      const n1 = f.nome.split(/\s+/).slice(0, 2).join(" ").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      texto = texto.replace(new RegExp(`\\b(ao|do|o|pelo|no) (?=${n1})`, "gi"), (_, a) => { const t = ART[a.toLowerCase()]; return (a[0] === a[0].toUpperCase() ? t[0].toUpperCase() + t.slice(1) : t) + " "; });
+    }
+    if (advogado.trim().replace(/:$/, "") === f.nome) advogado = f.cobre;
+    texto = texto.split(f.nome).join(f.cobre);
+    // a IA costuma abreviar ("Dr. Paulo"): troca também o tratamento com o primeiro nome
+    const curto = (n: string) => /^dra?\.?\s/i.test(n) ? n.split(/\s+/).slice(0, 2).join(" ") : "";
+    if (curto(f.nome) && curto(f.nome) !== f.nome) texto = texto.split(curto(f.nome)).join(curto(f.cobre) || f.cobre);
+  }
+  return { texto, advogado };
+}
+// F819 · a última rajada do cliente é só imagem (a IA deixava sem resposta)
+export const soImagem = (msgs: Msg[] = []) => {
+  const i = msgs.map((m) => m.direcao).lastIndexOf("entrada");
+  let j = i;
+  while (j >= 0 && msgs[j].direcao === "entrada") j--;
+  const r = msgs.slice(j + 1, i + 1);
+  return r.length > 0 && r.every((m) => m.tipo === "imagem" && !String(m.texto || "").trim());
+};
+export const RECEBI_IMAGEM = "Recebemos a imagem.\n\nUm colaborador do escritório vai verificar e responder em seguida.";
+// F819 · só cortesia: "ola" quando cumprimenta junto do agradecimento ("Ok gratidão Bom dia"), "fim" quando só agradece; senão null.
+// As palavras são as de zap_conf_agradece (F422ab/F819); o cumprimento sozinho segue para a IA.
+const CORTES = new Set(("ok okay obg muito valeu vlw beleza blz combinado certo ta tá bom está esta até ate lá la show perfeito isso sim amém amem " +
+  "deus abençoe abencoe graças gracas a o e confirmado entendi entendido doutor doutora dr dra então entao tchau dia tarde noite boa vou estarei eu " +
+  "tudo bem ótimo otimo legal joia jóia tranquilo abraço abraços abraco abracos de nada pela pelo atenção atencao").split(" "));
+const SAUDA = new Set(["bom", "boa", "dia", "tarde", "noite", "doutor", "doutora", "dr", "dra", "a", "o", "e"]);
+export function cortesia(texto: string | null | undefined): "ola" | "fim" | null {
+  const t = String(texto || "").toLowerCase().trim();
+  if (!t || t.length > 40 || t.includes("?")) return null;
+  const ws = t.replace(/[^\p{L}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
+  if (!ws.length) return "fim";   // só emoji ("👍")
+  if (!ws.every((w) => CORTES.has(w) || /^(grat|agradec|obrigad|brigad)/.test(w))) return null;
+  if (ws.every((w) => SAUDA.has(w))) return null;   // "Bom dia" sozinho abre conversa
+  return /\b(bom dia|boa tarde|boa noite)\b/.test(ws.join(" ")) ? "ola" : "fim";
+}
+
 // F421 · com o atendente Offline (F397) a mensagem automática dele já respondeu: a IA entra só na urgência e na agenda (F521)
 
 async function claude(texto: string | unknown[], esquema: unknown = ESQUEMA) {
@@ -1610,6 +1687,7 @@ if (typeof Deno !== "undefined") {
       if (!x) return json({ acao: null, aviso: "mensagem já lida ou vencida" });
       x.pagamento = await cfg("zap_dados_pagamento");   // F484 · fica no banco, porque o repositório é público
       x.ferias = await emFerias().catch(() => []);
+      if (x.advogado) x.advogado = semFerias("", x.advogado, x.ferias).advogado;   // F819
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       if (x.pericia) x.pericia.atendido = await atendidoHaPouco(x.cliente?.nome).catch(() => null);   // F661
@@ -1640,7 +1718,15 @@ if (typeof Deno !== "undefined") {
         x.remarcar.duvida = intencao === "outro";
       }
       let r: Record<string, any>;
-      if (x.motor === "agentes") {
+      // F819 · "Ok gratidão Bom dia": cumprimento do horário ou nada, nunca o menu
+      const ultimaEnt = [...(x.mensagens || [])].reverse().find((m: Msg) => m.direcao === "entrada");
+      const cort = !x.remarcar && ultimaEnt?.tipo === "texto" ? cortesia(ultimaEnt.texto) : null;
+      if (cort) {
+        const h = Number(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo", hour: "numeric", hourCycle: "h23" }));
+        const ola = h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
+        r = cort === "ola" ? { acao: x.interativa ? "conversa" : "responder", resposta: `${ola}! Em que posso ajudar?`, advogado: "", urgente: false, assunto: "cumprimento", relato: "", nome: "" }
+          : { acao: "nada", resposta: "", advogado: "", urgente: false, assunto: "agradecimento", relato: "", nome: "" };
+      } else if (x.motor === "agentes") {
         // o Managed Agents falhou: a chamada direta responde no lugar, ainda dentro dos 90 s
         try {
           r = await decidirPorAgente(x);
@@ -1668,11 +1754,19 @@ if (typeof Deno !== "undefined") {
         r = { ...r, assunto: r.assunto || "mensagens que o CRM não exibe; ver no celular",
           resposta: jaAvisou ? "" : "Um colaborador do escritório vai verificar a sua mensagem e responder em seguida." };
       }
+      // F819 · imagem do cliente recebe o recebimento e vai ao responsável
+      if (acao === "nada" && soImagem(x.mensagens)) { acao = "equipe"; r = { ...r, resposta: RECEBI_IMAGEM, assunto: r.assunto || "enviou imagem" }; }
+      // F819 · advogado em férias: o texto e o aviso vão a quem cobre
+      const sf = semFerias(String(r.resposta || ""), String(r.advogado || ""), x.ferias);
+      r = { ...r, resposta: sf.texto, advogado: sf.advogado };
       const antes = enviadosAtuais(x.mensagens);
       // F564 · na conversa assumida a resposta é sugestão; na confirmação e no aviso da perícia o escritório já abriu a conversa
       // F634 · o aviso vai na primeira resposta de cada dia (Paulo, 17.11.2026)
-      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), enviadosHoje(x.mensagens),
-        acao !== "nada" && !x.atendente && !x.remarcar && !x.pericia);
+      // F819 · a confirmação e o aviso da perícia dispensam o aviso só quando o escritório já escreveu hoje (o x.pericia vem
+      // para todo cliente com perícia marcada, e a primeira resposta do dia saía sem o aviso)
+      const hoje = enviadosHoje(x.mensagens);
+      const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), hoje,
+        acao !== "nada" && !x.atendente && (!(x.remarcar || x.pericia) || !hoje.length));
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: resposta, p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),

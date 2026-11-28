@@ -52,11 +52,20 @@ async function fundirCasos(absorvidoId, destinoId, opts={}){
   const falhas=[];
   const t=async(rotulo,f)=>{ try{ await f(); }catch(e){ falhas.push(rotulo); } };
   const registro = {de:a.id, para:d.id, fase:a.fase, ids:{}};
-  for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia","eventos"])
+  for(const tab of ["tarefas","pagamentos","andamento_tarefas","meu_dia","eventos","anexos"])
     registro.ids[tab] = ((await api(`/rest/v1/${tab}?caso_id=eq.${absorvidoId}&select=id`).catch(()=>[]))||[]).map(r=>r.id);
+  // F843 · o andamento que o destino já tem (mesma origem e origem_id, ou a mesma mensagem: o banco não deixa repetir)
+  // fica no incorporado. Um só repetido derrubava o lote inteiro e o histórico não saía da casca.
+  const chAnd = x => [x.zap_mensagem_id && "zap|"+x.zap_mensagem_id, x.origem_id && x.origem+"|"+x.origem_id].filter(Boolean);
+  const andsDe = id => todas("andamentos", `select=id,origem,origem_id,zap_mensagem_id&caso_id=eq.${id}`).catch(()=>[]);
+  const jaTem = new Set((await andsDe(destinoId)).flatMap(chAnd));
+  registro.ids.andamentos = (await andsDe(absorvidoId)).filter(x=>!chAnd(x).some(c=>jaTem.has(c))).map(x=>x.id);
+  for(let i=0; i<registro.ids.andamentos.length; i+=80)
+    await t("andamentos", ()=>api(`/rest/v1/andamentos?id=in.(${registro.ids.andamentos.slice(i, i+80).join(",")})`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}));
 
-  // filhos em lote (id preservado — a sincronização não duplica depois)
-  for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia"])
+  // filhos em lote (id preservado — a sincronização não duplica depois); F843 · os documentos vão junto
+  for(const tab of ["tarefas","pagamentos","andamento_tarefas","meu_dia","anexos"])
     await t(tab, ()=>api(`/rest/v1/${tab}?caso_id=eq.${absorvidoId}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}));
   // eventos um a um: a trinca caso+tipo+data é única — o repetido no destino
@@ -66,15 +75,15 @@ async function fundirCasos(absorvidoId, destinoId, opts={}){
     await t("evento", async()=>{
       try{ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"PATCH",
         headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}); }
-      catch(err){ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"DELETE"}); }
+      catch(err){ /* F844 · o mesmo agendamento já está no destino: a cópia fica na casca, nada se apaga */ }
     });
   // atribuições: quem já está no destino não entra duas vezes
   const atrA=await api(`/rest/v1/atribuicoes?caso_id=eq.${absorvidoId}&select=colaborador_id`).catch(()=>[])||[];
   const atrD=new Set(D.atrDoCaso.get(destinoId)||[]);
   for(const r of atrA)
-    await t("atribuição", ()=>api(`/rest/v1/atribuicoes?caso_id=eq.${absorvidoId}&colaborador_id=eq.${r.colaborador_id}`,
-      atrD.has(r.colaborador_id)?{method:"DELETE"}
-        :{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:destinoId})}));
+    if(!atrD.has(r.colaborador_id))   // F844 · quem já está no destino fica também na casca: nada se apaga
+      await t("atribuição", ()=>api(`/rest/v1/atribuicoes?caso_id=eq.${absorvidoId}&colaborador_id=eq.${r.colaborador_id}`,
+        {method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:destinoId})}));
 
   // campos: o destino manda; só o vazio herda. Listas se somam.
   const corpo={};
@@ -142,7 +151,9 @@ async function fundirCasos(absorvidoId, destinoId, opts={}){
   if(opts.quieto){
     Object.assign(d, corpo);
     if(a.todo_task_id) Object.assign(a, {fase:"encerrado", encerrado_em:new Date().toISOString(), arquivados:{...(a.arquivados||{}), fundido:{para:d.id, por:eu.id}}});
-    for(const x of (D._andsFicha||[])) if(x.caso_id===a.id) x.caso_id = d.id;
+    const foram = new Set(registro.ids.andamentos);
+    for(const x of (D._andsFicha||[])) if(foram.has(x.id)) x.caso_id = d.id;
+    for(const x of (D.anexos||[])) if(x.caso_id===a.id) x.caso_id = d.id;
     return a.todo_task_id ? registro : null;
   }
   aviso(`⇄ Fundido em "${tituloCaso(d)}"${falhas.length?` (atenção: falhou em ${falhas.join(", ")})`:""}`);
@@ -456,10 +467,10 @@ async function moverNumero(tipo, d, deId, paraId, opts={}){
     }
   }catch(e){ if(!opts.quieto) aviso("Não consegui levar o número — rode o crm/fase2/schema_por_em_dia.sql no Supabase se faltar coluna"); return false; }
   // os andamentos do número vão com ele, e os documentos e as tarefas desses andamentos também;
-  // o que o caso de destino já tem (mesma origem, mesmo origem_id, que o banco não deixa repetir) sai do de origem
+  // o que o caso de destino já tem (mesma origem, mesmo origem_id, que o banco não deixa repetir) fica no de origem
   const noDestino = new Set((D._andsFicha||[]).filter(a=>a.caso_id===paraId && a.origem_id).map(a=>a.origem+"|"+a.origem_id));
   const repetidos = ands.filter(a=>noDestino.has(a.origem+"|"+a.origem_id)).map(a=>a.id);
-  if(repetidos.length) await api(`/rest/v1/andamentos?id=in.(${repetidos.join(",")})`,{method:"DELETE"}).catch(()=>{});
+  // F844 · o repetido fica no caso de origem: nada se apaga (decisão do Paulo, 28.11.2026)
   const ids = ands.map(a=>a.id).filter(id=>!repetidos.includes(id));
   for(let i=0; i<ids.length; i+=80){
     const lote = ids.slice(i, i+80).join(",");
@@ -472,8 +483,7 @@ async function moverNumero(tipo, d, deId, paraId, opts={}){
   if(caminhos.length) await api(`/rest/v1/anexos?caso_id=eq.${deId}&or=(${caminhos.join(",")})`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:paraId})}).catch(()=>{});
   // a memória acompanha o banco: o lote seguinte e a evidência leem o caso novo
   const movidos = new Set(ids);
-  D._andsFicha = (D._andsFicha||[]).filter(a=>!repetidos.includes(a.id));
-  for(const a of D._andsFicha) if(movidos.has(a.id)) a.caso_id = paraId;
+  for(const a of (D._andsFicha||[])) if(movidos.has(a.id)) a.caso_id = paraId;
   for(const x of (D.anexos||[])) if((x.andamento_id && movidos.has(x.andamento_id)) || (x.caso_id===deId && caminhos.length && (numDoAnexo(x)||{}).d===d)) x.caso_id = paraId;
   // F225 · as perícias e audiências marcadas não dizem de que número são: vão junto quando o
   // caso de origem fica sem número nenhum, ou quando quem levou pediu (opts.eventos)
@@ -623,7 +633,21 @@ async function abrirOrganizar(cliId){ await abrirFicha(cliId); organizarCasos(cl
 // ══════════════════════════════════════════════════════════════════════════
 const ORDEM_FASE_ORG = {judicial:5, conselho:4, peticao_inicial:4, inss:3, escritorio:2, outro:1};
 function planoOrganizar(cliId){
-  const ks = casosParaOrganizar(cliId), passos = [], duvidas = [];
+  const passos = [], duvidas = [], juntados = new Set();   // F842 · casos que já se juntam pelo NB repetido
+  const rev = k=>/revis/i.test(k.beneficio||""), sobra = (xs, ys) => xs.length && ys.length && xs.some(x=>!ys.includes(x));
+  // F842 · só a tarefa do To Do se junta (vira casca, e a fusão se desfaz); nunca quando o caso ficaria com dois NUP
+  // ou dois processos principais, nem revisão com concessão
+  const podeJuntar = (k, n, dest, nd) => k.todo_task_id && n.nb.length===1 && !sobra(n.nup, nd.nup) && rev(k)===rev(dest)
+    && !(soDig(k.processo) && soDig(dest.processo) && soDig(k.processo)!==soDig(dest.processo));
+  // F844 · o caso em Pagamento é a fase final do mesmo benefício: o do mesmo NB se junta a ele (decisão do Paulo, 28.11.2026)
+  const pgs = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase==="pagamento").map(k=>[k, numerosDoCaso(k)]);
+  for(const k of casosParaOrganizar(cliId)){
+    const n = numerosDoCaso(k), alvo = pgs.filter(([, np])=>n.nb.length===1 && np.nb.includes(n.nb[0]));
+    if(alvo.length!==1 || !podeJuntar(k, n, alvo[0][0], alvo[0][1])) continue;
+    juntados.add(k.id);
+    passos.push({acao:"juntar", de:k.id, para:alvo[0][0].id, txt:`Juntar o caso ${rotCurtoCaso(k)} ao caso ${rotCurtoCaso(alvo[0][0])}, em Pagamento: os dois têm o NB ${fmtNb(n.nb[0])}`, fonte:"o mesmo NB nos dois casos"});
+  }
+  const ks = casosParaOrganizar(cliId).filter(k=>!juntados.has(k.id));
   if(ks.length<2) return {passos, duvidas};
   const ev = evidenciaNbs(ks), nums = new Map(ks.map(k=>[k.id, numerosDoCaso(k)]));
   const itens = [];
@@ -646,7 +670,21 @@ function planoOrganizar(cliId){
   const sai = (casoId, para) => { const x = saem.get(casoId) || {n:0, para:new Set()}; x.n++; x.para.add(para); saem.set(casoId, x); };
   for(const [nb, g] of grupos){
     const donos = ks.filter(k=>nums.get(k.id).nb.includes(nb));
-    if(donos.length>1) continue;   // o mesmo NB em dois casos: a sugestão "repetido" pede a escolha
+    if(donos.length>1){
+      // F842 · o mesmo NB em dois casos do cliente é o mesmo benefício que mudou de fase: os outros se juntam ao mais
+      // adiantado (decisão do Paulo, 27.11.2026). Só a tarefa do To Do se junta (vira casca, e a fusão se desfaz); nunca
+      // quando o caso ficaria com dois NUP ou dois processos principais, nem revisão com concessão. O resto segue na sugestão "repetido".
+      const ord = [...donos].sort((x,y)=>(ORDEM_FASE_ORG[y.fase]||0)-(ORDEM_FASE_ORG[x.fase]||0) || (x.todo_task_id?1:0)-(y.todo_task_id?1:0)
+        || String(x.criado_em||"").localeCompare(String(y.criado_em||"")));
+      const dest = ord[0], nd = nums.get(dest.id);
+      for(const k of ord.slice(1)){
+        const n = nums.get(k.id);
+        if(!podeJuntar(k, n, dest, nd)) continue;
+        juntados.add(k.id);
+        passos.push({acao:"juntar", de:k.id, para:dest.id, txt:`Juntar o caso ${rotCurtoCaso(k)} ao caso ${rotCurtoCaso(dest)}: os dois têm o NB ${fmtNb(nb)}`, fonte:"o mesmo NB nos dois casos"});
+      }
+      continue;
+    }
     const env = [...new Set([...g.map(x=>x.casoId), ...donos.map(k=>k.id)])].map(id=>D.casoPorId.get(id));
     if(env.length<2){
       const k = env[0];
@@ -673,7 +711,7 @@ function planoOrganizar(cliId){
   // o caso que entrega todos os seus números a um só destino junta-se a ele
   // (só o que veio do To Do: a casca fica encerrada e a fusão se desfaz)
   for(const k of ks){
-    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id) continue;
+    const x = saem.get(k.id); if(!x || x.para.size!==1 || !k.todo_task_id || juntados.has(k.id)) continue;
     const total = Object.values(nums.get(k.id)).reduce((s,v)=>s+v.length, 0);
     const para = D.casoPorId.get([...x.para][0]);
     if(total && x.n>=total && para) passos.push({acao:"juntar", de:k.id, para:para.id,
@@ -754,9 +792,13 @@ function planoHtml(cliId){
 // ── a organização em lote: todos os clientes de vários casos ─────────────
 function clientesVariosCasos(){
   const por = new Map();
-  for(const k of ativos()) if(k.fase!=="pagamento") por.set(k.cliente_id, [...(por.get(k.cliente_id)||[]), k]);
+  for(const k of ativos()) por.set(k.cliente_id, [...(por.get(k.cliente_id)||[]), k]);
   const linhas = [];
-  for(const [cid, ks] of por){
+  for(const [cid, todos] of por){
+    // F844 · o caso em Pagamento conta quando divide o NB com outro caso do cliente (a fusão o tem como destino)
+    const nbsPg = new Set(todos.filter(k=>k.fase==="pagamento").flatMap(k=>numerosDoCaso(k).nb));
+    const comPg = todos.some(x=>x.fase!=="pagamento" && numerosDoCaso(x).nb.some(n=>nbsPg.has(n)));
+    const ks = todos.filter(k=>k.fase!=="pagamento" || comPg);
     if(ks.length<2) continue;
     const c = D.cliPorId.get(cid); if(!c) continue;
     const org = (c.campos||{}).casos_org;

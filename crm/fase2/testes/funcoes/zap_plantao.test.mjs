@@ -316,6 +316,9 @@ console.log("formal: ok");
   const c = cx({ ...base, contato: "Paulo Tercini", relacao: "pai", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } });
   assert.ok(c.includes("Refira-se a Cliente apenas pelo primeiro nome") && c.includes("o menu automático inclusive"));
   assert.ok(pd.includes("nunca para abrir uma pergunta"));
+  const c830 = cx({ ...base, contato: "João Teste", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } });
+  assert.ok(c830.includes("cumprimente João, e não Cliente"), "F823 · contato diferente sem relação");
+  assert.ok(!cx({ ...base, contato: "Cliente", cliente: { nome: "Cliente Teste", mesmo_telefone: true, casos: [] } }).includes("(F823)"));
   console.log("menu e representado: ok");
 }
 
@@ -507,7 +510,8 @@ console.log("formal: ok");
     new Date("2026-11-09T12:30:00Z"));
   assert.ok(p.includes("Conclusos para julgamento") && p.includes("aguardando sentença"), "o andamento e a etapa dos portais vão ao modelo");
   assert.ok(!p.includes("5001864"), "o número do processo vai mascarado");
-  assert.ok(p.includes("de 2 a 3 semanas") && p.includes("aproximadamente 9 meses") && !p.includes("aproximadamente 6 meses") && p.includes("*28/09/2026*"), "os tempos medidos e o negrito do WhatsApp");
+  assert.ok(p.includes("de 2 a 3 semanas") && p.includes("aproximadamente 9 meses") && !p.includes("aproximadamente 6 meses") && !p.includes("*28/09/2026*") && p.includes("sem asterisco"), "os tempos medidos, sem negrito (F823)");
+  assert.ok(p.includes('"consultei o portal"') && p.includes("último fato decisivo") && p.includes("anotação da equipe vale mais"), "F823 · leitura do caso e frases proibidas");
   assert.ok(p.includes("ação acidentária (TJSP)") && p.includes("cerca de 8 meses") && !p.includes("Justiça Estadual: sem medição, não estime"), "F496 · o tempo medido da ação acidentária estadual");
   const f = promptAndamento({ conversa_id: "c", contato: "Ana", casos: [{ beneficio: "B42", fase: "judicial", andamentos: [],
     trf3: { ordem: 1098, total: 3173, orgao: "10ª Turma", consultado_em: "2026-10-30", previsao: "2027-03-15" } }], mensagens: [] });
@@ -547,7 +551,9 @@ console.log("formal: ok");
   const cob = promptCobranca({ conversa_id: "x", msg_id: "y", dias: 3, contato: "Ana", mensagens: [], atendente: { nome: "Meissa", cargo: "recepcao" } });
   assert.ok(cob.includes("como Meissa") && cob.includes("para que eu possa verificar"), "a cobrança também");
   const and = promptAndamento({ conversa_id: "c", contato: "Maria", casos: [], mensagens: [] });
-  assert.ok(and.includes("Sigo acompanhando") && and.includes("fico à disposição") && !and.includes("estamos à disposição."), "o modelo do andamento");
+  assert.ok(and.includes("Sigo acompanhando") && and.includes("jeito do Dr. Paulo") && !and.includes("Tudo bem?\\n"), "o modelo do andamento");
+  const rel = promptAndamento({ conversa_id: "c", contato: "João Teste", cliente: "Maria Teste", casos: [], mensagens: [] });
+  assert.ok(rel.includes("Quem escreve neste número: João Teste") && rel.includes("terceira pessoa"), "F823 · contato diferente do titular");
   assert.ok(primeiraPessoa(null).includes("o colaborador que atende"));
   assert.equal(emLinhas("Agradeço.\n\nQualquer dúvida, fico à disposição.", ["Qualquer dúvida, estamos à disposição."]), "Agradeço.", "o fecho uma vez só");
   console.log("ok F485 primeira pessoa");
@@ -848,4 +854,41 @@ assert.match(regras(), /nunca copie o nome do ato do portal/);
   const c = contexto({ contato: "Cliente Teste", advogado: null, advogados: null, modo: "conversa", respostas: 0, horario: true, agenda: true,
     agora: "x", mensagens: [], ferias: f });
   assert.ok(c.startsWith("Dr. Teste está ausente do WhatsApp até 26/11/2026") && c.includes("encaminhe a Dra. Teste"));
+}
+{
+  // F819 · auditoria de 21 a 25.11.2026
+  const { semFerias, soImagem, cortesia, RECEBI_IMAGEM, transcricao, regras } = await import("../../zap_plantao/index.ts");
+  const f = [{ nome: "Dr. Teste Titular", cobre: "Dra. Teste Substituta" }];
+  assert.deepEqual(semFerias("Vou encaminhar a sua pergunta ao Dr. Teste.", "Dr. Teste Titular:", f),
+    { texto: "Vou encaminhar a sua pergunta à Dra. Teste.", advogado: "Dra. Teste Substituta" });
+  assert.equal(semFerias("O Dr. Teste Titular responde.", "", f).texto, "A Dra. Teste Substituta responde.");
+  assert.equal(semFerias("Olá.", "Dr. Outro", f).advogado, "Dr. Outro");
+  const m = (direcao, tipo, texto = null) => ({ direcao, por_bot: direcao === "saida", tipo, texto, momento: "2026-11-24T12:00:00Z" });
+  assert.ok(soImagem([m("saida", "texto", "Olá"), m("entrada", "imagem"), m("entrada", "imagem")]));
+  assert.ok(!soImagem([m("entrada", "texto", "segue o laudo"), m("entrada", "imagem")]));
+  assert.ok(soImagem([m("entrada", "imagem"), m("saida", "texto", "Recebido")]));
+  assert.ok(RECEBI_IMAGEM.includes("Recebemos a imagem"));
+  assert.equal(cortesia("Ok gratidão Bom dia"), "ola");
+  assert.equal(cortesia("Obrigada!"), "fim");
+  assert.equal(cortesia("👍"), "fim");
+  assert.equal(cortesia("Bom dia"), null);
+  assert.equal(cortesia("ok, mas quero remarcar"), null);
+  assert.equal(cortesia("obrigada, e o processo?"), null);
+  assert.ok(transcricao([m("entrada", "audio", "quero saber da perícia")]).includes("[áudio transcrito] quero saber da perícia"));
+  assert.match(regras(), /nunca diga que não ouviu/);
+  assert.match(regras(), /sem medição para a etapa, não estime/);
+  console.log("F819 ok");
+}
+{
+  // F838 · o expediente aberto do PJe entra com o prazo certo; o "Decorrido prazo" da liminar não é o prazo atual
+  const m = await import("../../zap_plantao/index.ts");
+  const caso = { beneficio: "Aposentadoria", fase: "judicial", andamentos: [{ em: "2026-11-20T10:00:00Z", origem: "pje", texto: "Decorrido prazo de INSS em 19/11/2026" }],
+    expedientes: [{ grau: "1º grau", ato: "Sentença tipo A", destinatario: "Gerente Central de Análise de Benefícios", ciencia_em: "2026-11-03T10:00:00", prazo_dias: "20", limite: "2026-12-02T23:59:59" }] };
+  const p = m.promptAndamento({ conversa_id: "c", contato: "Cliente Teste", cliente: "Cliente Teste", casos: [caso], mensagens: [] });
+  assert.ok(p.includes("prazo em aberto: Sentença tipo A para Gerente Central de Análise de Benefícios, ciência em 03/11/2026, prazo de 20 dias, termina em 02/12/2026"));
+  assert.ok(p.includes("a sentença prevalece sobre a liminar"));
+  const pub = m.andamentosPublicos({ casos: [caso] });
+  assert.ok(pub[0].texto.includes("termina em 02/12/2026"));
+  assert.equal(pub.length, 2);
+  assert.ok(!m.promptAndamento({ conversa_id: "c", contato: "A", casos: [{ ...caso, expedientes: [] }], mensagens: [] }).includes("Expedientes do PJe"));
 }

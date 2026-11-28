@@ -111,8 +111,8 @@ def mover(gc, listas, k, titulo):
 
 
 def main(argv):
-    if os.environ.get("PONTE_PRECASO") == "0":
-        print("ponte do pré-caso desligada (PONTE_PRECASO=0). Nada foi enviado.")
+    if os.environ.get("PONTE_PRECASO") != "1":  # escrita no To Do só com autorização expressa (24.11.2026)
+        print("ponte do pré-caso desligada (PONTE_PRECASO diferente de 1). Nada foi enviado.")
         return 0
     url, chave = os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_KEY")
     if not url or not chave:

@@ -50,9 +50,11 @@ function pzNat(v){ _pzNat = v; pzPintar(); }
 function pzDia(d){ _pzDia = _pzDia===d ? null : d; pzPintar(); }
 function pzMes(n){ const m = _pzMes || hoje().slice(0,7), d = new Date(m+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7); pzPintar(); }
 // o retorno do To Do e a volta à fila têm chip próprio (Retorno), embora a natureza seja lembrete
-const ehRetornoPz = x => x.rotulo==="Retorno" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
+const ehRetornoPz = x => x.rotulo==="Prazo do Microsoft To Do" || x.rotulo==="Volta à fila" || x.rotulo==="Retorno do pré-caso";   // F666 · o retorno do pré-caso aparece na aba Prazos (antes só no quadro do Caso)
 // 19.11.2026 · transição até 31/12/2026 (pedido do Paulo): a aba mostra só as datas do Microsoft To Do; false devolve as demais
 const PZ_SO_TODO = !window.PZ_TODOS_TIPOS; // as provas da aba ligam PZ_TODOS_TIPOS
+// 27.11.2026 · só o que vem do To Do: a Volta à fila e o Retorno do pré-caso são do CRM e saem nesse modo
+const doTodoPz = x => !!x.todo || x.rotulo==="Prazo do Microsoft To Do";
 const natFiltroPz = x => ehRetornoPz(x) ? "retorno" : x._nat;
 const corPz = x => ehRetornoPz(x) ? "ret" : x._nat==="fatal" ? "fatal" : x._nat==="compromisso" ? "comp" : "lemb";
 const pillPz = x => ehRetornoPz(x) ? `<span class="pz-pill pz-pill-lembrete"><i aria-hidden="true"></i>${esc(x.rotulo)}</span>${pillTodo(x)}` : pillNat(x._nat) + pillTodo(x);
@@ -103,12 +105,12 @@ function calendarioPz(){
   }
   return `<aside class="pzm" aria-label="Mês"><div class="pzm-cab"><button type="button" class="pzm-nav" onclick="pzMes(-1)" aria-label="Mês anterior">‹</button><b>${MES_LONGO[mm-1][0].toUpperCase()+MES_LONGO[mm-1].slice(1)} de ${y}</b><button type="button" class="pzm-nav" onclick="pzMes(1)" aria-label="Mês seguinte">›</button></div>
     <div class="pzm-g">${h}</div>
-    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span><span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span><span><i class="pzm-ret"></i>Retorno</span></div></aside>`;
+    <div class="pzm-leg"><span><i class="pzm-fatal"></i>Prazo fatal</span>${PZ_SO_TODO ? "" : `<span><i class="pzm-comp"></i>Compromisso</span><span><i class="pzm-lemb"></i>Lembrete</span>`}<span><i class="pzm-ret"></i>Prazo do Microsoft To Do</span></div></aside>`;
 }
 function pzConteudo(cliId){
   const hj = hoje(), em = n => somaDias(hj, n);
   _pzCliId = cliId;
-  _pzCli = prazosDoCliente(cliId).lista.filter(x=>!PZ_SO_TODO || ehRetornoPz(x) || x.todo);
+  _pzCli = prazosDoCliente(cliId).lista.filter(x=>!PZ_SO_TODO || doTodoPz(x));
   _pzCli.forEach((x, i)=>prepPz(x, i, "cli"));
   if(painelPz && painelPz.fonte==="cli"){ const j = _pzCli.findIndex(x=>x.data===painelPz.data && (x.andId||"")===painelPz.andId && (x.rotulo||"")===painelPz.rotulo);
     if(j>=0) setTimeout(()=>abrirPainelPrazo(j, "cli")); }
@@ -119,7 +121,7 @@ function pzConteudo(cliId){
   const fatais = _pzCli.filter(x=>x._nat==="fatal" && !x.aConfirmar);
   const heroX = fatais.find(x=>x.data>=hj) || fatais.find(pend) || null;
   const ferr = `<div class="pzc-ferr">
-    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Retorno"]]).map(([v, r])=>
+    <div class="pzc-chips" role="group" aria-label="Filtrar pela natureza">${(PZ_SO_TODO ? [["todos","Microsoft To Do"]] : [["todos","Todos"],["fatal","Prazo fatal"],["compromisso","Compromisso"],["lembrete","Lembrete"],["retorno","Prazo do Microsoft To Do"]]).map(([v, r])=>
       `<button type="button" aria-pressed="${_pzNat===v}" class="pzc-chip${_pzNat===v?" on":""}" onclick="pzNat('${v}')"${!nNat(v) && v!=="todos" ? " disabled" : ""}>${r} <span>${nNat(v)}</span></button>`).join("")}</div>
     <div class="pzc-seg" role="group" aria-label="Agrupar os prazos">${[["data","Por data"],["caso","Por caso"]].map(([v, r])=>
       `<button type="button" aria-pressed="${_pzVer===v}" class="${_pzVer===v?"on":""}" onclick="pzVer('${v}')">${r}</button>`).join("")}</div>
@@ -153,7 +155,7 @@ function pzConteudo(cliId){
       <h3 class="pzc-gt"><span>${esc(o.rot)}</span> <span class="pzc-gn">${o.g.length}</span>${o.tom==="venc" ? `<button type="button" class="pzc-lk" onclick="pzReagendar()" title="Leva retornos, voltas à fila e lembretes vencidos a outra data. O prazo fatal fica.">Reagendar</button>` : ""}${o.k ? `<button type="button" class="pzc-g-abrir" onclick="casoSel='${o.k.id}';abaAtiva=2;subAba='escritorio';repintarFicha()" title="Abrir o caso">Abrir<span class="sr-only"> o caso</span></button>` : ""}</h3>
       <ul class="pzc-lista">${o.g.map(linha).join("")}</ul></section>`).join("")
     : `<p class="pzc-nada">${_pzDia ? "Nenhum prazo neste dia." : "Nenhum prazo desta natureza."}</p>`);
-  return `${heroX ? pzHero(heroX) : ""}${ferr}<div class="pzc-grade"><div class="pzc-col">${lista}</div>${calendarioPz()}</div>`;
+  return `${todoDatasCliente(cliId)}${heroX ? pzHero(heroX) : ""}${ferr}<div class="pzc-grade"><div class="pzc-col">${lista}</div>${calendarioPz()}</div>`;
 }
 // ══════════════════════════════════════════════════════════════════════════
 // F104 · OS QUADROS DE PRAZO (tema v10). Um quadro por prazo, lado a lado,
@@ -276,7 +278,7 @@ function casoCurtoPz(k){
 }
 // F504 · o nome curto da linha: a natureza, e não o título (pedido do Paulo, 10.11.2026)
 function natRotPz(x){
-  if(ehRetornoPz(x)) return "Retorno";
+  if(ehRetornoPz(x)) return "Prazo do Microsoft To Do";
   const nat = natDaLinha(x);
   if(nat==="fatal" || x.prorrogDe) return "Prazo fatal";
   if(x.ico==="🩺" && !/prorroga/i.test(x.rotulo||"")){
@@ -1255,7 +1257,16 @@ function nbsDoCaso(k){
 function miniAgenda(k){
   if(!k || !k.cliente_id) return "";
   if(k.cliente_id!==_pzCliId){ _pzCliId = k.cliente_id; _pzMes = null; _pzDia = null; }
-  return `<section class="ma" id="ma-cli" aria-label="Agenda do cliente">${maConteudo(k.cliente_id)}</section>`;
+  // F835 · a mini agenda abre recolhida numa linha "Próximo prazo"; o mês inteiro fica a um clique e a escolha vale até fechar o CRM
+  return `<section class="ma" aria-label="Agenda do cliente"><details class="ma-dt"${_maAberta ? " open" : ""} ontoggle="_maAberta=this.open"><summary>${maProximo(k.cliente_id)}</summary><div id="ma-cli">${maConteudo(k.cliente_id)}</div></details></section>`;
+}
+let _maAberta = false;
+function maProximo(cliId){
+  const hj = hoje(), x = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x)) && x.data>=hj).sort((a, b)=>a.data<b.data ? -1 : a.data>b.data ? 1 : 0)[0];
+  if(!x) return `<span class="ma-px-r">Próximo prazo</span><span class="ma-px-n">nenhum marcado</span>`;
+  prepPz(x, 0);
+  const quando = x.data===hj ? "hoje" : fmtBarra(x.data).slice(0,5);
+  return `<span class="ma-px-r">Próximo prazo</span><b>${quando}</b><span class="ma-px-t">${esc(ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete")}</span>`;
 }
 function maMes(n){
   const d = new Date((_pzMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7);
@@ -1264,7 +1275,7 @@ function maMes(n){
 function maDia(iso){ _pzDia = iso; _pzMes = iso.slice(0,7); abaAtiva = 5; repintarFicha(); }
 function maConteudo(cliId){
   const hj = hoje(), m = _pzMes || hj.slice(0,7), [y, mm] = m.split("-").map(Number), off = new Date(y, mm-1, 1, 12).getDay(), nDias = new Date(y, mm, 0).getDate();
-  const its = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || ehRetornoPz(x) || x.todo) && x.data.slice(0,7)===m);
+  const its = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x)) && x.data.slice(0,7)===m);
   its.forEach((x, i)=>prepPz(x, i));
   const por = new Map(); for(const x of its){ if(!por.has(x.data)) por.set(x.data, []); por.get(x.data).push(x); }
   const tipo = x => ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete";

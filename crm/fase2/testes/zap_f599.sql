@@ -42,7 +42,10 @@ insert into r select 'a1 fora do expediente não envia', zap_amparo_vez('2026-11
 insert into r select 'a2 envia só a de 70 min', zap_amparo_vez('2026-11-10 13:00:00+00') = 1;
 insert into r select 'a3 mensagem assinada pela assistente',
   exists (select 1 from zap_mensagens where conversa_id = (select id from v) and direcao = 'saida' and por_bot
-           and texto = E'*Assistente do escritório:*\n\nBom dia. Recebemos a sua mensagem. A equipe responderá em breve.');
+           and texto like E'*Assistente do escritório:*\n\nBom dia. Recebemos a sua mensagem. A equipe responderá em breve.\n\nAtenção ao golpe do falso advogado:%');
+-- F827 · sem a nota interna com o mesmo texto da mensagem
+insert into r select 'a3b F827 sem nota interna duplicada',
+  not exists (select 1 from zap_mensagens where conversa_id = (select id from v) and direcao = 'interna');
 insert into r select 'a4 recepção mencionada',
   exists (select 1 from mencoes where para_id = '55555555-5555-5555-5555-555555555555'
            and conversa_id = (select id from v) and texto like 'Cliente sem resposta há mais de 60 minutos%');
@@ -59,7 +62,7 @@ insert into r select 'a9 respondida não envia', zap_amparo_vez('2026-11-10 13:4
 -- nova mensagem do cliente 1 hora depois do primeiro amparo: ainda não passaram 2 horas
 update zap_conversas set ultima_entrada_em = '2026-11-10 13:30:00+00' where id = (select id from v);
 insert into r select 'b1 intervalo de 2 horas', zap_amparo_vez('2026-11-10 14:40:00+00') = 0;
-insert into r select 'b2 segundo amparo depois de 2 horas', zap_amparo_vez('2026-11-10 15:05:00+00') = 1;
+insert into r select 'b2 F819: sem segundo amparo no mesmo dia', zap_amparo_vez('2026-11-10 15:05:00+00') = 0;
 -- terceira espera no mesmo dia: limite de 2
 update zap_conversas set ultima_entrada_em = '2026-11-10 15:30:00+00' where id = (select id from v);
 insert into r select 'b3 limite de 2 por dia', zap_amparo_vez('2026-11-10 18:00:00+00') = 0;
@@ -68,7 +71,7 @@ update zap_conversas set ultima_entrada_em = '2026-11-11 17:00:00+00' where id =
 insert into r select 'b4 novo dia envia', zap_amparo_vez('2026-11-11 18:10:00+00') = 1;
 insert into r select 'b5 à tarde diz boa tarde e em breve, sem ainda hoje',
   exists (select 1 from zap_mensagens where conversa_id = (select id from v) and por_bot
-           and texto like '%Boa tarde. Recebemos a sua mensagem. A equipe responderá em breve.')
+           and texto like E'%Boa tarde. Recebemos a sua mensagem. A equipe responderá em breve.\n\nAtenção ao golpe do falso advogado:%')
   and not exists (select 1 from zap_mensagens where por_bot and (texto like '%ainda hoje%' or texto like '%ciente%'));
 -- pedido de andamento de cliente com ficha: equipe jurídica e URGENTE
 insert into clientes (id, nome) values ('66666666-6666-6666-6666-666666666666', 'Cliente Teste')
@@ -123,7 +126,7 @@ insert into r select 'e4a a IA grava',
   zap_amparo_gravar((select id from u), 'A perícia será na Agência Teste, Rua A, 1.', '2026-11-12 12:11:00+00');
 insert into r select 'e4 resposta da IA sem o aviso de equipe ciente',
   exists (select 1 from zap_mensagens where conversa_id = (select id from u) and por_bot
-               and texto = E'*Assistente do escritório:*\n\nBom dia. A perícia será na Agência Teste, Rua A, 1.');
+               and texto like E'*Assistente do escritório:*\n\nBom dia. A perícia será na Agência Teste, Rua A, 1.\n\nAtenção ao golpe do falso advogado:%');
 insert into r select 'e5 não grava duas vezes',
   not zap_amparo_gravar((select id from u), 'outra', '2026-11-12 12:12:00+00');
 -- sem resposta da IA em 3 minutos: o texto fixo
@@ -133,6 +136,22 @@ insert into r select 'e7a fixo depois de 3 minutos', zap_amparo_vez('2026-11-12 
 insert into r select 'e7 fixo depois de 3 minutos',
   exists (select 1 from zap_mensagens where conversa_id = (select id from u) and por_bot
                and texto like '%Boa tarde. Recebemos a sua mensagem. A equipe responderá em breve.');
+-- F827 · o aviso do golpe só na primeira mensagem do dia
+insert into r select 'e7b F827 aviso do golpe uma vez no dia',
+  (select count(*) from zap_mensagens where conversa_id = (select id from u) and por_bot and texto like '%falso advogado%') = 1;
+-- F827 · mensagem sem cobrança, parada há mais de 2 horas no expediente: o amparo não sai (só a cobrança o chama)
+create temp table x(id uuid);
+insert into x select zap_abrir('5500000000097', 'Cliente Teste');
+insert into zap_mensagens (conversa_id, direcao, texto, criado_em)
+values ((select id from x), 'entrada', 'Bom dia, preciso do extrato do benefício', '2026-11-13 11:00:00+00');
+update zap_conversas set status = 'aberta', automatica = false, sem_ia = false, atendente_id = null, plantao = null,
+       confirmacao = null, amparo = null, cliente_id = null, ultima_entrada_em = '2026-11-13 11:00:00+00', ultima_resposta_em = null
+ where id = (select id from x);
+insert into r select 'g1 F827 sem cobrança, 3 horas depois, sem amparo', zap_amparo_vez('2026-11-13 14:00:00+00') = 0;
+insert into r select 'g2 F827 sem o critério de 2 horas',
+  position('2 hours'')) then continue' in pg_get_functiondef('public.zap_amparo_vez'::regproc)) = 0;
+insert into r select 'g3 F827 agradecimento no fim da frase', zap_conf_agradece('texto', 'avisei ele, obrigada');
+insert into r select 'g4 F827 pedido com obrigada segue', not zap_conf_agradece('texto', 'quero remarcar, obrigada');
 -- desligado
 update config_app set valor = 'nao' where chave = 'zap_ia_amparo';
 update zap_conversas set ultima_entrada_em = '2026-11-12 13:00:00+00', ultima_resposta_em = null

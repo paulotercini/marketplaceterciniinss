@@ -345,7 +345,8 @@ async function renderConfig(){
 
   meio.innerHTML =
     // F151 · a agenda de quarta: o endereço do Apps Script e o token do Paulo
-    `<h3 class="secao">📅 Agenda de atendimentos</h3>${cardLigarAgenda()}`
+    `<h3 class="secao">📅 Agenda de atendimentos</h3>${agendaUrl() && agendaToken() ? cardLigarAgenda()   // F828 · sem ligar, o formulário fica recolhido
+      : `<details class="aq-ligar-d"><summary class="meio-sub">Agenda do Google não ligada. Ligar</summary>${cardLigarAgenda()}</details>`}`
     + cfgDuracoes()
     + cfgRegrasModelos()
     +     // ── quem atende ──────────────────────────────────────────────────────
@@ -546,7 +547,7 @@ async function renderConfig(){
            <li>Volte aqui, cole no campo abaixo e salve.</li>
          </ol>
          <textarea id="cf-crps-cracha" rows="3" placeholder="cole aqui o crachá copiado"
-           style="width:100%;font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:11px"></textarea>
+           style="width:100%;font-family:var(--f-mono,ui-monospace,Consolas,monospace);font-size:12px"></textarea>
          <div class="form-linha" style="margin-top:6px">
            <button class="btn" id="cf-crps-salvar" title="Salvar crachá">Salvar<span class="sr-only"> crachá</span></button>
            <span class="meio-sub">o crachá fica guardado num cofre que só o robô abre e não aparece nas telas.</span>
@@ -1088,8 +1089,8 @@ function itensDoCalendario(){
     // F450 · o retorno e a volta à fila se arrastam a outro dia; o prazo fatal, arrastado, abre a janela do prazo
     const desp = (k.ronda||{}).despacho, pz = {pz:{casoId:k.id}};
     if(k.prazo && !igual) push(k.prazo, prazoEhRetorno(k) ? "lembre" : "prazo",
-      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "retorno" : "prazo fatal"})`, c.id,
-      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Retorno"}} : pz);
+      `${c.nome}: ${k.lembrar_motivo||tituloCaso(k)} (${prazoEhRetorno(k) ? "prazo do Microsoft To Do" : "prazo fatal"})`, c.id,
+      prazoEhRetorno(k) ? {mov:{k, selo: desp && desp.prazo===k.prazo ? "Volta à fila" : "Prazo do Microsoft To Do"}} : pz);
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome}: exigência vence${igual==="exig"?" (prazo fatal)":""}`,c.id,pz);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome}: benefício cessa (pedir prorrogação)`,c.id);

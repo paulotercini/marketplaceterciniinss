@@ -65,7 +65,8 @@ const lcFichaAberta = new Set();
 // F114 · todas as datas do caso, na ordem da leitura. A linha mostra as
 // essenciais da espécie e gestão do caso guarda o resto.
 const DATAS_SECUNDARIAS = ["der","dib","dii","dat","cat_em","dcb","dcb_prorrogar_em","did","grau_deficiencia",
-  "consolidacao_em","obito_em","prisao_em","parto_em","cadunico","primeiro_pagamento_em","decisao_em","ajuizado_em"];
+  "consolidacao_em","obito_em","prisao_em","parto_em","cadunico","primeiro_pagamento_em","decisao_em","ajuizado_em",
+  "dip","citado_em","ciencia_indeferimento_em"];   // F831
 function lcNovaData(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const faltam = DATAS_SECUNDARIAS.filter(c=>!k[c]);
@@ -173,7 +174,7 @@ const ESSENCIAL = {
   B80:["parto_em"],
   B87:["did","cadunico"], B88:["cadunico"],
   // revisões e serviços · o 1º pagamento é que conta a decadência do art. 103
-  REV:["primeiro_pagamento_em","dib"],
+  REV:["primeiro_pagamento_em","dib","?ciencia_indeferimento_em"],
   REST:["dcb"],
   IIR:["did"],
 };
@@ -223,9 +224,10 @@ function lcJanela(k, campo){
     return d<0 ? `<small class="lc-jan venc" title="o CadÚnico vence em 2 anos e o benefício é bloqueado sem atualização">venceu há ${-d} d</small>`
       : `<small class="lc-jan ${d<=60?"venc":""}" title="o CadÚnico vale 2 anos">vence em ${d} d</small>`;
   }
-  if(campo==="primeiro_pagamento_em" && k.primeiro_pagamento_em){
-    const lim = somaDias(k.primeiro_pagamento_em, 3653), d = diasAte(lim);
-    const t = "a decadência do art. 103 conta do dia primeiro do mês seguinte ao primeiro pagamento; a ação não a interrompe (Tema 975/STJ)";
+  // F831 · a mesma conta da decadência do caso (10 anos do dia 1º do mês seguinte; a ciência do indeferimento conta do dia)
+  if((campo==="primeiro_pagamento_em" || campo==="ciencia_indeferimento_em") && k[campo]){
+    const dc = decadenciaCaso({[campo]:k[campo]}), lim = dc.ate, d = dc.dias;
+    const t = `${dc.base} (Lei 8.213/91, art. 103); a ação não interrompe a decadência (Tema 975/STJ)`;
     return d<0 ? `<small class="lc-jan venc" title="${esc(t)}">decaiu há ${-Math.round(d/30)} meses</small>`
       : `<small class="lc-jan ${d<=365?"venc":""}" title="${esc(t)}">decai em ${fmtBarra(lim)}</small>`;
   }
@@ -455,7 +457,8 @@ function linhaCaso(k){
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
       ${filaTrf3(k)}
       ${recursoParado(k)}
-      ${avisoQuadro(k)}`}
+      ${avisoQuadro(k)}
+      ${chipsAtrasados(k)}`}
       </div>
       <button type="button" class="lc-mais lc-mais-pe lc-dobra" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
         title="${n?"fechar":"tramitação, etapa, números do caso (NB, e-Sisrec, processo judicial) e a gestão do caso"}"><span>Números do caso e gestão</span>${setaAlca(!n)}</button>
@@ -876,6 +879,11 @@ let abaPedida = {}, abaDoCaso = {};
 // F405 · a seta recolhe a coluna dos prazos e do cartão do caso; fica guardada neste computador
 const esqOculta = () => ler("crm_caso_esq")==="0";
 function esqAlternar(){ guardar("crm_caso_esq", esqOculta() ? "" : "0"); trRepintar(); }
+// F836 · com a ficha aberta, a lista do meio vira faixa de 216px (nome e data); a escolha fica neste computador
+const listaFaixa = () => ler("crm_lista_faixa")!=="0";
+function listaPintar(){ const f = listaFaixa(); document.getElementById("app").classList.toggle("lista-faixa", f); document.getElementById("lista-alca").setAttribute("aria-expanded", String(!f)); }
+function listaAlternar(){ guardar("crm_lista_faixa", listaFaixa() ? "0" : ""); listaPintar(); }
+listaPintar();
 const dirOculta = () => ler("crm_caso_dir")==="0";
 function dirAlternar(){ guardar("crm_caso_dir", dirOculta() ? "" : "0"); trRepintar(); }
 function trEscolher(casoId, rito, i){
@@ -1340,6 +1348,15 @@ function blocoFatos(k){
 }
 // F670 · linha do tempo do caso (protótipo do Base44 aprovado pelo Paulo, 21.11.2026): total desde o 1º contato e a barra
 // das fases na cor de cada uma, com o ano em que começou. Tudo lido do que já está gravado; nada se digita aqui.
+// F674 · a fase em curso enche pelo tempo decorrido sobre a duração média medida (mín. 15%, teto 90%; sem média, 50% sem número)
+function pctFase(k, f, desde){
+  const esp = String(k.especie||"").replace(/\D/g,"").slice(0,2);
+  const med = f==="inss" ? (/^(31|32|91|92)$/.test(esp) ? 18 : /^(87|88)$/.test(esp) ? 30 : esp ? 45 : 0)
+    : f==="conselho" ? 425 : f==="judicial" ? (/^jef/.test(ritoDe(k, "judicial")||"") ? 274 : 0) : 0;
+  const dias = desde ? diasEntreIso(String(desde).slice(0,10), hoje()) : NaN;
+  if(!med || !(dias>=0)) return {p:50, mostra:false};
+  return {p: Math.round(Math.min(90, Math.max(15, dias/med*100))), mostra:true};
+}
 function linhaTempoCaso(k){
   if(!ehPrev(k) || ehPreCaso(k)) return "";
   const ano = s => (/^\d{4}/.exec(String(s||""))||[""])[0];
@@ -1349,6 +1366,7 @@ function linhaTempoCaso(k){
   const impl = !!k.dib || /^(pagamento|encerrado)$/.test(k.fase||"");
   const cli = D.cliPorId.get(k.cliente_id) || {}, ini = andsDoCaso(k).filter(a=>!a.excluir).map(a=>a.criado_em).filter(Boolean).sort()[0]   // F670b · o início é a primeira anotação
     || [cli.criado_em, k.criado_em].filter(Boolean).sort()[0];
+  const a0 = {escritorio:ini, inss:k.der, conselho:k.ro_protocolado_em, judicial:k.ajuizado_em};
   const segs = [
     ["escritorio", st("escritorio"), ano(ini), 2],
     ["inss", st("inss"), ano(k.der), 1.6],
@@ -1365,8 +1383,9 @@ function linhaTempoCaso(k){
   const resto = so.replace(/<button role="tab"[\s\S]*?<\/button>/g, "").replace(tudo, "");
   const bar = segs.filter(([f,s])=>s!=="n" || bt[f]).map(([f,s,a,fl])=>{
     const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v" || s==="n";
+    const pc = s==="a" ? pctFase(k, f, a0[f]) : null, fill = pc==null ? "" : `<i class="ltc-p" style="--p:${pc.p}%"></i>`;
     if(bt[f]) return bt[f].replace('class="jn-b ', `class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""} jn-b `).replace('style="', `style="flex:${fl};--c:${fut?"#B7BCC2":c};`)
-      .replace(/<\/button>$/, `<span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span></button>`);
+      .replace(/<\/button>$/, `<span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r">${fill}</span>${pc&&pc.mostra?`<span class="ltc-q">${pc.p}%</span>`:""}</button>`);
     return `<div class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""}" style="flex:${fl};--c:${fut?"#B7BCC2":c}" title="${esc(n)}${a&&!fut?` · desde ${a}`:""}">
       <span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span><span class="ltc-n">${esc(n)}</span></div>`; }).join("");
   let tot = "";

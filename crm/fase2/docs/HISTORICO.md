@@ -1069,6 +1069,7 @@ Rótulo "Advogado" virou "Responsável"; clique no nome copia (a ▾ abre os cas
 - F670c (v14.24, 21.11.2026): a barra da linha do tempo é a fila das fases; Escritório, INSS, CRPS e Judicial são botões que abrem o cartão de cada fase, com o resumo da etapa atual logo abaixo, no mesmo quadro.
 
 - F673 (21.11.2026, v14.25): a mini agenda do Caso e o Mês da aba Prazos usam o mesmo mês (_pzMes); o dia marcado na mini agenda abre a aba Prazos filtrada nesse dia.
+- F674 (v14.46, 27.11.2026): na linha do tempo, a fase em curso enche pelo tempo decorrido sobre a duração média medida (INSS B31 18 dias, BPC 30, aposentadoria 45; CRPS 425; JEF 274), mínimo 15% e teto 90%; sem média, 50% sem número.
 
 ## F674 · ajustes da IA do WhatsApp pela leitura da semana (21.11.2026)
 - zap_smb_bot: com resposta da equipe nas últimas 3 horas a mensagem do cliente fica com a equipe, salvo pedido de agendamento.
@@ -1119,4 +1120,151 @@ Pedido do Paulo: no celular, ao descer a lista de conversas, a tela voltava ao t
 ## F690 · IA indica um destino só ao passar adiante (23.11.2026)
 - zap_plantao: o exemplo "Vou encaminhar ao Dr. Paulo" saiu das regras; ao passar adiante a IA diz em uma frase que um colaborador vai verificar e responder, e nomeia o advogado só quando a conversa já é com ele (a IA disse "Vou encaminhar ao Dr. Paulo" e, na frase seguinte, que um colaborador responderia).
 
-- **F840** (27.11.2026) · Cliente de Matão: a IA não agenda presencial para quem mora em Matão ou cidade distante em qualquer assunto (inclusive Dr. Marcos) e passa ao advogado; Jaboticabal, Guariba, Taquaritinga, Pirangi e Vista Alegre agendam. Caso novo já agendado pela IA não cai mais no robô de horários na 8ª resposta. Resposta livre na escolha de horário recebe o endereço de Monte Alto. Migração f840_matao_agenda.sql; zap_plantao sem publicar (aguarda o ok do Paulo).
+## F691 · menu ⋯ e botões dos cartões de perícia (24.11.2026, v14.32)
+- Perícias e audiências da ficha: barra de ações no rodapé do cartão, sempre à vista; o ⋯ aberto fica acima do cartão vizinho.
+
+## F817 · botão "Ver as N anotações mais antigas" oculto com o Escritório recolhido (25.11.2026)
+Com o painel recolhido o CSS escondia as listas da linha do tempo, mas não o botão, que abria uma lista ainda oculta. O botão agora some junto; "Ver anotações anteriores" abre tudo.
+
+## F818 · nome do responsável na mesma linha do rótulo no cabeçalho da ficha (25.11.2026)
+Rótulo "Responsável", nome e selo de contato em .cli-adv-l, sem quebra; a parceria segue abaixo (F672).
+## F819 · auditoria do WhatsApp de 21 a 25.11.2026: férias, robôs, amparo, IA e fila de 24 h (25.11.2026, v14.33)
+- Migração `f819_zap_auditoria_ferias.sql`. `zap_conf_agradece` aceita "grat*", "agradec*", "obrigad*", "tudo bem", "ótimo" e afins; `zap_despedida` = agradecimento sem ser só cumprimento ("Bom dia" sozinho abre conversa).
+- Aviso de férias/Offline (`zap_offline_gatilho`): não sai se a equipe, o titular inclusive, escreveu desde o início das férias ou nas últimas 12 h (a F688 excluía o titular e olhava só 12 h), nem até 12 h depois de a IA agendar, nem em despedida (também no Offline comum: a ausência do Dr. Marcos respondia "Ok"); nunca leva o nome no cabeçalho, nem o salvo no texto.
+- Conta automática (`zap_filtro`): sem ficha e com texto de robô, ou respondendo duas vezes em até 5 s a mensagem automática nossa na mesma hora, fica `automatica` mesmo com a caixa zap_filtro_auto desligada (a caixa só decide se sai da fila): sem menu, aviso, amparo nem IA.
+- Amparo: uma vez por conversa por dia. `zap_plantao_aplicar`: advogado em férias vira a substituta (zap_cobre_id).
+- zap_plantao: `semFerias` troca o ausente pela substituta no texto e no advogado; imagem do cliente que a IA deixaria sem resposta recebe "Recebemos a imagem" e vai à equipe; áudio entra como "[áudio transcrito]"; "Ok gratidão Bom dia" recebe "Bom dia! Em que posso ajudar?" e o agradecimento puro, nada; aviso do golpe na primeira resposta do dia também com perícia marcada (o `x.pericia` pulava). "1 mês e meio do laudo à sentença" vem de TEMPOS_MEDIDOS: mantido; regra reforçada de não estimar sem medição.
+- Tela: no ⋯ do WhatsApp, "Sem resposta há mais de 24 h" (cliente por último, sem despedida nem conta automática); o filtro de atendente dá o recorte por responsável.
+## F820 · "Retorno" passa a "Prazo do Microsoft To Do" (25.11.2026)
+Selo do painel lateral, Meu Dia, Planejado, aba Prazos (chip e legenda), WhatsApp e quadro do caso. O selo do painel não quebra linha.
+
+## F821
+Conferência do WhatsApp em 25.11.2026: `zap_eh_automatica` reconhece os robôs de notificação (pedágio), de banco e de divulgação de aula que recebiam amparo e IA; conversas sem ficha que receberam esses textos nos últimos 30 dias ficam marcadas automática.
+
+## F822 · "A IA não responde esta conversa" volta a funcionar (25.11.2026)
+- O onclick dos itens "A IA não responde esta conversa" e "A IA conversa com este número" lia `c`, que só existia no template: o clique falhava com "c is not defined" e nada gravava. O valor passa a ir pronto no HTML. Prova: `testes/cadastro/zap-sem-ia.js`.
+- `zap_offline_gatilho` (migração f822): conversa com `sem_ia` não recebe o aviso do Offline/férias nem o recado da cobertura. Teste f23 em `testes/zap_ferias.sql`.
+
+## F823 · Sugestão do andamento no jeito do Dr. Paulo (26.11.2026)
+- `promptAndamento` (zap_plantao): lê anotações da equipe e portais para achar o último fato decisivo e o que falta; proíbe "consultei o portal", asterisco, "Tudo bem?" e termos do portal; exemplos anonimizados do estilo do Dr. Paulo.
+- Contato do WhatsApp diferente do titular da ficha (sem relação confirmada): a IA cumprimenta quem escreve e trata o titular em terceira pessoa (também no `contexto()`).
+- Migração f823: `zap_andamento_pegar` traz 12 registros por caso, sem as notas automáticas (✎, 🔎, "Etapa:").
+
+## F824 · Sugestão na hora na conversa assumida (26.11.2026)
+- `zap_plantao_vencidas` (migração f824): com atendente Online que já escreveu ao cliente, a mensagem em `plantao:espera` vai à IA em 1 minuto; a resposta é sugestão, não vai ao cliente. F629 (assumida sem mensagem da equipe) e Offline seguem os 20 minutos. Testes p33 e p34 em `testes/zap_plantao.sql`.
+
+## F825 · Trava de colaborador ativo em todas as tabelas (26.11.2026)
+- Migração f825: política RESTRICTIVE `so_colaborador_ativo` (sou_ativo()) em toda tabela pública com RLS, para authenticated. Fecha conta de cadastro aberto e de ex-colaborador. Testado: 6 contas ativas passam, a inativa não.
+
+## F826 · sete defeitos inequívocos: perícia sem hora, celular, permissão, Esc, painel e apagar (26.11.2026, v14.34)
+- Perícia com 00:00 (hora não informada, F624): `lembreteDoEvento` trava o recado (copiar, WhatsApp, mensagem ao cliente) com aviso; cartão e "Preparar" dizem "hora não informada".
+- Celular: `escolhido` e `fecharEscolha` esvaziam o modal como `fecharCaixa`, e o Escrever não fica invisível.
+- Permissão: `a.autor_id===eu.id&&(a.origem==="app"||a.origem==="zap_resumo")` (antes o resumo do zap de outro autor podia ser apagado/editado).
+- Esc: painel do cliente e seleção usam `modalAberto()`; Esc no campo de escrever só tira o foco; `irPara` fecha o painel do cliente.
+- Apagar anotação: falha do PATCH/DELETE avisa "Não apagou: tente de novo". Prova `testes/cadastro/f826.js`.
+
+## F827 · Amparo só na cobrança, aviso do golpe, nota duplicada, contador, botões, áudio, Esc e erros (27.11.2026, v14.35)
+- Ordem expressa do Paulo de 27.11.2026. Migração f827: `zap_amparo_vez` volta a "somente cobrança" (`zap_amparo_cobra`, F623), sem o "ou 2 horas" da F674; `zap_conf_agradece` reconhece o agradecimento no fim da frase curta ("avisei ele, obrigada"), salvo pedido ("quero remarcar, obrigada"); `zap_amparo_enviar` põe o aviso do golpe (texto de `AVISO_GOLPE`) na primeira mensagem do dia, como a IA principal, e não grava mais a nota interna com o mesmo texto. O zap_plantao não tinha a regra das 2 horas: não precisa ser publicado.
+- Tela: o menu do WhatsApp conta o mesmo que a aba Novas (minhas ou que cubro, abertas, com não lida, fora da IA; a carga traz `cobertura`); Emojis, Anexar e Nota com 40 px no celular; áudio sem arquivo diz "áudio antigo, não baixado — só no celular"; Esc com a conversa aberta no computador fecha a conversa (`modalAberto()` e painel do cliente à parte); `virarAndamento` e `novaTarefaZap` avisam a falha da gravação.
+- Provas: `testes/zap_f599.sql` (a3b, e7b, g1 a g4) e `testes/cadastro/f827.js`.
+
+## F828 · Rascunho da anotação rápida, Desfazer no apagar, Descartar, voltar pelas telas, painel e Agenda sem Google (27.11.2026, v14.36)
+- Ordem expressa do Paulo de 27.11.2026 (correções da auditoria). Anotação rápida (⚡, Anotar do topo e campo da barra): `fecharCaixa` guarda o texto de `#ar-texto` no sessionStorage (`rasc:ar`, as funções do rascunho do caso) e `anotacaoRapida` o devolve; gravar limpa. Esc, voltar e clique fora já não perdem o texto.
+- Apagar anotação: `apagarAndamento` oferece Desfazer (regrava a anotação com o mesmo id e as tarefas que o DELETE levou, ou desfaz o `excluir`, e devolve o prazo do caso); `apagarNotaAtendimento` também.
+- Escrever no caso: botão Descartar (só com texto) limpa o campo e o rascunho guardado (`descartarEscrita`).
+- Voltar: o primeiro voltar fecha o painel do cliente (`_pcli` em `temVoltar`/`voltarUmPasso`); as telas visitadas formam uma pilha (`marcarTela`), e o voltar leva à anterior antes do Meu Dia; a tela e a ficha ficam no endereço (`#planejado`, `#fase:inss/<cliente>`), lidas na carga (`_hashIni`), então recarregar mantém as duas; Ctrl+clique na linha abre a ficha noutra aba (`linkFicha`). Tudo só com o voltar ligado (no navegador automatizado, `crm_voltar=1`).
+- Painel do cliente em tela larga: os flutuantes (⚡, Sugestões, ?, Agenda, ⋯) andam 460 px para a esquerda, clicáveis e sem cobrir o painel.
+- Agenda sem o Google ligado mostra o Calendário do CRM (prazos, perícias, atendimentos) com aviso discreto e botão Ligar; em Configurações o formulário fica recolhido. A legenda do Calendário ganhou 24 px de altura (alvo de toque).
+- Prova `testes/cadastro/f828.js`.
+
+## F829 · Auditoria: To Do só leitura nos Prazos, honorários com escolha explícita, Editar, Cancelar e Desfazer (27.11.2026, v14.37)
+- Ordem expressa do Paulo de 27.11.2026. Prazos: até 31/12/2026 a data do Microsoft To Do é só leitura (`editaPzTodo` em 26-prazos.js zera o `edita` do "Prazo do Microsoft To Do" e do prazo fatal com `todo`), e some o Corrigir e o campo de data; no modo `PZ_SO_TODO` a aba e o mês mostram só o que vem do To Do (`doTodoPz`: sai a Volta à fila e o Retorno do pré-caso) e a legenda perde Compromisso e Lembrete.
+- Honorários: o + lançamento pede Recebido ou A receber (rádio sem padrão; Recebido com data futura é recusado) e a falha do POST avisa. Lançamento aberto ganha Editar (valor e vencimento) e Cancelar com motivo obrigatório; o cancelado fica riscado com quem, quando e o motivo, fora dos totais. Recebido ganha Desfazer, com confirmação: tira a minha conferência quando sou o último conferente, senão volta o lançamento a receber.
+- Migração f829 (não destrutiva): `pagamentos` ganha `cancelado_motivo/por/em` e `editado_por/em`; o gatilho `pagamentos_autoria` exige o motivo e grava quem (pelo login) e quando.
+- Parcelas do pré-caso (`sincronizarParcelasHon`) vão ao caso ligado ao pré-caso (`pc.caso_id` ou `k.precaso.id`), e só sem ele ao primeiro caso aberto.
+- Provas: `testes/colab_pagamentos_autoria.sql` e `testes/cadastro/auditoria829.js`.
+
+## F830 · Pré-caso: Gerar o caso no quadro, passos com quem e quando, Encerrar com motivo e apelido em destaque (27.11.2026, v14.38)
+- Ordem expressa do Paulo de 27.11.2026. Quadro do caso em formação (`quadroEmFormacao`): os passos vêm numerados (1 Identificação, 2 Primeiro atendimento, 3 Análise, 4 Documentos) com quem marcou e quando (`quemQuandoPc`, das `etapas` que o `concluirEtapa` grava).
+- **Gerar** (`gerarPcHtml`, `gerarCasoDoQuadro`): as caixas Procuração assinada e Contrato assinado gravam `casos.precaso.assinados.{proc,contr} = {em, por}` (`marcarAssinadoPc`); sem as duas, o botão fica desligado e a função recusa. Gerar pede o início e o número (`moverPreCaso(…, "caso")`) e converte a linha no CRM pelo `gerarCasoDoPre`. Nada vai ao To Do; `PC_MOVER_LIGADO` segue `false` (F602b).
+- Sincronização (`migrar.py`): `gerado_no_crm` reconhece o caso pelo `precaso.desfecho.tipo = "caso"`. Em `respeitar_movidos`, enquanto a tarefa segue no 🙋 Escritório (aberta ou concluída) vale o caso do CRM (fase, `pre_caso = false`, lista); quando ela chega a uma lista de fase, o `mover_para` sai e o To Do volta a mandar. Em `casos_movidos`, a tarefa movida com outro título adota o caso gerado, sem abrir um segundo.
+- **Encerrar** sem gerar caso: motivo obrigatório (Desistiu, Sem direito, Sem contato, Outro com texto), gravado em `precaso.arquivo = {em, origem: "crm", motivo, por}`, com Desfazer; o quadro do encerrado mostra motivo, quem e quando.
+- "Em qual caso registrar?": o apelido do caso aparece em destaque (`.esc-apel`), com a espécie embaixo.
+- Provas: `testes/cadastro/f830.js` e três casos em `tests/test_crm_fase2.py`. Sem migração (`precaso` é jsonb).
+
+## F831 · Atrasados no caso: prescrição, decadência, Tema 1124 e calculadora com índices do Banco Central (27.11.2026, v14.39)
+- Ordem expressa do Paulo de 27.11.2026 (melhorias 1 a 4 da auditoria). Módulo novo `src/js/43-casos.js` (antes do 42 no `modulos.txt`).
+- Datas: o caso já tinha DER, DIB, `ajuizado_em` e `primeiro_pagamento_em`; a migração f831 acrescenta `dip`, `citado_em`, `ciencia_indeferimento_em` e o jsonb `calculo` (RMI, reajustes, piso, 13º, `tema1124 {marcado, prova}` e o último `resultado`). As três datas entram em `FATOS` e nas datas da gestão do caso.
+- Prescrição (`termoAtrasados`): parcelas anteriores a 5 anos do ajuizamento (sem ajuizamento, de hoje) prescritas; o cartão do caso mostra "Atrasados desde". Tema 1124 marcado (com a prova obrigatória) leva o termo inicial à citação.
+- Decadência (`decadenciaCaso`, `alertaDecadencia`): 10 anos do dia 1º do mês seguinte ao primeiro pagamento ou da ciência do indeferimento definitivo, a mais cedo. Só revisão e só nos últimos 12 meses: chip no caso e seção "Decadência em até 12 meses" no Meu Dia (`blocoDecadenciaDia`). A linha "Revisão até" das cartas do dossiê passou de 730 para 365 dias. Nada vai ao Microsoft To Do.
+- Calculadora (`calcAtrasados`, botão Atrasados): do termo inicial à véspera da DIP, mês parcial pelos dias, 13º proporcional, piso do mínimo (`SAL_MIN`), reajuste informado ou derivado do INPC (marca "conferir"); INPC e juros da poupança (desde a citação) até 11/2021 e Selic única desde 12/2021. Mostra o total (estimativa), o valor da causa contra 60 mínimos (JEF, Tema 1030), o aviso da RPV, o destaque contratual, a sucumbência se fixada em 10% (Súmula 111) e o reflexo do Tema 1124. A proposta de honorários (`propostaHonorarios`) usa o `resultado` como "≈ estimado" quando não há requisição nem carta.
+- Índices: tabela `indices_mensais` (RLS de leitura para colaborador ativo e a RESTRICTIVE `so_colaborador_ativo`, sem escrita pelo navegador), com carga inicial baixada do SGS em 27.11.2026 (188 INPC, 4390 Selic, 7811 TR, 25 e 195 poupança) e renovação semanal por `indices_pedir`/`indices_gravar` (pg_net e pg_cron). Juros da poupança = (1 + rendimento) / (1 + TR) - 1.
+- Provas: `testes/cadastro/f831.js` e `testes/colab_indices_atrasados.sql`.
+
+## F832 · RPV e precatório no caso judicial, com repasse e recibo; laudo, manifestação e quesitos no cartão da perícia (27.11.2026, v14.40)
+- Ordem expressa do Paulo de 27.11.2026, melhorias 5 e 6 da auditoria.
+- **RPV e precatório** (16-casos.js): cartão "RPV e precatório" na aba Honorários de cada caso judicial ou em pagamento (`cartaoRequisicoes`). Registrar grava tipo, valor, expedição, entrega ao tribunal, honorários destacados e sucumbência em `clientes.campos.requisicoes[caso]` (`passoReq`/`gravarReq`); Paga, Levantada (com o alvará) e Repasse avançam a situação (Expedida, Paga, Levantada, Repassada), cada passo com andamento no caso e Desfazer.
+- Prazo da RPV (`prazoRpv`): 60 dias da entrega da requisição (Lei 10.259/2001, art. 17), da expedição quando falta a entrega; o precatório segue o cronograma do tribunal. Alerta "RPV" no Meu Dia (`itensAgendaTodos`) até a RPV ser paga.
+- Integração com honorários: a requisição registrada entra em `concessaoDoCaso` (`reqManual`) e a proposta lança destaque e sucumbência pela regra de antes, sem duplicar. No repasse, os honorários não destacados baixam o lançamento dos atrasados já existente; sem ele, nasce um recebido com a marca `hon:caso:atr` (`honorariosDoRepasse`).
+- Repasse e recibo: líquido = bruto menos IR retido (RRA, Lei 7.713/1988, art. 12-A) menos honorários contratuais, salvo os destacados (`liquidoRepasse`); Recibo imprimível (`reciboRepasse`).
+- **Perícia judicial** (29-pericias.js, `laudoJudicial`): no cartão da perícia que passou, situação Aguardando laudo, Laudo juntado ou Manifestação feita; botões Laudo, Manifestação e Quesitos anexam o arquivo com o nome que o identifica (`anexarDaPericia`, sobre `anexarArquivo`, extraído do `anexar`). O expediente do PJe aberto pelo laudo (`prazoDoLaudo`, sobre `prazoTribunalDoAto`) aparece como aviso; Fatal o anota como prazo do caso (`usarPrazoDoTribunal`). Sem anotação, não há prazo fatal.
+- Provas: `testes/cadastro/f832.js`. Sem migração (`campos` é jsonb).
+
+## F833 · Auditoria 7 a 9: data do To Do ao lado da do CRM, inadimplência por mês e telefone de quem (27.11.2026, v14.41)
+- Ordem expressa do Paulo de 27.11.2026. Prazos: até 31/12/2026 o Microsoft To Do é a única fonte de datas e o CRM não escreve nele. `datasTodoHtml` (26-prazos.js) mostra a data do To Do (`casos.todo_prazo`) ao lado da do CRM (`casos.prazo`), com o alerta "As datas divergem: vale a do To Do" (`todoDiverge`), e o botão Abrir, que leva à tarefa pelo `todo_task_id` (`linkTodo`: `to-do.live.com/tasks/id/<id>/details`, a conta é pessoal). Aparece no topo da aba Prazos do cliente (`todoDatasCliente`) e no painel do cliente (seção Microsoft To Do). Limitação: o link depende do id da tarefa no Graph; a lista do To Do não tem id guardado no CRM.
+- Honorários: relatório mensal de inadimplência nos 💰 Recebimentos (`inadimplencia`, `inadimplenciaHtml` em 16-casos.js): vencido não recebido e não cancelado (status `cancelado` ou `cancelado_em` da F829), sem "a calcular" e "conferir valor"; por mês do vencimento, com total, soma por responsável (o primeiro atribuído do caso) e lista por cliente, que abre a aba Honorários.
+- WhatsApp: alerta "Cliente conhecido sem ficha?" na conversa sem cliente que fala de caso, benefício ou processo (`falaDeCaso`) ou cujo número aparece em anotação (`numeroNasNotas`, busca pelos 8 dígitos), com Vincular (já marcado o cliente da anotação). "Este telefone é de" no Editar telefone da ficha (próprio, mãe, filho(a), cônjuge, outro com nome obrigatório), gravado em `telefones[i].de/de_nome`, mostrado na ficha e no cabeçalho da conversa (`telDe`, `telDeTexto`). Ao gravar, as conversas do número com o cliente recebem `contato_nome/contato_relacao` (`telDeNasConversas`), que o zap_plantao já lê para tratar o titular em terceira pessoa: a função não mudou e não precisa ser publicada.
+- Migração f833 (não destrutiva): gatilho `zap_conversa_tel_de` preenche o quem conversa da conversa que nasce ou é ligada ao cliente depois, só quando vazio; erro na leitura da lista nunca derruba a conversa.
+- Provas: `testes/cadastro/auditoria7a9.js` e `testes/zap_telefone_de.sql`.
+## F834 · Piso de 12px na letra (27.11.2026, v14.42)
+- Ordem do Paulo de 27.11.2026 (etapa 1 da revisão da estrutura visual). Toda regra de estilo com letra de 10, 11 ou 11,5px passou a 12px (267 regras em `css/base.css`, `css/tema-v10.css` e dois estilos montados no JS). Nenhuma tela mudou de desenho.
+- Conferido e mantido como estava: realce de mouse já travado por `@media (hover:hover) and (pointer:fine)`, campo de 16px no toque (F136) e resposta ao pressionar (`button:active`, F134).
+- Prova: `testes/cadastro/f834.js` (nenhuma letra abaixo de 12px no `app.html`).
+
+## F835 · Ficha do caso: linha do tempo compacta e Próximo prazo (27.11.2026, v14.42)
+
+Etapa 2 da revisão de estrutura visual. A linha do tempo do caso (F670) passa a rótulo e total em uma linha, com os trechos futuros em cinza sólido. A mini agenda (F669) abre recolhida na linha "Próximo prazo" (data e tipo); a seta abre o calendário, e a escolha vale até trocar de tela. A estrela segue abaixo do Anotações (F373). Prova em `f669.js`.
+
+## F836 · Lista em faixa com a ficha aberta (27.11.2026, v14.42)
+
+Etapa 3. No computador, com a ficha aberta, a lista do meio passa de 380px a 216px e mostra nome e data; a alça ao lado do título devolve a largura, e a escolha fica em `crm_lista_faixa` neste computador. O menu lateral e a etiqueta dos ícones (já existente) não mudam. Prova em `f669.js`.
+
+## F837 · Meu Dia: grupos neutros, atraso por extenso e Sugestões na cor do acento (27.11.2026, v14.42)
+
+Etapa 4. Os grupos Vencidas e Hoje ficam com fundo neutro e a cor apenas no título; Reagendar vai para junto da contagem; a data vencida diz "há N dias" (na lista larga; a coluna do prazo passou de 64px a 124px); o selo do tipo corta pela direita com reticências; o botão Sugestões troca o laranja pela cor do acento. Já existiam e não foram refeitos: o deslocamento dos flutuantes com o painel lateral, a folga de fim de rolagem e a coluna Etapa oculta quando vazia.
+
+## F838 · sugestão do andamento lê os expedientes abertos do PJe (27.11.2026, zap_plantao)
+
+A sugestão de resposta sobre o andamento (e o contexto do plantão) dizia que o prazo do INSS "terminou em 19/11", tirado do "Decorrido prazo" da liminar. `zap_andamento_pegar` (migração f838) passa a devolver, por caso, os expedientes do PJe com Fechado = NÃO (`casos.ronda.expedientes`: ato, destinatário, ciência, prazo, limite). O prompt lista esses prazos em aberto e manda usar o do ato mais recente (sentença sobre liminar), sem tomar o "Decorrido prazo" como prazo atual. Teste em `testes/funcoes/zap_plantao.test.mjs`.
+## F839 · Pontos restantes da estrutura visual: paleta única, camadas, espaçamento, etapas, celular e frase do Meu Dia (27.11.2026, v14.43)
+
+Pedido do Paulo ("faça o que falta"). Paleta única: as 536 cores literais das regras de `base.css` e `tema-v10.css` passaram a 260 variáveis `--p-família-n` em `:root` (fim do `tema-v10.css`), reunindo as que diferiam em menos de 3 de ΔE; cor nova entra nesse bloco. Camadas: `--z-pagina`, `--z-cabecalho`, `--z-painel`, `--z-flutuante`, `--z-janela`, com os valores antigos escritos como camada mais degrau (mesma ordem de antes). Sombras de elevação: `--sombra-painel` e `--sombra-janela` (as laterais e as de anel ficaram como estavam). Espaçamento em passos de 2px: 489 valores ímpares de `padding`, `margin` e `gap` desceram 1px. O teste `f839.js` barra cor literal, camada sem nome e espaçamento ímpar. Faixa de etapas com o total à esquerda da trilha (cerca de 20px mais baixa). No celular, espécie e fase na linha dos botões do cabeçalho, com botões de 44px. No Meu Dia do computador, a conta do dia continua a frase do alto e não repete os itens de hoje. A estrela da ficha permanece abaixo do Anotações (F373).
+
+## F840
+Conferência do modo férias (27.11.2026): no retorno (`zap_meu_offline` / `zap_ferias_fim`), conversa coberta cujo último texto é do cliente sem resposta da equipe gera menção ao titular "Pendente do período offline". `zap_eh_automatica` reconhece "insira uma resposta válida" e "de presente para você".
+## F841 · WhatsApp: painel de emojis, cabeçalho e flutuantes sobre os menus (27.11.2026)
+
+Pedido do Paulo (print do painel de emojis cortado a 1024 px; depois, "faça mais verificações de telas do WhatsApp"). Capturas em 1024, 1440 e 390 px com dados fictícios. Corrigido: o painel de emojis do campo principal se ancora ao rodapé da conversa, alinhado à direita e com a largura que couber (o da conversa ao lado da ficha continua como era); os botões do cabeçalho da conversa quebram linha na coluna estreita, em vez de empurrar o cabeçalho para o lado ao abrir o ⋯; os flutuantes Agenda e ⋯ somem enquanto o painel de emojis ou o menu + estão abertos.
+
+## F841 · Resumo do WhatsApp mais preciso e alerta sem as cortesias (27.11.2026)
+- O resumo diário recebe espécie, processo e último registro de cada caso; o modelo compara o assunto com eles antes de marcar dúvida.
+- "Conferir o caso" sai uma vez, no cabeçalho da anotação, e não mais em cada linha.
+- O que a equipe escreveu vai na primeira pessoa do singular, sem o nome do colaborador.
+- O alerta de 30 min (zap_alerta_sem_resposta) e o filtro "Sem resposta há mais de 24 h" ignoram "ok", agradecimento e cortesia (mais palavras: obga, igualmente, semana, todos, vocês).
+
+## F842 · Mesmo NB em dois casos do cliente: o plano de organização junta sozinho (27.11.2026, v14.44)
+
+Decisão do Paulo no plano de saneamento dos cadastros: casos do mesmo cliente com o mesmo NB são o mesmo benefício que mudou de fase. `planoOrganizar` (35-casos.js) deixava o NB repetido só na sugestão "repetido"; agora gera o passo "juntar" para o caso mais adiantado (`ORDEM_FASE_ORG`). Só a tarefa do To Do se junta (vira casca encerrada, a sincronização leva ao destino o que ela trouxer, e o Desfazer da organização a reabre). Não junta quando o caso ficaria com dois NUP ou dois processos principais, quando um é revisão e o outro não, quando o incorporado tem outro NB ou nasceu no CRM (a fusão o apagaria); esses seguem na sugestão. A fase Pagamento continua fora da organização. `lote/organizar_lote.js` aceita `CLIENTES` (grava só neles), acha o administrador sozinho e passa a deixar a fusão levar tarefas, pagamentos e Meu Dia; o workflow `crm-lote-organizar.yml` o roda à mão. Teste: `testes/cadastro/f842.js`.
+## F841 · Coluna Tipo das listas sem corte (27.11.2026, v14.45)
+
+No Meu Dia e no Planejado, o selo "Prazo do Microsoft To Do" saía cortado ("Prazo do Micros…") porque a coluna Tipo tinha 120px. A coluna passou a 168px (tema-v10.css, grade de `.ag-linha` e `.ag-th`). Achado no teste de tela de 27.11 (131 telas e suíte no GitHub após a F839).
+
+## F843 · Fusão de casos: andamento repetido no destino não trava mais o histórico, e os documentos vão junto (27.11.2026, v14.47)
+
+Achado do piloto do saneamento dos cadastros. `fundirCasos` (35-casos.js) mudava os andamentos em um só PATCH por `caso_id`; quando o destino já tinha o mesmo andamento coletado (índice único `caso_id, origem, origem_id`, ou a mesma mensagem do WhatsApp), o banco recusava o lote inteiro e o histórico ficava na casca encerrada, sem aviso no modo em lote. Agora a fusão lê as chaves do destino, leva por id só o que ele não tem (lotes de 80) e deixa o repetido no incorporado. Os documentos (`anexos`) do caso incorporado passam ao destino e entram no registro do Desfazer. Teste: `testes/cadastro/f842.js` (11 itens).
+
+## F844 · Organização sem apagar repetidos e fusão do caso em Pagamento pelo mesmo NB (28.11.2026, v14.48)
+
+Decisão do Paulo em 28.11.2026 para gravar a organização no acervo. `moverNumero` deixa no caso de origem o andamento que o destino já tem (mesma origem e `origem_id`), em vez de apagá-lo; `fundirCasos` deixa na casca o agendamento repetido e a atribuição de quem já está no destino. `planoOrganizar` junta ao caso em Pagamento o caso aberto do mesmo NB (mesmas travas do "juntar": tarefa do To Do, um NB, sem NUP divergente, revisão x concessão, processo divergente); `clientesVariosCasos` passa a contar o cliente cujo caso em Pagamento divide o NB com outro caso. Teste: `testes/cadastro/f842.js` (14 verificações).
+
+- **F846** (28.11.2026) · Cliente de Matão: a IA não agenda presencial para quem mora em Matão ou cidade distante em qualquer assunto (inclusive Dr. Marcos) e passa ao advogado; Jaboticabal, Guariba, Taquaritinga, Pirangi e Vista Alegre agendam. Caso novo já agendado pela IA não cai mais no robô de horários na 8ª resposta. Resposta livre na escolha de horário recebe o endereço de Monte Alto. Migração f846_matao_agenda.sql.

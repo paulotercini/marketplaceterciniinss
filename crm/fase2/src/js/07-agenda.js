@@ -130,10 +130,11 @@ function feitosHoje(quem){
   for(const ts of D.tarefasPorCaso.values()) ts.forEach(t=>{ if(t.colaborador_id===quem && t.concluida_em && dataSP(t.concluida_em)===hj) ids.add(t.id); });
   return ids.size + ativos().filter(k=>{ const d = (k.ronda||{}).despacho; return d && d.por===quem && d.em && dataSP(d.em)===hj; }).length;
 }
+// F839 · a conta entra na frase do alto (um resumo só): "N para hoje" já está na frase, aqui ficam concluídos, tempo e barra
 function contaDoDia(its, ats, quem){
   const feitos = feitosHoje(quem), n = its.length + ats.length; if(!n && !feitos) return "";
   const tab = durTabela(), min = [...its, ...ats].reduce((s, i)=>s + minutosDe(i, tab), 0), pct = Math.round(100*feitos/(feitos+n));
-  return `<div class="md-conta" role="group" aria-label="Conta do dia"><span><b>${n}</b> ${n===1?"item":"itens"} hoje</span><span><b>${feitos}</b> ${feitos===1?"concluído":"concluídos"}</span>`
+  return `<div class="md-conta" role="group" aria-label="Conta do dia"><span><b>${feitos}</b> ${feitos===1?"concluído":"concluídos"}</span>`
     + (min ? `<span title="estimativa pela natureza de cada item; a tabela fica nas Configurações">cerca de <b>${fmtMin(min)}</b></span>` : "")
     + `<span class="md-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="${pct}% do dia concluído"><i style="width:${pct}%"></i></span></div>`;
 }
@@ -223,7 +224,7 @@ function barraPlanejado(){
 // a natureza de cada item da Lista, para os filtros do alto
 const PLAN_NAT = [["prazos","Prazos","prazos fatais, recursos, exigências e prazos dos tribunais"],["pericias","Perícias","perícias, audiências e julgamentos"],
   ["tarefas","Tarefas","tarefas das anotações e tarefas soltas"],["fila","Retornos","casos que voltam à fila (Concluir por hoje)"],["lembretes","Lembretes","lembretes, cards, honorários e o resto"]];
-const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Retorno" ? "fila"
+const natPlan = i => i.ev||i.evPassado||i.avisar||i.novEv||i.selo==="Pauta" ? "pericias" : i.selo==="Volta à fila"||i.selo==="Prazo do Microsoft To Do" ? "fila"
   : i.fatal||i.prazo ? "prazos" : i.tc||i.t||i.rotina ? "tarefas" : "lembretes";
 let filtroPlanNat = "";
 function alternarFabs(){ const a=document.getElementById("app"), on=a.classList.toggle("fabs-on"), b=document.getElementById("fab-juntos"); if(b){ b.textContent=on?"✕":"⋯"; b.setAttribute("aria-expanded", on); } if(!on && visao==="whatsapp" && zagAberta()) zagAlternar(); }
@@ -277,7 +278,7 @@ function ligarArrastoFabs(){
   fabArrumar();
 }
 ligarArrastoFabs();
-function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
+function irPara(v){ visao=v; _sel.clear(); zag.fora=false; limparBusca(); fecharFicha(false); fecharPainelCli(); montarSidebar(); render(); pintarAgendaZap(); if(document.getElementById("app")?.classList.contains("fabs-on")) alternarFabs(); }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
