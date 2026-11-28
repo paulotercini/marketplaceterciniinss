@@ -376,7 +376,7 @@ export function promptAgendar(a: NonNullable<Contexto["agendar"]>) {
     `Peça ao Agendador vagas de ${com} ${quando}. Se a pessoa já tiver atendimento agendado, ofereça remarcá-lo em vez de agendar outro. ` +
     `Se perguntar o que será tratado, informe somente o motivo acima, sem acrescentar fatos e sem parecer jurídico; ` +
     `se pedir para adiantar o assunto por mensagem ou por telefone, diga com cordialidade que ${com} prefere conversar pessoalmente e ` +
-    `ofereça os horários; se insistir, use encaminhar_equipe. Se informar Matão ou cidade mais distante, siga a regra de Matão (sem presencial). ` +
+    `ofereça os horários; se insistir, use encaminhar_equipe. Se informar Matão ou cidade mais distante, não ofereça vaga, nem presencial, nem por vídeo ou telefone: use encaminhar_equipe para o advogado combinar. ` +
     `Se recusar o atendimento, agradeça e use encaminhar_equipe.\n`;
 }
 

@@ -70,9 +70,16 @@ function abrirAgendarIA(cliId){
       <span id="ag-dh" hidden><input type="date" id="ag-data"> <input type="time" id="ag-hora" step="900"></span></fieldset>
     <label style="display:block;margin:8px 0">Com quem <select id="ag-prof">${PROF_AG.map(([k,n])=>`<option value="${k}" ${k===resp?"selected":""}>${n}</option>`).join("")}</select></label>
     ${ks.length?`<label style="display:block;margin:8px 0">Caso <select id="ag-caso"><option value="">nenhum</option>${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select></label>`:""}
+    <label style="display:block;margin:8px 0">Enviar em <input type="datetime-local" id="ag-enviar" value="${proximoUtil()}"></label>
     <label style="display:block;margin:8px 0">Motivo (vai ao cliente)<br> <input id="ag-motivo" maxlength="140" placeholder="ex.: conversar sobre a perícia" style="width:100%"></label>
     <p class="meio-sub">A assistente virtual escreve ao cliente pelo WhatsApp, oferece as vagas livres e agenda.</p>
     <button class="btn-rap forte" onclick="enviarAgendarIA('${cliId}')" title="Enviar o pedido à assistente virtual">Enviar</button>`);
+}
+// F848 · por padrão a primeira mensagem sai no dia útil, das 8h às 18h: agora, se couber; senão às 8h do próximo dia útil
+function proximoUtil(d = new Date()){
+  const p = n => String(n).padStart(2,"0"), dentro = d.getDay()%6 && d.getHours()>=8 && d.getHours()<18;
+  if(!dentro){ if(d.getHours()>=18 || !(d.getDay()%6)) d.setDate(d.getDate()+1); while(!(d.getDay()%6)) d.setDate(d.getDate()+1); d.setHours(8,0,0,0); }
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 async function enviarAgendarIA(cliId){
   const q = (document.querySelector('input[name="ag-quando"]:checked')||{}).value;
@@ -81,10 +88,10 @@ async function enviarAgendarIA(cliId){
   if(motivo.length<4) return aviso("Informe o motivo do atendimento");
   if(q==="data" && !(v("ag-data") && v("ag-hora"))) return aviso("Informe o dia e o horário");
   try{
-    const r = await api(`/rest/v1/rpc/agendar_pedir`,{method:"POST", body:JSON.stringify({p_cliente:cliId, p_quando:q, p_prof:v("ag-prof"),
-      p_motivo:motivo, p_caso:v("ag-caso"), p_data:q==="data"?v("ag-data"):null, p_hora:q==="data"?v("ag-hora"):null})});
+    const r = await api(`/rest/v1/rpc/agendar_programar`,{method:"POST", body:JSON.stringify({p_cliente:cliId, p_quando:q, p_prof:v("ag-prof"),
+      p_motivo:motivo, p_caso:v("ag-caso"), p_data:q==="data"?v("ag-data"):null, p_hora:q==="data"?v("ag-hora"):null, p_enviar_em:v("ag-enviar")?new Date(v("ag-enviar")).toISOString():null})});
     if(r && r.erro) return aviso(r.erro);
-    fecharCaixa(); aviso("Pedido enviado: a assistente virtual escreveu ao cliente");
+    fecharCaixa(); aviso(r&&r.programado?"Pedido programado: a mensagem sai no horário escolhido":"Pedido enviado: a assistente virtual escreveu ao cliente");
   }catch(e){ aviso("O pedido não foi enviado: "+String(e.message||e).slice(0,120)); }
 }
 // F282 · o "Abrir ficha" do WhatsApp abre a ficha (o caso, quando há) com a conversa ao lado, como o botão WhatsApp da ficha

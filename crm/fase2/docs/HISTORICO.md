@@ -1275,3 +1275,6 @@ Aprovados pelo Paulo em 28.11. Trilho da fase atual no tom claro da cor da fase;
 
 ## F845 · Botão Agendar na ficha: a assistente virtual agenda o atendimento pedido pelo advogado (28.11.2026, v14.49)
 Plano aprovado pelo Paulo em 28.11.2026. O botão (chave `zap_ia_agendar_botao`, nasce `nao`) pergunta Quando (Urgente, Data e horário, Sem pressa), Com quem e o Motivo; `agendar_pedir` abre a conversa, grava `zap_conversas.agendar`, liga `ia_conversa` e envia a primeira mensagem; o zap_plantao lê `agendar_contexto` (`promptAgendar`) e fecha com `agendar_fechar` ao agendar; `agendar_sem_resposta` (cron diário 9h) manda lembrete em 1 dia útil e avisa o advogado após 2. Ligar a chave somente após publicar o zap_plantao com o ok do Paulo.
+
+## F848 · Botão Agendar: escolha do momento do envio (28.11.2026, v14.51)
+Pedido do Paulo em 28.11. Campo "Enviar em" na janela do botão Agendar, preenchido com o próximo horário útil (agora, se dia útil entre 8h e 18h; senão 8h do próximo dia útil). Envio programado fica em estado "programado" e sai pela rotina agendar-programados (a cada 5 min). Migração f848_agendar_enviar_em.sql.
