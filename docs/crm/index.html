@@ -3099,7 +3099,7 @@ html[data-tema="v10"] .lista-item .priv{color:var(--cinza);background:var(--plac
 html[data-tema="v10"] .lista-item.alvo{background:var(--azul-fundo);box-shadow:inset 3px 0 0 var(--azul);outline-color:var(--azul)}
 html[data-tema="v10"] .novo-cli{background:var(--azul);font-weight:600;border-radius:6px}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .novo-cli:hover{background:var(--azul-escuro)}}
-html[data-tema="v10"] .app.mini-lateral .sidebar .cont{background:var(--placa);color:var(--texto);box-shadow:0 0 0 2px var(--lateral)}
+html[data-tema="v10"] .app.mini-lateral .sidebar .cont{background:var(--p-cinza-4);color:var(--texto);box-shadow:0 0 0 2px var(--lateral);right:-2px}
 html[data-tema="v10"] .app.mini-lateral .sidebar .lista-item.ativa .cont{background:var(--azul);color:var(--p-branco)}
 html[data-tema="v10"] .app.mini-lateral .sidebar .lista-item.ativa::before{background:var(--azul)}
 html[data-tema="v10"] .sidebar .avatar{box-shadow:0 0 0 1px rgba(19,28,36,.08)}
@@ -3745,6 +3745,7 @@ html[data-tema="v10"] .pl-grupo{background:var(--p-branco);border:1px solid var(
 html[data-tema="v10"] .pl-grupo h3.secao{margin:0;padding:10px 16px;background:var(--placa);color:var(--cinza);
   font-size:12px;font-weight:600;letter-spacing:.08em;border-bottom:1px solid var(--borda)}
 html[data-tema="v10"] .pl-grupo h3.secao .pl-n{margin-left:4px;font-family:var(--f-mono);letter-spacing:0}
+html[data-tema="v10"] .md-ontem h3.secao .pl-n{text-transform:none;font-weight:400;font-family:inherit}
 html[data-tema="v10"] .pl-grupo[data-tom="venc"] h3.secao{background:var(--venc-fundo);color:var(--venc-tinta);border-bottom-color:var(--p-vermelho-4)}
 /* F443 · seleção múltipla: a linha marcada e a barra do pé */
 .cartao.sel,html[data-tema="v10"] #conteudo-meio .ag-linha.sel{background:color-mix(in srgb,var(--verde,var(--p-verde-25)) 10%,var(--p-branco));box-shadow:inset 3px 0 0 var(--verde,var(--p-verde-25))}
@@ -7412,9 +7413,10 @@ html[data-tema="v10"] .ltc-v .ltc-r{border:0;background:var(--p-cinza-2)}
 .ma-dt[open] > summary::after{content:"▴"}
 .ma-dt[open] > summary{margin-bottom:6px}
 .ma-dt > summary:focus-visible{outline:2px solid var(--azul,var(--p-petroleo-12));outline-offset:2px;border-radius:4px}
-.ma-px-r{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza-claro,var(--p-cinza-26))}
+.ma-px-r{white-space:nowrap;flex:none;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza-claro,var(--p-cinza-26))}
 .ma-px-n,.ma-px-t{color:var(--cinza,var(--p-cinza-34));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .ma-dt b{font-weight:600;font-variant-numeric:tabular-nums}
+.ma-dt b.venc{color:var(--venc-tinta)}
 .app.celular .ma-dt > summary{min-height:44px;align-items:center}
 /* F836 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
 .lista-alca{display:none}
@@ -7485,7 +7487,7 @@ html[data-tema="v10"] .ltc .ltc-y.ltc-sd{color:var(--p-cinza-20);font-weight:400
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.51</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.52</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7937,6 +7939,7 @@ async function desfazerAgora(){
   esconderDesfazer();
   if(f) await f();
 }
+window.addEventListener("offline", ()=>aviso("Sem internet: nada será gravado até a conexão voltar"));
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
 async function api(caminho, opcoes={}, tentativa=0){
@@ -7952,10 +7955,12 @@ async function api(caminho, opcoes={}, tentativa=0){
       "Content-Type": "application/json",
       ...(opcoes.headers||{}),
     },
-  });
+  }).catch(()=>{ throw new Error("Sem internet. O que foi escrito continua na tela; tente de novo."); });
   if(r.status === 401 && sessao && tentativa === 0){
     const ok = await renovar();
     if(ok) return api(caminho, opcoes, 1);
+    // soluço de rede no refresh não é sessão vencida: não desloga
+    if(!renovarRecusou) throw new Error("Sem conexão para renovar a sessão. Tente de novo.");
     // já dentro do sistema: sessão vencida, recomeça. Ainda no login:
     // recarregar apagaria a mensagem e a tela voltaria ao início sem dizer nada
     if(eu) return sair();
@@ -8030,17 +8035,24 @@ async function todas(tabela, filtro=""){  // paginação (Supabase limita a 1000
   }
 }
 
-async function renovar(){
-  try{
-    const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/auth/v1/token?grant_type=refresh_token", {
-      method:"POST", headers:{apikey:CONFIG.ANON_KEY,"Content-Type":"application/json"},
-      body: JSON.stringify({refresh_token: sessao.refresh_token}),
-    });
-    if(!r.ok) return false;
-    sessao = await r.json();
-    guardar("crm_sessao", JSON.stringify(sessao));
-    return true;
-  }catch{ return false; }
+let renovarRecusou = false;   // true só quando o banco recusou o refresh token (400/401); rede, 5xx e 429 não deslogam
+let renovando = null;         // vários 401 ao mesmo tempo dividem um único refresh (o token de refresh é de uso único)
+function renovar(){
+  if(renovando) return renovando;
+  renovando = (async()=>{
+    renovarRecusou = false;
+    try{
+      const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/auth/v1/token?grant_type=refresh_token", {
+        method:"POST", headers:{apikey:CONFIG.ANON_KEY,"Content-Type":"application/json"},
+        body: JSON.stringify({refresh_token: sessao.refresh_token}),
+      });
+      if(!r.ok){ renovarRecusou = r.status===400 || r.status===401; return false; }
+      sessao = await r.json();
+      guardar("crm_sessao", JSON.stringify(sessao));
+      return true;
+    }catch{ return false; }
+  })().finally(()=>{ renovando = null; });   // fora do corpo: se ele falhar antes do primeiro await, o finally interno rodaria antes da atribuição e a Promise ficaria presa
+  return renovando;
 }
 
 // ── login ─────────────────────────────────────────────────────────────────
@@ -8183,7 +8195,9 @@ async function iniciar(){
   _hashIni.c = null;
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS);
     // como o To Do ao voltar para a frente: a aba que reaparece busca o que mudou na hora, sem esperar a volta do relógio
-    document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) vigiarMudancas(); });
+    document.addEventListener("visibilitychange", ()=>{ if(document.hidden) return; vigiarMudancas();
+      // sem rede o recarregarZap trocaria a lista pela mensagem de "banco sem tabelas"
+      if(visao==="whatsapp" && navigator.onLine && typeof recarregarZap==="function") recarregarZap(true).catch(()=>{}); });
     vigiarLembretes(); setInterval(vigiarLembretes, 30000);
     setTimeout(()=>verGravacaoGuardada().catch(()=>{}), 1500); }   // F537: a gravação interrompida volta com Continuar
   // F187 · "online agora" no painel do gestor: um ponto por minuto
@@ -9368,10 +9382,12 @@ async function gravarEtapa(casoId, etapa){
 // a etapa que a própria providência declara, sem mover o caso de lista
 async function marcarEtapa(casoId, etapa){
   const k = D.casoPorId.get(casoId); if(!k || !etapa || k.etapa===etapa) return false;
+  const etapaAntes = k.etapa;
   k.etapa = etapa;
   const trM = trilhaSegueEtapa(k, etapa);   // F183
-  try{ await patchCaso(casoId, {etapa}); }catch(e){ return false; }
-  if(trM) try{ await patchCaso(casoId, {trilha:trM}); k.trilha = trM; }catch(e){}
+  // etapa e trilha na mesma gravação (como o gravarEtapa): ou as duas, ou nenhuma
+  try{ await patchCaso(casoId, {etapa, ...(trM?{trilha:trM}:{})}); if(trM) k.trilha = trM; }
+  catch(e){ k.etapa = etapaAntes; aviso("Não foi possível gravar a etapa do caso: "+msgErro(e)); return false; }
   return true;
 }
 async function andarEtapa(casoId, lista, motivo, etapa){
@@ -9385,10 +9401,9 @@ async function andarEtapa(casoId, lista, motivo, etapa){
   // F119 · etapa da fase antiga não faz sentido na nova
   const nova = etapa || null;
   k.fase = fase; k.mover_para = lista; k.etapa = nova;
-  try{ await patchCaso(casoId, {fase, mover_para:lista, etapa:nova}); }
+  const trA = trilhaSegueEtapa(k, nova);   // F183 · na mesma gravação: ou tudo, ou nada
+  try{ await patchCaso(casoId, {fase, mover_para:lista, etapa:nova, ...(trA?{trilha:trA}:{})}); if(trA) k.trilha = trA; }
   catch(e){ Object.assign(k, antes); return false; }
-  const trA = trilhaSegueEtapa(k, nova);   // F183
-  if(trA) try{ await patchCaso(casoId, {trilha:trA}); k.trilha = trA; }catch(e){}
   montarSidebar(); render(); if(clienteAberto) repintarFicha();
   avisoDesfazer(`Caso movido para ${lista}${k.etapa?`, ${k.etapa}`:""} · ${motivo}`, async ()=>{
     Object.assign(k, antes);
@@ -9663,7 +9678,7 @@ async function aceitarEtapaProposta(casoId){
   const p = propostaDeEtapa(k, andsDoCaso(k));
   if(!p) return aviso("A etapa já está de acordo com os fatos oficiais");
   const antes = {etapa:k.etapa||null, trilha:k.trilha||null, resultado:k.resultado||null, decisao_em:k.decisao_em||null};
-  let volta = null;
+  let volta = null, falha = "";
   if(p.mover){
     const lista = (LISTAS_MOVER.find(([,f])=>f===p.mover)||[])[0];
     if(!lista || !await andarEtapa(casoId, lista, porDaProposta(p), p.etapa))
@@ -9677,7 +9692,8 @@ async function aceitarEtapaProposta(casoId){
       const c = {};
       if(p.resultado && (!k.resultado || (k.decisao_em||"") < p.data)) c.resultado = p.resultado;
       if(!k.decisao_em || k.decisao_em < p.data) c.decisao_em = p.data;
-      if(Object.keys(c).length) try{ await patchCaso(k.id, c); Object.assign(k, c); }catch(e){}
+      if(Object.keys(c).length) try{ await patchCaso(k.id, c); Object.assign(k, c); }
+        catch(e){ falha = ". Não foi possível gravar o resultado e a data da decisão: "+msgErro(e); }
     }
   }
   let andId = null;
@@ -9689,7 +9705,7 @@ async function aceitarEtapaProposta(casoId){
   }catch(e){}
   const repinta = () => { montarSidebar(); render(); if(clienteAberto) (p.mover ? abrirFicha(clienteAberto) : repintarFicha()); };
   repinta();
-  avisoDesfazer(`Etapa: ${rotuloProposta(p)} ✔ — registrado no caso`, async () => {
+  avisoDesfazer(`Etapa: ${rotuloProposta(p)} ✔ — registrado no caso${falha}`, async () => {
     if(volta) await volta();
     else { Object.assign(k, antes); await patchCaso(k.id, antes).catch(()=>{}); }
     if(andId){ await api(`/rest/v1/andamentos?id=eq.${andId}`,{method:"DELETE"}).catch(()=>{});
@@ -18546,7 +18562,7 @@ async function renderWhats(){ zapAbaAuto = true;
   pararZapTimer();
   // sem WebSocket: uma olhada a cada 6 segundos é o suficiente para quem está
   // atendendo e não deixa a página pesada
-  zapTimer = setInterval(()=>{ if(visao==="whatsapp"){ recarregarZap(true); if(zagAberta()) zagCarregar(); } else pararZapTimer(); }, 6000);
+  zapTimer = setInterval(()=>{ if(document.hidden) return; if(visao==="whatsapp"){ recarregarZap(true); if(zagAberta()) zagCarregar(); } else pararZapTimer(); }, 6000);
 }
 
 async function recarregarZap(silencioso){
@@ -28879,9 +28895,10 @@ async function gravarReq(casoId, rid, passo){
   if(!await gravarCamposCli(c, {requisicoes:{...antes, [k.id]:nova}})) return;
   fecharCaixa();
   const pg = passo==="repasse" ? await honorariosDoRepasse(c, k, nova.find(y=>y.id===rid).repasse) : null;
-  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})}).catch(()=>{});
+  const falha = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})})
+    .then(()=>"", e=>". Não foi possível gravar a anotação no caso: "+msgErro(e));
   repintarFicha();
-  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo], async()=>{
+  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo] + falha, async()=>{
     await gravarCamposCli(c, {requisicoes:antes});
     if(pg) await api(`/rest/v1/pagamentos?id=eq.${pg.p.id}`, pg.antes ? {method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(pg.antes)} : {method:"DELETE"}).catch(()=>{});
     if(pg){ if(pg.antes) Object.assign(pg.p, pg.antes); else D.pagamentos = D.pagamentos.filter(y=>y!==pg.p); }
@@ -43912,9 +43929,10 @@ function quadroDatas(k){
 function prazosDoCliente(cliId){
   const {soltas} = linhasDeDatas(cliId), grupos = new Map();
   for(const x of soltas){ const g = x.casoId || ""; if(!grupos.has(g)) grupos.set(g, []); grupos.get(g).push(x); }
-  const hj = hoje(), venc = soltas.filter(x=>x.data<hj && !x.aConfirmar).length;
+  const vis = PZ_SO_TODO ? soltas.filter(doTodoPz) : soltas;   // F849 · o contador da aba conta só o que a aba mostra
+  const hj = hoje(), venc = vis.filter(x=>x.data<hj && !x.aConfirmar).length;
   const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
-  return {grupos, total: soltas.length, venc, lista};
+  return {grupos, total: vis.length, venc, lista};
 }
 // F453 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
 // ideias do Replit e do Base44). No alto, a faixa do próximo prazo fatal; depois a natureza (com Retorno à parte) e Por data
@@ -45140,11 +45158,14 @@ function miniAgenda(k){
 }
 let _maAberta = false;
 function maProximo(cliId){
-  const hj = hoje(), x = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x)) && x.data>=hj).sort((a, b)=>a.data<b.data ? -1 : a.data>b.data ? 1 : 0)[0];
+  const todas = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x))).sort((a, b)=>a.data<b.data ? -1 : a.data>b.data ? 1 : 0);
+  const hj = hoje(), x = todas.find(x=>x.data>=hj), v = todas[0];
+  // F849 · sem prazo futuro, o vencido mais antigo aparece em vez de "nenhum marcado"
+  if(!x && v) return `<span class="ma-px-r">Próximo prazo</span><b class="venc">vencido ${fmtBarra(v.data).slice(0,5)}</b>`;
   if(!x) return `<span class="ma-px-r">Próximo prazo</span><span class="ma-px-n">nenhum marcado</span>`;
   prepPz(x, 0);
   const quando = x.data===hj ? "hoje" : fmtBarra(x.data).slice(0,5);
-  return `<span class="ma-px-r">Próximo prazo</span><b>${quando}</b><span class="ma-px-t">${esc(ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete")}</span>`;
+  return `<span class="ma-px-r">Próximo prazo</span><b>${quando}</b><span class="ma-px-t">${esc(doTodoPz(x) ? "To Do" : ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete")}</span>`;
 }
 function maMes(n){
   const d = new Date((_pzMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7);
@@ -45544,10 +45565,10 @@ function lcGradeArea(k){
   const vara = orgaoJudCurto(dv(/^[óo]rg[ãa]o julgador/i) || k.orgao_judicial || "");
   const polos = [dv(/^polo ativo/i), dv(/^polo passivo/i)].filter(Boolean).join(" × ");
   const partes = (k.ronda||{}).partes || polos, valor = dv(/^valor da causa/i);
-  const f = (rot, v, cls="") => `<span class="lc-f${cls}"><span class="lc-k">${rot}</span>${v || `<span class="lc-vazio">não informado</span>`}</span>`;
+  const f = (rot, v, cls="") => `<span class="lc-f${cls}"><span class="lc-k">${rot}</span>${v || `<span class="lc-vazio">a informar</span>`}</span>`;
   return [f("Processo", k.processo ? lcCop(fmtProc(k.processo), "Número do processo") : ""),
     f("Vara", vara ? esc(vara) : ""),
-    `<span class="lc-f lc-partes"><span class="lc-k">Partes</span>${partes ? `<b class="lc-manual">${esc(partes)}</b>` : `<span class="lc-vazio">não informadas</span>`}<button class="lapis" title="escrever as partes" onclick="editarPartes('${k.id}')">✎</button></span>`,
+    `<span class="lc-f lc-partes"><span class="lc-k">Partes</span>${partes ? `<b class="lc-manual">${esc(partes)}</b>` : `<span class="lc-vazio">a informar</span>`}<button class="lapis" title="escrever as partes" onclick="editarPartes('${k.id}')">✎</button></span>`,
     f("Valor da causa", valor ? esc(valor) : "")].join("");
 }
 async function gravarRonda(k, ronda, msg){
@@ -45621,7 +45642,7 @@ function linhaCaso(k){
       <div class="lc-placa lc5-grade">
       ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
-        : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
+        : `<span class="lc-vazio">a informar</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       ${k.nb && !camposEssenciais(k).some(c=>soCampo(c)==="nb") ? `<span class="lc-f lc-nb"><span class="lc-k">NB</span>${lcCop(fmtNb(k.nb),"NB")}</span>` : ""}
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}
@@ -48344,12 +48365,17 @@ async function desfazerCumprimento(respId){
   catch(e){ return aviso("Não consegui desfazer"); }
   D._andsFicha = (D._andsFicha||[]).filter(a=>a.id!==r.id);
   const m = og && /\[PRAZO (\d{2}\.\d{2}\.\d{4})\]/.exec(og.texto||""), data = m && isoDoCarimbo(m[1]);
-  if(k && data && !k.prazo && k.fase!=="encerrado"){ await patchCaso(k.id, {prazo: data}).catch(()=>{}); k.prazo = data; }
+  let falha = "";
+  if(k && data && !k.prazo && k.fase!=="encerrado"){
+    try{ await patchCaso(k.id, {prazo: data}); k.prazo = data; }
+    catch(e){ falha = "Não foi possível gravar o prazo de volta no caso: "+msgErro(e); } }
   const junto = og ? tarefasDe(og).filter(t=>t.concluida_em && Math.abs(new Date(t.concluida_em) - new Date(r.criado_em)) < 120000) : [];
-  for(const t of junto){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({concluida_em: null})}).catch(()=>{}); t.concluida_em = null; }
-  if(k && junto.length) D.tarefasPorCaso.set(k.id, [...(D.tarefasPorCaso.get(k.id)||[]), ...junto.filter(t=>!(D.tarefasPorCaso.get(k.id)||[]).includes(t))]);
-  aviso("Registro desfeito: o prazo voltou ao caso", false);
+  for(const t of junto){
+    try{ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({concluida_em: null})}); t.concluida_em = null; }
+    catch(e){ falha = falha || "Não foi possível reabrir a tarefa concluída junto: "+msgErro(e); } }
+  if(k && junto.length) D.tarefasPorCaso.set(k.id, [...(D.tarefasPorCaso.get(k.id)||[]), ...junto.filter(t=>!t.concluida_em && !(D.tarefasPorCaso.get(k.id)||[]).includes(t))]);
+  aviso(falha ? "Registro desfeito. "+falha : "Registro desfeito: o prazo voltou ao caso", !!falha);
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 // a resposta do registro: o selo no lugar do colchete e o comprovante preso a ela
@@ -51211,18 +51237,22 @@ async function semNovidade(casoId, dias, ev){
   // a conferência que vencia (o lembrete de conferir, de hoje ou de antes) sai; a data volta daqui a N dias
   const velhas = (D.tarefasPorCaso.get(casoId)||[]).filter(t=>!t.concluida_em && t.natureza==="lembrete" && t.lembrar_em && t.lembrar_em<=hj);
   const agora = new Date().toISOString();
+  let falha = "";   // vai na faixa do desfazer, que apagaria um aviso solto
   for(const t of velhas){ t.concluida_em = agora;
-    api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida_em:agora})}).catch(()=>{}); }
+    try{ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida_em:agora})}); }
+    catch(e){ t.concluida_em = null; falha = ". Não foi possível gravar a conclusão do lembrete anterior: "+msgErro(e); } }
   // o "Concluir em" do To Do (casos.prazo) vencido é a própria data de conferir: anda junto. Ele não é apagado, porque
   // o To Do só preenche o vazio e devolveria a data velha
   const prazoAntes = k.prazo; let tf = null;
-  if(k.prazo && k.prazo<=hj){ k.prazo = quando; await patchCaso(casoId, {prazo:quando}).catch(()=>{}); }
+  if(k.prazo && k.prazo<=hj){ k.prazo = quando;
+    try{ await patchCaso(casoId, {prazo:quando}); }
+    catch(e){ k.prazo = prazoAntes; falha = ". Não foi possível gravar a nova data de conferência: "+msgErro(e); } }
   else { try{ [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:quando, natureza:"lembrete"})});
-    tarefaNaMemoria(tf); }catch(e){} }
+    tarefaNaMemoria(tf); }catch(e){ falha = ". Não foi possível gravar o lembrete da nova conferência: "+msgErro(e); } }
   const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
   repinta();
-  avisoDesfazer(`${c.rot} · conferir de novo em ${fmtBarra(quando)}`, async ()=>{
+  avisoDesfazer(`${c.rot} · conferir de novo em ${fmtBarra(quando)}${falha}`, async ()=>{
     await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
     if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id);
     for(const t of velhas){ t.concluida_em = null;
@@ -51442,8 +51472,11 @@ async function gravarSeparar(){
   if(and && Array.isArray(D._andsFicha) && clienteAberto===c.id) D._andsFicha.unshift(and);
   if(s.para!==eu.id) criarMencoes(texto, k.id, and.id).catch(()=>{});
   const item = {id:"en_"+Date.now().toString(36), docs, anexos:[...novos, ...ans].map(a=>a.id), caso_id:k.id, and_id:and.id, tf_id:tf&&tf.id, para:s.para, ate:s.ate, em:hoje(), por:eu.id};
+  const camposAntes = c.campos;
   c.campos = {...(c.campos||{}), entregar:[...entregarDe(c), item]};
-  await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  try{ await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ c.campos = camposAntes; if(clienteAberto===c.id) repintarFicha();
+    return aviso("A anotação e a tarefa foram criadas, mas não foi possível gravar os papéis na pasta do cliente: "+msgErro(e)); }
   aviso(`🖨 Separado: ${nomeQuem} imprime até ${fmtBarra(s.ate)}`, false);
   if(clienteAberto===c.id) repintarFicha();
 }
@@ -51789,14 +51822,17 @@ async function registrarMovimento(casoId, i){
   }
   const antes = Object.fromEntries(Object.keys(muda).map(c=>[c, k[c]===undefined ? null : k[c]]));   // 11.92 · JUR-06
   Object.assign(k, muda);
-  if(Object.keys(muda).length) await patchCaso(casoId, muda).catch(()=>{});
+  if(Object.keys(muda).length) try{ await patchCaso(casoId, muda); }
+    catch(e){ Object.assign(k, antes); montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
+      return aviso("A anotação foi gravada, mas o caso NÃO foi atualizado. Registre o movimento de novo."); }
   // a data da perícia ou da pauta vira lembrete do advogado responsável, nesse dia
+  let semLembrete = "";   // vai na faixa do Desfazer: um aviso() aqui seria coberto por ela no mesmo instante
   if(data && efeito==="data") try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
+      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){ semLembrete = ". O lembrete da data não foi gravado: "+String(e.message||e).slice(0,80); }
   if(advId && advId!==eu.id) criarMencoes(texto, casoId, and.id, [advId]).catch(()=>{});
   montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
   // 11.92 · JUR-06: desfazer como no "Em análise": o caso volta e a anotação sai (com a menção e o lembrete, em cascata no banco)
-  avisoDesfazer(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, async ()=>{
+  avisoDesfazer(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}${semLembrete}`, async ()=>{
     Object.assign(k, antes);
     if(Object.keys(antes).length) await patchCaso(casoId, antes).catch(()=>{});
     await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
@@ -63093,6 +63129,20 @@ new MutationObserver(ms=>{
     try{ await iniciar(); }catch{ if(await renovar()){ try{ await iniciar(); }catch{ sair(); } } }
   }
 })();
+
+// Trava de duplo clique: enquanto a gravação anterior do mesmo item não termina, o segundo clique é ignorado.
+// Fica no último módulo porque troca as quatro funções globais chamadas por onclick, já declaradas nos módulos anteriores.
+const _gravando = new Set();
+for(const n of ["novoPgto", "confirmarRecebido", "registrarMovimento", "semNovidade"]){
+  const f = window[n];
+  if(typeof f !== "function") continue;
+  window[n] = async function(...a){
+    const ch = n + ":" + a[0];
+    if(_gravando.has(ch)){ a.forEach(x=>x && x.stopPropagation && x.stopPropagation()); return; }   // o clique ignorado não sobe para a linha
+    _gravando.add(ch);
+    try{ return await f.apply(this, a); } finally{ _gravando.delete(ch); }
+  };
+}
 </script>
 </body>
 </html>
