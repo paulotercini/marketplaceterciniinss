@@ -1,6 +1,6 @@
 ---
 name: base-legislacao-fontes-primarias
-description: Repositório verificado de fontes primárias da legislação previdenciária brasileira em texto literal. Use SEMPRE que precisar CITAR artigo de Constituição Federal de 1988, EC 103/2019 (Reforma da Previdência), EC 20/1998 (direito adquirido do professor art. 9º §2º), Lei 8.213/91 (Plano de Benefícios), Lei 8.212/91 (Custeio), Lei 8.742/93 (LOAS), LC 142/2013 (Aposentadoria PCD), Lei 13.146/2015 (Estatuto da Pessoa com Deficiência), CPC Lei 13.105/2015, Juizados Especiais Lei 9.099/1995, Juizados Especiais Federais Lei 10.259/2001, Mandado de Segurança Lei 12.016/2009, processo administrativo federal Lei 9.784/1999, Lei 13.460/2017 usuário do serviço público, Lei 7.713/1988 imposto de renda isenção doença grave RRA, Lei 8.112/1990 servidores contagem recíproca, Lei 10.666/2003, Lei 9.876/1999 fator previdenciário, Lei 9.494/1997 art. 1º-F, Lei 9.796/1999 compensação previdenciária, Lei 13.135/2015 pensão, Lei 13.846/2019, Lei 14.768/2023 deficiência auditiva, Lei 15.176/2025 fibromialgia, Lei 10.741/2003 Estatuto do Idoso, Lei 8.880/1994 IRSM, Lei 9.032/1995, Decreto 3.048/99 (Regulamento da Previdência Social), Decreto 53.831/1964 (Quadro Anexo de agentes nocivos pré-1995), Decreto 83.080/1979 quadro de agentes e categorias, Decreto 2.172/1997, Decreto 62.755/1968, Decreto 6.214/2007 Regulamento do BPC, Decreto 6.949/2009 Convenção de Nova York, Decreto 10.995/2022 estrutura regimental do INSS, Instrução Normativa 128/2022 INSS, Portaria Interministerial 1/2014 IF-BrA, Portaria Conjunta MDS/INSS 2/2015 avaliação BPC, Portarias DIRBEN/INSS 990 a 996 de 2022, Portaria DIRBEN/INSS 998/2022 compensação, Portaria INSS 914/2021 PRBI, Portaria DIRBEN/INSS 1.309/2025 supervisão técnica revisão de ofício, Portaria DIRBEN/INSS 1.318/2025, Portaria PRES/INSS 1.851/2025 estrutura Superintendências Regionais, Portaria MPS 125/2026 (Regimento Interno CRPS). Use ANTES de afirmar qualquer redação de artigo, redação de parágrafo, hipótese de incidência ou regra processual. Use ANTES de redigir qualquer petição, recurso, mandado de segurança ou auditoria. A skill aponta para o repositório local verificado em C:\Users\VAIO\INSS\base-legislacao\ com mais de 50 arquivos baixados das fontes oficiais (Planalto, Imprensa Nacional, sirc.gov.br, gov.br/previdencia), com SHA-256 registrado, encoding UTF-8 e marcações de revogação/redação preservadas, índice atualizado na Onda 73 (v1.63.0). SEMPRE que houver dúvida sobre redação literal de um artigo, ABRA o arquivo correspondente no workspace ANTES de citar. NUNCA invente texto de artigo. MCP normas é a PRIMEIRA via de localização de dispositivo, LOCALIZA sem conferir, e tem quatro limitações medidas, vigência INFERIDA com parágrafo e inciso EMPILHADOS sem marca de qual vale, histórico por ANO da norma alteradora, Anexos II a IV do Decreto 3.048 fora da base com o Decreto 53.831/1964 no lugar para agente nocivo, e campo dispositivos que quebra em artigo com remissão interna, de modo que se transcreve o campo texto. Enunciado do CRPS segue no iurisprudencia. Postura pró-segurado exclusiva. Cruza com base-portarias-dpmf-inss-hub, precedentes-previdenciarios, peticao-previdenciaria, revisao-peticao, documentos-comprobatorios-in128, cnis-acerto-indicadores.
+description: Repositório verificado de fontes primárias da legislação previdenciária brasileira em texto literal. Use SEMPRE que precisar CITAR artigo de Constituição Federal de 1988, EC 103/2019 (Reforma da Previdência), EC 20/1998 (direito adquirido do professor art. 9º §2º), Lei 8.213/91 (Plano de Benefícios), Lei 8.212/91 (Custeio), Lei 8.742/93 (LOAS), LC 142/2013 (Aposentadoria PCD), Lei 13.146/2015 (Estatuto da Pessoa com Deficiência), CPC Lei 13.105/2015, Juizados Especiais Lei 9.099/1995, Juizados Especiais Federais Lei 10.259/2001, Mandado de Segurança Lei 12.016/2009, processo administrativo federal Lei 9.784/1999, Lei 13.460/2017 usuário do serviço público, Lei 7.713/1988 imposto de renda isenção doença grave RRA, Lei 8.112/1990 servidores contagem recíproca, Lei 10.666/2003, Lei 9.876/1999 fator previdenciário, Lei 9.494/1997 art. 1º-F, Lei 9.796/1999 compensação previdenciária, Lei 13.135/2015 pensão, Lei 13.846/2019, Lei 14.768/2023 deficiência auditiva, Lei 15.176/2025 fibromialgia, Lei 10.741/2003 Estatuto do Idoso, Lei 8.880/1994 IRSM, Lei 9.032/1995, Decreto 3.048/99 (Regulamento da Previdência Social), Decreto 53.831/1964 (Quadro Anexo de agentes nocivos pré-1995), Decreto 83.080/1979 quadro de agentes e categorias, Decreto 2.172/1997, Decreto 62.755/1968, Decreto 6.214/2007 Regulamento do BPC, Decreto 6.949/2009 Convenção de Nova York, Decreto 10.995/2022 estrutura regimental do INSS, Instrução Normativa 128/2022 INSS, Portaria Interministerial 1/2014 IF-BrA, Portaria Conjunta MDS/INSS 2/2015 avaliação BPC, Portarias DIRBEN/INSS 990 a 996 de 2022, Portaria DIRBEN/INSS 998/2022 compensação, Portaria INSS 914/2021 PRBI, Portaria DIRBEN/INSS 1.309/2025 supervisão técnica revisão de ofício, Portaria DIRBEN/INSS 1.318/2025, Portaria PRES/INSS 1.851/2025 estrutura Superintendências Regionais, Portaria MPS 125/2026 (Regimento Interno CRPS). Use ANTES de afirmar qualquer redação de artigo, redação de parágrafo, hipótese de incidência ou regra processual. Use ANTES de redigir qualquer petição, recurso, mandado de segurança ou auditoria. A skill aponta para o repositório local verificado em C:\Users\VAIO\INSS\base-legislacao\ com mais de 50 arquivos baixados das fontes oficiais (Planalto, Imprensa Nacional, sirc.gov.br, gov.br/previdencia), com SHA-256 registrado, encoding UTF-8 e marcações de revogação/redação preservadas. SEMPRE que houver dúvida sobre redação literal de um artigo, ABRA o arquivo correspondente no workspace ANTES de citar. NUNCA invente texto de artigo. MCP normas é a PRIMEIRA via de localização de dispositivo, LOCALIZA sem conferir, e tem quatro limitações medidas, vigência INFERIDA com parágrafo e inciso EMPILHADOS sem marca de qual vale, histórico por ANO da norma alteradora, Anexos II a IV do Decreto 3.048 fora da base com o Decreto 53.831/1964 no lugar para agente nocivo, e campo dispositivos que quebra em artigo com remissão interna, de modo que se transcreve o campo texto. Enunciado do CRPS segue no iurisprudencia. Postura pró-segurado exclusiva. Cruza com base-portarias-dpmf-inss-hub, precedentes-previdenciarios, peticao-previdenciaria, revisao-peticao, documentos-comprobatorios-in128, cnis-acerto-indicadores.
 ---
 
 # Repositório de Fontes Primárias da Legislação Previdenciária
@@ -9,9 +9,9 @@ description: Repositório verificado de fontes primárias da legislação previd
 
 Esta skill é o repositório de fontes primárias verificadas da legislação previdenciária brasileira do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110). Postura pró-segurado exclusiva.
 
-A skill foi criada na **Onda 31** (31/05/2026) como resposta ao protocolo de honestidade radical do escritório. Toda citação de artigo de lei, decreto, instrução normativa ou portaria DEVE ser verificada CONTRA os arquivos do workspace `C:\Users\VAIO\INSS\base-legislacao\` ANTES de ser inserida em qualquer petição, recurso, parecer ou orientação.
+Toda citação de artigo de lei, decreto, instrução normativa ou portaria DEVE ser verificada CONTRA os arquivos do workspace `C:\Users\VAIO\INSS\base-legislacao\` ANTES de ser inserida em qualquer petição, recurso, parecer ou orientação.
 
-## MCP `normas`, primeira via de localização (Onda 149)
+## MCP `normas`, primeira via de localização
 
 Desde 20/09/2026 existe o servidor MCP `normas`, base local montada deste mesmo corpus, e é por ele que a localização do dispositivo COMEÇA. Ele responde qual é o texto do artigo, qual era a redação em determinado ano e onde a expressão aparece no corpus, sem abrir arquivo a arquivo.
 
@@ -28,7 +28,7 @@ Desde 20/09/2026 existe o servidor MCP `normas`, base local montada deste mesmo 
 
 **Enunciado do CRPS não está no `normas`.** Continua no MCP `iurisprudencia`, cujo `enunciados_pleno_inss_crps` devolve o texto vigente, as redações anteriores e a resolução que alterou cada uma, e cujo `acordaos_por_precedente_inss_crps` devolve os acórdãos que o aplicaram. Não achar enunciado no `normas` não significa que ele não exista.
 
-A forma de pesquisar, com as cinco ferramentas, os casos de exercício e o estado da medição, está em `references/PESQUISA-NO-MCP-NORMAS.md`. Os agentes do plugin chamam o `normas` diretamente desde a Onda 156, com a mesma regra de marcação.
+A forma de pesquisar, com as cinco ferramentas, os casos de exercício e o estado da medição, está em `references/PESQUISA-NO-MCP-NORMAS.md`. Os agentes do plugin chamam o `normas` diretamente, com a mesma regra de marcação.
 
 ## Os outros três MCPs da casa
 
@@ -40,7 +40,7 @@ Toda vez que for citar um artigo de norma primária, o Claude DEVE seguir este p
 
 **Passo 1. Identificar a norma.** Localizar pelo MCP `normas`, e não estando ele disponível, localizar no índice abaixo qual arquivo do workspace contém a norma.
 
-**Passo 2. Abrir o arquivo.** Usar o Read tool no caminho absoluto do workspace correspondente ao mount Linux `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/...` ou no caminho Windows `C:\Users\VAIO\INSS\base-legislacao\...`.
+**Passo 2. Abrir o arquivo.** Ler o campo `texto` de `obter_artigo` ou, sem o MCP, o arquivo do workspace (caminhos abaixo). No plugin, o mesmo corpus está em `_base-conhecimento-inss/mcp-normas/corpus/`.
 
 **Passo 3. Buscar o artigo.** Usar Grep ou Read com offset/limit para localizar o artigo, parágrafo, inciso ou alínea exato. Para o Quadro Anexo do Decreto 53.831/1964, consultar o arquivo `Decreto-53831-1964-quadro-agentes-nocivos.md` que tem o quadro em formato tabular.
 
@@ -50,11 +50,11 @@ Se o artigo NÃO for localizado, declarar expressamente "Não localizado no arqu
 
 ## ÍNDICE COMPLETO DO REPOSITÓRIO
 
-Índice atualizado na Onda 73 (v1.63.0), substituindo o índice congelado da Onda 31 (31/05/2026). Registra todas as normas presentes na pasta, inclusive as gravadas após maio de 2026 que antes não eram acionadas automaticamente.
+Registra todas as normas presentes na pasta do workspace.
 
 Caminho base no Windows. `C:\Users\VAIO\INSS\base-legislacao\`
 
-Caminho base no Linux mount (Cowork). `/sessions/<sessão>/mnt/INSS/base-legislacao/`. O `<sessão>` muda a cada sessão do Cowork, resolver dinamicamente (ver a lição da Onda 69). Nesta sessão é `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/`.
+Caminho base no Linux mount (Cowork). `/sessions/<sessão>/mnt/INSS/base-legislacao/`, com o `<sessão>` resolvido a cada sessão.
 
 ### 01-Constituicao
 - `CF-1988-completa.md` Constituição Federal de 1988. Última alteração EC 139/2026.
@@ -100,7 +100,7 @@ Caminho base no Linux mount (Cowork). `/sessions/<sessão>/mnt/INSS/base-legisla
 - `Decreto-62755-1968.md` Decreto 62.755/1968, cadeia normativa do enquadramento.
 - `Decreto-6949-2009-convencao-NY-PCD.md` Decreto 6.949/2009, Convenção de Nova York sobre a pessoa com deficiência.
 - `Decreto-83080-1979.md` Decreto 83.080/1979 completo, aprovação (arts. 1º a 4º), Anexo I (agentes nocivos 1.x.x) e Anexo II (categorias profissionais 2.x.x). Revogado pelo Decreto 3.048/99.
-- `Decreto-10995-2022.md` Decreto 10.995/2022, Estrutura Regimental do INSS, base do mapeamento institucional. Última alteração Decreto 12.764/2025. (Verificado a mais na pasta na Onda 73, não constava do índice da Onda 31.)
+- `Decreto-10995-2022.md` Decreto 10.995/2022, Estrutura Regimental do INSS, base do mapeamento institucional. Última alteração Decreto 12.764/2025.
 
 ### 05-Instrucoes-Normativas
 - `IN-128-2022-INSS-parte1-arts-1-170.md` IN PRES/INSS 128/2022, parte 1. Consolidada até IN 170/2024.
@@ -139,17 +139,6 @@ TAXONOMIA CORRIGIDA DAS PORTARIAS DIRBEN/INSS DE 28/03/2022. A Portaria 992/2022
 - `Portaria-DIRBEN-INSS-1318-2025.md` Altera a Portaria 1.309/2025.
 - `Portaria-PRES-INSS-1851-2025-anexo-VI-estrutura-SR.md` Anexo VI, estrutura das Superintendências Regionais, mapeamento institucional. Consolidado com a Portaria 1.878/2025.
 
-## REGRA DE OURO PARA O CLAUDE
-
-ANTES de citar QUALQUER artigo destas normas em uma petição, recurso, MS, auditoria ou orientação ao cliente, o Claude DEVE.
-
-1. Identificar o arquivo correspondente no índice acima.
-2. Abrir o arquivo no caminho do mount Linux.
-3. Buscar o artigo com Grep ou Read.
-4. Transcrever LITERALMENTE preservando notas de redação.
-
-SE NÃO LOCALIZAR O ARTIGO, declarar "Não localizado no arquivo X em fonte verificada" e propor caminho de verificação adicional. NÃO INVENTAR.
-
 ## CRUZAMENTO COM OUTRAS SKILLS DO PLUGIN
 
 Esta skill deve ser acionada AUTOMATICAMENTE em conjunto com.
@@ -163,24 +152,22 @@ Esta skill deve ser acionada AUTOMATICAMENTE em conjunto com.
 
 ## ATUALIZAÇÃO DO REPOSITÓRIO
 
-O repositório foi baixado em 31/05/2026 (Onda 31). Índice reconciliado com a pasta na Onda 73 (v1.63.0). Atualizações devem ser registradas em log próprio. A regra é.
+O repositório foi baixado em 31/05/2026. Regras de atualização:
 
 - Para Leis e Decretos. Re-baixar do Planalto sempre que houver nova lei de alteração relevante (Lei 8.213 e Lei 8.212 mudam com frequência).
 - Para IN 128/2022. Re-baixar quando novas INs alterarem (IN 170/2024 já consolidada, conferir IN 174+).
 - Para Portarias. Re-baixar quando novas portarias revogarem ou alterarem.
 - Portaria MPS 125/2026 (RICRPS). Conferir alterações posteriores às Portarias 235 e 462/2026.
 
-A reexecução desta atualização deve ser feita em onda corretiva específica no plugin, com bump de versão.
+### Pendências do repositório
 
-### Notas de manutenção (Onda 73)
-
-Correção de status cruzada. A Portaria 1.309/2025 revoga a 1.056/2022 e a 1.231/2024. Tratamento já corrigido na skill `base-erro-administrativo-iea-13975` na Onda 64 (v1.54.0), com a 1.309/2025 alterada pela 1.318/2025 como norma vigente.
+A Portaria 1.309/2025, alterada pela 1.318/2025, revoga a 1.056/2022 e a 1.231/2024 (tratamento na `base-erro-administrativo-iea-13975`).
 
 Arquivos avulsos a apagar na pasta, pendentes de exclusão manual pelo escritório (o mount bloqueia exclusão pura pela skill). `04-Decretos/Decreto-83080-1979-quadro-agentes-nocivos.PARCIAL.md`, superado pelo `Decreto-83080-1979.md` completo. E o `.__wtest` na raiz da pasta, artefato de teste de gravação. Nenhum dos dois está no índice, por não serem fontes primárias válidas.
 
-Ainda faltam na pasta, sem fonte oficial acessível na data. Portaria DPMF/INSS 19/2026 (Teleperícia) e Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 (análise documental B31, B91, B94). A Portaria Conjunta MPS/INSS 43/2026, que prorroga por 365 dias o teto de 90 dias da 14/2026, ENTROU no corpus do MCP normas em 22/09/2026 (Onda 154), a partir do PDF do DOU, com hash e URL do in.gov.br no frontmatter. Observação. A Portaria Conjunta 13/2026 já foi conferida por inteiro teor no DOU na Onda 72, mas ainda não foi baixada como arquivo neste repositório. Baixar quando houver PDF oficial ou captura do DOU. A Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026), que altera os arts. 3º, 8º e 9º da 13/2026 e acrescenta o art. 8º-A, ENTROU no corpus em 06/11/2026 (`Portaria-Conjunta-MPS-INSS-54-2026.md`), com URL do in.gov.br no frontmatter; a 13/2026 está no corpus na redação original, com remissão à 54/2026 no frontmatter.
+Ainda faltam na pasta, sem fonte oficial acessível na data. Portaria DPMF/INSS 19/2026 (Teleperícia) e Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 (análise documental B31, B91, B94). A Portaria Conjunta MPS/INSS 43/2026, que prorroga por 365 dias o teto de 90 dias da 14/2026, entrou no corpus do MCP normas em 22/09/2026, a partir do PDF do DOU, com hash e URL do in.gov.br no frontmatter. Observação. A Portaria Conjunta 13/2026 já foi conferida por inteiro teor no DOU, mas ainda não foi baixada como arquivo neste repositório. Baixar quando houver PDF oficial ou captura do DOU. A Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026), que altera os arts. 3º, 8º e 9º da 13/2026 e acrescenta o art. 8º-A, ENTROU no corpus em 06/11/2026 (`Portaria-Conjunta-MPS-INSS-54-2026.md`), com URL do in.gov.br no frontmatter; a 13/2026 está no corpus na redação original, com remissão à 54/2026 no frontmatter.
 
-Segunda prioridade, mapeada mas ainda não baixada. Lei 15.157/2025, Lei 11.301/2006, Lei 15.326/2026, Lei 13.183/2015, Lei 11.718/2008, EC 41/2003, EC 113/2021, IN 164/2024 e IN 188/2025. Acrescida na Onda 74. Portaria MTP 1.467/2022 (consolidação dos RPPS, cujo Anexo X é a Relação das Bases de Cálculo de Contribuição usada na CTC estadual), invocada pela skill base-ctc-estadual-conferencia-e-lancamento-previus e por ora conferida apenas em fonte oficial gov.br, sem arquivo local.
+Segunda prioridade, mapeada mas ainda não baixada. Lei 15.157/2025, Lei 11.301/2006, Lei 15.326/2026, Lei 13.183/2015, Lei 11.718/2008, EC 41/2003, EC 113/2021, IN 164/2024 e IN 188/2025. Também a Portaria MTP 1.467/2022 (consolidação dos RPPS, cujo Anexo X é a Relação das Bases de Cálculo de Contribuição usada na CTC estadual), invocada pela skill base-ctc-estadual-conferencia-e-lancamento-previus e por ora conferida apenas em fonte oficial gov.br, sem arquivo local.
 
 Registro de incidente. A Lei 8.212/91 sumiu da pasta em rodada de gravação de 06/07/2026 e foi restaurada do Planalto na mesma data, causa não confirmada. Conferir periodicamente a integridade da pasta contra este índice.
 
@@ -188,7 +175,7 @@ Registro de incidente. A Lei 8.212/91 sumiu da pasta em rodada de gravação de 
 
 Esta skill APONTA para os arquivos no workspace, NÃO duplica o conteúdo nas references. Isso preserva o tamanho do plugin. O acesso ao texto literal exige o workspace do escritório Tercini disponível. Em sessões sem o workspace, a skill ainda serve como índice e protocolo, e a verificação deve ser feita via WebFetch direto da URL oficial registrada no índice acima.
 
-## VERIFICAÇÃO DINÂMICA EM CASCATA (Onda 36 - v1.26.0)
+## Verificação dinâmica em cascata
 
 Quando o artigo solicitado NÃO estiver no repositório local (o índice atual cobre mais de 50 arquivos de normas), esta skill aciona a cascata de verificação dinâmica documentada em `base-revisao-peticao-aprofundada/references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
 
@@ -206,7 +193,7 @@ A skill NUNCA registra "verificação não realizada" antes de esgotar os 4 nív
 
 **Operação.** Esta skill é fonte de URLs oficiais e do repositório literal. A execução da cascata é responsabilidade da skill `base-revisao-peticao-aprofundada` quando acionada durante revisão de petição.
 
-## Protocolo de pesquisa obrigatória nas MCPs (Onda 169)
+## Protocolo de pesquisa obrigatória nas MCPs
 
 Todas as skills remetem a este protocolo pelo bloco "MCPs da casa". A regra é uma só. Norma, súmula, tema, enunciado ou acórdão só entra em peça, parecer ou orientação depois de localizado no MCP próprio e lido na fonte oficial, e até lá leva [NÃO CONFIRMADO].
 
@@ -214,15 +201,15 @@ Cada tipo de citação tem um MCP de primeira via. O dispositivo de lei, decreto
 
 As coberturas foram medidas em 03/10/2026. A base local de normas é fotografia de 31/05/2026. O MCP da TNU cobre de 18/01/2019 a 02/10/2026, e o PEDILEF anterior a 2019 só aparece citado em acórdão posterior. O `trf3` local cobre acórdãos de 10/2021 a 09/2026, sem o Órgão Especial e sem as 3ª, 4ª e 6ª Turmas, e o JEF ao vivo não alcança a 2ª Seção e aceita de 12 a 15 consultas por minuto. Ausência em MCP não prova inexistência.
 
-A pesquisa obrigatória não se confunde com a forma de entregá-la. O resultado chega ao titular, no chat, pela corrente e pelo órgão, sem número de processo, relator ou data, e a lista completa, com a marcação de cada item, vai em planilha anexa e na peça (`base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`, Onda 171).
+A pesquisa obrigatória não se confunde com a forma de entregá-la. O resultado chega ao titular, no chat, pela corrente e pelo órgão, sem número de processo, relator ou data, e a lista completa, com a marcação de cada item, vai em planilha anexa e na peça (`base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`).
 
 Os portais do STF, do STJ (repetitivos e SCON), do CJF e do TST recusam o acesso automatizado por WebFetch, e a leitura oficial desses itens se faz pelo navegador do usuário, com os endereços e a técnica da seção 9 de `pesquisa-jurisprudencia-chrome`. O arquivo de verbetes do STJ (www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt) abre por WebFetch, mas está desatualizado e não serve de fonte. O que foi lido em fonte oficial fica registrado no catálogo complementar da `auditoria-citacoes`, que as próximas auditorias reconhecem. A cota de WebSearch de uma sessão se esgota em cerca de duzentas buscas, e a conferência em massa deve poupá-la.
 
-A auditoria da base usa três scripts, rodados depois de cada lote de Ondas. O `scripts/auditoria_normas.py`, nesta skill, confere a existência de artigo, parágrafo e inciso no banco do `normas`. O `auditoria_citacoes.py` e o `triagem_catalogo.py`, na `auditoria-citacoes`, extraem os precedentes e os cruzam com o catálogo. Os erros mais frequentes da rodada de 03/10/2026 foram o número de tema atribuído a assunto de outro tema, o homônimo de outra corte (Súmula 632 do STJ e do STF, Súmula 44 da TNU e do STJ, Tema 640 do STJ e do STF) e o dispositivo existente citado para conteúdo que está em outro parágrafo, como o art. 26, §3º, II, da EC 103/2019 citado para a regra de 60% mais 2%, que está no §2º, III.
+A auditoria da base usa três scripts, rodados depois de cada lote de alterações. O `scripts/auditoria_normas.py`, nesta skill, confere a existência de artigo, parágrafo e inciso no banco do `normas`. O `auditoria_citacoes.py` e o `triagem_catalogo.py`, na `auditoria-citacoes`, extraem os precedentes e os cruzam com o catálogo. Os erros mais frequentes da rodada de 03/10/2026 foram o número de tema atribuído a assunto de outro tema, o homônimo de outra corte (Súmula 632 do STJ e do STF, Súmula 44 da TNU e do STJ, Tema 640 do STJ e do STF) e o dispositivo existente citado para conteúdo que está em outro parágrafo, como o art. 26, §3º, II, da EC 103/2019 citado para a regra de 60% mais 2%, que está no §2º, III.
 
-## Auditoria mecânica das citações normativas (Onda 167)
+## Auditoria mecânica das citações normativas
 
-O script `scripts/auditoria_normas.py` varre skills e agentes, extrai cada citação de artigo, parágrafo e inciso e a confere no banco local do MCP `normas`, sem internet. Roda com `python scripts/auditoria_normas.py --so-problemas` depois de cada lote de Ondas, e com `--demo` para o autoteste.
+O script `scripts/auditoria_normas.py` varre skills e agentes, extrai cada citação de artigo, parágrafo e inciso e a confere no banco local do MCP `normas`, sem internet. Roda com `python scripts/auditoria_normas.py --so-problemas` depois de cada lote de alterações, e com `--demo` para o autoteste.
 
 A saída classifica cada ocorrência em artigo inexistente, revogado, parágrafo inexistente ou só em redação anterior, inciso inexistente e número divergente. Achado não é erro certo. A base é fotografia de 31/05/2026, e norma posterior aparece como inexistente, como os arts. 369-A, 532, §4º, e 566, §9º, da IN 128/2022, incluídos pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026). Todo achado se confere na fonte oficial antes da correção.
 

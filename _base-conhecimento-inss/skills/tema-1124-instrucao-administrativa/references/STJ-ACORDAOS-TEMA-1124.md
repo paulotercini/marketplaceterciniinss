@@ -2,7 +2,7 @@
 
 Onda 178, 11/10/2026. Leitura no site oficial do STJ, pelo navegador, na consulta processual (aba Decisões) e no SCON, com cada íntegra lida no PDF oficial. Tudo o que está aqui leva [CONFERIDO em 11/10/2026], salvo indicação em contrário. As páginas citadas são as do PDF de cada acórdão. Partes que são pessoas físicas não são nomeadas.
 
-A tese se cita pelo dispositivo do acórdão de mérito (Anexo B). A ementa do mérito do REsp 1.912.784 traz a tese em redação de rascunho e não serve para citação. Quem usa este arquivo é o agente `conferente-tema-1124` e a skill `tema-1124-instrucao-administrativa`.
+A tese se cita pelo dispositivo do acórdão de mérito, transcrito no SKILL.md. A ementa do mérito do REsp 1.912.784 traz a tese em redação de rascunho e não serve para citação. Quem usa este arquivo é o agente `conferente-tema-1124` e a skill `tema-1124-instrucao-administrativa`.
 
 ## 1. Quadro geral
 
@@ -28,7 +28,7 @@ Os três recursos especiais (todos do TRF3) foram afetados juntos e cada um tem 
 | 1.912.784 | Embargos de declaração do IBDP, IEPREV e IAP (Pet 2025/0110967-5) | 09/09/2026 | DJEN 21/09/2026 | Acolhidos em parte, sem efeitos modificativos (esclarecimento do item 1.4) |
 | 1.912.784 | Embargos de declaração do INSS (Pet 2025/0112374-9) | 09/09/2026 | DJEN 21/09/2026 | Rejeitados |
 
-Trânsito em julgado: Não localizado (não aparece nos documentos lidos).
+Trânsito em julgado: Não localizado (não aparece nos documentos lidos; o MCP `superiores` registra, em 28/11/2026, a situação "Acórdão Publicado").
 
 ## 2. Relatores, datas e íntegras
 
@@ -154,7 +154,7 @@ O que cada embargante pediu está nas ementas (Anexo A, itens "Afastadas as aleg
 
 - Afetação: mesma ementa, mesmo voto-vogal do Min. Og Fernandes e mesmo aditamento do relator; o voto original tem variações mínimas de redação. Mudam o relatório e o parecer do MPF (no 1.912.784, o MPF opinou pela não afetação e pelo não conhecimento).
 - Questão de ordem: mesmo texto nos três (no 1.912.784, só diferenças de espaçamento e a falta da palavra "uma" em "estabelecer distinção").
-- Mérito: a tese do dispositivo é idêntica nos três; o voto da relatora e o voto-vista (itens 1 a 11) se repetem. Diferem o relatório, o caso concreto e o resultado. O 1.912.784 é diferente na forma: relator para o acórdão o Min. Benedito Gonçalves, voto próprio dele, e uma ementa que traz a tese em redação de rascunho (ver seção 5).
+- Mérito: a tese do dispositivo é idêntica nos três; o voto da relatora e o voto-vista (itens 1 a 11) se repetem. Diferem o relatório, o caso concreto e o resultado. O 1.912.784 é diferente na forma: relator para o acórdão o Min. Benedito Gonçalves, voto próprio dele, e uma ementa que traz a tese em redação de rascunho (ver seção 4).
 - EDcl do IBDP: ementa idêntica nos três e voto com a mesma fundamentação e o mesmo resultado; no 1.912.784 o voto registra que o Min. Benedito Gonçalves determinou a redistribuição dos autos, porque os embargos se dirigiam à tese e não ao caso concreto.
 - EDcl do INSS: mesma ementa no 1.913.152 e no 1.905.830; no 1.912.784 a ementa não tem a parte do caso concreto. Os votos repetem a parte geral (Tema 995, prequestionamento) e diferem no caso concreto.
 - Só o 1.905.830 teve EDcl da parte autora e da CUT.
@@ -163,7 +163,7 @@ O que cada embargante pediu está nas ementas (Anexo A, itens "Afastadas as aleg
 
 - Mérito do 1.912.784: o voto do relator para o acórdão conclui "nego provimento", mas a fundamentação dele e o dispositivo dizem "não conhecer".
 - "Assim, acompanho o voto-vista apresentado pelo Ministro Paulo Sérgio Domingues. Ante o exposto, nego provimento ao recurso especial." (mérito do REsp 1.912.784, p. 22) [CONFERIDO em 11/10/2026]
-- Ementa do mérito do 1.912.784: tese em redação de rascunho (seção 4), "Lei 9.9784/99" e "CPC arts. 54º e 6º" no item 7, trecho repetido no fim do item 8 e numeração que pula de 11 para 13. No voto do Min. Benedito Gonçalves, a tese aparece como "1.4) Quanto o requerimento" (p. 19).
+- Ementa do mérito do 1.912.784: tese em redação de rascunho, "Lei 9.9784/99" e "CPC arts. 54º e 6º" no item 7, trecho repetido no fim do item 8 e numeração que pula de 11 para 13. No voto do Min. Benedito Gonçalves, a tese aparece como "1.4) Quanto o requerimento" (p. 19).
 - Início do julgamento do mérito: as certidões dão 09/10/2024; o voto-vista diz 08/10/2024 (p. 22 do 1.913.152) e o voto do Min. Benedito Gonçalves, "8 de outubro de 2024" (p. 17 do 1.912.784).
 - Os acórdãos de mérito foram assinados em 17/10/2025 (1.913.152 e 1.905.830) e em 03/11/2025 (1.912.784), todos publicados no DJEN de 06/11/2025.
 - PDFs dos EDcl: a certidão de adiamento de 20/08/2026 anexada a um PDF às vezes traz o número de outra petição do mesmo REsp. Exemplos: no PDF dos EDcl do IBDP no 1.913.152 está a certidão da Pet 2025/0112383-4 (INSS); no da CUT está a da Pet 2025/0110966-6 (IBDP).
@@ -248,51 +248,7 @@ O texto da questão de ordem, que no PDF ocupa o lugar da ementa, está na ínte
 
 ### Mérito, REsp 1.905.830
 
-> PROCESSUAL CIVIL. PREVIDENCIÁRIO. RECURSO ESPECIAL REPETITIVO. CONCESSÃO OU REVISÃO DE BENEFÍCIO PREVIDENCIÁRIO. PROVA NÃO SUBMETIDA AO CRIVO ADMINISTRATIVO. INTERESSE DE AGIR. TERMO INICIAL DOS EFEITOS FINANCEIROS. DATA DA ENTRADA DO REQUERIMENTO ADMINISTRATIVO (DER) OU DATA DA CITAÇÃO. DEVER DE COLABORAÇÃO E BOA-FÉ. ATUAÇÃO COOPERATIVA ENTRE O SEGURADO E A ADMINISTRAÇÃO. CRITÉRIOS OBJETIVOS PARA A FIXAÇÃO DO TERMO INICIAL. FIXAÇÃO DE TESE JURÍDICA VINCULANTE. SOLUÇÃO DO CASO CONCRETO: PROVIMENTO DO RECURSO ESPECIAL.
-
-> 1. Controvérsia jurídica submetida à apreciação do STJ sintetizada na seguinte proposição quando da afetação do recurso especial ao regime dos recursos repetitivos ( Tema 1.124/STJ): “Caso superada a ausência do interesse de agir, definir o termo inicial dos efeitos financeiros dos benefícios previdenciários concedidos ou revisados judicialmente, por meio de prova não submetida ao crivo administrativo do INSS, se a contar da data do requerimento administrativo ou da citação da autarquia previdenciária”.
-
-> 2. O interesse de agir é condição para a propositura da ação judicial previdenciária, que somente se configura quando o segurado, comprovando a existência de um prévio requerimento administrativo do benefício pretendido, demonstrar que o benefício previdenciário ou assistencial já era devido na data da apresentação do requerimento administrativo. Ou seja, a parte terá submetido à apreciação judicial a mesma matéria de fato e o mesmo conjunto probatório apresentados no processo administrativo, nos termos do Tema 350/STF e do Tema 660/STJ.
-
-> 3. Somente o procedimento administrativo apto - com oportunidade para a complementação, pelo segurado, de provas documentais e eventual realização de justificação administrativa, perícia médica nos benefícios por incapacidade - e com decisão fundamentada, é suficiente para configurar o interesse de agir para a ação judicial. Havendo interesse em apresentar novas provas ou arguir novos fatos, o segurado não poderá fazê-lo diretamente ao Poder Judiciário, devendo apresentar novo requerimento administrativo ( Tema 350/STF), sob pena de extinção do processo por falta de interesse de agir.
-
-> 4. O requerimento administrativo desprovido de documentação mínima, com documentos suficientes para permitir a análise administrativa de sua pretensão, caracterizando o chamado “indeferimento forçado”, não é apto a configurar o interesse de agir. A ausência de tais elementos afasta a resistência indevida da autarquia e impõe ao interessado a formulação de novo requerimento administrativo.
-
-> 5. A demora do INSS na análise dos pedidos é um grave problema, que deve ser corretamente reconhecido, analisado e solucionado, o que não exclui a obrigação do interessado de entregar a documentação completa à autarquia previdenciária antes de transferir ao Poder Judiciário a avaliação desses documentos ou a produção de nova prova.
-
-> 6. Por outro lado, o INSS, ao receber um requerimento administrativo apto a ser analisado, porém incompleto e que não seja suficiente para a concessão do benefício, tem o dever legal de oportunizar a complementação de prova por parte do segurado.
-
-> 7. A boa-fé objetiva e a cooperação processual ( Lei 9.784/99, art. 4º, II; CPC, arts. 5º e 6º) devem nortear tanto a atuação da autarquia quanto do segurado, de modo a evitar o ajuizamento prematuro de ações judiciais e a assegurar a efetividade do processo administrativo previdenciário como instrumento de concretização do direito social à Previdência.
-
-> 8. Não haverá decadência ou prescrição do fundo de direito para o pedido de revisão judicial do ato de indeferimento, cancelamento ou cessação de benefício previdenciário ( Tema 313/STF).
-
-> 9. Considerando a imensa variedade de situações que podem acontecer na prática previdenciária, a tese jurídica abarca situações concretas e a consequência jurídica das atitudes tomadas pelas partes na via administrativa e em juízo, assim sintetizadas.
-
-> 10. TESE FIXADA:
-
-> 1) QUANTO À CONFIGURAÇÃO DO INTERESSE DE AGIR PARA A PROPOSITURA DA AÇÃO JUDICIAL PREVIDENCIÁRIA:
-
-> 1.1) O segurado deve apresentar requerimento administrativo apto, ou seja, com documentação minimamente suficiente para viabilizar a compreensão e a análise do requerimento.
-
-> 1.2) A apresentação de requerimento sem as mínimas condições de admissão ("indeferimento forçado") pode levar ao indeferimento imediato por parte do INSS.
-
-> 1.3) O indeferimento de requerimento administrativo por falta de documentação mínima, configurando indeferimento forçado, ou a omissão do segurado na complementação da documentação após ser intimado, impede o reconhecimento do interesse de agir do segurado; ao reunir a documentação necessária, o segurado deverá apresentar novo requerimento administrativo.
-
-> 1.4) Quando o requerimento administrativo for acompanhado de documentação apta ao seu conhecimento, porém insuficiente à concessão do benefício, o INSS tem o dever legal de intimar o segurado a complementar a documentação ou a prova, por carta de exigência ou outro meio idôneo. Caso o INSS não o faça, o interesse de agir estará configurado.
-
-> 1.5) Sempre caberá a análise fundamentada, pelo Juiz, sobre se houve ou não desídia do segurado na apresentação de documentos ou de provas de seu alegado direito ou, por outro lado, se ocorreu uma ação não colaborativa do INSS ao deixar de oportunizar ao segurado a complementação da documentação ou a produção de prova.
-
-> 1.6) O interesse de agir do segurado se configura quando este levar a Juízo os mesmos fatos e as mesmas provas que levou ao processo administrativo. Se desejar apresentar novos documentos ou arguir novos fatos para pleitear seu benefício, deverá apresentar novo requerimento administrativo ( Tema 350/STF). A ação judicial proposta nessas condições deve ser extinta sem julgamento do mérito por falta de interesse de agir. A exceção a este tópico ocorrerá apenas quando o segurado apresentar em juízo documentos tidos pelo juiz como não essenciais, mas complementares ou em reforço à prova já apresentada na via administrativa e considerada pelo Juiz como apta, por si só, a levar à concessão do benefício.
-
-> 2) QUANTO À DATA DO INÍCIO DO BENEFÍCIO E OS EFEITOS FINANCEIROS:
-
-> 2.1) Configurado o interesse de agir, por serem levados a Juízo os mesmos fatos e mesmas provas apresentadas ao INSS no processo administrativo, em caso de procedência da ação o Magistrado fixará a Data do Início do Benefício na Data de Entrada do Requerimento, se entender que os requisitos já estariam preenchidos quando da apresentação do requerimento administrativo, a partir da análise da prova produzida no processo administrativo ou da prova produzida em juízo que confirme o conjunto probatório do processo administrativo. Se entender que os requisitos foram preenchidos depois, fixará a DIB na data do preenchimento posterior dos requisitos , nos termos do Tema 995/STJ.
-
-> 2.2) Quando o INSS, ao receber um pedido administrativo apto, mas com instrução deficiente, deixar de oportunizar a complementação da prova, quando tinha a obrigação de fazê-lo, e a prova for levada a Juízo pelo segurado ou produzida em Juízo, o magistrado poderá fixar a Data do Início do Benefício na Data da Entrada do Requerimento Administrativo, quando entender que o segurado já faria jus ao benefício na DER, ou em data posterior em que os requisitos para o benefício teriam sido cumpridos, ainda que anterior à citação, reafirmando a DER nos termos do Tema 995/STJ.
-
-> 2.3) Quando presente o interesse de agir e for apresentada prova somente em juízo, não levada ao conhecimento do INSS na via administrativa porque surgida após a propositura da ação ou por comprovada impossibilidade material (como por exemplo uma perícia judicial que reconheça atividade especial, um PPP novo ou LTCAT, o reconhecimento de vínculo ou de trabalho rural a partir de prova surgida após a propositura da ação), o juiz fixará a Data do Início do Benefício na citação válida ou na data posterior em que preenchidos os requisitos, nos termos do Tema 995/STJ.
-
-> 2.4) Em qualquer caso deve ser respeitada a prescrição das parcelas anteriores aos cinco últimos anos contados da propositura da ação.
+Ementa idêntica à do REsp 1.913.152 na cabeça e nos itens 1 a 10 (conferência automática). Diferem:
 
 > 11. Solução do caso concreto: a presente ação trata de pedido de concessão de aposentadoria por tempo de contribuição, com contagem de tempo laborado em regime próprio, cujo documento comprobatório - CTC - expedida pela Prefeitura do Município de Bom Sucesso do Itararé, apenas foi anexado pela parte autora quando da apresentação da petição inicial da ação judicial. Por se tratar de documento que o INSS não teria acesso a menos que a parte o apresentasse quando do pedido administrativo, a solução ao caso se enquadra no item 2.3 da tese ora proposta, devendo ser fixada a Data do Início do Benefício na data da apresentação da contestação, uma vez que a oferta da peça de defesa foi anterior à juntada do mandado de citação.
 
@@ -404,28 +360,6 @@ O texto da questão de ordem, que no PDF ocupa o lugar da ementa, está na ínte
 
 > 3. Embargos de declaração rejeitados.
 
-## Anexo B. Tese literal (dispositivo do mérito; idêntica nos três acórdãos)
+## Anexo B. Tese literal
 
-> 1) Configuração do interesse de agir para a propositura da ação judicial previdenciária:
-
-> 1.1) O segurado deve apresentar requerimento administrativo apto, ou seja, com documentação minimamente suficiente para viabilizar a compreensão e a análise do requerimento.
-
-> 1.2) A apresentação de requerimento sem as mínimas condições de admissão ("indeferimento forçado") pode levar ao indeferimento imediato por parte do INSS.
-
-> 1.3) O indeferimento de requerimento administrativo por falta de documentação mínima, configurando indeferimento forçado, ou a omissão do segurado na complementação da documentação após ser intimado, impede o reconhecimento do interesse de agir do segurado; ao reunir a documentação necessária, o segurado deverá apresentar novo requerimento administrativo.
-
-> 1.4) Quando o requerimento administrativo for acompanhado de documentação apta ao seu conhecimento, porém insuficiente à concessão do benefício, o INSS tem o dever legal de intimar o segurado a complementar a documentação ou a prova, por carta de exigência ou outro meio idôneo. Caso o INSS não o faça, o interesse de agir estará configurado.
-
-> 1.5) Sempre caberá a análise fundamentada, pelo Juiz, sobre se houve ou não desídia do segurado na apresentação de documentos ou de provas de seu alegado direito ou, por outro lado, se ocorreu uma ação não colaborativa do INSS ao deixar de oportunizar ao segurado a complementação da documentação ou a produção de prova.
-
-> 1.6) O interesse de agir do segurado se configura quando este levar a Juízo os mesmos fatos e as mesmas provas que levou ao processo administrativo. Se desejar apresentar novos documentos ou arguir novos fatos para pleitear seu benefício, deverá apresentar novo requerimento administrativo ( Tema 350/STF). A ação judicial proposta nessas condições deve ser extinta sem julgamento do mérito por falta de interesse de agir. A exceção a este tópico ocorrerá apenas quando o segurado apresentar em juízo documentos tidos pelo juiz como não essenciais, mas complementares ou em reforço à prova já apresentada na via administrativa e considerada pelo Juiz como apta, por si só, a levar à concessão do benefício.
-
-> 2) Data do início do benefício e seus efeitos financeiros:
-
-> 2.1) Configurado o interesse de agir, por serem levados a Juízo os mesmos fatos e mesmas provas apresentadas ao INSS no processo administrativo, em caso de procedência da ação o Magistrado fixará a Data do Início do Benefício na Data de Entrada do Requerimento, se entender que os requisitos já estariam preenchidos quando da apresentação do requerimento administrativo, a partir da análise da prova produzida no processo administrativo ou da prova produzida em juízo que confirme o conjunto probatório do processo administrativo. Se entender que os requisitos foram preenchidos depois, fixará a DIB na data do preenchimento posterior dos requisitos, nos termos do Tema 995/STJ.
-
-> 2.2) Quando o INSS, ao receber um pedido administrativo apto, mas com instrução deficiente, deixar de oportunizar a complementação da prova, quando tinha a obrigação de fazê-lo, e a prova for levada a Juízo pelo segurado ou produzida em Juízo, o magistrado poderá fixar a Data do Início do Benefício na Data da Entrada do Requerimento Administrativo, quando entender que o segurado já faria jus ao benefício na DER, ou em data posterior em que os requisitos para o benefício teriam sido cumpridos, ainda que anterior à citação, reafirmando a DER nos termos do Tema 995/STJ.
-
-> 2.3) Quando presente o interesse de agir e for apresentada prova somente em juízo, não levada ao conhecimento do INSS na via administrativa porque surgida após a propositura da ação ou por comprovada impossibilidade material (como por exemplo uma perícia judicial que reconheça atividade especial, um PPP novo ou LTCAT, o reconhecimento de vínculo ou de trabalho rural a partir de prova surgida após a propositura da ação), o juiz fixará a Data do Início do Benefício na citação válida ou na data posterior em que preenchidos os requisitos, nos termos do Tema 995/STJ.
-
-> 2.4) Em qualquer caso deve ser respeitada a prescrição das parcelas anteriores aos cinco últimos anos contados da propositura da ação.
+O dispositivo do mérito é idêntico nos três acórdãos e está transcrito no SKILL.md, seção "TESE LITERAL" (conferido também no MCP `superiores` em 28/11/2026, situação "Acórdão Publicado").

@@ -20,6 +20,8 @@ Reference dedicada ao acórdão paradigmático do Tema 385/TNU, com transcriçã
 
 **Requerido.** Instituto Nacional do Seguro Social - INSS.
 
+**Embargos de declaração.** Opostos pelo INSS e pelo IAPE, desprovidos (acórdão disponibilizado em 24/11/2026). O item 2 da tese não cria critério alternativo; apenas identifica circunstâncias em que se antecipa o resultado da avaliação completa. O acórdão registra: "O Tema 385 não supera o Tema 173. São complementares." Conferido no acervo TNU do MCP Iurisprudencia em 28/11/2026.
+
 ## EMENTA LITERAL - 9 ITENS
 
 ### Cabeçalho
@@ -72,7 +74,7 @@ Reference dedicada ao acórdão paradigmático do Tema 385/TNU, com transcriçã
 
 ## ALERTA CRÍTICO DE INTERPRETAÇÃO
 
-**O parâmetro (ii) dispensa a AVALIAÇÃO SOCIAL, não a biopsicossocial completa.** Fontes secundárias (Instagram, blogs) noticiaram equivocadamente que o parâmetro (ii) dispensaria a biopsicossocial. A redação literal do acórdão fala em "avaliação social" (não biopsicossocial). Ou seja.
+**O parâmetro (ii) dispensa a avaliação social, não a biopsicossocial completa.** A redação literal do acórdão fala em "avaliação social". Assim:
 
 - **Parâmetro (i).** Dispensa a AVALIAÇÃO BIOPSICOSSOCIAL COMPLETA (perícia médica basta e é decisiva contra a deficiência).
 - **Parâmetro (ii).** Dispensa apenas a AVALIAÇÃO SOCIAL (a perícia médica ATESTOU incapacidade total - basta essa perícia). Presunção iuris tantum de deficiência.
@@ -105,11 +107,11 @@ A Juíza Federal LILIAN OLIVEIRA DA COSTA TOURINHO ficou vencida parcialmente. O
 
 5. **Sem impedimento moderado, não há BPC.** Alertar cliente. Impedimento leve ou temporário (resolvível em <2 anos) não gera BPC.
 
-6. **Direito à avaliação biopsicossocial completa em grau moderado ou grave.** Se INSS ou juiz cesar/negar sem realizar a avaliação social por assistente social, cabe MS ou recurso.
+6. **Direito à avaliação biopsicossocial completa em grau moderado ou grave.** Se o INSS ou o juiz cessar ou negar o benefício sem realizar a avaliação social por assistente social, cabe MS ou recurso.
 
 ### Uso em peças
 
-Em petição inicial de BPC judicial, INVOCAR desde já o Tema 385/TNU, especialmente o item 3 (capacitismo). Em recursos contra indeferimento por "capacidade laboral", este precedente é BLINDAGEM.
+Em petição inicial de BPC judicial, INVOCAR desde já o Tema 385/TNU, especialmente o item 3 (capacitismo). Em recursos contra indeferimento por "capacidade laboral", o precedente é o fundamento principal, com o Tema 173/TNU (impedimento de longo prazo), que os embargos declararam complementar.
 
 ## CRUZAMENTO COM OUTRAS SKILLS
 
@@ -117,7 +119,7 @@ Em petição inicial de BPC judicial, INVOCAR desde já o Tema 385/TNU, especial
 - `base-bpc-impedimento-longo-prazo` (skill local).
 - `analise-bpc-loas`. Análise técnica.
 - `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-TNU.md`. Entrada Tema 385.
-- `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`. Se registrar como PEDILEF paradigmático a lado do Tema.
+- `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`. Registro paradigmático ao lado do Tema.
 - `formacao-documentacao-did-pcd`. Documentação para prova.
 - `base-cadastro-domiciliar-cadunico-in21-2026`. CadÚnico.
 - `mandado-seguranca-previdenciario`. MS por descumprimento.

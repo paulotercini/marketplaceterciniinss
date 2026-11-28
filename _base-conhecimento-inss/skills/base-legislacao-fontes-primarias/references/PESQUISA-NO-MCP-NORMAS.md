@@ -52,7 +52,7 @@ A CF/88 tem 139 números de artigo que existem no corpo permanente e no ADCT, e 
 
 **O Planalto NÃO responde a cliente HTTP comum na máquina do escritório.** Medido com `verificar_atualizacao` na Lei 8.213, que devolveu estado `exige_navegador` com `ConnectionResetError WinError 10054`. A resposta traz a URL e o que conferir à mão, e nunca reporta a norma como inexistente. O cliente não é disfarçado e nenhum bloqueio é contornado.
 
-Isto corrige o que esta referência afirmava na Onda 149, de que o Planalto responderia a cliente HTTP comum. Aquela medição foi da sonda do MCP trf3, feita no sandbox Linux do Cowork, e não vale para a máquina Windows onde o servidor roda.
+A medição anterior, de que o Planalto responderia a cliente HTTP comum, foi feita no sandbox Linux do Cowork e não vale para a máquina Windows onde o servidor roda.
 
 Os seis estados são `primeira_leitura`, `igual`, `mudou`, `nao_localizado`, `sem_fonte` e `exige_navegador`. Medido em 20/09/2026, as normas da base estão todas com `verificacao` em "ainda não verificado".
 

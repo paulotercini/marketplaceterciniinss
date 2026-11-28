@@ -212,7 +212,7 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Conferido em. 25/07/2026
 
 ### TEMA 905/STJ
-- Situação. vigente até 11/2021; de 12/2021 a 08/2025 vale a SELIC do art. 3º da EC 113/2021 (Tema 1419/STF) e, a partir de 09/2025, o regime do Manual CJF 2026 (Onda 173)
+- Situação. vigente até 11/2021; de 12/2021 a 08/2025 vale a SELIC do art. 3º da EC 113/2021 (Tema 1419/STF) e, a partir de 09/2025, o regime do Manual CJF 2026
 - Tese literal. "As condenações impostas à Fazenda Pública de natureza previdenciária sujeitam-se à incidência do INPC, para fins de correção monetária, no que se refere ao período posterior à vigência da Lei 11.430/2006, que incluiu o art. 41-A na Lei 8.213/91. Quanto aos juros de mora, incidem segundo a remuneração oficial da caderneta de poupança (art. 1º-F da Lei 9.494/97, com redação dada pela Lei n. 11.960/2009)." (item 3.2 da tese)
 - Órgão e leading case. STJ, Primeira Seção, REsp 1.495.146/MG, Rel. Min. Mauro Campbell Marques, j. 22/02/2018, DJe 02/03/2018.
 - Fonte oficial. https://processo.stj.jus.br/SCON/recrep/toc.jsp?LREF=REPETITIVOS&tema=%27905%27
@@ -296,7 +296,7 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Conferido em. 04/10/2026
 
 ### TEMA 1190/STJ
-- Situação. acórdão publicado em 01/07/2024, RE pendente (Tema 1442/STF), com modulação; TESE ADVERSA ao advogado do exequente
+- Situação. trânsito em julgado no STJ (MCP superiores, 28/11/2026); a questão segue no Tema 1442/STF. Com modulação. TESE ADVERSA ao advogado do exequente
 - Tese literal. "Na ausência de impugnação à pretensão executória, não são devidos honorários advocatícios sucumbenciais em cumprimento de sentença contra a Fazenda Pública, ainda que o crédito esteja submetido a pagamento por meio de Requisição de Pequeno Valor - RPV." Modulação: "a tese repetitiva deve ser aplicada apenas nos cumprimentos de sentença iniciados após a publicação deste acórdão."
 - Órgão e leading case. STJ, Primeira Seção, REsp 2.029.636/SP, Rel. Min. Maria Thereza de Assis Moura, j. 20/06/2024.
 - Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1190&cod_tema_final=1190
@@ -405,105 +405,105 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Tese literal. "Compete à Justiça Estadual processar e julgar os litígios decorrentes de acidente do trabalho"
 - Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
 - Fonte oficial. https://www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 44/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 8, texto lido na fonte oficial). O relatório não registra cancelamento.
 - Tese literal. "A definição, em ato regulamentar, de grau mínimo de disacusia, não exclui, por si só, a concessão do benefício previdenciário"
 - Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
 - Fonte oficial. https://www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 45/STJ
 - Situação. texto confirmado na fonte oficial (relatório E3, lote 8). O relatório marcou DIVERGENTE só o uso em cpc-apelacao-efeitos SKILL.md:56, que inverte o efeito da súmula.
 - Tese literal. "…é defeso, ao Tribunal, agravar a condenação imposta à Fazenda Pública" (trecho final, como transcrito no relatório E3). Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
 - Fonte oficial. https://www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 96/TCU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 2).
 - Tese literal. Não transcrita no relatório E3, que traz só esta síntese: Conta-se como tempo de serviço público o de aluno-aprendiz em Escola Pública Profissional, com retribuição pecuniária à conta do Orçamento. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. TCU. Data não registrada no relatório E3.
 - Fonte oficial. https://pesquisa.apps.tcu.gov.br/resultado/sumula/*/NUMERO:96/sinonimos=true (consulta pela REST do TCU)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 132/TST
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 1).
 - Tese literal. "A pretensão de retificação e entrega do Perfil Profissiográfico Previdenciário - PPP é imprescritível"
 - Órgão e leading case. TST, Tema 132 de recursos repetitivos. Processo e data não registrados no relatório E3.
 - Fonte oficial. https://portal.trt3.jus.br/internet/jurisprudencia/incidentes-suscitados-irr-iac-arginc-tst/downloads/tema-132-reafirm-acordao-publicado.pdf
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 598/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 2).
 - Tese literal. Não transcrita no relatório E3, que traz só esta síntese: Dispensa laudo médico oficial para a isenção judicial de IR por doença grave, se demonstrada por outros meios de prova. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STJ, Primeira Seção, 08/11/2017.
 - Fonte oficial. https://www.stj.jus.br/internet_docs/biblioteca/clippinglegislacao/Sumula_598_2017_primeira_secao.pdf
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 105/STJ
 - Situação. vigente, sem cancelamento (relatório E3, lote 2, CONFIRMADO_FONTE_OFICIAL).
 - Tese literal. "Na ação de mandado de segurança não se admite condenação em honorários advocatícios"
 - Órgão e leading case. STJ, julgada em 26/05/1994.
 - Fonte oficial. https://arquivocidadao.stj.jus.br/index.php/sumula-105
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1076/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 2).
 - Tese literal. Não transcrita no relatório E3, que traz só esta síntese: Honorários por equidade só se o proveito econômico for inestimável ou irrisório ou o valor da causa muito baixo; vedada se elevados. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STJ, REsp 1.850.512/SP, julgado em 16/03/2022.
 - Fonte oficial. https://www.stj.jus.br/docs_internet/informativos/PDF/Inf0730.pdf
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1178/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 1). Tese fixada no segundo semestre de 2025, segundo a notícia oficial.
 - Tese literal. "É vedado o uso de critérios objetivos para o indeferimento imediato da gratuidade…" (trecho inicial, como transcrito no relatório E3). Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STJ, recurso repetitivo. Processo não registrado no relatório E3.
 - Fonte oficial. https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias/2026/28012026-STJ-julgou-42-temas-repetitivos-no-segundo-semestre-de-2025--veja-as-teses-fixadas.aspx
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 37/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 6). O relatório não registra cancelamento.
 - Tese literal. "São cumuláveis as indenizações por dano material e dano moral oriundos do mesmo fato"
 - Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
 - Fonte oficial. scon.stj.jus.br/SCON/sumstj (Súmula 37)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 988/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (auditoria de 03/10/2026, rodada R2, página oficial dos repetitivos do STJ).
 - Tese literal. Não transcrita nesta rodada, que registra só esta síntese: o rol do art. 1.015 do CPC é de taxatividade mitigada, e o agravo de instrumento cabe fora dele quando demonstrada a urgência. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STJ, Corte Especial, REsp 1.696.396/MT e REsp 1.704.520/MT, julgados em 05/12/2018.
 - Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 955/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (auditoria de 03/10/2026, rodada R2, página oficial dos repetitivos do STJ). Tema de previdência complementar, não do RGPS; não confundir com o Tema 995/STJ (reafirmação da DER).
 - Tese literal. Não transcrita nesta rodada, que registra só esta síntese: os reflexos de horas extras reconhecidas pela Justiça do Trabalho não integram a complementação de aposentadoria já concedida. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STJ, Segunda Seção, REsp 1.312.736/RS. Data não registrada nesta rodada.
 - Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 512/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A).
 - Tese literal. "Não cabe condenação em honorários de advogado na ação de mandado de segurança."
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula512/false
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 405/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A).
 - Tese literal. "Denegado o mandado de segurança pela sentença, ou no julgamento do agravo, dela interposto, fica sem efeito a liminar concedida, retroagindo os efeitos da decisão contrária."
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula405/false
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 283/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Na base, o uso no pedido de uniformização é por analogia declarada.
 - Tese literal. "É inadmissível o recurso extraordinário, quando a decisão recorrida assenta em mais de um fundamento suficiente e o recurso não abrange todos êles."
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula283/false
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 284/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). O enunciado trata só do recurso extraordinário.
@@ -511,14 +511,14 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula284/false
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía aplicação mais rigorosa no JEF, que não decorre do enunciado.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 688/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). É a fonte para a incidência da contribuição sobre o 13º salário, que a base atribuía ao Tema 20/STF.
 - Tese literal. "É legítima a incidência da contribuição previdenciária sobre o 13º salário."
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula688/false
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 729/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A).
@@ -526,7 +526,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=30&sumula=2705
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía modulação, que o enunciado não contém.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 689/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A). A divergência estava em três passagens.
@@ -534,7 +534,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula689/false
 - Uso indevido corrigido em 03/10/2026: a base a citava para a competência do local do ato e para o foro do Distrito Federal, que decorre do art. 109, § 2º, da CF.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 267/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A).
@@ -542,7 +542,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula267/false
 - Uso indevido corrigido em 03/10/2026: a base lhe acrescentava a ressalva "exceto em hipóteses extremas", que não consta do enunciado.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 640/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A).
@@ -550,7 +550,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula640/false
 - Uso indevido corrigido em 03/10/2026: a base a estendia ao acórdão da TNU, que o enunciado não menciona.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 14/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A). O portal remete à Súmula 683.
@@ -558,42 +558,42 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF. Data não registrada no relatório C1A.
 - Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search/seq-sumula14/false
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía texto inventado sobre óbice infralegal a recurso.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 138/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Trânsito em julgado em 23/02/2012.
 - Tese literal. "Ao Estado é facultada a revogação de atos que repute ilegalmente praticados; porém, se de tais atos já tiverem decorrido efeitos concretos, seu desfazimento deve ser precedido de regular processo administrativo."
 - Órgão e leading case. STF, RE 594.296, Rel. Min. Dias Toffoli, mérito em 21/09/2011.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=138 (tese na página de andamento do tema, incidente 2644122)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1390/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Repercussão geral reconhecida, sem tese, mérito pendente.
 - Tese literal. Não há tese firmada. Assunto, segundo o relatório C1A: art. 201, § 16, da CF, empregado público aos 75 anos.
 - Órgão e leading case. STF, RE 1.519.008, Rel. Min. Gilmar Mendes.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1390
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1373/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A).
 - Tese literal. "O ajuizamento de ação para o reconhecimento de isenção de imposto de renda por doença grave e para a repetição do indébito tributário não exige prévio requerimento administrativo."
 - Órgão e leading case. STF, RE 1.525.407/CE.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1373 (tese na página de andamento do tema, incidente 7093152)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 384/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Trânsito em julgado em 21/09/2018.
 - Tese literal. "Nos casos autorizados constitucionalmente de acumulação de cargos, empregos e funções, a incidência do art. 37, inciso XI, da Constituição Federal pressupõe consideração de cada um dos vínculos formalizados, afastada a observância do teto remuneratório quanto ao somatório dos ganhos do agente público. (A mesma tese foi fixada para o Tema 377)"
 - Órgão e leading case. STF, RE 602.043/MT, Rel. Min. Marco Aurélio, mérito em 27/04/2017.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=384 (tese na página de andamento do tema, incidente 2694206)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1435/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Repercussão geral reconhecida (acórdão de 17/10/2025), sem tese, mérito pendente.
 - Tese literal. Não há tese firmada. Assunto, segundo o relatório C1A: licença-maternidade a um dos homens de união homoafetiva, servidor municipal.
 - Órgão e leading case. STF, ARE 1.498.231, Rel. Min. Edson Fachin.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1435
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 374/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL, uso com ressalva (relatório C1A). Trânsito em julgado em 08/12/2016.
@@ -601,21 +601,21 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, RE 627.709, Rel. Min. Ricardo Lewandowski, mérito em 20/08/2014.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=374 (tese na página de andamento do tema, incidente 3924696)
 - Uso indevido corrigido em 03/10/2026: a base o aplicava ao mandado de segurança ("impetrante") e mandava acompanhá-lo como pendente. A tese trata de ações contra autarquias federais; a extensão ao mandado de segurança é argumento [NÃO CONFIRMADO].
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 782/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Trânsito em julgado em 26/08/2016. É o tema que a base chamava de Tema 161/STF.
 - Tese literal. "Os prazos da licença adotante não podem ser inferiores aos prazos da licença gestante, o mesmo valendo para as respectivas prorrogações. Em relação à licença adotante, não é possível fixar prazos diversos em função da idade da criança adotada."
 - Órgão e leading case. STF, RE 778.889, Rel. Min. Luís Roberto Barroso, mérito em 10/03/2016. O tema trata de servidoras (licença estatutária); a aplicação ao salário-maternidade do RGPS é por analogia.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=782 (tese na página de andamento do tema, incidente 4482209)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 960/STF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1A). Repercussão geral negada (matéria infraconstitucional), trânsito em julgado em 26/09/2017.
 - Tese literal. "É constitucional a incidência do fator previdenciário ao benefício de aposentadoria por tempo de contribuição de professor, quando reunidos os requisitos para concessão após a edição da Lei n°. 9.876/1999." (tese registrada no portal)
 - Órgão e leading case. STF, RE 1.029.608, Rel. Min. Edson Fachin.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=960 (tese na página de andamento do tema, incidente 5140916)
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 28/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A). Trânsito em julgado em 19/08/2020.
@@ -623,7 +623,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, RE 1.205.530/SP, Rel. Min. Marco Aurélio, Plenário Virtual, mérito em 08/06/2020, acórdão em 01/07/2020.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=28 (tese na página de andamento do tema, incidente 5684509)
 - Uso indevido corrigido em 03/10/2026: a base o tratava como cumprimento ou execução provisória. A tese cuida da parte incontroversa e autônoma já transitada em julgado.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 627/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A). Trânsito em julgado em 21/04/2023.
@@ -631,7 +631,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, RE 658.999/SC, Rel. Min. Dias Toffoli, Plenário Virtual, mérito em 17/12/2022, acórdão em 22/03/2023.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=627 (tese na página de andamento do tema, incidente 4147805)
 - Uso indevido corrigido em 03/10/2026: a base datava o julgamento de 14/05/2014 e generalizava a tese para qualquer acumulação de cargos. A tese é restrita ao art. 11 da EC 20/98; o uso na acumulação do art. 24 da EC 103/2019 é por analogia.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1091/STF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C1A). Reafirmação de jurisprudência, trânsito em julgado em 27/06/2020.
@@ -639,7 +639,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, RE 1.221.630/SC, repercussão geral em 05/06/2020, acórdão em 19/06/2020. A descrição oficial pergunta também se o fator incide nos proventos de professor.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1091 (tese na página de andamento do tema, incidente 5732688)
 - Uso indevido corrigido em 03/10/2026: a base o rotulava "Professor e magistério" e mandava acompanhá-lo como pendente.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADI 1721
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada procedente em 11/10/2006.
@@ -647,7 +647,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, Rel. Min. Ayres Britto.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=1689611
 - Uso indevido corrigido em 03/10/2026: a base a citava para o art. 57, § 8º, da Lei 8.213/91, que a ação não trata.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADI 2110
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgamento em 21/03/2024, ata publicada em 05/04/2024, acórdão em 24/05/2024, trânsito em julgado em 25/10/2024. O registro do portal não mostra modulação para a carência; o inteiro teor não foi lido.
@@ -655,99 +655,99 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, Rel. Min. Nunes Marques, vencido neste ponto.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150
 - Uso indevido corrigido em 03/10/2026: a base fixava em 05/04/2024 o início da inexigibilidade da carência do salário-maternidade. Essa é a data da ata, que marca o corte da irrepetibilidade na Revisão da Vida Toda.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADI 2111
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada improcedente em 21/03/2024. Embargos (ED-ED) julgados em 10/04/2025 e publicados em 12/06/2025, com modulação. Quartos embargos não conhecidos em 22/06/2026. Trânsito em julgado em 09/07/2026.
 - Tese literal. "A declaração de constitucionalidade do art. 3º da Lei 9.876/1999 impõe que o dispositivo legal seja observado de forma cogente pelos demais órgãos do Poder Judiciário e pela administração pública, em sua interpretação textual, que não permite exceção. O segurado do INSS que se enquadre no dispositivo não pode optar pela regra definitiva prevista no artigo 29, incisos I e II, da Lei nº 8.213/91, independentemente de lhe ser mais favorável." Modulação, da ementa dos ED-ED, "a irrepetibilidade dos valores percebidos a maior pelos segurados e pensionistas do INSS em virtude de decisões judiciais, definitivas ou provisórias, prolatadas até a data da publicação da ata de julgamento do mérito das ADIs 2.110 e 2.111, ou seja, até 5.4.2024" e "a inexigibilidade de honorários advocatícios de sucumbência, custas e perícias contábeis dos postulantes de ações judiciais lastreadas na tese jurídica denominada Revisão da Vida Toda".
 - Órgão e leading case. STF, Rel. Min. Nunes Marques.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADI 3931
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada improcedente por maioria em 20/04/2020, trânsito em julgado em 13/08/2020.
 - Tese literal. Não transcrita no relatório C1B, que traz só esta síntese: constitucional o art. 21-A da Lei 8.213/91 (NTEP). Esse objeto vem de ementa posterior do STF que cita a ação. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STF, Rel. Min. Cármen Lúcia.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=2541930
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADI 6096
-- Situação. CONFIRMADO_FONTE_OFICIAL, andamento lido no portal na Onda 174. Sessão virtual de 02/10/2020 a 09/10/2020 (o relatório C1B registra 13/10/2020), por 6 votos a 5. Embargos rejeitados em 14/06/2021. Trânsito em julgado em 03/08/2021. Efeito prático, o art. 103 da Lei 8.213/91 aplica-se na redação da Lei 10.839/2004.
+- Situação. CONFIRMADO_FONTE_OFICIAL, andamento lido no portal. Sessão virtual de 02/10/2020 a 09/10/2020 (o relatório C1B registra 13/10/2020), por 6 votos a 5. Embargos rejeitados em 14/06/2021. Trânsito em julgado em 03/08/2021. Efeito prático, o art. 103 da Lei 8.213/91 aplica-se na redação da Lei 10.839/2004.
 - Tese literal. Não há tese fixada. Dispositivo, "julgou parcialmente procedente o pedido, declarando a inconstitucionalidade do art. 24 da Lei nº 13.846/2019 no que deu nova redação ao art. 103 da Lei nº 8.213/1991".
 - Órgão e leading case. STF, Rel. Min. Edson Fachin. Vencidos Marco Aurélio, Dias Toffoli, Gilmar Mendes, Luís Roberto Barroso e Luiz Fux.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=5647251
-- Conferido em. 04/10/2026 (portal, Onda 174)
+- Conferido em. 04/10/2026 (portal
 
 ### ADI 6309
-- Situação. CONFIRMADO_FONTE_OFICIAL, inteiro teor lido na Onda 170. Julgamento na sessão presencial de 03/06/2026, acórdão datado de 08/06/2026, ata no DJe de 11/06/2026, decisão publicada no DOU de 12/06/2026 (Seção 1, edição 108, p. 1), acórdão no DJe de 02/10/2026. Inteiro teor de 217 páginas, com código de autenticação C1BF-E5C1-9306-C208 na ementa e no acórdão (pp. 1 a 6). Sem tese de julgamento e sem modulação de efeitos. Até 04/10/2026, sem embargos de declaração registrados e sem trânsito certificado, com prazo de embargos em curso desde a publicação de 02/10/2026. A data de 12/07/2026 que aparece em títulos da base é a do registro na base, não a do julgamento.
+- Situação. CONFIRMADO_FONTE_OFICIAL, inteiro teor lido. Julgamento na sessão presencial de 03/06/2026, acórdão datado de 08/06/2026, ata no DJe de 11/06/2026, decisão publicada no DOU de 12/06/2026 (Seção 1, edição 108, p. 1), acórdão no DJe de 02/10/2026. Inteiro teor de 217 páginas, com código de autenticação C1BF-E5C1-9306-C208 na ementa e no acórdão (pp. 1 a 6). Sem tese de julgamento e sem modulação de efeitos. Até 04/10/2026, sem embargos de declaração registrados e sem trânsito certificado, com prazo de embargos em curso desde a publicação de 02/10/2026. A data de 12/07/2026 que aparece em títulos da base é a do registro na base, não a do julgamento.
 - Tese literal. Não há tese fixada. Dispositivo, "O Tribunal, por maioria, julgou parcialmente procedente a ação direta, declarando-se a inconstitucionalidade apenas do art. 19, § 1º, I, alíneas a, b e c, da EC nº 103/2019".
 - Placar. Idade mínima do art. 19, §1º, I, alíneas a, b e c, inconstitucional por 6 a 5 (André Mendonça, Nunes Marques, Dias Toffoli, Cármen Lúcia, Edson Fachin e Rosa Weber, contra Luís Roberto Barroso, Gilmar Mendes, Alexandre de Moraes, Cristiano Zanin e Luiz Fux). Art. 25, §2º, e art. 26, §2º, IV, constitucionais por 9 a 2, vencidos Edson Fachin e Rosa Weber. Flávio Dino não votou.
 - Órgão e leading case. STF, Plenário, Rel. Min. Luís Roberto Barroso (vencido em parte), redator do acórdão Min. André Mendonça. Autora, CNTI.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=5848987
-- Conferido em. 04/10/2026 (inteiro teor e portal, Onda 170)
+- Conferido em. 04/10/2026 (inteiro teor e portal
 
 ### ADI 6970
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada em 16/08/2022, por unanimidade, trânsito em julgado em 21/09/2022.
 - Tese literal. Não transcrita no relatório C1B, que traz só esta síntese: cautelar convertida em julgamento de mérito, pedido improcedente, constitucional a Lei 14.128/2021. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STF, Rel. Min. Cármen Lúcia, sessão virtual de 05 a 15/08/2022.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=6242600
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADI 7051
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgamento registrado em 26/06/2023 (sessão virtual encerrada em 23/06/2023), improcedente por maioria. Embargos rejeitados em 02/10/2023. Trânsito em julgado em 26/10/2023.
 - Tese literal. "sessão virtual encerrada em 23/06/2023"
 - Órgão e leading case. STF, Rel. Min. Luís Roberto Barroso. Vencidos parcialmente Edson Fachin e Rosa Weber.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=6320471
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ADPF 690
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada procedente em parte em 15/03/2021, por unanimidade.
 - Tese literal. Não transcrita no relatório C1B, que traz só esta síntese: o Ministério da Saúde deve manter a divulgação diária integral dos dados da Covid-19. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. STF, Rel. Min. Alexandre de Moraes.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=5931727
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 555/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente. Matéria tributária; a base só a menciona em notas de retirada.
 - Tese literal. "Quando não houver declaração do débito, o prazo decadencial quinquenal para o Fisco constituir o crédito tributário conta-se exclusivamente na forma do art. 173, I, do CTN, nos casos em que a legislação atribui ao sujeito passivo o dever de antecipar o pagamento sem prévio exame da autoridade administrativa."
 - Órgão e leading case. STJ, Primeira Seção, 09/12/2015, DJe 15/12/2015.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 148/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente. A afirmação de que revogou a Súmula 71 do TFR não está no enunciado e não foi conferida.
 - Tese literal. "Os débitos relativos a benefício previdenciário, vencidos e cobrados em juízo após a vigência da Lei nr. 6.899/81, devem ser corrigidos monetariamente na forma prevista nesse diploma legal."
 - Órgão e leading case. STJ, Terceira Seção, 07/12/1995, DJ 18/12/1995.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 168/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente.
 - Tese literal. "Não cabem embargos de divergência, quando a jurisprudência do Tribunal se firmou no mesmo sentido do acórdão embargado."
 - Órgão e leading case. STJ, Corte Especial, 16/10/1996, DJ 22/10/1996.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 278/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente. Súmula de contrato de seguro (Direito Civil); o uso previdenciário é por analogia.
 - Tese literal. "O termo inicial do prazo prescricional, na ação de indenização, é a data em que o segurado teve ciência inequívoca da incapacidade laboral."
 - Órgão e leading case. STJ, Segunda Seção, 14/05/2003, DJ 16/06/2003.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 416/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente.
 - Tese literal. "É devida a pensão por morte aos dependentes do segurado que, apesar de ter perdido essa qualidade, preencheu os requisitos legais para a obtenção de aposentadoria até a data do seu óbito."
 - Órgão e leading case. STJ, Terceira Seção, 09/12/2009, DJe 16/12/2009.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 204/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente.
 - Tese literal. "Os juros de mora nas ações relativas a benefícios previdenciários incidem a partir da citação válida."
 - Órgão e leading case. STJ, Terceira Seção, 11/03/1998, DJ 18/03/1998.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 212/STJ
 - Situação. CANCELADA pela Primeira Seção em 14/09/2022, no Projeto de Súmula 375 (DJe 19/09/2022). Cancelamento confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). A nota oficial não registra a ADI 4.296 como causa do cancelamento.
@@ -755,7 +755,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Primeira Seção.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?inde=(sumula+adj+cancelada).emen,inde.
 - Uso indevido corrigido em 03/10/2026: a base a tratava como vigente.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 213/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente. Matéria tributária.
@@ -763,21 +763,21 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Primeira Seção, 23/09/1998, DJ 02/10/1998.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base dizia que o mandado de segurança é instrumento de compensação tributária. A súmula trata da declaração do direito à compensação.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 7/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente.
 - Tese literal. "A pretensão de simples reexame de prova não enseja recurso especial."
 - Órgão e leading case. STJ, Corte Especial, 28/06/1990, DJ 03/07/1990.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 340/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente.
 - Tese literal. "A lei aplicável à concessão de pensão previdenciária por morte é aquela vigente na data do óbito do segurado."
 - Órgão e leading case. STJ, Terceira Seção, 27/06/2007, DJ 13/08/2007.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 272/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -785,7 +785,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Terceira Seção, 11/09/2002, DJ 19/09/2002.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía a dispensa de indenização do tempo rural anterior a 11/1991 e a vedação de carência sem indenização. A súmula exige contribuições facultativas e nada diz sobre o tempo anterior a 1991.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 387/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -793,7 +793,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Segunda Seção, 26/08/2009, DJe 01/09/2009.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía a cumulação de danos morais e materiais, que é matéria da Súmula 37/STJ.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 206/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -801,21 +801,21 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Corte Especial, 01/04/1998, DJ 16/04/1998.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base a citava para a competência do local do benefício.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 326/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente.
 - Tese literal. "Na ação de indenização por dano moral, a condenação em montante inferior ao postulado na inicial não implica sucumbência recíproca."
 - Órgão e leading case. STJ, Corte Especial, 22/05/2006, DJ 07/06/2006.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 345/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C2). Vigente. Restrita à execução individual de sentença proferida em ação coletiva.
 - Tese literal. "São devidos honorários advocatícios pela Fazenda Pública nas execuções individuais de sentença proferida em ações coletivas, ainda que não embargadas."
 - Órgão e leading case. STJ, Corte Especial, 07/11/2007, DJ 28/11/2007.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 376/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -823,7 +823,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Corte Especial, 18/03/2009, DJe 30/03/2009.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base a citava para alçada, para a competência da Justiça Federal ou do JEF em demandas previdenciárias e para o foro do domicílio.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 557/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -831,7 +831,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Primeira Seção, 09/12/2015, DJe 15/12/2015.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base a citava para a revisão pelo teto, matéria do Tema 76/STF.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 628/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -839,7 +839,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Primeira Seção, 12/12/2018, DJe 17/12/2018.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base a citava para arquivamento de processo administrativo.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 362/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente.
@@ -847,7 +847,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Corte Especial, 15/10/2008, DJe 03/11/2008.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base a citava para juros sobre honorários.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 378/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C2). Vigente. Súmula de servidor público civil, sem relação com matéria acidentária.
@@ -855,7 +855,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Terceira Seção, 22/04/2009, DJe 05/05/2009.
 - Fonte oficial. https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su
 - Uso indevido corrigido em 03/10/2026: a base a citava em matéria acidentária (base-incapacidade-acidentaria-b92), onde hoje consta o NTEP (art. 21-A da Lei 8.213/91).
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 1352/STJ
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório V4). Tema AFETADO, sem tese firmada, afetação em 09/06/2025. A suspensão alcança só recursos especiais e agravos em recurso especial.
@@ -863,14 +863,14 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ, Primeira Seção, Rel. Min. Paulo Sérgio Domingues, REsp 2.189.004/SP e REsp 2.188.858/SP, entre outros.
 - Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1352&cod_tema_final=1352
 - Uso indevido corrigido em 03/10/2026: a base o citava como tese sobre carência no reingresso.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### TEMA 995/STJ
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório V4). Trânsito em julgado. Não confundir com o Tema 955/STJ (previdência complementar).
-- Tese literal. Não transcrita no relatório V4, que traz só esta síntese: reafirmação da DER até a entrega da prestação jurisdicional nas instâncias ordinárias, nos termos dos arts. 493 e 933 do CPC, observada a causa de pedir. Copiar a redação literal da fonte antes de citar em peça.
+- Tese literal. "É possível a reafirmação da DER (Data de Entrada do Requerimento) para o momento em que implementados os requisitos para a concessão do benefício, mesmo que isso se dê no interstício entre o ajuizamento da ação e a entrega da prestação jurisdicional nas instâncias ordinárias, nos termos dos arts. 493 e 933 do CPC/2015, observada a causa de pedir." (MCP superiores, 28/11/2026; julgado em 22/10/2019)
 - Órgão e leading case. STJ, Primeira Seção, REsp 1.727.063/SP, REsp 1.727.064/SP e REsp 1.727.069/SP, Rel. Min. Mauro Campbell Marques, acórdão publicado em 02/12/2019. O acórdão dos embargos do INSS não foi lido.
 - Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=995&cod_tema_final=995
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 45/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
@@ -878,7 +878,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. TNU, DOU 14/12/2011.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
 - Uso indevido corrigido em 03/10/2026: a base a citava em matéria de pessoa com deficiência e de LC 142/2013.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 75/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
@@ -886,7 +886,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. TNU, DOU 13/06/2013.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía presunção de recolhimento das contribuições.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 77/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
@@ -894,35 +894,35 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. TNU, DOU 06/09/2013.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
 - Uso indevido corrigido em 03/10/2026: a base lhe atribuía a regra de que o INSS não pode desconsiderar a perícia judicial.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 79/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
 - Tese literal. Não transcrita no relatório C3, que traz só esta síntese: as condições socioeconômicas do requerente do benefício assistencial provam-se por laudo de assistente social, por auto de constatação ou, inviabilizados estes, por prova testemunhal. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. TNU, data não registrada no relatório C3.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 80/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3). A glosa "vedando indeferimento por perícia médica isolada", que aparece na base, não consta do enunciado.
 - Tese literal. Não transcrita no relatório C3, que traz só esta síntese: após a Lei 12.470/2011, o BPC exige avaliação social ou outras providências aptas a revelar a condição vivida no meio social. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. TNU, DOU 24/04/2015.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 52/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
 - Tese literal. Não transcrita no relatório C3, que traz só esta síntese: para a pensão por morte, é incabível regularizar contribuições de contribuinte individual após o óbito, salvo as arrecadadas por empresa tomadora de serviços. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. TNU, DOU 18/04/2012.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 14/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
 - Tese literal. "Para a concessão de aposentadoria rural por idade, não se exige que o início de prova material corresponda a todo o período equivalente à carência do benefício"
 - Órgão e leading case. TNU, DJ 24/05/2004.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 49/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
@@ -930,14 +930,14 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. TNU, DOU 15/03/2012.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
 - Uso indevido corrigido em 03/10/2026: a base a citava para a periculosidade do motociclista (NR-16, Anexo V), fora do período anterior a 29/04/1995.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 30/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
 - Tese literal. Não transcrita no relatório C3, que traz só esta síntese: imóvel superior ao módulo rural não afasta, por si só, a qualificação de segurado especial, se provada a exploração em regime de economia familiar. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. TNU, DJ 13/02/2006.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 53/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
@@ -945,35 +945,35 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. TNU, DOU 07/05/2012.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
 - Uso indevido corrigido em 03/10/2026: a base a citava para recesso forense.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### SUMULA 34/TNU
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3).
 - Tese literal. Trecho, como transcrito no relatório C3, "o início de prova material deve ser contemporâneo à época dos fatos a provar", no tempo de labor rural. Copiar a redação literal integral da fonte antes de citar em peça.
 - Órgão e leading case. TNU, DJ 04/08/2006.
 - Fonte oficial. https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ENUNCIADO 24/FONAJEF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3). Lista completa do CJF (arquivo de 17/02/2016); revisões posteriores a 2016 não conferidas.
 - Tese literal. "Reconhecida a incompetência do Juizado Especial Federal, é cabível a extinção do processo, sem julgamento de mérito" (nova redação, V FONAJEF).
 - Órgão e leading case. FONAJEF, nova redação aprovada no V FONAJEF.
 - Fonte oficial. https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ENUNCIADO 44/FONAJEF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3). Lista completa do CJF (arquivo de 17/02/2016); revisões posteriores a 2016 não conferidas.
 - Tese literal. "Não cabe ação rescisória no Juizado Especial Federal". O enunciado acrescenta que o art. 59 da Lei 9.099/95 se aplica também aos JEFs (síntese do relatório C3).
 - Órgão e leading case. FONAJEF. Ano de aprovação não registrado no arquivo.
 - Fonte oficial. https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ENUNCIADO 71/FONAJEF
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C3). Lista completa do CJF (arquivo de 17/02/2016); revisões posteriores a 2016 não conferidas.
 - Tese literal. Não transcrita no relatório C3, que traz só esta síntese: na execução, a parte autora deve ser instada a renunciar ao valor excedente à alçada do JEF para receber por RPV, sem aproveitar a renúncia inicial feita para definir a competência. Copiar a redação literal da fonte antes de citar em peça.
 - Órgão e leading case. FONAJEF.
 - Fonte oficial. https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ENUNCIADO 91/FONAJEF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C3). Lista completa do CJF (arquivo de 17/02/2016); revisões posteriores a 2016 não conferidas. Tese adversa, invocável pelo INSS contra perícia complexa ou onerosa no JEF.
@@ -981,7 +981,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. FONAJEF.
 - Fonte oficial. https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
 - Uso indevido corrigido em 03/10/2026: a base o lia como autorização da prova técnica simplificada. O amparo dessa prova é o Enunciado 225/FONAJEF, hoje só em fonte secundária.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ENUNCIADO 95/FONAJEF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C3). Lista completa do CJF (arquivo de 17/02/2016); revisões posteriores a 2016 não conferidas.
@@ -989,7 +989,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. FONAJEF.
 - Fonte oficial. https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
 - Uso indevido corrigido em 03/10/2026: a base o lia como regra de prova nova em recurso.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 ### ENUNCIADO 63/FONAJEF
 - Situação. texto confirmado na fonte oficial; uso DIVERGENTE na base (relatório C3). Lista completa do CJF (arquivo de 17/02/2016); revisões posteriores a 2016 não conferidas.
@@ -997,7 +997,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. FONAJEF.
 - Fonte oficial. https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
 - Uso indevido corrigido em 03/10/2026: a base o usava para admitir ação rescisória no JEF, que o Enunciado 44/FONAJEF veda.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 03/10/2026
 
 Fonte secundária, não conta como conferido (auditoria 03/10/2026). Ficam sem título ### para que o script não os registre como conferidos. O texto foi lido fora do portal oficial e precisa ser confirmado na fonte oficial antes de citar em peça.
 - ENUNCIADO 225/FONAJEF. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Não lido em portal oficial, porque a lista do CJF só vai até o Enunciado 110. Texto lido na página da AJUFE, que organiza o FONAJEF. Confirmar na fonte oficial antes de citar em peça. Tese literal. Texto da página da AJUFE, "A prova técnica simplificada é legítima para análise de pedidos de benefícios previdenciários e assistenciais". Órgão e leading case. XVIII FONAJEF. Fonte secundária. https://www.ajufe.org.br/foruns/fonajef/enunciados-fonajef/enunciados-xviii-fonajef/enunciado-n-225. Lido em 03/10/2026.
@@ -1019,8 +1019,8 @@ Homônimos do STF a evitar (auditoria 03/10/2026). Ficam sem título ### pela me
 - TEMA 20/STF. RE 565.160, mérito em 29/03/2017, trânsito em julgado em 31/08/2017. Assunto real, alcance de folha de salários: "A contribuição social a cargo do empregador incide sobre ganhos habituais do empregado, quer anteriores ou posteriores à Emenda Constitucional nº 20/1998." Não usar para a incidência da contribuição sobre o 13º salário, que é da Súmula 688/STF. Fonte oficial, https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=20.
 - TEMA 1054/STF. RE 1.182.189, Rel. Min. Edson Fachin, mérito em 25/04/2023 (Plenário Virtual), trânsito em julgado em 05/08/2023. Assunto real: "O Conselho Federal e os Conselhos Seccionais da Ordem dos Advogados do Brasil não estão obrigados a prestar contas ao Tribunal de Contas da União nem a qualquer outra entidade externa." Não usar para tempo no RPPS e direito adquirido. Fonte oficial, https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1054.
 - TEMA 161/STF. RE 598.099/MS, Rel. Min. Gilmar Mendes, mérito em 10/08/2011, trânsito em julgado em 01/03/2013. Assunto real: "O candidato aprovado em concurso público dentro do número de vagas previsto no edital possui direito subjetivo à nomeação." Não usar para licença adotante ou salário-maternidade, matéria do Tema 782/STF (RE 778.889). Fonte oficial, https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=161.
-- SUMULA VINCULANTE 9. Cancelada; tratava do art. 127 da Lei 7.210/1984 (LEP), remição e falta grave. Lida no portal do STF em 04/10/2026 (Onda 173). Não usar em matéria previdenciária; os Modelos Ouro a citavam na aposentadoria especial. Fonte oficial, https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26&sumula=1212.
-- RE 1.054.232. Não localizado na pesquisa processual do portal do STF em 04/10/2026 (Onda 173). A base o citava na revisão do teto; não citar.
+- SUMULA VINCULANTE 9. Cancelada; tratava do art. 127 da Lei 7.210/1984 (LEP), remição e falta grave. Lida no portal do STF em 04/10/2026. Não usar em matéria previdenciária; os Modelos Ouro a citavam na aposentadoria especial. Fonte oficial, https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26&sumula=1212.
+- RE 1.054.232. Não localizado na pesquisa processual do portal do STF em 04/10/2026. A base o citava na revisão do teto; não citar.
 - ADI 4827. Lei 7.372/2012 de Alagoas, efetivo da Polícia Militar; procedente em parte em 27/09/2019; Rel. Min. Alexandre de Moraes. Não usar para aposentadoria especial; a base a citava em duplicidade com o Tema 709/STF. Fonte oficial, https://portal.stf.jus.br/processos/detalhe.asp?incidente=4281129.
 - ADI 5751. Taxa judiciária de Sergipe, ação do Conselho Federal da OAB; improcedente em 21/06/2021; Rel. Min. Luís Roberto Barroso. Tese, em síntese do relatório C1B: o valor da causa pode ser base de cálculo se a lei fixar limites máximos. Não usar para BPC. Fonte oficial, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5231964.
 - ADI 5760. Art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91; procedente, por unanimidade, em 13/09/2019; Rel. Min. Alexandre de Moraes. Não usar para aposentadoria da pessoa com deficiência. Fonte oficial, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5247635.

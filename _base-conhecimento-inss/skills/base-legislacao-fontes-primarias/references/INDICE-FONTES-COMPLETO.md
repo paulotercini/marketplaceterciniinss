@@ -20,7 +20,7 @@ C:\Users\VAIO\INSS\base-legislacao\
 
 ### CF-1988-completa.md
 - Caminho Windows. `C:\Users\VAIO\INSS\base-legislacao\01-Constituicao\CF-1988-completa.md`
-- Caminho Linux. `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/01-Constituicao/CF-1988-completa.md`
+- Caminho Linux. `/sessions/<sessão>/mnt/INSS/base-legislacao/01-Constituicao/CF-1988-completa.md`
 - Fonte. https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm
 - Tamanho. 907.352 bytes
 - SHA-256 (HTML bruto). `4f0d32c8a346ad69b43c5ae7efe75ee64455997da69f730fa5bb3c397a90aea0`

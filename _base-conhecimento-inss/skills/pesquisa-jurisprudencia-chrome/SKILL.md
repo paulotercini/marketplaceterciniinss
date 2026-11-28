@@ -21,7 +21,7 @@ Firecrawl e SearXNG entram como apoio, nunca como fonte final da citação.
 
 **Nível 2, Firecrawl local mais SearXNG.** Serve para localizar candidatos rápido (`firecrawl_search` com operador `site:`) e para converter em markdown limpo um inteiro teor cuja URL já é conhecida (`firecrawl_scrape`). O achado nasce como [NÃO CONFIRMADO] e só muda de status depois de aberto no Nível 1.
 
-**Nível 2-A, os servidores MCP `trf3` e `iurisprudencia`.** Localizam rápido dentro de base própria, e o achado nasce [NÃO CONFIRMADO] como qualquer Nível 2. A forma de pesquisar em cada um, com os filtros, as particularidades de acentuação, a ausência de operador OU e a via oficial de conferência de cada base, está em `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`. O `trf3` cobre a 7ª à 10ª Turma, a 3ª Seção, as Turmas Recursais de SP e MS e a TRU3. O `iurisprudencia` cobre a TNU e o CRPS. O `superiores` cobre os temas e as decisões do STF e do STJ, na forma da seção "MCPs da casa". No `trf3`, a palavra se digita normalmente, com acento, porque nas Turmas Recursais o CJF apaga a letra acentuada ("ruído" chega como "rudo") e a busca já procura as duas formas. Consulta com mais de 10.000 resultados volta com o aviso `consulta_pesada` e sem ordenação por relevância. Nesse caso, acrescente termo ou filtro (órgão, acervo, datas) antes de ler a lista.
+**Nível 2-A, os servidores MCP `superiores`, `trf3` e `iurisprudencia`.** O `superiores` traz a tese e a situação dos temas do STF e do STJ na data da coleta, com o `link_oficial`. Os três localizam rápido dentro de base própria, e o achado nasce [NÃO CONFIRMADO] como qualquer Nível 2. A forma de pesquisar em cada um, com os filtros, as particularidades de acentuação, a ausência de operador OU e a via oficial de conferência de cada base, está em `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`. O `trf3` cobre a 7ª à 10ª Turma, a 3ª Seção, as Turmas Recursais de SP e MS e a TRU3. O `iurisprudencia` cobre a TNU e o CRPS. O `superiores` cobre os temas e as decisões do STF e do STJ, na forma da seção "MCPs da casa". No `trf3`, a palavra se digita normalmente, com acento, porque nas Turmas Recursais o CJF apaga a letra acentuada ("ruído" chega como "rudo") e a busca já procura as duas formas. Consulta com mais de 10.000 resultados volta com o aviso `consulta_pesada` e sem ordenação por relevância. Nesse caso, acrescente termo ou filtro (órgão, acervo, datas) antes de ler a lista.
 
 **Conferência do que vem do `iurisprudencia`.** O `link_portal` que ele devolve aponta para `iurisprudencia.com.br`, que NÃO é fonte oficial e não autoriza [CONFERIDO]. Acórdão da TNU se confere em `https://eproctnu-jur.cjf.jus.br`, na forma da seção 4.4. Enunciado do CRPS se confere na página oficial do Conselho no gov.br, e o texto vigente e as redações anteriores saem de `enunciados_pleno_inss_crps`. Para acórdão do CRPS a consulta pública oficial não foi localizada até 19/09/2026, e o julgado fica [NÃO CONFIRMADO] até que a via seja definida.
 
@@ -151,7 +151,7 @@ TST. Em 03/10/2026 o portal de súmulas do TST não respondeu, e a Súmula 368 f
 
 Técnica comum. Numa aba aberta no próprio portal, o `javascript_tool` busca as páginas por fetch de mesma origem, extrai o texto e o grava no corpo da página, que se lê por `get_page_text`. O retorno direto do `javascript_tool` é cortado em cerca de mil caracteres e bloqueia texto com endereço que tenha parâmetros. PDF se lê injetando o pdf.js do cdnjs na aba da mesma origem. Cada agente usa a própria aba e a fecha ao terminar.
 
-## MCP trf3, localizar no servidor e CONFERIR no portal (Onda 144)
+## MCP trf3, localizar no servidor e conferir no portal
 
 Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado primeiro no servidor MCP `trf3`, que guarda base local montada da Jurisprudência Unificada do CJF, com a 7ª à 10ª Turma, a 3ª Seção e as Recursais de SP e MS, sem monocráticas.
 
@@ -161,19 +161,13 @@ Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado prime
 
 **Lidos os demais acórdãos do processo, e não só o que casa a data.** Escolhido pela data de julgamento o julgado que corresponde ao registro do MCP, leem-se os outros acórdãos daqueles autos, porque a tese completa raramente está num só. Embargos rejeitados confirmam sem acrescentar. Embargos com efeito modificativo, agravo interno provido e retratação alteram o resultado, e o acórdão anterior deixa de valer sozinho. Cita-se o que traz a razão de decidir, indicando os posteriores que a mantiveram ou modificaram. Seção "Vários acórdãos no mesmo processo" de `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`, com o caso medido do processo 5248998-80.2020.4.03.9999, em que a tese estava na monocrática confirmada por agravo interno, e não nos embargos que o MCP devolveu.
 
-**O número devolve o PROCESSO, não o acórdão.** A pesquisa por número CNJ traz todos os julgados colegiados daqueles autos, e o certo é o que tem a DATA DE JULGAMENTO igual à do MCP. A classe não distingue, porque o TRF3 mantém a classe originária mesmo em embargos e agravo interno, conferido em 19/09/2026 nos processos 5248998-80.2020.4.03.9999 e 5003069-93.2024.4.03.6110, que devolveram dois resultados de mesma classe cada.
-
-**E há julgamento anulado no acervo.** No 5003069-93.2024.4.03.6110, o acórdão de 02/03/2026 traz "NULIDADE DO JULGAMENTO" por questão de ordem, e o de 29/06/2026 é o refeito. A lista não sinaliza isso. Vindo mais de um resultado, ler a ementa dos demais à procura de anulação, retratação ou efeitos infringentes antes de citar qualquer um.
-
 **Por que a conferência vale.** O portal traz as PARTES, que o MCP não tem, e é ali que se confirma quem recorreu, em vez de confiar no `polo_recorrente`, que é inferido. O campo `resultado` também é inferido, e "provido" não significa favorável ao segurado.
-
-**Alerta que decide peça.** A ementa do próprio tribunal pode conter citação incorreta. No acórdão usado no teste, a tese de julgamento ancorava a exceção do ruído no Tema 534 do STJ, que é eletricidade, e numa IN PRES/INSS nº 170/2024 não localizada no DOU. Toda citação de tema, súmula ou norma que venha dentro de ementa do TRF3 passa pelo `base-precedentes-catalogo-vinculantes` antes de ser reproduzida, porque copiar ementa importa os erros da ementa.
 
 Enquanto a carga não cobrir um ano, `perfil_orgao_trf3` e `perfil_relator_trf3` não entram em relatório, porque semanas não fazem amostra e a distribuição por órgão reflete a ordem da coleta.
 
-Roteiro completo, mecânica do portal e o caso do teste em `references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
+A pesquisa por número CNJ devolve todos os acórdãos do processo, inclusive julgamento anulado; a ementa do tribunal pode conter citação errada e passa pelo `base-precedentes-catalogo-vinculantes`. Roteiro completo, mecânica do portal e o caso do teste em `references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
 
-## Ordem de consulta entre os MCPs superiores e trf3 (11/10/2026)
+## Ordem de consulta entre os MCPs superiores e trf3
 
 Os dois servidores funcionam interligados, e a ordem é fixa. O TRF3 só se pesquisa depois de saber o que o STF e o STJ decidiram.
 

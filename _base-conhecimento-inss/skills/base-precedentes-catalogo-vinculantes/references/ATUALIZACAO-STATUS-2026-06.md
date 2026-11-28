@@ -1,6 +1,6 @@
-# Atualização de Status dos Temas - REVISADA EM 11/07/2026 (fonte primária)
+# Atualização de status dos temas
 
-Esta reference foi INTEGRALMENTE REVISADA em 11/07/2026 mediante consulta direta às páginas oficiais dos temas (processo.stj.jus.br/repetitivos e portal.stf.jus.br). A versão anterior (08/06/2026, apurada por imprensa especializada) continha DATAS ERRADAS nos Temas 1124, 1162 e 1291 do STJ e mantinha como suspenso o Tema 1140/STJ, julgado desde 2024. Não reutilizar a versão anterior.
+Quadro de status apurado nas páginas oficiais dos temas (processo.stj.jus.br/repetitivos, portal.stf.jus.br e CJF) em 11/07/2026, com as situações de temas pendentes e cancelados reconferidas no MCP superiores e no acervo TNU do MCP Iurisprudencia em 28/11/2026. Imprensa especializada não serve como fonte final de data ou tese.
 
 As teses literais completas estão nos catálogos CATALOGO-TEMAS-STJ.md e CATALOGO-TEMAS-STF.md. Aqui, somente o quadro de status.
 
@@ -12,18 +12,19 @@ As teses literais completas estão nos catálogos CATALOGO-TEMAS-STJ.md e CATALO
 
 - **Tema 1157/STJ.** Julgado em 07/05/2026. Acórdão publicado em 06/07/2026. Rel. Min. Herman Benjamin. REsp 1.985.189/SP e 1.985.190/SP. Tese contra o segurado (cancelamento administrativo de benefício por incapacidade concedido judicialmente, com devido processo e perícia).
 
-- **Tema 1162/STJ.** Julgado em 12/11/2025. Acórdão publicado em 19/11/2025. Rel. Min. Teodoro Silva Santos. Flexibilização do critério econômico do auxílio-reclusão só no regime pré-MP 871/2019 (excedente ínfimo); vedada após a MP 871/2019, salvo ausência de correção anual do teto. Modulação para prisões a partir de 27/11/2024.
+- **Tema 1162/STJ.** Julgado em 12/11/2025. Acórdão publicado em 19/11/2025. Rel. Min. Teodoro Silva Santos. Flexibilização do critério econômico do auxílio-reclusão apenas no regime pré-MP 871/2019 (excedente ínfimo); vedada após a MP 871/2019, salvo ausência de correção anual do teto. Modulação para prisões a partir de 27/11/2024.
 
 - **Tema 1291/STJ.** Julgado em 10/09/2025. Acórdão publicado em 18/09/2025. Situação oficial "Acórdão Publicado - RE Pendente". Rel. Min. Gurgel de Faria. Pró-segurado (tempo especial do contribuinte individual não cooperado após a Lei 9.032/95, sem exigência de formulário de empresa).
 
 - **Tema 1307/STJ.** Julgado em 07/05/2026. Acórdão publicado em 20/05/2026. Rel. Min. Gurgel de Faria. Pró-segurado (penosidade de motorista/cobrador de ônibus e motorista de caminhão pós-Lei 9.032/95, mediante perícia técnica individualizada).
 
-## STJ - TEMAS PENDENTES (situação oficial em 11/07/2026)
+## STJ - TEMAS PENDENTES (situação conferida no MCP superiores em 28/11/2026)
 
-- **Tema 1220/STJ.** Afetado. Memorando-Circular Conjunto 21/DIRBEN/PFEINSS como marco interruptivo da prescrição.
-- **Tema 1321/STJ.** Afetado. Prescrição e decadência contra pessoa com deficiência mental ou intelectual após a Lei 13.146/2015.
-- **Tema 1328/STJ.** Afetado. Dano moral in re ipsa na invalidação de RMC.
+- **Tema 1321/STJ.** Afetado e pendente. Prescrição e decadência contra pessoa com deficiência mental ou intelectual após a Lei 13.146/2015.
 - **Tema 1341/STJ.** Em Julgamento. Filho maior inválido com benefício próprio e pensão por morte.
+- **Tema 1370/STJ.** Em Julgamento. REsp 2.205.049, afetado em 19/08/2025.
+
+Cancelados no STJ, conferidos no MCP superiores em 28/11/2026: Tema 1220 (Memorando-Circular Conjunto 21/DIRBEN/PFEINSS como marco interruptivo da prescrição) e Tema 1328 (dano moral in re ipsa na invalidação de RMC). Não se citam.
 
 ## STF - TEMAS JULGADOS
 
@@ -31,7 +32,7 @@ As teses literais completas estão nos catálogos CATALOGO-TEMAS-STJ.md e CATALO
 - **Tema 1300/STF.** Julgado em 18/12/2025. Acórdão publicado em 10/04/2026. Trânsito em julgado em 18/04/2026. RE 1.469.150, Rel. Min. Barroso. Tese pró-INSS (constitucionalidade do art. 26, §2º, III, da EC 103/2019 para incapacidade posterior à reforma).
 - **Tema 1370/STF.** Mérito julgado em 16/12/2025. RE 1.520.468, Rel. Min. Flávio Dino. Tese pró-segurada (prestação à mulher vítima de violência doméstica, sem carência quando segurada).
 
-## STF - TEMAS AINDA SEM MÉRITO (situação oficial em 11/07/2026)
+## STF - TEMAS AINDA SEM MÉRITO (situação conferida no MCP superiores em 28/11/2026)
 
 - **Tema 1271/STF.** RE 1.442.021. Repercussão geral reconhecida (acórdão de RG publicado em 22/09/2023). Mérito pendente. Menor sob guarda e EC 103/2019.
 - **Tema 1298/STF.** RE 1.471.538. Repercussão geral reconhecida (24/04/2024). Mérito pendente. Pensão a mulher transexual.
@@ -41,7 +42,7 @@ As teses literais completas estão nos catálogos CATALOGO-TEMAS-STJ.md e CATALO
 
 - Tema 1066/STF cancelado em 22/02/2021 (acordo homologado em 09/12/2020 sobre prazos do INSS).
 - Súmula 86/TNU cancelada em 26/08/2021, DOU nº 166 de 01/09/2021, Seção 1, pág. 330. PEDILEF 0521830-35.2020.4.05.8100.
-- Temas 30, 66, 338 e 375 da TNU cancelados/revisados conforme catálogo TNU.
+- Tema 30/TNU cancelado (Tema 692/STJ). Tema 66/TNU cancelado, tese revista pelo Tema 355. Tema 130/TNU cancelado no julgamento do Tema 375 (D.E. 26/06/2025). Tema 338/TNU afetado e pendente, revisa o Tema 255.
 - Tema 58/TNU superado (Tema 694/STJ e Tema 174/TNU).
 
 ## SÚMULAS TNU DE AUXÍLIO-ACIDENTE E EPI (ERRATA de 11/07/2026, mesma data)
@@ -66,7 +67,7 @@ ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 
 
 - **Tema 382/TNU julgado em 15/04/2026 CONTRA o segurado.** "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)." PEDILEF 5012678-57.2022.4.04.7108/RS, Rel. Juíza Federal Lilian Oliveira da Costa Tourinho. A skill do tolueno atribuía ao tema tese inexistente sobre benzeno, com relator e processo falsos. Corrigida.
 
-- **Tema 385/TNU com status conflitante.** Julgamento noticiado como concluído por maioria (24/06/2026) em fontes especializadas, mas a página oficial do CJF constava "Em Julgamento" em 11/07/2026. Confirmar publicação do acórdão antes de citar como vinculante.
+- **Tema 385/TNU julgado.** Julgamento em 24/06/2026, acórdão disponibilizado em 30/06/2026. Embargos do INSS e do IAPE desprovidos, acórdão disponibilizado em 24/11/2026, com a afirmação de que o Tema 385 não supera o Tema 173 e os dois são complementares. Situação conferida no acervo TNU do MCP Iurisprudencia em 28/11/2026.
 
 - **Confirmados em fonte oficial com tese literal.** Tema 343 (julgado 14/04/2025), Tema 349 (julgado 16/10/2024), Tema 217 (julgado 21/08/2020, com a parte final sobre contraditório e arts. 9º e 10 do CPC), Tema 174 (redação integral com vedação de medição pontual), Tema 201 (contribuinte individual sem direito a B94).
 
@@ -100,15 +101,13 @@ ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 
 
 - **PEDILEF 0136882-97.2017.4.02.5167/RJ.** Juiz Federal Neian Milhomem Cruz, provimento pela TNU em fevereiro de 2026, frentista exposto a benzeno, com base no Tema 170/TNU e na Questão de Ordem 20, sem relação com o Tema 298/TNU [NÃO CONFIRMADO] (auditoria 03/10/2026, retirado o selo CONFERIDO). Número completo agora registrado.
 
-- **Contribuinte em dobro, correção aplicada.** O representativo da TNU é o PUIL 5000577-65.2021.4.04.7126/RS [NÃO CONFIRMADO], recolhimento em dobro só conta se TEMPESTIVO, dentro do período de graça. O PUIL 0003636-92.2018.4.01.3810/MG, antes indicado como representativo (Boletim TNU TRF3/GACO 04/2024), trata de registro no CRC (auditoria 03/10/2026).
+- **Contribuinte em dobro, correção aplicada.** O representativo da TNU é o PUIL 5000577-65.2021.4.04.7126/RS [NÃO CONFIRMADO], recolhimento em dobro apenas conta se TEMPESTIVO, dentro do período de graça. O PUIL 0003636-92.2018.4.01.3810/MG, antes indicado como representativo (Boletim TNU TRF3/GACO 04/2024), trata de registro no CRC (auditoria 03/10/2026).
 
 - **EM QUARENTENA (não verificáveis por fonte pública indexada).** PEDILEF 5001032-25.2014.4.04.7204/SC (químicos; o 5001032-41.2022.4.04.7014/PR, de mesmo prefixo, existe, trata de fenol e não está em quarentena, auditoria 03/10/2026), ApCiv 5002176-54.2023, 5005822-78.2023, 5005407-17.2022 e ApRem 0004116-78.2005 do TRF3. Conferir nos sítios oficiais antes de citar.
 
-- **Skills do escritório a atualizar via Settings (fora do repo).** auxilio-reclusao-previdenciario, pensao-por-morte e carta-servicos-inss citam os REsp do Tema 1421 sem o número do tema e sem a direção da tese, e o IRDR 35 sem a nota de absorção.
-
 ## ACHADOS DA ETAPA 4 DA AUDITORIA (legislação e atos 2025/2026, 12/07/2026)
 
-CONFERIDAS com existência, data e matéria compatíveis com o uso nas skills. Lei 15.157/2025 (DOU 02/07/2025, dispensa de reavaliação em impedimento permanente, irreversível ou irrecuperável, altera Lei 8.213 e LOAS). Lei 15.176/2025 (sancionada 24/07/2025, fibromialgia com equiparação a PCD condicionada à avaliação). Lei 15.326, de 06/01/2026 (professor de educação infantil integra o magistério, com Nota Informativa do MPS sobre efeitos previdenciários). Decreto 12.534/2025 (altera o Decreto 6.214/2007, Bolsa Família na renda do BPC, com controvérsia de constitucionalidade e precedente do TRF5 afastando o cômputo). Portaria MPS 125, de 26/01/2026 (NOVO RICRPS, PDF oficial consolidado até 20/03/2026, substitui a Portaria MTP 4.061/2022, que só deve ser citada como regimento histórico). Portaria MPS 462, de 19/03/2026 (DOU 20/03/2026, ALTERA o RICRPS 125/2026, inclusive arts. 64 e 112, citar sempre como alteradora do regimento). Portarias Conjuntas MPS/INSS 13, 14 e 15, todas de 23/03/2026 (análise documental B31, B91 e B94). Portaria Conjunta DPMF/INSS 19/2026 (Teleperícia, implementada com a Portaria DPMF/SRGPS/MPS 587/2026, de abril de 2026, norma nova ainda não citada nas skills). IN SAGICAD/MDS 20, de 21/01/2026, e IN SAGICAD/MDS 21, de 04/05/2026 (Cadastro Domiciliar, PDF oficial). IN 54/SENARC/MDS, de 30/04/2026 (desligamento voluntário do PBF e fluxo com o BPC, página oficial do MDS). Portaria Conjunta 34/2025 do MDS (deduções e grupo familiar do BPC) e Portaria DIRBEN/INSS 1.316/2025 (Anexo V, siglas e indicadores do CNIS) conferidas em substância por fonte especializada, selo em fonte oficial pendente.
+CONFERIDAS com existência, data e matéria compatíveis com o uso nas skills. Lei 15.157/2025 (DOU 02/07/2025, dispensa de reavaliação em impedimento permanente, irreversível ou irrecuperável, altera Lei 8.213 e LOAS). Lei 15.176/2025 (sancionada 24/07/2025, fibromialgia com equiparação a PCD condicionada à avaliação). Lei 15.326, de 06/01/2026 (professor de educação infantil integra o magistério, com Nota Informativa do MPS sobre efeitos previdenciários). Decreto 12.534/2025 (altera o Decreto 6.214/2007, Bolsa Família na renda do BPC, com controvérsia de constitucionalidade e precedente do TRF5 afastando o cômputo). Portaria MPS 125, de 26/01/2026 (NOVO RICRPS, PDF oficial consolidado até 20/03/2026, substitui a Portaria MTP 4.061/2022, que apenas deve ser citada como regimento histórico). Portaria MPS 462, de 19/03/2026 (DOU 20/03/2026, ALTERA o RICRPS 125/2026, inclusive arts. 64 e 112, citar sempre como alteradora do regimento). Portarias Conjuntas MPS/INSS 13, 14 e 15, todas de 23/03/2026 (análise documental B31, B91 e B94). Portaria Conjunta DPMF/INSS 19/2026 (Teleperícia, implementada com a Portaria DPMF/SRGPS/MPS 587/2026, de abril de 2026, norma nova ainda não citada nas skills). IN SAGICAD/MDS 20, de 21/01/2026, e IN SAGICAD/MDS 21, de 04/05/2026 (Cadastro Domiciliar, PDF oficial). IN 54/SENARC/MDS, de 30/04/2026 (desligamento voluntário do PBF e fluxo com o BPC, página oficial do MDS). Portaria Conjunta 34/2025 do MDS (deduções e grupo familiar do BPC) e Portaria DIRBEN/INSS 1.316/2025 (Anexo V, siglas e indicadores do CNIS) conferidas em substância por fonte especializada, selo em fonte oficial pendente.
 
 ERRO DE RÓTULO DETECTADO. A Lei 15.108, de 13/03/2025 (DOU 14/03/2025), tem ementa oficial no Planalto de alteração do §2º do art. 16 da Lei 8.213/91 (menor sob guarda equiparado a filho e dependência de netos, sobrinhos e enteados). As skills do escritório pensao-por-morte e carta-servicos-inss a rotulam como "complementação post mortem", matéria diversa (Tema 286/TNU). Corrigir nos pacotes .skill.
 
@@ -122,15 +121,11 @@ NÃO CONFIRMADAS NESTA RODADA (quarentena leve, conferir no DOU antes de citar).
 
 - **Novidade incorporada, Portaria DPMF/SRGPS/MPS 587/2026.** Implementação operacional da Teleperícia, ao lado da Portaria Conjunta 19/2026. Nota inserida na base-pericia-medica-federal-telepericia.
 
-- **Skills homólogas harmonizadas.** Nota de coexistência inserida nas duas famílias de leitura de peças adversárias (base-analise-contestacao-inss + pontes, e base-auditoria-adversarial-*), com regra de prevalência pelo selo [CONFERIDO]. Racionalização definitiva é decisão editorial do escritório.
-
-- **Pacotes .skill do escritório regenerados na Etapa 5.** pensao-por-morte e auxilio-reclusao-previdenciario atualizados com o Tema 1421/STJ julgado (tese literal, alerta de triagem dos 180 dias, estratégia pós-julgamento) e carta-servicos-inss com o rótulo da Lei 15.108/2025 corrigido (menor sob guarda) e o Tema 1421 incluído.
-
-## ADI 6309/STF JULGADA EM 03/06/2026, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, revisto pelo inteiro teor na Onda 170, 04/10/2026)
+## ADI 6309/STF JULGADA EM 03/06/2026, APOSENTADORIA ESPECIAL DA EC 103 (inteiro teor conferido em 04/10/2026)
 
 STF, Plenário, ação da CNTI contra dispositivos da EC 103/2019 sobre aposentadoria especial. Relator Min. Luís Roberto Barroso, vencido em parte, e Redator do acórdão Min. André Mendonça. Sessão presencial de 03/06/2026, ata no DJe de 11/06/2026, decisão publicada no DOU de 12/06/2026 (Seção 1, edição 108, p. 1) e acórdão no DJe de 02/10/2026 [CONFERIDO, inteiro teor de 217 páginas e portal do STF, 04/10/2026]. Três definições.
 
-1. INCONSTITUCIONAL a idade mínima do art. 19, §1º, I, alíneas a, b e c (55, 58 e 60 anos), por 6 votos a 5. Formaram a maioria André Mendonça, Nunes Marques, Dias Toffoli e Cármen Lúcia, que julgavam a ação parcialmente procedente, e Edson Fachin e Rosa Weber, que a julgavam totalmente procedente. Ficaram vencidos no ponto Luís Roberto Barroso, Gilmar Mendes, Alexandre de Moraes, Cristiano Zanin e Luiz Fux, que julgavam a ação totalmente improcedente. O acórdão os registra como "vencidos parcialmente", porque prevaleceram nos outros dois pontos (correção da Onda 170 ao registro anterior, que os dava como vencidos na íntegra e qualificava o Relator como aposentado sem fonte).
+1. INCONSTITUCIONAL a idade mínima do art. 19, §1º, I, alíneas a, b e c (55, 58 e 60 anos), por 6 votos a 5. Formaram a maioria André Mendonça, Nunes Marques, Dias Toffoli e Cármen Lúcia, que julgavam a ação parcialmente procedente, e Edson Fachin e Rosa Weber, que a julgavam totalmente procedente. Ficaram vencidos no ponto Luís Roberto Barroso, Gilmar Mendes, Alexandre de Moraes, Cristiano Zanin e Luiz Fux, que julgavam a ação totalmente improcedente. O acórdão os registra como "vencidos parcialmente", porque prevaleceram nos outros dois pontos.
 
 2. CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores a 13/11/2019 (art. 25, §2º), por 9 votos a 2, vencidos Edson Fachin e Rosa Weber.
 
@@ -138,21 +133,15 @@ STF, Plenário, ação da CNTI contra dispositivos da EC 103/2019 sobre aposenta
 
 Flávio Dino não votou, por suceder Rosa Weber. O acórdão não fixa tese de julgamento e não modula efeitos. Até 04/10/2026, o andamento não registra embargos de declaração nem trânsito em julgado, e o prazo de embargos corre desde a publicação de 02/10/2026.
 
-Efeitos nas skills. Notas revistas em base-aposentadoria-especial-transicao-ec103 (e nas duas referências), base-tempo-especial-conversao e base-calculo-rmi-ec103. Teses de inconstitucionalidade da vedação de conversão e do cálculo estão SUPERADAS. A concessão sem idade mínima pela regra do art. 19, §1º, I, está amparada, mas a IN 128/2022 aplica essa regra só ao filiado a partir de 14/11/2019 (art. 260) e dá ao filiado até 13/11/2019 os pontos do art. 21 (art. 262). Para o filiado anterior à reforma, a regra sem idade é tese de opção, ancorada no Decreto 3.048/99, art. 188-P, caput, e não decisão do STF. O art. 21 não foi objeto da ação. Correção da Onda 170 à frase anterior, que estendia a concessão sem idade a todo segurado que completasse o tempo de exposição.
-
-Pendência encerrada. Dispositivo, placar e ausência de modulação conferidos no inteiro teor em 04/10/2026. Pendência nova, acompanhar no portal eventual embargo com pedido de modulação. Skills do escritório fora do plugin a revisar em pacote próprio, auditoria-ppp, tempo-especial-peticoes-por-rito e carta-servicos-inss.
+Efeitos. Teses de inconstitucionalidade da vedação de conversão e do cálculo estão SUPERADAS. A concessão sem idade mínima pela regra do art. 19, §1º, I, está amparada, mas a IN 128/2022 aplica essa regra apenas ao filiado a partir de 14/11/2019 (art. 260) e dá ao filiado até 13/11/2019 os pontos do art. 21 (art. 262). Para o filiado anterior à reforma, a regra sem idade é tese de opção, ancorada no Decreto 3.048/99, art. 188-P, caput, e não decisão do STF. O art. 21 não foi objeto da ação.
 
 ## REsp 2.270.389/RS CONFERIDO POR INTEIRO TEOR (registro de 12/07/2026, PDF fornecido pelo escritório)
 
-Rel. Min. Teodoro Silva Santos, Segunda Turma, sessão virtual encerrada em 17/06/2026, unânime, DJEN de 23/06/2026. Três definições pró-segurado em auxílio-acidente precedido de auxílio-doença. Primeira, a conversão de B31 cessado em B94 pelo mesmo fato gerador dispensa novo requerimento administrativo (exceção do Tema 350/STF, relação jurídica já inaugurada), interesse de agir configurado pela própria cessação. Segunda, DIB no dia seguinte à cessação do B31, na forma do Tema 862/STJ (tese literal reafirmada, leading cases REsp 1.729.555/SP e 1.786.736/SP). Terceira, o fundo de direito é imprescritível, prescrevem só as parcelas do quinquênio (EREsp 1.269.726/MG, Primeira Seção, transcrito no voto), no caso concreto o B31 havia cessado em 08/02/2010 e a ação, ajuizada anos depois, foi provida. Julgado de Turma, persuasivo, usar junto com o Tema 350/STF e o Tema 862/STJ, que são os vinculantes.
+Rel. Min. Teodoro Silva Santos, Segunda Turma, sessão virtual encerrada em 17/06/2026, unânime, DJEN de 23/06/2026. Três definições pró-segurado em auxílio-acidente precedido de auxílio-doença. Primeira, a conversão de B31 cessado em B94 pelo mesmo fato gerador dispensa novo requerimento administrativo (exceção do Tema 350/STF, relação jurídica já inaugurada), interesse de agir configurado pela própria cessação. Segunda, DIB no dia seguinte à cessação do B31, na forma do Tema 862/STJ (tese literal reafirmada, leading cases REsp 1.729.555/SP e 1.786.736/SP). Terceira, o fundo de direito é imprescritível, prescrevem apenas as parcelas do quinquênio (EREsp 1.269.726/MG, Primeira Seção, transcrito no voto), no caso concreto o B31 havia cessado em 08/02/2010 e a ação, ajuizada anos depois, foi provida. Julgado de Turma, persuasivo, usar junto com o Tema 350/STF e o Tema 862/STJ, que são os vinculantes.
 
 CORREÇÃO DERIVADA. A skill base-b94-integracao-salario-beneficio-art31 atribuía ao Tema 862/STJ a tese de integração do B94 ao salário-de-benefício. FALSO. O Tema 862 é o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias decorre do art. 31 da Lei 8.213/91, norma legal sem repetitivo próprio. Skill corrigida em 12/07/2026.
 
-## CORREÇÃO INTEGRAL DA base-pcd-conversao-tempo-especial-pcd (12/07/2026, apontamento do escritório)
-
-Skill reescrita com extração literal dos arts. 70-A a 70-J do Decreto 3.048/99 no repositório de legislação verificada. Corrigidos, pisos por grau (grave 25 homem e 20 mulher, moderada 29 e 24, leve 33 e 28, por idade 60 e 55 com 15 anos como PCD, a versão instalada antiga trazia números trocados), tabelas literais completas do art. 70-E (conversão entre graus, com grau preponderante do §1º) e do art. 70-F, §1º (conversão do tempo especial para os parâmetros PCD quando favorável), vedações do art. 70-F (sem acumulação de reduções no mesmo período, sem conversão PCD para especial, §3º revogado pelo Decreto 10.410/2020) e RMI do art. 70-J (100% do salário de benefício na modalidade por tempo). Jurisprudência saneada, Tema 173/TNU retirado (tese trocada, é do BPC), Tema 694/STJ substituído pelo Tema 546/STJ no papel correto, ADI 5760 mantida com dados confirmados (Rel. Min. Alexandre de Moraes, Pleno, j. 13/09/2019) e ressalva de conferir o objeto no portal do STF antes de citar. Cenários recalculados com as tabelas oficiais.
-
-## ONDA 70. LIMBO PREVIDENCIÁRIO E CORREÇÃO DE NUMERAÇÃO NA TNU (conferido em 20/07/2026, páginas oficiais CJF e STF)
+## LIMBO PREVIDENCIÁRIO E NUMERAÇÃO DOS TEMAS 300 E 301 DA TNU (conferido em 20/07/2026, páginas oficiais CJF e STF)
 
 **ERRO GRAVE CORRIGIDO. Tema 300 e Tema 301 da TNU estavam invertidos no catálogo.** O CATALOGO-TEMAS-TNU.md atribuía a tese do limbo previdenciário ao Tema 301 e registrava o Tema 300 como "[Não há tese firmada]". Conferência direta nas páginas oficiais do CJF em 20/07/2026 demonstrou o inverso.
 
@@ -172,7 +161,7 @@ Skill reescrita com extração literal dos arts. 70-A a 70-J do Decreto 3.048/99
 
 - **STJ, ausência declarada.** Não há tema repetitivo, súmula ou enunciado do STJ sobre limbo previdenciário. Declarar a ausência expressamente quando o ponto for suscitado.
 
-- **EM QUARENTENA nesta Onda.** IRR 88 do TST sobre dano moral no limbo, entrada localizada no Índice Temático de Precedentes Qualificados do TST de 04/08/2025 mas documento oficial do tema inacessível. Circulam em fontes secundárias teses de dano moral in re ipsa atribuídas ora ao Tema 88 ora a um IRR 198. NÃO CONFIRMADO, não usar. Também em quarentena os códigos 73, 74, 76 e 80 da tabela de afastamentos da RAIS.
+- **EM QUARENTENA.** IRR 88 do TST sobre dano moral no limbo, entrada localizada no Índice Temático de Precedentes Qualificados do TST de 04/08/2025 mas documento oficial do tema inacessível. Circulam em fontes secundárias teses de dano moral in re ipsa atribuídas ora ao Tema 88 ora a um IRR 198. NÃO CONFIRMADO, não usar. Também em quarentena os códigos 73, 74, 76 e 80 da tabela de afastamentos da RAIS.
 
 ## PRÓXIMA REVISÃO
 

@@ -7,7 +7,7 @@ description: "Skill do Tema 1124/STJ (REsps 1.913.152/SP, 1.905.830/SP e 1.912.7
 
 ## Finalidade
 
-Esta skill consolida o Tema 1124/STJ sobre interesse de agir em ações previdenciárias e sobre o termo inicial dos efeitos financeiros quando há prova não submetida ao INSS. A Onda 161 (27/09/2026) substituiu a paráfrase anterior da tese, que trazia a numeração dos itens 1.1 a 1.6 trocada, pela tese literal, e incorporou os embargos de declaração, que esclareceram as hipóteses de enquadramento. A Onda 178 (11/10/2026) conferiu no site oficial do STJ os 17 acórdãos do tema, levantou a aplicação no TRF3 e nas Turmas Recursais de SP e MS e criou o agente `conferente-tema-1124`, que confronta o termo inicial pedido em cada peça com a tese e com o órgão que vai julgar.
+Tema 1124/STJ: interesse de agir em ação previdenciária e termo inicial dos efeitos financeiros quando há prova não submetida ao INSS. Traz a tese literal, a matriz de enquadramento do mérito e dos embargos de declaração e o retrato da aplicação no TRF3 e nas Turmas Recursais. Situação no MCP `superiores` em 28/11/2026: "Acórdão Publicado"; trânsito em julgado Não localizado. A defesa contra a aplicação de ofício em grau recursal está em `base-efeito-translativo-tema-1124-defesa`.
 
 ## Fontes primárias
 
@@ -83,7 +83,7 @@ A tese não pretende abranger todas as situações, e a ementa dos embargos (ite
 
 **Benefícios com DIB legal.** As datas de início previstas nos arts. 49, 54, 57, § 2º, 60, 74 e 80 da Lei 8.213/1991 continuam valendo, desde que o requerimento apto tenha sido formulado dentro das hipóteses legais.
 
-## APLICAÇÃO NO TRF3 E NAS TURMAS RECURSAIS (Onda 178)
+## APLICAÇÃO NO TRF3 E NAS TURMAS RECURSAIS
 
 Retrato de 11/10/2026, montado com 63 acórdãos do TRF3, das Turmas Recursais de SP e MS e da TRU lidos em inteiro teor, mais seis da TNU e três do TRF4. Números, datas e trechos estão em `references/APLICACAO-TRF3-TEMA-1124.md`, cada julgado com a sua marca. No tribunal, a disputa é sobre a data. Nas Turmas Recursais, é sobre a porta de entrada, e a extinção sem mérito foi o desfecho mais frequente entre os acórdãos lidos.
 
@@ -107,7 +107,7 @@ Em revisões de benefício em manutenção, quando há apresentação de novos e
 
 ## INTERAÇÃO COM A DECADÊNCIA, A ARMADILHA PROCESSUAL
 
-Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz extingue sem mérito, o segurado precisa voltar à via administrativa. Se o prazo decadencial de 10 anos já tiver se esgotado, o direito à revisão pode estar perdido, e o ajuizamento não interrompe esse prazo (art. 207 do Código Civil) (auditoria 03/10/2026). O pedido de revisão administrativa é a única via que gera prazo autônomo, conforme o Tema 256/TNU, hoje em discussão no Tema 1370/STJ.
+Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz extingue sem mérito, o segurado precisa voltar à via administrativa. Se o prazo decadencial de 10 anos já tiver se esgotado, o direito à revisão pode estar perdido, e o ajuizamento não interrompe esse prazo (art. 207 do Código Civil). O pedido de revisão administrativa é a única via que gera prazo autônomo, conforme o Tema 256/TNU. A questão está afetada no Tema 1370/STJ (REsp 2.205.049, afetado em 19/08/2025, "Em Julgamento" em 28/11/2026), ainda sem tese.
 
 **Procedimento obrigatório.** Havendo risco de extinção em revisão e prazo decadencial próximo do fim, protocolar de imediato o pedido de revisão administrativa com toda a documentação, guardar o comprovante e consultar a skill decadencia-revisao-previdenciaria. A ação só se mantém em paralelo quando o documento judicial se enquadrar na exceção da prova complementar do item 1.6.
 
@@ -138,7 +138,7 @@ Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz 
 | Art. 108 da Lei 8.213/1991 e art. 570 da IN 128/2022 | Justificação administrativa |
 | Art. 577, II, da IN 128/2022 | Reafirmação da DER no processo administrativo |
 | Art. 347, § 4º, do Decreto 3.048/99 | Efeitos financeiros da DPR em revisões |
-| Tema 313/STF | Sem decadência do fundo de direito contra indeferimento |
+| Tema 313/STF e ADI 6.096 | Inexiste prazo decadencial para a concessão inicial; a ADI 6.096 afastou a decadência sobre o indeferimento |
 | Tema 975/STJ | Decadência mesmo para matéria não apreciada |
 | Tema 256/TNU e Tema 1370/STJ | Prazo autônomo da revisão administrativa, em discussão |
 
@@ -146,11 +146,11 @@ Os dispositivos da Lei 8.213/1991, do Decreto 3.048/99 e da IN 128/2022 foram tr
 
 ## INTERAÇÃO COM OUTRAS SKILLS
 
-**conferente-tema-1124 (agente, Onda 178).** Confronta o termo inicial pedido com a tese, com os 17 acórdãos do STJ e com a tendência do órgão que vai julgar. Despachar em toda peça que fixe ou discuta o termo inicial, na revisão aprofundada, nas contrarrazões e recursos sobre efeitos financeiros e no cumprimento de sentença que tenha recebido o termo inicial diferido.
+**conferente-tema-1124 (agente).** Confronta o termo inicial pedido com a tese, com os 17 acórdãos do STJ e com a tendência do órgão que vai julgar. Despachar em toda peça que fixe ou discuta o termo inicial, na revisão aprofundada, nas contrarrazões e recursos sobre efeitos financeiros e no cumprimento de sentença que tenha recebido o termo inicial diferido.
 
 **peticao-previdenciaria.** Consultar esta skill antes de toda petição de concessão ou revisão, e redigir a seção "DOS EFEITOS FINANCEIROS" com o item aplicável da tese.
 
-**base-efeito-translativo-tema-1124-defesa.** Defesa contra a aplicação de ofício do Tema 1124 em grau recursal, sem o argumento de modulação, que o STJ afastou.
+**base-efeito-translativo-tema-1124-defesa.** Defesa contra a aplicação de ofício em grau recursal (arts. 10, 933 e 1.013 do CPC; item 1.5 da tese), sem o argumento de modulação, que o STJ afastou.
 
 **decadencia-revisao-previdenciaria.** Acionar quando o Tema 1124 levar à extinção e ao retorno à via administrativa.
 
@@ -166,6 +166,6 @@ Os dispositivos da Lei 8.213/1991, do Decreto 3.048/99 e da IN 128/2022 foram tr
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo não cita o Tema 1124/STJ, mas aplica a mesma lógica: o documento que não instruiu o requerimento administrativo desloca os efeitos financeiros para a citação, e o pedido de revisão fixa os efeitos da revisão. A prova vai ao INSS antes da ação. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 15.

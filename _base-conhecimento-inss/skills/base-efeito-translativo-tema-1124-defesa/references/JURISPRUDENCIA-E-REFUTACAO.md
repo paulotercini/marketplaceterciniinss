@@ -1,347 +1,43 @@
-# Jurisprudência e Refutação. Efeito Translativo e Tema 1124/STJ
+# Jurisprudência e refutação. Efeito translativo e Tema 1124/STJ
 
-## 1. Tema 1124/STJ
+Teses conferidas no MCP `superiores` em 28/11/2026. A tese literal do Tema 1124 e a matriz de enquadramento estão em `tema-1124-instrucao-administrativa`; aqui fica apenas o que serve à defesa contra a aplicação de ofício.
 
-### 1.1. Tese fixada
+## 1. Precedentes vinculantes
 
-"O segurado, no exercício do seu direito de ação, deverá comprovar a existência de prévio requerimento administrativo perante o INSS, salvo nas hipóteses excepcionais firmadas no Tema 350/STF (RE 631.240)".
+| Precedente | Situação | Conteúdo útil |
+|---|---|---|
+| Tema 1124/STJ (REsp 1.913.152, leading case; REsps 1.905.830 e 1.912.784) | Acórdão publicado em 06/11/2025; embargos julgados em 09/09/2026, DJEN 21/09/2026 | Item 1.4 (dever de carta de exigência), item 1.5 (análise fundamentada da conduta das duas partes), item 1.6 parte final (prova complementar), item 2.2 (DER quando o INSS não oportunizou a complementação). Sem modulação |
+| Tema 350/STF (RE 631.240) | Trânsito em julgado | Item I: lesão configurada com o indeferimento ou "se excedido o prazo legal para sua análise"; item II: notória resistência; item III: revisão, restabelecimento ou manutenção diretamente em juízo, salvo matéria de fato não levada à Administração |
+| Tema 995/STJ | Tese firmada | Reafirmação da DER, invocada pelos itens 2.1 a 2.3 do Tema 1124 |
+| Tema 698/STJ (REsp 1.410.839) | Trânsito em julgado | Embargos são protelatórios apenas quando rediscutem matéria decidida em conformidade com súmula ou repetitivo |
+| Súmula 98/STJ | Vigente | Embargos com notório propósito de prequestionamento não são protelatórios |
+| Súmula 43/TNU | Vigente | Não cabe incidente de uniformização sobre matéria processual |
+| Súmula 267/STF | Vigente | Não cabe MS contra ato judicial passível de recurso ou correição |
 
-### 1.2. Modulação
+O Tema 1066/STF (RE 1.171.152, prazo para perícia do INSS) foi cancelado. O que se invoca é o acordo homologado naquele recurso, com prazos máximos de análise por espécie.
 
-DJe 30/03/2022. Aplicação prospectiva.
+## 2. TRF3 e Turmas Recursais
 
-### 1.3. Aplicação restritiva pró-segurado
+Ver SKILL.md, seção 3.4. Inteiro teor, trechos e marcas de conferência em `tema-1124-instrucao-administrativa/references/APLICACAO-TRF3-TEMA-1124.md`.
 
-Apenas para ações ajuizadas após 30/03/2022.
+## 3. Refutação das teses do INSS
 
-Apenas após esgotamento do contraditório prévio.
+**"O interesse de agir é matéria de ordem pública e se conhece de ofício."** O art. 485, § 3º, do CPC autoriza o conhecimento de ofício, e o art. 10 exige o contraditório prévio "ainda que se trate de matéria sobre a qual deva decidir de ofício". O art. 933 dá o procedimento: intimação das partes em 5 dias. Conhecer de ofício não é decidir sem ouvir.
 
-Apenas em casos sem hipótese excepcional do Tema 350/STF.
+**"O Tema 1124 é obrigatório e se aplica independentemente de provocação."** A obrigatoriedade (art. 927, III, do CPC) diz respeito à tese, não ao procedimento. Aplicar o precedente exige identificar seus fundamentos e demonstrar que o caso se ajusta a eles (art. 489, § 1º, V, do CPC), e o próprio item 1.5 exige exame fundamentado da conduta do segurado e do INSS. Sem ouvir o segurado sobre o processo administrativo, esse exame não ocorre.
 
-## 2. Tema 350/STF (RE 631.240)
+**"O precedente superveniente alcança todo o processo."** Alcança os processos pendentes cuja discussão sobre a DIB não esteja preclusa, como disseram os embargos de 09/09/2026. O capítulo não impugnado não foi devolvido (art. 1.013, caput e § 1º, do CPC), e a 9ª Turma do TRF3 não aplica o tema para reformá-lo.
 
-### 2.1. Tese fixada
+**"Os embargos são protelatórios."** Súmula 98/STJ. O Tema 698/STJ alcança apenas a rediscussão de matéria decidida conforme súmula ou repetitivo. Embargos que apontam omissão sobre o contraditório e sobre o enquadramento fático não rediscutem a tese. Multa do art. 1.026, § 2º, do CPC inaplicável.
 
-"A instituição de condições para o regular exercício do direito de ação é compatível com o art. 5º, XXXV, da Constituição. Para se caracterizar a presença de interesse em agir, é preciso haver necessidade de ir a juízo".
+**"A prova foi juntada apenas em juízo, logo falta interesse de agir."** O item 1.6 ressalva o documento complementar ou de reforço à prova administrativa já apta. Se o INSS recebeu requerimento apto e não emitiu carta de exigência, o item 1.4 configura o interesse de agir e o item 2.2 permite a DIB na DER; os embargos de 09/09/2026 vedaram o indeferimento automático sem oportunidade de complementação. A perícia judicial que confirma documento apresentado ao INSS atrai o item 2.1.
 
-### 2.2. Hipóteses excepcionais
+**"A revisão exige novo requerimento."** Tema 350/STF, item III: dispensa-se o novo requerimento quando a revisão não depende de matéria de fato ainda não levada ao INSS.
 
-Pretensão de revisão de benefício já concedido.
+**"A demora administrativa não autoriza a ação."** Tema 350/STF, item I: há lesão quando excedido o prazo legal de análise. Art. 49 da Lei 9.784/1999 e acordo do RE 1.171.152/STF.
 
-Notório indeferimento administrativo (jurisprudência consolidada do INSS).
+**"A extinção não prejudica o segurado, que pode requerer de novo."** O novo requerimento fixa nova DER, com perda das parcelas anteriores, e o ajuizamento não interrompe a decadência da revisão. O prejuízo concreto se demonstra com o cálculo das parcelas perdidas.
 
-Mandado de segurança preventivo.
+## 4. PUIL e PEDILEF
 
-Ações de tutela coletiva.
-
-### 2.3. Aplicação
-
-Em qualquer destas hipóteses, dispensa-se o prévio requerimento administrativo.
-
-## 3. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-### 3.1. Tese fixada
-
-Reconhecimento da duração razoável do processo administrativo previdenciário.
-
-### 3.2. Aplicação ao Tema 1124
-
-Demora superior aos prazos legais (45 dias da Lei 9.784/1999) caracteriza indeferimento implícito.
-
-Aplicação por extensão da hipótese excepcional do Tema 350/STF.
-
-## 4. Súmula 98/STJ
-
-"Embargos de declaração manifestados com notório propósito de prequestionamento não têm caráter protelatório".
-
-### 4.1. Aplicação
-
-Em caso de decisão de ofício sem oitiva prévia, opor embargos sem temer multa.
-
-### 4.2. Estratégia
-
-Embargos com pedido expresso de manifestação sobre.
-
-Art. 10 CPC.
-
-Art. 933 CPC.
-
-Tema 1124/STJ na perspectiva do efeito translativo.
-
-## 5. Tema Repetitivo 698/STJ
-
-Limite da Súmula 98/STJ. Multa autorizada quando os embargos rediscutem matéria pacificada (auditoria 25/07/2026).
-
-O segurado preserva a proteção da Súmula 98/STJ ao prequestionar sem rediscutir a matéria pacificada (auditoria 03/10/2026).
-
-### 5.2. Aplicação
-
-Orienta embargos de prequestionamento objetivos, restritos à omissão (auditoria 03/10/2026).
-
-## 6. [Corrigido na auditoria 25/07/2026] Prequestionamento ficto
-
-O fundamento é o art. 1.025 do CPC. O Tema 660/STF trata de ofensa reflexa (ausência de repercussão geral) e foi retirado.
-
-Possibilidade de prequestionamento ficto pelo art. 1.025 CPC.
-
-### 6.2. Aplicação
-
-Em caso de embargos improvidos por entender desnecessária a manifestação, considera-se prequestionada a matéria.
-
-## 7. Jurisprudência sobre vedação à decisão surpresa
-
-### 7.1. STJ
-
-A jurisprudência do STJ tem reconhecido a aplicação do art. 10 CPC inclusive em matérias de ordem pública.
-
-A decisão de ofício sem oitiva prévia é nula.
-
-### 7.2. STF
-
-O STF tem reforçado a aplicação do art. 10 CPC como manifestação do contraditório constitucional.
-
-### 7.3. Doutrina
-
-Cândido Rangel Dinamarco. Art. 10 CPC é norma cogente que prepondera sobre o efeito translativo.
-
-Nelson Nery Júnior. Princípio do contraditório como pressuposto da decisão judicial.
-
-## 8. Refutação das teses do INSS
-
-### 8.1. Tese 1 do INSS. "Tema 1124 é matéria de ordem pública aplicável de ofício"
-
-Refutação. Art. 10 CPC veda a decisão surpresa, inclusive nas matérias de ordem pública.
-
-A aplicação automática do Tema 1124 sem oitiva prévia é nula.
-
-A ratio do art. 10 CPC é a observância do contraditório como pressuposto do devido processo legal.
-
-### 8.2. Tese 2 do INSS. "Embargos de declaração são protelatórios"
-
-Refutação. Súmula 98/STJ, embargos prequestionadores não são protelatórios; o Tema 698/STJ só autoriza multa na rediscussão de matéria pacificada (auditoria 25/07/2026).
-
-A multa do art. 1.026, § 2º, CPC é inaplicável.
-
-### 8.3. Tese 3 do INSS. "Tema 1124 se aplica retroativamente"
-
-Refutação. A modulação fixou aplicação prospectiva a partir de 30/03/2022.
-
-Ações ajuizadas antes não devem ser atingidas.
-
-A aplicação retroativa viola o ato jurídico perfeito (art. 5º, XXXVI, CF).
-
-### 8.4. Tese 4 do INSS. "Demora administrativa não justifica ação"
-
-Refutação. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Tema 350/STF. Demora superior aos prazos legais caracteriza indeferimento implícito.
-
-Lei 9.784/1999, art. 49 (45 dias). Lei 13.460/2017.
-
-### 8.5. Tese 5 do INSS. "Pretensão de revisão exige novo PA"
-
-Refutação. Tema 350/STF. Pretensão de revisão de benefício já concedido dispensa novo PA.
-
-O PA original que gerou a aposentadoria já satisfaz o pressuposto.
-
-### 8.6. Tese 6 do INSS. "Falta dialeticidade no recurso"
-
-Refutação. Apresentar argumentação específica no recurso, com cotejo entre a decisão atacada e as teses jurisprudenciais.
-
-Cruzamento com `execucao-cumprimento-previdenciario` para a dialeticidade.
-
-### 8.7. Tese 7 do INSS. "Reapresentação no JEF não causa prejuízo"
-
-Refutação. A reapresentação implica perda de tempo (anos), perda de marcos prescricionais e prejuízo financeiro ao segurado.
-
-A defesa do segurado é a manutenção do julgamento na ação original.
-
-## 9. Refutação no PEDILEF e PUIL
-
-### 9.1. Cotejo analítico
-
-Cruzamento com `pedilef-cotejo-analitico-tnu`.
-
-Apresentar paradigma de decisão da TNU ou de outra Turma Recursal sobre vedação à decisão surpresa.
-
-### 9.2. Similitude fática
-
-Demonstrar identidade fática com o paradigma.
-
-Identidade na questão de direito (aplicação de ofício do Tema 1124).
-
-### 9.3. Estratégia
-
-Apresentar paradigma com decisão favorável à manifestação prévia.
-
-Argumentar a divergência entre Turmas Recursais ou entre TR e TNU.
-
-## 10. Estratégia recursal exaustiva
-
-### 10.1. Primeira instância
-
-Petição inicial demonstrando PA ou hipótese excepcional.
-
-Em caso de saneamento, apresentar manifestação técnica.
-
-### 10.2. Segunda instância
-
-Antes do julgamento, peticionar requerendo prazo para manifestação se houver questão de ordem pública.
-
-Em sustentação oral, antecipar argumento.
-
-### 10.3. Embargos de declaração
-
-Em caso de decisão de ofício, opor embargos com prequestionamento.
-
-### 10.4. REsp / PUIL
-
-Em última instância, REsp ou PUIL com prequestionamento exaustivo.
-
-### 10.5. RE
-
-Em casos com matéria constitucional, RE.
-
-## 11. Pedidos típicos em embargos
-
-### 11.1. Pedido principal
-
-Anulação do acórdão por violação ao art. 10 CPC.
-
-### 11.2. Pedido alternativo
-
-Manifestação expressa sobre os arts. 9º, 10, 489, § 1º, e 933 CPC.
-
-### 11.3. Pedido cumulativo
-
-Manifestação sobre Tema 1124 + Tema 350/STF.
-
-### 11.4. Pedido subsidiário
-
-Prequestionamento ficto pelo art. 1.025 CPC.
-
-## 12. Pedidos típicos em REsp
-
-### 12.1. Pedido principal
-
-Reforma do acórdão por violação aos arts. 9º, 10, 489, § 1º, e 933 CPC.
-
-### 12.2. Pedido cumulativo
-
-Reforma para acolhimento da hipótese excepcional do Tema 350/STF.
-
-## 13. Pedidos típicos em PUIL
-
-### 13.1. Cabimento
-
-Em caso de decisão da Turma Recursal aplicando Tema 1124 sem manifestação.
-
-### 13.2. Paradigma
-
-Buscar paradigma de outra TR ou da TNU sobre vedação à decisão surpresa.
-
-### 13.3. Cotejo analítico
-
-Cruzamento com `pedilef-cotejo-analitico-tnu`.
-
-## 14. Doutrina pró-segurado detalhada
-
-### 14.1. Cândido Rangel Dinamarco
-
-"Instituições de Direito Processual Civil". Limites do efeito translativo no CPC/2015.
-
-### 14.2. Nelson Nery Júnior
-
-"Princípios do Processo Civil Moderno". Vedação à decisão surpresa como manifestação do contraditório.
-
-### 14.3. Fredie Didier Jr.
-
-"Curso de Direito Processual Civil". Art. 10 CPC como cláusula geral de contraditório prévio.
-
-### 14.4. Frederico Amado
-
-"Direito Previdenciário". Aplicação do Tema 1124 com observância do contraditório.
-
-### 14.5. Hugo Goes
-
-"Manual de Direito Previdenciário". Hipóteses excepcionais do Tema 350/STF.
-
-### 14.6. Marisa Ferreira dos Santos
-
-"Direito Previdenciário Esquematizado". Análise sistêmica do Tema 1124.
-
-### 14.7. Fábio Zambitte Ibrahim
-
-"Curso de Direito Previdenciário". Tema 350/STF e suas exceções.
-
-## 15. Estratégia em casos pré-modulação
-
-### 15.1. Identificar a data de ajuizamento
-
-Confirmar se a ação foi ajuizada antes de 30/03/2022.
-
-### 15.2. Argumentar a modulação
-
-A modulação fixou aplicação prospectiva.
-
-Ato jurídico perfeito (art. 5º, XXXVI, CF). Direito adquirido ao processamento sob a regra anterior.
-
-### 15.3. Pedido
-
-Inaplicabilidade do Tema 1124 às ações ajuizadas antes da publicação da tese.
-
-## 16. Mandado de segurança contra ato judicial
-
-### 16.1. Cabimento excepcional
-
-Súmula 267/STF. "Não cabe mandado de segurança contra ato judicial passível de recurso ou correição." A exceção para decisão teratológica é construção posterior e não consta do enunciado [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-### 16.2. Hipóteses
-
-Decisão liminar de extinção sem oitiva prévia em ação cautelar.
-
-Decisão teratológica.
-
-### 16.3. Tribunal competente
-
-TRF para MS contra ato de juiz federal.
-
-STJ para MS contra ato de TRF.
-
-## 17. Tabela comparativa de teses
-
-| Tese | Fundamento normativo | Tribunal | Aplicação |
-| --- | --- | --- | --- |
-| Tema 1124/STJ sem modulação | Acórdão de mérito e EDcl de 09/09/2026 | STJ | Processos pendentes com DIB não preclusa |
-| Tema 350/STF hipóteses excepcionais | Const | STF | Revisão / notório / MS preventivo |
-| acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) demora administrativa | Art. 5º LXXVIII CF | STF | >45 dias |
-| Súmula 98/STJ embargos prequestionadores | Procedimental | STJ | Embargos sem multa |
-| Tema 698/STJ | Vinculante | STJ | Aplicação obrigatória |
-| Prequestionamento ficto | Art. 1.025 CPC | norma expressa | Embargos improvidos |
-| Art. 10 CPC vedação decisão surpresa | CPC/2015 | Aplicável | Em todas as instâncias |
-
-## 18. Cruzamento com outras skills
-
-`tema-1124-instrucao-administrativa` para o Tema 1124 na fase administrativa.
-
-`peticao-previdenciaria` para a petição.
-
-`revisao-peticao` para a revisão.
-
-`base-cpc-fato-superveniente-art493` para fato superveniente.
-
-`base-cpc-coisa-julgada-progressiva` para coisa julgada progressiva.
-
-`precedentes-previdenciarios` para precedentes.
-
-`base-cpc-tutela-provisoria-previdenciaria` para tutela.
-
-`pedilef-cotejo-analitico-tnu` para o PEDILEF.
-
-`base-recursos-jef` para recursos no JEF.
-
-`base-rito-ordinario-trf` para rito ordinário.
-
-`mandado-seguranca-previdenciario` para o MS.
-
-`base-portarias-dpmf-inss-hub` para Portarias DPMF.
-
-`execucao-cumprimento-previdenciario` para dialeticidade.
+A Súmula 43/TNU barra o incidente sobre matéria processual, e a TNU trata o interesse de agir como processual. Formular a divergência sobre direito material (termo inicial dos efeitos financeiros conforme a espécie e o Tema 1124, itens 2.1 a 2.3), com paradigma da TNU ou de Turma Recursal de outra Região, cotejo analítico e similitude fática. Antes, acionar `base-puil-pedilef-vedacao-materia-processual` e `pedilef-cotejo-analitico-tnu`.
