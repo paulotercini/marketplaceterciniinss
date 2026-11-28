@@ -917,7 +917,7 @@ function rotuloDoCaso(k){
   tit = tit || k.especie || k.beneficio || "";
   return { cliente:c.nome||"cliente", titulo:tit, arquivo:nomeSeguro(tit ? `${c.nome||"cliente"}-${tit}` : (c.nome||"cliente")) };
 }
-async function baixarDocsZip(casoId, soSel, lista){
+async function baixarDocsZip(casoId, soSel, lista, extras=[]){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const docs = lista || docsEscolhidos(k, soSel);
   aviso(`Juntando ${docs.length} documento(s)…`, false);
@@ -943,6 +943,7 @@ async function baixarDocsZip(casoId, soSel, lista){
         zip.file(nome, await r.blob());
       }catch(e){ falhas++; }
     }
+    extras.forEach(([nome, conteudo])=>zip.file(nome, conteudo));   // F848 · a tela de Expedientes vai junto
     salvarBlob(`${rotuloDoCaso(k).arquivo}.zip`, await zip.generateAsync({type:"blob"}));
     aviso(falhas ? `⬇ zip pronto — ${falhas} documento(s) não baixaram` : "⬇ zip pronto");
   }catch(e){ aviso("Não consegui montar o zip: "+e.message); }
