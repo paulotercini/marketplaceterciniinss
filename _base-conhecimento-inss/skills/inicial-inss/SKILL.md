@@ -77,14 +77,14 @@ administrativa de 1 folha, sem lei/decreto).
   quebrado em partes que caibam (nomear `... (parte 1 de N)`). Apague os temporarios.
 
 ## 7. Peticao administrativa de 1 folha (norte para o analista)
-- **De preferencia uma folha** (referencia, nao limite obrigatorio, Onda 181). E um norte para bater o olho e entender o pedido, **sem
+- **De preferencia uma folha** (referencia, nao limite obrigatorio). E um norte para bater o olho e entender o pedido, **sem
   explicacoes, sem fundamentacao**. Conteudo enxuto:
   - qualificacao minima do segurado e do procurador (OAB/SP 331.110);
   - **o que se requer** (beneficio + especie/B, DER pretendida);
   - **rol de documentos anexados** na ordem (espelha a subpasta).
 - **NAO citar lei nem decreto.** Se for indispensavel citar legislacao, **apenas
-  Instrucao Normativa do INSS ou suas portarias**. Tom direto, sem dois-pontos como
-  separador logico. Salve como `00 - Requerimento Administrativo - DDMMAAAA` na
+  Instrucao Normativa do INSS ou suas portarias**. Tom direto, dois-pontos apenas
+  antes de enumeracao. Salve como `00 - Requerimento Administrativo - DDMMAAAA` na
   subpasta e tambem na subpasta `Claude`.
 
 ## 8. Revisao aprofundada OBRIGATORIA (base-revisao-peticao-aprofundada). autocorrecao
@@ -98,7 +98,7 @@ administrativa de 1 folha, sem lei/decreto).
   beneficio (faltantes em destaque), o cruzamento **CNIS x documentos** e a
   **ordenacao** por categoria/cronologia interna (passo 5).
 - **Corrija automaticamente** os achados sanaveis, sem voltar a perguntar: retirar
-  lei/decreto indevidos, dois-pontos logicos, divergencia de dado (nome, NIT, datas,
+  lei/decreto indevidos, dois-pontos fora de enumeracao, divergencia de dado (nome, NIT, datas,
   periodos) contra os documentos lidos, ordem dos anexos, citacao de portaria com
   taxonomia errada. Gere a versao corrigida do requerimento (subpasta `Claude` e
   `00 - Requerimento Administrativo`), **sem sobrescrever** o original.
@@ -144,15 +144,15 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
   `base-precedentes-catalogo-vinculantes`, `base-cnis-acerto-indicadores` e a `base-*`/
   `ponte-*` do beneficio, alem do `CLAUDE.md` do escritorio.
 
-## Decisor simulado antes do protocolo (Onda 114)
+## Decisor simulado antes do protocolo
 
 Concluída a curadoria dos documentos e a petição administrativa, submeter ao agente `servidor-chefe-inss` antes de anexar no Meu INSS. Ele antecipa a EXIGÊNCIA que o INSS emitiria e a pendência de CNIS que travaria a conclusão, o que permite corrigir antes e evitar o ciclo de exigência com perda de semanas.
 
-## CNIS auditado antes do protocolo (Onda 117)
+## CNIS auditado antes do protocolo
 
 Antes de montar o protocolo, despachar ao agente `analista-cnis`. Pendência bloqueante no extrato impede a conclusão do requerimento pelo servidor, e o processo trava em exigência sem que o mérito seja apreciado.
 
-Ordem correta. Analista do CNIS, depois curadoria dos documentos, depois o decisor simulado `servidor-chefe-inss`, e só então o protocolo.
+Ordem correta. Analista do CNIS, depois curadoria dos documentos, depois o decisor simulado `servidor-chefe-inss`, e apenas então o protocolo.
 
 ## MCPs da casa
 

@@ -3,15 +3,13 @@ name: base-auditoria-adversarial-contestacao-inss
 description: "Skill de auditoria adversarial de contestação, parecer da PFE-INSS, decisão administrativa ou acórdão do CRPS contrário ao segurado, para desconstruir a peça do adversário antes da réplica ou impugnação. Use SEMPRE que mencionar auditar contestação, analisar contestação do INSS, réplica à contestação, impugnação à contestação, parecer da Procuradoria contrário, desconstruir parecer do INSS, acórdão desfavorável do CRPS, encontrar falácia na defesa, alegação sem prova do INSS, contradição na contestação, distinguishing de acórdão colado pelo INSS, blefe argumentativo da autarquia, narrativa vazia sem lastro probatório, ou qualquer situação em que o INSS ou a autarquia apresentar defesa, parecer ou decisão a ser rebatida. NÃO use para auditoria de laudo pericial médico (skill auditoria-laudo-pericial) nem para auditoria de PPP (skill auditoria-ppp). Acionar em conjunto com precedentes-previdenciarios, base-analise-decisao-tres-eixos, base-cpc-onus-prova-art373, base-cpc-fundamentacao-art489 e peticao-previdenciaria."
 ---
 
-## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
-
-O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
-
 # Auditoria Adversarial de Contestação, Parecer e Decisão Contrária
 
 ## Objetivo
 
 Desconstruir tecnicamente a peça do INSS, da PFE-INSS ou do CRPS antes de redigir a réplica, a impugnação ou o recurso. A auditoria roda em cinco etapas sequenciais. Cada etapa gera um produto concreto que alimenta a etapa seguinte. A última etapa entrega os tópicos da peça final.
+
+Divisão com `base-analise-contestacao-inss`. Aquela classifica a defesa e monta o mapa da réplica. Esta examina a lógica de cada argumento, e seu resultado entra no Passo 3 (mérito defensivo) daquele mapa.
 
 Esta skill não substitui `base-analise-decisao-tres-eixos`, que audita a decisão judicial (sentença ou acórdão) em três eixos, preliminares, vícios de integração e mérito. Esta skill audita a manifestação do adversário (contestação, parecer, decisão administrativa, acórdão do CRPS desfavorável) que antecede ou sustenta a decisão.
 
@@ -19,7 +17,7 @@ Esta skill não substitui `base-analise-decisao-tres-eixos`, que audita a decis�
 
 Toda contestação, parecer ou decisão contrária recebida passa por esta auditoria antes de qualquer réplica, impugnação ou recurso ser redigido. Não pular etapa. Não redigir a peça final direto da leitura superficial da defesa.
 
-## Etapa 1. Caçador de Falácias
+## Etapa 1. Identificação de falácias
 
 Ler a peça adversária na íntegra, do início ao fim, e identificar falácias lógicas no raciocínio apresentado.
 
@@ -33,17 +31,17 @@ Falácias recorrentes em defesa do INSS.
 
 Para cada falácia localizada, registrar o trecho exato (com página ou ID do documento), a falácia identificada e a explicação de por que o raciocínio está fática ou juridicamente quebrado. Nunca apontar falácia inexistente para preencher a lista. Se a peça adversária não contiver falácia relevante, registrar essa conclusão honestamente e passar à etapa seguinte.
 
-## Etapa 2. Filtro de Blefes
+## Etapa 2. Alegações sem prova
 
 Montar tabela de duas colunas.
 
-Primeira coluna, cada alegação de fato feita pela autarquia ou pelo CRPS.
+Primeira coluna, cada alegação de fato feita pela Autarquia Federal ou pelo CRPS.
 
 Segunda coluna, verificação se a alegação veio acompanhada de prova documental correspondente nos autos ou no processo administrativo.
 
-Destacar em negrito toda alegação sem lastro probatório, aplicando o art. 373, II do CPC (ônus do réu quanto a fato impeditivo, modificativo ou extintivo) e o art. 341 do CPC (ônus da impugnação especificada). Contestação padronizada do INSS costuma repetir texto genérico sem enfrentar o caso concreto. Esse padrão, quando identificado, deve ser nomeado expressamente como impugnação genérica insuficiente, com cruzamento à skill `base-cpc-onus-prova-art373`.
+Destacar em negrito toda alegação sem lastro probatório, aplicando o art. 373, II, do CPC (ônus do réu quanto a fato impeditivo, modificativo ou extintivo) e o art. 341 do CPC (ônus da impugnação especificada). A contestação padronizada repete texto genérico sem enfrentar o caso concreto. Esse padrão se nomeia expressamente como impugnação genérica insuficiente, com cruzamento à skill `base-cpc-onus-prova-art373`.
 
-## Etapa 3. Detector de Contradições Internas
+## Etapa 3. Contradições internas
 
 Fazer leitura cruzada da própria peça adversária, comparando o que a autarquia afirma no início com o que afirma ao final.
 
@@ -55,7 +53,7 @@ Padrões comuns de contradição interna em manifestação do INSS.
 
 Para cada contradição, registrar os dois trechos exatos em confronto, com página ou ID, e a conclusão sobre qual das duas afirmações prevalece contra o próprio autor da peça (regra do venire contra factum proprium administrativo, quando aplicável).
 
-## Etapa 4. Aniquilador de Ementas (Distinguishing)
+## Etapa 4. Distinção do precedente citado pelo INSS
 
 Quando a peça adversária citar precedente, súmula, tema ou acórdão para sustentar a tese contrária ao segurado, aplicar o seguinte procedimento antes de qualquer resposta.
 
@@ -65,29 +63,19 @@ Segundo, se o precedente estiver vigente, comparar a base fática do precedente 
 
 Terceiro, redigir o distinguishing em bloco autônomo, primeiro citando a tese firmada no precedente, depois demonstrando a diferença fático-jurídica que afasta a aplicação ao caso concreto.
 
-Nunca aceitar a aplicação do precedente citado pelo INSS sem essa conferência. Nunca admitir a tese contrária apenas porque veio com jurisprudência colada, sem checagem.
+Nenhum precedente citado pelo INSS se aceita sem essa conferência.
 
-## Etapa 5. Redação Final da Réplica ou Impugnação
+## Etapa 5. Organização da réplica ou impugnação
 
-Com base nas etapas anteriores, redigir os tópicos da peça final (réplica, impugnação à contestação, contrarrazões de recurso administrativo ou recurso ao CRPS conforme o rito aplicável).
+Os achados se organizam pelo argumento do INSS, e não pela categoria da auditoria. A réplica segue o esqueleto da `peticao-previdenciaria` (seção Estrutura de Réplica e `references/METODO-PETICAO-TERCINI.md`, item 4): 1. DA CONTESTAÇÃO, 2. DAS RAZÕES PARA REJEITAR A DEFESA, com uma subseção por argumento do INSS, e REQUERIMENTOS. Em cada subseção, a falácia, a alegação sem prova, a contradição ou a distinção do precedente aparece como razão de rejeição, ligada ao documento por ID e à norma, em parágrafo aberto por "Nem se diga que" ou "Tampouco procede". O mesmo vale para impugnação, contrarrazões de recurso administrativo e recurso ao CRPS.
 
-Estrutura recomendada, cada tópico corresponde a um achado da auditoria.
-
-Primeiro tópico, das falácias identificadas na etapa 1, demonstrando a quebra lógica do raciocínio adversário.
-
-Segundo tópico, das alegações sem prova identificadas na etapa 2, aplicando o ônus do art. 373, II do CPC contra a autarquia.
-
-Terceiro tópico, das contradições internas identificadas na etapa 3, expondo a inconsistência da própria narrativa adversária.
-
-Quarto tópico, do distinguishing dos precedentes citados na etapa 4, afastando a aplicação ao caso concreto com base fática comparada.
-
-Tom técnico, firme e sem adjetivação vazia. Confronto direto entre prova documental, norma e fato concreto. Sem retórica abstrata. Seguir as regras de estilo do escritório, sem travessão, sem dois-pontos introduzindo lista ou conclusão, sem a estrutura "não é X, é Y", parágrafos curtos.
+A redação segue as medidas e o registro da `peticao-previdenciaria`, sem adjetivo de intensidade e sem acusação à Autarquia Federal.
 
 ## Adaptação por Rito
 
 ### JEF
 
-Réplica ou impugnação enxuta, direto aos pontos essenciais, sem digressão doutrinária. Priorizar a etapa 2 (blefes) e a etapa 3 (contradições), que rendem mais no rito sumaríssimo.
+Réplica ou impugnação enxuta, nos pontos essenciais, sem digressão doutrinária. Priorizar a etapa 2 (blefes) e a etapa 3 (contradições), que rendem mais no rito sumaríssimo.
 
 ### Rito ordinário federal
 
@@ -95,7 +83,7 @@ Peça mais densa, com fundamentação expressa de cada etapa, inclusive citaçã
 
 ### CRPS
 
-Aplicar a mesma lógica ao parecer que embasou a decisão de primeira instância administrativa ou ao acórdão desfavorável da Junta de Recursos, adaptando referências a protocolo e folha do processo administrativo em vez de ID do PJe. Cruzar com `admissibilidade-barreiras-crps` quando a decisão do CRPS impuser barreira formal, e com `recursos-superiores-crps` quando o caso comportar recurso especial ao Conselho Pleno.
+Aplicar a mesma lógica ao parecer que embasou a decisão de primeira instância administrativa ou ao acórdão desfavorável da Junta de Recursos, adaptando referências a protocolo e folha do processo administrativo em vez de ID do PJe. Cruzar com `admissibilidade-barreiras-crps` quando a decisão do CRPS impuser barreira formal, e com `recursos-superiores-crps` quando o caso comportar recurso especial à Câmara de Julgamento ou pedido de uniformização ao Conselho Pleno.
 
 ## Interação com Outras Skills
 
@@ -139,7 +127,7 @@ Antes de finalizar a réplica ou impugnação, verificar.
 4. Cada precedente citado pelo adversário foi conferido no catálogo antes do distinguishing.
 5. O distinguishing compara base fática do precedente com o caso concreto, não apenas afirma diferença.
 6. Nenhuma falácia, contradição ou blefe foi inventado para preencher a peça.
-7. A proibição de dois-pontos, travessão e "não é X, é Y" está observada.
+7. O registro segue a `peticao-previdenciaria`: dois-pontos apenas antes de citação literal e de enumeração, sem travessão e sem a construção "não é X, é Y".
 8. O formato segue o padrão do escritório quando gerado como .docx.
 
 ## MCPs da casa

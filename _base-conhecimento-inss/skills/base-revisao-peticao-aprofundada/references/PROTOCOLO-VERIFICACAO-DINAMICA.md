@@ -2,13 +2,13 @@
 
 Protocolo automatizado para verificação literal de artigos, parágrafos, incisos, enunciados, súmulas e precedentes citados em peças previdenciárias. Substitui o protocolo passivo (que emitia achado IMPORTANTE pedindo verificação manual) por protocolo ATIVO em cascata que esgota todas as fontes disponíveis ANTES de qualquer alerta ao usuário.
 
-Criado na Onda 36 (v1.26.0) para eliminar dependência do usuário em verificações que o próprio Claude pode realizar autonomamente.
+Elimina a dependência do usuário em verificações que o próprio Claude pode realizar.
 
 ## PRINCÍPIO OPERACIONAL
 
 Quando a skill `base-revisao-peticao-aprofundada` encontrar uma citação que precisa ser verificada, NÃO emite mais o achado "verificação não realizada". Em vez disso, ACIONA AUTOMATICAMENTE o protocolo em cascata abaixo.
 
-A verificação só é REPORTADA como pendente em três cenários extremos.
+A verificação apenas é REPORTADA como pendente em três cenários extremos.
 
 1. Todas as 4 fontes da cascata falharam.
 2. A URL oficial está fora do ar.
@@ -20,7 +20,7 @@ A verificação só é REPORTADA como pendente em três cenários extremos.
 
 Buscar o artigo nos 19 arquivos do repositório `base-legislacao-fontes-primarias` em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/` ou `C:\Users\VAIO\INSS\base-legislacao\`.
 
-Para PRECEDENTES (Tema STF, Tema STJ, Tema TNU, Enunciado CRPS), buscar no catálogo da skill `base-precedentes-catalogo-vinculantes` (Onda 37) nos arquivos.
+Para PRECEDENTES (Tema STF, Tema STJ, Tema TNU, Enunciado CRPS), buscar no catálogo da skill `base-precedentes-catalogo-vinculantes` nos arquivos.
 - `CATALOGO-TEMAS-STF.md` (56 Temas RG).
 - `CATALOGO-TEMAS-STJ.md` (60 Temas Repetitivos).
 - `CATALOGO-TEMAS-TNU.md` (156 Temas Representativos).
@@ -98,7 +98,7 @@ Tempo médio. 60 a 120 segundos.
 
 CONFIGURAÇÃO. Conforme `mcp__claude-in-chrome__list_connected_browsers`. O Comet é navegador instalado no computador do usuário em `C:\Users\VAIO\AppData\Local\Programs\Comet\` (instalação típica da Perplexity).
 
-## REGRA COMET PARA JULGADOS COM DÚVIDA (Onda 65)
+## REGRA COMET PARA JULGADOS COM DÚVIDA
 
 REGRA PRIORITÁRIA. Sempre que houver qualquer dúvida sobre um julgado, a cascata NÃO precisa esgotar os Níveis 2 e 3. A skill deve saltar direto ao Nível 4 (Comet) e conferir na fonte primária do órgão julgador.
 

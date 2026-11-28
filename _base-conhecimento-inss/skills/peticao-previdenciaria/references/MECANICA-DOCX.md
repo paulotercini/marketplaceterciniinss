@@ -39,8 +39,7 @@ A primeira página exibe cabeçalho timbrado em tabela de duas colunas, sem bord
 - Altura da linha: 993 twips
 
 **Logo (coluna 1).**
-- Imagem JPEG, alinhada à direita
-- Dimensões em EMU: **cx="791210" cy="712470"**
+- Imagem PNG opaca de fundo branco, alinhada à direita, em 83 x 75 px (cx="791210" cy="712470"), ver seção Logo do escritório
 
 **Texto de identificação (coluna 2), centralizado.**
 - Linha em branco (Bell MT, 8pt, espaçador superior)
@@ -133,7 +132,7 @@ Nas peças intermediárias o parágrafo de qualificação é "**[NOME DA PARTE A
 - `4. DA REAFIRMAÇÃO DA DER`
 - `5. REQUERIMENTOS` (título literal do titular, sem DA/DO, como QUESITOS)
 
-**Regra de títulos formais (Onda 162, 29/09/2026, determinação do titular para TODAS as peças).** O título de seção é formal, jurídico, numerado e nominal. Começa por DA, DO, DOS ou DAS e nomeia o instituto, o requisito, o vício ou o pedido, como os exemplos reais acima, em no máximo dezesseis palavras e de preferência em uma linha da tabela preta. O título não traz fato, data, valor, ID, nome de documento do caso, adjetivo, advérbio nem juízo de valor, e não antecipa a conclusão. Desde a Onda 176, o título pode trazer em algarismos o número que mede o objeto, usa o vocabulário técnico do juízo e troca a oração adjetiva desenvolvida e o verbo coloquial pelo particípio técnico. O exemplo do titular é "2. DO PERÍODO DE 60 DIAS DE TEMPO DE CONTRIBUIÇÃO ESTADUAL NÃO COMPUTADO NA REVISÃO", e não "2. DOS SESSENTA DIAS DO TEMPO ESTADUAL QUE A REVISÃO NÃO LANÇOU".
+**Regra de títulos formais (Onda 162, 29/09/2026, determinação do titular para TODAS as peças).** O título de seção é formal, jurídico, numerado e nominal. Começa por DA, DO, DOS ou DAS (as únicas exceções são REQUERIMENTOS e QUESITOS, forma literal do titular) e nomeia o instituto, o requisito, o vício ou o pedido, como os exemplos reais acima, em até doze palavras e de preferência em uma linha da tabela preta. O `medir_peca.py` acusa apenas acima de dezesseis, margem que acomoda o número que mede o objeto, como no exemplo do titular, de catorze palavras. O título não traz fato, data, valor, ID, nome de documento do caso, adjetivo, advérbio nem juízo de valor, e não antecipa a conclusão. Desde a Onda 176, o título pode trazer em algarismos o número que mede o objeto, usa o vocabulário técnico do juízo e troca a oração adjetiva desenvolvida e o verbo coloquial pelo particípio técnico. O exemplo do titular é "2. DO PERÍODO DE 60 DIAS DE TEMPO DE CONTRIBUIÇÃO ESTADUAL NÃO COMPUTADO NA REVISÃO", e não "2. DOS SESSENTA DIAS DO TEMPO ESTADUAL QUE A REVISÃO NÃO LANÇOU".
 
 - Certo, "2. DA INCAPACIDADE LABORATIVA". Errado, "2. DA INCAPACIDADE TOTAL E PERMANENTE COMPROVADA DESDE MARÇO DE 2024".
 - Certo, "2. DA ATIVIDADE ESPECIAL POR EXPOSIÇÃO A RUÍDO". Errado, "2. DA EXPOSIÇÃO HABITUAL E PERMANENTE A RUÍDO DE 89 dB(A) NO PERÍODO DE 2005 A 2023".
@@ -142,7 +141,7 @@ Nas peças intermediárias o parágrafo de qualificação é "**[NOME DA PARTE A
 
 A persuasão que antes ia no título passa para a primeira frase da seção, que apresenta o dado decisivo com número, data e ID. O título delimita o capítulo, e o texto convence. A regra de títulos persuasivos das versões anteriores está revogada, inclusive a distinção que a Onda 157 fazia entre cortes superiores e demais peças.
 
-O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o título que não começa por DA, DO, DOS ou DAS, que passa de dezesseis palavras, que traz ano, data, medida em dB ou %, valor ou ID, que tem oração adjetiva desenvolvida (QUE, ONDE, QUAL, CUJO) ou verbo coloquial (LANÇAR), ou que usa termo valorativo como "comprovada", "indevido", "ilegal", "equivocado" ou "desde".
+O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o título que não começa por DA, DO, DOS ou DAS (exceto REQUERIMENTOS e QUESITOS), que passa de dezesseis palavras, que traz ano, data, medida em dB ou %, valor ou ID, que tem oração adjetiva desenvolvida (QUE, ONDE, QUAL, CUJO) ou verbo coloquial (LANÇAR), ou que usa termo valorativo como "comprovada", "indevido", "ilegal", "equivocado" ou "desde".
 
 ### Fechamento e Assinatura
 
@@ -497,180 +496,27 @@ python /mnt/skills/public/docx/scripts/office/validate.py /mnt/user-data/outputs
 ```
 
 ---
+## Logo do escritório
 
-## Logo do Escritório
+O `md2docx.js` recebe a logo pelo argumento `--logo <caminho>` e não procura o arquivo sozinho. O arquivo do escritório é `logo-tercini.PNG` (extensão maiúscula), em `C:\Users\VAIO\INSS\assets\` no Windows e em `/sessions/<sessão>/mnt/INSS/assets/` no sandbox, localizável por `find /sessions -iname 'logo-tercini*' 2>/dev/null`.
 
-O logo do escritório deve estar disponível no ambiente de geração. Se não estiver acessível, gerar a petição sem logo e alertar o usuário ao final do output para que ele insira manualmente. Padrão de localização recomendado: `assets/logo-tercini.jpg` no diretório de trabalho.
+Antes de converter, a logo passa pela trava da Onda 116. O PNG deve estar em modo RGB, sem canal alfa, com fundo branco puro, porque o arquivo antigo guardava sob a transparência o padrão xadrez do editor, que reaparecia no PDF, no PJe e na impressão. Verificação e correção em `base-peticao-previdenciaria-padrao-visual/assets/README-LOGO.md`.
 
-Dimensões do logo no header (EMU): cx=791210, cy=712470. Em pixels a 96 DPI, aproximadamente 83×75. O parâmetro `transformation: { width: 83, height: 75 }` no `ImageRun` reproduz fielmente o tamanho original.
+O script insere a logo em 83 x 75 px. A proporção real do arquivo (538 x 421 px) pede 96 x 75 px, e o ajuste depende de alteração no script, ainda não feita. Sem `--logo` ou com caminho inexistente, o script gera a peça sem logo e sem aviso, por isso a verificação abaixo é obrigatória.
 
----
-
-## Trava do cabeçalho, logo com fundo branco (Onda 116)
-
-ANTES de gerar qualquer .docx, verificar o arquivo `logo-tercini.PNG` na pasta de assets. Ele DEVE estar em modo RGB, sem canal alfa, com os quatro cantos em branco puro 255,255,255.
-
-Logo com transparência é PROIBIDA no cabeçalho, porque o arquivo do escritório carrega, sob o canal alfa, o padrão xadrez do editor de imagem, que reaparece na conversão para PDF, no PJe e na impressão. Verificação e correção em `base-peticao-previdenciaria-padrao-visual/assets/README-LOGO.md`.
-
-Falhando a verificação, NÃO gerar a peça. Refazer o achatamento sobre branco primeiro.
-
-## Logo do Escritório
-
-### Caminhos de Busca (Atualizado Onda 69 - v1.59.0)
-
-REGRA DE OURO. O ambiente de execução decide o caminho. A skill geradora resolve as bases DINAMICAMENTE nesta ordem e usa o primeiro arquivo encontrado.
-
-**Bloco 1 - Sandbox Cowork/Claude (Linux). SEMPRE testado primeiro.**
-
-1. `<raiz da sessão derivada de process.cwd()>/mnt/INSS/assets/logo-tercini.(png|PNG|jpg|JPG|jpeg|JPEG)`. A raiz é extraída do padrão `/sessions/<nome-da-sessao>` do diretório de trabalho atual. O `<nome-da-sessao>` MUDA a cada sessão do Cowork, por isso o caminho NUNCA deve ser fixado literalmente.
-2. Glob defensivo em `/sessions/*/mnt/INSS/assets/` para qualquer sessão montada.
-
-**Bloco 2 - Windows local do escritório.**
-
-3. `C:\Users\VAIO\INSS\assets\logo-tercini.(png|jpg|jpeg)` e `logo.(png|jpg|jpeg)`.
-
-**Bloco 3 - Relativos.**
-
-4. `<diretório da skill>/assets/` e `./assets/` com os mesmos nomes.
-
-Em Python (geração via skill docx), aplicar a mesma lógica com `os.getcwd()`, `re.match(r'^(/sessions/[^/]+)', cwd)` e `glob.glob('/sessions/*/mnt/INSS/assets/logo*')`.
-
-### Suporte a Formato
-
-A implementação detecta automaticamente o formato pela extensão, testada em ambas as caixas (`.png`, `.PNG`, `.jpg`, `.JPG`, `.jpeg`, `.JPEG`). O arquivo real do escritório chama-se `logo-tercini.PNG` (extensão MAIÚSCULA). O parâmetro `type` do `ImageRun` é definido dinamicamente conforme o arquivo encontrado.
-
-### Logo Ausente é ERRO BLOQUEANTE (Onda 69)
-
-Comportamento anterior (até v1.58.0). Logo ausente gerava apenas um `console.warn` e a petição saía SEM timbre. Esse era o principal motivo de cabeçalho incorreto, porque no sandbox do Cowork os caminhos Windows nunca existem e o alerta passava despercebido.
-
-Comportamento atual. Logo ausente INTERROMPE a geração com `throw new Error('[BLOQUEANTE] ...')`. A peça sem timbre não é entregue. O Claude deve então localizar o logo (`find /sessions -iname 'logo-tercini*' 2>/dev/null`), confirmar o mount da pasta INSS e regenerar.
-
-### Dimensões (atualizado Onda 69)
-
-As dimensões são calculadas DINAMICAMENTE preservando o aspect ratio do arquivo real.
-
-Comportamento.
-- PNG. A função `calcularDimensoesLogo` lê os bytes 16-23 do cabeçalho para obter width/height nativos.
-- JPEG. Leitura implementada na Onda 69 pelos SOF markers (C0-CF, exceto C4, C8, CC), extraindo height/width dos bytes 5-8 do segmento.
-- Fixa altura em **75 px** (padrão do layout do header).
-- Calcula largura proporcional. `Math.round(75 × larguraReal / alturaReal)`.
-- Fallback para **96×75** (proporção 1,278 do logo real 538×421) SOMENTE se a leitura binária falhar. O fallback antigo de 83×75 DISTORCIA o logo e foi eliminado.
-
-**Exemplos práticos.**
-
-| Logo real | Proporção | Width calculado | Height final |
-|-----------|-----------|-----------------|--------------|
-| 538×421 px (atual) | 1.278 | 96 px | 75 px |
-| 512×512 px | 1.000 | 75 px | 75 px |
-| 400×300 px | 1.333 | 100 px | 75 px |
-| 600×450 px | 1.333 | 100 px | 75 px |
-
-### Verificação Obrigatória do Cabeçalho Pós-Geração (Onda 69)
-
-Antes de entregar QUALQUER petição, executar as três checagens no .docx gerado. O .docx é um ZIP.
+### Verificação obrigatória do cabeçalho pós-geração
 
 ```bash
-# 1. O logo está embarcado? Deve listar ao menos um arquivo em word/media/.
+# 1. A logo está embarcada? Deve listar ao menos um arquivo em word/media/.
 unzip -l peticao.docx | grep -i "word/media" || echo "[FALHA] SEM LOGO NO DOCX"
 
 # 2. O timbre textual está no header? Deve encontrar ADVOCACIA.
 unzip -p peticao.docx word/header1.xml word/header2.xml word/header3.xml 2>/dev/null | grep -c "ADVOCACIA" || echo "[FALHA] SEM TIMBRE TEXTUAL"
 
 # 3. A âncora do titlePage existe? Deve encontrar titlePg no sectPr.
-unzip -p peticao.docx word/document.xml | grep -c "titlePg" || echo "[FALHA] SEM titlePage - header da 1a pagina nao sera diferenciado"
+unzip -p peticao.docx word/document.xml | grep -c "titlePg" || echo "[FALHA] SEM titlePage"
 ```
 
-Se qualquer checagem falhar, NÃO entregar. Diagnosticar, corrigir e regenerar. Registrar no relatório de revisão da peça (`base-revisao-peticao-aprofundada`) a linha "Cabeçalho verificado. Logo embarcado, timbre presente, titlePage ativo."
+Falhando qualquer checagem, a peça não é entregue. Corrige-se a causa e regenera-se. O relatório de revisão registra a linha "Cabeçalho verificado. Logo embarcada, timbre presente, titlePage ativo."
 
-Armadilha conhecida do docx-js. Sem `titlePage: true` nas properties da seção, o `headers.first` é ignorado e o Word usa o `default` (vazio) em todas as páginas. Sem `spacing` explícito zerado nos parágrafos do header, o estilo default (before/after 240, line 360) desloca o timbre. Ver seção Header da Primeira Página.
-
-### Característica Visual do Logo
-
-O logo do escritório consiste em duas formas triangulares em tons de cinza (claro e escuro) sobrepostas em uma curva vermelha estilizando uma balança da justiça. PNG com fundo transparente para integração com cabeçalho timbrado.
-
-### Documentação Completa
-
-Ver `assets/README-LOGO.md` na pasta da skill para o procedimento completo de configuração e troubleshooting do logo.
-
----
-
-## Logo do Escritório
-
-### Caminhos de Busca (Atualizado Onda 69 - v1.59.0)
-
-REGRA DE OURO. O ambiente de execução decide o caminho. A skill geradora resolve as bases DINAMICAMENTE nesta ordem e usa o primeiro arquivo encontrado.
-
-**Bloco 1 - Sandbox Cowork/Claude (Linux). SEMPRE testado primeiro.**
-
-1. `<raiz da sessão derivada de process.cwd()>/mnt/INSS/assets/logo-tercini.(png|PNG|jpg|JPG|jpeg|JPEG)`. A raiz é extraída do padrão `/sessions/<nome-da-sessao>` do diretório de trabalho atual. O `<nome-da-sessao>` MUDA a cada sessão do Cowork, por isso o caminho NUNCA deve ser fixado literalmente.
-2. Glob defensivo em `/sessions/*/mnt/INSS/assets/` para qualquer sessão montada.
-
-**Bloco 2 - Windows local do escritório.**
-
-3. `C:\Users\VAIO\INSS\assets\logo-tercini.(png|jpg|jpeg)` e `logo.(png|jpg|jpeg)`.
-
-**Bloco 3 - Relativos.**
-
-4. `<diretório da skill>/assets/` e `./assets/` com os mesmos nomes.
-
-Em Python (geração via skill docx), aplicar a mesma lógica com `os.getcwd()`, `re.match(r'^(/sessions/[^/]+)', cwd)` e `glob.glob('/sessions/*/mnt/INSS/assets/logo*')`.
-
-### Suporte a Formato
-
-A implementação detecta automaticamente o formato pela extensão, testada em ambas as caixas (`.png`, `.PNG`, `.jpg`, `.JPG`, `.jpeg`, `.JPEG`). O arquivo real do escritório chama-se `logo-tercini.PNG` (extensão MAIÚSCULA). O parâmetro `type` do `ImageRun` é definido dinamicamente conforme o arquivo encontrado.
-
-### Logo Ausente é ERRO BLOQUEANTE (Onda 69)
-
-Comportamento anterior (até v1.58.0). Logo ausente gerava apenas um `console.warn` e a petição saía SEM timbre. Esse era o principal motivo de cabeçalho incorreto, porque no sandbox do Cowork os caminhos Windows nunca existem e o alerta passava despercebido.
-
-Comportamento atual. Logo ausente INTERROMPE a geração com `throw new Error('[BLOQUEANTE] ...')`. A peça sem timbre não é entregue. O Claude deve então localizar o logo (`find /sessions -iname 'logo-tercini*' 2>/dev/null`), confirmar o mount da pasta INSS e regenerar.
-
-### Dimensões (atualizado Onda 69)
-
-As dimensões são calculadas DINAMICAMENTE preservando o aspect ratio do arquivo real.
-
-Comportamento.
-- PNG. A função `calcularDimensoesLogo` lê os bytes 16-23 do cabeçalho para obter width/height nativos.
-- JPEG. Leitura implementada na Onda 69 pelos SOF markers (C0-CF, exceto C4, C8, CC), extraindo height/width dos bytes 5-8 do segmento.
-- Fixa altura em **75 px** (padrão do layout do header).
-- Calcula largura proporcional. `Math.round(75 × larguraReal / alturaReal)`.
-- Fallback para **96×75** (proporção 1,278 do logo real 538×421) SOMENTE se a leitura binária falhar. O fallback antigo de 83×75 DISTORCIA o logo e foi eliminado.
-
-**Exemplos práticos.**
-
-| Logo real | Proporção | Width calculado | Height final |
-|-----------|-----------|-----------------|--------------|
-| 538×421 px (atual) | 1.278 | 96 px | 75 px |
-| 512×512 px | 1.000 | 75 px | 75 px |
-| 400×300 px | 1.333 | 100 px | 75 px |
-| 600×450 px | 1.333 | 100 px | 75 px |
-
-### Verificação Obrigatória do Cabeçalho Pós-Geração (Onda 69)
-
-Antes de entregar QUALQUER petição, executar as três checagens no .docx gerado. O .docx é um ZIP.
-
-```bash
-# 1. O logo está embarcado? Deve listar ao menos um arquivo em word/media/.
-unzip -l peticao.docx | grep -i "word/media" || echo "[FALHA] SEM LOGO NO DOCX"
-
-# 2. O timbre textual está no header? Deve encontrar ADVOCACIA.
-unzip -p peticao.docx word/header1.xml word/header2.xml word/header3.xml 2>/dev/null | grep -c "ADVOCACIA" || echo "[FALHA] SEM TIMBRE TEXTUAL"
-
-# 3. A âncora do titlePage existe? Deve encontrar titlePg no sectPr.
-unzip -p peticao.docx word/document.xml | grep -c "titlePg" || echo "[FALHA] SEM titlePage - header da 1a pagina nao sera diferenciado"
-```
-
-Se qualquer checagem falhar, NÃO entregar. Diagnosticar, corrigir e regenerar. Registrar no relatório de revisão da peça (`base-revisao-peticao-aprofundada`) a linha "Cabeçalho verificado. Logo embarcado, timbre presente, titlePage ativo."
-
-Armadilha conhecida do docx-js. Sem `titlePage: true` nas properties da seção, o `headers.first` é ignorado e o Word usa o `default` (vazio) em todas as páginas. Sem `spacing` explícito zerado nos parágrafos do header, o estilo default (before/after 240, line 360) desloca o timbre. Ver seção Header da Primeira Página.
-
-### Característica Visual do Logo
-
-O logo do escritório consiste em duas formas triangulares em tons de cinza (claro e escuro) sobrepostas em uma curva vermelha estilizando uma balança da justiça. PNG com fundo transparente para integração com cabeçalho timbrado.
-
-### Documentação Completa
-
-Ver `assets/README-LOGO.md` na pasta da skill para o procedimento completo de configuração e troubleshooting do logo.
-
----
-
+Armadilha do docx-js. Sem `titlePage: true` nas properties da seção, o `headers.first` é ignorado e o Word usa o `default` (vazio). Sem `spacing` zerado nos parágrafos do header, o estilo default (before/after 240, line 360) desloca o timbre.

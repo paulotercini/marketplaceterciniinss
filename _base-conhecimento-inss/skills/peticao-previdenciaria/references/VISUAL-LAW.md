@@ -1,6 +1,8 @@
 # Componentes Visual Law
 
-Onda 140 (16/09/2026). Documentação dos cinco componentes, da síntese do caso em duas ou três linhas (Onda 118) e das regras de combinação. Em Markdown, todo componente é uma tabela `| a | b |`, e o `md2docx.js` a converte no padrão, com a primeira coluna em negrito. O teto é de TRÊS componentes por peça, com o quadro-resumo sempre entre eles.
+Documentação dos cinco componentes, da síntese do caso (Onda 118) e das regras de combinação. Em Markdown, todo componente é uma tabela `| a | b |`, e o `md2docx.js` a converte no padrão, com a primeira coluna em negrito.
+
+**Regra vigente (Onda 174).** O componente Visual Law é opcional. A petição no Método Tercini não leva síntese inicial nem quadro-resumo, porque as primeiras linhas de DOS FATOS já entregam o benefício, o indeferimento e a virada. O componente entra quando o titular pedir ou quando a matéria exigir tabela (períodos especiais, contribuições, grupo familiar e renda), até TRÊS por peça, contado o printscreen de `printscreen-impacto`. O memorial mantém o quadro-resumo. Onde abaixo se lê "quando usar", entende-se a indicação para o caso em que o componente for usado.
 
 ## Componentes Visual Law
 
@@ -16,10 +18,6 @@ Toda tabela Visual Law segue a paleta visual do escritório.
 - **Margens internas das células**: top=40, bottom=40, left=80, right=80 (twips). Mais enxutas do que parágrafos do corpo, para diferenciar tabela de texto corrido e economizar espaço vertical
 - **Spacing dos parágrafos dentro das células**: `before=0, after=0, line=240, lineRule=auto`, para impedir herança do estilo default do documento
 - **Linha de marcador semântico** entre colchetes em caixa alta (ex. `[FAVORÁVEL]`, `[DESFAVORÁVEL]`, `[PROCESSUAL]`, `[PROVA]`, `[INCONTROVERSO]`, `[CONTROVERTIDO]`, `[PARCIAL]`), em negrito, antes do conteúdo da célula. Sem cor distintiva, apenas o rótulo textual carrega o sentido
-
-### Regra Geral de Acionamento
-
-Sempre que a petição se enquadre nos critérios abaixo, o componente Visual Law correspondente é incluído automaticamente, sem necessidade de solicitação expressa. O usuário pode pedir a exclusão de qualquer componente, caso a caso.
 
 ### Regras Transversais Anti-Poluição (Onda 104)
 
@@ -39,7 +37,7 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 ### Componente 1. Linha do Tempo (timelineTable)
 
-**Quando usar.** Obrigatória em toda petição inicial de concessão, restabelecimento e revisão de benefício. Obrigatória em mandados de segurança. Opcional em recursos e embargos, a critério do caso.
+**Quando usar.** Controvérsia de sequência de eventos (cessação, limbo, qualidade de segurado, prazo), em inicial, mandado de segurança ou recurso.
 
 **Posição na petição.** Ao final da seção "DOS FATOS", após o último parágrafo narrativo e antes do título da seção seguinte.
 
@@ -64,7 +62,7 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 **Finalidade única.** Dizer ao julgador, em segundos, DUAS coisas. Qual é o ponto controvertido e o que se pede. Nada além disso.
 
-**Quando usar.** Obrigatório em toda petição inicial de concessão e restabelecimento e em todo recurso. Opcional nas demais peças.
+**Quando usar.** No memorial, sempre. Nas demais peças, apenas a pedido do titular.
 
 **Posição na petição.** Imediatamente após a qualificação das partes e a indicação "pelos fatos e fundamentos a seguir expostos", antes do primeiro título preto numerado.
 
@@ -79,12 +77,12 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 - Ponto controvertido. "O INSS reduziu pensão por morte concedida em **23/09/2008**, aplicando redutor criado pela EC 103/2019 por causa de aposentadoria concedida em 2025."
 - O que se pede. "Reforma da sentença para **suprimir o redutor de acumulação** e restituir R$ 245,14 mensais desde setembro de 2025."
 
-Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem são AS DUAS que decidem o caso (concessão pré-reforma e fato novo pós-reforma). O negrito marca só o núcleo. O valor aparece uma única vez, na providência. Nenhuma palavra sobra.
+Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem são AS DUAS que decidem o caso (concessão pré-reforma e fato novo pós-reforma). O negrito marca apenas o núcleo. O valor aparece uma única vez, na providência. Nenhuma palavra sobra.
 
 - Coluna 1: **Rótulo** (largura 3000 twips), Bookman Old Style 10pt negrito, sombreamento cinza claro `F2F2F2`
 - Coluna 2: **Conteúdo** (largura 6213 twips), Bookman Old Style 10pt, com o NÚCLEO da frase em negrito (a data, o marco ou a providência que decide o caso)
 
-**PROIBIÇÕES EXPRESSAS (Onda 104).** O quadro NÃO contém nome do segurado, NB, número de processo, DER, idade, CID, carência, qualidade de segurado, composição familiar nem qualquer campo cadastral. Tudo isso já está na qualificação, no endereçamento e no corpo da peça, e repetir no quadro só dilui o que importa. O quadro também NÃO contém fundamento jurídico (norma, tema, súmula), que pertence à seção DO DIREITO e ao Componente 5.
+**PROIBIÇÕES EXPRESSAS (Onda 104).** O quadro NÃO contém nome do segurado, NB, número de processo, DER, idade, CID, carência, qualidade de segurado, composição familiar nem qualquer campo cadastral. Tudo isso já está na qualificação, no endereçamento e no corpo da peça, e repetir no quadro apenas dilui o que importa. O quadro também NÃO contém fundamento jurídico (norma, tema, súmula), que pertence à seção DO DIREITO e ao Componente 5.
 
 **Teste de aprovação do quadro.** Ler somente o quadro, sem o resto da peça. Se o leitor souber exatamente qual é a disputa e o que se pede, o quadro está pronto. Se sobrar qualquer informação que não contribua para essas duas respostas, cortar.
 
@@ -97,9 +95,9 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 ### Componente 3. Fatos Incontroversos (undisputedFactsTable)
 
-**Quando usar.** Obrigatória em toda petição inicial em que houver pelo menos dois fatos incontroversos identificáveis. Obrigatória em mandados de segurança. Opcional em recursos.
+**Quando usar.** Quando a vitória depende de fixar o que já está provado, com pelo menos dois fatos incontroversos, em especial no JEF, no mandado de segurança e na réplica.
 
-**Posição na petição.** Entre a seção "DOS FATOS" e a seção "DO DIREITO". Pode receber seção própria denominada "DOS FATOS INCONTROVERSOS E PONTOS EM DISPUTA", com título preto padrão, ou ser inserida como elemento visual ao final da seção de fatos.
+**Posição na petição.** Entre a seção "DOS FATOS" e a seção do benefício. Pode receber seção própria denominada "DOS FATOS INCONTROVERSOS E PONTOS EM DISPUTA", com título preto padrão, ou ser inserida como elemento visual ao final da seção de fatos.
 
 **Estrutura.** Tabela de quatro colunas.
 
@@ -124,9 +122,9 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 ### Componente 4. Tabela Comparativa (comparisonTable)
 
-**Quando usar.** Obrigatória em toda petição inicial em que o INSS tenha fundamentado expressamente o indeferimento. Obrigatória em impugnação a laudo pericial. Opcional em recursos quando a sentença tiver fundamentação específica a ser confrontada.
+**Quando usar.** Quando o indeferimento, o laudo pericial ou a sentença tiver fundamentação específica a confrontar com a prova.
 
-**Posição na petição.** Dentro da seção "DO DIREITO", após a fundamentação normativa geral e antes da argumentação específica do caso. Pode também ocupar seção própria denominada "DO CONFRONTO ENTRE A POSIÇÃO DO INSS E A PROVA DOS AUTOS".
+**Posição na petição.** Dentro da seção do benefício, após a fundamentação normativa geral e antes da argumentação específica do caso. Pode também ocupar seção própria denominada "DO CONFRONTO ENTRE A POSIÇÃO DO INSS E A PROVA DOS AUTOS".
 
 **Estrutura.** Tabela de três colunas, larguras iguais (3071 twips cada).
 
@@ -144,7 +142,7 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 ### Componente 5. Tabela-Resumo Pedido x Fundamento (requestSummaryTable)
 
-**Quando usar.** Obrigatória em petições iniciais com dois ou mais pedidos autônomos (ex. reconhecimento de tempo especial + conversão + concessão, ou concessão de benefício + indenização por dano moral). Recomendada em réplicas e memoriais com múltiplos pontos. Opcional em peças com pedido único simples.
+**Quando usar.** Petição com dois ou mais pedidos autônomos que o juiz pode confundir (reconhecimento de tempo especial, conversão e concessão, ou concessão e indenização por dano moral), réplica e memorial com vários pontos.
 
 **Posição na petição.** Imediatamente antes dos pedidos, como última seção argumentativa da peça. Pode receber título preto "DA SÍNTESE DOS PEDIDOS E FUNDAMENTOS" ou ser inserida sem subtítulo.
 
@@ -157,28 +155,20 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Limite de linhas (apertado na Onda 118).** Máximo 6 linhas, com os acessórios (custas, honorários, AJG) agrupados em linha única. UM fundamento por linha, o mais forte. Empilhar três dispositivos e dois temas na mesma célula transforma o resumo em nova argumentação, que é exatamente o que ele existe para evitar.
 
-### Combinação de Componentes [REFORMADA NA ONDA 118, OPCIONAL DESDE A ONDA 174]
+### Combinação de Componentes
 
-Na Onda 174 o titular fixou o Método Tercini, cuja petição não leva síntese inicial nem quadro-resumo, porque a ordem fixa de seções já entrega ao julgador, nas primeiras linhas de DOS FATOS, o benefício, o indeferimento e a virada. Por isso o componente Visual Law passa a ser opcional nas peças judiciais e administrativas, e entra só quando o titular pedir ou quando a matéria exigir tabela (períodos especiais, contribuições, grupo familiar e renda), até três por peça. O memorial mantém o quadro-resumo. As regras abaixo valem quando o componente for usado.
-
-**Teto de TRÊS componentes por peça, sendo o quadro-resumo sempre um deles.** A regra anterior mandava empilhar os cinco na inicial típica, e o resultado eram peças carregadas que cansavam a leitura. Visual Law funciona por contraste, e cinco tabelas não contrastam com nada.
-
-Escolha dos outros dois, pelo que DECIDE o caso concreto.
+**Teto de TRÊS componentes por peça.** Visual Law funciona por contraste, e cinco tabelas não contrastam com nada. A escolha segue o que DECIDE o caso concreto.
 
 - A controvérsia é de SEQUÊNCIA de eventos (cessação, limbo, qualidade de segurado, prazo). Linha do tempo.
 - A controvérsia é de CONFRONTO com o que o INSS ou a sentença afirmou. Tabela comparativa.
 - A vitória depende de FIXAR o que já está provado (JEF, MS, réplica). Fatos incontroversos.
 - Há DOIS OU MAIS pedidos autônomos que o juiz pode confundir. Pedido x fundamento.
 
-Componente que não disputa a decisão não entra, ainda que ficasse bonito. O quarto e o quinto só aparecem em peça excepcionalmente complexa, com justificativa registrada, e nunca todos os cinco.
+Componente que não disputa a decisão não entra, ainda que ficasse bonito. O quarto e o quinto apenas aparecem em peça excepcionalmente complexa, com justificativa registrada, e nunca todos os cinco.
 
-Em petições simples (ex. restabelecimento por cessação automática), bastam o quadro-resumo e a linha do tempo.
+Na réplica, a tabela de fatos incontroversos e controvertidos (Componente 3 adaptado, com colunas "Fato alegado", "Impugnação pelo INSS" e "Situação processual") é o componente indicado.
 
-Em mandados de segurança, usar no mínimo o quadro-resumo, a linha do tempo e os fatos incontroversos.
-
-Em réplicas, usar no mínimo a tabela de fatos incontroversos/controvertidos (Componente 3 adaptado, com colunas "Fato alegado", "Impugnação pelo INSS" e "Situação processual").
-
-Em memoriais, usar no mínimo o quadro-resumo no formato canônico (Ondas 104 e 118) e, quando pertinente, um printscreen de jurisprudência (Componente 5 da skill `printscreen-impacto`).
+No memorial, o quadro-resumo no formato canônico (Ondas 104 e 118) e, quando pertinente, um printscreen do precedente-chave (`printscreen-impacto`).
 
 Em recursos, avaliar caso a caso. A tabela comparativa é o componente mais útil em sede recursal, confrontando a sentença com as provas não valoradas.
 

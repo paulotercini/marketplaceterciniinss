@@ -46,12 +46,14 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   `base-conhecimento-inss:red-team-peticao` (Onda 79), entregando a peca, o
   inventario de provas com IDs, o CNIS e o historico administrativo. O agente
   simula a contestacao do INSS e o voto contrario, devolve relatorio de
-  fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem
-  recomendada e veredito de protocolo. Ele so critica, nunca edita - o reforco
+  fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com reforco
+  recomendado e veredito de protocolo. Ele apenas critica, nunca edita - o reforco
   da peca e feito aqui, na sessao principal. Sem o agente disponivel, execute
   o mesmo roteiro inline.
-- Roteiro minimo (do agente ou inline): previo requerimento administrativo
-  (Tema 350/STF) e Tema 1124/STJ; decadencia; prescricao quinquenal; qualidade
+- Roteiro minimo (do agente ou inline): os alertas de previo requerimento
+  (Tema 350/STF), Tema 1124/STJ, decadencia (art. 103) e competencia seguem a
+  secao VERIFICACOES AUTOMATICAS OBRIGATORIAS da `base-revisao-peticao-aprofundada`;
+  somam-se prescricao quinquenal; qualidade
   de segurado/carencia; PPP extemporaneo ou sem NEN; EPI eficaz (Tema 555);
   coabitacao na pensao; etc.
 - Consulte `base-revisao-peticao-aprofundada`, `base-efeito-translativo-tema-1124-defesa`
@@ -90,8 +92,8 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   e as 5 camadas (formal, normativa, fatica, argumentativa, integridade probatoria),
   com severidade quadrupla (BLOQUEANTE / CRITICO / IMPORTANTE / MENOR).
 - **Corrija automaticamente** os achados sanaveis, sem voltar a perguntar (coerente
-  com a gravacao automatica deste fluxo): padrao visual/formatacao, dois-pontos
-  logicos, referencia por ID, redacao literal de artigos, numero/tese de precedente
+  com a gravacao automatica deste fluxo): padrao visual/formatacao, dois-pontos fora
+  de citacao literal ou enumeracao, referencia por ID, redacao literal de artigos, numero/tese de precedente
   trocado (substituir pela versao `[CONFERIDO]`), competencia territorial/material,
   fato classificado como "incontroverso" que o INSS impugnou (reclassificar como
   controvertido), fatos orfaos e provas orfas. Gere a peca ja corrigida mantendo o
@@ -100,7 +102,8 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   precedente NAO CONFIRMADA em fonte primaria e **removida/suspensa**, jamais
   inventada ou mantida. Achado BLOQUEANTE que exija decisao estrategica do Paulo
   (tese central apoiada em precedente inexistente, pedido incompativel com o rito,
-  ausencia de previo requerimento Tema 1124/STJ, dado fatico que contraria o CNIS)
+  ausencia de previo requerimento (Tema 350/STF) ou de documento
+  essencial nao levado ao INSS (Tema 1124/STJ), dado fatico que contraria o CNIS)
   **nao se resolve sozinho**, aplique o que for tecnico e **sinalize o restante em
   destaque** no relatorio de prontidao.
 - Registre no parecer e no relatorio o **log da revisao**: total de achados por
@@ -158,7 +161,7 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
 
 ## Extensão
 
-Extensão de referência da petição inicial, 7 páginas, com jurisprudência transcrita em cerca de 1 página. É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência da petição inicial, cerca de 7 páginas e 6 seções; a tabela única por tipo de peça está na Camada 6 da `base-revisao-peticao-aprofundada`. É referência, e não limite obrigatório: a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 

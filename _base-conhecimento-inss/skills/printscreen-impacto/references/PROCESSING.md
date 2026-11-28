@@ -464,7 +464,7 @@ def identify_highlights_from_audit(audit_results, document_type):
 ### PPP. Aposentadoria Especial
 
 ```python
-# Após auditoria do PPP identificar ruído de 92,3 dB(A) no campo 15.3
+# Após auditoria do PPP identificar ruído de 92,3 dB(A) no campo 15.4 (intensidade)
 
 page_img = extract_pdf_page("ppp_metalurgica.pdf", 2, "/tmp/ppp_page")
 
@@ -493,7 +493,7 @@ printscreen = compose_printscreen(
     highlights=[
         {"type": "highlight", "color": "vermelho", "box": (35, 280, 750, 320)},
         {"type": "annotation", "color": "vermelho", "position": (770, 270),
-         "title": "FUNDAMENTO IMPUGNÁVEL", "lines": ["Tema 1090/STJ, III: dúvida", "sobre o EPI favorece o autor"]},  # auditoria 03/10/2026, o Tema 1090/STJ não afasta a neutralização por EPI (item I)
+         "title": "FUNDAMENTO IMPUGNÁVEL", "lines": ["Tema 1090/STJ, III: dúvida", "sobre o EPI favorece o autor"]},  # o Tema 1090/STJ não afasta a neutralização por EPI eficaz (item I); o item III favorece o segurado apenas na dúvida
     ],
     source_text="Fonte: Despacho decisório INSS, Doc. ID 02 (Evento 1, PROCADM2)",
     output_path="/tmp/indeferimento_printscreen.png",

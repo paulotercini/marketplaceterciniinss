@@ -100,7 +100,7 @@ Cobertura.
 - Portaria 996/2022 (recursos - Livro VII).
 - Portaria MPS 125/2026 (RICRPS).
 
-ALERTA. A Portaria 990/2022 (CNIS, RAC, indicadores - Livro I) NÃO foi baixada na Onda 31. Conferir em outros lugares.
+- Portaria 990/2022 (CNIS - Livro I), no corpus do MCP normas (`06-Portarias/Portaria-DIRBEN-INSS-990-2022-CNIS.md`).
 
 ### 1.6 Para Precedentes (Tema STF/STJ/TNU, Súmula, IRDR, IAC)
 
@@ -131,7 +131,7 @@ Avaliar direito adquirido ou tempus regit actum se a tese se ancora em situaçã
 ### 2.2 Para Precedentes
 
 Verificar.
-- Houve overruling posterior? (Caso clássico. Tema 503/STF superou desaposentação.)
+- Houve overruling posterior? (Caso clássico. Tema 1102/STF, tese de 2022 superada no julgamento das ADIs 2.110 e 2.111.)
 - A súmula foi cancelada? (Caso clássico. Súmula 86/TNU cancelada em 26/08/2021.)
 - O tema foi superado por novo julgamento?
 
@@ -186,10 +186,10 @@ Achado se paráfrase apresentada entre aspas. IMPORTANTE.
 
 Casos clássicos de modulação a atentar.
 
-- **Tema 1102/STF** (Revisão da Vida Toda). Tese vigente adversa (art. 3º da Lei 9.876/1999 cogente, trânsito 15/05/2026); a tese de 2022 está superada e só a modulação aproveita ao segurado.
-- **Tema 1124/STJ** (interesse de agir e termo inicial dos efeitos financeiros). SEM modulação, negada no mérito e nos embargos de declaração. Aplica-se aos processos pendentes cuja discussão sobre a DIB não esteja preclusa (Onda 178).
-- **Tema 942/STF** (RE 1.014.286, conversão de tempo especial de servidor; auditoria 25/07/2026).
-- **Tema 709/STF** (RE 791.961, vedação de permanência ou retorno à atividade especial; auditoria 25/07/2026).
+- **Tema 1102/STF** (Revisão da Vida Toda). Tese vigente adversa (art. 3º da Lei 9.876/1999 cogente, trânsito 15/05/2026); a tese de 2022 está superada e apenas a modulação aproveita ao segurado.
+- **Tema 1124/STJ** (interesse de agir e termo inicial dos efeitos financeiros). SEM modulação, negada no mérito e nos embargos de declaração. Aplica-se aos processos pendentes cuja discussão sobre a DIB não esteja preclusa.
+- **Tema 942/STF** (RE 1.014.286, conversão de tempo especial de servidor).
+- **Tema 709/STF** (RE 791.961, vedação de permanência ou retorno à atividade especial).
 
 Achado se modulação não foi mencionada quando aplicável. IMPORTANTE.
 
@@ -220,11 +220,11 @@ Achado se número, órgão, REsp/RE, data ou relator FABRICADO.
 
 ## CASOS PRÁTICOS DE ALUCINAÇÃO HISTÓRICA
 
-Casos reais ocorridos no plugin antes da Onda 31/32 que motivaram este protocolo.
+Erros reais já ocorridos nas skills, que motivaram este protocolo.
 
 ### Caso 1 - Portaria 992/2022 como cálculo de RMI
 
-Erro repetido entre as Ondas 23 e 30 em 17 SKILL.md. A Portaria 992/2022 trata de Manutenção (Livro III), não de cálculo de RMI. Cálculo está na IN 128/2022 e Portaria 991/2022 (Livro II).
+Erro já repetido em diversas skills. A Portaria 992/2022 trata de Manutenção (Livro III), não de cálculo de RMI. Cálculo está na IN 128/2022 e Portaria 991/2022 (Livro II).
 
 Como evitar. Antes de afirmar que uma Portaria trata de Y, abrir o arquivo da Portaria no workspace `INSS\base-legislacao\06-Portarias\` e ler o art. 1º.
 

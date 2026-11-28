@@ -1,12 +1,12 @@
 # Pesquisa no MCP `acervo`, o que o escritório já escreveu
 
-Medido ao vivo em 20/09/2026, chamando as seis ferramentas. **Número não entra nesta página nem em skill**, porque a base cresce. Entre duas medições do mesmo dia ela passou de 112 para 1.807 peças, e depois mudou de novo enquanto eu media. O tamanho, o período coberto e a distribuição saem de `visao_geral_acervo`, que é a primeira chamada de qualquer sessão.
+Medido ao vivo em 20/09/2026, chamando as seis ferramentas. **Número não entra nesta página nem em skill**, porque a base cresce. No mesmo dia da medição ela mudou de tamanho mais de uma vez. O tamanho, o período coberto e a distribuição saem de `visao_geral_acervo`, que é a primeira chamada de qualquer sessão.
 
 ## O que a base é
 
 Base LOCAL construída dos Modelos Ouro, das Petições Ouro, das peças das pastas Claude dos clientes e dos processos protocolados. Responde "como já sustentamos X" devolvendo o trecho argumentativo e a peça de origem. Não tem jurisprudência, e o inteiro teor do precedente citado num trecho vive nos MCPs `trf3` e `iurisprudencia`.
 
-A unidade de busca é o PARÁGRAFO, e o trecho vem cortado no meio da frase quando é longo. Quem lê só o resultado da busca lê meio argumento, e por isso `obter_trecho_acervo` com os parágrafos vizinhos é parte do fluxo, não um extra.
+A unidade de busca é o PARÁGRAFO, e o trecho vem cortado no meio da frase quando é longo. Quem lê apenas o resultado da busca lê meio argumento, e por isso `obter_trecho_acervo` com os parágrafos vizinhos é parte do fluxo, não um extra.
 
 ## Vedação, que vem em toda resposta
 
@@ -18,9 +18,9 @@ O trecho é anonimizado na ingestão. O nome do cliente sai como `[NOME]` e o n�
 
 **O arquivo de origem NÃO é anonimizado.** `caminho_da_peca_acervo` devolve o caminho de verdade, com nome e CPF no nome do arquivo, e vem com aviso próprio. É chamada deliberada e separada, e quem a usa está abrindo dado de cliente.
 
-**Falha 1, nome embutido sem separador escapa.** Medido em 20/09/2026, o arquivo `Inicial_Ivair_BPC_JEF_RibeiraoPreto.docx` voltou com o primeiro nome do cliente em claro, porque o padrão snake_case não foi reconhecido. A pasta do mesmo caso estava corretamente mascarada, e só o nome do arquivo vazou.
+**Falha 1, nome embutido sem separador escapa.** Medido em 20/09/2026, um arquivo nomeado no padrão `Inicial_[NOME]_BPC_JEF_[CIDADE].docx` voltou com o primeiro nome do cliente em claro, porque o padrão snake_case não foi reconhecido. A pasta do mesmo caso estava corretamente mascarada, e apenas o nome do arquivo vazou.
 
-**Falha 2, protocolo e data ficam em claro.** Um trecho de BPC devolveu `protocolo 1095612540` e a data do requerimento, e outros devolveram datas de decisão administrativa. Número de protocolo e data não são mascarados, e juntos identificam o caso.
+**Falha 2, protocolo e data ficam em claro.** Um trecho de BPC devolveu o número de protocolo e a data do requerimento em claro, e outros devolveram datas de decisão administrativa. Número de protocolo e data não são mascarados, e juntos identificam o caso.
 
 **Falha 3, o anonimizador erra para mais e apaga palavra comum.** Medido, "Aposentadoria por Tempo de Contribuição" virou "Aposentadoria por Tempo de `[NOME]`" nos cinco Modelos Ouro daquela matéria, e "Coordenação-Geral de Benefícios Previdenciários" virou "Coordenação-Geral de `[NOME]` Previdenciários" dentro de um trecho. A consequência prática é que busca por "contribuição" ou "benefícios" no nome do arquivo não encontra.
 
@@ -47,7 +47,7 @@ A distribuição por benefício da `visao_geral_acervo` não é estatística do 
 
 ## Cobertura, que muda a cada ingestão
 
-A cobertura por matéria é desigual e a busca zera sem dizer por quê. Antes dos protocolados não havia uma única inicial de BPC, e uma busca sobre miserabilidade não achava tese sustentada porque ela não estava lá, não porque o escritório nunca a tivesse sustentado. Com a base grande isso mudou. A conclusão de que o escritório nunca escreveu sobre um tema só se tira depois de conferir o tamanho e o período na `visao_geral_acervo`.
+A cobertura por matéria é desigual e a busca zera sem dizer por quê. Antes dos protocolados não havia uma única inicial de BPC, e uma busca sobre miserabilidade não achava tese sustentada porque ela não estava lá, não porque o escritório nunca a tivesse sustentado. Com a base grande isso mudou. A conclusão de que o escritório nunca escreveu sobre um tema apenas se tira depois de conferir o tamanho e o período na `visao_geral_acervo`.
 
 ## Precedentes, a via mais confiável
 
@@ -62,7 +62,7 @@ Devolve a remissão e o trecho da peça, nunca o texto do precedente, e a nota v
 3. `obter_trecho_acervo` no id devolvido, com contexto 2 ou 3, porque o trecho da busca vem cortado.
 4. `precedentes_do_acervo` quando a pergunta for por precedente e não por tese.
 5. `listar_pecas_acervo` para achar o Modelo Ouro certo antes de escrever.
-6. `caminho_da_peca_acervo` só quando for abrir o arquivo, sabendo que ali há dado de cliente.
+6. `caminho_da_peca_acervo` apenas quando for abrir o arquivo, sabendo que ali há dado de cliente.
 
 ## O que este MCP não autoriza
 

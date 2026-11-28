@@ -9,7 +9,7 @@ Lei 10.259/2001. Skills relevantes. `base-jef-previdenciario`, `base-recursos-je
 ### Petição Inicial JEF
 
 - [ ] Valor da causa não excede 60 SM (ou há renúncia expressa ao excedente).
-- [ ] Endereçamento à Vara JEF competente conforme domicílio do autor.
+- [ ] Endereçamento à Subseção competente pelo domicílio do autor (tabela de competência nas Verificações automáticas da SKILL.md).
 - [ ] Qualificação do autor completa (nome, CPF, RG, estado civil, profissão, endereço).
 - [ ] Procuração nos autos.
 - [ ] Pedido de gratuidade da justiça com declaração de hipossuficiência.
@@ -17,8 +17,8 @@ Lei 10.259/2001. Skills relevantes. `base-jef-previdenciario`, `base-recursos-je
 - [ ] Direito sintético (rito simplificado tolera menos fundamentação que o ordinário).
 - [ ] Pedidos com correspondência aos fatos.
 - [ ] Especificação de provas direcionada.
-- [ ] Tema 1124/STJ verificado.
-- [ ] Política de tutela de urgência aplicada.
+- [ ] Prévio requerimento (Tema 350/STF) e termo inicial (Tema 1124/STJ) verificados.
+- [ ] Tutela de urgência ausente, salvo decisão expressa do titular.
 
 **Tolerância.** Peças JEF mais curtas. Flagrar excesso de fundamentação como MENOR.
 
@@ -41,13 +41,13 @@ Vara Federal Comum. Skills relevantes. `base-rito-ordinario-trf`.
 - [ ] Valor da causa acima de 60 SM ou matéria que exige rito ordinário.
 - [ ] Reexame necessário (Súmula 490/STJ) considerado.
 - [ ] Fatos completos e estruturados.
-- [ ] Direito esgotado nos fundamentos normativos.
-- [ ] Pedido de tutela provisória se aplicável.
+- [ ] Fundamentação seletiva, com um fundamento decisivo por tese.
+- [ ] Tutela de urgência ausente, salvo decisão expressa do titular.
 - [ ] Pedidos com correspondência aos fatos.
 - [ ] Especificação de provas.
-- [ ] Tema 1124/STJ verificado.
+- [ ] Prévio requerimento (Tema 350/STF) e termo inicial (Tema 1124/STJ) verificados.
 
-**Exigência.** Revisão completa. Esgotamento dos fundamentos normativos.
+**Exigência.** Revisão completa.
 
 ### Apelação
 
@@ -63,11 +63,11 @@ Skills relevantes. `admissibilidade-barreiras-crps`, `recursos-superiores-crps`,
 
 ### Recurso Ordinário à Junta de Recursos
 
-- [ ] Tempestividade (30 dias da intimação - art. 126 Lei 8.213/91).
+- [ ] Tempestividade (30 dias da ciência, art. 305, § 1º, do Decreto 3.048/99).
 - [ ] Endereçamento à Junta de Recursos.
 - [ ] Recuo de 4 cm (padrão CRPS).
 - [ ] Dialeticidade contra a decisão administrativa de indeferimento.
-- [ ] Argumentação densa (rito permite esgotamento dos fundamentos normativos).
+- [ ] Linguagem simples, artigo apenas quando a decisão contrariou norma expressa (`base-recurso-crps-peca-enxuta`).
 - [ ] Pedido de provimento.
 - [ ] Verificação de admissibilidade (Portaria MPS 462/2026, Portaria MPS 125/2026 RICRPS).
 
@@ -81,7 +81,7 @@ Skills relevantes. `admissibilidade-barreiras-crps`, `recursos-superiores-crps`,
 
 ### Embargos de Declaração CRPS
 
-- [ ] Tempestividade (5 dias).
+- [ ] Tempestividade (30 dias, art. 92, § 2º, do Regimento Interno do CRPS, conforme o registro do titular em `PADRAO-DE-ESCRITA.md`; texto do regimento não localizado no corpus local).
 - [ ] Omissão, contradição, obscuridade ou erro material.
 - [ ] Pedido de efeito modificativo quando aplicável.
 
@@ -93,9 +93,9 @@ Skills relevantes. `mandado-seguranca-previdenciario`, `ms-competencia-autoridad
 
 - [ ] Cabimento. Direito líquido e certo com prova pré-constituída.
 - [ ] Autoridade coatora identificada corretamente (gerente APS, CEAB, JR, CAJ, Pleno do CRPS).
-- [ ] Competência territorial. Foro da sede da autoridade ou domicílio do impetrante (art. 109 §2º CF).
+- [ ] Competência territorial. Foro da sede da autoridade ou domicílio do impetrante (art. 109, § 2º, da CF), sempre na Vara Federal, nunca no JEF (art. 3º, § 1º, I, da Lei 10.259/2001).
 - [ ] Tempestividade (120 dias - art. 23 Lei 12.016/2009).
-- [ ] Para omissão. Termo inicial renovado diariamente, porque a omissão continuada não deflagra o prazo do art. 23 da Lei 12.016/2009 (auditoria 03/10/2026).
+- [ ] Para omissão. Termo inicial renovado diariamente, porque a omissão continuada não deflagra o prazo do art. 23 da Lei 12.016/2009.
 - [ ] Indicação do ato impugnado (comissivo) ou da omissão (omissivo).
 - [ ] Fumus boni iuris demonstrado por prova pré-constituída.
 - [ ] Periculum in mora demonstrado por fatos concretos.
@@ -103,7 +103,7 @@ Skills relevantes. `mandado-seguranca-previdenciario`, `ms-competencia-autoridad
 - [ ] Pedido principal compatível com a Súmula 269/STF (não pode ser pago atrasado) e Súmula 271/STF (efeitos a partir da impetração).
 - [ ] Litisconsórcio passivo necessário (autarquia + autoridade) quando aplicável.
 
-**Verificação obrigatória.** Política de tutela de urgência. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) se houver demora administrativa.
+**Verificação obrigatória.** Liminar incluída por padrão (art. 7º, III, da Lei 12.016/2009). Acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) se houver demora administrativa.
 
 ## RITO 5 - PUIL/PEDILEF (Turma Nacional de Uniformização)
 
@@ -129,13 +129,12 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (OBRIGATÓRIA), `pedilef-co
 - [ ] Acórdão é de MÉRITO, não de tutela provisória (QO 54/TNU).
 - [ ] Acórdão recorrido NÃO está alinhado ao STJ (QO 24/TNU).
 - [ ] Prequestionamento (QO 10 + QO 35 + QO 36/TNU + Súmulas 282 e 356 STF + art. 1.025 CPC).
-- [ ] Tese central do PUIL ventilada nas fases anteriores do processo e apreciada expressamente pela turma recursal (não inovadora, QO 10/TNU) (auditoria 03/10/2026).
+- [ ] Tese central do PUIL ventilada nas fases anteriores do processo e apreciada expressamente pela turma recursal (não inovadora, QO 10/TNU).
 - [ ] Não há reexame de matéria de fato (Súmula 42/TNU).
 - [ ] Não há matéria processual (Súmula 43/TNU).
 - [ ] Tese revestida como direito material previdenciário.
 - [ ] Dialeticidade contra todos os fundamentos do acórdão recorrido.
 - [ ] Antecipação da defesa contra cada filtro do art. 14 RITNU.
-- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO, DOS ou DAS, sem fato antecipado (regra geral de todas as peças, Onda 162). Título fora do padrão é achado IMPORTANTE.
 
 **Estrutura mínima da peça.**
 
@@ -148,7 +147,7 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (OBRIGATÓRIA), `pedilef-co
 6. DA NÃO INCIDÊNCIA DA SÚMULA 43/TNU
 7. DA DIALETICIDADE
 8. DO MÉRITO
-9. DOS PEDIDOS (conhecimento + provimento + subsidiário de retratação)
+9. REQUERIMENTOS (conhecimento, provimento e, subsidiariamente, retratação)
 ```
 
 ### Agravo Contra Inadmissão de PUIL
@@ -180,7 +179,6 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (item 22), `precedentes-pre
 - [ ] Prequestionamento (Súmula 282 + Súmula 356 STF + art. 1.025 CPC).
 - [ ] Repercussão geral em tópico destacado.
 - [ ] Princípio da unirrecorribilidade respeitado.
-- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO, DOS ou DAS, sem fato antecipado (regra geral de todas as peças, Onda 162). Título fora do padrão é achado IMPORTANTE.
 
 ## RITO 7 - Réplica
 
@@ -232,7 +230,7 @@ Skills relevantes. `execucao-cumprimento-previdenciario`, `base-cumprimento-sent
 - [ ] Tempestividade do cumprimento (5 anos prescricionais).
 - [ ] Cálculos compatíveis com a sentença e com a planilha CJF.
 - [ ] Juros e correção conforme Tema 810/STF e Tema 905/STJ.
-- [ ] SELIC só de 12/2021 a 08/2025 (EC 113/2021; Tema 1419/STF) e, a partir de 09/2025, INPC (IPCA no BPC) com taxa legal (Manual CJF 2026).
+- [ ] SELIC apenas de 12/2021 a 08/2025 (EC 113/2021; Tema 1419/STF) e, a partir de 09/2025, INPC (IPCA no BPC) com taxa legal (Manual CJF 2026).
 - [ ] Honorários (Súmula 111/STJ, Tema 1050/STJ, art. 85 §11 CPC).
 - [ ] Base de cálculo dos honorários conforme Súmula 111.
 - [ ] Destaque de honorários (art. 22 §4º EAOAB).
@@ -251,8 +249,12 @@ Skills relevantes. `execucao-cumprimento-previdenciario`, `base-cumprimento-sent
 Em TODA peça, independentemente do rito.
 
 - [ ] Protocolo anti-alucinação de 5 níveis para CADA citação de norma e precedente.
-- [ ] Documentos referenciados por ID, não genericamente.
-- [ ] Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão (Onda 163).
+- [ ] Documentos referenciados por ID, não genericamente (na petição inicial e no MS, "em anexo", com emitente e data).
+- [ ] Dois-pontos apenas antes de citação ou enumeração, nunca antes de miniconclusão (Onda 163).
+- [ ] Títulos nominais conforme `peticao-previdenciaria/references/MECANICA-DOCX.md` (Onda 162). Título fora do padrão é achado IMPORTANTE.
+- [ ] Parágrafo de duas a quatro frases e de 30 a 55 palavras, teto de 65.
+- [ ] Defesa previsível do INSS refutada em parágrafo próprio (art. 489, § 1º, IV, do CPC).
+- [ ] Parágrafo de Realidade em peça de pessoa física (`base-peticao-paragrafo-de-realidade`).
 - [ ] Argumentação concreta com referência a fatos do caso.
 - [ ] Compatibilidade entre fatos narrados e pedido formulado.
 - [ ] Compatibilidade entre rito processual e tipo de peça.

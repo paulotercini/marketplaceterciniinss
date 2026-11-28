@@ -28,7 +28,7 @@ Polo passivo. "que move em face do **INSTITUTO NACIONAL DO SEGURO SOCIAL (INSS)*
 - Ação anterior julgada improcedente, com novo requerimento. Narra-se o NB anterior, o processo e o resultado, e conclui-se que "a presente postulação não caracteriza litispendência ou coisa julgada, uma vez que se trata de novo pedido administrativo (NB [__])".
 - Ação anterior que concedeu o benefício, depois cessado. Narra-se a concessão judicial, o NB e o indeferimento da prorrogação, e conclui-se pela inexistência de ação com o mesmo objeto, identificando o objeto novo.
 
-A alínea "d" do inciso I do art. 129-A da Lei 8.213/91 só se cita em benefício por incapacidade, porque o artigo trata apenas dos litígios relativos a benefícios por incapacidade, inclusive acidentários. Nas demais espécies a declaração é feita sem essa citação.
+A alínea "d" do inciso I do art. 129-A da Lei 8.213/91 apenas se cita em benefício por incapacidade, porque o artigo trata apenas dos litígios relativos a benefícios por incapacidade, inclusive acidentários. Nas demais espécies a declaração é feita sem essa citação.
 
 **2. DOS FATOS.** Três movimentos, nesta ordem.
 
@@ -36,7 +36,7 @@ Primeiro, a pessoa e o vínculo. "A Parte Autora, nascida em [data por extenso],
 
 Segundo, o requerimento e o indeferimento. "Na data de [data por extenso], a Parte Autora pleiteou administrativamente perante o INSS de [agência] o benefício [espécie] (NB [__]), o qual restou **indeferido** em razão de [motivo do indeferimento, com as palavras da decisão]."
 
-Terceiro, a virada. "Entretanto, está equivocado o entendimento da Autarquia Federal, porque [razão central, com o documento que a prova]." Há uma frase de virada pronta para cada motivo de indeferimento, entre colchetes de instrução, e o redator usa só a do caso.
+Terceiro, a virada. "Entretanto, está equivocado o entendimento da Autarquia Federal, porque [razão central, com o documento que a prova]." Há uma frase de virada pronta para cada motivo de indeferimento, entre colchetes de instrução, e o redator usa apenas a do caso.
 
 **2.1. DA [MATÉRIA DE FATO DECISIVA].** Subseção que demonstra o fato controvertido com a prova, como DA INCAPACIDADE, DA ATIVIDADE ESPECIAL, DO TRABALHO RURAL, DA DEPENDÊNCIA ECONÔMICA, DA DEFICIÊNCIA E DA MISERABILIDADE, DA SEQUELA. A sequência é sempre a mesma.
 
@@ -57,11 +57,11 @@ Terceiro, a virada. "Entretanto, está equivocado o entendimento da Autarquia Fe
 7. O Parágrafo de Realidade, na forma de `base-peticao-paragrafo-de-realidade`, quando a peça for de pessoa física.
 8. O fecho do direito. "Deste modo, Excelência, comprovado que [síntese dos requisitos com o número], requer seja [reconhecido/restabelecido] o direito ao [benefício], desde [a data do requerimento administrativo (dd/mm/aaaa) / a data da cessação (dd/mm/aaaa)]."
 
-Seções adicionais entram ENTRE a 3 e os requerimentos, numeradas em sequência, só quando o caso exigir (por exemplo, DA REAFIRMAÇÃO DA DER, DOS EFEITOS FINANCEIROS, DA PRIORIDADE NA TRAMITAÇÃO). O total fica, de preferência, em até seis seções e sete páginas (referência, Onda 181).
+Seções adicionais entram ENTRE a 3 e os requerimentos, numeradas em sequência, apenas quando o caso exigir (por exemplo, DA REAFIRMAÇÃO DA DER, DOS EFEITOS FINANCEIROS, DA PRIORIDADE NA TRAMITAÇÃO). O total fica, de preferência, em cerca de seis seções e sete páginas (referência, Onda 181, tabela na Camada 6 da `base-revisao-peticao-aprofundada`).
 
 Os efeitos financeiros do Tema 1124/STJ ficam protegidos de dois modos. Quando toda a prova integrou o processo administrativo, basta que DOS FATOS diga que os documentos em anexo foram apresentados ao INSS na DER e que o item 3 dos requerimentos fixe o termo inicial na DER. Quando há documento que não foi ao INSS, duas ou mais DERs, prova técnica judicial que confirma documento do processo administrativo ou omissão do INSS em emitir exigência, entra a seção adicional DOS EFEITOS FINANCEIROS, com a classificação de cada documento na forma da `peticao-previdenciaria`.
 
-**[N]. REQUERIMENTOS.** Título literal, sem DA/DO, por ser a forma do titular. "Ante o exposto, requer:" e itens numerados, cada um em parágrafo próprio.
+**[N]. REQUERIMENTOS.** Título literal, sem DA/DO, por ser a forma do titular, única exceção à regra de títulos ao lado de QUESITOS. "Ante o exposto, requer:" e itens numerados, cada um em parágrafo próprio.
 
 1. A citação do Instituto Nacional do Seguro Social. INSS, na pessoa do seu representante legal, para que responda a presente demanda, no prazo legal, sob pena de revelia;
 2. A concessão do benefício da justiça gratuita, em virtude de a Parte Autora não poder arcar com o pagamento das custas processuais e honorários advocatícios sem prejuízo do seu sustento ou de sua família, condição que expressamente declara, na forma dos arts. 98 e 99 do Código de Processo Civil;
@@ -70,7 +70,7 @@ Os efeitos financeiros do Tema 1124/STJ ficam protegidos de dois modos. Quando t
 4. [Somente no rito ordinário] A condenação do Instituto Nacional do Seguro Social. INSS ao pagamento das custas processuais e dos honorários advocatícios (art. 85, § 3º, do CPC, observada a Súmula 111/STJ). No JEF o item sai, porque não há custas nem honorários em primeiro grau (art. 55 da Lei 9.099/95);
 5. Provar o alegado por todos os meios de prova admitidos em direito, especialmente pela via documental anexa e mediante a realização de [perícia judicial com médico especializado / perícia técnica / prova testemunhal / avaliação social], a ser designada por Vossa Excelência.
 
-Itens opcionais, entre colchetes, só quando cabíveis: a prioridade na tramitação (art. 1.048, I, do CPC), a renúncia ao excedente de sessenta salários mínimos no JEF, a intimação para complementar prova administrativa (Tema 1124/STJ, itens 1.4 e 2.2). Tutela de urgência só entra por decisão expressa do titular.
+Itens opcionais, entre colchetes, apenas quando cabíveis: a prioridade na tramitação (art. 1.048, I, do CPC), a renúncia ao excedente de sessenta salários mínimos no JEF, a intimação para complementar prova administrativa (Tema 1124/STJ, itens 1.4 e 2.2). Tutela de urgência entra apenas por decisão expressa do titular (política única na `peticao-previdenciaria`).
 
 Valor da causa. "Dá-se à causa o valor de R$ [__] ([extenso])", correspondente à soma das parcelas vencidas e de doze vincendas (art. 292, §§ 1º e 2º, do CPC), que no JEF define a competência até sessenta salários mínimos.
 
@@ -109,7 +109,7 @@ Os campos a preencher ficam entre colchetes, e as instruções ao redator ficam 
 
 **Lei.** A transcrição é literal, em recuo, com rótulos em negrito, e se limita ao dispositivo cuja interpretação o INSS contestou, no máximo um por seção (Onda 182). O requisito incontroverso recebe remissão na frase. O parágrafo seguinte aplica a norma ao fato. O dispositivo acessório, que não decide o caso, entra na própria frase com o trecho operativo entre aspas, como faz o juízo (Onda 176). Lei transcrita sem aplicação e lei incontroversa transcrita em bloco são, ambas, falhas do método.
 
-**Precedente.** O modelo do titular não cita precedente na inicial de incapacidade, porque a lei e a prova bastam. Nas demais espécies o precedente entra só quando a tese depende dele (como o Tema 555/STF no ruído, o Tema 1007/STJ na híbrida, o Tema 27/STF na renda do BPC), uma única vez, com a tese literal em recuo e a marcação [CONFERIDO] apenas se constar do catálogo da base. Os bancos de teses dos Modelos Ouro guardam o restante para réplica e recurso.
+**Precedente.** O modelo do titular não cita precedente na inicial de incapacidade, porque a lei e a prova bastam. Nas demais espécies o precedente entra apenas quando a tese depende dele (como o Tema 555/STF no ruído, o Tema 1007/STJ na híbrida, o Tema 27/STF na renda do BPC), uma única vez, com a tese literal em recuo e a marcação [CONFERIDO] apenas se constar do catálogo da base. Os bancos de teses dos Modelos Ouro guardam o restante para réplica e recurso.
 
 ## 4. As demais peças, mesma voz
 
@@ -121,7 +121,7 @@ Todas as peças seguem a mesma abertura (endereçamento, qualificação pela fó
 - Manifestação sobre laudo pericial. 1. DO LAUDO PERICIAL (as respostas do perito transcritas), 2. DAS RAZÕES PARA [ACOLHER / AFASTAR] A CONCLUSÃO PERICIAL (documento contra documento), 3. REQUERIMENTOS (esclarecimentos, quesitos complementares, nova perícia).
 - Quesitos e alegações finais. QUESITOS na forma do item 1.3 e, nas alegações, 1. DOS FATOS E DA INSTRUÇÃO, 2. DA PROVA PRODUZIDA, 3. REQUERIMENTOS.
 - Réplica. 1. DA CONTESTAÇÃO, 2. DAS RAZÕES PARA REJEITAR A DEFESA (um argumento do INSS por subseção, refutado com documento e lei), 3. REQUERIMENTOS.
-- Mandado de segurança. Endereçamento à Vara Federal competente, qualificação do impetrante, nome em destaque ("MANDADO DE SEGURANÇA COM PEDIDO LIMINAR"), autoridade coatora, e 1. DA COMPETÊNCIA E DA AUTORIDADE COATORA, 2. DOS FATOS, 3. DO DIREITO LÍQUIDO E CERTO, 4. DA LIMINAR (incluída por padrão, art. 7º, III, da Lei 12.016/2009, e retirada só por decisão do titular, conforme a política de tutela da `peticao-previdenciaria`), 5. REQUERIMENTOS.
+- Mandado de segurança. Endereçamento à Vara Federal competente, qualificação do impetrante, nome em destaque ("MANDADO DE SEGURANÇA COM PEDIDO LIMINAR"), autoridade coatora, e 1. DA COMPETÊNCIA E DA AUTORIDADE COATORA, 2. DOS FATOS, 3. DO DIREITO LÍQUIDO E CERTO, 4. DA LIMINAR (incluída por padrão, art. 7º, III, da Lei 12.016/2009, e retirada apenas por decisão do titular, conforme a política de tutela da `peticao-previdenciaria`), 5. REQUERIMENTOS.
 - Cumprimento de sentença, RPV e implantação. 1. DO TÍTULO JUDICIAL (o dispositivo transcrito), 2. DO CÁLCULO, 3. [DOS HONORÁRIOS / DO DESTAQUE / DA IMPLANTAÇÃO], 4. REQUERIMENTOS.
 
 ## 5. O que o método corrigiu no modelo de origem

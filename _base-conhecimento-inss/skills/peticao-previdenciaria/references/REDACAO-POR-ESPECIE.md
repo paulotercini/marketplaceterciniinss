@@ -52,7 +52,7 @@ Redação mais cuidadosa. "O diagnóstico foi estabelecido em [data]. O afastame
 
 ### 5. Impugnar o laudo por uma falha identificável
 
-Evitam-se ataques genéricos à perícia. A impugnação fica mais consistente quando identifica a lacuna, explica sua importância e formula o esclarecimento necessário.
+Evitam-se impugnações genéricas à perícia. A impugnação fica mais consistente quando identifica a lacuna, explica sua importância e formula o esclarecimento necessário.
 
 Redação genérica. "O laudo é superficial, contraditório e não corresponde à realidade da autora."
 
@@ -130,7 +130,7 @@ O ganho é que a petição localiza o problema que impede a concessão e demonst
 
 ## Aposentadoria pelas regras de transição
 
-Evita-se mencionar simultaneamente todas as regras sem demonstrar qual foi preenchida. A redação escolhe a hipótese defendida e apresenta a respectiva apuração. Pontos, idade progressiva e pedágios têm requisitos distintos, nos arts. 15 a 20 da EC 103/2019.
+Evita-se mencionar simultaneamente todas as regras sem demonstrar qual foi preenchida. A redação escolhe a hipótese defendida e apresenta a respectiva apuração. Pontos, idade progressiva e pedágios têm requisitos distintos, nos arts. 15, 16, 17 e 20 da EC 103/2019.
 
 Para a regra de pontos. "Em [data], o autor contava com [idade] e [tempo de contribuição], alcançando [pontuação], conforme cálculo discriminado. A pontuação deve ser confrontada com a exigência correspondente ao ano de [ano], além do tempo mínimo de contribuição e da carência. A divergência administrativa concentra-se no vínculo de [período], cuja inclusão modifica o resultado apresentado pelo INSS."
 
