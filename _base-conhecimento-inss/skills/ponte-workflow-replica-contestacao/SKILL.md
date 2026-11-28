@@ -7,11 +7,11 @@ description: "Workflow pró-segurado para responder à contestação do INSS, do
 
 ## 1. Quando acionar
 
-Sempre que houver contestação do INSS a responder. Pressupõe o mapa de ataque já produzido pela `base-analise-contestacao-inss`. A réplica cabe quando o INSS alega fato impeditivo, modificativo ou extintivo (CPC, art. 350), argui preliminar do art. 337 (art. 351) ou junta documento (art. 437, §1º), sempre em 15 dias. Sem gatilho, avaliar se a réplica agrega.
+Sempre que houver contestação do INSS a responder. Pressupõe o mapa da réplica já produzido pela `base-analise-contestacao-inss`. A réplica cabe quando o INSS alega fato impeditivo, modificativo ou extintivo (CPC, art. 350), argui preliminar do art. 337 (art. 351) ou junta documento (art. 437, §1º), sempre em 15 dias. Sem gatilho, avaliar se a réplica agrega.
 
 ## 2. Pipeline executável
 
-### Passo 1. Importar o mapa de ataque
+### Passo 1. Importar o mapa da réplica
 
 Trazer da `base-analise-contestacao-inss` os cinco blocos, preliminares, fatos incontroversos, mérito defensivo, impugnação à prova e provas a especificar.
 

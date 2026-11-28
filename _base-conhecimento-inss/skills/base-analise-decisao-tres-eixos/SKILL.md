@@ -7,7 +7,7 @@ description: "Roteiro obrigatório de análise de toda decisão previdenciária,
 
 ## Escopo
 
-Skill orquestradora pró-segurado. Toda decisão recebida, sentença, acórdão, decisão do CRPS ou decisão administrativa do INSS, passa primeiro por uma auditoria forense contra os autos e depois pela triagem em três eixos. O produto é o mapa de ataque à decisão, não a peça final.
+Skill orquestradora pró-segurado. Toda decisão recebida, sentença, acórdão, decisão do CRPS ou decisão administrativa do INSS, passa primeiro por uma auditoria forense contra os autos e depois pela triagem em três eixos. O produto é o mapa de impugnação à decisão, não a peça final.
 
 ## Regra de ativação
 
@@ -69,7 +69,7 @@ Para a fundamentação, acionar `precedentes-previdenciarios` e o eixo probatór
 
 ## Sequência de decisão
 
-Primeiro, rodar a Fase 0 e montar o mapa de ataque.
+Primeiro, rodar a Fase 0 e montar o mapa de impugnação.
 
 Segundo, existe vício do eixo 1 que anule ou reduza a decisão? Tratar.
 
@@ -101,7 +101,7 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 ## Integração com outras skills
 
-Este roteiro é o ponto de entrada. A Fase 0 produz o mapa de ataque. Para arquitetar o recurso por rito, acionar `ponte-workflow-recurso-sentenca`. Para redigir a peça escolhida, acionar `peticao-previdenciaria`. Para auditar a peça, acionar `revisao-peticao`.
+Este roteiro é o ponto de entrada. A Fase 0 produz o mapa de impugnação. Para arquitetar o recurso por rito, acionar `ponte-workflow-recurso-sentenca`. Para redigir a peça escolhida, acionar `peticao-previdenciaria`. Para auditar a peça, acionar `revisao-peticao`.
 
 ## O que NÃO está nesta skill
 

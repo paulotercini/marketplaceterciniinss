@@ -7,11 +7,11 @@ description: "Workflow pró-segurado para atacar decisão contrária ao segurado
 
 ## 1. Quando acionar
 
-Sempre que houver decisão contrária ao segurado a ser atacada, sentença, acórdão, decisão do CRPS ou decisão interlocutória gravosa. Pressupõe o mapa de ataque já produzido pela `base-analise-decisao-tres-eixos`. Se ainda não houver diagnóstico, rodar antes a `base-analise-decisao-tres-eixos`.
+Sempre que houver decisão contrária ao segurado a ser atacada, sentença, acórdão, decisão do CRPS ou decisão interlocutória gravosa. Pressupõe o mapa de impugnação já produzido pela `base-analise-decisao-tres-eixos`. Se ainda não houver diagnóstico, rodar antes a `base-analise-decisao-tres-eixos`.
 
 ## 2. Pipeline executável
 
-### Passo 1. Importar o mapa de ataque
+### Passo 1. Importar o mapa de impugnação
 
 Trazer da `base-analise-decisao-tres-eixos` os achados dos cinco passos da Fase 0, omissões, confronto fático-probatório, nulidades, ratio e contra-precedente. Confirmar a via de cada achado, embargos ou recurso, e o eixo correspondente.
 
@@ -55,7 +55,7 @@ A família `base-auditoria-adversarial-contestacao-inss` e `base-auditoria-adver
 
 ## 3. Documentos essenciais
 
-Decisão recorrida. Comprovante de ciência e cálculo do prazo. Peças e documentos dos autos citados por ID no mapa de ataque. Acórdão paradigma quando o recurso for especial ou de uniformização.
+Decisão recorrida. Comprovante de ciência e cálculo do prazo. Peças e documentos dos autos citados por ID no mapa de impugnação. Acórdão paradigma quando o recurso for especial ou de uniformização.
 
 ## 4. Pontos críticos pró-segurado
 

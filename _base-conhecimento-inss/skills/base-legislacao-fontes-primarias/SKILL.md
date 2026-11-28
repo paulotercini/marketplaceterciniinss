@@ -147,8 +147,8 @@ Esta skill deve ser acionada AUTOMATICAMENTE em conjunto com.
 - `revisao-peticao` durante a auditoria, conferindo cada citação contra o repositório.
 - `base-portarias-dpmf-inss-hub` quando for citar Portarias 990-996/2022 (a taxonomia corrigida está aqui).
 - `precedentes-previdenciarios` quando for amarrar artigo de norma a precedente jurisprudencial.
-- `documentos-comprobatorios-in128` quando for citar arts. da IN 128/2022 sobre documentação.
-- `cnis-acerto-indicadores` quando for citar arts. das Portarias 990/2022 e 991/2022.
+- `base-documentos-comprobatorios-in128` quando for citar arts. da IN 128/2022 sobre documentação.
+- `base-cnis-acerto-indicadores` quando for citar arts. das Portarias 990/2022 e 991/2022.
 
 ## ATUALIZAÇÃO DO REPOSITÓRIO
 

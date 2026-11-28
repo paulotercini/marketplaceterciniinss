@@ -57,7 +57,7 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   de segurado/carencia; PPP extemporaneo ou sem NEN; EPI eficaz (Tema 555);
   coabitacao na pensao; etc.
 - Consulte `base-revisao-peticao-aprofundada`, `base-efeito-translativo-tema-1124-defesa`
-  e as `base-especial-*`/`defesa-probatoria` pertinentes. Reforce a peca contra cada
+  e as `base-especial-*`/`defesa-probatoria-especial` pertinentes. Reforce a peca contra cada
   fragilidade encontrada. Citacao suspeita apontada pelo red-team segue ao agente
   `verificador-precedentes` para conferencia em fonte oficial.
 - Na mesma rodada, despache ao agente `base-conhecimento-inss:conferente-tema-1124`

@@ -81,7 +81,7 @@ Lei 15.157/2025. Dispensa de reavaliação.
 
 LC 142/2013. Aposentadoria PCD.
 
-Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014. IF-BrA.
+Portaria Interministerial SDH/MPS/MF/MOG/AGU 1/2014. IF-BrA.
 
 ## 4. Checklist A. Validação de laudo para incapacidade (B31, B32, B91, B92, B94)
 

@@ -96,7 +96,7 @@ Nunca esquecer o outro lado do BPC, a avaliação social alcança renda e compos
 
 ### Aposentadoria PCD (LC 142/2013)
 
-O ponto decisivo é que NÃO se trata de incapacidade. O cliente pode estar trabalhando, e isso não prejudica nada. O que se avalia é a DEFICIÊNCIA funcional nos domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014), lida em conjunto com a LBI (Lei 13.146/2015), impedimento em interação com barreiras.
+O ponto decisivo é que NÃO se trata de incapacidade. O cliente pode estar trabalhando, e isso não prejudica nada. O que se avalia é a DEFICIÊNCIA funcional nos domínios do IF-BrA (Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014), lida em conjunto com a LBI (Lei 13.146/2015), impedimento em interação com barreiras.
 
 Erro clássico que a reunião existe para evitar, o cliente minimizar a limitação por orgulho ou por medo de parecer incapaz para o emprego atual. Explicar que a avaliação mede a dificuldade COM E SEM os apoios, e que relatar a rotina real (com as adaptações, os ajutórios da família, o esforço extra que ninguém vê) é o que pontua.
 
@@ -142,7 +142,7 @@ Sexta, português correto do padrão do escritório, sem dois-pontos introduzind
 
 ## Nota de grafia
 
-A portaria do IF-BrA é a Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (DOU de 30/01/2014).
+A portaria do IF-BrA é a Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014 (DOU de 30/01/2014).
 
 ## Extensão
 

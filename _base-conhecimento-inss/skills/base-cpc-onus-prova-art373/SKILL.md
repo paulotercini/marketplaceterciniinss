@@ -27,7 +27,7 @@ Regra geral, ônus estático. Exceção, distribuição dinâmica, que desloca o
 
 ## Aplicação previdenciária
 
-Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ. A falta de início de prova material leva à extinção sem resolução de mérito, com possibilidade de repropositura (Tema 629 STJ). Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
+Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ. A falta de início de prova material leva à extinção sem resolução de mérito, com possibilidade de repropositura (Tema 629 STJ). Acionar `segurado-especial-rural` e `base-documentos-comprobatorios-in128`.
 
 Segundo, dados em poder do INSS. CNIS, microficha, PPP arquivado, dossiê e processo administrativo estão com o INSS. Exigir do segurado a prova que apenas o INSS detém viola o art. 373, §1º. Requerer a distribuição dinâmica ou a exibição (art. 396).
 
@@ -58,7 +58,7 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 ## Integração com outras skills
 
 Acionada pelo eixo 3 de `base-analise-decisao-tres-eixos` na frente probatória.
-Para prova documental e checklist, acionar `documentos-comprobatorios-in128`.
+Para prova documental e checklist, acionar `base-documentos-comprobatorios-in128`.
 Para rural e segurado especial, acionar `segurado-especial-rural`.
 Para cerceamento por indeferimento de prova, acionar `base-cpc-nulidades-cerceamento`.
 Para precedentes de prova, acionar `precedentes-previdenciarios`.

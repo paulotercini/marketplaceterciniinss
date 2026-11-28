@@ -64,7 +64,7 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 ## Integração com outras skills
 
 Acionada pelo eixo de instrução de `base-analise-decisao-tres-eixos`.
-Para o rol documental do benefício, acionar `documentos-comprobatorios-in128`.
+Para o rol documental do benefício, acionar `base-documentos-comprobatorios-in128`.
 Para fato superveniente, acionar `base-cpc-fato-superveniente-art493`.
 Para sentença trabalhista como prova, acionar `base-reclamatoria-trabalhista-prova-previdenciaria`.
 Para requerimento de provas, acionar `especificacao-provas`.

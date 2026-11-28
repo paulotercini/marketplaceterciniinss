@@ -199,7 +199,7 @@ Esta skill DEVE ser acionada em conjunto com.
 - `tema-1124-instrucao-administrativa` para Tema 1124/STJ.
 - `base-cpc-tutela-provisoria-previdenciaria` para tutela de urgência.
 - `base-cpc-honorarios-sucumbencia-previdenciaria` para honorários.
-- `documentos-comprobatorios-in128` para matriz probatória.
+- `base-documentos-comprobatorios-in128` para matriz probatória.
 
 ## NÚCLEOS DE JUSTIÇA 4.0 DO TRF3 (REMESSA E PERMANÊNCIA)
 

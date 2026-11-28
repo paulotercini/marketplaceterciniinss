@@ -191,7 +191,7 @@ Verificar se a decisão aplicou corretamente os §§1º, 2º e 4º do art. 15. V
 
 ### 6.3 Ao orientar sobre documentação
 
-Acionar `documentos-comprobatorios-in128` para documentos gerais. Acionar `inss-canais-atendimento` para canal adequado. A IN 188/2025 determina que o Meu INSS é o canal preferencial.
+Acionar `base-documentos-comprobatorios-in128` para documentos gerais. Acionar `inss-canais-atendimento` para canal adequado. A IN 188/2025 determina que o Meu INSS é o canal preferencial.
 
 ### 6.4 Temas pendentes a acompanhar
 

@@ -23,7 +23,7 @@ Quando o título remeter o termo inicial dos efeitos financeiros ao cumprimento 
 
 ### Passo 2. Cotejo com o CNIS
 
-Acionar `cnis-acerto-indicadores` para conferir o CNIS atualizado contra a planilha do INSS. Identificar vínculos não computados, salários de contribuição divergentes, indicadores PEXT que ainda bloqueiem implementação.
+Acionar `base-cnis-acerto-indicadores` para conferir o CNIS atualizado contra a planilha do INSS. Identificar vínculos não computados, salários de contribuição divergentes, indicadores PEXT que ainda bloqueiem implementação.
 
 Quando o cumprimento for de revisão pelo Tema 1.070/STJ, acionar `impugnacao-cumprimento-concomitantes` desde já para identificar padrões de descumprimento e contribuições não somadas.
 

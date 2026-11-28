@@ -41,7 +41,7 @@ Onde o INSS impugna documento do segurado ou tenta deslocar o ônus para a parte
 
 ## Passo 5. Mapa da réplica
 
-Consolidar os achados no mapa da réplica, que as skills `ponte-*` chamam de mapa de ataque. Para cada ponto, registrar a natureza (incontroverso, preliminar ou mérito), a via de resposta, o documento por ID e o precedente [CONFERIDO] que sustenta a réplica, e as provas a especificar. Esse mapa é a entrada da `ponte-workflow-replica-contestacao`.
+Consolidar os achados no mapa da réplica. Para cada ponto, registrar a natureza (incontroverso, preliminar ou mérito), a via de resposta, o documento por ID e o precedente [CONFERIDO] que sustenta a réplica, e as provas a especificar. Esse mapa é a entrada da `ponte-workflow-replica-contestacao`.
 
 ## Disciplina antialucinação
 
