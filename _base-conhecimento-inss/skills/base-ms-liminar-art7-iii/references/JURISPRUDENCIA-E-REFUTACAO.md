@@ -1,127 +1,33 @@
 # Liminar em MS. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes e enunciados
 
-### Súmula 212 STJ
+ADI 4.296/DF, STF, Plenário, j. 09/06/2021. Tese: "É inconstitucional ato normativo que vede ou condicione a concessão de medida liminar na via mandamental." Declarados inconstitucionais o art. 7º, §2º, e o art. 22, §2º, da Lei 12.016/2009; mantida a caução facultativa do art. 7º, III.
 
-Compensação tributária. Súmula CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022) (auditoria 03/10/2026).
+Súmula 405 STF: "Denegado o mandado de segurança pela sentença, ou no julgamento do agravo, dela interposto, fica sem efeito a liminar concedida, retroagindo os efeitos da decisão contrária." Enunciado adverso ao impetrante; a resposta é instruir a inicial com prova completa.
 
-Fonte oficial em https://www.stj.jus.br
+Súmula 729 STF: "A decisão na ADC-4 não se aplica à antecipação de tutela em causa de natureza previdenciária."
 
-### Súmula 405 STF
+Tema 692 STJ (revisado em 2022). Devolução dos valores recebidos por tutela posteriormente revogada, com desconto de até 30% do benefício. Risco, não fundamento.
 
-"Denegado o mandado de segurança pela sentença, ou no julgamento do agravo, dela interposto, fica sem efeito a liminar concedida, retroagindo os efeitos da decisão contrária." Tese adversa ao impetrante; o caminho do segurado é instruir a inicial com prova pré-constituída completa (auditoria 03/10/2026).
+Súmula 212 STJ (compensação tributária por liminar). Cancelada pela 1ª Seção em setembro de 2022; matéria tributária, sem aplicação ao previdenciário. Registro histórico.
 
-Fonte oficial em https://portal.stf.jus.br
+## 2. Refutação aos argumentos típicos do INSS
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
+1. Ausência de fundamento relevante. Refutação. A ilegalidade está provada pelos documentos do próprio PA.
 
-Duração razoável.
+2. Irreversibilidade. Refutação. A Lei 12.016/2009 não traz vedação por irreversibilidade; o dano irreversível é o do segurado sem verba alimentar. O ressarcimento da autarquia, se revogada a liminar, está assegurado pelo Tema 692 STJ.
 
-Fonte oficial em https://portal.stf.jus.br
+3. Vedação a "pagamento de qualquer natureza" (art. 7º, §2º). Refutação. Dispositivo declarado inconstitucional na ADI 4.296.
 
-### Tema 692/STJ (devolução na tutela revogada)
+4. Vedação de tutela contra a Fazenda (ADC 4 e Lei 9.494/97). Refutação. Súmula 729 STF.
 
-Devolução obrigatória com teto de 30 por cento (auditoria 25/07/2026, corte corrigida).
+5. Necessidade de caução. Refutação. A caução é faculdade do juiz; gratuidade e caráter alimentar justificam a dispensa.
 
-### Súmula 729 STF
+6. Liminar com efeito patrimonial vedada (Súmula 271 STF). Refutação. A implantação gera prestações futuras, não pagamento de período pretérito.
 
-Fazenda Pública.
+7. Grave lesão à economia pública (art. 15). Refutação. Liminar individual de benefício não tem repercussão sistêmica; o ônus da prova da lesão é do requerente da suspensão.
 
-## 2. Marco legislativo
+8. Autoridade coatora errada. Refutação conforme `ms-competencia-autoridade-coatora` (encampação ou emenda).
 
-### Lei 12.016/2009, art. 7º
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.437/1992
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 9.494/1997
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Ausência de fumus
-
-Argumento adversário. Dúvida.
-
-Refutação. Documentação idônea assegura.
-
-### Argumento 2. Irreversibilidade
-
-Argumento adversário. Art. 7º §3º.
-
-Refutação. Caráter alimentar; atenção, o Tema 692/STJ impõe devolução se a liminar cair (auditoria 25/07/2026).
-
-### Argumento 3. Vedação do §2º
-
-Argumento adversário. Vantagem pecuniária.
-
-Refutação. Benefício do segurado não é vantagem funcional.
-
-### Argumento 4. Suspensão de segurança
-
-Argumento adversário. Lesão grave.
-
-Refutação. Não se configura em liminar individual.
-
-### Argumento 5. Caução exigível
-
-Argumento adversário. Garantia.
-
-Refutação. Justiça gratuita afasta.
-
-### Argumento 6. ADC 4
-
-Argumento adversário. A decisão na ADC 4 veda tutela contra a Fazenda.
-
-Refutação. A Súmula 729 STF afasta a ADC 4 da antecipação de tutela em causa previdenciária (auditoria 03/10/2026).
-
-### Argumento 7. Compensação de pagamentos
-
-Argumento adversário. Valores.
-
-Refutação. A Súmula 212 STJ tratava só de compensação tributária e foi cancelada em 14/09/2022 (PS 375, DJe 19/09/2022) (auditoria 03/10/2026).
-
-### Argumento 8. Liminar para efeitos financeiros vedada
-
-Argumento adversário. Súmula 271 STF.
-
-Refutação. Implantação pró-segurado não é pagamento pretérito.
-
-### Argumento 9. Falta de autoridade coatora correta
-
-Argumento adversário. Extinção.
-
-Refutação. Emenda art. 6º §3º.
-
-### Argumento 10. Decadência afasta liminar
-
-Argumento adversário. 120 dias.
-
-Refutação. Omissão renova.
-
-## 5. Estratégia integrada
-
-Primeiro, fundamentação.
-
-Segundo, prova.
-
-Terceiro, autoridade correta.
-
-Quarto, multa.
-
-Quinto, agravo.
-
-Sexto, resistência a suspensão.
-
-## 6. Diligência de atualização
-
-Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
-
-Revalidar Tema 692/STJ.
-
-Revalidar a Súmula 729 STF, favorável ao segurado (auditoria 03/10/2026).
+9. Decadência. Refutação. Omissão continuada renova o prazo (`base-ms-decadencia-omissao-demora`).

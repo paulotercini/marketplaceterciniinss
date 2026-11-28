@@ -1,125 +1,31 @@
 # Liminar em MS. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento normativo
 
-Liminar do MS é provimento de urgência para resguardar o direito durante o processo. Requisitos são fumus boni iuris e periculum in mora. Em previdenciário, o caráter alimentar reforça os requisitos.
+CF, art. 5º, XXXV, LXIX e LXXVIII; art. 201 (caráter alimentar do benefício).
 
-## 2. Fundamento constitucional
+Lei 12.016/2009: art. 7º, III (requisitos e caução facultativa), §1º (agravo de instrumento), §3º (duração até a sentença), §4º (prioridade); art. 8º (perempção); art. 15 (suspensão de segurança); art. 16, parágrafo único (agravo contra decisão do relator).
 
-Art. 5º LXIX CF/88.
+ADI 4.296 (j. 09/06/2021). Inconstitucionalidade do art. 7º, §2º, e do art. 22, §2º; constitucionalidade da caução facultativa do art. 7º, III.
 
-Art. 5º XXXV CF/88.
+## 2. Cenários e prova para a liminar
 
-Art. 5º LXXVIII CF/88.
+A. Benefício indeferido por fundamento apenas jurídico. Prova da ilegalidade no próprio PA; risco pela ausência de renda. Pedido de implantação em 15 dias, sob multa.
 
-Art. 201 CF/88.
+B. Cessação ilegal (sem perícia, sem notificação, contra decisão do CRPS). Prova da cessação e da regra violada. Pedido de restabelecimento.
 
-## 3. Fundamento legal
+C. Acórdão do CRPS não cumprido. Prova do acórdão, da devolução ao INSS e da inércia. Pedido de implantação.
 
-Lei 12.016/2009, art. 7º III.
+D. Demora na análise. Prova do tempo líquido de tramitação. Pedido de decisão em prazo fixado, não de concessão.
 
-Lei 12.016/2009, art. 7º §2º.
+E. Exigência sem previsão normativa. Pedido de prosseguimento da análise sem a exigência.
 
-Lei 12.016/2009, art. 14.
+F. PA arquivado sem motivação. Pedido de reabertura e análise.
 
-Lei 8.437/92.
+## 3. Cenários limitados
 
-Lei 9.494/97.
+Direito que depende de perícia ou prova oral não sustenta liminar em MS; usar ação ordinária com tutela (`base-cpc-tutela-provisoria-previdenciaria`), observada a regra do escritório de não pedir tutela de urgência em concessão no JEF e no rito ordinário.
 
-## 4. Marco jurisprudencial central
+## 4. Riscos
 
-### Súmula 212 STJ
-
-Compensação tributária. Súmula CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022) (auditoria 03/10/2026).
-
-### Súmula 405 STF
-
-Denegada a segurança, a liminar fica sem efeito, com retroação (auditoria 03/10/2026).
-
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Duração razoável.
-
-### Tema 692/STJ (devolução na tutela revogada)
-
-Devolução obrigatória com teto de 30 por cento; pesar o risco antes de pedir liminar (auditoria 25/07/2026, corte corrigida).
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Implantação liminar
-
-Benefício pronto.
-
-### Cenário B. Restabelecimento
-
-Cessação ilegal.
-
-### Cenário C. Cumprimento CRPS
-
-Omissão do INSS.
-
-### Cenário D. Reabertura PA
-
-Arquivamento sem fundamento.
-
-### Cenário E. Exigência abusiva
-
-Liminar para afastar.
-
-### Cenário F. Cessação por demora
-
-Perícia pendente.
-
-## 6. Cenários limitados
-
-### Cenário G. Vedação legal
-
-Art. 7º §2º Lei 12.016.
-
-### Cenário H. Suspensão de segurança
-
-Lei 8.437/92.
-
-### Cenário I. Ação com perícia
-
-Via ordinária.
-
-## 7. Metodologia
-
-Primeiro, fumus e periculum.
-
-Segundo, requerer no corpo da inicial.
-
-Terceiro, garantir autoridade coatora correta.
-
-Quarto, acompanhar decisão.
-
-Quinto, agravar se indeferida.
-
-Sexto, resistir a suspensão.
-
-## 8. Riscos processuais
-
-Risco de revogação.
-
-Risco de devolução em má-fé.
-
-Risco de suspensão de segurança.
-
-Risco de exigibilidade de caução.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, fundamentação robusta.
-
-Segundo, prova pré-constituída sólida.
-
-Terceiro, enfatizar caráter alimentar.
-
-Quarto, requerer multa por descumprimento.
-
-Quinto, agravar quando necessário.
-
-## 10. Integração prática
-
-`base-ms-cabimento-direito-liquido-certo`, `base-ms-competencia-autoridade-coatora-inss-crps`, `peticao-previdenciaria`, `base-cpc-tutela-provisoria-previdenciaria`, `mandado-seguranca-previdenciario`.
+Revogação e devolução (Tema 692 STJ). Suspensão de segurança (art. 15). Exigência de caução, a afastar pela gratuidade e pelo caráter alimentar.

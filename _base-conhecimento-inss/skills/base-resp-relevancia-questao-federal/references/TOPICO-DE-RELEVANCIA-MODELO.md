@@ -1,20 +1,10 @@
-# Tópico de Relevância no REsp Previdenciário. Moldura Doutrinária e Modelo
+# Tópico de Relevância no REsp Previdenciário. Modelo
 
-Onda 91 (26/07/2026). Reúne a moldura teórica do filtro, a posição do escritório e o modelo de redação do tópico próprio.
+Modelo de redação do tópico próprio, triagem das vias e defesa contra a inadmissão.
 
-## Moldura doutrinária, a tese da explicitação
+## Posição do escritório
 
-Corrente doutrinária relevante sustenta que a exigência de demonstrar relevância inaugura uma formalidade nova na redação do recurso, mas não um requisito novo em substância. O argumento tem três passos. A função constitucional do REsp sempre foi assegurar a interpretação uniforme da legislação federal, nunca corrigir a injustiça do caso concreto. Daí decorre que o recurso sempre pressupôs controvérsia capaz de ultrapassar o interesse exclusivo das partes e de orientar a solução de inúmeros casos semelhantes. Logo, a transcendência já estava implícita no art. 105, III, da CF, e a EC 125/2022 apenas explicitou o que decorria da natureza do recurso.
-
-Consequência prática apontada por essa corrente. O recorrente passa a ter DOIS ônus argumentativos autônomos, a violação à lei federal e, em tópico próprio, a razão técnica e objetiva pela qual aquela controvérsia repercute nacionalmente.
-
-## Posição do escritório, a leitura pró-segurado
-
-A tese é elegante e historicamente correta quanto à finalidade do REsp, mas suaviza o efeito real do filtro, e por isso não deve ser adotada sem ressalva.
-
-Antes da EC 125/2022, a transcendência era pressuposto teórico NÃO FISCALIZADO no juízo de admissibilidade. Depois dela, tornou-se requisito formal autônomo, com inadmissão possível pela sua simples ausência. Da perspectiva do segurado, que litiga por benefício de caráter alimentar e valor modesto, isso é barreira concreta de acesso ao STJ, não mero ajuste redacional.
-
-Duas consequências operacionais. Primeira, o tópico de relevância é obrigatório em toda peça, sem exceção, porque sem ele o recurso morre na porta. Segunda, a tese da explicitação tem uso DEFENSIVO valioso. Quando o STJ ou o tribunal de origem inadmitir por irrelevância, invocar que a transcendência sempre integrou a natureza do REsp permite sustentar que a demonstração já estava materialmente contida nas razões recursais, atacando o rigor puramente formal da inadmissão. Usar como escudo, nunca como desculpa para não redigir o tópico.
+A demonstração da relevância passou a ser requisito formal autônomo, com inadmissão pela simples ausência do tópico (CPC, art. 1.035-A, §§2º e 3º). Para o segurado, que litiga por verba alimentar de valor modesto, isso é barreira concreta de acesso ao STJ. O tópico entra em toda peça. Na defesa contra a inadmissão, sustentar que a transcendência integra a função do REsp e já estava contida nas razões recursais.
 
 ## Base normativa conferida
 
@@ -28,13 +18,13 @@ Art. 2º da EC 125/2022. A relevância "será exigida nos recursos especiais int
 
 Percorrer nesta ordem e parar na primeira que couber.
 
-Via 1, inciso V, presunção por contrariedade a jurisprudência dominante do STJ. É a porta natural do previdenciarista. Exige identificar o precedente qualificado violado e transcrever a tese em redação literal, conferida no `base-precedentes-catalogo-vinculantes` ou no catálogo complementar da `auditoria-citacoes`. Quando cabe, a relevância é PRESUMIDA e o ônus argumentativo cai drasticamente.
+Via 1, inciso V, presunção por contrariedade a jurisprudência dominante do STJ. É a porta natural do previdenciarista. Exige identificar o precedente qualificado violado e transcrever a tese em redação literal, conferida no `base-precedentes-catalogo-vinculantes` ou no catálogo complementar da `auditoria-citacoes`. Quando cabe, a relevância é PRESUMIDA e o ônus argumentativo diminui.
 
 Via 2, inciso III, presunção por valor da causa acima de 500 salários mínimos. Rara no previdenciário individual, viável em revisões de grande repercussão econômica e em execuções acumuladas. Lembrar da faculdade do art. 2º da EC 125/2022 de ATUALIZAR o valor da causa para esse fim.
 
 Via 3, relevância demonstrada. Quando nenhuma presunção couber, construir a demonstração em três dimensões, jurídica (a tese se repete em milhares de processos e não há orientação uniforme), social (o benefício tem natureza alimentar e a controvérsia atinge população vulnerável) e econômica (impacto no custeio ou nas contas do segurado). Nunca genérica, sempre ancorada em dado do caso.
 
-Via 4, inciso VI, outras hipóteses previstas em lei. Depende da lei do PL 3.085/2026. Conferir o status na skill antes de invocar.
+Via 4, inciso VI, outras hipóteses previstas em lei. A Lei 15.484/2026 não acrescentou hipótese de presunção; o art. 1.035-A, §4º, remete ao art. 105, §3º, da CF.
 
 ## Modelo do tópico, via inciso V (presunção)
 
@@ -91,15 +81,15 @@ concreto, mas de questão cuja solução é apta a orientar, de modo
 uniforme, a aplicação da legislação federal.
 ```
 
-## Erros que matam o tópico
+## Erros frequentes
 
 Primeiro, diluir a relevância dentro do tópico de violação à lei federal. São dois ônus autônomos e o tópico precisa ser PRÓPRIO, com título destacado.
 
-Segundo, argumentar a injustiça do caso. Isso confirma ao relator exatamente o que o filtro existe para barrar. A relevância se demonstra pela transcendência, nunca pelo prejuízo individual.
+Segundo, argumentar a injustiça do caso. O filtro existe para afastar esse argumento. A relevância se demonstra pela transcendência, nunca pelo prejuízo individual.
 
 Terceiro, invocar o inciso V sem transcrever a tese literal e sem fazer o cotejo. Presunção alegada não é presunção demonstrada.
 
-Quarto, citar precedente não conferido. Tese errada no tópico de relevância derruba o recurso e ainda expõe a peça. Lote de três ou mais citações vai ao agente `verificador-precedentes`.
+Quarto, citar precedente não conferido. Tese errada no tópico de relevância leva à inadmissão. Lote de três ou mais citações vai ao agente `verificador-precedentes`.
 
 Quinto, adjetivo no lugar de dado. "Questão da maior relevância nacional" não demonstra nada. Número de processos, divergência identificada e universo de atingidos demonstram.
 
@@ -109,13 +99,13 @@ Sexto, esquecer o resumo do art. 343-A do RISTJ, exigência regimental distinta 
 
 Primeiro, quórum. O não conhecimento com base nesse motivo exige manifestação de 2/3 dos membros do órgão competente (art. 105, § 2º, da CF). Decisão monocrática ou colegiada sem esse quórum é atacável.
 
-Segundo, fundamentação. A inadmissão genérica não satisfaz o art. 489, § 1º, do CPC, ver `base-cpc-fundamentacao-art489`.
+Segundo, fundamentação. A inadmissão genérica não satisfaz o art. 489, § 1º, do CPC, ver `base-cpc-fundamentacao-art489`. A decisão do STJ que nega a relevância é irrecorrível (art. 1.035-A, caput); a impugnação cabe contra a inadmissão na origem ou por embargos de declaração em caso de omissão.
 
 Terceiro, presunção ignorada. Se o caso se enquadrava em hipótese do § 3º, a inadmissão por irrelevância contraria a própria Constituição, porque a presunção não comporta juízo discricionário.
 
-Quarto, tese da explicitação como escudo, na forma da posição do escritório acima.
+Quarto, transcendência já contida nas razões recursais, na forma da posição do escritório acima.
 
-Quinto, marco temporal. O filtro só alcança REsp interposto após a vigência da EC 125/2022 (art. 2º), e a exigibilidade plena depende da lei de regulamentação. Guardar a data de interposição.
+Quinto, marco temporal. O tópico é exigido nos recursos interpostos contra acórdãos publicados após a vigência da Lei 15.484/2026 (art. 4º). Conferir a data de publicação do acórdão recorrido.
 
 ## Cruzamentos
 

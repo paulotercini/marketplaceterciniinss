@@ -1,180 +1,69 @@
 ---
 name: ms-competencia-autoridade-coatora
-description: "Fonte primária OPERACIONAL para definir QUEM é a autoridade coatora e ONDE impetrar mandado de segurança previdenciário contra o INSS. Use SEMPRE que mencionar mandado de segurança contra o INSS, autoridade coatora INSS, CEAB, Central de Análise de Benefícios, gerente executivo INSS, demora INSS, omissão administrativa INSS, competência em MS previdenciário, Vara Cível Federal, Vara Previdenciária, conflito de competência MS INSS, Tema 374 STF, art. 109 §2º CF, sede funcional, foro do domicílio do impetrante, e SEMPRE que peticao-previdenciaria for acionada para criar MS. Para a doutrina aprofundada dos órgãos do CRPS como autoridade coatora (Junta de Recursos, Câmara de Julgamento, Conselho Pleno, CEAB-DJ, ato complexo, deslocamento de competência), ver base-ms-competencia-autoridade-coatora-inss-crps. NÃO use para o mérito do benefício."
+description: "Fonte operacional para definir QUEM é a autoridade coatora e ONDE impetrar mandado de segurança previdenciário contra o INSS e o CRPS. Use SEMPRE que mencionar mandado de segurança contra o INSS, autoridade coatora INSS, CEAB, Central de Análise de Benefícios, gerente executivo INSS, demora INSS, omissão administrativa INSS, competência em MS previdenciário, Vara Cível Federal, Vara Previdenciária, conflito de competência MS INSS, Tema 374 STF, art. 109 §2º CF, Súmula 689 STF, sede funcional, foro do domicílio do impetrante, teoria da encampação, e SEMPRE que peticao-previdenciaria for acionada para criar MS. Competência material no TRF3 e órgãos do CRPS em detalhe em base-ms-competencia-autoridade-coatora-inss-crps. NÃO use para o mérito do benefício."
 ---
 
-# Competência e Autoridade Coatora em Mandado de Segurança Previdenciário
+# Competência e Autoridade Coatora no MS Previdenciário
 
-## Visão Geral
+Esta skill concentra o detalhe de autoridade coatora e foro. A `base-ms-competencia-autoridade-coatora-inss-crps` remete para cá e guarda o detalhe da competência material no TRF3.
 
-Esta skill define as regras de competência territorial, competência material e identificação da autoridade coatora em mandados de segurança contra o INSS, com base na CF/88, Lei 12.016/2009, jurisprudência do STF, STJ e TRF3, e na estrutura administrativa do INSS (CEABs, Gerências Executivas, Superintendências Regionais e CRPS).
+## Regra fundamental
 
-## Regra Fundamental
+A autoridade coatora depende de onde está o processo administrativo na data da impetração. Consulta prévia ao Meu INSS é obrigatória e o print entra como prova. Autoridade coatora é quem praticou o ato ou de quem emana a ordem (Lei 12.016/2009, art. 6º, §3º). A inicial indica também a pessoa jurídica a que ela pertence (art. 6º, caput).
 
-A definição da autoridade coatora depende exclusivamente de **onde se encontra o processo administrativo na data da impetração**. A verificação prévia no portal Meu INSS é obrigatória. A indicação equivocada resulta em extinção sem mérito por ilegitimidade passiva (art. 485, VI, CPC), sem possibilidade de aplicação da teoria da encampação quando envolver órgãos de pessoas jurídicas distintas (INSS vs. União).
+Indicação errada leva à extinção sem mérito. A teoria da encampação (Súmula 628 STJ) salva o erro apenas com vínculo hierárquico, defesa do mérito nas informações e sem mudança de competência constitucional; não se aplica entre INSS (autarquia) e CRPS (órgão da União).
 
-## 1. Autoridade Coatora por Fase do Processo Administrativo
+## 1. Autoridade coatora por fase do PA
 
-### 1.1. Análise inicial pela APS (Agência da Previdência Social)
+| Fase no Meu INSS | Autoridade coatora | Pessoa jurídica e representação |
+|---|---|---|
+| Análise na APS | Gerente Executivo do INSS da área da APS | INSS, PGF |
+| Análise na CEAB | Gerente da CEAB que detém o processo, ou Gerente Executivo da APS de protocolo | INSS, PGF |
+| Recurso na Junta de Recursos | Presidente da Junta de Recursos | União, PGU |
+| Recurso na Câmara de Julgamento | Presidente da Câmara de Julgamento | União, PGU |
+| Cumprimento de acórdão do CRPS (processo devolvido ao INSS) | Gerente da unidade que detém o processo (CEAB ou Gerência Executiva) | INSS, PGF |
+| Perícia Médica Federal | Chefe da unidade da Perícia Médica Federal responsável | União, PGU |
+| Cumprimento de decisão judicial | Gerente da CEAB-DJ | INSS, PGF |
 
-Autoridade coatora é o **Gerente Executivo do INSS** da localidade onde o benefício foi requerido.
+CEAB. Duas indicações são aceitas no TRF3. O Gerente da CEAB (AI 5023377-89.2020.4.03.0000, Rel. Des. Fed. Antonio Cedenho) ou o Gerente Executivo da APS de protocolo, opção que a Nota Técnica 9164268/2022 (PRF3, PFE/INSS, SR1 e Centro de Inteligência da JFSP) aponta como mais segura. Recomendação do escritório. Indicar o Gerente da CEAB quando o Meu INSS a apontar como unidade responsável; na dúvida, o Gerente Executivo.
 
-Pessoa jurídica interessada é o INSS (autarquia federal).
+Processo no CRPS. O gerente do INSS é parte ilegítima (TRF3, 4ª Turma, ApelRemNec 5000864-04.2019.4.03.6131, Rel. Des. Fed. Marli Marques Ferreira, j. 19/05/2020; 6ª Turma, ApelRemNec 5000361-55.2024.4.03.6115, Rel. Des. Fed. Souza Ribeiro; 3ª Turma, ApelRemNec 5002861-51.2020.4.03.6110, Rel. Des. Fed. Antonio Cedenho).
 
-Representação judicial pela PGF/PRF/AGU.
+Cumprimento de acórdão do CRPS. O TRF3 reconheceu a legitimidade do Gerente Executivo para responder pela implantação, com informações prestadas pela CEAB (3ª Turma, RemNecCiv 5014872-59.2022.4.03.6105, Rel. Des. Fed. Adriana Pileggi).
 
-### 1.2. Análise inicial pela CEAB (Central de Análise de Benefícios)
+## 2. Competência territorial
 
-Duas indicações são aceitas pela jurisprudência do TRF3.
+O art. 109, §2º, da CF permite aforar causa contra a União no domicílio do autor, no local do ato ou fato, onde está a coisa ou no Distrito Federal. O Tema 374/STF (RE 627.709/DF, j. 20/08/2014) estendeu a regra às ações contra autarquias federais. A tese não menciona MS, mas o STJ admite o foro do domicílio do impetrante em MS contra autoridade federal (por exemplo, CC 177.666, conferir inteiro teor antes de citar) e o Órgão Especial do TRF3 também (CC 5015986-83.2020.4.03.0000, Rel. Des. Fed. André Nabarrete).
 
-A primeira opção é o **Gerente da CEAB** que detém o processo (ex. Gerente da CEAB/RD/SR I para a região Sudeste I). Precedente favorável no AI 5023377-89.2020.4.03.0000 (TRF3, Rel. Des. Fed. Antonio Cedenho).
+Opções do segurado. Subseção do seu domicílio (preferencial); sede funcional da autoridade; capital do Estado (Súmula 689 STF, segundo a qual o segurado pode ajuizar ação "perante o juízo federal do seu domicílio ou nas varas federais da Capital do Estado-Membro"); Distrito Federal.
 
-A segunda opção é o **Gerente Executivo do INSS** vinculado à APS onde o benefício foi originalmente protocolado. A Nota Técnica nº 9164268/2022 (PRF3, PFE/INSS, Superintendência INSS SR1 e Centro de Inteligência da JFSP) aponta esta como a opção mais segura, pois a reestruturação administrativa não retira a responsabilidade da Autarquia.
+Advertência. Há acórdãos do próprio TRF3 que ainda afirmam competência absoluta pela sede funcional da autoridade em MS. Ao impetrar no domicílio, fundamentar a opção na inicial com o art. 109, §2º, o Tema 374 e os precedentes acima.
 
-Pessoa jurídica interessada é o INSS (autarquia federal).
+Competência e legitimidade não se confundem. O juiz que recebe MS no domicílio do impetrante não pode declinar para a sede da autoridade; se entender errada a autoridade, extingue por ilegitimidade (TRF3, Órgão Especial, CC 5008294-33.2020.4.03.0000, Rel. Des. Fed. André Nabarrete).
 
-Representação judicial pela PGF/PRF/AGU.
+Súmula 206 STJ ("A existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo") não define foro de MS federal; não a use para isso.
 
-**Recomendação do escritório.** Quando o Meu INSS indicar expressamente a CEAB como unidade responsável, indicar o Gerente da CEAB. Isso evita que o INSS alegue ilegitimidade do Gerente Executivo local por "não ter mais o processo". Quando houver dúvida sobre qual unidade analisa, indicar o Gerente Executivo, que é a opção mais conservadora.
+## 3. Competência material e de juízo
 
-### 1.3. Recurso na Junta de Recursos do CRPS
+MS contra o INSS é sempre da Justiça Federal comum (CF, art. 109, I e VIII) e nunca do JEF (Lei 10.259/2001, art. 3º, §1º, I). MS contra ato de juiz do JEF vai à Turma Recursal (Súmula 376 STJ).
 
-Autoridade coatora é o **Presidente da Junta de Recursos** onde tramita o recurso.
-
-Pessoa jurídica interessada é a **União Federal** (não o INSS). O CRPS integra a estrutura do Ministério da Previdência Social (ou Ministério do Trabalho, conforme reorganização vigente), não do INSS.
-
-Representação judicial pela PGU/PRU/AGU.
-
-**ATENÇÃO.** A teoria da encampação é expressamente afastada porque INSS (autarquia) e CRPS (órgão da União) são pessoas jurídicas distintas. Precedentes firmes no TRF3 (ApelRemNec 5000864-04.2019.4.03.6131, 4ª Turma, Rel. Des. Fed. Marli Marques Ferreira; ApelRemNec 5000361-55.2024.4.03.6115, 6ª Turma, Rel. Des. Fed. Souza Ribeiro).
-
-### 1.4. Recurso na Câmara de Julgamento do CRPS
-
-Autoridade coatora é o **Presidente da Câmara de Julgamento**.
-
-Pessoa jurídica interessada é a **União Federal**.
-
-Mesmas regras da Junta de Recursos quanto à inaplicabilidade da teoria da encampação.
-
-### 1.5. Cumprimento de acórdão do CRPS (processo retornou ao INSS)
-
-Autoridade coatora é o **Chefe da Agência/CEAB** onde o processo se encontra para implantação do benefício.
-
-Pessoa jurídica interessada é o INSS (autarquia federal).
-
-Precedente no TRF3 (RemNecCiv 5014872-59.2022.4.03.6105, 3ª Turma, Rel. Des. Fed. Adriana Pileggi).
-
-### 1.6. Perícia Médica Federal
-
-Autoridade coatora é o **Chefe de Divisão da Perícia Médica Federal** (não o Gerente Executivo do INSS).
-
-Pessoa jurídica interessada é a **União Federal** (a Perícia Médica Federal integra a estrutura da Secretaria de Previdência, não do INSS propriamente).
-
-## 2. Competência Territorial
-
-### 2.1. Regra geral (faculdade do impetrante)
-
-O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, Tema 374/STF (RE 627.709/DF, Rel. Min. Ricardo Lewandowski, j. 20/08/2014) e AgR no RE 736.971/RS (2ª Turma, j. 04/05/2020) [NÃO CONFIRMADO]. O Tema 374 trata das ações contra autarquias federais; a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-**Foro 1.** Subseção judiciária do **domicílio do impetrante**. É a opção mais utilizada e recomendada por facilitar o acesso à justiça.
-
-**Foro 2.** Local da **sede funcional da autoridade coatora** (sede da CEAB, da Gerência Executiva ou do CRPS).
-
-**Foro 3.** **Capital do estado-membro** onde o segurado tem domicílio (Súmula 689/STF).
-
-**Foro 4.** **Distrito Federal** (art. 109, §2º, CF/88) (auditoria 03/10/2026).
-
-### 2.2. Aplicação ao MS contra CEAB
-
-Se a autoridade coatora for o Gerente da CEAB/RD/SR I, a sede funcional é em São Paulo/SP, o que fixa a competência na Subseção Judiciária de São Paulo. Mas o impetrante pode igualmente impetrar no foro de seu domicílio.
-
-O TRF3, no CC 5008294-33.2020.4.03.0000 (Órgão Especial, Rel. Des. Fed. André Nabarrete), determinou que o juiz que recebe MS contra o Chefe de APS **não pode declinar da competência** para a sede da autoridade se o impetrante optou pelo foro de seu domicílio (auditoria 03/10/2026). Se entender que a autoridade indicada é incorreta, deve extinguir por ilegitimidade, e não declinar a competência. Competência e legitimidade não se confundem.
-
-### 2.3. Precedente-chave sobre competência territorial em MS contra o INSS
-
-CC 5015986-83.2020.4.03.0000 (TRF3, Órgão Especial). Firmou que a faculdade do art. 109, §2º, CF se aplica ao mandado de segurança, cabendo ao impetrante a escolha entre o foro do seu domicílio e o da sede da autoridade coatora.
-
-## 3. Competência Material
-
-### 3.1. MS por demora/omissão = Vara Cível Federal (não Previdenciária)
-
-O Órgão Especial do TRF3, no CC 5014490-19.2020.4.03.0000 (Rel. Des. Fed. Newton de Lucca, j. 28/08/2020), firmou que mandado de segurança impetrado para **compelir o INSS a concluir análise de requerimento administrativo** tem natureza administrativa, e não previdenciária. O writ visa suprir falha na prestação de serviço público. O direito líquido e certo é à análise conclusiva do pedido, não ao benefício em si. A competência é da **Vara Cível Federal**.
-
-Essa distinção é relevante especialmente em São Paulo, onde há varas especializadas (previdenciárias e cíveis).
-
-### 3.2. MS discutindo mérito do benefício
-
-Se o MS discute o mérito (ex. indeferimento ilegal de benefício, revisão de RMI), a competência é da **Vara Previdenciária**. Essa situação é distinta do MS por demora/omissão.
+No TRF3, MS apenas para compelir o INSS a decidir ou implantar tem natureza administrativa e vai à Vara Federal Cível; MS que discute o mérito do benefício vai à Vara Previdenciária (Órgão Especial, CC 5014490-19.2020.4.03.0000, Rel. Des. Fed. Newton De Lucca, j. 28/08/2020). Precedentes, corrente divergente e estratégia de distribuição em `base-ms-competencia-autoridade-coatora-inss-crps/references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`. A distinção importa onde há varas especializadas (capital); na subseção sem especialização, a vara federal única julga.
 
 ## 4. Estrutura das CEABs
 
-### 4.1. Base normativa
+Base normativa. Resolução 691/PRES/INSS, de 25/07/2019, atualizada pela Portaria PRES/INSS 1.372, de 28/10/2021 [conferir norma vigente].
 
-Resolução nº 691/PRES/INSS de 25/07/2019, atualizada pela Portaria PRES/INSS nº 1.372 de 28/10/2021.
+CEAB/RD/SR I (Sudeste I), sede em São Paulo/SP, abrange SP e MS. Endereço da Superintendência Regional Sudeste I para a petição, Viaduto Santa Efigênia, 266, 1º andar, Centro, São Paulo/SP, CEP 01207-000 [conferir atualização]. As demais são SR II (Sudeste II, Belo Horizonte), SR III (Sul, Florianópolis), SR IV (Nordeste, Recife), SR V (Norte e Centro-Oeste, Brasília).
 
-### 4.2. Distribuição por Superintendência Regional
+As CEABs trabalham de forma desterritorializada. Tipos. CEAB/RD (reconhecimento inicial de direitos), CEAB/DJ (cumprimento de decisões judiciais) e CEAB de manutenção (revisões).
 
-**CEAB/RD/SR I** (Sudeste I) com sede em São Paulo/SP. Abrange SP e MS.
-Endereço da Superintendência Regional Sudeste I do INSS para fins de endereçamento na petição é Viaduto Santa Efigênia, nº 266, 1º andar, Centro, São Paulo/SP, CEP 01207-000.
+## 5. Checklist pré-impetração
 
-**CEAB/RD/SR II** (Sudeste II) com sede em Belo Horizonte/MG. Abrange MG, RJ e ES.
-
-**CEAB/RD/SR III** (Sul) com sede em Florianópolis/SC. Abrange PR, SC e RS.
-
-**CEAB/RD/SR IV** (Nordeste) com sede em Recife/PE. Abrange todos os estados do Nordeste.
-
-**CEAB/RD/SR V** (Norte/Centro-Oeste) com sede em Brasília/DF. Abrange estados do Norte e Centro-Oeste (exceto MS).
-
-As CEABs operam em regime desterritorializado (teletrabalho institucionalizado). Os servidores podem estar lotados em diversas Gerências-Executivas e APS da região. O endereço físico da Superintendência é a referência administrativa oficial.
-
-### 4.3. Tipos de CEAB
-
-CEAB/RD (Reconhecimento de Direitos) é a que analisa requerimentos iniciais de benefícios.
-
-CEAB/DJ (Demandas Judiciais) é a que processa cumprimentos de decisões judiciais.
-
-CEAB de Manutenção é a que processa revisões e manutenção de benefícios já concedidos.
-
-## 5. Precedentes Consolidados do TRF3
-
-### Autoridade coatora e CEAB
-
-**ApelRemNec 5000361-55.2024.4.03.6115** (6ª Turma, Rel. Des. Fed. Souza Ribeiro). MS contra Gerente da CEAB/RD/SRI por demora em recurso administrativo. Extinto por ilegitimidade porque o processo já estava no CRPS. Teoria da encampação inaplicável.
-
-**ApelRemNec 5002861-51.2020.4.03.6110** (3ª Turma, Rel. Des. Fed. Antonio Cedenho). MS contra Chefe da CEAB/RD/SR I. Ilegitimidade reconhecida porque o processo estava em fase recursal perante o CRPS.
-
-**ApelRemNec 5000864-04.2019.4.03.6131** (4ª Turma, Rel. Des. Fed. Marli Marques Ferreira, j. 19/05/2020). Gerente Executivo do INSS ilegítimo quando processo está no CRPS. Precedente amplamente citado.
-
-**RemNecCiv 5014872-59.2022.4.03.6105** (3ª Turma, Rel. Des. Fed. Adriana Pileggi). CEAB prestou informações. Reconhecida legitimidade do Gerente Executivo para responder pela implantação de benefício concedido pelo CRPS. Segurança concedida.
-
-**AI 5023377-89.2020.4.03.0000** (Rel. Des. Fed. Antonio Cedenho). Aceitou o Chefe da CEAB/RD como autoridade coatora legítima quando processo estava sob gestão da CEAB.
-
-### Competência territorial
-
-**CC 5015986-83.2020.4.03.0000** (Órgão Especial, Rel. Des. Fed. André Nabarrete). Faculdade do art. 109, §2º, CF aplicável ao MS. Opção do impetrante entre foro do domicílio e sede da autoridade.
-
-**CC 5008294-33.2020.4.03.0000** (Órgão Especial, Rel. Des. Fed. André Nabarrete). Distinguiu competência de legitimidade. Juiz não pode declinar competência quando deveria reconhecer ilegitimidade.
-
-### Competência material
-
-**CC 5014490-19.2020.4.03.0000** (Órgão Especial, Rel. Des. Fed. Newton de Lucca, j. 28/08/2020). MS por demora tem natureza administrativa, competência da Vara Cível Federal.
-
-**CC 5005045-10.2020.4.03.6100** (2ª Seção, remetido ao Órgão Especial, Rel. Des. Fed. Marcelo Saraiva). MS contra Gerente da CEAB/RD/SRI. Matéria afeta a mais de uma Seção.
-
-## 6. Checklist Pré-Impetração
-
-Antes de impetrar qualquer MS contra o INSS, verificar obrigatoriamente no Meu INSS a situação atualizada do processo administrativo.
-
-1. Identificar se o processo está na APS local, na CEAB, no CRPS (Junta de Recursos ou Câmara de Julgamento), ou retornou ao INSS para cumprimento.
-
-2. Conforme a fase, definir a autoridade coatora nos termos das regras acima.
-
-3. Definir a competência territorial (foro do domicílio ou sede da autoridade coatora).
-
-4. Definir a competência material (Vara Cível para demora/omissão, Vara Previdenciária para mérito).
-
-5. Identificar a pessoa jurídica interessada (INSS ou União Federal) e a representação judicial correspondente (PGF/PRF ou PGU/PRU).
-
-6. Incluir print do Meu INSS como prova pré-constituída demonstrando a fase atual do processo.
+1. Conferir no Meu INSS a unidade que detém o processo e juntar o print.
+2. Definir a autoridade pela tabela do item 1.
+3. Indicar a pessoa jurídica (INSS ou União) e o órgão de representação (PGF ou PGU) para a ciência do art. 7º, II.
+4. Escolher o foro (domicílio, com fundamentação expressa).
+5. Definir a vara (Cível para mora, Previdenciária para mérito, onde houver especialização).
 
 ## MCPs da casa
 

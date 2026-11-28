@@ -1,6 +1,6 @@
 # O PGB e o Prazo de 30 Dias. Lei 15.497/2026
 
-Onda 142 (18/09/2026). Conferido no Planalto em 18/09/2026, com leitura do texto compilado da Lei 15.201/2025 e de todas as redações sucessivas.
+Conferido no Planalto em 18/09/2026, com leitura do texto compilado da Lei 15.201/2025 e de todas as redações sucessivas.
 
 ## O que mudou, com texto literal
 

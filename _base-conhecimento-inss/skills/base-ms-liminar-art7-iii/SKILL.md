@@ -1,123 +1,50 @@
 ---
 name: base-ms-liminar-art7-iii
-description: "Liminar em mandado de segurança previdenciário (art. 7º III Lei 12.016/2009), fumus boni iuris, periculum in mora, requisitos pró-segurado, vedações, impedimentos e rito do agravo contra decisão liminar. Use SEMPRE que mencionar liminar em MS previdenciário, art. 7º III Lei 12.016, fumus boni iuris MS, periculum in mora MS, concessão de liminar INSS, suspensão de liminar, agravo de instrumento MS, revogação de liminar, implantação liminar de benefício, restabelecimento liminar, liminar contra CEAB, liminar contra CRPS, liminar pericial, Súmula 212 STJ cancelada, vedação de compensação tributária, caráter irreversível. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e peticao-previdenciaria."
+description: "Liminar em mandado de segurança previdenciário (art. 7º, III, da Lei 12.016/2009): fundamento relevante e risco de ineficácia, caução facultativa, inconstitucionalidade das vedações do art. 7º, §2º (ADI 4.296), agravo de instrumento, suspensão de segurança (art. 15) e risco de devolução (Tema 692 STJ). Use SEMPRE que mencionar liminar em MS previdenciário, art. 7º III Lei 12.016, fumus boni iuris MS, periculum in mora MS, concessão de liminar INSS, suspensão de liminar, suspensão de segurança, agravo de instrumento MS, revogação de liminar, implantação liminar de benefício, restabelecimento liminar, liminar contra CEAB, liminar contra CRPS, ADI 4296, art. 7º §2º, Súmula 405 STF, Súmula 729 STF, Tema 692 STJ. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo e peticao-previdenciaria."
 ---
-
-> Nota da auditoria de citações (25/07/2026). A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022). A nota oficial do STJ não registra a ADI 4.296 como causa [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 # Liminar em MS Previdenciário
 
-## Escopo
+## Política do escritório
 
-Skill pró-segurado sobre liminar em MS previdenciário (art. 7º III Lei 12.016/2009), requisitos, hipóteses de cabimento, vedações legais e estratégia recursal.
+Todo MS leva pedido de liminar, com fundamentação própria e pedido de multa diária.
 
-## Marco normativo central
+## Requisitos (Lei 12.016/2009, art. 7º, III)
 
-Lei 12.016/2009, art. 7º III. Liminar.
+O juiz suspende o ato quando houver fundamento relevante e do ato puder resultar a ineficácia da medida, se deferida apenas ao final. Fundamento relevante é a prova documental da ilegalidade (PA, decisão, extrato do Meu INSS). O risco de ineficácia decorre do caráter alimentar do benefício e do tempo já decorrido; descrever o dano concreto do segurado (renda, saúde, dependentes), sem fórmula genérica.
 
-Lei 12.016/2009, art. 7º §2º. Vedações.
+A lei faculta exigir caução, fiança ou depósito (art. 7º, III, parte final), e o STF declarou a faculdade constitucional na ADI 4.296. Para segurado beneficiário da justiça gratuita e de verba alimentar, pedir expressamente a dispensa.
 
-Lei 12.016/2009, art. 14. Sentença.
+## Vedações do art. 7º, §2º, e do art. 22, §2º, não vigoram
 
-Lei 8.437/92. Suspensão de segurança.
+O STF, na ADI 4.296 (Plenário, j. 09/06/2021), declarou inconstitucionais o art. 7º, §2º (vedação de liminar para compensação tributária, mercadorias do exterior, reclassificação de servidores e "pagamento de qualquer natureza") e o art. 22, §2º (oitiva prévia do poder público no MS coletivo). Tese oficial, "É inconstitucional ato normativo que vede ou condicione a concessão de medida liminar na via mandamental." Não há vedação legal à liminar que implanta benefício previdenciário. O art. 7º, §5º, que estendia as vedações à tutela antecipada, fica sem conteúdo útil, porque remete às vedações declaradas inconstitucionais.
 
-Lei 9.494/97. Restrições.
+## Hipóteses típicas
 
-## Marco jurisprudencial
+Implantação de benefício com direito documentado (B94 negado só pelo Anexo III com laudo favorável). Restabelecimento após cessação ilegal. Cumprimento de acórdão do CRPS. Decisão em prazo fixado, nos casos de demora. Reabertura do PA arquivado sem motivação. Afastamento de exigência sem previsão normativa.
 
-A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022). A nota oficial do STJ não registra a ADI 4.296 como causa [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Prazo a pedir. O acordo homologado no RE 1.171.152/STF recomenda 15 dias para implantação em tutela de urgência (ver `base-ms-cumprimento-inss`).
 
-O enunciado cancelado vedava a compensação tributária por liminar (auditoria 03/10/2026).
+## Efeitos e duração
 
-Fonte oficial em https://www.stj.jus.br
+A liminar vale até a sentença, salvo revogação ou cassação (art. 7º, §3º), e dá prioridade ao processo (art. 7º, §4º). Denegada a segurança, a liminar fica sem efeito e a decisão contrária retroage (Súmula 405 STF). Perempção se o impetrante obstar o andamento ou deixar de promover diligência por mais de 3 dias úteis (art. 8º).
 
-### Súmula 405 STF
+Revogada a liminar, os valores recebidos são devolvidos (Tema 692 STJ, revisado em 2022, desconto de até 30% do benefício). O Tema 692 não serve como fundamento de irrepetibilidade. Registrar o risco ao cliente por escrito antes da impetração.
 
-Denegada a segurança, a liminar fica sem efeito, com retroação. A regra pesa contra o impetrante; o caminho do segurado é instruir a inicial com prova pré-constituída completa (auditoria 03/10/2026).
+## Recursos
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
+Contra a decisão do juiz de primeiro grau que concede ou nega a liminar cabe agravo de instrumento (art. 7º, §1º). No MS originário de tribunal, agravo interno contra decisão do relator (art. 16, parágrafo único).
 
-Duração razoável.
+Suspensão de segurança. O presidente do tribunal pode suspender a liminar ou a sentença a pedido da pessoa jurídica de direito público, para evitar grave lesão à ordem, à saúde, à segurança ou à economia públicas (art. 15). Da suspensão cabe agravo em 5 dias, sem efeito suspensivo. Na defesa, demonstrar que a liminar individual de benefício não afeta a economia pública.
 
-Atenção (risco): o Tema 692 é do STJ e determina a DEVOLUÇÃO dos valores recebidos por tutela/liminar posteriormente revogada. Não o utilize como fundamento de irrepetibilidade.
+## Contra a tese da ADC 4
 
-Devolução de valores em boa-fé.
+A decisão na ADC 4 não se aplica à antecipação de tutela em causa previdenciária (Súmula 729 STF).
 
-## Requisitos
+## Integração
 
-Primeiro, fumus boni iuris. Relevância dos fundamentos.
-
-Segundo, periculum in mora. Risco de ineficácia.
-
-## Hipóteses pró-segurado
-
-Primeiro, liminar de implantação de benefício com prova pré-constituída.
-
-Segundo, liminar de restabelecimento.
-
-Terceiro, liminar para cumprir decisão administrativa.
-
-Quarto, liminar para reabertura de PA arquivado.
-
-Quinto, liminar contra exigência abusiva.
-
-Sexto, liminar contra cessação por demora de perícia.
-
-## Vedações do art. 7º §2º. DISPOSITIVO INCONSTITUCIONAL (ADI 4.296, STF, 09/06/2021): as vedações abaixo NÃO vigoram; registro apenas histórico
-
-Primeiro, não cabe em matéria de compensação tributária.
-
-Segundo, não cabe para pagamento de vantagens pecuniárias, aumentos ou extensão a servidores.
-
-Terceiro, não cabe para entrega de mercadorias de outros países.
-
-Quarto, em previdenciário, a vedação não abrange benefício próprio quando se trate de pagamento de benefício devido, porque a vedação do art. 7º §2º visa vantagem funcional de servidores.
-
-## Cenários pró-segurado
-
-Cenário A, segurado com DER e laudo favorável aguardando há meses. Liminar para implantar.
-
-Cenário B, B31 cessado sem perícia idônea. Liminar para restabelecer.
-
-Cenário C, acórdão do CRPS concedeu, INSS não cumpre. Liminar para cumprir.
-
-Cenário D, PA arquivado sem fundamento. Liminar para reabrir.
-
-Cenário E, exigência documental abusiva. Liminar para afastar.
-
-## Suspensão de segurança
-
-Primeiro, Presidência do TRF pode suspender liminar que cause grave lesão (Lei 8.437/92 art. 4º).
-
-Segundo, cabível agravo interno contra decisão que suspende.
-
-Terceiro, requisitos da suspensão são restritivos.
-
-## Alertas
-
-Primeiro, a liminar pode ser revogada na sentença ou em grau recursal.
-
-Atenção (risco): o Tema 692 é do STJ e determina a DEVOLUÇÃO dos valores recebidos por tutela/liminar posteriormente revogada. Não o utilize como fundamento de irrepetibilidade.
-
-Terceiro, atenção ao caráter alimentar para afastar irreversibilidade.
-
-Quarto, em caso de indeferimento, agravar de instrumento.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
+Cabimento em `base-ms-cabimento-direito-liquido-certo`. Autoridade em `ms-competencia-autoridade-coatora`. Cumprimento em `base-ms-cumprimento-inss`. Tutela em ação ordinária em `base-cpc-tutela-provisoria-previdenciaria`. Devolução em `base-devolucao-valores-irrepetibilidade-tema979-tema692`. Redação em `peticao-previdenciaria`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para cabimento, acionar `base-ms-cabimento-direito-liquido-certo`.
-Para autoridade coatora, acionar `base-ms-competencia-autoridade-coatora-inss-crps`.
-Para redação, acionar `peticao-previdenciaria`.
-Para tutela em ação ordinária, acionar `base-cpc-tutela-provisoria-previdenciaria`.
-
-## O que NÃO está nesta skill
-
-Cabimento geral em `base-ms-cabimento-direito-liquido-certo`. Cumprimento em `base-ms-cumprimento-inss`. Decadência em `base-ms-decadencia-omissao-demora`.

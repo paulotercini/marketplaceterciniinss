@@ -1,6 +1,6 @@
 # Índice de Temas da TNU nos Boletins Oficiais
 
-Gerado na Onda 105 (11/08/2026) por extração programática dos 104 boletins do acervo do escritório (`Boletins TNU`), cobrindo as sessões de 18/02/2016 a 24/06/2026.
+Gerado em 11/08/2026 por extração programática dos 104 boletins do acervo do escritório (`Boletins TNU`), cobrindo as sessões de 18/02/2016 a 24/06/2026.
 
 Como usar. Localizar o tema, abrir o boletim indicado na pasta e ler o inteiro teor. A coluna Boletim traz TODAS as edições em que o tema aparece, o que é útil porque tema com mais de uma aparição costuma ter tese alterada, revista ou sobrestada.
 
@@ -235,7 +235,7 @@ Rigor. A data é a da PRIMEIRA sessão em que o tema aparece no acervo, não nec
 | 380 | B93, B98 | 09/04/2025 | - |
 | 381 | B94, B97 | 14/05/2025 | - |
 | 382 | B95, B103 | 15/04/2026 | - |
-| 383 | B95 | 25/06/2025 | Julgado em 24/09/2026 (Onda 177) |
+| 383 | B95 | 25/06/2025 | Julgado em 24/09/2026 |
 | 384 | B96 | 20/08/2025 | - |
 | 385 | B96, B105 | 20/08/2025 | - |
 | 386 | B96, B104 | 13/05/2026 | - |

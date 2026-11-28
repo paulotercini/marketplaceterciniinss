@@ -1,579 +1,188 @@
 ---
 name: base-tru-trf3-sumulas-jurisprudencia
-description: "As 23 Súmulas da Turma Regional de Uniformização dos Juizados Especiais Federais da 3ª Região, com redação literal conferida no DEJF3R 109/2015 e 198/2015, cada uma com seção própria no corpo. Use SEMPRE que mencionar Súmula da TRU, TRU3R, Turma Regional de Uniformização da 3ª Região, jurisprudência uniformizada da 3ª Região, paradigma da TRU para PUIL ou Enunciado JEFSP. Use TAMBÉM nos temas que elas resolvem, miserabilidade do BPC por meio salário mínimo como presunção relativa, dever alimentar do Código Civil no BPC, exclusão de benefício de um salário mínimo da renda familiar, início de prova material, dependência dos pais em pensão por morte de filho e qualidade de segurado na DII. Use OBRIGATORIAMENTE em PUIL com paradigma da TRU e em peça nas Turmas Recursais de SP e MS. Onda 144, acórdão de Recursal vem do MCP trf3, acervo recursais com a palavra digitada normalmente, conferido no portal do TRF3 antes de virar paradigma. Cruza com base-jef-trf3-manual-2025 e pesquisa-jurisprudencia-chrome."
+description: "As 23 Súmulas da Turma Regional de Uniformização dos Juizados Especiais Federais da 3ª Região, com redação literal conferida no DEJF3R 109/2015 e 198/2015, cada uma com seção própria no corpo. Use SEMPRE que mencionar Súmula da TRU, TRU3R, Turma Regional de Uniformização da 3ª Região, jurisprudência uniformizada da 3ª Região, paradigma da TRU para PUIL ou Enunciado JEFSP. Use TAMBÉM nos temas que elas resolvem, miserabilidade do BPC por meio salário mínimo como presunção relativa, dever alimentar do Código Civil no BPC, exclusão de benefício de um salário mínimo da renda familiar, início de prova material, dependência dos pais em pensão por morte de filho e qualidade de segurado na DII. Use OBRIGATORIAMENTE em PUIL com paradigma da TRU e em peça nas Turmas Recursais de SP e MS. Acórdão de Turma Recursal vem do MCP trf3, acervo recursais, conferido no portal do TRF3 antes de virar paradigma. Cruza com base-jef-trf3-manual-2025 e pesquisa-jurisprudencia-chrome."
 ---
 
-# Súmulas da Turma Regional de Uniformização dos JEFs da 3ª Região - Verificadas em Fonte Primária
+# Súmulas da TRU dos JEFs da 3ª Região
 
-## ATENÇÃO PRELIMINAR
+## Fonte e conferência
 
-### Conferência obrigatória (Onda 96)
+São 23 Súmulas, publicadas no DEJF3R 109/2015, de 17/06/2015 (Súmulas 1 a 19, sessão de 30 e 31/03/2015), e no DEJF3R 198/2015, de 26/10/2015 (Súmulas 20 a 23, sessão de 28/08/2015). PDFs oficiais em `https://www.trf3.jus.br/documentos/gaco/Sumulas_01_a_19.pdf` e `https://www.trf3.jus.br/documentos/gaco/Sumulas_20_a_23.pdf`. Última verificação registrada sem Súmula 24 ou posterior em 13/06/2026; conferir de novo antes de citar.
 
-Súmula do TRF3 se confere em `https://www.trf3.jus.br/diretoria-geral/biblioteca/setor-de-apoio-a-jurisprudencia/sumulas-do-trf3`, repositório oficial, verificando texto e eventual cancelamento. Julgado da TRU da 3ª Região se confere pelo Chrome conforme a skill `pesquisa-jurisprudencia-chrome`, porque a numeração de incidentes de uniformização regional se confunde com a de PEDILEF da TNU. Caminho validado em 30/07/2026, a TRU não tem base própria, fica no acervo das Turmas Recursais do TRF3 em `https://web.trf3.jus.br/jurisprudencia/home/index/1`, abrindo a pesquisa avançada e selecionando "Turma Regional de Uniformização" no campo Órgão Julgador (o mesmo seletor lista as 15 Turmas Recursais de São Paulo e as 2 de Mato Grosso do Sul). Sem a fonte aberta, o item fica [NÃO CONFIRMADO].
+Súmula do TRF3 se confere no repositório oficial do Tribunal. Julgado da TRU se confere no acervo das Turmas Recursais (`https://web.trf3.jus.br/jurisprudencia/home/index/1`, pesquisa avançada, órgão julgador "Turma Regional de Uniformização"). Súmula da TRU não está no MCP `trf3`.
 
-Esta skill consolida integralmente as 23 Súmulas aprovadas pela Turma Regional de Uniformização (TRU) dos Juizados Especiais Federais da 3ª Região, com redação literal verificada nos PDFs oficiais publicados no Diário Eletrônico da Justiça Federal da 3ª Região (DEJF3R).
+## Função das Súmulas
 
-Fonte primária verificada.
-- DEJF3R nº 109/2015 de 17/06/2015 (Súmulas 1 a 19, sessão de 30-31/03/2015 renumeradas em 03/06/2015).
-- DEJF3R nº 198/2015 de 26/10/2015 (Súmulas 20 a 23, sessão de 28/08/2015 numeradas em 22/10/2015).
+A TRU uniformiza a interpretação de lei federal em direito material entre as Turmas Recursais da mesma Região (Lei 10.259/2001, art. 14, §1º). Usos.
 
-URL fonte. `https://www.trf3.jus.br/documentos/gaco/Sumulas_01_a_19.pdf` e `https://www.trf3.jus.br/documentos/gaco/Sumulas_20_a_23.pdf`.
+1. Paradigma do pedido de uniformização regional (PEDILEF) contra acórdão de Turma Recursal da 3ª Região, na forma da Resolução CJF3R 80/2022 [conferir artigo na versão vigente].
+2. Fundamento em inicial, recurso inominado e contrarrazões no JEF da 3ª Região.
+3. Na TNU, acórdão da TRU da 3ª Região serve de paradigma apenas contra acórdão de Turma vinculada a outro TRF (RITNU, art. 12, §1º, "a"). Contra acórdão da própria 3ª Região, entra como fundamento complementar.
+4. Negativa de seguimento de recurso do INSS contrário a Súmula da TRU [NÃO CONFIRMADO o fundamento; o art. 932, IV, do CPC refere súmula do STF, do STJ ou do próprio tribunal; conferir o Regimento das Turmas Recursais].
 
-Status. Catálogo completo até 24 meses da última atualização, sem aprovação de Súmulas 24 ou posteriores. Verificar periodicamente em `https://www.trf3.jus.br`.
+## As 23 Súmulas
 
-Postura exclusivamente pró-segurado do INSS. Toda Súmula aqui sistematizada deve ser invocada em paradigma para PUIL, contrarrazões e peças no JEF da 3ª Região, sob pena de perda de oportunidade.
-
-## 1 NATUREZA JURÍDICA E EFEITO VINCULANTE
-
-A Turma Regional de Uniformização (TRU) é órgão da estrutura dos Juizados Especiais Federais previsto no art. 14 da Lei 10.259/2001, com função de uniformizar interpretação de lei federal em direito material entre as Turmas Recursais de uma mesma Região.
-
-As Súmulas da TRU consolidam o entendimento dominante para todas as Turmas Recursais da Região. Servem como.
-
-1. **Paradigma válido para PUIL Regional**. Acórdão de Turma Recursal contrário a Súmula da TRU autoriza PUIL na própria TRU (Hipótese 1 do art. 12 §1º RITNU c/c art. 14 Lei 10.259).
-
-2. **Causa de retratação ou adequação na origem**. O juízo da Turma Recursal pode aplicar diretamente a Súmula sem necessidade de recurso, art. 14 IV RITNU c/c Resolução CJF 347/2015.
-
-3. **Fundamento de causa de pedir em ação no JEF**. Súmula com redação literal pode ser invocada na petição inicial como tese jurídica.
-
-4. **Causa de negativa de seguimento de recurso do INSS**. Recurso inominado do INSS contrário a Súmula da TRU pode ser inadmitido na origem com base no art. 932 IV CPC.
-
-## 2 ATENÇÃO À POSTURA PRÓ-SEGURADO
-
-Algumas Súmulas têm conteúdo APARENTEMENTE neutro ou favorável ao INSS. A análise pró-segurado aqui sistematizada **distinguishing** estes casos para extrair o melhor proveito.
-
-Exemplo CRÍTICO. A Súmula 23 da TRU 3 ("BPC subsidiário e dever alimentar") deve ser confrontada com a Lei 13.146/2015 (EPCD), que LIMITOU (auditoria 25/07/2026, retirado o Tema 640/STF, não confirmado para dever alimentar) o alcance da exigência de exaurir as vias do dever alimentar.
-
-Distinguishing pró-segurado a partir da Lei 13.146/2015 (auditoria 25/07/2026, retirada a menção ao Tema 640/STF, não confirmada; o Tema 640/STJ trata da exclusão do benefício mínimo do idoso da renda).
-
-## 3 SÚMULA 1 - PRESCRIÇÃO DO PECÚLIO
-
-### Redação Literal
+### Súmula 1. Prescrição do pecúlio (NEUTRA)
 
 "Na hipótese de direito adquirido ao pecúlio, o prazo prescricional começa a fluir a partir do afastamento do trabalho."
 
-### Origem
+Origem. Enunciado 02 do JEFSP. Súmula nº 02 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Aplicação residual. O pecúlio foi extinto pela Lei 8.870/94 e a Súmula serve a direito adquirido anterior.
 
-Enunciado 02 do JEFSP. Súmula nº 02 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Aplicabilidade limitada hoje. Os pecúlios foram extintos pela Lei 8.870/94, mas permanecem situações de direito adquirido para benefícios concedidos sob a redação anterior da Lei 8.213/91.
-
-Quando aplicável. Segurado que adquiriu direito a pecúlio (sob a Lei 8.213/91 antes da revogação) e não recebeu, podendo argumentar que o prazo prescricional NÃO começou a fluir antes do afastamento, beneficiando o segurado.
-
-## 4 SÚMULA 2 - DESVINCULAÇÃO SALÁRIO MÍNIMO PÓS LEI 8.213/91
-
-### Redação Literal
+### Súmula 2. Desvinculação do salário mínimo após a Lei 8.213/91 (NEUTRA)
 
 "Com a implantação do Plano de Benefício da Previdência Social, oriundo da Lei nº 8.213/91, o benefício previdenciário de prestação continuada não mais está mais vinculado ao número de salários mínimos existentes quando de sua concessão."
 
-### Origem
+Origem. Enunciado 03 do JEFSP. Súmula nº 03 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Útil contra pedido de reajuste pela equivalência em salários mínimos após a Lei 8.213/91.
 
-Enunciado 03 do JEFSP. Súmula nº 03 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Súmula técnica sobre cálculo. Aplicável em REVISÕES de benefícios concedidos antes da Lei 8.213/91 que tenham sido transferidos para o novo regime.
-
-Importante para. Defesa contra teses do INSS que tentem aplicar correção pelo salário mínimo após a vigência da Lei 8.213/91.
-
-## 5 SÚMULA 3 - REVISÃO IRSM FEVEREIRO/1994
-
-### Redação Literal
+### Súmula 3. Revisão pelo IRSM de fevereiro de 1994 (PRÓ)
 
 "É devida a revisão da renda mensal inicial do benefício previdenciário cujo período básico de cálculo considerou o salário de contribuição de fevereiro de 1994, a ser corrigido pelo índice de 39,67% (trinta e nove vírgula sessenta e sete por cento), relativo ao IRSM daquela competência."
 
-### Origem
+Origem. Enunciado 04 do JEFSP. Súmula nº 04 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Invocar em toda revisão de benefício cujo PBC inclua fevereiro de 1994, observada a decadência. Ver `base-revisao-irsm-fevereiro-1994`.
 
-Enunciado 04 do JEFSP. Súmula nº 04 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Súmula DIRETAMENTE OPERACIONAL para revisão de benefícios concedidos com PBC contendo fevereiro/1994.
-
-Aplicação automática. Em toda petição de revisão de benefício com salários-de-contribuição em fevereiro/1994, invocar diretamente esta Súmula como paradigma da TRU 3.
-
-Cruza com `base-revisao-irsm-fevereiro-1994` (já existente).
-
-## 6 SÚMULA 4 - MISERABILIDADE BPC NÃO ABSOLUTA
-
-### Redação Literal
+### Súmula 4. Miserabilidade no BPC, critério de 1/4 não absoluto (PRÓ)
 
 "A renda mensal 'per capita' correspondente a 1/4 (um quarto) do salário mínimo não constitui critério absoluto de aferição da miserabilidade para fins de concessão de benefício assistencial."
 
-### Origem
+Origem. Enunciado 01 do JEFSP. Súmula nº 05 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Combinar com o art. 20, §§3º e 11, da LOAS, a Rcl 4.374 e o RE 567.985 do STF (2013). Ver `base-bpc-renda-per-capita-miserabilidade`.
 
-Enunciado 01 do JEFSP. Súmula nº 05 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-**FUNDAMENTAL para BPC**. Súmula consagra a tese do critério relativo de miserabilidade, posteriormente confirmada pelo STF na Reclamação 4374 e Recurso Extraordinário 567985, ambos julgados em 2013.
-
-Aplicação atualizada. Combinar com o art. 20, §3º, da Lei 8.742/1993, que traz o critério de 1/4 SM desde a redação original (a Lei 13.846/2019 só incluiu o §12, sobre CPF e CadÚnico) + Súmula 79/TNU + Tema 640/STJ (auditoria 03/10/2026).
-
-Em petições de BPC com renda per capita superior a 1/4 SM, esta Súmula é IMPRESCINDÍVEL.
-
-Cruza com `base-bpc-renda-per-capita-miserabilidade`.
-
-## 7 SÚMULA 5 - INÍCIO DE PROVA MATERIAL
-
-### Redação Literal
+### Súmula 5. Início de prova material (NEUTRA)
 
 "A comprovação de tempo de serviço rural ou urbano depende de início de prova material da prestação de serviço, nos termos do artigo 55, § 3º, da Lei nº 8.213/91."
 
-### Origem
+Origem. Enunciado 07 do JEFSP. Súmula nº 07 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. A exigência vem da lei. Explorar a amplitude do início de prova (documento em nome de familiar, Súmula 6 TNU; Súmula 149 STJ) e o Protocolo para Julgamento com Perspectiva de Gênero (Resolução CNJ 492/2023). Ver `perspectiva-genero-previdenciario`.
 
-Enunciado 07 do JEFSP. Súmula nº 07 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-ATENÇÃO. Súmula com conteúdo aparentemente neutro. A vedação à prova exclusivamente testemunhal vem da própria lei.
-
-DISTINGUISHING pró-segurado. A prova material exigida pelo art. 55 §3º admite flexibilização ampla por documentos indiretos (CTPS de cônjuge para esposa rural - Súmula 73/TNU, certidão de casamento qualificando como rural, declaração sindical, fotografias, recibos diversos).
-
-Cruzar com `documentos-comprobatorios-in128` e `perspectiva-genero-previdenciario`.
-
-## 8 SÚMULA 6 - ART. 21 §3º LEI 8.880/94 RMI
-
-### Redação Literal
+### Súmula 6. Art. 21, §3º, da Lei 8.880/94 (PRÓ)
 
 "Nos benefícios concedidos a partir de 01.03.94, na hipótese do salário de benefício exceder ao limite previsto no artigo 29, §2º, da Lei nº 8.213/91, aplica-se o disposto no artigo 21, §3º, da Lei nº 8.880/94."
 
-### Origem
+Origem. Enunciado 12 do JEFSP. Súmula nº 10 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Revisão da RMI de benefício concedido a partir de 01/03/1994 com salário de benefício limitado ao teto.
 
-Enunciado 12 do JEFSP. Súmula nº 10 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Súmula DIRETAMENTE OPERACIONAL para revisão de cálculo de RMI em benefícios concedidos entre 01/03/1994 e a vigência da Lei 9.876/1999.
-
-Cruza com `base-calculo-rmi-ec103` e revisões estruturantes.
-
-## 9 SÚMULA 7 - PENSÃO POR MORTE AOS PAIS
-
-### Redação Literal
+### Súmula 7. Pensão por morte aos pais (PRÓ)
 
 "Em caso de morte de filho segurado, os pais têm direito à pensão por morte, se provada a dependência econômica, ainda que não seja exclusiva."
 
-### Origem
+Origem. Enunciado 14 do JEFSP. Súmula nº 11 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Afasta a exigência de dependência exclusiva dos pais (Lei 8.213/91, art. 16, II e §4º). Ver `pensao-por-morte`.
 
-Enunciado 14 do JEFSP. Súmula nº 11 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-CRÍTICO em pensão por morte de pais sobre filho falecido segurado.
-
-A jurisprudência do INSS frequentemente exige dependência EXCLUSIVA. Esta Súmula derruba essa exigência. **A dependência não exclusiva basta**.
-
-Aplicação. Pais idosos que recebiam contribuição do filho falecido para complementar a aposentadoria ou benefício assistencial podem ter direito à pensão.
-
-Cruza com `pensao-por-morte` e `base-pensao-por-morte-uniao-estavel-prova`.
-
-## 10 SÚMULA 8 - APOSENTADORIA POR IDADE SEM QUALIDADE DE SEGURADO
-
-### Redação Literal
+### Súmula 8. Aposentadoria por idade sem qualidade de segurado (PRÓ)
 
 "Para a concessão de aposentadoria por idade, desde que preenchidos os requisitos legais, é irrelevante o fato de o requerente, ao atingir a idade mínima, não mais ostentar a qualidade de segurado."
 
-### Origem
+Origem. Enunciado 16 do JEFSP. Súmula nº 12 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Fundamento legal na Lei 10.666/2003, art. 3º, §1º (perda da qualidade irrelevante quando cumprida a carência) e na Lei 8.213/91, art. 102, §1º. Ver `aposentadoria-idade-hibrida`.
 
-Enunciado 16 do JEFSP. Súmula nº 12 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-**FUNDAMENTAL para aposentadoria por idade**. Confirmação regional da Súmula 416/STJ ("É devida a pensão por morte aos dependentes do segurado que, apesar de ter perdido essa qualidade...") aplicada por analogia à aposentadoria por idade, com o art. 102, §1º, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1340/STJ, que trata de home care em plano de saúde).
-
-Em casos onde o segurado completou carência e idade mas perdeu a qualidade de segurado no momento da DER, esta Súmula GARANTE o direito.
-
-Cruza com `aposentadoria-idade-hibrida` e `periodo-graca-qualidade-segurado`.
-
-## 11 SÚMULA 9 - LEGISLAÇÃO VIGENTE NA ÉPOCA - ESPECIAL
-
-### Redação Literal
+### Súmula 9. Tempo especial e lei da época (PRÓ)
 
 "Em matéria de comprovação de tempo de serviço especial, aplica-se a legislação vigente à época da prestação de serviço."
 
-### Origem
+Origem. Enunciado 17 do JEFSP. Súmula nº 13 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Tempus regit actum no enquadramento (Tema 694 STJ quanto ao ruído). Ver `base-tempo-especial-conversao`.
 
-Enunciado 17 do JEFSP. Súmula nº 13 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-**TEMPUS REGIT ACTUM consagrado regionalmente**. A Súmula consagra a regra geral do art. 6º LINDB aplicada ao tempo especial.
-
-Aplicação. Ruído anterior a 1997 com critério de 80 dB. Categoria profissional anterior a 28/04/1995. Exposição a agente nocivo conforme decreto da época.
-
-Cruza com `auditoria-ppp`, `defesa-probatoria-especial`, `base-tempo-especial-conversao`.
-
-## 12 SÚMULA 10 - PRECATÓRIO NO JEF ACIMA DE 60 SM
-
-### Redação Literal
+### Súmula 10. Precatório no JEF acima de 60 salários mínimos (NEUTRA)
 
 "É possível a expedição de precatório no Juizado Especial Federal, nos termos do artigo 17, §4º, da Lei nº 10.259/2001, quando o valor da condenação exceder 60 (sessenta) salários mínimos."
 
-### Origem
+Origem. Enunciado 20 do JEFSP. Súmula nº 16 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Execução no JEF. Combinar com o Tema 1030 STJ sobre renúncia ao excedente. Ver `execucao-cumprimento-previdenciario`.
 
-Enunciado 20 do JEFSP. Súmula nº 16 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Súmula procedimental relevante para execução. Cruza com `execucao-cumprimento-previdenciario` e Tema 1030/STJ.
-
-**ALERTA estratégico**. Esta súmula NÃO contradiz a renúncia ao teto JEF (Tema 1030/STJ). Apenas afirma a possibilidade de precatório em condenações que exorbitem após a sentença (ex. atrasados calculados maiores que o estimado).
-
-## 13 SÚMULA 11 - QUALIDADE DE SEGURADO NA DII
-
-### Redação Literal
+### Súmula 11. Qualidade de segurado na DII (PRÓ)
 
 "A qualidade de segurado, para fins de concessão de auxílio-doença e de aposentadoria por invalidez, deve ser verificada quando do início da incapacidade."
 
-### Origem
+Origem. Enunciado 23 do JEFSP. Súmula nº 18 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Qualidade de segurado aferida na DII, não na DER. Ver `base-incapacidade-b31-temporaria`.
 
-Enunciado 23 do JEFSP. Súmula nº 18 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-**CRÍTICA para B31 e B32**. O termo inicial da verificação da qualidade de segurado é a DATA DE INÍCIO DA INCAPACIDADE (DII), não a DER ou DIB.
-
-Aplicação. Segurado com qualidade de segurado na DII mas que perdeu posteriormente NÃO TEM o direito negado.
-
-Cruza com `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `periodo-graca-qualidade-segurado`.
-
-## 14 SÚMULA 12 - CONTRIBUIÇÃO PREVIDENCIÁRIA SOBRE 13º SALÁRIO
-
-### Redação Literal
+### Súmula 12. Contribuição sobre o 13º salário (NEUTRA)
 
 "Incide a contribuição previdenciária sobre o 13º salário nos termos do §2º do artigo 7º da Lei nº 8.620/93."
 
-### Origem
+Origem. Enunciado 33 do JEFSP. Súmula nº 27 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Súmula tributária, com reflexo no salário de contribuição.
 
-Enunciado 33 do JEFSP. Súmula nº 27 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Súmula tributária. Tem reflexo previdenciário porque a base de contribuição impacta o salário-de-contribuição e a RMI.
-
-Aplicação. Defesa em casos de exclusão indevida do 13º salário da base do salário-de-contribuição.
-
-## 15 SÚMULA 13 - REQUISITOS NÃO SIMULTÂNEOS APOSENTADORIA POR IDADE
-
-### Redação Literal
+### Súmula 13. Requisitos não simultâneos da aposentadoria por idade (PRÓ)
 
 "Os requisitos para concessão do benefício de aposentadoria por idade não precisam ser cumpridos simultaneamente."
 
-### Origem
+Origem. SÚMULA 05 do JEFMS. Súmula nº 28 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Combinar com a Lei 10.666/2003, art. 3º, §1º, e a Súmula 44 TNU.
 
-SÚMULA 05 do JEFMS. Súmula nº 28 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-CRÍTICA. Confirmação regional da Súmula 44/TNU (auditoria 03/10/2026, retirado o Tema 1340/STJ, que trata de home care em plano de saúde).
-
-Aplicação. Segurado pode cumprir a carência em um momento e a idade em outro. NÃO precisam coexistir.
-
-Esta Súmula É REGRA GERAL ESSENCIAL na advocacia previdenciária pró-segurado em casos de aposentadoria por idade.
-
-Cruza com `aposentadoria-idade-hibrida` e `periodo-graca-qualidade-segurado`.
-
-## 16 SÚMULA 14 - BENEFÍCIO UM SM IDOSO 65 BPC
-
-### Redação Literal
+### Súmula 14. Benefício de um salário mínimo de idoso fora da renda do BPC (PRÓ)
 
 "O valor do benefício equivalente a um salário mínimo, concedida a idoso, a partir de 65 anos, também não é computado para fins do cálculo da renda familiar a que se refere o artigo 20, § 3º da Lei nº 8.742/93."
 
-### Origem
+Origem. Súmula 12 do JEFMS. Súmula nº 30 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. A regra hoje está no art. 20, §14, da LOAS (Lei 13.982/2020), que alcança também o benefício de pessoa com deficiência. Ver `bpc-renda-grupo-familiar`.
 
-Súmula 12 do JEFMS. Súmula nº 30 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-**FUNDAMENTAL para BPC**. Aplica a regra do art. 34 §único do Estatuto do Idoso (Lei 10.741/2003) para EXCLUIR do cálculo da renda per capita o benefício previdenciário ou assistencial de até 1 SM recebido por idoso de 65+ anos no grupo familiar.
-
-Esta exclusão é PRO-SEGURADO em qualquer requerimento de BPC com idoso no núcleo familiar.
-
-Cruza com `bpc-renda-grupo-familiar` e `analise-bpc-loas`.
-
-## 17 SÚMULA 15 - 1/3 CONTRIBUIÇÕES CARÊNCIA - CONTAGEM RETROATIVA
-
-### Redação Literal
+### Súmula 15. Recolhimento de 1/3 da carência e contribuições anteriores (PRÓ)
 
 "O recolhimento de 1/3 (um terço) do número de contribuições, relativo à carência do benefício pretendido, permite a contagem de todas as contribuições anteriores, ainda que correspondentes a períodos descontínuos."
 
-### Origem
+Origem. Súmula 15 do JEFMS. Súmula nº 31 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Súmula anterior ao art. 27-A da Lei 8.213/91 (MP 871/2019, convertida na Lei 13.846/2019), que exige metade da carência após a perda da qualidade. Aplicar ao requerimento regido pela redação anterior e conferir a regra intertemporal em `base-carencia-por-especie-art27a`.
 
-Súmula 15 do JEFMS. Súmula nº 31 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-REGRA INTERPRETATIVA RELEVANTE. Súmula reconhece a possibilidade de contagem retroativa de contribuições antigas para fins de carência.
-
-Aplicação. Reingresso de segurado com contribuições antigas + recolhimento mínimo após o reingresso.
-
-Cruza com `periodo-graca-qualidade-segurado` (regra do reingresso pós-Lei 13.846/2019 art. 27-A Lei 8.213).
-
-## 18 SÚMULA 16 - CORREÇÃO MONETÁRIA ADMINISTRATIVA
-
-### Redação Literal
+### Súmula 16. Correção monetária de pagamento administrativo atrasado (PRÓ)
 
 "É devida a correção monetária nos pagamentos administrativos de valores em atraso desde a data do início do benefício e a partir do vencimento de cada parcela".
 
-### Origem
+Origem. SÚMULA 01 do JEFAME. Súmula nº 32 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Correção desde a DIB e o vencimento de cada parcela. Ver `base-juros-correcao-monetaria`.
 
-SÚMULA 01 do JEFAME. Súmula nº 32 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-CRÍTICA. Afirma o direito à correção monetária sobre valores pagos administrativamente com atraso, contados desde a DIB e o vencimento de cada parcela.
-
-Cruza com `base-juros-correcao-monetaria` e Tema 905/STJ.
-
-## 19 SÚMULA 17 - PRESCRIÇÃO PIS-PASEP QUINQUENAL
-
-### Redação Literal
+### Súmula 17. Prescrição quinquenal do PIS-PASEP (NEUTRA)
 
 "É quinquenal a prescrição para pleitear a correção do saldo de contas vinculadas de PIS-PASEP".
 
-### Origem
+Origem. Súmula 02 do JEFAME. Súmula nº 33 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Matéria alheia ao RGPS.
 
-Súmula 02 do JEFAME. Súmula nº 33 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-Súmula procedimental. Aplicação em ações de correção do PIS-PASEP.
-
-## 20 SÚMULA 18 - REAJUSTE JUDICIAL VEDADO
-
-### Redação Literal
+### Súmula 18. Reajuste de benefício e critério legal (CONTRA)
 
 "A garantia constitucional de reajustamento dos benefícios para preservar-lhes, em caráter permanente, o valor real, inserta no § 4º do art. 201 da Constituição Federal de 1988, não confere ao Judiciário o poder de modificar critérios de reajustamento eleitos pelo legislador, substituindo-os por outros que entenda mais adequados para repor as perdas geradas pela inflação, sob pena de ingerência indevida de um Poder na esfera do outro".
 
-### Origem
+Origem. Súmula 08 do JEFAME. Súmula nº 35 das Turmas Recursais da Seção Judiciária de São Paulo. Uso. Desfavorável em pedido de índice diverso do legal. Não alcança revisões que aplicam a lei, como teto (RE 564.354) e buraco negro. Ver `base-revisao-teto-buraco-negro-verde`.
 
-Súmula 08 do JEFAME. Súmula nº 35 das Turmas Recursais da Seção Judiciária de São Paulo.
-
-### Análise pró-segurado
-
-**ALERTA CRÍTICO**. Esta súmula é DESFAVORÁVEL ao segurado em temas de reajuste. Veda a substituição de índices legais por índices judiciais.
-
-NÃO INVOCAR em petição. DISTINGUISHING para teses específicas (Buraco Negro, Buraco Verde, Súmula 260/TFR) é o caminho.
-
-Cruza com `base-revisao-teto-buraco-negro-verde` e `base-revisao-reajuste-ortn-otn`.
-
-## 21 SÚMULA 19 - ART. 142 LEI 8.213 - CARÊNCIA PRÉ-24/07/1991
-
-### Redação Literal
+### Súmula 19. Carência do art. 142 para filiado antes de 24/07/1991 (PRÓ)
 
 "A regra definidora do período de carência para fins de concessão do benefício de aposentadoria por idade do filiado ao Regime Geral Previdenciário antes de 24/07/1991 é a do art. 142 da Lei 8.213/91, ainda que tenha havido perda da qualidade de segurado".
 
-### Origem
+Origem. Enunciado nº 06 da Turma Recursal da Seção Judiciária de Mato Grosso do Sul. Uso. Combinar com a Súmula 8 e a Súmula 44 TNU. Ver `aposentadoria-idade-hibrida`.
 
-Enunciado nº 06 da Turma Recursal da Seção Judiciária de Mato Grosso do Sul.
-
-### Análise pró-segurado
-
-**FUNDAMENTAL para aposentadoria por idade urbana**. Aplica a tabela do art. 142 (carência progressiva) para filiados ANTES de 24/07/1991, independentemente de perda da qualidade de segurado.
-
-Combinação com Súmula 8 (TRU 3) e Súmula 416/STJ = paradigma sólido para segurados antigos que reingressaram (auditoria 03/10/2026, retirado o Tema 1340/STJ).
-
-Cruza com `aposentadoria-idade-hibrida` e `periodo-graca-qualidade-segurado`.
-
-## 22 SÚMULA 20 - VEDAÇÃO MS NO JEF - RECURSO INOMINADO
-
-### Redação Literal
+### Súmula 20. Mandado de segurança no JEF (NEUTRA)
 
 "Não cabe mandado de segurança no âmbito dos juizados especiais federais. Das decisões que põem fim ao processo, não cobertas pela coisa julgada, cabe recurso inominado."
 
-### Origem
+Origem. Processos 0000146-33.2015.4.03.9300 e 0000635-67.2015.4.03.9301. Uso. A Súmula alcança MS contra ato judicial no JEF. MS contra ato do INSS não cabe no JEF (Lei 10.259/2001, art. 3º, §1º, I) e vai à Vara Federal comum. Ver `ms-competencia-autoridade-coatora`.
 
-Processos 0000146-33.2015.4.03.9300 e 0000635-67.2015.4.03.9301.
-
-### Análise pró-segurado
-
-**CRÍTICA PROCEDIMENTAL**. Vedação ao mandado de segurança DENTRO do JEF (contra atos de juiz federal ou turma recursal).
-
-ATENÇÃO. Esta Súmula NÃO se aplica a MS contra ATOS DO INSS (CEAB, gerentes executivos, autoridade coatora administrativa). Para MS contra ato do INSS, usar a competência federal comum.
-
-Cruza com `mandado-seguranca-previdenciario`, `ms-competencia-autoridade-coatora` e `base-jef-previdenciario`.
-
-## 23 SÚMULA 21 - BPC 1/2 SM CRITÉRIO OBJETIVO PRESUNÇÃO RELATIVA
-
-### Redação Literal
+### Súmula 21. BPC e presunção relativa até 1/2 salário mínimo (PRÓ)
 
 "Na concessão do benefício assistencial, deverá ser observado como critério objetivo a renda per capita de ½ salário mínimo gerando presunção relativa de miserabilidade, a qual poderá ser infirmada por critérios subjetivos em caso de renda superior ou inferior a ½ salário mínimo."
 
-### Origem
+Origem. Pedidos de uniformização 0000147-18.2015.4.03.9300 a 0000152-40.2015.4.03.9300. Uso. Até 1/2 salário mínimo, presume-se a miserabilidade, que o INSS precisa infirmar. A LOAS, art. 20, §11-A (Lei 14.176/2021), autoriza o regulamento a ampliar o limite para até 1/2 salário mínimo. Combinar com a Súmula 4.
 
-Processos 0000147-18.2015.4.03.9300, 0000148-03.2015.4.03.9300, 0000149-85.2015.4.03.9300, 0000150-70.2015.4.03.9300, 0000151-55.2015.4.03.9300, 0000152-40.2015.4.03.9300; processos 0000920-19.2014.4.03.6319, 0001666-45.2014.4.03.6331, 0006066-92.2014.4.03.6302, 0010812-03.2014.4.03.6302, 0063790-91.2013.4.03.6301, 0092610-33.2007.4.03.6301.
-
-### Análise pró-segurado
-
-**FUNDAMENTAL para BPC**. Súmula define o critério objetivo de 1/2 SM como PRESUNÇÃO RELATIVA, não absoluta.
-
-Reflexo prático. Renda per capita ATÉ 1/2 SM = presunção de miserabilidade que o INSS deve infirmar. Renda per capita ACIMA de 1/2 SM = a parte deve comprovar a miserabilidade por critérios subjetivos.
-
-CONFRONTO com o art. 20, §3º, da Lei 8.742/1993. O critério legal de 1/4 SM está na lei desde a redação original de 1993. A Lei 13.846/2019 não o alterou e apenas incluiu o §12 (inscrição no CPF e no CadÚnico), de modo que não serve de marco temporal. A Súmula 21 relativiza o critério legal com a presunção relativa até 1/2 SM (combinar com Súmula 4 TRU 3 + Tema 640/STJ) (auditoria 03/10/2026).
-
-Cruza com `base-bpc-renda-per-capita-miserabilidade`, `bpc-renda-grupo-familiar`, `analise-bpc-loas`.
-
-## 24 SÚMULA 22 - APENAS BENEFÍCIOS UM SM EXCLUÍDOS RENDA BPC
-
-### Redação Literal
+### Súmula 22. Exclusão apenas de benefícios de um salário mínimo (PRÓ)
 
 "Apenas os benefícios previdenciários e assistenciais no valor de um salário mínimo recebidos por qualquer membro do núcleo familiar devem ser excluídos para fins de apuração da renda mensal per capita objetivando a concessão de benefício de prestação continuada"
 
-### Origem
+Origem. Mesmos pedidos de uniformização da Súmula 21. Uso. Hoje, art. 20, §14, da LOAS. Benefício acima de um salário mínimo entra no cálculo pelo valor integral [conferir se a TNU admite a exclusão apenas do valor de um salário mínimo].
 
-Mesmos processos da Súmula 21.
-
-### Análise pró-segurado
-
-**FUNDAMENTAL para BPC**. Confirma o alcance da exclusão da renda do art. 34 §único do Estatuto do Idoso.
-
-ATENÇÃO ao avanço normativo. Lei 15.157/2025 expandiu critérios. Verificar combinação com `bpc-renda-grupo-familiar` para regras atuais sobre exclusões.
-
-Cruza com `bpc-renda-grupo-familiar` e `analise-bpc-loas`.
-
-## 25 SÚMULA 23 - BPC SUBSIDIÁRIO E DEVER ALIMENTAR
-
-### Redação Literal
+### Súmula 23. BPC subsidiário e dever alimentar (CONTRA)
 
 "O benefício de prestação continuada (LOAS) é subsidiário e para sua concessão não se prescinde da análise do dever legal de prestar alimentos previsto no Código Civil"
 
-### Origem
+Origem. Mesmos pedidos de uniformização da Súmula 21. Uso. Desfavorável. Ver distinção abaixo.
 
-Mesmos processos da Súmula 21.
+## Distinção da Súmula 23
 
-### Análise pró-segurado
+A Súmula 23 condiciona o BPC à análise do dever alimentar. Linhas de distinção em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-**ALERTA CRÍTICO. SÚMULA DESFAVORÁVEL AO SEGURADO.**
+## Quadro de postura
 
-Esta Súmula é uma armadilha pró-INSS. Exige análise do dever alimentar antes da concessão do BPC, o que é GRAVE OBSTÁCULO.
+PRÓ, uso direto. Súmulas 3, 4, 6, 7, 8, 9, 11, 13, 14, 15 (requerimento regido pela redação anterior ao art. 27-A), 16, 19, 21 e 22.
 
-DISTINGUISHING pró-segurado IMPRESCINDÍVEL.
+CONTRA, exige distinção. Súmulas 18 e 23.
 
-1. **Lei 13.146/2015 (EPCD)** e jurisprudência posterior limitaram a interpretação literal (auditoria 25/07/2026, retirado o Tema 640/STF, não confirmado).
+NEUTRAS ou técnicas. Súmulas 1, 2, 5, 10, 12, 17 e 20.
 
-2. **Lei 13.146/2015 (EPCD)** art. 40 reconhece o direito de PCD ao BPC INDEPENDENTEMENTE de exigir do parente próximo a prestação alimentar.
+Tabela por benefício em `references/TABELA-OPERACIONAL-23-SUMULAS.md`.
 
-3. **Art. 203 V CF** estabelece direito ao BPC sem exigência de prévia provocação do dever alimentar.
+## Paradigma de Turma Recursal pelo MCP trf3
 
-4. **Art. 20 LOAS** não exige análise do dever alimentar como condicionante.
+O MCP `trf3` cobre as Turmas Recursais de SP e MS no acervo `recursais`. O CJF apaga a letra acentuada nesse acervo, e a busca já procura as duas formas; digitar a palavra normalmente, com acento. A busca por número CNJ devolve todos os julgados colegiados dos autos, e o paradigma certo é o que casa a data de julgamento. Há julgamento anulado sem marca na lista. Todo acórdão localizado nasce [NÃO CONFIRMADO] e só é citado depois de aberto no portal do TRF3, com leitura do inteiro teor. Fluxo em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
 
-5. **Análise crítica da Súmula 23**. Foi aprovada em 2015, ANTES da Lei 13.146/2015. Está superada por norma posterior.
+Tese nacional da TNU em `base-boletins-tnu`. No microssistema dos Juizados, a tese da TNU prevalece sobre a Súmula regional em caso de conflito.
 
-EM PETIÇÕES DE BPC. NÃO INVOCAR a Súmula 23. SE INVOCADA PELO INSS, fazer distinguishing com:
+## Integração
 
-```
-"A Súmula 23 da TRU 3, datada de 2015, não considera a evolução normativa
-posterior. A Lei 13.146/2015 limitou a exigência de
-prévia análise do dever alimentar como condicionante do BPC. A
-interpretação literal da Súmula 23 violaria o art. 203 V CF e o art.
-20 LOAS, que não impõem essa condicionante."
-```
-
-Cruza com `analise-bpc-loas`, `bpc-renda-grupo-familiar`, `base-bpc-loas-requisitos`.
-
-## 26 USO ESTRATÉGICO DAS SÚMULAS EM PUIL
-
-### 26.1 Como Paradigma na Hipótese 1 do Art. 12 §1º RITNU
-
-Toda Súmula da TRU 3 é paradigma VÁLIDO para PUIL Regional dirigido à TRU 3.
-
-Estrutura da peça.
-
-1. Identificação do acórdão recorrido da Turma Recursal (contrário à Súmula).
-2. Identificação da Súmula da TRU como paradigma.
-3. Cotejo analítico em duas etapas.
-   - Etapa 1. Similitude fático-jurídica.
-   - Etapa 2. Demonstração da divergência.
-4. Tese jurídica reafirmada.
-5. Pedido de procedência do PUIL.
-
-### 26.2 Como Paradigma para PUIL Nacional (TNU)
-
-Atenção. Súmula da TRU 3 NÃO é paradigma válido para PUIL Nacional na TNU. Apenas as hipóteses 1 (acórdão TR contrário a TR de outra região), 2 (TR contra Súmula STJ), 3 (TR contra acórdão TNU) e 4 (acórdão TRU contra Súmula STJ ou acórdão TNU) do art. 12 §1º RITNU.
-
-Para PUIL Nacional, a Súmula da TRU 3 entra como FUNDAMENTO COMPLEMENTAR, não como paradigma.
-
-### 26.3 Como Causa de Negativa de Seguimento do Recurso do INSS
-
-Recurso inominado do INSS contrário a Súmula da TRU 3 pode ser inadmitido na origem.
-
-Estrutura da contrarrazão.
-
-```
-"O recurso inominado do INSS contraria diretamente a Súmula nº [X] da
-Turma Regional de Uniformização dos JEFs da 3ª Região, devendo ser
-negado seguimento na origem, nos termos do art. 932 IV CPC c/c art.
-14 IV RITNU (Resolução CJF 586/2019)."
-```
-
-## 27 CRUZAMENTO COM OUTRAS SKILLS
-
-Esta skill DEVE ser acionada AUTOMATICAMENTE em conjunto com.
-
-- `base-jef-trf3-manual-2025` (Onda 41). Manual JEF TRF3.
-- `base-jef-previdenciario`. Visão geral JEF.
-- `base-recursos-jef`. Recursos no JEF.
-- `base-tnu-admissibilidade-manual` (Onda 30). Admissibilidade TNU.
-- `pedilef-cotejo-analitico-tnu`. Cotejo analítico.
-- `base-puil-pedilef-vedacao-materia-processual`. Súmula 43/TNU.
-- `base-precedentes-catalogo-vinculantes` (Onda 37). Precedentes.
-- `peticao-previdenciaria`. Geração da peça.
-- `revisao-peticao`. Auditoria.
-
-Para BPC. Cruzar com `base-bpc-renda-per-capita-miserabilidade`, `bpc-renda-grupo-familiar`, `analise-bpc-loas`, `base-bpc-loas-requisitos`.
-
-Para aposentadoria por idade. Cruzar com `aposentadoria-idade-hibrida` e `periodo-graca-qualidade-segurado`.
-
-Para incapacidade. Cruzar com `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`.
-
-Para pensão por morte. Cruzar com `pensao-por-morte` e `base-pensao-por-morte-uniao-estavel-prova`.
-
-Para MS. Cruzar com `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`.
-
-## 28 FONTE NORMATIVA E ATUALIZAÇÃO
-
-Fonte primária verificada via WebFetch.
-
-- `https://www.trf3.jus.br/documentos/gaco/Sumulas_01_a_19.pdf` (DEJF3R 109/2015 de 17/06/2015).
-- `https://www.trf3.jus.br/documentos/gaco/Sumulas_20_a_23.pdf` (DEJF3R 198/2015 de 26/10/2015).
-
-Aprovação. Sessão da TRU 3 de 30-31/03/2015 (renumeradas em 03/06/2015) para Súmulas 1-19 e sessão de 28/08/2015 (numeradas em 22/10/2015) para Súmulas 20-23.
-
-Presidência da TRU 3 à época. Desembargador Federal Paulo Octávio Baptista Pereira.
-
-Status verificado em 13/06/2026. Sem aprovação de Súmulas 24 ou posteriores até esta data. Verificar trimestralmente em `https://www.trf3.jus.br`.
-
-## 29 ALERTA OPERACIONAL FINAL
-
-A combinação `base-tru-trf3-sumulas-jurisprudencia` (esta) + `base-jef-trf3-manual-2025` (Onda 41) constitui o NÚCLEO de atuação no JEF da 3ª Região.
-
-Súmulas pró-segurado de USO IMEDIATO. 3, 4, 7, 8, 11, 13, 14, 15, 16, 19, 21, 22.
-
-Súmulas com DISTINGUISHING NECESSÁRIO (potencial desfavorável). 18 (reajuste), 23 (BPC dever alimentar).
-
-Súmulas TÉCNICO-PROCEDIMENTAIS. 1, 2, 5, 6, 9, 10, 12, 17, 20.
-
-Postura pró-segurado sempre. Antes de invocar uma Súmula, conferir se ela favorece a tese do cliente. Se não, fazer distinguishing.
-
-## Boletins da TNU (Onda 105)
-
-Para a tese nacional que a TRU e as Turmas Recursais aplicam, consultar a skill `base-boletins-tnu`, com o índice dos 241 temas nos 104 boletins oficiais do acervo. Súmula regional do TRF3 e tese da TNU são fontes distintas e complementares, e a segunda prevalece no microssistema dos Juizados quando houver conflito.
-
-## MCP trf3 nas Turmas Recursais e o paradigma de PUIL (Onda 144)
-
-O servidor MCP `trf3` cobre também as Turmas Recursais de São Paulo e do Mato Grosso do Sul, no acervo `recursais`, e serve para localizar paradigma de PUIL e de PEDILEF.
-
-**Duas particularidades da fonte.** Nas Turmas Recursais o CJF apaga a letra acentuada, e não só o acento, de modo que "ruído" chega como "rudo". A busca do MCP `trf3` já procura as duas formas, e por isso a palavra se digita normalmente, com acento. Digitar sem acento, como `ruido`, não acha o texto mutilado. Consulta com mais de 10.000 resultados volta com o aviso `consulta_pesada` e sem ordenação por relevância. Nesse caso, acrescente termo ou filtro (órgão, acervo, datas) antes de ler a lista. A TRU da 3ª Região está na base desde a coleta de 09/2026, filtrada pelo órgão `Uniformiza`, e ausência de acórdão no MCP continua não autorizando afirmar que ele não existe.
-
-**A conferência é a mesma da `pesquisa-jurisprudencia-chrome`, e aqui ela é ainda mais exigente.** Paradigma de PUIL precisa de identificação exata de órgão, relator, data e tese, porque o cotejo analítico se faz sobre esses dados e erro neles derruba a admissibilidade. Todo acórdão localizado no MCP nasce `[NÃO CONFIRMADO]` e só é citado depois de aberto no portal do TRF3, na aba Turmas Recursais, com leitura do inteiro teor.
-
-**A busca por número devolve o processo inteiro (Onda 146).** Conferindo paradigma, lembrar que o número CNJ traz todos os julgados colegiados daqueles autos, e o certo é o que casa a DATA DE JULGAMENTO com a do MCP. A classe não distingue. Pior, há julgamento anulado no acervo sem marca na lista, e citar acórdão nulo como paradigma de PUIL é vício que a contraminuta explora. Detalhe em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
-
-**Súmula do TRF3 pode ser localizada no MCP pelo acervo `sumulas`**, e a citação continua saindo do repositório oficial. Súmula da TRU não está no MCP.
-
-Detalhamento do fluxo em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
+`base-jef-trf3-manual-2025`, `base-jef-previdenciario`, `base-recursos-jef`, `base-tnu-admissibilidade-manual`, `pedilef-cotejo-analitico-tnu`, `base-puil-pedilef-vedacao-materia-processual`, `base-precedentes-catalogo-vinculantes`, `peticao-previdenciaria`, `revisao-peticao`.
 
 ## MCPs da casa
 

@@ -121,7 +121,6 @@ Verificar periodicamente `web.trf3.jus.br/acordaos` para novas decisões (2023-2
 - `mandado-seguranca-previdenciario`. Estratégia geral do MS.
 - `base-ms-cabimento-direito-liquido-certo`. Cabimento por mora.
 - `base-ms-decadencia-omissao-demora`. Renovação do prazo em omissão.
-- `base-jef-trf3-manual-2025`. Manual JEF TRF3 (verificar se JEF absorve MS de mora).
-- `base-jef-previdenciario`. Alerta de que Súmula 20/TRU 3 veda MS no JEF - o MS aqui é para JUSTIÇA FEDERAL COMUM ou VARA PREVIDENCIÁRIA, não JEF.
+- `base-jef-previdenciario`. O MS não tramita no JEF (Lei 10.259/2001, art. 3º, §1º, I); vai à vara federal comum, Cível ou Previdenciária.
 - `base-precedentes-catalogo-vinculantes`. Novo bloco de precedentes TRF3.
 - `peticao-previdenciaria`. Redação da inicial.

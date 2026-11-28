@@ -1,6 +1,6 @@
 # Índice de Boletins da TNU (acervo do escritório)
 
-Gerado na Onda 105 (11/08/2026). 104 boletins processados, sessões de 18/02/2016 a 24/06/2026. A coluna Teses traz a contagem de blocos de tese capturados na extração automática, e serve de indicador de densidade, não de número exato de teses do boletim.
+Gerado em 11/08/2026. 104 boletins processados, sessões de 18/02/2016 a 24/06/2026. A coluna Teses traz a contagem de blocos de tese capturados na extração automática, e serve de indicador de densidade, não de número exato de teses do boletim.
 
 | Boletim | Sessão | Temas tratados | Teses capt. | Arquivo |
 |---|---|---|---|---|

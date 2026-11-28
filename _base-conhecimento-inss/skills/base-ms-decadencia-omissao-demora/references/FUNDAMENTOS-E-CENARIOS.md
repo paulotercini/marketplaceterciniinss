@@ -1,115 +1,31 @@
-# Decadência e Omissão MS. Fundamentos e Cenários
+# Decadência e Demora no MS. Fundamentos e Cenários
 
-## 1. Conceito operacional
+Regra, termo inicial e tabela de prazos no SKILL.md. Aqui, a aplicação por cenário.
 
-Decadência é prazo extintivo para impetração. 120 dias da ciência do ato. Em omissão ou trato continuado, o prazo renova enquanto o ato persiste. Em previdenciário, a demora do INSS é ato omissivo e autoriza MS sem fulminação decadencial.
+## 1. Cenários
 
-## 2. Fundamento constitucional
+A. Indeferimento formal comunicado ao segurado. Prazo de 120 dias da ciência registrada no PA (Meu INSS, carta, e-mail). Se o segurado recorreu ao CRPS, o recurso não suspende o prazo do MS contra o indeferimento (Súmula 430 STF por analogia); escolher uma via.
 
-Art. 5º LXIX CF/88.
+B. Requerimento sem decisão. Omissão continuada, sem decadência. Prova da inércia atual e do tempo líquido de tramitação, descontadas as exigências.
 
-Art. 5º LXXVIII CF/88. Duração razoável.
+C. Arquivamento ou encerramento sem fundamentação. Ato comissivo; 120 dias da ciência.
 
-Art. 37 CF/88. Eficiência.
+D. Acórdão do CRPS não cumprido. Omissão continuada (`base-ms-cumprimento-inss`).
 
-## 3. Fundamento legal
+E. Exigência abusiva mantida. Ato que se renova enquanto o INSS condiciona a análise ao seu cumprimento; por cautela, impetrar dentro de 120 dias da carta de exigência.
 
-Lei 12.016/2009, art. 23.
+F. Recurso parado na Junta ou na Câmara. Omissão continuada; autoridade é o presidente do órgão (`base-ms-competencia-autoridade-coatora-inss-crps`).
 
-Lei 9.784/99, art. 49.
+G. Benefício pago a menor por ato repetido mensalmente. Trato sucessivo; o prazo se renova a cada competência, mas o MS alcança apenas parcelas desde a impetração (Súmula 271 STF).
 
-Lei 13.460/2017.
+## 2. Prova da demora
 
-Lei 8.213/91.
+Protocolo do requerimento, histórico de tarefas do Meu INSS, cartas de exigência e datas de cumprimento, e, quando útil, o relatório trimestral do PGB com o tempo médio de atendimento (Lei 15.201/2025, art. 6º, §2º).
 
-## 4. Marco jurisprudencial central
+## 3. Cautelas
 
-### Súmula 632 STF (auditoria 03/10/2026)
+Ato comissivo com ciência duvidosa. Contar da data mais antiga possível e impetrar dentro dela.
 
-Decadência em MS.
+Prorrogação motivada pelo INSS. Prazo do art. 49 da Lei 9.784/99 dobra para 60 dias; sem motivação expressa, não há prorrogação.
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Duração razoável PA.
-
-### Tema 374 STF
-
-Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Ato comissivo
-
-120 dias da ciência.
-
-### Cenário B. Omissão
-
-Prazo renovado.
-
-### Cenário C. Arquivamento
-
-Da ciência.
-
-### Cenário D. Cumprimento CRPS
-
-Omissão.
-
-### Cenário E. Exigência abusiva persistente
-
-Trato continuado.
-
-### Cenário F. PA pendente
-
-Sem decadência.
-
-## 6. Cenários limitados
-
-### Cenário G. Ato transitório
-
-Alta acuidade na contagem.
-
-### Cenário H. Prorrogação PA
-
-Cautela.
-
-### Cenário I. MS preventivo
-
-Requer iminência.
-
-## 7. Metodologia
-
-Primeiro, identificar ato.
-
-Segundo, contar prazo.
-
-Terceiro, avaliar omissão.
-
-Quarto, impetrar tempestivamente.
-
-Quinto, fundamentar omissão como renovação.
-
-## 8. Riscos processuais
-
-Risco de decadência.
-
-Risco de perda de janela.
-
-Risco de contagem errada.
-
-Risco de ato dúbio.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, controle de prazos.
-
-Segundo, monitoramento do PA.
-
-Terceiro, impetrar antes de 90 dias para ato comissivo.
-
-Quarto, articular omissão.
-
-Quinto, preservar MS.
-
-## 10. Integração prática
-
-`base-ms-cabimento-direito-liquido-certo`, `base-ms-competencia-autoridade-coatora-inss-crps`, `mandado-seguranca-previdenciario`, `lei-13460-usuario-servico-publico`, `peticao-previdenciaria`.
+Antes de impetrar por demora, considerar a reclamação na Ouvidoria (`base-canais-falabr-corregedoria-cgu`), que não é requisito do MS.

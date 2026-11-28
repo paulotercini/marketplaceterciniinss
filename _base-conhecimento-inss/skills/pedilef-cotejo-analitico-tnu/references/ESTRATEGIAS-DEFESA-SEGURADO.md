@@ -20,9 +20,9 @@ A aplicação das QOs sobre admissibilidade do PEDILEF não pode supor supressã
 
 ## Argumentação Contra Aplicação Formalista da QO 59
 
-Confirmada a QO 59 na página oficial do CJF (aprovada por maioria em 15/04/2026, precedente 5007086-55.2020.4.02.5104), a argumentação contra sua aplicação formalista deve se estruturar em quatro eixos (auditoria 03/10/2026).
+Confirmada a QO 59 na página oficial do CJF (aprovada por maioria em 15/04/2026, precedente 5007086-55.2020.4.02.5104), a argumentação contra sua aplicação formalista deve se estruturar em quatro eixos.
 
-**Primeiro eixo. Excesso de rigor técnico em microssistema simplificado.** A transposição acrítica do padrão do art. 1.029, §1º, do CPC/2015 (que rege o recurso especial) para o PEDILEF desconsidera a distinção estrutural entre o recurso especial (tribunal de cúpula constitucional) e o PEDILEF (recurso uniformizador em microssistema simplificado). O próprio IEPrev, em texto do Dr. Yoshiaki Yamamoto de 09/12/2024, reconheceu que a TNU, ao aplicar formalismos estranhos aos JEFs, transforma turmas recursais em "bolhas hermenêuticas".
+**Primeiro eixo. Excesso de rigor técnico em microssistema simplificado.** A transposição acrítica do padrão do art. 1.029, §1º, do CPC/2015 (que rege o recurso especial) para o PEDILEF desconsidera a distinção estrutural entre o recurso especial (tribunal superior) e o PEDILEF (recurso uniformizador em microssistema simplificado). O próprio IEPrev, em texto do Dr. Yoshiaki Yamamoto de 09/12/2024, reconheceu que a TNU, ao aplicar formalismos estranhos aos JEFs, transforma turmas recursais em "bolhas hermenêuticas".
 
 **Segundo eixo. Instrumentalidade das formas.** Se a peça contiver materialmente os elementos exigidos (fatos, questão jurídica, ratio decidendi, divergência), a ausência de formato tabular explícito é irregularidade formal sanável, não causa de não conhecimento. A aplicação desproporcional da QO 59 violaria o art. 188 do CPC e o princípio da primazia da resolução de mérito (art. 4º, CPC).
 
@@ -32,7 +32,7 @@ Confirmada a QO 59 na página oficial do CJF (aprovada por maioria em 15/04/2026
 
 ## Táticas Pragmáticas de Prevenção
 
-**Tática 1. Formato tabular obrigatório.** Com a QO 59 em vigor, adotar o formato tabular comparativo paradigma por paradigma (auditoria 03/10/2026). É custo baixo e mitigação alta.
+**Tática 1. Formato tabular obrigatório.** Com a QO 59 em vigor, adotar o formato tabular comparativo paradigma por paradigma. É custo baixo e mitigação alta.
 
 **Tática 2. Paradigmas em cascata.** Apresentar pelo menos três paradigmas, priorizando um de outra região recursal e um em tese do STJ (IRDR/IAC/repetitivo/EDiv/PUIL-STJ). A redundância protege contra falha parcial (exemplo, superação superveniente de um dos paradigmas por QO 12).
 
@@ -48,17 +48,17 @@ Confirmada a QO 59 na página oficial do CJF (aprovada por maioria em 15/04/2026
 
 Redigir a tese em chave de valoração jurídica de prova, nunca em chave de reexame. Exemplos concretos.
 
-**Caso tempo especial por ruído.** Errado, "a perícia provou que o ruído era de 87 dB". Correto, "o PPP, documento técnico oficial, indicou ruído de 87 dB, nível que, à luz do Tema 174/TNU, caracteriza atividade especial, conclusão jurídica que o recorrido, ao exigir NEN em período posterior a 18/11/2003, contrariou."
+**Caso tempo especial por ruído.** Errado, "a perícia provou que o ruído era de 87 dB". Correto, "o PPP indica NEN de 87 dB apurado pela NHO-01 em período posterior a 18/11/2003, acima do limite de 85 dB do Anexo IV do Decreto 3.048/99 (código 2.0.1); o recorrido, ao negar o enquadramento, deu ao art. 57 da Lei 8.213/91 e ao Tema 174 TNU interpretação divergente do paradigma." [conferir a tese literal do Tema 174 antes de usar]
 
-**Caso segurado especial rural.** Errado, "o segurado é rural, trabalhou na lavoura". Correto, "a certidão do INCRA em nome do grupo familiar constitui razoável início de prova material, nos termos do art. 55, §3º, da Lei 8.213/91, valoração jurídica que o recorrido, ao exigir homologação pelo INSS do contrato de arrendamento, contrariou" (auditoria 03/10/2026, retirado o Tema 218/TNU, que trata de outra matéria).
+**Caso segurado especial rural.** Errado, "o segurado é rural, trabalhou na lavoura". Correto, "a certidão do INCRA em nome do grupo familiar constitui razoável início de prova material, nos termos do art. 55, §3º, da Lei 8.213/91, valoração jurídica que o recorrido, ao exigir homologação pelo INSS do contrato de arrendamento, contrariou".
 
 ## Estratégia Contra Inadmissão por Súmula 43 (Matéria Processual)
 
-Reformular cerceamento de defesa, coisa julgada e omissão probatória como questões de extensão do direito material. A violação processual deve aparecer como meio de supressão de direito material.
+Cerceamento de defesa, coisa julgada, interesse de agir e legitimidade são tratados pela TNU como matéria processual (PUIL 1028473-09.2022.4.01.3600 e aplicações de 2026, inclusive coisa julgada no PUIL 5047202-36.2024.4.04.7100). Não descrever o vício processual como "supressão de direito material", porque a TNU não conhece. Identificar a norma material subjacente e a interpretação divergente que o acórdão lhe deu.
 
-**Caso cerceamento em tempo especial.** Errado, "o juiz cerceou a defesa ao indeferir a perícia técnica". Correto, "o direito ao reconhecimento de tempo especial pelo agente ruído, conforme Tema 174/TNU, depende de prova técnica da metodologia NEN, cuja produção foi obstada pelo indeferimento da perícia, configurando supressão do direito material à aposentadoria especial".
+**Caso perícia em tempo especial.** Errado, "o juiz cerceou a defesa ao indeferir a perícia técnica". Correto, "a Turma de origem deu ao art. 57 da Lei 8.213/91 e ao Anexo IV do Decreto 3.048/99 interpretação divergente do paradigma quanto ao enquadramento qualitativo do agente químico". Tabela completa em `base-puil-pedilef-vedacao-materia-processual`.
 
-**Caso coisa julgada.** Errado, "a coisa julgada impediria a rediscussão". Correto, "a extensão material do direito à averbação de tempo especial reconhecido em ação anterior não pode ser restringida a período ali não demandado, porque o direito à contagem especial de cada período decorre do art. 57 da Lei 8.213/91, e a coisa julgada anterior só alcança os períodos ali decididos" (auditoria 03/10/2026, retirado o Tema 629/STJ, que trata da extinção sem mérito por ausência de prova eficaz).
+Se o acórdão apenas valorou a prova, sem tese jurídica divergente, preferir embargos de declaração ou outra via.
 
 ## Estratégia Contra QO 18 (Mais de Um Fundamento Suficiente)
 

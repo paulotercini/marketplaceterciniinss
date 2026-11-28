@@ -51,9 +51,9 @@ Quarto, erro material, equívoco evidente de escrita, cálculo, data ou número,
 
 ## Eixo 2. Vícios de integração
 
-Verificar omissão, obscuridade e contradição INTERNA ao próprio julgado. Presente o vício, a via é embargos de declaração, com disciplina dura de 1 a 2 vícios e 1 a 2 páginas. Acionar `base-cpc-embargos-declaracao`.
+Verificar omissão, obscuridade e contradição INTERNA ao próprio julgado. Presente o vício, a via é embargos de declaração, em peça enxuta, de 1 a 2 vícios e 1 a 2 páginas. Acionar `base-cpc-embargos-declaracao`.
 
-Regra crítica, a contradição que cabe em embargos é só a interna. Contradição com a prova, com a jurisprudência ou com a tese da parte é externa e vai para o recurso do eixo 3.
+A contradição que cabe em embargos é apenas a interna. Contradição com a prova, com a jurisprudência ou com a tese da parte é externa e vai para o recurso do eixo 3.
 
 ## Eixo 3. Mérito
 
@@ -61,7 +61,7 @@ Verificar o acerto do julgado quanto ao direito material e à valoração dos fa
 
 Primeiro, CRPS, recurso ordinário à Junta ou recurso especial à Câmara. Acionar `base-recurso-crps-peca-enxuta` e `base-crps-panorama-geral`.
 
-Segundo, JEF, recurso inominado à Turma Recursal, depois PUIL. Acionar `base-recursos-jef`.
+Segundo, JEF, recurso inominado à Turma Recursal e, depois, pedido de uniformização apenas sobre direito material (Súmulas 42 e 43 TNU). Acionar `base-recursos-jef` e `base-puil-pedilef-vedacao-materia-processual`.
 
 Terceiro, rito ordinário, apelação ao TRF, com atenção à causa madura do art. 1.013, §3º. Acionar `base-rito-ordinario-trf` e `base-cpc-apelacao-efeitos-art1013`.
 
@@ -81,15 +81,15 @@ Uma decisão pode acionar mais de um eixo. Embargos e recurso não se confundem 
 
 ## Prazos, atenção
 
-Primeiro, embargos, 30 dias no CRPS (art. 92, § 2º, do Regimento Interno, Portaria MPS 125/2026) e 5 dias no CPC.
+Primeiro, embargos, 30 dias no CRPS (art. 92, §2º, do Regimento Interno, Portaria MPS 125/2026), 5 dias no JEF (Lei 9.099/95, art. 49) e 5 dias úteis no CPC (art. 1.023).
 
-Segundo, recurso ordinário no CRPS, 30 dias.
+Segundo, recurso ordinário no CRPS, 30 dias (Decreto 3.048/99, art. 305, §1º).
 
-Terceiro, recurso inominado no JEF, 10 dias.
+Terceiro, recurso inominado no JEF, 10 dias (Lei 9.099/95, art. 42).
 
-Quarto, apelação no rito ordinário, 15 dias úteis.
+Quarto, apelação no rito ordinário, 15 dias úteis, em dobro para o INSS (CPC, arts. 1.003, §5º, e 183).
 
-Embargos tempestivos interrompem o prazo do recurso seguinte.
+Embargos tempestivos interrompem o prazo do recurso seguinte (CPC, art. 1.026; Lei 9.099/95, art. 50; Regimento do CRPS, art. 92, §3º).
 
 ## Disciplina antialucinação
 
