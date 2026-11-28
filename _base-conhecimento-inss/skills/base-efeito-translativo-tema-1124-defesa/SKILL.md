@@ -1,352 +1,104 @@
 ---
 name: base-efeito-translativo-tema-1124-defesa
-description: "Defesa pró-segurado contra aplicação de ofício do Tema 1124/STJ pelo efeito translativo, vedação à decisão surpresa e estratégia recursal. Use SEMPRE que mencionar efeito translativo Tema 1124, aplicação de ofício Tema 1124, art. 933 CPC, art. 1.013 §3º CPC, decisão surpresa, vedação decisão surpresa, art. 9º CPC, art. 10 CPC, Súmula 98 STJ, Tema Repetitivo 698 STJ, embargos de declaração prequestionadores, ratio decidendi Tema 1124, distinguishing Tema 1124, modulação Tema 1124, falta de prévio requerimento administrativo, extinção sem mérito de ofício, JEF defesa Tema 1124, PEDILEF Tema 1124, PUIL, REsp Tema 1124, RE Tema 1124, prequestionamento ficto art. 1.025 CPC, art. 489 §1º CPC. Cruza com tema-1124-instrucao-administrativa, peticao-previdenciaria, revisao-peticao, base-cpc-fato-superveniente-art493, base-cpc-coisa-julgada-progressiva, precedentes-previdenciarios."
+description: "Defesa pró-segurado contra a aplicação de ofício do Tema 1124/STJ em grau recursal (extinção pelo item 1.6 ou deslocamento da DIB para a citação em capítulo não impugnado), pela vedação à decisão surpresa e pelos limites da devolução. Use SEMPRE que mencionar efeito translativo Tema 1124, aplicação de ofício Tema 1124, art. 933 CPC, art. 1.013 CPC, art. 485 § 3º CPC, decisão surpresa, arts. 9º e 10 CPC, capítulo não impugnado, reformatio in pejus, Súmula 98 STJ, Tema 698 STJ, embargos de declaração prequestionadores, prequestionamento ficto art. 1.025 CPC, art. 489 § 1º CPC, distinguishing Tema 1124, modulação Tema 1124, extinção sem mérito de ofício, falta de interesse de agir em recurso, JEF defesa Tema 1124, PUIL, REsp Tema 1124. Cruza com tema-1124-instrucao-administrativa, base-puil-pedilef-vedacao-materia-processual, base-cpc-embargos-declaracao, precedentes-previdenciarios."
 ---
 
-# Efeito Translativo e Tema 1124/STJ. Defesa Pró-Segurado
+# Efeito translativo e Tema 1124/STJ. Defesa pró-segurado
 
-## 1. Quando acionar esta skill
+## 1. Quando acionar
 
-Acione SEMPRE que houver risco ou efetiva aplicação de ofício do Tema 1124/STJ pelo tribunal de segunda instância (TRF, Turma Recursal, TRU, TNU) por força do efeito translativo dos recursos.
+Quando o tribunal (TRF, Turma Recursal, TRU ou TNU) aplica ou ameaça aplicar o Tema 1124/STJ sem provocação da parte e sem ouvir o segurado. As hipóteses observadas no TRF3 e nas Turmas Recursais de SP são duas:
 
-Hipóteses típicas. Tribunal extingue ação sem mérito por falta de prévio requerimento administrativo, mesmo o INSS não tendo arguido a preliminar. Recurso do INSS apenas sobre o mérito, mas tribunal acolhe a preliminar de ofício. Sentença que concedeu o benefício é reformada por suposta falta de interesse de agir não suscitada na contestação.
+1. extinção sem mérito por falta de interesse de agir (itens 1.3 e 1.6), inclusive em processo já instruído e sentenciado com procedência;
+2. deslocamento da DIB da DER para a citação (item 2.3) em recurso do INSS que não impugnou o capítulo do termo inicial.
 
-A skill é fonte primária pró-segurado para a defesa contra a aplicação de ofício do Tema 1124, com fundamento na vedação à decisão surpresa (arts. 9º e 10 CPC) e na estratégia recursal sistêmica.
+O conteúdo do Tema 1124 (tese literal, matriz de enquadramento, acórdãos do STJ e mapa do TRF3) está em `tema-1124-instrucao-administrativa`. Esta skill trata apenas da defesa processual.
 
-## 2. O que é o efeito translativo
+## 2. O que o Tema 1124 decide
 
-### 2.1. Conceito
+Tema 1124/STJ, REsps 1.913.152/SP, 1.905.830/SP e 1.912.784/SP, Primeira Seção, julgado em 08/10/2025, acórdão publicado em 06/11/2025 (situação "Acórdão Publicado", conferida no MCP `superiores` em 28/11/2026). A questão afetada é o termo inicial dos efeitos financeiros do benefício concedido ou revisado judicialmente com prova não submetida ao INSS. A tese tem duas partes:
 
-O efeito translativo dos recursos é o fenômeno processual pelo qual o tribunal pode conhecer de questões de ordem pública que não foram suscitadas pelas partes, em razão da devolução plena do conhecimento.
+- itens 1.1 a 1.6: interesse de agir. Requerimento apto; dever do INSS de emitir carta de exigência (1.4); análise fundamentada, pelo juiz, da desídia do segurado ou da conduta não colaborativa do INSS (1.5); extinção quando o segurado leva a juízo fatos ou documentos novos, salvo prova apenas complementar (1.6);
+- itens 2.1 a 2.4: DIB na DER quando a prova judicial confirma a administrativa (2.1) ou quando o INSS deixou de oportunizar a complementação (2.2); DIB na citação quando a prova surgiu depois da ação ou era materialmente impossível antes (2.3); prescrição quinquenal (2.4).
 
-Aplicação. Preliminares processuais (litispendência, coisa julgada, falta de interesse de agir, ilegitimidade ad causam) podem ser conhecidas de ofício.
+A exigência de prévio requerimento como condição da ação é o Tema 350/STF (RE 631.240), ao qual o Tema 1124 remete no item 1.6. Não confundir os dois.
 
-### 2.2. Limites pelo CPC/2015
+**Modulação.** Não houve. O acórdão de mérito a negou, e os embargos de declaração julgados em 09/09/2026 (DJEN 21/09/2026) rejeitaram modulação e regime transitório. A tese alcança os processos pendentes cuja discussão sobre a DIB não esteja preclusa. O argumento de irretroatividade não deve ser usado.
 
-Art. 933 CPC. Cabe ao relator suscitar a questão e dar vista às partes para manifestação prévia.
+## 3. Tese central
 
-Art. 9º CPC. Não se proferirá decisão contra uma das partes sem que ela seja previamente ouvida.
+### 3.1. Contraditório prévio também na matéria de ordem pública
 
-Art. 10 CPC. O juiz não pode decidir, em grau algum de jurisdição, com base em fundamento a respeito do qual não se tenha dado às partes oportunidade de se manifestar, ainda que se trate de matéria sobre a qual deva decidir de ofício.
+O interesse de agir é conhecível de ofício em qualquer grau enquanto não houver trânsito em julgado (art. 485, § 3º, CPC). O conhecimento de ofício não dispensa o contraditório:
 
-### 2.3. Tensão sistêmica
+- art. 10 do CPC: o juiz não decide, em grau algum de jurisdição, com base em fundamento sobre o qual as partes não puderam se manifestar, "ainda que se trate de matéria sobre a qual deva decidir de ofício";
+- art. 933 do CPC: constatada questão apreciável de ofício ainda não examinada, o relator intima as partes para manifestação em 5 dias; se a constatação ocorrer na sessão, o julgamento é suspenso (§ 1º);
+- art. 9º do CPC e art. 5º, LV, da CF.
 
-O efeito translativo (matéria de ordem pública) coexiste com a vedação à decisão surpresa.
+### 3.2. O item 1.5 exige exame de fato
 
-A solução pelo CPC/2015 é a observância do contraditório prévio, mesmo nas matérias de ordem pública.
+O próprio Tema 1124 manda o juiz examinar, fundamentadamente, se houve desídia do segurado ou conduta não colaborativa do INSS (item 1.5), e se o documento juntado em juízo é essencial ou apenas complementar (item 1.6, parte final). São juízos de fato sobre o processo administrativo. Decidi-los de ofício, sem ouvir o segurado sobre carta de exigência, oferta de justificação administrativa e conteúdo do processo administrativo, viola os arts. 10 e 489, § 1º, IV, do CPC.
 
-## 3. O Tema 1124/STJ na perspectiva do efeito translativo
+### 3.3. Limites da devolução
 
-### 3.1. Tese fixada no Tema 1124
+A apelação devolve a matéria impugnada (art. 1.013, caput, CPC), e as questões de ofício alcançam apenas o capítulo impugnado (art. 1.013, § 1º). O capítulo do termo inicial não impugnado pelo INSS não é devolvido, e o precedente superveniente não amplia o objeto do recurso. É a posição da 9ª Turma do TRF3 (ApCiv 5782722-52.2019.4.03.9999, embargos julgados em 06/10/2026). Mudar a DIB em desfavor do segurado em recurso exclusivo do INSS sobre outro capítulo é reformatio in pejus.
 
-Distinção essencial: a exigência de PRÉVIO REQUERIMENTO ADMINISTRATIVO como condição da ação é o Tema 350/STF (RE 631.240), com suas exceções. O Tema 1124/STJ (REsps 1.913.152, 1.905.830 e 1.912.784) trata, desde a questão de ordem de 22/05/2024, do interesse de agir (itens 1.1 a 1.6) e do TERMO INICIAL DOS EFEITOS FINANCEIROS do benefício concedido ou revisado judicialmente com base em prova não submetida ao INSS (itens 2.1 a 2.4). A DER vale quando a prova já constava do processo administrativo ou quando o INSS deixou de oportunizar a complementação. A citação vale quando a prova surgiu depois da ação ou era materialmente impossível antes.
+### 3.4. Divergência no TRF3
 
-### 3.2. Aplicação pelo tribunal
+A 10ª Turma aplica o tema de ofício em recurso apenas do INSS, por entendê-lo obrigatório (ApCiv 5015421-22.2025.4.03.9999, j. 11/02/2026), e extinguiu pelo item 1.6 processo já instruído (ApCiv 5008321-91.2020.4.03.6183, acórdão de 13/05/2026, embargos julgados em 07/10/2026). A 14ª Turma Recursal de SP extinguiu, em recurso do INSS, processo de 2021 sentenciado com procedência (RecInoCiv 0004118-63.2021.4.03.6337, j. 18/09/2026). A 7ª Turma, diante de prova nova em processo em curso, desloca os efeitos para a citação sem extinguir (ApelRemNec 5003872-37.2023.4.03.6102, j. 31/08/2026). Todos conferidos em 11/10/2026; detalhe em `tema-1124-instrucao-administrativa/references/APLICACAO-TRF3-TEMA-1124.md`.
 
-Os 17 acórdãos do STJ não tratam da aplicação da tese de ofício nem do efeito translativo (Não localizado na leitura de 11/10/2026). O que dizem é que a tese vale para os processos pendentes cuja discussão sobre a DIB não esteja preclusa.
+Os 17 acórdãos do STJ no tema não tratam da aplicação de ofício nem do efeito translativo (Não localizado na leitura de 11/10/2026).
 
-No TRF3 há divergência entre Turmas. A 9ª Turma vedou aplicar o tema para reformar o capítulo do termo inicial que o recurso do INSS não impugnou, porque o precedente superveniente não amplia o objeto devolvido (ApCiv 5782722-52.2019.4.03.9999, embargos julgados em 06/10/2026) [CONFERIDO em 11/10/2026]. A 10ª Turma aplicou o tema de ofício em recurso só do INSS, por entender a aplicação obrigatória e independente de provocação (ApCiv 5015421-22.2025.4.03.9999, j. 11/02/2026) [CONFERIDO em 11/10/2026], e extinguiu pelo item 1.6 processo já instruído (ApCiv 5008321-91.2020.4.03.6183, acórdão de 13/05/2026, mantido nos embargos julgados em 07/10/2026) [CONFERIDO em 11/10/2026]. No JEF, a 14ª Turma Recursal de SP extinguiu, em recurso do INSS, processo de 2021 já sentenciado com procedência (RecInoCiv 0004118-63.2021.4.03.6337, j. 18/09/2026) [CONFERIDO em 11/10/2026]. Detalhe em `tema-1124-instrucao-administrativa/references/APLICACAO-TRF3-TEMA-1124.md`.
+## 4. Estratégia
 
-### 3.3. Crítica pró-segurado
+### 4.1. Na inicial (prevenção)
 
-A aplicação do Tema 1124 envolve análise de fato (existência ou não do prévio requerimento, natureza do indeferimento, preenchimento das hipóteses do Tema 350/STF). Não é matéria estritamente de ordem pública passível de aplicação automática de ofício.
+Seção "DOS EFEITOS FINANCEIROS" com cada documento classificado como apresentado ao INSS, complementar ou surgido depois da ação, com o ID do processo administrativo, a existência ou não de carta de exigência e o item da tese aplicável. A matriz está em `tema-1124-instrucao-administrativa`.
 
-A aplicação automática viola o contraditório prévio (arts. 9º e 10 CPC).
+### 4.2. Nas contrarrazões
 
-## 4. Tese central pró-segurado
+Declarar que o capítulo do termo inicial não foi impugnado e não foi devolvido (art. 1.013, caput e § 1º). Antecipar o enquadramento no item 2.1, no item 2.2 ou na exceção do item 1.6, com o pedido de intimação prévia (art. 933) se o órgão cogitar aplicar o tema de ofício.
 
-A aplicação do Tema 1124 de ofício pelo tribunal sem prévia manifestação das partes viola.
+### 4.3. Antes do julgamento
 
-Art. 9º CPC. Vedação ao julgamento sem oitiva prévia.
+Questão levantada em pauta ou em sessão sem vista às partes: petição pedindo a intimação do art. 933 e, na sessão, a suspensão do § 1º. Sustentação oral com o mesmo pedido.
 
-Art. 10 CPC. Vedação à decisão surpresa.
+### 4.4. Embargos de declaração
 
-Art. 489, § 1º, CPC. Dever de fundamentação adequada da decisão.
+Contra acórdão que aplicou o tema de ofício. Pedidos, nesta ordem:
 
-Art. 933 CPC. Dever do relator de suscitar a questão e dar vista às partes.
+1. anulação do acórdão por violação aos arts. 10 e 933 do CPC, com abertura de vista;
+2. manifestação expressa sobre os arts. 9º, 10, 489, § 1º, 933 e 1.013 do CPC, o item 1.5 do Tema 1124 e o enquadramento do caso nos itens 2.1, 2.2 ou na exceção do item 1.6;
+3. subsidiariamente, prequestionamento ficto (art. 1.025 do CPC).
 
-A nulidade da decisão surpresa enseja a devolução do exame ao tribunal, com observância do contraditório.
+Súmula 98/STJ: "Embargos de declaração manifestados com notório propósito de prequestionamento não têm caráter protelatório." O limite é o Tema 698/STJ: "Caracterizam-se como protelatórios os embargos de declaração que visam rediscutir matéria já apreciada e decidida pela Corte de origem em conformidade com súmula do STJ ou STF ou, ainda, precedente julgado pelo rito dos artigos 543-C e 543-B, do CPC." Embargos restritos à omissão sobre o contraditório e o enquadramento não rediscutem a tese, e a multa do art. 1.026, § 2º, do CPC não incide. Modelo em `references/FUNDAMENTOS-E-CENARIOS.md`.
 
-## 5. Estratégia preventiva
+### 4.5. Recursos aos tribunais superiores
 
-### 5.1. Petição inicial
+REsp por violação aos arts. 9º, 10, 489, § 1º, 933 e 1.013 do CPC e por má aplicação do Tema 1124 (ver `base-resp-relevancia-questao-federal`). No JEF, PUIL à TNU: a Súmula 43/TNU veda incidente sobre matéria processual, e a TNU trata o interesse de agir como processual. Antes de redigir, acionar `base-puil-pedilef-vedacao-materia-processual` para formular a divergência como questão de direito material (termo inicial dos efeitos financeiros, art. 49 e art. 54 da Lei 8.213/1991, conforme a espécie).
 
-Demonstrar expressamente o prévio requerimento administrativo na petição inicial.
+## 5. Cenários
 
-Anexar comprovante de protocolo, decisão administrativa, documentos do PA.
+| Cenário | Defesa principal | Pedido subsidiário |
+|---|---|---|
+| INSS recorre do mérito; tribunal extingue de ofício pelo item 1.6 | Arts. 10 e 933 CPC; item 1.5 exige exame de fato; prova apenas complementar (1.6, parte final) | Deslocar os efeitos para a citação sem extinguir (linha da 7ª Turma) |
+| INSS recorre do mérito; tribunal desloca a DIB para a citação | Capítulo não devolvido (art. 1.013); reformatio in pejus (9ª Turma) | Enquadramento no item 2.1 ou 2.2 |
+| Questão levantada na pauta sem vista | Petição pelo art. 933; suspensão do julgamento (§ 1º) | Embargos de declaração |
+| Ação anterior a 08/10/2025 | Preclusão da DIB já decidida; itens 2.1 e 2.2 | Não invocar modulação (negada) |
+| Indeferimento sem carta de exigência | Item 1.4 configura o interesse de agir; item 2.2 leva à DER, inclusive no indeferimento automático (embargos de 09/09/2026) | DER reafirmada antes da citação (Tema 995/STJ) |
+| Revisão de benefício concedido | Tema 350/STF, item III: dispensa novo requerimento, salvo matéria de fato não levada ao INSS | DPR (art. 347, § 4º, do Decreto 3.048/99) |
+| Demora na análise administrativa | Tema 350/STF, item I: lesão configurada quando "excedido o prazo legal"; art. 49 da Lei 9.784/1999 (30 dias, prorrogáveis por igual período motivadamente) | Prazos do acordo homologado no RE 1.171.152/STF |
 
-Citar o Tema 1124/STJ + Tema 350/STF afirmativamente.
+## 6. JEF
 
-Cruzamento com `tema-1124-instrucao-administrativa`.
+Lei 10.259/2001 e Lei 9.099/1995. A extinção sem mérito permite novo requerimento e nova ação, mas o segurado perde as parcelas entre a DER original e o novo requerimento e pode perder o prazo decadencial da revisão. Esse prejuízo se demonstra nos embargos e no PUIL, porque afasta a ideia de que a extinção é neutra.
 
-### 5.2. Em caso de ausência de PA
+## 7. Remissões
 
-Demonstrar o preenchimento das hipóteses excepcionais do Tema 350/STF.
+`tema-1124-instrucao-administrativa` (conteúdo do tema); `base-cpc-embargos-declaracao`; `base-cpc-apelacao-efeitos-art1013`; `base-cpc-nulidades-cerceamento`; `base-puil-pedilef-vedacao-materia-processual`; `pedilef-cotejo-analitico-tnu`; `base-recursos-jef`; `base-rito-ordinario-trf`; `base-fungibilidade-previdenciaria`; `decadencia-revisao-previdenciaria`; `precedentes-previdenciarios`. Agente `conferente-tema-1124`: despachar antes de protocolar contrarrazões, embargos ou recurso sobre termo inicial.
 
-Pretensão de revisão de benefício já concedido.
-
-Indeferimento implícito por demora administrativa.
-
-Hipótese de extinção sem custos no JEF.
-
-Mandado de segurança preventivo, antes da fase contenciosa.
-
-## 6. Estratégia reativa em segunda instância
-
-### 6.1. Fase de admissibilidade
-
-No agravo de instrumento ou na apelação, demonstrar previamente a observância do Tema 1124.
-
-### 6.2. Manifestação prévia ao julgamento
-
-Em caso de inclusão na pauta sem prévia manifestação sobre o Tema 1124, peticionar requerendo prazo para manifestação.
-
-Fundamentação. Art. 933 CPC. Art. 10 CPC.
-
-### 6.3. Sustentação oral
-
-Antecipar o argumento do efeito translativo.
-
-Defender a aplicação dos arts. 9º e 10 CPC.
-
-### 6.4. Embargos de declaração
-
-Em caso de decisão de ofício sem oitiva prévia, opor embargos com fundamento no art. 10 CPC.
-
-Pedido. Anular o acórdão e abrir vista para manifestação sobre o Tema 1124.
-
-### 6.5. Recurso especial e extraordinário
-
-Em última instância, REsp e RE com prequestionamento exaustivo.
-
-Súmula 98/STJ. Embargos prequestionadores não são protelatórios; atenção, o Tema 698/STJ autoriza multa quando os embargos rediscutem matéria já pacificada (auditoria 25/07/2026).
-
-Cruzamento com `pedilef-cotejo-analitico-tnu`.
-
-## 7. Súmula 98/STJ e Tema Repetitivo 698/STJ. Embargos prequestionadores
-
-### 7.1. Súmula 98/STJ
-
-"Embargos de declaração manifestados com notório propósito de prequestionamento não têm caráter protelatório".
-
-### 7.2. Tema Repetitivo 698/STJ
-
-É o limite da Súmula 98/STJ, não a sua ratificação. Autoriza multa quando os embargos rediscutem matéria já decidida em súmula ou repetitivo (auditoria 25/07/2026). Embargos prequestionadores objetivos permanecem protegidos pela Súmula 98/STJ.
-
-### 7.3. Aplicação
-
-Em caso de decisão de ofício sem manifestação prévia, opor embargos sem temer multa por protelação.
-
-### 7.4. Estratégia
-
-Embargos de declaração com pedido de manifestação expressa sobre.
-
-Art. 10 CPC.
-
-Art. 933 CPC.
-
-Art. 489, § 1º, CPC.
-
-Tema 1124/STJ na perspectiva do efeito translativo.
-
-## 8. Modulação do Tema 1124
-
-### 8.1. Não houve modulação (Onda 161, conferido nos acórdãos)
-
-O Tema 1124/STJ foi julgado pela Primeira Seção em 08/10/2025 (REsp 1.905.830/SP, DJEN 06/11/2025), e o acórdão de mérito negou a modulação por entender que apenas consolidou a jurisprudência do STJ e do STF. Os embargos de declaração julgados em 09/09/2026 (DJEN 21/09/2026) rejeitaram o pedido de modulação e o de regime transitório para tutelas, execuções, perícias e ações pendentes. A tese se aplica aos processos pendentes cuja discussão sobre a DIB não esteja preclusa.
-
-A versão anterior desta seção recomendava sustentar a inaplicabilidade do Tema 1124 a ações anteriores a uma modulação. Esse argumento não tem mais base e não deve ser usado.
-
-### 8.2. O que resta de defesa
-
-Os embargos afirmaram que a aplicação imediata vale tanto para os deveres do segurado quanto para os do INSS. A defesa se desloca para o enquadramento. Primeiro, a DIB já decidida e não impugnada no momento próprio está preclusa. Segundo, o requerimento apto indeferido sem carta de exigência ou sem oferta de justificação administrativa atrai o item 2.2 e a DER, inclusive quando o indeferimento foi automático. Terceiro, a prova judicial que apenas confirma o documento apresentado ao INSS atrai o item 2.1 e a exceção do item 1.6.
-
-### 8.3. Estratégia
-
-Mapear, documento por documento, o que o INSS recebeu, se houve carta de exigência e o que a prova judicial acrescentou, na forma da matriz de enquadramento de `tema-1124-instrucao-administrativa`.
-
-## 9. Distinguishing do Tema 1124
-
-### 9.1. Hipóteses excepcionais do Tema 350/STF
-
-Pretensão de revisão de benefício já concedido.
-
-Hipóteses de notório indeferimento (jurisprudência consolidada do INSS).
-
-Mandado de segurança preventivo.
-
-Ações de tutela coletiva.
-
-### 9.2. Hipóteses construídas pela jurisprudência
-
-Demora administrativa caracterizadora de indeferimento implícito.
-
-Demora superior a 30 dias, prorrogáveis por mais 30 (Lei 9.784/1999, art. 49).
-
-Demora superior aos prazos da Lei 13.460/2017.
-
-Ausência de canal funcional para o requerimento (PA extraviado).
-
-### 9.3. Estratégia
-
-Demonstrar que o caso concreto se enquadra em hipótese excepcional.
-
-Apresentar prova da demora ou da impossibilidade do PA.
-
-## 10. Defesa em JEF e Turmas Recursais
-
-### 10.1. Particularidades do JEF
-
-Lei 10.259/2001. Rito sumaríssimo.
-
-Custas processuais inicialmente isentas.
-
-Em caso de extinção sem mérito, segurado pode reapresentar a ação após PA.
-
-### 10.2. PEDILEF e PUIL
-
-Cruzamento com `pedilef-cotejo-analitico-tnu`.
-
-Em caso de decisão da Turma Recursal aplicando Tema 1124 de ofício, PUIL para a TNU com cotejo analítico.
-
-### 10.3. Estratégia
-
-Embargos de declaração com prequestionamento.
-
-PUIL com paradigma da TNU sobre vedação à decisão surpresa.
-
-## 11. Cenários práticos
-
-### 11.1. Cenário A. INSS não argui na contestação, tribunal aplica de ofício
-
-Quadro. Sentença concede o benefício. INSS apela apenas sobre o mérito. Tribunal aplica Tema 1124 de ofício e extingue sem mérito.
-
-Estratégia. Embargos de declaração com fundamento nos arts. 9º, 10 e 489, § 1º, CPC. Em caso de improvimento, REsp ou PUIL. A primeira defesa é a da 9ª Turma do TRF3, para a qual o precedente superveniente não amplia o objeto devolvido nem autoriza reformar capítulo não impugnado. Nas contrarrazões, dizer expressamente que o capítulo do termo inicial não foi devolvido.
-
-### 11.2. Cenário B. Tribunal levanta a questão na pauta
-
-Quadro. Tribunal levanta a questão antes do julgamento. Não dá vista às partes.
-
-Estratégia. Petição de manifestação antes do julgamento. Sustentação oral com argumento.
-
-### 11.3. Cenário C. Cliente sem PA por demora
-
-Quadro. PA indeferido implicitamente por demora superior a 45 dias.
-
-Estratégia. Demonstrar a demora como hipótese excepcional. Aplicação do Tema 350/STF.
-
-### 11.4. Cenário D. Cliente com revisão
-
-Quadro. Pretensão de revisão de benefício já concedido.
-
-Estratégia. Aplicação da exceção do Tema 350/STF, com o limite dos embargos de declaração do Tema 1124 (09/09/2026). A revisão porque o INSS não concedeu o benefício adequado às provas que tinha dispensa novo requerimento, e a revisão que pretende provar fato novo exige novo requerimento com as provas.
-
-### 11.5. Cenário E. Tribunal extingue ação antiga pelo Tema 1124
-
-Quadro. Ação ajuizada antes do julgamento do Tema 1124 e extinta ou com DIB deslocada em grau recursal.
-
-Estratégia. O STJ negou a modulação no mérito e nos embargos de declaração de 09/09/2026, de modo que o argumento temporal não serve. A defesa é a preclusão da DIB já decidida, o enquadramento no item 2.2 quando o INSS não emitiu carta de exigência e o enquadramento no item 2.1 ou na exceção do item 1.6 quando a prova judicial só confirmou a administrativa. Na 7ª Turma do TRF3, a prova nova em processo em curso desloca os efeitos para a citação sem extinguir o processo (ApelRemNec 5003872-37.2023.4.03.6102, j. 31/08/2026) [CONFERIDO em 11/10/2026], e esse é o pedido subsidiário quando a extinção for arguida.
-
-## 12. Pedidos típicos em embargos de declaração
-
-### 12.1. Pedido principal
-
-Anulação do acórdão por violação ao art. 10 CPC.
-
-### 12.2. Pedido alternativo
-
-Manifestação expressa sobre os arts. 9º, 10, 489, § 1º, e 933 CPC.
-
-### 12.3. Pedido cumulativo
-
-Manifestação sobre Tema 1124 + Tema 350/STF.
-
-### 12.4. Pedido subsidiário
-
-Prequestionamento ficto pelo art. 1.025 CPC.
-
-## 13. Pedidos típicos em REsp
-
-### 13.1. Pedido principal
-
-Reforma do acórdão por violação aos arts. 9º, 10, 489, § 1º, e 933 CPC.
-
-### 13.2. Pedido cumulativo
-
-Reforma para acolhimento da hipótese excepcional do Tema 350/STF.
-
-## 14. Pedidos típicos em PUIL
-
-### 14.1. Cabimento
-
-Em caso de decisão da Turma Recursal aplicando Tema 1124 sem manifestação.
-
-### 14.2. Paradigma
-
-Buscar paradigma de outra Turma Recursal ou da TNU sobre vedação à decisão surpresa.
-
-### 14.3. Cotejo analítico
-
-Cruzamento com `pedilef-cotejo-analitico-tnu`.
-
-## 15. Cruzamento com outras skills
-
-`tema-1124-instrucao-administrativa` para o Tema 1124 na fase administrativa.
-
-`peticao-previdenciaria` para a petição.
-
-`revisao-peticao` para a revisão da peça.
-
-`base-cpc-fato-superveniente-art493` para o fato superveniente.
-
-`base-cpc-coisa-julgada-progressiva` para a coisa julgada progressiva.
-
-`precedentes-previdenciarios` para os precedentes.
-
-`base-cpc-tutela-provisoria-previdenciaria` para a tutela.
-
-`pedilef-cotejo-analitico-tnu` para o PEDILEF.
-
-`base-recursos-jef` para os recursos no JEF.
-
-`base-rito-ordinario-trf` para o rito ordinário.
-
-`mandado-seguranca-previdenciario` para o MS.
-
-`base-portarias-dpmf-inss-hub` para Portarias DPMF.
-
-Agente `conferente-tema-1124` (Onda 178). Confere o termo inicial pedido e a defesa contra a aplicação de ofício em contrarrazões e recursos. Despachar antes de protocolar.
-
-## 16. Cruzamento com Onda 26
-
-Para filtro crítico de admissibilidade de PUIL/PEDILEF na TNU/TRU pela Súmula 43/TNU (vedação à matéria processual) e estratégia de revestimento da tese como direito material, acionar OBRIGATORIAMENTE `base-puil-pedilef-vedacao-materia-processual` ANTES de redigir qualquer PUIL ou PEDILEF contra acórdão que aplicou Tema 1124 de ofício. A reformulação do argumento processual como divergência sobre a interpretação do art. 18 da Lei 8.213/91 + Tema 350/STF é fundamental para a admissibilidade.
-
-## 17. O que NÃO está nesta skill
-
-Análise do mérito do Tema 1124 na fase administrativa em `tema-1124-instrucao-administrativa`.
-
-Estratégia genérica de aposentadoria em `peticao-previdenciaria`.
-
-Cruzamento com a fungibilidade em `base-fungibilidade-previdenciaria`.
-
-Filtro de admissibilidade de PUIL/PEDILEF em `base-puil-pedilef-vedacao-materia-processual`.
-
-## 18. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+Detalhe e modelo: `references/FUNDAMENTOS-E-CENARIOS.md`. Refutação das teses do INSS: `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

@@ -1,113 +1,72 @@
 ---
 name: base-cpc-tutela-provisoria-previdenciaria
-description: "Tutela provisória (arts. 294 a 311 CPC) aplicada ao Direito Previdenciário, tutela de urgência antecipada e cautelar, tutela de evidência, estabilização do art. 304, requisitos pró-segurado, caráter alimentar e hipossuficiência. Use SEMPRE que mencionar tutela provisória, tutela de urgência, tutela antecipada, tutela cautelar, tutela de evidência, liminar previdenciária, implantação imediata, restabelecimento liminar, perigo de dano previdenciário, probabilidade do direito, reversibilidade, art. 294 CPC, art. 300 CPC, art. 303 CPC, art. 304 CPC, art. 311 CPC, estabilização de tutela, fumus boni iuris previdenciário, natureza alimentar, irreversibilidade benefício. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-cpc-fato-superveniente-art493 e mandado-seguranca-previdenciario."
+description: "Tutela provisória (arts. 294 a 311 CPC) aplicada ao Direito Previdenciário, tutela de urgência antecipada e cautelar, tutela de evidência, estabilização do art. 304, requisitos pró-segurado, caráter alimentar e hipossuficiência. Use SEMPRE que mencionar tutela provisória, tutela de urgência, tutela antecipada, tutela cautelar, tutela de evidência, liminar previdenciária, implantação imediata, restabelecimento liminar, perigo de dano previdenciário, probabilidade do direito, reversibilidade, art. 294 CPC, art. 300 CPC, art. 303 CPC, art. 304 CPC, art. 311 CPC, art. 1.012 §1º V CPC, Súmula 729 STF, Tema 692 STJ, estabilização de tutela, fumus boni iuris previdenciário, natureza alimentar, irreversibilidade benefício. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-cpc-fato-superveniente-art493 e mandado-seguranca-previdenciario."
 ---
 
 # Tutela Provisória no Direito Previdenciário
 
 ## Escopo
 
-Skill pró-segurado sobre tutela provisória (CPC/2015 arts. 294 a 311) em ações previdenciárias, com foco em concessão de benefício, restabelecimento de benefício cessado, implantação imediata e estabilização.
+Tutela provisória (arts. 294 a 311 do CPC) para concessão, restabelecimento e implantação de benefício. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`. Devolução de valores em `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
 
-## Marco normativo central
+## Marco normativo
 
-CPC, art. 294. Tutela provisória é de urgência ou de evidência.
+CPC, art. 294. Tutela de urgência (antecipada ou cautelar) ou de evidência.
 
-CPC, art. 300. Requisitos da tutela de urgência.
+CPC, art. 300. Probabilidade do direito e perigo de dano ou risco ao resultado útil; vedada a antecipação com perigo de irreversibilidade dos efeitos (§3º).
 
-CPC, art. 303. Tutela antecipada antecedente.
+CPC, art. 302. A parte responde pelo prejuízo da efetivação de tutela posteriormente revogada.
 
-CPC, art. 304. Estabilização.
+CPC, arts. 303 e 304. Tutela antecipada antecedente; estabiliza-se se não houver recurso (art. 304, caput), e o direito de rever, reformar ou invalidar extingue-se em 2 anos da ciência da extinção (§5º), sem coisa julgada (§6º).
 
-CPC, art. 311. Tutela de evidência.
+CPC, art. 311. Tutela de evidência; no inciso II, fatos provados por documento e tese firmada em casos repetitivos ou súmula vinculante.
 
-Lei 8.213/91, art. 41-A, §5º. Prazo de 45 dias para o primeiro pagamento (implantação).
+CPC, art. 1.012, §1º, V. A sentença que concede ou confirma tutela produz efeitos imediatos, apesar da apelação.
 
-## Espécies aplicáveis
+Lei 10.259/2001, art. 4º. Medidas cautelares no JEF, de ofício ou a requerimento; recorríveis de imediato (art. 5º).
 
-Primeiro, tutela de urgência antecipada incidental em ação previdenciária.
+Lei 8.213/91, art. 41-A, §5º. Primeiro pagamento em até 45 dias da apresentação da documentação.
 
-Segundo, tutela de urgência cautelar para preservar pretensão (ex. prova pericial).
+Lei 8.213/91, art. 115, II. Desconto de até 30% do benefício para devolução de valores pagos por decisão judicial revogada.
 
-Terceiro, tutela antecipada antecedente (art. 303) em caso de extrema urgência.
+## Requisitos aplicados
 
-Quarto, tutela de evidência (art. 311), especialmente inciso II (tese firmada em repetitivo).
+Primeiro, probabilidade do direito. Prova documental do requisito (CNIS, PPP, laudo pericial judicial, CadÚnico).
 
-## Requisitos pró-segurado
+Segundo, perigo de dano. Natureza alimentar do benefício e situação concreta do segurado (desemprego, doença, renda familiar). Demonstrar o perigo de forma autônoma, não apenas pela natureza alimentar.
 
-Primeiro, probabilidade do direito. O caráter alimentar e a urgência concreta reforçam (auditoria 25/07/2026, retirado o Tema 313/STJ, matéria tributária).
+Terceiro, irreversibilidade. O benefício pago é recuperável por desconto (art. 115, II), o que afasta o óbice do art. 300, §3º.
 
-Segundo, perigo de dano. Presunção pró-segurado em benefício alimentar.
+## Risco de devolução
 
-Atenção (risco): o Tema 692 do STJ determina a DEVOLUÇÃO dos valores recebidos por tutela antecipada posteriormente revogada (com desconto de até 30% do benefício). Não o invoque como escudo de boa-fé; a irrepetibilidade deve ser buscada em fundamentos próprios (ex.: distinção, quando o valor não decorreu da tutela revogada; Tema 979 com boa-fé objetiva, no pagamento por erro administrativo), com cautela, pois a tese revista do Tema 692 alcança também os benefícios assistenciais (auditoria 03/10/2026).
+O Tema 692 STJ obriga o autor a devolver os valores de benefício previdenciário ou assistencial recebidos por tutela posteriormente reformada, por desconto de até 30% do benefício em manutenção. A boa-fé não afasta a devolução. Antes de pedir a tutela em caso de prova frágil, informar o cliente desse risco.
 
-## Cenários pró-segurado
+## Momento do pedido
 
-Cenário A, concessão de aposentadoria com DER e documentação completa. Tutela cabível.
+Primeiro, na inicial, quando a prova documental já demonstra o direito.
 
-Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
+Segundo, em incapacidade, após o laudo pericial judicial favorável.
 
-Cenário C, implantação de B32 com laudo pericial judicial favorável. Tutela cabível.
+Terceiro, na sentença, para afastar o efeito suspensivo da apelação (art. 1.012, §1º, V).
 
-Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto). O Tema 1102/STF não serve, pois a ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II. O Tema 1124/STJ também não serve, pois trata de interesse de agir e de DIB (auditoria 03/10/2026).
-
-## Estabilização (art. 304)
-
-Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304, §5º, CPC exige ação revisional em 2 anos (o §6º trata da ausência de coisa julgada; auditoria 03/10/2026, retirado o Tema 1085/STJ, que trata do limite de desconto bancário).
+Quarto, ao relator, na apelação ou no agravo (arts. 932, II, e 1.019, I).
 
 ## Alertas
 
-Primeiro, em ação por incapacidade, aguardar laudo pericial judicial antes de tutela pode ser mais seguro.
+Primeiro, não pedir tutela fundada no Tema 1102 STF (revisão da vida toda). A tese vigente é adversa ao segurado.
 
-Segundo, não pedir tutela em RVT, porque a tese vigente do Tema 1102/STF é adversa ao segurado.
+Segundo, no mandado de segurança o regime é o da liminar (Lei 12.016/2009, art. 7º, III). Ver `base-ms-liminar-art7-iii`.
 
-Terceiro, tutela em MS não é tutela antecipada, é liminar (Lei 12.016/2009 art. 7º III).
-
-Quarto, suspensão de segurança pela Presidência (Lei 8.437/92) é risco concreto, preparar contrarrazões.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Fredie Didier Jr, Rafael Oliveira, Paula Sarno Braga, Curso de Direito Processual Civil vol. 2.
-
-Cássio Scarpinella Bueno, Manual de Direito Processual Civil.
-
-Marco Aurélio Serau Junior, Processo Previdenciário.
-
-Jane Berwanger, previdenciário.
-
-José Antonio Savaris, Direito Processual Previdenciário.
+Terceiro, a suspensão de liminar pela Presidência do tribunal (Lei 8.437/1992, art. 4º) exige grave lesão à ordem, à saúde, à segurança ou à economia públicas, raramente presente em benefício individual.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para fato superveniente, acionar `base-cpc-fato-superveniente-art493`.
-Para coisa julgada progressiva, acionar `base-cpc-coisa-julgada-progressiva`.
-Para redação, acionar `peticao-previdenciaria`.
-Para MS, acionar `mandado-seguranca-previdenciario`.
+Agravo em `base-cpc-agravo-instrumento-art1015`. Fato superveniente em `base-cpc-fato-superveniente-art493`. Coisa julgada progressiva em `base-cpc-coisa-julgada-progressiva`. Mandado de segurança em `mandado-seguranca-previdenciario`. Cumprimento em `base-cumprimento-sentenca-rpv-precatorio`. Redação em `peticao-previdenciaria`. Portarias em `base-portarias-dpmf-inss-hub`.
 
-## O que NÃO está nesta skill
-
-Liminar em MS em `mandado-seguranca-previdenciario`. Cumprimento de tutela em `execucao-cumprimento-previdenciario`. Estabilização com fundo em `base-cpc-coisa-julgada-progressiva`.
-
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 Nenhuma das 78 sentenças e decisões do juízo concedeu tutela de urgência. A implantação ocorre após o trânsito, pela CEAB-DJ e pelo PREVJUD. Quando o titular decidir pedir a tutela, o pedido traz fundamentação autônoma do perigo. Detalhe na skill `base-juizo-catanduva`.

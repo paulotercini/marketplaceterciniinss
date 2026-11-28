@@ -7,7 +7,7 @@ description: "Prova documental e juntada de documentos no processo previdenciár
 
 ## Escopo
 
-Skill pró-segurado sobre a prova documental e o momento de juntá-la. O foco é juntar o documento necessário a qualquer tempo, com contraditório, e derrubar a alegação de preclusão que o INSS costuma levantar.
+Prova documental e momento da juntada. O foco é juntar o documento necessário a qualquer tempo, com contraditório, e afastar a alegação de preclusão do INSS.
 
 ## Marco normativo central
 
@@ -23,13 +23,13 @@ CPC, arts. 439 a 441. Documento eletrônico e sua força probante.
 
 ## Momento da juntada
 
-A regra é juntar com a inicial e com a contestação. A exceção do art. 435 é ampla. Documento formado depois, ou que só ficou acessível depois, pode entrar a qualquer tempo, desde que demonstrado o motivo e aberto o contraditório.
+A regra é juntar com a inicial e a contestação. Documento formado depois, ou acessível apenas depois, entra a qualquer tempo, demonstrado o motivo e aberto o contraditório (art. 435, parágrafo único).
 
 ## Documento novo, as duas portas
 
 Primeiro, documento sobre fato ocorrido após a petição. Vincula-se ao fato superveniente, ver `base-cpc-fato-superveniente-art493`.
 
-Segundo, documento antigo que só se tornou conhecido ou acessível depois. Comum no previdenciário, o PPP retificado, o laudo obtido tardiamente, a microficha localizada. Basta comprovar por que não estava disponível antes.
+Segundo, documento antigo que se tornou conhecido ou acessível depois: PPP retificado, laudo obtido tardiamente, microficha localizada. Comprovar por que não estava disponível antes.
 
 ## Contraditório obrigatório
 
@@ -37,15 +37,15 @@ Todo documento juntado abre prazo de manifestação à parte contrária, art. 43
 
 ## Juntada em grau recursal
 
-A jurisprudência admite a juntada de documento em grau recursal quando presente o motivo do art. 435 e assegurado o contraditório, sem má-fé nem intuito de surpresa. É via pró-segurado para o PPP ou o laudo que chegou depois da sentença.
+A juntada em grau recursal é admitida quando presente o motivo do art. 435, assegurado o contraditório e ausente má-fé. Serve ao PPP ou ao laudo obtido depois da sentença. Acórdão específico: Não localizado nos catálogos da casa; pesquisar no MCP trf3 antes de citar.
 
-Atenção ao efeito financeiro. Documento essencial não submetido antes ao INSS pode deslocar o termo dos atrasados, ver `base-efeito-translativo-tema-1124-defesa`.
+Efeito financeiro: documento essencial não submetido antes ao INSS desloca o termo inicial dos atrasados para a citação (Tema 1124 STJ). Ver `base-efeito-translativo-tema-1124-defesa`.
 
 ## Estratégia pró-segurado
 
 Primeiro, ao juntar documento tardio, indicar expressamente a hipótese do art. 435 e o motivo da juntada.
 
-Segundo, requerer o contraditório para blindar a prova contra nulidade.
+Segundo, requerer o contraditório, para afastar nulidade.
 
 Terceiro, contra a alegação de preclusão do INSS, opor o art. 435, parágrafo único, e a natureza social do direito.
 
@@ -59,24 +59,12 @@ Terceiro, cuidar do efeito financeiro do documento novo não submetido ao INSS.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
 Acionada pelo eixo de instrução de `base-analise-decisao-tres-eixos`.
-Para o rol documental do benefício, acionar `documentos-comprobatorios-in128`.
+Para o rol documental do benefício, acionar `base-documentos-comprobatorios-in128`.
 Para fato superveniente, acionar `base-cpc-fato-superveniente-art493`.
 Para sentença trabalhista como prova, acionar `base-reclamatoria-trabalhista-prova-previdenciaria`.
 Para requerimento de provas, acionar `especificacao-provas`.

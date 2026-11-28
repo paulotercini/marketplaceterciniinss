@@ -1,93 +1,18 @@
-# Salário-de-Contribuição — Fundamentos e Cenários
+# Salário-de-Contribuição. Cenários
 
-## 1. Conceito operacional
+Base normativa, limites e rol de verbas no SKILL.md.
 
-Salário-de-contribuição (SC) é a base sobre a qual incide a contribuição previdenciária. Do SC resulta, em conjunto com demais contribuições, o salário-de-benefício (SB). Há limites mínimo (salário-mínimo) e máximo (teto).
+## Cenários
 
-## 2. Fundamento constitucional
+- A. Verba remuneratória habitual paga sem registro no CNIS (horas extras, comissões, adicionais). RAC com holerites e folha; na recusa, ação com pedido de cômputo e revisão da RMI.
+- B. Empregador recolheu sobre verba indenizatória do §9º. O excesso não aumenta o direito do segurado à custa de verba que a lei exclui; a discussão é tributária e cabe à empresa. Para o benefício, conferir apenas se o valor ultrapassou o teto.
+- C. Empregador omitiu o vínculo ou as remunerações. RAC com CTPS e holerites; a omissão não prejudica o empregado (Lei 8.212/91, art. 30, I).
+- D. Contribuinte individual ou facultativo com competências abaixo do mínimo desde 13/11/2019. Complementação, utilização de excedente ou agrupamento (EC 103, art. 29).
+- E. Planejamento de contribuição próxima ao teto para elevar a média. Avaliar custo e efeito na RMI com `base-planejamento-previdenciario`.
+- F. 13º salário. Integra o custeio (art. 28, §7º), mas não o salário-de-benefício (Lei 8.213/91, art. 29, §3º, Lei 8.870/94). Conferir se o cálculo do INSS o incluiu ou o excluiu corretamente.
+- G. Diárias para viagens. Desde a Lei 13.467/2017 não integram, qualquer que seja o valor. Antes, integravam quando excedessem 50% da remuneração mensal.
+- H. Diferenças reconhecidas em reclamatória trabalhista. Averbação com a sentença e os cálculos homologados (`base-reclamatoria-trabalhista-prova-previdenciaria`).
 
-Art. 195 CF/88. Financiamento. Art. 201 §11 CF/88. Integração ao benefício.
+## Documentos
 
-## 3. Fundamento legal
-
-Lei 8.212/91, arts. 20, 22 e 28.
-
-Lei 8.213/91.
-
-Decreto 3.048/99, arts. 201 e seguintes.
-
-IN RFB 2.110/2022.
-
-## 4. Verbas integrantes
-
-Salário-base, horas extras, adicionais, comissões, 13º, gratificações regulares.
-
-## 5. Verbas não integrantes
-
-Vale-transporte, vale-alimentação PAT, diárias até 50% do salário, PLR Lei 10.101, ajuda de custo, licença-prêmio em pecúnia, aviso prévio indenizado (juízo controverso).
-
-## 6. Cenários pró-segurado
-
-### Cenário A — Verba remuneratória tributada indevidamente fora
-
-Pleitear cômputo e reflexos.
-
-### Cenário B — Verba indevidamente tributada e computada erroneamente
-
-Discutir natureza indenizatória.
-
-### Cenário C — Empregador omitiu SC no CNIS
-
-RAC e judicial.
-
-### Cenário D — Contribuinte individual com SC baixo
-
-Complementação EC 103.
-
-### Cenário E — Facultativo no teto para maximizar SB
-
-Planejamento.
-
-### Cenário F — 13º na soma do SC anual
-
-Cômputo correto.
-
-## 7. Cenários limitados
-
-### Cenário G — Contribuições acima do teto
-
-Não refletem em SB acima do teto.
-
-### Cenário H — Verbas de caráter esporádico
-
-Podem não integrar.
-
-### Cenário I — Diárias acima de 50% do salário
-
-Tributam conforme legislação.
-
-## 8. Metodologia
-
-Primeiro, auditoria do CNIS.
-
-Segundo, análise das folhas de pagamento.
-
-Terceiro, identificação de verbas.
-
-Quarto, pedido de correção.
-
-Quinto, cálculo do SB.
-
-## 9. Riscos processuais
-
-Risco de erro no cômputo de 13º. Verificar.
-
-Risco de natureza controvertida de verba. Discutir.
-
-Risco de prescrição em ação própria.
-
-Risco de EC 103 reduzir base. Avaliar.
-
-## 10. Integração prática
-
-`base-calculo-rmi-ec103`, `base-aposentadoria-direito-adquirido`, `base-planejamento-previdenciario`, `contribuicoes-complementacao-ec103`, `cnis-acerto-indicadores`.
+CNIS com remunerações, holerites, termo de rescisão, CTPS, folha de pagamento, GFIP ou eSocial, sentença e cálculos trabalhistas.

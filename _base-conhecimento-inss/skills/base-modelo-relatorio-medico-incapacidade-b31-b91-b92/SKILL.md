@@ -7,25 +7,25 @@ description: "Modelo narrativo enxuto (1 folha) de relatório médico para incap
 
 ## 1. Quando acionar esta skill
 
-Acione SEMPRE que houver necessidade de gerar modelo de relatório médico para encaminhar a médico assistente, com finalidade de instruir requerimento administrativo ou ação judicial de.
+Acione SEMPRE que houver necessidade de gerar modelo de relatório médico para encaminhar a médico assistente, com finalidade de instruir requerimento administrativo ou ação judicial de:
 
 Auxílio por incapacidade temporária, previdenciário (B31) ou acidentário (B91).
 
 Aposentadoria por incapacidade permanente, previdenciária (B32) ou acidentária (B92).
 
-As espécies seguem a tabela oficial do INSS desde a Onda 165 (03/10/2026). O nome da pasta desta skill foi mantido para não quebrar referências.
+As espécies seguem os códigos oficiais do INSS: B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente. O nome da pasta desta skill foi mantido para não quebrar referências.
 
-A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (cabe em 1 folha) no estilo do escritório Paulo Roberto Tercini Filho, com variantes por especialidade médica.
+A skill produz modelo narrativo de uma folha, no padrão do escritório, com variantes por especialidade médica.
 
 ## 2. Estilo do modelo
 
-Narrativo em parágrafos corridos (não checklist com lacunas, salvo variante específica).
+Narrativo em parágrafos corridos, sem lacunas para preencher, salvo variante específica.
 
-Cabe em meia página, no máximo uma folha A4, e não cita artigo de lei (Onda 165).
+Cabe em meia página, no máximo uma folha A4, e não cita artigo de lei.
 
-Estrutura. Cabeçalho simples + Diagnósticos (CID-10) + Histórico clínico + Avaliação funcional/prognóstico + Local, data e assinatura.
+Estrutura: cabeçalho, diagnósticos (CID-10), histórico clínico, avaliação funcional e prognóstico, local, data e assinatura.
 
-Tom técnico fluído. Conexão direta entre patologia → limitação → impossibilidade laboral.
+Tom técnico, com ligação direta entre patologia, limitação e impossibilidade de exercer a atividade habitual.
 
 ## 3. Estrutura do modelo base
 
@@ -46,22 +46,22 @@ CID com o quarto dígito quando existir, com lado e origem (primária, pós-trau
 ```
 Diagnósticos (CID-10)
 
-[CID] — [Nome técnico da patologia]
-[CID] — [Nome técnico da patologia]
-[CID] — [Nome técnico da patologia]
+[CID]. [Nome técnico da patologia]
+[CID]. [Nome técnico da patologia]
+[CID]. [Nome técnico da patologia]
 ```
 
 ### 3.3. Histórico clínico
 
-Parágrafo narrativo descrevendo. Data do diagnóstico inicial (DID). Sintomatologia atual. Evolução. Tratamentos realizados. Resposta terapêutica. Comorbidades. Atividade laboral habitual e como a patologia a inviabiliza.
+Parágrafo narrativo com: data do diagnóstico inicial (DID). Sintomatologia atual. Evolução. Tratamentos realizados. Resposta terapêutica. Comorbidades. Atividade laboral habitual e como a patologia a inviabiliza.
 
 ### 3.4. Avaliação funcional e prognóstico
 
-Parágrafo narrativo abordando. Domínios funcionais comprometidos (autocuidado, mobilidade, vida doméstica, vida laboral, vida social). Prognóstico (favorável, reservado, desfavorável). Resposta ao tratamento. Insuscetibilidade de reabilitação (permanente, B32 ou B92). Necessidade de assistência permanente (adicional de 25%).
+Parágrafo narrativo com: domínios funcionais comprometidos (autocuidado, mobilidade, vida doméstica, vida laboral, vida social). Prognóstico (favorável, reservado, desfavorável). Resposta ao tratamento. Insuscetibilidade de reabilitação (permanente, B32 ou B92). Necessidade de assistência permanente (adicional de 25%).
 
 ### 3.5. Duas datas, sempre, DID e DII
 
-DID, sempre, com o exame ou atendimento que a documenta. DII, com o marco documental. Se a DID for anterior à filiação ou ao reingresso, o relatório diz que a incapacidade começou com o agravamento do quadro e nomeia o marco, e a petição cita o art. 42, § 2º, e o art. 59, § 1º, da Lei 8.213/1991, conferidos no MCP `normas` em 03/10/2026.
+DID, sempre, com o exame ou atendimento que a documenta. DII, com o marco documental. Se a DID for anterior à filiação ou ao reingresso, o relatório diz que a incapacidade começou com o agravamento do quadro e nomeia o marco, e a petição cita o art. 42, § 2º, e o art. 59, § 1º, da Lei 8.213/1991.
 
 Temporária (B31 ou B91). Prazo de afastamento em dias.
 
@@ -72,7 +72,7 @@ Acidentária (B91 ou B92). Nexo com o trabalho ou o acidente, em uma frase, sem 
 ### 3.6. Encerramento
 
 ```
-[Local] — [UF], [data] de [mês] de [ano].
+[Local], [UF], [data] de [mês] de [ano].
 
 ________________________________________
 [Nome do Médico]
@@ -94,7 +94,7 @@ Psiquiatra. Transtornos depressivos, ansiosos, somatoformes, bipolar, psicose, a
 
 Reumatologista. Fibromialgia, artrite reumatoide, lúpus, espondilite anquilosante, osteoartrose.
 
-Em FIBROMIALGIA, aplicar OBRIGATORIAMENTE o roteiro de individualização de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87). A doença raramente tem o diagnóstico negado, o que se nega é a incapacidade, e o relatório genérico entrega ao perito a conclusão de doença sem repercussão funcional. Seis eixos obrigatórios, dor por região e comportamento (com alodínia e hiperalgesia à palpação localizadas), fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto na função real, humor com nexo funcional (nunca como causa alternativa que transforme o caso em psiquiátrico transitório) e resposta terapêutica com doses, tempo e intolerâncias. Instrumento validado (FIQR ou FSQ) aplicado, datado e transcrito POR DOMÍNIO, nunca só o total. Cada eixo termina na tarefa concreta da ocupação declarada no CNIS, e a DII se ancora em marco documental.
+Em fibromialgia, aplicar o roteiro de individualização de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`. O INSS raramente nega o diagnóstico e costuma negar a incapacidade, e o relatório genérico leva o perito a concluir por doença sem repercussão funcional. O relatório cobre seis eixos: dor por região e comportamento (com alodínia e hiperalgesia à palpação localizadas), fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto na função real, humor com nexo funcional (nunca como causa alternativa que transforme o caso em psiquiátrico transitório) e resposta terapêutica com doses, tempo e intolerâncias. Instrumento validado (FIQR ou FSQ) aplicado, datado e transcrito por domínio, e não apenas pelo total. Cada eixo termina na tarefa concreta da ocupação declarada no CNIS, e a DII se ancora em marco documental.
 
 Clínico Geral. Quadros multissistêmicos, comorbidades, doenças metabólicas, hipertensão, diabetes complicada.
 
@@ -108,7 +108,7 @@ Cirurgião. Pós-operatório em recuperação funcional, com repouso, restriçã
 
 Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
 
-Ver `references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68) para roteiros probatórios enxutos com. elementos clínicos que devem ser demonstrados (não apenas alegados) em ortopedia, psiquiatria, cardiologia, neurologia e cirurgia/pós-operatório. Ancoragem em exame complementar típico de cada especialidade. Texto padrão para a petição, com referência a ID de documentos. Alerta contra o vício comum de cada especialidade. Mitigação de risco processual e distinguishing.
+Ver `references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` para os roteiros probatórios de ortopedia, psiquiatria, cardiologia, neurologia e pós-operatório: elementos clínicos a demonstrar, exame complementar típico, texto padrão para a petição com referência ao ID do documento e falha comum de cada especialidade.
 
 ## 6. Pontos críticos pró-segurado
 
@@ -120,11 +120,11 @@ Evolução da doença deve ser indicada (estável, progressiva, regressiva).
 
 Tratamentos atuais com posologia.
 
-Evitar afirmações genéricas como "incapacitado". Detalhar QUAIS atividades a patologia inviabiliza.
+Evitar afirmações genéricas como "incapacitado". Detalhar quais atividades a patologia impede.
 
 ### 6.2. Para a permanente (B32 ou B92)
 
-Insuscetibilidade de reabilitação é OBRIGATÓRIA.
+A insuscetibilidade de reabilitação deve constar de forma expressa.
 
 Prognóstico desfavorável fundamentado.
 
@@ -134,19 +134,19 @@ Se houver necessidade de auxílio de terceiros, indicar para fundamentar adicion
 
 ### 6.3. Para a acidentária (B91 ou B92)
 
-Nexo causal com o trabalho é OBRIGATÓRIO.
+O nexo causal com o trabalho deve constar de forma expressa.
 
-Hipóteses. Acidente típico (art. 19). Doença profissional/ocupacional (art. 20). Equiparação acidente (art. 21). NTEP automático (art. 21-A, Lista B do Anexo II do Decreto 3.048/99).
+Hipóteses da Lei 8.213/91: acidente típico (art. 19), doença profissional ou do trabalho (art. 20), situações equiparadas (art. 21) e nexo técnico epidemiológico (art. 21-A, Lista C do Anexo II do Decreto 3.048/99).
 
 CAT (Comunicação de Acidente do Trabalho) referenciada quando emitida.
 
 ### 6.4. Artrose e doenças degenerativas (M15 a M19, M47, M50 a M54)
 
-O indeferimento típico é "quadro compatível com a idade" ou "doença preexistente". O relatório responde com as duas datas, o grau radiológico datado (Kellgren-Lawrence I a IV), o tratamento esgotado e a limitação em verbos com medida ligada à profissão, e a mesma artrose que não impede o trabalho sentado impede o do pedreiro. Quando o esforço do trabalho agravou o quadro, o relatório diz isso em uma frase e a petição sustenta a concausa do art. 21, I. ATENÇÃO, o art. 20, § 1º, "a", da Lei 8.213/1991 exclui a doença degenerativa do conceito de doença do trabalho, e o INSS usará esse dispositivo. A tese acidentária em artrose depende de demonstrar o agravamento pelo trabalho, e não a causa, e deve ser avaliada caso a caso antes de escolher a espécie e o foro.
+O indeferimento típico é "quadro compatível com a idade" ou "doença preexistente". O relatório responde com as duas datas, o grau radiológico datado (Kellgren-Lawrence I a IV), o tratamento esgotado e a limitação em verbos com medida ligada à profissão, e a mesma artrose que não impede o trabalho sentado impede o do pedreiro. Quando o esforço do trabalho agravou o quadro, o relatório diz isso em uma frase e a petição sustenta a concausa do art. 21, I. O art. 20, § 1º, "a", da Lei 8.213/1991 exclui a doença degenerativa do conceito de doença do trabalho, e o INSS usará esse dispositivo. A tese acidentária em artrose depende de demonstrar o agravamento pelo trabalho, e não a causa, e deve ser avaliada caso a caso antes de escolher a espécie e o foro.
 
 ## 7. Armadilhas a evitar
 
-Laudo genérico. "Paciente apresenta CID X.X e está incapacitado". INSUFICIENTE.
+Laudo genérico, do tipo "paciente apresenta CID X.X e está incapacitado", não sustenta o pedido.
 
 Falta de DII. Crítico para todos os benefícios.
 
@@ -154,7 +154,7 @@ Falta de DID. A DID omitida por medo da preexistência entrega ao INSS a tese se
 
 Falta do quarto dígito do CID em artrose, sem lado e sem origem. Grau radiológico citado como se decidisse o caso. Profissão ausente do relatório. Citação de artigo de lei no corpo do relatório.
 
-Prognóstico vago. "Prognóstico reservado" sem fundamentação. Solicitar detalhamento.
+Prognóstico vago, como "prognóstico reservado" sem fundamentação. Solicitar detalhamento.
 
 Funcionalidade não abordada. Na permanente, sem insuscetibilidade de reabilitação expressa, a perícia rejeita.
 
@@ -168,11 +168,11 @@ Modelo de carta de apresentação solicitando o relatório, com instruções esp
 
 Após o médico preencher o relatório, validar formalmente com o Checklist A em `base-validacao-formal-laudo-medico-checklist-ab`.
 
-Fluxo. Acionar esta skill para gerar o modelo. Médico preenche. Acionar a skill validadora para auditar antes do protocolo.
+Fluxo: acionar esta skill para gerar o modelo. Médico preenche. Acionar a skill validadora para auditar antes do protocolo.
 
 ## 10. Como o Claude entrega na prática
 
-Quando você acionar a skill em caso concreto, indique.
+Ao acionar a skill em caso concreto, informe os dados abaixo, que ficam no documento do caso.
 
 Nome do cliente.
 
@@ -182,15 +182,15 @@ Especialidade do médico que vai assinar.
 
 Tipo de benefício (B31, B91, B32 ou B92).
 
-Eu gero o relatório personalizado em formato .docx pronto para ser entregue ao médico assistente.
+Claude gera o relatório personalizado em formato .docx pronto para ser entregue ao médico assistente.
 
-### Requisitos obrigatórios x facultativos no Atestmed (Onda 72)
+### Requisitos obrigatórios x facultativos no Atestmed
 
-O art. 2º da Portaria Conjunta MPS/INSS 13/2026, conferido no DOU de 24/03/2026, exige documento oficial com foto (caput) e documentação médica legível e sem rasuras contendo cinco incisos. Identificação do requerente, data de emissão, diagnóstico por extenso OU código CID (alternativos), assinatura do emitente e identificação do emitente com registro no Conselho de Classe legível.
+O art. 2º da Portaria Conjunta MPS/INSS 13/2026 exige documento oficial com foto (caput) e documentação médica legível e sem rasuras, com os cinco incisos: identificação do requerente, data de emissão, diagnóstico por extenso ou código CID (alternativos), assinatura do emitente e identificação do emitente com registro no Conselho de Classe legível.
 
-Prazo estimado em dias (art. 2º, §2º) e data de início do repouso (art. 2º, §1º c/c art. 4º, §1º) NÃO são requisitos obrigatórios. São, respectivamente, elemento facultativo e lacuna suprida por norma. Recomenda-se obtê-los por estratégia, para reduzir o espaço do art. 4º, §3º, mas sua ausência não é causa normativa de indeferimento.
+Prazo estimado em dias (art. 2º, §2º) e data de início do repouso (art. 2º, §1º c/c art. 4º, §1º) não são requisitos obrigatórios. São, respectivamente, elemento facultativo e lacuna suprida por norma. Recomenda-se obtê-los por estratégia, para reduzir o espaço do art. 4º, §3º, mas sua ausência não é causa normativa de indeferimento.
 
-Detalhamento e uso pró-segurado da correção em `analise-documental-incapacidade`, seção Requisitos REAIS do art. 2º.
+Detalhamento e uso pró-segurado da correção em `analise-documental-incapacidade`, seção sobre os requisitos do art. 2º.
 
 ## 11. Cruzamento com outras skills
 
@@ -228,7 +228,7 @@ Validação formal do laudo está em `base-validacao-formal-laudo-medico-checkli
 
 Consulte os arquivos `references/MODELO-BASE.md` e `references/MODELOS-POR-ESPECIALIDADE.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Antes de redigir o modelo para o médico assistente, despachar o médico da área com os documentos já existentes, porque é ele que diz o que falta demonstrar e, portanto, o que o relatório precisa conter.
 
@@ -249,16 +249,4 @@ O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

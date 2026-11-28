@@ -1,80 +1,64 @@
 ---
 name: base-carencia-por-especie-art27a
-description: "Skill base sobre carência previdenciária por espécie e a regra do art. 27-A da Lei 8.213/91, com defesa do segurado contra exigência abusiva de nova carência integral após perda da qualidade. Use SEMPRE que mencionar carência previdenciária, art. 25 Lei 8.213, art. 26 Lei 8.213, art. 27 Lei 8.213, art. 27-A Lei 8.213, Lei 13.846/2019, MP 871/2019, perda qualidade segurado, reingresso carência, 1/3 carência reingresso, metade carência reingresso, carência integral, carência B31, carência B32, carência B21, carência aposentadoria idade, carência aposentadoria tempo, carência salário-maternidade, carência auxílio-acidente, carência BPC, isenção carência, art. 26 isenção, acidente trabalho carência, doença grave carência, Tema 365 TNU. Hub para defesa pró-segurado contra exigência integral de carência após reingresso e contra recusa de cômputo. NÃO use para período de graça isolado (skill periodo-graca-qualidade-segurado). Cruza com peticao-previdenciaria e revisao-peticao."
+description: "Carência previdenciária por espécie (arts. 24 a 27 da Lei 8.213/91) e reingresso após perda da qualidade de segurado (art. 27-A), com defesa do segurado contra exigência de carência integral ou indevida. Use SEMPRE que mencionar carência, art. 25, art. 26, art. 27 ou art. 27-A da Lei 8.213, Lei 13.457/2017, MP 871/2019, Lei 13.846/2019, reingresso, metade da carência, 1/3 da carência, carência B31, B32, B21, B25, aposentadoria por idade, salário-maternidade, auxílio-reclusão, auxílio-acidente, isenção de carência, doença grave, Portaria Interministerial 22/2022, gestação de alto risco, benefício intercalado na carência, Tema 1125 STF, Tema 365 TNU. NÃO use para período de graça isolado (periodo-graca-qualidade-segurado). Cruza com peticao-previdenciaria e revisao-peticao."
 ---
 
 # Carência por Espécie e art. 27-A da Lei 8.213/91
 
-## 1. Quando acionar esta skill
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação às teses do INSS em `references/JURISPRUDENCIA-E-REFUTACAO.md`; gestação de alto risco em `references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
 
-Acione SEMPRE que houver discussão sobre cumprimento de carência, especialmente em casos de reingresso após perda da qualidade de segurado, isenção e cômputo de períodos especiais.
+## Carência por espécie (Lei 8.213/91)
 
-## 2. Marco normativo
+| Benefício | Carência | Fundamento |
+|---|---|---|
+| B31 e B32 | 12 contribuições | art. 25, I |
+| B31 e B32 por acidente de qualquer natureza, doença profissional ou do trabalho, ou doença da lista interministerial surgida após a filiação | isenta | art. 26, II; Portaria Interministerial MTP/MS 22/2022 |
+| Aposentadorias programadas (idade, tempo, especial) | 180 contribuições | art. 25, II |
+| Salário-maternidade | inexigível para todas as categorias | ADI 2110 STF, que afastou o art. 25, III; Enunciado 19 CRPS |
+| Auxílio-reclusão | 24 contribuições | art. 25, IV (MP 871/2019 e Lei 13.846/2019) |
+| Pensão por morte, salário-família, auxílio-acidente | isenta | art. 26, I |
+| Segurado especial (benefícios do art. 39, I) | prova de atividade rural no período equivalente | art. 26, III, e art. 39 |
 
-A Lei 8.213/91, no art. 25, estabelece a carência específica de cada benefício. O art. 26 lista hipóteses de isenção. O art. 27 trata da contagem. O art. 27-A, incluído pela MP 767/2017, convertida na Lei 13.457/2017, e com redação dada pela MP 871/2019 e pela Lei 13.846/2019, disciplina o reingresso (auditoria 03/10/2026).
+Pensão por morte não tem carência. As 18 contribuições do art. 77, §2º, V, da Lei 8.213/91 definem apenas a duração da cota do cônjuge ou companheiro: com menos de 18 contribuições ou menos de 2 anos de casamento ou união, a cota dura 4 meses.
 
-## 3. Eixos centrais pró-segurado
+## Cômputo (art. 27)
 
-Pensão por morte: SEM carência (art. 26, I). As 18 contribuições mensais (Lei 13.135/2015) afetam apenas a DURAÇÃO da cota do cônjuge — com menos de 18 contribuições do falecido ou menos de 2 anos de casamento/união, a pensão dura 4 meses.
+Empregado, doméstico e avulso: contribuições desde a filiação (art. 27, I). Contribuinte individual, segurado especial contribuinte facultativo e facultativo: a partir do primeiro pagamento sem atraso; as competências anteriores recolhidas em atraso não contam para carência (art. 27, II).
 
-A isenção de carência aplica-se em acidente de trabalho, doença grave (art. 26 II) e doenças listadas em portaria.
+Benefício por incapacidade intercalado com atividade ou contribuição conta como carência (Tema 1125 STF; Enunciado 18 CRPS). O Tema 365 TNU, adverso, afasta esse cômputo apenas para as 120 contribuições que prorrogam o período de graça (art. 15, §1º).
 
-O art. 27-A (Lei 13.846/2019) aplica a metade da carência APENAS a auxílio por incapacidade temporária e aposentadoria por incapacidade permanente (6), salário-maternidade (5) e auxílio-reclusão (12) (auditoria 03/10/2026). No salário-maternidade a fração perdeu aplicação, porque a carência desse benefício é inexigível (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS) (auditoria 03/10/2026). A aposentadoria por idade está FORA do art. 27-A: as 180 contribuições do art. 25, II, somam-se ao longo da vida, e a perda da qualidade de segurado é irrelevante (art. 3º, §1º, Lei 10.666/2003).
+## Reingresso (art. 27-A), regra do fato gerador
 
-A perda da qualidade não apaga as contribuições anteriores. As contribuições somam-se ao reingresso.
+| Período do reingresso | Regra |
+|---|---|
+| até 07/07/2016 | 1/3 da carência (art. 24, parágrafo único, original) |
+| 08/07/2016 a 04/11/2016 (MP 739/2016) | carência integral para B31, B32 e salário-maternidade |
+| 05/11/2016 a 05/01/2017 | 1/3 (MP 739 perdeu a eficácia) |
+| 06/01/2017 a 26/06/2017 (MP 767/2017) | carência integral |
+| 27/06/2017 a 17/01/2019 (Lei 13.457/2017) | metade dos incisos I e III do art. 25 |
+| 18/01/2019 a 17/06/2019 (MP 871/2019) | carência integral para B31, B32, salário-maternidade e auxílio-reclusão |
+| desde 18/06/2019 (Lei 13.846/2019) | metade dos incisos I, III e IV: 6 para B31 e B32, 12 para auxílio-reclusão |
 
-O próprio art. 27-A protege o segurado contra exigência integral abusiva, pois limita a nova carência à metade (auditoria 03/10/2026).
+A aposentadoria programada está fora do art. 27-A. As 180 contribuições somam-se ao longo da vida e a perda da qualidade de segurado não se considera para a aposentadoria por idade, tempo de contribuição e especial (Lei 10.666/2003, art. 3º, caput e §1º). As contribuições anteriores à perda nunca se apagam: no reingresso somam-se às novas.
 
-## 4. Fragilidades adversárias mais comuns
+Data das MPs a conferir na fonte oficial antes de peça que dependa do dia exato.
 
-O INSS exige carência integral após perda. Refute com art. 27-A.
+## Defesa do segurado
 
-O INSS recusa cômputo de período pretérito. Refute com o art. 27-A, caput, que exige no reingresso só metade da carência e aproveita as contribuições anteriores (auditoria 03/10/2026).
+1. Identificar a espécie e a data do fato gerador (DII, parto, prisão, DER).
+2. Aplicar a regra de reingresso vigente nessa data, não a da DER (tempus regit actum).
+3. Na isenção por doença grave, provar que a doença ou o agravamento surgiu após a filiação ou o reingresso (art. 26, II). O Juízo de Catanduva adota a data mais antiga da doença nos documentos médicos e afasta a isenção na filiação tardia de portador; blocos em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+4. Documentos: CNIS com extrato de contribuições e datas de pagamento, atestados e exames datados, prova do reingresso.
+5. Recurso ao CRPS ou ação judicial, com `periodo-graca-qualidade-segurado`, `base-cnis-acerto-indicadores` e `peticao-previdenciaria`.
 
-O INSS recusa isenção de carência em doença grave. Refute com art. 26 II e portarias.
+## Gestação de alto risco
 
-O INSS aplica MP 871 antes da vigência. Refute com tempus regit actum.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em CNIS detalhado, prova de doença grave, recurso ao CRPS e ação judicial. Combinar com `periodo-graca-qualidade-segurado`, `cnis-acerto-indicadores` e `peticao-previdenciaria`.
-
-## 6. Documentos essenciais
-
-CNIS. Atestados médicos. Portarias de doença grave. Comprovação de reingresso. Histórico contributivo.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Gestação de alto risco, dispensa de carência (Onda 142)
-
-A Portaria Interministerial MPS/MS nº 15, de 03/07/2026, publicada no DOU de 24/07/2026, acrescentou o inciso XVIII ao art. 2º da Portaria Interministerial MTP/MS nº 22/2022, incluindo a **gestação de alto risco** entre as afecções que dispensam carência nos benefícios por incapacidade, com fundamento no art. 26, II, da Lei 8.213/91.
-
-A própria ementa registra que a alteração cumpre determinação judicial na Ação Civil Pública nº 5051528-83.2017.4.04.7100, o que abre a discussão sobre indeferimentos anteriores a 24/07/2026. A dispensa resolve apenas a carência, e permanecem exigíveis a qualidade de segurada e a incapacidade por mais de quinze dias.
-
-Texto literal, requisitos remanescentes, o que pedir ao médico assistente e o que está ou não confirmado em fonte primária estão em `references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
+A Portaria Interministerial MPS/MS 15, de 03/07/2026 (DOU de 24/07/2026), incluiu a gestação de alto risco no art. 2º, XVIII, da Portaria Interministerial MTP/MS 22/2022, em cumprimento à ACP 5051528-83.2017.4.04.7100. A dispensa resolve apenas a carência; qualidade de segurada e incapacidade por mais de 15 dias continuam exigíveis. Detalhe no reference próprio.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Portarias
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Juízo de Catanduva (Onda 179)
-
-Na isenção de carência, o juízo usa a data mais antiga da doença que aparecer nos documentos médicos, e a filiação tardia de quem já era portador da doença afasta a isenção. A peça prova que a doença começou depois da filiação ou do reingresso, ou que houve agravamento posterior com carência cumprida. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+Portarias DPMF, DIRBEN e INSS em `base-portarias-dpmf-inss-hub`.

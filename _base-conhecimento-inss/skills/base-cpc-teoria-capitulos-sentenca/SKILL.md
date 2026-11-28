@@ -7,7 +7,7 @@ description: "Teoria dos capítulos da sentença no processo previdenciário, re
 
 ## Escopo
 
-Skill pró-segurado sobre os capítulos da decisão. A sentença previdenciária costuma ter mais de um capítulo, por exemplo o reconhecimento do tempo, a concessão do benefício, a DIB, os atrasados e os honorários. Cada capítulo tem vida própria para fins de recurso e de coisa julgada.
+Capítulos da decisão. A sentença previdenciária costuma ter vários: reconhecimento do tempo, concessão do benefício, DIB, atrasados e honorários. Cada capítulo é autônomo para recurso e coisa julgada.
 
 ## Conceito
 
@@ -15,11 +15,11 @@ Capítulo é cada unidade decisória autônoma do dispositivo, que poderia exist
 
 ## Consequências práticas
 
-Primeiro, recurso parcial. Impugnado só um capítulo, os demais transitam em julgado. O tantum devolutum quantum appellatum limita o tribunal ao que foi atacado.
+Primeiro, recurso parcial. Impugnado apenas um capítulo, os demais transitam em julgado (arts. 1.002 e 1.013, caput).
 
 Segundo, trânsito em julgado por capítulos. O capítulo não recorrido estabiliza-se antes do fim do processo, tema aprofundado em `base-cpc-coisa-julgada-progressiva`.
 
-Terceiro, execução do incontroverso. O capítulo já estável pode ser cumprido desde logo, sem esperar o julgamento do recurso sobre os demais, IRDR 18/TRF4 e Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Terceiro, execução do incontroverso. O capítulo transitado pode ser cumprido desde logo, inclusive por RPV ou precatório da parte incontroversa observada a importância total executada para o enquadramento como pequeno valor (Tema 28 STF, RE 1.205.530/SP). Tese literal em `auditoria-citacoes/references/CATALOGO-COMPLEMENTAR-VERIFICADO.md`.
 
 ## Sucumbência e honorários
 
@@ -27,7 +27,7 @@ Primeiro, sucumbência recíproca, art. 86, quando cada parte perde em parte. A 
 
 Segundo, sucumbência mínima, art. 86, parágrafo único, quando a parte decai de parte ínfima, o adversário responde sozinho pelas verbas.
 
-Terceiro, vedação de compensação de honorários, art. 85, §14. Cálculo detalhado em `base-cpc-honorarios-sucumbencia-previdenciaria`.
+Terceiro, vedação de compensação de honorários (art. 85, §14). Detalhe em `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
 ## Estratégia pró-segurado
 
@@ -39,7 +39,7 @@ Terceiro, na resposta ao recurso do INSS, delimitar que o capítulo não atacado
 
 ## Alertas
 
-Primeiro, recurso amplo demais reabre capítulo já favorável, cuidado com a extensão.
+Primeiro, recurso amplo reabre capítulo favorável; delimitar a extensão.
 
 Segundo, o trânsito parcial exige que o capítulo seja realmente autônomo, não mera parte da fundamentação.
 
@@ -47,19 +47,7 @@ Terceiro, a execução do incontroverso depende de capítulo líquido e certo.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 

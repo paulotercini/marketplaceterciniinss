@@ -1,49 +1,20 @@
-# PPP Mudanças de Layout — Fundamentos e Cenários
+# PPP e formulários históricos. Fundamentos e cenários
 
-## 1. Marco normativo histórico
+## 1. Normas
 
-Decreto 53.831/64. Decreto 83.080/79. Lei 8.213/91, art. 58. Lei 9.032/95. IN INSS/DC 78/2002. IN INSS/DC 99/2003 (instituiu o PPP). IN INSS/PRES 77/2015. IN INSS/PRES 128/2022 (vigente). eSocial S-2240, S-2245, S-2299.
+Lei 8.213/91, art. 58, §§ 1º a 4º (formulário com base em laudo; PPP). Lei 9.032/95 (prova da exposição desde 29/04/1995). MP 1.523/96, de 14/10/1996 (laudo técnico). Decreto 3.048/99, art. 68, § 3º. IN INSS/DC 99/2003 (PPP desde 01/01/2004). IN 128/2022, arts. 272, 274, 276, 277 e 281, com a redação da IN 170/2024.
 
-## 2. Cenário 1 — Trabalho anterior a 1979
+## 2. Cenários
 
-Formulário DISES-BE 5235. Aplicação por analogia, com prova testemunhal e Súmula 198 TFR. Aceitação do reconhecimento por categoria profissional sem documento técnico.
-
-## 3. Cenário 2 — Trabalho de 1979 a 1995
-
-Formulário SB-40. Aceito como prova suficiente. Não exigia LTCAT.
-
-## 4. Cenário 3 — Trabalho de 1995 a 2003
-
-Formulários DSS-8030 e DIRBEN-8030. Exigem informação de LTCAT a partir de 1995, mas a forma é flexível.
-
-## 5. Cenário 4 — Trabalho de 2004 em diante
-
-PPP no layout da IN INSS/DC 99/2003, mantido em essência pela IN 77/2015 e atualizado pela IN 128/2022. Uso obrigatório.
-
-## 6. Cenário 5 — Trabalho a partir de 2017
-
-eSocial integrou o regime. Eventos S-2240 (condições ambientais), S-2245 (treinamentos) e S-2299 (desligamento) substituem informações antes manuscritas.
-
-## 7. Cenário 6 — Empresa que apresenta layout incompatível
-
-A empresa pode apresentar DSS-8030 abrangendo período de 1990 a 2010. Aceito quando contém todos os campos exigidos pelo regime aplicável a cada subperíodo.
-
-## 8. Cenário 7 — PPP eSocial sem assinatura física
-
-A IN 128/2022 dispensa carimbo quando há assinatura digital ICP-Brasil. Recusa do INSS é abusiva.
-
-## 9. Cenário 8 — PPP retificado após mudança de layout
-
-Cabe retificação pela empresa para inclusão de campos omissos. Skill `retificacao-ppp` aplicável.
-
-## 10. Cenário 9 — Migração de layout
-
-A migração nem sempre preserva todos os dados. Cabe ao INSS solicitar fonte primária ou aceitar prova suplementar.
-
-## 11. Cenário 10 — Empresa extinta sem formulário
-
-Aceita prova testemunhal e perícia indireta. Súmula 198 TFR e Tema 1031 STJ.
-
-## 12. Documentos essenciais
-
-Formulário da época. LTCAT contemporâneo. GFIP. CTPS. CNIS. Declaração de empresa sucessora.
+| Cenário | Solução |
+|---|---|
+| Categoria profissional até 28/04/1995 | CTPS basta quando a anotação permite o enquadramento (art. 274, § 1º) |
+| SB-40 ou DSS-8030 emitido até 31/12/2003 para agente químico até 13/10/1996 | Formulário basta (art. 274, I, "b", 1; II, "a") |
+| Mesmo formulário para ruído | Exigir também o laudo que embasou o formulário |
+| Formulário antigo para 14/10/1996 a 31/12/2003 | Juntar LTCAT ou demonstração ambiental (art. 274, III, "a") |
+| PPP emitido em 2003 cobrindo 1985 a 2003 | Aceito, pois emitido depois de 18/07/2002 |
+| Formulário antigo emitido depois de 31/12/2003 | Recusado pelo INSS; pedir PPP à empresa ou à sucessora, ou perícia |
+| PPP eletrônico do eSocial | Válido (art. 272, § 2º) |
+| PPP sem carimbo ou procuração | Impugnação genérica não basta (PUIL 0005459-58.2020.4.03.6338) |
+| Empresa extinta | Perícia indireta ou por similaridade (Súmula 198 do TFR; CPC, art. 369) e testemunhas |
+| PPP com campos omitidos | Retificação (`retificacao-ppp`) ou LTCAT |

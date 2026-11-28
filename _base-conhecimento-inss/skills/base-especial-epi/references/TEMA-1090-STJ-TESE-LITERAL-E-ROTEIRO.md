@@ -1,6 +1,6 @@
 # Tema 1090 do STJ. Tese Literal, Embargos e Roteiro de Prova
 
-Onda 109 (14/08/2026). Conferido no SCON do STJ (`scon.stj.jus.br`) em 14/08/2026, com leitura das ementas integrais dos três acórdãos de mérito e dos dois acórdãos de embargos. Substitui integralmente as redações anteriores da base, que eram INCOMPLETAS.
+Conferido no SCON do STJ (`scon.stj.jus.br`) em 14/08/2026, com leitura das ementas integrais dos três acórdãos de mérito e dos dois acórdãos de embargos.
 
 ## Identificação
 
@@ -8,7 +8,7 @@ REsp 2.080.584/PR, REsp 2.082.072/RS e REsp 2.116.343/RJ. Relatora Ministra Mari
 
 **Situação do tema no sistema do STJ, TRÂNSITO EM JULGADO.** Não afirmar RE pendente.
 
-Histórico relevante. O REsp originalmente afetado NÃO FOI CONHECIDO. Os três recursos acima foram afetados em 03/12/2024 (DJEN 13/12/2024) em SUBSTITUIÇÃO, com NOVA DELIMITAÇÃO da controvérsia. Quem citar o Tema 1090 por acórdão anterior a dezembro de 2024 corre o risco de estar citando a delimitação velha.
+Histórico relevante. O REsp originalmente afetado não foi conhecido. Os três recursos acima foram afetados em 03/12/2024 (DJEN 13/12/2024) em substituição, com nova delimitação da controvérsia. Quem citar o Tema 1090 por acórdão anterior a dezembro de 2024 corre o risco de estar citando a delimitação velha.
 
 ## Tese literal, texto integral conferido
 
@@ -18,27 +18,23 @@ Histórico relevante. O REsp originalmente afetado NÃO FOI CONHECIDO. Os três 
 >
 > III - Se a valoração da prova concluir pela presença de divergência ou de dúvida sobre a real eficácia do EPI, a conclusão deverá ser favorável ao autor."
 
-## O que a base dizia de errado
+## Pontos de leitura
 
-Primeiro, a redação em uso omitia os CINCO INCISOS do item II. Eram justamente eles que dão o roteiro de prova ao segurado. A base transmitia a impressão de um ônus genérico e intransponível.
-
-Segundo, a redação omitia a palavra DIVERGÊNCIA no item III, que abre uma segunda porta além da dúvida. Divergência entre PPP e LTCAT, entre PPP e prova pericial, ou entre laudos, já basta.
-
-Terceiro, várias passagens atribuíam à TESE uma lista de hipóteses excepcionais com cancerígenos da LINACH e agentes biológicos. A tese não traz lista. Ver a seção seguinte para saber quem traz.
+O item II traz cinco incisos, que são o roteiro de prova do segurado. O item III contém a palavra "divergência", fundamento autônomo ao lado da dúvida: divergência entre PPP e LTCAT, entre PPP e perícia, ou entre laudos. A tese não traz lista de hipóteses excepcionais.
 
 ## Quem define as hipóteses excepcionais
 
-**O próprio STJ, nos embargos.** EDcl no REsp 2.116.343/RJ, Primeira Seção, j. 10/09/2025, DJEN 18/09/2025, PARCIALMENTE ACOLHIDOS COM EFEITOS INFRINGENTES.
+**O próprio STJ, nos embargos.** EDcl no REsp 2.116.343/RJ, Primeira Seção, j. 10/09/2025, DJEN 18/09/2025, parcialmente acolhidos com efeitos infringentes.
 
 Razão de decidir, literal. "Uma dessas 'hipóteses excepcionais' é relativa à exposição a agentes cancerígenos."
 
 Tese do julgamento dos embargos, literal. "Diante do alegado caráter cancerígeno dos agentes químicos, cabe avaliar se a hipótese permite o reconhecimento excepcional da especialidade do labor, mesmo com o uso de EPI eficaz."
 
-Consequência prática. Os autos voltaram à origem para avaliar a especialidade diante do caráter cancerígeno dos agentes. **Este é o achado mais valioso do Tema 1090 para o segurado**, e vale mais do que qualquer paráfrase, porque é o STJ dizendo, em acórdão, que cancerígeno é hipótese excepcional.
+Consequência prática. Os autos voltaram à origem para avaliar a especialidade diante do caráter cancerígeno dos agentes. É o ponto mais útil do Tema 1090 para o segurado, porque é o STJ dizendo, em acórdão, que cancerígeno é hipótese excepcional.
 
-**O que o STJ recusou dizer.** EDcl no REsp 2.080.584/PR, mesma sessão, REJEITADOS. Razão de decidir, literal. "Propositadamente, o acórdão embargado não discorreu mais a fundo sobre essas hipóteses excepcionais. Deixou-se claro que o julgamento seria 'sobre os casos em que o uso do EPI eficaz descaracteriza o tempo especial'."
+**O que o STJ recusou dizer.** EDcl no REsp 2.080.584/PR, mesma sessão, rejeitados. Razão de decidir, literal. "Propositadamente, o acórdão embargado não discorreu mais a fundo sobre essas hipóteses excepcionais. Deixou-se claro que o julgamento seria 'sobre os casos em que o uso do EPI eficaz descaracteriza o tempo especial'."
 
-Leitura pró-segurado. A lista é ABERTA por decisão deliberada da Primeira Seção. O Tema 1090 não esgotou as hipóteses excepcionais, apenas julgou o oposto delas. Logo, sustentar biológicos, ruído ou periculosidade como hipótese excepcional NÃO contraria o Tema 1090, e o INSS não pode usar o repetitivo para fechar a porta.
+Leitura pró-segurado. A lista é aberta por decisão deliberada da Primeira Seção. O Tema 1090 não esgotou as hipóteses excepcionais, apenas julgou o oposto delas. Logo, sustentar biológicos, ruído ou periculosidade como hipótese excepcional não contraria o Tema 1090, e o INSS não pode usar o repetitivo para fechar a porta.
 
 **A modulação foi afastada**, com fundamentação declarada suficiente nos mesmos embargos. Os impactos em cada caso concreto devem ser avaliados individualmente.
 
@@ -54,7 +50,7 @@ Periculosidade e eletricidade. Ver `base-especial-eletricidade-periculosidade`.
 
 ## Roteiro de prova, os cinco caminhos do item II
 
-Este é o uso prático mais importante da tese. Cada inciso é um caminho autônomo, e basta UM.
+Este é o uso prático mais importante da tese. Cada inciso é um caminho autônomo, e basta um.
 
 **(i) Ausência de adequação ao risco.** Confrontar o EPI declarado com o agente. Protetor auricular contra ruído de impacto, respirador PFF2 contra vapor orgânico, luva de procedimento contra solvente que a atravessa. Fonte técnica na ficha do agente e na NR correspondente.
 
@@ -64,9 +60,9 @@ Este é o uso prático mais importante da tese. Cada inciso é um caminho autôn
 
 **(iv) Ausência ou insuficiência de orientação e treinamento.** NR-6 e NR-1. Requerer os registros de treinamento. A empresa raramente os tem para todo o período.
 
-**(v) Qualquer outro motivo capaz de conduzir à conclusão da ineficácia.** CLÁUSULA ABERTA. É por aqui que entram os Pareceres da Fundacentro sobre a diferença entre eficácia de laboratório e efetividade em campo, a jornada real, o calor que impede o uso contínuo, e a prova testemunhal do uso concreto.
+**(v) Qualquer outro motivo capaz de conduzir à conclusão da ineficácia.** Cláusula aberta. É por aqui que entram os Pareceres da Fundacentro sobre a diferença entre eficácia de laboratório e efetividade em campo, a jornada real, o calor que impede o uso contínuo, e a prova testemunhal do uso concreto.
 
-Regra do escritório. Escolher DOIS ou TRÊS caminhos e provar cada um com documento por ID, em vez de alegar os cinco genericamente. Alegação de cinco sem prova de nenhum é o que o INSS espera.
+Regra do escritório. Escolher dois ou três caminhos e provar cada um com documento por ID, em vez de alegar os cinco genericamente. Alegação de cinco sem prova de nenhum é o que o INSS espera.
 
 ## O item III como rede de segurança
 
@@ -74,8 +70,8 @@ Provado qualquer início de divergência ou dúvida, a conclusão é favorável 
 
 Uso na peça. Fechar o tópico de EPI com o item III, sempre. Ainda que o juízo não se convença de nenhum dos cinco caminhos, resta a divergência.
 
-## O que a peça NÃO deve fazer
+## O que a peça não deve fazer
 
-Não afirmar que o Tema 1090 lista biológicos. Não citar o Tema 1090 como se ele fosse pró-segurado em bloco, porque o item I e o item II são desfavoráveis. Não pedir inversão do ônus da prova pelo art. 373, § 1º, do CPC, porque a razão de decidir n. 8 do acórdão a REJEITOU expressamente por ausência de assimetria informacional. Insistir nisso entrega ao INSS um argumento de contrariedade a repetitivo.
+Não afirmar que o Tema 1090 lista biológicos. Não citar o Tema 1090 como se ele fosse pró-segurado em bloco, porque o item I e o item II são desfavoráveis. Não pedir inversão do ônus da prova pelo art. 373, § 1º, do CPC, porque a razão de decidir n. 8 do acórdão a rejeitou expressamente por ausência de assimetria informacional. Insistir nisso entrega ao INSS um argumento de contrariedade a repetitivo.
 
 O caminho correto é assumir o ônus e cumpri-lo por um dos cinco incisos, fechando com o item III.

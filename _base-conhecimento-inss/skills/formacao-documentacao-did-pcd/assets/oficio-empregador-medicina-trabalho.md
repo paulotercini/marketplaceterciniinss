@@ -31,13 +31,13 @@ Fundamentação jurídica
 
 A CLT, no art. 168, estabelece a obrigatoriedade de exame médico ocupacional e a guarda dos registros.
 
-A NR-07 (PCMSO), item 7.4.5, estabelece a obrigação de guarda do prontuário clínico individual do trabalhador pelo prazo mínimo de 20 (vinte) anos após o desligamento. Trata-se de prazo legal vigente.
+A NR-07 (PCMSO) estabelece a obrigação de guarda do prontuário clínico individual do trabalhador pelo prazo mínimo de 20 (vinte) anos após o desligamento. Trata-se de prazo legal vigente.
 
 O art. 168, §4º, da CLT, assegura ao empregado o direito de acesso ao próprio prontuário médico ocupacional.
 
 A Lei 13.709/2018 (LGPD), no art. 18, garante ao titular o direito de acesso aos dados pessoais objeto de tratamento, aqui incluídos os dados de saúde registrados pela empresa.
 
-A Resolução CFM 1.821/2007 estabelece que o prontuário médico pertence ao paciente, vedando-se a recusa de acesso.
+O Código de Ética Médica (Resolução CFM 2.217/2018), art. 88, veda ao médico negar ao paciente acesso ao prontuário ou deixar de lhe fornecer cópia quando solicitada.
 
 Destinação da documentação
 

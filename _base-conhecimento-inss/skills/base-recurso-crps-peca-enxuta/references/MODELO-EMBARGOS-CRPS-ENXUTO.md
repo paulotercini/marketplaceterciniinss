@@ -1,6 +1,6 @@
 # Modelo de Embargos de Declaração ao CRPS - Versão Enxuta
 
-Modelo de embargos de declaração do art. 92 do Regimento Interno do CRPS, pró-segurado, em padrão ULTRA-ENXUTO. Os embargos são peças MUITO CURTAS, cuja função específica é sanar vício do acórdão, e na Onda 184 passaram à linguagem simples, sem nenhuma transcrição de lei.
+Modelo de embargos de declaração do art. 92 do Regimento Interno do CRPS, pró-segurado, em padrão ULTRA-ENXUTO. Os embargos são peças MUITO CURTAS, cuja função específica é sanar vício do acórdão, em linguagem simples, sem nenhuma transcrição de lei.
 
 ## DO CABEÇALHO
 
@@ -13,7 +13,6 @@ ou
 EXCELENTÍSSIMO SENHOR PRESIDENTE DA [X]ª CÂMARA DE JULGAMENTO DO
 CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL
 
-
 [Nome do Embargante], CPF [XXX.XXX.XXX-XX], nos autos do processo
 administrativo nº [protocolo], referente ao benefício nº [NB], vem,
 respeitosamente, opor EMBARGOS DE DECLARAÇÃO ao acórdão [número], de
@@ -22,15 +21,12 @@ DD/MM/AAAA, pelas razões a seguir.
 
 ## DO CORPO DA PEÇA
 
-O corpo foi revisto na auditoria de 03/10/2026 e na Onda 184, que alinhou a forma ao quadro "A mesma peça em todos os ritos" do `ESTILO-MODELO.md`.
-
 ```
 1. DA TEMPESTIVIDADE
 
 O Embargante tomou ciência do acórdão embargado em DD/MM/AAAA e opõe
 estes embargos em DD/MM/AAAA, dentro do prazo de 30 dias (art. 92, § 2º,
 do Regimento Interno do CRPS).
-
 
 2. DO VÍCIO
 
@@ -75,16 +71,13 @@ O acórdão embargado registra [data, valor, NB, CPF ou nome] na folha [__],
 enquanto o documento da folha [__] indica [dado correto]. O erro decorre
 de [origem do equívoco] e deve ser corrigido para [correção pretendida].
 
-
 3. DO PEDIDO
 
 Pelo exposto, requer o conhecimento e provimento dos presentes
 embargos para [sanar o vício específico] e, se cabível, emprestar
 efeito infringente em razão de [justificativa].
 
-
 [Cidade], [data].
-
 
 [Assinatura]
 Paulo Roberto Tercini Filho
@@ -97,7 +90,7 @@ OAB/SP 331.110
 
 **Cuidado crítico.** Os embargos NÃO são instrumento de rediscussão de mérito, e o efeito infringente é EXCEÇÃO, justificada caso a caso. O vício se aponta com referência ao trecho do acórdão e à folha onde o ponto foi suscitado.
 
-**Forma da peça (Onda 184).** Nenhuma lei se transcreve, e o art. 92 do Regimento Interno entra por remissão curta. Transcreve-se apenas o trecho do acórdão, ao lado do ponto suscitado e da folha onde foi suscitado.
+**Forma da peça.** Nenhuma lei se transcreve, e o art. 92 do Regimento Interno entra por remissão curta. Transcreve-se apenas o trecho do acórdão, ao lado do ponto suscitado e da folha onde foi suscitado.
 
 **Função estratégica dos embargos.** Os embargos servem para sanar vício técnico e limpar o caminho do recurso especial, para provocar o prequestionamento de matéria não enfrentada e para corrigir erro material que afeta a execução.
 

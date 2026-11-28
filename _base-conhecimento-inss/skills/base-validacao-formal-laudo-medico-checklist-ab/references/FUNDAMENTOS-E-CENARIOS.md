@@ -160,75 +160,19 @@ Solução. Solicitar inclusão. Em casos de consultório particular sem carimbo,
 
 ## 3. Marco normativo detalhado
 
-### 3.1. Lei 12.842/2013 (Lei do Ato Médico)
-
-Art. 1º. "O exercício da Medicina é regido pelas disposições desta Lei".
-
-Art. 4º. Atividades privativas do médico (incluindo a emissão de laudo médico para fins ocupacionais).
-
-### 3.2. Resolução CFM 1.851/2008
-
-"Atestado médico para fins de avaliação ocupacional".
-
-Disciplina a forma e o conteúdo do atestado e laudo.
-
-### 3.3. Resolução CFM 2.057/2013
-
-"Atestado e laudo médicos. Validade".
-
-Define a validade temporal do laudo.
-
-### 3.4. Resolução CFM 2.314/2022
-
-"Telemedicina".
-
-Disciplina a emissão de laudos via telemedicina, com assinatura digital.
-
-### 3.5. Resolução CFM 2.217/2018 (Código de Ética Médica)
-
-Art. 80. Vedação ao médico de emitir atestado falso.
-
-Art. 81. Dever do médico de fundamentar tecnicamente o laudo.
-
-### 3.6. Lei 8.213/91, art. 60, § 11-A
-
-Análise documental do INSS, com parecer de verossimilhança a partir de documentos médicos.
-
-### 3.7. IN 128/2022
-
-Art. 286. Documentos comprobatórios da incapacidade.
-
-Art. 287. Critérios para a aceitação do laudo.
-
-Art. 290. Pareceres técnicos.
-
-### 3.8. Portarias Conjuntas MPS/INSS 13/2026, 14/2026 e 15/2026
-
-Análise documental B31, B91, B94.
-
-### 3.9. LC 142/2013
-
-Aposentadoria PCD.
-
-Necessidade de comprovação documental do grau de deficiência via IF-BrA.
-
-### 3.10. Lei 8.742/93 (LOAS)
-
-BPC.
-
-Necessidade de comprovação do impedimento de longo prazo.
-
-### 3.11. Lei 13.146/2015 (Estatuto da PCD)
-
-Art. 2º. Definição de pessoa com deficiência.
-
-Art. 84. Apoio à decisão.
-
-### 3.12. Convenção de Nova Iorque sobre Direitos da Pessoa com Deficiência
-
-Decreto 6.949/2009.
-
-Modelo biopsicossocial da deficiência.
+| Norma | Conteúdo aplicável |
+|---|---|
+| Lei 12.842/2013, art. 4º | Atividades privativas do médico, inclusive atestação e laudo |
+| Resolução CFM 1.658/2002, alterada pela Resolução CFM 1.851/2008 | Atestado médico: conteúdo e requisitos |
+| Resolução CFM 2.314/2022 | Telemedicina; documentos com assinatura digital |
+| Resolução CFM 2.217/2018 (Código de Ética Médica), arts. 80 e 81 | Vedação a documento sem ato profissional, tendencioso ou falso, e a atestado para obter vantagem |
+| Lei 8.213/91, art. 60, §11-A | Exame médico-pericial por telemedicina ou análise documental, conforme regulamento |
+| Portaria Conjunta MPS/INSS 13/2026, art. 2º | Requisitos mínimos do documento médico na análise documental do B31 |
+| Portaria Conjunta MPS/INSS 15/2026, art. 2º | Requisitos mínimos do documento médico na análise documental do B94 |
+| LC 142/2013 e Portaria Interministerial 1/2014 | Aposentadoria PcD e IF-BrA |
+| Lei 8.742/93, art. 20, §§2º e 10 | Conceito de pessoa com deficiência e impedimento de longo prazo (2 anos) para o BPC |
+| Lei 13.146/2015, art. 2º | Conceito de pessoa com deficiência e avaliação biopsicossocial |
+| Convenção sobre os Direitos das Pessoas com Deficiência (Decreto 6.949/2009) | Modelo social da deficiência |
 
 ## 4. Cenários práticos detalhados
 
@@ -302,11 +246,11 @@ Assinatura digital com certificado ICP-Brasil ou similar.
 
 A análise documental do INSS aceita laudos digitais, desde que com assinatura válida.
 
-A teleperícia (Portaria DPMF/INSS 19/2026) também é compatível com laudos digitais.
+A Teleperícia da Portaria Conjunta DPMF/INSS 19/2026 ocorre com o segurado na APS e admite o exame dos documentos digitais apresentados.
 
 ### 5.3. Refutação da rejeição administrativa
 
-Quando o INSS rejeitar laudo digital sob alegação de invalidade, contra-argumentar com a Resolução CFM 2.314/2022 e com a IN 128/2022.
+Quando o INSS rejeitar laudo digital sob alegação de invalidade, contra-argumentar com a Resolução CFM 2.314/2022 e com o art. 2º, VII, da Portaria Conjunta MPS/INSS 15/2026, que admite assinatura eletrônica passível de validação.
 
 ## 6. Hipóteses de validação por tipo de profissional
 
@@ -412,20 +356,3 @@ Insuscetibilidade de reabilitação não abordada.
 
 Cruzamento com `auditoria-laudo-pericial`.
 
-## 9. Doutrina pró-segurado
-
-### 9.1. Frederico Amado
-
-"Direito Previdenciário". Standard probatório atenuado para incapacidade. Princípio do in dubio pro misero.
-
-### 9.2. Hugo Goes
-
-"Manual de Direito Previdenciário". Importância do laudo do médico assistente.
-
-### 9.3. Marisa Ferreira dos Santos
-
-"Direito Previdenciário Esquematizado". Modelo biopsicossocial da deficiência.
-
-### 9.4. Wladimir Novaes Martinez
-
-"Comentários à Lei 8.213/91". Avaliação do laudo médico no processo administrativo.

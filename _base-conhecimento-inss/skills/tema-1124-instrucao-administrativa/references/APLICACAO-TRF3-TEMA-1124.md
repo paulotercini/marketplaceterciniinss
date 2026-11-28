@@ -132,7 +132,7 @@ O favorável é F25 (10ª): PPP sem assinatura do responsável, suprido depois, 
 
 ## 11. Revisão por reclamação trabalhista
 
-No JEF, os efeitos vão para o pedido administrativo de revisão (J06, J07, J16), e a TNU firmou que o Tema 102 foi superado (lista em `tnu.md`). Sem pedido de revisão com os documentos trabalhistas, a ação é extinta (J24). No tribunal, há revisão mantida na DER quando o INSS não levantou o tema (P02), e a 3ª Seção mandou para a citação a sentença trabalhista posterior ao requerimento (F29).
+No JEF, os efeitos vão para o pedido administrativo de revisão (J06, J07, J16), e a TNU considera o Tema 102/TNU superado (ver seção 4, item "Tema 102/TNU"). Sem pedido de revisão com os documentos trabalhistas, a ação é extinta (J24). No tribunal, há revisão mantida na DER quando o INSS não levantou o tema (P02), e a 3ª Seção mandou para a citação a sentença trabalhista posterior ao requerimento (F29).
 
 ## 12. Os mais úteis
 
@@ -756,6 +756,6 @@ O titular enviou capturas de sete decisões divulgadas em redes sociais. O que f
 - **J22.** JEF, 2ª Turma Recursal de Mato Grosso do Sul, RecInoCiv 5009582-95.2024.4.03.6201. 13/08/2026; publicação 21/08/2026 (DJEN). DIB: sem DIB; a Turma afirma que, mesmo com a juntada judicial, a DIB seria a citação Avaliação: perigoso no fundamento (requerimento sem laudo médico = indeferimento forçado), embora a extinção, no caso, preserve a possibilidade de nova ação [NÃO CONFIRMADO]
 - **J26.** JEF, Turma Regional de Uniformização (TRU3), PUILCiv 5003089-12.2023.4.03.6307. 30/09/2026; publicação 07/10/2026 (DJEN). DIB: sem efeitos (extinção) Avaliação: perigoso (confirma J25; "entendimento notório contrário" não dispensa o requerimento quando há documento novo) [NÃO CONFIRMADO]
 - **J27.** JEF, Turma Regional de Uniformização (TRU3), PUILCiv 0046560-89.2020.4.03.6301. 09/12/2025; publicação 12/12/2025 (DJEN). DIB: pendentes Avaliação: retrato do período de transição (sobrestamento não é revisável pela TRU) [NÃO CONFIRMADO]
-- **T06.** TNU, PUIL 1002230-53.2022.4.01.3818/MG. sessão virtual de 24/06/2026 a 30/06/2026; D.E. 03/07/2026. DIB:  Avaliação: útil (obriga a TR a examinar se o INSS intimou para complementar antes de afastar a retroação) [NÃO CONFIRMADO]
-- **P01.** TRF3, 10ª Turma, ApCiv 5000477-24.2020.4.03.6108. . DIB:  Avaliação:  [NÃO CONFIRMADO]
-- **P02.** TRF3, 9ª Turma, ApCiv 6091485-66.2019.4.03.9999. . DIB:  Avaliação:  [NÃO CONFIRMADO]
+- **T06.** TNU, PUIL 1002230-53.2022.4.01.3818/MG. sessão virtual de 24/06/2026 a 30/06/2026; D.E. 03/07/2026. Avaliação: útil (obriga a TR a examinar se o INSS intimou para complementar antes de afastar a retroação) [NÃO CONFIRMADO]
+- **P01.** TRF3, 10ª Turma, ApCiv 5000477-24.2020.4.03.6108. Período anterior ao mérito do Tema 1124; título que remeteu o termo inicial à execução. Data e ficha: Não localizado [NÃO CONFIRMADO]
+- **P02.** TRF3, 9ª Turma, ApCiv 6091485-66.2019.4.03.9999. Período anterior ao mérito do Tema 1124; revisão mantida na DER sem arguição do tema pelo INSS. Data e ficha: Não localizado [NÃO CONFIRMADO]

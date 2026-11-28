@@ -1,13 +1,15 @@
 ---
 name: printscreen-impacto
-description: "Componente Visual Law #5. Processa documentos reais (PPP, CNIS, indeferimento, laudo, exames, decisões) gerando printscreens com destaques automáticos (grifo, borda, seta, caixa de anotação) e insere no .docx da petição junto ao argumento. Use SEMPRE que peticao-previdenciaria for acionada com documentos reais anexados. Use SEMPRE que mencionar printscreen de impacto, destaque visual, grifo no PPP, grifo no indeferimento, destaque no CNIS, seta no laudo, prova visual na petição, Visual Law com documento real. Acionar AUTOMATICAMENTE quando auditoria-ppp, auditoria-laudo-pericial, analise-documental-incapacidade, analise-bpc-loas ou cnis-acerto-indicadores identificarem pontos críticos. NÃO use sem documento real."
+description: "Componente Visual Law de documento real. Processa documentos reais (PPP, CNIS, indeferimento, laudo, exames, decisões) gerando printscreens com destaques (grifo, borda, seta, caixa de anotação) e insere no .docx da petição junto ao argumento. Use quando a peticao-previdenciaria tiver documento real cujo trecho decide o ponto e o titular quiser o destaque, e SEMPRE que mencionar printscreen de impacto, destaque visual, grifo no PPP, grifo no indeferimento, destaque no CNIS, seta no laudo, prova visual na petição, Visual Law com documento real. Indicada quando auditoria-ppp, auditoria-laudo-pericial, analise-documental-incapacidade, analise-bpc-loas ou base-cnis-acerto-indicadores identificarem pontos críticos. NÃO use sem documento real."
 ---
 
-# Skill Printscreen de Impacto — Componente Visual Law #5
+# Printscreen de Impacto. Componente Visual Law de documento real
 
 ## Visão Geral
 
-Esta skill transforma documentos reais do caso em argumentos visuais dentro da petição. O julgador visualiza a prova documental no exato momento em que lê o argumento jurídico, sem necessidade de buscar o documento nos autos. Destaques coloridos direcionam a atenção para o ponto específico que sustenta a tese.
+Esta skill insere na petição a imagem do documento real, com destaque no trecho que sustenta a tese, no ponto em que o argumento o analisa. O julgador vê a prova sem buscá-la nos autos.
+
+Desde a Onda 174 o componente Visual Law é opcional e entra quando o titular pedir ou quando a matéria exigir, e o printscreen conta no teto de três componentes por peça de `peticao-previdenciaria/references/VISUAL-LAW.md`. A paleta preto e branco daquela referência rege as tabelas. O destaque sobre a imagem usa a paleta de cores abaixo, porque o grifo cinza não se distingue do texto digitalizado.
 
 ## Princípio Fundamental
 
@@ -15,23 +17,24 @@ O printscreen de impacto NÃO é um anexo. É um elemento argumentativo integrad
 
 ## Pipeline de Processamento
 
-O fluxo de processamento tem quatro etapas obrigatórias executadas em sequência.
+O processamento tem quatro etapas, em sequência.
 
-### Etapa 1 — Extração
+### Etapa 1. Extração
 
 Extrair a página ou região relevante do documento original. Para PDFs, converter a página em imagem com resolução mínima de 200 DPI usando `pdftoppm`. Para imagens já enviadas pelo usuário, usar diretamente. Para documentos extensos, recortar apenas a região relevante com Pillow (crop).
 
 Consultar `references/PROCESSING.md` para o código completo de extração.
 
-### Etapa 2 — Identificação Automática
+### Etapa 2. Identificação Automática
 
 Identificar os pontos a destacar com base na auditoria técnica já realizada pelas skills complementares. A identificação segue regras por tipo de documento.
 
 **PPP**
-- Campo 15.3 com intensidade acima do limite de tolerância (ruído ≥ 85 dB, calor acima do IBUTG, vibração acima dos limites NHO-09/10)
-- Campo 15.3 com avaliação qualitativa para agentes do Anexo 13 NR-15 (correto, destacar em verde)
-- Campo 15.5 com indicação de EPI sem comprovação de eficácia (Tema 1090/STJ)
-- Campo 15.7 com responsável técnico sem habilitação
+- Campo 15.4 com intensidade acima do limite de tolerância do período (ruído acima de 80 dB(A) até 05/03/1997, de 90 dB(A) até 18/11/2003 e de 85 dB(A) depois, Tema 694/STJ; calor acima do IBUTG; vibração acima dos limites NHO-09/10)
+- Campo 15.3 com agente do Anexo 13 da NR-15 avaliado de forma qualitativa (correto, destacar em verde)
+- Campo 15.5 com técnica de medição ausente ou reduzida à menção "NR-15"
+- Campo 15.7 com EPI declarado eficaz sem comprovação (Tema 1090/STJ)
+- Campo 16 com responsável técnico sem habilitação ou fora do período
 - Divergências entre períodos registrados e CNIS
 - Omissão de agente nocivo identificado em LTCAT ou laudo técnico
 
@@ -64,15 +67,15 @@ Identificar os pontos a destacar com base na auditoria técnica já realizada pe
 - Omissão de fundamentação sobre ponto essencial
 - Erro material em dados do segurado
 
-### Etapa 3 — Aplicação de Destaques
+### Etapa 3. Aplicação de Destaques
 
 Aplicar os destaques visuais sobre a imagem do documento usando Pillow. O sistema de destaques segue uma paleta fixa integrada ao Visual Law do escritório.
 
-**Paleta de cores**
-- Vermelho (rgba 255,0,0,60) — fundamento superado, erro técnico, valor acima do limite, contradição
-- Verde (rgba 144,238,144,100) — ponto que favorece a tese, dado correto, fato incontroverso
-- Âmbar/Amarelo (rgba 255,255,0,100) — alerta, EPI sem comprovação, dado que exige atenção
-- Azul (rgba 0,100,255,60) — marco processual, dado informativo neutro
+**Paleta de cores do destaque**
+- Vermelho (rgba 255,0,0,60), fundamento superado, erro técnico, valor acima do limite, contradição
+- Verde (rgba 144,238,144,100), ponto que favorece a tese, dado correto, fato incontroverso
+- Âmbar/Amarelo (rgba 255,255,0,100), alerta, EPI sem comprovação, dado que exige atenção
+- Azul (rgba 0,100,255,60), marco processual, dado informativo neutro
 
 **Tipos de destaque**
 - Grifo semi-transparente (retângulo com fill RGBA sobre o texto)
@@ -88,7 +91,7 @@ Aplicar os destaques visuais sobre a imagem do documento usando Pillow. O sistem
 
 Consultar `references/PROCESSING.md` para o código completo de processamento.
 
-### Etapa 4 — Inserção no .docx
+### Etapa 4. Inserção no .docx
 
 Inserir o printscreen processado no .docx da petição usando a função `printscreenImpacto()` disponível em `references/DOCX-INTEGRATION.js`.
 
@@ -106,28 +109,28 @@ Inserir o printscreen processado no .docx da petição usando a função `prints
 
 **Regras de uso por tipo de petição**
 
-Em petições iniciais de aposentadoria especial, incluir printscreen do PPP (campo 15.3) e do indeferimento (fundamentos superados). Mínimo 1, máximo 3 printscreens.
+Quando o componente for usado, o documento e o teto variam pela peça.
 
-Em petições de incapacidade (B31/B32), incluir printscreen do laudo pericial (contradição) e/ou exame médico (achado clínico). Mínimo 1, máximo 3.
+| Peça | Documento | Teto |
+|---|---|---|
+| Inicial de aposentadoria especial | PPP (campos 15.3 a 15.7) e indeferimento | 3 |
+| Incapacidade (B31/B32) | laudo pericial (contradição) ou exame (achado clínico) | 3 |
+| Mandado de segurança | ato impugnado | 2 |
+| Recurso e impugnação | decisão recorrida, no ponto atacado | 2 |
+| BPC/LOAS | avaliação IFBrM, domínios subpontuados | 2 |
 
-Em mandados de segurança, incluir printscreen do ato impugnado com destaque no fundamento violador. Mínimo 1, máximo 2.
-
-Em recursos e impugnações, incluir printscreen da decisão recorrida com destaque no ponto atacado. Mínimo 1, máximo 2.
-
-Em petições de BPC/LOAS, incluir printscreen da avaliação IFBrM (domínios subpontuados). Mínimo 1, máximo 2.
-
-No JEF, limitar a 2 printscreens por petição para manter concisão. No rito ordinário e CRPS, até 4 printscreens quando justificado.
+No JEF, até 2 por peça. No rito ordinário e no CRPS, até 4 quando justificado, sempre dentro do teto de três componentes Visual Law.
 
 ## Integração com Skills Complementares
 
-Esta skill é acionada automaticamente pelas seguintes skills quando identificam pontos críticos em documentos reais.
+Estas skills indicam o printscreen quando identificam ponto crítico em documento real.
 
-- **auditoria-ppp** — Campos com vícios, valores acima dos limites, EPI sem eficácia comprovada
-- **auditoria-laudo-pericial** — Contradições, quesitos evasivos, omissões
-- **analise-documental-incapacidade** — Requisitos documentais das Portarias 13/14/15-2026
-- **analise-bpc-loas** — Domínios subpontuados no IFBrM, divergências funcionais
-- **cnis-acerto-indicadores** — Indicadores bloqueantes, competências problemáticas
-- **peticao-previdenciaria** — Integra os printscreens no .docx final como Componente Visual Law #5
+- **auditoria-ppp.** Campos com vícios, valores acima dos limites, EPI sem eficácia comprovada
+- **auditoria-laudo-pericial.** Contradições, quesitos evasivos, omissões
+- **analise-documental-incapacidade.** Requisitos documentais das Portarias 13/14/15-2026
+- **analise-bpc-loas.** Domínios subpontuados no IFBrM, divergências funcionais
+- **base-cnis-acerto-indicadores.** Indicadores bloqueantes, competências problemáticas
+- **peticao-previdenciaria.** Integra os printscreens no .docx final
 
 ## Fluxo de Trabalho Completo
 
@@ -143,21 +146,9 @@ Esta skill é acionada automaticamente pelas seguintes skills quando identificam
 
 ## Referências
 
-- `references/PROCESSING.md` — Código Python completo para extração, recorte e aplicação de destaques com Pillow
-- `references/DOCX-INTEGRATION.js` — Função JavaScript para inserção do printscreen no .docx via docx-js, compatível com TEMPLATE.js da peticao-previdenciaria
+- `references/PROCESSING.md`. Código Python completo para extração, recorte e aplicação de destaques com Pillow
+- `references/DOCX-INTEGRATION.js`. Função JavaScript para inserção do printscreen no .docx via docx-js, escrita para o antigo TEMPLATE.js; com o `md2docx.js` (Onda 140), a imagem se insere no .docx já convertido
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

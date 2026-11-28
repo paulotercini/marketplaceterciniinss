@@ -1,10 +1,10 @@
 # Checklist Operacional do PUIL - Antes do Protocolo
 
-Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recursos correlatos destinados à TNU. Baseado no Manual de Admissibilidade Recursal da TNU 10ª edição (CJF, 24/02/2026). Cada item identifica um gate de admissibilidade que pode aniquilar o recurso se descumprido.
+Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recursos correlatos destinados à TNU. Baseado no Manual de Admissibilidade Recursal da TNU 10ª edição (CJF, 24/02/2026). Cada item corresponde a um requisito cujo descumprimento leva à inadmissão.
 
 ## BLOCO A. PRESSUPOSTOS RECURSAIS GERAIS (Art. 14, I, RITNU)
 
-- [ ] **A.1 Tempestividade.** Data de intimação do acórdão da TR registrada. 15 dias úteis contados corretamente. ED, se opostos, interromperam o prazo (art. 1.026 CPC).
+- [ ] **A.1 Tempestividade.** Data de intimação do acórdão da TR registrada. 15 dias úteis contados corretamente. ED, se opostos, interromperam o prazo (Lei 9.099/95, art. 50, aplicada pela Lei 10.259/2001, art. 1º).
 - [ ] **A.2 Cabimento objetivo.** Acórdão é de MÉRITO (não decisão monocrática, não tutela provisória - QO 54/TNU).
 - [ ] **A.3 Legitimidade.** Parte recorrente foi parte no processo de origem.
 - [ ] **A.4 Interesse recursal.** A reforma traria utilidade para o segurado.
@@ -24,7 +24,7 @@ Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recurs
 - [ ] **C.1 Tese central do PUIL coincide com a tese do recurso inominado.** Sem inovação argumentativa (QO 10/TNU).
 - [ ] **C.2 A questão controvertida foi efetivamente apreciada pela TR.** Cumpre QO 35/TNU.
 - [ ] **C.3 Se houve omissão, foram opostos ED tempestivos.** Cumpre QO 36/TNU.
-- [ ] **C.4 Se ED foram rejeitados, invocar art. 1.025 CPC.** Prequestionamento ficto preservado.
+- [ ] **C.4 Se ED foram rejeitados, invocar o art. 1.025 do CPC.** Prequestionamento ficto [NÃO CONFIRMADO quanto à aceitação pela TNU; conferir à luz da QO 35].
 - [ ] **C.5 Tópico de prequestionamento expresso na peça do PUIL.** Demonstração documentada de cada etapa.
 
 ## BLOCO D. COTEJO ANALÍTICO (Art. 14, V, "c", RITNU)
@@ -50,6 +50,7 @@ Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recurs
 - [ ] **F.1 A peça NÃO discute coisa julgada, litispendência ou prescrição processual.**
 - [ ] **F.2 A peça NÃO discute cerceamento de defesa ou nulidade.**
 - [ ] **F.3 A peça NÃO discute ausência de fundamentação do acórdão.**
+- [ ] **F.3-A A peça NÃO discute interesse de agir ou legitimidade** (PUIL 1028473-09.2022.4.01.3600).
 - [ ] **F.4 A tese é estritamente de DIREITO MATERIAL previdenciário.**
 - [ ] **F.5 Cruzamento feito com a skill base-puil-pedilef-vedacao-materia-processual.**
 - [ ] **F.6 Tópico expresso "DA NÃO INCIDÊNCIA DA SÚMULA 43/TNU" inserido na peça.**
@@ -88,7 +89,7 @@ Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recurs
 - [ ] **K.1 Cabeçalho timbrado do escritório (Bell MT 24pt).**
 - [ ] **K.2 Fonte Bookman Old Style 12pt, espaçamento 1,5.**
 - [ ] **K.3 Recuo de 2 cm (judicial) ou 4 cm (CRPS não se aplica aqui, pois TNU é judicial).**
-- [ ] **K.4 Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão (Onda 163).**
+- [ ] **K.4 Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão.**
 - [ ] **K.5 Títulos de seção em tabelas pretas com texto branco em negrito.**
 - [ ] **K.6 Estrutura mínima.** I - Pressupostos / II - Cabimento / III - Prequestionamento / IV - Cotejo / V - Não incidência Súm 42 / VI - Não incidência Súm 43 / VII - Dialeticidade / VIII - Mérito / IX - Pedidos.
 - [ ] **K.7 Linha do tempo Visual Law (intimação > ED > acórdão > PUIL).**
@@ -119,7 +120,6 @@ Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recurs
 - [ ] **N.1 Cadastro da DER do recurso no Microsoft To Do (Lista Andamento ou Caso Específico).**
 - [ ] **N.2 Lembrete de prazo de contraprova do INSS (15 dias após distribuição).**
 - [ ] **N.3 Lembrete de prazo para agravo se houver inadmissão (15 dias da intimação).**
-- [ ] **N.4 Marker 🤖 na tarefa indicando análise por IA.**
 
 ## DIAGRAMA DE FLUXO RESUMIDO
 
@@ -166,7 +166,7 @@ PUIL em 15 dias úteis -----------------> |
 
 ## OBSERVAÇÕES OPERACIONAIS
 
-Este checklist deve ser impresso ou copiado para o caderno de auditoria de cada PUIL. Cada item assinalado é um gate vencido. Itens não assinalados são vetores de não conhecimento.
+Este checklist deve ser impresso ou copiado para o caderno de auditoria de cada PUIL. Item não assinalado indica risco de não conhecimento.
 
 Em casos complexos com múltiplas teses, o checklist deve ser refeito para CADA tese central do PUIL.
 

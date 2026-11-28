@@ -4,7 +4,7 @@
 
 ### 1.1. Conclusão de aposentadoria PCD sem perícia médica nem avaliação biopsicossocial
 
-Trata-se de violação frontal aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (IF-BrA) (auditoria 03/10/2026). A avaliação para aposentadoria PCD é necessariamente médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS. Conclusão automática sem perícia médica e sem avaliação social é nula de pleno direito.
+Trata-se de violação aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014 (IF-BrA). A avaliação para aposentadoria PCD é necessariamente médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS. Conclusão automática sem perícia médica e sem avaliação social é nula de pleno direito.
 
 ### 1.2. Indeferimento sem fundamentação adequada
 
@@ -52,7 +52,7 @@ A fundamentação atualizada deve invocar a Portaria DIRBEN/INSS nº 1.309/2025 
 
 Art. 26, §§ 1º a 9º, da Portaria DIRBEN/INSS nº 1.309/2025, em vigor desde 04/11/2025 (com alterações pela Portaria 1.318/2025).
 
-Só se invocam as Portarias 1.056/2022 e 1.231/2024 quando o ato viciado for anterior a 04/11/2025, e ainda assim em conjunto com a 1.309/2025, sob o fundamento da continuidade normativa da autotutela. Nunca como norma vigente autônoma.
+Apenas se invocam as Portarias 1.056/2022 e 1.231/2024 quando o ato viciado for anterior a 04/11/2025, e ainda assim em conjunto com a 1.309/2025, sob o fundamento da continuidade normativa da autotutela. Nunca como norma vigente autônoma.
 
 ## 3. Texto literal do art. 26 §1º (Portaria 1.309/2025)
 
@@ -71,7 +71,7 @@ VIII. Chefias das Coordenações, Divisões e Serviços das Superintendências R
 
 ## 4. Vedação de requerimento externo
 
-O art. 13, §9º, da Portaria DIRBEN/INSS 1.056/2022, na redação da Portaria 1.231/2024, ambas revogadas pelo art. 44 da Portaria 1.309/2025, firmava. "A indicação de erro administrativo é um ato interno e em hipótese nenhuma poderá ser objeto de requerimento externo". A Portaria 1.309/2025 não reproduziu a vedação, e o seu art. 26 vai só até o §8º, com o §1º enumerando quem abre a tarefa (auditoria 03/10/2026).
+O art. 13, §9º, da Portaria DIRBEN/INSS 1.056/2022, na redação da Portaria 1.231/2024, ambas revogadas pelo art. 44 da Portaria 1.309/2025, firmava. "A indicação de erro administrativo é um ato interno e em hipótese nenhuma poderá ser objeto de requerimento externo". A Portaria 1.309/2025 não reproduziu a vedação, e o seu art. 26 vai apenas até o §8º, com o §1º enumerando quem abre a tarefa.
 
 Daí decorre a recusa do INSS em abrir a tarefa por petição direta do advogado. É justamente por isso que a estratégia correta consiste em provocar as autoridades nominalmente legitimadas (gerente da APS, chefes da SARD/SAMB/SADJ/SAMC/SGREC/SAREC, chefe do SGBEN, COBEN/COREC da Superintendência) para que, no exercício de seu poder-dever de autotutela (art. 53 da Lei 9.784/1999 e Súmula 473 do STF), abram a IEA de ofício.
 
@@ -115,7 +115,7 @@ Lei 13.460/2017 (Código de Defesa do Usuário do Serviço Público), arts. 5º,
 
 Lei 12.527/2011 (LAI) e Lei 13.709/2018 (LGPD). Aplicáveis à juntada de documento de terceiro ao processo do segurado, configurando quebra de sigilo cadastral e tratamento indevido de dados pessoais sensíveis. Configura "incidente de segurança" passível de comunicação à ANPD (art. 48 da LGPD) e responsabilização da autarquia.
 
-Lei Complementar nº 142/2013, arts. 4º e 5º. A avaliação para aposentadoria PCD será médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS, mediante IF-BrA (Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014) (auditoria 03/10/2026). A conclusão automática (sem perícia médica e sem avaliação social) viola frontalmente o §1º do art. 201 da CF (com redação da EC 103/2019).
+Lei Complementar nº 142/2013, arts. 4º e 5º. A avaliação para aposentadoria PCD será médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS, mediante IF-BrA (Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014). A conclusão automática (sem perícia médica e sem avaliação social) viola o art. 201, §1º, I, da CF (com redação da EC 103/2019).
 
 Decreto Legislativo nº 186/2008 e Decreto nº 6.949/2009. Convenção sobre os Direitos das Pessoas com Deficiência, status de emenda constitucional. Impõe ao Brasil tratamento prioritário e modelo social/biopsicossocial.
 
@@ -137,9 +137,9 @@ A recusa injustificada da chefia importa potencial infração disciplinar e prev
 
 A omissão prolongada, em caso de pessoa com deficiência, viola prioridade legal expressa (Lei 13.146/2015, art. 9º, VII).
 
-A jurisprudência do TRF3 admite mandado de segurança por omissão quando ultrapassados os prazos do art. 49 da Lei 9.784/1999, do art. 41-A §5º da Lei 8.213/1991 e do parâmetro nacional do STF (RE 1.171.152/SC).
+A jurisprudência do TRF3 admite mandado de segurança por omissão quando ultrapassados os prazos do art. 49 da Lei 9.784/1999, do art. 41-A §5º da Lei 8.213/1991 e dos prazos do acordo homologado no RE 1.171.152/SC (conferir precedente atual no MCP trf3).
 
-A propositura imediata da ação judicial, demonstrada inércia prolongada, dispensa exaurimento administrativo (Tema 350/STF, RE 631.240).
+O Tema 350/STF (RE 631.240) exige prévio requerimento, mas dispensa o exaurimento da via administrativa. Excedido o prazo legal de análise, há interesse de agir.
 
 ## 9. Estratégia escalonada referencial
 

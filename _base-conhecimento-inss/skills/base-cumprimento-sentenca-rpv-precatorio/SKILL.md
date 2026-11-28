@@ -1,150 +1,64 @@
 ---
 name: base-cumprimento-sentenca-rpv-precatorio
-description: "Cumprimento de sentença contra o INSS, expedição de RPV e precatório, juros e correção monetária, honorários, tributação e destaque. Use SEMPRE que mencionar cumprimento de sentença previdenciário, execução INSS, RPV, precatório, art. 100 CF, art. 17 Lei 10.259, Lei 11.960/2009, Tema 810 STF, Tema 905 STJ, art. 85 CPC, honorários sucumbenciais, Súmula 111 STJ, Tema 1050 STJ, destaque honorários, IR sobre atrasados, RRA art. 12-A Lei 7.713, Tema 368 STF, deságio precatório, teto RPV, 60 salários-mínimos, parcelamento, expedição de ofício, dialeticidade recursal execução, impugnação ao cumprimento, IRDR 18 TRF4. Cruza com execucao-cumprimento-previdenciario, peticao-previdenciaria, tributacao-beneficios-previdenciarios, honorarios-contrato-previdenciario e impugnacao-cumprimento-concomitantes."
+description: "Cumprimento de sentença contra o INSS, expedição de RPV e precatório, juros e correção monetária, honorários, tributação e destaque. Use SEMPRE que mencionar cumprimento de sentença previdenciário, execução INSS, RPV, precatório, art. 100 CF, art. 17 Lei 10.259, Lei 11.960/2009, Tema 810 STF, Tema 905 STJ, Tema 1419 STF, EC 113/2021, EC 136/2025, Tema 1190 STJ, Tema 1018 STJ, art. 85 CPC, honorários sucumbenciais, Súmula 111 STJ, Tema 1050 STJ, destaque honorários, IR sobre atrasados, RRA art. 12-A Lei 7.713, Tema 368 STF, deságio precatório, teto RPV, 60 salários-mínimos, parcelamento, expedição de ofício, dialeticidade recursal execução, impugnação ao cumprimento, IRDR 18 TRF4. Cruza com execucao-cumprimento-previdenciario, peticao-previdenciaria, tributacao-beneficios-previdenciarios, honorarios-contrato-previdenciario e impugnacao-cumprimento-concomitantes."
 ---
 
 # Cumprimento de Sentença Previdenciário. RPV e Precatório
 
 ## Escopo
 
-Skill pró-segurado sobre o cumprimento de sentença contra o INSS, abrangendo expedição de RPV e precatório, cálculo de atrasados, juros e correção monetária, honorários sucumbenciais com destaque, tributação (IR, RRA), e estratégias em face de impugnações do INSS. Trabalha em conjunto com a skill operacional `execucao-cumprimento-previdenciario`.
+Quadro normativo do cumprimento de sentença contra o INSS: requisição, juros e correção, honorários e tributação. O roteiro operacional (coisa julgada progressiva na execução, renúncias no JEF, dialeticidade, fluxo decisório) está em `execucao-cumprimento-previdenciario`, que detalha estes pontos. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 100. Precatórios.
+CF/88, art. 100. Débitos alimentares com preferência (§1º); superpreferência de idoso a partir de 60 anos, portador de doença grave e pessoa com deficiência, até o triplo do pequeno valor (§2º); pequeno valor sem precatório (§3º); precatórios apresentados até 1º de fevereiro pagos até o fim do exercício seguinte (§5º, na redação da EC 136/2025; antes, 2 de abril pela EC 114/2021); vedado fracionar para enquadrar como RPV (§8º).
 
-Lei 10.259/2001, art. 17. RPV em JEF.
+Lei 10.259/2001, art. 17. RPV paga em 60 dias da entrega da requisição (caput); teto de 60 salários mínimos (§1º); sequestro se desatendida (§2º); vedado fracionamento (§3º); renúncia ao excedente para receber por RPV (§4º).
 
-CPC, arts. 534 e 535. Cumprimento contra Fazenda Pública.
+CPC, arts. 534 e 535. Demonstrativo do exequente; impugnação do INSS em 30 dias, com as matérias do art. 535; excesso exige declarar o valor correto (§2º); parte não impugnada cumprida desde logo (§4º); inexigibilidade do título fundado em norma declarada inconstitucional pelo STF antes do trânsito (§§5º a 8º).
 
-Lei 11.960/2009, art. 1º-F. Juros e correção monetária da Fazenda, com leitura pelo Tema 810 STF.
+CPC, art. 85, §§1º, 7º e 13. Honorários no cumprimento; ver regra abaixo.
 
-Resoluções CJF. Critérios de cálculo, deságios e honorários.
+Lei 7.713/1988, art. 12-A. Imposto de renda sobre rendimentos recebidos acumuladamente, pelo número de meses.
 
-Súmula 111 STJ. Honorários sobre parcelas vencidas.
+## Juros e correção monetária
 
-Tema 1050 STJ. Proveito econômico em honorários.
+Três fases do Manual de Cálculos da Justiça Federal 2026 (Resolução CJF 990/2026): até 11/2021, INPC (art. 41-A da Lei 8.213/91; Tema 905 STJ) e juros da poupança; de 12/2021 a 08/2025, SELIC única (art. 3º da EC 113/2021; Tema 1419 STF); a partir de 09/2025, INPC e juros pela taxa legal (EC 136/2025; art. 406 do Código Civil). Detalhe e quadros em `base-juros-correcao-monetaria`.
 
-## Marco jurisprudencial
+## Honorários no cumprimento
 
-### Tema 810 STF
+Primeiro, cumprimento impugnado e impugnação rejeitada. Honorários devidos (art. 85, §1º), acrescidos ao débito (§13).
 
-Correção monetária pelo IPCA-E [NÃO CONFIRMADO] e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram em 03/10/2019 [CONFERIDO] (https://portal.stf.jus.br/processos/abaDecisoes.asp?incidente=4723934). No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [CONFERIDO]. SELIC de 12/2021 a 08/2025 (art. 3º da EC 113/2021; Tema 1419/STF [CONFERIDO]) e, a partir de 09/2025, INPC com juros pela taxa legal (Manual CJF 2026), conferido na Onda 173.
+Segundo, cumprimento não impugnado. Sem honorários quando gerar precatório (§7º) e, nos cumprimentos iniciados após 01/07/2024, também quando gerar RPV (Tema 1190 STJ; RE pendente, Tema 1442 STF).
 
-Fonte oficial em https://portal.stf.jus.br
+Terceiro, execução individual de sentença coletiva. Honorários devidos ainda que não embargada (Súmula 345 STJ).
 
-### Tema 905 STJ
+Quarto, honorários de sucumbência formam crédito autônomo do advogado e podem ser requisitados separadamente; contratuais são destacados com a juntada do contrato antes da requisição (art. 22, §4º, da Lei 8.906/94). Ver `honorarios-contrato-previdenciario`.
 
-Juros e correção em benefícios previdenciários.
+## Benefício administrativo mais vantajoso (Tema 1018 STJ)
 
-Fonte oficial em https://www.stj.jus.br
+O segurado pode manter o benefício administrativo mais vantajoso concedido no curso da ação e executar as parcelas do benefício judicial até a implantação daquele. Registro na base de que a 1ª Turma do STJ aplicou o tema também à concessão por reafirmação da DER (AgInt no REsp 2.269.424/RS, DJEN 25/11/2026) [NÃO CONFIRMADO]; conferir no portal do STJ antes de citar.
 
-### Prescrição em cumprimento
+## Tributação
 
-Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
-
-### Tema 368 STF
-
-IR sobre atrasados e tributação.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Súmula 111 STJ
-
-Honorários sobre parcelas vencidas até a sentença.
-
-### Súmula 345 STJ e art. 85, §1º, CPC
-
-Honorários na execução individual de sentença proferida em ação coletiva, ainda que não embargada (Súmula 345 STJ). Nas demais execuções vale o art. 85, §1º, CPC, salvo a exceção do §7º para o precatório sem impugnação (auditoria 03/10/2026). A Súmula 443 STJ é matéria penal, não usar.
-
-**Tema 1018 com reafirmação da DER (AgInt no REsp 2.269.424/RS, 1ª Turma do STJ, rel. Min. Herman Benjamin, j. 17/11/2026, DJEN 25/11/2026) [NÃO CONFIRMADO].** A concessão judicial mediante reafirmação da DER (Tema 995) não afasta o Tema 1018. Se o INSS conceder benefício mais vantajoso no curso da ação, o segurado mantém o administrativo e executa as parcelas do judicial até a implantação daquele. A Turma negou que a reafirmação seja distinção apta a afastar o repetitivo. Conferir no portal do STJ antes de citar; a fonte inicial foi publicação em rede social.
-
-## Espaço pró-segurado
-
-Primeiro, RPV é paga em até 60 dias após requisição, sem deságio, com teto de 60 SM por credor.
-
-Segundo, precatório para valores superiores, inscritos até 2 de abril de cada exercício, pagos até o final do exercício seguinte (art. 100 CF).
-
-Terceiro, destaque de honorários é direito do advogado (art. 22 §4º EAOAB).
-
-Quarto, tributação diferida pela RRA (art. 12-A Lei 7.713/1988). Isenção para doença grave.
-
-Quinto, correção monetária e juros devem respeitar Temas 810 STF e 905 STJ.
-
-Sexto, impugnação ao cumprimento exige fundamentação específica, sob pena de rejeição.
-
-## Regra pró-segurado
-
-Primeiro, cálculo detalhado com planilha.
-
-Segundo, requisição de pagamento (RPV ou precatório) com honorários destacados.
-
-Terceiro, acompanhamento do prazo.
-
-Quarto, tributação adequada, com RRA se cabível.
-
-Quinto, em caso de impugnação, resposta técnica.
-
-Sexto, em caso de demora, MS por mora.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para técnicas de execução, acionar `execucao-cumprimento-previdenciario`.
-Para tributação, acionar `tributacao-beneficios-previdenciarios`.
-Para honorários, acionar `honorarios-contrato-previdenciario`.
-Para atividades concomitantes, acionar `impugnacao-cumprimento-concomitantes`.
-Para redação, acionar `peticao-previdenciaria`.
+RRA pelo art. 12-A da Lei 7.713/1988 (Tema 368 STF). Isenção por doença grave sem exigência de contemporaneidade dos sintomas (Súmula 627 STJ). Detalhe em `tributacao-beneficios-previdenciarios`.
 
 ## Alertas
 
-Primeiro, prazo de 60 dias para RPV, cumprido automaticamente.
+Primeiro, a renúncia do valor da causa (Tema 1030 STJ) não se confunde com a renúncia para RPV (art. 17, §4º); esta é colhida na execução (Enunciado 71 FONAJEF).
 
-Segundo, precatório está sujeito ao calendário anual.
+Segundo, a impugnação genérica do INSS, sem o valor que entende correto, não se conhece (art. 535, §2º).
 
-Terceiro, IR sobre atrasados pode gerar RRA favorável.
-
-Quarto, honorários sucumbenciais têm base diferente em JEF e rito ordinário.
-
-Quinto, impugnação do INSS exige resposta técnica pelo segurado.
-
-## Manual de Cálculos CJF 2026 e EC 136/2025 (Onda 76)
-
-A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o encerramento da SELIC do art. 3º da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, por força da EC 136/2025. O Tema 1419 STF (ARE 1.557.312/SP) aplica a SELIC da EC 113/2021 a toda condenação da Fazenda, e os embargos de 05/2026 negaram modulação e restringiram a tese à redação original do art. 3º [CONFERIDO, portal do STF, 04/10/2026]. Para benefícios previdenciários, de set/2025 em diante, correção pelo INPC e juros pela taxa legal (SELIC com dedução do INPC, art. 406 do CC na redação da Lei 14.905/2024). O Manual também trouxe diretrizes novas para as planilhas de cálculo destinadas à expedição de requisições, que devem apresentar todos os dados necessários ao ofício requisitório (Nota 5 do item 4.3.1.1). Quadros completos, consolidação de dez/2021 e tabela da taxa legal em `base-juros-correcao-monetaria/references/MANUAL-CJF-2026-QUADROS.md`.
+Terceiro, compensação de valores recebidos administrativamente faz-se mês a mês (Tema 1207 STJ). Ver `impugnacao-cumprimento-concomitantes`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## Doutrina de apoio
+## MCPs da casa
 
-Frederico Amado, execução contra INSS.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Hugo Goes, execução.
+## Integração com outras skills
 
-Marco Aurélio Serau Junior, execução previdenciária.
-
-Daniel Pulino, cumprimento.
-
-Jane Berwanger, execução.
-
-IBDP, advocacia previdenciária.
-
-## O que NÃO está nesta skill
-
-Atividades concomitantes em `impugnacao-cumprimento-concomitantes`. Tributação detalhada em `tributacao-beneficios-previdenciarios`. Honorários contratuais em `honorarios-contrato-previdenciario`.
+Operação da execução em `execucao-cumprimento-previdenciario`. Juros em `base-juros-correcao-monetaria`. Tributação em `tributacao-beneficios-previdenciarios`. Honorários em `base-cpc-honorarios-sucumbencia-previdenciaria` e `honorarios-contrato-previdenciario`. Concomitantes em `impugnacao-cumprimento-concomitantes`. Fluxo em `ponte-workflow-cumprimento-sentenca`.

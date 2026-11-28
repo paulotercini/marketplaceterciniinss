@@ -1,133 +1,44 @@
-# Salário-Maternidade — Fundamentos e Cenários
+# Salário-Maternidade. Qualidade por Categoria e Cenários
 
-## 1. Fundamentos normativos
+Base normativa no SKILL.md.
 
-CF/88, art. 7º, XVIII. Licença-maternidade sem prejuízo do emprego e do salário, com duração de 120 dias.
+## Qualidade de segurada por categoria (Enunciado 19 CRPS)
 
-CF/88, art. 201, II. Salário-maternidade como benefício previdenciário.
+- Empregada, doméstica e avulsa: vínculo na data do fato gerador ou período de graça.
+- Contribuinte individual: sem inscrição formal, prova da atividade remunerada e de ao menos uma contribuição (inciso I); contribuição paga até o vencimento da competência.
+- Facultativa: pagamento e filiação anterior ao fato gerador (inciso IV).
+- Segurada especial: atividade rural nos 12 meses anteriores, ainda que descontínua (inciso III). A que contribui para receber acima do mínimo prova atividade em ao menos um desses meses e uma contribuição (inciso II).
+- Atividades concomitantes: um benefício por atividade, com exercício na data do parto (inciso V).
+- Desempregada: qualidade pelo art. 15, qualquer que seja a categoria anterior.
 
-Lei 8.213/91, art. 71. Salário-maternidade à gestante.
+## Valor
 
-Lei 8.213/91, art. 71-A. Salário-maternidade à adotante.
+- Empregada e avulsa: remuneração integral (art. 72).
+- Doméstica: último salário de contribuição (art. 73, I).
+- Segurada especial: 1 salário mínimo (art. 73, II).
+- Contribuinte individual e facultativa: 1/12 da soma dos 12 últimos salários de contribuição, apurados em até 15 meses (art. 73, III).
 
-Lei 8.213/91, art. 71-B. Transferência ao cônjuge em óbito da mãe. Introduzido pela LC 146/2014.
+## Início e duração
 
-Lei 8.213/91, art. 72. Duração de 120 dias.
+- Parto: até 28 dias antes, por atestado, ou no parto (Decreto 3.048/99, art. 93, §3º). Extensão de até duas semanas, em casos excepcionais, por perícia (IN 128/2022, art. 358, §2º).
+- Natimorto: 120 dias (IN 128/2022, art. 358, I).
+- Aborto não criminoso: duas semanas (art. 358, §1º).
+- Adoção ou guarda: data do termo de guarda, da liminar ou do trânsito em julgado (art. 358, II).
+- Óbito da segurada: tempo restante ao cônjuge ou companheiro (Lei 8.213/91, art. 71-B).
 
-Lei 8.213/91, art. 73. Pagamento. Empregador reembolsado pelo INSS para empregada.
+## Cenários
 
-Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para CI, facultativa e segurada especial, exigência declarada inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]). O Enunciado 19/CRPS declara a carência inexigível e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
+1. Empregada dispensada na gestação: qualidade mantida, pagamento pelo INSS; estabilidade discutida na Justiça do Trabalho.
+2. Segurada especial: autodeclaração, CAF e ITR do período; 1 salário mínimo.
+3. MEI com poucas contribuições pagas em dia: direito, pela média do art. 73, III.
+4. Facultativa de baixa renda (código 1929): direito, com recolhimento validado.
+5. Desempregada há 8 meses: qualidade mantida.
+6. Adoção de criança de 3 anos: 120 dias desde o termo de guarda.
+7. Adoção de adolescente de 15 anos: 120 dias pelo Tema 344 TNU; o INSS limita a 12 anos (art. 358, II).
+8. Óbito da mãe no parto: o pai segurado recebe pelo tempo restante (art. 71-B).
+9. Natimorto: 120 dias.
+10. Gestante afastada 30 dias antes do parto: salário-maternidade só a partir de 28 dias antes; antes disso, auxílio por incapacidade temporária.
 
-Lei 8.213/91, art. 25, parágrafo único. Reduzia a carência do inciso III em caso de parto antecipado e perdeu utilidade com a inexigibilidade dessa carência. A segurada especial rege-se pelo art. 39, parágrafo único, com atividade rural, ainda que descontínua, nos 12 meses anteriores ao benefício (auditoria 03/10/2026).
+## Documentos
 
-Lei 8.213/91, art. 26, VI. Isenção para empregada, doméstica, avulsa.
-
-Lei 11.770/2008. Empresa Cidadã. Prorrogação por 60 dias (total 180).
-
-Lei 12.873/2013. Pai adotante/guardião.
-
-Lei 14.457/2022. Prevenção do assédio e tutela da maternidade no trabalho.
-
-Decreto 3.048/99, arts. 93 e seguintes. Regulamenta.
-
-## 2. Qualidade de segurada por categoria, sem carência (auditoria 03/10/2026)
-
-Empregada, doméstica, trabalhadora avulsa. Isenção pelo art. 26, VI.
-
-Contribuinte individual. Sem inscrição formal, prova o efetivo exercício de atividade remunerada e o recolhimento de ao menos uma contribuição, com documentação idônea (Enunciado 19/CRPS, I). Facultativa. Prova o pagamento da contribuição, com filiação regularmente constituída antes do fato gerador (inciso IV). Nas duas categorias, a contribuição deve ser paga até o vencimento da competência (§ 2º) (auditoria 03/10/2026).
-
-Segurada especial rural. Atividade rural nos 12 meses anteriores ao fato gerador, ainda que descontínua, sem exigência de exercício contínuo em todo o período (Enunciado 19/CRPS, III, e art. 39, parágrafo único). A que contribui para receber acima do salário mínimo prova atividade rural em ao menos um desses 12 meses e uma contribuição (inciso II) (auditoria 03/10/2026).
-
-Facultativa baixa renda. Prova o pagamento no código 1929 e a filiação regular antes do fato gerador (Enunciado 19/CRPS, IV), com o recolhimento validado na forma de `base-facultativo-baixa-renda` (auditoria 03/10/2026).
-
-Desempregada. Qualidade de segurado pelo art. 15, sem carência, qualquer que seja a categoria anterior (auditoria 03/10/2026).
-
-## 3. DIB e duração
-
-DIB na data do parto, salvo afastamento antecipado de até 28 dias por atestado médico (art. 93 §3º do Decreto 3.048/99).
-
-Em adoção. DIB na data da guarda judicial.
-
-Em aborto/natimorto. DIB na data do evento. Duração de 120 dias no parto, inclusive de natimorto (art. 71 da Lei 8.213/91 e art. 358, I, da IN 128/2022), e de duas semanas no aborto não criminoso (art. 93, §5º, do Decreto 3.048/99) (auditoria 03/10/2026, retirado o Tema 149/TNU, que trata do fator previdenciário do professor).
-
-Em óbito da mãe. Transferência ao cônjuge pela duração restante.
-
-## 4. Cenários operacionais pró-segurada
-
-### Cenário 1 — Empregada gestante demitida
-
-Empregada demitida antes do parto. Manteve qualidade. Pagamento direto pelo INSS.
-
-### Cenário 2 — Segurada especial rural
-
-Trabalhadora rural em economia familiar. 12 meses de atividade comprovada (autodeclaração + CAF + ITR). 1 salário mínimo por 120 dias.
-
-### Cenário 3 — CI/MEI com qualidade de segurada (auditoria 03/10/2026)
-
-MEI com qualidade de segurada no parto, ainda que com poucas contribuições, desde que pagas até o vencimento da competência (Enunciado 19/CRPS, § 2º) (auditoria 03/10/2026). Direito ao B80 no valor do salário-de-benefício.
-
-### Cenário 4 — Facultativa baixa renda
-
-Dona de casa de baixa renda com código 1929, sem carência, com contribuição paga e filiação regular antes do parto (Enunciado 19/CRPS, IV). Salário-mínimo (auditoria 03/10/2026).
-
-### Cenário 5 — Desempregada em período de graça
-
-Última contribuição há 8 meses. Qualidade mantida. B80 devido.
-
-### Cenário 6 — Adoção
-
-Mãe adota criança de 3 anos. Sentença de guarda. B82 por 120 dias.
-
-### Cenário 7 — Óbito da mãe no parto
-
-Mãe falece no parto. Pai assume com transferência do salário-maternidade pela LC 146/2014. 120 dias.
-
-### Cenário 8 — Natimorto
-
-Natimorto com mais de 22 semanas de gestação. B81 com duração de 120 dias (posição mais favorável).
-
-### Cenário 9 — Aborto espontâneo
-
-Aborto espontâneo até 22 semanas. B81 com duração de 14 dias.
-
-### Cenário 10 — Gravidez de risco
-
-Gestante com hipertensão grave afastada 30 dias antes do parto. B80 antecipado (28 dias pelo art. 93 §3º Decreto 3.048/99). Se exceder 28 dias, B31 até a data do parto com conversão.
-
-## 5. Documentos essenciais
-
-Certidão de nascimento ou documento hospitalar.
-Atestado médico em caso de afastamento antecipado.
-Sentença de guarda ou adoção.
-Certidão de óbito da mãe em casos de transferência.
-Documentos de segurada especial (autodeclaração, CAF, DAP, ITR, contratos).
-CNIS e GPS para CI/facultativa/MEI.
-Comprovante de inscrição no código 1929 para facultativa baixa renda.
-
-## 6. Cálculo do valor
-
-Empregada. Último salário.
-Doméstica. Último salário-de-contribuição.
-CI/MEI/facultativa. Média dos 12 últimos salários-de-contribuição.
-Segurada especial. 1 salário mínimo.
-
-## 7. Cruzamento com outras skills
-
-Acionar `peticao-previdenciaria` para peça.
-Acionar `periodo-graca-qualidade-segurado` para qualidade.
-Acionar `segurado-especial-rural` para segurada rural.
-Acionar `perspectiva-genero-previdenciario` para leitura com perspectiva de gênero.
-Acionar `documentos-comprobatorios-in128` para documentação.
-Acionar `precedentes-previdenciarios` para jurisprudência.
-
-## 8. Alerta estratégico
-
-Primeiro, em empregada desligada antes do parto, qualidade pelo art. 15. Prorrogação em desemprego involuntário.
-
-Segundo, em segurada especial, prova da atividade rural nos 12 meses antes do parto, ainda que descontínua, sem exigência de 10 meses nem de exercício contínuo (Enunciado 19/CRPS, III) (auditoria 03/10/2026).
-
-Terceiro, em adoção, DIB na guarda judicial, não no trânsito em julgado da adoção.
-
-Quarto, em óbito da mãe, transferência automática ao pai pela LC 146/2014.
-
-Quinto, em natimorto, buscar equiparação a parto para 120 dias.
+Certidão de nascimento ou documento hospitalar; atestado do afastamento antecipado; termo de guarda ou sentença; certidão de óbito; documentos da segurada especial; CNIS e guias da contribuinte individual, MEI ou facultativa.

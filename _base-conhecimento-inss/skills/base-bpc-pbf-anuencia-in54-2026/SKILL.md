@@ -1,268 +1,94 @@
 ---
 name: base-bpc-pbf-anuencia-in54-2026
-description: "Anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e estratégia pró-segurado. Use SEMPRE que mencionar IN 54/2026 SENARC MDS, anuência PBF BPC, desligamento PBF requerimento BPC, modalidade III art. 2º IN 54, vício de consentimento BPC, Termo Anuência Condicional, Decreto 12.534/2025 BPC PBF, Lei 14.601/2023 PBF, Lei 8.742/93 LOAS, atendente INSS consentimento, segurado vulnerável BPC PBF, MS preventivo desligamento PBF, MS repressivo BPC PBF, retorno PBF indeferimento BPC, irrepetibilidade BPC PBF, Tema 979 STJ, Tema 692 STJ, Súmula 34 AGU, autotutela art. 53 Lei 9784, vulnerabilidade hipossuficiente, dignidade art. 1º III CF, Convenção Nova Iorque PCD, Decreto 6949/2009. Cruza com analise-bpc-loas, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, peticao-previdenciaria, mandado-seguranca-previdenciario, base-bpc-loas-requisitos."
+description: "Anuência ao desligamento voluntário do Programa Bolsa Família no requerimento do BPC pela IN 54/SENARC/MDS, de 30/04/2026 (art. 2º, III), vício de consentimento e estratégia pró-segurado. Use SEMPRE que mencionar IN 54/2026 SENARC MDS, anuência PBF BPC, desligamento voluntário PBF, desligamento PBF requerimento BPC, modalidade III art. 2º IN 54, incompatibilidade de renda PBF BPC, vício de consentimento BPC, termo de anuência condicional, Decreto 12.534/2025 BPC PBF, Lei 14.601/2023 PBF, Portaria MDS 897/2023, Sibec, atendente INSS consentimento, segurado vulnerável BPC PBF, MS preventivo desligamento PBF, MS repressivo BPC PBF, retorno PBF indeferimento BPC, irrepetibilidade BPC PBF, Tema 979 STJ, Tema 692 STJ, Súmula 34 AGU, Lei 13.460/2017. Cruza com analise-bpc-loas, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, base-cadastro-domiciliar-cadunico-in21-2026, peticao-previdenciaria, mandado-seguranca-previdenciario e base-bpc-loas-requisitos."
 ---
 
-# IN 54/SENARC/MDS/2026. Anuência ao Desligamento do PBF no Requerimento do BPC
+# Anuência ao Desligamento do PBF no Requerimento do BPC (IN 54/SENARC/MDS/2026)
 
-## 1. Quando acionar esta skill
+## Quando acionar
 
-Acione SEMPRE que houver requerimento de BPC/LOAS feito por beneficiário do Programa Bolsa Família (PBF), especialmente após a entrada em vigor da IN 54/SENARC/MDS/2026.
+Requerimento de BPC por família beneficiária do Programa Bolsa Família (PBF); desligamento do PBF seguido de indeferimento ou cessação do BPC; anuência colhida no atendimento do INSS sem informação adequada.
 
-Hipóteses típicas. Atendimento INSS exige anuência ao desligamento do PBF como condição para protocolar o requerimento. Indeferimento do BPC após desligamento do PBF. Cessação do BPC com retorno ao CadÚnico. Exclusão automática do PBF antes da concessão definitiva do BPC.
+## Texto da IN 54/SENARC/MDS, de 30/04/2026
 
-A skill é fonte primária pró-segurado para confronto da IN 54/2026 com a CF (art. 6º e art. 203, V), com a LOAS (Lei 8.742/93) e com a Lei 14.601/2023 (PBF).
+A norma tem quatro artigos e trata do desligamento voluntário do PBF, com procedimentos da Portaria MDS 897/2023 e operação no Sistema de Benefícios ao Cidadão (Sibec).
 
-## 2. Contexto da IN 54/SENARC/MDS/2026
+- **Art. 2º.** O Responsável Familiar pode pedir o desligamento voluntário por três modalidades: I, gestão municipal ou distrital do PBF, com termo próprio; II, aplicativo do Bolsa Família, com anuência ao "Termo de Desligamento Voluntário"; III, INSS, "mediante anuência registrada no momento do requerimento do Benefício da Prestação Continuada (BPC), acionada quando for constatada incompatibilidade de renda para recebimento de ambos os benefícios".
+- **Art. 2º, §2º.** Em qualquer modalidade, a administração do benefício ocorre no Sibec.
+- **Art. 3º.** Os procedimentos técnicos estão em anexos publicados no portal do MDS e podem ser reeditados.
+- **Art. 4º.** Vigência na publicação.
 
-A IN 54/2026 da Secretaria Nacional de Renda de Cidadania (SENARC) do MDS instituiu três modalidades de desligamento do PBF.
+A IN não declara a anuência pressuposto do protocolo do BPC; a modalidade III depende da constatação de incompatibilidade de renda. Os anexos operacionais devem ser lidos na fonte antes de cada peça: [NÃO CONFIRMADO] quanto ao conteúdo do termo usado pelo INSS.
 
-Modalidade I. Desligamento voluntário pelo próprio beneficiário diretamente no CRAS ou pelo CadÚnico Cidadão.
+## Marco normativo
 
-Modalidade II. Desligamento por descumprimento de condicionalidades.
+- CF, arts. 1º, III, 5º, II, 6º e 203, V.
+- LOAS, art. 20, §1º (grupo familiar), §3º (renda) e §4º (acumulação); arts. 21 e 21-A.
+- Lei 9.784/1999, arts. 2º, 50 e 53.
+- Lei 13.146/2015, art. 84 (apoio à decisão da pessoa com deficiência).
+- Lei 13.460/2017, art. 6º (direito do usuário à informação).
+- Lei 14.601/2023 (PBF).
+- CC, arts. 138, 145, 151 e 156 (erro, dolo, coação e estado de perigo).
+- Decreto 6.214/2007, com a redação do Decreto 12.534/2025 (cômputo do PBF na renda do BPC).
+- Decreto 6.949/2009, arts. 12 e 28.
+- Portaria MDS 897/2023; IN 54/SENARC/MDS/2026.
 
-Modalidade III. Anuência ao desligamento dentro do atendimento do INSS no momento do requerimento do BPC. Esta é a modalidade controvertida.
+## Problemas da modalidade III
 
-Pelo art. 2º da IN 54/2026, o atendente do INSS apresenta termo de anuência ao beneficiário do PBF que requer BPC, e a assinatura passa a ser pressuposto formal do protocolo.
+1. **Consentimento.** O atendente do INSS opera programa gerido pelo MDS e não tem atribuição para orientar sobre seus efeitos. Anuência dada em vulnerabilidade, sem informação sobre os efeitos, sustenta a tese de erro substancial ou coação (CC, arts. 138 e 151).
+2. **Duplo prejuízo.** Se o BPC for indeferido, a família perde o PBF sem receber o BPC; o retorno exige nova habilitação e fila.
+3. **Informação prévia.** O termo deve informar que o desligamento independe do resultado do BPC, que o retorno não é automático e que o PBF entra no cálculo da renda do BPC pelo Decreto 12.534/2025. A omissão viola a Lei 13.460/2017, art. 6º.
+4. **Legalidade.** Ato infralegal não pode condicionar o acesso ao BPC sem lei (CF, art. 5º, II). O Decreto 12.534/2025 trata do cômputo da renda e não autoriza o desligamento como requisito do requerimento.
 
-## 3. Vícios da Modalidade III
+## Tese central
 
-### 3.1. Vício de consentimento
+O desligamento do PBF deve produzir efeito apenas após a concessão definitiva do BPC. A exigência de anuência incondicional como requisito do protocolo, se ocorrer na prática, carece de base legal.
 
-O atendente do INSS não tem competência funcional nem capacitação técnica para colher consentimento livre e informado sobre desligamento de programa de transferência de renda gerido por outro órgão (MDS).
+## Estratégia
 
-O segurado, em estado de vulnerabilidade socioeconômica e diante de pressão administrativa para protocolar o BPC, assina sem compreender os efeitos do desligamento.
+1. **Antes do atendimento.** Explicar ao cliente os efeitos do desligamento, avaliar a viabilidade do BPC e registrar a decisão informada.
+2. **Anuência condicional.** Se a anuência for pedida, acrescentar ressalva manuscrita: "A presente anuência ao desligamento do Programa Bolsa Família tem natureza condicional e suspensiva e produz efeitos apenas após a concessão definitiva do BPC requerido nesta data. Em caso de indeferimento, recurso pendente ou cessação do BPC, a anuência fica sem efeito, com permanência no programa nas condições anteriores."
+3. **Pessoa idosa não alfabetizada ou pessoa com deficiência intelectual.** Recusar o termo padrão e pedir apoio do CRAS (Lei 13.146/2015, art. 84).
+4. **Recusa do protocolo.** Registrar a recusa (Ouvidoria ou Fala.BR, ver `base-canais-falabr-corregedoria-cgu`) e impetrar MS preventivo.
+5. **Desligamento consumado e BPC indeferido ou pendente.** MS repressivo ou ação, com pedido de restabelecimento do PBF e de tramitação prioritária do BPC.
+6. **Cessação do BPC com perda do PBF.** Ação com restabelecimento do BPC, reinserção no PBF e irrepetibilidade.
 
-Vício. Erro substancial. Coação moral. Estado de perigo (CC, arts. 138, 151 e 156).
+**Competência e autoridade.** O PBF é gerido pelo MDS no Sibec, e o BPC, pelo INSS. O pedido de restabelecimento do PBF envolve a União e a autoridade do MDS; o do BPC, o INSS. O MS tramita na Vara Federal comum, pois o JEF não processa MS (Lei 10.259/2001, art. 3º, §1º, I). Autoridade coatora em `ms-competencia-autoridade-coatora`.
 
-### 3.2. Subordinação indevida do PBF ao BPC
+**Tutela de urgência.** Probabilidade do direito pela falta de base legal e pelo vício de informação; perigo de dano pela natureza alimentar; reversibilidade do restabelecimento.
 
-A LOAS (art. 20, § 4º, antes do Decreto 12.534/2025) e a Lei 14.601/2023 estabelecem que o PBF e o BPC são programas distintos, com finalidades distintas. O PBF é programa de transferência de renda condicionada. O BPC é benefício assistencial constitucional (art. 203, V, CF).
+**Dano moral.** Desligamento com lapso sem renda, recusa da ressalva ou recusa de retorno (`base-dano-moral-previdenciario`).
 
-A IN 54/2026 transforma o requerimento do BPC em causa automática de desligamento do PBF, em afronta à autonomia dos programas.
+## Devolução de valores
 
-### 3.3. Risco de duplo prejuízo
+Cancelado o BPC em revisão após a saída do PBF, a cobrança de valores enfrenta a boa-fé e a natureza alimentar.
+- Tema 979 STJ (REsp 1.381.734): o pagamento indevido por erro administrativo material ou operacional é repetível, salvo prova da boa-fé objetiva do segurado; a defesa é essa prova.
+- Tema 692 STJ (REsp 1.401.560): tese adversa sobre a devolução após revogação de tutela; afastar por distinção quando não houve tutela revogada.
+- Súmula 34 AGU, na redação da Portaria AGU 516/2025: conferir o texto vigente antes de citar.
+Detalhe em `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
 
-Se o BPC for indeferido, o segurado terá perdido o PBF sem ter conquistado o BPC.
+## Refutação a argumentos típicos do INSS
 
-O retorno ao PBF não é automático e demanda novo requerimento com fila no CadÚnico.
+- **A IN apenas regulamenta procedimento.** Se aplicada como condição do protocolo, cria restrição sem lei.
+- **O Decreto 12.534/2025 torna o desligamento consequência lógica.** O decreto trata do cálculo da renda, e a própria IN exige constatação de incompatibilidade de renda.
+- **O atendente apenas colhe a anuência.** Consentimento sem informação nem apoio é formal; Lei 13.460/2017 e Lei 13.146/2015, art. 84.
+- **O retorno ao PBF é possível a qualquer tempo.** A IN não prevê retorno automático, e o intervalo deixa a família sem renda.
 
-Em casos extremos, o segurado fica meses sem nenhum benefício, em afronta à dignidade humana (art. 1º, III, CF).
+## Cenários
 
-### 3.4. Ausência de respaldo legal expresso
+- **Pessoa idosa com PBF requer BPC.** Ressalva condicional; MS preventivo se o protocolo for recusado.
+- **PCD adulta com PBF.** Ressalva e apoio do CRAS.
+- **Criança com deficiência.** Requerimento pelo responsável legal; CF, art. 227.
+- **Família com vários membros no PBF.** Calcular o impacto antes da anuência, com o CRAS.
 
-A IN 54/2026 é ato infralegal de hierarquia normativa inferior. Não pode criar restrição ao acesso do BPC sem suporte em lei (art. 5º, II, CF, princípio da legalidade).
+## Documentos
 
-O Decreto 12.534/2025 trata da INCLUSÃO dos valores do PBF no cálculo da renda per capita do BPC (revogada a exclusão anterior), mas não autoriza o desligamento como pressuposto procedimental.
+CadÚnico atualizado; histórico do PBF (NIS, folhas de pagamento, valor); termo de anuência, com ou sem ressalva; protocolo do BPC e tela do Meu INSS; decisão do BPC; renda do grupo familiar; documentos da deficiência ou da idade; relatório do CRAS e comprovantes de despesas.
 
-## 4. Marco normativo
+## Integração
 
-CF/88, art. 1º, III. Dignidade humana.
-
-CF/88, art. 5º, II. Legalidade.
-
-CF/88, art. 6º. Direito à assistência social como direito social.
-
-CF/88, art. 203, V. Direito ao BPC.
-
-CF/88, art. 226. Proteção da família.
-
-Lei 8.742/93. LOAS.
-
-Lei 8.742/93, art. 20. Requisitos do BPC.
-
-Lei 8.742/93, art. 20, §1º. Definição do grupo familiar (o §14 trata da exclusão, do cálculo da renda, de outro BPC ou benefício previdenciário de até 1 SM de idoso/PCD).
-
-Lei 8.742/93, art. 21. Revisão bienal.
-
-Lei 8.742/93, art. 21-A. Suspensão por exercício de atividade remunerada.
-
-Lei 14.601/2023. Programa Bolsa Família.
-
-Decreto 6.214/2007. Regulamento do BPC.
-
-Decreto 12.534/2025. Inclui o PBF no cômputo da renda do BPC.
-
-IN 54/SENARC/MDS/2026. Modalidades de desligamento do PBF.
-
-Convenção de Nova Iorque sobre Direitos da Pessoa com Deficiência. Decreto 6.949/2009.
-
-Lei 9.784/1999. Processo administrativo.
-
-Lei 13.460/2017. Direitos do usuário do serviço público.
-
-CC, arts. 138 a 165. Defeitos do negócio jurídico.
-
-## 5. Tese central pró-segurado
-
-A IN 54/2026, na sua Modalidade III, é inconstitucional e ilegal por instituir condicionante infralegal ao acesso ao BPC, em afronta aos arts. 5º, II, e 203, V, da CF.
-
-O desligamento do PBF deve ocorrer apenas após a concessão definitiva do BPC, e nunca como pressuposto do protocolo do requerimento.
-
-Termo de Anuência Condicional. Estratégia para o atendimento INSS. Assinar com ressalva expressa que a anuência produz efeitos apenas após a concessão definitiva e irrecorrível do BPC.
-
-## 6. Estratégia processual
-
-### 6.1. Termo de Anuência Condicional no atendimento
-
-No momento do atendimento, antes de assinar o termo padrão da IN 54/2026, redigir aditivo manuscrito com cláusula condicional.
-
-Modelo de cláusula. "A presente anuência ao desligamento do Programa Bolsa Família tem natureza CONDICIONAL e suspensiva, produzindo efeitos exclusivamente após a concessão definitiva e irrecorrível do BPC. Em caso de indeferimento, manutenção em fase recursal, ou cessação posterior do BPC, o desligamento do PBF resta automaticamente revogado, com retorno imediato ao programa nas condições anteriores".
-
-### 6.2. Mandado de segurança preventivo
-
-Cabível antes do protocolo do BPC.
-
-Direito líquido e certo. Acesso ao BPC sem condicionante infralegal.
-
-Pedido. Determinar ao INSS que receba o requerimento de BPC sem exigência de anuência ao desligamento do PBF. Subsidiariamente, que receba a anuência condicional manuscrita pelo segurado.
-
-Tutela de urgência. Risco de dano (perda do benefício alimentar).
-
-Autoridade coatora. Gerente Executivo da APS local. Verificar `ms-competencia-autoridade-coatora`.
-
-### 6.3. Mandado de segurança repressivo
-
-Cabível quando o desligamento do PBF já ocorreu e o BPC foi indeferido ou está pendente.
-
-Pedido principal. Restabelecimento imediato do PBF.
-
-Pedido cumulativo. Tramitação prioritária do BPC.
-
-Pedido subsidiário. Indenização por danos morais por aplicação irregular da IN 54/2026 (`base-dano-moral-previdenciario`).
-
-### 6.4. Ação ordinária
-
-Para casos com discussão fática complexa (renda do grupo familiar, prova da deficiência, prova da idade, miserabilidade material, etc.).
-
-Pedido principal. Concessão do BPC com restabelecimento concomitante do PBF.
-
-Pedido cumulativo. Indenização por danos morais.
-
-## 7. Vedação à exigência cumulativa de restituição
-
-Nas hipóteses em que o segurado teve cessado o PBF e recebeu o BPC, e posteriormente o BPC é cancelado por revisão, o INSS não pode exigir devolução cumulativa dos valores do PBF e do BPC.
-
-Princípio da irrepetibilidade. Tema 979/STJ (REsp 1.381.734/RN), pelo qual o pagamento por erro administrativo é repetível, salvo prova da boa-fé objetiva do segurado, que é o caminho da defesa. Tema 692/STJ (REsp 1.401.560/MT), tese adversa que manda devolver o recebido por tutela antecipada revogada; o segurado a afasta por distinção quando não houve tutela revogada (auditoria 03/10/2026). Súmula 34/AGU.
-
-Boa-fé objetiva. Verba alimentar. Vulnerabilidade socioeconômica.
-
-Cruzamento com `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
-
-## 8. Cenários práticos
-
-### 8.1. Cenário A. Beneficiário do PBF requer BPC
-
-Estratégia. Redigir cláusula condicional manuscrita no termo de anuência.
-
-Documentação. Cópia do termo assinado com a cláusula. Protocolo do requerimento. Comprovante de inclusão no CadÚnico atualizado.
-
-### 8.2. Cenário B. Beneficiário desligado do PBF teve BPC indeferido
-
-Estratégia. MS repressivo com pedido de restabelecimento do PBF + tramitação prioritária do recurso administrativo do BPC + danos morais.
-
-Documentação. Termo de desligamento. Decisão de indeferimento do BPC. Comprovante da renda do grupo familiar. Documentos da deficiência ou idade.
-
-### 8.3. Cenário C. Cessação do BPC com perda do PBF
-
-Estratégia. Ação ordinária com pedido cumulativo de restabelecimento do BPC + reinserção no PBF + irrepetibilidade.
-
-Documentação. Histórico do BPC. Termo de cessação. Decreto 12.534/2025 (sobre composição da renda).
-
-### 8.4. Cenário D. Idoso vulnerável sem alfabetização requer BPC
-
-Estratégia. Recusa expressa da assinatura do termo padrão. Solicitar acompanhamento por servidor do CRAS. Eventual MS preventivo com tutela de urgência.
-
-## 9. Documentos essenciais
-
-CadÚnico atualizado.
-
-Histórico do PBF (folhas de pagamento, NIS, valor atual).
-
-Documentos da deficiência ou comprovação da idade ≥ 65 anos.
-
-Comprovação da renda do grupo familiar.
-
-Termo de anuência (assinado ou não).
-
-Protocolo de requerimento do BPC.
-
-Decisão administrativa do BPC, se já houver.
-
-## 10. Confronto com Decreto 12.534/2025
-
-O Decreto 12.534/2025 incluiu o valor do PBF no cômputo da renda per capita do BPC, em afronta à tradição protetiva da LOAS.
-
-Tese pró-segurado defendida em `base-bpc-renda-per-capita-miserabilidade`.
-
-A IN 54/2026 amplia o problema ao tornar o desligamento do PBF causa automática do BPC, criando dupla armadilha.
-
-## 11. Doutrina pró-segurado
-
-Wladimir Novaes Martinez. Crítica à infralegalidade que cria barreiras ao BPC.
-
-Frederico Amado. Direito Previdenciário. Princípio da legalidade na criação de pressupostos do BPC.
-
-Marisa Ferreira dos Santos. Direito Previdenciário Esquematizado. Inconstitucionalidade de restrições infralegais ao acesso a benefícios constitucionais.
-
-Fábio Zambitte Ibrahim. Curso de Direito Previdenciário. Vulnerabilidade do beneficiário do BPC e necessidade de proteção reforçada.
-
-## 12. Status normativo
-
-IN 54/SENARC/MDS/2026. VIGENTE.
-
-Decreto 12.534/2025. VIGENTE.
-
-Lei 14.601/2023. VIGENTE.
-
-## 13. Cruzamento com outras skills
-
-`analise-bpc-loas` para análise técnica.
-
-`base-bpc-loas-requisitos` para requisitos estruturais.
-
-`base-bpc-renda-per-capita-miserabilidade` para o critério de renda.
-
-`bpc-renda-grupo-familiar` para a composição familiar.
-
-`base-bpc-aposentadoria-pcd-procedimentos` para o procedimento administrativo.
-
-`mandado-seguranca-previdenciario` para o MS.
-
-`ms-competencia-autoridade-coatora` para a definição da autoridade coatora.
-
-`peticao-previdenciaria` para a petição.
-
-`base-dano-moral-previdenciario` para o pedido de indenização.
-
-`base-devolucao-valores-irrepetibilidade-tema979-tema692` para a vedação à devolução cumulativa.
-
-`tema-1124-instrucao-administrativa` para a instrução administrativa.
-
-## 14. Hub de portarias
-
-Acionar `base-portarias-dpmf-inss-hub` e `base-bpc-aposentadoria-pcd-procedimentos` para as Portarias aplicáveis ao procedimento.
-
-## 15. Cruzamento com Onda 27
-
-Para Cadastro Domiciliar do CadÚnico pelas INs SAGICAD/MDS 20/2026 e 21/2026 (modalidade preferencial PCD mobilidade reduzida, obrigatória famílias unipessoais BPC/PBF, dispensa em 8 hipóteses, vedação ao caráter fiscalizatório), acionar `base-cadastro-domiciliar-cadunico-in21-2026`. Esta skill é diretamente complementar à IN 54/2026.
-
-## 16. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+Requisitos em `base-bpc-loas-requisitos`; renda em `base-bpc-renda-per-capita-miserabilidade` e `bpc-renda-grupo-familiar`; cadastro domiciliar em `base-cadastro-domiciliar-cadunico-in21-2026`; procedimento em `base-bpc-aposentadoria-pcd-procedimentos`; MS em `mandado-seguranca-previdenciario`; peça em `peticao-previdenciaria`; portarias em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

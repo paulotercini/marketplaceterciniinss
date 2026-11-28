@@ -1,40 +1,36 @@
 # Jurisprudência e Refutação. PFE-INSS, ANPD, DPU, CONADE
 
-## 1. STF. AGU e PFE-INSS
+## 1. AGU e PFE-INSS. Base normativa
 
-ADI 5.624. Reafirma a autonomia funcional dos órgãos da AGU.
+LC 73/1993 (Lei Orgânica da AGU) e Lei 10.480/2002, art. 10, que atribui à Procuradoria-Geral Federal a representação judicial e extrajudicial das autarquias e as atividades de consultoria e assessoramento jurídicos.
 
-RE 593.443. Atribuições da AGU em representação do INSS.
-
-A jurisprudência do STF reconhece a competência da PFE-INSS para avaliar a legalidade dos atos administrativos do INSS e para orientar correção de ofício.
+Precedente do STF específico sobre a PFE-INSS: Não localizado. As referências ADI 5.624 e RE 593.443 da versão anterior não tratam do tema e foram retiradas.
 
 ## 2. STF. LGPD aplicada à Administração Pública
 
-ADI 6387. Cautelar referendada em 07/05/2020 contra a MP 954/2020, que tratava do compartilhamento de dados de usuários de telefonia com o IBGE, e ação julgada prejudicada em 19/11/2020. Não trata da LGPD no setor público (auditoria 03/10/2026).
+ADI 6387. Cautelar referendada em 07/05/2020 contra a MP 954/2020, que tratava do compartilhamento de dados de usuários de telefonia com o IBGE, e ação julgada prejudicada em 19/11/2020. Não trata da LGPD no setor público.
 
-ADC 51 e ADIs correlatas. Validação da estrutura geral da LGPD [NÃO CONFIRMADO] (auditoria 03/10/2026).
+ADC 51 e ADIs correlatas. Validação da estrutura geral da LGPD [NÃO CONFIRMADO].
 
-## 3. STJ. Responsabilidade da Administração por incidente de segurança
+## 3. STJ. Vazamento de dados pessoais e dano moral
 
-REsp 1.997.793/RS. Responsabilidade objetiva da Administração por vazamento de dados pessoais.
+AREsp 2.130.619/SP (STJ, 2ª Turma, 2023). Vazamento de dados pessoais comuns não gera dano moral presumido; o titular deve provar o dano [NÃO CONFIRMADO, conferir no MCP superiores]. Em dado sensível de saúde (LGPD, art. 5º, II), demonstre o prejuízo concreto e a exposição.
 
-REsp 2.014.849/SP. Dever do controlador (Administração Pública) de comunicar incidente de segurança à ANPD e ao titular.
+A juntada indevida de documento de terceiro ao processo do segurado pode configurar incidente de segurança (LGPD, art. 46 e art. 48). A responsabilidade do INSS segue o art. 37, §6º, da CF.
 
-A juntada indevida de documento de terceiro ao processo do segurado configura incidente de segurança e enseja responsabilização do INSS.
+Os REsp 1.997.793/RS e 2.014.849/SP da versão anterior não foram localizados e foram retirados.
 
-## 4. STJ. DPU em matéria previdenciária
+## 4. DPU em matéria previdenciária
 
-REsp 1.823.058/SP. Legitimidade da DPU em ações previdenciárias.
+CF, art. 134, e LC 80/1994. A DPU presta assistência jurídica integral e gratuita ao necessitado na Justiça Federal.
 
-REsp 1.945.030/RJ. Atuação da DPU em conjunto com advogado particular constituído.
-
-A DPU pode atuar em conjunto com o advogado, somando esforços em casos de hipossuficiência relevante.
+Precedente do STJ sobre atuação conjunta da DPU com advogado constituído: Não localizado. Os REsp 1.823.058/SP e 1.945.030/RJ da versão anterior foram retirados.
 
 ## 5. TRF3. Reconhecimento da PFE-INSS como interlocutora
 
 TRF3 reconhece, em precedentes administrativos e em despachos de cumprimento de decisões judiciais, a PFE-INSS Regional como interlocutora institucional do INSS. Notas Técnicas SEI/JFSP demonstram o fluxo padronizado de cumprimento de decisões judiciais via PFE-INSS Regional SP.
 
-Nota Técnica SEI/JFSP 9164268. Fluxo padronizado entre TRF3, INSS, Superintendência SRSE-I e PFE-INSS Regional SP.
+Nota Técnica SEI/JFSP 9164268 [NÃO CONFIRMADO]. Fluxo padronizado entre TRF3, INSS, Superintendência SRSE-I e PFE-INSS Regional SP.
 
 ## 6. LC 75/93 e LC 73/93
 
@@ -44,13 +40,13 @@ LC 73/93. Lei Orgânica da AGU. Atribuições e estrutura.
 
 A PFE-INSS, como unidade da AGU, tem dever institucional de cooperar com o MPF e o Judiciário, e de avaliar a legalidade dos atos do INSS.
 
-## 7. Lei 13.853/2019 e ANPD
+## 7. ANPD. Base normativa
 
-Cria a ANPD. Estrutura institucional autônoma.
+Lei 13.853/2019 criou a ANPD. A Lei 14.460/2022 a transformou em autarquia de natureza especial. A Lei 15.352/2026 a renomeou para Agência Nacional de Proteção de Dados, vinculada ao Ministério da Justiça e Segurança Pública (LGPD, art. 55-A).
 
-Decreto 11.348/2023. Estrutura Regimental da ANPD.
+Estrutura regimental vigente: conferir no portal da ANPD (o Decreto 11.348/2023 citado na versão anterior não foi confirmado).
 
-Resolução ANPD 15/2024. Regulamenta comunicação de incidentes de segurança.
+Resolução CD/ANPD 15/2024. Regulamenta a comunicação de incidentes de segurança pelo controlador.
 
 ## 8. LGPD. Dispositivos centrais
 
@@ -88,11 +84,11 @@ A DPU tem legitimidade para propor ACP em defesa de pessoas com deficiência.
 
 Lei 13.146/2015, art. 9º, VII. Prioridade.
 
-Art. 39. Direito à previdência social.
+Art. 41. Aposentadoria da pessoa com deficiência segurada do RGPS, nos termos da LC 142/2013.
 
-Art. 84. Acessibilidade.
+Art. 53. Acessibilidade.
 
-Art. 175. Responsabilidade do Estado.
+Art. 79. Acesso à justiça.
 
 ## 12. Convenção de Nova Iorque
 
@@ -110,51 +106,29 @@ Estabelece a estrutura do Ministério dos Direitos Humanos e da Cidadania, inclu
 
 ### 14.1. "A PFE-INSS não pode interferir em ato administrativo de mérito"
 
-Refutação. Falso. A PFE-INSS tem competência consultiva e deve avaliar a legalidade dos atos administrativos. Pode emitir parecer recomendando revisão de ofício, com base no art. 53 da Lei 9.784/1999. A função é cooperativa, não fiscalizatória, mas tem peso institucional.
+Refutação. Falso. A PFE-INSS tem competência consultiva e deve avaliar a legalidade dos atos administrativos. Pode emitir parecer recomendando revisão de ofício, com base no art. 53 da Lei 9.784/1999. A função é consultiva e cooperativa.
 
 ### 14.2. "A comunicação à ANPD é tarefa exclusiva do controlador"
 
-Refutação. Falso. Embora o art. 48 da LGPD imponha o dever ao controlador, o titular ou seu representante também podem comunicar diretamente à ANPD. A omissão do controlador (INSS) reforça o cabimento da comunicação direta pelo afetado.
+Refutação. Falso. O art. 48 da LGPD impõe o dever de comunicar ao controlador. O titular, ou seu procurador, pode peticionar à ANPD contra o controlador (LGPD, art. 18, §1º, e art. 55-J, V). A omissão do controlador (INSS) reforça o cabimento da comunicação direta pelo afetado.
 
-### 14.3. "A DPU só atua em ausência de advogado constituído"
+### 14.3. "A DPU apenas atua em ausência de advogado constituído"
 
 Refutação. Falso. A DPU pode atuar em conjunto com o advogado constituído, mediante autorização do segurado. A atuação conjunta é permitida e útil em casos de hipossuficiência relevante.
 
 ### 14.4. "O CONADE é meramente consultivo, não tem efetividade"
 
-Refutação. Parcialmente correto na forma, mas incorreto no efeito prático. O CONADE pode emitir recomendações, manifestações públicas e moções que pressionam politicamente a Administração. Em casos de vício estrutural, sua atuação tem peso institucional.
+Refutação. Parcialmente correto na forma, mas incorreto no efeito prático. O CONADE pode emitir recomendações, manifestações públicas e moções dirigidas à Administração. Em casos de vício estrutural, sua manifestação registra o problema no plano da política pública.
 
 ### 14.5. "O Disque 100 é canal de denúncia, não decide casos"
 
-Refutação. Correto na forma. Mas o registro e o acompanhamento da denúncia geram trilha probatória e podem desencadear atuação do MDHC, da SNDPP e de outros órgãos. Função paralela de pressão institucional.
+Refutação. Correto na forma. O registro e o acompanhamento da denúncia geram trilha probatória e podem desencadear atuação do MDHC, da SNDPP e de outros órgãos. A função é paralela e institucional.
 
 ### 14.6. "O recurso ao CRPS exclui demais frentes"
 
-Refutação. Falso. Os meios são autônomos. O recurso ao CRPS impugna a decisão administrativa por nulidade. A IEA é autotutela. Os canais externos são pressão institucional. As três frentes são compatíveis e cumulativas.
+Refutação. Falso. Os meios são autônomos. O recurso ao CRPS impugna a decisão administrativa por nulidade. A IEA é autotutela. Os canais externos levam a irregularidade a órgãos de controle. As três frentes são compatíveis e cumulativas.
 
-## 15. Doutrina
-
-Maria Sylvia Zanella Di Pietro. Direito Administrativo. Detalha a AGU, a Defensoria e os órgãos de controle.
-
-Pedro Lenza. Direito Constitucional. Funções institucionais da AGU e da Defensoria.
-
-Frederico Amado. Direito Previdenciário. Detalha a estrutura da PFE-INSS.
-
-Hugo Goes. Manual de Direito Previdenciário. Detalha canais de defesa do segurado.
-
-Marco Aurélio Serau Junior. Direito Previdenciário. Aprofunda a tutela coletiva e a Defensoria.
-
-Mariana Loja Cintra. LGPD aplicada à Administração Pública.
-
-Ricardo Maffeis Martins. LGPD na Administração Pública.
-
-Roberto Ceolin. LGPD e Setor Público.
-
-Bruno Bioni. LGPD aplicada.
-
-Cláudio Lopes. Direito da pessoa com deficiência.
-
-## 16. Fontes oficiais
+## 15. Fontes oficiais
 
 Portal AGU (https://www.gov.br/agu/).
 

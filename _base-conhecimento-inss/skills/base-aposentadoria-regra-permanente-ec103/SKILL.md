@@ -1,117 +1,44 @@
 ---
 name: base-aposentadoria-regra-permanente-ec103
-description: "Regra permanente de aposentadoria por idade e tempo de contribuição na EC 103/2019, sob ótica exclusiva do segurado. Use SEMPRE que mencionar regra permanente EC 103, regra definitiva EC 103, art. 19 EC 103, aposentadoria idade urbana pós-reforma, aposentadoria pós 13/11/2019, novo segurado após a reforma, primeiro emprego após 2019, carência 180 aposentadoria idade, idade mínima 62 65 permanente, 15 anos tempo contribuição mulher, 20 anos tempo contribuição homem, art. 201 CF §7º pós-EC 103, dependência da regra permanente vs transição, RMI regra permanente, cláusula pétrea direito previdenciário, rejeição de interpretação restritiva INSS, aplicação para novos filiados, filiação após promulgação, carência mínima 180 RGPS, MP 905/2019 e sua rejeição, indisponibilidade de direitos previdenciários. Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-transicao-ec103, base-calculo-rmi-ec103, precedentes-previdenciarios e revisao-peticao."
+description: "Regra permanente de aposentadoria programada da EC 103/2019, sob a ótica do segurado. Use SEMPRE que mencionar regra permanente EC 103, regra definitiva EC 103, art. 19 EC 103, aposentadoria programada, aposentadoria idade urbana pós-reforma, novo segurado após a reforma, filiação após 13/11/2019, primeiro emprego após 2019, idade mínima 62 65 permanente, 15 anos tempo contribuição mulher, 20 anos tempo contribuição homem, art. 201 §7º CF pós-EC 103, carência 180, RMI regra permanente, divisor mínimo 108, descarte art. 26 §6º. Aciona peticao-previdenciaria. Cruza com base-aposentadoria-transicao-ec103, base-calculo-rmi-ec103, aposentadoria-idade-hibrida e precedentes-previdenciarios."
 ---
 
-# Regra Permanente da EC 103/2019 (Aposentadoria)
+# Regra Permanente da EC 103/2019 (Aposentadoria Programada)
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Aborda a regra permanente da aposentadoria na EC 103/2019, aplicável a novos filiados ao RGPS a partir de 14 de novembro de 2019 e aos segurados sem direito adquirido ou sem porta de transição mais vantajosa. O objetivo único é assegurar a concessão conforme a regra mais favorável ao segurado.
+Aposentadoria do art. 19 da EC 103 para quem se filiou ao RGPS a partir de 14/11/2019. Quem era filiado até 13/11/2019 dispõe das transições (arts. 15 a 18 e 20) e do direito adquirido; para ele a via residual por idade é o art. 18, e não o art. 19. Cenários e refutação em `references/`.
 
-## Marco normativo central
+## Requisitos
 
-EC 103/2019, art. 19. Estabelece regra permanente. Idade mínima de 65 anos (homem) e 62 anos (mulher). Tempo mínimo de contribuição de 20 anos (homem) e 15 anos (mulher). Carência mantida em 180 contribuições.
+- Idade: 65 anos (H) e 62 (M) (CF, art. 201, §7º, I; EC 103, art. 19, caput).
+- Tempo de contribuição: 20 anos (H) e 15 (M) (art. 19, caput).
+- Carência: 180 contribuições (Lei 8.213/91, art. 25, II).
+- Trabalhador rural e segurado especial: 60 anos (H) e 55 (M), com 15 anos de atividade rural (CF, art. 201, §7º, II; Lei 8.213/91, art. 48, §§1º e 2º). Híbrida: art. 48, §3º (`aposentadoria-idade-hibrida`).
 
-Constituição Federal, art. 201, §7º, com redação da EC 103/2019. Fixou as regras constitucionais da aposentadoria do RGPS após a reforma.
+## Cálculo
 
-Lei 8.213/91, art. 48. Idade rural mantida em 60 anos (homem) e 55 anos (mulher), com exigência de 15 anos de atividade rural.
+- Média de 100% dos salários de contribuição desde 07/1994 ou desde o início das contribuições (EC 103, art. 26, caput), limitada ao teto (§1º).
+- RMI: 60% da média + 2% por ano acima de 20 anos (H) ou 15 (M) (art. 26, §§2º e 5º). Sem fator previdenciário.
+- Exclusão de contribuições que reduzam a média, mantido o tempo mínimo; o tempo excluído não serve para acréscimo nem para outro regime (art. 26, §6º).
+- Divisor mínimo de 108 meses: apenas para quem se filiou até julho de 1994 (Lei 8.213/91, art. 135-A, incluído pela Lei 14.331/2022). Não alcança o filiado após a reforma.
 
-Lei 8.213/91, art. 25, II. Carência de 180 contribuições para aposentadoria por idade.
+Detalhe em `base-calculo-rmi-ec103`.
 
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+## Estratégia
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
-
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
-
-## Dois ramos da regra permanente
-
-Primeiro ramo. Segurados urbanos que ingressaram no RGPS a partir de 14 de novembro de 2019, sem porta de transição. Aplica-se a regra permanente do art. 19 da EC 103. A carência é de 180 contribuições (art. 25, II, da Lei 8.213/91).
-
-Segundo ramo. Segurados filiados ao RGPS antes da reforma, mas para os quais nenhuma regra de transição é mais vantajosa. Para eles, a aposentadoria por idade segue a transição do art. 18 da EC 103 (65 anos, homem; 62 anos, mulher, desde 2023; 15 anos de contribuição para ambos), e não o art. 4º, que trata do servidor público federal (auditoria 03/10/2026).
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado que teve primeiro recolhimento em 2020, aos 45 anos. Atingirá aposentadoria permanente aos 65 anos, com 20 anos de contribuição, cumprindo carência de 180.
-
-Segundo, segurada com primeira contribuição em 2005 e filiação contínua após 2019. Aos 62 anos e com 15 anos de contribuição, elegível pela regra permanente. Se tiver 30 anos completos, avaliar comparativo com transições por tempo.
-
-Terceiro, segurado filiado antes da reforma, com idade avançada mas poucos anos de contribuição, sem se enquadrar em transição por tempo. A transição por idade do art. 18 da EC 103, aos 65 anos e com 15 anos de contribuição (homem), pode ser a única via, com carência cumprida (auditoria 03/10/2026).
-
-Quarto, segurado rural com 60 anos (homem) ou 55 anos (mulher) e 15 anos de atividade rural. Regra permanente rural do art. 48 da Lei 8.213/91, inalterada pela reforma.
-
-Quinto, segurada dona de casa na condição de facultativa de baixa renda. Art. 201, §13, da CF e arts. 21 §2º II e 21 §3º da Lei 8.212/91. Cumpre requisitos da regra permanente urbana com alíquota diferenciada.
-
-## Regra e estratégia
-
-A regra geral é de que a regra permanente é de último acesso. O planejamento pró-segurado sempre começa pelo direito adquirido, depois percorre as portas de transição dos arts. 15, 16, 17, 18 e 20 da EC 103; para quem era filiado até 13/11/2019, a via residual por idade é o art. 18, com 15 anos de contribuição, e não a regra permanente do art. 19 (auditoria 03/10/2026).
-
-Para segurados com filiação após a reforma, a regra permanente é a única via por tempo e idade (além da aposentadoria por incapacidade permanente e da aposentadoria especial). Contudo, o planejamento pode otimizar contribuições para maximizar a RMI, nos termos do art. 26 da EC 103 (acionar `base-calculo-rmi-ec103`).
-
-O art. 26, §6º, da EC 103 traz regra pró-segurado: podem ser EXCLUÍDAS, a pedido, as contribuições que reduzam o valor do benefício, desde que mantido o tempo mínimo. O divisor mínimo de 108 contribuições vem do art. 135-A da Lei 8.213/91 (Lei 14.331/2022). Pós-EC 103 a média usa 100% dos salários desde 07/1994 — não existe mais o descarte automático dos 20% menores (regra do art. 3º da Lei 9.876/99, aplicável só a direito adquirido pré-reforma).
+1. Confirmar a data de filiação. Filiado até 13/11/2019: aplicar `base-aposentadoria-transicao-ec103` e `base-aposentadoria-direito-adquirido`.
+2. Acertar o CNIS antes do requerimento (`base-cnis-acerto-indicadores`).
+3. Avaliar indenização ou complementação de contribuições (`indenizacao-contribuicoes-atraso`, `contribuicoes-complementacao-ec103`).
+4. Simular a RMI com e sem anos adicionais de contribuição e com a exclusão do §6º.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao comparar com transições, acione `base-aposentadoria-transicao-ec103`.
-Ao calcular RMI, acione `base-calculo-rmi-ec103`.
-Ao verificar direito adquirido, acione `base-aposentadoria-direito-adquirido`.
-Ao buscar precedentes, acione `precedentes-previdenciarios`.
-Ao revisar minuta, acione `revisao-peticao`.
-
-## Alertas
-
-Primeiro, a regra permanente não exige pontos nem pedágio, apenas tempo mínimo e idade mínima. Contudo, a RMI calculada pelo art. 26 da EC 103 (60% + 2% por ano excedente) tende a ser inferior ao pedágio de 100% para perfis com alta média salarial.
-
-Segundo, a regra permanente rural permanece mais favorável que a urbana, com idades reduzidas de 60 anos (homem) e 55 anos (mulher). Essa diferença não foi alterada pela EC 103, conforme art. 201, §7º, II, da CF.
-
-Terceiro, atenção ao acerto de CNIS antes de requerer benefício pela regra permanente. Períodos faltantes ou pendências podem inviabilizar o cômputo da carência. Acionar `cnis-acerto-indicadores`.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a indisponibilidade dos direitos previdenciários e o dever de o INSS aplicar a regra mais favorável, mesmo quando o segurado recorre à regra permanente.
-
-Hugo Goes, em Manual, sistematiza a regra permanente do art. 19 e destaca a necessidade de comparativo com as transições.
-
-Fábio Zambitte Ibrahim, em Curso, analisa o impacto da reforma sobre novos filiados e defende o reconhecimento da regra permanente como porta residual.
-
-Wladimir Novaes Martinez enfrenta a mudança de paradigma e sustenta o equilíbrio entre idade e tempo mínimo na nova sistemática.
-
-O IBDP sustenta institucionalmente o direito do segurado ao comparativo obrigatório antes de concessão sob regra permanente.
-
-## O que NÃO está nesta skill
-
-Não estão aqui o direito adquirido pré-reforma, objeto de `base-aposentadoria-direito-adquirido`. Não estão aqui as regras de transição, objeto de `base-aposentadoria-transicao-ec103`. Não está aqui o cálculo da RMI em detalhe, objeto de `base-calculo-rmi-ec103`. Não está aqui a aposentadoria especial, objeto de `base-aposentadoria-especial-transicao-ec103`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por idade urbana e programada" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+- Peça: `peticao-previdenciaria`, bloco "Aposentadoria por idade urbana e programada" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`.
+- Qualidade de segurado: `periodo-graca-qualidade-segurado`. Rural: `segurado-especial-rural`. Facultativo baixa renda: `base-facultativo-baixa-renda`.
+- Fungibilidade: `base-fungibilidade-previdenciaria`. Portarias: `base-portarias-dpmf-inss-hub`.
+- Especial: `base-aposentadoria-especial-transicao-ec103`. Revisão de minuta: `revisao-peticao`.

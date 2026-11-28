@@ -7,145 +7,62 @@ description: "Data de Início da Deficiência (DID) retroativa na aposentadoria 
 
 ## Escopo
 
-Skill pró-segurado sobre fixação retroativa da Data de Início da Deficiência, valor probatório e estratégia para maximizar o tempo de PCD por grau.
+Fixação da data provável de início da deficiência (DID) em data anterior à DER, prova admitida e uso da DID e das variações de grau para ampliar o tempo de contribuição na condição de pessoa com deficiência. Formação da documentação pretérita em `formacao-documentacao-did-pcd`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 201 §1º.
+- CF, art. 201, §1º, I.
+- LC 142/2013, art. 6º: §1º, a deficiência anterior à vigência da LC deve ser certificada, inclusive quanto ao grau, "sendo obrigatória a fixação da data provável do início da deficiência"; §2º, o tempo anterior à LC não se prova por prova exclusivamente testemunhal.
+- Decreto 3.048/1999, art. 70-D (redação do Decreto 10.410/2020): a avaliação deve "fixar a data provável do início da deficiência e o seu grau" (I) e "identificar a ocorrência de variação no grau de deficiência e indicar os respectivos períodos em cada grau" (II); §1º, documentos que subsidiem a avaliação, vedada a prova exclusivamente testemunhal.
+- Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014 (IF-BrA, avaliação médica e funcional).
+- Lei 13.146/2015, art. 2º.
 
-LC 142/2013.
+## Regras de fixação
 
-Decreto 8.145/2013.
+1. A DID e cada mudança de grau são objeto obrigatório da avaliação (Decreto 3.048/1999, art. 70-D, I e II). Laudo que fixa a DID na DER sem examinar a prova pretérita descumpre esse dever.
+2. Prova documental é exigida para o período anterior; o testemunho complementa, mas não basta sozinho (LC 142, art. 6º, §2º).
+3. Documentos úteis: prontuários, ASO e PCMSO, exames datados, receitas, atestados, relatórios escolares, laudos de acidente, fotografias, declarações do empregador sobre adaptações.
+4. Doença degenerativa ou progressiva documentada sustenta a continuidade entre registros; intervalos sem tratamento não interrompem por si a deficiência.
+5. Períodos com graus diferentes são convertidos proporcionalmente pelos multiplicadores do art. 70-E do Decreto 3.048/1999 (`base-pcd-conversao-tempo-especial-pcd`).
+6. Na aposentadoria por idade, os 15 anos de contribuição na condição de pessoa com deficiência dependem da DID (Decreto 3.048/1999, art. 70-C, §1º).
 
-Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
+## Cenários
 
-IN 128/2022.
+- **Diagnóstico antigo com prontuário.** DID na origem documentada.
+- **Agravamento gradual.** Uma data por mudança de grau, cada uma com documento contemporâneo.
+- **Sem prontuário.** Pedido de segunda via à unidade de saúde e ao empregador; relatório do médico assistente que reconstrua a evolução com base em exames antigos.
+- **Tratamento intermitente.** Exames e receitas espaçados, com testemunho complementar.
+- **Sequela de acidente.** DID na consolidação documentada.
+- **Deficiência congênita.** DID no nascimento ou no primeiro registro.
 
-## Marco jurisprudencial
+Sem enquadramento retroativo: ausência de qualquer documento anterior (DID tende à data do primeiro documento) e diagnóstico recente sem repercussão funcional anterior.
 
-### Tema 173 TNU
+## Refutação a argumentos típicos do INSS
 
-Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
+- **DID apenas na DER.** LC 142, art. 6º, §1º, e Decreto 3.048/1999, art. 70-D, I, obrigam a fixar a data provável de início.
+- **Grau único para todo o período.** O art. 70-D, II, manda identificar a variação de grau e os períodos.
+- **Testemunho sem valor.** Vedada apenas a prova exclusivamente testemunhal; somado a documento, o testemunho integra a prova.
+- **Tratamento intermitente afasta a deficiência.** Condição crônica documentada mantém o impedimento entre os registros.
+- **Avaliação sem serviço social.** O IF-BrA exige avaliação médica e funcional; a ausência da parte funcional é vício.
+- **Perícia retrospectiva inviável.** O próprio art. 70-D pressupõe exame retrospectivo da documentação.
 
-Fonte oficial em https://www.cjf.jus.br
+## Jurisprudência
 
-### Repercussão social e funcional na avaliação (IF-BrA)
+O Tema 173 TNU, antes citado, não trata da LC 142 e foi retirado. As Súmulas 149 e 577 STJ tratam de tempo rural e servem apenas por analogia; a regra própria é a LC 142, art. 6º, §2º. Precedente específico sobre DID retroativa na LC 142: Não localizado.
 
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
+## Integração
 
-### Súmula 149 STJ
+IF-BrA em `base-pcd-if-bra-metodologia`; conversão em `base-pcd-conversao-tempo-especial-pcd`; documentação em `formacao-documentacao-did-pcd`; aposentadoria em `aposentadoria-deficiencia`; portarias em `base-portarias-dpmf-inss-hub`.
 
-Prova exclusivamente testemunhal não vale, mas conta como complemento.
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 577 STJ
-
-Início razoável de prova material.
-
-## Fixação retroativa
-
-Primeiro, DID pode ser anterior à DER.
-
-Segundo, prova documental e testemunhal admitida.
-
-Terceiro, prontuário, ASO, exames, fotos, declarações.
-
-Quarto, perícia retrospectiva é direito.
-
-## Aplicação pró-segurado
-
-Primeiro, retroatividade é regra quando há prova.
-
-Segundo, agravamento progressivo permite alteração de grau.
-
-Terceiro, conversão de tempo se ajusta ao grau no período.
-
-Quarto, INSS tem ônus de afastar a presunção.
-
-## Presunção de continuidade
-
-Primeiro, doença degenerativa presume-se contínua e progressiva.
-
-Segundo, ausência de tratamento não afasta a deficiência.
-
-Terceiro, intervalos de melhora não interrompem.
-
-Quarto, prova testemunhal complementa prova material.
-
-## Cenários pró-segurado
-
-Cenário A, segurado com diagnóstico antigo. Documentação pretérita robusta. DID fixada na origem.
-
-Cenário B, segurada com agravamento gradual. Múltiplas DIDs por grau.
-
-Cenário C, segurado sem prontuário. Roteiro ao médico assistente para reconstrução.
-
-Cenário D, segurada com tratamento intermitente. Prova testemunhal e fotos.
-
-## Alertas
-
-Primeiro, DID na DER é regra geral, mas não única.
-
-Segundo, perícia que ignora prova pretérita é viciada.
-
-Terceiro, ausência de assistente social na perícia retroativa é vício.
-
-Quarto, agravamento documentado permite reescalonamento.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Jane Berwanger.
-
-Frederico Amado.
-
-Daniel Pulino.
-
-Marco Aurélio Serau Junior.
-
-IBDP.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para metodologia IF-BrA, acionar `base-pcd-if-bra-metodologia`.
-Para conversão de tempo, acionar `base-pcd-conversao-tempo-especial-pcd`.
-Para formação de documentação, acionar `formacao-documentacao-did-pcd`.
-Para detalhes operacionais, acionar `aposentadoria-deficiencia`.
-
-## O que NÃO está nesta skill
-
-Metodologia IF-BrA em `base-pcd-if-bra-metodologia`. Conversão em `base-pcd-conversao-tempo-especial-pcd`. Formação em `formacao-documentacao-did-pcd`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015, com fato concreto e documento por ID, e cobrar os quatro incisos do art. 2º, §1º; a prova da barreira no passado também sustenta a DID.
 
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria da pessoa com deficiência" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## MCPs da casa
+
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+

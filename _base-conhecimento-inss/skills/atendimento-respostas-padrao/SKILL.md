@@ -15,7 +15,7 @@ Quem usa. Amanda no dia a dia (integrada ao semáforo da `processos-amanda-admin
 
 Antes de qualquer resposta padrão, verificar a lista. Presente UM gatilho, a consulta NÃO recebe template. Vai para o Paulo pelo semáforo (VERMELHO), com registro no body da tarefa.
 
-Cliente insatisfeito, alterado, mencionando desistência, troca de advogado, OAB ou reclamação. Prazo processual ou administrativo correndo relacionado à consulta. Honorário em qualquer discussão (valor, desconto, parcelamento, questionamento). Pergunta sobre valores de acordo, RPV, precatório ou atrasados (expectativa de valor só o advogado administra). Suspeita de fraude, documento estranho, dado que não fecha. Notícia de óbito, prisão ou incapacidade civil do cliente. Contato de outro advogado, de órgão público, de perito ou de imprensa. Pergunta cuja resposta verdadeira seria admitir erro do escritório. Terceiro pedindo informação do processo de outra pessoa (LGPD, só o titular ou procurador).
+Cliente insatisfeito, alterado, mencionando desistência, troca de advogado, OAB ou reclamação. Prazo processual ou administrativo correndo relacionado à consulta. Honorário em qualquer discussão (valor, desconto, parcelamento, questionamento). Pergunta sobre valores de acordo, RPV, precatório ou atrasados (expectativa de valor apenas o advogado administra). Suspeita de fraude, documento estranho, dado que não fecha. Notícia de óbito, prisão ou incapacidade civil do cliente. Contato de outro advogado, de órgão público, de perito ou de imprensa. Pergunta cuja resposta verdadeira seria admitir erro do escritório. Terceiro pedindo informação do processo de outra pessoa (LGPD, apenas o titular ou procurador).
 
 Em dúvida se é gatilho, é gatilho.
 
@@ -31,7 +31,7 @@ Conferir o andamento REAL antes de responder. Núcleo, informar a última movime
 
 ### "Quando sai meu benefício?" / "Quanto tempo demora?"
 
-Núcleo, explicar que o prazo não depende do escritório, informar o prazo NORMATIVO quando existir (45 dias do art. 41-A, § 5º, da Lei 8.213/91 para o primeiro pagamento após concessão, prazos do acordo do RE 1.171.152 por espécie quando aplicável) e o que o escritório faz quando o prazo estoura (cobrança, MS por mora). Jamais chutar data.
+Núcleo, explicar que o prazo não depende do escritório, informar o prazo NORMATIVO quando existir (45 dias do art. 41-A, § 5º, da Lei 8.213/91 para o primeiro pagamento após concessão, prazos do acordo do RE 1.171.152 por espécie quando aplicável) e o que o escritório faz quando o prazo estoura (cobrança, MS por mora). Nunca estimar data sem base.
 
 ### "O INSS me mandou uma carta de exigência, e agora?"
 
@@ -49,11 +49,11 @@ Gatilho VERMELHO por definição (indeferimento sempre escala). Núcleo da prime
 
 Conferir o checklist do benefício (`base-documentos-comprobatorios-in128` e a carta de documentos do cliente). Núcleo, lista curta e específica do que falta DAQUELE cliente, com a forma de envio.
 
-### Pedido de documentos ao cliente (Onda 164, 02/10/2026)
+### Pedido de documentos ao cliente
 
 O titular comparou duas listas de documentos para o mesmo caso de pensão por morte. A gerada pelo plugin falava com o juiz, chamava a cliente de "autora", citava artigo da IN 128/2022, número de benefício e de requerimento, tinha treze itens e expunha à cliente a suspeita sobre a data de um atestado e o histórico de tentativas de suicídio. A gerada pelo ChatGPT falava com a cliente pelo nome, explicava em uma frase o que precisava ser provado e trazia sete itens com o lugar onde obter cada documento. O titular aprovou a segunda forma, e ela é o padrão.
 
-O pedido de documentos ao cliente segue sete regras. Primeira, fala com a pessoa pelo nome, em "você" ou "a senhora", com saudação curta. Segunda, diz em uma ou duas frases o que precisa ser provado e por quê, sem artigo de lei, sem número de benefício e sem número de requerimento. Terceira, diz qual é a prioridade, quantos documentos e de que período. Quarta, traz no máximo sete itens numerados, cada um com o documento, onde se consegue e o período exigido. Quinta, só entra o que o cliente consegue obter, e o que o escritório obtém sozinho, como a cópia do processo administrativo, as comunicações do Meu INSS e o CNIS, fica na anotação interna da tarefa. Sexta, nenhuma estratégia, suspeita ou divergência é explicada ao cliente, e o documento é pedido sem o motivo interno. Sétima, nenhum dado sensível desnecessário aparece na mensagem, e o pedido de documentos médicos usa termos neutros, como relatórios e receitas médicas de determinado período.
+O pedido de documentos ao cliente segue sete regras. Primeira, fala com a pessoa pelo nome, em "você" ou "a senhora", com saudação curta. Segunda, diz em uma ou duas frases o que precisa ser provado e por quê, sem artigo de lei, sem número de benefício e sem número de requerimento. Terceira, diz qual é a prioridade, quantos documentos e de que período. Quarta, traz no máximo sete itens numerados, cada um com o documento, onde se consegue e o período exigido. Quinta, apenas entra o que o cliente consegue obter, e o que o escritório obtém sozinho, como a cópia do processo administrativo, as comunicações do Meu INSS e o CNIS, fica na anotação interna da tarefa. Sexta, nenhuma estratégia, suspeita ou divergência é explicada ao cliente, e o documento é pedido sem o motivo interno. Sétima, nenhum dado sensível desnecessário aparece na mensagem, e o pedido de documentos médicos usa termos neutros, como relatórios e receitas médicas de determinado período.
 
 A linguagem é a do cliente. Escreve-se "morava com sua mãe" e "ajudava no seu sustento", e não "residência comum" e "dependência econômica". Os dois-pontos antes da lista são admitidos.
 
@@ -83,7 +83,7 @@ Núcleo, alertar para golpe, o INSS não liga pedindo dados, senha ou pagamento,
 
 ### "Posso trabalhar enquanto espero?" / "Posso fazer bico?"
 
-NÃO é template. A resposta depende do benefício (em incapacidade pode derrubar o caso, em aposentadoria comum é indiferente, em auxílio-acidente não prejudica). AMARELO sempre, Amanda registra a pergunta e o Paulo responde.
+NÃO é template. A resposta depende do benefício (em incapacidade pode prejudicar o pedido, em aposentadoria comum é indiferente, em auxílio-acidente não prejudica). AMARELO sempre, Amanda registra a pergunta e o Paulo responde.
 
 ### "Chegou um valor na minha conta" / "Caiu um pagamento"
 
@@ -91,11 +91,11 @@ Pergunta sobre valores, VERMELHO por regra. Primeira resposta apenas, "vamos con
 
 ### Cliente sem resposta há dias cobra retorno
 
-Núcleo, responder NO MESMO DIA ainda que sem novidade, "sem movimentação nova, o processo está em [fase], nós avisamos assim que mudar". Silêncio é o maior gerador de insatisfação, e insatisfação é gatilho VERMELHO. Registrar a cobrança no body.
+Núcleo, responder NO MESMO DIA ainda que sem novidade, "sem movimentação nova, o processo está em [fase], nós avisamos assim que mudar". O silêncio gera insatisfação, e insatisfação é gatilho VERMELHO. Registrar a cobrança no body.
 
 ## Forma das mensagens
 
-Linguagem simples, frases curtas, sem juridiquês, tratamento respeitoso (senhor, senhora, o nome da pessoa). Uma informação por mensagem, no máximo duas. Sem promessa, sem adjetivo de expectativa ("ótima notícia" só quando a notícia É ótima e confirmada). Dois-pontos admitidos antes de lista. Pedido de documentos segue o modelo da seção própria acima. Toda mensagem enviada gera registro `(A):` no body da tarefa do cliente.
+Linguagem simples, frases curtas, sem juridiquês, tratamento respeitoso (senhor, senhora, o nome da pessoa). Uma informação por mensagem, no máximo duas. Sem promessa, sem adjetivo de expectativa ("boa notícia" apenas quando a notícia for confirmada). Dois-pontos admitidos antes de lista. Pedido de documentos segue o modelo da seção própria acima. Toda mensagem enviada gera registro `(A):` no body da tarefa do cliente.
 
 ## Manutenção
 
@@ -103,24 +103,12 @@ Consulta nova que se repetir três vezes ganha entrada nesta skill, com o núcle
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
 `processos-amanda-administrativo` para o semáforo e o quadro de delegação. `triagem` para a fila diária. `inss-canais-atendimento` para orientar canal e protocolo. `base-meu-inss-pat-gerid-fluxo` para conferir andamento antes de responder. `orientacao-cliente-pericia` quando a consulta for sobre perícia agendada. NÃO substitui parecer jurídico, peça ou orientação de estratégia, que são do advogado.
 
-## Origem no atendimento transcrito (Onda 125)
+## Origem no atendimento transcrito
 
 Quando a resposta ao cliente nascer de atendimento gravado, a `transcricao-atendimento` roda antes e devolve o que foi efetivamente orientado e solicitado. A resposta padrão se constrói sobre esse registro, e não sobre a memória da conversa.

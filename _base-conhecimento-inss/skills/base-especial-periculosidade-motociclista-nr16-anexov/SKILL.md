@@ -3,66 +3,39 @@ name: base-especial-periculosidade-motociclista-nr16-anexov
 description: "Skill base sobre periculosidade do motociclista profissional como tempo especial, à luz da NR-16 Anexo V, art. 193 §4º CLT, Portaria MTE 2.021/2025 e doutrina previdenciária pró-segurado. Use SEMPRE que mencionar periculosidade motociclista, motoboy, motociclista profissional, entregador de moto, mototaxista, NR-16 Anexo V, art. 193 §4º CLT, Lei 12.997/2014, Portaria MTE 2.021/2025, adicional de periculosidade, tempo especial motociclista, periculosidade extramuros, atividade externa, perfil profissiográfico motociclista, PPP motoboy, LTCAT motociclista, EPI motociclista, capacete, banco com aquecedor, perigo de via pública, exposição a risco. Hub temático para o reconhecimento de tempo especial pela periculosidade do motociclista profissional, com defesa pró-segurado contra recusas administrativas e teses restritivas. NÃO use para periculosidade por eletricidade (skill base-especial-eletricidade-periculosidade) nem agentes nocivos físicos isolados. Cruza com auditoria-ppp e peticao-previdenciaria."
 ---
 
-# Periculosidade Motociclista NR-16 Anexo V e Portaria MTE 2.021/2025
+# Periculosidade do motociclista (NR-16, Anexo V)
 
-## 1. Quando acionar esta skill
+## Quando acionar
 
-Acione SEMPRE que o caso envolver reconhecimento de tempo especial pela periculosidade da atividade profissional em motocicleta. A skill consolida fundamentos pró-segurado para auditoria de PPP, defesa em fase administrativa e judicial, e cotejo com a NR-16 Anexo V e a Portaria MTE 2.021/2025.
+Pedido de tempo especial de motoboy, mototaxista, entregador ou empregado que usa motocicleta no serviço. Fundamentos e cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## 2. Marco normativo
+## Marco normativo
 
-A periculosidade do motociclista decorre do art. 193 §4º CLT, incluído pela Lei 12.997/2014. A NR-16 Anexo V regulamenta as atividades perigosas em motocicleta. A Portaria MTE 2.021/2025 atualiza a regulamentação, especificando hipóteses e excluindo algumas, com adoção de critérios técnicos rigorosos.
+- **CLT, art. 193, § 4º**, incluído pela Lei 12.997/2014: "São também consideradas perigosas as atividades de trabalhador em motocicleta."
+- **NR-16, Anexo 5**, aprovado pela Portaria MTE 1.565/2014, e **novo Anexo V**, aprovado pela Portaria MTE 2.021, de 03/12/2025 (Atividades Perigosas em Motocicletas). O Anexo exclui situações como o uso eventual ou o deslocamento apenas entre residência e trabalho; conferir o texto na fonte antes de citar.
+- **Lei 8.213/91, arts. 57 e 58; Decreto 3.048/99, arts. 64 e 65.** O Anexo IV não lista a periculosidade do motociclista.
+- **EC 103/2019.** Desde 14/11/2019, o art. 201, § 1º, II, da CF menciona apenas agentes químicos, físicos e biológicos.
 
-A Lei 8.213/91 nos arts. 57 e 58 e o Decreto 3.048/99 admitem o tempo especial por periculosidade quando a categoria está reconhecida em norma regulamentadora vigente. Fora do rol do Anexo IV do Decreto 3.048/99, o pedido se ancora no art. 193, §4º, da CLT e na NR-16, Anexo V, com prova da exposição habitual e permanente ao risco (auditoria 03/10/2026, retirado o Tema 132 STJ, que trata de ISS bancário).
+## Posição atual (contrária ao segurado)
 
-## 3. Eixos centrais pró-segurado
+1. A TNU negou o enquadramento fundado apenas no art. 193, § 4º, da CLT e no Anexo 5 da NR-16, por autonomia entre as legislações trabalhista e previdenciária e pela vedação ao enquadramento por categoria ou presunção de risco após a Lei 9.032/95 (PUIL 1008245-93.2021.4.01.3811, Rel. Juíza Federal Marina Vasques Duarte, disponibilizado em 25/11/2026).
+2. O STF negou a especialidade do vigilante por periculosidade (Tema 1209, RE 1.368.225, julgado em 18/02/2026). O Tema 1031 do STJ, invocado antes por analogia, está superado.
+3. Até 28/04/1995, não há código específico para motociclista. A analogia com motorista de ônibus ou caminhão (código 2.4.4 do Decreto 53.831/64) depende de prova da equivalência pela profissiografia (Tema 198 da TNU) e é frágil.
 
-A NR-16 Anexo V reconhece a atividade do motociclista como perigosa. A redação atualizada pela Portaria MTE 2.021/2025 mantém o reconhecimento de motoristas em motocicleta para deslocamentos profissionais, exceto em situações específicas como mensagens internas e deslocamento eventual.
+## Caminhos residuais
 
-O argumento do INSS de que motociclista não consta do rol do Anexo IV do Decreto 3.048/99 não exclui o reconhecimento. O art. 193, §4º, da CLT e a NR-16, Anexo V, qualificam a atividade como perigosa (auditoria 03/10/2026).
+- **Agente nocivo.** Ruído do motor e vibração de corpo inteiro medidos (`base-especial-ruido`, `base-especial-vibracao`); calor e radiação não ionizante conforme o período.
+- **Laudo técnico da periculosidade.** O PPP que registra o fator de risco com base em LTCAT deve ser examinado pela Turma Recursal; a omissão gera nulidade (PUIL 0000807-12.2021.4.03.6322, Rel. Juiz Federal Wagmar Roberto Silva, disponibilizado em 10/11/2026, Questão de Ordem 47 da TNU).
+- **Súmula 198 do TFR.** Perícia judicial que constate a nocividade, com o ônus argumentativo de superar a posição da TNU.
 
-A habitualidade e a permanência decorrem da atividade profissional contínua, conforme jurisprudência do TRF4, porque a exposição ao risco da via pública é indissociável da prestação do serviço (art. 65 do Decreto 3.048/99). A Súmula 49 TNU não ampara esse ponto, pois apenas dispensa a permanência antes de 29/4/1995 (auditoria 03/10/2026).
+## Prova
 
-A exposição ao risco da via pública é caracterizada pela exposição constante a acidentes, ataques, intempéries e deslocamento contínuo.
-
-## 4. Fragilidades adversárias mais comuns
-
-O INSS argumenta que motociclista não consta literalmente no Anexo IV do Decreto 3.048/99. Refute com o art. 193, §4º, da CLT e a NR-16, Anexo V (auditoria 03/10/2026).
-
-O INSS exige LTCAT específico para periculosidade. Refute com PPP, NR-16 Anexo V e arts. 281 e 282 IN 128/2022.
-
-O INSS limita o reconhecimento ao período pós-Lei 12.997/2014. Refute com a Súmula 198 TFR e Decreto 53.831/64 quanto à analogia com transporte.
-
-O INSS desconsidera a Portaria MTE 2.021/2025 alegando que apenas a Lei trabalhista é vinculante. Refute com a integração entre as normas regulamentadoras e o regime previdenciário.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em PPP com campo 15.5 indicando periculosidade, LTCAT subsidiário, declaração da empresa, e prova testemunhal sobre rotina de deslocamento. Combinar com as skills `auditoria-ppp`, `base-especial-eletricidade-periculosidade` e `peticao-previdenciaria`.
-
-## 6. Documentos essenciais
-
-PPP atualizado com campo 15.5 marcando periculosidade. CTPS com função de motociclista. Declaração da empresa sobre rotina de uso de moto. LTCAT mencionando exposição. CNIS com vínculo correspondente.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+PPP com o fator de risco e a descrição das rotas; LTCAT ou laudo de periculosidade; CTPS; holerites com adicional de periculosidade; testemunhas sobre a rotina; medições de ruído e vibração.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

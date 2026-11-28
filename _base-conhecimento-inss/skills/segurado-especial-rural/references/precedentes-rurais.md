@@ -1,92 +1,36 @@
-# Precedentes Vinculantes e Qualificados — Atividade Rural
+# Precedentes da Atividade Rural
 
-## Precedentes verificados e catalogados nesta skill
+Complementa `precedentes-previdenciarios` e o catálogo `base-precedentes-catalogo-vinculantes`. Tese literal no catálogo antes de citar.
 
-Esta referência complementa a skill `precedentes-previdenciarios` com precedentes específicos de atividade rural que foram verificados no estudo técnico de março/2026. Precedentes que já constam da base principal são indicados com [BASE].
+## STJ
 
----
+- Tema 297 (Súmula 149), adverso: a prova exclusivamente testemunhal não basta.
+- Tema 554: aplica-se a Súmula 149 ao boia-fria, mas a prova material de parte do período, complementada por testemunhas idôneas, basta.
+- Tema 629: a ausência de prova eficaz leva à extinção sem mérito e permite nova ação (REsp 1.352.721/SP, j. 16/12/2015).
+- Tema 638 (Súmula 577): reconhece-se tempo rural anterior ao documento mais antigo, com prova testemunhal convincente.
+- Tema 1007: o tempo rural anterior a 1991, remoto e descontínuo, conta para a carência da aposentadoria híbrida.
+- Tema 1115: o tamanho da propriedade, por si só, não descaracteriza o regime de economia familiar.
+- Tema 1360: o registro no Ministério do Trabalho pode ser suprido por outros meios para prorrogar o período de graça; a mera ausência de anotação na CTPS ou no CNIS não basta.
 
-## STJ — Temas Repetitivos
+## TNU
 
-### Tema 297/STJ [BASE]
-Tese adversa. A prova exclusivamente testemunhal não basta para comprovar a atividade rurícola (Súmula 149/STJ). O caminho do segurado é o início de prova material, e o art. 116 da IN 128 admite documentos além dos listados ("dentre outros") (auditoria 03/10/2026).
+- Tema 18: certidão do INCRA ou documento de propriedade em nome de integrante do grupo familiar é início de prova material.
+- Tema 219: conta o trabalho rural antes dos 12 anos, pelos mesmos meios de prova, com participação efetiva e indispensável; é vedada a negativa por fundamentação genérica (PUIL 5005824-38.2022.4.04.7111/RS, j. 18/11/2025).
+- Tema 327: documento do cônjuge ou companheiro qualificado como empregado rural é início de prova material para a segurada especial.
+- Tema 348: prorrogação do período de graça do segurado especial por inatividade involuntária (PEDILEF 0504229-18.2022.4.05.8400/RN).
+- PUIL 1001293-53.2020.4.01.3805/MG: a economia familiar inclui a produção para comercialização [NÃO CONFIRMADO; conferir no acervo da TNU].
 
-### Tema 554/STJ [BASE]
-Prova testemunhal pode estender período reconhecido por início de prova material, sem configurar prova exclusivamente testemunhal.
+## CRPS
 
-### Tema 629/STJ [BASE]
-Improcedência por ausência de prova material → extinção sem resolução do mérito → permite repropositura com novas provas.
-REsp 1.352.721/SP, Rel. Min. Napoleão Nunes Maia Filho, j. 16/12/2015, DJe 28/04/2016.
+- Enunciado 8 (Resolução CRPS/MPS 12/2025, DOU 08/09/2025), incisos I a IX: contagem recíproca com indenização (I); área explorada de até 4 módulos (II); trabalho urbano de outro membro (III); provas em nome do cônjuge (IV); idade mínima relativizada pela ACP 5017267-34.2013.4.04.7100 (V); autodeclaração ratificada (VI); documentos complementares (VII); Justificação Administrativa subsidiária (VIII); efeitos da JA restritos à pessoa (IX).
+- Enunciado 15 (DOU 27/07/2023): tempo especial do empregado rural (código 2.2.1 do Decreto 53.831/64), nos termos do SKILL.md.
 
-### Tema 638/STJ [BASE]
-Certidão de casamento ou óbito com profissão de lavrador do cônjuge ou genitor constitui início de prova material.
+## TRF4, perspectiva de gênero [NÃO CONFIRMADO]
 
----
+- ApCiv 5010839-54.2022.4.04.9999/SC: renda urbana de pequeno valor do cônjuge não descaracteriza a segurada.
+- ApCiv 5004512-59.2023.4.04.9999/SC (j. 10/09/2024, art. 942 do CPC): boia-fria; flexibilização da prova em nome da mulher.
 
-## TNU — Temas Representativos de Controvérsia
+## Outros [NÃO CONFIRMADO]
 
-### Tema 219/TNU [BASE]
-Trabalho rural antes dos 12 anos. (1) Mesmos meios de prova. (2) Exige participação efetiva e indispensabilidade (art. 11, §§1º e 6º). (3) Vedada negativa por fundamentação genérica.
-
-### Tema 327/TNU [BASE]
-Documentação em nome do cônjuge ou companheiro que o qualifica como empregado rural constitui início de prova material para concessão na condição de segurado especial.
-
-### Tema 348/TNU [BASE]
-Segurado especial tem direito à prorrogação do período de graça por inatividade involuntária, por analogia ao art. 15, §2º, da Lei 8.213/91.
-PEDILEF 0504229-18.2022.4.05.8400/RN.
-
----
-
-## TNU — PUILs (verificar se catalogados na base principal)
-
-### PUIL 1001293-53.2020.4.01.3805/MG [VERIFICADO — CATALOGADO]
-**Tese.** O reconhecimento do tempo rural em regime de economia familiar não se limita à subsistência, nem a determinado tipo de cultura, podendo incluir a produção para comercialização, desde que comprovada a atividade em condições de mútua dependência e colaboração, sem utilização de empregados permanentes.
-**Publicação.** D.E. 23/10/2025 (auditoria 03/10/2026).
-**Relevância.** Bloqueia o argumento do INSS de que notas fiscais de valor alto ou produção comercial descaracterizam o segurado especial. Alinhado ao art. 109, §1º, da IN 128/2022.
-
-### PUIL 5009034-30.2021.4.03.6119 [LOCALIZADO NO MCP TNU, A CONFERIR NA FONTE OFICIAL]
-**Tese.** Documentos em nome dos pais constituem início de prova material para os filhos do mesmo núcleo familiar, aplicando-se o Protocolo de Julgamento com Perspectiva de Gênero do CNJ.
-**Relevância.** Extensão do Tema 327/TNU (cônjuge) para a relação pais-filhos.
-**Ressalva.** Fonte da informação é publicação de Prof. Frederico Martins (EPREV/Instagram). Localizado no MCP TNU, a conferir na fonte oficial (auditoria 03/10/2026). A tese, contudo, já é consolidada na TNU pelo Tema 18 e pela Súmula 6/TNU, independentemente deste PUIL específico.
-
----
-
-## Enunciados do CRPS
-
-### Enunciado 8 (alterado pela Resolução CRPS/MPS 12/2025)
-Cômputo de labor rural antes dos 12 anos de idade, desde que comprovada participação efetiva. Na prática do CRPS, reconhecimento a partir de 7-8 anos com instrumentos ratificadores contemporâneos.
-
-### Enunciado 15 (alterado pela Resolução CRPS/MPS 30/2023)
-Enquadramento do empregado rural como atividade especial. Pré-25/07/91 pelo código 2.2.1 do Decreto 53.831/64 com recolhimento presumido. De 25/07/91 a 28/04/95, exige atividade na agropecuária.
-
----
-
-## Julgados de TRFs sobre perspectiva de gênero no rural
-
-### TRF4, Apelação Cível 5010839-54.2022.4.04.9999/SC
-9ª Turma, Rel. Des. Paulo Afonso Brum Vaz.
-Rendimento urbano do cônjuge (pensão por morte inferior a 2 SM) não descaracteriza segurada especial. O adjutório à economia familiar deve ser considerado pela perspectiva de gênero.
-
-### TRF4, Apelação Cível 5004512-59.2023.4.04.9999/SC
-9ª Turma, j. 10/09/2024, Rel. Celso Kipper, Rel. p/ acórdão Paulo Afonso Brum Vaz.
-Colegiado ampliado do art. 942 CPC. Segurada boia-fria com início de prova material corroborado por testemunhal. Flexibilização da exigência de prova em nome da mulher. Julgamento com perspectiva de gênero aplicada em quatro fundamentos expressos, incluindo reconhecimento de que exigir prova material exclusivamente em nome da mulher perpetua discriminação de gênero.
-
----
-
-## Acórdão CRPS verificado
-
-### 1ª Composição Adjunta da 16ª JR, Processo 44236.473328/2024-39
-Rel. Gustavo Moreira Bavoso, j. 22/11/2025.
-Recurso conhecido e parcialmente provido. Reconheceu labor rural de 18/09/1976 a 17/09/1980 (a partir dos 8 anos) e de 01/05/1986 a 23/05/1986. Aplicou Enunciado 8 CRPS, OC 46/2019 e art. 305, §1º, Decreto 3.048/99.
-
----
-
-## ACP e normatização administrativa
-
-### ACP 5031617-51.2018.4.04.7100/RS
-Obriga o INSS a reconhecer trabalho rural de menor de qualquer idade, desde que comprovado.
-Normatizada pela Portaria Conjunta INSS/PFE nº 7, de 09/04/2020.
-Abrangência territorial restrita ao TRF4 (RS, SC, PR).
-
-### STF, ARE 1.500.973-RS
-Negou seguimento a RE do INSS, mantendo decisão do TRF4 que permitiu indenização de tempo rural pós-31/10/1991 na fase de cumprimento de sentença, com efeitos financeiros desde a DER.
+- STF, ARE 1.500.973/RS: indenização do tempo rural posterior a 10/1991 no cumprimento de sentença, com efeitos desde a DER.
+- CRPS, 1ª Composição Adjunta da 16ª JR, j. 22/11/2025: reconhecimento de trabalho rural a partir dos 8 anos com base no Enunciado 8.

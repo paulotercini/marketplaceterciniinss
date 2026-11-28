@@ -1,14 +1,14 @@
-# Guideline SBR 2026 de Fibromialgia — Atualizações Clínicas e Uso Previdenciário
+# Guideline SBR 2026 de Fibromialgia. Atualizações Clínicas e Uso Previdenciário
 
-Incorporado na Onda 85 (25/07/2026) a partir de carrossel da colega Dra. Bárbara Pimenta (@dra.barbarapimenta). ATUALIZADO na Onda 86 (26/07/2026) com a leitura do TEXTO INTEGRAL das duas partes do guideline, obtida via Comet. Os rótulos provisórios da Onda 85 foram substituídos pelos consensos literais.
+Conteúdo conferido no texto integral das duas partes do guideline, a partir de material de divulgação profissional (carrossel em cartões) que serviu de ponto de partida.
 
-## Fonte primária (texto integral lido em 26/07/2026)
+## Fonte primária
 
 Parte I. Heymann RE e colaboradores. "Brazilian Society of Rheumatology's fibromyalgia treatment guidelines – part I: monitoring and non-pharmacological management". Advances in Rheumatology, publicado em 16/01/2026. DOI 10.1186/s42358-025-00507-x. Acesso aberto.
 
 Parte II. Heymann RE e colaboradores. "Review of fibromyalgia treatment guidelines: part 2 – pharmacological treatment". Adv Rheumatol 66, 9 (2026), publicado em 22/01/2026. DOI 10.1186/s42358-025-00483-2. Acesso aberto.
 
-Press-release oficial da SBR de 07/05/2026 em reumatologia.org.br, que anuncia as diretrizes e serviu de primeira conferência na Onda 85.
+Press-release oficial da SBR de 07/05/2026 em reumatologia.org.br, que anuncia as diretrizes.
 
 O guideline atualiza as recomendações de 2010 e estrutura-se em perguntas seguidas de CONSENSO. As transcrições abaixo são literais do texto em inglês, com tradução livre indicada quando usada.
 
@@ -74,7 +74,7 @@ Combinações farmacológicas. "Current evidence remains insufficient to support
 
 ## Resultado do confronto com o carrossel de origem
 
-Confirmados integralmente pelo texto do guideline. Os cinco fármacos com evidência do cartão 4, INCLUÍDOS milnaciprano e ciclobenzaprina, que na Onda 85 estavam pendentes por ausência no press-release. Os quatro grupos sem evidência do cartão 5. O CSI do cartão 3, também pendente na Onda 85. A dieta do cartão 7, em redação praticamente idêntica. TCC e ACT do cartão 8. tDCS e rTMS do cartão 9. Acupuntura, espiritualidade, religiosidade e cuidado interdisciplinar do cartão 10. A superioridade da combinação aeróbico mais força do cartão 6.
+Confirmados integralmente pelo texto do guideline. Os cinco fármacos com evidência do cartão 4, incluídos milnaciprano e ciclobenzaprina, ausentes do press-release. Os quatro grupos sem evidência do cartão 5. O CSI do cartão 3. A dieta do cartão 7, em redação praticamente idêntica. TCC e ACT do cartão 8. tDCS e rTMS do cartão 9. Acupuntura, espiritualidade, religiosidade e cuidado interdisciplinar do cartão 10. A superioridade da combinação aeróbico mais força do cartão 6.
 
 Não localizados no guideline, apesar de correta a menção geral. A posologia do cartão 6 (duas vezes por semana, 30 a 60 minutos) não aparece como recomendação. O texto registra, na revisão de evidências sobre força, intervenções de 4 a 21 semanas, com sessões de 2 a 3 vezes por semana e intensidade de 40% a 80% de uma repetição máxima. Citar posologia em peça exige apoio na prescrição médica do caso, não no guideline.
 

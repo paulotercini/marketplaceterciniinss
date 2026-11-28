@@ -1,127 +1,29 @@
-# Dano Moral Previdenciário — Jurisprudência e Refutação
+# Dano Moral Previdenciário. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Súmula 37 STJ
+Súmula 37 STJ. "São cumuláveis as indenizações por dano material e dano moral oriundos do mesmo fato." A Súmula 387 STJ trata de dano estético e moral.
 
-Cumulação de dano material e dano moral, "São cumuláveis as indenizações por dano material e dano moral oriundos do mesmo fato". A Súmula 387 STJ, antes citada aqui, trata de dano estético e dano moral (auditoria 03/10/2026). Fonte oficial em https://scon.stj.jus.br/SCON/sumstj
+Súmula 326 STJ. "Na ação de indenização por dano moral, a condenação em montante inferior ao postulado na inicial não implica sucumbência recíproca."
 
-### Súmula 326 STJ
+RE 1.171.152/SC (acordo homologado em 09/12/2020; ex-Tema 1066 STF, cancelado em 22/02/2021). Prazos máximos de análise: BPC e aposentadorias, 90 dias; aposentadoria por invalidez e auxílio-doença, 45 dias; pensão por morte, auxílio-reclusão e auxílio-acidente, 60 dias; salário-maternidade, 30 dias. Vigência de 24 meses com reavaliação; prorrogação formal Não localizada.
 
-Sucumbência no dano moral, "Na ação de indenização por dano moral, a condenação em montante inferior ao postulado na inicial não implica sucumbência recíproca." (auditoria 03/10/2026). Fonte oficial em https://scon.stj.jus.br/SCON/sumstj
+Tema 138 STF. Desfazimento de ato com efeitos concretos exige processo administrativo prévio.
 
-### Súmula 160 TFR
-
-Suspeita de fraude não autoriza, de plano, suspender ou cancelar o benefício, o que depende de apuração em procedimento administrativo [NÃO CONFIRMADO]. Texto lido só em fonte secundária. O dano moral vem da jurisprudência, não da súmula (auditoria 03/10/2026).
-
-### CF/88, art. 5º X
-
-Indenização por dano moral. Fonte oficial em https://www.planalto.gov.br
-
-### CF/88, art. 37 §6º
-
-Responsabilidade objetiva do Estado. Fonte oficial em https://www.planalto.gov.br
-
-### CC, arts. 186 e 927
-
-Ato ilícito e dever de indenizar. Fonte oficial em https://www.planalto.gov.br
-
-### Dano moral em ações previdenciárias
-
-Ancora-se no art. 37, §6º, da CF (auditoria 03/10/2026, retirado o Tema 372/STJ, que trata do SIMPLES de hospitais).
-
-### Tema 642 STJ
-
-Quantificação. Fonte oficial em https://www.stj.jus.br
+Súmula 160 TFR [NÃO CONFIRMADO na fonte oficial]. Suspeita de fraude não autoriza suspensão de plano, sem apuração administrativa.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Mero indeferimento não gera dano moral
+Argumento 1. Indeferimento não gera dano moral. Refutação: a ação não se funda no indeferimento em si, mas na ilegalidade manifesta ou na conduta abusiva demonstrada.
 
-Argumento adversário. Indeferimento é ato regular.
+Argumento 2. Falta prova do dano. Refutação: privação de verba alimentar por ato ilegal, comprovada a repercussão por documentos e relatório social.
 
-Refutação. Indeferimento abusivo, com falso indício de fraude ou exigência ilegítima, gera dano moral. Distinção entre erro tolerável e ato abusivo.
+Argumento 3. Ausência de culpa. Refutação: responsabilidade objetiva (art. 37, §6º, da CF).
 
-### Argumento 2 — Falta de prova do dano
+Argumento 4. Demora tolerável. Refutação: superação dos prazos do acordo no RE 1.171.152, sem exigência pendente do segurado.
 
-Argumento adversário. Dano deve ser provado.
+Argumento 5. Suspensão é poder-dever de fiscalização. Refutação: a suspensão exige notificação e prazo de defesa (art. 69, §1º, da Lei 8.212/91; Tema 138 STF).
 
-Refutação. Dano moral in re ipsa quando há cessação de benefício alimentar.
+Argumento 6. Cumulação indevida. Refutação: Súmula 37 STJ.
 
-### Argumento 3 — Valor simbólico
-
-Argumento adversário. Indenização mínima.
-
-Refutação. Parâmetros jurisprudenciais de R$ 5.000 a R$ 20.000.
-
-### Argumento 4 — Prescrição quinquenal
-
-Argumento adversário. Prazo prescrito.
-
-Refutação. Súmula 85 STJ para parcelas e prazo prescricional autônomo para dano.
-
-### Argumento 5 — Mero descumprimento administrativo
-
-Argumento adversário. Atraso é tolerável.
-
-Refutação. Demora acima dos prazos do acordo homologado no RE 1.171.152/STF (ex-Tema 1066, 30 a 90 dias por espécie) gera dano (auditoria 25/07/2026).
-
-### Argumento 6 — Suspensão por suspeita
-
-Argumento adversário. Direito de fiscalização.
-
-Refutação. Suspensão sem contraditório viola CF/88. Súmula 160 TFR.
-
-### Argumento 7 — Sem culpa subjetiva
-
-Argumento adversário. Demanda culpa.
-
-Refutação. Responsabilidade objetiva do INSS pelo art. 37 §6º CF.
-
-### Argumento 8 — Cumulação inadequada
-
-Argumento adversário. Não cabe cumulação.
-
-Refutação. Súmula 37 STJ admite a cumulação de dano material e dano moral oriundos do mesmo fato (auditoria 03/10/2026).
-
-### Argumento 9 — Quantum excessivo
-
-Argumento adversário. Valor desproporcional.
-
-Refutação. Princípio da proporcionalidade respeita gravidade.
-
-### Argumento 10 — Legitimidade do União
-
-Argumento adversário. Erro do servidor não responsabiliza.
-
-Refutação. Art. 37 §6º CF garante responsabilização objetiva.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira sustenta a aplicação ampla do dano moral.
-
-Frederico Amado defende dano in re ipsa em cessação de benefício alimentar.
-
-Hugo Goes admite responsabilização ampla do INSS.
-
-Marco Aurélio Serau Junior critica o uso do silêncio administrativo.
-
-IBDP sustenta indenização integral.
-
-## 4. Estratégia integrada
-
-Primeiro, esgotar via administrativa.
-
-Segundo, ação ordinária com pedido cumulado.
-
-Terceiro, mandado de segurança quando cabível.
-
-Quarto, dialeticidade nas razões finais.
-
-Quinto, monitoramento da quantificação.
-
-Sexto, conferência de cumprimento.
-
-## 5. Diligência de atualização
-
-Acompanhar STJ sobre quantum. Súmula 37 STJ conferida no SCON (auditoria 03/10/2026). Monitorar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
+Argumento 7. Valor excessivo. Refutação: proporcionalidade à duração da privação e à vulnerabilidade do segurado.

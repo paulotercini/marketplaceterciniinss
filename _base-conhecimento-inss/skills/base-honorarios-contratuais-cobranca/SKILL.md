@@ -1,157 +1,77 @@
 ---
 name: base-honorarios-contratuais-cobranca
-description: "Honorários contratuais e cobrança de clientes em advocacia previdenciária pró-segurado, distintos de honorários de sucumbência. Use SEMPrE que mencionar honorários contratuais, contrato de honorários advocatícios, cobrança de cliente, lista 💵 Pagamentos, Microsoft To Do Pagamentos, percentual sobre atrasados, percentual sobre mensalidade, honorários ad exitum, honorários iniciais, honorários por etapa, parcelamento de honorários, inadimplência cliente, distrato com cliente, retenção de documentos por inadimplência, ação de cobrança honorários, execução honorários OAB, retenção art 22 EAOAB, contrato escrito advocatício, honorários em RPV, destaque de honorários no precatório, antecipação cliente, cobrança preventiva, lembrete de pagamento, código de ética OAB cobrança. Cruza com base-cpc-honorarios-sucumbencia-previdenciaria, base-cumprimento-sentenca-rpv-precatorio, base-canais-falabr-corregedoria-cgu e base-aposentadoria-futura-pipeline."
+description: "Honorários contratuais e cobrança de clientes em advocacia previdenciária pró-segurado, distintos de honorários de sucumbência. Use SEMPRE que mencionar honorários contratuais, contrato de honorários advocatícios, cobrança de cliente, lista 💵 Pagamentos, Microsoft To Do Pagamentos, percentual sobre atrasados, percentual sobre mensalidade, honorários ad exitum, honorários iniciais, honorários por etapa, parcelamento de honorários, inadimplência cliente, distrato com cliente, retenção de documentos por inadimplência, ação de cobrança honorários, execução honorários OAB, retenção art 22 EAOAB, contrato escrito advocatício, honorários em RPV, destaque de honorários no precatório, antecipação cliente, cobrança preventiva, lembrete de pagamento, código de ética OAB cobrança. Cruza com base-cpc-honorarios-sucumbencia-previdenciaria, base-cumprimento-sentenca-rpv-precatorio, base-canais-falabr-corregedoria-cgu e base-aposentadoria-futura-pipeline."
 ---
-
 # Honorários Contratuais e Cobrança de Clientes
 
 ## Escopo
 
-Skill operacional pró-segurado do escritório Paulo Roberto Tercini Filho. Diferente da skill de sucumbência (`base-cpc-honorarios-sucumbencia-previdenciaria`), esta skill trata da relação contratual com o cliente. Cobre desde a fixação do honorário no início do caso até a cobrança em caso de inadimplência. A auditoria identificou 51 tarefas abertas em 💵 Pagamentos, sendo 20 sem body (cobrança cega, sem registro de tentativa anterior).
+Rotina operacional do escritório para fixar, registrar e cobrar os honorários contratuais. O regime jurídico do contrato (cláusulas, multa por revogação, destaque, execução, CED) está em `honorarios-contrato-previdenciario`. A sucumbência está em `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
-## Premissa central
+## Premissa
 
-Honorário contratual é receita do escritório. Honorário de sucumbência é prêmio adicional. Os dois NÃO se confundem, art. 22 do EAOAB (auditoria 03/10/2026, retirada a Súmula 47 STJ, que é penal militar). O cliente paga o contratual; o vencido paga a sucumbência. Quando a parte é vencedora, o escritório recebe os dois. Quando perde, recebe apenas o contratual já pago.
+Contratual e sucumbência não se confundem (EAOAB, art. 22, caput, e art. 23). O cliente paga o contratual; o vencido paga a sucumbência. Na vitória, o escritório recebe os dois. Na derrota, recebe o contratual já pago.
 
-A boa gestão do contratual garante o caixa do escritório e elimina o conflito posterior com o cliente. A má gestão acumula tarefas em 💵 Pagamentos sem clareza, vira dívida de difícil recuperação.
+## Modalidades usadas no escritório
 
-## Fundamento normativo
+A. Êxito (mais comum). 30% sobre os atrasados e 1 mensalidade do benefício, devida após a implantação.
+B. Valor inicial. Entre R$ 500 e R$ 1.500, conforme a complexidade.
+C. Por etapa. Para casos longos, com nota a cada etapa concluída.
+D. Valor fixo total. Raro no previdenciário.
 
-**EAOAB (Estatuto da OAB) art. 22.** Honorário advocatício é direito do advogado.
-**EAOAB art. 22 §4º.** Destaque do honorário no pagamento (RPV ou precatório), inclusive em ação previdenciária.
-**EAOAB art. 24.** Execução do contrato de honorários como título executivo extrajudicial.
-**Código de Ética OAB.** Veda cobrança vexatória, mas autoriza cobrança regular e protesto via órgão de classe se necessário.
-**Lei 8.906/1994, art. 22, caput.** Espécies de honorários: convencionados (contratuais), arbitrados judicialmente e de sucumbência.
+Todo cliente novo assina contrato escrito. Se recusar o escrito, registrar o acordo no corpo da tarefa com data e testemunhas e, se possível, gravar áudio de aceite.
 
-## Modalidades de fixação no escritório
+## Registro na lista Pagamentos (Microsoft To Do)
 
-### Modelo padrão pró-segurado previdenciário
-
-**A. Honorário ad exitum (mais comum).** Percentual sobre o resultado, somente devido se houver êxito. Padrão do escritório:
-- 30 % sobre o valor dos atrasados (parcelas vencidas até a sentença ou implantação)
-- 1 mensalidade do benefício concedido (devida apenas após implantação)
-
-**B. Honorário inicial fixo.** Valor pago no momento da contratação para cobrir despesas e início do trabalho. Padrão sugerido R$ 500 a R$ 1.500 dependendo da complexidade.
-
-**C. Honorário por etapa.** Para casos longos (recurso, ação judicial), divisão por etapa procedimental. Cada etapa concluída gera nota.
-
-**D. Honorário fixo total.** Pouco usado em previdenciário. Mais comum em cível e consultivo.
-
-### Acordo verbal vs escrito
-
-Regra do escritório, todo cliente novo deve ter contrato escrito assinado. Quando o cliente recusa o escrito (pessoa idosa, baixa instrução), reduzir a termo no body da tarefa do To Do com data e testemunhas, e gravar áudio de aceitação se possível.
-
-## Configuração no Microsoft To Do
-
-Cada cliente em 💵 Pagamentos deve ter no body:
+Cada cliente da lista 💵 Pagamentos tem no corpo da tarefa:
 
 ```
-[CASO]: Aposentadoria por Idade Urbana, processo XXX
+[CASO]: espécie e número do processo
 [HONORÁRIOS CONTRATUAIS]: 30% atrasados + 1 mensalidade
-[HONORÁRIO INICIAL]: R$ 800 quitado em DD/MM/AAAA
-[FORMA DE PAGAMENTO]: PIX 11999999999 ou parcelado em 3x
-[STATUS]: Aguardando crédito de atrasados / Implantado, falta cobrar mensalidade / Inadimplente
-
-FIXO: cliente prefere PIX direto
-FIXO: tem documento na pasta cinza para devolver
+[HONORÁRIO INICIAL]: R$ ___ quitado em DD/MM/AAAA
+[FORMA DE PAGAMENTO]: PIX [chave] ou parcelado
+[STATUS]: aguardando crédito / implantado, falta mensalidade / inadimplente
+FIXO: observações permanentes
 ```
 
-Itens de checklist devem registrar cada pagamento com data e valor: `(A): Pagou R$ 1.300 em 13/04/2026`. Padrão atual já em uso, manter.
+Cada pagamento vira item de checklist com data e valor, no padrão `(A): Pagou R$ ___ em DD/MM/AAAA`. Tarefa sem corpo é cobrança às cegas; preencher antes de cobrar.
 
-## Diagnóstico atual
+## Rotina de cobrança
 
-Auditoria revelou:
-- 51 tarefas abertas em 💵 Pagamentos
-- 20 sem body (cobrança cega, sem histórico de tentativa)
-- 7 abandonadas há mais de 180 dias
+Antes do crédito. Na implantação ou na liberação dos atrasados, criar tarefa com prazo na data prevista do crédito mais 7 dias e fazer contato proativo.
+Até 30 dias do crédito confirmado sem resposta. Cobrança formal por WhatsApp ou e-mail, com mensagem respeitosa.
+60 dias sem pagamento e duas tentativas sem resposta. Carta com AR.
+90 dias. Notificação extrajudicial (`base-notificacao-extrajudicial-mapeamento-institucional`).
+Última instância. Execução do contrato, nos termos de `honorarios-contrato-previdenciario`, seção 7. Protesto do contrato é vedado pelo CED, art. 52.
 
-Recomendação imediata é preencher os 20 bodies vazios. Não se sabe se houve contato anterior, valor combinado, status de pagamento.
+Em ação judicial, o meio mais seguro é o destaque dos honorários na RPV ou no precatório (EAOAB, art. 22, §4º): contrato juntado com a inicial e pedido reiterado antes da expedição.
 
-## Rotina de cobrança preventiva
+## Situações frequentes
 
-**Antes do crédito chegar.** Quando benefício é implantado e atrasados liberados, gerar tarefa em 💵 Pagamentos com prazo igual à data de previsão de crédito + 7 dias. No D-7, contato proativo perguntando se o crédito chegou.
+Cliente quer renegociar após o êxito. Ouvir; se a dificuldade for comprovada, conceder desconto por aditivo escrito.
+Cliente diz que desconhecia o honorário. Sem registro escrito ou áudio, a prova fica difícil; daí a regra do contrato escrito.
+Cliente faleceu. O crédito é dívida do espólio e se habilita no inventário. A pensão dos dependentes pede contrato novo.
+Distrato ou troca de advogado. Honorários proporcionais ao serviço prestado; comunicar o novo patrono e o juízo.
 
-**No vencimento.** Se cliente não respondeu em 30 dias após crédito confirmado, cobrança formal por WhatsApp ou e-mail.
+## Tributação
 
-**Cobrança formal.** Mensagem padronizada respeitosa lembrando do contrato e do crédito.
+Honorário contratual é receita tributável do escritório. Emitir nota fiscal e controlar por cliente. Na cobrança tardia, correção e juros seguem o contrato; na falta de pacto, IPCA e taxa legal (CC, arts. 389, parágrafo único, e 406, na redação da Lei 14.905/2024).
 
-**Inadimplência prolongada.** Após 60 dias sem pagamento e sem resposta a duas tentativas, escalar para cobrança escrita formal (carta com AR).
+## Mensagens-modelo
 
-**Notificação extrajudicial.** Após 90 dias, notificação extrajudicial via OAB ou cartório. Skill `base-notificacao-extrajudicial-mapeamento-institucional`.
+Cobrança preventiva. "Olá, Sr./Sra. [NOME]. Seu benefício foi implantado e os atrasados foram liberados. Quando puder, acertamos o honorário combinado: R$ [VALOR], PIX [chave]."
+Mensalidade. "Olá, como combinado, no mês da implantação fica devida 1 mensalidade do honorário, R$ [VALOR]. Prefere passar aqui ou fazer PIX?"
+Atraso de 30 dias. "Olá, Sr./Sra. [NOME], ainda não recebemos o pagamento combinado. Se houver dificuldade, podemos conversar sobre alternativa."
+Atraso de 60 dias. Texto formal, com referência ao contrato e oferta de parcelamento.
 
-**Execução do contrato.** Última instância. Ação de execução de título extrajudicial pela soma devida + correção + juros + multa.
+## Metas
 
-## Estratégia de retenção (RPV/precatório)
-
-Em ação judicial, o destaque do honorário contratual no RPV ou precatório (art. 22 §4º EAOAB) garante que o escritório receba diretamente, sem depender da boa-fé do cliente. Procedimento:
-
-1. No início da ação, juntar contrato de honorários nos autos.
-2. Antes da expedição do RPV/precatório, pedir destaque dos honorários contratuais no valor X ou %.
-3. Juiz determina destaque. Escritório recebe diretamente do tribunal.
-
-Falha na retenção é causa frequente de inadimplência posterior. Skill `base-cumprimento-sentenca-rpv-precatorio`.
-
-## Hipóteses-armadilha
-
-**Cliente quer renegociar após êxito.** Ouvir, mas registrar que o contrato é título executivo. Se a renegociação for por dificuldade comprovada, conceder desconto pontual mas formalizado por aditivo.
-
-**Cliente diz que não tinha conhecimento do honorário.** Se foi acordo verbal sem registro, fica difícil. Por isso, padrão do escritório deve ser sempre escrito ou com áudio gravado.
-
-**Cliente faleceu.** Honorário contratual é dívida do espólio. Habilitar crédito no inventário. Pensão por morte para dependentes pode gerar novo contrato com sucessores.
-
-**Distrato a pedido do cliente.** Cliente pede para sair, escritório ainda não recebeu. Calcular honorários proporcionais ao trabalho já feito. Cobrança formal ou ação se houver resistência.
-
-**Cliente trocou de advogado durante o caso.** Honorários proporcionais ao trabalho já feito. Comunicar ao novo patrono e ao juízo (em ação judicial).
-
-## Estratégia tributária
-
-Honorário contratual é receita tributável do escritório. Emitir nota fiscal correspondente. Recolhimento de tributos conforme regime (Simples Nacional, lucro presumido, lucro real). Manter controle por cliente para apuração.
-
-Em cobrança após anos, atualização monetária e juros pelo IPCA + 1% ao mês (ou índice da cidade) podem ser exigidos.
-
-## Comunicação com cliente
-
-Ton de cobrança: respeitoso, lembrancete, sem agressividade. Padrão pró-segurado significa também tratar o cliente como parceiro mesmo na cobrança.
-
-Templates oficiais sugeridos (a serem construídos como artefatos do escritório):
-- **Cobrança preventiva.** "Olá Sr./Sra. X, conforme combinado, seu benefício foi implantado e os atrasados foram liberados. Quando puder, podemos acertar o honorário contratual? Valor R$ Y, PIX [chave]."
-- **Cobrança de mensalidade.** "Olá, como foi acordado, no mês da implantação fica devida 1 mensalidade do honorário. Valor R$ Y. Combina passar por aqui ou faço PIX?"
-- **Lembrete de inadimplência (30+ dias).** "Olá Sr./Sra. X, vi que ainda não recebemos o pagamento combinado. Se houver alguma dificuldade, podemos conversar e ver alternativa."
-- **Última tentativa amigável (60+ dias).** Texto formal lembrando do contrato e abrindo espaço para parcelamento.
-
-## Integração com outras skills do escritório
-
-- `base-cpc-honorarios-sucumbencia-previdenciaria` (sucumbência, complementar)
-- `base-cumprimento-sentenca-rpv-precatorio` (destaque em RPV/precatório)
-- `base-notificacao-extrajudicial-mapeamento-institucional` (notificação extrajudicial)
-- `base-canais-falabr-corregedoria-cgu` (Ouvidoria do INSS quando cliente abandona pós-concessão)
-
-## Métrica de sucesso
-
-- Tempo médio entre implantação e quitação do contratual (meta < 30 dias)
-- Taxa de inadimplência (meta < 5 % da carteira)
-- Tarefas abertas em 💵 Pagamentos (meta < 30, hoje em 51)
-- Tarefas em 💵 Pagamentos sem body (meta zero, hoje em 20)
-- Cobranças que evoluem para ação executiva (meta < 1 % - sinal de boa relação)
-
-## Link operacional
-
-Lista no Microsoft To Do, `💵 Pagamentos`. Acessível pelo conector Microsoft Graph.
-
-EAOAB (Lei 8.906/1994), arts. 22 a 26, fundamento dos honorários.
+Tempo entre implantação e quitação abaixo de 30 dias. Inadimplência abaixo de 5% da carteira. Nenhuma tarefa sem corpo na lista Pagamentos. Cobranças que chegam à execução abaixo de 1%.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+`honorarios-contrato-previdenciario`, `base-cpc-honorarios-sucumbencia-previdenciaria`, `execucao-cumprimento-previdenciario` (destaque na requisição), `base-notificacao-extrajudicial-mapeamento-institucional`, `base-canais-falabr-corregedoria-cgu`.

@@ -1,123 +1,27 @@
-# Cumprimento MS — Fundamentos e Cenários
+# Cumprimento do MS. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento normativo
 
-Cumprimento do MS é a fase em que a ordem judicial é materializada. Envolve implantação ou restabelecimento de benefício, multa por descumprimento e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF.
+Lei 12.016/2009, art. 13 (transmissão da sentença à autoridade e à pessoa jurídica), art. 14, §1º (remessa necessária), §3º (execução provisória), art. 25 (sem honorários), art. 26 (desobediência).
 
-## 2. Fundamento constitucional
+CPC, arts. 497 e 536 a 537 (tutela específica e multa), aplicados subsidiariamente.
 
-Art. 5º LXIX CF/88.
+Decreto 3.048/99, art. 308, caput e §§1º e 2º; IN 128/2022, art. 581 (cumprimento das decisões do CRPS).
 
-Art. 5º XXXV CF/88.
+## 2. Cenários
 
-Art. 201 CF/88.
+A. Segurança concedida e benefício implantado. Conferir RMI, DIB e DIP na carta de concessão. Parcelas desde a impetração pertencem ao MS; anteriores seguem para requerimento administrativo ou ação própria.
 
-## 3. Fundamento legal
+B. INSS não implanta no prazo. Petição com prova da inércia (extrato do Meu INSS, HISCRE), pedido de intimação pessoal da autoridade e de fixação ou majoração da multa.
 
-Lei 12.016/2009, art. 13.
+C. Implantação parcial ou com erro. Petição demonstrando a divergência com a ordem e pedido de correção sob multa.
 
-Lei 12.016/2009, art. 14.
+D. Omissão reiterada após intimação pessoal. Pedido de ofício ao MPF (Lei 12.016/2009, art. 26).
 
-Lei 12.016/2009, art. 26.
+E. Atrasados anteriores à impetração. Ação ordinária autônoma ou requerimento administrativo (Súmula 271 STF), com a sentença do MS como prova do direito.
 
-CPC, art. 497.
+F. INSS não cumpre acórdão do CRPS. Novo MS, roteiro em `MS-CUMPRIMENTO-ACORDAO-CRPS.md`.
 
-CPC, art. 537.
+## 3. Riscos
 
-## 4. Marco jurisprudencial central
-
-### Súmula 271 STF
-
-Patrimoniais.
-
-### Súmula 269 STF
-
-Cobrança.
-
-### Pagamento pretérito no MS
-
-Segue as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
-
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Duração razoável.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Ordem cumprida
-
-Implantação.
-
-### Cenário B — Demora
-
-Multa.
-
-### Cenário C — Cumprimento parcial
-
-Novo ofício.
-
-### Cenário D — Omissão dolosa
-
-Crime.
-
-### Cenário E — Cobrança pretérita
-
-Ordinária autônoma.
-
-### Cenário F — Concurso com ação ordinária
-
-Combinação estratégica.
-
-## 6. Cenários limitados
-
-### Cenário G — Efeitos patrimoniais vedados
-
-Súmula 269.
-
-### Cenário H — Descumprimento reiterado
-
-MS de cumprimento.
-
-### Cenário I — Agravo
-
-Decisões de cumprimento.
-
-## 7. Metodologia
-
-Primeiro, ofício ao INSS.
-
-Segundo, acompanhamento.
-
-Terceiro, multa em caso de demora.
-
-Quarto, crime em caso extremo.
-
-Quinto, cobrança em ação ordinária.
-
-Sexto, monitoramento.
-
-## 8. Riscos processuais
-
-Risco de demora.
-
-Risco de limite de efeitos.
-
-Risco de cobrança frustrada.
-
-Risco de agravo do INSS.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, ofício imediato.
-
-Segundo, multa progressiva.
-
-Terceiro, cobrança pretérita autônoma.
-
-Quarto, MS coletivo quando cabível.
-
-Quinto, vigilância.
-
-## 10. Integração prática
-
-`base-ms-cabimento-direito-liquido-certo`, `base-ms-competencia-autoridade-coatora-inss-crps`, `mandado-seguranca-previdenciario`, `execucao-cumprimento-previdenciario`, `peticao-previdenciaria`.
+Revogação da liminar ou reforma da sentença gera devolução (Tema 692/STJ). Suspensão de segurança pelo presidente do tribunal (art. 15) também interrompe o cumprimento; ver `base-ms-liminar-art7-iii`.

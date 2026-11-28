@@ -3,7 +3,7 @@ name: estudo-pre-audiencia
 description: Gera o ESTUDO PRÉ-AUDIÊNCIA, documento INTERNO do advogado, em tópicos curtos, para preparar audiência de instrução previdenciária, depoimento pessoal do cliente e testemunhas. Irmã da estudo-pre-pericia, para o ato de audiência. Use SEMPRE que mencionar estudo pré-audiência, preparar audiência, reunião antes da audiência, preparar testemunha, roteiro de audiência, ponto decisivo da audiência, depoimento pessoal, audiência de instrução, audiência rural, audiência de união estável, testemunha de tempo especial, justificação judicial. Identifica o fato que a audiência existe para provar por matéria, rural em economia familiar, união estável, vínculo sem registro, desemprego involuntário, tempo especial por testemunha (Súmula 198/TFR). Prepara o que cada testemunha confirma com conhecimento próprio e as perguntas prováveis do juiz e do INSS. Cruza com estudo-pre-pericia e as skills de matéria. NÃO use para perícia nem para o entregável ao cliente.
 ---
 
-# Estudo Pré-Audiência — Preparação Interna de Instrução, Depoimento e Testemunhas
+# Estudo Pré-Audiência. Preparação Interna de Instrução, Depoimento e Testemunhas
 
 ## O que é
 
@@ -24,8 +24,8 @@ A mesma da `estudo-pre-pericia`. Puxar a cópia integral do processo da pasta do
 ## Formato fixo do estudo
 
 ```
-ESTUDO PRÉ-AUDIÊNCIA — [NOME DO CLIENTE]
-[Benefício] — Audiência em [data], [vara], [presencial ou videoconferência]
+ESTUDO PRÉ-AUDIÊNCIA. [NOME DO CLIENTE]
+[Benefício]. Audiência em [data], [vara], [presencial ou videoconferência]
 
 1. O FATO QUE ESTA AUDIÊNCIA EXISTE PARA PROVAR
 - [uma a três linhas, o fato controvertido e o período exato]
@@ -69,7 +69,7 @@ O fato é a prestação de trabalho com subordinação, habitualidade e remunera
 
 ### Desemprego involuntário (período de graça, art. 15, § 2º)
 
-O fato é a situação de desemprego involuntário após o último vínculo, para estender o período de graça. O registro no SINE ou o seguro-desemprego ajudam mas não são indispensáveis, a prova testemunhal supre (Tema 1360/STJ e Súmula 27/TNU; auditoria 03/10/2026, retirado o Tema 255/TNU, que trata da prorrogação por mais de 120 contribuições). Depoimento precisa da procura ativa por trabalho, bicos sem vínculo não descaracterizam por si. Consultar `periodo-graca-qualidade-segurado`.
+O fato é a situação de desemprego involuntário após o último vínculo, para estender o período de graça. O registro no SINE ou o seguro-desemprego ajudam mas não são indispensáveis, a prova testemunhal supre (Tema 1360/STJ e Súmula 27/TNU). Depoimento precisa da procura ativa por trabalho, bicos sem vínculo não descaracterizam por si. Consultar `periodo-graca-qualidade-segurado`.
 
 ### Tempo especial com empresa extinta
 
@@ -85,7 +85,7 @@ Primeira, uma conversa por testemunha, sempre com o fato específico que ela vei
 
 Segunda, organizar a memória, nunca implantar memória. Perguntar o que ela lembra, ancorar em marcos dela (casamento, enchente, safra, patrão), e aceitar o que ela não lembra.
 
-Terceira, avisar sempre. Dizer a verdade, responder só o que foi perguntado, "não sei" e "não lembro" são respostas boas quando verdadeiras, não adivinhar data (dizer "por volta de" é melhor que chutar ano exato e errar).
+Terceira, avisar sempre. Dizer a verdade, responder apenas o que foi perguntado, "não sei" e "não lembro" são respostas boas quando verdadeiras, não adivinhar data (dizer "por volta de" é melhor que chutar ano exato e errar).
 
 Quarta, checar a contradita ANTES. Parente, amigo íntimo, inimigo, interessado no resultado. Se a testemunha é contraditável, saber disso na reunião, não na audiência.
 
@@ -103,27 +103,15 @@ Quarta, dados de cliente e testemunha ficam no documento do caso, nunca em skill
 
 Quinta, o estudo é personalizado, texto que sobrevive à troca do nome não está pronto.
 
-Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa.
+Sexta, português do padrão do escritório, com dois-pontos apenas antes de citação literal ou de enumeração.
 
 ## Extensão
 
-Teto de o estudo pré-audiência, 2 páginas, com o fato que a audiência existe para provar na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+O estudo pré-audiência tem teto de 2 páginas, com o fato que a audiência existe para provar na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 

@@ -1,147 +1,37 @@
-# Cumprimento — Jurisprudência e Refutação
+# Cumprimento. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 810 STF
+Tema 905 STJ (REsp 1.495.146/MG). INPC para condenações previdenciárias após a Lei 11.430/2006 e juros da poupança. Tese literal em `auditoria-citacoes/references/CATALOGO-COMPLEMENTAR-VERIFICADO.md`.
 
-IPCA-E [NÃO CONFIRMADO] e juros, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
+Tema 810 STF (RE 870.947). Inconstitucionalidade da correção pela poupança; juros da poupança constitucionais nas relações não tributárias. Embargos rejeitados em 03/10/2019, sem modulação.
 
-Fonte oficial em https://portal.stf.jus.br
+Tema 1419 STF (ARE 1.557.312/SP, trânsito em 16/09/2026). SELIC do art. 3º da EC 113/2021 em qualquer condenação da Fazenda, restrita ao período da redação original, sem projeção sobre o regime da EC 136/2025.
 
-### Tema 905 STJ
+Tema 28 STF (RE 1.205.530/SP). RPV ou precatório da parte incontroversa e autônoma transitada em julgado, observada a importância total executada.
 
-Benefícios previdenciários.
+Tema 1190 STJ (REsp 2.029.636/SP). Sem honorários no cumprimento não impugnado contra a Fazenda, ainda que por RPV, nos cumprimentos iniciados após 01/07/2024.
 
-Fonte oficial em https://www.stj.jus.br
+Tema 1018 STJ. Opção pelo benefício administrativo mais vantajoso, com execução das parcelas judiciais até a implantação.
 
-### Prescrição em cumprimento
+Tema 1207 STJ (REsp 2.039.614). Compensação mês a mês, vedado valor mensal ou final negativo.
 
-Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
+Tema 368 STF (RE 614.406). IR sobre rendimentos recebidos acumuladamente pelo regime de competência.
 
-### Tema 368 STF
+Súmula 345 STJ. Honorários na execução individual de sentença coletiva, ainda que não embargada. A Súmula 443 STJ é penal e não se aplica.
 
-RRA e IR.
+Súmula 204 STJ. Juros de mora desde a citação válida nas ações relativas a benefícios.
 
-### Súmula 111 STJ
+## 2. Refutação aos argumentos típicos do INSS
 
-Honorários sobre parcelas vencidas.
+Argumento 1. Excesso de execução genérico. Refutação: sem o valor que entende correto, a impugnação não se conhece (art. 535, §2º).
 
-### Súmula 443 STJ
+Argumento 2. Índices diversos do título ou do Manual. Refutação: aplicam-se o título e, no que for omisso, as três fases do Manual 2026; a coisa julgada que fixou índice prevalece (item 4 do Tema 905).
 
-Honorários em execução.
+Argumento 3. Compensação global de valores administrativos. Refutação: compensação mês a mês (Tema 1207 STJ).
 
-### Tema 1050 STJ
+Argumento 4. Honorários de sucumbência somados ao principal para o teto de RPV. Refutação: crédito autônomo do advogado, requisitado separadamente.
 
-Proveito econômico.
+Argumento 5. Tributação pelo valor global. Refutação: RRA (art. 12-A da Lei 7.713/1988; Tema 368 STF).
 
-## 2. Marco legislativo
-
-### Lei 10.259/2001, art. 17
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, arts. 534 e 535
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 11.960/2009
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Cálculo excessivo
-
-Argumento adversário. Inflação de valores.
-
-Refutação. Planilha conforme Manual da AGU ou resoluções CJF.
-
-### Argumento 2 — Prescrição
-
-Argumento adversário. Parcelas prescritas.
-
-Refutação. Súmula 85 STJ, prescrição quinquenal somente sobre parcelas anteriores.
-
-### Argumento 3 — Honorários mal calculados
-
-Argumento adversário. Base incorreta.
-
-Refutação. Súmula 111 STJ. Tema 1050 STJ. Proveito econômico.
-
-### Argumento 4 — Precatório preterido
-
-Argumento adversário. Calendário.
-
-Refutação. Art. 100 §3º CF, preferência idoso/doente.
-
-### Argumento 5 — RRA negada
-
-Argumento adversário. Retenção acumulada.
-
-Refutação. Art. 12-A Lei 7.713/1988. Tema 368 STF.
-
-### Argumento 6 — Juros antes da citação
-
-Argumento adversário. Marco.
-
-Refutação. Súmula 204 STJ, juros da citação.
-
-### Argumento 7 — Dialeticidade na impugnação
-
-Argumento adversário. Genérica.
-
-Refutação. Rejeição da impugnação não dialética.
-
-### Argumento 8 — Deságio imposto
-
-Argumento adversário. Desconto.
-
-Refutação. Deságio é operação voluntária do credor. INSS não pode impor.
-
-### Argumento 9 — Atraso no pagamento
-
-Argumento adversário. Agenda orçamentária.
-
-Refutação. Multa e juros pelo atraso. MS por mora.
-
-### Argumento 10 — Retenção de tributos
-
-Argumento adversário. Alíquota máxima.
-
-Refutação. RRA por número de meses. Isenção por doença grave. Acionar `tributacao-beneficios-previdenciarios`.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, execução contra INSS.
-
-Hugo Goes, execução.
-
-Marco Aurélio Serau Junior, execução previdenciária.
-
-Daniel Pulino, cumprimento.
-
-Jane Berwanger, execução.
-
-IBDP, advocacia previdenciária.
-
-## 5. Estratégia integrada
-
-Primeiro, cálculo preciso.
-
-Segundo, destaque de honorários.
-
-Terceiro, RRA.
-
-Quarto, controle de prazos.
-
-Quinto, resposta técnica.
-
-Sexto, recebimento.
-
-## 6. Diligência de atualização
-
-Acompanhar Temas 810 STF, 905 STJ, 368 STF.
-
-Acompanhar resoluções CJF de cálculo.
-
-Revalidar Súmulas 111 e 443 STJ.
+Argumento 6. Precatório inscrito fora do prazo. Refutação: conferir a data de apresentação (1º de fevereiro, EC 136/2025) e pedir a superpreferência quando cabível.

@@ -1,4 +1,4 @@
-# Prazos Recursais e Intimações – Arts. 77, 78 e 80
+# Prazos Recursais e Intimações. Arts. 77, 78 e 80
 
 ## 1. Prazos para Interposição de Recursos (Art. 77)
 

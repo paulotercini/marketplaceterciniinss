@@ -1,143 +1,19 @@
-# Desaposentação — Jurisprudência e Refutação
+# Desaposentação. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 503 STF
+- Tema 503 STF (RE 661.256): tese literal no SKILL.md. Embargos: extensão à reaposentação e modulação [NÃO CONFIRMADO].
+- Tema 334 STF: quadro mais favorável no cálculo da RMI, respeitadas a decadência e a prescrição.
+- Tema 966 STJ (adverso): decadência do art. 103 alcança o direito adquirido ao benefício mais vantajoso.
+- Tema 995 STJ: reafirmação da DER até a entrega da prestação jurisdicional nas instâncias ordinárias.
 
-RE 661.256. Desaposentação vedada, por ausência de previsão legal.
+## 2. Respostas ao INSS
 
-Fonte oficial em https://portal.stf.jus.br
+1. **"O pedido de revisão é desaposentação disfarçada."** A revisão por melhor benefício usa apenas o tempo anterior à DIB (Tema 334 STF); a vedação do Tema 503 recai sobre o tempo posterior.
+2. **"A reafirmação é descabida."** Antes da implantação do benefício, a reafirmação é cabível (IN 128, art. 577; Tema 995 STJ).
+3. **"O segurado deve devolver o que recebeu."** Valores recebidos de boa-fé por decisão judicial até os embargos do Tema 503 foram protegidos pela modulação [NÃO CONFIRMADO].
+4. **"Decadência."** Contar o prazo do dia primeiro do mês seguinte ao do primeiro pagamento (Lei 8.213/91, art. 103).
 
-### Devolução de valores em boa-fé
+## 3. Atualização
 
-Nos embargos de declaração do RE 661.256 (Tema 503 STF), o STF dispensou a devolução dos valores recebidos de boa-fé até aquele julgamento [NÃO CONFIRMADO]. O Tema 381 STF, antes citado aqui, trata do Estatuto do Idoso em plano de saúde (auditoria 03/10/2026).
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Súmula 557 STJ (não aplicável à desaposentação)
-
-Trata da RMI da aposentadoria por invalidez precedida de auxílio-doença (Tema 704/STJ) e não de desaposentação, cuja vedação decorre do Tema 503/STF (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 995 STJ
-
-Reafirmação da DER.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 334 STF
-
-Melhor benefício.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, art. 18 §2º
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 13.183/2015
-
-Fonte oficial em https://www.planalto.gov.br
-
-### EC 103/2019
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Desaposentação vedada em todo caso
-
-Argumento adversário. Tema 503 STF.
-
-Refutação. Honestidade radical. Tese isolada rejeitada. Alternativas existem. Reafirmação da DER, revisão por melhor benefício, revisão por vínculos ou salários omitidos.
-
-### Argumento 2 — Devolução de valores
-
-Argumento adversário. Exigência em caso de renúncia.
-
-Refutação. Boa-fé afasta devolução, conforme os embargos de declaração do RE 661.256 (Tema 503 STF) [NÃO CONFIRMADO] (auditoria 03/10/2026, retirado o Tema 381 STF).
-
-### Argumento 3 — Contribuição pós-DIB sem efeito
-
-Argumento adversário. Apenas salário-família e reabilitação.
-
-Refutação. Realidade atual. Alertar cliente sobre limites. Buscar alternativas via revisão.
-
-### Argumento 4 — Coisa julgada em ação anterior
-
-Argumento adversário. Já decidido.
-
-Refutação. Tema 629 STJ em rural pode ser análogo. Acionar `coisa-julgada-previdenciaria`.
-
-### Argumento 5 — Reafirmação da DER em caso de benefício já implantado
-
-Argumento adversário. Descabida.
-
-Refutação. Tema 995 STJ. Regra geral exige que não tenha havido implantação. Analisar caso.
-
-### Argumento 6 — EC 103/2019 encerrou a tese
-
-Argumento adversário. Reforma definitiva.
-
-Refutação. Vedação reforçada, porém não obstáculo a alternativas.
-
-### Argumento 7 — Revisão por direito adquirido inaplicável
-
-Argumento adversário. Benefício concedido.
-
-Refutação. Tema 334 STF admite direito adquirido em casos específicos. Analisar DIB.
-
-### Argumento 8 — Desnecessidade de devolução reduz vantagem
-
-Argumento adversário. Cálculo.
-
-Refutação. Valor líquido preserva o benefício (auditoria 03/10/2026, retirado o Tema 381 STF).
-
-### Argumento 9 — Demandas em aberto
-
-Argumento adversário. Jurisprudência definitiva.
-
-Refutação. Mudança legislativa pode abrir caminho. Reserva estratégica em casos pontuais.
-
-### Argumento 10 — Substituição de benefício vedada
-
-Argumento adversário. Impossibilidade.
-
-Refutação. Confirmar Tema 503 e buscar revisão ou reafirmação.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, desaposentação.
-
-Hugo Goes, benefícios.
-
-Marco Aurélio Serau Junior, desaposentação.
-
-Daniel Pulino, aposentadoria.
-
-Jane Berwanger, planejamento.
-
-IBDP, advocacia previdenciária.
-
-## 5. Estratégia integrada
-
-Primeiro, orientação com honestidade radical.
-
-Segundo, descarte da tese isolada de desaposentação.
-
-Terceiro, exploração de reafirmação, melhor benefício e revisões.
-
-Quarto, auditoria do benefício.
-
-Quinto, proposta ao cliente.
-
-Sexto, controle de decadência.
-
-## 6. Diligência de atualização
-
-Acompanhar Tema 503 STF e eventual superação por legislador.
-
-Acompanhar Tema 995 STJ.
-
-Revalidar EC 103/2019 e regulamentação.
+Acompanhar eventual lei que crie a desaposentação, condição posta pelo próprio Tema 503.

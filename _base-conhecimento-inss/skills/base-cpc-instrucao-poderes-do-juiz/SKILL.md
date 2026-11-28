@@ -7,7 +7,7 @@ description: "Instrução processual e poderes instrutórios do juiz no processo
 
 ## Escopo
 
-Skill pró-segurado sobre a produção da prova e os poderes do juiz na instrução. O foco é ativar o dever de o juiz buscar a verdade, provocando a prova de ofício quando ela é decisiva e o segurado é hipossuficiente.
+Produção da prova e poderes instrutórios do juiz. O foco é provocar a prova de ofício quando ela é decisiva e o segurado é hipossuficiente.
 
 ## Marco normativo central
 
@@ -15,19 +15,19 @@ CPC, art. 369. As partes têm o direito de provar por todos os meios legítimos,
 
 CPC, art. 370. O juiz determina de ofício as provas necessárias ao julgamento. O parágrafo único indefere apenas as diligências inúteis ou meramente protelatórias, por decisão fundamentada.
 
-CPC, art. 371. O juiz aprecia a prova pelo livre convencimento motivado.
+CPC, art. 371. O juiz aprecia a prova dos autos, independentemente de quem a promoveu, e indica na decisão as razões da formação de seu convencimento.
 
 CPC, art. 372. Prova emprestada, o juiz admite prova produzida em outro processo, com contraditório.
 
 CPC, art. 139, especialmente incisos IV e VI. Poderes de condução, de efetivação das decisões e de adequação da ordem e dos prazos das provas.
 
-CPC, art. 357. Saneamento e organização, fixação dos pontos controvertidos e das provas a produzir. O §3º admite audiência de saneamento em causa complexa.
+CPC, art. 357. Saneamento e organização: questões de fato controvertidas, provas admitidas e distribuição do ônus. As partes pedem esclarecimentos ou ajustes em 5 dias, após o que a decisão se estabiliza (§1º). O §3º admite audiência de saneamento em causa complexa.
 
 CPC, arts. 481 a 484. Inspeção judicial de pessoas ou coisas.
 
 ## Poder-dever de prova de ofício
 
-O art. 370 não é faculdade indiferente. Diante de dúvida sobre fato decisivo, o juiz deve determinar a prova, sobretudo quando a parte é vulnerável. A inércia do juiz que julga contra o segurado sem esgotar a prova necessária é atacável como cerceamento, ver `base-cpc-nulidades-cerceamento`.
+Diante de dúvida sobre fato decisivo, o juiz deve determinar a prova (art. 370), sobretudo quando a parte é vulnerável. A inércia do juiz que julga contra o segurado sem esgotar a prova necessária é atacável como cerceamento, ver `base-cpc-nulidades-cerceamento`.
 
 ## Prova emprestada
 
@@ -35,7 +35,7 @@ O art. 372 permite trazer laudo, perícia ou depoimento de outro processo, útil
 
 ## Saneamento como oportunidade
 
-No saneamento, art. 357, a parte deve pedir a fixação dos pontos controvertidos e a admissão das provas, documental, pericial e testemunhal. Ponto não fixado e prova não admitida geram risco de cerceamento na sentença.
+No saneamento (art. 357), pedir a fixação dos pontos controvertidos e a admissão das provas documental, pericial e testemunhal. Ponto omitido ou prova inadmitida exige o pedido de ajuste do §1º, sob pena de estabilização.
 
 ## Estratégia pró-segurado
 
@@ -45,11 +45,11 @@ Segundo, no saneamento, listar as provas e pedir a fixação dos pontos controve
 
 Terceiro, oferecer prova emprestada quando a produção originária é inviável.
 
-Quarto, sustentar o livre convencimento do art. 371 para valorar prova indiciária e testemunhal no contexto rural e informal.
+Quarto, sustentar a valoração motivada do art. 371 para a prova indiciária e testemunhal no contexto rural e informal.
 
 ## Alertas
 
-Primeiro, prova de ofício não substitui o ônus da parte, ver `base-cpc-onus-prova-art373`, ela o complementa.
+Primeiro, a prova de ofício complementa o ônus da parte, sem substituí-lo (ver `base-cpc-onus-prova-art373`).
 
 Segundo, requerimento de prova não registrado no momento próprio preclui e enfraquece a arguição de cerceamento.
 
@@ -57,19 +57,7 @@ Terceiro, o indeferimento de prova deve ser fundamentado, o indeferimento genér
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 

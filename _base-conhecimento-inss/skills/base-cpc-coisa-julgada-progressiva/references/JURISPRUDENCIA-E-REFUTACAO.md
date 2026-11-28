@@ -1,147 +1,25 @@
-# Coisa Julgada Progressiva — Jurisprudência e Refutação
+# Coisa Julgada Progressiva. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### IRDR 18 TRF4
+Tema 28 STF (RE 1.205.530/SP, trânsito em 19/08/2020). "Surge constitucional expedição de precatório ou requisição de pequeno valor para pagamento da parte incontroversa e autônoma do pronunciamento judicial transitada em julgado observada a importância total executada para efeitos de dimensionamento como obrigação de pequeno valor."
 
-Coisa julgada progressiva em capítulos autônomos.
+Súmula 729 STF. "A decisão na ADC-4 não se aplica à antecipação de tutela em causa de natureza previdenciária." Fundamenta a implantação por tutela.
 
-Fonte oficial em https://www.trf4.jus.br
+Súmula 111 STJ e Tema 1105 STJ. Honorários sobre as parcelas vencidas até a sentença, também na parte transitada. Ver `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
-### Tema 28 STF
+IRDR 18 TRF4 (Corte Especial, 24/10/2019). Persuasivo no TRF3; tese transcrita em `execucao-cumprimento-previdenciario`, seção 1.2, a conferir no portal do TRF4 antes de citar.
 
-Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
+## 2. Refutação aos argumentos típicos do INSS
 
-Fonte oficial em https://portal.stf.jus.br
+Argumento 1. A apelação devolve toda a matéria. Refutação: a apelação devolve a matéria impugnada (art. 1.013, caput); o §1º amplia apenas as questões do capítulo impugnado.
 
-### Súmula 729 STF
+Argumento 2. Não há cumprimento antes do trânsito total. Refutação: o capítulo autônomo transita em separado, e a parte incontroversa comporta RPV ou precatório (Tema 28 STF; art. 535, §4º).
 
-Tutela contra Fazenda.
+Argumento 3. Execução provisória contra a Fazenda é vedada. Refutação: o pedido é de execução definitiva do capítulo transitado, não de execução provisória.
 
-Fonte oficial em https://portal.stf.jus.br
+Argumento 4. A discussão da RMI impede a implantação. Refutação: a concessão é capítulo distinto do valor; implanta-se pela RMI incontroversa e paga-se a diferença ao final.
 
-### Tema 1030 STJ
+Argumento 5. Fracionamento vedado. Refutação: o Tema 28 STF admite a expedição do incontroverso, observado o valor total para definir RPV ou precatório.
 
-Renúncia no JEF.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 1070 STJ
-
-Revisão por concomitantes.
-
-## 2. Marco legislativo
-
-### CPC, art. 502
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, art. 356
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, art. 1.013
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, art. 523
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Apelação devolve integralmente
-
-Argumento adversário. Efeito translativo.
-
-Refutação. Art. 1.013 §1º CPC limita. IRDR 18 TRF4.
-
-### Argumento 2 — Cumprimento só após trânsito total
-
-Argumento adversário. Uniformidade.
-
-Refutação. Capítulos autônomos transitam em separado.
-
-### Argumento 3 — Execução provisória vedada contra Fazenda
-
-Argumento adversário. Não cabe execução contra a Fazenda antes do trânsito em julgado (auditoria 03/10/2026).
-
-Refutação. Cabe a execução definitiva da parte transitada, que comporta precatório ou RPV (Tema 28 STF) [CONFERIDO].
-
-### Argumento 4 — RMI em discussão suspende tudo
-
-Argumento adversário. Indivisibilidade.
-
-Refutação. Concessão incontroversa permite implantação.
-
-### Argumento 5 — Honorários globais
-
-Argumento adversário. Reserva.
-
-Refutação. Honorários sobre parte transitada, respeitadas Súmula 111 STJ e Tema 1050 STJ.
-
-### Argumento 6 — Recurso parcial do segurado amplia devolução
-
-Argumento adversário. Simetria.
-
-Refutação. Recurso parcial delimita. Art. 1.013 §1º CPC.
-
-### Argumento 7 — JEF não admite
-
-Argumento adversário. Rito sumário.
-
-Refutação. Não há vedação. Art. 1º da Lei 10.259/2001.
-
-### Argumento 8 — Falta de dialeticidade do segurado
-
-Argumento adversário. Súmula 284 STF.
-
-Refutação. Capítulo autônomo pode ser impugnado isoladamente com dialeticidade própria.
-
-### Argumento 9 — Fato superveniente reabre
-
-Argumento adversário. Reabertura.
-
-Refutação. Fato superveniente afeta capítulo relacionado. Demais permanecem estáveis.
-
-### Argumento 10 — Suspensão de segurança retira efeito
-
-Argumento adversário. Art. 4º Lei 8.437.
-
-Refutação. Lesão grave não se configura em capítulo individual.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Fredie Didier Jr, Leonardo Carneiro da Cunha, Fazenda em Juízo.
-
-Cássio Scarpinella Bueno.
-
-Teresa Arruda Alvim.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, delimitar capítulos autônomos.
-
-Segundo, postular implantação imediata.
-
-Terceiro, cumprimento parcial.
-
-Quarto, honorários da parte transitada.
-
-Quinto, consolidar com superveniência.
-
-Sexto, resistir a suspensão.
-
-## 6. Diligência de atualização
-
-Acompanhar IRDR 18 TRF4.
-
-Tema 28 STF [CONFERIDO] no portal do STF, RE 1.205.530, trânsito em 19/08/2020 (auditoria 03/10/2026).
-
-Acompanhar modulações do Tema 1030 STJ.
+Argumento 6. Fato superveniente reabre tudo. Refutação: o fato superveniente afeta apenas o capítulo a que se relaciona.

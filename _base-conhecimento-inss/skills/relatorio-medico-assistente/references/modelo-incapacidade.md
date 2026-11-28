@@ -1,6 +1,6 @@
 # Modelo de relatório de incapacidade
 
-Serve à incapacidade temporária (B31 previdenciária, B91 acidentária) e à permanente (B32 previdenciária, B92 acidentária). Onda 165, 03/10/2026: alinhado ao modelo curto de `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/MODELO-BASE.md`, que prevalece em caso de divergência.
+Serve à incapacidade temporária (B31 previdenciária, B91 acidentária) e à permanente (B32 previdenciária, B92 acidentária). Alinhado ao modelo curto de `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/MODELO-BASE.md`, que prevalece em caso de divergência.
 
 ## O que o relatório precisa conter
 

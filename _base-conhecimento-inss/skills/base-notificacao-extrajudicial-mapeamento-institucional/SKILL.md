@@ -161,7 +161,7 @@ A jurisprudência consolidada do TRF3 admite mandado de segurança por omissão 
 
 45 dias do art. 41-A, §5º, da Lei 8.213/1991 e art. 174 do Decreto 3.048/1999, para implantação de benefício.
 
-90 dias do acordo homologado pelo STF no RE 1.171.152/SC (parâmetro nacional para análise de requerimentos previdenciários).
+Prazos do acordo homologado pelo STF no RE 1.171.152/SC, de até 90 dias conforme a espécie de benefício (parâmetro nacional para análise de requerimentos previdenciários).
 
 Em matéria de PCD, dada a prioridade legal (Lei 13.146/2015, art. 9º, VII) e a natureza alimentar do benefício, o TRF3 tem mitigado esses prazos em sede de liminar, especialmente quando demonstrada vulnerabilidade.
 
@@ -301,7 +301,7 @@ Tema 1124 em `tema-1124-instrucao-administrativa`.
 
 ## 10. Alertas
 
-Primeiro, sempre use endereçamento múltiplo. Notifique todas as chefias legitimadas pelo art. 13/26 §1º das Portarias DIRBEN. Multiplica os pontos de pressão e neutraliza alegação posterior de não recebimento.
+Primeiro, sempre use endereçamento múltiplo. Notifique todas as chefias legitimadas pelo art. 13/26 §1º das Portarias DIRBEN. O endereçamento múltiplo amplia o registro da ciência e afasta alegação posterior de não recebimento.
 
 Segundo, sempre inclua a cláusula de inversão do ônus argumentativo. "Caso o endereço institucional aqui presumido não seja válido, a unidade deverá reencaminhar ao endereço correto, comprovando o reencaminhamento". Isto impede defesa baseada em "ato não recebido".
 
@@ -313,27 +313,11 @@ Quinto, em PCD, inclua sempre a invocação expressa da prioridade (Lei 13.146/2
 
 Sexto, dimensione corretamente o escalonamento. Dia 1 para tudo paralelo. Dia 6 para MS. Não aguarde meses tentando administrativamente sem ajuizar.
 
-Sétimo, em MS, use litisconsórcio passivo necessário (Gerente-Executivo + Chefe do SGBEN + Superintendente Regional). O TRF3 admite. Reforça a tese e amplia a eficácia da liminar.
+Sétimo, em MS, use litisconsórcio passivo necessário (Gerente-Executivo + Chefe do SGBEN + Superintendente Regional). Confira a admissão do litisconsórcio no MCP trf3 antes de ajuizar. A pluralidade de autoridades amplia a eficácia da liminar.
 
-Oitavo, em casos PCD, peça astreintes diárias com base em REM. NEC. CÍVEL 5002980-84.2020.4.03.6183. Precedente expresso do TRF3.
+Oitavo, em casos PCD, peça astreintes diárias com base no art. 537 do CPC. O precedente REM. NEC. CÍVEL 5002980-84.2020.4.03.6183 (TRF3) consta da versão anterior desta skill [NÃO CONFIRMADO].
 
-## 11. Doutrina de apoio
-
-Hely Lopes Meirelles. Mandado de Segurança. Detalha o cabimento contra omissão.
-
-Calmon de Passos. Mandado de Segurança. Aprofunda técnica processual.
-
-Cassio Scarpinella Bueno. Mandado de Segurança. Manual contemporâneo.
-
-José dos Santos Carvalho Filho. Manual de Direito Administrativo. Detalha autoridade coatora.
-
-Frederico Amado e Hugo Goes. Direito Previdenciário. Detalham canais de defesa do segurado.
-
-Daniel Pulino. Aposentadoria por Invalidez. Aprofunda o processo administrativo previdenciário.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário. Analisa o MS previdenciário.
-
-## 12. O que NÃO está nesta skill
+## 11. O que NÃO está nesta skill
 
 IEA 13975 em `base-erro-administrativo-iea-13975`.
 
@@ -343,26 +327,14 @@ MPF, PFDC, PRM em `base-mpf-pfdc-prm-defesa-segurado`.
 
 PFE-INSS, ANPD, DPU, CONADE em `base-pfe-inss-anpd-dpu-conade`.
 
-## 13. Fontes
+## 12. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

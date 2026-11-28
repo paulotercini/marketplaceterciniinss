@@ -3,7 +3,7 @@ name: triagem-caso-novo
 description: "Skill de triagem e classificação de caso novo na advocacia previdenciária. Use SEMPRE que mencionar caso novo, cliente novo, consulta inicial, triagem, qual benefício cabe, que ação propor, que documentos pedir, avaliar viabilidade, estudar caso, aceitar caso, viabilidade do caso, estratégia inicial, plano de ação, ou novo cliente para avaliação. Use quando apresentar dados iniciais de segurado sem especificar skill. Use quando perguntar 'o que faço com esse caso', 'qual o caminho', 'por onde começo', 'esse caso tem chance'. Ponto de entrada do ecossistema, roteia para skills especializadas pertinentes. NÃO use quando já souber exatamente o que quer (ex. 'faça a petição de B31', 'audite esse laudo')."
 ---
 
-# Triagem de Caso Novo — Escritório Paulo Tercini
+# Triagem de Caso Novo. Escritório Paulo Tercini
 
 ## Visão Geral
 
@@ -11,7 +11,7 @@ Esta skill é o ponto de entrada do ecossistema de skills do escritório. Recebe
 
 Funciona como um roteador inteligente. Não substitui nenhuma skill especializada, mas garante que nenhuma deixe de ser acionada quando pertinente.
 
-Quando a triagem envolver leitura de pasta de cliente no Drive ou houver mais de um caso na mesma conversa, despache a análise ao agente do plugin `base-conhecimento-inss:triagem-caso` (Onda 82), um cliente por despacho. O agente roda com contexto isolado, impede que dados de um caso vazem no contexto de outro e devolve o relatório nas mesmas oito seções desta skill. Sem o agente disponível, execute a triagem inline conforme este roteiro.
+Quando a triagem envolver leitura de pasta de cliente no Drive ou houver mais de um caso na mesma conversa, despache a análise ao agente do plugin `base-conhecimento-inss:triagem-caso`, um cliente por despacho. O agente roda com contexto isolado, impede que dados de um caso vazem no contexto de outro e devolve o relatório nas mesmas oito seções desta skill. Sem o agente disponível, execute a triagem inline conforme este roteiro.
 
 ## Protocolo de Coleta de Dados
 
@@ -41,7 +41,7 @@ Antes de classificar o caso, coletar os seguintes dados. Se o usuário não forn
 
 ### Regra de coleta progressiva
 
-Não bombardear o cliente com todas as perguntas de uma vez. Fazer a coleta em duas rodadas.
+Não apresentar ao cliente todas as perguntas de uma vez. Fazer a coleta em duas rodadas.
 
 **Rodada 1.** Dados críticos. Classificar provisoriamente o caso.
 
@@ -51,30 +51,30 @@ Se o usuário enviar documentos (CNIS, carta de indeferimento, laudo, PPP), extr
 
 ## Classificação do Caso
 
-Após a coleta, classificar o caso em uma ou mais das categorias abaixo. Ler o arquivo `references/MAPA-CLASSIFICACAO.md` para a árvore decisória completa com critérios de enquadramento.
+Após a coleta, classificar o caso em uma ou mais das categorias abaixo.
 
 ### Categorias principais
 
-1. **Incapacidade temporária (B31/B91)** — auxílio por incapacidade temporária
-2. **Incapacidade permanente (B32/B92)** — aposentadoria por incapacidade permanente
-3. **Auxílio-acidente (B94)** — sequela com redução da capacidade
-4. **Aposentadoria especial** — atividade com agentes nocivos
-5. **Aposentadoria por tempo de contribuição** — regras de transição EC 103/2019
-6. **Aposentadoria por idade urbana** — idade + carência
-7. **Aposentadoria por idade rural** — segurado especial ou contribuinte rural
-7A. **Aposentadoria por idade híbrida** — soma de períodos rurais e urbanos (art. 48, §3º)
-8. **Aposentadoria da pessoa com deficiência (LC 142/2013)** — por tempo ou por idade
-9. **BPC/LOAS deficiência** — benefício assistencial PCD
-10. **BPC/LOAS idoso** — benefício assistencial 65+
-11. **Pensão por morte** — dependentes de segurado falecido
-12. **Auxílio-reclusão** — dependentes de segurado preso
-13. **Salário-maternidade** — inclusive segurada especial
-14. **Revisão de benefício** — qualquer revisão de benefício já concedido
-15. **Acerto de CNIS/RAC** — correção de dados no cadastro
-16. **Recurso administrativo (CRPS)** — recurso contra decisão do INSS
-17. **Mandado de segurança** — contra ato ilegal ou abusivo do INSS
-18. **Cumprimento de decisão** — INSS não cumpre decisão judicial ou administrativa
-19. **Aposentadoria do professor (RGPS)** — professor da educação básica, regras diferenciadas, Lei 15.326/2026
+1. **Incapacidade temporária (B31/B91)**, auxílio por incapacidade temporária
+2. **Incapacidade permanente (B32/B92)**, aposentadoria por incapacidade permanente
+3. **Auxílio-acidente (B94)**, sequela com redução da capacidade
+4. **Aposentadoria especial**, atividade com agentes nocivos
+5. **Aposentadoria por tempo de contribuição**, regras de transição EC 103/2019
+6. **Aposentadoria por idade urbana**, idade + carência
+7. **Aposentadoria por idade rural**, segurado especial ou contribuinte rural
+7A. **Aposentadoria por idade híbrida**, soma de períodos rurais e urbanos (art. 48, §3º)
+8. **Aposentadoria da pessoa com deficiência (LC 142/2013)**, por tempo ou por idade
+9. **BPC/LOAS deficiência**, benefício assistencial PCD
+10. **BPC/LOAS idoso**, benefício assistencial 65+
+11. **Pensão por morte**, dependentes de segurado falecido
+12. **Auxílio-reclusão**, dependentes de segurado preso
+13. **Salário-maternidade**, inclusive segurada especial
+14. **Revisão de benefício**, qualquer revisão de benefício já concedido
+15. **Acerto de CNIS/RAC**, correção de dados no cadastro
+16. **Recurso administrativo (CRPS)**, recurso contra decisão do INSS
+17. **Mandado de segurança**, contra ato ilegal ou abusivo do INSS
+18. **Cumprimento de decisão.** INSS não cumpre decisão judicial ou administrativa
+19. **Aposentadoria do professor (RGPS)**, professor da educação básica, regras diferenciadas, Lei 15.326/2026
 
 ### Classificação múltipla
 
@@ -82,21 +82,21 @@ Um caso pode ter mais de uma classificação. Exemplo comum é o segurado que pr
 
 ## Roteamento de Skills
 
-Após a classificação, acionar automaticamente as skills pertinentes conforme a tabela em `references/MAPA-ROTEAMENTO.md`. O roteamento não é exaustivo. Se durante a análise surgir necessidade de skill não prevista na tabela, acionar igualmente.
+Após a classificação, acionar automaticamente as skills pertinentes conforme os pipelines por benefício da `ponte-orquestrador-previdenciario` (seção 3). O roteamento não é exaustivo. Se durante a análise surgir necessidade de skill não prevista na tabela, acionar igualmente.
 
 ### Skills universais (acionadas em TODO caso)
 
 Estas skills são acionadas independentemente da classificação.
 
-- **documentos-comprobatorios-in128** — documentação obrigatória por categoria e espécie
-- **precedentes-previdenciarios** — temas vinculantes aplicáveis ao caso
-- **atendimento-respostas-padrao** — gerar o pedido de documentos ao cliente, no modelo da seção "Pedido de documentos ao cliente" (a skill cartas-documentos-previdencia não existe no plugin)
-- **inss-canais-atendimento** — orientar canal adequado se for via administrativa
-- **requerimento-administrativo-inss** — quando o caso exigir requerimento administrativo, gerar peça no formato adequado ao servidor do INSS (linguagem instrutiva, normas internas, formato tabular)
+- **base-documentos-comprobatorios-in128**, documentação obrigatória por categoria e espécie
+- **precedentes-previdenciarios**, temas vinculantes aplicáveis ao caso
+- **atendimento-respostas-padrao**, gerar o pedido de documentos ao cliente, no modelo da seção "Pedido de documentos ao cliente"
+- **inss-canais-atendimento**, orientar canal adequado se for via administrativa
+- **requerimento-administrativo-inss**, quando o caso exigir requerimento administrativo, gerar peça no formato adequado ao servidor do INSS (linguagem instrutiva, normas internas, formato tabular)
 
 ### Skills condicionais (acionadas conforme classificação)
 
-Ler `references/MAPA-ROTEAMENTO.md` para a tabela completa de roteamento por classificação.
+Usar os pipelines por benefício da `ponte-orquestrador-previdenciario` e a skill do benefício classificado.
 
 ## Determinação do Rito e Foro
 
@@ -130,31 +130,31 @@ Ler `references/MAPA-ROTEAMENTO.md` para a tabela completa de roteamento por cla
 
 Gerar alerta quando identificar qualquer das seguintes situações.
 
-**ALERTA — Requerimento administrativo ausente.** Tema 350/STF exige prévio requerimento. Orientar requerimento antes de ajuizar, salvo se o caso se enquadrar nas dispensas previstas no Tema 350.
+**ALERTA. Requerimento administrativo ausente.** Tema 350/STF exige prévio requerimento. Orientar requerimento antes de ajuizar, salvo se o caso se enquadrar nas dispensas previstas no Tema 350.
 
-**ALERTA — Tempestividade recursal.** Se o cliente trouxer carta de indeferimento, calcular o prazo de 30 dias para recurso ordinário ao CRPS. Se menos de 10 dias restantes, alertar urgência.
+**ALERTA. Tempestividade recursal.** Se o cliente trouxer carta de indeferimento, calcular o prazo de 30 dias para recurso ordinário ao CRPS. Se menos de 10 dias restantes, alertar urgência.
 
-**ALERTA — Decadência.** Se revisão de benefício, calcular prazo do art. 103 da Lei 8.213/91 a partir do primeiro pagamento. Se menos de 12 meses restantes, alertar em destaque.
+**ALERTA. Decadência.** Se revisão de benefício, calcular prazo do art. 103 da Lei 8.213/91 a partir do primeiro pagamento. Se menos de 12 meses restantes, alertar em destaque.
 
-**ALERTA — Conversão de espécie.** Se o segurado tem B31 e há indicadores de nexo acidentário (CAT, NTEP, doença ocupacional), alertar oportunidade de conversão B31→B91 com efeitos na estabilidade acidentária e no FGTS.
+**ALERTA. Conversão de espécie.** Se o segurado tem B31 e há indicadores de nexo acidentário (CAT, NTEP, doença ocupacional), alertar oportunidade de conversão B31→B91 com efeitos na estabilidade acidentária e no FGTS.
 
-**ALERTA — Perspectiva de gênero.** Se a segurada é mulher em atividade rural, informal ou doméstica, acionar `perspectiva-genero-previdenciario`.
+**ALERTA. Perspectiva de gênero.** Se a segurada é mulher em atividade rural, informal ou doméstica, acionar `perspectiva-genero-previdenciario`.
 
-**ALERTA — Segurado analfabeto.** Se identificado que o segurado não sabe ou não pode assinar, acionar `assinatura-a-rogo` para orientar procedimento de procuração e documentos.
+**ALERTA. Segurado analfabeto.** Se identificado que o segurado não sabe ou não pode assinar, orientar procuração por instrumento público ou assinatura a rogo com duas testemunhas, conforme a exigência do INSS e do juízo [conferir a exigência vigente].
 
-**ALERTA — Análise documental (B31/B91/B94).** Se o caso envolver requerimento de B31, B91 ou B94, acionar `analise-documental-incapacidade` para verificar o regime das Portarias Conjuntas 13/14/15/2026.
+**ALERTA. Análise documental (B31/B91/B94).** Se o caso envolver requerimento de B31, B91 ou B94, acionar `analise-documental-incapacidade` para verificar o regime das Portarias Conjuntas 13/14/15/2026.
 
-**ALERTA — Portaria 462 (armadilha processual).** Se o segurado fez pedido de revisão do ato de indeferimento antes de recorrer, alertar sobre a restrição do art. 112 §7º e acionar `portaria-462-restricao-recursal`.
+**ALERTA. Art. 112, §7º, do RICRPS (redação da Portaria MPS 462/2026).** Se o segurado fez pedido de revisão do ato de indeferimento antes de recorrer, alertar sobre a restrição do art. 112, §7º, e acionar `admissibilidade-barreiras-crps`.
 
-**ALERTA — Segurado especial rural.** Se o caso envolver segurado especial, atividade rural em regime de economia familiar, aposentadoria rural por idade ou período rural a computar, acionar `segurado-especial-rural` para regime jurídico completo, estratégia probatória e precedentes específicos. Se CNPJ ativo no CPF do segurado, acionar imediatamente para defesa preventiva.
+**ALERTA. Segurado especial rural.** Se o caso envolver segurado especial, atividade rural em regime de economia familiar, aposentadoria rural por idade ou período rural a computar, acionar `segurado-especial-rural` para regime jurídico completo, estratégia probatória e precedentes específicos. Se CNPJ ativo no CPF do segurado, acionar imediatamente para defesa preventiva.
 
-**ALERTA — Aposentadoria por idade híbrida.** Se o segurado combina períodos rurais e urbanos e está próximo da idade mínima (62F/65M) ou já a implementou, avaliar viabilidade de aposentadoria por idade híbrida (art. 48, §3º). Acionar `aposentadoria-idade-hibrida` para regime completo. A IN 188/2025 dispensou qualidade de segurado e exercício de atividade na DER. O Tema 1007/STJ garante cômputo de rural pré-1991 sem contribuição. A TNU (PEDILEF 2024) dispensou contribuição para rural pós-1991 na híbrida. Alertar sobre o Tema 1104/STF pendente.
+**ALERTA. Aposentadoria por idade híbrida.** Se o segurado combina períodos rurais e urbanos e está próximo da idade mínima (62F/65M) ou já a implementou, avaliar viabilidade de aposentadoria por idade híbrida (art. 48, §3º). Acionar `aposentadoria-idade-hibrida` para regime completo. A IN 188/2025 dispensou qualidade de segurado e exercício de atividade na DER. O Tema 1007/STJ garante cômputo de rural pré-1991 sem contribuição. A TNU (PEDILEF 2024) dispensou contribuição para rural pós-1991 na híbrida. Alertar sobre o Tema 1104/STF pendente.
 
-**ALERTA — Aposentadoria do professor (RGPS).** Se o segurado exerceu magistério na educação básica (educação infantil, ensino fundamental ou médio), inclusive em cargos de direção escolar, coordenação pedagógica ou funções com nomenclatura diversa (auxiliar de creche, técnico em desenvolvimento infantil, agente pedagógico), acionar `aposentadoria-professor-rgps` para regime completo. Verificar se há direito adquirido pré-EC 103/2019, qual regra de transição é mais favorável, se o acréscimo de 17%/20% da EC 20/98 se aplica, e se a Lei 15.326/2026 amplia o enquadramento. Distinguir RGPS de RPPS antes de prosseguir.
+**ALERTA. Aposentadoria do professor (RGPS).** Se o segurado exerceu magistério na educação básica (educação infantil, ensino fundamental ou médio), inclusive em cargos de direção escolar, coordenação pedagógica ou funções com nomenclatura diversa (auxiliar de creche, técnico em desenvolvimento infantil, agente pedagógico), acionar `aposentadoria-professor-rgps` para regime completo. Verificar se há direito adquirido pré-EC 103/2019, qual regra de transição é mais favorável, se o acréscimo de 17%/20% da EC 20/98 se aplica, e se a Lei 15.326/2026 amplia o enquadramento. Distinguir RGPS de RPPS antes de prosseguir.
 
-**ALERTA — Manutenção da qualidade de segurado.** Se o segurado já cumpriu carência para aposentadoria por idade mas ainda não atingiu a idade mínima, NUNCA orientar cessação total de contribuições, mesmo que a perda da qualidade não impeça a aposentadoria por idade (art. 3º, §1º, Lei 10.666/2003). A qualidade de segurado protege contra incapacidade (B31/B32) e garante pensão por morte (B21/B93) aos dependentes. Orientar manutenção de contribuições periódicas até implementação de todos os requisitos das aposentadorias programáveis. Acionar `periodo-graca-qualidade-segurado` para prazos e estratégia.
+**ALERTA. Manutenção da qualidade de segurado.** Se o segurado já cumpriu carência para aposentadoria por idade mas ainda não atingiu a idade mínima, NUNCA orientar cessação total de contribuições, mesmo que a perda da qualidade não impeça a aposentadoria por idade (art. 3º, §1º, Lei 10.666/2003). A qualidade de segurado protege contra incapacidade (B31/B32) e garante pensão por morte (B21/B93) aos dependentes. Orientar manutenção de contribuições periódicas até implementação de todos os requisitos das aposentadorias programáveis. Acionar `periodo-graca-qualidade-segurado` para prazos e estratégia.
 
-**ALERTA — Doença preexistente à filiação (art. 59, parágrafo único).** Se a doença que fundamenta o pedido de incapacidade existia antes da filiação ou do reinício das contribuições, NÃO propor isenção de carência pelo art. 151 como argumento isolado. A isenção pressupõe doença surgida após a filiação. Para doença preexistente, o único fundamento viável é o agravamento posterior (art. 59, parágrafo único, Lei 8.213/91). Verificar se há prova clínica do agravamento e em que data ele ocorreu. Contar a carência nessa data antes de afirmar que o requisito está cumprido. Esse alerta se aplica especialmente quando o segurado inicia contribuições como facultativo após longo período sem filiação e já possui diagnóstico prévio.
+**ALERTA. Doença preexistente à filiação (art. 59, §1º, da Lei 8.213/91).** Se a doença que fundamenta o pedido de incapacidade existia antes da filiação ou do reinício das contribuições, NÃO propor isenção de carência pelo art. 151 como argumento isolado. A isenção pressupõe doença surgida após a filiação. Para doença preexistente, o único fundamento viável é o agravamento posterior (art. 59, parágrafo único, Lei 8.213/91). Verificar se há prova clínica do agravamento e em que data ele ocorreu. Contar a carência nessa data antes de afirmar que o requisito está cumprido. Esse alerta se aplica especialmente quando o segurado inicia contribuições como facultativo após longo período sem filiação e já possui diagnóstico prévio.
 
 ## Análise de Viabilidade
 
@@ -170,7 +170,7 @@ Classificar em ALTA (precedente vinculante favorável + legislação clara), MÉ
 
 ### Viabilidade probatória
 
-O cliente tem ou pode obter a prova necessária? Há lacunas documentais suprímíveis?
+O cliente tem ou pode obter a prova necessária? Há lacunas documentais supríveis?
 
 Classificar em ALTA (documentação completa ou facilmente obtenível), MÉDIA (documentação parcial com lacunas supríveis) ou BAIXA (prova principal ausente e de difícil obtenção).
 
@@ -191,41 +191,41 @@ TRIAGEM DE CASO NOVO
 Data: [data atual]
 ```
 
-### Seção 1 — Dados do Caso
+### Seção 1. Dados do Caso
 
 Resumo dos dados coletados em formato narrativo (não tabular). Duas a quatro frases.
 
-### Seção 2 — Classificação
+### Seção 2. Classificação
 
 Categoria(s) identificada(s), com justificativa em uma frase por categoria.
 
-### Seção 3 — Rito e Foro
+### Seção 3. Rito e Foro
 
 Via processual recomendada (administrativa, JEF, ordinária, MS), foro competente e justificativa.
 
-### Seção 4 — Viabilidade
+### Seção 4. Viabilidade
 
 Os três indicadores (jurídica, probatória, risco processual) com classificação e justificativa em uma frase cada.
 
-### Seção 5 — Alertas
+### Seção 5. Alertas
 
 Todos os alertas automáticos disparados, ordenados por urgência.
 
-### Seção 6 — Documentação Necessária
+### Seção 6. Documentação Necessária
 
 Lista de documentos que o cliente precisa providenciar, gerada a partir da skill `base-documentos-comprobatorios-in128`. A lista técnica fica no relatório, e a mensagem ao cliente segue o modelo da seção "Pedido de documentos ao cliente" de `atendimento-respostas-padrao`, com até sete itens, em linguagem do cliente e sem estratégia interna.
 
-### Seção 7 — Plano de Ação
+### Seção 7. Plano de Ação
 
 Sequência numerada de próximos passos concretos, do imediato ao final. Cada passo indica a ação, o responsável (advogado ou cliente) e o prazo estimado quando aplicável.
 
-### Seção 8 — Skills Acionadas
+### Seção 8. Skills Acionadas
 
 Lista das skills consultadas durante a triagem, para rastreabilidade.
 
 ## Regras de Comportamento
 
-**Nunca classificar sem dados mínimos.** Se os dados críticos estão ausentes, perguntar antes de classificar. Não chutar.
+**Nunca classificar sem dados mínimos.** Se os dados críticos estão ausentes, perguntar antes de classificar. Não presumir.
 
 **Nunca omitir alertas.** Se um alerta foi disparado, ele aparece no relatório independentemente de o usuário ter perguntado.
 
@@ -239,20 +239,13 @@ Lista das skills consultadas durante a triagem, para rastreabilidade.
 
 **Registrar aprendizados.** Se durante a triagem o usuário relatar resultado de caso anterior que revele aprendizado documental, acionar `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") no Fluxo B.
 
-## Referências
-
-Antes de classificar qualquer caso, consultar os arquivos de referência.
-
-- `references/MAPA-CLASSIFICACAO.md` — árvore decisória de classificação por dados do segurado
-- `references/MAPA-ROTEAMENTO.md` — tabela de roteamento de skills por classificação
-
-## Análise do CNIS na triagem (Onda 117)
+## Análise do CNIS na triagem
 
 Havendo extrato do CNIS, despachar ao agente `analista-cnis` ANTES de classificar o benefício cabível e de avaliar viabilidade. A contagem em dois cenários que ele devolve, sem correção e com correção, é o que permite dizer se o caso é de requerimento imediato, de acerto administrativo prévio ou de espera.
 
 Triagem feita sobre a leitura superficial do CNIS erra o benefício e erra a DER.
 
-## Atendimento transcrito (Onda 125)
+## Atendimento transcrito
 
 Vindo o caso de atendimento gravado, de áudio ou de conversa de WhatsApp, passar antes pela `transcricao-atendimento`, que converte a fala na anotação padronizada e devolve a seção "Faltou perguntar", confrontando o atendimento com os dados mínimos desta skill.
 
@@ -260,20 +253,8 @@ Ganho da ordem. A triagem recebe o caso já com os dados críticos separados do 
 
 ## Extensão
 
-Teto de o relatório de triagem, 1 página, porque vira parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto do relatório de triagem, 1 página, porque vira parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que excede o teto volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

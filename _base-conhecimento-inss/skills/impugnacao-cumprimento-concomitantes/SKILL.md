@@ -15,15 +15,15 @@ Esta skill contém estratégias, fundamentos e padrões recorrentes identificado
 
 O INSS exclui do cálculo revisado as competências em que o contribuinte individual ou cooperado recolheu abaixo do salário mínimo. Alega que são "recolhimentos irregulares". Esse padrão é o mais frequente e afeta cooperados de cooperativas de trabalho, autônomos prestadores de serviço e contribuintes individuais com remuneração variável.
 
-**Contra-argumento consolidado**
+**Contra-argumento**
 
-O indicador PREC-MENOR-MIN é marcação administrativa (Anexo V da Portaria DIRBEN/INSS nº 990/2022), não sinônimo de irregularidade. Para benefícios com DIB anterior a 13/11/2019, não existia vedação constitucional ao cômputo dessas contribuições. A exigência de contribuição mínima sobre o salário mínimo (art. 195, §14, CF) foi introduzida apenas pela EC 103/2019. O art. 19-E do Decreto 3.048/99 (Decreto 10.410/2020) limita a restrição a "competências a partir de 13 de novembro de 2019". O princípio tempus regit actum é pacífico (STF, Súmula 359; STJ, EDcl no REsp 1.240.190/PR).
+O indicador PREC-MENOR-MIN é marcação administrativa (Anexo V da Portaria DIRBEN/INSS nº 990/2022), não sinônimo de irregularidade. Para benefícios com DIB anterior a 13/11/2019, não existia vedação constitucional ao cômputo dessas contribuições. A exigência de contribuição mínima sobre o salário mínimo (art. 195, §14, CF) foi introduzida apenas pela EC 103/2019. O art. 19-E do Decreto 3.048/99 (Decreto 10.410/2020) limita a restrição a "competências a partir de 13 de novembro de 2019". O princípio tempus regit actum é pacífico (STF, Súmula 359).
 
 Para contribuintes individuais prestadores de serviço a empresa, o recolhimento abaixo do mínimo decorre da responsabilidade do tomador (art. 5º, Lei 10.666/2003), sendo inadmissível penalizar o segurado.
 
 A TNU fixou no Tema 349 (PEDILEF 0504017-94.2022.4.05.8400/RN, j. 16/10/2024) que o recolhimento abaixo do mínimo não impede o reconhecimento da qualidade de segurado obrigatório. Embora o cerne seja qualidade de segurado, a ratio decidendi abrange a validade da contribuição "para todos os efeitos".
 
-**Atenção** O Tema 349 da TNU está com Recurso Extraordinário admitido no STF (março/2025). Ainda não há pronunciamento definitivo do Supremo. Sempre mencionar esse fato com transparência.
+**Atenção.** Contra o acórdão do Tema 349 TNU, o STF reconheceu repercussão geral no RE 1.544.748 (Tema 1467 STF, sessão virtual encerrada em 19/06/2026) e determinou a suspensão nacional dos processos sobre a mesma controvérsia. Nos benefícios com DIB anterior a 13/11/2019, o fundamento principal não depende do Tema 349: o art. 195, §14, da CF e o art. 19-E do Decreto 3.048/99 alcançam apenas competências a partir de 13/11/2019. Verificar se a suspensão alcança o caso antes de citar o tema.
 
 ### 2. Exclusão de contribuições de empregado público concomitante
 
@@ -59,20 +59,20 @@ O item 1.4 estipula pagamento de 95% dos atrasados (deságio de 5%). O item 2.1 
 
 Ao redigir impugnação ao cumprimento deficiente, seguir esta estrutura.
 
-**Fase 1 — Primeira impugnação (logo após a revisão pelo INSS)**
+**Fase 1. Primeira impugnação (logo após a revisão pelo INSS)**
 
 1. Apresentar a divergência entre CNIS e Carta de Concessão revisada, competência a competência.
 2. Demonstrar que o acordo excluiu apenas segurado facultativo e RPPS.
 3. Juntar planilha comparativa e nova Carta de Concessão.
 4. Requerer que o INSS proceda à correta revisão.
 
-**Fase 2 — Réplica à defesa do INSS**
+**Fase 2. Réplica à defesa do INSS**
 
 O INSS geralmente apresenta dois argumentos. O primeiro é a limitação ao teto (procedente para poucas competências). O segundo é o PREC-MENOR-MIN (improcedente para benefícios com DIB anterior à EC 103/2019).
 
-A réplica deve separar os grupos de contribuições, demonstrar que contribuições de empregado público (Câmara, Prefeitura concomitante) não possuem PREC-MENOR-MIN e foram igualmente excluídas, invocar o art. 32 da Lei 8.213/91, o Tema 1.070/STJ, o tempus regit actum e a inaplicabilidade da EC 103/2019, e citar o Tema 349/TNU (com a ressalva do RE pendente no STF).
+A réplica deve separar os grupos de contribuições, demonstrar que contribuições de empregado público (Câmara, Prefeitura concomitante) não possuem PREC-MENOR-MIN e foram igualmente excluídas, invocar o art. 32 da Lei 8.213/91, o Tema 1.070/STJ, o tempus regit actum e a inaplicabilidade da EC 103/2019, e citar o Tema 349/TNU apenas com a ressalva do Tema 1467 STF e da suspensão nacional.
 
-**Fase 3 — Manifestação sobre a Cecalc**
+**Fase 3. Manifestação sobre a Cecalc**
 
 Se a Cecalc validar o cálculo do INSS, verificar se importou dados do INSS. Se sim, demonstrar que não houve cotejo independente com o CNIS. Requerer novo cálculo a partir dos dados brutos.
 
@@ -86,13 +86,13 @@ Para consulta rápida dos fundamentos, ler o arquivo `references/FUNDAMENTOS.md`
 
 O Tema 1.207/STJ (REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria, j. 28/06/2024, trânsito fev/2025) é o precedente nacional vinculante sobre compensação de benefício inacumulável em cumprimento de sentença. Tese fixada por unanimidade, sob rito dos repetitivos. A compensação deve ser feita mês a mês, limitada ao valor do título judicial por competência, vedado saldo negativo mensal ou final, vedada execução invertida ou restituição indevida.
 
-O IRDR 14/TRF4 (5023872-14.2017.4.04.0000, trânsito 17/11/2021) é o precedente precursor, com tese substancialmente idêntica. O Tema 195/TNU (j. 18/09/2020) é diverso e menos protetivo, porque compensa pelo total dos valores e veda apenas o saldo final negativo (auditoria 03/10/2026). O Tema 1.207/STJ prevalece como repetitivo nacional.
+O IRDR 14/TRF4 (5023872-14.2017.4.04.0000, trânsito 17/11/2021) é o precedente precursor, com tese substancialmente idêntica. O Tema 195/TNU (j. 18/09/2020) é diverso e menos protetivo, porque compensa pelo total dos valores e veda apenas o saldo final negativo. O Tema 1.207/STJ prevalece como repetitivo nacional.
 
 A RCIJEF 5001446-98.2024.4.04.7004 (3ª TR Paraná, j. 14/04/2025) estendeu a vedação de saldo negativo e execução invertida também a benefícios concedidos administrativamente em que a compensação traga prejuízo ao segurado.
 
-**Uso obrigatório.** Em toda impugnação ao cumprimento de sentença por atividades concomitantes em que o INSS ou a Cecalc computar saldo negativo em qualquer competência, invocar o Tema 1.207/STJ como fundamento principal, reforçado pelo IRDR 14/TRF4; o Tema 195/TNU só reforça a vedação do saldo final negativo e não sustenta a compensação mês a mês (auditoria 03/10/2026). Quando houver cobrança administrativa por concomitância, invocar o RCIJEF 5001446-98.2024.4.04.7004.
+**Uso obrigatório.** Em toda impugnação ao cumprimento de sentença por atividades concomitantes em que o INSS ou a Cecalc computar saldo negativo em qualquer competência, invocar o Tema 1.207/STJ como fundamento principal, reforçado pelo IRDR 14/TRF4; o Tema 195/TNU só reforça a vedação do saldo final negativo e não sustenta a compensação mês a mês. Quando houver cobrança administrativa por concomitância, invocar o RCIJEF 5001446-98.2024.4.04.7004.
 
-## Tema 1.207/STJ incorporado ao Manual CJF 2026 (Onda 76)
+## Tema 1.207/STJ incorporado ao Manual CJF 2026
 
 A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o Tema 1.207/STJ como Nota 6 do item 4.3.1.1, com a diretriz expressa de compensação MÊS A MÊS, no limite, para cada competência, do valor do título judicial, vedado valor mensal ou final negativo, para evitar execução invertida ou restituição indevida. Em impugnação contra a contadoria, citar a tese E a nota do Manual, que orienta o procedimento das contadorias da Justiça Federal.
 
@@ -110,16 +110,4 @@ Ao analisar qualquer cálculo de revisão por atividades concomitantes, seguir e
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

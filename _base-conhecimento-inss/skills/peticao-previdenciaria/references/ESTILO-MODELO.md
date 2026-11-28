@@ -2,7 +2,7 @@
 
 Onda 182, 17/10/2026. Este é o manual de redação das peças do escritório, revisto a pedido do titular para produzir texto direto, jurídico e formal, sem enrolação e sem excesso de lei, com preferência pelos fatos e pelo seu detalhamento. As calibragens anteriores (Ondas 163 e 176) e o histórico das correções estão em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-**Ordem de prevalência.** Em primeiro lugar valem as preferências do titular. Depois vale este manual, na linguagem, na frase, no parágrafo, nos fatos e na medida da lei. Por fim vale o `METODO-PETICAO-TERCINI.md`, na ordem das seções, nas fórmulas e na voz. Em peça dirigida a Catanduva, o vocabulário e a sequência do bloco-modelo da matéria vêm da skill `base-juizo-catanduva`.
+**Divisão de matérias.** As preferências do titular prevalecem sobre tudo. Este manual rege a linguagem, a frase, o parágrafo, os fatos e a medida da lei. O `METODO-PETICAO-TERCINI.md` rege a ordem das seções, as fórmulas e a voz. A regra de títulos está em `MECANICA-DOCX.md`, e a extensão de referência por tipo de peça, na Camada 6 da `base-revisao-peticao-aprofundada`. Em peça dirigida a Catanduva, o vocabulário e a sequência do bloco-modelo da matéria vêm da skill `base-juizo-catanduva`.
 
 ## O princípio
 
@@ -67,7 +67,7 @@ Cada ponto controvertido se desenvolve em quatro tempos:
 3. a norma que incide, na medida da seção anterior;
 4. a consequência, com número.
 
-Quando há controvérsia, a pergunta da seção vem em uma frase, formulada pelo critério legal, como faz o juízo: "Cabe saber, assim, se a Parte Autora [...]". A defesa previsível do INSS é enfrentada em parágrafo próprio, aberto por "Nem se diga que".
+Quando há controvérsia, a pergunta da seção vem em uma frase, formulada pelo critério legal, como faz o juízo: "Cabe saber, assim, se a Parte Autora [...]". A defesa previsível do INSS é enfrentada em parágrafo próprio, aberto por "Nem se diga que", o que obriga o julgador a examinar o argumento que a afasta (art. 489, § 1º, IV, do CPC).
 
 Em embargos, réplica e recurso, a resposta segue ponto a ponto. Cada ponto traz três informações: onde foi suscitado (ID), o que a decisão disse ou deixou de dizer e por que o ponto muda o resultado.
 
@@ -91,7 +91,7 @@ Os dois trechos abaixo mostram a forma pretendida, em caso fictício de incapaci
 
 ## Títulos
 
-O título começa por DO, DA, DOS ou DAS e nomeia o instituto, o requisito, o vício ou o pedido. Pode trazer, em algarismos, o número que mede o objeto, como "60 DIAS". Não traz data, ID, valor em reais, oração adjetiva desenvolvida, verbo coloquial nem adjetivo valorativo.
+A regra completa está em `MECANICA-DOCX.md`, seção Títulos de Seção. Em síntese, o título começa por DO, DA, DOS ou DAS (salvo REQUERIMENTOS e QUESITOS), nomeia o instituto, o requisito, o vício ou o pedido em até doze palavras, pode trazer em algarismos o número que mede o objeto e não traz fato, data, ID, valor em reais, oração adjetiva desenvolvida, verbo coloquial nem adjetivo valorativo.
 
 | Antes | Depois |
 |---|---|
@@ -172,7 +172,7 @@ Os critérios retiram apenas repetição e ruído. Nenhum deles autoriza retirar
 
 ## Auditoria antes de entregar
 
-A peça só sai depois de dez conferências, feitas em silêncio, com apenas o resultado no relatório:
+A peça apenas sai depois de dez conferências, feitas em silêncio, com apenas o resultado no relatório:
 
 1. os fatos ocupam a maior parte da peça e vêm com data, documento e número;
 2. a lei transcrita se limita ao dispositivo controvertido, e o restante é remissão;

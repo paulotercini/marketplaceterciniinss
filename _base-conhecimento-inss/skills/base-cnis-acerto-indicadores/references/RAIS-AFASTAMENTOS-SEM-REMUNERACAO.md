@@ -1,162 +1,61 @@
-# RAIS e eSocial - Afastamentos Sem Remuneração e Impacto no Tempo de Contribuição
+# RAIS e eSocial. Afastamentos sem Remuneração e Tempo de Contribuição
 
-Reference operacional para verificar, em cada análise de CNIS que traga anexos da RAIS ou dados de S-2230 do eSocial, os períodos em que o segurado ficou afastado do trabalho SEM remuneração. Estes períodos NÃO são considerados pelo INSS para tempo de contribuição, para carência ou para qualidade de segurado, e precisam ser alertados ao advogado ANTES do requerimento administrativo ou da inicial.
+Roteiro para toda análise de CNIS que traga RAIS, dossiê previdenciário com bloco de afastamentos ou evento S-2230 do eSocial.
 
-## Por que este ponto é crítico
+## Fundamento
 
-O INSS trabalha com o binômio contribuição efetiva x tempo computável. Quando o vínculo empregatício está aberto mas o empregado está afastado sem receber salário (e sem receber benefício previdenciário), a competência aparece sem remuneração no CNIS. O algoritmo do INSS interpreta essas competências como.
+- Tempo de contribuição é o período com contribuição obrigatória ou facultativa (Decreto 3.048/99, art. 19-C). O afastamento sem remuneração do empregado, doméstico ou intermitente conta apenas se houve contribuição facultativa no período (art. 19-C, VIII, c/c art. 11, §5º).
+- O salário-maternidade conta (art. 19-C, II). O benefício por incapacidade intercalado com atividade conta como tempo (Lei 8.213/91, art. 55, II) e como carência (Tema 1125 STF; Súmula 73 TNU).
+- O segurado suspenso ou licenciado sem remuneração entra em período de graça de 12 meses (Lei 8.213/91, art. 15, II). A qualidade de segurado não se perde de imediato.
+- A competência zerada com vínculo aberto entra no PBC pelo salário mínimo, para empregado, doméstico e avulso, salvo jornada parcial ou intermitente (IN 128/2022, art. 223, §§2º e 3º, redação da IN 212/2026).
 
-- Sem salário-de-contribuição válido para a média (art. 29 Lei 8.213/91).
-- Sem tempo de contribuição computável para carência (art. 25 Lei 8.213/91).
-- Sem impacto na qualidade de segurado, salvo se a hipótese ativar o art. 15, §3º ou o art. 15, §4º da Lei 8.213/91.
+## Onde localizar
 
-Se o advogado só olhar o campo "vínculo aberto de X a Y" no CNIS sem descer nas remunerações mês a mês (e sem cruzar com a RAIS), pode acreditar que há mais tempo de contribuição do que efetivamente há, e o cliente é surpreendido no indeferimento administrativo ou na sentença. Este ponto já custou aposentadorias no escritório e passa a ser verificação obrigatória.
+RAIS (até a substituição pelo eSocial), evento S-2230 do eSocial, GFIP e o extrato do CNIS com remunerações mês a mês, inclusive o bloco de ocorrências.
 
-## Onde encontrar os afastamentos
+## Tabela 18 do eSocial (motivos de afastamento)
 
-**RAIS.** Relação Anual de Informações Sociais, entregue anualmente pelo empregador até 2019 e substituída gradativamente pelo eSocial. Traz para cada empregado o vínculo, remunerações mensais, e campos de afastamento com o código do motivo.
+Códigos conforme o leiaute S-1.3, Tabela 18. Fonte de conferência: https://www.gov.br/esocial/pt-br/documentacao-tecnica (a vigência de vários códigos mudou em 19/07/2021; confira a versão vigente na data do afastamento). Código não confere direito por si: o que decide é a remuneração efetivamente paga e registrada.
 
-**eSocial S-2230.** Evento de afastamento temporário. A partir da adesão da empresa ao eSocial (calendário escalonado, quase todas as empresas privadas a partir de 2019 a 2021), os afastamentos aparecem no CNIS pelas informações do S-2230, com código conforme a Tabela 18 do Manual do eSocial.
+**Grupo A. Remunerado ou com salário-maternidade (conta).**
+15 férias ou recesso; 16 licença remunerada; 17 licença-maternidade; 18 prorrogação Empresa Cidadã; 19 aborto não criminoso; 20 adoção ou guarda judicial; 33 licença-maternidade de 180 dias da Lei 13.301/2016 (até 18/07/2021); 35 antecipação ou prorrogação da licença-maternidade por atestado; 43 prorrogação da Lei 15.156/2025; 53 gestante ou lactante afastada de atividade insalubre sem local salubre (CLT, art. 394-A, §3º).
 
-**GFIP.** Guia de Recolhimento do FGTS e Informações à Previdência Social, formato mais antigo, também traz campos de afastamento.
+**Grupo B. Benefício previdenciário.**
+01 acidente ou doença do trabalho; 03 acidente ou doença não relacionados ao trabalho; 06 aposentadoria por invalidez. Os 15 primeiros dias são salário pago pelo empregador. O período em benefício conta se intercalado com atividade ou contribuição; requerer o cômputo expressamente.
 
-**Extrato completo do CNIS.** Quando o advogado tem procuração e acesso ao CNIS pelo Meu INSS ou pelo Plataforma do Advogado, deve baixar o extrato COM remunerações e cruzar mês a mês.
+**Grupo C. Em regra sem remuneração (alerta).**
+07 acompanhamento de familiar enfermo; 11 cárcere; 21 licença não remunerada ou suspensão por obrigação legal; 27 suspensão para qualificação (CLT, art. 476-A); 30 suspensão disciplinar (até 18/07/2021); 34 inatividade do avulso por mais de 90 dias; 37 suspensão temporária do contrato (Lei 14.020/2020 e programa de 2021); 38 impedimento de escala do avulso; 41 e 42 qualificação com suspensão (Lei 14.457/2022); 44 suspensão por ajuizamento de rescisão indireta; 45 suspensão para inquérito de falta grave.
 
-## Códigos da Tabela 18 do eSocial (Motivos de Afastamento)
+**Conferir caso a caso.** 12 e 13 candidatura eleitoral; 22 mandato eleitoral; 24 mandato sindical; 25 vítima de violência doméstica (Lei 11.340/2006, art. 9º, §2º, II); 29 serviço militar obrigatório, que conta por regra própria mediante certidão militar (Lei 8.213/91, art. 55, I; ver `base-servico-militar-obrigatorio`); 05, 10, 31, 39 e 40, próprios de servidor ou empregado público.
 
-A relação abaixo é operacional, categorizando cada código em três grupos.
+## Procedimento
 
-### Grupo A - Afastamento REMUNERADO, MANTÉM tempo de contribuição
-
-Nestes casos o empregador continua pagando o salário ou paga a diferença, e o INSS reconhece a competência para carência e tempo.
-
-- **15.** Gozo de férias ou recesso.
-- **17.** Licença-maternidade (durante os primeiros 120 dias pagos pela empresa e reembolsados pelo INSS, ou pagos diretamente pelo INSS).
-- **20.** Licença-maternidade prorrogada (Lei 11.770/2008, Empresa Cidadã).
-- **21.** Licença remunerada.
-- **34.** Licença-paternidade.
-- **35.** Convocação eleitoral.
-- **44.** Licença por adoção (novo código).
-
-### Grupo B - Afastamento com BENEFÍCIO previdenciário (mantém qualidade de segurado, MAS não conta como tempo de contribuição direto)
-
-O trabalhador fica em gozo de benefício, o vínculo permanece, a qualidade de segurado é mantida (art. 15, I Lei 8.213/91), mas a competência não recebe salário-de-contribuição direto do empregador. **ATENÇÃO.** Há tese pró-segurado consolidada de que o período em gozo de auxílio-doença conta como tempo de contribuição quando INTERCALADO com períodos contributivos (Tema 998/STJ), mas o INSS resiste a computar administrativamente e o advogado precisa peticionar. Cruzar com `precedentes-previdenciarios`.
-
-- **01.** Acidente/Doença não relacionada ao trabalho (a partir do 16º dia, INSS assume via B31, mesmo antes o empregador paga integralmente).
-- **02.** Acidente do trabalho ou doença ocupacional (a partir do 16º dia, INSS via B91).
-- **03.** Acidente ou doença relacionada ao trabalho.
-- **05.** Aposentadoria por invalidez (na verdade, encerra o vínculo previdenciário para efeitos de novo tempo).
-- **17.** Licença-maternidade (quando paga integralmente pelo INSS a partir de determinados enquadramentos).
-- **36.** Auxílio-reclusão (para o dependente do preso, não computa tempo para o titular, mas relevante para dependentes).
-
-### Grupo C - Afastamento SEM remuneração e SEM benefício (NÃO CONTA para tempo de contribuição, ALERTA CRÍTICO)
-
-Estes são os afastamentos que o INSS DESCARTA da contagem. O advogado precisa alertar o cliente no atendimento inicial, ajustar a estratégia de aposentadoria e considerar complementação ou indenização de contribuições quando cabível.
-
-- **04.** Serviço militar obrigatório. O tempo de serviço militar é contabilizado por regra própria (Lei 4.375/1964 e art. 55, I Lei 8.213/91), CONTA para tempo de contribuição, mas depende de averbação via CTC militar, não vem automático no CNIS.
-- **07.** Acompanhamento de cônjuge servidor público. NÃO CONTA.
-- **08.** Cárcere/prisão (do empregado). NÃO CONTA (a menos que haja auxílio-reclusão para dependente).
-- **11.** Licença sem remuneração para tratar de interesses particulares. NÃO CONTA.
-- **13.** Cárcere/reclusão. NÃO CONTA.
-- **14.** Qualificação profissional (Lei 12.513/2011). Quando bolsa PRONATEC paga, discute-se se conta.
-- **16.** Declaração de nulidade do contrato de trabalho. NÃO CONTA.
-- **18.** Licença sem vencimento. NÃO CONTA.
-- **19.** Suspensão por indisciplina. NÃO CONTA.
-- **22.** Cárcere/prisão. NÃO CONTA.
-- **27.** Licença por afastamento do cônjuge servidor público. NÃO CONTA.
-- **30.** Suspensão disciplinar temporária. NÃO CONTA.
-- **31.** Suspensão preventiva. NÃO CONTA.
-- **33.** Suspensão do contrato para participação em curso. NÃO CONTA (salvo bolsa PRONATEC).
-- **34.** Suspensão do contrato do art. 476-A CLT (qualificação profissional). NÃO CONTA. Este código gera confusão porque a numeração se repete no Grupo A (licença-paternidade), depende da versão da tabela vigente no momento do afastamento.
-- **37.** Suspensão do contrato do art. 133 CLT. NÃO CONTA.
-
-## Procedimento operacional obrigatório
-
-Quando a análise de CNIS for feita, o advogado ou a skill DEVE seguir este roteiro.
-
-### Passo 1. Identificar se há RAIS ou eSocial no material recebido
-
-O cliente pode entregar a RAIS impressa dos anos anteriores, ou o dossiê previdenciário emitido pelo INSS que já incorpora os afastamentos, ou apenas o extrato CNIS. Se houver apenas o extrato CNIS, verificar se traz o bloco "Períodos de afastamento" ou "Ocorrências", que reflete os S-2230 do eSocial e os campos da RAIS transmitidos.
-
-### Passo 2. Listar os afastamentos por competência
-
-Para cada afastamento identificado, registrar.
-
-- Nome do empregador e CNPJ.
-- Data de início do afastamento.
-- Data de término do afastamento.
-- Código de motivo (Tabela 18 eSocial) e descrição do motivo.
-- Grupo em que se enquadra (A, B ou C).
-
-### Passo 3. Verificar remunerações do período
-
-Cruzar com o extrato de remunerações mês a mês do CNIS. Se houve remuneração paga no período de afastamento, provavelmente Grupo A. Se não houve remuneração e o segurado recebeu benefício previdenciário no mesmo período, Grupo B. Se não houve remuneração nem benefício, Grupo C.
-
-### Passo 4. Emitir alertas
-
-Para cada período do Grupo C identificado, emitir alerta claro ao advogado com o seguinte formato.
+1. Listar cada afastamento: empregador, CNPJ, início, fim, código e descrição.
+2. Cruzar com as remunerações mensais do CNIS e com os benefícios do período.
+3. Classificar no grupo A, B ou C pela remuneração efetiva, não apenas pelo código.
+4. Emitir o alerta abaixo para cada período do grupo C e consolidar o total.
+5. Escolher a providência.
 
 ```
 [ALERTA - TEMPO DE CONTRIBUICAO]
 Empregador. [Nome + CNPJ]
-Vínculo. [DIA de admissão] a [DIA de rescisão, ou "aberto"]
-Afastamento SEM remuneração de [DIA] a [DIA]
-Motivo. [Código] - [Descrição]
-Impacto. [X] meses e [Y] dias NÃO computados pelo INSS
-para tempo de contribuição, carência ou qualidade de segurado.
-Ação recomendada. [ver seção Ações a seguir]
+Vínculo. [admissão] a [rescisão ou "aberto"]
+Afastamento sem remuneração de [data] a [data]
+Motivo. [código] - [descrição]
+Impacto. [X] meses e [Y] dias não computados para tempo de contribuição e carência.
+Providência. [retificação, cômputo do intercalado, prova de remuneração, ajuste da DER]
 ```
 
-Consolidar ao final o total de meses e dias que o INSS descartará da contagem, para o advogado tomar decisão estratégica.
+## Providências
 
-### Passo 5. Ações a considerar
+- Código lançado errado (ex.: licença-maternidade informada como licença não remunerada): retificação do eSocial pela empresa e RAC de vínculos e remunerações (IN 128/2022, Anexo I-B).
+- Remuneração existente mas não informada: RAC com holerites, extratos bancários e CTPS. A omissão do empregador não prejudica o empregado (Lei 8.212/91, art. 30, I; Lei 8.213/91, art. 34, I).
+- Suspensão revertida em juízo (códigos 44 e 45) com pagamento de salários: averbar pela sentença trabalhista (`base-rt-ajuizamento-vinculo-previdenciario`).
+- Benefício intercalado: requerer o cômputo como tempo e carência.
+- Afastamento sem remuneração em curso: o segurado pode contribuir como facultativo no período (Decreto 3.048/99, art. 11, §5º). A filiação facultativa não retroage (art. 11, §3º); para o passado, ajustar a DER e o planejamento.
+- Sócio que manteve pró-labore no período: o tempo pode contar como contribuinte individual (`contribuinte-individual-in128`).
+- Vínculo aberto com remuneração zerada em caso de alta do INSS e recusa do empregador: não pedir baixa do vínculo; ver `base-limbo-previdenciario-tema300`.
 
-Para cada período do Grupo C, avaliar.
+## Integração
 
-- **Complementação de contribuição.** Se o cliente puder recolher retroativamente como contribuinte individual ou facultativo para períodos posteriores à filiação obrigatória, verificar se ainda há prazo (art. 45-A Lei 8.212/91 com prazos decadenciais).
-- **Indenização de contribuições em atraso.** Skill `indenizacao-contribuicoes-atraso`.
-- **Prova de manutenção da qualidade de segurado.** Se o afastamento coincidiu com período em que o cliente estava recebendo benefício previdenciário paralelo, verificar o art. 15, I Lei 8.213/91.
-- **Impugnação de código incorreto na RAIS.** Se o empregador informou código do Grupo C erroneamente quando deveria ter sido do Grupo A (ex. licença-maternidade lançada como licença sem vencimento), pedir retificação da RAIS pela empresa e retificação do CNIS pelo INSS via RAC (Anexo I-A da IN 128/2022).
-- **Adaptação da estratégia de aposentadoria.** Se o total descartado for expressivo (ex. mais de 12 meses), reavaliar a DER planejada, considerar reafirmação da DER futura, avaliar regras de transição EC 103/2019 alternativas.
-
-## Alerta especial - período em auxílio-doença intercalado
-
-O Tema 998/STJ firmou tese pró-segurado. O período de gozo de auxílio-doença deve ser computado como tempo de contribuição quando INTERCALADO com períodos contributivos, mesmo que o CNIS não traga o cômputo automaticamente. O advogado deve REQUERER expressamente esse cômputo no requerimento administrativo e, se negado, na inicial da ação. Cruzar com `precedentes-previdenciarios` e Tema 998/STJ literal.
-
-## Alerta especial - Contribuinte individual empresário durante afastamento
-
-Se o cliente for sócio administrador ou empresário e ficar afastado do vínculo empregatício, verificar se manteve pró-labore como CI da empresa própria no mesmo período. Se sim, esse período pode contar por outra via (CI), não pelo vínculo empregatício. Cruzar com `contribuinte-individual-in128`.
-
-## Alerta especial - Empregador que não informou o afastamento
-
-Se o CNIS mostra vínculo aberto mas com remunerações zeradas em determinado período, e a RAIS do ano correspondente não traz código de afastamento, isso pode significar que o empregador omitiu a informação. Duas hipóteses.
-
-- Empregador em situação irregular (pode gerar indicador PVIN-IRREG). Se o afastamento REALMENTE não ocorreu e o cliente lembra de ter trabalhado normalmente, pedir RAC de acerto de remuneração (Anexo I-A). Isso é PRÓ-SEGURADO, ganha tempo de contribuição.
-- Empresa em falência ou desativada. Impugnar via RAC apresentando outros documentos (CTPS, holerite, extratos bancários com salário creditado, testemunhas).
-
-## Integração com esta skill
-
-Este roteiro se aplica em conjunto com o restante da skill `base-cnis-acerto-indicadores`. A verificação de RAIS e afastamentos deve rodar no mesmo momento em que se verifica os indicadores CNIS, ANTES do requerimento administrativo, para evitar surpresa.
-
-## Fontes normativas
-
-- Lei 8.213/91, arts. 15, 25, 27-A, 29, 55.
-- Lei 8.212/91, arts. 27, 32, 45-A.
-- Decreto 3.048/99, arts. 19, 32.
-- Portaria DIRBEN/INSS 990/2022 (com alteração da 1.316/2025) - Livro I - CNIS.
-- IN 128/2022 INSS (com alteração IN 164/2024) - RAC.
-- Manual do eSocial versão S-1.3 - Tabela 18 Motivos de Afastamento.
-- Tema 998/STJ - período de auxílio-doença intercalado com contributivo.
-- Súmula 73/TNU - Tempo em gozo de auxílio-doença.
-
-## Cruzamento com outras skills
-
-- `base-cnis-acerto-indicadores` (skill mãe).
-- `indenizacao-contribuicoes-atraso`.
-- `contribuinte-individual-in128`.
-- `contribuicoes-complementacao-ec103`.
-- `precedentes-previdenciarios` (Tema 998/STJ).
-- `base-precedentes-catalogo-vinculantes`.
-- `periodo-graca-qualidade-segurado`.
-- `base-planejamento-previdenciario`.
-- `peticao-previdenciaria`.
+`indenizacao-contribuicoes-atraso`, `contribuicoes-complementacao-ec103`, `periodo-graca-qualidade-segurado`, `base-planejamento-previdenciario`, `peticao-previdenciaria`, `base-precedentes-catalogo-vinculantes`.

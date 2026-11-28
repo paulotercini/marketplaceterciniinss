@@ -46,16 +46,18 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   `base-conhecimento-inss:red-team-peticao` (Onda 79), entregando a peca, o
   inventario de provas com IDs, o CNIS e o historico administrativo. O agente
   simula a contestacao do INSS e o voto contrario, devolve relatorio de
-  fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem
-  recomendada e veredito de protocolo. Ele so critica, nunca edita - o reforco
+  fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com reforco
+  recomendado e veredito de protocolo. Ele apenas critica, nunca edita - o reforco
   da peca e feito aqui, na sessao principal. Sem o agente disponivel, execute
   o mesmo roteiro inline.
-- Roteiro minimo (do agente ou inline): previo requerimento administrativo
-  (Tema 350/STF) e Tema 1124/STJ; decadencia; prescricao quinquenal; qualidade
+- Roteiro minimo (do agente ou inline): os alertas de previo requerimento
+  (Tema 350/STF), Tema 1124/STJ, decadencia (art. 103) e competencia seguem a
+  secao VERIFICACOES AUTOMATICAS OBRIGATORIAS da `base-revisao-peticao-aprofundada`;
+  somam-se prescricao quinquenal; qualidade
   de segurado/carencia; PPP extemporaneo ou sem NEN; EPI eficaz (Tema 555);
   coabitacao na pensao; etc.
 - Consulte `base-revisao-peticao-aprofundada`, `base-efeito-translativo-tema-1124-defesa`
-  e as `base-especial-*`/`defesa-probatoria` pertinentes. Reforce a peca contra cada
+  e as `base-especial-*`/`defesa-probatoria-especial` pertinentes. Reforce a peca contra cada
   fragilidade encontrada. Citacao suspeita apontada pelo red-team segue ao agente
   `verificador-precedentes` para conferencia em fonte oficial.
 - Na mesma rodada, despache ao agente `base-conhecimento-inss:conferente-tema-1124`
@@ -83,25 +85,26 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   a versao ajustada como **NOVO** arquivo na subpasta `Claude`:
   `Peticao Inicial - <Cliente> - DDMMAAAA (revisada)`. Preserve o original.
 
-## 8. Revisao aprofundada OBRIGATORIA (base-revisao-peticao-aprofundada) — autocorrecao
+## 8. Revisao aprofundada OBRIGATORIA (base-revisao-peticao-aprofundada). autocorrecao
 - SEMPRE, antes de fechar a peca, rode a skill `base-revisao-peticao-aprofundada`
   sobre a versao revisada (passo 7): protocolo anti-alucinacao de 5 niveis
   (existencia, vigencia, redacao literal, modulacao, numero de processo/precedente)
   e as 5 camadas (formal, normativa, fatica, argumentativa, integridade probatoria),
   com severidade quadrupla (BLOQUEANTE / CRITICO / IMPORTANTE / MENOR).
 - **Corrija automaticamente** os achados sanaveis, sem voltar a perguntar (coerente
-  com a gravacao automatica deste fluxo): padrao visual/formatacao, dois-pontos
-  logicos, referencia por ID, redacao literal de artigos, numero/tese de precedente
+  com a gravacao automatica deste fluxo): padrao visual/formatacao, dois-pontos fora
+  de citacao literal ou enumeracao, referencia por ID, redacao literal de artigos, numero/tese de precedente
   trocado (substituir pela versao `[CONFERIDO]`), competencia territorial/material,
   fato classificado como "incontroverso" que o INSS impugnou (reclassificar como
   controvertido), fatos orfaos e provas orfas. Gere a peca ja corrigida mantendo o
-  versionamento do passo 7 — **sem sobrescrever** o original.
+  versionamento do passo 7, **sem sobrescrever** o original.
 - **Honestidade radical (nao autocorrigir as cegas):** citacao de norma ou
   precedente NAO CONFIRMADA em fonte primaria e **removida/suspensa**, jamais
   inventada ou mantida. Achado BLOQUEANTE que exija decisao estrategica do Paulo
   (tese central apoiada em precedente inexistente, pedido incompativel com o rito,
-  ausencia de previo requerimento Tema 1124/STJ, dado fatico que contraria o CNIS)
-  **nao se resolve sozinho** — aplique o que for tecnico e **sinalize o restante em
+  ausencia de previo requerimento (Tema 350/STF) ou de documento
+  essencial nao levado ao INSS (Tema 1124/STJ), dado fatico que contraria o CNIS)
+  **nao se resolve sozinho**, aplique o que for tecnico e **sinalize o restante em
   destaque** no relatorio de prontidao.
 - Registre no parecer e no relatorio o **log da revisao**: total de achados por
   severidade, o que foi autocorrigido e o que permanece pendente (com localizacao e
@@ -158,23 +161,11 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
 
 ## Extensão
 
-Extensão de referência da petição inicial, 7 páginas, com jurisprudência transcrita em cerca de 1 página. É referência preferencial, e não limite obrigatório (Onda 181): a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência da petição inicial, cerca de 7 páginas e 6 seções; a tabela única por tipo de peça está na Camada 6 da `base-revisao-peticao-aprofundada`. É referência, e não limite obrigatório: a peça tem a extensão que a compreensão de cada pedido exige, e dela sai apenas a repetição, nunca fato, prova, cálculo, explicação de norma ou transição. Antes de escrever, nomear em uma frase o ponto que decide, e o dado que o prova acompanha cada pedido. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Cadeia de cada pedido (regra permanente, 12/10/2026)
 

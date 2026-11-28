@@ -1,27 +1,25 @@
 ---
 name: base-cnis-acerto-indicadores
-description: Skill versionada no plugin do escritório, consolidando indicadores do CNIS (Portaria DIRBEN/INSS 990/2022 alterada pela 1.316/2025, atualização normativa até 06/2026), formulários RAC (Anexo I, I-A, I-B, I-C, I-D, I-E, I-F da IN 128/2022 com redação da IN 164/2024), robotização (Portaria DIRBEN/INSS 1.087/2022 e 997/2022), checklist pré-requerimento e estratégia antirobotização. Use SEMPRE que analisar extrato CNIS, identificar pendências, indicadores bloqueantes, alertas, acerto de CNIS, acerto de vínculos remunerações e contribuições, RAC, impugnação de indicador, indicador acerto, ACNISVR ADIV-DADOS-GFIP AEXT AEXT-IND AEXT-INDJ AEXT-INDR AEXT-VI AEXT-VP AEXT-VPR AEXT-VPT AEXT-VT AEXT-VTJ AEXT-VTR ASE-DEF ASE-DEFJ ASE-DEFR ASE-IND ASE-INDR ASEF-DEF AVR-AGPVINC AVRC-AGPVINC AVRC-DEF AVRC-DGPVINC AVRC-IND, NDET PADM-EMPR PCEI-EQP-INV PCTC-NTR PDARF PDIV-DADOS-GFIP PDT-NASC-FIL-INV PEMP-CAD PEMP-IDINV PEXT PNIT-0094 PNIT-CRIT PNIT-IND PNIT-SC PNIT-SUP PREC-CDCONC PREC-COD1821 PREC-CSE PREC-FACULTCONC PREC-FBR PREC-FBR-ANT PREC-LC123-ANT PREC-LC150-DOM PREC-MENOR-MIN PREC-OBITO PREC-PMIG-DOM PREM-BLOQ-EC103 PREM-EMPR PREM-EXT PREM-FORA-ATIV-INTERM PREM-FORA-CONVOC PREM-FORA-REINTEG PREM-FVIN PREM-IVIN PREM-NASC PREM-OBITO PREM-POSGRT PREM-PER-QUARENTENA PREM-REINTEG PREM-TSVE PREM-VINC-PROC-TRAB PRES-EMPR PRPPS PRPSE PSC-MEN-SM-EC103 PSE-NEG PSE-PEN PSE-POS PSUC-DIVERG-DT-ADM PVIN-ADMISSAO PVIN-ADM-OBITO PVIN-AGRUP-INC PVIN-CAGED PVIN-DESLIG-JUSTIÇA-TRAB PVIN-DESLIG-OBITO PVIN-DESLIG-PROC-TRAB PVIN-IRREG PVIN-MAND-ELETIVO PVIN-OBITO PVIN-RE PVIN-REC-PROC-TRAB PVIN-RESP-INDIRETO PVIN-SUBSTIT-INC PVIN-TRAB-INTERM PVIN-UNIC-CONTR, FBR-AUT-BAT FBR-AUT-CONCBEN FBR-AUT-CONCQSA FBR-AUT-CONCSD FBR-AUT-DUPGRUPFAM FBR-AUT-EXPCAD FBR-AUT-FACULTCONC FBR-AUT-OBITO FBR-AUT-PENDCAD FBR-AUT-PENDPROCES FBR-AUT-RENPES FBR-AUT-RENSUP, GFIP IAGRU IAGRUP ICED-VR-EXC-EC103 ICOMPL-VR-SM-EC103 IDARF IDESINDEXA IDT IEAN IREC-DESINDEXA IREC-FBR IREC-INDPEND IREC-LC123 IREC-LIM-SM IREC-MEI IRECOL IREL-PREV-POSSUI-COMP-AJUST IREM-ACD IREM-PARC-CEDIDO IREM-PARC-DIR-SIND IREM-PERQRT IREM-RECL-TRAB IREM-REINTEG IREM-TRAB-INTERM IREM-VINC-PROC-TRAB ISALMIN ISE-CVU IUTILIZ-EXC-EC103 IVIN-AGRUP-VINC IVIN-DESLIG-JUSTICA-TRAB IVIN-JORN-DIFERENCIADA IVIN-MAND-ELETIVO IVIN-POSSUI-REG-PRELIM IVIN-POSSUI-REM-TRAB-INTERM IVIN-POSSUI-REM-TRANS IVIN-PROC-TRAB IVIN-REG-PRELIM IVIN-REINTEG IVIN-TRAB-INTERM IVIN-TRAB-VERDE-AMARELO IVIN-UNIC-CONTR IVLR-DARF-LIMITADO, GPS código errado, retificação GPS, complementação contribuição, NIT unificação, IN 164/2024, robotização, concessão automática, indeferimento automático, Portaria 1087/2022, Memorando-Circular 14, vínculo sem data rescisão, data fim igual data início, seguro-desemprego CNIS, microficha, doméstica sem vínculo, checklist pré-requerimento, antirobotização, art. 574 IN 128 motivação, art. 576 parágrafo único reabertura, Portaria 997 novos elementos. Aciona AUTOMATICAMENTE para todo benefício que dependa de tempo de contribuição ou carência (aposentadoria por idade, tempo, especial, BPC sem renda, etc), antes do requerimento. Verifica também RAIS, dossiê previdenciário e eventos S-2230 do eSocial para identificar afastamentos SEM remuneração que o INSS descarta da contagem de tempo (códigos 07, 08, 11, 13, 16, 18, 22, 27, 30, 31, 33, 34, 37 da Tabela 18), gera alerta pró-segurado por período e recomenda ação (complementação, indenização art 45-A Lei 8.212, retificação da RAIS, cômputo do auxílio-doença intercalado pelo Tema 998/STJ). Use SEMPRE que mencionar RAIS, S-2230, eSocial afastamento temporário, licença sem remuneração, licença sem vencimento, suspensão do contrato, art 476-A CLT, art 133 CLT, licença interesse particular, acompanhamento cônjuge servidor, tabela 18 esocial, código afastamento, tempo de contribuição zerado, meses zerados no CNIS, remuneração zerada, empregado afastado sem salário, auxílio-doença intercalado, Tema 998 STJ, Súmula 73 TNU. Cruza com base-documentos-comprobatorios-in128, peticao-previdenciaria, precedentes-previdenciarios, tema-1124-instrucao-administrativa, mandado-seguranca-previdenciario, admissibilidade-barreiras-crps, contribuicoes-complementacao-ec103, indenizacao-contribuicoes-atraso, contribuinte-individual-in128, periodo-graca-qualidade-segurado, base-planejamento-previdenciario, base-revisao-peticao-aprofundada. NÃO use para RMI ou PPP isoladamente.
+description: Indicadores do CNIS (Portaria DIRBEN/INSS 990/2022 alterada pela 1.316/2025, atualização normativa até 06/2026), formulários RAC (Anexos I-B a I-E da IN 128/2022, art. 12, §2º, redação da IN 164/2024), robotização (Portaria DIRBEN/INSS 1.087/2022 e 997/2022), checklist pré-requerimento e estratégia antirobotização. Use SEMPRE que analisar extrato CNIS, identificar pendências, indicadores bloqueantes, alertas, acerto de CNIS, acerto de vínculos remunerações e contribuições, RAC, impugnação de indicador, indicador acerto, ACNISVR ADIV-DADOS-GFIP AEXT AEXT-IND AEXT-INDJ AEXT-INDR AEXT-VI AEXT-VP AEXT-VPR AEXT-VPT AEXT-VT AEXT-VTJ AEXT-VTR ASE-DEF ASE-DEFJ ASE-DEFR ASE-IND ASE-INDR ASEF-DEF AVR-AGPVINC AVRC-AGPVINC AVRC-DEF AVRC-DGPVINC AVRC-IND, NDET PADM-EMPR PCEI-EQP-INV PCTC-NTR PDARF PDIV-DADOS-GFIP PDT-NASC-FIL-INV PEMP-CAD PEMP-IDINV PEXT PNIT-0094 PNIT-CRIT PNIT-IND PNIT-SC PNIT-SUP PREC-CDCONC PREC-COD1821 PREC-CSE PREC-FACULTCONC PREC-FBR PREC-FBR-ANT PREC-LC123-ANT PREC-LC150-DOM PREC-MENOR-MIN PREC-OBITO PREC-PMIG-DOM PREM-BLOQ-EC103 PREM-EMPR PREM-EXT PREM-FORA-ATIV-INTERM PREM-FORA-CONVOC PREM-FORA-REINTEG PREM-FVIN PREM-IVIN PREM-NASC PREM-OBITO PREM-POSGRT PREM-PER-QUARENTENA PREM-REINTEG PREM-TSVE PREM-VINC-PROC-TRAB PRES-EMPR PRPPS PRPSE PSC-MEN-SM-EC103 PSE-NEG PSE-PEN PSE-POS PSUC-DIVERG-DT-ADM PVIN-ADMISSAO PVIN-ADM-OBITO PVIN-AGRUP-INC PVIN-CAGED PVIN-DESLIG-JUSTIÇA-TRAB PVIN-DESLIG-OBITO PVIN-DESLIG-PROC-TRAB PVIN-IRREG PVIN-MAND-ELETIVO PVIN-OBITO PVIN-RE PVIN-REC-PROC-TRAB PVIN-RESP-INDIRETO PVIN-SUBSTIT-INC PVIN-TRAB-INTERM PVIN-UNIC-CONTR, FBR-AUT-BAT FBR-AUT-CONCBEN FBR-AUT-CONCQSA FBR-AUT-CONCSD FBR-AUT-DUPGRUPFAM FBR-AUT-EXPCAD FBR-AUT-FACULTCONC FBR-AUT-OBITO FBR-AUT-PENDCAD FBR-AUT-PENDPROCES FBR-AUT-RENPES FBR-AUT-RENSUP, GFIP IAGRU IAGRUP ICED-VR-EXC-EC103 ICOMPL-VR-SM-EC103 IDARF IDESINDEXA IDT IEAN IREC-DESINDEXA IREC-FBR IREC-INDPEND IREC-LC123 IREC-LIM-SM IREC-MEI IRECOL IREL-PREV-POSSUI-COMP-AJUST IREM-ACD IREM-PARC-CEDIDO IREM-PARC-DIR-SIND IREM-PERQRT IREM-RECL-TRAB IREM-REINTEG IREM-TRAB-INTERM IREM-VINC-PROC-TRAB ISALMIN ISE-CVU IUTILIZ-EXC-EC103 IVIN-AGRUP-VINC IVIN-DESLIG-JUSTICA-TRAB IVIN-JORN-DIFERENCIADA IVIN-MAND-ELETIVO IVIN-POSSUI-REG-PRELIM IVIN-POSSUI-REM-TRAB-INTERM IVIN-POSSUI-REM-TRANS IVIN-PROC-TRAB IVIN-REG-PRELIM IVIN-REINTEG IVIN-TRAB-INTERM IVIN-TRAB-VERDE-AMARELO IVIN-UNIC-CONTR IVLR-DARF-LIMITADO, GPS código errado, retificação GPS, complementação contribuição, NIT unificação, IN 164/2024, robotização, concessão automática, indeferimento automático, Portaria 1087/2022, Memorando-Circular 14, vínculo sem data rescisão, data fim igual data início, seguro-desemprego CNIS, microficha, doméstica sem vínculo, checklist pré-requerimento, antirobotização, art. 574 IN 128 motivação, art. 576 parágrafo único reabertura, Portaria 997 novos elementos. Aciona AUTOMATICAMENTE para todo benefício que dependa de tempo de contribuição ou carência (aposentadoria por idade, tempo, especial, BPC sem renda, etc), antes do requerimento. Verifica também RAIS, dossiê previdenciário e eventos S-2230 do eSocial para identificar afastamentos SEM remuneração que o INSS descarta da contagem de tempo (Tabela 18 do eSocial, como os códigos 07, 11, 21, 27, 30, 34, 37, 41, 42, 44 e 45), gera alerta pró-segurado por período e recomenda ação (retificação do eSocial ou da RAIS, contribuição facultativa no afastamento, cômputo do auxílio-doença intercalado pela Súmula 73 TNU e pelo Tema 1125 STF). Use SEMPRE que mencionar RAIS, S-2230, eSocial afastamento temporário, licença sem remuneração, licença sem vencimento, suspensão do contrato, art 476-A CLT, art 133 CLT, licença interesse particular, acompanhamento cônjuge servidor, tabela 18 esocial, código afastamento, tempo de contribuição zerado, meses zerados no CNIS, remuneração zerada, empregado afastado sem salário, auxílio-doença intercalado, Tema 1125 STF, Súmula 73 TNU. Cruza com base-documentos-comprobatorios-in128, peticao-previdenciaria, precedentes-previdenciarios, tema-1124-instrucao-administrativa, mandado-seguranca-previdenciario, admissibilidade-barreiras-crps, contribuicoes-complementacao-ec103, indenizacao-contribuicoes-atraso, contribuinte-individual-in128, periodo-graca-qualidade-segurado, base-planejamento-previdenciario, base-revisao-peticao-aprofundada. NÃO use para RMI ou PPP isoladamente.
 ---
 
-# CNIS - Indicadores e Acerto (RAC) - Versão Plugin v1.40
+# CNIS. Indicadores e Acerto (RAC)
 
 ## VISÃO GERAL E POSTURA
 
-Esta skill é a versão versionada no plugin `base-conhecimento-inss` (Onda 50) da skill local do escritório `cnis-acerto-indicadores`, ampliada com a lista integral de indicadores capturada do banco de dados `planilha.tramitacaointeligente.com.br/indicadores-cnis` atualizado até 06/2026.
+Lista integral de indicadores em `references/INDICADORES-COMPLETO-2026.md`, transcrita do Anexo V da Portaria DIRBEN/INSS 990/2022 conforme o catálogo `planilha.tramitacaointeligente.com.br/indicadores-cnis` (fonte secundária, atualizada até 06/2026; conferir o Anexo V antes de citar).
 
-Postura exclusivamente pró-segurado. A análise de indicadores CNIS é o PRIMEIRO PASSO em qualquer requerimento que envolva tempo de contribuição. Indicadores não impugnados a tempo podem causar concessão deficiente ou indeferimento automatizado.
+A análise de indicadores CNIS é o PRIMEIRO PASSO em qualquer requerimento que envolva tempo de contribuição. Indicador não tratado antes do requerimento pode causar concessão deficiente ou indeferimento automatizado.
 
 ## FONTES NORMATIVAS
 
 **Indicadores.** Portaria DIRBEN/INSS nº 990/2022 (Anexo V), alterada pela Portaria 1.316/2025.
 
-**RAC (Requerimento de Acerto Cadastral).** IN PRES/INSS nº 128/2022 (redação da IN 164/2024). Portaria DIRBEN/INSS nº 1.240/2024, art. 25.
+**RAC (Requerimento de Atualização do CNIS).** IN PRES/INSS 128/2022, arts. 11 e 12 (redação da IN 164/2024). Portaria DIRBEN/INSS 990/2022, Livro I, arts. 23 e 24 (redação da Portaria 1.240/2024).
 
 **Robotização.** Portaria DIRBEN/INSS nº 1.087/2022. Portaria DIRBEN/INSS nº 997/2022, arts. 9º §2º e 11.
 
 **Vínculos sem data fim e regras operacionais.** Memorando-Circular nº 14 DIRBEN/INSS, de 20/05/2013 (regras absorvidas pelo sistema CNIS).
-
-**Catálogo de indicadores atualizado.** Banco de dados em `planilha.tramitacaointeligente.com.br/indicadores-cnis` consolidado até 06/2026 (com 11 grupos temáticos).
 
 ## CATEGORIAS DOS INDICADORES
 
@@ -61,11 +59,11 @@ Catálogo completo de indicadores em `references/INDICADORES-COMPLETO-2026.md`.
 
 **PVIN-CAGED.** Vínculo oriundo da fonte CAGED. Conferir contemporaneidade.
 
-**PADM-EMPR / PRES-EMPR / PREM-EMPR.** Empresa encerrada, restrita ou com CNPJ cancelado. NÃO PODE prejudicar o segurado (art. 29-A Lei 8.213/91).
+**PADM-EMPR / PRES-EMPR / PREM-EMPR.** Empresa encerrada, restrita ou com CNPJ cancelado. A irregularidade do empregador não prejudica o empregado, cujas contribuições são ônus da empresa (Lei 8.212/91, art. 30, I; Lei 8.213/91, art. 34, I).
 
 **PEMP-CAD / PEMP-IDINV.** Empregador com identificador inválido ou faltam dados cadastrais. Impugnar.
 
-**PDIV-DADOS-GFIP.** Divergência GFIP. Algoritmo Levenshtein gera falsos positivos.
+**PDIV-DADOS-GFIP.** Divergência de dados cadastrais na GFIP. Conferir grafia de nome e data de nascimento; divergência de grafia se corrige por RAC.
 
 **NDET.** Data de início de atividade estimada na migração. Confirmar com CTPS.
 
@@ -87,7 +85,7 @@ Catálogo completo de indicadores em `references/INDICADORES-COMPLETO-2026.md`.
 
 ### Contribuições
 
-**PREC-MENOR-MIN.** Recolhimento abaixo do mínimo. Exige complementação (GPS códigos 1872/1873 + DARF). Cruzar com `contribuicoes-complementacao-ec103`.
+**PREC-MENOR-MIN.** Recolhimento abaixo do mínimo. Após a EC 103/2019, complementação por DARF (art. 195, §14, CF; art. 19-E do Decreto 3.048/99). Cruzar com `contribuicoes-complementacao-ec103`.
 
 **PSC-MEN-SM-EC103.** Salário de contribuição abaixo do mínimo após EC 103/2019. Passível de complementação, utilização ou agrupamento.
 
@@ -105,17 +103,17 @@ Catálogo completo de indicadores em `references/INDICADORES-COMPLETO-2026.md`.
 
 ### Facultativo de Baixa Renda (FBR)
 
-Treze indicadores específicos da família FBR (FBR-AUT-BAT, FBR-AUT-CONCBEN, FBR-AUT-CONCQSA, FBR-AUT-CONCSD, FBR-AUT-DUPGRUPFAM, FBR-AUT-EXPCAD, FBR-AUT-FACULTCONC, FBR-AUT-OBITO, FBR-AUT-PENDCAD, FBR-AUT-PENDPROCES, FBR-AUT-RENPES, FBR-AUT-RENSUP).
+Doze indicadores da família FBR (FBR-AUT-BAT, FBR-AUT-CONCBEN, FBR-AUT-CONCQSA, FBR-AUT-CONCSD, FBR-AUT-DUPGRUPFAM, FBR-AUT-EXPCAD, FBR-AUT-FACULTCONC, FBR-AUT-OBITO, FBR-AUT-PENDCAD, FBR-AUT-PENDPROCES, FBR-AUT-RENPES, FBR-AUT-RENSUP).
 
 Cruzar com `base-facultativo-baixa-renda` para estratégia.
 
-### DARF (EC 103/2019 e EC 113/2021)
+### DARF (complementação pós-EC 103/2019)
 
 **PDARF-ALT-COMP-FORA-VIG / PDARF-ALT-CPF / PDARF-EVENTO-INCONSISTENTE / PDARF-INV-ALT-CODRECEITA / PDARF-RESTIT-PARCIAL / PDARF-RESTIT-TOTAL.** Pendências de DARF que impactam contribuições EC 103. Cruzar com `contribuicoes-complementacao-ec103`.
 
 ### NIT - Identificação
 
-**PNIT-0094 / PNIT-O094.** NIT em faixa crítica (Ofício INSS 094). Unificação obrigatória.
+**PNIT-0094.** NIT em faixa crítica. Requer unificação ou validação do NIT.
 
 **PNIT-CRIT.** NIT em faixa crítica.
 
@@ -217,29 +215,27 @@ A robotização do INSS (Portaria DIRBEN 1.087/2022 e 997/2022) processa requeri
 
 ### Como evitar a armadilha
 
-1. **Resolver pendências ANTES de requerer.** RAC adequado.
-2. **Anexar documentos** desde a inicial, mesmo que não solicitado.
-3. **Protocolo de Tema 1124** quando aplicável.
-4. **Pedido de PA físico** se houver fundamento (situação atípica).
-5. **Indeferimento automático.** Analisar motivação (art. 574 IN 128/2022) e pedir REABERTURA via art. 576 par. único IN 128.
+1. Tratar as pendências antes de requerer, por RAC.
+2. Anexar todos os documentos no protocolo, ainda que não solicitados (Tema 1124 STJ).
+3. No indeferimento automático, conferir a motivação, que deve analisar as provas e indicar os requisitos não atendidos (IN 128/2022, art. 574, §1º).
+4. Constatado erro, pedir revisão de ofício do processo concluído (IN 128/2022, art. 576, parágrafo único, redação da IN 141/2022).
 
 Cruzar com `tema-1124-instrucao-administrativa`.
 
-## FORMULÁRIOS RAC (Anexos da IN 128/2022)
+## FORMULÁRIOS RAC
 
-**Anexo I.** Acerto de vínculos.
-**Anexo I-A.** Acerto de remunerações.
-**Anexo I-B.** Acerto de contribuições.
-**Anexo I-C.** Unificação de NIT.
-**Anexo I-D.** Acerto de dados cadastrais.
-**Anexo I-E.** Acerto específico (variável).
-**Anexo I-F.** Acerto específico (variável).
+Modelos da IN 128/2022, art. 12, §2º (IN 164/2024):
+- Anexo I-B, 2.2. Acerto de vínculos e remunerações de empregado e doméstico.
+- Anexo I-C, 2.3. Acerto de remunerações de trabalhador avulso.
+- Anexo I-D, 2.4. Acerto de remunerações de contribuinte individual prestador de serviço.
+- Anexo I-E, 2.5. Reconhecimento de filiação e atualização de atividade.
+- Anexo I, 2.6. Acerto de contribuições (Portaria 990/2022, Livro I, art. 24, §1º).
 
-Detalhamento operacional dos RAC em `references/RAC-FORMULARIOS-2026.md`.
+O RAC é dispensado quando o requerimento eletrônico já contém as informações necessárias (art. 12, §3º).
 
 ## CRUZAMENTO COM OUTRAS SKILLS
 
-- `base-documentos-comprobatorios-in128` (Onda 50). Documentos para sanar indicadores.
+- `base-documentos-comprobatorios-in128`. Documentos para sanar indicadores.
 - `peticao-previdenciaria`. Geração de peças com base nos indicadores.
 - `precedentes-previdenciarios`. Jurisprudência sobre indicadores impugnáveis.
 - `tema-1124-instrucao-administrativa`. Estratégia ANTIROBOTIZAÇÃO.
@@ -255,50 +251,13 @@ Detalhamento operacional dos RAC em `references/RAC-FORMULARIOS-2026.md`.
 - `base-contagem-reciproca-rgps-rpps`. RPPS.
 - `auditoria-ppp`. IEAN como gatilho de auditoria.
 
-## VERIFICAÇÃO OBRIGATÓRIA DE RAIS E AFASTAMENTOS SEM REMUNERAÇÃO (Onda 62)
+## VERIFICAÇÃO OBRIGATÓRIA DE RAIS E AFASTAMENTOS SEM REMUNERAÇÃO
 
-**Regra do escritório.** Sempre que a análise de CNIS envolver material que inclua RAIS, dossiê previdenciário do INSS com bloco de afastamentos ou dados do S-2230 do eSocial, executar a verificação de AFASTAMENTOS SEM REMUNERAÇÃO antes de qualquer requerimento administrativo ou petição inicial.
+Sempre que o material trouxer RAIS, dossiê previdenciário com bloco de afastamentos ou evento S-2230 do eSocial, verificar os afastamentos sem remuneração antes do requerimento ou da inicial. O afastamento do empregado sem remuneração só conta como tempo se houve contribuição facultativa (Decreto 3.048/99, art. 19-C, VIII, c/c art. 11, §5º) e abre período de graça (Lei 8.213/91, art. 15, II).
 
-**Por que.** O INSS descarta da contagem de tempo de contribuição, da carência e da qualidade de segurado os períodos em que o vínculo empregatício estava aberto mas o empregado ficou afastado sem receber salário e sem receber benefício previdenciário. Códigos típicos da Tabela 18 do eSocial que geram este cenário. licença sem vencimento (18), licença sem remuneração para interesses particulares (11), acompanhamento de cônjuge servidor (07 e 27), suspensão do contrato do art. 476-A CLT para qualificação profissional (34), suspensão do contrato do art. 133 CLT (37), suspensão preventiva ou disciplinar (30 e 31), cárcere (08, 13 e 22), declaração de nulidade do contrato (16), entre outros.
+Roteiro: listar cada afastamento (empregador, CNPJ, datas, código da Tabela 18), cruzar com as remunerações e benefícios do CNIS, classificar em grupo A (remunerado ou salário-maternidade), B (benefício previdenciário) ou C (sem remuneração), emitir alerta por período do grupo C e escolher a providência. Tabela 18 classificada, modelo de alerta e providências em `references/RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md`.
 
-**Roteiro operacional obrigatório.**
-
-1. Identificar se há RAIS ou S-2230 no material recebido.
-2. Listar cada afastamento com empregador, CNPJ, início, término, código do motivo e descrição.
-3. Cruzar com as remunerações mensais do CNIS para confirmar se houve pagamento ou benefício previdenciário no mesmo período.
-4. Classificar cada afastamento em Grupo A (remunerado, mantém tempo), Grupo B (com benefício previdenciário, mantém qualidade), Grupo C (sem remuneração e sem benefício, NÃO CONTA para tempo de contribuição).
-5. Emitir alerta claro para o advogado, período a período do Grupo C, com o total consolidado de meses e dias que o INSS descartará.
-6. Avaliar as ações cabíveis. complementação de contribuição, indenização de contribuições em atraso (art. 45-A Lei 8.212), impugnação do código na RAIS quando lançado errado, requerimento expresso de cômputo do período em auxílio-doença intercalado (Tema 998/STJ), adaptação da estratégia de aposentadoria e da DER planejada.
-
-**Formato padrão do alerta pró-segurado.**
-
-```
-[ALERTA - TEMPO DE CONTRIBUICAO]
-Empregador. [Nome + CNPJ]
-Vínculo. [DIA de admissão] a [DIA de rescisão, ou "aberto"]
-Afastamento SEM remuneração de [DIA] a [DIA]
-Motivo. [Código] - [Descrição]
-Impacto. [X] meses e [Y] dias NÃO computados pelo INSS
-para tempo de contribuição, carência ou qualidade de segurado.
-Ação recomendada. [complementação, indenização, retificação da
-RAIS, cômputo do intercalado, ou adaptação da DER]
-```
-
-Consolidar total ao final do relatório para tomada de decisão estratégica.
-
-Detalhamento normativo e operacional completo em `references/RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` com a Tabela 18 do eSocial categorizada em três grupos, procedimento por passo, alertas especiais para auxílio-doença intercalado e contribuinte individual concomitante, e fontes normativas.
-
-## FONTE PRIMÁRIA - BANCO DE DADOS
-
-Catálogo dinâmico de indicadores. https://planilha.tramitacaointeligente.com.br/indicadores-cnis
-
-Atualização normativa até 06/2026 (Portaria 1.316/2025).
-
-A reference `INDICADORES-COMPLETO-2026.md` traz a transcrição literal da lista publicada, organizada por grupo temático e categoria, para consulta rápida.
-
-A reference `RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` (Onda 62) consolida a Tabela 18 do eSocial em três grupos com fluxo pró-segurado.
-
-## LIMBO PREVIDENCIÁRIO. EXCEÇÃO À ROTINA DE SANEAMENTO (Onda 70)
+## LIMBO PREVIDENCIÁRIO. EXCEÇÃO À ROTINA DE SANEAMENTO
 
 **ALERTA CRÍTICO. Nunca requerer RAC pedindo baixa de vínculo em aberto quando houver diagnóstico de limbo previdenciário.**
 
@@ -314,11 +273,11 @@ Diagnóstico, roteiro probatório em oito graus e defesa antecipada em `base-lim
 
 Não confundir as duas tabelas que esta skill utiliza.
 
-A **Tabela 18 do eSocial**, códigos 01 a 44, está em `references/RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` e serve para triar afastamentos sem remuneração que o INSS descarta da contagem de tempo. É instrumento de diagnóstico do próprio segurado.
+A **Tabela 18 do eSocial**, códigos 01 a 53, está em `references/RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` e serve para triar afastamentos sem remuneração que o INSS descarta da contagem de tempo. É instrumento de diagnóstico do próprio segurado.
 
 A **tabela de afastamentos da RAIS**, item D.2 do Manual de Orientação, códigos 10 a 85, está em `base-limbo-previdenciario-tema300`, `references/TABELA-RAIS-AFASTAMENTOS-D2.md`, com as regras de preenchimento D.1, D.3 e D.4 e sete teses probatórias. É instrumento de prova contra o empregador, sobretudo a regra de que a RAIS não possui código de afastamento por férias e a de que remuneração zerada é confissão de que nada foi pago.
 
-## Competência com vínculo e sem remuneração, IN 212/2026 (Onda 115)
+## Competência com vínculo e sem remuneração, IN 212/2026
 
 O art. 223, § 2º, I, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, manda considerar o valor do SALÁRIO MÍNIMO nas competências do PBC em que existir VÍNCULO e não existir REMUNERAÇÃO, para o empregado, o doméstico e o avulso, nos termos do art. 19-E do RPS. A renda DEVE ser recalculada quando apresentada prova dos salários de contribuição, observado o prazo decadencial.
 
@@ -326,7 +285,7 @@ O art. 223, § 2º, I, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/0
 
 EXCEÇÃO do § 3º. Não se aplica a vínculo com jornada PARCIAL ou INTERMITENTE, casos em que a inclusão depende do contrato de trabalho com a remuneração contratada, ou da demonstração das remunerações auferidas. Nesses vínculos, levantar o contrato ANTES do requerimento, porque o ônus é do segurado. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
 
-## Agente analista-cnis (Onda 117)
+## Agente analista-cnis
 
 Esta skill é a FONTE PRIMÁRIA do agente `analista-cnis`, que executa a leitura técnica do extrato competência a competência. Acionar o agente SEMPRE que houver CNIS nos autos ou na pasta do cliente, e SEMPRE ANTES de requerimento, planejamento, petição ou revisão que dependa de tempo, carência, qualidade de segurado ou salário-de-benefício.
 
@@ -336,13 +295,13 @@ Regra que ele carrega e que vale para todos. O CNIS tem presunção RELATIVA, e 
 
 ## Extensão
 
-Teto de o relatório de acerto do CNIS, 2 páginas, indicadores bloqueantes primeiro, e competência sem pendência não é listada. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto do relatório de acerto do CNIS: 2 páginas, indicadores bloqueantes primeiro, e competência sem pendência não é listada. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por idade urbana e programada" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
 
-## Indicadores do segurado especial, CAFIR e RGP (Onda 142)
+## Indicadores do segurado especial, CAFIR e RGP
 
 Os indicadores `PSE-POS`, `PSE-PEN`, `PSE-NEG`, `ASE-RPOS`, `ASE-RNEG` e `ASE-NSE` registram a classificação automática de período rural migrado das bases CAFIR e RGP. A redação oficial de cada um está em `base-segurado-especial-autodeclaracao-arts-92-93-94/references/INDICADORES-CNIS-SEGURADO-ESPECIAL-CAFIR-RGP.md`.
 
@@ -352,16 +311,4 @@ Os indicadores `PSE-POS`, `PSE-PEN`, `PSE-NEG`, `ASE-RPOS`, `ASE-RNEG` e `ASE-NS
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

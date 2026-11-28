@@ -1,128 +1,43 @@
 ---
 name: base-especial-radiacao-ionizante
-description: "Exposição a radiação ionizante para aposentadoria especial pelo Anexo IV Decreto 3.048/99, Anexo 5 NR-15, Norma CNEN-NN-3.01, dose efetiva e enquadramento qualitativo de radiologistas, técnicos em radiologia, profissionais de medicina nuclear e radioterapia. Use SEMPRE que mencionar radiação ionizante aposentadoria especial, raios X aposentadoria especial, técnico radiologia aposentadoria, médico radiologista, medicina nuclear aposentadoria, radioterapia aposentadoria, Anexo IV Decreto 3.048, Anexo 5 NR-15, CNEN-NN-3.01, dose efetiva radiação, exposição habitual permanente radiação, enquadramento qualitativo radiação, Lei 7.394/85, art. 14 Lei 7.394, jornada reduzida radiologista. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-calor-nho06, base-especial-frio-camara-frigorifica, base-especial-penosidade-enfermagem-petroleiro, base-especial-categoria-profissional-pre1995 e defesa-probatoria-especial."
+description: "Exposição a radiação ionizante para aposentadoria especial: código 1.1.4 do Decreto 53.831/64, código 1.1.3 do Anexo I do Decreto 83.080/79, código 2.0.3 do Anexo IV dos Decretos 2.172/97 e 3.048/99, arts. 294 e 295 da IN 128/2022 (NR-15 Anexo 5, NHO-05, CNEN NN-3.01), caráter cancerígeno (art. 68, § 4º, do Decreto 3.048/99, Tema 170 da TNU) e técnicos e médicos de radiologia, medicina nuclear e radioterapia. Use SEMPRE que mencionar radiação ionizante aposentadoria especial, raios X, técnico em radiologia, operador de raio X, médico radiologista, tomografia, hemodinâmica, medicina nuclear, radioterapia, gamagrafia industrial, dosímetro, dose efetiva, Anexo 5 NR-15, CNEN-NN-3.01, NHO-05, Lei 7.394/85. Cruza com auditoria-ppp, base-especial-epi, base-especial-categoria-profissional-pre1995, base-especial-agentes-biologicos, tempo-especial-peticoes-por-rito e defesa-probatoria-especial."
 ---
 
-# Radiação Ionizante e Aposentadoria Especial
+# Radiação ionizante e aposentadoria especial
 
-## Escopo
+## Quadro normativo por período
 
-Skill pró-segurado sobre exposição a radiação ionizante para aposentadoria especial, Anexo IV Decreto 3.048/99 e enquadramento qualitativo.
+| Período | Fundamento | Critério |
+|---|---|---|
+| Até 05/03/1997 | Decreto 53.831/64, código 1.1.4 (raios X, rádium e substâncias radioativas; operadores de raios X, de rádium e substâncias radioativas, entre outros). Decreto 83.080/79, Anexo I, código 1.1.3 (extração de minerais radioativos, reatores, raios X, rádio e substâncias radioativas para fins industriais, terapêuticos e diagnósticos, entre outros). | Qualitativo, por presunção de exposição (IN 128/2022, art. 294, I). |
+| A partir de 06/03/1997 | Decretos 2.172/97 e 3.048/99, Anexo IV, código 2.0.3: inclui "trabalhos realizados com exposição aos raios Alfa, Beta, Gama e X, aos nêutrons e às substâncias radioativas para fins industriais, terapêuticos e diagnósticos" (25 anos). | Para o INSS, quantitativo: limites do Anexo 5 da NR-15 (art. 294, II), com NHO-05 para raios X em radiologia e CNEN NN-3.01 nos demais casos (art. 295). Na via judicial, qualitativo (ver abaixo). |
 
-## Marco normativo central
+## Tese qualitativa após 1997
 
-CF/88, art. 201 §1º.
+A TNU não exige medição quantitativa para agentes reconhecidamente cancerígenos, em qualquer período (Tema 170 da TNU, sobre o art. 68, § 4º, do Decreto 3.048/99 na redação do Decreto 8.123/2013). Aplicando-o à radiação ionizante, a TNU manteve acórdão que reconheceu técnico de raios X em hospital após 1995 pela mera presença do agente: o número CAS não é requisito do art. 68, § 4º, e o código 2.0.3 do Anexo IV não impõe limite de tolerância (PUIL 0500215-20.2019.4.05.8101, Rel. Juiz Federal Paulo Cezar Neves Junior, D.E. 16/11/2021).
 
-Lei 8.213/91, arts. 57 e 58.
+Ressalva: o art. 68, § 4º, na redação do Decreto 10.410/2020, admite a descaracterização se medidas de controle eliminarem a nocividade, e a IN 128/2022, art. 298, § 2º, aplica essa regra a períodos a partir de 01/07/2020. Para esses períodos, impugnar especificamente a alegada eliminação.
 
-Lei 7.394/85.
+## Roteiro do caso
 
-NR-15, Anexo 5.
+1. Até 05/03/1997: função com raios X ou substâncias radioativas descrita no PPP ou formulário antigo basta.
+2. Após 1997: confirmar no PPP o fator "radiação ionizante", o setor (radiologia, hemodinâmica, centro cirúrgico com arco cirúrgico, medicina nuclear, radioterapia, gamagrafia) e a habitualidade.
+3. INSS exigirá dose acima do limite: sustentar a tese qualitativa (Tema 170 da TNU; PUIL 0500215-20.2019.4.05.8101).
+4. EPI (avental plumbífero, protetor de tireoide) e dosimetria abaixo do limite não afastam o agente cancerígeno; impugnar com Tema 1090 do STJ e Tema 213 da TNU. Ver `base-especial-epi`.
+5. Somar agentes biológicos quando o trabalho for hospitalar (`base-especial-agentes-biologicos`).
 
-CNEN-NN-3.01.
+A Lei 7.394/85 regula a profissão de técnico em radiologia (jornada e piso); não é norma de enquadramento previdenciário.
 
-Decreto 3.048/99, Anexo IV.
-
-IN 128/2022.
-
-## Marco jurisprudencial
-
-### Súmula 198 TFR
-
-Categoria profissional.
-
-### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
-
-O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 174 TNU
-
-Metodologia.
-
-## Radiação como agente
-
-Primeiro, radiação ionizante é qualitativa.
-
-Segundo, exposição habitual e permanente.
-
-Terceiro, Anexo IV Decreto 3.048 enquadra.
-
-Quarto, dose efetiva controlada não afasta nocividade.
-
-## Aplicação pró-segurado
-
-Primeiro, técnico em radiologia.
-
-Segundo, médico radiologista.
-
-Terceiro, profissional medicina nuclear.
-
-Quarto, profissional radioterapia.
-
-## Cenários pró-segurado
-
-Cenário A, técnico raios X. Especial.
-
-Cenário B, médico radiologista. Especial.
-
-Cenário C, medicina nuclear. Especial.
-
-Cenário D, radioterapia. Especial.
-
-Cenário E, dosimetria controlada. Não afasta.
-
-## Alertas
-
-Primeiro, INSS pode exigir dose acima do limite. Anexo IV é qualitativo.
-
-Segundo, EPI não neutraliza por completo.
-
-Terceiro, dose efetiva apenas mitiga risco.
-
-Quarto, perícia judicial cabível.
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`. Refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Sebastião Geraldo de Oliveira.
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-IBDP.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para auditoria de PPP, acionar `auditoria-ppp`.
-Para calor, acionar `base-especial-calor-nho06`.
-Para frio, acionar `base-especial-frio-camara-frigorifica`.
-Para penosidade, acionar `base-especial-penosidade-enfermagem-petroleiro`.
-Para categoria pré-1995, acionar `base-especial-categoria-profissional-pre1995`.
-
-## O que NÃO está nesta skill
-
-Calor em `base-especial-calor-nho06`. Frio em `base-especial-frio-camara-frigorifica`. Penosidade em `base-especial-penosidade-enfermagem-petroleiro`. Categoria em `base-especial-categoria-profissional-pre1995`.
+Auditoria do PPP em `auditoria-ppp`. EPI em `base-especial-epi`. Biológicos em `base-especial-agentes-biologicos`. Categoria profissional em `base-especial-categoria-profissional-pre1995`. Prova em `defesa-probatoria-especial`. Peça por rito em `tempo-especial-peticoes-por-rito`.

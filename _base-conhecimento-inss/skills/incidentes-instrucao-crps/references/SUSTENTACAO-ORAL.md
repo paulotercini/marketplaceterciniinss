@@ -1,4 +1,4 @@
-# Sustentação Oral no CRPS – Art. 81
+# Sustentação Oral no CRPS. Art. 81
 
 ## Formas de Requerer a Sustentação (Art. 81, I a III)
 
@@ -10,11 +10,11 @@
 
 ## Modalidades Admitidas (Art. 81, §1º)
 
-**Memoriais escritos** – sustentação por escrito, sem limite de tamanho definido no Regimento
+**Memoriais escritos**, sustentação por escrito, sem limite de tamanho definido no Regimento
 
-**Sustentação oral ao vivo** – na sessão de julgamento (presencial ou virtual)
+**Sustentação oral ao vivo**, na sessão de julgamento (presencial ou virtual)
 
-**Gravação por link não listado** – duração máxima de 8 minutos. Será desconsiderada a gravação que exceder o tempo (art. 81, §5º)
+**Gravação por link não listado**, duração máxima de 8 minutos. Será desconsiderada a gravação que exceder o tempo (art. 81, §5º)
 
 ## Representação Processual (Art. 81, §§2º e 3º)
 
@@ -48,7 +48,7 @@ NÃO há sustentação oral em embargos de declaração e revisão de acórdão.
 
 **Exceções (Arts. 92, §16 e 116, §9º).** Admite-se sustentação quando, no julgamento do recurso originário (ordinário, especial, PUJ ou reclamação ao CP), a sustentação oral não tenha sido oportunizada, desde que solicitada no prazo regimental.
 
-## Sustentação em Decisão Monocrática – Conversão Automática em Colegiada (Art. 81, §13)
+## Sustentação em Decisão Monocrática. Conversão Automática em Colegiada (Art. 81, §13)
 
 Se houver solicitação de sustentação oral para processo incluído em sessão de julgamento de decisão monocrática, o processo DEVE ser retirado de pauta e incluído na próxima sessão ordinária, submetido ao colegiado. A sustentação oral converte o julgamento monocrático em colegiado. Essa é a regra mais impactante do Regimento para o advogado do segurado no campo das decisões monocráticas.
 
@@ -90,6 +90,6 @@ Em sessão por videoconferência, o conselheiro, a parte e o advogado devem esta
 
 **Sustentação oral que converte monocrática em colegiada.** Esta é a ferramenta mais poderosa do advogado previdenciarista no novo Regimento. Se o processo está em pauta monocrática e o advogado solicita sustentação, a UJ é obrigada a converter em sessão colegiada (art. 81, §13). A composição colegiada permite votos divergentes e voto de qualidade. Em matéria médica (art. 110, II), onde a monocrática seria de não provimento automático com base no parecer da PMF, a conversão permite questionar a qualidade do parecer e apresentar documentos médicos particulares aos quatro conselheiros. Em renúncia tácita (art. 110, I), permite demonstrar ao colegiado que a ação judicial não é idêntica. Em intempestividade (art. 110, VII), permite sustentar a relevação. O advogado deve monitorar as pautas, identificar os processos em pauta monocrática e solicitar sustentação via Fala.BR no prazo de 3 dias úteis antes da sessão. A solicitação feita nas razões recursais (art. 81, I) já garante a conversão automaticamente quando o processo for pautado.
 
-**Quando NÃO solicitar sustentação para converter.** Se a decisão monocrática for favorável ao segurado (por exemplo, art. 110, V, reconhecimento pelo INSS), a conversão em colegiada é contraproducente, pois atrasaria o julgamento. A conversão só deve ser provocada quando a previsão de resultado for desfavorável.
+**Quando NÃO solicitar sustentação para converter.** Se a decisão monocrática for favorável ao segurado (por exemplo, art. 110, V, reconhecimento pelo INSS), a conversão em colegiada é contraproducente, pois atrasaria o julgamento. A conversão apenas deve ser provocada quando a previsão de resultado for desfavorável.
 
 **Combinação sustentação + memoriais.** A melhor estratégia é juntar memorial escrito detalhado com toda a fundamentação e, na sustentação oral, focar nos pontos mais impactantes para os conselheiros. A sustentação oral não deve ser uma leitura do memorial, mas uma apresentação persuasiva dos argumentos-chave.

@@ -1,121 +1,29 @@
-# Contagem Recíproca RGPS e RPPS — Fundamentos e Cenários
+# Contagem Recíproca RGPS e RPPS. Cenários
 
-## 1. Conceito operacional
+Base normativa e precedentes no SKILL.md.
 
-Contagem recíproca é a técnica que permite ao segurado aproveitar o tempo de contribuição prestado em um regime (RGPS ou RPPS) no outro regime, mediante emissão de Certidão de Tempo de Contribuição (CTC) e compensação financeira.
+## Cenários favoráveis
 
-A CTC é o instrumento formal pelo qual o regime de origem certifica o tempo e os recolhimentos, para que o regime de destino possa averbar.
+- A. Servidor com tempo anterior de empregado no RGPS. CTC do INSS averbada no RPPS; para empregado, a CTC dispensa prova de recolhimento (Lei 8.213/91, art. 96, V).
+- B. Ex-servidor que passou ao RGPS. CTC do ente (art. 96, VI), acompanhada da Relação das Bases de Cálculo de Contribuição desde 07/1994 (IN 128/2022, art. 70; Portaria MTP 1.467/2022, Anexos IX e X).
+- C. Tempo de serviço militar levado ao RPPS ou ao RGPS por certidão da Força (`base-servico-militar-obrigatorio`).
+- D. Aluno-aprendiz reconhecido, certificado por CTC (Portaria 998/2022, art. 43-A, na redação da Portaria 1.250/2024).
+- E. Tempo especial do RGPS discriminado na CTC, sem conversão, para aposentadoria especial do servidor (art. 96, IX).
+- F. Servidor com tempo especial anterior a 13/11/2019 no próprio RPPS: conversão em comum pelas regras do RGPS (Tema 942 STF).
 
-## 2. Fundamento constitucional
+## Cenários com restrição
 
-Art. 201, §9º, CF/88. Garantia constitucional da contagem recíproca.
+- G. Tempo rural anterior a 11/1991 no RPPS: exige indenização (Tema 609 STJ; IN 128/2022). Comparar antes com aposentadoria no RGPS, onde conta sem indenização para tempo, não para carência.
+- H. Contribuinte individual sem recolhimento: indenização antes da CTC (art. 96, IV e V).
+- I. Concomitância entre tempo público e privado: conta-se uma vez (art. 96, II); a remuneração concomitante pode compor o salário de contribuição no RGPS.
+- J. Tempo já usado em aposentadoria: não se reaproveita (art. 96, III).
+- K. Desaverbação: vedada se o tempo gerou vantagem remuneratória ao servidor ativo (art. 96, VIII).
+- L. Vínculo estatutário ativo: o RPPS não emite CTC (art. 96, VI; Enunciado 17 da Jornada do TRF4).
 
-Art. 40, §9º, CF/88. Contagem recíproca para aposentadoria do servidor.
+## Metodologia
 
-## 3. Fundamento legal
-
-Lei 8.213/91, art. 94. Cômputo recíproco.
-
-Lei 8.213/91, art. 96. Efeitos.
-
-Lei 8.213/91, art. 98. Tempo em dois regimes concomitantemente.
-
-Lei 9.796/1999. Compensação financeira.
-
-Decreto 10.188/2019. Regulamento.
-
-IN 128/2022. Regras operacionais.
-
-## 4. Marco jurisprudencial central
-
-### Art. 201, §9º, da CF (contagem recíproca)
-
-Base constitucional direta (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
-
-### Art. 94 da Lei 8.213/91
-
-Cômputo recíproco do tempo de contribuição em regimes distintos, com compensação financeira (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
-
-### Tema 609 STJ
-
-Tese adversa. O tempo rural anterior à Lei 8.213/91 dá direito à certidão, mas só se computa no regime estatutário com a prova do pagamento das contribuições. Caminho do segurado: no próprio RGPS esse tempo conta sem indenização, salvo para carência (art. 55, §2º, da Lei 8.213/91) (auditoria 03/10/2026).
-
-### Alerta corretivo Onda 66
-
-O Enunciado 6 do CRPS, conforme redação oficial publicada no DOU de 12/11/2019 e verificada no Comet, NÃO trata de CTC. Ele trata do salário-maternidade à gestante demitida sem justa causa no curso da gravidez. Não existe Enunciado do CRPS entre os Enunciados 1 a 19 vigentes que trate especificamente de CTC e efeitos. A fundamentação normativa da CTC e da contagem recíproca deve remontar ao art. 96 da Lei 8.213/91, art. 130 da IN 128/2022 e Livro IX da Portaria DIRBEN/INSS 998/2022; o Tema 609 STJ é tese adversa, porque condiciona o cômputo do tempo rural no RPPS ao pagamento das contribuições (auditoria 03/10/2026, retirado o Tema 176 STF, que trata de ICMS).
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Servidor público com tempo privado anterior
-
-Tempo no RGPS averbado no RPPS por CTC. Compensação financeira entre INSS e ente público.
-
-### Cenário B — Ex-servidor público migra para o RGPS
-
-Tempo no RPPS averbado no RGPS por CTC do ente.
-
-### Cenário C — Tempo militar aproveitado no RPPS
-
-Via CTC militar.
-
-### Cenário D — Tempo rural pré-1991 no RPPS
-
-Via indenização de contribuições, exigida pelo Tema 609 STJ, tese adversa. Antes, comparar com a aposentadoria no próprio RGPS, em que esse tempo conta sem indenização (auditoria 03/10/2026).
-
-### Cenário E — Aluno-aprendiz para contagem recíproca
-
-Após reconhecimento, CTC do INSS para o RPPS.
-
-## 6. Cenários limitados
-
-### Cenário F — Sobreposição
-
-Vedada a contagem dupla. Desaverbar antes.
-
-### Cenário G — Conversão especial no RPPS
-
-Controvertida. Em muitos entes, vedada. Em alguns, admitida por decisão judicial.
-
-### Cenário H — Cômputo sem CTC
-
-Vedado. Exige instrumento formal.
-
-## 7. Metodologia
-
-Primeiro, levantamento detalhado de cada período em cada regime.
-
-Segundo, solicitação de CTC ao regime de origem.
-
-Terceiro, conferência do conteúdo da CTC (datas, categorias, recolhimentos).
-
-Quarto, apresentação ao regime de destino para averbação.
-
-Quinto, em caso de recusa, recurso administrativo e, se necessário, mandado de segurança.
-
-Sexto, em tempo rural pré-1991, indenização de contribuições.
-
-## 8. Riscos processuais
-
-Risco de emissão tardia da CTC. Alto.
-
-Risco de recusa de averbação. Mandado de segurança cabível.
-
-Risco de conflito entre regimes em compensação financeira.
-
-Risco de sobreposição. Atenção.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, planejamento prévio à aposentadoria.
-
-Segundo, CTC emitida com antecedência.
-
-Terceiro, averbação no regime de destino.
-
-Quarto, requerimento de benefício.
-
-Quinto, em caso de recusa, via judicial.
-
-## 10. Integração prática
-
-Frequentemente cumulado com aluno-aprendiz, militar, tempo rural e tempo especial. A indenização de contribuições entra quando o tempo rural é posterior a 1991 e sem recolhimento.
+1. Mapear os períodos em cada regime, com concomitâncias e natureza (empregado, CI, rural, militar, especial).
+2. Simular a aposentadoria em cada regime antes de certificar.
+3. Requerer a CTC e conferir o conteúdo.
+4. Averbar no destino e acompanhar a compensação, que não condiciona o direito.
+5. Recusa ou mora: recurso administrativo e mandado de segurança.

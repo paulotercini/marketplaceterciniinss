@@ -92,13 +92,15 @@ Lei nº 13.709/2018 (LGPD).
 
 Lei nº 13.853/2019. Cria a ANPD.
 
-Decreto nº 11.348/2023. Estrutura Regimental da ANPD.
+Lei nº 14.460/2022 e Lei nº 15.352/2026. Transformam a ANPD em autarquia especial e a renomeiam Agência Nacional de Proteção de Dados, vinculada ao Ministério da Justiça e Segurança Pública (LGPD, art. 55-A).
+
+Estrutura regimental vigente: conferir no portal da ANPD.
 
 Resolução ANPD nº 15/2024. Regulamenta a comunicação de incidentes de segurança.
 
 ### 3.2. Definição de incidente de segurança
 
-Resolução ANPD 15/2024, art. 4º. Incidente de segurança é qualquer evento adverso confirmado, relacionado à violação na segurança de dados pessoais que possa ocasionar acesso não autorizado, destruição, perda, alteração, comunicação ou difusão indevida.
+Resolução CD/ANPD 15/2024. Incidente de segurança é qualquer evento adverso confirmado, relacionado à violação na segurança de dados pessoais que possa ocasionar acesso não autorizado, destruição, perda, alteração, comunicação ou difusão indevida.
 
 ### 3.3. Comunicação obrigatória
 
@@ -174,7 +176,7 @@ E outras unidades em municípios estratégicos.
 
 Agendamento online em https://www.dpu.def.br/.
 
-0800 nacional para orientação. 0800 773 4340 (cuidado, este 0800 também atende DPE/SP, complementar).
+Atendimento remoto pelos canais do portal. O 0800 773 4340 da versão anterior é da DPE/SP, que não atua em matéria previdenciária federal [NÃO CONFIRMADO].
 
 Plantão em casos de urgência (telefones específicos por unidade).
 
@@ -264,7 +266,7 @@ Sua função é de registro, encaminhamento e coordenação institucional.
 
 Pode resultar em recomendações ou em campanhas estruturais.
 
-## 8. CRSS/CRPS como meio paralelo
+## 8. CRPS como meio paralelo
 
 ### 8.1. Cabimento
 
@@ -278,7 +280,7 @@ Devolução para nova análise com perícia médica e funcional.
 
 ### 8.2. Sede
 
-CRPS/CRSS, sediado no Ministério da Previdência (referência atual: art. 32, XXXI, da Lei 13.844/2019).
+O CRPS integra o Ministério da Previdência Social (Decreto 3.048/1999, art. 303). Regimento interno aprovado pela Portaria MPS 125/2026, alterada pelas Portarias MPS 235/2026 e 462/2026.
 
 ### 8.3. Tramitação
 
@@ -286,9 +288,9 @@ Junta de Recursos. Instância inicial.
 
 Câmara de Julgamento. Instância recursal especial.
 
-Conselho Pleno em casos de divergência.
+Conselho Pleno, para uniformização da jurisprudência administrativa.
 
-Prazo recursal. 30 dias úteis.
+Prazo recursal. 30 dias (Decreto 3.048/1999, art. 305, §1º; RICRPS, art. 77).
 
 ### 8.4. Estratégia
 
@@ -389,8 +391,6 @@ Documentação do caso (PA, decisões, tentativas anteriores).
 Agendamento online em https://www.dpu.def.br/.
 
 Plantão em casos de urgência.
-
-0800 nacional para orientação inicial.
 
 ## 12. Documentação institucional consultável
 

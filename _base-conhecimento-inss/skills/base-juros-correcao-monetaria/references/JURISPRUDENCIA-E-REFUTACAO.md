@@ -1,141 +1,22 @@
-# Juros e Correção — Jurisprudência e Refutação
-
-## 1. Precedentes relevantes
-
-### Tema 810 STF
-
-IPCA-E [NÃO CONFIRMADO], juros poupança, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 905 STJ
-
-Benefícios previdenciários.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 204 STJ
-
-Juros da citação.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 148 STJ
-
-Correção monetária desde o vencimento.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 362 STJ
-
-Correção monetária do dano moral, "A correção monetária do valor da indenização do dano moral incide desde a data do arbitramento." Não trata de juros nem de honorários e serve só ao pedido cumulado de dano moral (auditoria 03/10/2026).
-
-## 2. Marco legislativo
-
-### Lei 9.494/1997 art. 1º-F
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 11.960/2009
-
-Fonte oficial em https://www.planalto.gov.br
-
-### EC 113/2021
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Aplicação do TR
-
-Argumento adversário. Lei 11.960.
-
-Refutação. Inconstitucional. Tema 810 STF. IPCA-E.
-
-### Argumento 2 — Juros ínfimos
-
-Argumento adversário. Poupança reduzida.
-
-Refutação. Poupança simples 0,5% mensal ou remuneração vigente. Tema 905 STJ.
-
-### Argumento 3 — SELIC antes de 12/2021
-
-Argumento adversário. Unificação.
-
-Refutação. EC 113/2021, vigência 09/12/2021. Antes, IPCA-E e poupança.
-
-### Argumento 4 — Juros anteriores à citação
-
-Argumento adversário. Termo inicial.
-
-Refutação. Súmula 204 STJ. Juros da citação.
-
-### Argumento 5 — Correção sem índice adequado
-
-Argumento adversário. TR.
-
-Refutação. IPCA-E.
-
-### Argumento 6 — Cálculo contra segurado
-
-Argumento adversário. INSS corrige em desfavor.
-
-Refutação. Cotejar com Manual CJF.
-
-### Argumento 7 — Prescrição quinquenal
-
-Argumento adversário. Parcelas antigas.
-
-Refutação. Súmula 85 STJ, quinquênio anterior ao ajuizamento.
-
-### Argumento 8 — Juros sobre honorários
-
-Argumento adversário. Dispensa.
-
-Refutação. Juros sobre honorários devidos. Fixados em quantia certa, incidem desde o trânsito em julgado da decisão (art. 85, §16, CPC) (auditoria 03/10/2026, retirada a Súmula 362 STJ, que trata de correção do dano moral).
-
-### Argumento 9 — Fixação de juros remuneratórios
-
-Argumento adversário. Percentual livre.
-
-Refutação. Vedação. Critério legal.
-
-### Argumento 10 — Cálculo paralelo do INSS
-
-Argumento adversário. Perícia contábil.
-
-Refutação. Apresentar planilha conforme Manual CJF e refutar divergências.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, correção.
-
-Hugo Goes, juros.
-
-Marco Aurélio Serau Junior, cálculo previdenciário.
-
-Daniel Pulino, execução.
-
-Jane Berwanger, execução.
-
-IBDP, advocacia previdenciária.
-
-## 5. Estratégia integrada
-
-Primeiro, planilha CJF.
-
-Segundo, IPCA-E ou SELIC conforme marco.
-
-Terceiro, juros da citação.
-
-Quarto, honorários com juros.
-
-Quinto, destaque de honorários.
-
-## 6. Diligência de atualização
-
-Acompanhar Tema 810 STF.
-
-Acompanhar Tema 905 STJ.
-
-Revalidar Manual CJF e resoluções.
+# Juros e Correção. Jurisprudência e Refutação
+
+## 1. Precedentes
+
+- Tema 810 STF (RE 870.947): TR inconstitucional para correção; juros da poupança constitucionais nas condenações não tributárias. Embargos rejeitados em 03/10/2019, sem modulação.
+- Tema 905 STJ: INPC para benefícios previdenciários a partir da Lei 11.430/2006; juros da poupança; ressalva da coisa julgada.
+- Tema 1419 STF (ARE 1.557.312/SP): SELIC da EC 113/2021 restrita à redação original do art. 3º; sem projeção ao regime da EC 136/2025.
+- Tema 1207 STJ: compensação mês a mês de inacumuláveis.
+- Súmula 204 STJ: juros de mora desde a citação válida.
+- Súmula 148 STJ: correção dos débitos de benefício cobrados em juízo pela Lei 6.899/81.
+- Súmula 111 STJ: honorários sobre as parcelas vencidas até a sentença.
+- Súmula 362 STJ: correção do dano moral desde o arbitramento; serve apenas ao pedido cumulado de dano moral.
+
+## 2. Refutação
+
+1. **"Correção pela TR."** Tema 810 STF.
+2. **"IPCA-E em benefício previdenciário."** O índice é o INPC até 11/2021 (Tema 905 STJ) e a partir de 09/2025 (Manual 2026).
+3. **"SELIC desde antes de 12/2021."** A EC 113/2021 vale a partir de 12/2021; antes, INPC e poupança.
+4. **"SELIC após 08/2025."** EC 136/2025 e Manual 2026; Tema 1419 STF restrito à redação original da EC 113.
+5. **"SELIC cumulada com correção."** Vedada na fase 2; e a taxa legal da fase 3 já deduz o INPC.
+6. **"Juros sobre honorários indevidos."** Honorários em quantia certa vencem juros desde o trânsito (CPC, art. 85, §16).
+7. **"Compensação pelo total."** Mês a mês (Tema 1207 STJ).

@@ -1,13 +1,12 @@
 # Modelo de Recurso Ordinário ao CRPS - Versão Enxuta
 
-Modelo de estrutura mínima de recurso ordinário à Junta de Recursos do CRPS, pró-segurado, em padrão enxuto, direto e claro. A fundamentação é normativa, sem citação de julgados judiciais como base principal, e segue a regra da Onda 184 de linguagem simples, com artigo de lei apenas quando extremamente necessário.
+Modelo de estrutura mínima de recurso ordinário à Junta de Recursos do CRPS, pró-segurado, em padrão enxuto, direto e claro. A fundamentação é normativa, sem citação de julgados judiciais como base principal, e usa linguagem simples, com artigo de lei apenas quando extremamente necessário.
 
 ## DO CABEÇALHO
 
 ```
 EXCELENTÍSSIMO SENHOR PRESIDENTE DA [X]ª JUNTA DE RECURSOS DO
 CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL
-
 
 [Nome do Recorrente], CPF [XXX.XXX.XXX-XX], nos autos do processo
 administrativo nº [protocolo], referente ao benefício nº [NB], vem,
@@ -16,8 +15,6 @@ respeitosamente, interpor RECURSO ORDINÁRIO contra a decisão de
 ```
 
 ## DO CORPO DA PEÇA
-
-O corpo foi revisto na auditoria de 03/10/2026 e na Onda 184, que alinhou a forma ao quadro "A mesma peça em todos os ritos" do `ESTILO-MODELO.md`.
 
 ```
 1. DA TEMPESTIVIDADE E DA ADMISSIBILIDADE
@@ -28,7 +25,6 @@ DD/MM/AAAA, conforme [aviso ou extrato do Meu INSS, protocolo]. O recurso
 Regimento Interno do CRPS). O Recorrente tem legitimidade e interesse na
 reforma, porque não renunciou ao recurso nem ajuizou ação judicial sobre
 a mesma matéria.
-
 
 2. DOS FATOS
 
@@ -41,7 +37,6 @@ declarado na comunicação de decisão, folha __].
 O CNIS de DD/MM/AAAA (folha __) registra [X] contribuições, a última em
 MM/AAAA, e [o vínculo ou o benefício que mantém a qualidade de segurado,
 com as datas].
-
 
 3. DO MÉRITO
 
@@ -63,7 +58,6 @@ Decreto 3.048/99 e a IN 128/2022 entram apenas quando a decisão
 contrariou dispositivo deles, por remissão curta, e nunca como lista de
 normas que confirmam a hipótese.]
 
-
 3.2. DO ENUNCIADO DO CRPS CONTRARIADO
 
 [Tópico apenas quando a decisão contrariou Enunciado. É a única
@@ -78,7 +72,6 @@ Enunciado.
 precedente vinculante do art. 109 do Regimento Interno do CRPS, sem
 transcrição de ementa.]
 
-
 3.3. DA EXIGÊNCIA SEM PREVISÃO NORMATIVA
 
 A decisão recorrida exigiu [documento ou requisito] (folha __), que
@@ -86,7 +79,6 @@ nenhuma norma prevê para o [benefício]. O [documento já apresentado],
 de DD/MM/AAAA (folha __), comprova o mesmo fato, razão pela qual a
 exigência deve ser afastada (art. 5º, IV, XI, XIII e XV, da Lei
 13.460/2017).
-
 
 4. DOS PEDIDOS
 
@@ -99,9 +91,7 @@ Requer ainda a juntada dos documentos relacionados ao fim, cada um com a
 indicação da folha, como reforço da demonstração já feita na via
 administrativa.
 
-
 [Cidade], [data].
-
 
 [Assinatura]
 Paulo Roberto Tercini Filho
@@ -112,11 +102,11 @@ OAB/SP 331.110
 
 **Tamanho final esperado.** O recurso tem de 3 a 6 páginas, conforme o tema, e a peça muito acima disso merece busca de repetição, que é o único trecho a cortar.
 
-**Forma do tópico (Onda 184).** Cada tópico abre pelo fato e pelo erro da decisão, e a norma entra depois, por remissão curta e apenas quando a decisão contrariou norma expressa ou o pedido depende dela.
+**Forma do tópico.** Cada tópico abre pelo fato e pelo erro da decisão, e a norma entra depois, por remissão curta e apenas quando a decisão contrariou norma expressa ou o pedido depende dela.
 
 Por sua vez, o título nomeia o requisito ou o vício, como DA QUALIDADE DE SEGURADO, e nunca o número do artigo. Não se transcreve lei em bloco, salvo o trecho exato da norma ou do Enunciado do CRPS que a decisão contrariou, uma vez na peça.
 
-**Cabeçalho timbrado.** O cabeçalho segue o padrão Tercini da `base-peticao-previdenciaria-padrao-visual`, com recuo de 5 cm, próprio do CRPS, fonte Bookman Old Style 12pt e espaçamento 1,5.
+**Cabeçalho timbrado.** O cabeçalho segue o padrão Tercini da `base-peticao-previdenciaria-padrao-visual`, com recuo de primeira linha de 4 cm (opção `--crps`), próprio do CRPS, fonte Bookman Old Style 12pt e espaçamento 1,5.
 
 **Negrito.** O negrito se reserva aos fatos-chave e aos dispositivos centrais, na faixa de 2 a 3 destaques por página.
 

@@ -5,25 +5,25 @@
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Deficiência física, ex. G82.2 paraplegia / Q05 espinha bífida / S14.1 lesão medular sequelar / Z89 amputação]
+[CID]. [Deficiência física, ex. G82.2 paraplegia / Q05 espinha bífida / S14.1 lesão medular sequelar / Z89 amputação]
 
 **Histórico clínico**
 
 Paciente apresenta deficiência física desde [DD/MM/AAAA]. Quadro [congênito / pós-traumático / pós-doença]. Em acompanhamento ortopédico contínuo, com [adaptações, fisioterapia, ortopedia]. Os exames complementares confirmam [achados estruturais permanentes].
 
-**Avaliação biopsicossocial e IFBrM**
+**Funções do corpo e atividades (Portaria Conjunta MDS/INSS 2/2015)**
 
-Domínio Físico. GRAVEMENTE LIMITADO. [Descrição. Necessidade de cadeira de rodas, claudicação, perda de membro, restrição de movimento articular, dificuldade de transferências].
+Funções neuromusculoesqueléticas e de movimento (b7), mobilidade (d4) e cuidado pessoal (d5). GRAVEMENTE LIMITADO. [Descrição. Necessidade de cadeira de rodas, claudicação, perda de membro, restrição de movimento articular, dificuldade de transferências].
 
-Domínio Mental. [Em geral preservado, salvo impacto psicológico secundário].
+Funções mentais (b1). [Em geral preservado, salvo impacto psicológico secundário].
 
-Domínio Intelectual. [Preservado].
+Aprendizagem, tarefas gerais e comunicação (d1 a d3). [Preservado].
 
-Domínio Sensorial. [Preservado, salvo em casos neurológicos associados].
+Funções sensoriais e dor (b2). [Preservado, salvo em casos neurológicos associados].
 
 **Barreiras enfrentadas (CIF)**
 
@@ -31,7 +31,7 @@ Físicas. [Domicílio sem acessibilidade, espaços públicos com barreiras]. Ati
 
 **Impedimento de longo prazo**
 
-Superior a 2 anos (desde [DD/MM/AAAA]). Natureza FÍSICA. [Para PCD permanente irrecuperável. Lei 15.157/2025].
+Superior a 2 anos (desde [DD/MM/AAAA]). Natureza FÍSICA. [Se permanente, irreversível ou irrecuperável, declarar expressamente (LOAS, art. 21, §5º; Portaria Conjunta 2/2015, art. 7º, IV)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -47,27 +47,27 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10/CID-11/DSM-5-TR)**
 
-[CID-10] — [Ex. F20 esquizofrenia / F71 retardo mental moderado]
-[CID-11] — [Para autismo. 6A02 Transtorno do Espectro Autista, nível de suporte (1, 2 ou 3)]
-[DSM-5-TR] — [Para autismo. Transtorno do Espectro do Autismo]
+[CID-10]. [Ex. F20 esquizofrenia / F71 retardo mental moderado]
+[CID-11]. [Para autismo. 6A02 Transtorno do Espectro Autista, nível de suporte (1, 2 ou 3)]
+[DSM-5-TR]. [Para autismo. Transtorno do Espectro do Autismo]
 
 **Histórico clínico**
 
 Paciente apresenta [autismo / deficiência intelectual / transtorno mental grave] desde [DD/MM/AAAA, congênito ou primeiro diagnóstico]. [Para criança autista. Sinais identificados aos (idade) meses/anos, com avaliação multidisciplinar (neuropediatra, psicólogo, fonoaudiólogo)]. Em acompanhamento contínuo, com tratamento [farmacológico, terapêutico, ABA, fonoaudiologia, terapia ocupacional].
 
-**Avaliação biopsicossocial e IFBrM**
+**Funções do corpo e atividades (Portaria Conjunta MDS/INSS 2/2015)**
 
-Domínio Físico. [Para autismo. Hipersensibilidade ou hipossensibilidade sensorial, alterações motoras finas. Para esquizofrenia/intelectual. Em geral preservado].
+Funções neuromusculoesqueléticas e de movimento (b7), mobilidade (d4) e cuidado pessoal (d5). [Para autismo. Hipersensibilidade ou hipossensibilidade sensorial, alterações motoras finas. Para esquizofrenia/intelectual. Em geral preservado].
 
-Domínio Mental. GRAVEMENTE LIMITADO. [Comportamentos repetitivos no autismo, restrição de interesses, intolerância a mudanças. Para esquizofrenia. Sintomas positivos/negativos, isolamento. Para intelectual. Limitação de raciocínio adaptativo].
+Funções mentais (b1). GRAVEMENTE LIMITADO. [Comportamentos repetitivos no autismo, restrição de interesses, intolerância a mudanças. Para esquizofrenia. Sintomas positivos/negativos, isolamento. Para intelectual. Limitação de raciocínio adaptativo].
 
-Domínio Intelectual. [Para autismo. Padrões cognitivos diferenciados, com áreas de interesse intenso e outras de grave dificuldade. Para deficiência intelectual. Limitação cognitiva global].
+Aprendizagem, tarefas gerais e comunicação (d1 a d3). [Para autismo. Padrões cognitivos diferenciados, com áreas de interesse intenso e outras de grave dificuldade. Para deficiência intelectual. Limitação cognitiva global].
 
-Domínio Sensorial. [Para autismo. Alterações sensoriais relevantes].
+Funções sensoriais e dor (b2). [Para autismo. Alterações sensoriais relevantes].
 
 **Barreiras enfrentadas (CIF)**
 
@@ -79,7 +79,7 @@ Superior a 2 anos. Natureza [MENTAL/INTELECTUAL].
 
 [Para criança. Marcos do desenvolvimento atrasados. Necessidade de escolarização especializada, atendimento multiprofissional].
 
-[Para PCD permanente irrecuperável. Lei 15.157/2025].
+[Se permanente, irreversível ou irrecuperável, declarar expressamente (LOAS, art. 21, §5º; Portaria Conjunta 2/2015, art. 7º, IV)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -90,33 +90,33 @@ CRM [número]
 
 ---
 
-## 3. REUMATOLOGISTA (fibromialgia Lei 15.176/2025 e doenças autoimunes)
+## 3. REUMATOLOGISTA (fibromialgia e doenças autoimunes)
 
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-M79.7 — Fibromialgia (Lei 15.176/2025)
+M79.7. Fibromialgia
 [CID secundário, se houver]
 
 **Histórico clínico**
 
 Paciente em acompanhamento reumatológico desde [DD/MM/AAAA] com diagnóstico de fibromialgia pelos critérios ACR 2010. Apresenta dor crônica musculoesquelética generalizada, fadiga crônica, distúrbios do sono não reparador, comprometimento cognitivo. Tratamento medicamentoso contínuo com [posologia], com resposta limitada.
 
-A fibromialgia é reconhecida como deficiência pela Lei 15.176/2025 para fins de BPC e aposentadoria PCD.
+A Lei 14.705/2023, art. 1º-C (incluído pela Lei 15.176/2025), admite a equiparação à pessoa com deficiência mediante avaliação biopsicossocial; o relatório fornece os achados individualizados para essa avaliação.
 
-**Avaliação biopsicossocial e IFBrM**
+**Funções do corpo e atividades (Portaria Conjunta MDS/INSS 2/2015)**
 
-Domínio Físico. Severamente limitado. Dor crônica generalizada, fadiga, intolerância ao ortostatismo prolongado, limitação para esforços e movimentos repetitivos.
+Funções neuromusculoesqueléticas e de movimento (b7), mobilidade (d4) e cuidado pessoal (d5). Severamente limitado. Dor crônica generalizada, fadiga, intolerância ao ortostatismo prolongado, limitação para esforços e movimentos repetitivos.
 
-Domínio Mental. Comprometido. Comorbidade frequente com transtornos depressivos e ansiosos.
+Funções mentais (b1). Comprometido. Comorbidade frequente com transtornos depressivos e ansiosos.
 
-Domínio Intelectual. "Fibro fog". Dificuldade de concentração, memória, raciocínio rápido.
+Aprendizagem, tarefas gerais e comunicação (d1 a d3). "Fibro fog". Dificuldade de concentração, memória, raciocínio rápido.
 
-Domínio Sensorial. Hipersensibilidade dolorosa. Alodinia, hiperalgesia.
+Funções sensoriais e dor (b2). Hipersensibilidade dolorosa. Alodinia, hiperalgesia.
 
 **Barreiras enfrentadas (CIF)**
 
@@ -124,7 +124,7 @@ Atitudinais. [Descrença social da gravidade da fibromialgia, dificuldade de ace
 
 **Impedimento de longo prazo**
 
-Superior a 2 anos (desde [DD/MM/AAAA]). Natureza FÍSICA com componentes sensorial e cognitivo. [Lei 15.157/2025 se aplicável].
+Superior a 2 anos (desde [DD/MM/AAAA]). Natureza FÍSICA com componentes sensorial e cognitivo. [Se permanente, irreversível ou irrecuperável, declarar (LOAS, art. 21, §5º)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -140,25 +140,25 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Patologia multissistêmica, ex. E10 DM tipo 1 complicado / G35 esclerose múltipla / B20-B24 HIV/AIDS / C00-C97 câncer]
+[CID]. [Patologia multissistêmica, ex. E10 DM tipo 1 complicado / G35 esclerose múltipla / B20-B24 HIV/AIDS / C00-C97 câncer]
 
 **Histórico clínico**
 
 Paciente apresenta [diabetes mellitus de longa data com complicações graves / esclerose múltipla com surtos desde DD/MM / doença renal crônica avançada / câncer em tratamento]. Em acompanhamento contínuo desde [data]. Tratamento intensivo.
 
-**Avaliação biopsicossocial e IFBrM**
+**Funções do corpo e atividades (Portaria Conjunta MDS/INSS 2/2015)**
 
-Domínio Físico. Limitado por [fadiga crônica, neuropatia, dispneia, fraqueza, sequelas neurológicas].
+Funções neuromusculoesqueléticas e de movimento (b7), mobilidade (d4) e cuidado pessoal (d5). Limitado por [fadiga crônica, neuropatia, dispneia, fraqueza, sequelas neurológicas].
 
-Domínio Mental. [Variável conforme a doença].
+Funções mentais (b1). [Variável conforme a doença].
 
-Domínio Intelectual. [Em geral preservado].
+Aprendizagem, tarefas gerais e comunicação (d1 a d3). [Em geral preservado].
 
-Domínio Sensorial. [Para DM. Retinopatia, neuropatia sensitiva].
+Funções sensoriais e dor (b2). [Para DM. Retinopatia, neuropatia sensitiva].
 
 **Barreiras enfrentadas (CIF)**
 
@@ -166,7 +166,7 @@ Físicas. [Restrições de mobilidade, necessidade de internações frequentes].
 
 **Impedimento de longo prazo**
 
-Superior a 2 anos. Natureza [FÍSICA / MÚLTIPLA]. [Lei 15.157/2025 quando aplicável].
+Superior a 2 anos. Natureza [FÍSICA / MÚLTIPLA]. [Se permanente, irreversível ou irrecuperável, declarar (LOAS, art. 21, §5º)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -182,11 +182,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Deficiência visual, ex. H54.0 cegueira em ambos os olhos / H54.4 cegueira em um olho (Súmula 377/STJ) / H54.6 baixa visão]
+[CID]. [Deficiência visual, ex. H54.0 cegueira em ambos os olhos / H54.4 cegueira em um olho (visão monocular, Lei 14.126/2021) / H54.6 baixa visão]
 
 **Histórico clínico**
 
@@ -194,15 +194,15 @@ Paciente apresenta deficiência visual desde [DD/MM/AAAA] decorrente de [retinop
 
 Acuidade visual com melhor correção. OD [valor], OE [valor]. Campo visual. [achados]. Decreto 5.296/2004. Considera-se deficiência visual a [acuidade visual ≤ 0,3 / cegueira ≤ 0,05 / campo visual ≤ 20°].
 
-**Avaliação biopsicossocial e IFBrM**
+**Funções do corpo e atividades (Portaria Conjunta MDS/INSS 2/2015)**
 
-Domínio Físico. Mobilidade limitada por dificuldade de orientação espacial. Necessidade de bengala, cão-guia ou acompanhante.
+Funções neuromusculoesqueléticas e de movimento (b7), mobilidade (d4) e cuidado pessoal (d5). Mobilidade limitada por dificuldade de orientação espacial. Necessidade de bengala, cão-guia ou acompanhante.
 
-Domínio Mental. Em geral preservado.
+Funções mentais (b1). Em geral preservado.
 
-Domínio Intelectual. Preservado.
+Aprendizagem, tarefas gerais e comunicação (d1 a d3). Preservado.
 
-Domínio Sensorial. GRAVEMENTE LIMITADO. [Cegueira / baixa visão / perda de campo visual].
+Funções sensoriais e dor (b2). GRAVEMENTE LIMITADO. [Cegueira / baixa visão / perda de campo visual].
 
 **Barreiras enfrentadas (CIF)**
 
@@ -210,9 +210,9 @@ Físicas. [Acessibilidade urbana, sinalização tátil, calçadas]. De comunica�
 
 **Impedimento de longo prazo**
 
-Superior a 2 anos. Natureza SENSORIAL VISUAL. [Lei 15.157/2025 quando aplicável].
+Superior a 2 anos. Natureza SENSORIAL VISUAL. [Se permanente, irreversível ou irrecuperável, declarar (LOAS, art. 21, §5º)].
 
-Para CEGUEIRA MONOCULAR. Súmula 377/STJ. Pessoa com deficiência.
+Para VISÃO MONOCULAR. Lei 14.126/2021 (deficiência sensorial do tipo visual); o BPC depende ainda do impedimento de longo prazo com barreiras.
 
 [Local], [DD] de [mês] de [ano].
 
@@ -228,25 +228,25 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Cardiopatia, ex. Q24 cardiopatia congênita / I50 insuficiência cardíaca crônica / I42 cardiomiopatia dilatada]
+[CID]. [Cardiopatia, ex. Q24 cardiopatia congênita / I50 insuficiência cardíaca crônica / I42 cardiomiopatia dilatada]
 
 **Histórico clínico**
 
 Paciente apresenta cardiopatia [crônica desde DD/MM/AAAA / congênita]. Em acompanhamento contínuo com terapia medicamentosa otimizada. Ecocardiograma demonstra [fração de ejeção (valor)%]. Classe funcional NYHA [II/III/IV].
 
-**Avaliação biopsicossocial e IFBrM**
+**Funções do corpo e atividades (Portaria Conjunta MDS/INSS 2/2015)**
 
-Domínio Físico. Limitado por dispneia aos esforços, redução da tolerância ao exercício, fadiga crônica.
+Funções neuromusculoesqueléticas e de movimento (b7), mobilidade (d4) e cuidado pessoal (d5). Limitado por dispneia aos esforços, redução da tolerância ao exercício, fadiga crônica.
 
-Domínio Mental. Em geral preservado.
+Funções mentais (b1). Em geral preservado.
 
-Domínio Intelectual. Preservado.
+Aprendizagem, tarefas gerais e comunicação (d1 a d3). Preservado.
 
-Domínio Sensorial. Preservado.
+Funções sensoriais e dor (b2). Preservado.
 
 **Barreiras enfrentadas (CIF)**
 
@@ -254,7 +254,7 @@ Físicas. [Domicílio com escadas, necessidade de evitar esforço]. Tecnológica
 
 **Impedimento de longo prazo**
 
-Superior a 2 anos. Natureza FÍSICA. [Lei 15.157/2025 quando aplicável].
+Superior a 2 anos. Natureza FÍSICA. [Se permanente, irreversível ou irrecuperável, declarar (LOAS, art. 21, §5º)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -269,16 +269,14 @@ CRM [número]
 
 Todos os modelos focam em IMPEDIMENTO DE LONGO PRAZO (≥ 2 anos) e BARREIRAS enfrentadas.
 
-Abordagem biopsicossocial conforme Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026).
-
-IFBrM com domínios físico, mental, intelectual, sensorial (Portaria 37/2026).
+Abordagem biopsicossocial conforme a Portaria Conjunta MDS/INSS 2/2015, na redação da Portaria Conjunta 37/2026: Funções do Corpo (b1 a b8) e Atividades d1 a d5 pelo médico; agravante de estrutura, prognóstico e permanência (art. 7º).
 
 Para menores de 16 anos. Adaptação à faixa etária.
 
-Para PCD permanente irrecuperável. Lei 15.157/2025 dispensa reavaliação.
+Impedimento permanente, irreversível ou irrecuperável: LOAS, art. 21, §5º (Lei 15.157/2025), dispensa a reavaliação periódica.
 
-Para fibromialgia. Lei 15.176/2025.
+Para fibromialgia. Lei 14.705/2023, art. 1º-C.
 
-Cegueira monocular. Súmula 377/STJ.
+Visão monocular. Lei 14.126/2021.
 
 Citação dos dispositivos legais e normativos pertinentes.

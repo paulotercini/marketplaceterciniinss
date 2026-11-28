@@ -1,133 +1,27 @@
-# Cumprimento de Sentença — Fundamentos e Cenários
+# Cumprimento de Sentença. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-Cumprimento de sentença contra o INSS se processa pelo rito do CPC (arts. 534 e 535) em Vara Federal, e pela Lei 10.259/2001 no JEF, com RPV até 60 SM e precatório acima. A execução inclui cálculo de atrasados, juros, correção, honorários e tributação.
+CF/88, art. 100, §§1º, 2º, 3º, 5º e 8º. Lei 10.259/2001, arts. 13 e 17. CPC, arts. 85, 534 e 535. Lei 7.713/1988, art. 12-A. Lei 8.906/94, arts. 22 a 24. Manual de Cálculos da Justiça Federal 2026.
 
-## 2. Fundamento constitucional
+## 2. Cenários
 
-Art. 100, CF/88. Precatório.
+Cenário A. Atrasados até 60 salários mínimos na data da conta. RPV, paga em 60 dias da entrega da requisição.
 
-Art. 100, §3º, CF/88. Pequeno valor (RPV).
+Cenário B. Atrasados acima de 60 salários mínimos. Orientar o cliente por escrito entre a renúncia ao excedente (RPV) e o precatório, que, apresentado até 1º de fevereiro, é pago até o fim do exercício seguinte.
 
-## 3. Fundamento legal
+Cenário C. Segurado com 60 anos ou mais, doença grave ou deficiência. Pedir a superpreferência do art. 100, §2º, até o triplo do pequeno valor, e o restante na ordem cronológica.
 
-Lei 10.259/2001, art. 17.
+Cenário D. INSS impugna parte da conta. Expedição imediata do incontroverso (art. 535, §4º), observado o valor total para definir RPV ou precatório (Tema 28 STF).
 
-CPC, arts. 534 e 535.
+Cenário E. Benefício administrativo mais vantajoso concedido no curso da ação. Opção pelo administrativo e execução das parcelas judiciais até a implantação (Tema 1018 STJ).
 
-Lei 11.960/2009, art. 1º-F.
+Cenário F. Atrasados de vários anos. Requerer a tributação como RRA e, se houver doença grave, a isenção (Súmula 627 STJ).
 
-Lei 9.494/1997.
+## 3. Cenários limitados
 
-Resoluções CJF.
+Pretensão executiva não exercida em cinco anos do trânsito (Súmula 150 STF). Fracionamento do principal em RPV e precatório (art. 17, §3º). Cessão de crédito com deságio: operação voluntária, avaliar com o cliente.
 
-## 4. Marco jurisprudencial central
+## 4. Metodologia
 
-### Tema 810 STF
-
-IPCA-E [NÃO CONFIRMADO] e juros poupança, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
-
-### Tema 905 STJ
-
-Benefícios previdenciários e critérios específicos.
-
-### Prescrição em cumprimento
-
-Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
-
-### Tema 368 STF
-
-RRA e IR.
-
-### Súmula 111 STJ
-
-Honorários.
-
-### Súmula 345 STJ e art. 85, §1º, CPC
-
-Honorários em execução contra a Fazenda; a Súmula 345 STJ alcança a execução individual de sentença coletiva, ainda que não embargada (auditoria 03/10/2026, retirada a Súmula 443 STJ, que é penal).
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Atrasados até 60 SM
-
-RPV com prazo de 60 dias.
-
-### Cenário B — Atrasados acima de 60 SM
-
-Precatório, calendário anual.
-
-### Cenário C — Renúncia ao excedente
-
-Para obter RPV mesmo com atrasados maiores.
-
-### Cenário D — RRA
-
-Diferimento tributário em atrasados.
-
-### Cenário E — Isenção por doença grave
-
-Tema 1373 STF, Súmula 627 STJ.
-
-### Cenário F — Dialeticidade em impugnação
-
-Combate técnico.
-
-### Cenário G — Honorários destacados
-
-Arts. 22 §4º, 23 e 24 EAOAB.
-
-## 6. Cenários limitados
-
-### Cenário H — Prescrição quinquenal
-
-Em cumprimento, prescreve crédito não requerido em 5 anos.
-
-### Cenário I — Deságio em precatório
-
-Operação financeira, avaliar.
-
-### Cenário J — Abatimento de valores administrativos
-
-Se DIP anterior, compensar.
-
-## 7. Metodologia
-
-Primeiro, planilha detalhada de cálculo.
-
-Segundo, requisição com honorários destacados.
-
-Terceiro, acompanhamento de expedição.
-
-Quarto, resposta à impugnação.
-
-Quinto, tributação correta.
-
-Sexto, recebimento.
-
-## 8. Riscos processuais
-
-Risco de prescrição quinquenal em cumprimento.
-
-Risco de recusa da RRA pela Receita. Pedir RRA no próprio juízo.
-
-Risco de juros e correção incorretos. Cotejar Temas 810 e 905.
-
-Risco de deságio precatório elevado. Evitar.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, cálculo preciso.
-
-Segundo, destaque de honorários.
-
-Terceiro, aplicação RRA.
-
-Quarto, controle de prazos.
-
-Quinto, resposta à impugnação.
-
-## 10. Integração prática
-
-`execucao-cumprimento-previdenciario`, `tributacao-beneficios-previdenciarios`, `honorarios-contrato-previdenciario`, `impugnacao-cumprimento-concomitantes`, `peticao-previdenciaria`.
+Primeiro, conferir o título (DIB, DIP, índices, honorários). Segundo, elaborar ou conferir a conta pelas três fases do Manual 2026. Terceiro, definir RPV ou precatório e colher a renúncia, se for o caso. Quarto, juntar o contrato para destaque. Quinto, responder à impugnação ponto a ponto. Sexto, acompanhar o pagamento e pedir sequestro na RPV desatendida (art. 17, §2º).

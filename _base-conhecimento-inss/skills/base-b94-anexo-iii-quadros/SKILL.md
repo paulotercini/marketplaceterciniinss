@@ -1,161 +1,61 @@
 ---
 name: base-b94-anexo-iii-quadros
-description: "Anexo III do Decreto 3.048/99 e quadros exemplificativos do auxílio-acidente B94, caráter exemplificativo, sequelas além do rol, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, perda parcial e função residual, redução da capacidade laborativa para o trabalho habitual. Use SEMPRE que mencionar Anexo III Decreto 3.048, quadros do auxílio-acidente, sequela enquadrável B94, rol exemplificativo, sequela fora do anexo, redução parcial da capacidade laborativa, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, função residual, perda anatômica, perda funcional B94, capacidade habitual reduzida, ofensa estética B94, ofensa funcional, Portaria 991/2022, TJSP. Inclui o arsenal de MAIOR ESFORÇO e perda de dedo (Onda 124), acionado por perícia desfavorável B94, laudo nega incapacidade, amputação de dedo, quirodáctilo, função de pinça, órgão preensor, maior esforço, art. 104 II revogado, Tema 416 STJ. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-sumula88-tnu e base-b94-nexo-acidentario-ntep."
+description: "Anexo III do Decreto 3.048/99 e quadros exemplificativos do auxílio-acidente B94, caráter exemplificativo, sequelas além do rol, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, perda parcial e função residual, redução da capacidade laborativa para o trabalho habitual. Use SEMPRE que mencionar Anexo III Decreto 3.048, quadros do auxílio-acidente, sequela enquadrável B94, rol exemplificativo, sequela fora do anexo, redução parcial da capacidade laborativa, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, função residual, perda anatômica, perda funcional B94, capacidade habitual reduzida, prejuízo estético B94, quadros 1 a 9, Portaria 991/2022, TJSP. Inclui a fundamentação de maior esforço e perda de dedo, acionada por perícia desfavorável B94, laudo nega incapacidade, amputação de dedo, quirodáctilo, função de pinça, órgão preensor, maior esforço, art. 104 II revogado, Tema 416 STJ. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-sumula88-tnu e base-b94-nexo-acidentario-ntep."
 ---
 
-## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+# Anexo III e quadros do B94
 
-Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
-
-1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
-2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
-3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
-
-Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
-
-
-# Anexo III e Quadros do B94
+Convenção de espécies (códigos INSS): B31 e B91 auxílio por incapacidade temporária previdenciário e acidentário; B32 e B92 aposentadoria por incapacidade permanente previdenciária e acidentária; B94 auxílio-acidente (B36 quando previdenciário; a base usa B94 para ambos).
 
 ## Escopo
 
-Skill pró-segurado sobre o caráter exemplificativo do Anexo III do Decreto 3.048/99 e o reconhecimento de sequelas além do rol no auxílio-acidente.
+Caráter exemplificativo do Anexo III do Decreto 3.048/99, conteúdo dos quadros e enquadramento de sequelas fora do rol. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`; laudo desfavorável com admissão de maior esforço em `references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
 
-## Marco normativo central
+## Fundamento do caráter exemplificativo, na ordem de uso
 
-CF/88, art. 201 §10.
+1. Lei 8.213/91, art. 86: exige apenas sequela que implique redução da capacidade para o trabalho habitual; não remete a rol.
+2. Decreto 3.048/99, art. 104, caput, na redação do Decreto 10.410/2020: sequela definitiva que, "a exemplo das situações discriminadas no Anexo III", implique redução da capacidade. Os incisos I a III do art. 104 foram revogados pelo mesmo decreto; não citar o antigo inciso II (maior esforço).
+3. IN 128/2022, art. 354, §1º, incluído pela IN PRES/INSS 212, de 06/08/2026: o Anexo III "contém rol meramente exemplificativo" e o não enquadramento não impede a Perícia Médica Federal de verificar os requisitos no caso concreto. Em requerimento e recurso ao CRPS, é o fundamento principal (norma do próprio INSS). Detalhe em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+4. Tema 416 STJ (REsp 1.109.591/SC): basta redução da capacidade habitual, ainda que mínima a lesão; o grau do maior esforço não interfere.
+5. Súmula 88 TNU: limitação, ainda que leve, para a atividade habitual enseja o B94. A Súmula 89 TNU é o limite negativo (sem redução nem maior esforço, sem B94).
 
-Lei 8.213/91, art. 86.
+## Os nove quadros (síntese)
 
-Decreto 3.048/99, Anexo III.
+Texto integral dos quadros e notas em `auxilio-acidente-b94/references/ANEXO-III.md`.
 
-IN 128/2022.
+| Quadro | Matéria | Situações principais |
+|---|---|---|
+| 1 | Aparelho visual | Acuidade, após correção, até 0,2 no olho acidentado ou até 0,5 em ambos; paresia de musculatura extrínseca; lesão de vias lacrimais |
+| 2 | Aparelho auditivo (trauma acústico) | Perda no ouvido acidentado; redução em grau médio ou superior (41 dB ou mais na média de 500 a 3.000 Hz) |
+| 3 | Fonação | Perturbação da palavra em grau médio ou máximo, comprovada por método objetivo |
+| 4 | Prejuízo estético | Grau médio ou máximo em crânio, face ou pescoço; perda de dentes com deformação da arcada que impede prótese |
+| 5 | Perda de segmentos | Carpo ou tarso; primeiro quirodáctilo com falange proximal; dois quirodáctilos com falange proximal em um; segundo quirodáctilo com falange proximal; três ou mais falanges de três ou mais dedos; pododáctilos |
+| 6 | Alterações articulares | Redução de amplitude em grau médio (mais de 1/3) ou máximo (mais de 2/3) conforme a articulação |
+| 7 | Encurtamento de membro inferior | Mais de 4 cm |
+| 8 | Força ou capacidade funcional | Grau sofrível ou inferior (escala de desempenho muscular) em mão, punho, antebraço, membro superior, primeiro quirodáctilo, pé, perna ou membro inferior |
+| 9 | Outros aparelhos | Segmentectomia pulmonar com redução média ou superior; perda de segmento digestivo com repercussão nutricional |
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Os graus mínimos fixados nos quadros (ex.: falange proximal, grau médio) não limitam o direito: lesão abaixo do grau descrito gera B94 se reduzir a capacidade para a atividade habitual (itens 2 a 5 acima). Para disacusia abaixo do grau tabelado, Súmula 44 STJ e Tema 22 STJ: a definição regulamentar de grau mínimo não exclui, por si só, o benefício. A perda auditiva exige nexo com o trabalho e redução efetiva da capacidade habitual (Lei 8.213/91, art. 86, §4º; Tema 213 STJ).
 
-TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
+## Aplicação
 
-## Marco jurisprudencial
-
-### Súmula 88 TNU
-
-Caráter exemplificativo.
-
-Fonte oficial em https://www.cjf.jus.br
-
-### Súmula 89 TNU
-
-Sequela permanente.
-
-### Tema 416 STJ
-
-Auxílio-acidente e redução parcial.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 350 TNU
-
-Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não concessão ou prova (auditoria 03/10/2026).
-
-## Anexo III exemplificativo
-
-Primeiro, o Anexo III lista quadros exemplificativos.
-
-Segundo, sequelas fora do rol também concedem B94.
-
-Terceiro, exigência é redução parcial da capacidade laborativa habitual.
-
-Quarto, súmula 88 TNU consagra a interpretação.
-
-## Aplicação pró-segurado
-
-Primeiro, sequela funcional e anatômica.
-
-Segundo, perda parcial mesmo que pequena.
-
-Terceiro, função residual após acidente.
-
-Quarto, ofensa estética grave também conta.
-
-## Cenários pró-segurado
-
-Cenário A, dedo amputado parcialmente. Não está literalmente no Anexo. Súmula 88 garante.
-
-Cenário B, perda auditiva parcial após acidente. B94.
-
-Cenário C, sequela neurológica leve mas permanente. B94.
-
-Cenário D, ofensa estética grave após queimadura. B94.
-
-## Alertas
-
-Primeiro, INSS frequentemente indefere por ausência literal no Anexo. Súmula 88 refuta.
-
-Segundo, exigência de incapacidade total é incorreta. B94 é parcial.
-
-Terceiro, redução pode ser pequena. Tema 416 STJ.
-
-Quarto, sequela mesmo sem CID específico admite enquadramento.
+1. Enquadrar a sequela no quadro, quando possível, como reforço.
+2. Fora do quadro, demonstrar a redução ou o maior esforço na atividade habitual concreta, descrita com fatos (gestos, ferramentas, jornada).
+3. Quesitar a redução da capacidade, nunca a incapacidade.
+4. Prejuízo estético conta apenas nas regiões e graus do Quadro 4 ou quando reduzir a capacidade para a atividade habitual (ex.: profissão de contato com público), demonstrado em concreto.
 
 ## Fungibilidade aplicável
 
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+Acionar `base-fungibilidade-previdenciaria` (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
+`base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para detalhes operacionais, acionar `auxilio-acidente-b94`.
-Para integração ao salário-de-benefício, acionar `base-b94-integracao-salario-beneficio-art31`.
-Para cessação e acumulação, acionar `base-b94-cessacao-acumulacao-vedacao`.
-Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
-Para nexo, acionar `base-b94-nexo-acidentario-ntep`.
-
-## O que NÃO está nesta skill
-
-Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Cessação em `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`. Nexo em `base-b94-nexo-acidentario-ntep`.
-
-## O INSS reconhece o Anexo III como EXEMPLIFICATIVO (Onda 115)
-
-O art. 354, § 1º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026), dispõe que "o Anexo III do RPS contém rol meramente exemplificativo das situações que ensejam o direito ao auxílio-acidente e o não enquadramento em alguma das situações listadas não impede que a Perícia Médica Federal verifique, no caso concreto, o preenchimento dos requisitos para a concessão do benefício".
-
-Mudança de patamar. O que antes se sustentava pela Súmula 88 da TNU e pelo Tema 416 do STJ passa a ter fundamento na NORMA INTERNA do próprio INSS.
-
-Regra de uso. Em requerimento e em recurso ao CRPS, citar o art. 354, § 1º, da IN 128 como fundamento PRINCIPAL e a jurisprudência como reforço, jamais o contrário, porque o CRPS é órgão administrativo vinculado à norma. Em indeferimento anterior fundado na taxatividade do Anexo III, sustentar a interpretação autêntica da Administração. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
-
-## Maior esforço e perda de dedo, com perícia desfavorável (Onda 124)
-
-Arsenal para o laudo que conclui "sem incapacidade" mas admite, na descrição, interferência funcional da sequela. A chave é que o B94 NÃO exige incapacidade, exige REDUÇÃO da capacidade, de modo que o perito que responde ao quesito de incapacidade responde a pergunta errada e sua conclusão não vincula quanto a requisito que não avaliou. Roteiro, quesitos e modelo de tópico em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
-
-ALERTA NORMATIVO. O art. 104, inciso II, do Decreto 3.048/99, que trazia o "maior esforço" expresso, foi REVOGADO pelo Decreto 10.410/2020, junto com os incisos I e III. Citá-lo hoje entrega contestação fácil à PFE-INSS. O maior esforço sobrevive no Tema 416 do STJ, cuja tese diz que "o grau do maior esforço não interfere na concessão do benefício, o qual será devido ainda que mínima a lesão".
-
-Ganho da redação vigente. O caput do art. 104, na redação do Decreto 10.410/2020, refere as situações do Anexo III "A EXEMPLO DE", afirmando o caráter exemplificativo com mais clareza que a redação antiga, e somando-se ao art. 354, § 1º, da IN 128/2022.
+Detalhes operacionais: `auxilio-acidente-b94`. Integração ao salário de benefício: `base-b94-integracao-salario-beneficio-art31`. Cessação e acumulação: `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima: `base-b94-sequela-minima-sumula88-tnu`. Nexo: `base-b94-nexo-acidentario-ntep`.

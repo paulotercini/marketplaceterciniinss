@@ -2,7 +2,7 @@
 
 ## Posição Estratégica
 
-O PEDILEF é arma de dois gumes. Quando o INSS interpõe, o segurado tem a oportunidade de virar o ônus técnico contra a autarquia, explorando as mesmas QOs que poderiam prejudicá-lo. O PEDILEF da autarquia frequentemente é interposto em massa, com paradigmas genéricos e sem cotejo analítico consistente, exatamente o padrão que a QO 59 (aprovada em 15/04/2026) pretende impedir (auditoria 03/10/2026).
+Quando o INSS interpõe o pedido, o segurado pode arguir contra a autarquia, explorando as mesmas QOs que poderiam prejudicá-lo. O PEDILEF da autarquia frequentemente é interposto em massa, com paradigmas genéricos e sem cotejo analítico consistente, exatamente o padrão que a QO 59 (aprovada em 15/04/2026) pretende impedir.
 
 ## Eixo Central da Impugnação
 
@@ -22,13 +22,13 @@ Muitos PEDILEFs do INSS atacam matéria processual disfarçada de material. Exem
 
 O INSS frequentemente tenta rediscutir fatos sob o disfarce de questão jurídica. Exemplo, impugnação do enquadramento como rural quando a perícia social e a prova material já foram valoradas soberanamente pelas instâncias ordinárias. Demonstrar que o PEDILEF da autarquia pretende reexame de fato, não valoração jurídica.
 
-### 4. Paradigma Inválido — Vício Estrutural
+### 4. Paradigma Inválido. Vício Estrutural
 
 Conferir cada paradigma invocado pelo INSS contra as seguintes vedações.
 
-**QO 48.** Paradigma do STF — descabimento absoluto. Verificar se algum paradigma do INSS é do STF (comum em matéria de EPI, repercussão geral ARE 664.335, Tema 555). Se for, suscitar a vedação.
+**QO 48.** Paradigma do STF, descabimento absoluto. Verificar se algum paradigma do INSS é do STF (comum em matéria de EPI, repercussão geral ARE 664.335, Tema 555). Se for, suscitar a vedação.
 
-**QO 3.** Ausência de juntada do acórdão paradigma ou de link válido — suscitar quando aplicável. Verificar se o INSS juntou cópia integral ou se apenas citou numeração sem link funcional.
+**QO 3.** Ausência de juntada do acórdão paradigma ou de link válido, suscitar quando aplicável. Verificar se o INSS juntou cópia integral ou se apenas citou numeração sem link funcional.
 
 **QO 5.** Precedente do STJ fora das modalidades admitidas (IRDR, IAC, repetitivo, EDiv, PUIL/STJ). Verificar se os precedentes do STJ invocados pelo INSS são de turmas regulares, acórdãos isolados ou agravos internos, situações em que não servem para demonstração de jurisprudência dominante.
 
@@ -40,11 +40,11 @@ Demonstrar, paradigma por paradigma, que as bases fáticas do caso em julgamento
 
 **Tática.** Inverter a tabela comparativa. Onde o INSS alegaria similitude, demonstrar distinção nos elementos nucleares. Exemplo, em tempo especial, se o INSS apresenta paradigma em que o PPP era ausente, enquanto no recorrido há PPP completo, a similitude é falsa, porque o elemento nuclear (existência de PPP) é distinto.
 
-### 6. Ausência de Cotejo Analítico (Núcleo Estratégico — QO 59 e Jurisprudência Consolidada)
+### 6. Ausência de Cotejo Analítico (Núcleo Estratégico. QO 59 e Jurisprudência Consolidada)
 
 O PEDILEF do INSS frequentemente se limita a transcrever ementas, sem o confronto analítico das teses. Este é o núcleo da impugnação.
 
-**Argumentação padrão.** A autarquia limita-se à mera transcrição de ementas dos acórdãos paradigmas, sem demonstrar analiticamente a divergência nos termos da jurisprudência consolidada da TNU (QOs 22 e 59) e do STJ (art. 1.029, §1º, CPC/2015, por analogia estrutural). A demonstração da divergência exige descrição comparativa individualizada entre (a) os fatos em julgamento do recorrido e do paradigma; (b) os fundamentos determinantes de cada um. O INSS não realizou esse confronto, o que impede o conhecimento do PEDILEF (auditoria 03/10/2026).
+**Argumentação padrão.** A autarquia limita-se à mera transcrição de ementas dos acórdãos paradigmas, sem demonstrar analiticamente a divergência nos termos da jurisprudência consolidada da TNU (QOs 22 e 59) e do STJ (art. 1.029, §1º, CPC/2015, por analogia estrutural). A demonstração da divergência exige descrição comparativa individualizada entre (a) os fatos em julgamento do recorrido e do paradigma; (b) os fundamentos determinantes de cada um. O INSS não realizou esse confronto, o que impede o conhecimento do PEDILEF.
 
 ### 7. Fundamento Único Autônomo Não Impugnado (QO 18)
 
@@ -64,7 +64,7 @@ Se o INSS suscita, no PEDILEF, tese não ventilada nas fases anteriores e não e
 
 Se a matéria que o INSS pretende uniformizar não foi efetivamente apreciada pela turma recursal, suscitar QO 35. Esse é ponto sensível, porque a autarquia frequentemente invoca teses genéricas que não têm correspondência específica no acórdão.
 
-## Modelo Argumentativo em Bloco — Pauta Defensiva Cumulativa
+## Modelo Argumentativo em Bloco. Pauta Defensiva Cumulativa
 
 Usar todos os eixos cabíveis, em ordem lógica, combinando causas preliminares e vícios específicos. A cumulatividade é virtude, não redundância, porque protege contra reforma isolada em agravo.
 
@@ -82,7 +82,7 @@ Mesmo em contrarrazões focadas em inadmissibilidade, incluir tópico de mérito
 
 ## Contrarrazões em PEDILEF Representativo de Controvérsia
 
-Quando o PEDILEF do INSS é afetado como representativo, a contrarrazão ganha função pública maior, porque a tese fixada vinculará casos sobrestados. Investir em densidade argumentativa extraordinária. Considerar amicus curiae via entidades (IEPrev, IBDP, IAPE, OAB) — a QO 50/TNU admite amicus nos termos do art. 138 do CPC. Articular com a skill `precedentes-previdenciarios` para demonstrar a consolidação jurisprudencial contrária à tese do INSS.
+Quando o PEDILEF do INSS é afetado como representativo, a contrarrazão ganha função pública maior, porque a tese fixada vinculará casos sobrestados. Investir em densidade argumentativa extraordinária. Considerar amicus curiae via entidades (IEPrev, IBDP, IAPE, OAB), a QO 50/TNU admite amicus nos termos do art. 138 do CPC. Articular com a skill `precedentes-previdenciarios` para demonstrar a consolidação jurisprudencial contrária à tese do INSS.
 
 ## Agravo Contra Admissão Indevida na Origem
 

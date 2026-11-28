@@ -1,133 +1,31 @@
-# Cumprimento MS — Jurisprudência e Refutação
+# Cumprimento do MS. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Enunciados
 
-### Súmula 271 STF
+Súmula 269 STF: "O mandado de segurança não é substitutivo de ação de cobrança."
 
-Patrimoniais.
+Súmula 271 STF: "Concessão de mandado de segurança não produz efeitos patrimoniais em relação a período pretérito, os quais devem ser reclamados administrativamente ou pela via judicial própria."
 
-Fonte oficial em https://portal.stf.jus.br
+Súmula 105 STJ e Súmula 512 STF (sem honorários em MS).
 
-### Súmula 269 STF
+Tema 692/STJ (revisado em 2022). Valores recebidos por tutela posteriormente revogada devem ser devolvidos, com desconto de até 30% do benefício.
 
-Cobrança por ordinária.
+Precedentes sobre o cumprimento de acórdão do CRPS em `MS-CUMPRIMENTO-ACORDAO-CRPS.md`.
 
-Fonte oficial em https://portal.stf.jus.br
+## 2. Refutação aos argumentos típicos do INSS
 
-### Pagamento pretérito no MS
+1. Efeitos patrimoniais vedados. Refutação. A Súmula 271 STF alcança apenas o período anterior à impetração.
 
-Segue as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
+2. Prazo de cumprimento insuficiente. Refutação. Implantação é ato administrativo ordinário; o próprio acordo do RE 1.171.152/STF fixou 15 dias para tutela de urgência e 25 a 45 dias conforme a espécie.
 
-Fonte oficial em https://portal.stf.jus.br
+3. Multa vedada contra a Fazenda. Refutação. A tutela específica e a multa aplicam-se à Fazenda Pública (CPC, arts. 497 e 537).
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
+4. Desobediência inaplicável a servidor. Refutação. O art. 26 da Lei 12.016/2009 tipifica expressamente o descumprimento de decisão em MS.
 
-Duração razoável.
+5. Execução provisória vedada contra a Fazenda. Refutação. O art. 14, §3º, da Lei 12.016/2009 autoriza a execução provisória da sentença concessiva, e a implantação é obrigação de fazer, sem precatório.
 
-## 2. Marco legislativo
+6. Apelação ou remessa suspendem a ordem. Refutação. A remessa necessária não tem efeito suspensivo, e a sentença concessiva se cumpre de imediato (art. 14, §§1º e 3º); efeito suspensivo depende de decisão expressa ou de suspensão de segurança (art. 15).
 
-### Lei 12.016/2009
+7. Recurso ou revisão de acórdão no CRPS impede o cumprimento. Refutação. Apenas recurso tempestivo tem efeito suspensivo, e revisão de acórdão não é recurso (Decreto 3.048/99, art. 308, caput e §1º); cabe ao INSS provar a tempestividade.
 
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, arts. 497 e 537
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Efeitos patrimoniais vedados
-
-Argumento adversário. Súmula 271.
-
-Refutação. Efeitos entre impetração e cumprimento cabíveis. Demais em ordinária.
-
-### Argumento 2 — Prazo de cumprimento insuficiente
-
-Argumento adversário. Operacional.
-
-Refutação. Implantação é obrigação administrativa ordinária.
-
-### Argumento 3 — Multa vedada contra Fazenda
-
-Argumento adversário. Imunidade.
-
-Refutação. Cabível com respaldo nos arts. 497 e 537 CPC.
-
-### Argumento 4 — Crime de desobediência inaplicável
-
-Argumento adversário. Imunidade.
-
-Refutação. Art. 26 Lei 12.016.
-
-### Argumento 5 — Cumprimento parcial satisfaz
-
-Argumento adversário. Integral.
-
-Refutação. Ordem exige integralidade. Novo ofício.
-
-### Argumento 6 — Agravo suspende
-
-Argumento adversário. Efeito suspensivo.
-
-Refutação. Agravo sem efeito suspensivo, salvo deferimento.
-
-### Argumento 7 — Cobrança pretérita no MS
-
-Argumento adversário. Ampliação.
-
-Refutação. Súmula 269 STF obriga ordinária.
-
-### Argumento 8 — Gerência incorreta
-
-Argumento adversário. Erro.
-
-Refutação. Ofício à gerência competente.
-
-### Argumento 9 — Revogação em grau recursal
-
-Argumento adversário. Descumprimento.
-
-Refutação. Trânsito em julgado consolida.
-
-### Argumento 10 — Execução provisória
-
-Argumento adversário. Não cabe execução contra a Fazenda antes do trânsito em julgado (auditoria 03/10/2026).
-
-Refutação. Obrigação de fazer é imediata, não demanda execução provisória monetária.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Hely Lopes Meirelles, Arnoldo Wald, Gilmar Ferreira Mendes.
-
-Cassio Scarpinella Bueno.
-
-Teori Albino Zavascki.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, ofício imediato.
-
-Segundo, multa progressiva.
-
-Terceiro, cobrança pretérita autônoma.
-
-Quarto, desobediência em caso extremo.
-
-Quinto, vigilância.
-
-Sexto, recursos.
-
-## 6. Diligência de atualização
-
-Acompanhar o STJ sobre efeitos patrimoniais do MS (auditoria 03/10/2026, retirado o Tema 394/STJ, que é tributário).
-
-Revalidar Súmulas 269 e 271 STF.
-
-Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
+8. Ofício dirigido a unidade errada. Refutação. A pessoa jurídica foi cientificada (art. 7º, II, e art. 13) e responde pela distribuição interna.

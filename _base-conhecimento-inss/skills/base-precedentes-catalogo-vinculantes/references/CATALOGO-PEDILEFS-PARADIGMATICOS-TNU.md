@@ -1,8 +1,6 @@
 # Catálogo de PEDILEFs Paradigmáticos da TNU - Não Repetitivos
 
-Reference dedicada a julgados paradigmáticos da Turma Nacional de Uniformização que NÃO ostentam status de Tema repetitivo, mas constituem precedentes vinculantes em razão da reiteração ou de aplicação de Questões de Ordem (QO).
-
-Sob a sistemática do art. 14 da Lei 10.259/2001 c/c art. 12 §1º RITNU, os acórdãos da TNU sobre matéria de direito material vinculam as Turmas Recursais por força do dever de adequação (juízo de retratação previsto no art. 14, IV, RITNU c/c Resolução CJF 347/2015).
+Julgados da TNU, de TRU e do TRF3 que não são temas representativos, mas orientam a aplicação de matéria recorrente. Acórdão da TNU fora do rito representativo não vincula: serve como paradigma de PUIL e PEDILEF e como reforço argumentativo, e a Questão de Ordem 20/TNU permite à TNU anular o acórdão da Turma Recursal que o contraria para adequação. A base do incidente está no art. 14 da Lei 10.259/2001 e no Regimento Interno da TNU [NÃO CONFIRMADO o artigo regimental exato na redação vigente].
 
 Verificação dinâmica obrigatória em fonte primária (https://www.cjf.jus.br/cjf/jef/turma-nacional-de-uniformizacao) antes de citação literal em peça.
 
@@ -144,7 +142,7 @@ Por ser PUIL regional acolhido, a tese vincula todas as Turmas Recursais da 4ª 
 
 ## PRECEDENTES DO TRF3 - Competência em MS por Mora Administrativa
 
-Bloco dedicado aos conflitos de competência do TRF3 sobre o tema. Verificação em fonte primária do PDF do CC 5026411-72.2020.4.03.0000 (Rel. Nelton dos Santos), verificado em 06/07/2026 (auditoria 03/10/2026). Detalhamento operacional em `base-ms-competencia-autoridade-coatora-inss-crps/references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md` (Onda 63).
+Bloco dedicado aos conflitos de competência do TRF3 sobre o tema. Verificação em fonte primária do PDF do CC 5026411-72.2020.4.03.0000 (Rel. Nelton dos Santos), verificado em 06/07/2026. Detalhamento operacional em `base-ms-competencia-autoridade-coatora-inss-crps/references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
 
 ### Tese firmada pelo Órgão Especial
 
@@ -185,9 +183,3 @@ MS que APENAS busca compelir o INSS a apreciar ou implementar requerimento admin
 ### Distinção decisiva pró-segurado
 
 O que se pede em juízo determina a competência. Pedido APENAS de mora, Vara Cível. Pedido cumulativo de concessão/revisão + mora, Vara Previdenciária. Distribuir a inicial conforme a estratégia.
-
-## OUTROS PEDILEFs PARADIGMÁTICOS A INCORPORAR
-
-A reference é incremental. Novos PEDILEFs paradigmáticos confirmados em fonte primária podem ser adicionados.
-
-Aguardando catalogação posterior à medida que o escritório identificar PEDILEFs relevantes.

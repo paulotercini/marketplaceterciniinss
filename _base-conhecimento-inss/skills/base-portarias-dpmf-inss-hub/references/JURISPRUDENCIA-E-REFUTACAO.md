@@ -10,7 +10,7 @@ O juiz federal aplica a Lei e os precedentes vinculantes.
 
 Em sede judicial, a Portaria é apenas referência operacional. Não pode operar como exigência legal.
 
-Toda exigência da Portaria que extrapole a Lei é argumento de derrotabilidade.
+Toda exigência da Portaria que extrapole a Lei pode ser afastada pelo princípio da legalidade.
 
 ## 2. Súmulas e Temas que limitam interpretação restritiva das Portarias
 
@@ -18,11 +18,11 @@ Toda exigência da Portaria que extrapole a Lei é argumento de derrotabilidade.
 
 Súmula 14/TNU. Início de prova material não precisa cobrir toda a carência.
 
-Súmula 73/TNU. Não é exigida atividade ininterrupta na carência rural.
+Lei 8.213/1991, art. 143 e art. 48, §2º. A atividade rural pode ser comprovada "ainda que de forma descontínua". (A Súmula 73/TNU, citada antes neste ponto, trata do cômputo de benefício por incapacidade intercalado e foi retirada daqui.)
 
 Súmula 577/STJ. Prova testemunhal pode levar tempo rural anterior ao documento mais antigo.
 
-Tema 532/STJ. Prova material de período diverso da carência, com prova testemunhal.
+Tema 532/STJ. O trabalho urbano de um membro do grupo familiar não descaracteriza, por si só, os demais como segurados especiais.
 
 Tema 642/STJ. Atividade rural no período imediatamente anterior à DER ou ao implemento da idade.
 
@@ -38,9 +38,9 @@ Súmula 88/TNU. Auxílio-acidente devido independentemente do grau (Tema 416/STJ
 
 ### 2.3. Em matéria de EPI (Portaria MTP 672/2021)
 
-Tema 555/STF. EPI eficaz afasta nocividade, salvo exceções (ruído, biológicos, cancerígenos).
+Tema 555/STF. EPI eficaz afasta a nocividade, salvo para o ruído acima do limite de tolerância. As exceções de agentes biológicos e cancerígenos decorrem de outras fontes (Tema 383/TNU, LINACH).
 
-Tema 1090/STJ. Hipóteses excepcionais.
+Tema 1090/STJ. A anotação de EPI eficaz no PPP pode ser impugnada pelo segurado, e a dúvida favorece o reconhecimento da especialidade.
 
 Tema 213/TNU. Standard probatório atenuado.
 
@@ -48,17 +48,17 @@ IRDR 15/TRF4.
 
 Tema 383/TNU. EPI e agentes biológicos. Pareceres Fundacentro 2 e 3/2025.
 
-### 2.4. Em matéria de BPC (Portaria Conjunta 2/2015) (auditoria 03/10/2026)
+### 2.4. Em matéria de BPC (Portaria Conjunta 2/2015)
 
 Tema 312/STF. Critério econômico do BPC.
 
 Tema 640/STJ. Renda per capita.
 
-Tema 369/TNU. Avaliação biopsicossocial.
+Tema 369/TNU. Avaliação biopsicossocial [NÃO CONFIRMADO].
 
-### 2.5. Em matéria de aposentadoria PCD (Portaria 1/2015)
+### 2.5. Em matéria de deficiência (Portaria Interministerial 1/2014 e Portaria Conjunta 2/2015)
 
-Tema 376/TNU. TEA e LC 142/2013.
+Tema 376/TNU (adverso). O diagnóstico de TEA não dispensa a avaliação biopsicossocial no BPC. Prepare a prova do impedimento e de seu impacto.
 
 ### 2.6. Em matéria administrativa geral
 
@@ -72,7 +72,7 @@ Súmula 473/STF. Autotutela.
 
 ### 3.1. "A Portaria DIRBEN/INSS exige documento X que o segurado não tem"
 
-Refutação. A Portaria é infralegal. Não pode reduzir a Lei. Súmula 149/STJ confirma exemplificatividade do rol de provas.
+Refutação. A Portaria é infralegal e não pode reduzir a Lei. O rol de documentos do art. 106 da Lei 8.213/1991 é exemplificativo segundo a jurisprudência do STJ (precedente específico a conferir no MCP superiores). A Súmula 149/STJ, citada antes aqui, trata da prova exclusivamente testemunhal e não serve a esse fim.
 
 ### 3.2. "O servidor seguiu literalmente a Portaria"
 
@@ -84,17 +84,17 @@ Refutação. Aplicação do princípio do tempus regit actum. A Portaria nova n�
 
 ### 3.4. "A Portaria preenche lacuna da Lei"
 
-Refutação. Atribuição da Portaria é interpretar e operacionalizar a Lei, não criar exigências novas. Crítica em Wladimir Novaes Martinez.
+Refutação. Atribuição da Portaria é interpretar e operacionalizar a Lei, não criar exigências novas.
 
 ### 3.5. "A Portaria está em vigor"
 
-Refutação. Mesmo vigente, a Portaria que conflita com a Lei é derrotável. Em ação judicial, é mera referência.
+Refutação. Mesmo vigente, a Portaria que conflita com a Lei não prevalece sobre ela. Em ação judicial, é referência operacional.
 
 ## 4. Estratégia processual
 
 ### 4.1. Em recurso administrativo
 
-Cite a Portaria como suporte se favorável. Atacar como restritiva se contrária.
+Cite a Portaria como suporte quando favorável. Impugne-a como restritiva quando contrária.
 
 Combinar com Lei e Súmula vinculante.
 
@@ -119,41 +119,3 @@ Pautar em violação à Lei (não à Portaria).
 ### 4.5. Em PEDILEF
 
 Citar Portaria como fonte do conflito interpretativo. Tese central deve ser sobre a Lei.
-
-## 5. Doutrina
-
-Frederico Amado. Direito Previdenciário. Análise das Portarias DIRBEN.
-
-Hugo Goes. Manual de Direito Previdenciário. Crítica a formalismos.
-
-Wladimir Novaes Martinez. Curso de Direito Previdenciário. Crítica robusta a portarias restritivas.
-
-Marina Vasques Duarte. Direito Previdenciário.
-
-Carlos Alberto Pereira de Castro e João Batista Lazzari. Manual de Direito Previdenciário.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário.
-
-Daniel Pulino. Aposentadoria por Invalidez.
-
-José Antônio Savaris. Direito Processual Previdenciário.
-
-## 6. Fontes oficiais
-
-DOU (Diário Oficial da União).
-
-Portal INSS (gov.br/inss).
-
-Portal MPS (gov.br/previdencia).
-
-Portal MTE (gov.br/trabalho-e-emprego).
-
-Portal Planalto.
-
-Portal CRPS.
-
-Portal STJ (https://www.stj.jus.br/).
-
-Portal STF (https://portal.stf.jus.br/).
-
-Portal CJF/TNU (https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/).

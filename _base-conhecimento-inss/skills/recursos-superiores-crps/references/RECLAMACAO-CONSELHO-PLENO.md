@@ -1,4 +1,4 @@
-# Reclamação ao Conselho Pleno – Art. 123
+# Reclamação ao Conselho Pleno. Art. 123
 
 ## Natureza
 
@@ -49,7 +49,7 @@ O resultado do julgamento da Reclamação pelo CP será objeto de notificação 
 
 A decisão será editada em forma de Resolução (art. 119, §8º), exigida maioria simples. Cabem embargos de declaração contra as Resoluções (art. 92, §15) e pedido de revisão (art. 119, §9º).
 
-## Sessões do Conselho Pleno – Regras Gerais (Art. 119)
+## Sessões do Conselho Pleno. Regras Gerais (Art. 119)
 
 Abertas pela Presidência do CRPS após verificada maioria absoluta. Após leitura do relatório e voto, os conselheiros votam (acompanhar, divergir ou pedir vista). O pedido de vista aproveita a todos. O Presidente profere voto de qualidade em empate. A CJ atua nas sessões conforme art. 27, VII.
 
@@ -68,7 +68,7 @@ Abertas pela Presidência do CRPS após verificada maioria absoluta. Após leitu
 
 **Quando usar Reclamação em vez de PUJ.** Use a Reclamação quando o acórdão violar diretamente uma norma vinculante identificável (parecer, súmula, enunciado). Use o PUJ quando houver dois acórdãos divergentes sobre a mesma matéria de direito, sem que nenhum deles viole necessariamente uma norma vinculante. Na dúvida, se houver tanto uma norma vinculante violada quanto um paradigma divergente, a Reclamação é a via mais forte, porque o provimento importa em anulação direta.
 
-**Hipótese IV (art. 123, IV) – Distinguishing indevido.** Essa hipótese é nova e poderosa. Se a JR ou a CAJ afastou a aplicação de um enunciado ou súmula argumentando distinguishing, mas a distinção foi inadequada, a Reclamação é o caminho. O CP pode declarar que o distinguishing foi indevido e anular a decisão.
+**Hipótese IV (art. 123, IV). Distinguishing indevido.** Essa hipótese é nova e poderosa. Se a JR ou a CAJ afastou a aplicação de um enunciado ou súmula argumentando distinguishing, mas a distinção foi inadequada, a Reclamação é o caminho. O CP pode declarar que o distinguishing foi indevido e anular a decisão.
 
 **Suspensão do cumprimento.** A Reclamação tempestiva suspende o prazo de cumprimento (art. 123, §1º). Isso é útil quando o INSS pretende cumprir decisão desfavorável ao segurado antes que o CP se manifeste.
 

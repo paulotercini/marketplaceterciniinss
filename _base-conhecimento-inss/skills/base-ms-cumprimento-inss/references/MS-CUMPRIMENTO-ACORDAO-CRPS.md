@@ -1,6 +1,6 @@
 # Mandado de Segurança para Cumprimento de Acórdão do CRPS
 
-Incorporado na Onda 88 (26/07/2026) a partir de acórdão do TRF4 fornecido pelo escritório, lido integralmente. Esta é uma das situações mais recorrentes do contencioso previdenciário. O segurado GANHA no CRPS e o INSS não implanta, alegando incidente próprio ou simplesmente silenciando.
+Situação recorrente. O segurado obtém decisão favorável no CRPS e o INSS não implanta, alegando incidente próprio ou silenciando.
 
 ## Precedente central (verificado no inteiro teor)
 
@@ -10,7 +10,7 @@ Tese de julgamento, em redação literal do acórdão. "A demora injustificada d
 
 Situação de fato. Recurso do segurado julgado procedente pela 1ª Composição Adjunta da 11ª Junta de Recursos (Acórdão 1ªCA 11ª JR/14758/2025) em 27/09/2025, com devolução dos autos ao INSS na MESMA data para cumprimento. Até a impetração não houve implantação. O INSS informou análise do acórdão apenas em 10/03/2026 e a interposição de Revisão de Acórdão, devolvendo o expediente ao colegiado. A sentença determinou implantação em 30 dias, descontados os períodos de espera por diligência do próprio segurado, e o Tribunal manteve.
 
-Registro de honestidade. O acórdão é de Turma do TRF4, sem caráter vinculante nacional. Vale como precedente persuasivo forte, sobretudo na 4ª Região, onde o próprio acórdão afirma que "o entendimento das Turmas que compõem a 3ª Seção deste Tribunal é uníssono".
+O acórdão é de Turma do TRF4, sem caráter vinculante nacional. Vale como precedente persuasivo forte, sobretudo na 4ª Região, onde o próprio acórdão afirma que "o entendimento das Turmas que compõem a 3ª Seção deste Tribunal é uníssono".
 
 ## Arsenal normativo do pedido (base do voto)
 
@@ -18,11 +18,11 @@ Decreto 3.048/99, art. 308, caput. Somente os recursos interpostos TEMPESTIVAMEN
 
 Decreto 3.048/99, art. 308, § 1º. "Para fins do disposto neste artigo, não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento." A Revisão de Acórdão, portanto, jamais suspende o cumprimento.
 
-Decreto 3.048/99, art. 308, § 2º. Invocado no acórdão pela vedação de o INSS escusar-se de cumprir decisões definitivas. Conferir a redação literal no repositório da `base-legislacao-fontes-primarias` antes de transcrever em peça.
+Decreto 3.048/99, art. 308, § 2º (redação do Decreto 6.722/2008). "É vedado ao INSS escusar-se de cumprir as diligências solicitadas pelo CRPS, bem como deixar de dar cumprimento às decisões definitivas daquele colegiado, reduzir ou ampliar o seu alcance ou executá-las de modo que contrarie ou prejudique seu evidente sentido."
 
-Decreto 3.048/99, art. 305, § 1º, II. Prazo de trinta dias para recursos, contado da ciência da decisão. Serve para demonstrar a intempestividade do recurso da autarquia.
+Decreto 3.048/99, art. 305, § 1º, II (redação do Decreto 10.410/2020). Prazo de trinta dias para recursos, contado da ciência da decisão. Serve para demonstrar a intempestividade do recurso da autarquia.
 
-IN 128/2022, art. 581 e § 4º. O caput atribui ao INSS a obrigação de cumprir as decisões e diligências do CRPS. O § 4º traz as ÚNICAS exceções admitidas, deferimento de benefício mais vantajoso ou decisão judicial transitada em julgado sobre o mesmo objeto. Fora dessas duas hipóteses não há amparo normativo para o não cumprimento. ATENÇÃO, transcrever a redação literal do art. 581 a partir da IN 128/2022 no repositório de fontes primárias, o acórdão descreve o conteúdo sem transcrever o texto.
+IN 128/2022, art. 581. O caput reproduz a vedação do art. 308, § 2º, do Decreto. O § 4º admite que a decisão deixe de ser cumprida, excepcionalmente, apenas se "I - for demonstrado pelo INSS ao interessado que foi deferido outro benefício mais vantajoso, desde que haja opção expressa do interessado; ou II - for identificada ação judicial com decisão transitada em julgado do mesmo objeto do processo administrativo." O § 5º equipara à opção o silêncio do beneficiário cientificado.
 
 CF/88, art. 5º, LXXVIII (razoável duração do processo) e art. 37, caput (legalidade e eficiência).
 

@@ -7,7 +7,7 @@ description: "Fundamentação das decisões pelo art. 489, §1º, do CPC, nulida
 
 ## Escopo
 
-Skill pró-segurado sobre o dever de fundamentação e a nulidade da decisão que o descumpre. Toda decisão judicial e, por simetria de devido processo, a decisão administrativa, deve enfrentar os fundamentos relevantes. A decisão que não fundamenta é nula.
+Dever de fundamentação e nulidade da decisão que o descumpre. A decisão judicial e a administrativa devem enfrentar os fundamentos relevantes; a decisão sem fundamentação é nula.
 
 ## Marco normativo central
 
@@ -21,9 +21,11 @@ CPC, art. 489, §1º. Rol do que NÃO se considera decisão fundamentada.
 
 CPC, art. 1.022, parágrafo único, II. É omissa a decisão que incorre nas condutas do art. 489, §1º, o que abre embargos.
 
+Lei 9.784/1999, art. 50. Motivação explícita, clara e congruente do ato administrativo que nega, limita ou afeta direito (inciso I e §1º).
+
 ## Os seis incisos do art. 489, §1º
 
-Não é fundamentada a decisão que.
+Não é fundamentada a decisão que:
 
 Primeiro, inciso I. Apenas indica, reproduz ou parafraseia ato normativo sem explicar sua relação com a causa.
 
@@ -31,7 +33,7 @@ Segundo, inciso II. Emprega conceito jurídico indeterminado sem explicar o moti
 
 Terceiro, inciso III. Invoca motivos que se prestariam a justificar qualquer outra decisão.
 
-Quarto, inciso IV. Não enfrenta todos os argumentos deduzidos capazes de, em tese, infirmar a conclusão adotada. Este é o inciso mais poderoso no previdenciário.
+Quarto, inciso IV. Não enfrenta todos os argumentos deduzidos capazes de, em tese, infirmar a conclusão adotada.
 
 Quinto, inciso V. Invoca precedente ou súmula sem identificar seus fundamentos determinantes nem demonstrar que o caso se ajusta.
 
@@ -45,7 +47,7 @@ Segundo, decisão que aplica Tema ou Súmula contra o segurado sem cotejo do cas
 
 Terceiro, decisão genérica que serviria a qualquer caso viola o inciso III. Arguir nulidade no eixo 1 de `base-analise-decisao-tres-eixos`.
 
-Quarto, a nulidade por falta de fundamentação é matéria de ordem pública, alegável em qualquer recurso e reconhecível de ofício.
+Quarto, reconhecida a nulidade por falta de fundamentação, o tribunal julga desde logo o mérito se a causa estiver madura (art. 1.013, §3º, IV). Pedir esse julgamento na apelação.
 
 ## Alertas
 
@@ -53,23 +55,11 @@ Primeiro, não confundir decisão contrária com decisão não fundamentada. Jul
 
 Segundo, o juiz não precisa rebater cada frase, apenas os argumentos capazes de mudar o resultado.
 
-Terceiro, no CRPS, a fundamentação deficiente da decisão administrativa também autoriza embargos, art. 92 do RICRPS.
+Terceiro, no CRPS, a omissão ou contradição do acórdão autoriza embargos (art. 92 do RICRPS, Portaria MPS 125/2026), e a falta de motivação viola o art. 50 da Lei 9.784/1999.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 

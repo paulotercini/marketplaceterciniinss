@@ -1,159 +1,48 @@
 ---
 name: base-ms-cumprimento-inss
-description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, efeitos patrimoniais MS, MS para cumprimento de acórdão do CRPS, INSS não implanta decisão do CRPS, demora no cumprimento de acórdão administrativo, revisão de acórdão sem efeito suspensivo, recurso intempestivo do INSS, art. 308 Decreto 3.048/99, art. 581 IN 128/2022, art. 581 §4º exceções, TRF4 RemNec 5000463-92.2026.4.04.7113, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
+description: "Cumprimento da ordem em mandado de segurança previdenciário (implantação, restabelecimento, multa diária, crime de desobediência do art. 26 da Lei 12.016/2009, efeitos patrimoniais das Súmulas 269 e 271 STF) e MS para obrigar o INSS a cumprir acórdão do CRPS. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, Súmula 269 STF, Súmula 271 STF, efeitos patrimoniais MS, execução provisória MS, MS para cumprimento de acórdão do CRPS, INSS não implanta decisão do CRPS, revisão de acórdão sem efeito suspensivo, recurso intempestivo do INSS, art. 308 Decreto 3.048/99, art. 581 IN 128/2022, TRF4 RemNec 5000463-92.2026.4.04.7113, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo e execucao-cumprimento-previdenciario."
 ---
 
 # Cumprimento da Ordem em MS Previdenciário
 
 ## Escopo
 
-Skill pró-segurado sobre cumprimento da sentença concessiva em MS previdenciário, implantação, restabelecimento, multa diária, crime de desobediência e efeitos patrimoniais.
+Duas situações distintas. A primeira é o cumprimento da liminar ou da sentença concessiva. A segunda é o MS impetrado para obrigar o INSS a cumprir acórdão do CRPS, cujo roteiro completo está em `references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`.
 
-## Marco normativo central
+## Cumprimento da ordem judicial
 
-Lei 12.016/2009, art. 13. Cumprimento imediato.
+Concedida a segurança, o juiz transmite o inteiro teor da sentença à autoridade coatora e à pessoa jurídica (Lei 12.016/2009, art. 13). A sentença concessiva pode ser executada provisoriamente, salvo nas hipóteses em que a liminar seria vedada (art. 14, §3º); como o art. 7º, §2º, foi declarado inconstitucional (ADI 4.296), a ressalva não alcança benefício previdenciário. A remessa necessária (art. 14, §1º) não suspende a ordem.
 
-Lei 12.016/2009, art. 14. Sentença.
+Prazo de implantação. O acordo homologado no RE 1.171.152/STF recomenda 15 dias para tutela de urgência, 25 dias para benefícios por incapacidade e assistenciais, 45 dias para aposentadorias, pensões e outros auxílios, e 90 dias para revisões, CTC e averbação. São parâmetros para pedir prazo certo ao juízo; o acordo teve prazo inicial de 24 meses, e sua manutenção deve ser conferida antes de citá-lo.
 
-Lei 12.016/2009, art. 26. Crime de desobediência.
+Multa diária. Cabe contra o INSS para a obrigação de fazer (CPC, arts. 497 e 537, aplicados subsidiariamente), com valor e periodicidade fixados pelo juízo e revisáveis.
 
-CPC, art. 497. Obrigação de fazer.
+Crime de desobediência. O descumprimento de decisão em MS, liminar ou sentença, constitui crime de desobediência (Lei 12.016/2009, art. 26; CP, art. 330), sem prejuízo de sanções administrativas e da Lei 1.079/1950. Reservar o pedido de ofício ao MPF para a omissão reiterada após intimação pessoal da autoridade.
 
-CPC, art. 537. Multa.
-
-Súmula 269 STF.
-
-Súmula 271 STF.
-
-## Marco jurisprudencial
-
-### Súmula 271 STF
-
-Efeitos patrimoniais.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Súmula 269 STF
-
-Cobrança por ação ordinária.
-
-### Pagamento pretérito no MS
-
-Seguem as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
-
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Duração razoável.
-
-## Cumprimento da ordem
-
-Primeiro, sentença determina obrigação de fazer.
-
-Segundo, ofício ao INSS para implantação ou restabelecimento.
-
-Terceiro, prazo comum de 10 a 30 dias.
-
-Quarto, multa diária se descumprir.
-
-## Multa diária
-
-Primeiro, fundamento art. 497 e 537 CPC.
-
-Segundo, valor razoável e progressivo.
-
-Terceiro, exigibilidade após trânsito ou tutela.
-
-Quarto, execução direta.
-
-## Crime de desobediência
-
-Primeiro, art. 26 Lei 12.016/2009. Sujeita a agente público.
-
-Segundo, pode ensejar responsabilização criminal e administrativa.
-
-Terceiro, instrumento raro mas relevante em casos extremos.
+Cumprimento parcial ou divergente. Peticionar nos autos com prova do erro (carta de concessão, HISCRE) e pedir nova intimação sob multa.
 
 ## Efeitos patrimoniais
 
-Primeiro, Súmula 271 STF. Parcelas entre impetração e cumprimento.
+O MS não substitui ação de cobrança (Súmula 269 STF) e não produz efeitos patrimoniais quanto a período pretérito (Súmula 271 STF). As parcelas vencidas desde a impetração são pagas no próprio MS (administrativamente ou por requisição, conforme o caso); as anteriores, por requerimento administrativo ou ação ordinária autônoma. Honorários de sucumbência não cabem (art. 25; Súmula 105 STJ; Súmula 512 STF).
 
-Segundo, parcelas anteriores à impetração por ação ordinária.
+## MS para cumprir acórdão do CRPS
 
-Terceiro, esse limite decorre das Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
+O INSS não pode deixar de cumprir decisão definitiva do CRPS, reduzir ou ampliar seu alcance (Decreto 3.048/99, art. 308, §2º; IN 128/2022, art. 581). Apenas recurso tempestivo contra decisão de Junta ou Câmara tem efeito suspensivo (art. 308, caput), e pedido de revisão de acórdão não é recurso (art. 308, §1º). As únicas exceções ao cumprimento são o benefício mais vantajoso com opção expressa do interessado e a ação judicial transitada em julgado sobre o mesmo objeto (IN 128/2022, art. 581, §4º).
 
-## Cenários pró-segurado
+Precedente central (persuasivo). TRF4, 5ª Turma, RemNec 5000463-92.2026.4.04.7113/RS, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026, com a tese de que a demora injustificada em cumprir decisão do CRPS viola direito líquido e certo quando o recurso da autarquia é intempestivo e sem efeito suspensivo.
 
-Cenário A, MS concede benefício. Ofício de implantação.
-
-Cenário B, INSS demora a cumprir. Multa.
-
-Cenário C, INSS cumpre parcialmente. Novo ofício.
-
-Cenário D, crime de desobediência em omissão dolosa.
-
-Cenário E, cobrança de parcelas pretéritas por ação ordinária autônoma.
-
-## MS para cumprimento de acórdão do CRPS pelo INSS (Onda 88)
-
-Situação distinta e recorrente. Aqui o MS não é para cumprir ordem judicial, é para FORÇAR o INSS a cumprir decisão administrativa do CRPS favorável ao segurado, quando a autarquia não implanta e alega incidente próprio ou silencia.
-
-Tese literal do TRF4 (5ª Turma, RemNec 5000463-92.2026.4.04.7113/RS, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). "A demora injustificada do INSS em cumprir decisão administrativa do Conselho de Recursos da Previdência Social (CRPS), que reconheceu o direito a benefício previdenciário, viola direito líquido e certo do segurado, quando o recurso interposto pela autarquia é intempestivo e não possui efeito suspensivo."
-
-Chave normativa. O art. 308, § 1º, do Decreto 3.048/99 diz que pedido de revisão de acórdão NÃO é recurso, e o caput só atribui efeito suspensivo a recurso interposto TEMPESTIVAMENTE. O art. 581 da IN 128/2022 obriga o INSS a cumprir as decisões do CRPS, e o § 4º admite apenas duas exceções, benefício mais vantajoso deferido ou decisão judicial transitada em julgado sobre o mesmo objeto. Fora disso não há amparo para o não cumprimento.
-
-Ponto de rigor. A numeração do dispositivo da Revisão de Acórdão VARIA entre versões do RICRPS (o acórdão cita art. 116, precedente de janeiro de 2026 cita art. 76, e a base registra o art. 116 como agravo ao Pleno). Conferir na versão vigente antes de citar, e enquanto isso ancorar no art. 308, § 1º, do Decreto 3.048/99, que é norma superior e inequívoca.
-
-Roteiro completo, arsenal normativo, o que o INSS responde, alerta de honorários (não cabem em MS) e advertência ao cliente sobre eventual cessação com devolução em `references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`.
+A numeração do dispositivo regimental da revisão de acórdão varia entre versões do Regimento Interno do CRPS. Ancorar no art. 308, §1º, do Decreto 3.048/99 até conferir o artigo vigente.
 
 ## Alertas
 
-Primeiro, atenção a efeitos patrimoniais limitados. Planejar cumprimento e cobrança.
+Indicar no pedido de cumprimento a unidade correta do INSS (CEAB-DJ ou gerência que detém o processo).
 
-Segundo, em MS coletivo, cumprimento pode exigir liquidação.
+Revogada a liminar, os valores recebidos são devolvidos (Tema 692/STJ, desconto limitado a 30% do benefício). Registrar o risco ao cliente por escrito.
 
-Terceiro, descumprimento pode gerar agravo e MS de cumprimento.
+## Integração
 
-Quarto, atentar para gerência correta para ofício.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Hely Lopes Meirelles, Arnoldo Wald, Gilmar Ferreira Mendes.
-
-Cassio Scarpinella Bueno.
-
-Teori Albino Zavascki.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
+Cabimento em `base-ms-cabimento-direito-liquido-certo`. Autoridade em `ms-competencia-autoridade-coatora`. Hub em `mandado-seguranca-previdenciario`. Cumprimento em ação ordinária em `execucao-cumprimento-previdenciario`. Fundamentos e refutação em `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para cabimento, acionar `base-ms-cabimento-direito-liquido-certo`.
-Para autoridade coatora, acionar `base-ms-competencia-autoridade-coatora-inss-crps`.
-Para detalhes processuais, acionar `mandado-seguranca-previdenciario`.
-Para cumprimento em ação ordinária, acionar `execucao-cumprimento-previdenciario`.
-
-## O que NÃO está nesta skill
-
-Cabimento em `base-ms-cabimento-direito-liquido-certo`. Liminar em `base-ms-liminar-art7-iii`. Competência em `base-ms-competencia-autoridade-coatora-inss-crps`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

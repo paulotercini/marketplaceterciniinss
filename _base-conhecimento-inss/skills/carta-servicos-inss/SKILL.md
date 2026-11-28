@@ -15,7 +15,7 @@ Acionar sempre que houver pedido para adicionar novo benefício, atualizar marco
 
 A carta é dirigida ao cliente leigo, não ao perito ou ao juiz. Linguagem deve ser clara, objetiva, com instruções acionáveis. Não escreva como petição.
 
-Toda afirmação jurídica entra somente após verificação em fonte primária oficial. Nunca invente Tema, Súmula, número de Lei ou Portaria. Se não confirmar, não cite.
+Toda afirmação jurídica entra apenas após verificação em fonte primária oficial. Nunca invente Tema, Súmula, número de Lei ou Portaria. Se não confirmar, não cite.
 
 A postura é exclusivamente pró-segurado. Nenhum alerta deve enfraquecer a posição do cliente. Quando há controvérsia jurisprudencial, escolha a redação que preserva o direito e indique a tese pró-segurado como cabível, sem prometer vitória.
 
@@ -43,7 +43,7 @@ Em seguida, leia o arquivo para localizar exatamente os trechos a alterar. Use p
 
 Antes de redigir qualquer alerta com fundamento normativo, consulte `references/marcos-normativos.md` e cruze com a base-conhecimento-inss correspondente. Confirme em fonte primária quando o marco for novo.
 
-Sempre incremente a versão no rodapé do cabeçalho (`v8.0 — DD/MM/AAAA`) e a data atual. A versão deve ser sequencial e a data deve ser obtida via bash com `date +%d/%m/%Y`.
+Sempre incremente a versão no rodapé do cabeçalho (`v8.0. DD/MM/AAAA`) e a data atual. A versão deve ser sequencial e a data deve ser obtida via bash com `date +%d/%m/%Y`.
 
 Valide a sintaxe JavaScript antes de finalizar. Extraia o conteúdo do `<script>` para um arquivo `.js` e rode `node --check`. JS quebrado torna a página inutilizável.
 
@@ -65,7 +65,7 @@ Atualize o array `ids` do agrupamento em `GRUPOS`. Se o agrupamento certo não e
 
 Adicione entrada no objeto `B`, com todos os campos obrigatórios. A introdução fala diretamente ao cliente. As seções `s` listam documentos obrigatórios. Os alertas `al` cobrem prazos, riscos, controvérsias e dicas pró-segurado.
 
-Adicione entrada correspondente em `EX`, no formato `{grupos:[...]}` quando houver mais de uma categoria de exemplos. Use array simples só para benefícios muito enxutos.
+Adicione entrada correspondente em `EX`, no formato `{grupos:[...]}` quando houver mais de uma categoria de exemplos. Use array simples apenas para benefícios muito enxutos.
 
 Confirme com `grep` que o id aparece em todos os pontos certos antes de finalizar.
 
@@ -87,31 +87,21 @@ Atualize `references/marcos-normativos.md` com o novo item para futuras consulta
 
 ## Como publicar no Netlify Drop
 
-A publicação no Netlify Drop é simples, mas exige cuidado com nome do arquivo.
-
-Renomeie o arquivo final para `index.html` antes do upload. O Netlify só serve diretamente o `index.html` na raiz da URL. Sem essa renomeação, a URL exigirá complemento `/carta-documentos-inss-v8.html`.
-
-Acesse `app.netlify.com/drop` e arraste o arquivo. A URL é gerada automaticamente. Se o usuário cadastrou conta, é possível reservar nome próprio do site (por exemplo `carta-tercini.netlify.app`).
-
-Cada nova versão exige novo arrastar do arquivo atualizado, com mesmo nome `index.html`. Avise sempre o usuário a fazer o upload da versão final.
-
-Para configurar domínio próprio do escritório, oriente o usuário a apontar CNAME do subdomínio escolhido para o Netlify. Esta etapa é opcional.
-
-O passo a passo detalhado, incluindo controle de acesso e atualização, está em `references/publicacao-netlify.md`.
+Renomeie o arquivo final para `index.html` e arraste-o em `app.netlify.com/drop`; cada versão exige novo envio com o mesmo nome. Passo a passo, controle de acesso e domínio próprio em `references/publicacao-netlify.md`.
 
 ## Validação obrigatória antes de fechar o ciclo
 
 Antes de declarar a alteração concluída, faça a checagem abaixo.
 
-Validar JS com `node --check` em uma extração do conteúdo do `<script>`. Sintaxe quebrada torna a página inutilizável.
+Validar JS com `node --check` em uma extração do conteúdo do `<script>`.
 
 Confirmar contagens com `grep -c` para os ids novos e marcos normativos novos. Cada id deve aparecer no card, em B e em EX. Cada marco deve aparecer ao menos uma vez no alerta correspondente.
 
 Verificar a versão e a data no rodapé do cabeçalho.
 
-Conferir que nenhum alerta usa expressão hesitante como "parece que", "pode ser que", "talvez", "é possível que" em redação técnica. A skill segue a regra de honestidade radical do escritório. Se o fundamento existe, afirma. Se não existe, declara que não há base.
+Conferir que nenhum alerta usa expressão hesitante como "parece que", "pode ser que", "talvez", "é possível que" em redação técnica. Se o fundamento existe, a carta afirma; se não existe, declara que não há base.
 
-Conferir que nenhum dois-pontos foi usado para introduzir explicações ou listas no corpo da carta, conforme padrão editorial do escritório. A carta usa frases independentes ou conectadas por conjunções.
+Conferir que os dois-pontos aparecem apenas antes de citação literal ou de enumeração, conforme o padrão de escrita do escritório.
 
 ## Cruzamentos obrigatórios
 
@@ -119,7 +109,7 @@ Esta skill cruza automaticamente com as skills da `base-conhecimento-inss` corre
 
 Cruza também com `peticao-previdenciaria` quando o ajuste tiver origem em padrão usado nas peças. A carta deve refletir os argumentos pró-segurado que o escritório usa em juízo.
 
-Cruza com `documentos-comprobatorios-in128` para garantir que a lista de documentos siga a IN 128/2022.
+Cruza com `base-documentos-comprobatorios-in128` para garantir que a lista de documentos siga a IN 128/2022.
 
 Cruza com `precedentes-previdenciarios` para confirmar Temas e Súmulas antes de citá-los.
 
@@ -127,7 +117,7 @@ Cruza com `precedentes-previdenciarios` para confirmar Temas e Súmulas antes de
 
 Quando o usuário pedir benefício que ainda não existe na carta, primeiro confirme se há base normativa e demanda recorrente do escritório. Não criar card para situação muito específica que pode ser tratada em consulta individual.
 
-Para cada novo card, propor primeiro a estrutura completa e só depois aplicar. Evita retrabalho e padroniza a árvore de cards.
+Para cada novo card, propor primeiro a estrutura completa e depois aplicá-la. Evita retrabalho e padroniza a árvore de cards.
 
 ## Quando NÃO usar esta skill
 
@@ -149,16 +139,4 @@ A versão 6.6 (18/03/2026) era a versão inicial enviada pelo usuário, com 16 b
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

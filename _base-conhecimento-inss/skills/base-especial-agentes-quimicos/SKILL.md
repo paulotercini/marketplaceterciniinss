@@ -3,92 +3,50 @@ name: base-especial-agentes-quimicos
 description: "Base de teses pró-segurado sobre agentes químicos em aposentadoria especial. Use SEMPRE que mencionar agentes químicos, hidrocarboneto, benzeno, tolueno, óleo mineral, OLUC, fumos metálicos de solda, poeiras minerais, sílica, frentista, químico de laboratório, Tema 298 TNU, Tema 157 TNU, Tema 629 STJ, Anexo 11 NR-15, Anexo 12 NR-15, Anexo 13 NR-15, Anexo 14 NR-15, absorção cutânea, exposição qualitativa, exposição quantitativa, LINACH, cancerígeno, HPA, PEDILEF 0136882, PEDILEF 5001032, Decreto 3.048/99 Anexo IV químicos, campo 15.3 PPP químicos, campo 15.4 limites de tolerância, rol exemplificativo, NR-15 versus Anexo IV, exposição habitual, acondicionamento em recipiente, Frederico Amado, Hugo Goes, Fábio Zambitte, IBDP, Wladimir Novaes Martinez. Traz enquadramento qualitativo, refutação da exigência quantitativa indevida, cenários por agente e roteiro pró-segurado. NÃO use para ruído, biológicos ou físicos. Cruza com auditoria-ppp, base-especial-epi e peticao-previdenciaria."
 ---
 
-# Base Temática. Agentes Químicos em Aposentadoria Especial
+# Agentes químicos em aposentadoria especial
 
 ## Escopo
 
-Skill de referência exclusiva para defesa do segurado exposto a agentes químicos, em aposentadoria especial. Complementa `auditoria-ppp`, `base-especial-epi` e `peticao-previdenciaria`. Não trata de ruído nem de agentes biológicos.
+Defesa do segurado exposto a agentes químicos. Marco normativo e cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`. Tolueno em `base-tolueno-tema-382-tnu-via-cutanea`; EPI em `base-especial-epi`.
 
-## Postura
+## Critério de avaliação
 
-Exclusivamente pró-segurado. A tese do INSS, quando exige comprovação quantitativa para agentes constantes da NR-15, é rejeitada nesta skill.
+| Situação | Avaliação | Fonte |
+|---|---|---|
+| Até 05/03/1997 | Agente nominado nos quadros dos Decretos 53.831/64 (1.2.x) e 83.080/79 (Anexo I, 1.2.x) | Decretos da época |
+| Desde 06/03/1997, agente do Anexo 13 da NR-15 | Qualitativa | Anexo IV, códigos 1.0.x; NR-15, Anexo 13 |
+| Desde 06/03/1997, agente do Anexo 11 ou 12 da NR-15 | Quantitativa, com limite de tolerância | NR-15, Anexos 11 e 12 |
+| Cancerígeno do Grupo 1 da LINACH | Qualitativa, EPI irrelevante | Decreto 3.048/99, art. 68, § 4º; Tema 170 da TNU; IN 128/2022, art. 298 |
 
-## Fluxo de trabalho
+## Teses centrais
 
-1. Leia este SKILL.md integralmente
-2. Leia `references/FUNDAMENTOS-E-CENARIOS.md` para o marco normativo, NR-15 e Anexos, e os cenários por agente
-3. Leia `references/JURISPRUDENCIA-E-REFUTACAO.md` para teses verificadas e contra-argumentação ao INSS
-4. Ao redigir peça, acione `peticao-previdenciaria`
-5. Ao auditar o PPP concreto, acione `auditoria-ppp`
-6. Ao impugnar alegação de EPI eficaz, acione `base-especial-epi`
+1. **Cancerígenos (Tema 170 da TNU).** A redação do art. 68, § 4º, dada pelo Decreto 8.123/2013 aplica-se a períodos anteriores, com "(1) desnecessidade de avaliação quantitativa; e (2) ausência de descaracterização pela existência de EPI". Na via administrativa, a IN 128/2022, art. 298, limita a regra aos agentes com CAS constantes do Anexo IV e, desde 01/07/2020, admite a descaracterização por medidas de controle. Enfrentar essa restrição com o Tema 170 e com os EDcl no REsp 2.116.343/RJ (Tema 1090 do STJ), que reconhecem os cancerígenos como hipótese excepcional.
+2. **Especificação do agente (Tema 298 da TNU, adverso).** A partir do Decreto 2.172/97, "hidrocarbonetos" ou "óleos e graxas" genéricos não bastam. Caminho: obter no LTCAT ou por retificação o nome do agente (benzeno, n-hexano, óleo mineral não refinado, HPA). Até 05/03/1997, a manipulação de óleos e graxas comprovada basta (Tema 53 da TNU).
+3. **Frentista (Tema 157 da TNU).** "Não há presunção legal de periculosidade da atividade do frentista, sendo devida a conversão de tempo especial desde que comprovado o exercício da atividade e o contato com os agentes nocivos." O benzeno da gasolina é cancerígeno do Grupo 1 da LINACH.
+4. **Tolueno (Tema 382 da TNU, adverso).** "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)." Exigir medição pelo Anexo 11 ou co-exposição a benzeno.
+5. **Prova insuficiente (Tema 629 do STJ).** A falta de prova eficaz leva à extinção sem resolução do mérito, e não à improcedência, o que preserva nova ação com prova nova.
 
-## Síntese pró-segurado
+## Químicos da clínica odontológica
 
-A aferição de nocividade por agentes químicos se rege pela Avaliação Qualitativa quando o agente consta de anexo da NR-15 que adote avaliação qualitativa, como os Anexos 13 (agentes diversos) e 14 (agentes biológicos, aqui marcado apenas pela remissão). A avaliação quantitativa só é exigível para agentes cujos Anexos 11 e 12 da NR-15 estabelecem limite de tolerância numérico.
+O TRF3 reconheceu, para dentista, mercúrio, óxido de zinco, eugenol, resinas, ácido fosfórico e anestésicos tópicos (Ap 0030294-30.2016.4.03.9999, 10ª Turma, j. 25/07/2017). O hidróxido de cálcio entra pela via dos álcalis cáusticos, cujo manuseio rotineiro basta (TRF4, AC 5012692-29.2022.4.04.7112/RS). Há julgados que afastam químicos "ordinariamente empregados no mister", pensando em produtos de limpeza. A distinção é que, na odontologia, esses agentes são insumos do ato clínico, manuseados diariamente pelo profissional. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
 
-O Tema 170/TNU admite aplicar a períodos anteriores a redação do art. 68, §4º, do Decreto 3.048/99 dada pelo Decreto 8.123/2013, com desnecessidade de avaliação quantitativa para agentes cancerígenos; o Tema 298/TNU exige, a partir do Decreto 2.172/97, a especificação do agente, sem bastar a menção genérica a hidrocarbonetos ou óleos e graxas, tese adversa cujo caminho é especificar o agente no PPP e no LTCAT (auditoria 03/10/2026, corrigida a atribuição anterior). O Tema 157 TNU afastou a tese de que o simples exercício de atividade de frentista configura especialidade, exigindo que o PPP demonstre exposição efetiva a hidrocarbonetos aromáticos. O Tema 629 STJ fixou que a falta de prova eficaz na inicial leva à extinção sem resolução do mérito, e não à improcedência, o que permite ao segurado propor nova ação com prova nova.
+## Juízo de Catanduva
 
-## Regras rígidas de redação
+O juízo exige o agente pelo nome, o código do decreto da época e contato habitual e permanente, e não eventual. A medida de proteção eficaz afastou o agente, e o documento ausente do requerimento administrativo levou os efeitos financeiros para a citação. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 4.
 
-Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
+## Redação da peça
 
-Segundo, nunca admitir que o segurado tem o ônus de produzir medição quantitativa para agentes sujeitos a avaliação qualitativa.
-
-Terceiro, jurisprudência somente após verificação em fonte primária oficial.
-
-Quarto, quando o agente for cancerígeno LINACH, a tese é direta. Enquadramento automático, sem limite de tolerância, sem consideração ao EPI.
+Seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`: afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina reconhecida
-
-Frederico Amado, em Direito Previdenciário, sustenta a prevalência do enquadramento qualitativo para os agentes da NR-15 com avaliação qualitativa. Hugo Goes, em Manual, reforça a exigência de medição apenas para os Anexos 11 e 12. Fábio Zambitte Ibrahim, em Curso, defende a interpretação ampla do Anexo 13 com presunção de nocividade para os agentes listados. Wladimir Novaes Martinez trata do princípio in dubio pro operario em matéria probatória previdenciária. O IBDP sustenta em teses institucionais a superação de exigências quantitativas indevidas.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao auditar PPP, acione `auditoria-ppp`.
-Ao refutar EPI eficaz, acione `base-especial-epi`.
-Ao discutir cerceamento de defesa por ausência de perícia, acione `defesa-probatoria-especial`.
-Ao verificar precedentes vinculantes, acione `precedentes-previdenciarios`.
-Ao pedir retificação do PPP à empresa, acione `retificacao-ppp`.
-
-## Cruzamento com Onda 24
-
-Para tolueno, acionar `base-tolueno-tema-382-tnu-via-cutanea`. ATENÇÃO (auditoria de 11/07/2026). O Tema 382/TNU foi julgado em 15/04/2026 CONTRA o enquadramento qualitativo do tolueno pela via cutânea ("A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)"). Para tolueno, exigir análise quantitativa pelo Anexo 11 da NR-15. A skill do tolueno traz a estratégia residual para sapateiro, gráfica, oficina mecânica, indústria de tintas e frentista.
-
-## O que NÃO está nesta skill
-
-Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes biológicos. Cada um tem skill específica. Tolueno e o Tema 382/TNU (tese contrária ao qualitativo pela via cutânea, julgado 15/04/2026) em `base-tolueno-tema-382-tnu-via-cutanea`.
-
-## Químicos da clínica odontológica (Onda 108)
-
-Agentes nominados em acórdão do TRF3 para dentista, mercúrio vivo, óxido de zinco, eugenol, resinas, ÁCIDO FOSFÓRICO e anestésicos tópicos (Ap 0030294-30.2016.4.03.9999, 10ª Turma, j. 25/07/2017). Somar orto-cresol e hidróxido de cálcio, este resolvido pela via dos ÁLCALIS CÁUSTICOS, cujo manuseio rotineiro basta, sem exigir fabricação (TRF4, AC 5012692-29.2022.4.04.7112/RS).
-
-Contra-linha a antecipar. Há julgados que afastam a especialidade de químicos "ordinariamente empregados no mister", pensando em produto de limpeza. O distinguishing da odontologia é que esses agentes são insumos do ATO-FIM, de manuseio direto e diário pelo profissional, com classificação técnica no Anexo 13 da NR-15 demonstrável por laudo. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
-
-## Juízo de Catanduva (Onda 179)
-
-O juízo exige o agente pelo nome, o código do decreto da época e contato habitual e permanente, e não eventual. A medida de proteção eficaz afastou o agente, e o documento ausente do requerimento administrativo levou os efeitos financeiros para a citação. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 4.
+Peça em `peticao-previdenciaria`. PPP em `auditoria-ppp`. EPI em `base-especial-epi`. Cerceamento de defesa em `defesa-probatoria-especial`. Precedentes em `precedentes-previdenciarios`. Retificação do PPP em `retificacao-ppp`. Petroleiro e benzeno em refinaria em `base-especial-penosidade-enfermagem-petroleiro`.

@@ -7,7 +7,7 @@ description: "Workflow pró-segurado de recurso ao CRPS (Junta de Recursos e Câ
 
 ## 1. Quando acionar
 
-Sempre que houver decisão administrativa do INSS recorrível ao CRPS. Inclui recurso ordinário (parte segurada contra decisão do servidor, parte INSS contra decisão da APS), recurso especial às Câmaras de Julgamento, embargos, revisão de acórdão, agravo, PUJ ao Conselho Pleno e Reclamação.
+Sempre que houver decisão administrativa do INSS recorrível ao CRPS. Inclui recurso ordinário contra decisão do INSS, recurso especial às Câmaras de Julgamento, embargos, revisão de acórdão, agravo, PUJ ao Conselho Pleno e Reclamação.
 
 ## 2. Pipeline executável
 
@@ -19,19 +19,19 @@ Localizar protocolo, data de ciência, prazo recursal.
 
 ### Passo 2. Admissibilidade primeiro
 
-Acionar `admissibilidade-barreiras-crps` antes de qualquer mérito. Verificar tempestividade, legitimidade, interesse recursal, perda de objeto, renúncia tácita art. 86, ação judicial simultânea (art. 87), tríplice identidade.
+Acionar `admissibilidade-barreiras-crps` antes de qualquer mérito. Verificar tempestividade, legitimidade, interesse recursal, perda de objeto, renúncia por ação judicial com identidade de partes, causa de pedir e pedido (art. 86 do RICRPS; Lei 8.213/1991, art. 126, § 3º) e a restrição do art. 112, § 7º (revisão sem elemento novo).
 
 Quando houver risco de não conhecimento, planejar relevação de intempestividade ou fungibilidade entre recursos.
 
 ### Passo 3. Estratégia de competência
 
-Recurso contra decisão de servidor da APS ou da CEAB vai para JR. Recurso contra acórdão de JR vai para CAJ por recurso especial limitado a divergência ou nulidade.
+Recurso contra decisão do INSS (APS ou CEAB) vai à JR. Recurso especial contra acórdão de JR vai à CAJ, salvo matéria de alçada exclusiva (art. 89, § 3º) e decisão de diligência (art. 90, § 2º).
 
 Acionar `base-crps-panorama-geral` para mapa do regimento.
 
 ### Passo 4. Fundamentação normativa do mérito
 
-Acionar a skill base-* específica do benefício e do tema controvertido. A pesquisa normativa vai até o fim, mas a peça leva apenas a norma que a decisão contrariou ou de que o pedido depende, por remissão curta e em linguagem simples, e cada tópico abre pelo fato e pelo erro da decisão (Onda 184, `base-recurso-crps-peca-enxuta`, Seção 3).
+Acionar a skill base-* específica do benefício e do tema controvertido. A pesquisa normativa vai até o fim, mas a peça leva apenas a norma que a decisão contrariou ou de que o pedido depende, por remissão curta e em linguagem simples, e cada tópico abre pelo fato e pelo erro da decisão.
 
 Aposentadoria especial. Skills `base-especial-*` correspondentes.
 Incapacidade. Skills `base-incapacidade-*` ou `base-auxilio-acidente-b94-*`.
@@ -48,9 +48,9 @@ Quando o tema envolver normas vinculantes do CRPS (art. 114 RICRPS), citar resol
 
 ### Passo 6. Incidentes processuais
 
-Quando houver omissão, contradição ou obscuridade em acórdão da JR, planejar embargos pelo art. 92.
+Omissão, contradição, obscuridade, ambiguidade ou erro material em acórdão: embargos (art. 92).
 
-Quando houver vício insanável de procedimento, planejar revisão de acórdão pelo art. 93 ou agravo pelo art. 116.
+Violação literal de lei ou decreto, divergência de parecer vinculante ou enunciado, ou vício insanável: revisão de acórdão (art. 116). Inadmissão de PUJ ou de reclamação: agravo (art. 93).
 
 Acionar `incidentes-instrucao-crps`.
 
@@ -60,9 +60,9 @@ Quando relevante, requerer sustentação oral via Fala.BR. Avaliar pedido de dil
 
 ### Passo 8. Recurso especial e PUJ
 
-Quando o caso comportar recurso especial à CAJ, acionar `recursos-superiores-crps`. Identificar paradigma e divergência.
+Quando o caso comportar recurso especial à CAJ, acionar `recursos-superiores-crps` e enquadrar o pedido de anulação no art. 91, § 1º, se houver.
 
-Quando houver divergência entre Câmaras, planejar PUJ ao Conselho Pleno. Acionar `recursos-superiores-crps`.
+Quando houver divergência entre Câmaras, ou entre Juntas em matéria de alçada, planejar PUJ ao Conselho Pleno, com acórdão paradigma dos últimos três anos (art. 122). Acionar `recursos-superiores-crps`.
 
 ### Passo 9. Verificações obrigatórias
 
@@ -70,22 +70,22 @@ Tema 1124/STJ via `tema-1124-instrucao-administrativa` para evitar recurso sobre
 
 Decadência de revisão via `decadencia-revisao-previdenciaria`.
 
-Documentos comprobatórios via `documentos-comprobatorios-in128` para juntada complementar.
+Documentos comprobatórios via `base-documentos-comprobatorios-in128` para juntada complementar.
 
-CNIS via `cnis-acerto-indicadores` para divergências cadastrais que sustentem o recurso.
+CNIS via `base-cnis-acerto-indicadores` para divergências cadastrais que sustentem o recurso.
 
 ### Passo 10. Redação da peça e revisão
 
-Acionar `base-recurso-crps-peca-enxuta` (Onda 34) para diretrizes de redação enxuta, direta e clara no padrão CRPS pró-segurado. A peça deve ser puramente fundada em normativo (Constituição, leis, decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados, Resoluções e Súmulas do CRPS), com vedação ao uso de julgados judiciais como fundamento principal.
+Acionar `base-recurso-crps-peca-enxuta` para diretrizes de redação enxuta, direta e clara no padrão CRPS pró-segurado. A peça deve ser puramente fundada em normativo (Constituição, leis, decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados, Resoluções e Súmulas do CRPS), com vedação ao uso de julgados judiciais como fundamento principal.
 
-Acionar `peticao-previdenciaria` ou `base-peticao-previdenciaria-padrao-visual` no padrão CRPS (recuo 5cm, fonte Bookman Old Style 12pt, espaçamento 1,5).
+Acionar `peticao-previdenciaria` ou `base-peticao-previdenciaria-padrao-visual` no padrão administrativo (opção `--crps`: recuo de primeira linha de 4 cm, Bookman Old Style 12pt, espaçamento 1,5).
 
 Tamanho típico esperado.
 - Recurso ordinário. 3 a 6 páginas.
 - Recurso especial. 5 a 8 páginas.
 - Embargos. 1 a 2 páginas, máximo 3.
 
-Acionar `base-revisao-peticao-aprofundada` (Onda 33) para auditoria pós-redação. Atenção especial aos anti-patterns 5 (argumentação genérica), 6 (excesso de jurisprudência judicial transcrita) e 11 (excesso de destaques).
+Acionar `base-revisao-peticao-aprofundada` para auditoria pós-redação. Atenção especial aos anti-patterns 5 (argumentação genérica), 6 (excesso de jurisprudência judicial transcrita) e 11 (excesso de destaques).
 
 ## 3. Documentos essenciais
 
@@ -93,46 +93,34 @@ Decisão recorrida (cópia). Comprovante de ciência. Procuração com poderes e
 
 ## 4. Pontos críticos pró-segurado
 
-Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por relevação fundamentada (dispositivo próprio do RICRPS (Portaria MPS 125/2026) e jurisprudência do CRPS — atenção: o art. 112 da Lei 8.213/91 trata de valores não recebidos em vida pelo segurado).
+Tempestividade é o primeiro requisito. Intempestividade pode ser superada por relevação quando o direito for líquido e certo nos autos ou nas bases governamentais (RICRPS, art. 112, §§ 1º e 2º), sem diligência (§ 8º). Não confundir com o art. 112 da Lei 8.213/1991, que trata de valores não recebidos em vida.
 
 Renúncia tácita por ação judicial simultânea pode ser evitada com desistência da ação ou esclarecimento da diversidade de causas de pedir.
 
-Pareceres vinculantes do CRPS (art. 108) e enunciados (CRPS 1 a 18) podem ser favoráveis ou desfavoráveis. Mapear antes de recorrer.
+Pareceres vinculantes da Consultoria Jurídica (art. 108) e enunciados do Conselho Pleno (art. 124) podem ser favoráveis ou desfavoráveis. Mapeá-los antes de recorrer.
 
-Decisões monocráticas (art. 110) podem ser convertidas em colegiadas mediante agravo.
+Processo pautado para decisão monocrática (art. 110) passa ao colegiado quando se pede sustentação oral (art. 81, § 13).
 
 Diligência prévia ou em mesa pode reverter decisão. Acionar `incidentes-instrucao-crps` para planejar.
 
 ## 5. Postura
 
-Pró-segurado integral. CRPS é a última via administrativa antes do Judiciário e merece esforço argumentativo denso. Esgotar a pesquisa normativa, levar à peça apenas o artigo extremamente necessário (Onda 184), citar precedentes vinculantes do CRPS e dos tribunais superiores, usar incidentes processuais como ferramenta ofensiva e não recuar diante de não conhecimento mal fundamentado.
+Pró-segurado. Esgotar a pesquisa normativa, levar à peça apenas o artigo necessário, citar enunciados e pareceres vinculantes e, dos tribunais, apenas o que o art. 109 do RICRPS admite. Usar os incidentes cabíveis e impugnar todo não conhecimento mal fundamentado.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## Decisores simulados no fluxo (Onda 114)
+## Decisores simulados no fluxo
 
-Último passo do workflow, antes do protocolo. Recurso ordinário ao `conselheiro-junta-de-recursos`, recurso especial e incidentes ao `conselheiro-camara-de-julgamento`. Se o decisor simulado devolver NÃO CONHECIDO, o fluxo NÃO segue para o protocolo, volta para a correção da admissibilidade.
+Último passo do workflow, antes do protocolo. Recurso ordinário ao `conselheiro-junta-de-recursos`, recurso especial e incidentes ao `conselheiro-camara-de-julgamento`. Se o decisor simulado devolver não conhecimento, o fluxo volta à correção da admissibilidade antes do protocolo.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido (regra permanente)
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
 
-Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.
+Forma da peça: `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção "A mesma peça em todos os ritos".

@@ -1,121 +1,50 @@
 ---
 name: base-aluno-aprendiz
-description: "Cômputo do tempo de aluno-aprendiz como tempo de contribuição, com base na Súmula 96 TCU, Súmula 18 TNU, IN 128/2022 e Decreto 4.073/1942. Use SEMPRE que mencionar aluno-aprendiz, tempo de aluno-aprendiz, escola industrial, escola técnica federal, SENAI como aluno-aprendiz, CEFET aluno-aprendiz, escola agrícola federal, ESPCEX, Decreto 4.073/1942, Lei 3.552/1959, Súmula 96 TCU, Súmula 18 TNU, PEDILEF aluno-aprendiz, retribuição pecuniária, Fundo de Caixa Escolar, remuneração aprendiz, cômputo em RPPS, contagem recíproca aluno-aprendiz, certidão ensino técnico federal, prova do período aluno-aprendiz, declaração escolar, histórico escolar federal, Portaria 990/2022, Portaria 1.316/2025. Cruza com cnis-acerto-indicadores, documentos-comprobatorios-in128, peticao-previdenciaria, base-contagem-reciproca-rgps-rpps e precedentes-previdenciarios."
+description: "Cômputo do tempo de aluno-aprendiz como tempo de contribuição: Súmula 96 TCU, Súmula 18 TNU (redação do Tema 216), IN 128/2022 arts. 135 a 137 e 216, X, Portaria DIRBEN 990/2022 arts. 128 a 129, Decreto-Lei 4.073/1942. Use SEMPRE que mencionar aluno-aprendiz, escola industrial, escola técnica federal, SENAI ou SENAC aprendiz, CEFET, escola agrícola federal, Instituto Federal, Decreto-Lei 4.073/1942, Lei 3.552/1959, retribuição pecuniária indireta, Fundo de Caixa Escolar, encomendas para terceiros, certidão escolar, CTC de aluno-aprendiz, contagem recíproca aluno-aprendiz. Cruza com base-cnis-acerto-indicadores, base-documentos-comprobatorios-in128, peticao-previdenciaria, base-contagem-reciproca-rgps-rpps e precedentes-previdenciarios."
 ---
 
 # Tempo de Aluno-Aprendiz
 
 ## Escopo
 
-Skill temática pró-segurado. Orienta o cômputo do tempo de aluno-aprendiz em escolas industriais, técnicas federais, agrícolas federais e similares, reconhecendo esse período como tempo de contribuição para a previdência, desde que comprovada a retribuição pecuniária à conta do orçamento da União e a vinculação formal ao ensino profissionalizante.
+Cômputo, como tempo de contribuição, do período de aprendizado profissional em escola industrial, técnica ou agrícola, com retribuição à conta do orçamento público, ainda que indireta. Cenários e metodologia em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação às teses do INSS em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Base normativa
 
-CF/88, art. 201, §9º. Contagem recíproca de tempo de contribuição.
+- CF, art. 201, §9º (contagem recíproca) e EC 20/1998, que vedou o tempo ficto. O aprendizado posterior a 16/12/1998 não conta (IN 128/2022, art. 216, X).
+- Decreto-Lei 4.073/1942 (Lei Orgânica do Ensino Industrial). Entre 30/01/1942 e 15/02/1959 reconhecia o aluno-aprendiz como empregado, bastando comprovar o vínculo (Portaria DIRBEN 990/2022, art. 128-A, I).
+- Lei 3.552/1959 (reorganização das escolas técnicas federais).
+- IN 128/2022, arts. 135 a 137: períodos computáveis até 16/12/1998, independentemente da data em que o segurado implemente os demais requisitos.
+- Portaria DIRBEN/INSS 990/2022, Livro I, arts. 128, 128-A e 129, na redação da Portaria DIRBEN 1.240/2024:
+  - art. 128, I a III: escolas profissionais de ferrovias; cursos do SENAI, SENAC e escolas de empresas (Decreto 31.546/1952); escolas industriais, técnicas e agrícolas federais, equiparadas (estaduais e distritais) ou reconhecidas (municipais e privadas autorizadas), com retribuição à conta do orçamento do ente;
+  - art. 128-A, III: valem como vínculo e remuneração a frequência e os valores de alimentação, fardamento, material escolar e parcela da renda das encomendas para terceiros;
+  - art. 129: prova por certidão da empresa ferroviária, certidão escolar ou CTC (Lei 6.226/1975), conforme o ente mantivesse ou não RPPS à época.
 
-Fundamentos próprios do aluno-aprendiz: Súmula 96 TCU, Súmula 18 TNU, Súmula 24 AGU e art. 201, §9º, CF (o art. 55, I, da Lei 8.213 trata de serviço militar).
+O art. 55, I, da Lei 8.213/91 trata de serviço militar e não fundamenta o aluno-aprendiz.
 
-Decreto 4.073/1942. Lei Orgânica do Ensino Industrial.
+## Precedentes
 
-Lei 3.552/1959. Nova organização das escolas técnicas federais.
+- Súmula 96 TCU: "Conta-se para todos os efeitos, como tempo de serviço público, o período de trabalho prestado, na qualidade de aluno-aprendiz, em Escola Pública Profissional, desde que comprovada a retribuição pecuniária à conta do Orçamento, admitindo-se, como tal, o recebimento de alimentação, fardamento, material escolar e parcela de renda auferida com a execução de encomendas para terceiros."
+- Súmula 18 TNU, redação dada no Tema 216 (PEDILEF 0525048-76.2017.4.05.8100/CE, julgado em 14/02/2020): "Para fins previdenciários, o cômputo do tempo de serviço prestado como aluno-aprendiz exige a comprovação de que, durante o período de aprendizado, houve simultaneamente: (i) retribuição consubstanciada em prestação pecuniária ou em auxílios materiais; (ii) à conta do Orçamento; (iii) a título de contraprestação por labor; (iv) na execução de bens e serviços destinados a terceiros." Sem recorte temporal.
 
-IN 128/2022. Regras administrativas do INSS sobre cômputo de tempo de contribuição.
+## Roteiro pró-segurado
 
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
-
-## Marco jurisprudencial
-
-Súmula 96 TCU. Reconhecimento do tempo de aluno-aprendiz para fins de aposentadoria, desde que haja retribuição pecuniária à conta do orçamento, mesmo que indireta, como alimentação, fardamento ou material escolar custeados pelo Poder Público, em escolas profissionais federais.
-
-Fonte oficial em https://pesquisa.apps.tcu.gov.br
-
-Súmula 18 TNU. Redação revista em 14/02/2020 (Tema 216) [NÃO CONFIRMADO]. O cômputo exige prova simultânea de retribuição, mesmo em auxílios materiais, à conta do orçamento, como contraprestação por labor na execução de bens e serviços destinados a terceiros, sem recorte temporal. Para o segurado, a prova se faz com certidão escolar que descreva as encomendas executadas e a retribuição recebida (auditoria 03/10/2026).
-
-Fonte oficial em https://www.jf.jus.br
-
-PEDILEFs da TNU reafirmam a tese.
-
-## Espaço pró-segurado
-
-Primeiro, segurado que frequentou escola técnica federal, escola industrial, escola agrícola ou estabelecimento equivalente em caráter de aluno-aprendiz, com retribuição pecuniária documentada (direta ou indireta).
-
-Segundo, prova por declaração escolar, histórico escolar, ata de formatura, carteira de aluno-aprendiz, certificado.
-
-Terceiro, cômputo do período para tempo de contribuição, inclusive para contagem recíproca com RPPS.
-
-Quarto, carência. O tempo de aluno-aprendiz não compõe carência, apenas tempo de contribuição.
-
-## Decadência e prescrição
-
-Art. 103 da Lei 8.213/91. Decadência decenal em revisão.
-
-Súmula 85 STJ. Prescrição quinquenal.
-
-## Regra pró-segurado
-
-Primeiro, obter declaração oficial da escola sobre o caráter de aluno-aprendiz, com detalhamento do período, da remuneração (direta ou indireta) e do vínculo formal.
-
-Segundo, obter histórico escolar.
-
-Terceiro, documentar a remuneração à conta do orçamento da União.
-
-Quarto, requerimento administrativo.
-
-Quinto, ação judicial em caso de indeferimento.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acionar `peticao-previdenciaria`.
-Ao documentar prova, acionar `documentos-comprobatorios-in128`.
-Para contagem recíproca, acionar `base-contagem-reciproca-rgps-rpps`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
+1. Certidão da instituição (hoje, em regra, o Instituto Federal sucessor) com: norma de funcionamento, período com dia, mês e ano, frequência, forma de retribuição e encomendas executadas para terceiros.
+2. Histórico escolar, regulamento interno, atas e registros do Fundo de Caixa Escolar.
+3. CTC quando o ente mantinha RPPS à época (Portaria 990, art. 129, III).
+4. Requerimento administrativo completo (Tema 350 STF; Tema 1124 STJ).
+5. No indeferimento, ação com prova testemunhal de ex-colegas e docentes, complementar à documental.
 
 ## Alertas
 
-Primeiro, a retribuição pecuniária, mesmo indireta, deve ser demonstrada. Sem prova, pedido indefere.
+- A Súmula 18 TNU exige os quatro elementos simultâneos. A certidão que omite a contraprestação por encomendas para terceiros é a causa mais comum de indeferimento: peça certidão complementar.
+- O tempo de aluno-aprendiz conta como tempo de contribuição, não como carência.
+- Aluno regular, sem trabalho na execução de encomendas, não gera tempo.
 
-Segundo, o período deve ser de aluno-aprendiz em estabelecimento federal. Aluno comum não gera tempo.
+## MCPs da casa
 
-Terceiro, o INSS rotineiramente indefere administrativamente. Via judicial costuma ser necessária.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Quarto, o tempo de aluno-aprendiz não computa carência.
+## Integração
 
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, aluno-aprendiz e Súmula 96 TCU.
-
-Hugo Goes, cômputo do tempo.
-
-Fábio Zambitte Ibrahim, tempo de contribuição atípico.
-
-Wladimir Novaes Martinez, regras de transição.
-
-Daniel Pulino, contagem recíproca.
-
-Marco Aurélio Serau Junior, tempo especial e atípico.
-
-IBDP, defesa do aluno-aprendiz.
-
-## O que NÃO está nesta skill
-
-Contagem recíproca entre regimes está em `base-contagem-reciproca-rgps-rpps`. Tempo militar obrigatório está em `base-servico-militar-obrigatorio`. Tempo rural anterior a 1991 está em `base-tempo-rural-anterior-1991`. Conversão de tempo especial está em `base-tempo-especial-conversao`.
+Peça: `peticao-previdenciaria`. Prova: `base-documentos-comprobatorios-in128`. Contagem recíproca: `base-contagem-reciproca-rgps-rpps`. Precedentes: `precedentes-previdenciarios`. Portarias: `base-portarias-dpmf-inss-hub`. Serviço militar: `base-servico-militar-obrigatorio`. Tempo rural: `base-tempo-rural-anterior-1991`. Tempo especial: `base-tempo-especial-conversao`.

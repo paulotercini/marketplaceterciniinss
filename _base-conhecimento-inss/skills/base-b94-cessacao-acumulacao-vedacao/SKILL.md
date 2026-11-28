@@ -1,152 +1,47 @@
 ---
 name: base-b94-cessacao-acumulacao-vedacao
-description: "Cessação do auxílio-acidente B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997, direito adquirido da Súmula 507 STJ, art. 86 §2º Lei 8.213/91 e estratégias contra cessação automática indevida. Use SEMPRE que mencionar cessação B94, B94 cessou pela aposentadoria, vedação acumulação B94 aposentadoria, art. 86 §2º Lei 8.213, MP 1.596-14/1997 vedação, marco temporal 11/11/1997, acumulação só com lesão e aposentadoria anteriores a 11/11/1997, Súmula 507 STJ direito adquirido, B94 cessado indevidamente, restabelecimento B94 cessado, retroatividade vedação acumulação, B94 concedido antes 1997, lei velha B94, tempus regit actum B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-anexo-iii-quadros, base-b94-sequela-minima-sumula88-tnu e decadencia-revisao-previdenciaria."
+description: "Cessação do auxílio-acidente B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997, direito adquirido da Súmula 507 STJ, art. 86 §2º Lei 8.213/91 e estratégias contra cessação automática indevida. Use SEMPRE que mencionar cessação B94, B94 cessou pela aposentadoria, vedação acumulação B94 aposentadoria, art. 86 §2º Lei 8.213, MP 1.596-14/1997 vedação, marco temporal 11/11/1997, acumulação apenas com lesão e aposentadoria anteriores a 11/11/1997, Súmula 507 STJ direito adquirido, B94 cessado indevidamente, restabelecimento B94 cessado, retroatividade vedação acumulação, B94 concedido antes 1997, lei velha B94, tempus regit actum B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-anexo-iii-quadros, base-b94-sequela-minima-sumula88-tnu e decadencia-revisao-previdenciaria."
 ---
 
-# Cessação e Vedação de Acumulação do B94
+# Cessação e vedação de acumulação do B94
+
+Convenção de espécies (códigos INSS): B31 e B91 auxílio por incapacidade temporária previdenciário e acidentário; B32 e B92 aposentadoria por incapacidade permanente previdenciária e acidentária; B94 auxílio-acidente (B36 quando previdenciário; a base usa B94 para ambos).
 
 ## Escopo
 
-Skill pró-segurado sobre cessação do B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997 e direito adquirido só quando lesão incapacitante e aposentadoria são anteriores a 11/11/1997 (auditoria 03/10/2026).
+Hipóteses de cessação e suspensão do B94, vedação de acumulação com aposentadoria desde 11/11/1997 e direito adquirido. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Regra vigente
 
-CF/88, art. 5º XXXVI, direito adquirido.
+- O B94 é devido até a véspera do início de qualquer aposentadoria ou até o óbito (Lei 8.213/91, art. 86, §1º), vedada a acumulação com qualquer aposentadoria (art. 86, §2º). Redação da MP 1.596-14, de 10/11/1997, publicada em 11/11/1997, convertida na Lei 9.528/97.
+- Vedada a percepção de mais de um auxílio-acidente (art. 124, V).
+- Reaberto o auxílio por incapacidade temporária decorrente do mesmo acidente, o B94 fica suspenso e é reativado na cessação (Decreto 3.048/99, art. 104, §6º).
+- O retorno ao trabalho, a remuneração e a reabilitação não cessam o B94 (art. 86, §§2º e 3º).
+- Cessado o B94 pela aposentadoria, o valor mensal do B94 integra o salário de contribuição no cálculo do salário de benefício (art. 31): ver `base-b94-integracao-salario-beneficio-art31`.
 
-CF/88, art. 201 §11.
+## Direito adquirido à acumulação
 
-Lei 8.213/91, art. 86 §2º, redação após MP 1.596-14/1997.
+A acumulação exige que a lesão incapacitante e a aposentadoria sejam ambas anteriores a 11/11/1997 (Súmula 507 STJ; Tema 555 STJ, REsp 1.296.673/MG). Em doença profissional ou do trabalho, o momento da lesão é o do art. 23 da Lei 8.213/91: início da incapacidade, segregação compulsória ou diagnóstico, o que ocorrer primeiro (Tema 556 STJ). Para o segurado com B94 e aposentadoria anteriores ao marco, a cessação do B94 é ilegal (CF, art. 5º, XXXVI).
 
-MP 1.596-14/1997, marco em 11/11/1997.
+## Aplicação
 
-Decreto 3.048/99.
-
-IN 128/2022.
-
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
-
-TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
-
-## Marco jurisprudencial
-
-### Súmula 507 STJ
-
-Acumulação preservada para B94 anterior.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 555 STJ
-
-Direito adquirido.
-
-### Integração ao salário-de-benefício. Art. 31 da Lei 8.213/91
-
-O fundamento é LEGAL e direto, sem tema repetitivo. O art. 31 da Lei 8.213/91 determina que o valor mensal do auxílio-acidente integra o salário de contribuição para fins de cálculo do salário de benefício de qualquer aposentadoria. Não citar o Tema 862 aqui, porque ele é termo inicial.
-
-### Tema 862 STJ. TERMO INICIAL do auxílio-acidente
-
-Tese literal, conferida na página oficial de precedentes qualificados do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ."
-
-Primeira Seção, leading cases REsp 1.729.555/SP e REsp 1.786.736/SP, julgados em 09/06/2021, acórdão publicado em 01/07/2021. **Trânsito em julgado.** A matéria subiu ao STF como Tema 1225, e o Supremo decidiu em 13/08/2022 que NÃO há repercussão geral por ser questão infraconstitucional, com trânsito em 15/09/2022, de modo que a tese do STJ está firme e definitiva.
-
-**ALERTA de uso.** O Tema 862 NÃO trata de integração do B94 ao salário-de-benefício. Essa integração tem fundamento legal direto no art. 31 da Lei 8.213/91 e NÃO possui tema repetitivo próprio. Citar o Tema 862 para sustentar integração entrega ao INSS um erro de fundamento.
-
-**Regra prática desfavorável, registrada com honestidade.** A descrição oficial do Tema 1225/STF registra que o STJ, na ementa do julgado, considerou como termo inicial a DATA DA CITAÇÃO do INSS quando não houver auxílio-doença prévio nem requerimento administrativo do auxílio-acidente. Havendo B31 anterior, vale o dia seguinte à cessação. Não havendo, o requerimento administrativo prévio passa a ser decisivo para não perder retroativos.
-
-## Vedação após 11/11/1997
-
-Primeiro, B94 concedido após essa data não acumula com aposentadoria.
-
-Segundo, art. 86 §2º veda acumulação.
-
-Terceiro, integração ao SB substitui acumulação.
-
-Quarto, art. 31 da Lei 8.213/91 para a integração, e Tema 862 STJ apenas para o termo inicial.
-
-## Direito adquirido anterior
-
-Primeiro, a acumulação exige que a lesão incapacitante E a aposentadoria sejam ambas anteriores a 11/11/1997 (Súmula 507 STJ).
-
-Segundo, Súmula 507 STJ é vinculante.
-
-Terceiro, INSS frequentemente cessa indevidamente.
-
-Quarto, restabelecimento via revisão ou MS.
-
-## Aplicação pró-segurado
-
-Primeiro, identificar a data da lesão incapacitante e a DIB da aposentadoria, porque ambas precisam ser anteriores a 11/11/1997 (auditoria 03/10/2026).
-
-Segundo, comparar com marco temporal.
-
-Terceiro, defender direito adquirido.
-
-Quarto, requerer restabelecimento ou integração.
-
-## Cenários pró-segurado
-
-Cenário A, B94 desde 1995, aposentadoria 2005. NÃO acumula, porque a aposentadoria é posterior a 11/11/1997 (Súmula 507 STJ exige lesão e aposentadoria anteriores ao marco). O B94 cessa na aposentadoria; resta a integração ao SB pelo art. 31 da Lei 8.213/91.
-
-Cenário B, B94 cessado indevidamente em 2010. Restabelecimento.
-
-Cenário C, B94 desde 2000. Sem acumulação, mas integração.
-
-Cenário D, dúvida sobre DIB. Pesquisa documental.
-
-## Alertas
-
-Primeiro, INSS pode cessar B94 antigo. Súmula 507 STJ refuta.
-
-Segundo, vedação não retroage. Tempus regit actum.
-
-Terceiro, decadência da revisão é tema sensível.
-
-Quarto, MS cabível para cessação indevida.
+1. Fixar a data da lesão (art. 23, se doença ocupacional) e a DIB da aposentadoria, pela carta de concessão e pelo CNIS.
+2. Ambas anteriores a 11/11/1997: requerer o restabelecimento, com atrasados dos cinco anos anteriores ao requerimento ou à ação (Súmula 85 STJ). MS cabe quando a prova for documental pré-constituída.
+3. Aposentadoria posterior: a cessação é regular; conferir se o B94 entrou no salário de benefício da aposentadoria (art. 31). Se não entrou, pedir revisão, observado o prazo decadencial do art. 103 (ver `decadencia-revisao-previdenciaria`).
+4. B94 cessado por motivo diverso (alta, "recuperação"): o benefício é vitalício até aposentadoria ou óbito; requerer restabelecimento.
 
 ## Fungibilidade aplicável
 
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+Acionar `base-fungibilidade-previdenciaria` (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
+`base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para detalhes operacionais, acionar `auxilio-acidente-b94`.
-Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-art31`.
-Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
-Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
-Para decadência, acionar `decadencia-revisao-previdenciaria`.
-
-## O que NÃO está nesta skill
-
-Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`.
+Detalhes operacionais: `auxilio-acidente-b94`. Integração ao salário de benefício e Tema 862 STJ (termo inicial): `base-b94-integracao-salario-beneficio-art31`. Anexo III: `base-b94-anexo-iii-quadros`. Sequela mínima: `base-b94-sequela-minima-sumula88-tnu`. Decadência: `decadencia-revisao-previdenciaria`.

@@ -211,7 +211,7 @@ Verificações executadas em 16/06/2026 via Comet (Claude in Chrome) e WebFetch 
 - Diário Eletrônico da Justiça Federal da 3ª Região (DEJF3R).
 - Página `https://www.trf3.jus.br/justica-40`.
 - Despachos judiciais publicados que citam expressamente os Provimentos.
-- Manual de Padronização dos JEFs da 3ª Região (Onda 41) que cita art. 11 e art. 20 §§ 1º a 3º do Provimento 103/2024.
+- Manual de Padronização dos JEFs da 3ª Região que cita art. 11 e art. 20 §§ 1º a 3º do Provimento 103/2024.
 
 ALERTA. Os textos integrais dos Provimentos NÃO foram baixados para o repositório `base-legislacao-fontes-primarias` nesta verificação. Citações em peças processuais devem incluir conferência específica no PDF oficial do DEJF3R antes da menção literal.
 

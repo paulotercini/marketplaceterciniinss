@@ -1,133 +1,30 @@
-# Nexo Acidentário B94 — Jurisprudência e Refutação
-
-## 1. Precedentes relevantes
-
-### ADI 3931 STF
-
-NTEP constitucional.
-
-Fonte oficial em https://www.stf.jus.br
-
-### Tema 416 STJ
-
-Redução parcial.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 89 TNU
-
-Sequela permanente.
-
-### Tema 350 TNU
-
-Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, art. 21-A
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 3.048/99, Anexo II
-
-Fonte oficial em https://www.planalto.gov.br
-
-### IN 128/2022
-
-Fonte oficial em https://www.in.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — NTEP inconstitucional
-
-Argumento adversário. Negação.
-
-Refutação. ADI 3931 STF afirma constitucionalidade.
-
-### Argumento 2 — Sem CAT, sem nexo
-
-Argumento adversário. Forma.
-
-Refutação. CAT pode ser emitida posteriormente.
-
-### Argumento 3 — Doença degenerativa exclui
-
-Argumento adversário. Origem.
-
-Refutação. Concausa admite.
-
-### Argumento 4 — Sem CNAE específico
-
-Argumento adversário. Forma.
-
-Refutação. NTEP por correlação.
-
-### Argumento 5 — Trajeto não conta
-
-Argumento adversário. Restrição.
-
-Refutação. Art. 21 IV d Lei 8.213.
-
-### Argumento 6 — Agressão fora do nexo
-
-Argumento adversário. Restrição.
-
-Refutação. Art. 21 II Lei 8.213.
-
-### Argumento 7 — Contaminação fortuita
-
-Argumento adversário. Restrição.
-
-Refutação. Art. 21 III Lei 8.213.
-
-### Argumento 8 — Refutação NTEP pelo INSS
-
-Argumento adversário. Procedimento.
-
-Refutação. Refutação exige fundamentação técnica.
-
-### Argumento 9 — Sequela transitória
-
-Argumento adversário. Forma.
-
-Refutação. Súmula 89 TNU.
-
-### Argumento 10 — Sem perícia
-
-Argumento adversário. Prova.
-
-Refutação. Perícia judicial supre.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, perícia técnica.
-
-Segundo, NTEP de ofício.
-
-Terceiro, conversão B31 para B91.
-
-Quarto, B94 cumulativo.
-
-Quinto, monitoramento.
-
-Sexto, dialeticidade.
-
-## 6. Diligência de atualização
-
-ADI 3931 STF julgada improcedente em 20/04/2020, com trânsito em julgado em 13/08/2020; nada a acompanhar (auditoria 03/10/2026).
-
-Revalidar art. 21-A.
-
-Monitorar Lista B Anexo II.
+# Nexo acidentário B94. Jurisprudência e refutação
+
+## 1. Precedentes
+
+- **ADI 3.931 STF.** Constitucionalidade do art. 21-A da Lei 8.213/91 (NTEP); julgada improcedente em 2020.
+- **Tema 416 STJ (REsp 1.109.591/SC).** O B94 exige lesão que reduza a capacidade para o trabalho habitual; o grau do dano e do maior esforço não interfere na concessão, devida ainda que mínima a lesão.
+- **Súmula 88 TNU.** Limitação, ainda que leve, para a atividade habitual enseja o B94, em observância ao Tema 416 STJ.
+- **Súmula 89 TNU (adversa).** Não há B94 quando as sequelas não reduzem a capacidade habitual nem exigem maior esforço. Refutar por distinção: demonstrar a redução ou o maior esforço com o laudo pericial.
+- **Tema 315 TNU.** DIB do B94 no dia seguinte à cessação do auxílio por incapacidade temporária que lhe deu origem, independentemente de pedido de prorrogação, observada a prescrição quinquenal.
+- **Tema 350 TNU.** Quem estava em gozo de B94, ou teve consolidação das lesões até 17/06/2019, mantém a qualidade de segurado por 12 meses a partir da vigência da Lei 13.846/2019.
+- **Súmula 15 STJ.** Compete à Justiça Estadual processar e julgar os litígios decorrentes de acidente do trabalho.
+- **Súmula 89 STJ.** A ação acidentária prescinde do exaurimento da via administrativa.
+
+## 2. Refutação aos argumentos do INSS
+
+| Argumento | Refutação |
+|---|---|
+| NTEP inconstitucional ou mera estatística | Art. 21-A; ADI 3.931 STF. A presunção apenas cede a prova técnica da inexistência do nexo (art. 21-A, §1º). |
+| Sem CAT não há nexo | A CAT pode ser emitida pelo segurado, dependente, sindicato, médico ou autoridade pública, sem o prazo do caput (art. 22, §2º). O nexo se prova por qualquer meio. |
+| Doença degenerativa exclui o nexo | A concausa equipara-se a acidente (art. 21, I). Exige-se contribuição direta, não causa única. |
+| A empresa contestou o NTEP | A contestação não afasta a presunção sem decisão fundamentada; cabe recurso do segurado ao CRPS com efeito suspensivo (art. 21-A, §2º). |
+| Acidente de trajeto não é acidente do trabalho | Art. 21, IV, "d", vigente: a revogação pela MP 905/2019 perdeu vigência (MP 955/2020). |
+| Agressão ou contaminação são fortuitas | Art. 21, II, "a" e "b", e III, equiparam expressamente. |
+| Sequela mínima não gera B94 | Tema 416 STJ e Súmula 88 TNU. |
+| B94 depende de nexo laboral | Art. 86 abrange acidente de qualquer natureza; o nexo define apenas a espécie e a competência. |
+
+## 3. Pontos de atualização
+
+- Conferir a Lista C do Anexo II na redação vigente do Decreto 3.048/99 antes de afirmar NTEP.
+- Conferir o texto do art. 21 na data do acidente (alínea "d" do inciso IV).

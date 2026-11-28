@@ -11,20 +11,13 @@ Esta skill realiza auditoria técnico-jurídica de Perfis Profissiográficos Pre
 
 ## Fluxo de Trabalho
 
-1. Leia este SKILL.md completamente
-2. Leia `references/CHECKLIST.md` para obter o checklist completo de auditoria
-3. Leia `references/FUNDAMENTOS-METODOLOGIA.md` para obter os fundamentos normativos sobre metodologia, enquadramento e limites de tolerância
-4. Receba o PPP (PDF ou texto colado na conversa)
-5. Se houver múltiplos PPPs do mesmo segurado, analise-os em sequência cronológica
-6. Execute a auditoria conforme o checklist, período a período
-7. Quando identificar agente químico, leia `references/AGENTES-QUIMICOS.md`
-8. Quando identificar agente biológico, calor, frio, vibração ou periculosidade, leia `references/AGENTES-BIOLOGICOS-FISICOS.md`
-9. Apresente a análise estruturada conforme a seção "Estrutura da Análise" abaixo
+1. Receba o PPP (PDF ou texto colado na conversa).
+2. Havendo vários PPPs do mesmo segurado, analise-os em ordem cronológica.
+3. Execute a auditoria período a período, pelos sete eixos abaixo.
+4. Para cada agente, consulte a skill própria (seção "Checklist rápido por tipo de agente").
+5. Apresente a análise na estrutura indicada abaixo.
 
 ## Regras Críticas
-
-### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se o PPP for tecnicamente sólido e não apresentar vícios, diga isso com clareza. Se o enquadramento for inviável para determinado período, declare sem rodeios. Não force enquadramentos inexistentes. Se houver controvérsia, identifique-a com precisão.
@@ -32,30 +25,30 @@ Se o PPP for tecnicamente sólido e não apresentar vícios, diga isso com clare
 ### Verificação de Fontes
 Todos os fundamentos normativos devem ser verificados contra a legislação vigente. Nunca invente artigos, enunciados, súmulas, temas repetitivos ou precedentes. Se não houver base normativa, apresente o argumento como tese doutrinária ou posição minoritária, identificando o risco.
 
-### Tom e Estilo
-A análise deve ser contundente, técnica e persuasiva. Opiniões firmes sem hesitação. Parágrafos curtos. Organização lógica por período.
+### Estilo
+Análise técnica, organizada por período, em parágrafos curtos e conforme `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Princípio Central — Análise por Período
+## Princípio Central. Análise por Período
 
 O PPP documenta a história laboral em períodos distintos, cada um com seus próprios agentes, intensidades, metodologias e responsáveis técnicos. A auditoria NUNCA pode tratar o PPP como unidade homogênea. Cada período declarado no campo 13.1 (Lotação e Atribuição) deve ser analisado individualmente nos seguintes aspectos obrigatórios.
 
 ### Para cada período, verificar obrigatoriamente
 
-**1. Agente nocivo declarado** — Identificar o agente e confrontar com os Anexos da NR-15 e com o Anexo IV do Decreto 3.048/99 (Regulamento da Previdência Social). Verificar se o agente consta na legislação vigente à época do período analisado.
+**1. Agente nocivo declarado.** Identificar o agente e confrontar com os Anexos da NR-15 e com o Anexo IV do Decreto 3.048/99 (Regulamento da Previdência Social). Verificar se o agente consta na legislação vigente à época do período analisado.
 
-**2. Enquadramento normativo** — Definir se o enquadramento se dá por categoria profissional (períodos até 28/04/1995), por agente nocivo qualitativo ou por agente nocivo quantitativo. Aplicar o limite de tolerância vigente à época conforme a evolução normativa (Decreto 53.831/64, Decreto 83.080/79, Decreto 2.172/97, Decreto 3.048/99, Decreto 4.882/2003).
+**2. Enquadramento normativo.** Definir se o enquadramento se dá por categoria profissional (períodos até 28/04/1995), por agente nocivo qualitativo ou por agente nocivo quantitativo. Aplicar o limite de tolerância vigente à época conforme a evolução normativa (Decreto 53.831/64, Decreto 83.080/79, Decreto 2.172/97, Decreto 3.048/99, Decreto 4.882/2003).
 
-**3. Metodologia e técnica utilizada (CAMPO 15.5)** — Este é o eixo mais negligenciado e mais determinante da auditoria. A NR-15 NÃO é técnica de medição, é norma regulamentadora. A indicação isolada de "NR-15" no campo 15.5 significa que o PPP não demonstrou a obtenção do NEN, mas não permite presumir que a medição foi pontual. A dosimetria pode ser realizada com parâmetros da NR-15 (Q=5, NLI=85) ou da NHO-01 (Q=3, NLI=80), e o instrumento não determina a norma. Verificar se a técnica declarada é adequada ao agente e ao período normativo. Para ruído em períodos a partir de 19/11/2003, aplicar os quatro cenários do Comunicado CRPS 99/2025 (Cenário 1 — NHO-01 isolada, presume NEN; Cenário 2 — NEN isolado; Cenário 3 — NEN + NHO-01; Cenário 4 — NR-15 com NEN expresso). Na via judicial, a menção à NR-15 gera presunção relativa de regularidade (Tema 174/TNU, PEDILEF 0001717, novembro/2025). O Tema 317/TNU (setembro/2025) exige indicação expressa da norma, não bastando a menção a "dosimetria" ou "dosímetro". Consultar obrigatoriamente o arquivo `references/FUNDAMENTOS-METODOLOGIA.md` para os critérios de adequação e a estratégia por cenário.
+**3. Metodologia e técnica utilizada (CAMPO 15.5).** Este campo costuma decidir a auditoria. A NR-15 é norma regulamentadora e não descreve, por si, a técnica de medição. A indicação isolada de "NR-15" no campo 15.5 significa que o PPP não demonstrou a obtenção do NEN, mas não permite presumir que a medição foi pontual. A dosimetria pode ser realizada com parâmetros da NR-15 (Q=5, NLI=85) ou da NHO-01 (Q=3, NLI=80), e o instrumento não determina a norma. Verificar se a técnica declarada é adequada ao agente e ao período normativo. Para ruído desde 19/11/2003, na via administrativa, considerar os quatro registros atribuídos à Nota 00792/2025/CONJUR-MPS/CGU/AGU, de conteúdo [NÃO CONFIRMADO] (NHO-01 isolada, com presunção de NEN; NEN isolado; NEN com NHO-01; NR-15 com NEN expresso). Na via judicial, a menção à NHO-01 ou à NR-15 gera presunção relativa de regularidade (Tema 174 da TNU; PUIL 0001717-22.2019.4.03.6318/SP). O Tema 317 da TNU (18/09/2025) exige a indicação expressa da norma; "dosimetria" ou "dosímetro" não bastam. Cenários e estratégia em `base-especial-ruido`.
 
-**4. Intensidade/concentração declarada (CAMPO 15.4)** — Verificar a grandeza registrada. Para ruído, distinguir entre NPS (Nível de Pressão Sonora, medição pontual), LAVG/NE (Nível Médio, dosimetria não normalizada) e NEN (Nível de Exposição Normalizado, dosimetria normalizada para 480 minutos). Confrontar com o limite de tolerância vigente. **Sempre que o ruído estiver entre 82 e 85 dB(A), verificar a jornada efetiva do trabalhador (contratual + horas extras habituais). Se a jornada efetiva exceder 480 minutos e o valor não for NEN, calcular a normalização pela fórmula da NHO-01 com fator 10 (NEN = NE + 10 × log₁₀(TE/480)). Demonstrar complementarmente pela lógica C/T da NR-15 Anexo 1. Quando o LAVG estiver na faixa de 82 a 85 dB(A), verificar obrigatoriamente a existência de horas extras habituais nos contracheques, pois a jornada efetiva pode alterar decisivamente o NEN.** Consultar a seção 2.6 do arquivo `references/FUNDAMENTOS-METODOLOGIA.md` para a fórmula, critérios de aplicação, identificação de grandezas e comprovação de jornada efetiva.
+**4. Intensidade/concentração declarada (CAMPO 15.4).** Verificar a grandeza registrada. Para ruído, distinguir entre NPS (Nível de Pressão Sonora, medição pontual), LAVG/NE (Nível Médio, dosimetria não normalizada) e NEN (Nível de Exposição Normalizado, dosimetria normalizada para 480 minutos). Confrontar com o limite de tolerância vigente. **Sempre que o ruído estiver entre 82 e 85 dB(A), verificar a jornada efetiva do trabalhador (contratual + horas extras habituais). Se a jornada efetiva exceder 480 minutos e o valor não for NEN, calcular a normalização pela fórmula da NHO-01 com fator 10 (NEN = NE + 10 × log₁₀(TE/480)). Demonstrar complementarmente pela lógica C/T da NR-15 Anexo 1. Quando o LAVG estiver na faixa de 82 a 85 dB(A), verificar obrigatoriamente a existência de horas extras habituais nos contracheques, pois a jornada efetiva pode alterar decisivamente o NEN.** Fórmula e prova da jornada em `base-especial-ruido/references/CENARIOS-ENQUADRAMENTO.md`, cenário 5.
 
-**5. EPI e EPC (CAMPOS 15.6 e 15.7)** — Analisar as declarações sobre eficácia de equipamentos de proteção. Aplicar o Tema 555/STF (ARE 664.335). Identificar preenchimento ambíguo (asteriscos, campos em branco, "N.A." sem justificativa).
+**5. EPI e EPC (CAMPOS 15.6 e 15.7).** Analisar as declarações sobre eficácia de equipamentos de proteção. Aplicar o Tema 555 do STF (ARE 664.335), o Tema 1090 do STJ e a IN 128/2022, art. 291 (`base-especial-epi`). Identificar preenchimento ambíguo (asteriscos, campos em branco, "N.A." sem justificativa).
 
-**5-A. Agentes biológicos em ambiente hospitalar (Tema 383/TNU, julgado em 24/09/2026)** — Ler juntos o setor (campo 13.3), a profissiografia (campo 14.2), o código de ocorrência da GFIP (campo 13.7) e o campo 15.9. Setor crítico, ala infectocontagiosa ou procedimento gerador de aerossol atrai o item I, e o EPI eficaz do campo 15.7 deixa de obstar a especialidade. Código 04 no campo 13.7 é declaração da empregadora de exposição com aposentadoria aos 25 anos, contraditória com o EPI eficaz. Fora do item I, apontar os fundamentos de impugnação específica do Tema 213/TNU (item II). Setor ou procedimento omitido gera o pedido P8 da `retificacao-ppp`. Roteiro em `base-tema383-tnu-fundacentro-epi-biologicos`, seção 0.
+**5-A. Agentes biológicos em ambiente hospitalar (Tema 383 da TNU, PEDILEF 1004356-32.2019.4.01.3802/MG, julgado em 24/09/2026).** Ler juntos o setor (campo 13.3), a profissiografia (campo 14.2), o código de ocorrência da GFIP (campo 13.7) e o campo 15.9. Setor crítico, ala infectocontagiosa ou procedimento gerador de aerossol atrai o item I, e o EPI eficaz do campo 15.7 deixa de obstar a especialidade. Código 04 no campo 13.7 é declaração da empregadora de exposição com aposentadoria aos 25 anos, contraditória com o EPI eficaz. Fora do item I, apontar os fundamentos de impugnação específica do Tema 213/TNU (item II). Setor ou procedimento omitido gera o pedido P8 da `retificacao-ppp`. Roteiro em `base-tema383-tnu-fundacentro-epi-biologicos`, seção 0.
 
-**6. Base documental (LTCAT/PPRA/PGR)** — Identificar qual documento ambiental embasa o PPP para cada período. Verificar retroatividade, lacunas temporais e coerência entre o programa ambiental declarado e o período coberto.
+**6. Base documental (LTCAT/PPRA/PGR).** Identificar qual documento ambiental embasa o PPP para cada período. Verificar retroatividade, lacunas temporais e coerência entre o programa ambiental declarado e o período coberto.
 
-**7. Responsável técnico (CAMPO 16)** — Verificar habilitação profissional, registro no conselho de classe e coerência do período de responsabilidade com o período analisado.
+**7. Responsável técnico (CAMPO 16).** Verificar habilitação profissional, registro no conselho de classe e coerência do período de responsabilidade com o período analisado.
 
 ## Estrutura da Análise
 
@@ -88,27 +81,29 @@ Se o usuário apresentar mais de um PPP do mesmo segurado, a análise deve segui
 
 ## Enquadramento de Agentes Nocivos por Período
 
-**Até 05/03/1997** — Enquadramento por categoria profissional (Decretos 53.831/64 e 83.080/79) ou por agente nocivo com avaliação qualitativa. Mera presença no ambiente basta.
+**Até 28/04/1995.** Categoria profissional (Decretos 53.831/64 e 83.080/79) ou agente nocivo, sem exigência de permanência (`base-especial-categoria-profissional-pre1995`). Ruído e calor exigem medição desde sempre.
 
-**De 06/03/1997 a 02/12/1998** — Agente nocivo conforme Anexo IV do Decreto 2.172/97 ou 3.048/99. Não se exige avaliação quantitativa nem se considera eficácia do EPI para agentes químicos (PEDILEF 5001032-41.2022.4.04.7014/PR, TNU).
+**De 29/04/1995 a 05/03/1997.** Agente nocivo dos quadros dos Decretos 53.831/64 e 83.080/79, com formulário.
 
-**A partir de 03/12/1998** — Regime pleno. Qualitativa ou quantitativa conforme NR-15. EPI relevante, exceto para agentes com presunção de ineficácia.
+**De 06/03/1997 a 02/12/1998.** Agente do Anexo IV do Decreto 2.172/97 ou 3.048/99, com laudo. O EPI apenas é considerado em demonstrações ambientais emitidas a partir de 03/12/1998 (IN 128/2022, art. 291).
 
-**Exceção permanente — Cancerígenos Grupo 1 LINACH** — Independentemente do período pós-06/03/1997, agentes do Grupo 1 da LINACH (Portaria Interministerial 09/2014) são sempre de avaliação qualitativa. EPI irrelevante. Art. 68, §4º, Decreto 3.048/99; art. 298, III, IN 128/2022.
+**A partir de 03/12/1998.** Avaliação qualitativa ou quantitativa conforme a NR-15. EPI analisado pelo Tema 1090 do STJ, salvo ruído (Tema 555 do STF) e as exceções de `base-especial-epi`.
+
+**Cancerígenos do Grupo 1 da LINACH** (Portaria Interministerial 9/2014). Avaliação qualitativa e EPI irrelevante (Tema 170 da TNU). Na via administrativa, a IN 128/2022, art. 298, aplica a avaliação qualitativa aos agentes com CAS e constantes do Anexo IV, para períodos desde 08/10/2014 (§ 1º), e admite a descaracterização por medidas de controle para períodos desde 01/07/2020 (inciso III e § 2º). Ponto controvertido a enfrentar com o Tema 170.
 
 ## Checklist Rápido por Tipo de Agente
 
-**Agentes Químicos** — consultar `references/AGENTES-QUIMICOS.md`. Verificar nome técnico no campo 15.3 (Tema 298/TNU exige especificação), via de absorção (cutânea = Anexo 13 NR-15 = qualitativo), classificação LINACH (Grupo 1 = qualitativo + EPI irrelevante), curva de atenuação no campo 15.4 (valor já descontado = vício, viola Tema 555/STF), técnica no campo 15.5.
+**Agentes químicos**, consultar `base-especial-agentes-quimicos` e, para tolueno, `base-tolueno-tema-382-tnu-via-cutanea`. Verificar nome técnico no campo 15.3 (Tema 298/TNU exige especificação), via de absorção (cutânea = Anexo 13 NR-15 = qualitativo), classificação LINACH (Grupo 1 = qualitativo + EPI irrelevante), intensidade no campo 15.4 já descontada a atenuação do EPI (vício de registro), técnica no campo 15.5.
 
-**Agentes Biológicos** — consultar `references/AGENTES-BIOLOGICOS-FISICOS.md`. Não se exige exposição permanente. Basta risco potencial de contaminação superior ao risco geral, em caráter indissociável da prestação do serviço (Tema 211/TNU).
+**Agentes biológicos**, consultar `base-especial-agentes-biologicos` e `base-tema383-tnu-fundacentro-epi-biologicos`. Basta a probabilidade da exposição, em caráter indissociável da prestação do serviço (Tema 211 da TNU).
 
-**Calor** — consultar `references/AGENTES-BIOLOGICOS-FISICOS.md`. Tese trifásica do Tema 323/TNU. Verificar regime de trabalho e taxa de metabolismo.
+**Calor**, consultar `base-especial-calor-nho06`. Tema 323 da TNU (taxa metabólica média ponderada em kcal/h). Verificar regime de trabalho e metodologia do período.
 
-**Frio** — consultar `references/AGENTES-BIOLOGICOS-FISICOS.md`. Código 1.0.4 Anexo IV Decreto 3.048/99. Câmaras frigoríficas.
+**Frio**, consultar `base-especial-frio-camara-frigorifica`. Código 1.1.2 do Decreto 53.831/64 e do Anexo I do Decreto 83.080/79, até 05/03/1997 (IN 128/2022, art. 301); o Anexo IV não prevê o frio, e depois a via é a perícia (Súmula 198 do TFR).
 
-**Vibração** — consultar `references/AGENTES-BIOLOGICOS-FISICOS.md`. Vácuo normativo de 06/03/1997 a 13/08/2014 permite enquadramento qualitativo.
+**Vibração**, consultar `base-especial-vibracao` (código 2.0.2 do Anexo IV; critérios do Anexo 8 da NR-15 por período).
 
-**Periculosidade** — consultar `references/AGENTES-BIOLOGICOS-FISICOS.md`. PUIL TNU admite após 05/03/1997. Tensão com EC 103/2019 após 13/11/2019.
+**Periculosidade**, consultar `base-especial-eletricidade-periculosidade` (Tema 534 do STJ) e `base-especial-periculosidade-motociclista-nr16-anexov`. Após 13/11/2019, o art. 201, § 1º, II, da CF não menciona a periculosidade.
 
 ## Interação com Outras Skills
 
@@ -122,26 +117,21 @@ Quando o segurado for menor de idade no período analisado, registrar a fundamen
 
 ## Precedentes Recentes sobre PPP (2024-2026)
 
-**PEDILEF 0005459 (TNU, outubro/2025)** — PPP sem carimbo e sem procuração. Impugnação genérica do INSS não desconstituiu o valor probante. O PPP dispensa carimbo quando há identificação do representante legal ou preposto (art. 281 §§1º e 2º IN 128/2022). Ônus invertido — cabe ao INSS demonstrar vícios específicos.
+**PUIL 0005459-58.2020.4.03.6338 (TNU, Rel. Juiz Federal Rodrigo Rigamonte Fonseca, disponibilizado em 23/10/2025).** Tese: "a inexistência de insurgência do INSS ou a impugnação genérica quanto à existência de vícios formais no PPP não é suficiente, por si só, para desconstituir o seu valor probante; para tanto, é necessária a impugnação apta a incutir no julgador dúvida objetiva quanto à sua idoneidade". O caso tratava de PPP sem carimbo e sem procuração do subscritor.
 
-**Tema 132/TST (IRR, j. 16/05/2025)** — A pretensão de retificação e entrega do PPP é imprescritível. Alternativa quando o empregador nega ou distorce o PPP. Se PPP retificado pela Justiça do Trabalho for apresentado ao INSS antes da ação previdenciária, efeitos financeiros retroagem à DER pelo Tema 1124/STJ.
+**Tema 132 do TST (recurso repetitivo) [NÃO CONFIRMADO quanto ao processo e à data].** A pretensão de retificação e entrega do PPP é imprescritível. Alternativa quando o empregador nega ou distorce o PPP. Os efeitos financeiros do PPP retificado seguem o Tema 1124 do STJ (`tema-1124-instrucao-administrativa`).
 
-**Natureza jurídica do PPP (Resolução 21/2014 CRPS; auditoria 03/10/2026, retirado o Tema 213/TNU, que trata só da informação de EPI no PPP)** — O PPP não goza de presunção legal nem lógica de veracidade. É declaração sobre ciência de fato (art. 408 parágrafo único CPC). O paradoxo é que o direito do segurado depende de prova produzida pela empresa que terá carga tributária majorada caso o direito seja reconhecido.
+**Natureza do PPP.** O PPP é declaração do empregador sobre fato (CPC, art. 408, parágrafo único). O empregador tem interesse contrário ao reconhecimento, porque a especialidade majora a contribuição do art. 57, § 6º, da Lei 8.213/91. Por isso a anotação de EPI eficaz ou de agente abaixo do limite admite prova em contrário.
 
-**Tema 1291/STJ (REsp 2.163.429/RS, 1ª Seção, Rel. Min. Gurgel de Faria, j. 10/09/2025)** — O CI não cooperado tem direito à aposentadoria especial. Art. 64 do Decreto 3.048/99 declarado ilegal na parte restritiva. O PPP não é o único meio admissível para CI não cooperado. Comprovação alternativa por laudos técnicos, NF de serviço, contratos e declarações de empresas contratantes. Impacto na auditoria de PPP: quando o segurado for CI autônomo (profissional liberal, prestador de serviço), a ausência de PPP formal não é óbice ao enquadramento especial. Acionar `defesa-probatoria-especial` (Parte IV) e `contribuinte-individual-in128` para enquadramento do CI.
+**Tema 1291 do STJ (REsp 2.163.429/RS, 1ª Seção, Rel. Min. Gurgel de Faria, j. 10/09/2025).** O contribuinte individual não cooperado tem direito ao reconhecimento do tempo especial após a Lei 9.032/95 (tese literal no `base-precedentes-catalogo-vinculantes`). O PPP não é o único meio admissível para CI não cooperado. Comprovação alternativa por laudos técnicos, NF de serviço, contratos e declarações de empresas contratantes. Impacto na auditoria de PPP: quando o segurado for CI autônomo (profissional liberal, prestador de serviço), a ausência de PPP formal não é óbice ao enquadramento especial. Acionar `defesa-probatoria-especial` (Parte IV) e `contribuinte-individual-in128` para enquadramento do CI.
 
-**Divergência CRPS/Judiciário sobre NEN** — A divergência entre Comunicado CRPS 99/2025 (exige demonstração da grandeza NEN) e a via judicial (Tema 174/TNU, presunção relativa de regularidade da menção à NR-15) é estrutural e impacta diretamente a escolha entre via administrativa e judicial à luz do Tema 1124/STJ. Consultar a skill `tempo-especial-peticoes-por-rito` para definição da via adequada.
+**Ruído na via administrativa e na judicial.** Pela Nota 00792/2025, o CRPS aceita a NR-15 apenas com NEN expresso; no JEF, a menção à NR-15 gera presunção relativa (PUIL 0001717). A diferença pesa na escolha da via, à luz do Tema 1124 do STJ. Consultar a skill `tempo-especial-peticoes-por-rito` para definição da via adequada.
 
-## Referências
+## Formulário e layout
 
-Antes de realizar a auditoria, leia obrigatoriamente os seguintes arquivos.
+Formulários anteriores ao PPP (SB-40, DISES-BE 5235, DSS-8030, DIRBEN-8030) e mudanças de layout do PPP em `base-especial-ppp-mudanca-layout-historico`. Retificação em `retificacao-ppp`.
 
-- `references/CHECKLIST.md` — Checklist completo de auditoria ponto a ponto, organizado por seção do PPP
-- `references/FUNDAMENTOS-METODOLOGIA.md` — Fundamentos normativos sobre metodologia de medição, evolução dos limites de tolerância, enquadramento por categoria profissional e agentes nocivos
-- `references/AGENTES-QUIMICOS.md` — Análise especializada de agentes químicos (hidrocarbonetos, benzeno, óleos minerais, OLUC, HPA, Anexo 13, LINACH, frentista, mecânico)
-- `references/AGENTES-BIOLOGICOS-FISICOS.md` — Análise especializada de agentes biológicos, calor, frio, vibração e periculosidade
-
-## PPP e laudo do profissional autônomo (Onda 108)
+## PPP e laudo do profissional autônomo
 
 Recorrente em dentista, médico e demais contribuintes individuais com consultório próprio. O INSS recusa o PPP alegando que foi emitido pelo próprio interessado.
 
@@ -149,7 +139,7 @@ Resposta conferida no TRF3. O PPP e o laudo elaborados no próprio consultório 
 
 ## Extensão
 
-Teto de o relatório de auditoria, 2 páginas, achados em ordem de gravidade, e o que não muda o enquadramento não entra. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+O relatório de auditoria tem até duas páginas, com os achados em ordem de gravidade. O que não muda o enquadramento fica de fora. Antes de escrever, nomear em uma frase o ponto que decide; entra apenas o dado que o prova. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Redação da peça neste tema
 
@@ -157,20 +147,8 @@ Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 Para o juízo, "a prova do enquadramento especial das atividades laborais é procedida pela apresentação dos formulários de PPP", e o erro do formulário se discute na Justiça do Trabalho. A auditoria confere a assinatura de quem tem poderes, o responsável técnico em todo o período, a técnica de medição do ruído e a eficácia do EPI anotada, porque esses quatro pontos decidiram as improcedências do corpus. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seções 2 a 6.

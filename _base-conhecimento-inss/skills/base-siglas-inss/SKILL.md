@@ -19,11 +19,11 @@ Postura pró-segurado exclusiva.
 
 ### CNIS - Cadastro Nacional de Informações Sociais
 
-Banco de dados mantido pela DATAPREV e administrado pelo INSS. Contém vínculos empregatícios, salários-de-contribuição, contribuições previdenciárias, benefícios recebidos e indicadores. Acesso restrito (apenas servidor INSS, segurado, advogado com procuração e perito judicial autorizado). Base para concessão automática e revisão de benefícios. Cruzar com `cnis-acerto-indicadores`.
+Banco de dados mantido pela DATAPREV e administrado pelo INSS. Contém vínculos empregatícios, salários-de-contribuição, contribuições previdenciárias, benefícios recebidos e indicadores. Acesso restrito (apenas servidor INSS, segurado, advogado com procuração e perito judicial autorizado). Base para concessão automática e revisão de benefícios. Cruzar com `base-cnis-acerto-indicadores`.
 
 ### CTPS - Carteira de Trabalho e Previdência Social
 
-Documento de prova de vínculo empregatício. Tem presunção relativa de veracidade (Súmula 12 TST; auditoria 03/10/2026). Atualmente, digital pelo eSocial, mas a versão física segue válida.
+Documento de prova de vínculo empregatício. Tem presunção relativa de veracidade (Súmula 12 TST; na via previdenciária, Súmula 75 TNU). Atualmente, digital pelo eSocial, mas a versão física segue válida.
 
 ### CADPF - Cadastro da Pessoa Física
 
@@ -31,7 +31,7 @@ Base de dados do CPF mantida pela Receita Federal. Integrada ao CNIS para vincul
 
 ### CEI - Cadastro Específico do INSS
 
-Cadastro de matrículas de empresas, obras e equiparados perante o INSS. Substituído gradualmente pelo CNPJ + CAEPF (Cadastro de Atividade Econômica da Pessoa Física).
+Cadastro de matrículas de empresas, obras e equiparados perante o INSS. Substituído pelo CNO (Cadastro Nacional de Obras) e pelo CAEPF (Cadastro de Atividade Econômica da Pessoa Física).
 
 ### CAEPF - Cadastro de Atividade Econômica da Pessoa Física
 
@@ -61,7 +61,7 @@ Data em que o segurado protocolou junto ao INSS o pedido de concessão de um ben
 
 ### DIB - Data do Início do Benefício
 
-Data efetiva de início do benefício. Normalmente coincide com a DER, mas há exceções (pensão por morte de menor com requerimento até 90 dias do óbito retroage à data do falecimento; revisão de DCB indevida; DIB anterior à DER por reafirmação - Tema 995 STJ).
+Data efetiva de início do benefício. Normalmente coincide com a DER, mas há exceções (pensão por morte requerida até 180 dias do óbito por filho menor de 16 anos, ou até 90 dias pelos demais dependentes, retroage ao óbito, art. 74, I, da Lei 8.213/91; restabelecimento após DCB indevida; reafirmação da DER, que fixa a DIB em data posterior à DER, Tema 995 STJ).
 
 ### DIP - Data do Início do Pagamento
 
@@ -73,7 +73,7 @@ Data em que o benefício foi cessado pelo INSS. Pode ocorrer por alta médica, �
 
 ### DAT - Data do Afastamento do Trabalho
 
-Data a partir da qual o segurado não exerce mais atividade laborativa. Importante para a verificação da qualidade de segurado e do período de graça.
+Data em que o segurado se afastou do trabalho. No B31 do empregado, o benefício começa no 16º dia do afastamento (art. 60 da Lei 8.213/91). Importa também para qualidade de segurado e período de graça.
 
 ### DDB - Data do Despacho do Benefício
 
@@ -85,11 +85,11 @@ Primeira contribuição registrada no CNIS. Marco para análise de tempo de cont
 
 ### DID - Data do Início da Doença
 
-Data a partir da qual o segurado é diagnosticado com a moléstia. CRÍTICA na aposentadoria PCD da LC 142/2013 e em pensão por morte por doença preexistente.
+Data estimada de início da doença, que pode anteceder o diagnóstico. CRÍTICA na aposentadoria PCD da LC 142/2013 e na alegação de doença preexistente à filiação (art. 59, §1º, da Lei 8.213/91).
 
 ### DII - Data do Início da Incapacidade
 
-Data a partir da qual o segurado se torna incapacitado para o trabalho. CRÍTICA para verificar qualidade de segurado nos benefícios por incapacidade, B31, B32, B91 e B92 (Súmula 11 TRU 3 - Skill `base-tru-trf3-sumulas-jurisprudencia`).
+Data a partir da qual o segurado se torna incapacitado para o trabalho. CRÍTICA para verificar qualidade de segurado nos benefícios por incapacidade, B31, B32, B91 e B92 (ver `base-tru-trf3-sumulas-jurisprudencia`).
 
 ### DN - Data de Nascimento
 
@@ -119,7 +119,7 @@ Valor inicial do benefício na DIB, após aplicados o fator previdenciário, o c
 
 ### SB - Salário-de-Benefício
 
-Média aritmética dos salários-de-contribuição corrigidos do PBC. Base para o cálculo da RMI.
+Média aritmética dos salários-de-contribuição corrigidos do PBC. Após a EC 103/2019, média de 100% dos salários (art. 26); antes, média dos 80% maiores (Lei 9.876/1999). Base para o cálculo da RMI.
 
 ### SC - Salário-de-Contribuição
 
@@ -131,11 +131,11 @@ Intervalo no qual são apurados os salários-de-contribuição do segurado para 
 
 ### MR - Mensalidade Reajustada
 
-Valor atual do benefício após reajustes anuais, sem descontos (IR, consignações, empréstimos) nem acréscimos (salário-família, devolução CPMF).
+Valor atual do benefício após reajustes anuais, sem descontos (IR, consignações, empréstimos) nem acréscimos.
 
 ### SMR - Salário Mínimo de Referência
 
-Piso de cálculo previdenciário usado em determinadas situações.
+Sigla sem definição normativa localizada. Não localizado.
 
 ### SM - Salário Mínimo
 
@@ -143,7 +143,7 @@ Marco constitucional do piso de benefícios previdenciários (art. 201 §2º CF)
 
 ### PNS - Piso Nacional de Salários
 
-Instituído pelo art. 1º do Decreto-lei 2.351/1987 e extinto pelo art. 5º da Lei 7.789/1989. Súmula 15 TRF4 trata da questão.
+Instituído pelo art. 1º do Decreto-lei 2.351/1987 e extinto pelo art. 5º da Lei 7.789/1989. 
 
 ### TETO - Teto do RGPS
 
@@ -157,11 +157,11 @@ Autarquia federal responsável pela operacionalização do RGPS. Sucessor do INP
 
 ### MPS - Ministério da Previdência Social
 
-Pasta governamental responsável pela política previdenciária. Em 2025/2026 está vinculado ao governo federal como pasta autônoma.
+Ministério responsável pela política previdenciária, recriado em 2023 (Lei 14.600/2023). O INSS e o CRPS estão vinculados a ele.
 
 ### CRPS - Conselho de Recursos da Previdência Social
 
-Órgão recursal administrativo do INSS. Estrutura. Juntas de Recursos (1ª instância recursal), Câmaras de Julgamento (2ª instância recursal) e Conselho Pleno (instância de uniformização). Cruzar com `base-crps-panorama-geral`.
+Órgão colegiado do Ministério da Previdência Social, distinto do INSS, que julga os recursos contra decisões da autarquia. Regimento: Portaria MPS 125/2026, alterada pelas Portarias MPS 235/2026 e 462/2026. Estrutura. Juntas de Recursos (1ª instância recursal), Câmaras de Julgamento (2ª instância recursal) e Conselho Pleno (instância de uniformização). Cruzar com `base-crps-panorama-geral`.
 
 ### JRPS - Junta de Recursos da Previdência Social
 
@@ -177,11 +177,11 @@ Segunda instância do CRPS. Aprecia recurso especial em face de acórdão da JR.
 
 ### CNPS - Conselho Nacional de Previdência Social
 
-Órgão de deliberação política sobre o RGPS. Composição tripartite (Governo, empregadores, trabalhadores).
+Órgão superior de deliberação colegiada sobre a Previdência Social. Composição: representantes do Governo e da sociedade civil, esta formada por aposentados e pensionistas, trabalhadores em atividade e empregadores (art. 3º da Lei 8.213/91).
 
 ### PFE/INSS - Procuradoria Federal Especializada junto ao INSS
 
-Representação jurídica do INSS perante o Judiciário. Cruzar com `base-pfe-inss-anpd-dpu-conade`.
+Representação judicial e extrajudicial e consultoria jurídica do INSS, como unidade da Procuradoria-Geral Federal (AGU). Cruzar com `base-pfe-inss-anpd-dpu-conade`.
 
 ### APS - Agência da Previdência Social
 
@@ -189,7 +189,7 @@ Unidade de atendimento presencial do INSS.
 
 ### GEX - Gerência Executiva
 
-Estrutura territorial do INSS que agrupa diversas APS sob comando único. Em São Paulo há GEX Sul, Norte, Leste, Oeste, ABC, Vale do Paraíba e outras.
+Estrutura territorial do INSS que agrupa diversas APS sob comando único. Confira a GEX da cidade no portal do INSS.
 
 ### CEAB - Central Especializada de Análise de Benefícios
 
@@ -197,7 +197,7 @@ Estrutura nacional do INSS para análise concentrada de determinados benefícios
 
 ### CECALC - Central de Cálculos
 
-Unidade do INSS responsável por cálculos de RMI e revisão.
+Unidade do INSS para cálculos de RMI e revisão [NÃO CONFIRMADO].
 
 ### DATAPREV - Empresa de Tecnologia e Informações da Previdência Social
 
@@ -215,7 +215,7 @@ Benefício temporário por incapacidade laboral.
 
 ### B91 - Auxílio por Incapacidade Temporária Acidentário (antigo Auxílio-Doença por Acidente do Trabalho)
 
-B31 acidentário. Competência da Justiça Estadual. Espécies conferidas na tabela de espécies do INSS em 03/10/2026 (Onda 165), que corrigiu a troca entre B91 e B32 que esta skill trazia.
+B31 acidentário. Competência da Justiça Estadual.
 
 ### B92 - Aposentadoria por Incapacidade Permanente Acidentária (antiga Aposentadoria por Invalidez por Acidente do Trabalho)
 
@@ -237,7 +237,6 @@ Benefício indenizatório por sequela de acidente do trabalho ou doença ocupaci
 
 ### B80 - Salário-Maternidade
 
-
 ### B87 - BPC - Benefício de Prestação Continuada da Pessoa com Deficiência
 
 ### B88 - BPC - Benefício de Prestação Continuada do Idoso
@@ -258,7 +257,7 @@ Benefício indenizatório por sequela de acidente de qualquer natureza que não 
 
 ### B83 - Aposentadoria por Invalidez (ex-SASSE)
 
-Espécie residual da antiga carteira do SASSE. O pescador artesanal se aposenta por idade como segurado especial (B41), sem espécie própria. O salário-maternidade tem espécie única (B80), em todas as hipóteses.
+Espécie residual da antiga carteira do SASSE [NÃO CONFIRMADO]. O pescador artesanal se aposenta por idade como segurado especial (B41), sem espécie própria. O salário-maternidade tem espécie única (B80), em todas as hipóteses.
 
 ## 6 BLOCO F - DOCUMENTOS E CONSULTAS
 
@@ -312,7 +311,7 @@ Documento formal que comunica a concessão do benefício. Não é INFBEN.
 
 ### CARTA DE INDEFERIMENTO
 
-Documento formal que comunica o indeferimento. Marco para prazo de recurso administrativo (30 dias para JR).
+Documento formal que comunica o indeferimento. A ciência da decisão abre o prazo de 30 dias para o recurso ordinário à Junta de Recursos (Decreto 3.048/99, art. 305, §1º).
 
 ### COMUNICADO DE DECISÃO
 
@@ -352,6 +351,8 @@ Formulário oficial que comunica ao INSS a ocorrência de acidente de trabalho. 
 
 ### CIRB - Comunicado de Indeferimento de Benefício
 
+[NÃO CONFIRMADO]
+
 ## 7 BLOCO G - SISTEMAS E PLATAFORMAS
 
 ### SABI - Sistema de Acompanhamento de Benefício por Incapacidade
@@ -360,27 +361,27 @@ Sistema do INSS para gestão dos benefícios por incapacidade (B31, B32, B91, B9
 
 ### PLENUS / SISBEN - Sistema de Benefícios
 
-Sistema integrado da DATAPREV de acesso restrito (servidor, segurado, advogado constituído). Contém INFBEN, HISCRE, CONCAL, CONBAS e demais documentos.
+Sistema interno da DATAPREV, de uso do servidor. Gera as telas INFBEN, HISCRE, CONCAL, CONBAS e demais extratos, que o segurado e o advogado obtêm pelo Meu INSS, pelo PAT ou por requerimento.
 
-### GERID - Gestão Integrada de Demanda
+### GERID - Gerenciador de Identidades
 
-Plataforma de gestão de demanda do INSS.
+Sistema de gestão de identidade e acesso da DATAPREV. Libera o login do advogado no PAT pelo Acordo de Cooperação Técnica com a OAB.
 
-### PAT - Plataforma de Atendimento
+### PAT - Portal de Atendimento
 
-Plataforma para agendamento e atendimento. Cruzar com `base-meu-inss-pat-gerid-fluxo`.
+Portal do INSS para protocolo e acompanhamento de requerimentos por entidades conveniadas e advogados credenciados. Cruzar com `base-meu-inss-pat-gerid-fluxo`.
 
 ### MEU INSS
 
-Aplicativo e portal de autoatendimento do segurado. Substituído gradualmente pela GERID/PAT.
+Aplicativo e portal de autoatendimento do segurado. Continua sendo o canal do segurado; o PAT é o canal do advogado credenciado.
 
 ### eSocial
 
-Sistema empresarial de informações trabalhistas. Substitui GFIP, GPS e outros documentos.
+Sistema de escrituração das obrigações trabalhistas e previdenciárias do empregador. Com a DCTFWeb, substitui a GFIP e, para as empresas, a GPS.
 
 ### PJe - Processo Judicial Eletrônico
 
-Sistema de tramitação processual eletrônica dos tribunais (TRF3, JEF, CRPS digital).
+Sistema de tramitação processual eletrônica dos tribunais (TRF3, JEF).
 
 ### SEEU - Sistema Eletrônico de Execução Unificado
 
@@ -424,7 +425,7 @@ Pessoa cuja relação com o segurado justifica o recebimento de benefício deriv
 
 ### SEGURADO ESPECIAL
 
-Trabalhador rural em economia familiar. Cruzar com `segurado-especial-rural`.
+Produtor rural, pescador artesanal e assemelhados que trabalham individualmente ou em regime de economia familiar (art. 11, VII, da Lei 8.213/91). Cruzar com `segurado-especial-rural`.
 
 ### SEGURADO FACULTATIVO
 
@@ -450,13 +451,13 @@ Mecanismo automático que estabelece nexo entre doença e atividade laboral base
 
 ### NEXO TÉCNICO
 
-Vinculação entre a doença/sequela e o ambiente de trabalho. Tipos. Nexo profissional/causal (lista A do Decreto), nexo individual (perícia médica), nexo epidemiológico (NTEP).
+Vinculação entre a doença/sequela e o ambiente de trabalho. Tipos. Nexo profissional ou do trabalho (Anexo II do Decreto 3.048/99), nexo individual (perícia médica), nexo epidemiológico (NTEP).
 
 ## 10 BLOCO J - CONTRIBUIÇÕES E GUIAS
 
 ### GPS - Guia da Previdência Social
 
-Documento de recolhimento de contribuição previdenciária. Substituída em grande parte pelo eSocial.
+Documento de recolhimento de contribuição previdenciária. Ainda usada pelo contribuinte individual e pelo facultativo; para as empresas, substituída pelo DARF da DCTFWeb.
 
 ### GFIP - Guia de Recolhimento do FGTS e Informações à Previdência Social
 
@@ -464,7 +465,7 @@ Antiga guia das empresas. Substituída pelo eSocial.
 
 ### DARF - Documento de Arrecadação de Receitas Federais
 
-Usado para indenização de contribuições (Códigos 1872 e 1873). Cruzar com `indenizacao-contribuicoes-atraso`.
+Usado pelas empresas no recolhimento via DCTFWeb. Os códigos de indenização de contribuições em atraso estão na skill indicada [conferir]. Cruzar com `indenizacao-contribuicoes-atraso`.
 
 ### DCTF - Declaração de Débitos e Créditos Tributários Federais
 
@@ -475,8 +476,6 @@ Usado para indenização de contribuições (Códigos 1872 e 1873). Cruzar com `
 ### CI - Contribuinte Individual
 
 Categoria de segurado obrigatório. Trabalhador autônomo, MEI, sócio administrador, etc. Cruzar com `contribuinte-individual-in128`.
-
-### CAEPF - Cadastro de Atividade Econômica da Pessoa Física
 
 ## 11 BLOCO K - INDICADORES CNIS E PENDÊNCIAS
 
@@ -502,7 +501,7 @@ Indicador de contribuição abaixo do salário mínimo (necessita complementaç�
 
 ### PSC-MEN-SM-EC103 - Salário-de-Contribuição Menor que SM EC 103
 
-Cruzar com `cnis-acerto-indicadores` e `contribuicoes-complementacao-ec103`.
+Cruzar com `base-cnis-acerto-indicadores` e `contribuicoes-complementacao-ec103`.
 
 ## 12 BLOCO L - EXECUÇÃO E PAGAMENTO
 
@@ -516,17 +515,9 @@ Requisição de pagamento acima de 60 SM. Pagamento conforme cronograma constitu
 
 ### PAB - Pagamento Alternativo de Benefício
 
-Forma de pagamento de benefício suspenso (mesmo se inativo).
-
-### RPPS - Requisição de Pagamento Pequeno Solidário
-
-Sigla pouco usada, eventualmente em determinados juízos.
+Crédito emitido fora da rotina mensal, por exemplo atrasados de revisão ou de reativação.
 
 ## 13 BLOCO M - PROCESSUAIS
-
-### PJe - Processo Judicial Eletrônico
-
-### PAT - Pauta de Atendimento
 
 ### TJ-SP - Tribunal de Justiça do Estado de São Paulo
 
@@ -582,13 +573,15 @@ Programa do INSS para reinserção do segurado incapacitado parcial. Art. 136 De
 
 ### IFBr-A - Instrumento de Funcionalidade Brasileiro - Aposentadoria
 
-Avaliação funcional para aposentadoria PCD da LC 142/2013. Cruzar com `aposentadoria-deficiencia`.
+Índice de Funcionalidade Brasileiro Aplicado para fins de aposentadoria da pessoa com deficiência (Portaria Interministerial SDH/MPS/MF/MOG/AGU 1/2014). Cruzar com `aposentadoria-deficiencia`.
 
-### IFBr-M - Instrumento de Funcionalidade Brasileiro - Modificado (BPC)
+### IFBrM - Índice de Funcionalidade Brasileiro Modificado
 
-Avaliação funcional para BPC LOAS de deficiente.
+Instrumento validado sem adoção normativa vigente no INSS. O BPC usa o instrumento da Portaria Conjunta MDS/INSS 2/2015.
 
-### TCQ - Termo Consensual de Qualificação (BPC)
+### TCQ - Tabela Conclusiva de Qualificadores (BPC)
+
+Anexo IV da Portaria Conjunta MDS/INSS 2/2015.
 
 ### CIF - Classificação Internacional de Funcionalidade
 
@@ -626,19 +619,23 @@ Cadastro obrigatório para BPC. Cruzar com `base-cadastro-domiciliar-cadunico-in
 
 ### RAC - Requerimento de Acerto Cadastral
 
-Formulário de acerto de pendências no CNIS. Cruzar com `cnis-acerto-indicadores`.
+Formulário de acerto de pendências no CNIS. Cruzar com `base-cnis-acerto-indicadores`.
 
 ### ROA - Recurso Ordinário Administrativo (à JR do CRPS)
 
+Sigla de uso interno, sem previsão no RICRPS. Na peça, escreva "recurso ordinário".
+
 ### REA - Recurso Especial Administrativo (à CAJ do CRPS)
+
+Sigla de uso interno, sem previsão no RICRPS. Na peça, escreva "recurso especial".
 
 ### PMF - Perito Médico Federal
 
-Servidor do INSS responsável pela perícia médica.
+Servidor da carreira de Perito Médico Federal, que deixou os quadros do INSS com a Lei 13.846/2019 e hoje se vincula ao Ministério da Previdência Social.
 
-### DPMF - Diretoria de Perícia Médica Federal
+### DPMF - Departamento de Perícia Médica Federal
 
-Estrutura do INSS responsável pelas perícias médicas. Sucessora da DPMF.
+Unidade do Ministério da Previdência Social que coordena a Perícia Médica Federal [conferir estrutura vigente].
 
 ### CFM - Conselho Federal de Medicina
 
@@ -656,6 +653,8 @@ Marco para consolidação de lesões (B94) ou alta médica (B31).
 
 ### DIRF - Declaração do Imposto sobre a Renda Retido na Fonte
 
+Extinta para fatos a partir de 2025, substituída pelo eSocial e pela EFD-Reinf [NÃO CONFIRMADO].
+
 ### RRA - Rendimentos Recebidos Acumuladamente
 
 Cruzar com `tributacao-beneficios-previdenciarios`.
@@ -668,7 +667,7 @@ Ao receber qualquer decisão do INSS (carta de concessão, indeferimento, comuni
 
 ### Tradução para o cliente
 
-Cliente leigo. Usar nome por extenso da sigla + breve explicação. Exemplo. "Sua DIB (Data de Início do Benefício) foi fixada em 01/03/2024, o que significa que seu auxílio começa a contar dessa data, mesmo que o pagamento só ocorra a partir da DIP (Data do Início do Pagamento)."
+Cliente leigo. Usar nome por extenso da sigla + breve explicação. Exemplo. "Sua DIB (Data de Início do Benefício) foi fixada em 01/03/2024, o que significa que seu auxílio começa a contar dessa data, mesmo que o pagamento apenas ocorra a partir da DIP (Data do Início do Pagamento)."
 
 ### Identificação de armadilhas
 
@@ -689,7 +688,7 @@ Esta skill deve ser acionada AUTOMATICAMENTE quando.
 
 Cruzar com.
 
-- `cnis-acerto-indicadores`. Indicadores CNIS.
+- `base-cnis-acerto-indicadores`. Indicadores CNIS.
 - `base-meu-inss-pat-gerid-fluxo`. Plataformas do INSS.
 - `base-legislacao-fontes-primarias`. Marcos normativos das siglas.
 - `peticao-previdenciaria`. Geração da peça.
@@ -702,20 +701,8 @@ Este glossário é VIVO. Novas siglas aparecem com a edição de Portarias e a e
 
 Fonte principal. Glossário do escritório Paulo Roberto Tercini Filho.
 
-Última revisão. 13/06/2026.
+Última revisão. 28/11/2026.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

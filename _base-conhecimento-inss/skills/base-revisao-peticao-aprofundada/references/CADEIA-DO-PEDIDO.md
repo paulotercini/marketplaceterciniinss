@@ -1,6 +1,6 @@
 # Cadeia do pedido
 
-Onda 176, complemento de 10/10/2026. Conferência de cada pedido da peça, um por vez, pela ligação entre o que se pede, os fatos, as provas, o cálculo e a conclusão jurídica.
+Conferência de cada pedido da peça, um por vez, pela ligação entre o que se pede, os fatos, as provas, o cálculo e a conclusão jurídica.
 
 ## Regra permanente (12/10/2026)
 
@@ -10,9 +10,9 @@ O mandato é o do advogado experiente em revisão estratégica. Cada pedido é a
 
 A peça não é reescrita por inteiro. A correção é pontual, a frase que falta, o ID que se acrescenta, a conta que se demonstra ou o parágrafo que muda de lugar, e é aplicada na própria versão entregue, com cada correção registrada no bloco O QUE ESCLARECER, CONECTAR OU REORGANIZAR. Elo que depende de documento ausente dos autos não se corrige por redação e vira pendência de juntada.
 
-## Execução obrigatória (Onda 180, 17/10/2026)
+## Execução obrigatória
 
-O titular relatou que a regra escrita não era cumprida e que precisava pedir a conferência depois de cada peça. A causa é a mesma da Onda 140, em que a prosa do padrão visual não era seguida até virar script: a regra dependia de o redator se lembrar dela entre dezenas de outras e de conferir o próprio texto. Desde a Onda 180, a conferência roda em agente próprio, o `revisor-cadeia-do-pedido`, que não redigiu a peça e lê como o juiz lê, com o mandato literal do titular. O relatório se grava em `peca.cadeia.md`, e o `md2docx.js` recusa a conversão sem ele. Em peça endereçada a Catanduva, o mesmo arquivo traz o bloco LINGUAGEM DO JUÍZO, do agente `juiz-catanduva`.
+A regra escrita em prosa não era cumprida, porque dependia de o redator se lembrar dela e conferir o próprio texto. Por isso a conferência roda em agente próprio, o `revisor-cadeia-do-pedido`, que não redigiu a peça e lê como o juiz lê, com o mandato literal do titular. O relatório se grava em `peca.cadeia.md`, e o `md2docx.js` recusa a conversão sem ele. Em peça endereçada a Catanduva, o mesmo arquivo traz o bloco LINGUAGEM DO JUÍZO, do agente `juiz-catanduva`.
 
 ## O que se confere
 
@@ -49,7 +49,7 @@ O fundamento processual está no art. 319, III e IV, do CPC, que exige "o fato e
 
 ## Como se aplica
 
-A lista de pedidos sai dos requerimentos finais e dos pedidos parciais de cada seção (método da Onda 174, "Posto isto, requer [...]"). Cada pedido é percorrido de trás para frente, do pedido à prova, e cada elo recebe uma de quatro marcas: presente e ligado, presente e solto, ausente, ou não se aplica. Elo presente em outra seção sem remissão é "presente e solto", e a correção é conectar ou reorganizar, não reescrever.
+A lista de pedidos sai dos requerimentos finais e dos pedidos parciais de cada seção ("Posto isto, requer [...]"). Cada pedido é percorrido de trás para frente, do pedido à prova, e cada elo recebe uma de quatro marcas: presente e ligado, presente e solto, ausente, ou não se aplica. Elo presente em outra seção sem remissão é "presente e solto", e a correção é conectar ou reorganizar, não reescrever.
 
 A severidade segue a quádrupla da skill:
 
@@ -60,7 +60,7 @@ A severidade segue a quádrupla da skill:
 
 ## Como se reporta
 
-O bloco CADEIA DOS PEDIDOS entra no relatório consolidado depois do painel de extensão e substitui, para esses vícios, o achado avulso nas camadas 3, 4 e 5. Cada pedido ocupa uma linha, com o pedido, o veredito e a localização. Pedido com cadeia completa recebe só essa expressão. O bloco termina com O QUE ESCLARECER, CONECTAR OU REORGANIZAR, pedido a pedido, dizendo exatamente a frase, o ID ou a conta que entra, e o parágrafo que muda de lugar.
+O bloco CADEIA DOS PEDIDOS entra no relatório consolidado depois do painel de extensão e substitui, para esses vícios, o achado avulso nas camadas 3, 4 e 5. Cada pedido ocupa uma linha, com o pedido, o veredito e a localização. Pedido com cadeia completa recebe apenas essa expressão. O bloco termina com O QUE ESCLARECER, CONECTAR OU REORGANIZAR, pedido a pedido, dizendo exatamente a frase, o ID ou a conta que entra, e o parágrafo que muda de lugar.
 
 ```
 CADEIA DOS PEDIDOS
@@ -73,4 +73,4 @@ O QUE ESCLARECER, CONECTAR OU REORGANIZAR
 3. Inserir, antes da conclusão da seção 3, a soma dos períodos especiais, período a período, com o total em anos, meses e dias.
 ```
 
-A correção decorrente da cadeia segue a disciplina da Onda 99. O elo que falta é buscado nos autos antes de ser apontado como lacuna. Documento ausente dos autos vira pendência de juntada, e nunca fato afirmado sem prova.
+A correção decorrente da cadeia segue esta disciplina. O elo que falta é buscado nos autos antes de ser apontado como lacuna. Documento ausente dos autos vira pendência de juntada, e nunca fato afirmado sem prova.

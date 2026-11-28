@@ -1,6 +1,6 @@
 ---
 name: ponte-workflow-pensao-por-morte
-description: "Workflow pró-segurado de pensão por morte (B21/B93) costurando análise de qualidade de segurado do falecido, prova de dependência (especialmente união estável) e produção da peça processual. Use SEMPRE que mencionar workflow pensão por morte, pipeline pensão por morte, ação pensão por morte, recurso CRPS pensão, MS pensão, B21 B93 viúvo viúva companheiro companheira, união estável previdenciária, dependência presumida, art. 16 Lei 8.213, Tema 526 STF, Súmula 63 TNU, prova material companheiro, fluxo pensão dependente. Cruza com pensao-por-morte, documentos-comprobatorios-in128, peticao-previdenciaria e revisao-peticao. NÃO use para auxílio-reclusão (B25) nem benefício originário do falecido."
+description: "Workflow pró-segurado de pensão por morte (B21/B93) costurando análise de qualidade de segurado do falecido, prova de dependência (especialmente união estável) e produção da peça processual. Use SEMPRE que mencionar workflow pensão por morte, pipeline pensão por morte, ação pensão por morte, recurso CRPS pensão, MS pensão, B21 B93 viúvo viúva companheiro companheira, união estável previdenciária, dependência presumida, art. 16 Lei 8.213, Tema 526 STF, Súmula 63 TNU, prova material companheiro, fluxo pensão dependente. Cruza com pensao-por-morte, base-documentos-comprobatorios-in128, peticao-previdenciaria e revisao-peticao. NÃO use para auxílio-reclusão (B25) nem benefício originário do falecido."
 ---
 
 # Workflow Pensão por Morte
@@ -17,7 +17,7 @@ Solicitar ao cliente certidão de óbito, RG e CPF do dependente, comprovante de
 
 ### Passo 2. Análise da qualidade de segurado do falecido
 
-Acionar `cnis-acerto-indicadores` no CNIS do falecido. Identificar indicadores bloqueantes, vínculos não computados, pendências GFIP. Acionar `periodo-graca-qualidade-segurado` para verificar se o falecido mantinha qualidade na DOF (data do óbito).
+Acionar `base-cnis-acerto-indicadores` no CNIS do falecido. Identificar indicadores bloqueantes, vínculos não computados, pendências GFIP. Acionar `periodo-graca-qualidade-segurado` para verificar se o falecido mantinha qualidade na DOF (data do óbito).
 
 Quando o falecido fosse contribuinte individual com gaps, acionar `contribuinte-individual-in128` e `indenizacao-contribuicoes-atraso`.
 
@@ -25,13 +25,13 @@ Quando o falecido fosse rurícola, acionar `segurado-especial-rural`.
 
 ### Passo 3. Análise da dependência
 
-Filhos menores de 21 e cônjuge formal têm dependência presumida (art. 16 §4º Lei 8.213/91). Companheiro também tem presunção, mas precisa provar a união estável.
+Filhos menores de 21 e cônjuge têm dependência presumida (art. 16, §4º, da Lei 8.213/91). O companheiro também, mas precisa provar a união estável.
 
-Para companheiro, acionar `base-pensao-por-morte-uniao-estavel-prova` para fundamentação normativa e `documentos-comprobatorios-in128` para mapa de provas materiais.
+Para companheiro, acionar `base-pensao-por-morte-uniao-estavel-prova` para fundamentação normativa e `base-documentos-comprobatorios-in128` para mapa de provas materiais.
 
-Para união estável anterior à CF/88 ou em concorrência com ex-cônjuge, acionar `base-pensao-por-morte-pos-reforma`.
+Para concorrência com ex-cônjuge, acionar `base-pensao-por-morte-pos-reforma`.
 
-Para união estável simultânea (concubinato), acionar `base-pensao-por-morte-uniao-estavel-prova` e avaliar exceções jurisprudenciais ao Tema 526/STF.
+Para união estável simultânea (concubinato), acionar `base-pensao-por-morte-uniao-estavel-prova`. Os Temas 526 e 529 STF são adversos e o caminho é provar a separação de fato do instituidor.
 
 ### Passo 4. Cálculo e rateio
 
@@ -55,7 +55,7 @@ Perspectiva de gênero via `perspectiva-genero-previdenciario` quando a dependen
 
 ### Passo 7. Redação da peça
 
-Acionar `peticao-previdenciaria`. Em caso de demora administrativa, `mandado-seguranca-previdenciario`.
+Acionar `peticao-previdenciaria`. Em caso de demora administrativa, `mandado-seguranca-previdenciario` (só na Vara Federal, nunca no JEF).
 
 ### Passo 8. Revisão automática
 
@@ -67,21 +67,21 @@ Certidão de óbito. CNIS do falecido. CTPS do falecido. Carteiras de filiação
 
 ## 4. Pontos críticos pró-segurado
 
-Recusa do INSS em aceitar prova testemunhal pura. Para óbitos até a MP 871/2019 (18/01/2019), refutar com a Súmula 63/TNU na redação de 18/09/2025 (auditoria 25/07/2026) e art. 22 do Decreto 3.048/99; para óbitos posteriores, o art. 16, §5º, da Lei 8.213/91 exige início de prova material contemporânea (vedada prova exclusivamente testemunhal, salvo força maior/caso fortuito).
+Recusa do INSS em aceitar prova testemunhal pura. Para óbitos até a MP 871/2019 (18/01/2019), refutar com a Súmula 63/TNU na redação de 18/09/2025 e o art. 22 do Decreto 3.048/99; para óbitos posteriores, o art. 16, §5º, da Lei 8.213/91 exige início de prova material contemporânea (vedada prova exclusivamente testemunhal, salvo força maior/caso fortuito).
 
 Exigência de escritura pública de união estável. Refutar com o art. 1.723 do CC e, para óbito até 18/01/2019, com a Súmula 63/TNU.
 
-Indeferimento por questionamento de contemporaneidade. Refutar com a continuidade da relação demonstrada por qualquer documento de qualquer época da convivência.
+Indeferimento por falta de contemporaneidade. Para óbito anterior a 18/01/2019, qualquer documento da convivência serve. Para óbito posterior, o início de prova material deve ser dos 24 meses anteriores ao óbito (art. 16, §5º; Tema 371 TNU), e com um só documento cabe Justificação Administrativa (IN 128/2022, art. 180, parágrafo único).
 
 Concorrência com ex-cônjuge alimentando. Verificar se houve renúncia expressa aos alimentos ou prestação efetiva.
 
 Perda de qualidade do falecido por afastamento longo. Verificar prorrogações do art. 15 §§1º e 2º da Lei 8.213/91, desemprego involuntário e limbo previdenciário.
 
-Limbo do instituidor é hipótese de alto rendimento e frequentemente passa despercebida, porque o dependente desconhece a história funcional do falecido. Se o instituidor recebeu alta ou indeferimento e o empregador recusou a reassunção, a qualidade de segurado se mantém até a rescisão pelo **Tema 300 da TNU**, e não pelo Tema 1421 do STF, que é a pendência de superação com mérito não julgado. Foi assim que a 2ª Turma Recursal de São Paulo concedeu pensão no RI 5001689-93.2024.4.03.6317, com instituidor em limbo de 10/11/2016 até o óbito em 05/10/2022. Levantar CNIS, RAIS, CTPS Digital e eventual reclamatória trabalhista do falecido. Acionar `base-limbo-previdenciario-tema300`.
+Limbo do instituidor passa despercebido com frequência, porque o dependente desconhece a história funcional do falecido. Se o instituidor recebeu alta ou indeferimento e o empregador recusou a reassunção, a qualidade de segurado se mantém até a rescisão pelo **Tema 300 da TNU**. Foi assim que a 2ª Turma Recursal de São Paulo concedeu pensão no RI 5001689-93.2024.4.03.6317, com instituidor em limbo de 10/11/2016 até o óbito em 05/10/2022. Levantar CNIS, RAIS, CTPS Digital e eventual reclamatória trabalhista do falecido. Acionar `base-limbo-previdenciario-tema300`.
 
 ## 5. Postura
 
-Pró-segurado integral. Identificar a vulnerabilidade do dependente, explorar presunção de dependência econômica, refutar barreiras infralegais e exigências documentais excessivas com base na Lei 13.460/2017.
+Identificar a vulnerabilidade do dependente, explorar presunção de dependência econômica, refutar barreiras infralegais e exigências documentais excessivas com base na Lei 13.460/2017.
 
 ## Fungibilidade aplicável
 
@@ -89,24 +89,12 @@ Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para 
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.

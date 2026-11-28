@@ -11,79 +11,53 @@ Skill pró-segurado sobre a apelação no rito ordinário e a extensão dos seus
 
 ## Marco normativo central
 
-CPC, art. 1.009. Cabimento da apelação contra sentença.
+CPC, art. 1.009. Cabimento contra sentença; o §1º devolve as interlocutórias não agraváveis.
 
-CPC, art. 1.010. Requisitos e processamento.
+CPC, art. 1.010. Requisitos; o juízo de origem não faz juízo de admissibilidade (§3º).
 
-CPC, art. 1.012. Efeito suspensivo como regra, com exceções no §1º.
+CPC, art. 1.012. Efeito suspensivo como regra. A sentença que confirma, concede ou revoga tutela provisória produz efeitos imediatos (§1º, V), e o apelado pode pedir cumprimento provisório (§2º).
 
-CPC, art. 1.013. Efeito devolutivo. O caput fixa a extensão pela impugnação. O §1º devolve as questões suscitadas e discutidas ainda que não decididas. O §3º autoriza o julgamento direto do mérito.
+CPC, art. 1.013. Efeito devolutivo pela matéria impugnada; questões suscitadas e discutidas relativas ao capítulo impugnado (§1º); fundamentos não acolhidos (§2º); causa madura (§§3º e 4º); capítulo da tutela impugnável na apelação (§5º).
 
-CPC, art. 1.014. Questões de fato não propostas, admitidas por força maior.
+CPC, art. 1.014. Questão de fato nova apenas por força maior.
 
-## Os efeitos, em ordem
+## Os efeitos
 
-Primeiro, devolutivo. O tribunal julga o que foi impugnado, tantum devolutum quantum appellatum, mais as questões do §1º.
+Primeiro, devolutivo. O tribunal julga o impugnado e as questões do §1º, mais os demais fundamentos do pedido ou da defesa (§2º).
 
-Segundo, translativo. Matérias de ordem pública, como nulidade e condições da ação, são conhecíveis de ofício mesmo sem impugnação específica.
+Segundo, translativo. Matéria de ordem pública (arts. 337, §5º, e 485, §3º) é conhecível de ofício.
 
-Terceiro, suspensivo. Regra do art. 1.012, salvo as hipóteses do §1º que permitem execução provisória.
+Terceiro, suspensivo. Regra do art. 1.012, salvo o §1º. A tutela concedida ou confirmada na sentença mantém o benefício implantado durante a apelação do INSS.
 
-## Causa madura, art. 1.013 §3º
+## Causa madura, art. 1.013, §§3º e 4º
 
-O tribunal julga desde logo o mérito quando.
+Estando o processo em condições de imediato julgamento, o tribunal decide o mérito quando: reformar sentença terminativa (§3º, I); anular sentença incongruente com o pedido ou a causa de pedir (II); constatar omissão no exame de um pedido (III); anular sentença por falta de fundamentação (IV); reformar sentença que reconheceu decadência ou prescrição (§4º).
 
-Primeiro, reformar sentença que extinguiu o feito sem mérito.
-
-Segundo, decretar a nulidade da sentença por não ser congruente com os limites do pedido.
-
-Terceiro, constatar omissão no exame de um dos pedidos.
-
-Quarto, reformar sentença que reconheceu decadência ou prescrição.
-
-Aqui está o ganho pró-segurado. Reformada a sentença terminativa, o TRF concede o benefício na própria apelação, sem devolver o processo à origem.
+Reformada a sentença terminativa, o TRF concede o benefício na própria apelação, sem retorno à origem. Se faltar prova (perícia, prova testemunhal rural), pedir a anulação com retorno para instrução, e não a improcedência.
 
 ## Reformatio in pejus
 
-Quando só o segurado apela, o tribunal não pode piorar a sua situação. O efeito devolutivo é limitado pela impugnação. A parte não impugnada transita em julgado, tema tratado em `base-cpc-teoria-capitulos-sentenca`.
+Apelando apenas o segurado, o tribunal não piora sua situação. O capítulo não impugnado transita em julgado. Ver `base-cpc-teoria-capitulos-sentenca`.
 
 ## Reexame necessário
 
-Primeiro, sentença contra o INSS até mil salários mínimos dispensa reexame, art. 496, §3º, I.
+Primeiro, dispensado quando a condenação ou o proveito contra autarquia federal for inferior a 1.000 salários mínimos (art. 496, §3º, I), e quando a sentença se fundar em súmula de tribunal superior, repetitivo, IRDR ou IAC, ou orientação vinculante da própria administração (art. 496, §4º).
 
-Segundo, sentença ilíquida não dispensa o reexame, Súmula 490/STJ. Em ação previdenciária, o Tema 1081/STJ [NÃO CONFIRMADO] mitigou a súmula e dispensa a remessa quando o valor é aferível por cálculo e fica abaixo de mil salários mínimos (auditoria 03/10/2026).
+Segundo, a Súmula 490 STJ, editada sob o CPC/73, afasta a dispensa de valor para sentença ilíquida. Sob o CPC/2015, o STJ dispensa a remessa nas sentenças ilíquidas contra o INSS quando o proveito econômico mensurável fica abaixo de 1.000 salários mínimos (REsp 1.735.097/RS, Rel. Min. Gurgel de Faria, 1ª Turma, Informativo 658, nov. 2019). Demonstrar a conta simples na contrarrazão.
 
-Terceiro, no reexame é defeso agravar a condenação da Fazenda, Súmula 45/STJ. A súmula protege o INSS, e não o segurado, que só amplia a condenação se apelar (auditoria 03/10/2026).
+Terceiro, no reexame é defeso agravar a condenação da Fazenda (Súmula 45 STJ). A súmula protege o INSS; o segurado amplia a condenação apenas se apelar.
 
 ## Estratégia pró-segurado
 
-Primeiro, na apelação contra sentença terminativa, pedir expressamente a aplicação da causa madura e o julgamento do mérito.
+Primeiro, contra sentença terminativa, pedir expressamente a causa madura e o julgamento do mérito.
 
-Segundo, provocar o efeito translativo para nulidades de ordem pública.
+Segundo, contra sentença que nega tutela, requerer tutela ao relator (art. 1.012, §3º, e art. 932, II).
 
-Terceiro, delimitar bem a impugnação para não deixar transitar capítulo favorável.
-
-## Alertas
-
-Primeiro, o capítulo não impugnado transita em julgado, cuidar da dimensão do recurso.
-
-Segundo, a causa madura exige que a questão esteja pronta para julgamento, sem necessidade de nova prova.
+Terceiro, delimitar a impugnação para não reabrir capítulo favorável.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 

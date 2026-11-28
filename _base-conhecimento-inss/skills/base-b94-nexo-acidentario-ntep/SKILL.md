@@ -1,159 +1,58 @@
 ---
 name: base-b94-nexo-acidentario-ntep
-description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-art31, base-b94-sequela-minima-sumula88-tnu e ntep-nexo-acidentario."
+description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista C do Anexo II do Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B e Lista C B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-art31, base-b94-sequela-minima-sumula88-tnu e ntep-nexo-acidentario."
 ---
 
-## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+# Nexo acidentário do B94
 
-Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
-
-1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
-2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
-3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
-
-Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
-
-Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
-
-
-# Nexo Acidentário do B94
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 auxílio por incapacidade temporária acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 aposentadoria por incapacidade permanente acidentária; B94 auxílio-acidente por acidente do trabalho (B36 quando decorre de acidente de qualquer natureza; a base usa B94 para ambos).
 
 ## Escopo
 
-Skill pró-segurado sobre nexo causal acidentário e B94, NTEP, art. 21-A Lei 8.213/91 e estratégias de conversão.
+Nexo entre trabalho e agravo para fins de B94 acidentário: acidente típico, doença profissional e do trabalho, equiparações, NTEP e conversão de B31 em B91. Detalhe dos cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Quando o nexo importa no B94
 
-CF/88, art. 7º XXVIII.
+O B94 é devido após consolidação de lesão decorrente de acidente de qualquer natureza que reduza a capacidade para o trabalho habitual (Lei 8.213/91, art. 86). O nexo laboral não é requisito do benefício. Ele define: a natureza acidentária (espécie, estabilidade do art. 118, depósito de FGTS no afastamento, art. 15, §5º, da Lei 8.036/90); a competência da Justiça Estadual (CF, art. 109, I; Lei 8.213/91, art. 129, II; Súmula 15 STJ). Carência é dispensada em qualquer caso (art. 26, I), e o B94 alcança apenas empregado, doméstico, avulso e segurado especial (art. 18, §1º).
 
-CF/88, art. 201 §10.
+## Fontes do nexo
 
-Lei 8.213/91, arts. 19, 20, 21 e 21-A.
+1. Acidente típico (Lei 8.213/91, art. 19).
+2. Doença profissional e doença do trabalho (art. 20, I e II), com as exclusões do §1º (degenerativa, inerente a grupo etário, sem incapacidade, endêmica sem exposição) e a ressalva do §2º (doença fora da relação, mas resultante das condições especiais do trabalho).
+3. Equiparações (art. 21): concausa (I); agressão, ofensa física, imprudência de terceiro, ato de pessoa privada da razão e caso fortuito no local e horário (II); contaminação acidental (III); acidente fora do local na execução de ordem, serviço espontâneo, viagem a serviço e trajeto (IV, a a d); intervalo de refeição e descanso (§1º). A revogação da alínea "d" pela MP 905/2019 perdeu vigência com a MP 955/2020.
+4. NTEP (art. 21-A): presunção de natureza acidentária pela correlação entre a CNAE da empresa e o intervalo de CID da Lista C do Anexo II do Decreto 3.048/99 (art. 337, §3º, do Decreto). A Lista B do mesmo anexo relaciona doenças a agentes e grupos da CID (nexo técnico profissional), sem presunção estatística.
 
-Decreto 3.048/99, Anexo II Lista B.
+## NTEP na prática
 
-IN 128/2022.
+- A perícia aplica o NTEP de ofício; afasta-o apenas quando demonstrada a inexistência do nexo (art. 21-A, §1º; Decreto 3.048/99, art. 337, §6º), com fundamentação técnica.
+- A empresa pode contestar; da decisão cabe recurso com efeito suspensivo, da empresa ou do segurado, ao CRPS (art. 21-A, §2º).
+- O STF declarou constitucional o art. 21-A (ADI 3.931, julgada improcedente em 2020).
+- A ausência de CAT não afasta o nexo: o próprio segurado, dependente, sindicato, médico ou autoridade pública pode emiti-la a qualquer tempo (Lei 8.213/91, art. 22, §2º).
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+## Conversão B31 em B91 e pedido de B94
 
-TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
-
-## Marco jurisprudencial
-
-### ADI 3931 STF
-
-Constitucionalidade do NTEP.
-
-Fonte oficial em https://www.stf.jus.br
-
-### Tema 416 STJ
-
-Redução parcial.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 89 TNU
-
-Sequela permanente.
-
-### Tema 350 TNU
-
-Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
-
-## NTEP
-
-Primeiro, NTEP é presunção de nexo entre CNAE e CID.
-
-Segundo, art. 21-A Lei 8.213.
-
-Terceiro, ADI 3931 STF confirma constitucionalidade.
-
-Quarto, INSS deve aplicar de ofício.
-
-## Conversão B31 para B91
-
-Primeiro, B31 com nexo é convertido em B91.
-
-Segundo, sequela permanente após B91 admite B94.
-
-Terceiro, pedido cumulativo é prática recomendada.
-
-Quarto, estabilidade art. 118 e FGTS.
-
-## Aplicação pró-segurado
-
-Primeiro, aplicar NTEP automaticamente.
-
-Segundo, comprovar CAT ou nexo material.
-
-Terceiro, requerer conversão.
-
-Quarto, requerer B94 cumulativamente.
-
-## Cenários pró-segurado
-
-Cenário A, lesão por esforço repetitivo. NTEP. B91 com B94 sequela.
-
-Cenário B, acidente típico. CAT. B91 e B94.
-
-Cenário C, doença ocupacional comprovada. B94.
-
-Cenário D, acidente trajeto. B91 e B94.
+1. Requerer, no processo administrativo ou na ação, o reconhecimento da natureza acidentária do B31 (conversão em B91), com CAT, NTEP ou prova do nexo material.
+2. Cumular pedido de B94 a partir do dia seguinte à cessação do auxílio por incapacidade temporária (art. 86, §2º; Tema 315 TNU).
+3. Indicar os reflexos: estabilidade de 12 meses após a cessação do B91 (art. 118), depósito de FGTS no afastamento e competência estadual.
 
 ## Alertas
 
-Primeiro, INSS frequentemente nega NTEP. ADI 3931 e art. 21-A refutam.
-
-Segundo, conversão é direito do segurado.
-
-Terceiro, perícia mal feita prejudica.
-
-Quarto, CAT pode ser emitida posteriormente.
+- Qualidade de segurado do titular de B94: desde a Lei 13.846/2019, o B94 não mantém a qualidade sem limite de prazo (art. 15, I). Transição pelo Tema 350 TNU: quem estava em gozo de B94, ou teve consolidação das lesões até 17/06/2019, mantém a qualidade por 12 meses a partir da vigência da lei.
+- Súmula 89 TNU é adversa (nega B94 quando a sequela não reduz a capacidade nem exige maior esforço). Refutação por distinção, com a Súmula 88 TNU e o Tema 416 STJ.
+- Prescrição quinquenal das ações acidentárias, contada do acidente (incapacidade temporária) ou do reconhecimento, pela Previdência, da incapacidade permanente ou do agravamento das sequelas (Lei 8.213/91, art. 104).
 
 ## Fungibilidade aplicável
 
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+Acionar `base-fungibilidade-previdenciaria` para a relação entre este benefício e outros cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
+Portarias DPMF, DIRBEN e INSS de procedimento, cálculo e recurso: `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para detalhes operacionais, acionar `auxilio-acidente-b94`.
-Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
-Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-art31`.
-Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
-Para NTEP geral, acionar `ntep-nexo-acidentario`.
-
-## O que NÃO está nesta skill
-
-Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`. NTEP geral em `ntep-nexo-acidentario`.
+Detalhes operacionais do B94: `auxilio-acidente-b94`. Anexo III: `base-b94-anexo-iii-quadros`. Integração ao salário de benefício: `base-b94-integracao-salario-beneficio-art31`. Sequela mínima: `base-b94-sequela-minima-sumula88-tnu`. NTEP fora do B94 e conversão B31/B91 em profundidade: `ntep-nexo-acidentario`.

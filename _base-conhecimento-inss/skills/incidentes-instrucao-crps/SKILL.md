@@ -7,7 +7,7 @@ description: "Embargos de declaração, revisão de acórdão, agravo, conflito 
 
 ## Visão Geral
 
-Esta skill consolida embargos de declaração (art. 92), revisão de acórdão (art. 116), agravo (art. 93), conflito de competência (art. 115), sustentação oral (art. 81), decisões monocráticas (art. 110), diligências e instrução processual (art. 75), e o regime de óbito do segurado com recurso pendente (art. 68, par. único), conforme o Regimento Interno do CRPS (Portaria MPS nº 125/2026, compilada com as Portarias 235/2026 e 462/2026).
+Esta skill trata de embargos de declaração (art. 92), revisão de acórdão (art. 116), agravo (art. 93), conflito de competência (art. 115), sustentação oral (art. 81), decisões monocráticas (art. 110), diligências e instrução processual (art. 75), e o regime de óbito do segurado com recurso pendente (art. 68, par. único), conforme o Regimento Interno do CRPS (Portaria MPS nº 125/2026, compilada com as Portarias 235/2026 e 462/2026).
 
 ## Fluxo de Trabalho
 
@@ -19,15 +19,15 @@ Esta skill consolida embargos de declaração (art. 92), revisão de acórdão (
 6. Para mapa completo de decisões monocráticas, leia `references/DECISOES-MONOCRATICAS.md`
 7. Para óbito do segurado com recurso pendente, leia `references/OBITO-RECURSO-PENDENTE.md`
 
-## Embargos de Declaração (Art. 92) — Síntese
+## Embargos de Declaração (Art. 92). Síntese
 
 Cabem contra omissão, obscuridade, ambiguidade, contradição ou erro material em decisões colegiadas. Prazo de 30 dias (erro material a qualquer tempo). Oposição única salvo erro material. Interrompem prazo de recurso especial, reclamação e PUJ. Vedada juntada de novos documentos (art. 88). NÃO cabem contra decisões interlocutórias (art. 92, §18). Fungibilidade com revisão de acórdão (art. 92, §14; art. 116, §10). Consultar referência para análise completa.
 
-## Revisão de Acórdão (Art. 116) — Síntese
+## Revisão de Acórdão (Art. 116). Síntese
 
 Reexame de decisões quando o acórdão violar lei ou decreto, divergir de parecer vinculante ou enunciado do CP, ou contiver vício insanável. Prazo até a decadência do art. 103-A, Lei 8.213. Requerimento único por instância. NÃO suspende prazos. Vedada juntada de novos documentos. Não sujeita à relevação de intempestividade (art. 116, §12). Consultar referência para análise completa.
 
-## Agravo (Art. 93) — Síntese
+## Agravo (Art. 93). Síntese
 
 Cabível contra indeferimento de admissibilidade de PUJ ou Reclamação ao CP (art. 93, I), e contra declaração de impedimento de conselheiro (art. 93, II). Prazo de 30 dias. Dirigido à Presidência do CP. Decisão definitiva e irrecorrível (art. 93, §4º). Vedada juntada de novos documentos (art. 93, §2º).
 
@@ -39,67 +39,53 @@ Cabível contra indeferimento de admissibilidade de PUJ ou Reclamação ao CP (a
 | Revisão | Art. 116 | Até decadência art. 103-A | NÃO suspende | Vedado |
 | Agravo | Art. 93 | 30 dias | Não definido | Vedado |
 
-## Sustentação Oral (Art. 81) — Síntese
+## Sustentação Oral (Art. 81). Síntese
 
 Três modalidades admitidas. Memoriais escritos, defesa oral ao vivo na sessão virtual, e gravação por link não listado (máximo 8 minutos). Pedido via razões recursais, petição até inclusão em pauta, ou Fala.BR em até 3 dias úteis antes da sessão. NÃO cabe em embargos de declaração nem revisão de acórdão, salvo quando sustentação não foi oportunizada no julgamento originário.
 
 Ponto estratégico central. A sustentação oral converte automaticamente a decisão monocrática em colegiada (art. 81, §13). Usar sempre que processo for pautado monocraticamente e houver argumentos para debate.
 
-## Decisões Monocráticas (Art. 110) — Síntese
+## Decisões Monocráticas (Art. 110). Síntese
 
 Oito hipóteses taxativas no art. 110, além de cláusula de abertura (inciso VIII). Toda monocrática depende de homologação pelo Presidente da UJ (art. 110, caput), que pode recusar e submeter ao colegiado (§3º). Das monocráticas cabem os mesmos recursos das colegiadas (§2º). Outras monocráticas espalhadas pelo Regimento incluem erro material em embargos (art. 92, §6º), inadmissibilidade de revisão (art. 116, §4º), admissibilidade de PUJ e Reclamação (arts. 122, §2º e 123, §2º), agravo definitivo (art. 93, §4º), conflito de competência irrecorrível (art. 115, §2º).
 
-## Diligências e Instrução (Art. 75) — Síntese
+## Diligências e Instrução (Art. 75). Síntese
 
 Instrução eletrônica. O interessado pode produzir prova documental, requerer diligências e perícias até a inclusão em pauta. Diligências prévias (antes da pauta) e em mesa (durante sessão). INSS tem 30 dias, prorrogáveis por mais 30, para cumprir. Vedado ao INSS escusar-se do cumprimento integral. O conselheiro deve buscar informações nas bases governamentais quando não houver extração automática.
 
-## Óbito do Segurado com Recurso Pendente — Síntese
+## Óbito do Segurado com Recurso Pendente. Síntese
 
 O falecimento NÃO extingue o recurso administrativo (art. 68, par. único; art. 112, §4º). Sucessores podem solicitar habilitação. Ordem de preferência para pagamento do resíduo segue art. 112 da Lei 8.213/91 e art. 624 da IN 128/2022. Dependentes previdenciários habilitados à pensão por morte têm preferência sobre herdeiros civis.
 
-Riscos processuais a monitorar. Tentativa de renúncia tácita pelo INSS (afastar com ausência de identidade). Alegação de perda de objeto (direito incorpora-se ao patrimônio do segurado em vida). Ausência de habilitação (peticionar imediatamente). Tema 1057/STJ fundamenta legitimidade de pensionistas para pleitear revisão do benefício do instituidor. Tema 1254/STJ (pendente) sobre prescrição da habilitação exige cautela.
+Riscos processuais a monitorar. Tentativa de renúncia tácita pelo INSS (afastar com ausência de identidade). Alegação de perda de objeto (direito incorpora-se ao patrimônio do segurado em vida). Ausência de habilitação (peticionar imediatamente). Tema 1057/STJ fundamenta legitimidade de pensionistas para pleitear revisão do benefício do instituidor. Tema 1254/STJ, sobre prescrição na habilitação, afetado à Corte Especial, pede habilitação imediata; confira a situação atual antes de citar.
 
 Consultar `references/OBITO-RECURSO-PENDENTE.md` para protocolo completo com jurisprudência e estratégias por tipo de benefício.
 
 ## Vedações Comuns
 
-- Art. 88 — vedada inovação de argumentos e provas em embargos e revisão
-- Art. 92, §18 — incidentes NÃO cabem contra decisões interlocutórias
-- Art. 92, §12 — vedada juntada de novos documentos em embargos
-- Art. 116, §8º — vedada juntada de novos documentos em revisão
+- Art. 88, vedada inovação de argumentos e provas em embargos e revisão
+- Art. 92, §18, incidentes NÃO cabem contra decisões interlocutórias
+- Art. 92, §12, vedada juntada de novos documentos em embargos
+- Art. 116, §8º, vedada juntada de novos documentos em revisão
 
-## Conflito de Competência (Art. 115) — Síntese
+## Conflito de Competência (Art. 115). Síntese
 
 Duas ou mais UJs se declaram competentes ou nenhuma se declara. Conflitos entre JRs são dirimidos pelos Presidentes das CAJs por distribuição alternada. Demais casos pela Presidência do CRPS. Decisão monocrática irrecorrível.
 
 ## Referências
 
-- `references/EMBARGOS-DECLARACAO.md` — Hipóteses, efeitos, vedações e estratégia
-- `references/REVISAO-ACORDAO.md` — Hipóteses, vícios insanáveis, competência e estratégia
-- `references/AGRAVO-CONFLITO.md` — Agravo interno e conflito de competência
-- `references/SUSTENTACAO-ORAL.md` — Modalidades, prazos, vedações e conversão monocrática-colegiada
-- `references/DILIGENCIAS-INSTRUCAO.md` — Tipos de diligência, prazos, vedações e papel da PMF
-- `references/DECISOES-MONOCRATICAS.md` — Mapa completo de monocráticas do Regimento
-- `references/OBITO-RECURSO-PENDENTE.md` — Óbito com recurso pendente, habilitação, efeitos financeiros e protocolo
+- `references/EMBARGOS-DECLARACAO.md`. Hipóteses, efeitos, vedações e estratégia
+- `references/REVISAO-ACORDAO.md`. Hipóteses, vícios insanáveis, competência e estratégia
+- `references/AGRAVO-CONFLITO.md`. Agravo interno e conflito de competência
+- `references/SUSTENTACAO-ORAL.md`. Modalidades, prazos, vedações e conversão monocrática-colegiada
+- `references/DILIGENCIAS-INSTRUCAO.md`. Tipos de diligência, prazos, vedações e papel da PMF
+- `references/DECISOES-MONOCRATICAS.md`. Mapa completo de monocráticas do Regimento
+- `references/OBITO-RECURSO-PENDENTE.md`. Óbito com recurso pendente, habilitação, efeitos financeiros e protocolo
 
-Sempre leia os arquivos de referência pertinentes antes de analisar incidentes processuais no CRPS.
+## Revisão de Acórdão não suspende o cumprimento
 
-## Revisão de Acórdão não suspende o cumprimento (Onda 88)
-
-A Revisão de Acórdão NÃO tem natureza de recurso e não suspende o prazo de cumprimento da decisão do CRPS. Base inequívoca no art. 308, § 1º, do Decreto 3.048/99 ("não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento"), reforçada pelo caput do art. 308, que só atribui efeito suspensivo a recurso interposto TEMPESTIVAMENTE. Quando o INSS usa a revisão para não implantar benefício já reconhecido, cabe mandado de segurança, conforme o TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). Roteiro em `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`. Cautela de citação, a numeração do dispositivo regimental da Revisão de Acórdão varia entre versões do RICRPS, conferir antes de citar e ancorar no Decreto 3.048/99.
+A Revisão de Acórdão NÃO tem natureza de recurso e não suspende o prazo de cumprimento da decisão do CRPS. Fundamento: art. 308, § 1º, do Decreto 3.048/99 ("não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento"), reforçada pelo caput do art. 308, que atribui efeito suspensivo apenas a recurso interposto TEMPESTIVAMENTE. Quando o INSS usa a revisão para não implantar benefício já reconhecido, cabe mandado de segurança, conforme o TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). Roteiro em `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`. Cautela de citação, a numeração do dispositivo regimental da Revisão de Acórdão varia entre versões do RICRPS, conferir antes de citar e ancorar no Decreto 3.048/99.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

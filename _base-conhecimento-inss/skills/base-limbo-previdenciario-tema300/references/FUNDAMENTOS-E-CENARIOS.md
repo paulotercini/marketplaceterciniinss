@@ -12,9 +12,9 @@ São dois fatos constitutivos, e ambos precisam de lastro documental.
 
 **Fato A. A cessação do benefício ou o indeferimento.** Prova-se por carta de concessão, extrato do Meu INSS, comunicado de decisão, DCB no CNIS ou INFBEN. É o fato mais fácil e quase nunca falta.
 
-**Fato B. O impedimento patronal ao retorno.** É onde os casos morrem. Prova-se pelo roteiro do item 2. O Enunciado 302/2026 do TRT7 desdobra esse fato em dois momentos, a comunicação da alta pelo trabalhador e a recusa pela empresa.
+**Fato B. O impedimento patronal ao retorno.** É o fato que mais exige prova. Prova-se pelo roteiro do item 2. O Enunciado 302/2026 do TRT7 desdobra esse fato em dois momentos, a comunicação da alta pelo trabalhador e a recusa pela empresa.
 
-Um terceiro elemento é pressuposto e costuma vir de graça. **O contrato permaneceu vivo no período.** Prova-se por CNIS, CTPS Digital, RAIS e PPP.
+Um terceiro elemento é pressuposto e em regra já consta dos registros. **O contrato permaneceu vivo no período.** Prova-se por CNIS, CTPS Digital, RAIS e PPP.
 
 ---
 
@@ -26,7 +26,7 @@ Ordem de força decrescente. Buscar sempre o grau mais alto disponível antes de
 
 Prova soberana. Reconhece o limbo, define o responsável pelos salários e, quando há execução, recompõe a cadeia contributiva.
 
-Foi o que venceu no RI 5001689-93.2024.4.03.6317 da 2ª Turma Recursal de São Paulo. A empregadora recolheu todas as contribuições do período nos autos da RT, o que derrubou a alegação de tempo fictício do INSS.
+Foi o que venceu no RI 5001689-93.2024.4.03.6317 da 2ª Turma Recursal de São Paulo. A empregadora recolheu todas as contribuições do período nos autos da RT, o que afastou a alegação de tempo fictício do INSS.
 
 Juntar a sentença, o acórdão se houver, a certidão de trânsito e a comprovação do recolhimento das contribuições. Acionar `base-reclamatoria-trabalhista-prova-previdenciaria` para o regime de aceitação.
 

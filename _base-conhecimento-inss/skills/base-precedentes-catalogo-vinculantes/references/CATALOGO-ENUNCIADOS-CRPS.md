@@ -1,10 +1,6 @@
 # Enunciados do CRPS (1 a 19) - Texto Oficial Conferido no DOU
 
-REESCRITO INTEGRALMENTE em 11/07/2026 (auditoria de veracidade). Fonte primária. PDF consolidado oficial do CRPS "Enunciados nº 1 ao nº 19" (gov.br/previdencia, seção CRPS > Enunciados e Editais, atualizado com DOU de 08/09/2025). A versão anterior deste arquivo continha redações incorretas em 11 dos 18 enunciados e foi descartada. Cada enunciado abaixo indica o DOU de origem.
-
-CONVERGÊNCIA (12/07/2026). Este catálogo foi cruzado com a auditoria paralela da Onda 66 (reference AUDITORIA-ENUNCIADOS-CRPS-ONDA-66.md), feita sobre a mesma fonte primária com complemento da Imprensa Nacional. As duas auditorias convergem integralmente nos Enunciados 1, 6, 8, 12, 13 e 17. Os ganhos da Onda 66 (inciso V integral do Enunciado 8, caput e incisos VI e VII do Enunciado 10, data de publicação da Resolução 29/2024) foram incorporados abaixo.
-
-AVISO OPERACIONAL. Antes de transcrever em peça, conferir incisos no PDF oficial. No Enunciado 8 a extração automática do PDF truncou trecho, sinalizado como [TRECHO A CONFERIR NO DOU]. O Enunciado 19 foi completado em 03/10/2026 com o texto vigente obtido no MCP de enunciados do CRPS, e o Enunciado 10 recebeu pela mesma fonte o caput e os incisos VI e VII (auditoria 03/10/2026).
+Fonte primária: PDF consolidado oficial do CRPS "Enunciados nº 1 ao nº 19" (gov.br/previdencia, seção CRPS > Enunciados e Editais, atualizado com o DOU de 08/09/2025), conferido em 11/07/2026, e MCP de enunciados do CRPS (`enunciados_pleno_inss_crps`), que traz o texto vigente e as redações anteriores. Os Enunciados 8, 10 e 19 foram completados pelo MCP, porque o PDF tem trechos ilegíveis. Cada enunciado indica o DOU de origem. Antes de transcrever em peça, conferir a redação vigente no MCP ou no PDF oficial.
 
 ## ENUNCIADO 1 (DOU 12/11/2019)
 
@@ -96,7 +92,7 @@ VI - Não se aplica o disposto no artigo 76 do Regulamento da Previdência Socia
 
 ## ENUNCIADO 8 (alterado pela Resolução CRPS/MPS nº 12, de 27/08/2025, DOU 08/09/2025)
 
-A atividade do trabalhador rural pode ser computada para fins de obtenção de benefícios no Regime Geral de Previdência Social - RGPS, conforme os critérios estabelecidos nos incisos a seguir.
+A atividade do trabalhador rural pode ser computada para fins de obtenção de benefícios no Regime Geral de Previdência Social - RGPS, conforme os critérios estabelecidos nos incisos a seguir:
 
 I - O tempo de atividade do segurado especial, anterior à Lei nº 8.213, de 24 de julho de 1991, pode ser utilizado para contagem recíproca, desde que sejam indenizadas as respectivas contribuições previdenciárias;
 
@@ -104,15 +100,19 @@ II - A atividade agropecuária efetivamente explorada em área de até 4 módulo
 
 III - O exercício de atividade urbana por um dos integrantes do grupo familiar não implica, por si só, na descaracterização dos demais membros como segurado especial, condição que deve ser devidamente comprovada no caso concreto;
 
-IV - É considerado segurado especial a pessoa que, além de realizar tarefas domésticas em seu lar, exerce atividade rural, admitindo-se provas em nome do cônjuge ou companheiro(a), corroboradas por outros meios de prova. [TRECHO A CONFERIR NO DOU, extração parcialmente truncada]
+IV - É considerado segurado especial a pessoa que, além de realizar tarefas domésticas em seu domicílio, exerce atividade rural em regime de economia familiar, sendo permitido o aproveitamento das provas em nome do cônjuge ou companheiro(a), corroboradas por outros meios de prova.
 
-V - Com fundamento na decisão proferida na Ação Civil Pública nº 5017267-34.2013.4.04.7100, poderá ser relativizada a idade mínima exigida para o reconhecimento da condição de segurado especial, desde que comprovada a participação ativa e indispensável na atividade rural, em regime de economia familiar. [Texto integral confirmado pela auditoria da Onda 66 na fonte primária.]
+V - Com fundamento na decisão proferida na Ação Civil Pública de n.º 5017267-34.2013.4.04.7100, poderá ser relativizada a idade mínima exigida para o reconhecimento da condição de segurado especial, desde que comprovada a participação ativa e indispensável na atividade rural, em regime de economia familiar, conforme estabelece o art. 9º, inciso VII, letra "c" combinado com o § 5º do mesmo dispositivo, do Decreto 3.048, de 06 de maio de 1999.
 
 VI - A comprovação do exercício da atividade rural deverá ser realizada por meio de autodeclaração ratificada por entidades públicas credenciadas ou bases governamentais.
 
-VII - Na ausência ou insuficiência dos elementos referidos no inciso anterior, será admitida a apresentação de documentos complementares, nos termos do § 11, art. 19-D, do Decreto nº 3.048, de 6 de maio de 1999, ou no art. 106, da Lei nº 8.213, de 24 de julho de 1991.
+VII - Na ausência ou insuficiência dos elementos referidos no inciso anterior, será admitida a apresentação de documentos complementares, nos termos do § 11, art. 19-D, do Decreto nº 3.048, de 6 de maio de 1999, ou no art. 106, da Lei nº 8.213, de 24 de julho de 1999 [sic, a Lei 8.213 é de 1991].
 
 VIII - A justificação administrativa não deverá ser realizada se a autodeclaração for ratificada por bases governamentais ou por elementos comprobatórios contemporâneos admitidos na forma da legislação.
+
+IX - Os efeitos dos documentos apresentados em sede de justificação administrativa aplicam-se exclusivamente à pessoa a quem se referirem, sendo vedada sua utilização por terceiros, ainda que para fins de comprovação da condição de segurado especial.
+
+Texto vigente desde 08/09/2025, conferido no MCP de enunciados do CRPS em 28/11/2026.
 
 ## ENUNCIADO 9 (DOU 12/11/2019)
 
@@ -144,7 +144,7 @@ VI - Transcorridos mais de dez anos da data da concessão do benefício, não po
 
 VII - O pecúlio previsto no inciso II do artigo 81 da Lei nº 8.213/91, em sua redação original, que não foi pago em vida ao segurado aposentado que retornou à atividade quando dela se afastou, é devido aos seus dependentes ou sucessores, relativamente às contribuições vertidas até 14/04/94, salvo se prescrito.
 
-NOTA DE HARMONIZAÇÃO (12/07/2026, cruzamento com a auditoria da Onda 66). A auditoria paralela da Onda 66, com pesquisa complementar na Imprensa Nacional (in.gov.br), apurou para este Enunciado 10 um caput expresso ("A decadência prevista no art. 103-A da Lei nº 8.213/91 não se aplica aos atos administrativos praticados pela Administração Previdenciária tendentes à cessação da manutenção de benefícios ou quotas cuja continuidade da percepção seja indevida em face da legislação previdenciária de regência") e dois incisos adicionais, VI (vedação de suspensão por falta de documentação após 10 anos da concessão, salvo fraude ou má-fé) e VII (pecúlio), que não constam legíveis do PDF consolidado. Caput e incisos VI e VII conferidos em 03/10/2026 no MCP de enunciados do CRPS, texto vigente desde 02/08/2023, e transcritos acima (auditoria 03/10/2026). ALERTA ESTRATÉGICO (apurado na Onda 66 e confirmado). O caput e o inciso IV são CONTRA o segurado, afastam a decadência administrativa que o protegeria de cessações tardias em B31, B32 e benefícios de revisão periódica. O uso pró-segurado está no inciso V (indeferimento, cancelamento e cessação impugnáveis a qualquer tempo) e no inciso VI.
+NOTA. O caput e os incisos VI (vedação de suspensão por falta de documentação após 10 anos da concessão, salvo fraude ou má-fé) e VII (pecúlio) não constam legíveis do PDF consolidado e foram conferidos no MCP de enunciados do CRPS, texto vigente desde 02/08/2023. ALERTA. O caput e o inciso IV são contrários ao segurado, porque afastam a decadência administrativa nas cessações tardias de B31, B32 e benefícios de revisão periódica. O uso pró-segurado está no inciso V (indeferimento, cancelamento e cessação impugnáveis a qualquer tempo) e no inciso VI.
 
 ## ENUNCIADO 11 (alterado, DOU 06/12/2021)
 
@@ -252,10 +252,10 @@ V - O segurado que desempenhar atividades concomitantes terá direito ao salári
 
 § 3º Para fins de concessão do salário-maternidade em atividades concomitantes, exige-se a comprovação da contribuição até a data do fato gerador, salvo se presumido o recolhimento, ou, no caso de contribuinte individual por conta própria, se o fato gerador tiver ocorrido antes do prazo legal para pagamento de contribuição em dia, hipóteses em que deve comprovar o exercício da atividade.
 
-Texto vigente desde 13/07/2026, conferido em 03/10/2026 no MCP de enunciados do CRPS. A Resolução nº 13/2026 alterou o inciso IV, que antes dizia apenas "O Contribuinte Facultativo deve comprovar o pagamento da contribuição", e suprimiu do § 2º a expressão "ainda que o parto ocorra em data anterior a esse vencimento", o que importa na leitura de acórdãos anteriores a 13/07/2026 (auditoria 03/10/2026).
+Texto vigente desde 13/07/2026, conferido em 03/10/2026 no MCP de enunciados do CRPS. A Resolução nº 13/2026 alterou o inciso IV, que antes dizia apenas "O Contribuinte Facultativo deve comprovar o pagamento da contribuição", e suprimiu do § 2º a expressão "ainda que o parto ocorra em data anterior a esse vencimento", o que importa na leitura de acórdãos anteriores a 13/07/2026.
 
 ## FONTE
 
 PDF oficial consolidado. https://www.gov.br/previdencia/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/conselho-de-recursos-da-previdencia-social/enunciados-e-editais/enunciadosn1aon19dou_08-09-2025-atualizado.pdf
 
-Conferido em 11/07/2026 na auditoria de veracidade de citações (Etapa 1). Próxima conferência recomendada ao surgir nova Resolução do Conselho Pleno.
+Conferir de novo a cada nova resolução do Conselho Pleno.

@@ -1,123 +1,27 @@
-# Devolução de Valores — Jurisprudência e Refutação
+# Devolução de Valores. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 979/STJ
+Tema 979 STJ. "Com relação aos pagamentos indevidos aos segurados decorrentes de erro administrativo (material ou operacional), não embasado em interpretação errônea ou equivocada da lei pela Administração, são repetíveis, sendo legítimo o desconto no percentual de até 30%, ressalvada a hipótese em que o segurado, diante do caso concreto, comprova sua boa-fé objetiva." Modulação para processos distribuídos a partir da publicação do acórdão (23/04/2021). Conferir a íntegra da modulação na página de repetitivos antes de citar.
 
-Erro administrativo: valores repetíveis, com desconto de até 30%, salvo boa-fé objetiva comprovada pelo segurado. Modulação para processos distribuídos a partir da publicação do acórdão, em 23/04/2021 [NÃO CONFIRMADO] (auditoria 03/10/2026). Fonte oficial em https://www.stj.jus.br
+Tema 692 STJ (REsp 1.401.560/MT, tese revista em 2022). "A reforma da decisão que antecipa os efeitos da tutela final obriga o autor da ação a devolver os valores dos benefícios previdenciários ou assistenciais recebidos, o que pode ser feito por meio de desconto em valor que não exceda 30% da importância de eventual benefício que ainda lhe estiver sendo pago."
 
-### Tema 692/STJ (REsp 1.401.560/MT) (auditoria 03/10/2026)
+Tema 138 STF (RE 594.296). "Ao Estado é facultada a revogação de atos que repute ilegalmente praticados; porém, se de tais atos já tiverem decorrido efeitos concretos, seu desfazimento deve ser precedido de regular processo administrativo."
 
-Reforma de tutela antecipada. Tese adversa: obriga a devolução, por desconto de até 30% do benefício em manutenção. O caminho do segurado é a distinção, quando o valor cobrado não decorreu da tutela revogada. Fonte oficial em https://www.stj.jus.br
+Tema 1013 STJ. Recebimento conjunto das rendas do trabalho e do benefício por incapacidade no período entre o indeferimento e a implantação judicial.
 
-### Súmula 34/AGU
-
-Trata de servidor público que recebe de boa-fé valores pagos por errônea interpretação da lei pela Administração. A redação da Portaria AGU 516/2025 admite o ressarcimento em erro de cálculo ou operacional, salvo boa-fé objetiva comprovada. No RGPS a súmula serve só por analogia, ao lado do Tema 979/STJ (auditoria 03/10/2026). Fonte oficial em https://www.gov.br/agu/pt-br/composicao/cgu/cgu/sumula
-
-### CF, art. 5º, LV (auditoria 03/10/2026)
-
-Contraditório administrativo. Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.213/91, art. 115
-
-Limites de desconto. Fonte oficial em https://www.planalto.gov.br
-
-### Tema 692 STJ
-
-Tese adversa, já descrita acima: na tutela revogada, a boa-fé não afasta a devolução (auditoria 03/10/2026). Fonte oficial em https://www.stj.jus.br
-
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Mora administrativa. Fonte oficial em https://portal.stf.jus.br
+Súmula 34 AGU. Trata de servidor público e de interpretação errônea da lei; no RGPS serve por analogia. A redação dada pela Portaria AGU 516/2025, registrada na base, [NÃO CONFIRMADO].
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Reforma de tutela autoriza devolução
+Argumento 1. Todo pagamento indevido se devolve. Refutação: a interpretação errônea da lei está fora do Tema 979; no erro operacional, a boa-fé objetiva comprovada afasta a devolução.
 
-Argumento adversário. Tutela revogada exige restituição.
+Argumento 2. Desconto integral do benefício. Refutação: limite de 30% e parcelamento (art. 115, II e §1º).
 
-Refutação. Tese adversa: o Tema 692/STJ ampara a cobrança e obriga a devolução, com desconto de até 30% do benefício. O caminho do segurado é a distinção, quando o valor cobrado não decorreu da tutela revogada, e o teto de 30% (auditoria 03/10/2026).
+Argumento 3. Desconto imediato, sem defesa. Refutação: art. 69, §1º, da Lei 8.212/91 e Tema 138 STF exigem processo administrativo com prazo de defesa.
 
-### Argumento 2 — Erro administrativo permite cobrança
+Argumento 4. Recebimento indevido prova má-fé. Refutação: a má-fé não se presume; no Tema 979, o segurado demonstra a boa-fé objetiva pelos dados que forneceu.
 
-Argumento adversário. INSS pode corrigir.
+Argumento 5. O INSS pode rever a qualquer tempo. Refutação: decadência decenal do art. 103-A, salvo má-fé comprovada.
 
-Refutação. O Tema 979/STJ admite a cobrança, com desconto de até 30%, salvo se o segurado comprovar boa-fé objetiva. A defesa produz essa prova e verifica se o pagamento decorreu de interpretação errônea da lei, hipótese fora da tese (auditoria 03/10/2026).
-
-### Argumento 3 — Desconto integral
-
-Argumento adversário. Pode descontar 100%.
-
-Refutação. Art. 115 Lei 8.213 limita a 30%.
-
-### Argumento 4 — Presunção de má-fé
-
-Argumento adversário. Recebimento indevido demonstra má-fé.
-
-Refutação. Presunção juris tantum de boa-fé. Súmula 34/AGU, por analogia, pois trata de servidor público (auditoria 03/10/2026).
-
-### Argumento 5 — Sem contraditório prévio
-
-Argumento adversário. Desconto direto.
-
-Refutação. O art. 5º, LV, da Constituição exige contraditório (auditoria 03/10/2026).
-
-### Argumento 6 — Natureza não alimentar
-
-Argumento adversário. Atraso na devolução.
-
-Refutação. Benefício previdenciário é alimentar.
-
-### Argumento 7 — Súmula 34/AGU não vincula
-
-Argumento adversário. Súmula é interna.
-
-Refutação. STJ adota orientação. AGU vinculou seus órgãos jurídicos, mas o enunciado trata de servidor público e no RGPS serve só por analogia, ao lado do Tema 979/STJ (auditoria 03/10/2026).
-
-### Argumento 8 — Tema 692 STJ afasta a boa-fé
-
-Argumento adversário. Na tutela revogada, a boa-fé não impede a devolução.
-
-Refutação. Tese adversa, correta na tutela revogada. O segurado exige o teto de 30% e a prova de que cada parcela decorreu da tutela; a boa-fé objetiva pesa no erro administrativo, pelo Tema 979/STJ (auditoria 03/10/2026).
-
-### Argumento 9 — Acúmulo indevido
-
-Argumento adversário. Acúmulo gera devolução.
-
-Refutação. Análise individualizada.
-
-### Argumento 10 — Reforma em segundo grau
-
-Argumento adversário. Devolução automática.
-
-Refutação. Tese adversa: o Tema 692/STJ também alcança a tutela revogada em segundo grau. O segurado exige o teto de 30% no desconto e a prova da origem de cada parcela cobrada (auditoria 03/10/2026).
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira sustenta a irrepetibilidade.
-
-Corrente doutrinária defende a leitura ampla da boa-fé objetiva do segurado (auditoria 03/10/2026).
-
-Hugo Goes admite limite de desconto.
-
-Marco Aurélio Serau Junior critica cobrança regressiva.
-
-IBDP sustenta vedação.
-
-## 4. Estratégia integrada
-
-Primeiro, mandado de segurança contra desconto.
-
-Segundo, ação declaratória de inexigibilidade.
-
-Terceiro, embargos à execução.
-
-Quarto, recurso ao CRPS.
-
-Quinto, monitoramento da execução.
-
-Sexto, conferência da boa-fé.
-
-## 5. Diligência de atualização
-
-Acompanhar STJ. Revalidar Súmula 34/AGU. Monitorar o Tema 692/STJ, tese adversa (auditoria 03/10/2026).
+Argumento 6. Tutela revogada em segundo grau. Refutação parcial: o Tema 692 alcança a hipótese; exigir a correspondência das parcelas com a tutela e o limite de 30%.

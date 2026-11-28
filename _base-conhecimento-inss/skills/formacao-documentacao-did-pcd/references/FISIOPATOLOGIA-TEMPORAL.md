@@ -19,11 +19,11 @@ Quadro clínico. Dor articular progressiva, rigidez matinal breve, crepitação,
 Tempo de evolução. Processo degenerativo de instalação insidiosa. Alterações radiológicas iniciais (estreitamento de espaço articular, osteófitos marginais discretos) aparecem após 3 a 5 anos de processo subclínico. Alterações avançadas (condropatia grau III-IV em Outerbridge, osteófitos grosseiros, cistos subcondrais) exigem tipicamente 8 a 15 anos de evolução. Estágio terminal (destruição articular com indicação de artroplastia) exige 15 a 25 anos.
 
 Classificação de Outerbridge (artroscópica e por RM).
-Grau 0 — cartilagem normal.
-Grau I — amolecimento e edema da cartilagem.
-Grau II — fissuras e fragmentação com menos de 50% da espessura.
-Grau III — fissuras e fragmentação com mais de 50% da espessura, sem exposição do osso subcondral.
-Grau IV — exposição do osso subcondral, perda total da cartilagem na área afetada.
+Grau 0, cartilagem normal.
+Grau I, amolecimento e edema da cartilagem.
+Grau II, fissuras e fragmentação com menos de 50% da espessura.
+Grau III, fissuras e fragmentação com mais de 50% da espessura, sem exposição do osso subcondral.
+Grau IV, exposição do osso subcondral, perda total da cartilagem na área afetada.
 
 Inferência temporal a partir do estágio atual. Condropatia grau IV em paciente sem histórico de trauma agudo (acidente) compatível com processo degenerativo de no mínimo 8 a 10 anos. Presença de edema ósseo subcondral sugere atividade recente do processo, mas o substrato anatômico exige anos prévios. Osteófitos tricompartimentais indicam processo difuso e crônico.
 
@@ -113,7 +113,7 @@ Evolução. Quadro consolidado com atrofia do interósseo e hipotrofia da eminê
 
 ### Fibromialgia (CID M79.7 ou CID-11 MG30.01)
 
-Reconhecida como deficiência pela Lei 15.176/2025. Quadro de dor crônica generalizada, fadiga, distúrbio de sono, fibrofog. Diagnóstico clínico pelos critérios ACR 2010/2016.
+Equiparação à deficiência condicionada à avaliação biopsicossocial (Lei 14.705/2023, art. 1º-C, incluído pela Lei 15.176/2025). Quadro de dor crônica generalizada, fadiga, distúrbio de sono, fibrofog. Diagnóstico clínico pelos critérios ACR 2010/2016.
 
 Evolução. Diagnóstico formal frequentemente tardio. Pacientes referem sintomas por 2 a 10 anos antes do diagnóstico. Anamnese cuidadosa permite recuo da DID.
 

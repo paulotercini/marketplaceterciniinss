@@ -1,145 +1,27 @@
-# Tutela Provisória Previdenciária — Fundamentos e Cenários
+# Tutela Provisória Previdenciária. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-Tutela provisória é técnica de antecipação ou preservação de direitos durante o processo. No Direito Previdenciário o benefício tem natureza alimentar, o que reforça o perigo de dano e a urgência.
+CF/88, art. 5º, XXXV, e art. 201. CPC, arts. 294 a 311, 932, II, 1.012, §1º, V, e 1.019, I. Lei 10.259/2001, arts. 4º e 5º. Lei 8.213/91, arts. 41-A, §5º, e 115, II. Lei 8.437/1992, art. 4º.
 
-## 2. Fundamento constitucional
+## 2. Cenários
 
-Art. 5º XXXV CF/88. Inafastabilidade.
+Cenário A. Aposentadoria indeferida com tempo comprovado por CNIS e PPP. Tutela de urgência ou de evidência (art. 311, II, se houver repetitivo aplicável).
 
-Art. 5º LIV CF/88. Devido processo.
+Cenário B. B31 cessado sem perícia ou com DCB fixada sem reavaliação, com relatório médico atual. Tutela de urgência para restabelecimento.
 
-Art. 201 CF/88. Seguridade.
+Cenário C. Perícia judicial que constata incapacidade. Pedir a tutela logo após o laudo, sem aguardar a sentença.
 
-## 3. Fundamento legal
+Cenário D. BPC com estudo social favorável e CadÚnico atualizado. Tutela de urgência.
 
-CPC, art. 294.
+Cenário E. Sentença de procedência sem tutela. Embargos de declaração por omissão, se pedida na inicial, ou pedido ao relator na apelação.
 
-CPC, arts. 300 a 302.
+Cenário F. JEF. Pedido com base no art. 4º da Lei 10.259/2001; indeferido, recurso à Turma Recursal (art. 5º).
 
-CPC, art. 303.
+## 3. Cenários limitados
 
-CPC, art. 304.
+Incapacidade sem laudo e com relatório médico frágil: risco de revogação e devolução (Tema 692 STJ). Revisão de RMI sem urgência: perigo de dano difícil de demonstrar. Tese pendente de julgamento em tribunal superior: sem base para evidência.
 
-CPC, art. 311.
+## 4. Metodologia
 
-Lei 8.213/91, art. 101.
-
-Lei 10.259/2001 JEF, art. 4º. Cabimento no JEF.
-
-## 4. Marco jurisprudencial central
-
-### Tema 692/STJ (devolução na tutela revogada)
-
-A reforma da tutela obriga a devolução, com desconto de até 30 por cento (auditoria 25/07/2026, corte corrigida; a boa-fé não afasta essa devolução).
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Devolução de valores na revisão posterior
-
-Rege-se pelo Tema 692/STJ, acima (auditoria 03/10/2026, retirado o Tema 1009/STJ, que trata de servidor público).
-
-Fonte oficial em https://www.stj.jus.br
-
-### [Retirado na auditoria 25/07/2026] Tema 313/STJ
-
-Tema tributário (PIS/COFINS), sem relação com tutela previdenciária.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 729 STF
-
-Texto oficial, "A decisão na Ação Direta de Constitucionalidade 4 não se aplica à antecipação de tutela em causa de natureza previdenciária." O enunciado não trata de modulação (auditoria 03/10/2026).
-
-### Tema 1102 STF
-
-RVT. A ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II, o que afasta a tese e o seu uso em tutela de evidência (auditoria 03/10/2026).
-
-### Tema 76 STF
-
-Revisão do teto, tese firmada.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Concessão de aposentadoria
-
-DER, documentos completos, negativa administrativa. Tutela antecipada cabível.
-
-### Cenário B — Restabelecimento de B31
-
-Cessação sem perícia idônea. Tutela para retomar.
-
-### Cenário C — Implantação de B32
-
-Laudo judicial favorável. Tutela para implantar.
-
-### Cenário D — Tutela de evidência
-
-Tese repetitiva firmada. Art. 311 II CPC.
-
-### Cenário E — Tutela antecipada antecedente
-
-Extrema urgência. Art. 303 CPC. Estabilização.
-
-### Cenário F — Tutela no JEF
-
-Art. 4º Lei 10.259/2001. Cabível.
-
-### Cenário G — Tutela em MS
-
-Liminar art. 7º III Lei 12.016/2009. Regime próprio.
-
-## 6. Cenários limitados
-
-### Cenário H — Reversibilidade discutida
-
-Se o INSS recorrer com sucesso, o segurado devolve (Tema 692/STJ, desconto de até 30 por cento); a boa-fé não afasta essa devolução (auditoria 25/07/2026).
-
-### Cenário I — Suspensão de segurança
-
-Presidência do TRF pode suspender liminar coletiva (Lei 8.437/92). Preparar contrarrazões.
-
-### Cenário J — Incapacidade sem laudo
-
-Arriscado sem perícia. Aguardar instrução.
-
-## 7. Metodologia
-
-Primeiro, analisar requisitos art. 300 CPC.
-
-Segundo, escolher espécie (antecipada, cautelar, evidência).
-
-Terceiro, preparar pedido com fundamento.
-
-Quarto, anexar documentos comprobatórios.
-
-Quinto, monitorar eventual recurso.
-
-Sexto, sustentar em caso de suspensão.
-
-## 8. Riscos processuais
-
-Risco de indeferimento liminar. Interpor agravo de instrumento.
-
-Risco de revogação posterior. O Tema 692/STJ impõe a devolução (teto de 30 por cento); a tese alcança também o benefício assistencial, e o caminho do segurado é a distinção, quando o valor não decorreu da tutela revogada (auditoria 03/10/2026, retirados o Tema 1009/STJ, que trata de servidor público, e o Tema 1034/STJ, que trata de plano de saúde).
-
-Risco de suspensão de segurança. Preparar defesa.
-
-Risco de estabilização indevida pelo INSS em 2 anos.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, tutela em toda petição inicial previdenciária quando cabível.
-
-Segundo, invocar caráter alimentar.
-
-Terceiro, anexar prova robusta.
-
-Quarto, pedir multa diária por descumprimento (art. 497 CPC).
-
-Quinto, recorrer em caso de indeferimento.
-
-## 10. Integração prática
-
-`peticao-previdenciaria`, `revisao-peticao`, `base-cpc-fato-superveniente-art493`, `base-cpc-coisa-julgada-progressiva`, `mandado-seguranca-previdenciario`, `execucao-cumprimento-previdenciario`.
+Primeiro, enquadrar urgência ou evidência. Segundo, demonstrar o perigo concreto. Terceiro, juntar a prova documental do requisito. Quarto, pedir prazo de implantação e multa diária (arts. 297 e 537). Quinto, indeferido o pedido, agravar (art. 1.015, I) ou recorrer no JEF (art. 5º da Lei 10.259/2001).

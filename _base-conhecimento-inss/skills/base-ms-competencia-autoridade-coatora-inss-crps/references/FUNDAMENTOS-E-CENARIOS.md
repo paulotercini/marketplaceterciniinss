@@ -1,119 +1,33 @@
-# Competência e Autoridade Coatora MS — Fundamentos e Cenários
+# Competência e Autoridade Coatora. Fundamentos e Cenários
 
-## 1. Conceito operacional
+A tabela de autoridade por fase do PA, o foro do domicílio e o checklist estão em `ms-competencia-autoridade-coatora`. Aqui ficam o fundamento e os cenários próprios do CRPS e da competência material.
 
-Autoridade coatora é a pessoa física que pratica ou se omite no ato ilegal. Competência combina critério territorial, material e funcional. Erro compromete o MS. Em previdenciário, o mapa é complexo entre INSS (APS, CEAB, CEAB-DJ, perícia) e CRPS (JR, CAJ, Pleno).
+## 1. Fundamento normativo
 
-## 2. Fundamento constitucional
+CF, art. 109, I (Justiça Federal), VIII (MS contra autoridade federal) e §2º (foros alternativos contra a União, estendidos às autarquias pelo Tema 374/STF).
 
-Art. 5º LXIX.
+Lei 12.016/2009, art. 2º (autoridade federal quando a União ou entidade por ela controlada suporta as consequências patrimoniais), art. 6º, caput e §3º (indicação da autoridade e da pessoa jurídica), art. 7º, II (ciência ao órgão de representação).
 
-Art. 109 I e §2º CF/88.
+Lei 10.259/2001, art. 3º, §1º, I (MS excluído do JEF).
 
-Art. 114 CF (competência trabalhista, quando cabível para exclusão).
+Provimentos CJF3R 186/1999 e 228/2002 (Varas Previdenciárias limitadas a feitos sobre benefícios).
 
-## 3. Fundamento legal
+## 2. Cenários
 
-Lei 12.016/2009, art. 6º.
+A. Recurso ordinário parado na Junta de Recursos. Autoridade é o presidente da Junta; pessoa jurídica é a União; vara Cível, onde houver especialização, porque o pedido é apenas de julgamento.
 
-Lei 8.213/91, arts. 122 e ss.
+B. Recurso especial parado na Câmara de Julgamento. Mesma lógica, com o presidente da Câmara.
 
-Portaria 462/2026 CRPS.
+C. Acórdão do CRPS não cumprido. O processo voltou ao INSS; autoridade é o gerente da unidade que o detém e pessoa jurídica é o INSS. Indicar o presidente do órgão do CRPS gera ilegitimidade. Roteiro em `base-ms-cumprimento-inss`.
 
-## 4. Marco jurisprudencial central
+D. Mora cumulada com pedido de concessão. Vara Previdenciária, porque há pedido sobre o benefício.
 
-### Tema 374 STF
+E. MS distribuído na vara errada. Declínio de competência, não extinção; se houver conflito, pedir a designação do juízo suscitado para atos urgentes e a apreciação da liminar.
 
-Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
+## 3. Cautelas
 
-### Súmula 689 STF
+Conferir no Meu INSS, na data da impetração, se o processo está no CRPS ou no INSS. Juntar o print.
 
-"O segurado pode ajuizar ação contra a instituição previdenciária perante o juízo federal do seu domicílio ou nas varas federais da Capital do Estado-Membro." (auditoria 03/10/2026)
+Onde não houver vara especializada, a discussão Cível x Previdenciária não se coloca.
 
-### Súmula 206 STJ
-
-"A existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo." (auditoria 03/10/2026)
-
-### Súmula 376 STJ
-
-"Compete a turma recursal processar e julgar o mandado de segurança contra ato de juizado especial." (auditoria 03/10/2026)
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Demora PA
-
-Gerente CEAB.
-
-### Cenário B — Exigência abusiva
-
-Gerente APS.
-
-### Cenário C — Arquivamento
-
-Gerente da área.
-
-### Cenário D — Demora CRPS
-
-Presidente do órgão.
-
-### Cenário E — Cumprimento
-
-Gerência do INSS.
-
-### Cenário F — Ato complexo
-
-Preponderante.
-
-## 6. Cenários limitados
-
-### Cenário G — Múltiplas autoridades
-
-Atos sucessivos.
-
-### Cenário H — Erro na autoridade
-
-Emenda art. 6º §3º.
-
-### Cenário I — Foro do impetrante
-
-Opção pró-segurado.
-
-## 7. Metodologia
-
-Primeiro, identificar ato.
-
-Segundo, identificar autoridade.
-
-Terceiro, escolher foro.
-
-Quarto, peticionar.
-
-Quinto, corrigir eventual erro.
-
-Sexto, sustentar competência.
-
-## 8. Riscos processuais
-
-Risco de extinção por erro. Emenda.
-
-Risco de competência absoluta mal escolhida.
-
-Risco de CRPS como autoridade coatora mal identificada.
-
-Risco de ato complexo mal lido.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, mapear corretamente.
-
-Segundo, foro do domicílio quando vantajoso.
-
-Terceiro, emendar se necessário.
-
-Quarto, fundamentar em precedentes.
-
-Quinto, preservar MS.
-
-## 10. Integração prática
-
-`base-ms-cabimento-direito-liquido-certo`, `ms-competencia-autoridade-coatora`, `mandado-seguranca-previdenciario`, `peticao-previdenciaria`.
+Encampação não se aplica entre INSS e União.

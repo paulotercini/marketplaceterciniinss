@@ -1,159 +1,22 @@
-# Revisão por Reajustes ORTN e OTN — Jurisprudência Verificada e Refutação
+# Revisão ORTN/OTN e Súmula 260. Jurisprudência e Refutação
 
-## 1. Precedentes vinculantes e supletivos
+## 1. Fontes
 
-### Súmula 260 ex-TFR
+- Lei 6.423/1977, art. 1º (correção pela ORTN).
+- Súmula 260 do ex-TFR: texto literal no SKILL.md.
+- Decreto-Lei 2.335/1987 (Plano Bresser); Lei 7.730/1989 (Plano Verão); Lei 7.604/1987 (piso de 95% do salário mínimo e atualização de 11/1979 a 05/1984).
+- Tema 313 STF: decadência de 10 anos, contada de 01/08/1997 para benefícios anteriores à MP 1.523/97.
+- Tema 1057 STJ: legitimidade do pensionista.
+- Súmula 85 STJ: prescrição das parcelas.
+- Súmula do TRF3 sobre a correção dos 24 salários anteriores aos 12 últimos pela Lei 6.423/77 [NÃO CONFIRMADO: localizar número e texto antes de citar].
 
-Tese. Reajuste pela maior variação salarial.
+## 2. Refutação
 
-Fonte oficial em https://www2.cjf.jus.br/jurisprudencia
+1. **"A Súmula 260 se aplica a benefícios atuais."** Não se aplica; ela alcança apenas benefícios anteriores à CF/88. Não sustentar fora desse âmbito.
+2. **"Prescrição total."** A prescrição alcança apenas as parcelas anteriores ao quinquênio (Súmula 85 STJ); o obstáculo real é a decadência.
+3. **"Sem documentos não há revisão."** Requerer a cópia integral do processo administrativo ao INSS.
+4. **"Bis in idem."** A correção dos salários de contribuição e o reajuste do benefício operam em camadas distintas.
 
-Aplicação supletiva histórica, em benefícios concedidos até a Lei 6.423/1977.
+## 3. Ponto adverso
 
-### Súmula 71 ex-TFR
-
-Tese. Critérios afins de correção em benefícios pretéritos.
-
-Aplicação histórica.
-
-### Súmula 85 STJ
-
-Tese. Prescrição quinquenal das parcelas vencidas.
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação. Limita efeitos financeiros.
-
-### Tema 975 STJ
-
-Tese. Decadência decenal do art. 103 da Lei 8.213/91.
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação. Barreira dominante.
-
-### Súmula 443 STF
-
-Tese. Trata da prescrição das prestações, e não de decadência: se o próprio direito não foi negado antes do prazo, a prescrição não atinge o fundo do direito [NÃO CONFIRMADO] (auditoria 03/10/2026, corrigida a síntese anterior).
-
-Fonte oficial em https://portal.stf.jus.br
-
-Aplicação. Apoio em cenários específicos.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 41-A e 103
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 6.423/1977
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 7.604/1987 (Plano Bresser)
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 7.730/1989 (Plano Verão)
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Decadência consumada
-
-Argumento adversário. Benefício antigo não admite revisão.
-
-Refutação. Regra geral, decadência consumada. Mas verificar pedidos administrativos que interromperam prazo. Em pensões derivadas, decadência autônoma dos dependentes.
-
-### Argumento 2 — Súmula 260 revogada tacitamente
-
-Argumento adversário. Não se aplica.
-
-Refutação. Aplicação supletiva preservada para o período anterior à Lei 6.423/1977 e em cenários em que a legislação superveniente foi omissa ou insuficiente.
-
-### Argumento 3 — Ausência de documentação histórica
-
-Argumento adversário. Sem Carta de Concessão, não é possível revisar.
-
-Refutação. Requerer cópia integral do PA histórico ao INSS. Eventualmente, diligências no arquivo nacional do INSS.
-
-### Argumento 4 — Bis in idem com outras revisões
-
-Argumento adversário. Dupla correção.
-
-Refutação. Cada revisão opera em camada distinta. Cautela na cumulação, mas legítima.
-
-### Argumento 5 — Coisa julgada em ações antigas
-
-Argumento adversário. Revisão já foi decidida.
-
-Refutação. Verificar causa de pedir específica. Acionar `coisa-julgada-previdenciaria`.
-
-### Argumento 6 — Pensão derivada sem revisão
-
-Argumento adversário. Dependente não tem direito.
-
-Refutação. Revisão reflexa é direito pacífico. Decadência autônoma do parágrafo único do art. 103.
-
-### Argumento 7 — Prescrição total
-
-Argumento adversário. Todas as parcelas prescreveram.
-
-Refutação. Súmula 85 STJ. Prescrição apenas das parcelas anteriores ao quinquênio.
-
-### Argumento 8 — Inexistência de distorção
-
-Argumento adversário. RMI reajustada corretamente.
-
-Refutação. Exigir memória completa. Recalcular independentemente.
-
-### Argumento 9 — Tutela de urgência negada
-
-Argumento adversário. Negativa genérica.
-
-Refutação. Idade avançada do segurado. Natureza alimentar. Perigo de dano.
-
-### Argumento 10 — Honorários sucumbenciais
-
-Argumento adversário. Risco alto.
-
-Refutação. Justiça gratuita. Análise prévia rigorosa.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Wladimir Novaes Martinez, planos econômicos e previdência.
-
-Frederico Amado, preservação do valor real.
-
-Hugo Goes, índices de correção.
-
-Fábio Zambitte Ibrahim, regras de cálculo.
-
-Daniel Pulino, decadência.
-
-Marco Aurélio Serau Junior, análise histórica dos planos econômicos.
-
-IBDP, defesa da correção integral.
-
-## 5. Estratégia integrada
-
-Primeiro, auditoria da DIB e do prazo decadencial.
-
-Segundo, diligência documental junto ao INSS.
-
-Terceiro, simulação profissional com pesquisa histórica.
-
-Quarto, requerimento administrativo.
-
-Quinto, ação judicial com pedidos cumulativos cabíveis.
-
-Sexto, pedido de prioridade de tramitação em função da idade do segurado.
-
-## 6. Diligência de atualização
-
-Acompanhar acórdãos do STJ sobre Súmula 260 e planos econômicos.
-
-Acompanhar IACs e IRDRs dos TRFs.
-
-Revalidar entendimento sobre decadência autônoma em pensões.
+A decadência consumada em 2007 inviabiliza ações novas sobre benefícios anteriores a 1988.

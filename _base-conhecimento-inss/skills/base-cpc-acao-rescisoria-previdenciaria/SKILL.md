@@ -7,143 +7,54 @@ description: "Ação rescisória previdenciária (art. 966 CPC), prova nova, pro
 
 ## Escopo
 
-Skill pró-segurado sobre ação rescisória previdenciária (art. 966 CPC), cabível contra coisa julgada previdenciária com fundamento em prova nova, prova falsa, erro de fato ou violação de norma jurídica.
+Desconstituição de decisão de mérito transitada em julgado no procedimento comum (art. 966 do CPC), pelo segurado. Detalhe normativo e cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Cabimento
 
-CPC, art. 966. Hipóteses.
+Primeiro, apenas no procedimento comum. No JEF a rescisória é vedada (art. 59 da Lei 9.099/1995, aplicado por força do art. 1º da Lei 10.259/2001; Enunciado 44 FONAJEF). No JEF, título fundado em norma declarada inconstitucional pelo STF ataca-se pela inexigibilidade do art. 535, §5º, do CPC (Tema 100 STF).
 
-CPC, art. 968. Petição inicial.
+Segundo, hipóteses taxativas do art. 966. Prevaricação, concussão ou corrupção do juiz (I); juiz impedido ou juízo absolutamente incompetente (II); dolo, coação, simulação ou colusão (III); ofensa à coisa julgada (IV); violação manifesta de norma jurídica (V); prova cuja falsidade se apurou em processo criminal ou na própria rescisória (VI); prova nova, ignorada ou inacessível, capaz por si só de assegurar resultado favorável (VII); erro de fato verificável do exame dos autos (VIII).
 
-CPC, art. 969. A propositura não impede o cumprimento da decisão rescindenda, salvo tutela provisória.
+Terceiro, cabe contra um único capítulo (art. 966, §3º) e contra decisão que, sem ser de mérito, impeça nova propositura ou a admissibilidade do recurso (art. 966, §2º).
 
-CPC, art. 968. Petição inicial, documentos e depósito de 5% (o art. 974 trata do julgamento).
+Quarto, cabe com base no inciso V contra decisão que aplicou súmula ou repetitivo sem enfrentar a distinção (art. 966, §§5º e 6º), com o ônus de demonstrar a situação particularizada, sob pena de inépcia.
 
-CPC, art. 975. Prazo decadencial de 2 anos.
+## Procedimento
 
-CPC, art. 525 §§12 a 15. Precedentes.
+Petição inicial com os requisitos do art. 319, cumulando o pedido de novo julgamento e o depósito de 5% do valor da causa (art. 968, I e II), limitado a 1.000 salários mínimos (§2º). O beneficiário da gratuidade está dispensado do depósito (art. 968, §1º).
 
-## Marco jurisprudencial
+A propositura não suspende o cumprimento da decisão rescindenda, salvo tutela provisória (art. 969).
 
-### [Corrigido na auditoria 25/07/2026] Tema 1370/STJ não é de rescisória
+Julgado procedente o pedido, o tribunal rescinde, rejulga e restitui o depósito; inadmissão ou improcedência unânime reverte o depósito ao réu (art. 974).
 
-O Tema 1370/STJ (afetado em 12/08/2025, pendente, suspensão nacional) trata de prazos decadenciais autônomos na revisão administrativa. Para rescisória por violação de norma, o fundamento é o art. 966, V, do CPC.
-
-### Tema 100 STF
-
-Rescisória e discordância jurisprudencial.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Enunciado 44 FONAJEF
-
-Não cabe ação rescisória no JEF, Enunciado 44 FONAJEF (lista completa do CJF, arquivo de 17/02/2016), em linha com o art. 59 da Lei 9.099/1995. A vedação não alcança o procedimento comum, em que a rescisória segue cabível no TRF, art. 966 do CPC (auditoria 03/10/2026).
-
-### Súmula 343 STF
-
-Interpretação divergente não autoriza, salvo matéria constitucional.
-
-### Tema 629 STJ
-
-Segurado especial rural, prova nova.
-
-## Hipóteses do art. 966 CPC
-
-Primeiro, I, prevaricação, concussão, corrupção do juiz.
-
-Segundo, II, juiz impedido ou absolutamente incompetente.
-
-Terceiro, III, sentença obtida por dolo, coação ou colusão.
-
-Quarto, IV, ofensa à coisa julgada.
-
-Quinto, V, violar manifestamente norma jurídica.
-
-Sexto, VI, sentença fundada em prova falsa.
-
-Sétimo, VII, obter prova nova.
-
-Oitavo, VIII, erro de fato.
-
-## Aplicações pró-segurado
-
-Primeiro, PPP retificado após o trânsito em julgado. Prova nova.
-
-Segundo, CAT lavrada após cessação do B31 indevida.
-
-Terceiro, laudo retrospectivo sobre DID para aposentadoria PCD.
-
-[Retirado em 13/10/2026] A sentença que negou a RVT não viola o Tema 1102/STF, cuja tese vigente é adversa ao segurado.
-
-Quinto, sentença com erro de fato (cômputo errado de tempo).
+Competência: TRF para rescindir sentença de juiz federal e acórdão próprio.
 
 ## Prazo decadencial
 
-Regra geral, 2 anos do trânsito em julgado (art. 975 CPC).
+Dois anos do trânsito em julgado da última decisão do processo (art. 975, caput), prorrogado para o primeiro dia útil (§1º). Na prova nova, dois anos da descoberta, limitado a cinco anos do trânsito (§2º).
 
-Prova nova, 2 anos da descoberta, limitado a 5 anos do trânsito (art. 975 §2º).
+## Usos pró-segurado típicos
 
-## Cenários pró-segurado
+Primeiro, PPP ou LTCAT emitido ou retificado após o trânsito, ignorado pelo segurado (inciso VII).
 
-Cenário A, PPP retificado extemporâneo. Prova nova, art. 966, VII, do CPC (auditoria 03/10/2026, retirado o Tema 1116/STJ, que trata de consignado a analfabeto).
+Segundo, sentença que computou tempo inexistente ou deixou de computar vínculo constante do CNIS juntado (inciso VIII, §1º), desde que o ponto não tenha sido controvertido.
 
-Cenário B, laudo pericial novo contradiz anterior. Avaliar erro de fato.
+Terceiro, sentença contrária a súmula ou repetitivo sem distinção, ou a texto expresso de lei (inciso V).
 
-Cenário C [retirado em 13/10/2026]. Não cabe rescisória fundada no Tema 1102/STF contra sentença que negou a RVT, porque a tese vigente é adversa ao segurado. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
-
-Cenário D, sentença fundada em documento falso. Art. 966 VI.
-
-Cenário E, ofensa à coisa julgada material.
+Quarto, sentença improcedente por falta de início de prova material rural. A via preferencial é a repropositura, porque a extinção deve ser sem resolução de mérito (Tema 629 STJ). Ver `coisa-julgada-previdenciaria`.
 
 ## Alertas
 
-Primeiro, Súmula 343/STF limita rescisória por interpretação divergente, salvo matéria constitucional.
+Primeiro, a Súmula 343 STF afasta a rescisória por interpretação controvertida nos tribunais. Em matéria constitucional, não cabe rescisória se o julgado seguia o Plenário do STF à época, ainda que o precedente tenha sido superado depois (Tema 136 STF).
 
-Segundo, competência do TRF para rescisórias de seus julgados.
+Segundo, não cabe rescisória fundada no Tema 1102 STF contra sentença que negou a revisão da vida toda: a tese vigente é adversa ao segurado. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
-Terceiro, o segurado pode usar tanto rescisória como repropositura (Tema 629/STJ em contextos específicos).
-
-Quarto, afirmação retirada na auditoria 25/07/2026. Não se confirma que o Tema 1370/STJ trate de rescisória; ele versa sobre decadência de revisão administrativa e está pendente.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Fredie Didier Jr, vol. 3.
-
-Luiz Guilherme Marinoni, Sérgio Cruz Arenhart, Precedentes.
-
-Teresa Arruda Alvim, Rescisória.
-
-Marco Aurélio Serau Junior, Processo Previdenciário.
-
-José Antonio Savaris, Processual Previdenciário.
+Terceiro, o Tema 1370 STJ trata de decadência na revisão administrativa e não fundamenta rescisória.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para coisa julgada, acionar `coisa-julgada-previdenciaria`.
-Para redação, acionar `peticao-previdenciaria`.
-Para decadência, acionar `decadencia-revisao-previdenciaria`.
-Para precedentes, acionar `precedentes-previdenciarios`.
-
-## O que NÃO está nesta skill
-
-Repropositura em `coisa-julgada-previdenciaria`. Precedentes vinculantes em `precedentes-previdenciarios`. Decadência do benefício em `decadencia-revisao-previdenciaria`.
+Coisa julgada e repropositura em `coisa-julgada-previdenciaria` e `base-cpc-coisa-julgada-progressiva`. Decadência do direito material em `decadencia-revisao-previdenciaria`. Precedentes em `precedentes-previdenciarios`. Redação em `peticao-previdenciaria`. Portarias em `base-portarias-dpmf-inss-hub`.

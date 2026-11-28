@@ -1,4 +1,4 @@
-# Aposentadoria Especial Pós EC 103/2019 — Jurisprudência Verificada e Refutação
+# Aposentadoria Especial Pós EC 103/2019. Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -14,7 +14,7 @@ Aplicação pró-segurado. Afasta a idade de 55, 58 e 60 anos da regra do art. 1
 
 ### Tema 1090 STJ
 
-Tese. Ler a redação literal em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md` antes de citar. A síntese anterior desta referência foi retirada na Onda 170 por não reproduzir a tese.
+Tese literal em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`; ler antes de citar.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -22,7 +22,7 @@ Aplicação pró-segurado. Base para afastar a tese administrativa de neutraliza
 
 ### Tema 555 STF (ARE 664.335)
 
-Tese literal. "I - O direito à aposentadoria especial pressupõe a efetiva exposição do trabalhador a agente nocivo à sua saúde, de modo que, se o EPI for realmente capaz de neutralizar a nocividade não haverá respaldo constitucional à aposentadoria especial; II - Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do Perfil Profissiográfico Previdenciário (PPP), no sentido da eficácia do Equipamento de Proteção Individual – EPI, não descaracteriza o tempo de serviço especial para aposentadoria." [CONFERIDO, portal do STF, 04/10/2026; corrigida na Onda 170 a síntese anterior, que atribuía à tese uma abertura genérica a exceções que o texto não contém]
+Tese literal. "I - O direito à aposentadoria especial pressupõe a efetiva exposição do trabalhador a agente nocivo à sua saúde, de modo que, se o EPI for realmente capaz de neutralizar a nocividade não haverá respaldo constitucional à aposentadoria especial; II - Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do Perfil Profissiográfico Previdenciário (PPP), no sentido da eficácia do Equipamento de Proteção Individual – EPI, não descaracteriza o tempo de serviço especial para aposentadoria." [CONFERIDO, portal do STF, 04/10/2026]
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -30,15 +30,15 @@ Aplicação pró-segurado. O item II protege o segurado exposto a ruído. O item
 
 ### Tema 211 TNU
 
-Tese. "Para aplicação do art. 57, §3º, da Lei 8.213/91 a agentes biológicos, exige-se a probabilidade da exposição ocupacional, avaliando-se o seu caráter indissociável da produção do bem ou da prestação do serviço." (auditoria 03/10/2026, corrigida a síntese anterior, que estendia a tese a todos os agentes).
+Tese. "Para aplicação do art. 57, §3º, da Lei 8.213/91 a agentes biológicos, exige-se a probabilidade da exposição ocupacional, avaliando-se o seu caráter indissociável da produção do bem ou da prestação do serviço.".
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Em agentes biológicos, afasta a exigência administrativa de exposição contínua (auditoria 03/10/2026).
+Aplicação pró-segurado. Em agentes biológicos, afasta a exigência administrativa de exposição contínua.
 
 ### Tema 205 TNU
 
-Tese. Para agentes biológicos, o tempo especial é reconhecido quando a exposição é inerente à função, mesmo que intermitente.
+Síntese. O rol de atividades com agentes biológicos é exemplificativo, mas exige-se a prova do risco concreto de contágio. Tese literal em `base-especial-agentes-biologicos`.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -46,7 +46,7 @@ Aplicação pró-segurado. Reforço para agentes biológicos. Acionar `base-espe
 
 ### Tema 210 TNU
 
-Tese. O enquadramento por eletricidade não exige tempo mínimo de exposição, bastando exposição em parte da jornada pela natureza do risco de morte iminente.
+Síntese. Na tensão acima de 250 V, a permanência se afere pelo risco inerente à atividade, sem tempo mínimo de exposição na jornada. Tese literal em `base-especial-eletricidade-periculosidade`.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -54,93 +54,83 @@ Aplicação pró-segurado. Refuta tese de tempo mínimo.
 
 ### Art. 25, §2º, da EC 103/2019 (conversão até 13/11/2019)
 
-Retirado o Tema 942/STJ na auditoria 25/07/2026 (o tema real trata de cheque); a conversão de tempo especial de servidor está no Tema 942/STF (RE 1.014.286).
-
-Fonte oficial em https://www.stj.jus.br
-
 Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-reforma.
 
 ### Tema 709/STF (RE 791.961)
 
 Tese literal. "I) É constitucional a vedação de continuidade da percepção de aposentadoria especial se o beneficiário permanece laborando em atividade especial ou a ela retorna, seja essa atividade especial aquela que ensejou a aposentação precoce ou não. II) Nas hipóteses em que o segurado solicitar a aposentadoria e continuar a exercer o labor especial, a data de início do benefício será a data de entrada do requerimento, remontando a esse marco, inclusive, os efeitos financeiros. Efetivada, contudo, seja na via administrativa, seja na judicial a implantação do benefício, uma vez verificado o retorno ao labor nocivo ou sua continuidade, cessará o pagamento do benefício previdenciário em questão." [CONFERIDO, portal do STF e transcrição no acórdão da ADI 6309, pp. 149 e 150, 04/10/2026]
 
-Fonte oficial em https://portal.stf.jus.br (auditoria 03/10/2026).
+Fonte oficial em https://portal.stf.jus.br.
 
-Aplicação pró-segurado. Tese adversa; pelo item II, a DIB é a DER mesmo que o segurado continue no labor especial, e o pagamento só cessa se ele permanecer ou retornar à atividade nociva após a implantação (auditoria 03/10/2026).
+Aplicação pró-segurado. Tese adversa; pelo item II, a DIB é a DER mesmo que o segurado continue no labor especial, e o pagamento apenas cessa se ele permanecer ou retornar à atividade nociva após a implantação.
 
-A ADI 4827, antes citada aqui, trata de lei de Alagoas sobre o efetivo da Polícia Militar e não de aposentadoria especial; o retorno à atividade especial está no Tema 709 acima (auditoria 03/10/2026).
-
-
-
-
-
-
+A ADI 4827, antes citada aqui, trata de lei de Alagoas sobre o efetivo da Polícia Militar e não de aposentadoria especial; o retorno à atividade especial está no Tema 709 acima.
 
 ### Tema 1083 STJ
 
-Tese. O ruído com níveis variados se afere pelo Nível de Exposição Normalizado (NEN); ausente essa informação, adota-se o nível máximo (pico de ruído), com perícia judicial que comprove habitualidade e permanência (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a doença preexistente agravada).
+Tese. O ruído com níveis variados se afere pelo Nível de Exposição Normalizado (NEN); ausente essa informação, adota-se o nível máximo (pico de ruído), com perícia judicial que comprove habitualidade e permanência.
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Sem NEN no PPP, o pico de ruído serve de critério, desde que a perícia judicial comprove habitualidade e permanência (auditoria 03/10/2026).
+Aplicação pró-segurado. Sem NEN no PPP, o pico de ruído serve de critério, desde que a perícia judicial comprove habitualidade e permanência.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
-### Argumento 1 — Exigência de exposição contínua na transição
+### Argumento 1. Exigência de exposição contínua na transição
 
 Argumento adversário. A atividade especial exige exposição contínua ao agente nocivo.
 
-Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço. Em agentes biológicos, o Tema 211 TNU exige a probabilidade da exposição ocupacional (auditoria 03/10/2026).
+Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço. Em agentes biológicos, o Tema 211 TNU exige a probabilidade da exposição ocupacional.
 
-### Argumento 2 — Neutralização por EPI
+### Argumento 2. Neutralização por EPI
 
 Argumento adversário. O EPI eficaz neutraliza o risco e descaracteriza o tempo especial.
 
-Refutação. Tema 1090 STJ e Tema 555 STF. Em hipóteses excepcionais, especialmente para cancerígenos, biológicos e eletricidade, o EPI não neutraliza o risco. Acionar `base-especial-epi`.
+Refutação. No ruído, o EPI é irrelevante (Tema 555 do STF, item II). Nos cancerígenos, os EDcl no REsp 2.116.343/RJ reconhecem hipótese excepcional do Tema 1090 do STJ. Nos demais agentes, impugnação específica e dúvida favorável (Tema 1090, itens II e III; Tema 213 da TNU). Acionar `base-especial-epi`.
 
-### Argumento 3 — Recusa de conversão pós-EC 103
+### Argumento 3. Recusa de conversão pós-EC 103
 
 Argumento adversário. A conversão de tempo especial em comum foi totalmente vedada após a reforma.
 
-Refutação. Art. 25, §2º, da EC 103/2019 (auditoria 25/07/2026, retirado o Tema 942/STJ, que trata de cheque). A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma. A ADI 6309 confirmou a validade da regra e registrou na ementa que a EC 103 "assegurou a possibilidade de conversão do tempo de trabalho anterior à sua edição" (item 6).
+Refutação. Art. 25, §2º, da EC 103/2019. A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação apenas alcança tempo pós-reforma. A ADI 6309 confirmou a validade da regra e registrou na ementa que a EC 103 "assegurou a possibilidade de conversão do tempo de trabalho anterior à sua edição" (item 6).
 
-### Argumento 4 — Aplicação de regra permanente em quem tinha direito adquirido
+### Argumento 4. Aplicação de regra permanente em quem tinha direito adquirido
 
 Argumento adversário. Quem completou 25/20/15 anos após a reforma se submete à regra permanente, mesmo que parte fosse pré-reforma.
 
 Refutação. Art. 3º da EC 103. Quem completou o tempo mínimo antes de 13 de novembro de 2019 tem direito adquirido à regra anterior. Acionar `base-aposentadoria-direito-adquirido`.
 
-### Argumento 5 — Pontuação da transição aplicada sem o tempo mínimo
+### Argumento 5. Pontuação da transição aplicada sem o tempo mínimo
 
 Argumento adversário. A transição por pontos dispensa o tempo mínimo de 15, 20 ou 25 anos.
 
 Refutação. Art. 21 da EC 103. A transição exige simultaneamente o tempo mínimo e a pontuação. São requisitos cumulativos, não alternativos.
 
-### Argumento 6 — Negativa por PPP deficiente
+### Argumento 6. Negativa por PPP deficiente
 
 Argumento adversário. PPP sem preenchimento completo impede reconhecimento do tempo especial.
 
-Refutação. A comprovação da atividade especial admite meios alternativos de prova técnica (Súmula 198 do TFR). Acionar `retificacao-ppp` e `defesa-probatoria-especial` (auditoria 25/07/2026, retirado o Tema 709/STJ, que é de execução penal).
+Refutação. A comprovação da atividade especial admite meios alternativos de prova técnica (Súmula 198 do TFR). Acionar `retificacao-ppp` e `defesa-probatoria-especial`.
 
-### Argumento 7 — Exigência de dosimetria de ruído
+### Argumento 7. Exigência de dosimetria de ruído
 
 Argumento adversário. Ruído exige medição por NEN (nível de exposição normalizado), não basta NPS (nível de pressão sonora).
 
-Refutação. Tema 174 TNU e metodologia consolidada. A NHO-01 aceita dosimetria com LAVG quando compatível. Acionar `base-especial-ruido`.
+Refutação. Tema 174 da TNU: a metodologia da NHO-01 ou da NR-15 deve constar do PPP; a menção a uma delas gera presunção relativa de regularidade (PUIL 0001717-22.2019.4.03.6318/SP). O Tema 317 da TNU é adverso quando o PPP informa apenas "dosimetria". Acionar `base-especial-ruido`.
 
-### Argumento 8 — Aplicação da regra permanente sem comparativo com transição
+### Argumento 8. Aplicação da regra permanente sem comparativo com transição
 
 Argumento adversário. A regra permanente é aplicada automaticamente após 13 de novembro de 2019.
 
-Refutação. Tema 334 do STF (quadro mais favorável ao beneficiário), usado por analogia, porque trata do cálculo da renda e não da escolha entre regras de acesso, e Decreto 3.048/99, art. 188-P, caput, que ressalva ao filiado até 13/11/2019 o direito de opção pela aposentadoria do art. 64. Comparativo obrigatório com a transição por pontos (art. 21) é direito do segurado (Onda 170, retirada a menção ao art. 4º da EC 103, que trata da transição do servidor público).
+Refutação. Tema 334 do STF (quadro mais favorável ao beneficiário), usado por analogia, porque trata do cálculo da renda e não da escolha entre regras de acesso, e Decreto 3.048/99, art. 188-P, caput, que ressalva ao filiado até 13/11/2019 o direito de opção pela aposentadoria do art. 64. Comparativo obrigatório com a transição por pontos (art. 21) é direito do segurado.
 
-### Argumento 9 — Exigência de idade mínima após a ADI 6309
+### Argumento 9. Exigência de idade mínima após a ADI 6309
 
 Argumento adversário. O Decreto 3.048/99, art. 64, I a III, e a IN 128/2022, art. 260, I a III, exigem 55, 58 ou 60 anos de idade.
 
 Refutação. As idades reproduzem o art. 19, §1º, I, alíneas a, b e c, da EC 103, declarado inconstitucional na ADI 6309. A declaração tem eficácia contra todos e efeito vinculante sobre a Administração Pública federal (Lei 9.868/1999, art. 28, parágrafo único) [CONFERIDO, Planalto, 04/10/2026]. Sustentar que as idades do decreto e da IN perderam fundamento, porque o art. 57 da Lei 8.213/91 não prevê idade mínima (texto transcrito no voto do Min. Alexandre de Moraes, p. 105) e a regra constitucional que elas repetiam foi invalidada. O STF não declarou, por arrastamento, a inconstitucionalidade do art. 64 do Decreto nem do art. 260 da IN, e por isso o fundamento principal é o efeito vinculante.
 
-### Argumento 10 — Filiado até 13/11/2019 só se aposenta pelos pontos do art. 21
+### Argumento 10. Filiado até 13/11/2019 apenas se aposenta pelos pontos do art. 21
 
 Argumento adversário. A IN 128/2022, art. 262, aplica ao filiado até 13/11/2019 apenas a pontuação de 66, 76 ou 86 pontos.
 
@@ -159,18 +149,6 @@ Quarto, em ausência de PPP, usar prova alternativa. Acionar `defesa-probatoria-
 Quinto, simular quatro cenários (direito adquirido, transição, regra permanente, conversão). Escolher o mais vantajoso.
 
 Sexto, em caso de indeferimento, recurso ao CRPS com `admissibilidade-barreiras-crps` ou ação judicial com `peticao-previdenciaria`.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a ampla preservação do acervo de tempo especial e o direito de escolha do segurado.
-
-Hugo Goes, em Manual, detalha as regras de transição especial e enfatiza o comparativo obrigatório.
-
-Fábio Zambitte Ibrahim, em Curso, critica o endurecimento dos requisitos e defende o amplo reconhecimento do tempo especial pré-reforma.
-
-Wladimir Novaes Martinez analisa o caráter protetivo da aposentadoria especial e defende o afastamento da neutralização do risco por EPI.
-
-O IBDP sustenta institucionalmente a centralidade da aposentadoria especial como proteção do trabalhador exposto a agentes nocivos e o dever de reconhecimento amplo.
 
 ## 5. Diligência de atualização
 

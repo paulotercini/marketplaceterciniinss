@@ -3,7 +3,7 @@
 ## Cruzamentos Obrigatórios
 
 ### 1. auditoria-laudo-pericial
-**Quando cruzar** — Sempre que um laudo pericial de benefício por incapacidade for submetido para auditoria.
+**Quando cruzar.** Sempre que um laudo pericial de benefício por incapacidade for submetido para auditoria.
 
 **O que verificar**
 - O perito se manifestou sobre nexo causal (item B9 do checklist)
@@ -18,7 +18,7 @@ Se o NTEP se aplica (correlação CNAE × CID na Lista C) e o perito não o menc
 Se o perito negou o nexo com base em "doença degenerativa" sem analisar concausa, registrar como achado na seção "Vícios de Fundamentação".
 
 ### 2. peticao-previdenciaria
-**Quando cruzar** — Em toda petição de benefício por incapacidade (concessão, restabelecimento, revisão).
+**Quando cruzar.** Em toda petição de benefício por incapacidade (concessão, restabelecimento, revisão).
 
 **O que verificar**
 - A espécie requerida está correta (B91 em vez de B31 quando o nexo está demonstrado)
@@ -31,7 +31,7 @@ Se o perito negou o nexo com base em "doença degenerativa" sem analisar concaus
 Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriamente abordar o NTEP, o nexo profissional, o nexo individual e a concausa. Usar os quesitos estratégicos do arquivo CONVERSAO-B31-B91.md.
 
 ### 3. riscos-psicossociais-previdenciario
-**Quando cruzar** — Quando o CID for dos agrupamentos F00-F99 (transtornos mentais e comportamentais) ou QD85 (burnout CID-11).
+**Quando cruzar.** Quando o CID for dos agrupamentos F00-F99 (transtornos mentais e comportamentais) ou QD85 (burnout CID-11).
 
 **O que verificar**
 - Correlação CNAE × CID na Lista C para transtornos mentais
@@ -40,7 +40,7 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - Período educativo da Portaria MTE 1.419/2024 (até maio/2026)
 
 ### 4. pgr-nr1-prova-especial
-**Quando cruzar** — Quando houver PGR disponível ou quando a requisição do PGR for estratégica.
+**Quando cruzar.** Quando houver PGR disponível ou quando a requisição do PGR for estratégica.
 
 **O que verificar**
 - O PGR reconhece riscos que se correlacionam com a patologia do segurado
@@ -48,15 +48,14 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - PGR omisso em riscos que deveriam constar (negligência da empresa)
 
 ### 5. precedentes-previdenciarios
-**Quando cruzar** — Sempre, para fundamentação jurisprudencial.
+**Quando cruzar.** Sempre, para fundamentação jurisprudencial.
 
 **Precedentes mais relevantes para nexo acidentário**
-- ADI 3931/STF — Constitucionalidade do NTEP
+- ADI 3931/STF. Constitucionalidade do NTEP
 - Consultar `references/incapacidade.md` da skill de precedentes para temas sobre benefícios por incapacidade, nexo causal, DII, condições pessoais
 
-
 ### 6. portaria-462-restricao-recursal
-**Quando cruzar** — Antes de orientar revisão administrativa de espécie.
+**Quando cruzar.** Antes de orientar revisão administrativa de espécie.
 
 **O que verificar**
 - Se o segurado requerer revisão do ato concessório para alterar de B31 para B91 e o INSS indeferir, o recurso ao CRPS está sujeito às restrições do art. 112, §7º e §8º
@@ -64,7 +63,7 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - Se a documentação probatória é robusta o suficiente para ser considerada "elemento novo"
 
 ### 7. tema-1124-instrucao-administrativa
-**Quando cruzar** — Em toda judicialização de conversão de espécie.
+**Quando cruzar.** Em toda judicialização de conversão de espécie.
 
 **O que verificar**
 - Se a prova do nexo (laudos, PPP, CAT) foi apresentada ao INSS antes da ação judicial
@@ -72,7 +71,7 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - Risco de extinção sem mérito por falta de prévio requerimento administrativo
 
 ### 8. decadencia-revisao-previdenciaria
-**Quando cruzar** — Quando o benefício já foi cessado e o segurado pretende conversão retroativa.
+**Quando cruzar.** Quando o benefício já foi cessado e o segurado pretende conversão retroativa.
 
 **O que verificar**
 - Se o prazo decadencial de 10 anos (art. 103, Lei 8.213/91) já escoou
@@ -80,14 +79,14 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - Alertar se o prazo estiver a menos de 12 meses do esgotamento
 
 ### 9. ms-competencia-autoridade-coatora
-**Quando cruzar** — Quando a estratégia envolver mandado de segurança (por exemplo, contra omissão do INSS em aplicar o NTEP ou contra demora na análise de revisão de espécie).
+**Quando cruzar.** Quando a estratégia envolver mandado de segurança (por exemplo, contra omissão do INSS em aplicar o NTEP ou contra demora na análise de revisão de espécie).
 
 **O que verificar**
 - Autoridade coatora correta (Gerente Executivo da APS ou Gerente da CEAB)
-- Competência territorial (Vara Cível Federal, não Justiça Estadual, porque o MS previdenciário contra ato do INSS é de competência da Justiça Federal mesmo em matéria acidentária — a exceção do art. 109, I, CF aplica-se às causas de acidente de trabalho, não ao MS contra autoridade federal)
+- Competência territorial (Vara Cível Federal, não Justiça Estadual, porque o MS previdenciário contra ato do INSS é de competência da Justiça Federal mesmo em matéria acidentária, a exceção do art. 109, I, CF aplica-se às causas de acidente de trabalho, não ao MS contra autoridade federal)
 
 ### 10. admissibilidade-relevacao-crps e recurso-especial-crps
-**Quando cruzar** — Quando houver recurso ao CRPS sobre classificação de espécie ou NTEP.
+**Quando cruzar.** Quando houver recurso ao CRPS sobre classificação de espécie ou NTEP.
 
 **O que verificar**
 - Tempestividade do recurso (30 dias)
@@ -96,7 +95,7 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - Se a empresa contestou o NTEP (art. 337, §7º, Decreto 3.048/99), verificar se o segurado foi notificado e se houve participação no procedimento
 
 ### 11. especificacao-provas
-**Quando cruzar** — Na fase de especificação de provas em ação de conversão de espécie ou reconhecimento de natureza acidentária.
+**Quando cruzar.** Na fase de especificação de provas em ação de conversão de espécie ou reconhecimento de natureza acidentária.
 
 **O que incluir**
 - Perícia médica com quesitos sobre NTEP, NP, NI e concausa
@@ -106,7 +105,7 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 - Fixar como fato incontroverso a correlação CNAE × CID se o NTEP se aplica
 
 ### 12. documentos-comprobatorios-in128
-**Quando cruzar** — Ao orientar a instrução do requerimento administrativo de revisão.
+**Quando cruzar.** Ao orientar a instrução do requerimento administrativo de revisão.
 
 **Documentos específicos para nexo acidentário**
 - CAT ou declaração de ausência de CAT com justificativa

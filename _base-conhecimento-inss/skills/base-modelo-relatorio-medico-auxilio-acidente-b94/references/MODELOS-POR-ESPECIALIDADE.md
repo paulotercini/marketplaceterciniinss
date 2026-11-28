@@ -5,13 +5,13 @@
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela ortopédica principal, ex. S82.3 fratura consolidada da tíbia com osteossíntese definitiva]
-[CID] — [Sequela secundária, ex. M21.7 desigualdade de comprimento dos membros inferiores]
-[CID] — [Complicação biomecânica, ex. M19.0 artrose secundária]
+[CID]. [Sequela ortopédica principal, ex. S82.3 fratura consolidada da tíbia com osteossíntese definitiva]
+[CID]. [Sequela secundária, ex. M21.7 desigualdade de comprimento dos membros inferiores]
+[CID]. [Complicação biomecânica, ex. M19.0 artrose secundária]
 
 **Histórico clínico**
 
@@ -27,7 +27,7 @@ As sequelas implicam REDUÇÃO da capacidade laborativa para a função habitual
 
 **Nexo causal**
 
-[Documentado pela CAT emitida em DD/MM/AAAA / reconhecido pelo NTEP em razão da correlação CID-CNAE / fundamentado pelo histórico ocupacional documentado].
+[Sequela decorrente de acidente de qualquer natureza registrado em (boletim, prontuário) de DD/MM/AAAA / documentado pela CAT emitida em DD/MM/AAAA / reconhecido pelo NTEP em razão da correlação CID-CNAE / fundamentado pelo histórico ocupacional documentado].
 
 **Conclusão**
 
@@ -47,11 +47,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela psiquiátrica, ex. F07 transtornos de personalidade pós-traumatismo cranioencefálico / F43.1 transtorno de estresse pós-traumático]
+[CID]. [Sequela psiquiátrica, ex. F07 transtornos de personalidade pós-traumatismo cranioencefálico / F43.1 transtorno de estresse pós-traumático]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -90,11 +90,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela LER/DORT, ex. M75.1 síndrome do manguito rotador / M77.1 epicondilite lateral consolidada]
+[CID]. [Sequela LER/DORT, ex. M75.1 síndrome do manguito rotador / M77.1 epicondilite lateral consolidada]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -131,11 +131,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela sistêmica, ex. J84 fibrose pulmonar pós-pneumoconiose / N18 doença renal crônica pós-intoxicação]
+[CID]. [Sequela sistêmica, ex. J84 fibrose pulmonar pós-pneumoconiose / N18 doença renal crônica pós-intoxicação]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -170,11 +170,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela visual, ex. H54.4 cegueira monocular / H54.6 visão subnormal / H33 descolamento de retina sequelar]
+[CID]. [Sequela visual, ex. H54.4 cegueira monocular / H54.6 visão subnormal / H33 descolamento de retina sequelar]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -187,7 +187,7 @@ Após o tratamento, a perda visual encontra-se CONSOLIDADA. Acuidade visual atua
 
 Apresenta [cegueira monocular irreversível / baixa visão bilateral / perda de campo visual em (descrição)]. A sequela é PERMANENTE e IRREVERSÍVEL, sem perspectiva de recuperação.
 
-As limitações implicam REDUÇÃO da capacidade laborativa para a função habitual de [profissão], em razão de [perda da estereopsia que afeta atividades de precisão, redução da percepção de profundidade, dificuldade em ambientes pouco iluminados]. O paciente mantém capacidade laborativa em atividades adaptadas. Súmula 377/STJ. Cegueira monocular caracteriza pessoa com deficiência.
+As limitações implicam REDUÇÃO da capacidade laborativa para a função habitual de [profissão], em razão de [perda da estereopsia que afeta atividades de precisão, redução da percepção de profundidade, dificuldade em ambientes pouco iluminados]. O paciente mantém capacidade laborativa em atividades adaptadas.
 
 **Nexo causal**
 
@@ -211,11 +211,11 @@ CRM [número]
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de nascimento:** [DD/MM/AAAA]. Idade: [XX] anos
 
 **Diagnósticos (CID-10)**
 
-[CID] — [Sequela cardíaca, ex. I25.2 infarto do miocárdio antigo / I50 insuficiência cardíaca sequelar / I42 cardiomiopatia]
+[CID]. [Sequela cardíaca, ex. I25.2 infarto do miocárdio antigo / I50 insuficiência cardíaca sequelar / I42 cardiomiopatia]
 [CID secundário, se houver]
 
 **Histórico clínico**
@@ -249,14 +249,14 @@ CRM [número]
 
 ## Observações comuns
 
-Todos os modelos focam em SEQUELA CONSOLIDADA e REDUÇÃO da capacidade laborativa para o trabalho habitual.
+Todos os modelos focam em sequela consolidada e redução da capacidade laborativa para o trabalho habitual.
 
 Documentar irreversibilidade.
 
-Indicar expressamente o nexo causal com o trabalho.
+Indicar expressamente o nexo entre a sequela e o acidente; o nexo com o trabalho entra quando houver natureza acidentária.
 
 Conectar a sequela à atividade laboral concreta.
 
-Anexo III do Decreto 3.048/99 é exemplificativo (Súmulas 88 e 89/TNU + Tema 416/STJ).
+Anexo III do Decreto 3.048/99 é exemplificativo (Decreto 3.048/99, art. 104, caput; IN 128/2022, art. 354, §1º).
 
-Sequela mínima admite B94 (Súmula 88/TNU e Tema 416/STJ; auditoria 03/10/2026).
+Sequela mínima admite B94 (Súmula 88 TNU e Tema 416 STJ).

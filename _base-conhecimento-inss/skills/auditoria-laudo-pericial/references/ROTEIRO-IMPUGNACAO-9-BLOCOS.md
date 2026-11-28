@@ -1,6 +1,6 @@
 # Roteiro de Impugnação em 9 Blocos
 
-Incorporado na Onda 84 (25/07/2026) a partir do prompt operacional do escritório, para que a auditoria dirigida à impugnação rode sem colar prompt. Este roteiro é o Modo 3 da skill `auditoria-laudo-pericial` e se executa por inteiro, na ordem, sem preâmbulo na saída.
+Este roteiro é o Modo 3 da skill `auditoria-laudo-pericial` e se executa por inteiro, na ordem, sem preâmbulo na saída.
 
 ## Postura de dupla camada
 
@@ -26,7 +26,7 @@ Apontar todo documento médico do autor que o perito ignorou, mencionou sem enfr
 
 ### Bloco 4. Padrão técnico exigido
 
-Indicar o protocolo, a norma ou o critério diagnóstico exigido para esse tipo de avaliação e dizer se o perito o seguiu. Regra dura, só citar norma, resolução do CFM, portaria, NHO ou critério de sociedade médica que se possa nomear com número, ano e órgão emissor. Sem certeza da vigência e da redação, escrever "não localizado, verificar em fonte primária" e não inventar substituto. Em dúvida sobre norma, cruzar com a `base-legislacao-fontes-primarias` e a `base-validacao-formal-laudo-medico-checklist-ab`.
+Indicar o protocolo, a norma ou o critério diagnóstico exigido para esse tipo de avaliação e dizer se o perito o seguiu. Regra dura, apenas citar norma, resolução do CFM, portaria, NHO ou critério de sociedade médica que se possa nomear com número, ano e órgão emissor. Sem certeza da vigência e da redação, escrever "não localizado, verificar em fonte primária" e não inventar substituto. Em dúvida sobre norma, cruzar com a `base-legislacao-fontes-primarias` e a `base-validacao-formal-laudo-medico-checklist-ab`.
 
 ### Bloco 5. Vícios jurídicos
 
@@ -42,11 +42,11 @@ Cinco a oito quesitos cirúrgicos, cada um vinculado a uma falha já apontada no
 
 ### Bloco 8. Estrutura da peça
 
-Montar a estrutura da impugnação ao laudo, com os tópicos na ordem de ataque, pedido de esclarecimentos (art. 477 do CPC), pedido de complementação e, se a falha for estrutural, pedido de nova perícia com perito de especialidade compatível (art. 480 do CPC). Indicar o que pedir em cada cenário e qual a alternativa se o juiz negar (esclarecimentos negados abrem caminho para cerceamento de defesa, conforme `base-cpc-nulidades-cerceamento`). A redação final da peça segue a skill `peticao-previdenciaria`.
+Montar a estrutura da impugnação ao laudo, com os tópicos na ordem de impugnação, pedido de esclarecimentos (art. 477 do CPC), pedido de complementação e, se a falha for estrutural, pedido de nova perícia com perito de especialidade compatível (art. 480 do CPC). Indicar o que pedir em cada cenário e qual a alternativa se o juiz negar (esclarecimentos negados abrem caminho para cerceamento de defesa, conforme `base-cpc-nulidades-cerceamento`). A redação final da peça segue a skill `peticao-previdenciaria`.
 
 ### Bloco 9. Risco
 
-Apontar o ponto mais frágil da nossa impugnação, o que o INSS vai responder e como neutralizar. Quando a peça de impugnação estiver redigida, o teste completo do adversário é do agente `red-team-peticao`.
+Apontar o ponto mais frágil da nossa impugnação, o que o INSS vai responder e como refutar. Quando a peça de impugnação estiver redigida, o teste completo do adversário é do agente `red-team-peticao`.
 
 ## Regras de saída
 

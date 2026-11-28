@@ -1,6 +1,6 @@
 # Individualização dos Achados de Fibromialgia no Relatório Médico
 
-Criado na Onda 87 (26/07/2026). Este é o ponto de virada da fibromialgia no INSS. O diagnóstico praticamente nunca é negado, o que se nega é a INCAPACIDADE. Laudo que repete "fibromialgia, CID M79.7, dor difusa há anos" entrega ao perito exatamente o que ele precisa para concluir "doença sem repercussão funcional objetiva". O relatório vence quando descreve ESTA pessoa, com ESTES achados, impedindo ESTAS tarefas.
+Na fibromialgia, o INSS raramente nega o diagnóstico; nega a repercussão funcional. Laudo que repete "fibromialgia, CID M79.7, dor difusa há anos" entrega ao perito exatamente o que ele precisa para concluir "doença sem repercussão funcional objetiva". O relatório eficaz descreve esta pessoa, com estes achados, impedindo estas tarefas.
 
 Este roteiro se aplica aos três modelos do escritório. `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`, `base-modelo-relatorio-medico-aposentadoria-pcd-lc142` e `base-modelo-relatorio-medico-bpc-loas-deficiente`. Vale também como pauta de quesitos na `auditoria-laudo-pericial`.
 

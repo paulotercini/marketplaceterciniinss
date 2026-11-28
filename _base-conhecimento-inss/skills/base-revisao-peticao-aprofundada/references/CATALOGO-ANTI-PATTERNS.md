@@ -30,7 +30,7 @@
 
 **Correção.** Revisar pedido para corresponder à narrativa fática ou refazer narrativa para sustentar o pedido.
 
-**Conferência completa.** A ligação de cada pedido com fatos, provas, cálculo e conclusão é conferida pela cadeia do pedido (`CADEIA-DO-PEDIDO.md`, Onda 176).
+**Conferência completa.** A ligação de cada pedido com fatos, provas, cálculo e conclusão é conferida pela cadeia do pedido (`CADEIA-DO-PEDIDO.md`).
 
 ## 3. Argumentação Repetitiva
 
@@ -106,7 +106,7 @@ Seção "DOS REQUISITOS DA TUTELA DE URGÊNCIA" com demonstração concreta. "O 
 
 ## 8. Título Argumentativo, Narrativo ou Informal
 
-**Definição (reescrita na Onda 162, 29/09/2026, por determinação do titular).** Título de seção que antecipa conclusão, narra fato, traz data, número, valor, ID ou nome de documento do caso, usa adjetivo ou juízo de valor, ou não começa por DA, DO, DOS ou DAS. Vale para TODAS as peças. A versão anterior deste item mandava o contrário e está revogada.
+**Definição (determinação do titular).** Título de seção que antecipa conclusão, narra fato, traz data, número, valor, ID ou nome de documento do caso, usa adjetivo ou juízo de valor, ou não começa por DA, DO, DOS ou DAS. Vale para TODAS as peças. A versão anterior deste item mandava o contrário e está revogada.
 
 **Severidade.** IMPORTANTE.
 
@@ -134,13 +134,13 @@ Seção 1 - Tabela "Fato alegado / Impugnação pelo INSS / Situação processua
 
 ## 10. Memorial com Mais de Duas Páginas
 
-**Definição.** Memorial extraprocessual que excede duas páginas.
+**Definição.** Memorial extraprocessual que excede a referência de duas páginas sem que o conteúdo o exija.
 
-**Severidade.** CRÍTICO.
+**Severidade.** IMPORTANTE.
 
-**Regra.** Memoriais longos não serão lidos.
+**Regra.** A extensão é referência, e não limite (tabela na Camada 6 da SKILL). Memorial longo tende a não ser lido.
 
-**Correção.** Aplicar framework EVO (Essencial, Visual, Organizado) e condensar para no máximo duas páginas.
+**Correção.** Aplicar framework EVO (Essencial, Visual, Organizado) e retirar a repetição.
 
 ## 11. Excesso de Destaques por Página (Regra Von Restorff)
 
@@ -182,7 +182,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Correção.** Reescrever fatos em linguagem direta, frases curtas, cronologia clara e referência a documentos por ID.
 
-## 14. Cotejo Analítico Ausente em PUIL (NOVO - Onda 30)
+## 14. Cotejo Analítico Ausente em PUIL
 
 **Definição.** PUIL/PEDILEF dirigido à TNU sem cotejo analítico em duas etapas (fato + tese) entre acórdão recorrido e paradigma.
 
@@ -200,17 +200,17 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Correção.** Reestruturar a peça com a seção "DA DEMONSTRAÇÃO DO DISSÍDIO" em duas etapas.
 
-## 15. Paradigma de TRF em PUIL (NOVO - Onda 30)
+## 15. Paradigma de TRF em PUIL
 
 **Definição.** PUIL utilizando acórdão de Tribunal Regional Federal como paradigma.
 
 **Severidade.** CRÍTICO.
 
-**Regra.** Art. 14, §2º, da Lei 10.259/2001. TRFs não compõem o microssistema dos juizados; a QO 48/TNU veda também o paradigma do STF (auditoria 25/07/2026). Paradigmas válidos são Turma Recursal de outra região, TNU, Súmula STJ ou tese fixada em IRDR.
+**Regra.** Art. 14, §2º, da Lei 10.259/2001. TRFs não compõem o microssistema dos juizados; a QO 48/TNU veda também o paradigma do STF. Paradigmas válidos são Turma Recursal de outra região, TNU, Súmula STJ ou tese fixada em IRDR.
 
 **Correção.** Buscar acórdão equivalente de outra TR ou Súmula do STJ no mesmo sentido.
 
-## 16. Portaria 992/2022 como Cálculo de RMI (NOVO - Onda 32)
+## 16. Portaria 992/2022 como Cálculo de RMI
 
 **Definição.** Peça que cita Portaria DIRBEN/INSS 992/2022 como regulamento de cálculo de RMI.
 
@@ -220,7 +220,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Correção.** Substituir a referência. Para cálculo de RMI, usar IN 128/2022 e Portaria 991/2022. Para manutenção, suspensão, cessação ou descontos, manter Portaria 992/2022.
 
-## 17. Súmula 86/TNU como Vigente (NOVO)
+## 17. Súmula 86/TNU como Vigente
 
 **Definição.** Peça que cita Súmula 86/TNU como vigente.
 
@@ -230,7 +230,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Correção.** Suspender a citação. Se a tese pretendida é a contrária ao cancelamento, fundamentar diretamente no novo entendimento.
 
-## 18. Revisão da Vida Toda Sem Modulação (NOVO)
+## 18. Revisão da Vida Toda Sem Modulação
 
 **Definição.** Peça que invoca o Tema 1102/STF (Revisão da Vida Toda) sem mencionar a modulação dos efeitos firmada em 2024.
 
@@ -260,11 +260,11 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Severidade.** CRÍTICO.
 
-**Regra.** Política do escritório (Onda 29 - padrão visual) exige seção dedicada com fundamentação dos efeitos financeiros conforme Tema 1124/STJ, em conjunto com `tema-1124-instrucao-administrativa` e `base-efeito-translativo-tema-1124-defesa`.
+**Regra.** Política do escritório exige seção dedicada com fundamentação dos efeitos financeiros conforme Tema 1124/STJ, em conjunto com `tema-1124-instrucao-administrativa` e `base-efeito-translativo-tema-1124-defesa`.
 
 **Correção.** Inserir seção com fundamentação dos efeitos financeiros, DIB, DIP e juros/correção.
 
-## 21. Discussão de Matéria Processual em PUIL (NOVO - Onda 30)
+## 21. Discussão de Matéria Processual em PUIL
 
 **Definição.** PUIL/PEDILEF que veicula questões de matéria processual (coisa julgada, cerceamento de defesa, ausência de fundamentação do acórdão recorrido, ônus da prova, regularidade procedimental).
 
@@ -274,7 +274,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Correção.** Para vícios processuais, a via correta é o mandado de segurança contra Turma Recursal ou recurso extraordinário direto. Reestruturar a tese como questão de direito MATERIAL ou suspender o PUIL.
 
-## 22. Citação de Norma Sem Leitura do Arquivo Verificado (NOVO - Onda 31)
+## 22. Citação de Norma Sem Leitura do Arquivo Verificado
 
 **Definição.** Peça que cita artigo de Lei, Decreto, IN ou Portaria sem que o Claude tenha aberto o arquivo correspondente no repositório `base-legislacao-fontes-primarias` antes de transcrever.
 
@@ -297,7 +297,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 | 7 | Urgência por formatação | IMPORTANTE |
 | 8 | Título argumentativo, narrativo ou informal | IMPORTANTE |
 | 9 | Réplica como contestação da contestação | IMPORTANTE |
-| 10 | Memorial >2 páginas | CRÍTICO |
+| 10 | Memorial acima da referência de 2 páginas | IMPORTANTE |
 | 11 | Excesso de destaques (Von Restorff) | MENOR |
 | 12 | Latim desnecessário | MENOR |
 | 13 | Teste do leigo (fatos técnicos demais) | IMPORTANTE |

@@ -1,137 +1,44 @@
 ---
 name: base-desaposentacao-reaposentacao
-description: "Desaposentação e reaposentação, Tema 503 STF RE 661.256, vedação constitucional após Lei 13.183/2015 e EC 103/2019, alternativas ao segurado e comparação com reafirmação da DER. Use SEMPRE que mencionar desaposentação, reaposentação, renúncia a aposentadoria, Tema 503 STF, RE 661.256, Lei 13.183/2015, art. 18 §2º Lei 8.213, EC 103/2019 art. 6º, devolução de valores desaposentação, contribuições após aposentadoria, cômputo pós-aposentadoria, aposentado que voltou a trabalhar, melhor benefício pós-aposentação, substituição de benefício, segurado com contribuições após DIB, revisão por contribuições posteriores, desaposentação judicial. Cruza com peticao-previdenciaria, precedentes-previdenciarios, reafirmacao-der, base-planejamento-previdenciario, base-calculo-rmi-ec103, decadencia-revisao-previdenciaria e coisa-julgada-previdenciaria."
+description: "Desaposentação e reaposentação, Tema 503 STF RE 661.256, art. 18, §2º, da Lei 8.213/91, alternativas ao segurado e comparação com reafirmação da DER. Use SEMPRE que mencionar desaposentação, reaposentação, renúncia a aposentadoria, Tema 503 STF, RE 661.256, Lei 13.183/2015, art. 18 §2º Lei 8.213, devolução de valores desaposentação, contribuições após aposentadoria, cômputo pós-aposentadoria, aposentado que voltou a trabalhar, melhor benefício pós-aposentação, substituição de benefício, segurado com contribuições após DIB, revisão por contribuições posteriores, desaposentação judicial. Cruza com peticao-previdenciaria, precedentes-previdenciarios, reafirmacao-der, base-planejamento-previdenciario, base-calculo-rmi-ec103, decadencia-revisao-previdenciaria e coisa-julgada-previdenciaria."
 ---
-
-> Nota da auditoria de citações (25/07/2026). Reaposentação igualmente vedada pela lógica do Tema 503/STF e de seus embargos (auditoria 25/07/2026, retirado o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha).
 
 # Desaposentação e Reaposentação
 
 ## Escopo
 
-Skill pró-segurado sobre a tese da desaposentação (renúncia ao benefício para obtenção de outro mais vantajoso com cômputo das contribuições posteriores), com honestidade radical sobre o estado atual da jurisprudência (Tema 503 STF desfavorável) e alternativas processuais ao segurado.
+Renúncia à aposentadoria para obter outra mais vantajosa com as contribuições posteriores (desaposentação) ou nova aposentadoria apenas com as contribuições posteriores (reaposentação). A tese está vedada; esta skill orienta o cliente com franqueza e aponta as vias que restam.
 
-## Marco normativo central
+## Base normativa
 
-CF/88, art. 201.
+- Lei 8.213/91, art. 18, §2º (redação da Lei 9.528/97): o aposentado que permanece ou volta à atividade não faz jus a prestação alguma em decorrência dela, "exceto ao salário-família e à reabilitação profissional, quando empregado".
+- Decreto 3.048/99, art. 181-B: a aposentadoria é irreversível e irrenunciável; a desistência do pedido é possível apenas antes do primeiro pagamento ou do saque do FGTS ou do PIS (§2º).
 
-EC 103/2019, art. 6º. Regras de transição e vedações.
+## Precedente
 
-Lei 8.213/91, art. 18, §2º. Aposentado que volta a trabalhar, proteção restrita.
+Tema 503 STF (RE 661.256): "No âmbito do Regime Geral de Previdência Social - RGPS, somente lei pode criar benefícios e vantagens previdenciárias, não havendo, por ora, previsão legal do direito à 'desaposentação', sendo constitucional a regra do art. 18, § 2º, da Lei nº 8.213/91."
 
-Lei 13.183/2015. Consolidação do regime.
+Nos embargos de declaração, o STF estendeu a tese à reaposentação, preservou as desaposentações reconhecidas por decisão transitada em julgado e dispensou a devolução dos valores recebidos de boa-fé até o julgamento [NÃO CONFIRMADO: conferir data e texto da modulação no portal do STF].
 
-Decreto 3.048/99 e IN 128/2022.
+A Súmula 557 STJ trata da RMI da aposentadoria por invalidez precedida de auxílio-doença e não serve a este tema.
 
-## Marco jurisprudencial
+## Vias que restam
 
-### Tema 503 STF
-
-RE 661.256. Desaposentação vedada, por ausência de previsão legal. Cabe ao legislador criar a figura.
-
-Fonte oficial em https://portal.stf.jus.br
-
-Reaposentação igualmente vedada pela lógica do Tema 503/STF e de seus embargos (auditoria 25/07/2026, retirado o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha).
-
-Devolução de valores. Desnecessidade em boa-fé.
-
-Fonte oficial em https://portal.stf.jus.br
-
-Atenção: a Súmula 557 STJ trata da RMI da aposentadoria por invalidez precedida de auxílio-doença — não versa sobre desaposentação; não a utilize neste tema.
-
-Tema análogo, vedação pacificada.
-
-Reaposentação igualmente vedada pela lógica do Tema 503/STF e de seus embargos (auditoria 25/07/2026, retirado o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha).
-
-Efeitos para processos antes da decisão.
-
-## Estado atual da tese
-
-Honestidade radical. A desaposentação foi rejeitada pelo STF em 2016 no Tema 503, com modulação restrita. A EC 103/2019 manteve a vedação. Ações atuais de desaposentação têm probabilidade mínima de êxito.
-
-Contudo, o segurado ainda pode obter ganhos por outras vias.
-
-## Alternativas pró-segurado
-
-Primeiro, reafirmação da DER (Tema 995 STJ). Se o segurado não recebeu benefício ainda, pode reafirmar a DER para incluir contribuições posteriores. Acionar `reafirmacao-der`.
-
-Segundo, revisão da RMI por inclusão de vínculos ou salários-de-contribuição não considerados na DIB.
-
-Terceiro, revisão por melhor benefício (Tema 334 STF) em casos de direito adquirido.
-
-Quarto, ação por contribuições pós-aposentadoria que gerariam benefício adicional, ainda que rejeitada pelo Tema 503, pode ser ajuizada em reserva para caso de alteração legislativa.
-
-Quinto, revisão do benefício com outras teses (IRSM, teto, art. 29 II).
-
-## Regra pró-segurado
-
-Primeiro, auditoria do benefício.
-
-Segundo, avaliação de decadência.
-
-Terceiro, identificação de vícios.
-
-Quarto, proposta de revisão ou reafirmação.
-
-Quinto, orientação sobre desaposentação com honestidade radical.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para reafirmação da DER, acionar `reafirmacao-der`.
-Para planejamento, acionar `base-planejamento-previdenciario`.
-Para cálculo de RMI, acionar `base-calculo-rmi-ec103`.
-Para redação, acionar `peticao-previdenciaria`.
-Para decadência, acionar `decadencia-revisao-previdenciaria`.
-Para coisa julgada, acionar `coisa-julgada-previdenciaria`.
+1. **Ainda sem benefício implantado:** reafirmação da DER (IN 128, art. 577; Tema 995 STJ; `reafirmacao-der`) ou desistência do pedido antes do primeiro pagamento (Decreto 3.048, art. 181-B, §2º).
+2. **Melhor benefício com requisitos anteriores à DIB** (Tema 334 STF): não se confunde com desaposentação, porque usa apenas o tempo até a DIB. Sujeita-se à decadência (Tema 966 STJ).
+3. **Revisão da RMI** por vínculo, salário de contribuição ou tempo especial omitidos na concessão (`decadencia-revisao-previdenciaria`).
+4. **Teses de revisão específicas:** `base-revisao-art29-melhor-beneficio`, `base-revisao-irsm-fevereiro-1994`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-atividades-concomitantes-tema1070`.
 
 ## Alertas
 
-Primeiro, desaposentação isolada tem probabilidade mínima de êxito no atual estado da jurisprudência.
+- Ação de desaposentação ou reaposentação contraria tese vinculante: risco de improcedência e de honorários de sucumbência. Informar o cliente por escrito.
+- As contribuições do aposentado que trabalha não geram nova aposentadoria nem acréscimo na RMI.
+- Ação anterior com trânsito em julgado: verificar coisa julgada (`coisa-julgada-previdenciaria`).
 
-Segundo, devolução de valores em boa-fé é desnecessária.
+## MCPs da casa
 
-Terceiro, reafirmação da DER é alternativa vantajosa antes da DIB.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Quarto, contribuições pós-aposentadoria geram salário-família e reabilitação, não nova RMI.
+## Integração
 
-Quinto, EC 103/2019 reforçou a vedação.
-
-Sexto, o advogado deve alertar o cliente sobre o risco antes de propor a tese.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, desaposentação.
-
-Hugo Goes, benefícios.
-
-Marco Aurélio Serau Junior, desaposentação.
-
-Daniel Pulino, aposentadoria.
-
-Jane Berwanger, planejamento.
-
-IBDP, advocacia previdenciária.
-
-## O que NÃO está nesta skill
-
-Reafirmação da DER em `reafirmacao-der`. Planejamento em `base-planejamento-previdenciario`. Revisões específicas em skills próprias (Tema 327, IRSM de fevereiro de 1994, Tema 334, Tema 1102) (auditoria 03/10/2026).
+`reafirmacao-der`, `base-planejamento-previdenciario`, `base-calculo-rmi-ec103`, `base-aposentadoria-direito-adquirido`, `peticao-previdenciaria`, `decadencia-revisao-previdenciaria`, `coisa-julgada-previdenciaria`, `base-portarias-dpmf-inss-hub`.

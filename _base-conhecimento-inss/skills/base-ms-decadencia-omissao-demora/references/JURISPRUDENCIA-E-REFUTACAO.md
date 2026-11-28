@@ -1,135 +1,33 @@
-# Decadência e Omissão MS — Jurisprudência e Refutação
+# Decadência e Demora no MS. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Enunciados e precedentes
 
-### Súmula 632 STF (auditoria 03/10/2026)
+Súmula 632 STF: "É constitucional lei que fixa o prazo de decadência para a impetração de mandado de segurança."
 
-Decadência.
+Súmula 430 STF: "Pedido de reconsideração na via administrativa não interrompe o prazo para o mandado de segurança."
 
-Fonte oficial em https://portal.stf.jus.br
+Acordo homologado no RE 1.171.152/STF (prazos por espécie no SKILL.md). Termo de acordo publicado pelo INSS em gov.br/inss; prazo inicial de 24 meses (cláusula 14.3).
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
+STJ, omissão continuada renova o prazo decadencial. MS 14.384/DF, Rel. Min. Jorge Mussi, DJe 28/02/2018; MS 20.426/DF, Rel. Min. Napoleão Nunes Maia Filho, DJe 18/12/2017; AgRg no REsp 1.293.389/TO, DJe 01/12/2014; MS 16.125/DF, DJe 07/06/2011; MS 16.083/DF, DJe 04/10/2011. Conferir o inteiro teor de cada um antes de transcrever.
 
-Duração razoável.
+TRF4, 9ª Turma, RemNec 5006814-58.2024.4.04.7208, Rel. José Antonio Savaris, j. 18/02/2025 (persuasivo).
 
-Fonte oficial em https://portal.stf.jus.br
+## 2. Refutação aos argumentos típicos do INSS
 
-### Tema 374 STF
+1. Decadência consumada. Refutação. Na omissão continuada o ato se renova e o prazo não corre.
 
-Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
+2. Prazo contado do requerimento. Refutação. O art. 23 conta da ciência do ato impugnado; na omissão não há ato do qual tomar ciência.
 
-### Súmula 405 STF
+3. Pedido de reconsideração ou recurso administrativo suspendeu o prazo. Refutação favorável ao INSS apenas no ato comissivo (Súmula 430 STF); por isso, impetrar dentro dos 120 dias da ciência.
 
-Denegada a segurança, a liminar fica sem efeito, com retroação (auditoria 03/10/2026).
+4. Ato comissivo sem ciência formal. Refutação. Sem ciência comprovada pelo INSS, o prazo não começou.
 
-## 2. Marco legislativo
+5. Demora justificada pelo volume de processos. Refutação. Dificuldade estrutural não afasta o dever de decidir (Lei 9.784/99, art. 48) nem a duração razoável (CF, art. 5º, LXXVIII); o próprio INSS pactuou prazos máximos no acordo do RE 1.171.152/STF.
 
-### Lei 12.016/2009, art. 23
+6. Prazo de 90 dias ainda não esgotado. Refutação. O prazo do acordo varia por espécie (30 dias para salário-maternidade, 45 para benefício por incapacidade); e o art. 49 da Lei 9.784/99 fixa 30 dias após a instrução.
 
-Fonte oficial em https://www.planalto.gov.br
+7. Prorrogação administrativa legítima. Refutação. Exige motivação expressa e limita-se a igual período (art. 49).
 
-### Lei 9.784/99, art. 49
+8. Fila cronológica, o MS fere a isonomia. Refutação. O direito à decisão em prazo razoável é individual; a ordem judicial corrige a ilegalidade no caso concreto.
 
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 13.460/2017
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Decadência fulmina
-
-Argumento adversário. Prazo rígido.
-
-Refutação. Ato omissivo renova.
-
-### Argumento 2 — Contagem a partir do requerimento
-
-Argumento adversário. Pedido.
-
-Refutação. Contagem a partir da ciência do ato impugnado.
-
-### Argumento 3 — Ato de trato continuado não gera MS
-
-Argumento adversário. Restritivo.
-
-Refutação. Renovação do prazo enquanto persiste.
-
-### Argumento 4 — Omissão não é ato
-
-Argumento adversário. Inação.
-
-Refutação. Omissão legítima autoridade coatora. Lei 12.016.
-
-### Argumento 5 — Prazo se suspende com PA
-
-Argumento adversário. Interrupção.
-
-Refutação. Decadência é ininterrupta, salvo trato continuado.
-
-### Argumento 6 — Ato comissivo sem ciência formal
-
-Argumento adversário. Presunção.
-
-Refutação. Sem ciência, prazo não corre.
-
-### Argumento 7 — MS preventivo não tem prazo
-
-Argumento adversário. Ilimitado.
-
-Refutação. Exige iminência.
-
-### Argumento 8 — Demora não é coator
-
-Argumento adversário. Administrativa.
-
-Refutação. O acordo homologado no RE 1.171.152/STF (ex-Tema 1066) e o art. 5º, LXXVIII, da CF afirmam a duração razoável (auditoria 25/07/2026).
-
-### Argumento 9 — Prorrogação PA afasta MS
-
-Argumento adversário. Legítima.
-
-Refutação. Prorrogação motivada. Sem motivação, MS cabível.
-
-### Argumento 10 — 90 dias é razoável
-
-Argumento adversário. Lei 9.784.
-
-Refutação. Razoabilidade concreta. Casos com 180 dias têm liminar.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Hely Lopes Meirelles, Arnoldo Wald, Gilmar Ferreira Mendes.
-
-Cassio Scarpinella Bueno.
-
-Teori Albino Zavascki.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, monitoramento do ato.
-
-Segundo, contagem precisa.
-
-Terceiro, articulação de omissão.
-
-Quarto, impetração tempestiva.
-
-Quinto, fundamentação.
-
-Sexto, preservar MS.
-
-## 6. Diligência de atualização
-
-Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
-
-Revalidar Lei 13.460/2017.
-
-Acompanhar jurisprudência sobre omissão.
+9. O PGB não cria prazo legal. Cautela própria. Não invocar o PGB como prazo legal; usá-lo como parâmetro e prova, até 31/12/2026.

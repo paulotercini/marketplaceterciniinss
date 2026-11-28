@@ -1,6 +1,6 @@
-# Duas Falhas de Método da Auditoria, e Como Evitá-las
+# Falhas de método da auditoria e como evitá-las
 
-Onda 143 (18/09/2026). Registrado a partir do caso do Tema 862 do STJ, apontado pelo titular.
+Registro de 18/09/2026, a partir do caso do Tema 862 do STJ, apontado pelo titular.
 
 ## O caso
 
@@ -8,7 +8,7 @@ O Tema 862 do STJ é **termo inicial do auxílio-acidente**. A base o citava, em
 
 A auditoria de 12/07/2026 detectou o erro e corrigiu. Dois meses depois, o erro continuava em vinte ocorrências, e o titular o encontrou. A correção tinha sido feita, mas incompleta, e é isso que este registro trata.
 
-## Falha 1. Correção parcial, só na definição
+## Falha 1. Correção parcial, apenas na definição
 
 A auditoria corrigiu a seção onde o tema é DEFINIDO, na skill própria, com nota datada e tudo. Não varreu os USOS do tema espalhados pelo restante da base.
 
@@ -48,6 +48,6 @@ A reconferência de 18/09/2026 trouxe três dados que a correção de julho não
 
 O trânsito em julgado do Tema 862 está confirmado, e a matéria subiu ao STF como Tema 1225, onde o Supremo decidiu em 13/08/2022 que não há repercussão geral por ser questão infraconstitucional. A tese do STJ está firme e definitiva, o que permite citá-la sem ressalva de pendência.
 
-A descrição oficial do Tema 1225 registra uma regra prática que a base não tinha. Sem auxílio-doença prévio e sem requerimento administrativo do auxílio-acidente, o STJ fixou o termo inicial na CITAÇÃO do INSS. É regra desfavorável, e por isso precisa ser conhecida, porque torna o requerimento administrativo prévio decisivo para não perder retroativos.
+A questão do Tema 1225 (conferida no MCP `superiores` em 28/11/2026, trânsito em julgado em 15/09/2022) registra que a ementa do Tema 862 traz uma regra prática que a base não tinha. Sem auxílio-doença prévio e sem requerimento administrativo do auxílio-acidente, o STJ fixou o termo inicial na CITAÇÃO do INSS. É regra desfavorável, e por isso precisa ser conhecida, porque torna o requerimento administrativo prévio decisivo para não perder retroativos.
 
 Lição geral. Auditoria que só conserta o ponto apontado deixa o erro vivo nos usos. E a reconferência de um item já auditado não é retrabalho, porque costuma trazer o que a primeira passada não viu.

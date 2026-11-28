@@ -1,133 +1,29 @@
-# Educação Infantil Lei 15.326/2026 — Fundamentos e Cenários
+# Educação Infantil. Cenários e Metodologia
 
-## 1. Conceito operacional
+Fundamentos e alcance da Lei 15.326/2026 estão no SKILL.md.
 
-A Lei 15.326/2026 assegura cômputo de tempo em educação infantil e creche como magistério para fins de aposentadoria do professor, incluindo cargos híbridos.
+## 1. Cenários que contam
 
-## 2. Fundamento constitucional
+- **A. Professora de pré-escola:** magistério na educação básica.
+- **B. Auxiliar de creche concursada, com formação em magistério, que atua diretamente com as crianças em atividade pedagógica:** professora da educação infantil (LDB, art. 61, §2º, Lei 15.326/2026), qualquer que seja a designação do cargo.
+- **C. Monitora ou berçarista em escola privada com atuação pedagógica comprovada:** conta pela prova da função docente; a Lei 15.326/2026 reforça o critério da função.
+- **D. Cargo híbrido (docência e apoio):** conta o período de função docente efetiva, provado por documento e testemunha.
+- **E. Direção ou coordenação de creche exercida por professora:** ADI 3772.
 
-CF/88, art. 208 IV. Educação infantil como dever do Estado.
+## 2. Cenários que não contam
 
-CF/88, art. 201 §8º. Professor.
+- **F. Função exclusivamente de cuidado** (higiene, alimentação) sem atividade pedagógica.
+- **G. Serviço administrativo** sem docência.
+- **H. Professor universitário:** fora do art. 201, §8º.
 
-CF/88, art. 5º XXXVI. Direito adquirido.
+## 3. Metodologia
 
-## 3. Fundamento legal
+1. Identificar as atribuições efetivas em cada período.
+2. Reunir prova documental (lei municipal, edital, diários, planos) e testemunhal.
+3. Separar a função docente da função de cuidado.
+4. Somar o tempo docente ao magistério posterior e aplicar a regra mais vantajosa (pontos, idade progressiva, pedágio ou direito adquirido).
+5. Reafirmação da DER se necessário.
 
-Lei 15.326/2026. Cômputo de tempo.
+## 4. Exemplo
 
-Lei 11.301/2006. Funções de magistério.
-
-Lei 9.394/96, LDB, arts. 29 a 31.
-
-Lei 8.213/91, arts. 56 e 57.
-
-IN 128/2022.
-
-## 4. Marco jurisprudencial central
-
-### ADI 3772 STF
-
-Funções de magistério.
-
-### Tema 1011 STJ
-
-Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
-
-### Tema 1091 STF
-
-Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2020). Tese. "É constitucional o fator previdenciário previsto no art. 29, caput, incisos e parágrafos, da Lei nº 8.213/91, com a redação dada pelo art. 2º da Lei nº 9.876/99." Tese adversa. Só pesa no benefício calculado com fator, como a aposentadoria por tempo de contribuição com requisitos reunidos entre a Lei 9.876/99 e a EC 103/2019; nas regras de transição do professor o valor segue o art. 26 da EC 103/2019, sem fator (auditoria 03/10/2026).
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Professora de pré-escola
-
-Magistério pleno.
-
-### Cenário B — Auxiliar de creche com função pedagógica
-
-Lei 15.326/2026 garante.
-
-### Cenário C — Monitora pedagógica
-
-Enquadra-se.
-
-### Cenário D — Berçarista com atuação pedagógica
-
-Conta.
-
-### Cenário E — Cargo híbrido docente apoio
-
-Tempo efetivo de função pedagógica conta.
-
-### Cenário F — Direção de creche
-
-Lei 11.301 e ADI 3772.
-
-### Cenário G — Coordenação em educação infantil
-
-Conta.
-
-## 6. Cenários limitados
-
-### Cenário H — Função exclusivamente de cuidado
-
-Não conta. Sem componente pedagógico.
-
-### Cenário I — Serviço administrativo sem docência
-
-Não conta.
-
-### Cenário J — Professor universitário
-
-Não aplicável. O texto limita a aposentadoria do professor à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º) (auditoria 03/10/2026).
-
-## 7. Metodologia
-
-Primeiro, identificação das atribuições efetivas.
-
-Segundo, prova documental (atribuição, diário de classe, plano pedagógico).
-
-Terceiro, diferenciar pedagógico de cuidado básico.
-
-Quarto, cômputo retroativo.
-
-Quinto, combinação com regras aplicáveis.
-
-Sexto, reafirmação se necessário.
-
-## 8. Riscos processuais
-
-Risco de descaracterização pela função de cuidado.
-
-Risco de negativa pela classificação funcional.
-
-Risco de exigência formal excessiva.
-
-Risco de limitação temporal da aplicação da lei.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, prova detalhada das funções.
-
-Segundo, diário pedagógico, plano de aula, atribuição.
-
-Terceiro, depoimento testemunhal.
-
-Quarto, fundamentação com Lei 15.326/2026 e Lei 11.301.
-
-Quinto, ADI 3772 e Tema 1011.
-
-Sexto, comparação entre regras.
-
-## 10. Cálculos ilustrativos
-
-Tempo em educação infantil de 2000 a 2026. 26 anos.
-
-Cargo híbrido de 2005 a 2010. 5 anos, função pedagógica.
-
-Soma com professor regular posterior. Total conta.
-
-## 11. Integração prática
-
-`aposentadoria-professor-rgps`, `base-professor-regra-transicao-pontos-ec103`, `base-professor-regra-transicao-pedagio-ec103`, `base-professor-regra-transicao-idade-progressiva-ec103`, `base-professor-direito-adquirido-ec20`, `peticao-previdenciaria`, `precedentes-previdenciarios`.
+Docente em creche de 2000 a 2005 (5 anos), auxiliar com função pedagógica comprovada de 2005 a 2010 (5 anos) e professora de pré-escola de 2010 a 2025 (15 anos): 25 anos de magistério se provada a função docente no período de auxiliar.

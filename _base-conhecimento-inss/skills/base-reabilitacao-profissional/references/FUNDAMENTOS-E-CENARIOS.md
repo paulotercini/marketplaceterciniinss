@@ -1,115 +1,26 @@
-# Reabilitação Profissional — Fundamentos e Cenários
+# Reabilitação profissional. Fundamentos e cenários
 
-## 1. Conceito operacional
+O marco normativo conferido e as teses estão em `../SKILL.md`. Este arquivo reúne os cenários de aplicação.
 
-Reabilitação profissional é a providência do INSS para que o segurado incapacitado para a atividade original volte ao mercado em função compatível com sua capacidade residual. O benefício B26 mantém a proteção financeira durante o PRP.
+## Cenários favoráveis
 
-## 2. Fundamento constitucional
+| Cenário | Pedido | Fundamento |
+|---|---|---|
+| A. B31 ou B91 cessado no curso do PRP | Restabelecimento até a conclusão do programa | Lei 8.213/91, art. 62, §1º |
+| B. PRP encerrado sem certificado | Restabelecimento e retomada do programa | Lei 8.213/91, art. 92; Decreto 3.048/99, art. 140 |
+| C. Certificado para função incompatível | Nulidade do encerramento | Lei 8.213/91, arts. 62, §1º, e 92 |
+| D. Incapacidade parcial e permanente reconhecida em juízo | Encaminhamento ao PRP com a premissa judicial | Tema 177 TNU |
+| E. Perfil sem potencial de reinserção | Aposentadoria por incapacidade permanente (B32 ou B92) | Lei 8.213/91, art. 62, §1º; Súmula 47 TNU |
+| F. Falta de recursos de deslocamento ou alimentação | Pedido de auxílio-transporte, alimentação ou diárias | IN 128/2022, art. 419, V a VII |
+| G. Recolocação por cota | Indicação de vagas reservadas a reabilitados | Lei 8.213/91, art. 93 |
 
-Art. 201, I, CF/88.
+## Cenários desfavoráveis
 
-Art. 203, IV, CF/88. Inclusão.
+| Cenário | Efeito | Fundamento |
+|---|---|---|
+| H. Certificado regular para função compatível | Encerramento válido; INSS não responde pela colocação | Decreto 3.048/99, art. 140, §1º |
+| I. Recusa injustificada ao PRP | Suspensão e posterior cessação | Lei 8.213/91, art. 101, II; IN 128/2022, art. 423 |
 
-## 3. Fundamento legal
+## Prova útil
 
-Lei 8.213/91, arts. 89, 93 e 101.
-
-Decreto 3.048/99, arts. 136 a 140.
-
-IN 128/2022.
-
-Portaria 991/2022.
-
-## 4. Marco jurisprudencial central
-
-### Tema 177 TNU
-
-Reabilitação e alta.
-
-### Súmula 47 TNU
-
-Capacidade residual.
-
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Razoável duração do processo.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Segurado em B31 com prognóstico de reabilitação
-
-Conversão para B26.
-
-### Cenário B — B32 com possibilidade de reabilitação
-
-Conversão para B26.
-
-### Cenário C — PRP inconcluso
-
-Manutenção do B26.
-
-### Cenário D — Alta sem certificado
-
-Revisão judicial.
-
-### Cenário E — Empregador não readapta
-
-Retorno do benefício ou art. 118 estabilidade.
-
-### Cenário F — Cota de PCD
-
-Inserção ao mercado sob Lei 8.213 art. 93.
-
-## 6. Cenários limitados
-
-### Cenário G — Idade ou perfil incompatíveis
-
-Aposentadoria por incapacidade permanente.
-
-### Cenário H — Certificado emitido e recolocação efetiva
-
-Alta regular.
-
-### Cenário I — Segurado que se recusa ao PRP sem justificativa
-
-Cessação do benefício, art. 101 Lei 8.213.
-
-## 7. Metodologia
-
-Primeiro, análise do prognóstico.
-
-Segundo, conversão para B26.
-
-Terceiro, PRP estruturado.
-
-Quarto, acompanhamento.
-
-Quinto, inserção via cota.
-
-Sexto, combate a alta indevida.
-
-## 8. Riscos processuais
-
-Risco de alta prematura. Impugnar.
-
-Risco de limbo trabalhista-previdenciário.
-
-Risco de empregador recusar readaptação.
-
-Risco de PRP mal executado.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, prognóstico claro.
-
-Segundo, PRP estruturado.
-
-Terceiro, inserção real no mercado.
-
-Quarto, acompanhamento jurídico.
-
-Quinto, ação judicial em alta indevida.
-
-## 10. Integração prática
-
-`base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `analise-documental-incapacidade`, `peticao-previdenciaria`, `ntep-nexo-acidentario`.
+Relatório do médico assistente com limitações funcionais (`relatorio-medico-assistente`), cópia integral do processo de reabilitação, descrição das funções pela empresa (IN 128/2022, art. 422) e prova de escolaridade e histórico profissional.

@@ -1,9 +1,11 @@
 ---
 name: base-validacao-formal-laudo-medico-checklist-ab
-description: "Validação formal de relatório médico pelos Checklists A e B do escritório, regime CFM e Portarias MPS/INSS 13/2026, 14/2026, 15/2026. Use SEMPRE que mencionar checklist A laudo médico, checklist B laudo PCD BPC, validação formal laudo, auditoria documental relatório médico, Resolução CFM 1.851/2008, Resolução CFM 2.314/2022 telemedicina, IN 128/2022 art. 286 287 290, B31 laudo, B32 laudo, B91 laudo, B92 laudo, B94 laudo, BPC laudo, PCD laudo IF-BrA, IFBrM laudo, laudo extemporâneo, validade temporal laudo, prognóstico laudo, exames complementares, CID laudo, dupla codificação CID DSM-5-TR autismo, fibromialgia laudo Lei 15.176, perícia documental Portaria 13/2026 14/2026 15/2026, parecer verossimilhança, Lei 12.842/2013, art. 60 §11-A Lei 8.213. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-auxilio-acidente-b94-pos-reforma, analise-bpc-loas, aposentadoria-deficiencia, peticao-previdenciaria."
+description: "Validação formal de relatório médico pelos Checklists A e B do escritório, regime CFM e Portarias MPS/INSS 13/2026, 14/2026, 15/2026. Use SEMPRE que mencionar checklist A laudo médico, checklist B laudo PCD BPC, validação formal laudo, auditoria documental relatório médico, Resolução CFM 1.851/2008, Resolução CFM 2.314/2022 telemedicina, Resolução CFM 1.658/2002 atestado, B31 laudo, B32 laudo, B91 laudo, B92 laudo, B94 laudo, BPC laudo, PCD laudo IF-BrA, IFBrM laudo, laudo extemporâneo, validade temporal laudo, prognóstico laudo, exames complementares, CID laudo, dupla codificação CID DSM-5-TR autismo, fibromialgia laudo Lei 15.176, perícia documental Portaria 13/2026 14/2026 15/2026, parecer verossimilhança, Lei 12.842/2013, art. 60 §11-A Lei 8.213. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-auxilio-acidente-b94-pos-reforma, analise-bpc-loas, aposentadoria-deficiencia, peticao-previdenciaria."
 ---
 
 # Validação Formal de Relatório Médico. Checklist A e B do Escritório
+
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente.
 
 ## 1. Quando acionar esta skill
 
@@ -45,11 +47,9 @@ Solução. Solicitar laudo segmentado conforme finalidade, com checklist especí
 
 Lei 12.842/2013 (Lei do Ato Médico). Art. 1º. Define o ato médico.
 
-Resolução CFM 1.851/2008. Atestado médico para fins de avaliação ocupacional.
+Resolução CFM 1.658/2002, alterada pela Resolução CFM 1.851/2008. Atestado médico: conteúdo e requisitos.
 
 Resolução CFM 2.314/2022. Disciplina a telemedicina.
-
-Resolução CFM 2.057/2013. Atestado e laudo médicos. Validade.
 
 Código de Ética Médica (Resolução CFM 2.217/2018). Arts. 80 e 81.
 
@@ -57,7 +57,7 @@ Código de Ética Médica (Resolução CFM 2.217/2018). Arts. 80 e 81.
 
 Lei 8.213/91, art. 60, § 11-A. Análise documental.
 
-IN 128/2022, arts. 286, 287, 290. Documentos comprobatórios da incapacidade.
+Portaria Conjunta MPS/INSS 13/2026, art. 2º. Requisitos mínimos do documento médico na análise documental do B31.
 
 Portaria Conjunta MPS/INSS 13/2026. Análise documental B31.
 
@@ -71,17 +71,17 @@ Lei 8.742/93 (LOAS).
 
 Decreto 6.214/2007.
 
-Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026). Avaliação biopsicossocial.
+Portaria Conjunta MDS/INSS 2/2015. Avaliação biopsicossocial.
 
-Portaria 34/2025. TCQ.
+Portaria Conjunta MDS/INSS 34/2025. Regras e procedimentos do BPC.
 
-Portaria 37/2026. IFBrM.
+Portaria Conjunta MDS/MPS/INSS 37/2026. Altera a Portaria Conjunta MDS/INSS 2/2015 (avaliação social e médica do BPC).
 
 Lei 15.157/2025. Dispensa de reavaliação.
 
 LC 142/2013. Aposentadoria PCD.
 
-Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (auditoria 03/10/2026). IF-BrA.
+Portaria Interministerial SDH/MPS/MF/MOG/AGU 1/2014. IF-BrA.
 
 ## 4. Checklist A. Validação de laudo para incapacidade (B31, B32, B91, B92, B94)
 
@@ -159,7 +159,7 @@ Item A.27. Período estimado de incapacidade (B31).
 
 Item A.28. Insuscetibilidade de reabilitação (B32 ou B92).
 
-Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86, caput, da Lei 8.213/91; auditoria 03/10/2026, retirado o Tema 416/STJ, cuja tese fala em acidente do trabalho e trata da lesão mínima) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
+Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86, caput, da Lei 8.213/91); o Tema 416 STJ trata do grau mínimo da lesão; o nexo laboral é exigido apenas quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
 
 Item A.30. Caracterização da sequela (B94).
 
@@ -289,7 +289,7 @@ Refutação. Insuficiência probatória. Solicitar laudo detalhado conforme chec
 
 Laudo não fixa data de início da doença ou da deficiência.
 
-Crítico para. B32 ou B92 (com adicional 25%). Aposentadoria PCD (DID retroativa). BPC (caracterização do impedimento de longo prazo).
+Crítico para. Preexistência em qualquer benefício por incapacidade (art. 42, §2º, e art. 59, §1º, da Lei 8.213/91). Aposentadoria PCD (DID retroativa). BPC (caracterização do impedimento de longo prazo). O adicional de 25% depende da necessidade de assistência permanente de outra pessoa (art. 45 da Lei 8.213/91), e não da DID.
 
 Cruzamento com `formacao-documentacao-did-pcd`.
 
@@ -335,7 +335,7 @@ Pedir ao médico a limitação em verbos com medida, ligada à profissão.
 
 ### 6.10. Vício de data única
 
-Laudo traz só a data do diagnóstico, ou só a data do afastamento. Sem a DID e a DII separadas, cada uma com seu marcador, o INSS fixa a DII na data da filiação ou antes dela e alega preexistência.
+Laudo traz apenas a data do diagnóstico, ou apenas a data do afastamento. Sem a DID e a DII separadas, cada uma com seu marcador, o INSS fixa a DII na data da filiação ou antes dela e alega preexistência.
 
 Pedir as duas datas, com o documento que prova cada uma, e o marco do agravamento quando a doença é anterior à filiação.
 
@@ -356,8 +356,6 @@ Cruzamento com `formacao-documentacao-did-pcd`.
 ### 7.3. Telemedicina e laudo extemporâneo
 
 Resolução CFM 2.314/2022. Telemedicina admitida.
-
-Resolução CFM 2.057/2013. Validade do laudo extemporâneo.
 
 Análise documental do INSS aceita laudos com validade temporal compatível com o caso.
 
@@ -467,7 +465,7 @@ Histórico ambulatorial.
 
 Cartão de vacinação (BPC para crianças).
 
-### Requisitos obrigatórios x facultativos no Atestmed (Onda 72)
+### Requisitos obrigatórios e facultativos no Atestmed
 
 O art. 2º da Portaria Conjunta MPS/INSS 13/2026, conferido no DOU de 24/03/2026, exige documento oficial com foto (caput) e documentação médica legível e sem rasuras contendo cinco incisos. Identificação do requerente, data de emissão, diagnóstico por extenso OU código CID (alternativos), assinatura do emitente e identificação do emitente com registro no Conselho de Classe legível.
 
@@ -515,7 +513,7 @@ Detalhamento e uso pró-segurado da correção em `analise-documental-incapacida
 
 `base-bpc-aposentadoria-pcd-procedimentos` para procedimentos BPC e PCD.
 
-## 13. Cruzamento com Onda 28 (Modelos Geradores)
+## 13. Cruzamento com os modelos geradores
 
 Para GERAR o modelo de relatório médico antes de enviar ao médico assistente (e depois usar esta skill para VALIDAR o que o médico devolver), acionar.
 
@@ -533,7 +531,7 @@ Fluxo. Acionar skill geradora para preparar modelo personalizado. Enviar ao méd
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos conferentes, acionamento obrigatório
 
 O Checklist A e o Checklist B conferem a FORMA do relatório médico. O conteúdo clínico é do médico da área, despachado em paralelo, e é ele que diz se o relatório demonstra o que a tese precisa.
 
@@ -554,16 +552,4 @@ O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

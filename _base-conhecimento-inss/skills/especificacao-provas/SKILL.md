@@ -3,7 +3,7 @@ name: especificacao-provas
 description: "Skill de manifestação estratégica na fase de especificação de provas em processos previdenciários. Use SEMPRE que o usuário mencionar especificação de provas, intimação para provas, 'quais provas deseja produzir', 'nada a requerer', 'sem provas a produzir', fase probatória, encerramento da instrução, art. 348 CPC, art. 350 CPC, art. 355 CPC, julgamento antecipado, fatos incontroversos, prova documental suficiente, manifestação sobre provas, despacho para especificação, ou qualquer situação em que o juiz intimar a parte autora para dizer se tem provas a produzir. Use também quando a skill peticao-previdenciaria for acionada para gerar manifestação em fase de instrução processual. Esta skill substitui integralmente o hábito de responder com simples 'nada a requerer' e impõe a técnica de fixação de fatos incontroversos vinculados a documentos por ID. NUNCA responder 'nada a requerer' ou 'sem provas a produzir' sem antes aplicar esta skill."
 ---
 
-# Skill de Especificação de Provas — Fixação Estratégica de Fatos Incontroversos
+# Skill de Especificação de Provas. Fixação Estratégica de Fatos Incontroversos
 
 ## Objetivo
 
@@ -13,23 +13,23 @@ Transformar a intimação para especificação de provas em oportunidade process
 
 ### Base normativa
 
-O art. 374 do CPC estabelece que não dependem de prova os fatos incontroversos (inciso III), os admitidos no processo como incontroversos (inciso III) e aqueles em cujo favor milita presunção legal de existência ou veracidade (inciso IV).
+O art. 374 do CPC dispensa de prova os fatos notórios (I), os afirmados por uma parte e confessados pela outra (II), os admitidos no processo como incontroversos (III) e os que têm a seu favor presunção legal de existência ou veracidade (IV).
 
-O art. 341 do CPC impõe ao réu o ônus da impugnação específica. Cada fato não impugnado especificamente será presumido verdadeiro. Quando o advogado do segurado explicita quais fatos cada documento comprova, transfere ao INSS o ônus de impugnar cada ponto individualmente. O silêncio do INSS após essa manifestação opera contra a autarquia.
+O art. 341 do CPC impõe ao réu a impugnação específica, e o fato não impugnado se presume verdadeiro. A presunção não alcança o fato sobre o qual não se admite confissão (art. 341, I), e a jurisprudência a atenua contra a Fazenda Pública por envolver direito indisponível (arts. 345, II, e 392). Mesmo assim, explicitar o que cada documento comprova obriga o INSS a enfrentar cada ponto, e o silêncio dele torna o fato incontroverso para o art. 374, III, e pesa na valoração.
 
 O art. 355, I do CPC autoriza o julgamento antecipado do mérito quando não houver necessidade de produção de outras provas. A manifestação que declara suficiência da prova documental pavimenta o caminho para o julgamento antecipado favorável.
 
-O art. 371 do CPC consagra o livre convencimento motivado. O juiz deve apreciar toda a prova e indicar as razões de seu convencimento. Quando a manifestação vincula cada fato a um documento específico por ID, o juiz que ignorar qualquer deles sem justificativa comete omissão embargável (art. 1.022, II do CPC).
+Pelo art. 371 do CPC, o juiz aprecia a prova constante dos autos e indica as razões da formação de seu convencimento. Quando a manifestação vincula cada fato a um documento específico por ID, o juiz que ignorar qualquer deles sem justificativa comete omissão embargável (art. 1.022, II do CPC).
 
 ### Lógica processual
 
 A técnica opera em três camadas simultâneas.
 
-**Camada 1 — Fixação de incontroversos.** Ao explicitar quais fatos são incontroversos e já comprovados, a manifestação cria um ônus de resposta para o INSS. Se a autarquia não impugna, os fatos se tornam incontroversos por preclusão lógica.
+**Camada 1. Fixação de incontroversos.** Ao explicitar quais fatos são incontroversos e já comprovados, a manifestação cria um ônus de resposta para o INSS. Se a autarquia não impugna, os fatos se tornam incontroversos (art. 374, III).
 
-**Camada 2 — Direcionamento da valoração probatória.** Ao vincular cada documento a um fato específico, o advogado direciona a leitura do juiz e reduz a margem de discricionariedade na apreciação da prova. Se a sentença ignorar um documento expressamente vinculado a um fato, configura omissão.
+**Camada 2. Direcionamento da valoração probatória.** Ao vincular cada documento a um fato específico, o advogado direciona a leitura do juiz e reduz a margem de discricionariedade na apreciação da prova. Se a sentença ignorar um documento expressamente vinculado a um fato, configura omissão.
 
-**Camada 3 — Registro formal de suficiência.** Se o juiz indeferir o pedido por insuficiência de provas após a parte autora declarar suficiência probatória sem impugnação do INSS, o recurso ganha fundamento concreto de cerceamento de defesa invertido ou de error in procedendo na valoração da prova.
+**Camada 3. Registro formal de suficiência.** Se o juiz indeferir o pedido por insuficiência de provas após a parte autora declarar suficiência probatória sem impugnação do INSS, o recurso ganha fundamento concreto de cerceamento de defesa invertido ou de error in procedendo na valoração da prova.
 
 ## Regra Absoluta do Escritório
 
@@ -43,7 +43,7 @@ Identificação da parte autora, número do processo e referência ao despacho q
 
 ### 2. Bloco de fatos incontroversos vinculados a documentos
 
-Para cada fato relevante do processo, a manifestação deve conter um parágrafo autônomo com a seguinte estrutura lógica (sem dois-pontos).
+Para cada fato relevante do processo, a manifestação deve conter um parágrafo autônomo com a seguinte estrutura lógica.
 
 **Fato** → **Documento que o comprova (por ID)** → **Conclusão de que o fato é incontroverso ou independe de prova adicional**
 
@@ -80,7 +80,7 @@ Fatos típicos a fixar como incontroversos vinculados a documentos por ID.
 
 **Verificação obrigatória para ruído na faixa limítrofe (82 a 85 dB(A)).** Quando o PPP informar ruído entre 82 e 85 dB(A) e o valor não for expressamente NEN, a manifestação deve incluir os seguintes requerimentos específicos.
 
-Primeiro, requerimento de juntada de contracheques/holerites de todo o período do vínculo para comprovação da jornada efetivamente cumprida, incluindo horas extras habituais. A jornada efetiva é o TE da fórmula de normalização do NEN (NHO-01, item 5.1.2), e horas extras habituais podem elevar o NEN acima de 85 dB(A).
+Primeiro, requerimento de juntada de contracheques/holerites de todo o período do vínculo para comprovação da jornada efetivamente cumprida, incluindo horas extras habituais. A jornada efetiva é o TE da fórmula de normalização do NEN (NHO-01), e horas extras habituais podem elevar o NEN acima de 85 dB(A).
 
 Segundo, requerimento de expedição de ofício à empresa (ou ao responsável pela guarda dos documentos, se empresa extinta) para apresentação de cópia do LTCAT que embasou o PPP, com indicação expressa da metodologia utilizada (NHO-01 ou NR-15), equipamento de medição (decibelímetro ou dosímetro), configuração do dosímetro (incremento de duplicação de dose Q e nível limiar de integração NLI) e grandeza reportada (NPS, LAVG ou NEN). A identificação desses parâmetros é indispensável à luz do Tema 317/TNU (setembro/2025), que exige indicação expressa da norma no PPP.
 
@@ -123,7 +123,7 @@ Manifestação enxuta e direta. Dois a quatro parágrafos. Sem fundamentação d
 
 ### Rito ordinário federal
 
-Manifestação mais densa. Fundamentar expressamente o art. 374, III e o art. 341 do CPC. Vincular cada fato ao documento por ID. Requerer julgamento antecipado com fundamentação.
+Manifestação mais densa. Fundamentar o art. 374, III, e o art. 341 do CPC. Vincular cada fato ao documento por ID. Requerer julgamento antecipado com fundamentação.
 
 ### CRPS (processo administrativo recursal)
 
@@ -141,7 +141,7 @@ Se a sentença indeferir o pedido por insuficiência de provas após a manifesta
 
 ### tema-1124-instrucao-administrativa
 
-Se o processo envolver documentos não apresentados na via administrativa (PPP, LTCAT, laudos novos), a manifestação de especificação de provas deve vincular esses documentos aos fatos e reforçar que a prova nova em juízo justifica a retroação dos efeitos financeiros à DER, nos termos do Tema 1124/STJ.
+Se o processo envolver documentos não apresentados na via administrativa (PPP, LTCAT, laudos novos), a manifestação vincula esses documentos aos fatos e sustenta o termo inicial na DER quando o documento já existia e o INSS deveria tê-lo exigido. Prova apresentada apenas em juízo tende a deslocar os efeitos para a citação (Tema 1124/STJ, item 2.3). O ideal é levá-la ao INSS antes da ação; ver `tema-1124-instrucao-administrativa`.
 
 ## Alertas Automáticos
 
@@ -163,25 +163,13 @@ Antes de finalizar a manifestação, verificar.
 4. A declaração de suficiência probatória está presente
 5. A ressalva de perícia está incluída quando o caso exige prova técnica
 6. O requerimento de julgamento antecipado está presente quando cabível
-7. A proibição de dois-pontos está observada
+7. Dois-pontos apenas antes de citação literal ou de enumeração
 8. O formato segue o padrão do escritório quando gerado como .docx
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo de Catanduva julga antecipadamente sempre que a prova documental basta, indefere perícia técnica salvo empresa inativa ou recusa documentada e defere ofício à empregadora para juntar o LTCAT. A prova documental vai com a inicial. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seções 6 e 13.

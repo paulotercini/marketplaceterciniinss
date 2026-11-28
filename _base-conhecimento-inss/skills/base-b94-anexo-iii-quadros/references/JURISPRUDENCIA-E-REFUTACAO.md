@@ -1,133 +1,14 @@
-# Anexo III B94 — Jurisprudência e Refutação
-
-## 1. Precedentes relevantes
-
-### Súmula 88 TNU
-
-Exemplificativo.
-
-Fonte oficial em https://www.cjf.jus.br
-
-### Súmula 89 TNU
-
-Sequela permanente.
-
-### Tema 416 STJ
-
-Redução parcial.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 350 TNU
-
-Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, art. 86
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 3.048/99
-
-Fonte oficial em https://www.planalto.gov.br
-
-### IN 128/2022
-
-Fonte oficial em https://www.in.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Anexo é taxativo
-
-Argumento adversário. Restrição.
-
-Refutação. Súmula 88 TNU exemplificativo.
-
-### Argumento 2 — Sem incapacidade total
-
-Argumento adversário. Severidade.
-
-Refutação. B94 é redução parcial. Tema 416 STJ.
-
-### Argumento 3 — Sem CID específico
-
-Argumento adversário. Forma.
-
-Refutação. Sequela funcional importa.
-
-### Argumento 4 — Perda parcial mínima não enquadra
-
-Argumento adversário. Insignificância.
-
-Refutação. Tema 416 STJ aceita pequena redução.
-
-### Argumento 5 — Sequela estética não conta
-
-Argumento adversário. Função intacta.
-
-Refutação. Ofensa estética grave conta.
-
-### Argumento 6 — Exigência de cura definitiva
-
-Argumento adversário. Definitivo.
-
-Refutação. Súmula 89 TNU sequela permanente.
-
-### Argumento 7 — Sem CAT, sem B94
-
-Argumento adversário. Forma.
-
-Refutação. CAT pode ser emitida posteriormente.
-
-### Argumento 8 — Sem nexo acidentário
-
-Argumento adversário. Espécie.
-
-Refutação. NTEP e prova material.
-
-### Argumento 9 — Sequela em outro membro
-
-Argumento adversário. Restrição.
-
-Refutação. Anexo III amplo.
-
-### Argumento 10 — Cessou tratamento
-
-Argumento adversário. Estabilização.
-
-Refutação. Sequela permanente independe de tratamento.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, perícia técnica.
-
-Segundo, comparação ao Anexo III.
-
-Terceiro, fundamentação Súmula 88.
-
-Quarto, recurso ou ação.
-
-Quinto, monitoramento.
-
-Sexto, integração com SB.
-
-## 6. Diligência de atualização
-
-Acompanhar Tema 416 STJ.
-
-Revalidar Súmulas 88 e 89 TNU.
-
-Monitorar jurisprudência sobre Anexo III.
+# Anexo III B94. Refutação
+
+Precedentes e fundamento normativo no SKILL.md.
+
+| Argumento do INSS | Refutação |
+|---|---|
+| O Anexo III é taxativo | Art. 104, caput, do Decreto 3.048/99 ("a exemplo das situações"); IN 128/2022, art. 354, §1º (rol meramente exemplificativo); Tema 416 STJ; Súmula 88 TNU. |
+| Não há incapacidade | O B94 exige redução da capacidade, não incapacidade (art. 86). Quesito de incapacidade não responde ao requisito. |
+| Sequela sem CID específico | O requisito é funcional; o CID não é elemento do art. 86. |
+| A redução é mínima | Tema 416 STJ: devido ainda que mínima a lesão. |
+| Perda auditiva abaixo do grau tabelado | Súmula 44 STJ. |
+| O maior esforço saiu do regulamento | A revogação do art. 104, II, não retirou o requisito do art. 86; o maior esforço está na tese do Tema 416 STJ. |
+| O segurado voltou a trabalhar na mesma função | O B94 é indenização e é devido independentemente de remuneração (art. 86, §§2º e 3º). |
+| Sem CAT não há B94 | O B94 cobre acidente de qualquer natureza (art. 86); a CAT importa apenas à natureza acidentária. |

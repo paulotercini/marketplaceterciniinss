@@ -9,7 +9,7 @@ Protocolo obrigatório pró-segurado para garantir que NENHUMA citação de arti
 Antes de mencionar qualquer artigo, conferir que ele EXISTE na norma de referência. Procedimento.
 
 1. Identificar a norma (Lei, Decreto, IN, Portaria, EC, LC).
-2. Localizar o arquivo no repositório `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/`.
+2. Localizar o arquivo no repositório `/sessions/<sessão>/mnt/INSS/base-legislacao/`.
 3. Usar Grep ou Read para confirmar que o artigo existe.
 4. Se NÃO existe, declarar "Artigo X da Lei Y não localizado no arquivo verificado" e suspender a afirmação.
 
@@ -50,7 +50,7 @@ Quando o artigo for citado em conjunto com precedente, verificar.
 
 ## CASO PRÁTICO 1 - PORTARIA 992/2022 (ERRO RECORRENTE)
 
-PROBLEMA. Em várias skills do plugin entre as Ondas 23 e 30, eu (Claude) repeti que "Portaria DIRBEN/INSS 992/2022 trata do cálculo da RMI".
+PROBLEMA. Várias skills do plugin afirmavam que "Portaria DIRBEN/INSS 992/2022 trata do cálculo da RMI".
 
 VERIFICAÇÃO PELO PROTOCOLO. Abrir o arquivo `06-Portarias/Portaria-DIRBEN-INSS-992-2022-manutencao.md` no workspace. Ler o art. 1º.
 

@@ -286,7 +286,7 @@ Do que para constar, firma-se a presente.
 
 Os e-mails das chefias intermediárias da GEX (SGBEN, SAMB, SADJ, SAMC, SGREC, SAREC) e das coordenações COBEN/COREC da SR não são divulgados em página pública oficial do gov.br/inss. A página "Quem é Quem" do INSS exibe nomes e e-mails apenas até o nível de Gerente-Executivo e Superintendente.
 
-Para nomes individuais e e-mails das chefias de seção, recomenda-se Pedido de Acesso à Informação (LAI) pelo Fala.BR, com prazo de resposta de 20 dias úteis prorrogável por mais 10 (Lei 12.527/2011, art. 11).
+Para nomes individuais e e-mails das chefias de seção, recomenda-se Pedido de Acesso à Informação (LAI) pelo Fala.BR, com prazo de resposta de 20 dias prorrogável por mais 10 (Lei 12.527/2011, art. 11).
 
 O padrão de domínio "[sigla].[gex]@inss.gov.br" (ex.: sard.gexacq@inss.gov.br já em uso) sugere fortemente os endereços presumidos, mas devem ser validados antes da impetração do MS, especialmente para fins de prova da efetiva ciência das autoridades coatoras.
 

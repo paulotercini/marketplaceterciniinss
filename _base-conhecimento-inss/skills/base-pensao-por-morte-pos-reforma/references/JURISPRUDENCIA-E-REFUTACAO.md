@@ -1,177 +1,27 @@
-# Pensão por Morte — Jurisprudência Verificada e Refutação
-
-## 1. Precedentes vinculantes
-
-### Súmula 416 STJ
-
-Tese. É devida a pensão por morte aos dependentes do segurado que, embora sem a qualidade ao tempo do óbito, já havia preenchido os requisitos para a concessão de aposentadoria em vida.
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação pró-segurado. Afasta negativa por perda de qualidade quando havia direito adquirido.
-
-### Súmula 340 STJ
-
-Tese. A Lei aplicável à concessão da pensão é a vigente na data do óbito (tempus regit actum).
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação pró-segurado. Preserva direito conforme regra vigente na DO.
-
-### Tema 45 TNU
-
-Tese. É devida pensão por morte ao ex-cônjuge que não percebe alimentos, desde que comprovada dependência econômica superveniente à separação, demonstrada em momento anterior ao óbito (auditoria 03/10/2026). Quem recebia alimentos concorre pelo art. 76, §2º, da Lei 8.213/91.
-
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado. Inclui ex-cônjuge pensionista alimentícia.
-
-### Filho inválido (Lei 8.213/91, art. 16, I, e art. 77, §2º, II)
-
-Regra legal, sem tema da TNU. Filho inválido mantém direito à pensão por morte além dos 21 anos; o Tema 15 TNU, antes citado aqui, trata de concubinato (auditoria 03/10/2026).
-
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado. Garante continuidade da pensão em caso de invalidez.
-
-### Súmula 37 TNU
-
-Tese. A pensão por morte, devida ao filho até os 21 anos de idade, não se prorroga pela pendência do curso universitário (auditoria 03/10/2026). Tese adversa ao filho estudante; o caminho é provar invalidez ou deficiência, que mantém a cota pelo art. 77, §2º, II.
-
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado. Protege filho que se tornou inválido antes dos 21.
-
-### Tema 81 TNU
-
-Tese. Contra os menores impúberes não corre o prazo do art. 74, II, da Lei n. 8.213/91, devendo a pensão por morte ser deferida a partir do óbito do instituidor (auditoria 03/10/2026). Para óbitos desde 18/01/2019 (MP 871/2019), o Tema 1421/STJ afasta a retroação quando o filho menor de 16 anos requer após 180 dias; é tese adversa, e o caminho é requerer dentro desse prazo.
-
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado. Fortalece prova de união estável.
-
-### Tema 148 TNU
-
-Tese. A perda da qualidade de segurado constitui óbice à concessão da pensão por morte quando o de cujus não chegou a preencher, antes de sua morte, os requisitos para obtenção de qualquer aposentadoria (auditoria 03/10/2026). Tese adversa; o caminho é provar a qualidade de segurado pelo período de graça ou que o instituidor já reunia os requisitos de alguma aposentadoria.
-
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado. Orienta demonstração da dependência nas classes II e III.
-
-### Tema 732/STJ (REsp 1.411.258) e Tema 1271/STF pendente (auditoria 25/07/2026)
-
-Tese. Menor sob guarda é equiparado a filho para fins de pensão por morte.
-
-Fonte oficial em https://portal.stf.jus.br
-
-Aplicação pró-segurado. Resolve controvérsia histórica sobre equiparação.
-
-### IRDR 35 TRF4
-
-Tese. Específico sobre pensão por morte com elementos controvertidos (verificar conteúdo preciso em precedentes).
-
-Fonte oficial em https://www.trf4.jus.br
-
-Aplicação pró-segurado. Orientação regional relevante.
-
-## 2. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Perda da qualidade de segurado
-
-Argumento adversário. O instituidor havia perdido a qualidade antes do óbito.
-
-Refutação. Súmula 416 STJ. Direito adquirido à aposentadoria antes da perda da qualidade preserva a pensão. Ainda, acionar `periodo-graca-qualidade-segurado` para verificar prorrogação.
-
-### Argumento 2 — Ausência de prova da união estável
-
-Argumento adversário. A união estável não foi comprovada documentalmente.
-
-Refutação. Tema 81 TNU. Provas materiais podem ser complementadas por prova testemunhal. Lei 13.846/2019 não exclui a complementação. Conjunto probatório robusto prevalece.
-
-### Argumento 3 — Ex-cônjuge sem direito
-
-Argumento adversário. Ex-cônjuge não tem direito à pensão após separação.
-
-Refutação. Art. 76, §2º, da Lei 8.213/91. Ex-cônjuge que recebia alimentos concorre em igualdade com os dependentes do art. 16, I, e, sem alimentos, o Tema 45 TNU admite a pensão com prova de dependência econômica superveniente à separação (auditoria 03/10/2026). A dependência é mantida pela percepção dos alimentos.
-
-### Argumento 4 — Filho maior sem invalidez atestada
-
-Argumento adversário. Filho maior de 21 anos sem invalidez não é dependente.
-
-Refutação. Art. 16, I, e art. 77, §2º, II, da Lei 8.213/91 (auditoria 03/10/2026). Filho com invalidez ou deficiência mantém pensão além dos 21. A prova médica é fundamental. Acionar `aposentadoria-deficiencia` para conceito de deficiência.
-
-### Argumento 5 — Menor sob guarda excluído por MP 1.523/96
-
-Argumento adversário. Menor sob guarda foi excluído do rol de dependentes.
-
-Refutação. Tema 732/STJ, o menor sob guarda tem direito à pensão comprovada a dependência econômica. Atenção (auditoria 25/07/2026), a matéria pós-EC 103 está afetada no Tema 1271/STF (RE 1.442.021), com suspensão nacional desde 21/01/2025.
-
-### Argumento 6 — Redução drástica da RMI
-
-Argumento adversário. A nova regra da EC 103/2019 reduziu a RMI para 50% + 10% por dependente.
-
-Refutação. A redução é constitucional mas exige aplicação correta. Direito adquirido preserva regra anterior para óbitos anteriores a 13/11/2019. Na pensão acidentária (B93), a cota do art. 23 incide sobre aposentadoria-base de 100% da média (EC 103, art. 26, §3º, II) (auditoria 03/10/2026).
-
-### Argumento 7 — Cessação pela duração da tabela
-
-Argumento adversário. Cônjuge jovem terá pensão por prazo limitado.
-
-Refutação. Cônjuge com 45 anos ou mais na DO tem pensão vitalícia em óbito desde 01/01/2021, e com 44 anos ou mais em óbito até 31/12/2020 (auditoria 03/10/2026). Cônjuge inválido mantém enquanto durar a invalidez. Cônjuge com filho menor pode pedir reanálise quando da maioridade do filho para reavaliação.
-
-### Argumento 8 — Concubinato impuro não gera direito
-
-Argumento adversário. Concubinato paralelo ao casamento não gera pensão.
-
-Refutação. Tese em reconstrução no STJ. Concubinato de longa duração com dependência econômica comprovada permite argumentação pró-dependente. Caso a caso.
-
-### Argumento 9 — Ausência de carência
-
-Argumento adversário. O instituidor não havia cumprido carência.
-
-Refutação. Art. 26, I, da Lei 8.213/91. Pensão por morte é isenta de carência. Argumento inaplicável.
-
-### Argumento 10 — DIB no requerimento e não na DO
-
-Argumento adversário. A DIB deve ser no requerimento, não na DO.
-
-Refutação. Art. 74, I. Se requerimento em 180/90 dias, DIB na DO. Prazo da Lei 13.183/2015 ampliado depois (verificar vigência). Fora do prazo, DIB na DER.
-
-## 3. Estratégia integrada
-
-Primeiro, reunir documentação robusta de dependência (IR, conta conjunta, testemunhas).
-
-Segundo, investigar caráter acidentário do óbito para B93.
-
-Terceiro, verificar qualidade do instituidor e direito adquirido à aposentadoria.
-
-Quarto, maximizar número de dependentes reconhecidos para elevar percentual.
-
-Quinto, em filho inválido, reunir prova médica robusta de invalidez anterior aos 21.
-
-Sexto, em ex-cônjuge, certidão judicial de alimentos.
-
-Sétimo, em menor sob guarda, sentença de guarda definitiva.
-
-Oitavo, em concubinato de longa duração, conjunto probatório denso e argumentação com precedentes recentes.
-
-Nono, em óbito de CI, verificar possibilidade de indenização post mortem de contribuições.
-
-Décimo, em hipóteses de acumulação, avaliar regra de opção pela mais vantajosa.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a proteção ampla da família e a interpretação extensiva do conceito de dependência.
-
-Hugo Goes, em Manual, detalha a tabela de duração e o rateio.
-
-Fábio Zambitte Ibrahim, em Curso, critica a redução da RMI e defende direito adquirido.
-
-Wladimir Novaes Martinez analisa a união estável e defende prova testemunhal como complemento legítimo.
-
-Marco Aurélio Serau Junior, em Pensão por Morte, aprofunda o tema.
-
-O IBDP sustenta institucionalmente o direito dos dependentes.
-
-## 5. Diligência de atualização
-
-Revalidar Lei 15.108/2025 e Portaria DIRBEN 4/2025. Acompanhar julgados sobre concubinato e união estável. Acionar `precedentes-previdenciarios`.
+# Pensão por Morte Pós-Reforma. Refutação
+
+Precedentes da TNU com dados de julgamento em `pensao-por-morte`.
+
+## Precedentes
+
+- Súmula 340 STJ: lei vigente na data do óbito.
+- Súmula 416 STJ: pensão devida se o instituidor, embora sem qualidade, já reunia os requisitos de aposentadoria.
+- Tema 732 STJ: menor sob guarda, com dependência econômica, tem direito à pensão do mantenedor (ECA, art. 33, §3º). Tema 1271 STF pendente para o regime da EC 103/2019.
+- Temas 526 e 529 STF, adversos: concubinato e uniões simultâneas.
+- Tema 45 TNU: ex-cônjuge sem alimentos com dependência superveniente à separação, anterior ao óbito.
+- Tema 148 TNU, adverso: sem qualidade e sem requisitos de aposentadoria, não há pensão.
+- Tema 1421 STJ, adverso: filho menor de 16 anos que requer após 180 dias do óbito ocorrido desde 18/01/2019 recebe desde a DER.
+- Súmula 37 TNU e Tema 7 TNU, adversos: a pensão do filho não se prorroga por curso universitário.
+
+## Teses do INSS e refutação
+
+1. Perda da qualidade: período de graça e prorrogações (art. 15) ou requisitos de aposentadoria já reunidos (Súmula 416 STJ).
+2. União estável sem prova: óbito anterior a 18/01/2019, Súmula 63 TNU; posterior, início de prova material dos 24 meses e Justificação Administrativa (IN 128/2022, art. 180, parágrafo único).
+3. Ex-cônjuge sem direito: art. 76, §2º, e Tema 45 TNU.
+4. Filho maior sem direito: invalidez ou deficiência anterior ao óbito (art. 16, I); a presunção de dependência do filho inválido é relativa (Tema 114 TNU), e renda pequena não a afasta.
+5. Menor sob guarda excluído: Tema 732 STJ e Lei 15.108/2025.
+6. Cota de 50% mais 10 pontos para óbito anterior a 13/11/2019: regra anterior (Súmula 340 STJ).
+7. Pensão de 4 meses: conferir 2 anos de união e 18 contribuições, e a dispensa no óbito acidentário (art. 77, §2º-A).
+8. Carência: inexigível (art. 26, I).
+9. DIB na DER: requerimento dentro de 90 ou 180 dias gera DIB no óbito (art. 74, I).
+10. Acumulação vedada: o art. 24 da EC 103/2019 só veda duas pensões de cônjuge ou companheiro no mesmo regime; nas demais acumulações aplicam-se as faixas do §2º.

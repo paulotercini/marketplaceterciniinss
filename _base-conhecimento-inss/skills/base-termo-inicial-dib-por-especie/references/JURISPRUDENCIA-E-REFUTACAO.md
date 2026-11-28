@@ -1,127 +1,19 @@
-# DIB por Espécie — Jurisprudência e Refutação
+# DIB por Espécie. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 350 STF
+- Tema 862 STJ: auxílio-acidente a partir do dia seguinte à cessação do auxílio-doença que lhe deu origem, observada a Súmula 85 STJ.
+- Tema 626 STJ e Súmula 576 STJ: citação como termo inicial da aposentadoria por invalidez judicial sem requerimento prévio.
+- Tema 350 STF: necessidade de requerimento administrativo prévio, com as exceções da tese.
+- Tema 995 STJ: reafirmação da DER.
+- Tema 1124 STJ: prova apresentada apenas em juízo (`tema-1124-instrucao-administrativa`).
+- Súmula 22 TNU: perícia judicial que constata incapacidade já existente no requerimento fixa a DIB do benefício assistencial nessa data.
 
-Prévio requerimento administrativo (RE 631.240), e não salário de benefício (auditoria 03/10/2026). Fonte oficial em https://portal.stf.jus.br
+## 2. Refutação
 
-### Tema 995 STJ
-
-Reafirmação da DER. Fonte oficial em https://www.stj.jus.br
-
-### Tema 416 STJ
-
-Auxílio-acidente. Fonte oficial em https://www.stj.jus.br
-
-### Lei 8.213/91, arts. 49, 60, 74, 86
-
-DIB. Fonte oficial em https://www.planalto.gov.br
-
-### Lei 13.846/2019
-
-Alterou DIB pensão. Fonte oficial em https://www.planalto.gov.br
-
-### Tema 326 TNU
-
-DIB auxílio-doença. Fonte oficial em https://www.cjf.jus.br
-
-### Súmula 22 TNU
-
-DIB do benefício assistencial, fixada no requerimento administrativo quando a perícia judicial mostra que a incapacidade já existia nessa data (auditoria 03/10/2026). Fonte oficial em https://www.cjf.jus.br
-
-### IN INSS 128/2022
-
-Procedimento. Fonte oficial em https://www.gov.br/inss
-
-## 2. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — DIB sempre na DER
-
-Argumento adversário. Regra única.
-
-Refutação. Cada espécie tem regra própria.
-
-### Argumento 2 — Pensão por morte sempre na DER
-
-Argumento adversário. Não retroage.
-
-Refutação. Art. 74 retroage ao óbito.
-
-### Argumento 3 — Auxílio-doença sempre na DER
-
-Argumento adversário. Sem retroação.
-
-Refutação. Art. 60 §1º.
-
-### Argumento 4 — Auxílio-acidente sempre na DER
-
-Argumento adversário. Independe da cessação.
-
-Refutação. Art. 86.
-
-### Argumento 5 — BPC retroage
-
-Argumento adversário. BPC retroage ao requerimento de avaliação.
-
-Refutação. Art. 21 LOAS — DER.
-
-### Argumento 6 — Recusa de retroação
-
-Argumento adversário. Sem prazo, sem retroação.
-
-Refutação. Art. 74 prazo de 90/180 dias.
-
-### Argumento 7 — Afastamento desconsiderado
-
-Argumento adversário. Sem afastamento, DER.
-
-Refutação. Prova médica e CTPS.
-
-### Argumento 8 — Reafirmação não cabe
-
-Argumento adversário. Reafirmação afasta direito.
-
-Refutação. Tema 995 STJ.
-
-### Argumento 9 — Salário-maternidade sempre no parto
-
-Argumento adversário. Regra única.
-
-Refutação. Art. 71 admite afastamento.
-
-### Argumento 10 — Sem documento, sem retroação
-
-Argumento adversário. Documentação rigorosa.
-
-Refutação. Análise probatória ampla.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira sustenta retroação favorável.
-
-Frederico Amado defende interpretação por espécie.
-
-Hugo Goes admite reafirmação.
-
-Marco Aurélio Serau Junior critica DIB tardia.
-
-IBDP sustenta DIB favorável.
-
-## 4. Estratégia integrada
-
-Primeiro, identificar espécie e DIB aplicável.
-
-Segundo, prova do afastamento ou óbito.
-
-Terceiro, recurso ao CRPS.
-
-Quarto, ação judicial.
-
-Quinto, dialeticidade.
-
-Sexto, monitoramento.
-
-## 5. Diligência de atualização
-
-Acompanhar STJ. Revalidar Súmula 22 TNU. Monitorar IN INSS.
+1. **"A DIB é sempre a DER."** Cada espécie tem regra própria (arts. 43, 49, 54, 57, 60, 71, 74, 80 e 86 da Lei 8.213/91).
+2. **"A pensão não retroage ao óbito."** Art. 74, I: 180 dias para filhos menores de 16 anos e 90 dias para os demais.
+3. **"O auxílio-acidente começa na DER ou na perícia."** Art. 86, §2º, e Tema 862 STJ.
+4. **"O auxílio por incapacidade do empregado começa na DER."** Art. 60, caput: 16º dia do afastamento, se requerido em até 30 dias.
+5. **"Aposentadoria por idade do empregado começa na DER."** Art. 49, I, "a": desligamento, se requerida em até 90 dias.
+6. **"Reafirmação não cabe."** Tema 995 STJ e IN 128, art. 577.

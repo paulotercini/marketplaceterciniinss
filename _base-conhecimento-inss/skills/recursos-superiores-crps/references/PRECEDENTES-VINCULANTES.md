@@ -1,4 +1,4 @@
-# Precedentes Vinculantes, Pareceres e Normas Vinculantes do CRPS – Arts. 108, 109 e 114
+# Precedentes Vinculantes, Pareceres e Normas Vinculantes do CRPS. Arts. 108, 109 e 114
 
 ## 1. Pareceres com Caráter Vinculante (Art. 108)
 
@@ -30,7 +30,7 @@ A vedação se aplica igualmente às súmulas vinculantes aprovadas pelo Ministr
 
 É vedado aplicar norma sustada pelo Congresso Nacional, nos termos do art. 49, V, da CF.
 
-## 3. Observância de Precedentes do STF – Obrigatória (Art. 109, §2º)
+## 3. Observância de Precedentes do STF. Obrigatória (Art. 109, §2º)
 
 As decisões do CRPS DEVERÃO observar as interpretações firmadas pelo STF nas seguintes hipóteses
 
@@ -40,7 +40,7 @@ As decisões do CRPS DEVERÃO observar as interpretações firmadas pelo STF nas
 
 Nesses casos, a observância é imperativa. Não há margem de discricionariedade para o conselheiro.
 
-## 4. Observância de Precedentes do STF – Facultativa (Art. 109, §3º)
+## 4. Observância de Precedentes do STF. Facultativa (Art. 109, §3º)
 
 As decisões do CRPS PODERÃO observar as interpretações firmadas pelo STF
 
@@ -52,7 +52,7 @@ As decisões do CRPS PODERÃO observar as interpretações firmadas pelo STF
 
 Embora o verbo seja "poderão", trata-se de faculdade formal. Na prática, o advogado do segurado deve argumentar que a observância é impositiva por dever de coerência do sistema e por economia processual. Se o CRPS decidir em sentido contrário ao STF em repercussão geral, o segurado terá que judicializar para obter o mesmo resultado, gerando custo desnecessário para ambas as partes e para o sistema.
 
-## 5. Observância de Precedentes do STJ – Facultativa (Art. 109, §4º)
+## 5. Observância de Precedentes do STJ. Facultativa (Art. 109, §4º)
 
 As decisões do CRPS PODERÃO observar as interpretações firmadas pelo STJ
 

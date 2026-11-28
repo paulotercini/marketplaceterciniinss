@@ -3,66 +3,40 @@ name: base-especial-ppp-mudanca-layout-historico
 description: "Skill base sobre as mudanças históricas do layout do Perfil Profissiográfico Previdenciário (PPP), com auditoria pró-segurado dos formulários antigos (DSS-8030, DIRBEN-8030, SB-40, DISES-BE 5235), do PPP em layout 2003 a 2017 e do PPP eSocial atual. Use SEMPRE que mencionar mudança de layout PPP, PPP antigo, PPP histórico, PPP eSocial, formulário SB-40, DSS-8030, DIRBEN-8030, DISES-BE 5235, layout 2003 PPP, layout 2017 PPP, S-2240, S-2245, S-2299, eSocial periculosidade, PPP digital, retificação PPP por mudança de layout, perda de dados em mudança, conversão de campos antigos, transposição de SB-40 para PPP, comparação SB-40 PPP, agente nocivo em layout antigo, EPC EPI campo histórico. Hub para defesa do segurado quando empresa apresenta documento em layout incompatível com fato gerador, ou quando INSS exige formulário inadequado para o período. NÃO use para auditoria isolada de PPP atual sem componente de mudança de layout. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria."
 ---
 
-# PPP. Mudanças de Layout e Formulários Históricos
+# PPP. Formulários históricos e mudanças de layout
 
-## 1. Quando acionar esta skill
+## Quando acionar
 
-Acione SEMPRE que houver dúvida sobre o formulário aplicável ao período, divergência entre o layout do PPP e o fato gerador, ou auditoria de documento histórico (SB-40, DSS-8030, DIRBEN-8030). A skill protege o segurado de exigências formais incompatíveis com o regime vigente à época.
+Dúvida sobre o formulário aceito para cada período, recusa de formulário antigo, PPP emitido em layout diverso do período trabalhado ou PPP eletrônico do eSocial. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## 2. Marco normativo histórico
+## Formulários aceitos (IN 128/2022, arts. 272 e 274)
 
-Antes de 1995, os formulários eram DISES-BE 5235 e SB-40 (Decretos 53.831/64 e 83.080/79). Entre 1995 e 2003, o DSS-8030 substituiu, com requisitos mais técnicos pela Lei 9.032/95. A partir de 1º/01/2004 vigorou o PPP no layout instituído pela IN INSS/DC 99/2003 e mantido em essência até 2017 (IN 77/2015).
+| Período trabalhado | Documento |
+|---|---|
+| Até 28/04/1995, por categoria | CTPS, ficha ou livro de registro; dispensa formulário quando a anotação basta (art. 274, § 1º) |
+| Até 13/10/1996, por agente | Antigo formulário (SB-40, DISES-BE 5235, DSS-8030, DIRBEN-8030) emitido até 31/12/2003, ou PPP emitido desde 18/07/2002; para ruído, também o laudo |
+| De 14/10/1996 a 31/12/2003 | Antigo formulário emitido até 31/12/2003 com LTCAT ou demonstração ambiental, ou PPP emitido desde 18/07/2002 |
+| Desde 01/01/2004 | PPP (IN INSS/DC 99/2003; Decreto 3.048/99, art. 68, § 3º) |
+| PPP eletrônico | Válido o documento do eSocial para essa finalidade (art. 272, § 2º) |
 
-Em 2017, o eSocial passou a substituir gradualmente o PPP. Os eventos S-2240 (condições ambientais), S-2245 (treinamentos) e S-2299 (desligamento) integram o regime digital. A IN INSS 128/2022 consolidou o regime atual.
+A IN 170/2024 antecipou de 01/01/2004 para 18/07/2002 a data a partir da qual o PPP emitido é aceito.
 
-## 3. Eixos centrais pró-segurado
+## Teses
 
-A regra é tempus regit actum. O formulário aplicável é o vigente à data do trabalho.
+1. **Lei do tempo do serviço.** O enquadramento segue a norma vigente à época do trabalho; o formulário é apenas o meio de prova.
+2. **Formulário antigo emitido até 31/12/2003 vale para o seu período.** A recusa por "obsolescência" contraria os arts. 272, I, e 274 da IN 128/2022.
+3. **PPP atual para período antigo.** O PPP emitido desde 18/07/2002 cobre períodos anteriores (art. 274, I, "b", 2; II, "b"; III, "b"), desde que fundado em demonstração ambiental.
+4. **Vício formal.** A impugnação genérica de vício formal no PPP não desconstitui seu valor probante; exige-se impugnação que gere dúvida objetiva sobre a idoneidade (TNU, PUIL 0005459-58.2020.4.03.6338).
+5. **Lacuna ou erro de migração.** Suprir por LTCAT, retificação (`retificacao-ppp`), testemunhas e perícia (Súmula 198 do TFR).
 
-A empresa que apresenta DSS-8030 quando o trabalho é anterior a 1995 não macula o documento. Pelo contrário, o DSS-8030 supre o SB-40.
+## Prova
 
-A empresa que apresenta PPP atual (layout 2003 ou eSocial) com cobertura de período anterior é válida, desde que a fonte primária (LTCAT, GFIP) esteja preservada.
-
-A ausência de migração entre layouts não pode prejudicar o segurado. Cabe ao INSS aceitar conversão de campos.
-
-## 4. Fragilidades adversárias mais comuns
-
-O INSS recusa SB-40 sob alegação de obsolescência. Refute com tempus regit actum e Súmula 198 TFR.
-
-O INSS recusa PPP eSocial sob alegação de ausência de carimbo. Refute com a IN 128/2022, que dispensa carimbos quando há assinatura digital ICP-Brasil.
-
-O INSS exige formulário não vigente à época. Refute com hierarquia normativa.
-
-O INSS desconsidera PPP histórico que cobre múltiplos períodos com layouts diferentes. Refute com a possibilidade de reconstituição documental.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em retificação de PPP pela empresa quando viável (skill `retificacao-ppp`), produção de prova testemunhal e perícia indireta. Combinar com `auditoria-ppp` e `base-especial-categoria-profissional-pre1995`.
-
-## 6. Documentos essenciais
-
-Formulário aplicável à época. LTCAT contemporâneo. GFIP. CTPS. CNIS. Quando histórico, declaração de empresa sucessora.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+Formulário da época ou PPP; LTCAT ou demonstrações ambientais; CTPS e ficha de registro; CNIS; declaração da sucessora quando a empresa mudou ou foi extinta.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

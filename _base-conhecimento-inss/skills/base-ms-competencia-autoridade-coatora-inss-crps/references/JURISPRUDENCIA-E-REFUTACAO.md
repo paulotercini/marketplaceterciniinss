@@ -1,137 +1,29 @@
-# Competência e Autoridade Coatora MS — Jurisprudência e Refutação
+# Competência e Autoridade Coatora. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes e enunciados
 
-### Tema 374 STF
+Tema 374/STF (RE 627.709/DF, j. 20/08/2014, trânsito em 08/12/2016). Tese: "A regra prevista no § 2º do art. 109 da Constituição Federal também se aplica às ações movidas em face de autarquias federais." A tese não menciona MS; a aplicação ao MS vem do STJ e do TRF3 (`ms-competencia-autoridade-coatora`).
 
-"A regra prevista no § 2º do art. 109 da Constituição Federal também se aplica às ações movidas em face de autarquias federais." A tese não trata de mandado de segurança, e a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Súmula 689 STF: "O segurado pode ajuizar ação contra a instituição previdenciária perante o juízo federal do seu domicílio ou nas varas federais da Capital do Estado-Membro."
 
-Fonte oficial em https://portal.stf.jus.br
+Súmula 376 STJ: "Compete a turma recursal processar e julgar o mandado de segurança contra ato de juizado especial."
 
-### Súmula 689 STF
+Súmula 628 STJ (encampação, requisitos cumulativos de vínculo hierárquico, defesa do mérito e ausência de mudança de competência constitucional).
 
-"O segurado pode ajuizar ação contra a instituição previdenciária perante o juízo federal do seu domicílio ou nas varas federais da Capital do Estado-Membro." (auditoria 03/10/2026)
+TRF3, Órgão Especial, CC 5014490-19.2020.4.03.0000, Rel. Des. Fed. Newton De Lucca, j. 28/08/2020 (MS de mora tem natureza administrativa, Vara Cível). Demais precedentes do Órgão Especial e da 2ª Seção em `COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
 
-Fonte oficial em https://portal.stf.jus.br
+TRF3, 4ª Turma, ApelRemNec 5000864-04.2019.4.03.6131, j. 19/05/2020, e 6ª Turma, ApelRemNec 5000361-55.2024.4.03.6115 (gerente do INSS ilegítimo com processo no CRPS; encampação afastada).
 
-### Súmula 206 STJ
+## 2. Refutação aos argumentos típicos
 
-"A existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo." (auditoria 03/10/2026)
+1. Autoridade incorreta, extinção. Refutação. Se a autoridade indicada pertence à mesma pessoa jurídica e defendeu o mérito, aplica-se a encampação (Súmula 628 STJ); caso contrário, pedir emenda (CPC, arts. 321 e 338, subsidiários) e, extinto sem mérito, renovar no prazo (Lei 12.016/2009, art. 6º, §6º).
 
-Fonte oficial em https://www.stj.jus.br
+2. Foro do domicílio inviável em MS. Refutação. Art. 109, §2º, CF; Tema 374/STF; STJ e TRF3 admitem a opção do impetrante (CC 5015986-83.2020.4.03.0000).
 
-### Súmula 376 STJ
+3. Juízo deve declinar para a sede da autoridade. Refutação. Competência e legitimidade não se confundem; o juízo do domicílio não declina (TRF3, Órgão Especial, CC 5008294-33.2020.4.03.0000).
 
-"Compete a turma recursal processar e julgar o mandado de segurança contra ato de juizado especial." (auditoria 03/10/2026)
+4. Órgão do CRPS não é autoridade. Refutação. O presidente da Junta ou da Câmara pratica o ato de pautar e julgar e responde pela omissão.
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
+5. Vara Previdenciária competente para MS de mora. Refutação. Pedido limitado a decidir ou implantar é administrativo (CC 5014490-19.2020.4.03.0000).
 
-Duração razoável.
-
-## 2. Marco legislativo
-
-### Lei 12.016/2009, art. 6º
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.213/91
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Portaria 462/2026 CRPS
-
-Fonte oficial em https://www.in.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1 — Autoridade coatora incorreta
-
-Argumento adversário. Extinção.
-
-Refutação. Emenda art. 6º §3º.
-
-### Argumento 2 — Competência absoluta mal indicada
-
-Argumento adversário. Nulidade.
-
-Refutação. Declínio para foro correto, preservação do ato.
-
-### Argumento 3 — Foro do impetrante inviável
-
-Argumento adversário. Restritivo.
-
-Refutação. O Tema 374 STF aplica o art. 109, §2º, CF às ações contra autarquias federais. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-### Argumento 4 — CRPS não é autoridade coatora
-
-Argumento adversário. Interna.
-
-Refutação. Presidente do órgão responde por ato.
-
-### Argumento 5 — Ato interno não é coator
-
-Argumento adversário. Administrativo.
-
-Refutação. Omissão ou negativa caracteriza.
-
-### Argumento 6 — Competência no DF
-
-Argumento adversário. Foro central.
-
-Refutação. Art. 109 §2º CF permite alternativa.
-
-### Argumento 7 — Ato complexo
-
-Argumento adversário. Diluição.
-
-Refutação. Preponderante é a autoridade do resultado.
-
-### Argumento 8 — Vara comum vs Vara Previdenciária
-
-Argumento adversário. Conflito.
-
-Refutação. Portaria do TRF define.
-
-### Argumento 9 — MS no JEF
-
-Argumento adversário. Alçada.
-
-Refutação. O art. 3º, §1º, I, da Lei 10.259/2001 exclui o mandado de segurança da competência do JEF. A Súmula 376 STJ cuida só do MS contra ato de juizado especial (auditoria 03/10/2026).
-
-### Argumento 10 — Inexistência de competência funcional
-
-Argumento adversário. Critério.
-
-Refutação. Justiça Federal art. 109 I CF.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Hely Lopes Meirelles, Arnoldo Wald, Gilmar Ferreira Mendes.
-
-Cassio Scarpinella Bueno.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, mapeamento preciso.
-
-Segundo, escolha de foro vantajoso.
-
-Terceiro, correção oportuna.
-
-Quarto, sustentação.
-
-Quinto, consolidação.
-
-## 6. Diligência de atualização
-
-Tema 374 STF com trânsito em julgado em 08/12/2016, sem pendência a acompanhar (auditoria 03/10/2026).
-
-Revalidar Portaria 462/2026.
-
-Acompanhar jurisprudência de TRF sobre autoridade coatora.
+6. MS cabe no JEF pelo valor. Refutação. Exclusão expressa do art. 3º, §1º, I, da Lei 10.259/2001.

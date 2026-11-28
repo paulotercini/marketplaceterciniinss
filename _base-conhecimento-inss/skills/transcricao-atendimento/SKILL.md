@@ -7,7 +7,7 @@ description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou
 
 Converte o que foi FALADO em atendimento na anotação que o escritório efetivamente usa. A saída é texto pronto para colar no Microsoft To Do, nunca um resumo livre.
 
-## Regra de ouro, o teste dos quatro elementos
+## O teste dos quatro elementos
 
 A anotação não existe para narrar o atendimento. Existe para deixar o caso OPERACIONALMENTE RETOMÁVEL, de modo que meses depois se saiba o que foi decidido, por quê, e o que precisa acontecer em seguida.
 
@@ -21,24 +21,24 @@ Quatro blocos rotulados, todos OPCIONAIS. Entra o bloco que tiver conteúdo novo
 
 **Rótulo em caixa alta seguido de dois-pontos, e o conteúdo na MESMA LINHA.** Exceção admitida à vedação geral de dois-pontos, porque campo estruturado não é prosa.
 
-**Cada bloco ocupa UMA LINHA CORRIDA, sem quebra interna.** A quebra de linha separa um bloco do outro, e nada mais. Texto quebrado artificialmente polui a leitura no To Do.
+**Cada bloco ocupa UMA LINHA CORRIDA, sem quebra interna.** A quebra de linha separa um bloco do outro, e nada mais. Texto quebrado artificialmente prejudica a leitura no To Do.
 
 | Bloco | O que recebe |
 |---|---|
-| `FATOS` | Só o objetivo e apurado. Situação contributiva, benefício, processo, documentos existentes, datas, resultado de perícia, conteúdo relevante de PPP, CNIS e laudo, o que o cliente informou e os eventos já ocorridos |
+| `FATOS` | Apenas o objetivo e apurado. Situação contributiva, benefício, processo, documentos existentes, datas, resultado de perícia, conteúdo relevante de PPP, CNIS e laudo, o que o cliente informou e os eventos já ocorridos |
 | `ANÁLISE` | A leitura técnica e estratégica. Direito possível, impedimento, risco, documento decisivo, tese principal, alternativa subsidiária, motivo para aguardar ou não requerer, impacto de determinada prova |
 | `PROVIDÊNCIAS DO CLIENTE` | Tudo que depende dele. Conseguir PPP, relatório médico, CTPS, comprovante, senha do Gov.br, comparecer à perícia, falar com o RH, localizar exame antigo, retornar informação |
 | `PROVIDÊNCIAS DO ESCRITÓRIO` | Tudo que depende do escritório. Conferir CNIS, calcular, protocolar, cobrar empresa, juntar documentos, revisar PPP, recorrer, avisar o cliente, acompanhar resultado e a data de nova verificação |
 
 ### As cinco regras que fazem o formato funcionar
 
-**Primeira, bloco vazio não entra.** Registro simples de acompanhamento tem dois blocos e acabou. Criar `ANÁLISE` sem conclusão nova, ou `PROVIDÊNCIAS DO CLIENTE` sem nada a pedir, é preencher formulário, não registrar caso.
+**Primeira, bloco vazio não entra.** Registro simples de acompanhamento tem apenas dois blocos. Criar `ANÁLISE` sem conclusão nova, ou `PROVIDÊNCIAS DO CLIENTE` sem nada a pedir, é preencher formulário, não registrar caso.
 
 **Segunda, `FATOS` não recebe juízo.** "Vínculo de 1999 provavelmente deverá ser excluído" é análise disfarçada de fato, e o "provavelmente" pertence ao bloco seguinte. Em `FATOS` vai o que se viu, em `ANÁLISE` o que se concluiu.
 
-**Terceira, `ANÁLISE` abre pela CONCLUSÃO.** Qual o melhor caminho, e só então por quê. Conclusão enterrada no meio do bloco obriga a reler tudo. E registra-se a CONSEQUÊNCIA PRÁTICA, não a fundamentação. Descoberta a coisa julgada sobre períodos especiais, escreve-se que só resta a aposentadoria por idade, não a teoria da coisa julgada, que é da peça e do parecer.
+**Terceira, `ANÁLISE` abre pela CONCLUSÃO.** Qual o melhor caminho, e apenas então por quê. Conclusão escondida no meio do bloco obriga a reler tudo. E registra-se a CONSEQUÊNCIA PRÁTICA, não a fundamentação. Descoberta a coisa julgada sobre períodos especiais, escreve-se que apenas resta a aposentadoria por idade, não a teoria da coisa julgada, que é da peça e do parecer.
 
-**Quarta, a separação entre as duas providências é a razão de ser do formato.** Ela não vem de frequência no acervo, vem de projeto. Anotação como "PPP incompleto, pedir correção, aguardar até 29/03" empacota conclusão, tarefa do cliente e tarefa interna numa frase só, e obriga quem retoma a desempacotar. Separadas, a equipe lê o bloco que é dela sem varrer o resto.
+**Quarta, a separação entre as duas providências é a razão de ser do formato.** Ela não vem de frequência no acervo, vem de projeto. Anotação como "PPP incompleto, pedir correção, aguardar até 29/03" empacota conclusão, tarefa do cliente e tarefa interna numa única frase, e obriga quem retoma a desempacotar. Separadas, a equipe lê o bloco que é dela sem varrer o resto.
 
 **Quinta, a data de retorno é obrigatória**, salvo encerramento. Fecha `PROVIDÊNCIAS DO ESCRITÓRIO`, porque controlar prazo é tarefa interna. "Verificar em DD/MM", "Aguardar até DD/MM", "Relembrar em DD/MM", "Cobrar em DD/MM". Presente em 14,3% das entradas do titular, é o elemento mais constante do sistema. Anotação sem data de retorno é anotação que morre.
 
@@ -57,7 +57,7 @@ Data em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses. `(P)` Paul
 FATOS: 43 anos e 3 meses, 26 anos e 7 meses de contribuição e 23 anos e 10 meses de atividade especial na projeção atual. Vínculos antigos sem data de saída e um vínculo de 1999 em duplicidade. Tem a CTPS física. PPP eletrônico a partir de 2023 aponta ruído de 94 dB. Informa hérnia de disco com episódios de limitação funcional.
 ANÁLISE: O melhor caminho tende a ser a aposentadoria da pessoa com deficiência, projetada em R$ 5.800,00 e sem exigir afastamento do trabalho, desde que haja prova antiga e atual da deficiência leve. A data de início da deficiência decide a contagem. A especial fica como alternativa, projetada em R$ 4.500,00, faltando 1 ano e 1 mês para os 25 anos, com requerimento possível em outubro de 2027 se o PPP confirmar os períodos anteriores.
 PROVIDÊNCIAS DO CLIENTE: Solicitar o PPP no RH. Trazer a CTPS física. Procurar exames antigos da coluna, tomografia ou ressonância, e não localizando, refazer o exame e passar em ortopedista para relatório que detalhe as limitações.
-PROVIDÊNCIAS DO ESCRITÓRIO: Conferir e corrigir os vínculos do CNIS pela CTPS. Revisar a contagem quando chegarem o PPP e os documentos médicos, e só então definir a via. Verificar em 09/10.
+PROVIDÊNCIAS DO ESCRITÓRIO: Conferir e corrigir os vínculos do CNIS pela CTPS. Revisar a contagem quando chegarem o PPP e os documentos médicos, e apenas então definir a via. Verificar em 09/10.
 ```
 
 ### Registro simples, acompanhamento
@@ -92,7 +92,7 @@ Terceiro, ênfase por CAIXA ALTA na palavra que vira a frase, e o acervo traz 11
 
 Quarto, aspas na fala do cliente SOMENTE quando ela descreve a limitação melhor que o termo técnico E a limitação altera a estratégia. Diagnóstico e sintoma que não mudam prova, via ou prazo ficam de fora, por mais vívidos que sejam.
 
-Quinto, número concreto inline. Valor, protocolo, NB e tempo apurado entram no meio da frase, sem cerimônia.
+Quinto, número concreto inline. Valor, protocolo, NB e tempo apurado entram no meio da frase.
 
 Sexto, referência a anexo entre parênteses, na forma "(anexo)".
 
@@ -115,7 +115,7 @@ Encerrando, NÃO inventar data de retorno.
 
 ## O que NUNCA entra
 
-Cumprimento, conversa fiada, repetição do que o cliente falou três vezes.
+Cumprimento, conversa sem relação com o caso, repetição do que o cliente falou três vezes.
 
 Diagnóstico jurídico definitivo dado como certeza. Atendimento gera HIPÓTESE, e a certeza vem depois do CNIS e dos documentos.
 
@@ -161,16 +161,4 @@ Honestidade sobre a origem de cada regra. A ordem decisória, o fecho com data, 
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

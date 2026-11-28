@@ -1,116 +1,55 @@
 ---
 name: base-aposentadoria-direito-adquirido
-description: "Direito adquirido à aposentadoria pré-reforma EC 103/2019, proteção exclusiva do segurado. Use SEMPRE que mencionar direito adquirido aposentadoria, regras pré-reforma, art. 3º EC 103, Súmula 359 STF, RE 630.501, Tema 334 STF, melhor benefício, aposentadoria por tempo de contribuição 35 25, aposentadoria proporcional, EC 20 art. 9º, pedágio 20% integral, pedágio 40% proporcional, aposentadoria especial pré-reforma, requisitos antes 13/11/2019, reafirmação DER, acervo contributivo pré-reforma, tempus regit actum, afastar regra nova menos vantajosa, professor 30 25, art. 53 Lei 8.213, fator previdenciário, regra 85/95 progressiva Lei 13.183/2015, desaposentação Tema 503 STF, revisão da vida toda Tema 1102 STF e modulação. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao e reafirmacao-der."
+description: "Direito adquirido à aposentadoria pelas regras anteriores à EC 103/2019, na defesa do segurado. Use SEMPRE que mencionar direito adquirido aposentadoria, regras pré-reforma, art. 3º EC 103, Súmula 359 STF, RE 630.501, Tema 334 STF, melhor benefício, aposentadoria por tempo de contribuição 35 30, aposentadoria proporcional, EC 20 art. 9º, pedágio 20% integral, pedágio 40% proporcional, aposentadoria especial pré-reforma, requisitos até 13/11/2019, acervo contributivo pré-reforma, professor 30 25, art. 53 Lei 8.213, fator previdenciário, regra 85/95 progressiva art. 29-C Lei 13.183/2015, desaposentação Tema 503 STF, revisão da vida toda Tema 1102 STF. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao e reafirmacao-der."
 ---
 
-# Aposentadoria com Direito Adquirido Pré EC 103/2019
+# Aposentadoria com Direito Adquirido (Requisitos até 13/11/2019)
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta a identificação, preservação e efetivação do direito adquirido à aposentadoria concedida sob as regras anteriores à EC 103/2019, promulgada em 13 de novembro de 2019. Refuta qualquer tentativa de aplicação retroativa das regras da reforma para segurados que já haviam preenchido os requisitos antes da promulgação.
+Identificar e efetivar o direito à aposentadoria pelas regras anteriores à EC 103/2019 para quem reuniu os requisitos até 13/11/2019. Cenários e refutação em `references/`.
 
-## Marco normativo central
+## Fundamento
 
-Constituição Federal, art. 5º, XXXVI. A lei não prejudicará o direito adquirido, o ato jurídico perfeito e a coisa julgada.
+- CF, art. 5º, XXXVI: a lei não prejudica o direito adquirido.
+- EC 103, art. 3º: concessão assegurada, a qualquer tempo, a quem cumpriu os requisitos até a data de entrada em vigor da Emenda, observados os critérios da legislação vigente na data do cumprimento dos requisitos.
+- Súmula 359 STF e Tema 334 STF: aplica-se a lei do tempo em que reunidos os requisitos e o quadro mais favorável.
 
-EC 103/2019, art. 3º. O segurado que até 13 de novembro de 2019 tenha cumprido os requisitos para concessão de aposentadoria nos termos das regras anteriores mantém o direito ao benefício conforme tais regras, inclusive quanto ao cálculo da RMI.
+## Hipóteses de direito adquirido em 13/11/2019
 
-Lei 8.213/91, art. 53. Tabela de aposentadoria proporcional aplicável a quem implementou os requisitos sob a regra anterior.
+| Hipótese | Requisitos | RMI |
+|---|---|---|
+| Tempo de contribuição integral (CF, art. 201, §7º, I, redação da EC 20; Lei 8.213/91, art. 52 e seguintes) | 35 anos (H) / 30 (M), sem idade mínima | 100% do salário de benefício com fator previdenciário; sem fator se atingida a pontuação do art. 29-C |
+| Regra 85/95 (Lei 8.213/91, art. 29-C) | 35/30 anos e 96/86 pontos de 31/12/2018 a 13/11/2019 (95/85 até 30/12/2018) | 100% sem fator |
+| Professor (Lei 8.213/91, art. 56) | 30 anos (H) / 25 (M) de magistério na educação infantil, ensino fundamental ou médio | com fator; sem fator se a soma atingir a pontuação do art. 29-C com o bônus de 5 pontos (§3º) |
+| Proporcional da EC 20 (art. 9º, §1º, revogado pela EC 103, aplicável por direito adquirido) | 53 anos (H) / 48 (M), 30/25 anos e pedágio de 40% do tempo que faltava em 16/12/1998 | 70% + 5% por ano acima da soma, até 100% |
+| Tempo de serviço até 16/12/1998 (Lei 8.213/91, art. 53) | 30 anos (H) / 25 (M), sem idade | 70% + 6% por ano, até 100% aos 35/30 |
+| Especial (Lei 8.213/91, art. 57) | 15, 20 ou 25 anos de atividade especial, sem idade mínima | 100% do salário de benefício, sem fator |
+| Idade urbana (art. 48) | 65 (H) / 60 (M) e carência | 70% + 1% por grupo de 12 contribuições (art. 50) |
+| Idade rural (art. 48, §§1º e 2º) | 60 (H) / 55 (M) e 15 anos de atividade rural | 1 salário mínimo ao segurado especial (art. 39, I) |
 
-Lei 13.183/2015. Instituiu a regra 85/95 progressiva que continua aplicável a quem atingiu a fórmula antes da reforma.
+Salário de benefício pré-reforma: média dos 80% maiores salários de contribuição desde 07/1994 (Lei 8.213/91, art. 29, I e II; Lei 9.876/99, art. 3º, caput), com divisor mínimo de 60% do período decorrido entre 07/1994 e a DIB (art. 3º, §2º, Lei 9.876/99).
 
-EC 20/1998, art. 9º. Transição: integral com pedágio de 20% (caput) e proporcional com pedágio de 40% sobre o tempo faltante em 16/12/1998 (§1º), ambas com idade mínima de 53 anos (homem) ou 48 anos (mulher).
+## Estratégia
 
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
-
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
-
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado homem que em 13 de novembro de 2019 tinha 35 anos de contribuição. Direito adquirido à aposentadoria por tempo de contribuição integral, sem pedágio e sem idade mínima.
-
-Segundo, segurada mulher que em 13 de novembro de 2019 tinha 30 anos de contribuição. Mesmo raciocínio, direito adquirido à aposentadoria por tempo integral.
-
-Terceiro, segurado que até 13 de novembro de 2019 cumpriu os requisitos da proporcional da EC 20/98 (art. 9º, §1º): idade mínima de 53 anos (homem) ou 48 anos (mulher), 30/25 anos de contribuição e pedágio de 40% do tempo que faltava em 16/12/1998. Direito adquirido à aposentadoria proporcional, com coeficiente da tabela do art. 53 da Lei 8.213/91.
-
-Quarto, segurado que em 13 de novembro de 2019 atingiu a regra 85/95 progressiva da Lei 13.183/2015. Direito adquirido à aposentadoria por tempo de contribuição sem fator previdenciário, afastando a desvantagem.
-
-Quinto, professor que em 13 de novembro de 2019 tinha 30 anos de magistério (homem) ou 25 anos (mulher). Direito adquirido à aposentadoria especial do professor.
-
-Sexto, segurado especial que em 13 de novembro de 2019 tinha idade e carência rural completa sob a regra anterior. Direito adquirido à aposentadoria rural sob as regras pré-reforma.
-
-Sétimo, atividade especial concluída até 13 de novembro de 2019 com 25, 20 ou 15 anos. Direito adquirido à aposentadoria especial pré-reforma, sem idade mínima e sem pedágio.
-
-## Regra e estratégia
-
-A regra geral é de direito adquirido absoluto para quem preencheu requisitos até 13 de novembro de 2019. O INSS tenta, em muitos casos, impor regra de transição a segurado que já possuía direito adquirido. Enfrentar pelo art. 3º da EC 103 e pela Súmula 359 do STF.
-
-Sempre apurar o acervo contributivo fechado em 13 de novembro de 2019. Confrontar com cada regra pré-reforma e com o direito ao melhor benefício. Acionar `reafirmacao-der` para eventual postergação se houver benefício mais vantajoso depois, mas nunca abrir mão do direito adquirido já aperfeiçoado.
-
-Verificar se há tempo especial omitido no PPP que feche a conta antes da reforma. Acionar `auditoria-ppp` e `retificacao-ppp` quando aplicável.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao postergar DER, acione `reafirmacao-der`.
-Ao auditar PPP pré-reforma, acione `auditoria-ppp`.
-Ao buscar precedentes vinculantes, acione `precedentes-previdenciarios`.
-Ao revisar minuta, acione `revisao-peticao`.
+1. Fechar o tempo de contribuição em 13/11/2019, com CNIS e PPP auditados (`auditoria-ppp`, `retificacao-ppp`).
+2. Testar cada hipótese da tabela e calcular a RMI em cada data em que os requisitos já estavam reunidos (Tema 334 STF).
+3. Comparar com as transições (`base-aposentadoria-transicao-ec103`) e escolher a de maior RMI. O direito adquirido não precisa ter sido exercido antes da reforma.
+4. Benefício já concedido por regra menos vantajosa: revisão dentro do prazo do art. 103 da Lei 8.213/91 (Tema 966 STJ; `decadencia-revisao-previdenciaria`).
 
 ## Alertas
 
-Primeiro, o direito adquirido não decai pela simples não fruição. O segurado que preencheu requisitos antes da reforma e continuou trabalhando mantém o direito ao benefício pré-reforma, com cálculo pela regra antiga, conforme Súmula 359 STF e art. 3º EC 103.
+- O INSS aplica com frequência regra de transição a quem tinha direito adquirido. Impugnar pelo art. 3º da EC 103.
+- Revisão da vida toda: tese superada. O STF declarou constitucional o art. 3º da Lei 9.876/99 (ADIs 2110 e 2111, 21/03/2024) e o Tema 1102 passou a ter tese adversa, com trânsito em 15/05/2026. Remanesce apenas a modulação (irrepetibilidade do recebido por decisão judicial prolatada até 05/04/2024 e dispensa de honorários, custas e perícias nas ações pendentes naquela data). Ver `base-revisao-vida-toda-rvt`.
+- Desaposentação e reaposentação são vedadas (Tema 503 STF). A revisão por melhor benefício com requisitos anteriores à DIB não se confunde com elas.
 
-Segundo, cuidado com a revisão da vida toda. O art. 3º da Lei 9.876/1999 foi declarado constitucional nas ADIs 2110 e 2111 (21/03/2024), com modulação de efeitos, o que esvaziou a tese do Tema 1102 STF; a modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da Revisão da Vida Toda [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão; detalhes em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026, corrigida a atribuição da modulação ao próprio Tema 1102).
+## MCPs da casa
 
-Terceiro, a desaposentação foi vedada pelo Tema 503 STF, mas a revisão da aposentadoria por direito adquirido e melhor benefício permanece cabível, inclusive para afastar aplicação indevida do fator previdenciário em quem já atingiu a regra 85/95.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Fungibilidade aplicável
+## Integração
 
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a proteção absoluta do direito adquirido previdenciário pelo art. 5º, XXXVI, da CF.
-
-Hugo Goes, em Manual, reforça que o art. 3º da EC 103/2019 é regra de proteção, não de concessão, e preserva integralmente o acervo contributivo fechado antes da reforma.
-
-Fábio Zambitte Ibrahim, em Curso, defende o princípio do melhor benefício e a aplicação da regra mais favorável ao segurado que tenha implementado requisitos sob regime anterior.
-
-Wladimir Novaes Martinez enfrenta a sistemática de transição e sustenta a prevalência do direito adquirido frente a tentativas administrativas de deslegitimar o acervo pré-reforma.
-
-O IBDP sustenta institucionalmente a proteção do direito adquirido e do melhor benefício como garantias fundamentais do segurado.
-
-## O que NÃO está nesta skill
-
-Não está aqui a regra de transição da EC 103. Isso é objeto de `base-aposentadoria-transicao-ec103`. Não está aqui a regra permanente pós-reforma, objeto de `base-aposentadoria-regra-permanente-ec103`. Não está aqui o cálculo da RMI pós-reforma, objeto de `base-calculo-rmi-ec103`. Não está aqui a aposentadoria especial de transição, objeto de `base-aposentadoria-especial-transicao-ec103`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por tempo de contribuição com direito adquirido" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+- Peça: `peticao-previdenciaria`, bloco "Aposentadoria por tempo de contribuição com direito adquirido" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`. Revisão de minuta: `revisao-peticao`.
+- Reafirmação da DER: `reafirmacao-der`. Professor com tempo até 16/12/1998: `base-professor-direito-adquirido-ec20`.
+- Fungibilidade: `base-fungibilidade-previdenciaria`. Portarias: `base-portarias-dpmf-inss-hub`. Rural: `base-segurado-especial-autodeclaracao-arts-92-93-94`.
+- Especial de transição: `base-aposentadoria-especial-transicao-ec103`.

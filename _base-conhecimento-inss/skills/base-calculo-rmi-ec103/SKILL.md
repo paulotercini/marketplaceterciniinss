@@ -1,128 +1,59 @@
 ---
 name: base-calculo-rmi-ec103
-description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, exclusão de contribuições art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B32 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, art. 31 Lei 8.213 integração auxílio-acidente, Tema 76 STF teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
+description: "Cálculo da RMI após a EC 103/2019, na defesa do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, exclusão de contribuições art. 26 §6º, divisor mínimo 108 art. 135-A, renda mensal inicial pós-reforma, salário de benefício pós EC 103, RMI pedágio 100%, RMI pedágio 50% fator previdenciário, RMI 100% média, cálculo B31 B32 B91 B92 B94 pós-reforma, pensão por morte cota familiar, benefícios acima do teto, Tema 1070 STJ concomitantes, art. 31 Lei 8.213 integração auxílio-acidente, ADI 6309 especial, revisão da vida toda superada. Cruza com peticao-previdenciaria, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e precedentes-previdenciarios."
 ---
 
-## NOTA DA ADI 6309 (inteiro teor conferido na Onda 170, 04/10/2026)
-
-O STF, na ADI 6309 (Plenário, Rel. Min. Luís Roberto Barroso, Red. p/ acórdão Min. André Mendonça, j. 03/06/2026, acórdão no DJe de 02/10/2026), declarou **constitucional o art. 26, §2º, IV, da EC 103/2019**, por 9 votos a 2, vencidos Edson Fachin e Rosa Weber [CONFERIDO, inteiro teor e portal do STF]. A aposentadoria especial pós-reforma corresponde a 60% da média, com acréscimo de 2 pontos percentuais por ano de contribuição que exceder 20 anos, ou 15 anos na especial de 15 anos e para as mulheres (art. 26, §5º). O fundamento da ementa é que regra de cálculo própria criaria "uma espécie de dupla diferenciação" em favor de quem já tem requisitos de acesso diferenciados (item 7). Não sustentar mais a inconstitucionalidade do cálculo da especial. Na mesma ação, o STF declarou inconstitucional apenas a idade mínima do art. 19, §1º, I, alíneas a, b e c, por 6 votos a 5, o que antecipa a data de aquisição do direito para quem se enquadra nessa regra, ver base-aposentadoria-especial-transicao-ec103.
-
-
-# Cálculo da RMI Pós EC 103/2019
+# Cálculo da RMI após a EC 103/2019
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta o cálculo da Renda Mensal Inicial (RMI) dos benefícios concedidos sob as regras da EC 103/2019 e a fiscalização crítica da RMI apurada pelo INSS, com foco exclusivo na maximização do valor devido ao segurado.
+Cálculo e conferência da RMI dos benefícios com requisitos reunidos a partir de 14/11/2019. Fórmula passo a passo, cenários e refutação em `references/`. Benefícios com direito adquirido seguem `base-aposentadoria-direito-adquirido`.
 
-## Marco normativo central
+## Salário de benefício
 
-EC 103/2019, art. 26. Fixa a nova fórmula de cálculo. Média aritmética simples dos salários de contribuição desde julho de 1994 ou desde a filiação se posterior. Aplica-se 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher) de contribuição.
+- Média aritmética de 100% dos salários de contribuição desde 07/1994 ou desde o início das contribuições, se posterior (EC 103, art. 26, caput), corrigidos monetariamente (Lei 8.213/91, art. 29-B), limitada ao teto (§1º). Não há descarte automático dos 20% menores.
+- Exclusão facultativa (art. 26, §6º): podem ser excluídas as contribuições que reduzam o valor, mantido o tempo mínimo; o tempo excluído não serve para o acréscimo de 2% nem para averbação em outro regime. Simular: excluir contribuição baixa eleva a média, mas pode reduzir o coeficiente.
+- Divisor mínimo de 108 meses apenas para o filiado até julho de 1994, nas aposentadorias exceto a por incapacidade permanente (Lei 8.213/91, art. 135-A, Lei 14.331/2022).
+- O 13º salário não integra o salário de benefício (Lei 8.213/91, art. 29, §3º, redação da Lei 8.870/94).
+- Competência com contribuição abaixo do salário mínimo não conta sem complementação ou agrupamento (CF, art. 195, §14; EC 103, art. 29; `contribuicoes-complementacao-ec103`).
+- Atividades concomitantes: soma das contribuições, respeitado o teto (Tema 1070 STJ; `base-revisao-atividades-concomitantes-tema1070`).
+- Auxílio-acidente integra o salário de contribuição para a aposentadoria (Lei 8.213/91, art. 31).
 
-EC 103/2019, art. 26, §6º. Faculdade PRÓ-SEGURADO de excluir do cálculo as contribuições que reduzam o benefício, mantido o tempo mínimo. O divisor mínimo de 108 contribuições é o art. 135-A da Lei 8.213/91 (Lei 14.331/2022).
+## Coeficientes
 
-EC 103/2019, art. 26, §1º. A média fica limitada ao teto do RGPS; o piso de um salário mínimo vem do art. 201, §2º, da CF, e o §2º do art. 26 fixa os 60% com acréscimo de 2% por ano (auditoria 03/10/2026).
+| Benefício | RMI |
+|---|---|
+| Regra permanente (art. 19), pontos (art. 15), idade progressiva (art. 16), idade de transição (art. 18) | 60% + 2% por ano acima de 20 (H) ou 15 (M) (art. 26, §§2º e 5º) |
+| Pedágio 50% (art. 17) | média × fator previdenciário (art. 17, parágrafo único) |
+| Pedágio 100% (art. 20) | 100% da média (art. 26, §3º, I) |
+| Especial (art. 19, §1º, I, e art. 21) | 60% + 2% por ano acima de 20, ou de 15 na especial de 15 anos e para a mulher (art. 26, §§2º, IV, e 5º) |
+| B32 previdenciária | 60% + 2% (art. 26, §2º, III) |
+| B92 (acidente de trabalho, doença profissional ou do trabalho) | 100% da média (art. 26, §3º, II) |
+| B31 e B91 | 91% do salário de benefício, limitado à média dos 12 últimos salários de contribuição (Lei 8.213/91, arts. 61 e 29, §10) |
+| B94 | 50% do salário de benefício (Lei 8.213/91, art. 86, §1º) |
+| Pensão por morte | cota familiar de 50% da aposentadoria do instituidor ou da que teria por incapacidade permanente, + 10 pontos por dependente, até 100% (EC 103, art. 23); 100% até o teto havendo dependente inválido ou com deficiência intelectual, mental ou grave (§2º) |
 
-Constituição Federal, art. 201, §2º. Nenhum benefício que substitua o salário de contribuição ou o rendimento do trabalho do segurado terá valor mensal inferior ao salário mínimo; a irredutibilidade do valor dos benefícios está no art. 194, parágrafo único, IV (auditoria 03/10/2026).
+Piso de um salário mínimo (CF, art. 201, §2º), salvo B94, e teto do RGPS.
 
-Lei 8.213/91, art. 29 (para benefícios pré-reforma) e art. 29-C (professor pré-reforma).
+## ADI 6309 (alerta que muda a aplicação)
 
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+O STF declarou constitucional o art. 26, §2º, IV, da EC 103 (cálculo da especial) e inconstitucional a idade mínima do art. 19, §1º, I, "a" a "c" (ADI 6309, Plenário, j. 03/06/2026, acórdão no DJe de 02/10/2026, conforme registro da base em 04/10/2026). Não sustentar a inconstitucionalidade do cálculo da especial. Efeitos sobre o acesso em `base-aposentadoria-especial-transicao-ec103`.
 
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+## Estratégia
 
-## Regra permanente e pedágio 100%
-
-Na regra permanente e nas transições por pontos e idade progressiva, aplica-se o art. 26 da EC 103 (60% + 2% por ano excedente a 20/15). O pedágio de 50% (art. 17) NÃO segue essa regra: a RMI é a média de 100% dos salários multiplicada pelo fator previdenciário; o pedágio de 100% (art. 20) garante 100% da média.
-
-No pedágio de 100% (art. 20), aplica-se integralidade. A RMI corresponde a 100% da média aritmética simples das contribuições.
-
-## Benefícios por incapacidade pós-reforma
-
-B31 (auxílio por incapacidade temporária) pós-reforma. 91% da média.
-
-B32 (aposentadoria por incapacidade permanente) pós-reforma. 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher), exceto quando decorrer de acidente de trabalho, quando a RMI é 100% da média (art. 26 §3º II EC 103).
-
-B92 (aposentadoria por incapacidade permanente acidentária). 100% da média. Manter auditoria de NTEP para conversão B31 para B91 acidentária. Acionar `ntep-nexo-acidentario`.
-
-B94 (auxílio-acidente) pós-reforma. Permanece em 50% do salário-de-benefício, conforme art. 86 da Lei 8.213/91 e regulamentação específica. Acionar `auxilio-acidente-b94`.
-
-## Pensão por morte pós-reforma
-
-Art. 23 da EC 103. RMI da pensão é de 50% do valor da aposentadoria do segurado falecido mais 10% por dependente, limitada a 100%. Afasta a regra anterior de 100% fixo.
-
-Atenção crítica. A cota familiar de 50% gera RMI final entre 60% e 100% conforme o número de dependentes. Em caso de dependente único, a RMI é de 60%, o que pode ser inferior ao valor que a família dependia. Estratégia de inclusão de todos os dependentes elegíveis (filhos menores, dependentes inválidos) é fundamental.
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado com 35 anos de contribuição na regra dos pontos (art. 15). RMI = 60% + 2% × 15 (anos excedentes a 20) = 90% da média.
-
-Segundo, segurada com 30 anos de contribuição na regra de idade progressiva. RMI = 60% + 2% × 15 (anos excedentes a 15) = 90% da média.
-
-Terceiro, segurado com 36 anos no pedágio de 50%: RMI = média × fator previdenciário (art. 17, parágrafo único) — simular o fator; não se aplica o 60% + 2%.
-
-Quarto, segurado no pedágio de 100%. RMI = 100% da média, vantagem tangível em perfis de alta remuneração.
-
-Quinto, aposentadoria por incapacidade permanente (B32) sem caráter acidentário. RMI = 60% + 2% por ano excedente. Verificar possibilidade de conversão para B92 acidentária, elevando para 100%. Acionar `auditoria-laudo-pericial` e `ntep-nexo-acidentario`.
-
-Sexto, pensão por morte com 3 dependentes. RMI = 50% + 10% × 3 = 80% do valor da aposentadoria do falecido (ou do valor que ele receberia se fosse se aposentar por incapacidade na data do óbito).
-
-## Regra e estratégia
-
-Verificar salários de contribuição mais altos em momentos específicos (horas extras habituais, comissões) — atenção: o 13º salário NÃO integra o salário de benefício desde a Lei 8.870/94 (art. 29, §3º).
-
-Afastar descarte indevido dos 80% maiores salários. A regra da Lei 9.876/99 de descarte dos 20% menores foi afastada pela EC 103 para benefícios pós-reforma. A fórmula é 100% das contribuições, cuja média nunca supera a dos 80% maiores; o alívio possível é a exclusão do art. 26, §6º (auditoria 03/10/2026).
-
-Atenção à média do art. 26, caput, da EC 103. Ela usa 100% das competências desde julho de 1994 ou da filiação, o que pode gerar média inferior se houve muitas contribuições em valores baixos; o §6º permite excluí-las, mantido o tempo mínimo (auditoria 03/10/2026). Em revisões, a análise do divisor é crítica.
+1. Obter CNIS e carta de concessão com memória de cálculo (Meu INSS).
+2. Calcular de forma independente cada regra cabível e escolher a de maior RMI (Tema 334 STF).
+3. Conferir: competências omitidas, concomitância, remunerações habituais (horas extras, comissões), exclusão do §6º, coeficiente pelo tempo total (inclusive especial convertido até 13/11/2019 e tempo reconhecido em juízo).
+4. Incapacidade: verificar o nexo acidentário, que eleva a B32 de 60% + 2% para 100% (`ntep-nexo-acidentario`, `auditoria-laudo-pericial`).
+5. Revisão: prazo decadencial de 10 anos (Lei 8.213/91, art. 103; `decadencia-revisao-previdenciaria`).
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao comparar regras, acione `base-aposentadoria-transicao-ec103` e `base-aposentadoria-regra-permanente-ec103`.
-Ao verificar CNIS, acione `cnis-acerto-indicadores`.
-Ao auditar cumprimento de sentença, acione `impugnacao-cumprimento-concomitantes`.
-Ao buscar jurisprudência, acione `precedentes-previdenciarios`.
-Ao revisar peça, acione `revisao-peticao`.
-
-## Alertas
-
-Primeiro, cálculos de RMI exigem CNIS completo. Sem CNIS, não há como apurar valor correto. Solicitar sempre a Carta de Concessão com demonstrativo de cálculo pelo Meu INSS.
-
-Segundo, benefícios acima do teto do RGPS sofrem limitação. A RMI é calculada normalmente mas o valor mensal é reduzido ao teto. Em revisões, cuidado com o teto vigente à época da DIB.
-
-Terceiro, contribuições abaixo do mínimo após EC 103 exigem complementação, nos termos do §14 do art. 195 da CF com redação da EC 103. Acionar `contribuicoes-complementacao-ec103`.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a análise crítica do cálculo pós-reforma e defende o afastamento da regra dos 80% maiores.
-
-Hugo Goes, em Manual, detalha a nova fórmula e adverte para a necessidade de simulação detalhada em cada caso.
-
-Fábio Zambitte Ibrahim, em Curso, critica a redução do percentual base de 70% para 60% e defende o aproveitamento integral do tempo excedente.
-
-Wladimir Novaes Martinez analisa a cota familiar da pensão por morte e defende a inclusão ampla de dependentes elegíveis.
-
-O IBDP sustenta institucionalmente o direito do segurado à transparência no cálculo e à revisão quando detectada fragilidade na média.
-
-## O que NÃO está nesta skill
-
-Não estão aqui o direito adquirido pré-reforma, as regras de transição ou a regra permanente, que são objeto de skills específicas. Não está aqui a revisão da vida toda em benefícios concedidos antes de 13 de novembro de 2019, objeto de skill própria. Não estão aqui as peculiaridades do benefício assistencial BPC, sem RMI pela fórmula do art. 26 EC 103.
+- Peça: `peticao-previdenciaria`. Revisão de minuta: `revisao-peticao`.
+- CNIS: `base-cnis-acerto-indicadores`. Execução: `impugnacao-cumprimento-concomitantes`.
+- Pensão: `pensao-por-morte`. Auxílio-acidente: `auxilio-acidente-b94`.
+- Portarias: `base-portarias-dpmf-inss-hub`.

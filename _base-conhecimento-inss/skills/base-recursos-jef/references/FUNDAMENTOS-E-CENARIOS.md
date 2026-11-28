@@ -1,119 +1,29 @@
-# Recursos no JEF Previdenciário — Fundamentos e Cenários
+# Recursos no JEF Previdenciário. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-O sistema recursal do JEF é próprio, sumaríssimo, centrado em recurso inominado à Turma Recursal, embargos de declaração, IUJEF regional, PUIL à TNU, RE ao STF e MS contra ato da Turma Recursal.
+CF/88, arts. 98, §1º, e 102, III. Lei 10.259/2001, arts. 4º, 5º, 9º, 14 e 15. Lei 9.099/1995, arts. 12-A, 41 a 43, 48 a 50 e 55. Súmulas 203 e 376 STJ; Súmula 640 STF; Súmulas 42 e 43 TNU.
 
-## 2. Fundamento constitucional
+## 2. Cenários
 
-Art. 98, §1º, CF/88. Autorização.
+Cenário A. Sentença de improcedência. Recurso inominado em 10 dias úteis, atacando cada fundamento; preliminar de cerceamento se houve protesto tempestivo.
 
-Art. 102, III, CF/88. Recurso extraordinário.
+Cenário B. Indeferimento de tutela no curso do processo. Recurso à Turma Recursal (art. 5º da Lei 10.259/2001).
 
-Art. 105, III, CF/88. Recurso especial. Súmula 203 STJ.
+Cenário C. Acórdão da Turma Recursal omisso sobre tese decisiva. Embargos de declaração, com prequestionamento.
 
-## 3. Fundamento legal
+Cenário D. Acórdão da Turma Recursal de SP divergente de outra Turma de SP ou MS em direito material. Pedido de uniformização regional à TRU.
 
-Lei 10.259/2001.
+Cenário E. Acórdão divergente de Turma de outra Região, de súmula da TNU ou de jurisprudência dominante do STJ. PUIL à TNU, com cotejo analítico.
 
-Lei 9.099/1995.
+Cenário F. TNU contraria súmula ou jurisprudência dominante do STJ em direito material. Provocação do STJ (art. 14, §4º).
 
-Regimento TNU.
+Cenário G. Questão constitucional. Recurso extraordinário, com repercussão geral.
 
-## 4. Marco jurisprudencial central
+## 3. Cenários limitados
 
-### Súmula 203 STJ
+PUIL sobre interesse de agir, cerceamento ou outra matéria processual (Súmula 43 TNU). PUIL que pede reexame de prova (Súmula 42 TNU). REsp contra Turma Recursal (Súmula 203 STJ). Embargos para rediscutir mérito.
 
-REsp não cabe contra acórdão de Turma Recursal.
+## 4. Metodologia
 
-### Súmula 640 STF
-
-RE cabe diretamente contra acórdão de Turma Recursal em matéria constitucional.
-
-### PEDILEF TNU
-
-Uniformização em tese.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Sentença desfavorável no JEF
-
-Recurso inominado à Turma Recursal.
-
-### Cenário B — Acórdão da TR com omissão
-
-Embargos de declaração.
-
-### Cenário C — Divergência entre TRs da mesma Região
-
-IUJEF.
-
-### Cenário D — Divergência entre TRs de Regiões diversas ou com Súmula
-
-PUIL à TNU.
-
-### Cenário E — Acórdão TNU com divergência STJ
-
-REsp excepcional. Regra geral, PUIL bloqueia REsp (Súmula 203 STJ), mas art. 14 §4º Lei 10.259 permite em caso específico.
-
-### Cenário F — Matéria constitucional
-
-RE ao STF.
-
-### Cenário G — Ato ilegal de TR sem recurso
-
-MS.
-
-## 6. Cenários limitados
-
-### Cenário H — Embargos como sucedâneo
-
-Vedado.
-
-### Cenário I — RE sem matéria constitucional
-
-Inadmissível.
-
-### Cenário J — REsp contra TR sem PUIL
-
-Inadmissível (Súmula 203 STJ).
-
-## 7. Metodologia
-
-Primeiro, análise da decisão.
-
-Segundo, verificação de tese e divergência.
-
-Terceiro, escolha do recurso.
-
-Quarto, pesquisa de paradigmas.
-
-Quinto, dialeticidade.
-
-Sexto, prequestionamento.
-
-## 8. Riscos processuais
-
-Risco de intempestividade. Crítico.
-
-Risco de falta de dialeticidade. Recurso não conhecido.
-
-Risco de paradigmas inadequados. Não conhecimento do PUIL.
-
-Risco de Súmula 203 STJ. REsp direto é inadmissível.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, prazos agendados.
-
-Segundo, tese concisa.
-
-Terceiro, paradigma adequado.
-
-Quarto, prequestionamento desde a sentença.
-
-Quinto, combinação de embargos + recurso quando cabível.
-
-## 10. Integração prática
-
-Acionar `peticao-previdenciaria` para redação. `revisao-peticao` para auditoria interna. `precedentes-previdenciarios` para fundamentação.
+Primeiro, identificar a decisão e o recurso cabível. Segundo, contar o prazo em dias úteis. Terceiro, mapear os fundamentos e impugnar cada um. Quarto, na uniformização, selecionar paradigma válido e fazer o cotejo. Quinto, prequestionar.

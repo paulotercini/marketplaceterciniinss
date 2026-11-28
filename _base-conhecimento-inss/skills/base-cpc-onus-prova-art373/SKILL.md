@@ -7,7 +7,7 @@ description: "Ônus da prova pelo art. 373 do CPC e distribuição dinâmica, ó
 
 ## Escopo
 
-Skill pró-segurado sobre distribuição do ônus da prova e sua flexibilização. Em matéria previdenciária o ônus estático do art. 373 é frequentemente injusto, porque o INSS detém dados que o segurado não tem. A distribuição dinâmica corrige esse desequilíbrio.
+Distribuição do ônus da prova e sua flexibilização. O INSS detém dados que o segurado não tem, e a distribuição dinâmica corrige esse desequilíbrio.
 
 ## Marco normativo central
 
@@ -15,25 +15,27 @@ CPC, art. 373, I. Ao autor cabe provar o fato constitutivo do seu direito.
 
 CPC, art. 373, II. Ao réu cabe provar fato impeditivo, modificativo ou extintivo do direito do autor.
 
-CPC, art. 373, §1º. Distribuição dinâmica, o juiz pode atribuir o ônus a quem tem melhor aptidão para a prova, por decisão fundamentada e com oportunidade de desincumbência.
+CPC, art. 373, §1º. Distribuição dinâmica: diante da impossibilidade ou excessiva dificuldade de cumprir o encargo, ou da maior facilidade de obter a prova do fato contrário, o juiz atribui o ônus de modo diverso, por decisão fundamentada e com oportunidade de desincumbência. Agravável (art. 1.015, XI).
 
-CPC, art. 373, §2º. Veda atribuir à parte encargo de prova impossível ou excessivamente difícil.
+CPC, art. 373, §2º. A redistribuição não pode gerar situação em que a desincumbência seja impossível ou excessivamente difícil.
+
+CPC, arts. 396 a 400. Exibição de documento em poder da parte contrária; a recusa injustificada faz admitir como verdadeiros os fatos que o documento provaria (art. 400).
 
 ## Regra geral e exceção
 
-A regra geral é o ônus estático, cada parte prova o que alega. A exceção pró-segurado é a distribuição dinâmica, que desloca o ônus para o INSS quando ele tem melhor acesso à prova.
+Regra geral, ônus estático. Exceção, distribuição dinâmica, que desloca o ônus para o INSS quando ele tem melhor acesso à prova.
 
 ## Aplicação previdenciária
 
-Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ (auditoria 03/10/2026, retirado o Tema 629/STJ, que trata da extinção sem mérito por ausência de prova eficaz). Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
+Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ. A falta de início de prova material leva à extinção sem resolução de mérito, com possibilidade de repropositura (Tema 629 STJ). Acionar `segurado-especial-rural` e `base-documentos-comprobatorios-in128`.
 
-Segundo, dados em poder do INSS. CNIS, microficha, PPP arquivado, dossiê e processo administrativo estão com o INSS. Exigir do segurado a prova que só o INSS detém é impor prova diabólica, art. 373, §2º. Requerer a inversão dinâmica.
+Segundo, dados em poder do INSS. CNIS, microficha, PPP arquivado, dossiê e processo administrativo estão com o INSS. Exigir do segurado a prova que apenas o INSS detém viola o art. 373, §1º. Requerer a distribuição dinâmica ou a exibição (art. 396).
 
 Terceiro, prova emprestada. Documento e perícia de outro processo têm valor, art. 372 do CPC, útil quando a prova original é inacessível ao segurado.
 
 Quarto, hipossuficiência. A vulnerabilidade técnica e econômica do segurado reforça a aptidão do INSS para a prova e sustenta a dinâmica.
 
-Quinto, limbo previdenciário. O ônus da comunicação da alta ao empregador é do trabalhador, por se tratar de fato constitutivo, na linha do Enunciado 302/2026 do TRT7, persuasivo e não vinculante. O TST afetou a questão no IRR 302, RRAg-0100395-61.2022.5.01.0491, ainda sem tese firmada. Quando a notificação extrajudicial não tiver sido produzida em tempo, sustentar a aptidão do empregador para a prova, art. 373, §1º, porque o ASO de retorno, o prontuário do serviço médico do trabalho e o controle de ponto estão em poder da empresa. Acionar `base-limbo-previdenciario-tema300`.
+Quinto, limbo previdenciário. O ônus da comunicação da alta ao empregador recai sobre o trabalhador na linha do Enunciado 302/2026 do TRT7 (persuasivo); o IRR 302 do TST está afetado, sem tese. Sem notificação extrajudicial tempestiva, sustentar a aptidão do empregador (art. 373, §1º), que guarda ASO de retorno, prontuário e controle de ponto. Ver `base-limbo-previdenciario-tema300`.
 
 ## Estratégia pró-segurado
 
@@ -51,24 +53,12 @@ Segundo, a inversão não dispensa o mínimo de início de prova material no rur
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
 Acionada pelo eixo 3 de `base-analise-decisao-tres-eixos` na frente probatória.
-Para prova documental e checklist, acionar `documentos-comprobatorios-in128`.
+Para prova documental e checklist, acionar `base-documentos-comprobatorios-in128`.
 Para rural e segurado especial, acionar `segurado-especial-rural`.
 Para cerceamento por indeferimento de prova, acionar `base-cpc-nulidades-cerceamento`.
 Para precedentes de prova, acionar `precedentes-previdenciarios`.

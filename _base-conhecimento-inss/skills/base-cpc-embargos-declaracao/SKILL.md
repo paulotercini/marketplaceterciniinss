@@ -1,13 +1,13 @@
 ---
 name: base-cpc-embargos-declaracao
-description: "Disciplina de embargos de declaração no CRPS e no Judiciário, peça enxuta pró-segurado com no máximo 1 a 2 vícios e 1 a 2 páginas. Use SEMPRE que mencionar embargos de declaração, ED, opor embargos, omissão, obscuridade, contradição interna, erro material, art. 1.022 CPC, art. 1.023 CPC, art. 1.025 CPC prequestionamento ficto, art. 1.026 CPC multa protelatória, embargos protelatórios, art. 92 RICRPS Portaria MPS 125/2026, art. 48 Lei 9.099, art. 16 RITNU, efeito modificativo, embargos com prequestionamento, quando cabe embargos, quando não opor embargos, peça de embargos enxuta, embargos objetivos, teste anti-protelatório. Regra dura, um vício por bloco, trecho A contra trecho B, só opor quando cabível. Cruza com base-analise-decisao-tres-eixos, base-recurso-crps-peca-enxuta, base-recursos-jef, base-rito-ordinario-trf, base-tnu-admissibilidade-manual, base-cpc-fundamentacao-art489, peticao-previdenciaria e revisao-peticao. NÃO use para mérito recursal nem para recurso ordinário, inominado ou apelação."
+description: "Disciplina de embargos de declaração no CRPS e no Judiciário, peça enxuta pró-segurado com no máximo 1 a 2 vícios e 1 a 2 páginas. Use SEMPRE que mencionar embargos de declaração, ED, opor embargos, omissão, obscuridade, contradição interna, erro material, art. 1.022 CPC, art. 1.023 CPC, art. 1.025 CPC prequestionamento ficto, art. 1.026 CPC multa protelatória, embargos protelatórios, art. 92 RICRPS Portaria MPS 125/2026, art. 48 Lei 9.099, art. 30 RITNU, efeito modificativo, embargos com prequestionamento, quando cabe embargos, quando não opor embargos, peça de embargos enxuta, embargos objetivos, teste anti-protelatório. Regra dura, um vício por bloco, trecho A contra trecho B, só opor quando cabível. Cruza com base-analise-decisao-tres-eixos, base-recurso-crps-peca-enxuta, base-recursos-jef, base-rito-ordinario-trf, base-tnu-admissibilidade-manual, base-cpc-fundamentacao-art489, peticao-previdenciaria e revisao-peticao. NÃO use para mérito recursal nem para recurso ordinário, inominado ou apelação."
 ---
 
 # Embargos de Declaração. Disciplina de peça enxuta
 
 ## Escopo
 
-Skill pró-segurado que padroniza a redação de embargos de declaração no CRPS e no Judiciário. O objetivo é uma peça objetiva, de leitura imediata, onde se bate o olho e se enxerga o vício. Vale para embargos no CRPS, no JEF, no rito ordinário e na TNU.
+Padroniza a redação de embargos de declaração no CRPS, no JEF, no rito ordinário e na TNU. A peça é objetiva e mostra o vício na primeira leitura.
 
 ## Regra de ouro da disciplina
 
@@ -17,23 +17,23 @@ Segundo, 1 a 2 páginas. Sem relatório longo, sem repetição da tese de fundo.
 
 Terceiro, um vício por bloco. Cada vício ganha um bloco curto que aponta o trecho viciado, explica objetivamente o defeito e pede o saneamento.
 
-Quarto, só opor quando houver vício real e demonstrável. Embargos não são etapa automática. São exceção cabível.
+Quarto, opor apenas quando houver vício real e demonstrável. Embargos não são etapa automática.
 
 ## Marco normativo central
 
 CPC, art. 1.022. Cabimento por omissão, contradição, obscuridade e erro material.
 
-CPC, art. 1.023. Prazo de 5 dias, sem contrarrazões salvo efeito modificativo.
+CPC, art. 1.023. Prazo de 5 dias; contrarrazões em 5 dias apenas se houver possível efeito modificativo (§2º).
 
 CPC, art. 1.025. Prequestionamento ficto, matéria considerada incluída no acórdão para fins de recurso superior.
 
-CPC, art. 1.026. Interrupção do prazo do recurso seguinte. Multa de até 2% no §2º e até 10% na reiteração no §3º.
+CPC, art. 1.026. Sem efeito suspensivo, interrompem o prazo do recurso seguinte. Multa de até 2% do valor atualizado da causa (§2º) e até 10% na reiteração (§3º); não se admitem novos embargos após dois protelatórios (§4º).
 
-RICRPS, art. 92, Portaria MPS 125/2026. Embargos no CRPS por omissão, contradição, obscuridade ou erro material, prazo de 30 dias (§ 2º), e o erro material se corrige a qualquer tempo. Os 5 dias do art. 1.023 do CPC valem apenas no processo judicial.
+RICRPS, art. 92, Portaria MPS 125/2026. Embargos no CRPS por omissão, obscuridade, ambiguidade, contradição ou erro material, opostos uma única vez salvo erro material (§1º), em 30 dias da ciência; o erro material admite oposição a qualquer tempo (§2º). Os 5 dias do art. 1.023 do CPC valem apenas no processo judicial.
 
-Lei 9.099/95, art. 48. Embargos no JEF nos casos do CPC.
+Lei 9.099/95, arts. 48 a 50. Embargos no JEF nos casos do CPC, em 5 dias, com interrupção do prazo recursal.
 
-RITNU, Resolução CJF 586/2019, art. 16. Embargos na TNU com aplicação subsidiária do CPC.
+RITNU, Resolução CJF 586/2019, art. 30. Embargos na TNU contra qualquer decisão, por omissão, contradição ou obscuridade, em 5 dias; o manifestamente incabível é rejeitado de plano (§3º).
 
 ## Os quatro vícios, definição objetiva
 
@@ -45,7 +45,7 @@ Terceiro, contradição. Apenas a contradição INTERNA ao próprio julgado, ent
 
 Quarto, erro material. Equívoco evidente de escrita, cálculo, data, nome ou número, sem carga decisória.
 
-## Contradição só interna
+## Contradição interna
 
 A contradição entre o julgado e a prova dos autos, a jurisprudência divergente ou a tese da parte é contradição EXTERNA. Não cabe em embargos. Enfrenta-se com o recurso próprio, ordinário no CRPS, inominado no JEF, apelação no rito ordinário, ou PUIL. Confundir as duas gera rejeição liminar e risco de multa.
 
@@ -69,7 +69,7 @@ Segundo, embargos com fim de prequestionamento garantem a inclusão da matéria,
 
 Terceiro, embargos protelatórios geram multa de até 2%, agravada a até 10% na reiteração, art. 1.026, §§2º e 3º.
 
-Quarto, em ação previdenciária com isenção de custas, art. 129, parágrafo único, da Lei 8.213/91, a multa por embargos protelatórios não é afastada, ainda que os honorários sim.
+Quarto, a gratuidade não afasta a multa por embargos protelatórios; na reiteração, o beneficiário da gratuidade recolhe a multa ao final, sem depósito prévio (art. 1.026, §3º).
 
 ## Template da peça objetiva
 
@@ -77,7 +77,7 @@ Endereçamento e qualificação em uma linha cada.
 
 Tempestividade em uma frase, data da intimação e prazo.
 
-Bloco do vício 1. Trecho viciado citado entre aspas, com o ID (no CRPS, a folha), ao lado do ponto suscitado e do ID onde foi suscitado. Explicação objetiva do defeito em duas ou três frases, dizendo por que o ponto muda o resultado. Pedido de saneamento. Nenhuma lei se transcreve, e o art. 1.022 do CPC (no CRPS, o art. 92 do Regimento Interno) entra por remissão (Onda 184).
+Bloco do vício 1. Trecho viciado citado entre aspas, com o ID (no CRPS, a folha), ao lado do ponto suscitado e do ID onde foi suscitado. Explicação objetiva do defeito em duas ou três frases, dizendo por que o ponto muda o resultado. Pedido de saneamento. Nenhuma lei se transcreve, e o art. 1.022 do CPC (no CRPS, o art. 92 do Regimento Interno) entra por remissão.
 
 Bloco do vício 2, se houver, na mesma forma.
 
@@ -92,24 +92,12 @@ Pedido final, acolhimento dos embargos para sanar o vício, com ou sem efeito mo
 - [ ] Cada vício cita trecho concreto, página e parágrafo?
 - [ ] Passei no teste anti-protelatório?
 - [ ] A peça tem 1 a 2 páginas, sem repetir o mérito?
-- [ ] Prazo de 5 dias respeitado?
+- [ ] Prazo respeitado (5 dias no Judiciário, 30 dias no CRPS)?
 - [ ] Prequestionei se o alvo é recurso superior?
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
@@ -129,12 +117,12 @@ Mérito recursal está no recurso próprio. Contradição interna detalhada est�
 
 Ao transpor esta matéria para peça, seguir o bloco "técnica 6 (demonstrar por que a omissão altera o resultado)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
 
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo rejeitou os 14 embargos de declaração do corpus que rediscutiam o mérito, por "evidente caráter infringente". As correções vieram de erro material e de erro de fato documentado. Os embargos trazem o trecho da sentença ao lado do ponto omitido e o ID em que o ponto foi suscitado, e o inconformismo vai ao recurso. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 14.
 
-Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.
+Forma da peça em `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção "A mesma peça em todos os ritos".

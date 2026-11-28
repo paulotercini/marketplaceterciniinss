@@ -1,6 +1,6 @@
 # Catálogo Completo das Rubricas de Pagamento do INSS
 
-Fonte. Anexo IX da Portaria DIRBEN/INSS nº 992, de 28 de março de 2022. Transcrição verificada a partir de documento oficial fornecido pelo usuário em 19/06/2026.
+Fonte: Anexo IX da Portaria DIRBEN/INSS nº 992, de 28 de março de 2022. Transcrição verificada a partir de documento oficial fornecido pelo usuário em 19/06/2026.
 
 ## TABELA INTEGRAL
 
@@ -252,18 +252,7 @@ Fonte. Anexo IX da Portaria DIRBEN/INSS nº 992, de 28 de março de 2022. Transc
 
 3. As rubricas 333 a 379 espelham parcialmente as rubricas 123 a 158 do bloco 100, sendo o sub-bloco específico de Complemento Positivo associado a revisões.
 
-4. As entidades consignatárias historicamente conhecidas pelos códigos do bloco 900 incluem.
-   - ASBAPI - Associação Brasileira de Aposentados, Pensionistas e Inválidos.
-   - COBAP - Confederação Brasileira de Aposentados e Pensionistas.
-   - CONTAG - Confederação Nacional dos Trabalhadores na Agricultura.
-   - SINTAPI - Sindicato dos Aposentados, Pensionistas e Idosos.
-   - SINDNAPI - Sindicato Nacional de Aposentados, Pensionistas e Idosos da Força Sindical.
-   - CENTRAPE - Central dos Aposentados e Pensionistas.
-   - STFERJ - Sindicato dos Trabalhadores Ferroviários do RJ.
-   - ASTRE - Associação dos Trabalhadores Rodoferroviários e Empregados.
-   - ANAPPS - Associação Nacional dos Aposentados, Pensionistas e Pré-aposentados.
-   - SINDAPB - Sindicato dos Aposentados do Brasil.
-   - FNTF - Federação Nacional dos Trabalhadores Ferroviários.
+4. As siglas das entidades consignatárias do bloco 900 aparecem no extrato. O nome completo e o acordo de cooperação técnica de cada entidade devem ser conferidos no próprio extrato ou junto ao INSS antes de citados em peça.
 
 ## CHECKLIST DE AUDITORIA DE FOLHA DE PAGAMENTO
 
@@ -275,9 +264,9 @@ Fonte. Anexo IX da Portaria DIRBEN/INSS nº 992, de 28 de março de 2022. Transc
 - [ ] CP-Revisão Teto (156, 157, 158, 366, 367, 368) consta? Se cabia, ausência é problema.
 - [ ] CP-Revisão Art. 29 (369-372) consta?
 - [ ] CP-Revisão IRSM Lei 10.999/04 (143, 144, 353, 354) consta?
-- [ ] Desconto por acumulação (252, 253) compatível com Tema 1070?
+- [ ] Desconto por acumulação (252, 253, 377, 378) compatível com o art. 124 da Lei 8.213/91 e o art. 24 da EC 103/2019?
 - [ ] Pensão alimentícia (202, 210, 213, 911) atualizada conforme decisão vigente?
 
 ## FONTE PRIMÁRIA
 
-Anexo IX da Portaria DIRBEN/INSS nº 992/2022. Verificar IN 128/2022 art. 624 a 670 para procedimentos administrativos correlatos. Cruzar com `base-portarias-dpmf-inss-hub` para taxonomia completa das Portarias 990-996/2022.
+Anexo IX da Portaria DIRBEN/INSS nº 992/2022. Cruzar com `base-portarias-dpmf-inss-hub` para taxonomia completa das Portarias 990-996/2022.

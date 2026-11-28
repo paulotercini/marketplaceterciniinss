@@ -1,566 +1,83 @@
 ---
 name: base-segurado-especial-autodeclaracao-arts-92-93-94
-description: "Autodeclaração do segurado especial e ratificação pelos arts. 92, 93 e 94 da Portaria DIRBEN/INSS 990/2022 (com alterações pelas 1005/2022, 1079/2022, 1209/2024, 1240/2024, 1251/2025 e 1299/2025). Use SEMPRE que mencionar autodeclaração rural, segurado especial autodeclaração, art. 38-B Lei 8.213, art. 92 Portaria 990, art. 93 Portaria 990 36 incisos, art. 94 carência, art. 94 §5º flexibilização, bases governamentais, InfoDAP CAF DAP, CAFIR módulos fiscais, RGP, SDPA, SIPRA INCRA, SNCR, MEI Rural LC 155/2016, eSocial Doméstico Rural, Tema 1115 STJ 4 módulos fiscais, Tema 642 STJ, Tema 1007 STJ híbrida, Súmula 14 TNU, Súmula 73 TNU, Súmula 577 STJ, Tema 532 STJ, Tema 219 TNU labor infantil, Tema 327 TNU, Súmula 6 TNU, Tema 348 TNU. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, perspectiva-genero-previdenciario, base-portarias-dpmf-inss-hub, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Autodeclaração do segurado especial e ratificação pelos arts. 92, 93 e 94 da Portaria DIRBEN/INSS 990/2022 (com alterações pelas 1005/2022, 1079/2022, 1209/2024, 1240/2024, 1251/2025 e 1299/2025). Use SEMPRE que mencionar autodeclaração rural, segurado especial autodeclaração, art. 38-B Lei 8.213, art. 92 Portaria 990, art. 93 Portaria 990 36 incisos, art. 94 carência, art. 94 §5º flexibilização, bases governamentais, InfoDAP CAF DAP, CAFIR módulos fiscais, RGP, SDPA, SIPRA INCRA, SNCR, MEI Rural LC 155/2016, eSocial Doméstico Rural, Tema 1115 STJ 4 módulos fiscais, Tema 642 STJ, Tema 1007 STJ híbrida, Súmula 14 TNU, Súmula 46 TNU, Súmula 30 TNU, Súmula 577 STJ, Tema 532 STJ, Tema 554 STJ, Tema 638 STJ, Tema 219 TNU labor infantil, Tema 327 TNU, Súmula 6 TNU, Tema 348 TNU. Cruza com segurado-especial-rural, base-documentos-comprobatorios-in128, perspectiva-genero-previdenciario, base-portarias-dpmf-inss-hub, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
 # Autodeclaração do Segurado Especial. Arts. 92, 93 e 94 da Portaria 990/2022
 
-## 1. Quando acionar esta skill
+Pleitos com atividade rural em regime de economia familiar: aposentadoria por idade rural e híbrida, tempo rural em aposentadoria por tempo de contribuição ou CTC, pensão, incapacidade, auxílio-reclusão e salário-maternidade rurais. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`; indicadores CAFIR e RGP no CNIS em `references/INDICADORES-CNIS-SEGURADO-ESPECIAL-CAFIR-RGP.md`. Caracterização do segurado especial em `segurado-especial-rural`; tempo rural anterior a 1991 em `base-tempo-rural-anterior-1991`.
 
-Acione SEMPRE que houver qualquer pleito de benefício previdenciário com base em atividade rural exercida em regime de economia familiar (segurado especial). Use em aposentadoria por idade rural pura, aposentadoria híbrida, aposentadoria por tempo de contribuição com período rural, pensão por morte rural, auxílio-doença rural, auxílio-reclusão rural, salário-maternidade rural e BPC rural.
+## 1. Base normativa
 
-A skill é fonte primária para mapear a estratégia probatória, aplicar a cláusula de flexibilização do art. 94 §5º e refutar interpretação restritiva da Portaria 990 com base em jurisprudência vinculante.
+- CF, art. 195, §8º (contribuição sobre a comercialização) e art. 201, §7º, II (redução de 5 anos na idade do trabalhador rural).
+- Lei 8.213/91: art. 11, VII e §§7º a 13 (caracterização e descaracterização); art. 38-B (Lei 13.846/2019: cadastro, autodeclaração ratificada por entidades públicas e bases governamentais); art. 39, I, e art. 48, §§1º a 4º (atividade rural, ainda que descontínua, no período imediatamente anterior, igual à carência; híbrida); art. 55, §§2º e 3º; art. 106 (rol exemplificativo).
+- Lei 8.212/91, art. 25, §1º (contribuição facultativa do segurado especial). LC 155/2016 (MEI rural).
+- Decreto 3.048/99, art. 9º, VII, e art. 19-D. IN 128/2022, arts. 109 a 118 (art. 112, §4º: a simples inscrição no CNPJ não descaracteriza, comprovada a atividade rural; art. 116: documentos complementares).
+- Portaria DIRBEN/INSS 990/2022, arts. 90 a 94, com as Portarias 1.005/2022, 1.079/2022, 1.209/2024, 1.240/2024, 1.251/2025 e 1.299/2025.
+- Enunciado 8 CRPS (Resolução CRPS/MPS 12/2025): incisos II (área explorada até 4 módulos, independente da área total), III (atividade urbana de membro da família), IV (aproveitamento de provas do cônjuge), V (relativização da idade mínima pela ACP 5017267-34.2013.4.04.7100), VI a IX (autodeclaração, documentos complementares e JA).
 
-## 2. Marco normativo
+A Portaria vincula o servidor do INSS. Em juízo prevalecem a lei e os precedentes; exigência da Portaria que exceda a lei é fundamento de recurso.
 
-CF/88, art. 195, §8º (segurado especial e contribuição sobre comercialização da produção).
+## 2. Art. 92. Bases governamentais
 
-CF/88, art. 201, §7º, II (regras de transição para o trabalhador rural).
+- Consulta progressiva (art. 92, §1º): InfoDAP (DAP ou CAF, art. 90, §5º) e, sem êxito, CAFIR, RGP, SDPA, DICFN, SNCR, SIPRA, MEI e eSocial (art. 90, §6º). Base suficiente dispensa documentos (art. 90, §7º).
+- DAP com status "Cancelada" ou "Suspensa" não serve; "Ativa" ou "Expirada" produz efeito no período de validade, que varia de 1 a 6 anos conforme a data de emissão.
+- CAFIR e RGP (art. 90, §8º): período positivo (área total até 4 módulos fiscais; pescador artesanal não embarcado), pendente (área acima de 4 módulos com registro até 22/06/2008; pescador embarcado) e negativo (área acima de 4 módulos com registro desde 23/06/2008; pescador industrial). A classificação é presunção administrativa: o tamanho da propriedade não descaracteriza, por si só (Tema 1115 STJ; Súmula 30 TNU; Enunciado 8 CRPS, II).
+- Intercalação (art. 92, §2º): bases intercaladas dentro do período autodeclarado ratificam o período todo, sem critério de descaracterização.
+- Ratificação parcial (art. 92, §3º): o restante se complementa com documentos contemporâneos. Não aceitar o reconhecimento parcial sem análise da complementação.
+- Pesca (art. 92, §4º): SDPA deferido e pesca ininterrupta ratificam sem documentos privados. Vale o período entre defesos ou os 12 meses anteriores ao defeso atual, o que for menor; apenas SDPA de defesos iniciados desde 01/04/2015 (Decreto 8.424/2015, art. 12); SDPA não deferido não serve.
+- Registrar as consultas feitas antes do protocolo. Indeferimento sem consulta às bases do art. 90, §6º, viola a própria Portaria.
 
-Lei 8.213/91, art. 11, VII e §§ 7º a 13 (caracterização e descaracterização do segurado especial).
+## 3. Art. 93. Documentos complementares
 
-Lei 8.213/91, art. 38-B, caput e §§ 1º e 2º (autodeclaração ratificada por entidades públicas, redação da Lei 13.846/2019).
+O rol de 36 incisos é exemplificativo ("dentre outros"), como o art. 106 da Lei 8.213/91. Destaques: I contrato de arrendamento, parceria, meação ou comodato, eficaz apenas desde o registro ou reconhecimento de firma; II DAP; III bloco de notas; IV notas fiscais de entrada; VI comprovantes de contribuição sobre a comercialização; VIII documento do INCRA de assentado; IX ITR, DIAC, DIAT; X certidão da FUNAI; XI a XXXV documentos civis, escolares, eleitorais, militares, sindicais, de saúde e religiosos; XXXVI declaração do INCRA para quilombolas (Portarias 1.209/2024 e 1.240/2024).
 
-Lei 8.213/91, art. 39, parágrafo único (carência rural por meses correspondentes).
+- Documentos dos incisos XI a XXXV exigem a profissão ou outro elemento da atividade rural (§1º).
+- Contemporaneidade pela data de emissão ou registro (§2º, I). Documento de caráter permanente (propriedade, posse, outorga) vale até sua desconstituição, inclusive para toda a carência (§2º, III).
+- Titular do documento sem condição de segurado especial na emissão: o documento não vale (§2º, IV). O instrumento vale para todo o grupo familiar (§3º, I).
+- Intercalação de atividade urbana superior a 120 dias no ano civil: novo instrumento a cada retorno ao campo (§2º, V).
+- Documentos em nome do cônjuge aproveitam ao outro (Súmula 6 TNU; Tema 327 TNU; Enunciado 8 CRPS, IV). Ver `perspectiva-genero-previdenciario`.
 
-Lei 8.213/91, art. 48 §§ 1º a 4º (aposentadoria por idade rural pura e híbrida).
+## 4. Art. 94. Critérios de ratificação
 
-Lei 8.213/91, art. 96, IV (indenização do período rural, exigida só na contagem recíproca) (auditoria 03/10/2026).
+- Inciso I, aposentadoria por idade rural: ao menos um instrumento contemporâneo para cada metade da carência exigida (para 180 meses, 90 e 90; na tabela do art. 142, sobre a carência efetivamente exigida).
+- Inciso II, híbrida, CTC e aposentadoria por tempo de contribuição: ao menos um instrumento contemporâneo para cada período rural analisado, observado o limite do inciso I. Na CTC e na aposentadoria por tempo de contribuição, aplicam-se as regras de indenização (§2º).
+- Inciso III, demais benefícios: ao menos um instrumento anterior ao fato gerador (óbito, DII, prisão, parto), abrangendo parte do período autodeclarado (§1º). A alínea "c", que exigia para o salário-maternidade instrumento anterior à data presumida da gravidez, foi revogada pela Portaria 1.299/2025.
+- §5º (redação da Portaria 1.240/2024): "Na utilização dos documentos descritos no art.93, §2º, inciso III, assim como, para outros instrumentos ratificadores, a existência de apenas um instrumento poderá ratificar todo o período autodeclarado. Para tanto, a validade deste instrumento deverá recair, ainda que parcialmente, em ambas as metades da carência da aposentadoria por idade, conforme inciso I deste artigo." Exemplos: título de propriedade, contrato registrado de longa vigência, DAP ou CAF que alcance as duas metades.
 
-Lei 8.213/91, art. 106 (rol exemplificativo de provas materiais).
+## 5. Por modalidade
 
-Lei 8.213/91, art. 143 (regra de transição rural).
+- Idade rural: 60 anos (homem) e 55 (mulher), 180 meses de atividade no período imediatamente anterior ao requerimento ou à idade (Tema 642 STJ). Aplicar o inciso I, priorizando o §5º.
+- Híbrida: 65 e 62 anos, 180 meses somando rural e urbano. A última atividade é irrelevante e o tempo rural anterior a 1991 conta sem contribuição (Tema 1007 STJ). Detalhe em `aposentadoria-idade-hibrida`.
+- Tempo de contribuição: rural anterior a 01/11/1991 conta sem contribuição, salvo para carência (art. 55, §2º); indenização apenas na contagem recíproca (art. 96, IV). Rural posterior exige contribuição facultativa como segurado especial (Lei 8.212/91, art. 25, §1º) ou indenização (`indenizacao-contribuicoes-atraso`).
+- Empregado, contribuinte individual e avulso rurais não usam a autodeclaração: provam pelos meios da categoria (Portaria 990/2022, arts. 34 a 40, 53 a 57 e 61; IN 128/2022, art. 94, §4º).
 
-Lei 8.212/91, art. 25, §§ 1º e 13 (contribuição do segurado especial e MEI Rural).
+## 6. Defesa contra leitura restritiva
 
-Lei 11.718/2008 (alterações na carência rural).
+1. Mapear cada base e cada documento do art. 93 sobre o período autodeclarado.
+2. Demonstrar o §5º quando houver instrumento de longa validade.
+3. Apontar violação da própria Portaria: bases não consultadas, §5º ignorado, documento permanente desconsiderado.
+4. Lei e precedentes: Súmulas 14, 34, 41 e 46 TNU; Súmula 577 STJ; Temas 532, 554, 638, 642, 1007 e 1115 STJ; Temas 219 e 327 TNU.
+5. Prova testemunhal sob contraditório para o período sem documento (Súmula 577 STJ; Tema 638 STJ). Na via administrativa, Justificação Administrativa com início de prova material, desnecessária se a autodeclaração já estiver ratificada (Enunciado 8 CRPS, VIII).
+6. Documentos apresentados já no requerimento (`tema-1124-instrucao-administrativa`).
 
-LC 155/2016 (MEI Rural).
+## 7. Riscos
 
-Lei 13.846/2019 (autodeclaração ratificada).
+- Exclusão de período no Portal CNIS com o indicador ASE-NSE: apenas se recupera por recurso ou decisão judicial. Nenhuma ratificação ou exclusão sem análise do escritório (detalhe no reference de indicadores).
+- MEI fora das atividades que não descaracterizam (LC 155/2016) e inscrição no CNPJ: verificar a atividade efetiva (IN 128/2022, art. 112, §4º).
+- Comodato verbal ou sem registro: não ratifica na via administrativa (art. 93, I); em juízo, prova testemunhal.
+- Labor antes dos 12 anos: Tema 219 TNU e Enunciado 8 CRPS, V. Limite etário administrativo do Ofício-Circular 46/2019 [NÃO CONFIRMADO].
+- Quilombola: declaração do INCRA com os requisitos do art. 93, §§5º a 9º. Indígena: certidão da FUNAI.
+- Período de graça do segurado especial por inatividade involuntária: Tema 348 TNU (`periodo-graca-qualidade-segurado`).
 
-Decreto 3.048/99, arts. 9º, VII, e 19-D (com a redação do Decreto 10.410/2020).
+## 8. Documentos
 
-Decreto 8.424/2015, art. 12 (SDPA defeso).
-
-IN PRES/INSS 128/2022, arts. 109 a 118 (Seção XV).
-
-Portaria DIRBEN/INSS 990/2022, arts. 90 a 94, com alterações pelas Portarias 1005/2022, 1079/2022, 1209/2024, 1240/2024, 1251/2025 e 1299/2025.
-
-Ofício-Circular 46/2019 INSS.
-
-Resolução CNJ 492/2023 (Protocolo de Julgamento com Perspectiva de Gênero).
-
-## 3. Hierarquia normativa
-
-A Portaria DIRBEN é norma do INSS que vincula apenas o servidor administrativo. O juiz federal aplica a Lei e os precedentes vinculantes.
-
-Em sede judicial, o art. 94 é apenas referência operacional. Não pode operar como exigência legal.
-
-Toda exigência da Portaria que extrapole a Lei é argumento de derrotabilidade em recurso ou ação.
-
-## 4. Art. 92. Bases governamentais como instrumento ratificador
-
-### 4.1. Função
-
-Normatiza quais bases governamentais o servidor consulta progressivamente para ratificar automática ou manualmente a autodeclaração, sem necessidade de prova documental privada complementar.
-
-### 4.2. Bases governamentais previstas (art. 90, §6º)
-
-InfoDAP/CAF. Painel Cidadão do Portal CNIS. Verifica DAP (Declaração de Aptidão ao PRONAF) ou Cadastro da Agricultura Familiar (CAF) ativo no período.
-
-CAFIR. Cadastro de Imóveis Rurais da RFB. Identifica propriedade ou posse rural e tamanho do imóvel.
-
-RGP. Registro Geral da Pesca. Identifica pescador artesanal e modalidade da atividade.
-
-SDPA. Seguro-Defeso do Pescador Artesanal.
-
-DICFN. Divisão de Negócios de Controle Financeiro. Verifica contribuições do segurado especial sobre comercialização da produção (art. 25, Lei 8.212/91).
-
-SNCR. Sistema Nacional de Cadastro Rural (Lei 5.868/72). Cruza posse, arrendamento e parceria.
-
-SIPRA. Sistema de Informações de Projetos de Reforma Agrária (INCRA). Identifica beneficiário de assentamento.
-
-MEI Rural. Verifica se a atividade do MEI está nas hipóteses não descaracterizantes (LC 155/2016).
-
-eSocial Doméstico/Rural. Obrigatório a partir da competência outubro/2021 para o segurado especial (Portaria Interministerial MTP/ME 3/2021), conforme art. 90, §9º.
-
-### 4.3. Lógica do CAFIR (art. 90, §8º)
-
-Cruzamento com o CAFIR gera três tipos de período no CNIS rural.
-
-Período positivo. Imóveis com área total até 4 módulos fiscais. Pescador artesanal não embarcado.
-
-Período pendente. Imóveis com área total acima de 4 módulos fiscais com data de registro até 22/06/2008. Pescador artesanal embarcado.
-
-Período negativo. Imóveis com área superior a 4 módulos fiscais com data de registro a partir de 23/06/2008 (data da Lei 11.718/08). Pescador industrial.
-
-### 4.4. Alerta estratégico sobre o período negativo
-
-O período "negativo" é sinalização do INSS de que o segurado seria proprietário de imóvel acima do limite legal. Trata-se de mera presunção administrativa.
-
-O Tema 1115/STJ (REsp 1.947.404/RS) fixou que área superior a 4 módulos fiscais, por si só, NÃO descaracteriza o segurado especial, desde que comprovados os demais requisitos (regime de economia familiar, indispensabilidade, ausência de empregados permanentes).
-
-A Súmula 30 da TNU caminhou na mesma direção.
-
-Sempre que o CAFIR gerar período "negativo", a defesa do segurado deve juntar prova robusta de regime de economia familiar e oferecer impugnação direta ao indício.
-
-### 4.5. Ratificação por intercalação (art. 92, §2º)
-
-Permite reconhecer todo o período declarado mesmo quando a base governamental aparece apenas em pontos isolados, desde que intercalada dentro do período informado e ausentes os critérios de descaracterização do art. 11 da Lei 8.213/91.
-
-Exemplo. DAP ativa em 2014 e nova CAF ativa em 2022 podem cobrir, por extensão, todo o período intermediário, sem necessidade de renovação anual.
-
-### 4.6. Ratificação parcial (art. 92, §3º)
-
-Quando a base governamental cobre apenas parte do período declarado, a parte restante é complementada por documentos do art. 93. Não aceitar reconhecimento parcial sem complementação.
-
-### 4.7. Pesca artesanal. SDPA como ratificador pleno (art. 92, §4º)
-
-Os SDPAs deferidos e a atividade pesqueira ininterrupta dispensam apresentação de documentos privados, desde que ausentes critérios de descaracterização.
-
-Limites importantes.
-
-O período pesqueiro ininterrupto considerado é entre defesos ou os 12 meses anteriores ao defeso atual, o que for menor.
-
-Apenas SDPAs referentes a períodos de defeso iniciados a partir de 1º de abril de 2015 servem como ratificação plena (art. 12 do Decreto 8.424/2015).
-
-SDPAs notificados e não pagos não servem.
-
-### 4.8. Aplicação prática
-
-Antes de protocolar requerimento administrativo, fazer screen-shot das consultas em todas as bases relevantes. Se a ratificação automática falhar e o servidor tiver indeferido sem consultar todas, isso é violação do art. 90, §6º, da própria Portaria. Argumento de nulidade administrativa em recurso ao CRPS e em mandado de segurança.
-
-## 5. Art. 93. Provas documentais complementares
-
-### 5.1. Função
-
-Lista exemplificativa de documentos que ratificam a autodeclaração quando insuficientes ou inexistentes as bases governamentais.
-
-### 5.2. Natureza do rol
-
-O caput emprega a fórmula "dentre outros". O rol não é exaustivo. Coincide com o art. 106 da Lei 8.213/91 e com o art. 116 da IN 128/2022, todos exemplificativos. A Súmula 149/STJ reforça a exemplificatividade.
-
-Indeferimento por "documento não previsto na lista" é fundamentação inválida.
-
-### 5.3. Incisos relevantes (rol consolidado em maio de 2026)
-
-O art. 93 contém atualmente cerca de 36 incisos, com o XXXVI incluído pela Portaria DIRBEN 1209/2024 (declaração do INCRA para remanescentes de comunidades quilombolas) e o X alterado pela Portaria DIRBEN 1.079/2022 (certidão da FUNAI para indígenas) (auditoria 03/10/2026).
-
-Documentos com maior valor probatório.
-
-I. Contrato de arrendamento, parceria, meação ou comodato rural. Atenção. Só vale a partir do registro ou reconhecimento de firma em cartório.
-
-II. DAP/CAF.
-
-III. Bloco de notas do produtor rural.
-
-IV. Notas fiscais de entrada de mercadorias com indicação do segurado como vendedor.
-
-V. Documentos fiscais de entrega à cooperativa ou entreposto.
-
-VI. Comprovantes de recolhimento de contribuição sobre comercialização (art. 25, Lei 8.212/91).
-
-VII. Declaração de imposto de renda com renda rural.
-
-VIII. Licença de ocupação do INCRA ou documento de assentamento.
-
-IX. Comprovante de ITR, DIAC, DIAT.
-
-X. Certidão da FUNAI para indígena (redação da Portaria 1.079/2022) (auditoria 03/10/2026).
-
-XI. Certidão de casamento civil ou religioso ou de união estável.
-
-XII. Certidão de nascimento ou batismo dos filhos.
-
-XV. Título de eleitor com domicílio rural.
-
-XVII. Comprovante de matrícula em escola rural.
-
-XVIII. Ficha de associado em cooperativa.
-
-XIX. Beneficiário em programas governamentais rurais.
-
-XX. Comprovante de assistência técnica e extensão rural.
-
-XXIX. Ficha sindical ou de colônia de pescadores.
-
-XXXVI. Declaração do INCRA para quilombolas (incluída pela Portaria 1209/2024).
-
-### 5.4. Estratégia probatória
-
-Cada caso exige mapeamento completo de quais incisos têm cobertura no histórico do cliente.
-
-Regra prática. Juntar o maior número possível, com prioridade aos documentos mais antigos (ratificam a primeira metade da carência) e aos de validade prolongada (que ativam o §5º do art. 94 e ratificam o conjunto).
-
-Atenção redobrada para mulheres seguradas especiais. A Súmula 6 da TNU permite usar como início de prova material para a esposa documentos onde o marido é qualificado como lavrador. Isso aproveita, conjugado com o Protocolo de Julgamento com Perspectiva de Gênero (Resolução CNJ 492/2023). Ver `perspectiva-genero-previdenciario`.
-
-## 6. Art. 94. Critérios de ratificação
-
-### 6.1. Função
-
-Dispositivo nevrálgico. Núcleo operacional da ratificação. Define quanta prova ratificadora é necessária e como ela deve estar distribuída temporalmente para cada espécie de benefício rural.
-
-### 6.2. Inciso I. Aposentadoria por idade rural pura
-
-Aposentadoria por idade rural pura (art. 48, §§1º e 2º, Lei 8.213/91).
-
-Exige no mínimo um instrumento ratificador contemporâneo para cada metade da carência exigida. Para 180 meses, isso significa um documento na primeira metade de 90 meses e outro na segunda metade de 90 meses.
-
-Casos com carência reduzida pelo art. 142 da Lei 8.213/91 (segurados inscritos antes de 25/07/1991) seguem a tabela do anexo, e a metade é calculada sobre a carência efetivamente exigida.
-
-Períodos declarados acima da carência exigida podem ser reconhecidos se houver instrumento ratificador adicional.
-
-### 6.3. Inciso II. Aposentadoria híbrida, CTC e aposentadoria por tempo de contribuição
-
-Exige um instrumento ratificador contemporâneo para cada período rural a ser analisado, observado o limite temporal do inciso I.
-
-Quando o instrumento for insuficiente para reconhecer todo o período autodeclarado, computa-se o período mais antigo em relação ao instrumento.
-
-Atenção. A regra é especialmente exigente em casos de fragmentação rural urbana. Cada bloco rural autodeclarado precisa de seu próprio ratificador, salvo quando se aciona o §5º.
-
-### 6.4. Inciso III. Demais benefícios
-
-Pelo menos um instrumento ratificador anterior ao fato gerador, observado o limite temporal do inciso I.
-
-Aplicação concreta.
-
-Pensão por morte rural. Documento ratificador anterior ao óbito.
-
-Auxílio-doença rural (B31/B91). Documento ratificador anterior à DII.
-
-Auxílio-reclusão rural. Documento ratificador anterior à reclusão.
-
-Salário-maternidade rural. Documento anterior ao início presumido da gravidez (270 dias antes do parto). A alínea específica para salário-maternidade exige documento anterior à data presumida do início da gravidez ou da adoção (Portaria 1079/2022).
-
-### 6.5. § 5º. Cláusula de flexibilização (Portaria 1079/2022). Porta de entrada do segurado
-
-Este parágrafo é a principal aliada do segurado contra leitura literal do art. 94.
-
-Texto literal. "Na utilização dos documentos descritos no inciso III do art. 93, assim como, para outros instrumentos ratificadores, a existência de apenas um instrumento poderá ratificar todo o período autodeclarado. Para tanto, a validade deste instrumento deverá recair, ainda que parcialmente, em ambas as metades da carência da aposentadoria por idade, conforme inciso I deste artigo."
-
-Aplicação prática.
-
-Contrato de comodato rural com vigência de 2008 a 2025 ratifica sozinho 180 meses contínuos, mesmo sem outro documento.
-
-Bloco de notas do produtor com baixas em ambas as metades faz a mesma coisa.
-
-Inscrição em cooperativa com vigência prolongada também serve.
-
-DAP/CAF que abranja parcialmente a primeira e a segunda metade serve.
-
-A leitura literal do INSS frequentemente despreza esse §5º. Em recurso ou ação, citar expressamente o §5º, demonstrar a vigência do instrumento sobre as duas metades e argumentar que a recusa de reconhecimento viola a própria norma do INSS.
-
-### 6.6. Síntese operacional
-
-Aposentadoria por idade rural pura. 1 doc por metade da carência. Cada metade dos 180 meses (90+90). Art. 94, I.
-
-Aposentadoria híbrida, CTC, ATC com período rural. 1 doc para cada bloco rural. Cada período analisado, observado limite temporal. Art. 94, II.
-
-Pensão, auxílio-doença, auxílio-reclusão, BPC rural, salário-maternidade. 1 doc anterior ao fato gerador. Cobertura limitada pelo inciso I. Art. 94, III.
-
-Qualquer benefício acima. Cláusula de flexibilização. 1 instrumento único de longa duração. Validade recaindo em ambas as metades. Art. 94, §5º.
-
-## 7. Aplicação a cada modalidade de aposentadoria
-
-### 7.1. Aposentadoria por idade rural pura
-
-Idade. 60 anos homem, 55 anos mulher.
-
-Carência. 180 meses, comprovada na forma do art. 39, I e parágrafo único, no período imediatamente anterior ao requerimento ou ao implemento da idade (Tema 642/STJ).
-
-Estratégia. Aplicar art. 94, I, com prioridade ao §5º. Quando o cliente tem documentos esparsos, mapear se algum tem vigência suficientemente prolongada para cobrir as duas metades.
-
-Limites jurisprudenciais ao art. 94 (vinculantes para o juízo).
-
-Súmula 14/TNU. "Para a concessão de aposentadoria rural por idade, não se exige que o início de prova material corresponda a todo o período equivalente à carência do benefício."
-
-Súmula 46/TNU: o exercício de atividade urbana intercalada não impede a concessão de benefício previdenciário de trabalhador rural, condição que deve ser analisada no caso concreto.
-
-Súmula 577/STJ. "É possível reconhecer o tempo de serviço rural anterior ao documento mais antigo apresentado, desde que amparado em convincente prova testemunhal colhida sob o contraditório."
-
-Tema 638/STJ (REsp 1.348.633): é possível reconhecer tempo rural anterior ao documento mais antigo apresentado (origem da Súmula 577 STJ). Já o Tema 554/STJ (REsp 1.321.493; auditoria 03/10/2026, corrigido o número, antes indicado como Tema 532/STJ, que trata do trabalho urbano de membro do grupo familiar) mitiga a exigência de prova material para o boia-fria/diarista.
-
-### 7.2. Aposentadoria por idade híbrida
-
-Idade. 65 anos homem, 62 anos mulher.
-
-Carência. 180 meses, somando tempo rural e urbano.
-
-Tema 1007/STJ (REsp 1.674.221). É irrelevante a natureza da última atividade exercida. O tempo rural anterior à Lei 8.213/91 é cômputável independentemente de recolhimento.
-
-Aplicação do art. 94, II. Cada período rural autodeclarado precisa de seu próprio ratificador, salvo aplicação do §5º.
-
-Armadilha frequente. O INSS recusa documentos antigos do cônjuge (geralmente do marido) quando a requerente é mulher do lar ou trabalhou na infância e adolescência junto à família. Combater com Súmula 6/TNU, Tema 327/TNU, Súmula 5/TNU e Resolução CNJ 492/2023 (Protocolo de Gênero).
-
-### 7.3. Aposentadoria por tempo de contribuição com período rural
-
-Período rural anterior a 31/10/1991. Cômputo como tempo de contribuição independentemente do recolhimento das contribuições, exceto para efeito de carência (art. 55, §2º, Lei 8.213/91). A indenização (art. 96, IV, Lei 8.213/91 c/c art. 45-A, Lei 8.212/91) só se exige na contagem recíproca (auditoria 03/10/2026).
-
-Período rural posterior a 31/10/1991. Computa apenas se o segurado especial contribuiu facultativamente nessa mesma condição, e não como contribuinte individual (art. 25, §1º, Lei 8.212/91, e art. 39, II, Lei 8.213/91) (auditoria 03/10/2026).
-
-Aplicação do art. 94, II. Cada bloco rural exige ratificador. Priorizar instrumentos de longa vigência para acionar o §5º.
-
-### 7.4. Aposentadoria por idade urbana com cômputo rural
-
-Há divergência jurisprudencial sobre cômputo de período rural anterior a 1991 sem indenização para fins de carência da aposentadoria por idade urbana. Para contagem recíproca, a indenização é obrigatória (Decreto 3.048/99, art. 123).
-
-### 7.5. Empregado rural, contribuinte individual rural e trabalhador avulso rural
-
-Esses segurados rurais NÃO são segurados especiais, mas têm direito à aposentadoria por idade reduzida quando comprovam o exercício de atividade rural pelos meios próprios da categoria.
-
-Empregado rural. Comprova-se por CTPS, ficha de registro de empregados, contrato individual de trabalho, FGTS (arts. 34 a 40 da Portaria 990).
-
-Contribuinte individual rural. Comprova-se na forma do art. 61 da Portaria 990. Para período até 31/12/2010, aplica-se o art. 143 da Lei 8.213/91 com necessidade de comprovação efetiva da atividade.
-
-Trabalhador avulso rural. Certificado do sindicato ou OGMO (arts. 53 a 57 da Portaria 990).
-
-A autodeclaração e os arts. 92, 93 e 94 da Portaria 990 NÃO se aplicam diretamente a essas categorias, mas o §2º do art. 34 da Portaria autoriza Justificação Administrativa para empregado rural com base em início de prova material para o art. 143.
-
-## 8. Confronto Portaria 990 versus jurisprudência vinculante
-
-### 8.1. Súmulas e Temas que derrotam leitura restritiva
-
-Súmula 14/TNU. Início de prova material não precisa cobrir toda a carência.
-
-Súmula 34/TNU. Contemporaneidade do início de prova material à época dos fatos.
-
-Súmula 41/TNU. Atividade urbana de membro da família não descaracteriza, por si só.
-
-Súmula 46/TNU. Atividade urbana intercalada não impede o benefício rural.
-
-Súmula 5/TNU. Labor rural a partir de 12 anos cômputável.
-
-Súmula 6/TNU. Certidão de casamento aproveita ao outro cônjuge.
-
-Súmula 73/TNU (enunciado real): o tempo de gozo de auxílio-doença ou aposentadoria por invalidez, intercalado com atividade, conta como tempo de contribuição e carência.
-
-Súmula 149/STJ. Rol exemplificativo de prova material.
-
-Súmula 577/STJ. Prova testemunhal pode levar tempo rural anterior ao documento mais antigo.
-
-Tema 532/STJ. Prova material de período diverso da carência, com prova testemunhal.
-
-Tema 642/STJ. Atividade rural no período imediatamente anterior à DER ou ao implemento da idade.
-
-Tema 1007/STJ. Irrelevância da última atividade na híbrida.
-
-Tema 1115/STJ. Área superior a 4 módulos, por si só, não descaracteriza.
-
-Tema 219/TNU. Labor infanto-juvenil. Vedada negativa por fundamentação genérica.
-
-Tema 327/TNU. Prova emprestada do cônjuge.
-
-Tema 348/TNU. Prorrogação do período de graça do segurado especial por inatividade involuntária. Trânsito em julgado em 17/06/2025.
-
-### 8.2. Sequência argumentativa em recurso e ação
-
-Estrutura recomendada de fundamentação contra indeferimento por aplicação rigorosa do art. 94.
-
-1. Apresentar a autodeclaração e mapear cada base governamental e cada documento do art. 93 que ratifica o período declarado.
-
-2. Demonstrar a incidência do §5º do art. 94, se houver instrumento de longa duração.
-
-3. Atacar o indeferimento como violação da própria Portaria (não consulta a todas as bases do art. 90, §6º; não consideração do §5º).
-
-4. Subsidiariamente, atacar a leitura literal como contrária à Lei e aos precedentes vinculantes (Súmulas TNU 14, 34, 73; Súmula 577/STJ; Temas 532, 642 e 1115/STJ).
-
-5. Em última camada, ofertar prova testemunhal sob contraditório como ratificadora do período rural não coberto por documento.
-
-## 9. Sequência operacional. Check-list
-
-1. Coleta de bases governamentais. CNIS rural completo, InfoDAP, CAFIR, RGP, SDPA, SIPRA, SNCR, MEI Rural, eSocial Doméstico Rural.
-
-2. Coleta de prova material privada. Inventário dos 36 incisos do art. 93 aplicáveis.
-
-3. Mapeamento da carência. Identificar carência exigida e dividir em duas metades. Para 180 meses, são duas faixas de 90 meses.
-
-4. Verificação do §5º. Há documento ou base com vigência prolongada que recaia parcialmente sobre as duas metades?
-
-5. Plano A. Aplicar §5º com instrumento único de longa duração.
-
-6. Plano B. Documento por metade.
-
-7. Plano C (judicial). Início de prova material de qualquer época + prova testemunhal robusta sob contraditório (Súmula 577/STJ e Tema 638/STJ, que a originou) (auditoria 03/10/2026, corrigido o número, antes indicado como Tema 532/STJ).
-
-8. Justificação Administrativa. Quando faltar prova em uma das metades, requerer JA com base em início de prova material (art. 571 da IN 128/2022).
-
-9. Verificação de descaracterizadores. CNPJ ativo (art. 112, §4º, IN 128) (auditoria 03/10/2026, retirado o Tema 1115/STJ, que trata do tamanho da propriedade), MEI Rural (LC 155/2016), área acima de 4 módulos fiscais (Tema 1115/STJ), rendimento urbano de membro da família (Súmula 41/TNU).
-
-10. Verificação Tema 1124/STJ. Toda a documentação foi apresentada na via administrativa antes da judicialização?
-
-## 10. Riscos e armadilhas operacionais
-
-### 10.1. Risco de descaracterização
-
-MEI urbano fora da lista do Ofício-Circular 46/2019. Indeferimento quase certo.
-
-Empregado urbano simultâneo do titular do grupo familiar. Quebra de regime de economia familiar se não houver prova de continuidade do labor rural.
-
-DAP/CAF cancelada ou suspensa. Não serve como ratificador (art. 90, §6º). Buscar outra base ou documentos do art. 93.
-
-SDPA notificado e não pago. Não serve.
-
-CAFIR com área acima de 4 módulos fiscais a partir de 23/06/2008. Gera período "negativo". Combater com Tema 1115/STJ.
-
-### 10.2. Risco de reconhecimento parcial
-
-O art. 92, §3º, autoriza ratificação parcial, mas o segurado NÃO é obrigado a aceitar. Recorrer ao CRPS e judicializar integralmente quando o INSS reconhecer fragmentariamente.
-
-### 10.3. Risco de extinção sem mérito (Tema 1124/STJ)
-
-Antes de judicializar, verificar se autodeclaração e todos os documentos foram apresentados administrativamente. Se não, há risco de extinção sem mérito por falta de prévio requerimento administrativo regular.
-
-Solução. Reabrir o PA com complementação ou aproveitar DER já existente com nova documentação.
-
-### 10.4. Pegadinha do contrato de comodato
-
-O art. 93, I, exige registro ou reconhecimento de firma em cartório. Comodato meramente verbal ou não registrado NÃO opera como ratificador na via administrativa.
-
-Na via judicial, contrato verbal pode ser provado por prova testemunhal robusta sob Súmula 577/STJ, mas o INSS administrativamente não aceita.
-
-### 10.5. Pegadinha do labor rural infanto-juvenil
-
-A Portaria 990 não fixa idade mínima para reconhecimento, mas o Ofício-Circular 46/2019 estabelece limite de 7 anos e meio para ratificação por autodeclaração. Resistência administrativa é certa abaixo dessa idade. Combater com Enunciado 8/CRPS, Tema 219/TNU e Súmula 5/TNU.
-
-### 10.6. Pegadinha do quilombola e do indígena
-
-A Portaria 1209/2024 (XXXVI) e a Portaria 1.079/2022 (X) criaram regimes específicos (auditoria 03/10/2026). Para quilombola, exige declaração do INCRA. Para indígena, exige certidão da FUNAI. A simples autodeclaração étnica e a prova material genérica frequentemente são recusadas administrativamente.
-
-## 11. Documentos essenciais
-
-Autodeclaração assinada pelo segurado.
-
-Bases governamentais com print das consultas.
-
-Documentos do art. 93 organizados cronologicamente.
-
-Procuração com poderes específicos.
-
-Eventual Justificação Administrativa requerida.
-
-Para mulher segurada especial. Documentos do marido (Súmula 6/TNU, Tema 327/TNU).
-
-Para indígena. Certidão da FUNAI.
-
-Para quilombola. Declaração do INCRA.
-
-Para pescador. RGP, SDPA, ficha da colônia.
-
-Para assentado. Documento do INCRA, contrato de concessão de uso.
-
-## 12. Integração com outras skills
-
-Hub de portarias DPMF/INSS em `base-portarias-dpmf-inss-hub`.
-
-Segurado especial em `segurado-especial-rural`.
-
-Documentos comprobatórios em `documentos-comprobatorios-in128`.
-
-Precedentes em `precedentes-previdenciarios`.
-
-Perspectiva de gênero em `perspectiva-genero-previdenciario`.
-
-Aposentadoria híbrida em `aposentadoria-idade-hibrida`.
-
-Aposentadoria rural em `aposentadoria-idade-hibrida` e na própria.
-
-Tema 1124 em `tema-1124-instrucao-administrativa`.
-
-CNIS em `cnis-acerto-indicadores`.
-
-Auditoria em `revisao-peticao`.
-
-Triagem em `triagem-caso-novo`.
-
-Contribuinte individual em `contribuinte-individual-in128` (quando segurado especial migra para CI por descaracterização).
-
-Indenização em `indenizacao-contribuicoes-atraso` (período rural pós-31/10/1991).
-
-Período de graça em `periodo-graca-qualidade-segurado` (Tema 348/TNU).
-
-Pensão por morte rural em `pensao-por-morte`.
-
-Salário-maternidade rural em skills de salário-maternidade.
-
-Reafirmação DER em `reafirmacao-der`.
-
-Fungibilidade previdenciária em `base-fungibilidade-previdenciaria`.
-
-## 13. Alertas
-
-Primeiro, sempre fazer screen-shot das consultas em todas as bases governamentais antes do protocolo administrativo.
-
-Segundo, em PPP rural, anexar TODOS os 36 incisos aplicáveis. Mapeamento completo.
-
-Terceiro, sempre verificar a aplicabilidade do §5º. Cláusula de flexibilização é a porta principal.
-
-Quarto, em mulher segurada especial, invocar Súmula 6/TNU + Resolução CNJ 492/2023 + Tema 327/TNU.
-
-Quinto, em CAFIR com período "negativo", impugnar com Tema 1115/STJ.
-
-Sexto, em recurso e ação, citar expressamente os Temas 532, 642, 1007, 1115/STJ e Súmulas 14, 73, 577/STJ.
-
-Sétimo, em comodato verbal, oferecer prova testemunhal sob Súmula 577/STJ.
-
-Oitavo, em quilombola e indígena, juntar declaração específica antes do protocolo (Portarias 1209/2024 e 1.079/2022) (auditoria 03/10/2026).
-
-Nono, em SDPA notificado e não pago, buscar outras bases.
-
-Décimo, em hibrida, sempre invocar Tema 1007/STJ (irrelevância da última atividade).
-
-## 14. Doutrina de apoio
-
-Frederico Amado. Direito Previdenciário. Capítulo aprofundado sobre segurado especial.
-
-Hugo Goes. Manual de Direito Previdenciário. Detalha autodeclaração e prova material.
-
-Wladimir Novaes Martinez. Curso de Direito Previdenciário. Crítica a formalismos infralegais.
-
-Marina Vasques Duarte. Direito Previdenciário.
-
-Carlos Alberto Pereira de Castro e João Batista Lazzari. Manual de Direito Previdenciário.
-
-João Marcelino Soares. Aposentadoria Rural.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário.
-
-Theodoro Vicente Agostinho. Aposentadoria Rural.
-
-## 15. O que NÃO está nesta skill
-
-Hub das portarias DPMF/INSS em geral em `base-portarias-dpmf-inss-hub`.
-
-Empregado rural, contribuinte individual rural e avulso rural não usam autodeclaração. Têm meios próprios em outras skills.
-
-Cálculo de RMI específico em skills de cálculo.
-
-## 16. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Indicadores do CNIS na validação automática do período rural (Onda 142)
-
-O INSS migra períodos de segurado especial das bases CAFIR e RGP e os classifica automaticamente, e o CNIS registra isso em seis indicadores. Na pendência, `PSE-POS`, `PSE-PEN` e `PSE-NEG`. No acerto, `ASE-RPOS`, `ASE-RNEG` e `ASE-NSE`.
-
-**Alerta que decide casos.** O Anexo V da Portaria 990/2022 diz, sobre o `ASE-NSE`, que "períodos excluídos com esse motivo só poderão ser comprovados posteriormente mediante decisão judicial ou recursal". Nenhuma ratificação ou exclusão no Portal CNIS é feita pelo cliente sem análise prévia do escritório, porque a exclusão fecha a via administrativa comum.
-
-O critério automático do CAFIR é a área superior a quatro módulos fiscais, com o marco de 23/06/2008 separando `PSE-PEN` de `PSE-NEG`. Ele inverte o ponto de partida e não encerra a discussão, que segue pelo Tema 1115 do STJ e pela prova do art. 106.
-
-Redação oficial de cada indicador e a correção das siglas que circulam em material de divulgação estão em `references/INDICADORES-CNIS-SEGURADO-ESPECIAL-CAFIR-RGP.md`.
+Autodeclaração assinada, registro das consultas às bases, documentos do art. 93 em ordem cronológica, procuração, documentos do cônjuge, certidão da FUNAI ou declaração do INCRA, RGP, SDPA e ficha da colônia, documento de assentamento.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+`segurado-especial-rural`, `base-tempo-rural-anterior-1991`, `base-documentos-comprobatorios-in128`, `perspectiva-genero-previdenciario`, `aposentadoria-idade-hibrida`, `tema-1124-instrucao-administrativa`, `base-cnis-acerto-indicadores`, `contribuinte-individual-in128`, `indenizacao-contribuicoes-atraso`, `periodo-graca-qualidade-segurado`, `pensao-por-morte`, `base-salario-maternidade-pos-reforma`, `reafirmacao-der`, `base-fungibilidade-previdenciaria`, `base-portarias-dpmf-inss-hub`, `peticao-previdenciaria`, `precedentes-previdenciarios`.

@@ -1,121 +1,19 @@
-# Cessação e Acumulação B94 — Fundamentos e Cenários
+# Cessação e acumulação B94. Cenários
 
-## 1. Conceito operacional
+Regra e fundamento no SKILL.md.
 
-A acumulação do B94 com aposentadoria foi vedada pela MP 1.596-14/1997, com marco em 11/11/1997. Só acumula quando a lesão incapacitante e a aposentadoria são anteriores ao marco (Súmula 507 STJ e Tema 555 STJ). Nos demais casos, o B94 cessa na aposentadoria e integra o salário-de-contribuição pelo art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
+| Cenário | Solução |
+|---|---|
+| A. Lesão em 1995, aposentadoria em 1996 | Acumula (Súmula 507 STJ). Cessação do B94 é ilegal: restabelecer com atrasados quinquenais. |
+| B. Lesão em 1995, aposentadoria em 2005 | Não acumula: a aposentadoria é posterior ao marco. B94 cessa na véspera da aposentadoria; conferir a integração do art. 31 no salário de benefício. |
+| C. Lesão em 2010, aposentadoria em 2024 | Não acumula. Conferir a integração do art. 31; revisar se omitida, dentro do prazo do art. 103. |
+| D. Doença ocupacional com sintomas antes de 1997 e diagnóstico depois | Data da lesão pelo art. 23 (Tema 556 STJ): início da incapacidade, segregação ou diagnóstico, o que ocorrer primeiro. Reunir prontuário e atestados antigos. |
+| E. B94 cessado por "alta" ou "recuperação" | Ilegal: o B94 vigora até aposentadoria ou óbito (art. 86, §1º). Restabelecer. |
+| F. Reabertura de B31/B91 pelo mesmo acidente | Suspensão do B94 e reativação na cessação (Decreto 3.048/99, art. 104, §6º). Cessação definitiva é ilegal. |
+| G. Segundo acidente com nova sequela | Vedado o segundo B94 (art. 124, V). Avaliar a opção pelo mais vantajoso. |
+| H. B94 e BPC | Inacumuláveis, com opção pelo mais vantajoso (Tema 253 TNU). |
 
-## 2. Fundamento constitucional
+## Riscos
 
-CF/88, art. 5º XXXVI.
-
-CF/88, art. 201 §11.
-
-CF/88, art. 7º XXVIII.
-
-## 3. Fundamento legal
-
-Lei 8.213/91, art. 86 §2º.
-
-MP 1.596-14/1997.
-
-Lei 9.528/1997, conversão.
-
-Decreto 3.048/99.
-
-IN 128/2022.
-
-## 4. Marco jurisprudencial central
-
-### Súmula 507 STJ
-
-Acumulação preservada.
-
-### Tema 555 STJ
-
-Direito adquirido.
-
-### Tema 862 STJ. TERMO INICIAL, não integração
-
-Tese literal, conferida na página oficial do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ." Primeira Seção, REsp 1.729.555/SP e 1.786.736/SP, trânsito em julgado. A integração ao salário-de-benefício tem fundamento no art. 31 da Lei 8.213/91 e não neste tema.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — B94 desde 1995
-
-Acumulação só se a aposentadoria também for anterior a 11/11/1997 (Súmula 507 STJ). Com aposentadoria posterior, não acumula e resta a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
-
-### Cenário B — B94 cessado indevidamente
-
-Restabelecimento.
-
-### Cenário C — B94 desde 2010
-
-Integração ao SB.
-
-### Cenário D — Dúvida sobre DIB
-
-Pesquisa documental.
-
-### Cenário E — B94 com majoração
-
-Revisão.
-
-### Cenário F — Atrasados
-
-Cinco anos pretéritos.
-
-### Cenário G — Aposentadoria por invalidez
-
-Análise específica.
-
-## 6. Cenários limitados
-
-### Cenário H — DIB confirmada após 11/11/1997
-
-Sem acumulação.
-
-### Cenário I — Decadência consumada
-
-Direito perdido.
-
-### Cenário J — Coisa julgada
-
-Análise específica.
-
-## 7. Metodologia
-
-Primeiro, identificar DIB do B94.
-
-Segundo, comparar com marco.
-
-Terceiro, definir regime.
-
-Quarto, requerer manutenção ou integração.
-
-Quinto, monitorar.
-
-## 8. Riscos processuais
-
-Risco de cessação indevida.
-
-Risco de cálculo errado.
-
-Risco de decadência.
-
-Risco de coisa julgada.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, pesquisa documental.
-
-Segundo, fundamentação Súmula 507.
-
-Terceiro, MS para cessação indevida.
-
-Quarto, monitoramento.
-
-Quinto, dialeticidade.
-
-## 10. Integração prática
-
-`auxilio-acidente-b94`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-sumula88-tnu`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`.
+- Revisão para incluir o B94 no salário de benefício: prazo decadencial de dez anos do art. 103.
+- Coisa julgada anterior sobre a mesma cessação: verificar causa de pedir (`coisa-julgada-previdenciaria`).

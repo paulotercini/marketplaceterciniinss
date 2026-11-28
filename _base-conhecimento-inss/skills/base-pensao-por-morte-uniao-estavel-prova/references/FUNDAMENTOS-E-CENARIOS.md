@@ -1,49 +1,16 @@
-# União Estável e Pensão por Morte — Fundamentos e Cenários
+# União Estável e Pensão por Morte. Cenários
 
-## 1. Marco normativo aplicável
+Base normativa no SKILL.md.
 
-CF/88, art. 226 §3º. CC, arts. 1.723 a 1.727. Lei 8.213/91, art. 16. Decreto 3.048/99, art. 22. Lei 13.846/2019. IN INSS 128/2022.
+1. Convivência de 30 anos, filhos comuns, sem escritura, óbito em 2017: Súmula 63 TNU; testemunhas e qualquer documento.
+2. Convivência de 5 anos, óbito em 2024: plano de saúde e conta conjunta dos 24 meses anteriores ao óbito atendem o §5º; documento de 2 anos de união atende o §6º.
+3. Companheiro como dependente na declaração de imposto de renda: prova material forte, se do período de 24 meses.
+4. Só um documento dos 24 meses: Justificação Administrativa (IN 128/2022, art. 180, parágrafo único).
+5. Residências separadas: a convivência pública, contínua e duradoura não exige o mesmo teto, mas o Juízo de Catanduva valoriza o mesmo endereço.
+6. Instituidor casado: Temas 526 e 529 STF, adversos; provar a separação de fato.
+7. União homoafetiva: ADI 4.277 e ADPF 132.
+8. Óbito por força maior que impediu a prova documental: exceção do §5º.
 
-## 2. Cenário 1 — União estável longa sem escritura
+## Documentos
 
-Casal com 30 anos de convivência, filhos comuns, sem escritura. Ampla prova material e testemunhal.
-
-## 3. Cenário 2 — União estável breve com início de prova material
-
-Casal com 5 anos de convivência, com plano de saúde, conta bancária conjunta. Suficiente.
-
-## 4. Cenário 3 — Companheiro registrado como dependente em IR
-
-Declaração de IR com companheiro como dependente. Forte prova.
-
-## 5. Cenário 4 — Plano de saúde com dependente
-
-Plano corporativo com inclusão. Prova material.
-
-## 6. Cenário 5 — Conta bancária conjunta
-
-Conta corrente conjunta com movimentação por anos. Prova material.
-
-## 7. Cenário 6 — Filho comum
-
-Certidão de nascimento de filho. Prova de convivência.
-
-## 8. Cenário 7 — Domicílio comum
-
-Comprovante de residência conjunta. Prova de convivência.
-
-## 9. Cenário 8 — Concubinato impuro
-
-Convivência simultânea com cônjuge. Tema 526/STF veda em regra, com exceções.
-
-## 10. Cenário 9 — União homoafetiva
-
-Reconhecida desde 2011 (RE 477.554). Mesmas provas.
-
-## 11. Cenário 10 — Justificação administrativa
-
-INSS deve admitir JA com testemunhas e documentos. Art. 142 IN 128.
-
-## 12. Documentos essenciais
-
-Certidão de óbito. IR. Plano de saúde. Conta conjunta. Fotografias. Residência comum. Filhos. Prova testemunhal.
+Certidão de óbito; documentos em nome dos dois ou no mesmo endereço, datados; certidões dos filhos comuns; declaração de imposto de renda; apólices e planos de saúde; contrato de aluguel; testemunhas.

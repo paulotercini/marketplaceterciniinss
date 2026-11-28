@@ -6,8 +6,8 @@ O falecimento do segurado NÃO extingue o recurso administrativo pendente no CRP
 
 Fundamento normativo primário no Regimento Interno (Portaria MPS nº 125/2026, compilada até 04/02/2026)
 
-- Art. 68, parágrafo único — em caso de óbito do requerente, os sucessores poderão solicitar habilitação no processo, nos termos do art. 9º, II, da Lei 9.784/99 e do art. 112 da Lei 8.213/91
-- Art. 112, §4º — em caso de falecimento do requerente, os atos processuais poderão ser praticados pelos sucessores, desde que previamente habilitados por iniciativa própria, ficando garantida a análise do mérito
+- Art. 68, parágrafo único, em caso de óbito do requerente, os sucessores poderão solicitar habilitação no processo, nos termos do art. 9º, II, da Lei 9.784/99 e do art. 112 da Lei 8.213/91
+- Art. 112, §4º, em caso de falecimento do requerente, os atos processuais poderão ser praticados pelos sucessores, desde que previamente habilitados por iniciativa própria, ficando garantida a análise do mérito
 
 Três premissas inafastáveis decorrem desses dispositivos. O óbito não extingue o recurso. A habilitação depende de iniciativa dos sucessores. O mérito será analisado independentemente do óbito.
 
@@ -35,11 +35,11 @@ A dispensa de inventário prevista no art. 112 da Lei 8.213/91 refere-se à legi
 
 O INSS pode comunicar à Unidade Julgadora a existência de ação judicial (pensão por morte) para tentar configurar renúncia tácita ao recurso administrativo.
 
-DEFESA — Não há tríplice identidade. O recurso administrativo versa sobre o benefício originário (aposentadoria, auxílio-doença). A pensão por morte tem partes, causa de pedir e pedido distintos. Aplicação do art. 86, §5º, do Regimento, que exclui da renúncia tácita as ações judiciais com objetivo de dar celeridade ao recurso, e §7º, que limita a renúncia às matérias com objeto idêntico.
+DEFESA. Não há tríplice identidade. O recurso administrativo versa sobre o benefício originário (aposentadoria, auxílio-doença). A pensão por morte tem partes, causa de pedir e pedido distintos. Aplicação do art. 86, §5º, do Regimento, que exclui da renúncia tácita as ações judiciais com objetivo de dar celeridade ao recurso, e §7º, que limita a renúncia às matérias com objeto idêntico.
 
 ### 3.2. Alegação de perda de objeto do recurso
 
-DEFESA — O direito ao benefício previdenciário, uma vez implementados os requisitos em vida, incorpora-se ao patrimônio jurídico do segurado e transmite-se aos sucessores (art. 112, Lei 8.213/91). O óbito não faz desaparecer o direito subjetivo. Os valores acumulados entre a DER e o óbito são devidos.
+DEFESA. O direito ao benefício previdenciário, uma vez implementados os requisitos em vida, incorpora-se ao patrimônio jurídico do segurado e transmite-se aos sucessores (art. 112, Lei 8.213/91). O óbito não faz desaparecer o direito subjetivo. Os valores acumulados entre a DER e o óbito são devidos.
 
 ### 3.3. Ausência de habilitação pelos sucessores
 
@@ -47,7 +47,7 @@ O art. 85, §2º, do Regimento estabelece que o descumprimento de exigência pel
 
 A ausência de habilitação não extingue o recurso, mas cria limbo processual. O acórdão favorável pode não ser cumprido por ausência de legitimado.
 
-AÇÃO IMEDIATA — Comunicar o óbito, juntar certidão, juntar procuração dos dependentes e requerer habilitação formal.
+AÇÃO IMEDIATA. Comunicar o óbito, juntar certidão, juntar procuração dos dependentes e requerer habilitação formal.
 
 ### 3.4. Validade dos atos praticados pelo advogado após o óbito
 
@@ -83,11 +83,11 @@ Aposentadorias, auxílio-doença, auxílio-acidente, salário-maternidade. O rec
 
 ### 5.2. BPC/LOAS
 
-Benefício personalíssimo e intransferível. Não gera pensão por morte. Porém, se o direito foi reconhecido (mesmo por decisão administrativa posterior ao óbito), os valores acumulados entre a DER e o óbito são devidos aos sucessores (Tema 1057/STJ; TRF3, 9ª Turma, AI 5010882-81.2018.4.03.0000).
+Benefício personalíssimo e intransferível. Não gera pensão por morte. Porém, se o direito foi reconhecido (mesmo por decisão administrativa posterior ao óbito), os valores acumulados entre a DER e o óbito são devidos aos sucessores (TRF3, 9ª Turma, AI 5010882-81.2018.4.03.0000).
 
-ALERTA — risco real quando instrução probatória está incompleta e depende de avaliação biopsicossocial presencial. Se o segurado falecer antes da avaliação, a análise ficará prejudicada. Esse risco é menor no CRPS (recurso já pressupõe decisão administrativa anterior), mas existe em matéria de alçada exclusiva (art. 89, §3º, Regimento) quando a PMF ainda não emitiu parecer.
+ALERTA, risco real quando instrução probatória está incompleta e depende de avaliação biopsicossocial presencial. Se o segurado falecer antes da avaliação, a análise ficará prejudicada. Esse risco é menor no CRPS (recurso já pressupõe decisão administrativa anterior), mas existe em matéria de alçada exclusiva (art. 89, §3º, Regimento) quando a PMF ainda não emitiu parecer.
 
-ALERTA ADICIONAL — para BPC de menores de 16 anos, aplicar automaticamente os critérios diferenciados de avaliação funcional conforme skill analise-bpc-loas.
+ALERTA ADICIONAL, para BPC de menores de 16 anos, aplicar automaticamente os critérios diferenciados de avaliação funcional conforme skill analise-bpc-loas.
 
 ### 5.3. Pensão por morte
 
@@ -95,7 +95,7 @@ Se o segurado faleceu com recurso pendente sobre outro benefício, a pensão por
 
 ## 6. JURISPRUDÊNCIA APLICÁVEL
 
-### 6.1. Art. 112 da Lei 8.213/91 — aplicação administrativa e judicial
+### 6.1. Art. 112 da Lei 8.213/91. aplicação administrativa e judicial
 
 STJ, REsp 1.596.774/RS, 2ª Turma, Rel. Min. Mauro Campbell Marques, j. 21/03/2017. A aplicação do art. 112 não se restringe à Administração Pública, sendo aplicável também no âmbito judicial.
 
@@ -111,33 +111,33 @@ TRF3, 9ª Turma, AI 5010882-81.2018.4.03.0000. Quando o feito já se encontrava 
 
 TRF3, 9ª Turma, ApCiv/MS 5004912-76.2018.4.03.9999, Rel. Des. Fed. João Batista Gonçalves, j. 08/07/2021. Art. 689 do Código Civil. Atos válidos enquanto o mandatário ignorar a morte do mandante.
 
-### 6.5. Tema 1057/STJ — legitimidade de pensionistas e sucessores
+### 6.5. Tema 1057/STJ. legitimidade de pensionistas e sucessores
 
 REsp 1.856.967/ES (afetado). Possibilidade de reconhecimento da legitimidade ativa ad causam de pensionistas e sucessores para, em ordem de preferência, propor ação revisional da aposentadoria do de cujus, com o objetivo de redefinir a renda mensal da pensão por morte, e receber as diferenças.
 
-### 6.6. Tema 1.254/STJ — prescrição da habilitação (PENDENTE)
+### 6.6. Tema 1.254/STJ. prescrição da habilitação (PENDENTE)
 
-REsp 2.034.210, 2.034.211 e 2.034.214, Corte Especial, Rel. Min. Humberto Martins. Controvérsia sobre se ocorre ou não prescrição para a habilitação de herdeiros ou sucessores da parte falecida no curso da ação. PENDENTE DE JULGAMENTO. Enquanto não julgado, a cautela recomenda habilitação imediata.
+REsp 2.034.210, 2.034.211 e 2.034.214, Corte Especial, Rel. Min. Humberto Martins. Controvérsia sobre se ocorre ou não prescrição para a habilitação de herdeiros ou sucessores da parte falecida no curso da ação. Situação a conferir na data da peça. Enquanto houver dúvida, habilitar de imediato.
 
 ## 7. PROTOCOLO DE ATUAÇÃO DO ESCRITÓRIO
 
-### Passo 1 — Ciência do óbito
+### Passo 1. Ciência do óbito
 
 Reunir certidão de óbito, documentos de dependência (certidão de casamento ou declaração de união estável, certidão de nascimento dos filhos menores), procuração dos dependentes.
 
-### Passo 2 — Petição ao CRPS
+### Passo 2. Petição ao CRPS
 
 Peticionar imediatamente (via Meu INSS ou Fala.BR, conforme art. 13 do Regimento), comunicando o óbito, requerendo habilitação dos dependentes nos termos do art. 68, parágrafo único, e do art. 112, §4º, do Regimento, e solicitando expressamente o prosseguimento do julgamento.
 
-### Passo 3 — Requerimento simultâneo de pensão por morte
+### Passo 3. Requerimento simultâneo de pensão por morte
 
 Se houver dependentes habilitáveis, requerer pensão por morte no Meu INSS, fundamentando a existência de recurso pendente no CRPS sobre benefício do instituidor.
 
-### Passo 4 — Após acórdão favorável
+### Passo 4. Após acórdão favorável
 
 Peticionar ao INSS para implantação do benefício com DIB na DER e cessação na data do óbito. Requerer pagamento do resíduo aos dependentes habilitados (art. 624, IN 128/2022), apresentando alvará judicial ou escritura pública.
 
-### Passo 5 — Revisão da pensão por morte
+### Passo 5. Revisão da pensão por morte
 
 Se a aposentadoria reconhecida pelo CRPS for mais vantajosa que a base de cálculo da pensão, requerer revisão da RMI da pensão por morte.
 

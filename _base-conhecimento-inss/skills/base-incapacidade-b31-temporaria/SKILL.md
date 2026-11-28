@@ -1,178 +1,79 @@
 ---
 name: base-incapacidade-b31-temporaria
-description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 47 TNU, Súmula 77 TNU, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b32-permanente e orientacao-cliente-pericia."
+description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 220 TNU, Tema 246 TNU, Tema 277 TNU, Súmula 77 TNU, trava de indeferimentos, Portaria Conjunta 54/2026 reanálise, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b32-permanente e orientacao-cliente-pericia."
 ---
 
-# Auxílio por Incapacidade Temporária (B31) Pós EC 103/2019
+# Auxílio por incapacidade temporária (B31) após a EC 103/2019
+
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente.
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta concessão, manutenção, prorrogação e restabelecimento do B31 (auxílio por incapacidade temporária) em ambiente pós EC 103/2019 e sob a vigência do regime de análise documental instituído pela Portaria Conjunta MPS/INSS 13/2026. Objetivo único é assegurar o direito do segurado, jamais favorecer o INSS ou a autarquia.
+Concessão, prorrogação, cessação e restabelecimento do B31, inclusive no regime de análise documental. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Requisitos
 
-Lei 8.213/91, art. 59. Concede B31 ao segurado que, por motivo de doença ou acidente, ficar incapacitado para o trabalho habitual por mais de 15 dias consecutivos.
+1. Qualidade de segurado na DII (`periodo-graca-qualidade-segurado`).
+2. Carência de 12 contribuições (Lei 8.213/91, art. 25, I), dispensada em acidente de qualquer natureza, doença profissional ou do trabalho e nas doenças da lista do art. 151 e da Portaria Interministerial MTP/MS 22/2022 (art. 26, II). Perdida a qualidade, recuperação com metade da carência (art. 27-A).
+3. Incapacidade para o trabalho ou atividade habitual por mais de 15 dias consecutivos (art. 59).
+4. Incapacidade não preexistente à filiação, salvo progressão ou agravamento (art. 59, §1º).
 
-Lei 8.213/91, art. 60, §11-A. Na redação da Lei 15.265/2025, autoriza o exame médico-pericial do B31 por telemedicina ou por análise documental, conforme o regulamento. O limite de 30 dias por pedido e as travas de novo requerimento não estão na lei; vêm da Portaria Conjunta 13/2026 (auditoria 03/10/2026).
+Rol do art. 151: tuberculose ativa, hanseníase, alienação mental, esclerose múltipla, hepatopatia grave, neoplasia maligna, cegueira, paralisia irreversível e incapacitante, cardiopatia grave, doença de Parkinson, espondiloartrose anquilosante, nefropatia grave, estado avançado da doença de Paget, aids e contaminação por radiação. O rol do art. 151 admite interpretação extensiva; o do art. 26, II, é exaustivo (Tema 220 TNU).
 
-Portaria Conjunta MPS/INSS 13/2026. Regulamenta a análise documental do B31. Acionar `analise-documental-incapacidade`.
+## DIB, RMI e duração
 
-Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026) [CONFERIDO]. Altera a 13/2026. Cria a reanálise da documentação médica em dez dias da ciência do indeferimento (art. 8º-A), que preserva a DER e admite documento novo; o recurso interposto antes preclui a reanálise (art. 9º, § 1º); o prazo do recurso conta da ciência da decisão ou da decisão da reanálise (art. 9º, § 2º); a perícia presencial obrigatória vem após dois indeferimentos documentais, e não três (art. 8º); e a perícia presencial favorável no requerimento anterior reinicia a soma do limite de duração (art. 3º, § 2º). Vale para indeferimentos com ciência a partir de 06/11/2026 (art. 2º).
+- DIB: 16º dia do afastamento para o empregado; DII para os demais (art. 60, caput). Requerido após 30 dias do afastamento, DIB na DER (art. 60, §1º).
+- RMI: 91% do salário de benefício (art. 61), limitada à média dos 12 últimos salários de contribuição (art. 29, §10). O salário de benefício segue a média do art. 26 da EC 103/2019.
+- DCB: a concessão fixa prazo; sem prazo, 120 dias da concessão ou reativação (art. 60, §§8º e 9º). No JEF, Tema 246 TNU.
+- Prorrogação: pedido nos últimos 15 dias do benefício (IN 128/2022, art. 339, §3º, redação da IN PRES/INSS 212/2026). Antes, pode ser recusado; depois da DCB, é novo requerimento. Registrar a data limite na agenda do cliente na concessão.
+- Interesse de agir contra alta programada: exige pedido de prorrogação, recurso ou reconsideração (Tema 277 TNU).
 
-Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças constantes da lista do Ministério da Saúde.
+## Análise documental
 
-Lei 8.213/91, art. 27-A. Reabertura de qualidade exige 1/2 da carência após novo vínculo para quem perdeu qualidade (com matizes jurisprudenciais).
+- O exame pericial pode ser feito por telemedicina ou análise documental (art. 60, §11-A, redação da Lei 15.265/2025). O limite de 30 dias e as travas de novo requerimento vêm da Portaria Conjunta MPS/INSS 13/2026, não da lei.
+- Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026), para indeferimentos com ciência a partir de 06/11/2026: reanálise da documentação médica em dez dias, com documento novo e preservação da DER (art. 8º-A); recurso interposto antes preclui a reanálise (art. 9º, §1º); prazo recursal conta da ciência da decisão ou da reanálise (art. 9º, §2º); perícia presencial obrigatória após dois indeferimentos documentais, e não três (art. 8º); perícia presencial favorável anterior reinicia a soma do limite de duração (art. 3º, §2º).
+- Espera de 180 dias para nova análise documental após prorrogação indeferida (Portaria Conjunta 13/2026, art. 6º, V). Em agravamento, MS pelo direito ao requerimento (CF, art. 5º, XXXIV).
+- Detalhe em `analise-documental-incapacidade`.
 
-Lei 8.213/91, art. 61. Fixa a RMI do B31 em 91% do salário de benefício, com a média apurada na forma do art. 26 da EC 103/2019.
+## Estratégia
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+1. Pedir a prorrogação na janela de 15 dias, com relatório médico atualizado.
+2. Indeferimento documental: reanálise em dez dias com documento novo, ou recurso ao CRPS, ou ação com perícia judicial (`auditoria-laudo-pericial`).
+3. Cessação sem pedido de prorrogação possível: restabelecimento direto em juízo (Tema 350 STF, exceção de restabelecimento).
+4. Incapacidade que se prolonga ou se agrava: pedido subsidiário de B32 (`base-incapacidade-b32-permanente`).
+5. Doença ocupacional ou acidente do trabalho: conversão em B91 (`base-incapacidade-acidentaria-b92`, `ntep-nexo-acidentario`).
+6. Limbo previdenciário-trabalhista: Tema 300 TNU mantém a qualidade de segurado até a rescisão; Tema 1421 STF pendente de mérito, citar como risco. Exige prova do impedimento patronal; não requerer baixa do vínculo aberto (`base-limbo-previdenciario-tema300`).
+7. Segurado especial: B31 de um salário mínimo, com prova da atividade rural nos 12 meses anteriores (art. 39, I; `base-segurado-especial-autodeclaracao-arts-92-93-94`).
 
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+## Revisão de benefícios de longa duração (histórico)
 
-## Requisitos cumulativos
+Programa da Lei 13.846/2019, operacionalizado pela Portaria INSS 914/2021 (texto em `mcp-normas/corpus/06-Portarias/Portaria-INSS-914-2021-PRBI.md`): convocação com AR, 30 dias para agendar, suspensão (art. 77 do Decreto 3.048/99) e cessação após mais 60 dias sem agendamento. Conferir a vigência antes de invocar. Em cessação, verificar a regularidade da notificação no endereço cadastrado; reativação por agendamento durante a suspensão; recurso ao CRPS em 30 dias; MS em notificação irregular.
 
-Primeiro, qualidade de segurado na DII (data do início da incapacidade). Acionar `periodo-graca-qualidade-segurado`.
+## Dona de casa facultativa
 
-Segundo, carência de 12 contribuições mensais, salvo isenção pelo art. 26, II.
-
-Terceiro, incapacidade temporária comprovada por documentação médica ou por perícia.
-
-Quarto, incapacidade por mais de 15 dias consecutivos para o trabalho habitual.
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado empregado afastado por 20 dias com atestado médico. Direito ao B31 a partir do 16º dia, observada a qualidade e carência, ou isenção.
-
-Segundo, segurado com doença do art. 151 da Lei 8.213/91 (AIDS, neoplasia, tuberculose ativa, hanseníase, alienação mental, esclerose múltipla, cegueira, paralisia irreversível, cardiopatia grave, doença de Parkinson, espondiloartrose anquilosante, nefropatia grave, estado avançado de Paget, contaminação radioativa, hepatopatia grave) (auditoria 03/10/2026). Isenção de carência. Concessão independente do tempo de contribuição.
-
-Terceiro, segurado especial rural com incapacidade. Carência cumprida pela atividade rural. Direito ao B31 no valor de um salário mínimo, conforme art. 39, I, da Lei 8.213/91.
-
-Quarto, segurado com B31 indeferido por perícia documental inconclusiva. Com ciência a partir de 06/11/2026, examinar primeiro a reanálise da documentação médica em dez dias (art. 8º-A da Portaria Conjunta 13/2026, redação da 54/2026), que o recurso direto preclui. Cabe também P1 (pedido de prorrogação) ou recurso ao CRPS com fundamento em atestados e exames complementares. Acionar `analise-documental-incapacidade`.
-
-Quinto, segurado em limbo previdenciário-trabalhista. INSS cessou o B31 mas a empresa não aceitou o retorno. O fundamento é o **Tema 300 da TNU**, que mantém a qualidade de segurado até a rescisão contratual, quando só então começa a correr o período de graça do art. 15, II. O Tema 1421 do STF é a pendência que pode superá-lo, mérito não julgado, citar como risco e não como fundamento. A aplicação exige prova do impedimento patronal, vínculo aberto no CNIS não basta, e não se deve requerer RAC de baixa desse vínculo. Acionar `base-limbo-previdenciario-tema300`.
-
-Sexto, MEI, contribuinte individual ou doméstica com recolhimento regular. Direito ao B31 nas mesmas condições de carência e qualidade.
-
-## Regra e estratégia
-
-A regra geral é que a incapacidade temporária comprovada e a qualidade de segurado geram direito ao B31. O INSS tenta rejeitar por critérios formais (ausência de documento, perícia inconclusiva, falta de carência mal apurada). Enfrentar cada negativa com documentação robusta.
-
-Sempre pedir P1 antes da DCB. Acumular atestados, receitas e exames complementares. Em caso de cessação abrupta, impugnar imediatamente com pedido de restabelecimento.
-
-Em caso de perícia documental com parecer desfavorável, reanálise em dez dias com documento novo (art. 8º-A) ou recurso ao CRPS com novos documentos ou ação judicial com perícia médica judicial. Acionar `auditoria-laudo-pericial` para laudo pericial judicial.
-
-Sempre verificar a possibilidade de conversão em B32 quando a incapacidade se protrair ou se agravar. Acionar `base-incapacidade-b32-permanente`.
-
-Em caso de doença ocupacional ou acidente de trabalho, verificar caráter acidentário para conversão em B91 acidentário (ou B92, se permanente). Acionar `base-incapacidade-acidentaria-b92` e `ntep-nexo-acidentario`.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao analisar perícia documental, acione `analise-documental-incapacidade`.
-Ao auditar laudo pericial, acione `auditoria-laudo-pericial`.
-Ao verificar qualidade de segurado, acione `periodo-graca-qualidade-segurado`.
-Ao converter para B32, acione `base-incapacidade-b32-permanente`.
-Ao atestar caráter acidentário, acione `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
-Ao orientar para perícia, acione `orientacao-cliente-pericia`.
-Ao buscar precedentes, acione `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, a DIB do B31 é o 16º dia do afastamento para o segurado empregado e a DII para os demais segurados, desde que o requerimento seja feito em até 30 dias do afastamento; o art. 60, §1º, da Lei 8.213/91 vale para todo segurado (auditoria 03/10/2026). Fora desse prazo, DIB na DER.
-
-Segundo, a cessação antecipada (Alta Programada) pode ser impugnada via P1 ou MS. Acumular prova médica e contestar a DCB fixada sem perícia.
-
-Terceiro, a trava de 180 dias não vem do art. 60, §11-A, que só autoriza telemedicina ou análise documental; a Portaria Conjunta 13/2026, art. 6º, V [CONFERIDO], a aplica à nova análise documental após prorrogação indeferida, e dois indeferimentos sucessivos levam à perícia presencial (art. 8º, na redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026). Contra essa barreira, em caso de agravamento, MS pela urgência e pela violação do direito ao requerimento.
+A incapacidade para as tarefas domésticas habituais gera B31 à segurada facultativa. Precedente regional: TRU da 4ª Região, PUIL 5002876-10.2023.4.04.7202 [NÃO CONFIRMADO], equipara a exigência física do trabalho doméstico não remunerado à do remunerado. Não vincula a 3ª Região. Ver `base-facultativo-baixa-renda` e `perspectiva-genero-previdenciario`.
 
 ## Fungibilidade aplicável
 
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+Acionar `base-fungibilidade-previdenciaria` (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+Portarias DIRBEN/INSS 991/2022 (reconhecimento) e 992/2022 (manutenção): `base-portarias-dpmf-inss-hub`.
 
-## Autodeclaração rural
+## Redação da peça
 
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
+Seguir as técnicas 1, 2 e 4 (controvérsia no início, condição clínica ligada às tarefas, cronologia) de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`. Validação formal do relatório médico: `base-validacao-formal-laudo-medico-checklist-ab`.
 
-## Doutrina de apoio
+## MCPs da casa
 
-Frederico Amado, em Direito Previdenciário, sustenta a preponderância da prova médica sobre a triagem documental e a necessidade de perícia judicial em casos conflitantes.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Hugo Goes, em Manual, detalha o B31 e adverte para a necessidade de P1 para evitar cessação.
+## Integração com outras skills
 
-Fábio Zambitte Ibrahim, em Curso, critica a trava da análise documental e defende o amplo direito à concessão quando há documentação médica consistente.
+Peça: `peticao-previdenciaria`. Análise documental: `analise-documental-incapacidade`. Laudo: `auditoria-laudo-pericial`. Qualidade de segurado: `periodo-graca-qualidade-segurado`. B32: `base-incapacidade-b32-permanente`. Acidentário: `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`. B94: `base-auxilio-acidente-b94-pos-reforma`. Perícia: `orientacao-cliente-pericia` e `base-pericia-medica-federal-telepericia`.
 
-Wladimir Novaes Martinez analisa a transitoriedade do benefício e defende a conversão em B32 quando houver prognóstico desfavorável.
-
-O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do B31 e à proteção durante a recuperação da capacidade laboral.
-
-## Cruzamento com Onda 24
-
-Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B32, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
-
-## PROGRAMA DE REVISÃO DE BENEFÍCIOS POR INCAPACIDADE DE LONGA DURAÇÃO - PRBI (Onda 49)
-
-Instituído pela Lei 13.846/2019 e operacionalizado pela Portaria INSS nº 914, de 06/08/2021.
-
-Convocação por carta com AR digital ao endereço cadastrado. Segurado tem 30 dias para agendar perícia (Meu INSS, app ou Central 135) e apenas 1 remarcação permitida (até 1 dia antes da data). Decorrido sem agendamento, suspensão pelo art. 77 RPS. Decorridos mais 60 dias da suspensão sem agendamento, CESSAÇÃO DEFINITIVA. Resultado disponível em 21h pela Central 135 ou Meu INSS. Prazo de 30 dias para recurso ao CRPS em caso de não concordância.
-
-Critérios de seleção. Orientação Interna SPREV/SEPRT nº 03, de 02/09/2019 (alterada por OI 03 de 08/06/2021).
-
-ESTRATÉGIA PRÓ-SEGURADO. Em caso de cessação por PRBI.
-1. Conferir se a notificação foi REGULAR (carta com AR efetivamente recebida no endereço atualizado).
-2. Reativação por agendamento durante a suspensão (60 dias) é direito automático.
-3. Após cessação definitiva, recurso ao CRPS em 30 dias.
-4. Em caso de notificação irregular, MS pode reverter a suspensão ou cessação.
-
-Texto integral da Portaria 914/2021 disponível na própria base, em `mcp-normas/corpus/06-Portarias/Portaria-INSS-914-2021-PRBI.md` (Onda 49; auditoria 03/10/2026).
-
-Cruzar com `analise-documental-incapacidade`, `admissibilidade-barreiras-crps`, `mandado-seguranca-previdenciario` para estratégia recursal e MS.
-
-## TRABALHO DOMÉSTICO NÃO REMUNERADO - INCAPACIDADE DA DONA DE CASA (Onda 52)
-
-**Precedente regional persuasivo.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF [NÃO CONFIRMADO], Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC. Não é julgado da TNU e não vincula a 3ª Região (auditoria 03/10/2026).
-
-**Tese.** A execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado, salvo comprovação em sentido contrário.
-
-**Aplicação prática ao B31.** Segurada facultativa (ou facultativa de baixa renda) dona de casa que sofre incapacidade para as tarefas domésticas cotidianas TEM DIREITO ao B31. INSS não pode negar sob o argumento de que "trabalho doméstico não remunerado exige menos esforço".
-
-**Prova.** Basta laudo médico atestando as limitações. A tese TRU4 gera presunção favorável à segurada.
-
-Cruzar com `base-facultativo-baixa-renda`, `perspectiva-genero-previdenciario` (skill local) e `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
-
-## O que NÃO está nesta skill
-
-Não está aqui a aposentadoria por incapacidade permanente B32, objeto de `base-incapacidade-b32-permanente`. Não está aqui o caráter acidentário B91 ou B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
-
-## Janela de quinze dias do pedido de prorrogação (Onda 115)
-
-O art. 339, § 3º, da IN 128/2022, com redação dada pela IN PRES/INSS 212, de 06/08/2026 (auditoria 03/10/2026), dispõe que "o segurado poderá requerer a prorrogação nos últimos quinze dias do benefício caso o prazo fixado para a recuperação da capacidade para o trabalho ou para a atividade habitual revele-se insuficiente".
-
-Consequência operacional. Pedido ANTES da janela pode ser recusado por prematuridade. Pedido DEPOIS da DCB deixa de ser prorrogação e passa a ser novo requerimento, com todas as travas próprias, inclusive as das Portarias Conjuntas de análise documental. Registrar a data limite na agenda do cliente no momento da concessão.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "técnicas 1, 2 e 4 (controvérsia no início, condição clínica ligada às tarefas, cronologia)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
-
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos conferentes
 
 Havendo documentos médicos no caso, despachar o médico da área antes de fechar a estratégia, porque a espécie, a DII e o prognóstico dependem da leitura clínica.
 
@@ -187,16 +88,16 @@ Havendo documentos médicos no caso, despachar o médico da área antes de fecha
 | Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
 | Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
 
-Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na fixação da DII, no prognóstico e nos quesitos.
+Havendo mais de uma área nos documentos, despachar até três agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na fixação da DII, no prognóstico e nos quesitos.
 
-O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+O parecer médico é instrumento interno. Orienta a peça, os quesitos e o pedido ao médico assistente, e não vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
 
-## Gestação de alto risco (Onda 142)
+## Gestação de alto risco
 
-Desde a Portaria Interministerial MPS/MS nº 15, de 03/07/2026, a gestação de alto risco consta expressamente do rol de afecções que dispensam carência para os benefícios por incapacidade, como inciso XVIII do art. 2º da Portaria Interministerial MTP/MS nº 22/2022.
+Desde a Portaria Interministerial MPS/MS nº 15, de 03/07/2026, a gestação de alto risco consta do rol de afecções que dispensam carência para os benefícios por incapacidade, como inciso XVIII do art. 2º da Portaria Interministerial MTP/MS nº 22/2022.
 
-Permanecem exigíveis a qualidade de segurada na DII e a incapacidade por mais de quinze dias consecutivos, com recomendação médica de afastamento. O detalhamento está em `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
+Permanecem exigíveis a qualidade de segurada na DII e a incapacidade por mais de quinze dias consecutivos, com recomendação médica de afastamento. Antes dela, a TNU já admitia a dispensa (Tema 220 TNU, item 3). Detalhe em `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo decide pelo laudo pericial e pelo CNIS. Confere a qualidade de segurado e a carência na DII do perito, homologa acordo com frequência e fixa a DIP na sentença, com implantação após o trânsito pela CEAB-DJ. A peça demonstra os dois requisitos na DII provável, com a contagem mês a mês. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

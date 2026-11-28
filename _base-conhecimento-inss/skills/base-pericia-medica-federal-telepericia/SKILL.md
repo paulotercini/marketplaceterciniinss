@@ -1,161 +1,90 @@
 ---
 name: base-pericia-medica-federal-telepericia
-description: "Perícia Médica Federal e Teleperícia para benefícios por incapacidade e BPC, ótica pró-segurado. Use SEMPRE que mencionar perícia médica INSS, PMF, perito INSS, Teleperícia, Portaria DPMF/INSS 19/2026, videoconferência, telemedicina perícia, SAT Remoto, análise documental incapacidade, Portarias Conjuntas 13/2026, 14/2026 e 15/2026, parecer de verossimilhança, perícia presencial, perícia judicial, quesitos, assistente técnico, cerceamento Teleperícia, recusa Teleperícia, acessibilidade, acompanhante, impugnar laudo PMF, recurso CRPS laudo PMF, art. 60 §11-A. Cruza com auditoria-laudo-pericial, orientacao-cliente-pericia, peticao-previdenciaria, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-incapacidade-acidentaria-b92, base-auxilio-acidente-b94-pos-reforma e analise-bpc-loas."
+description: "Perícia Médica Federal e Teleperícia para benefícios por incapacidade e BPC, ótica pró-segurado. Use SEMPRE que mencionar perícia médica INSS, PMF, perito INSS, Teleperícia, Portaria Conjunta DPMF/INSS 19/2026, Portaria DPMF/SRGPS/MPS 587/2026, Lei 14.724/2023, videoconferência, telemedicina perícia, SAT Remoto, análise documental incapacidade, Portarias Conjuntas MPS/INSS 13/2026, 14/2026, 15/2026 e 54/2026, parecer de verossimilhança, perícia presencial, perícia judicial, quesitos, assistente técnico, cerceamento Teleperícia, recusa Teleperícia, acessibilidade, acompanhante, impugnar laudo PMF, recurso CRPS laudo PMF, art. 60 §11-A. Cruza com auditoria-laudo-pericial, orientacao-cliente-pericia, peticao-previdenciaria, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-incapacidade-acidentaria-b92, base-auxilio-acidente-b94-pos-reforma e analise-bpc-loas."
 ---
 
-## ATUALIZAÇÃO NORMATIVA (Etapa 5 da auditoria, 12/07/2026)
+# Perícia Médica Federal e Teleperícia
 
-A Teleperícia tem duas normas de regência. A Portaria Conjunta DPMF/INSS nº 19/2026 (regulamentação) e a Portaria DPMF/SRGPS/MPS nº 587/2026, de abril de 2026 (implementação operacional). Citar as duas ao tratar de agendamento, recusa ou nulidade de teleperícia. Conferir o texto da 587/2026 no DOU antes de transcrever.
-
-
-# Perícia Médica Federal e Teleperícia Pós EC 103/2019
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente.
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta o enfrentamento da Perícia Médica Federal (PMF) presencial, da Teleperícia (videoconferência) e da análise documental sob as Portarias Conjuntas MPS/INSS 13/2026, 14/2026 e 15/2026 e da Portaria DPMF/INSS 19/2026. Objetivo único é defender o segurado contra erros, omissões e cerceamentos na avaliação pericial.
+Orienta o enfrentamento da Perícia Médica Federal (PMF) presencial, da Teleperícia e da análise documental, com foco em erros, omissões e cerceamentos na avaliação pericial.
 
-## Marco normativo central
+## Marco normativo conferido
 
-Lei 8.213/91, art. 42 caput e 60. Exigência de perícia médica para concessão e manutenção de benefícios por incapacidade.
+| Norma | Conteúdo |
+|---|---|
+| Lei 8.213/91, art. 60, §11-A (incluído pela Lei 14.724/2023) | O exame médico-pericial pode ser feito por telemedicina ou por análise documental, conforme regulamento |
+| Lei 14.724/2023, art. 12 | Autoriza a telemedicina na PMF em municípios com difícil provimento de peritos ou com espera elevada |
+| Lei 8.213/91, art. 101 | Submissão a exame, reabilitação e tratamento, sob pena de suspensão |
+| Portaria Conjunta DPMF/INSS 19/2026 (vigência em 13/04/2026) | Teleperícia pelo SAT Remoto: perito remoto e presença obrigatória do segurado em uma APS (art. 2º, I); serviços: perícia inicial e avaliação ou reavaliação do BPC (art. 3º); prévio agendamento (art. 4º) |
+| Portaria DPMF/SRGPS/MPS 587/2026 | Lista as 499 APS que ofertaram perícia por telemedicina entre 03/01/2025 e 03/04/2026 |
+| Portaria Conjunta MPS/INSS 13/2026, alterada pela 54/2026 | Análise documental do B31; reanálise em dez dias da ciência, antes do recurso (art. 8º-A); perícia presencial obrigatória após dois indeferimentos documentais sucessivos (art. 8º) |
+| Portaria Conjunta MPS/INSS 14/2026, prorrogada pela 43/2026 | Limite transitório de 90 dias para o B31 concedido por análise documental |
+| Portaria Conjunta MPS/INSS 15/2026 | Análise documental do B94, etapa obrigatória anterior ao exame presencial (art. 1º, §3º); requisitos mínimos do documento médico (art. 2º) |
+| Portaria Conjunta MDS/INSS 2/2015 | Avaliação social e médica do BPC |
+| Resolução CFM 2.314/2022 | Telemedicina |
 
-Lei 8.213/91, art. 60, §11-A. Regime de análise documental com parecer de verossimilhança para concessão e prorrogação.
+A Teleperícia da Portaria Conjunta 19/2026 ocorre dentro da APS. O segurado não usa equipamento próprio nem conexão doméstica. O argumento de falta de internet não se aplica a ela; o argumento cabível é a inadequação do exame remoto ao quadro clínico.
 
-Decreto 3.048/99, arts. 304 e seguintes. Regula a PMF.
+## Modalidades
 
-Portaria Conjunta MPS/INSS 13/2026. Análise documental de B31. Alterada pela Portaria Conjunta MPS/INSS 54/2026 (DOU de 06/11/2026): reanálise da documentação médica em dez dias da ciência, antes do recurso (art. 8º-A), e perícia presencial após dois indeferimentos documentais (art. 8º).
+| Modalidade | Base | Ponto de atenção |
+|---|---|---|
+| Perícia presencial em APS | Lei 8.213/91, art. 101 | Exame físico completo |
+| Teleperícia (perito remoto, segurado na APS) | Portaria Conjunta DPMF/INSS 19/2026 | Inadequada quando o quadro exige palpação, testes de força, mobilidade ou reflexos |
+| Análise documental do B31 | Portaria Conjunta MPS/INSS 13/2026 | Reanálise em dez dias; recurso sem reanálise preclui a faculdade (art. 8º-A, §1º) |
+| Análise documental do B94 | Portaria Conjunta MPS/INSS 15/2026 | Documento deve trazer acidente, data, consolidação e nexo |
+| Perícia externa (domicílio ou hospital) | Lei 8.213/91, art. 101; IN 128/2022 | Segurado impossibilitado de locomoção |
+| Avaliação biopsicossocial (BPC e aposentadoria PcD) | Portaria Conjunta MDS/INSS 2/2015; Portaria Interministerial 1/2014 | Avaliação social e médica |
 
-Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para 90 dias o limite de duração do B31 concedido por análise documental, prorrogada por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026). Não é a norma da análise documental do B91.
+## Cenários pró-segurado
 
-Portaria Conjunta MPS/INSS 15/2026. Análise documental de B94.
+Primeiro, B31 indeferido por análise documental. Pedir reanálise em dez dias (art. 8º-A) ou recorrer. Após dois indeferimentos documentais, exigir perícia presencial (art. 8º). Ver `analise-documental-incapacidade`.
 
-Portaria DPMF/INSS 19/2026. Regula a Teleperícia (perícia por videoconferência).
+Segundo, quadro que exige exame físico (ortopédico, neurológico, dermatológico). Pedir perícia presencial e registrar a inadequação do exame remoto.
 
-Portaria MDS/INSS sobre TCQ e avaliação biopsicossocial para BPC e aposentadoria PCD.
+Terceiro, quadro psíquico, cognitivo ou sensorial complexo. Pedir exame presencial e acompanhante.
 
-Resolução 2.314/2022 CFM e Resolução 2.378/2024 CFM. Ética médica em telemedicina.
+Quarto, segurado com deficiência auditiva sem intérprete de Libras. Violação do dever de acessibilidade da Lei 13.146/2015.
 
-## Modalidades de avaliação
+Quinto, BPC com avaliação social ou médica superficial. Impugnar com a Portaria Conjunta MDS/INSS 2/2015. Ver `analise-bpc-loas`.
 
-Primeira, perícia presencial em APS (Agência da Previdência Social). Modalidade clássica.
+Sexto, laudo da PMF sem exame descrito, sem CID ou sem fundamentação. Recurso ao CRPS ou ação judicial. Ver `auditoria-laudo-pericial`.
 
-Segunda, Teleperícia por videoconferência (Portaria DPMF/INSS 19/2026). Exame à distância.
+Sétimo, segurado acamado com perícia externa negada. Mandado de segurança.
 
-Terceira, análise documental (Portaria Conjunta 13/14/15 de 2026). Sem exame físico, parecer de verossimilhança.
+## Direitos do segurado
 
-Quarta, PMF externa em domicílio ou hospital. Em casos de impossibilidade de locomoção.
+Primeiro, perícia com exame físico quando o quadro exigir.
 
-Quinta, perícia conjunta médica e social para BPC e aposentadoria PCD (avaliação biopsicossocial).
+Segundo, perícia externa quando não puder se locomover.
 
-## Cenários operacionais pró-segurado
+Terceiro, acompanhante em caso de deficiência, idade avançada, menoridade ou quadro psiquiátrico (Lei 13.146/2015).
 
-Primeiro, segurado com incapacidade evidente que teve B31 indeferido por análise documental. Cabe requerer Teleperícia ou perícia presencial. Acionar `base-incapacidade-b31-temporaria`.
+Quarto, acessibilidade, inclusive intérprete de Libras.
 
-Segundo, segurado com quadro que exige exame físico (limitação ortopédica, neurológica, alterações visíveis). Teleperícia é inadequada. Cabe exigir perícia presencial. Recusa justificada.
+Quinto, cópia integral do laudo, pelo Meu INSS ou pela Lei 12.527/2011.
 
-Terceiro, segurado com condições que dificultam a Teleperícia (sem acesso à internet, sem equipamento, idoso, com deficiência). Cabe perícia presencial com acessibilidade.
+Sexto, laudo fundamentado (Lei 9.784/99, art. 50).
 
-Cuarto, segurado com CID sensorial, psíquico ou cognitivo complexo. Teleperícia inadequada. Exame presencial com especialista.
+## Estratégia
 
-Quinto, segurado em BPC cuja avaliação biopsicossocial foi superficial. Impugnação com fundamento na Portaria Conjunta MDS/INSS nº 2, de 30/03/2015, atualizada (auditoria 03/10/2026). Acionar `analise-bpc-loas`.
+Primeiro, preparar o segurado e a documentação (`orientacao-cliente-pericia`).
 
-Sexto, laudo da PMF com erros técnicos ou omissões. Recurso ao CRPS ou ação judicial. Acionar `auditoria-laudo-pericial`.
+Segundo, juntar relatório do médico assistente com os requisitos das Portarias Conjuntas 13/2026 e 15/2026 (`relatorio-medico-assistente`).
 
-Sétimo, perícia com tempo insuficiente (menos de 10 minutos). Cerceamento de defesa. Impugnável.
+Terceiro, pedir cópia do laudo e auditá-lo (`auditoria-laudo-pericial`).
 
-Oitavo, segurado sem acompanhante ou intérprete em Teleperícia com deficiência auditiva. Violação do direito de acessibilidade.
+Quarto, em ação judicial, formular quesitos precisos e indicar assistente técnico (`base-cpc-prova-pericial-arts464-480`).
 
-## Regra e estratégia
-
-A regra geral é que a perícia deve ser realizada de modo completo, em condições adequadas, permitindo exame físico e avaliação detalhada. O INSS tende a substituir perícia presencial por Teleperícia ou análise documental para ganhar tempo e reduzir custos. Sempre exigir perícia presencial quando a Teleperícia for inadequada ao quadro.
-
-Primeiro, preparar o segurado com toda a documentação médica. Acionar `orientacao-cliente-pericia`.
-
-Segundo, em Teleperícia, preparar ambiente e testar conexão antes. Gravar, se possível, com autorização do segurado.
-
-Terceiro, em caso de laudo desfavorável, impugnar com fundamento técnico. Acionar `auditoria-laudo-pericial`.
-
-Quarto, pedir cópia integral do laudo da PMF pelo Meu INSS ou e-SIC.
-
-Quinto, em análise documental negativa, reunir documentação robusta e recorrer ou ajuizar.
-
-Sexto, em ação judicial, quesitos precisos e assistente técnico quando necessário.
-
-## Direitos do segurado na perícia
-
-Primeiro, direito à perícia completa, com exame físico quando necessário.
-
-Segundo, direito à Teleperícia adequada, com qualidade de imagem e som e sem atropelo.
-
-Terceiro, direito à perícia externa em caso de impossibilidade de locomoção.
-
-Quarto, direito ao acompanhante em caso de vulnerabilidade, idoso, deficiência ou menor de idade.
-
-Quinto, direito à acessibilidade (intérprete de Libras, rampa, banheiro adaptado).
-
-Sexto, direito ao laudo completo e fundamentado.
-
-Sétimo, direito a recorrer em caso de cerceamento ou erro técnico.
+Os fundamentos e os cenários detalhados estão em `references/FUNDAMENTOS-E-CENARIOS.md`. Precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`. Portarias em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao auditar laudo, acione `auditoria-laudo-pericial`.
-Ao analisar perícia documental, acione `analise-documental-incapacidade`.
-Ao orientar o segurado, acione `orientacao-cliente-pericia`.
-Para B31, acione `base-incapacidade-b31-temporaria`.
-Para B32, acione `base-incapacidade-b32-permanente`.
-Para B91 ou B92, acione `base-incapacidade-acidentaria-b92`.
-Para B94, acione `base-auxilio-acidente-b94-pos-reforma`.
-Para BPC, acione `analise-bpc-loas` e `bpc-renda-grupo-familiar`.
-Para aposentadoria PCD, acione `aposentadoria-deficiencia`.
-Para MS contra demora ou cerceamento, acione `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`.
-
-## Alertas
-
-Primeiro, Teleperícia não substitui perícia presencial quando há necessidade de exame físico. Cerceamento impugnável.
-
-Segundo, análise documental é triagem, não perícia. Parecer de verossimilhança negativo não vincula juízo. Ação judicial com perícia médica judicial é caminho.
-
-Terceiro, laudo da PMF deve ser fundamentado. Omissões ou superficialidade são motivos de impugnação.
-
-Quarto, direito à acessibilidade é absoluto. Segurado com deficiência tem direito a intérprete, acompanhante e adaptações.
-
-Quinto, tempo de perícia insuficiente é cerceamento. Em casos complexos, a perícia deve ter tempo adequado.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, defende o direito à perícia completa e contraditório na PMF.
-
-Hugo Goes, em Manual, detalha o papel da PMF e os direitos do segurado.
-
-Fábio Zambitte Ibrahim, em Curso, critica a substituição da perícia presencial por análise documental.
-
-Wladimir Novaes Martinez analisa o perito como servidor público sujeito ao dever de fundamentação.
-
-Daniel Pulino trata da perícia médica federal com foco no devido processo.
-
-O IBDP sustenta institucionalmente o direito à perícia adequada e ao laudo fundamentado.
-
-## O que NÃO está nesta skill
-
-Não está aqui a auditoria de laudos específicos, objeto de `auditoria-laudo-pericial`. Não estão aqui as regras específicas de cada benefício (B31/B32/B91/B92/B94), objeto de skills temáticas próprias. Não está aqui a avaliação biopsicossocial do BPC em detalhe, objeto de `analise-bpc-loas`. Não está aqui a orientação direta ao segurado, objeto de `orientacao-cliente-pericia`.
+`peticao-previdenciaria`, `auditoria-laudo-pericial`, `analise-documental-incapacidade`, `orientacao-cliente-pericia`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92`, `base-auxilio-acidente-b94-pos-reforma`, `analise-bpc-loas`, `bpc-renda-grupo-familiar`, `aposentadoria-deficiencia`, `mandado-seguranca-previdenciario`, `ms-competencia-autoridade-coatora`.

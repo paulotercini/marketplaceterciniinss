@@ -15,9 +15,9 @@ Siga EXATAMENTE os passos abaixo.
   sem acento, então escreva certo de primeira.
 - **Proibido inventar.** Todo dado afirmado vem lido de documento. Sem documento,
   escreva "não consta / a confirmar". Sem confirmação de norma, tema ou
-  precedente, escreva "Não localizado" e não afirme. Jurisprudência só depois de
+  precedente, escreva "Não localizado" e não afirme. Jurisprudência apenas depois de
   conferida em `base-precedentes-catalogo-vinculantes` (e, quando a rede permitir,
-  na fonte oficial) e só se favorece o segurado. Marque `[CONFERIDO]` ou
+  na fonte oficial) e apenas se favorece o segurado. Marque `[CONFERIDO]` ou
   `[NÃO CONFIRMADO]`. Nunca apresente informação possivelmente desatualizada como
   vigente; sinalize quando o tema pode ter mudado.
 - **Estilo do escritório** (ver CLAUDE.md, seção da personalização): sem dois
@@ -39,7 +39,7 @@ Grava `triagem_hoje.json`, leia-o.
 ## 3. Processar CADA tarefa (gravação automática, sem aprovação prévia)
 Para não sobrecarregar o contexto e impedir vazamento de dados entre clientes,
 delegue cada cliente ao agente do plugin
-`base-conhecimento-inss:triagem-caso` (Onda 82), um despacho por tarefa,
+`base-conhecimento-inss:triagem-caso`, um despacho por tarefa,
 passando o item do JSON, os ponteiros da pasta no Drive e a instrução de
 gravação do parecer. O agente já carrega o roteiro completo (modo
 COMPLETO/COMPLEMENTO, leitura integral de CNIS/PPP/médicos/rurais, alertas
@@ -76,7 +76,7 @@ d) **Localizar a pasta do cliente** no Drive via `search_files`
    (`title contains 'NOME'` ou `fullText contains 'CPF'`) e listar arquivos
    (`parentId = '<pasta>'`). Ler os documentos relevantes com `read_file_content`,
    seguindo a cadeia de leitura integral do CLAUDE.md (CNIS, PPP, rurais e médicos
-   têm leitura obrigatória da integralidade; documento de imagem só com OCR; em
+   têm leitura obrigatória da integralidade; documento de imagem apenas com OCR; em
    dúvida ou rasura, perguntar ao Paulo). Se a pendência citar anexo da tarefa,
    ler com `python3 todo_anexo.py "<list_id>" "<task_id>" "trecho"`.
 
@@ -97,7 +97,7 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
 f) **Gerar a CONCLUSÃO** objetiva, **máx. 4 linhas**, com achado e próximo passo.
    NÃO iniciar com data ou prefixo (o script adiciona "DD.MM.AAAA (C): "). Nunca
    inventar dados; faltando documento, dizer claramente. No modo complemento, a
-   conclusão registra só o que foi feito na nova data.
+   conclusão registra apenas o que foi feito na nova data.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 
 g) **Salvar o parecer** na subpasta `Claude` da pasta do cliente (criar com
@@ -108,7 +108,7 @@ g) **Salvar o parecer** na subpasta `Claude` da pasta do cliente (criar com
    pendências do histórico, lista de renomeações sugeridas e mensagem ao cliente
    quando aplicável.
    - **OBRIGATÓRIO em todo parecer, uma seção final "Pendências em aberto"**, em
-     destaque, listando tudo o que ainda falta (ex.: falta RG, falta PPP da Cica,
+     destaque, listando tudo o que ainda falta (ex.: falta RG, falta PPP da empresa X,
      falta comprovante de residência, indicador de CNIS a corrigir, prazo a
      confirmar). No modo complemento, essa seção é **carregada do parecer anterior
      e atualizada** (o que foi resolvido sai, o que continua pendente permanece, o
@@ -130,41 +130,29 @@ CNIS ou prazo a confirmar, consolidando as pendências de todos os clientes.
 ## Regras
 - Escopo somente tarefas atribuídas ao Paulo (P) vencendo hoje (já filtradas).
   Quando o pedido trouxer um cliente específico como argumento, localize a tarefa
-  ativa dele por nome/CPF e processe só ela (mesma cadeia b a h).
+  ativa dele por nome/CPF e processe apenas ela (mesma cadeia b a h).
 - Conclusão SEMPRE até 4 linhas, em português com acentuação, direta.
 - Gravação automática em todas, sem etapa de aprovação.
-- NÃO renomear nem apagar no Drive (só listar renomeações). NÃO enviar mensagens
-  (só deixar prontas). NÃO usar Gmail salvo pedido explícito.
+- NÃO renomear nem apagar no Drive (apenas listar renomeações). NÃO enviar mensagens
+  (apenas deixá-las prontas). NÃO usar Gmail salvo pedido explícito.
 - Apagar arquivos temporários locais que criar.
 
-## Dependencias (necessarias no ambiente, inclusive no cowork)
+## Dependências (necessárias no ambiente, inclusive no cowork)
 Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
 - **Scripts Python (raiz do repo):** `graph_bootstrap.py`, `graph_client.py`,
   `triagem.py`, `triagem_do_dia.py`, `todo_anexo.py`, `todo_conclusao.py` e um
-  `graph_tokens.json` valido.
+  `graph_tokens.json` válido.
 - **MCP:** Google Drive (search_files, read_file_content, download_file_content,
   create_file) e Microsoft To Do via Microsoft Graph.
 - **Skills de apoio (base/ponte):** `base-precedentes-catalogo-vinculantes`,
   `base-cnis-acerto-indicadores`, `base-documentos-comprobatorios-in128` e a `base-*`/
-  `ponte-*` do beneficio de cada cliente, alem do `CLAUDE.md` do escritorio (que traz
-  o mapa de ativacao de skills e as verificacoes automaticas).
+  `ponte-*` do benefício de cada cliente, além do `CLAUDE.md` do escritório (que traz
+  o mapa de ativação de skills e as verificações automáticas).
 
 ## Extensão
 
-Teto de o parecer de triagem, 1 página, porque é parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto do parecer de triagem, 1 página, porque é parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que excede o teto volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

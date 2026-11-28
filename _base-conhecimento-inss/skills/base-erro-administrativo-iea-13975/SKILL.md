@@ -9,7 +9,7 @@ description: "Indicação de Erro Administrativo (IEA, código 13975) e autotute
 
 Acione SEMPRE que houver erro material, formal ou de mérito em processo administrativo do INSS que justifique autotutela, e o servidor responsável recusar abrir a tarefa interna 13975 ou se omitir além do prazo. Acione também em caso de conclusão sem perícia, indeferimento sem fundamentação, juntada indevida de documento de terceiro, exigência abusiva, ou qualquer ato viciado que reclame revisão de ofício.
 
-A IEA é instrumento interno de provocação da autotutela. O art. 26, §1º, da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria DIRBEN/INSS 1.318/2025) restringe a abertura da tarefa às chefias que enumera. A vedação textual de requerimento externo constava do art. 13, §9º, da Portaria 1.056/2022, na redação da Portaria 1.231/2024, ambas revogadas, e não foi reproduzida na Portaria 1.309/2025, cujo art. 26 vai só até o §8º (auditoria 03/10/2026). Daí a estratégia ser provocar nominalmente as autoridades legitimadas a abrir a tarefa.
+A IEA é instrumento interno de provocação da autotutela. O art. 26, §1º, da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria DIRBEN/INSS 1.318/2025) restringe a abertura da tarefa às chefias que enumera. A vedação textual de requerimento externo constava do art. 13, §9º, da Portaria 1.056/2022, na redação da Portaria 1.231/2024, ambas revogadas, e não foi reproduzida na Portaria 1.309/2025, cujo art. 26 vai apenas até o §8º. Daí a estratégia ser provocar nominalmente as autoridades legitimadas a abrir a tarefa.
 
 ## 2. Marco normativo
 
@@ -17,7 +17,7 @@ CF/88, art. 5º, XXXIV "a" (direito de petição), LXXVIII (razoável duração 
 
 Lei 9.784/1999, art. 2º (princípios), art. 5º (decidir), art. 6º (forma do requerimento), art. 48 (dever de decidir), art. 49 (prazo de 30 dias prorrogáveis uma vez), art. 53 (poder-dever de autotutela).
 
-Súmula 473 do STF: "A administração pode anular seus próprios atos, quando eivados de vícios que os tornam ilegais, porque deles não se originam direitos; ou revogá-los, por motivo de conveniência ou oportunidade, respeitados os direitos adquiridos, e ressalvada, em todos os casos, a apreciação judicial." (auditoria 03/10/2026)
+Súmula 473 do STF: "A administração pode anular seus próprios atos, quando eivados de vícios que os tornam ilegais, porque deles não se originam direitos; ou revogá-los, por motivo de conveniência ou oportunidade, respeitados os direitos adquiridos, e ressalvada, em todos os casos, a apreciação judicial."
 
 Lei 8.213/1991, art. 41-A, §5º. Prazo de 45 dias para o primeiro pagamento de benefício após apresentação da documentação.
 
@@ -31,7 +31,7 @@ Portaria DIRBEN/INSS nº 1.318, de 19/12/2025. Alterou a Portaria 1.309/2025 sem
 
 Portaria DIRBEN/INSS nº 1.056/2022. Revogada expressamente pelo art. 44, III, da Portaria 1.309/2025. Referência puramente histórica. Não invocar como norma vigente.
 
-Portaria DIRBEN/INSS nº 1.231, de 15/10/2024 (DOU 06/11/2024). Revogada expressamente pelo art. 44, V, da Portaria 1.309/2025. Referência puramente histórica. Só invocar quando o erro administrativo tiver sido praticado entre 06/11/2024 e 03/11/2025, sob a lógica do tempus regit actum, e ainda assim em conjunto com a 1.309/2025 para reforçar a continuidade normativa da autotutela.
+Portaria DIRBEN/INSS nº 1.231, de 15/10/2024 (DOU 06/11/2024). Revogada expressamente pelo art. 44, V, da Portaria 1.309/2025. Referência histórica. Apenas invocar quando o erro administrativo tiver sido praticado entre 06/11/2024 e 03/11/2025, sob a lógica do tempus regit actum, e ainda assim em conjunto com a 1.309/2025 para reforçar a continuidade normativa da autotutela.
 
 ## 3. Rol exaustivo das chefias legitimadas
 
@@ -83,25 +83,25 @@ Prazo da Lei 8.213/1991, art. 41-A, §5º e Decreto 3.048/1999, art. 174. 45 dia
 
 Prazo da Lei 13.460/2017, art. 16. Decisão administrativa final em ouvidoria em 30 dias prorrogáveis uma vez por igual período.
 
-Parâmetro nacional do STF, RE 1.171.152/SC. 90 dias para análise de requerimentos previdenciários.
+Acordo homologado pelo STF no RE 1.171.152/SC (Tema 1066 cancelado). Prazos de até 90 dias para análise, conforme a espécie de benefício.
 
-Em PCD, dada a prioridade legal (Lei 13.146/2015, art. 9º, VII) e a natureza alimentar do benefício, o TRF3 mitiga esses prazos em sede de liminar quando demonstrada vulnerabilidade.
+Em PCD, dada a prioridade legal (Lei 13.146/2015, art. 9º, VII) e a natureza alimentar do benefício, o TRF3 tem mitigado esses prazos em liminar quando demonstrada vulnerabilidade (conferir precedente atual no MCP trf3).
 
 ## 6. Eixos pró-segurado
 
-A autotutela é poder-dever, não faculdade. O art. 53 da Lei 9.784/1999 impõe à Administração anular ato eivado de vício de legalidade, e a Súmula 473 do STF reconhece esse poder (auditoria 03/10/2026). A omissão é ilegal por si.
+A autotutela é poder-dever. O art. 53 da Lei 9.784/1999 ("A Administração deve anular seus próprios atos, quando eivados de vício de legalidade") impõe à Administração anular ato eivado de vício de legalidade, e a Súmula 473 do STF reconhece esse poder. A omissão é ilegal por si.
 
 A vedação de requerimento externo de IEA não exime a Administração do dever de autotutela. O advogado provoca as autoridades nominalmente legitimadas, que têm o poder-dever de abrir a tarefa.
 
-A recusa injustificada da chefia importa potencial infração disciplinar (Lei 8.112/90, art. 116, II, IV, VI e XII e art. 117, IV e IX). Cabe representação à Corregedoria-Geral do INSS.
+A recusa injustificada da chefia importa potencial infração disciplinar (Lei 8.112/90, art. 116, I, III e V, e art. 117, IV). Cabe representação à Corregedoria-Geral do INSS.
 
-A omissão prolongada caracteriza prevaricação (CP, art. 319) quando há retardamento ou deixa de praticar, indevidamente, ato de ofício para satisfazer interesse ou sentimento pessoal. Cabe Notícia de Fato ao MPF.
+A omissão prolongada apenas configura prevaricação (CP, art. 319) se houver indício de que o servidor retardou o ato para satisfazer interesse ou sentimento pessoal. Sem esse indício, a via é disciplinar. Havendo, cabe Notícia de Fato ao MPF.
 
-A doutrina e a jurisprudência (Tema 350/STF, RE 631.240) admitem ação judicial imediata quando comprovada inércia prolongada, sem necessidade de exaurir a via administrativa. Esforço administrativo paralelo serve para constituir prova robusta da omissão.
+O Tema 350/STF (RE 631.240) exige prévio requerimento, mas dispensa o exaurimento da via administrativa. Excedido o prazo legal de análise, há interesse de agir. O esforço administrativo paralelo documenta a omissão.
 
 ## 7. Estratégia processual
 
-A defesa pró-segurado pivota em provocação multifrontal simultânea. Notificação extrajudicial endereçada conjuntamente a todas as autoridades nominadas, manifestações no Fala.BR (Denúncia, Reclamação, Solicitação), representação à Corregedoria, Notícia de Fato ao MPF, cópia à PFDC e, transcorrido o prazo de 5 dias úteis, mandado de segurança com pedido liminar e astreintes contra Gerente-Executivo e Superintendência Regional em litisconsórcio passivo. A modelagem detalhada está em `base-notificacao-extrajudicial-mapeamento-institucional`.
+A defesa pró-segurado combina provocações simultâneas: notificação extrajudicial endereçada conjuntamente a todas as autoridades nominadas, manifestações no Fala.BR (Denúncia, Reclamação, Solicitação), representação à Corregedoria, Notícia de Fato ao MPF, cópia à PFDC e, transcorrido o prazo de 5 dias úteis, mandado de segurança com pedido liminar e astreintes contra Gerente-Executivo e Superintendência Regional em litisconsórcio passivo. A modelagem detalhada está em `base-notificacao-extrajudicial-mapeamento-institucional`.
 
 ## 8. Documentos essenciais
 
@@ -124,11 +124,11 @@ Tema 1124 em `tema-1124-instrucao-administrativa`.
 
 Primeiro, a IEA é interna. Não tente protocolar IEA por petição direta do advogado, porque o ato será recusado.
 
-Segundo, sempre provoque nominalmente todas as autoridades do rol do art. 26, §1º da Portaria DIRBEN/INSS 1.309/2025. Endereçamento múltiplo neutraliza alegação posterior de não recebimento.
+Segundo, sempre provoque nominalmente todas as autoridades do rol do art. 26, §1º da Portaria DIRBEN/INSS 1.309/2025. O endereçamento múltiplo afasta alegação posterior de não recebimento.
 
-Terceiro, fundamente sempre na Portaria DIRBEN/INSS 1.309/2025 (norma vigente) e nas alterações da Portaria DIRBEN/INSS 1.318/2025. Só invoque a revogada Portaria 1.231/2024 se o ato viciado for anterior a 04/11/2025, e mesmo assim em conjunto com a 1.309/2025 sob o fundamento da continuidade normativa da autotutela. Nunca cite a Portaria 1.056/2022 como fundamento vigente.
+Terceiro, fundamente sempre na Portaria DIRBEN/INSS 1.309/2025 (norma vigente) e nas alterações da Portaria DIRBEN/INSS 1.318/2025. Apenas invoque a revogada Portaria 1.231/2024 se o ato viciado for anterior a 04/11/2025, e mesmo assim em conjunto com a 1.309/2025 sob o fundamento da continuidade normativa da autotutela. Nunca cite a Portaria 1.056/2022 como fundamento vigente.
 
-Quarto, identifique a espécie correta de Supervisão Técnica para forçar classificação adequada. Em caso de erro formal, invoque também o código 9428.
+Quarto, identifique a espécie correta de Supervisão Técnica para obter a classificação adequada. Em caso de erro formal, invoque também o código 9428.
 
 Quinto, se o vício envolver dado pessoal de terceiro, acione paralelamente ANPD pela LGPD (art. 48). Ver `base-pfe-inss-anpd-dpu-conade`.
 
@@ -136,36 +136,18 @@ Sexto, em PCD, invoque sempre o art. 9º, VII, da Lei 13.146/2015 (prioridade) e
 
 Sétimo, transcorridos 5 dias úteis, ajuíze MS sem aguardar mais. A omissão continuada renova diariamente o prazo decadencial do art. 23 da Lei 12.016/2009.
 
-## 11. Doutrina de apoio
-
-Hely Lopes Meirelles e Celso Antônio Bandeira de Mello fundam a doutrina da autotutela. Maria Sylvia Zanella Di Pietro detalha o ato administrativo viciado. José dos Santos Carvalho Filho aprofunda o processo administrativo.
-
-Frederico Amado, Hugo Goes e Wladimir Novaes Martinez analisam a autotutela na esfera previdenciária. Marco Aurélio Serau Junior trata da proteção social processual. Daniel Pulino aprofunda o processo administrativo previdenciário. O IBDP sustenta a proteção integral procedimental.
-
-## 12. O que NÃO está nesta skill
+## 11. O que NÃO está nesta skill
 
 Canais externos (Ouvidoria, Corregedoria, CGU) estão em `base-canais-falabr-corregedoria-cgu`. MPF, PFDC, PRM em `base-mpf-pfdc-prm-defesa-segurado`. PFE-INSS, ANPD, DPU, CONADE em `base-pfe-inss-anpd-dpu-conade`. Modelagem da notificação extrajudicial e mapeamento institucional em `base-notificacao-extrajudicial-mapeamento-institucional`.
 
-## 13. Fontes
+## 12. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

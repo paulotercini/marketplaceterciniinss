@@ -16,7 +16,7 @@ Checklist exaustivo de cada uma das 5 camadas da revisão aprofundada. Use como 
 - [ ] Recuo de parágrafo. 2 cm para rito judicial. 4 cm para CRPS.
 - [ ] Rodapé do escritório (Paulo Roberto Tercini Filho, OAB/SP 331.110, endereço, contatos).
 
-### 1.2 Dois-Pontos (Onda 163)
+### 1.2 Dois-Pontos
 
 - [ ] Dois-pontos apenas antes de citação literal ou de enumeração de pedidos ou requisitos.
 - [ ] Nenhum dois-pontos antes de miniconclusão ou de explicação que caberia no mesmo período.
@@ -24,7 +24,7 @@ Checklist exaustivo de cada uma das 5 camadas da revisão aprofundada. Use como 
 ### 1.3 Referenciação Documental
 
 - [ ] Todo documento citado tem ID (ex. "CNIS - ID 13476890").
-- [ ] Vedado "conforme documentos em anexo" sem ID.
+- [ ] Vedado "conforme documentos em anexo" sem ID nas peças intermediárias. Na petição inicial e no MS, que ainda não têm ID, o documento segue "em anexo", com emitente e data.
 - [ ] Vedado "documentos juntados na inicial" sem identificação específica.
 - [ ] Em PJe, formato "(ID XXXXXXXX)" ou "(doc. ID XXXXXXXX)".
 
@@ -80,7 +80,7 @@ Checklist exaustivo de cada uma das 5 camadas da revisão aprofundada. Use como 
 - [ ] Seção 4. Pedidos de prova direcionados.
 
 **Memorial.**
-- [ ] Limite de duas páginas.
+- [ ] Referência de duas páginas.
 - [ ] Framework EVO (Essencial, Visual, Organizado).
 - [ ] Questão central, fundamento para reforma, provas e resultados, pedido final.
 
@@ -105,7 +105,7 @@ Para CADA citação de Tema STF/STJ/TNU, Súmula, IRDR, IAC, Enunciado CRPS.
 - [ ] Número do processo está correto.
 - [ ] Órgão julgador está correto.
 - [ ] Relator e data estão corretos.
-- [ ] Não há overruling posterior (Tema 503/STF, Súmula 86/TNU cancelada, etc).
+- [ ] Não há overruling posterior (Tema 1102/STF com tese de 2022 superada, Súmula 86/TNU cancelada, etc).
 - [ ] Modulação verificada (Tema 1102/STF e outros).
 - [ ] Aplicação ao caso concreto é pertinente.
 
@@ -119,7 +119,7 @@ Para CADA citação de Tema STF/STJ/TNU, Súmula, IRDR, IAC, Enunciado CRPS.
 - [ ] BPC menor 16 anos com critérios diferenciados.
 - [ ] Tempestividade recursal verificada.
 - [ ] CNIS cruzado com documentação.
-- [ ] Cálculo previdenciário só com dados completos.
+- [ ] Cálculo previdenciário apenas com dados completos.
 
 ### 2.4 Hub de Acionamento de Skills
 
@@ -132,7 +132,7 @@ Conforme tipo de peça, verificar se as skills abaixo foram acionadas pela skill
 - [ ] `ms-competencia-autoridade-coatora` (MS).
 - [ ] `base-tnu-admissibilidade-manual` (PUIL/PEDILEF).
 - [ ] `pedilef-cotejo-analitico-tnu` (PUIL/PEDILEF).
-- [ ] `documentos-comprobatorios-in128` (matriz probatória).
+- [ ] `base-documentos-comprobatorios-in128` (matriz probatória).
 - [ ] `auditoria-ppp` (aposentadoria especial com PPP).
 - [ ] `base-portarias-dpmf-inss-hub` (citação de Portarias DPMF).
 - [ ] `analise-documental-incapacidade` (B31/B91/B94).
@@ -191,9 +191,9 @@ Ver o catálogo completo de 22 anti-patterns no arquivo `CATALOGO-ANTI-PATTERNS.
 - [ ] 5. Argumentação genérica (superlativos sem fato).
 - [ ] 6. Excesso de jurisprudência transcrita.
 - [ ] 7. Urgência sinalizada por formatação.
-- [ ] 8. Título argumentativo, narrativo ou informal (todas as peças, Onda 162).
+- [ ] 8. Título argumentativo, narrativo ou informal (todas as peças).
 - [ ] 9. Réplica respondendo ponto a ponto.
-- [ ] 10. Memorial com mais de duas páginas.
+- [ ] 10. Memorial acima da referência de duas páginas.
 - [ ] 11. Excesso de destaques (Von Restorff).
 - [ ] 12. Latim desnecessário.
 - [ ] 13. Teste do leigo na seção fática.

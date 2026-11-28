@@ -1,115 +1,18 @@
-# B94 Auxílio-Acidente — Fundamentos e Cenários
+# B94 após a EC 103/2019. Cenários
 
-## 1. Fundamentos normativos
+Regime geral em `auxilio-acidente-b94`; alterações desde 2019 no SKILL.md.
 
-Lei 8.213/91, art. 86. Concessão do B94. Sequela consolidada com redução da capacidade para o trabalho habitual.
+| Cenário | Enquadramento | Via |
+|---|---|---|
+| 1. Amputação de dois dedos em serraria | Anexo III, Quadro 5, ou redução concreta (Tema 416 STJ; Súmula 88 TNU) | Acidentária, Justiça Estadual |
+| 2. Perda auditiva por ruído ocupacional | Art. 86, §4º (nexo e redução efetiva); Tema 213 STJ; Tema 22 e Súmula 44 STJ | Acidentária, Justiça Estadual |
+| 3. Lesão de joelho fora do Anexo III em pedreiro | Art. 104, caput, do Decreto 3.048/99; IN 128/2022, art. 354, §1º; Súmula 88 TNU | Conforme a natureza do acidente |
+| 4. Acidente de trânsito fora do trabalho | B36, acidente de qualquer natureza (art. 86) | Justiça Federal (JEF até 60 salários mínimos) |
+| 5. B31 cessado com sequela consolidada | DIB no dia seguinte à cessação (Tema 862 STJ); pedido direto em juízo (Tema 350 STF; REsp 2.270.389/RS) | Conforme a natureza |
+| 6. B94 desde 2015, aposentadoria em 2018 | Sem acumulação (Súmula 507 STJ); integração do B94 no salário de benefício (art. 31) | Revisão da aposentadoria, se omitida |
+| 7. B94 cessado sem aposentadoria, CTC ou óbito | Ilegal (art. 86, §1º; IN 128/2022, art. 355) | Restabelecimento com tutela de urgência |
+| 8. Acidente no período de graça de vínculo de empregado, já como contribuinte individual | PUIL 5000733 TNU | JEF; no rito comum, divergência no STJ |
 
-Lei 8.213/91, art. 86, §1º. RMI de 50% do salário-de-benefício. Caráter indenizatório.
+## Documentos
 
-Lei 8.213/91, art. 86, §2º. DIB a partir do dia seguinte à cessação do B31.
-
-Lei 8.213/91, art. 86, §3º. Cessação apenas com a aposentadoria.
-
-Lei 8.213/91, art. 86, §4º. Recebimento do B94 integra o salário-de-contribuição para fins de cálculo de benefícios.
-
-Lei 8.213/91, art. 26, I. Isenção de carência.
-
-Lei 8.213/91, art. 18, §1º (redação anterior à Lei 13.846/2019). Permitia acumulação. A partir da Lei 13.846/2019, vedação aplicada a concessões posteriores.
-
-Lei 8.213/91, art. 31. Integração do B94 ao salário-de-contribuição.
-
-Decreto 3.048/99, Anexo III. Lista exemplificativa de sequelas.
-
-Portaria Conjunta MPS/INSS 15/2026. Regulamenta análise documental do B94.
-
-EC 103/2019. Não alterou estruturalmente o B94. Regra específica do art. 86 mantida.
-
-Lei 13.846/2019. Vedou acumulação com aposentadoria para concessões pós-vigência.
-
-## 2. Natureza jurídica
-
-O B94 é benefício indenizatório, não substitutivo de renda. Destina-se a compensar a redução permanente da capacidade, sem exigir incapacidade total. Integra salário-de-contribuição e, por isso, repercute no cálculo de benefício posterior.
-
-Caráter vitalício até a aposentadoria é decisivo. Enquanto não houver aposentadoria, o B94 deve ser mantido. Cessações sob qualquer outro fundamento são indevidas.
-
-## 3. Requisitos
-
-Primeiro, acidente de qualquer natureza. Não precisa ser acidente de trabalho. Acidente doméstico, trânsito, desportivo ou outro qualquer gera o auxílio-acidente previdenciário (espécie 36), na Justiça Federal; o B94 acidentário exige nexo com o trabalho (auditoria 03/10/2026).
-
-Segundo, consolidação das lesões. Fim do tratamento curativo com estabilização do quadro.
-
-Terceiro, redução permanente da capacidade para o trabalho habitual. Não precisa impossibilitar.
-
-Quarto, qualidade de segurado na data do acidente.
-
-Quinto, nexo entre acidente e sequela.
-
-## 4. Cenários operacionais pró-segurado
-
-### Cenário 1 — Segurado com amputação de dedo
-
-Segurado de serraria amputa dois dedos. Após consolidação, B94 com base na Súmula 88 TNU e no Anexo III.
-
-### Cenário 2 — Perda auditiva ocupacional
-
-Segurado exposto a ruído com perda auditiva leve a moderada. Art. 86, §4º, da Lei 8.213/91, Tema 22 STJ e Súmula 44 STJ (auditoria 03/10/2026, no lugar do Tema 322 TNU). Redução de capacidade para a função habitual. B94 cabível.
-
-### Cenário 3 — Sequela fora do Anexo III
-
-Segurado com lesão de joelho que, embora não descrita no Anexo III, reduz a capacidade para atividade de pedreiro. Súmula 89 TNU confirma caráter exemplificativo do rol.
-
-### Cenário 4 — Acidente de trânsito
-
-Segurado sofre acidente de carro, fratura exposta, com sequela funcional permanente. Auxílio-acidente previdenciário (espécie 36), na Justiça Federal, independente de ser acidente de trabalho (auditoria 03/10/2026).
-
-### Cenário 5 — B94 após cessação de B31
-
-Segurado em B31 por 18 meses, com consolidação e sequela. Conversão automática em B94. Se o INSS não converte, cabe recurso ou ação.
-
-### Cenário 6 — Acumulação com aposentadoria posterior a 11/11/1997
-
-Segurado com B94 desde 2015 e aposentadoria em 2018. Não acumula, porque lesão e aposentadoria são posteriores a 11/11/1997 (Tema 555 STJ e Súmula 507 STJ). O B94 cessa na véspera da aposentadoria e seu valor integra o salário-de-contribuição para o cálculo dela (art. 31 da Lei 8.213/91) (auditoria 03/10/2026).
-
-### Cenário 7 — Cessação indevida de B94
-
-INSS cessa B94 sem que o segurado tenha se aposentado. Violação do art. 86 §3º. Restabelecimento imediato com tutela.
-
-### Cenário 8 — Revisão de RMI
-
-Segurado com B94 calculado sem inclusão de verbas salariais. Art. 31 da Lei 8.213/91. Revisão para incluir.
-
-## 5. Documentos essenciais
-
-Laudo médico com descrição detalhada da sequela e sua repercussão laboral.
-Exames complementares pertinentes.
-Boletim de ocorrência ou CAT em caso de acidente.
-Prontuário médico com histórico de tratamento e consolidação.
-Fotografia da sequela quando visível.
-Descrição das atividades laborais para demonstrar o impacto da sequela.
-Declaração de colegas ou supervisores sobre limitação.
-
-## 6. Análise documental (Portaria Conjunta 15/2026)
-
-Regime documental exige laudo conclusivo sobre sequela consolidada e sua repercussão. Em parecer de verossimilhança negativo, cabe recurso ou ação judicial. Acionar `analise-documental-incapacidade`.
-
-## 7. Cruzamento com outras skills
-
-Acionar `auditoria-laudo-pericial` para revisão de laudo.
-Acionar `ntep-nexo-acidentario` para nexo.
-Acionar `analise-documental-incapacidade` para detalhes do regime documental.
-Acionar `base-incapacidade-b31-temporaria` para conversão.
-Acionar `base-incapacidade-acidentaria-b92` para casos de incapacidade permanente.
-Acionar `base-calculo-rmi-ec103` para cálculo.
-Acionar `orientacao-cliente-pericia` para orientação ao segurado.
-
-## 8. Alerta estratégico
-
-Primeiro, Anexo III é exemplificativo. Nunca se conformar com indeferimento por não enquadramento direto.
-
-Segundo, redução mínima também gera B94. Súmula 89 TNU.
-
-Terceiro, acumulação com aposentadoria só subsiste quando lesão incapacitante e aposentadoria são anteriores a 11/11/1997 (Tema 555 STJ e Súmula 507 STJ); fora disso, resta a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
-
-Quarto, cessação apenas pela aposentadoria (art. 86 §3º). Impugnar qualquer outra cessação.
-
-Quinto, integração pelo art. 31 garante repercussão no benefício posterior. Verificar cálculo da aposentadoria.
+Relatório médico com sequela e repercussão na atividade; exames; CAT ou boletim de ocorrência; prontuário com o tratamento e a consolidação; fotografias, se visível; descrição das tarefas da função; declarações de colegas ou superiores sobre a limitação.

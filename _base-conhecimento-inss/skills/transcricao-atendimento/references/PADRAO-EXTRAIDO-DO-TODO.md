@@ -1,6 +1,6 @@
 # Padrão de Anotação Extraído do To Do do Escritório
 
-Onda 125 (09/09/2026). Análise do backup `backup_microsoft_todo_20260711.json`, com 38 listas e 4.114 tarefas, cruzada com o CRM em `paulotercini.github.io/marketplaceterciniinss/crm` e com os dados mínimos da `triagem-caso-novo`.
+Levantamento de 09/09/2026. Análise do backup `backup_microsoft_todo_20260711.json`, com 38 listas e 4.114 tarefas, cruzada com o CRM em `paulotercini.github.io/marketplaceterciniinss/crm` e com os dados mínimos da `triagem-caso-novo`.
 
 Este arquivo registra PADRÕES e CONTAGENS. Nenhum dado de cliente foi transportado para cá.
 
@@ -121,7 +121,7 @@ Histórico em ordem decrescente, entrada nova no topo, entrada anterior intocada
 
 Hipótese de benefício é hipótese. Certeza vem do CNIS e dos documentos.
 
-## Origem dos rótulos do formato por itens (Onda 126)
+## Origem dos rótulos do formato por itens
 
 O formato de saída por ITENS não inventou vocabulário. Os rótulos vêm da contagem de uso real no acervo, na seção "Rótulos de seção usados no corpo" acima.
 
@@ -142,7 +142,7 @@ Por que a mudança. A primeira versão da skill produzia parágrafo corrido, fie
 
 Regra de forma. Uma a duas linhas por item, máximo de oito itens, rótulo sem conteúdo não entra. O que exceder oito itens é narrativa disfarçada de estrutura.
 
-## Duas grafias de data no acervo (Onda 127, 09/09/2026)
+## Duas grafias de data no acervo
 
 Contagem sobre as 27.872 linhas de Notes do backup, separando o carimbo de abertura das datas citadas no corpo do texto.
 
@@ -159,13 +159,13 @@ Confirmação independente. O cabeçalho estruturado do escritório já emprega 
 
 Exemplos colhidos no próprio backup. Abertura `10.07.2026 (D):`, conteúdo `Verificar em 02/07`, `Prazo é 10/10` e `agenda horário para o dia 15/07`.
 
-## A voz real da anotação (Onda 128, 09/09/2026) — CORREÇÃO da Onda 126
+## A voz real da anotação. Corrige a seção sobre a origem dos rótulos
 
 Medição sobre as **15.147 entradas datadas** com conteúdo na mesma linha.
 
-**Rótulo em caixa alta aparece em 11 entradas, 0,1% do total.** As 143 ocorrências de `ENCAMINHAMENTO`, 92 de `CONSIDERAÇÕES` e 90 de `ATITUDE A SER TOMADA` contadas na Onda 125 estavam em linhas SEPARADAS de bloco processual estruturado, e não em anotação de atendimento. A Onda 126 leu essas contagens como se fossem o padrão da anotação e converteu a exceção em regra. Erro corrigido aqui.
+**Rótulo em caixa alta aparece em 11 entradas, 0,1% do total.** As 143 ocorrências de `ENCAMINHAMENTO`, 92 de `CONSIDERAÇÕES` e 90 de `ATITUDE A SER TOMADA` contadas na revisão anterior estavam em linhas SEPARADAS de bloco processual estruturado, e não em anotação de atendimento. a revisão dos rótulos leu essas contagens como se fossem o padrão da anotação e converteu a exceção em regra. Erro corrigido aqui.
 
-**Extensão.** Mediana de 10 palavras por entrada, média de 16, percentil 90 em 34. O bloco por rótulos gerado na Onda 126 tinha 120 palavras, três vezes e meia o percentil 90.
+**Extensão.** Mediana de 10 palavras por entrada, média de 16, percentil 90 em 34. O bloco por rótulos gerado na revisão dos rótulos tinha 120 palavras, três vezes e meia o percentil 90.
 
 **Traços medidos da voz.**
 
@@ -189,13 +189,13 @@ Medição sobre as **15.147 entradas datadas** com conteúdo na mesma linha.
 
 Lição para a manutenção da base. Contagem de rótulo isolada não prova padrão de forma. Antes de converter um achado numérico em regra, conferir em QUE POSIÇÃO do texto o achado aparece.
 
-## Dois gêneros distintos de entrada (Onda 129, 09/09/2026) — CORREÇÃO da Onda 128
+## Dois gêneros distintos de entrada. Corrige a seção sobre a voz real da anotação
 
-A Onda 128 acertou ao derrubar os rótulos, e errou ao aplicar à transcrição de atendimento a estatística das notas de andamento. São gêneros diferentes.
+A revisão da voz real acertou ao retirar os rótulos, e errou ao aplicar à transcrição de atendimento a estatística das notas de andamento. São gêneros diferentes.
 
 **Gênero A, nota de andamento.** É o que domina o acervo. Mediana de 10 palavras. Registra um fato processual e o próximo passo. `A sentença foi de improcedência. Gratuidade deferida. Tarefa encerrada.`
 
-**Gênero B, anotação de atendimento.** São as 482 entradas com 60 palavras ou mais. **Mediana de 83 palavras, percentil 90 em 131, máximo de 226.** O teto de 60 palavras fixado na Onda 128 ficava abaixo da própria mediana do gênero, e estrangulava o texto.
+**Gênero B, anotação de atendimento.** São as 482 entradas com 60 palavras ou mais. **Mediana de 83 palavras, percentil 90 em 131, máximo de 226.** O teto de 60 palavras fixado na revisão da voz real ficava abaixo da própria mediana do gênero, e estrangulava o texto.
 
 Alvo fixado para a transcrição de atendimento, **80 a 140 palavras em blocos temáticos**.
 
@@ -209,7 +209,7 @@ Medição sobre as 482 entradas longas.
 | Fecho com data de retorno | 34 | 7,1% | Sustentado |
 | Aspas na fala do cliente | 15 | 3,1% | Sustentado |
 | Marca em caixa alta abrindo bloco, `ALERTA.`, `ATENÇÃO.` | 6 | 1,2% | Sustentado, e `ALERTA` aparece 473 vezes no acervo inteiro |
-| Ênfase por caixa alta na palavra, `NÃO` | 118 no acervo | — | Sustentado |
+| Ênfase por caixa alta na palavra, `NÃO` | 118 no acervo | - | Sustentado |
 | Abertura "Trata-se de" | 1 | 0,2% | NÃO sustentado pelo acervo |
 | Verbo de relato, "Refere que" | 4 | 0,8% | NÃO sustentado pelo acervo |
 
@@ -217,11 +217,11 @@ Medição sobre as 482 entradas longas.
 
 **Lição de método.** Antes de aplicar uma estatística a um formato, verificar se a amostra pertence ao mesmo GÊNERO do texto que se quer produzir. Mediana de corpus heterogêneo não descreve nenhum dos seus gêneros.
 
-## Estrutura decisória e os dois modos (Onda 131, 09/09/2026)
+## Estrutura decisória e os dois modos
 
 Análise do titular sobre o próprio padrão, conferida no acervo. Confirmada nos pontos verificáveis.
 
-### A ordem é decisória, e a Onda 129 estava errada
+### A ordem é decisória, e a revisão dos dois gêneros estava errada
 
 Medição sobre as 7.893 entradas com marcador `(P)`.
 
@@ -230,7 +230,7 @@ Medição sobre as 7.893 entradas com marcador `(P)`.
 | Fato ou resultado, "Benefício indeferido", "Perícia agendada", "Não trouxe", "Verifiquei que" | 1.036 | 13,1% |
 | "Trata-se de" ou "O cliente" | 90 | 1,1% |
 
-Proporção de doze para um. A Onda 129 fixou "Trata-se de pedido de" como abertura canônica, e o acervo diz o contrário. Corrigido. A fórmula fica reservada ao atendimento INICIAL, onde a hipótese é a própria conclusão do dia.
+Proporção de doze para um. A revisão dos dois gêneros fixou "Trata-se de pedido de" como abertura canônica, e o acervo diz o contrário. Corrigido. A fórmula fica reservada ao atendimento INICIAL, onde a hipótese é a própria conclusão do dia.
 
 ### Demais traços conferidos
 
@@ -252,15 +252,15 @@ Modo A, corrido decisório, para acompanhamento. É o dominante no acervo.
 
 Modo B, com FATOS, ANÁLISE e PROVIDÊNCIAS, para consulta inicial, triagem e planejamento. Proposto pelo titular em 09/09/2026. Os rótulos `FATOS` e `PEDIDOS` já aparecem 8 vezes cada no acervo, em bloco de parecer.
 
-Três correções aplicadas ao modelo proposto. ANÁLISE abre pela CONCLUSÃO e não pelo raciocínio. FATOS recebe só o apurado, sem juízo, porque "vínculo provavelmente deverá ser excluído" é análise disfarçada de fato. E o fecho com data de retorno é obrigatório também no Modo B, que tende a omiti-lo porque PROVIDÊNCIAS parece fechamento e não é.
+Três correções aplicadas ao modelo proposto. ANÁLISE abre pela CONCLUSÃO e não pelo raciocínio. FATOS recebe apenas o apurado, sem juízo, porque "vínculo provavelmente deverá ser excluído" é análise disfarçada de fato. E o fecho com data de retorno é obrigatório também no Modo B, que tende a omiti-lo porque PROVIDÊNCIAS parece fechamento e não é.
 
 ### Cortes acrescentados
 
 Explicação repetida ao cliente, detalhe pessoal que não altera requisito ou estratégia, e ato burocrático já refletido no andamento. Nada mudando, `Não retornou. Aguardar até DD/MM.` basta.
 
-## Formato definitivo, quatro blocos opcionais (Onda 132, 09/09/2026)
+## Formato definitivo, quatro blocos opcionais
 
-Definido pelo titular. Substitui os dois modos da Onda 131, que ficaram redundantes, porque um registro simples é o mesmo formato com dois blocos em vez de quatro.
+Definido pelo titular. Substitui os dois modos da revisão da estrutura decisória, que ficaram redundantes, porque um registro simples é o mesmo formato com dois blocos em vez de quatro.
 
 `FATOS`, `ANÁLISE`, `PROVIDÊNCIAS DO CLIENTE`, `PROVIDÊNCIAS DO ESCRITÓRIO`. Todos opcionais, rótulo e conteúdo na mesma linha, cada bloco em UMA LINHA CORRIDA sem quebra interna.
 
@@ -282,4 +282,4 @@ A ordem decisória, o fecho com data em 14,3%, a primeira pessoa em 8,4%, a ênf
 
 ### Regra de extensão
 
-O teste dos quatro elementos decide, e não a contagem de palavras. As faixas fixadas nas Ondas 129 e 130 saem. Acompanhamento fica em duas linhas, consulta inicial de planejamento chega a doze, e ambas estão certas se cada frase move decisão, motivo, prova ou próximo movimento.
+O teste dos quatro elementos decide, e não a contagem de palavras. As faixas fixadas nas revisões anteriores saem. Acompanhamento fica em duas linhas, consulta inicial de planejamento chega a doze, e ambas estão certas se cada frase move decisão, motivo, prova ou próximo movimento.

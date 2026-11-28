@@ -1,141 +1,57 @@
 ---
 name: base-incapacidade-acidentaria-b92
-description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 862 STJ termo inicial B94, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º II EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente e base-auxilio-acidente-b94-pos-reforma."
+description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º II EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente e base-auxilio-acidente-b94-pos-reforma."
 ---
 
-Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
+# Incapacidade acidentária (B91 e B92) após a EC 103/2019
 
-
-# Incapacidade Permanente Acidentária (B92) Pós EC 103/2019
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 auxílio por incapacidade temporária acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 aposentadoria por incapacidade permanente acidentária; B94 auxílio-acidente.
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta o reconhecimento do caráter acidentário (B92 e B91) sob o novo regime jurídico, com destaque para a RMI integral de 100%, o nexo técnico epidemiológico e as doenças ocupacionais. Objetivo único é defender o segurado, jamais a autarquia.
+Reconhecimento da natureza acidentária da incapacidade e seus efeitos (RMI, estabilidade, competência). Nexo e NTEP em profundidade em `ntep-nexo-acidentario`. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Fontes do nexo
 
-Lei 8.213/91, art. 19. Define acidente de trabalho como aquele que ocorre pelo exercício do trabalho, provocando lesão corporal ou perturbação funcional, que cause a morte, perda ou redução da capacidade para o trabalho.
+- Acidente típico (Lei 8.213/91, art. 19).
+- Doença profissional e do trabalho (art. 20, I e II); excluídas a degenerativa, a inerente a grupo etário, a que não incapacita e a endêmica sem exposição (§1º); em caso excepcional, doença fora da relação, resultante das condições especiais do trabalho e com ele diretamente relacionada, é acidente do trabalho (§2º).
+- Equiparações (art. 21): concausa (I), agressão e fortuito no local e horário (II), contaminação acidental (III), acidente fora do local a serviço e de trajeto (IV, "a" a "d"; a revogação da alínea "d" pela MP 905/2019 perdeu vigência).
+- NTEP (art. 21-A): correlação entre a CNAE da empresa e o intervalo de CID da Lista C do Anexo II do Decreto 3.048/99 (art. 337, §3º). A perícia apenas o afasta demonstrando a inexistência do nexo (§1º); constitucional (ADI 3.931 STF).
+- Anexo II do Decreto 3.048/99: Lista A (agentes e fatores de risco), Lista B (doenças relacionadas ao trabalho por grupo da CID, base do nexo técnico profissional) e Lista C (NTEP).
 
-Lei 8.213/91, art. 20. Equipara ao acidente de trabalho a doença profissional (desencadeada pelo exercício de atividade peculiar) e a doença do trabalho (adquirida em função das condições em que o trabalho é realizado).
+## Efeitos da natureza acidentária
 
-Lei 8.213/91, art. 21. Lista situações equiparadas a acidente de trabalho, incluindo acidente de trajeto (art. 21, IV, d) e acidentes por concausa.
+| Efeito | B91 | B92 |
+|---|---|---|
+| RMI | 91% do salário de benefício (art. 61), como o B31 | 100% da média (EC 103/2019, art. 26, §3º, II), contra 60% mais 2% por ano excedente no B32 |
+| Carência | Dispensada (art. 26, II) | Dispensada |
+| Estabilidade | 12 meses após a cessação do B91 (art. 118) | Não se aplica |
+| FGTS | Depósito durante o afastamento (Lei 8.036/90, art. 15, §5º) | Não se aplica |
+| Competência | Justiça Estadual (CF, art. 109, I; Súmula 15 STJ); isenção de custas e sucumbência (art. 129, parágrafo único) | Idem |
 
-Lei 8.213/91, art. 21-A. Nexo Técnico Epidemiológico (NTEP). Presume a natureza acidentária quando há correspondência entre CID e CNAE da empresa, pela estatística epidemiológica do Ministério.
+## Estratégia
 
-Decreto 3.048/99, Anexo II. Lista A (agentes e fatores de risco ocupacionais), Lista B (doenças relacionadas com o trabalho) [NÃO CONFIRMADO] e Lista C (matriz do NTEP, que relaciona a CID à atividade da empresa, conforme o art. 337, §3º) (auditoria 03/10/2026).
-
-EC 103/2019, art. 26, §3º, II. RMI do B92 (aposentadoria por incapacidade permanente acidentária) é de 100% da média aritmética dos salários de contribuição.
-
-Lei 8.213/91, art. 61. RMI do auxílio-doença acidentário (B91) é de 91% do salário de benefício, com a média apurada na forma do art. 26 da EC 103/2019.
-
-Lei 8.213/91, art. 118. Estabilidade provisória de 12 meses após a cessação do B91 acidentário.
-
-ADI 3931 (STF). Reconhece a constitucionalidade do NTEP como regra de inversão do ônus da prova em favor do segurado.
-
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
-
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
-
-TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
-
-## Requisitos cumulativos
-
-Primeiro, incapacidade para o trabalho (temporária ou permanente).
-
-Segundo, nexo com o trabalho, por qualquer das vias (NTEP, laudo ocupacional, CAT, PGR, histórico).
-
-Terceiro, qualidade de segurado e carência, observadas as isenções do art. 26, II (acidente de qualquer natureza dispensa carência).
-
-## Cenários operacionais pró-segurado
-
-Primeiro, operário com LER/DORT (CID M65, M70, M75) em atividade com CNAE correspondente. NTEP automático. Conversão B31 em B91 acidentário (ou B92).
-
-Segundo, trabalhador com depressão grave após assédio moral ou sobrecarga. Transtorno mental ocupacional (CID F32/F33) com nexo comprovado. B92 com RMI integral.
-
-Terceiro, burnout (CID QD85 na CID-11 ou Z73.0 na CID-10). Classificado como fenômeno ocupacional pela OMS. Portaria MTE 1.419/2024 inclui riscos psicossociais na NR-1. Nexo ocupacional comprovável.
-
-Quarto, acidente de trajeto com incapacidade. Art. 21, IV, d, Lei 8.213/91 equipara a acidente de trabalho. B91 ou B92 devido, mesmo após MP 905/2019 (revogada).
-
-Quinto, doença preexistente agravada pela atividade. O agravamento/concausa gera nexo acidentário (art. 21, I, da Lei 8.213/91, c/c arts. 42, §2º, e 59, §1º).
-
-Sexto, segurado com CAT emitida. Presunção reforçada de acidentariedade, ainda que CAT tardia.
-
-Sétimo, empresa sem emissão de CAT mas com documentação interna (PGR, LTCAT, PPP) que demonstra exposição. Nexo por via documental.
-
-Oitavo, aposentadoria por invalidez acidentária retroativa. Conversão de B32 não acidentário em B92, com recálculo da RMI para 100% da média.
-
-## Regra e estratégia
-
-A regra geral é que caráter acidentário gera RMI integral (100% no B92) e estabilidade pós-cessação (art. 118). O INSS tende a classificar como não acidentário (B31/B32) para reduzir a RMI. Sempre contestar a classificação.
-
-Primeiro, verificar CNAE e CID para aplicação do NTEP.
-
-Segundo, buscar CAT (pode ser emitida pelo segurado, sindicato, médico assistente ou autoridade pública).
-
-Terceiro, obter PGR, LTCAT e PPP da empresa para demonstrar exposição.
-
-Quarto, em doença preexistente, enfrentar com agravamento/concausa (art. 21, I, da Lei 8.213/91).
-
-Quinto, em transtornos mentais, usar Portaria MTE 1.419/2024 e NR-1 sobre riscos psicossociais.
-
-Sexto, impugnar desclassificação feita pelo INSS via recurso ao CRPS ou ação judicial com perícia técnica especializada.
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao analisar nexo, acione `ntep-nexo-acidentario`.
-Ao auditar laudo, acione `auditoria-laudo-pericial`.
-Ao converter B31 em B92, acione `base-incapacidade-b31-temporaria` e `base-incapacidade-b32-permanente`.
-Ao tratar sequela (não incapacidade), acione `base-auxilio-acidente-b94-pos-reforma`.
-Ao calcular RMI, acione `base-calculo-rmi-ec103`.
-Ao verificar precedentes, acione `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, a diferença entre RMI de B32 não acidentário (60% + 2%) e B92 (100%) é decisiva para o segurado. Sempre investigar caráter acidentário antes de conformar com classificação não acidentária.
-
-Segundo, CAT pode ser emitida por médico assistente, sindicato, segurado ou autoridade pública, não dependendo da empresa. Sua ausência não afasta nexo, mas sua presença reforça.
-
-Terceiro, em doença preexistente, o INSS tende a negar nexo. Enfrentar com agravamento e concausa nos termos dos arts. 21, I, 42, §2º, e 59, §1º, da Lei 8.213/91.
-
-Quarto, estabilidade provisória do art. 118 é direito paralelo na esfera trabalhista. Orientar ação paralela se houver rescisão no período.
+1. Levantar a CNAE do empregador e o CID; conferir a Lista C.
+2. Buscar a CAT ou emiti-la pelo segurado, sindicato, médico assistente ou autoridade pública (art. 22, §2º).
+3. Obter PGR, LTCAT, PPP e documentos internos que demonstrem a exposição.
+4. Doença preexistente: demonstrar o agravamento pelo trabalho (concausa, art. 21, I; arts. 42, §2º, e 59, §1º).
+5. Transtorno mental: riscos psicossociais no gerenciamento de riscos da NR-1 (Portaria MTE 1.419/2024); burnout como fenômeno ocupacional na CID-11 (QD85; Z73.0 na CID-10).
+6. Impugnar a classificação previdenciária por recurso ao CRPS ou ação acidentária com perícia médica e, se preciso, de engenharia do trabalho.
+7. Estabilidade do art. 118: orientar ação trabalhista se houver dispensa no período.
 
 ## Fungibilidade aplicável
 
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+Acionar `base-fungibilidade-previdenciaria` (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+Portarias DIRBEN/INSS 991/2022 e 992/2022: `base-portarias-dpmf-inss-hub`.
 
-## Doutrina de apoio
+## MCPs da casa
 
-Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do caráter acidentário e a interpretação extensiva do art. 21.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Hugo Goes, em Manual, detalha o NTEP e a presunção a favor do segurado.
+## Integração com outras skills
 
-Fábio Zambitte Ibrahim, em Curso, defende reconhecimento amplo da concausa em doenças preexistentes.
+Peça: `peticao-previdenciaria`; inicial no Núcleo 4.0 do TJSP: `base-auxilio-acidente-b94-pos-reforma`. Nexo: `ntep-nexo-acidentario`. Laudo: `auditoria-laudo-pericial`. Conversões: `base-incapacidade-b31-temporaria` e `base-incapacidade-b32-permanente`. Sequela sem incapacidade: `auxilio-acidente-b94`. RMI: `base-calculo-rmi-ec103`. Perícia: `base-pericia-medica-federal-telepericia`.
 
-Wladimir Novaes Martinez analisa a evolução do conceito de doença ocupacional e defende inclusão dos riscos psicossociais.
-
-O IBDP sustenta institucionalmente a proteção integral em caso de acidente ou doença ocupacional.
-
-## O que NÃO está nesta skill
-
-Não está aqui o B31 genérico não acidentário, objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B32 não acidentário, objeto de `base-incapacidade-b32-permanente`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui o detalhamento procedimental da perícia, objeto de `base-pericia-medica-federal-telepericia`.

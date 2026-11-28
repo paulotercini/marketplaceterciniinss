@@ -1,6 +1,6 @@
 # Estrutura de card
 
-Documento de referência para criação e edição de cards do gerador. Cada benefício precisa de quatro elementos sincronizados — card estático no HTML, entrada em `GRUPOS`, entrada em `B` e entrada em `EX`.
+Documento de referência para criação e edição de cards do gerador. Cada benefício precisa de quatro elementos sincronizados, card estático no HTML, entrada em `GRUPOS`, entrada em `B` e entrada em `EX`.
 
 ## 1. Card estático no HTML
 

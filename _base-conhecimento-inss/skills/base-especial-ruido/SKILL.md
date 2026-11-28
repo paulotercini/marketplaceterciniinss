@@ -3,132 +3,79 @@ name: base-especial-ruido
 description: "Base de teses de defesa do segurado em aposentadoria especial por ruído. Use SEMPRE que mencionar ruído, dB(A), NEN, NHO-01, NR-15, dosimetria, dosímetro, Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024, PEDILEF 0001717, PEDILEF 0005459, Comunicado CRPS 99/2025, Nota 792/2025 CONJUR-MPS AGU, Despacho 301/2025, quatro critérios registro ruído PPP, presunção NEN pela NHO-01, limite de tolerância ruído, 80 85 90 dB, evolução normativa ruído, Decreto 53.831/64, Decreto 83.080/79, Decreto 2.172/97, Decreto 3.048/99 Anexo IV, Decreto 4.882/2003, normalização de jornada efetiva, horas extras habituais ruído, fórmula NEN, campo 15.5 PPP, campo 15.4 PPP, presunção relativa NR-15, cerceamento de defesa ruído, impugnação PPP ruído, EPI para ruído Tema 555 STF, Súmula 9 TNU, conversão ruído tempo especial, direito adquirido ruído, CTC ruído, método ponderado rotativo. Traz cenários de enquadramento, refutações ao INSS e roteiro argumentativo pró-segurado. NÃO use para outros agentes nocivos. Cruza com auditoria-ppp e peticao-previdenciaria."
 ---
 
-# Base Temática. Ruído em Aposentadoria Especial
+# Ruído em aposentadoria especial
 
 ## Escopo
 
-Skill de referência para sustentar a tese do segurado em casos de exposição a ruído. Complementa a skill `auditoria-ppp` (execução da auditoria) e a skill `peticao-previdenciaria` (redação da peça). Não substitui nenhuma das duas.
+Referência para sustentar a tese do segurado exposto a ruído. A auditoria do PPP concreto fica em `auditoria-ppp`; a redação da peça, em `peticao-previdenciaria`. Precedentes em `references/JURISPRUDENCIA.md`, limites por período em `references/EVOLUCAO-NORMATIVA.md`, cenários de PPP em `references/CENARIOS-ENQUADRAMENTO.md` e respostas ao indeferimento em `references/TESES-REFUTACAO-INSS.md`.
 
-Toda afirmação normativa ou jurisprudencial foi verificada em fonte primária oficial. As citações de teses e precedentes constam em `references/JURISPRUDENCIA.md` com link aferido na data de fechamento desta skill.
+## Limites por período
 
-## Postura
+| Período | Limite | Fonte |
+|---|---|---|
+| Até 05/03/1997 | Acima de 80 dB(A) | Decreto 53.831/64, código 1.1.6; IN 128/2022, art. 292, I |
+| 06/03/1997 a 18/11/2003 | Acima de 90 dB(A) | Decreto 2.172/97 e Decreto 3.048/99, Anexo IV, código 2.0.1 |
+| Desde 19/11/2003 | NEN acima de 85 dB(A) | Decreto 4.882/2003, que alterou o código 2.0.1 do Anexo IV |
 
-Atua exclusivamente pró-segurado. Nunca apresenta argumento da Fazenda ou do INSS, salvo para refutá-lo expressamente.
-
-## Fluxo de trabalho
-
-1. Leia este SKILL.md integralmente
-2. Leia `references/EVOLUCAO-NORMATIVA.md` para compreender os limites por período
-3. Leia `references/CENARIOS-ENQUADRAMENTO.md` para identificar o cenário aplicável ao caso concreto
-4. Leia `references/JURISPRUDENCIA.md` para acessar os precedentes vinculantes e teses de superação
-5. Leia `references/TESES-REFUTACAO-INSS.md` para responder aos argumentos típicos do indeferimento
-6. Ao produzir peça, aciona `peticao-previdenciaria` e `auditoria-ppp`
-
-## Evolução normativa condensada
-
-A tabela completa está em `references/EVOLUCAO-NORMATIVA.md`. A síntese operacional é a seguinte.
-
-Até 05/03/1997, vigia o Decreto 53.831/64 com limite de 80 dB para enquadramento e o Decreto 83.080/79 com limite de 90 dB. A TNU firmou que se aplica o limite mais benéfico ao segurado no período sob análise.
-
-De 06/03/1997 a 18/11/2003, vigeu o Decreto 2.172/97 com limite de 90 dB, depois mantido no Anexo IV do Decreto 3.048/99 até 18/11/2003.
-
-A partir de 19/11/2003, o Decreto 4.882/2003 alterou o Anexo IV do Decreto 3.048/99, reduzindo o limite para 85 dB(A), com exigência de apuração por NEN (Nível de Exposição Normalizado).
+O Decreto 83.080/79 previa 90 dB, mas os dois decretos coexistiram até 05/03/1997 e prevalece o limite de 80 dB, como a própria IN 128/2022 admite. O limite de 85 dB não retroage a 1997 (Tema 694 do STJ). O Enunciado 13 do CRPS adota os mesmos três limites.
 
 ## Teses estruturais
 
-### Tese 1. Superação do binarismo NHO-01 vs NR-15
+### Tese 1. Metodologia após 19/11/2003 (Tema 174 da TNU)
 
-O INSS historicamente recusou PPPs que indicavam NR-15 sem menção expressa ao NEN. A TNU pacificou no Tema 174 que, a partir de 19/11/2003, a aferição do ruído deve seguir a NHO-01 ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma utilizadas (auditoria 03/10/2026). O PEDILEF 0001717 consolidou que a menção à NR-15 no PPP gera presunção relativa de regularidade, cabendo ao INSS demonstrar que a medição foi pontual e sem normalização.
+A TNU fixou que, desde 19/11/2003, a aferição segue a NHO-01 da Fundacentro ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma. Na omissão ou dúvida, o PPP cede ao LTCAT. Tese literal em `references/JURISPRUDENCIA.md`, seção 1.
 
-Ver `references/JURISPRUDENCIA.md` seção 1 para a tese firmada e os precedentes aplicáveis.
+O PUIL 0001717-22.2019.4.03.6318/SP (TNU, Rel. Juiz Federal Nagibe de Melo Jorge Neto) afirmou que a menção à NHO-01 ou à NR-15 no PPP induz presunção relativa de que a aferição observou a metodologia adequada durante toda a jornada. Cabe ao INSS impugnar de forma fundamentada a regularidade da medição.
 
-### Tese 2. Tema 317 TNU e a insuficiência de dosimetria ou dosímetro isolados
+### Tese 2. Dosimetria isolada (Tema 317 da TNU)
 
-O Tema 317 fixou que a simples menção a "dosimetria" ou "dosímetro" no campo 15.5 do PPP não é suficiente para se presumir a observância da NHO-01 ou da NR-15. Exige-se indicação expressa da norma técnica aplicada. Contudo, esta tese é compatível com o Tema 174 e não inviabiliza o reconhecimento quando o PPP, mesmo sem indicar a norma, traz o NEN no campo 15.4, por serem tecnologias rastreáveis à NHO-01.
+O Tema 317 (PUIL 5000648-28.2020.4.02.5002/ES, julgado em 18/09/2025) é contrário ao segurado. A menção a dose, dosímetro ou dosimetria não basta; exige-se menção expressa à NHO-01 ou à NR-15. Caminho do segurado: juntar o LTCAT que indique a norma, requerer sua exibição pelo empregador ou pedir a retificação do PPP (`retificacao-ppp`). O NEN informado no campo 15.4 indica a metodologia da NHO-01, mas essa leitura é argumento da casa e não consta da tese.
 
-O aprofundamento consta em `references/JURISPRUDENCIA.md` seção 2 e em `references/CENARIOS-ENQUADRAMENTO.md`.
+### Tese 3. Enunciado 13 do CRPS
 
-### Tese 3. Revisão do Enunciado 13 do CRPS
+A Resolução 29/2024 do Conselho Pleno do CRPS, de 09/12/2024 (DOU de 19/12/2024), revogou o inciso III do Enunciado 13, que exigia a menção conjunta à NR-15 e ao NEN. Citar a revogação no recurso ordinário à Junta e no recurso especial à Câmara de Julgamento. Redação vigente em `references/JURISPRUDENCIA.md`.
 
-Em sessão de 09/12/2024, o Conselho Pleno do CRPS revogou o inciso III do Enunciado 13, abrindo caminho para o reconhecimento do tempo especial por ruído com base na NHO-01 isoladamente ou no NEN isoladamente. Essa alteração fortalece a posição do segurado em recurso administrativo e deve ser explicitamente citada em recurso ordinário a Junta de Recursos e em recurso especial a Câmara de Julgamento. A redação atual do Enunciado 13, com a revogação, consta em `references/JURISPRUDENCIA.md` seção 3.
+### Tese 4. Normalização pela jornada efetiva
 
-### Tese 4. Normalização por jornada efetiva
+Quando o segurado cumpria habitualmente jornada superior a 480 minutos, cabe pedir a normalização da NHO-01: NEN = NE + 10 × log(TE/480). Em jornada de 600 minutos o acréscimo é de 0,97 dB, de modo que apenas valores a partir de 84,1 dB(A) ultrapassam 85 dB(A). A jornada se prova por cartões de ponto, contracheques com horas extras, reclamatória trabalhista e CNIS. Passo a passo em `references/CENARIOS-ENQUADRAMENTO.md`, cenário 5.
 
-Quando o ruído declarado no campo 15.4 do PPP fica pouco abaixo de 85 dB(A) sem normalização e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras frequentes, cabe solicitar a normalização pela fórmula da NHO-01 com fator 10, aplicando NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e 480. Esse cálculo só eleva o resultado acima de 85 dB(A), configurando especialidade no período pós 18/11/2003, quando o valor medido está perto do limite. Em jornada de 600 minutos, o acréscimo é de 0,97 dB, e só valores a partir de 84,1 dB(A) passam de 85 dB(A) (auditoria 03/10/2026). A comprovação da jornada se faz por contracheques, folhas de ponto, Reclamação Trabalhista e CNIS.
+### Tese 5. EPI não afasta o ruído (Tema 555 do STF)
 
-O passo a passo aplicado está em `references/CENARIOS-ENQUADRAMENTO.md` cenário 5.
+O STF fixou no ARE 664.335: "Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do Perfil Profissiográfico Previdenciário (PPP), no sentido da eficácia do Equipamento de Proteção Individual - EPI, não descaracteriza o tempo de serviço especial para aposentadoria." A IN 128/2022, art. 291, § 2º, incluído pela IN 170/2024, reproduz a regra na via administrativa. A anotação "S" no campo do EPI é irrelevante para o ruído, e o segurado não tem ônus de provar a ineficácia do protetor auricular. Para os demais agentes vale o Tema 1090 do STJ (`base-especial-epi`).
 
-### Tese 5. Ineficácia do EPI para ruído
+### Tese 6. Nota 00792/2025/CONJUR-MPS/CGU/AGU
 
-O STF firmou no Tema 555 (ARE 664.335) que, em regra, o uso eficaz de EPI neutraliza a nocividade. Para ruído, porém, o próprio STF reconheceu exceção expressa, firmando que, mesmo com uso de EPI devidamente certificado, não se afasta a especialidade por exposição a ruído acima do limite, dadas as limitações da proteção auricular em condições reais. A tese se aplica integralmente, independentemente da anotação do campo 15.7 do PPP. A fundamentação integral está em `references/TESES-REFUTACAO-INSS.md` seção 1.
+A existência da Nota está confirmada. A 4ª Câmara de Julgamento do CRPS a aplicou no Acórdão 9955/2026 (sessão de 19/10/2026), ao lado do Parecer 00217/2023/CONJUR-MPS/CGU/AGU e do Enunciado 13. O teor abaixo vem de fontes secundárias [NÃO CONFIRMADO]. A Nota, aprovada pelo Despacho 00301/2025/CONJUR-MPS/CGU/AGU, admite quatro registros do ruído no PPP:
+1. apenas a NHO-01, com presunção de uso do NEN;
+2. apenas o NEN, inerente à NHO-01;
+3. o NEN com a indicação da NHO-01;
+4. a NR-15, desde que acompanhada do NEN.
 
-### Tese 6. Nota nº 00792/2025/CONJUR-MPS/CGU/AGU, os quatro critérios de registro do ruído no PPP (Onda 98)
+Também registraria que "dosimetria" isolada não comprova o NEN e que a medição deve abranger toda a jornada. A íntegra não foi localizada em repositório público. Em peça, citar o número completo e requerer que o INSS junte a íntegra, pois o documento está em poder da Administração. Para PPP apenas com NR-15 e sem NEN, usar a Tese 1 ou a retificação do PPP.
 
-A Nota nº 00792/2025/CONJUR-MPS/CGU/AGU, aprovada pelo Despacho nº 00301/2025/CONJUR-MPS/CGU/AGU, fixou o entendimento da consultoria jurídica do MPS sobre COMO a exposição ao ruído pode ser registrada no PPP, em quatro hipóteses válidas. Primeira, somente a norma NHO-01, hipótese em que se PRESUME a utilização do NEN ainda que não haja menção expressa no PPP. Segunda, somente o NEN, pois ele é inerente à metodologia da NHO-01. Terceira, a metodologia NEN acompanhada da indicação da norma NHO-01. Quarta, a NR-15 DESDE QUE acompanhada da menção expressa ao NEN, uma vez que essa norma não possui metodologia própria de cálculo do nível de normalização e opera apenas com limites de tolerância fixos.
+### Tese 7. Enunciado 12 da I Jornada do TRF4
 
-Uso pró-segurado. As três primeiras hipóteses blindam o PPP que traz NHO-01 ou NEN em qualquer combinação, e derrubam a exigência administrativa de menção literal ao NEN quando a NHO-01 está indicada (a presunção é da própria consultoria jurídica do ministério). Em recurso ao CRPS e em réplica, a Nota soma com o Tema 174/TNU e com a revisão do Enunciado 13 (Tese 3 acima), formando bloco fechado contra o indeferimento por formalismo de registro. O ponto de cautela é a quarta hipótese, PPP baseado só em NR-15 sem NEN expresso segue vulnerável, e nesse caso a saída é a Tese 1 (presunção relativa do PEDILEF 0001717, com ônus do INSS de demonstrar medição pontual) ou a retificação do PPP pela `retificacao-ppp`.
+Texto conferido no caderno da EMAGIS/TRF4 (I Jornada Regional de Direito Previdenciário da 4ª Região, 1º e 2 de setembro de 2025, p. 16): "(1) a referência à utilização da técnica da dosimetria no PPP ou no LTCAT enseja presunção relativa de cumprimento da metodologia de cálculo da NR-15 ou da NHO-01 da Fundacentro; (2) havendo aferição por ambos os métodos, NR-15 e NHO-01 da Fundacentro, no mesmo período, deve-se adotar a mais favorável ao trabalhador; e (3) a confirmação da habitualidade e permanência no laudo técnico elaborado pela empresa empregadora gera presunção relativa de cumprimento desses requisitos e dispensa a perícia técnica judicial referida na tese do Tema 1.083 do STJ."
 
-A Nota registra ainda, conforme as fontes consultadas, que expressões genéricas como dosimetria ou audiodosimetria, isoladas, não permitem concluir pela aplicação do NEN (convergente com o Tema 317, Tese 2 acima), e que a medição deve refletir a totalidade da jornada, o que reforça a Tese 4 da normalização por jornada efetiva.
+O próprio TRF4 atribui aos enunciados caráter doutrinário. Citar como reforço, nunca como precedente, e indicar a Região de origem em peça na 3ª Região. O item 1 colide com o Tema 317 da TNU no JEF; os itens 2 e 3 seguem úteis.
 
-Rigor de fonte (conferência de 30/07/2026). A EXISTÊNCIA e o TEOR da Nota estão confirmados por fontes secundárias especializadas convergentes, entre elas a análise publicada por Adriane Bramante, referência nacional em aposentadoria especial. A ÍNTEGRA do documento não foi localizada em repositório público da AGU nesta rodada. Em peça, citar a Nota pelo número completo com a aprovação pelo Despacho 00301/2025, e requerer, quando útil, que o INSS junte a íntegra aos autos (o documento vincula a administração e está em poder dela). Pendência de manutenção, obter a íntegra quando disponível e promover esta tese a fonte primária conferida.
+## Juízo de Catanduva
 
-## Regras rígidas de redação
+Depois de 18/11/2003, o juízo exige a técnica NHO-01 ou NR-15 e o nível normalizado, e recusou PPP que mencionava apenas "decibelímetro" (Tema 174 da TNU). O EPI não descaracteriza o ruído (Tema 555 do STF). O juízo ainda cita a Súmula 32 da TNU, que está cancelada e não se cita. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 2.
 
-Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
+## Redação da peça
 
-Segundo, hierarquia normativa respeitada. A Constituição Federal vem antes. Depois as leis complementares, leis ordinárias, decretos, IN 128/2022, portarias, enunciados do CRPS, orientações internas.
-
-Terceiro, jurisprudência citada só quando apoiar o segurado e após confirmação em fonte oficial. Se o precedente não for encontrado, declarar "Não localizado" e ajustar a tese.
-
-Quarto, proibido transferir para o segurado o ônus de provar que o EPI não foi eficaz, pois essa é posição que favorece o INSS e contraria a exceção do próprio STF no Tema 555 para ruído.
+Seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`: afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao auditar PPP concreto, acione `auditoria-ppp`.
-Ao refutar laudo pericial judicial, acione `auditoria-laudo-pericial`.
-Ao organizar defesa probatória contra cerceamento, acione `defesa-probatoria-especial`.
-Ao verificar precedentes vinculantes, acione `precedentes-previdenciarios`.
-Ao apontar vício do PPP e pedir retificação à empresa, acione `retificacao-ppp`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## O que NÃO está nesta skill
 
-Não há cálculo de RMI. Não há orientação sobre outros agentes. Não há roteiro de perícia judicial genérica. Para cada um desses tópicos, outra skill é responsável.
+## Integração com outras skills
 
-## Enunciado 12 da I Jornada do TRF4, dosimetria e presunções (Onda 109)
-
-Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 16. "Para a comprovação da especialidade por exposição ao agente ruído em períodos de tempo de serviço/contribuição posteriores a 18/11/2003. (1) a referência à utilização da técnica da dosimetria no PPP ou no LTCAT enseja presunção relativa de cumprimento da metodologia de cálculo da NR-15 ou da NHO-01 da Fundacentro; (2) havendo aferição por ambos os métodos, NR-15 e NHO-01 da Fundacentro, no mesmo período, deve-se adotar a mais favorável ao trabalhador; e (3) a confirmação da habitualidade e permanência no laudo técnico elaborado pela empresa empregadora gera presunção relativa de cumprimento desses requisitos e dispensa a perícia técnica judicial referida na tese do Tema 1.083 do STJ."
-
-Valor pró-segurado. Os três itens resolvem, por presunção, exatamente o que o INSS costuma exigir como prova impossível. O item 2 é o mais útil, porque converte a duplicidade metodológica em escolha do trabalhador. O item 3 afasta a perícia judicial quando o laudo da empresa já confirma habitualidade e permanência.
-
-Identificação. Enunciado 12 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região, EMAGIS/TRF4, 1º e 2 de setembro de 2025.
-
-RESSALVA OBRIGATÓRIA. Por declaração do próprio TRF4, os enunciados têm caráter meramente doutrinário e força persuasiva técnico-jurídica, não se confundindo com a posição do tribunal. Citar como doutrina qualificada, jamais como precedente, e sinalizar a Região de origem em peça na 3ª Região.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
-
-## Juízo de Catanduva (Onda 179)
-
-Depois de 18/11/2003, o juízo exige a técnica NHO-01 ou NR-15 e o nível normalizado, e recusou o PPP que mencionava apenas "decibelímetro" (Tema 174/TNU [NÃO CONFIRMADO]). O EPI não descaracteriza o ruído (Tema 555/STF [NÃO CONFIRMADO]). O juízo ainda cita a Súmula 32 da TNU, que está cancelada e não se cita. Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 2.
+Peça em `peticao-previdenciaria`. PPP concreto em `auditoria-ppp`. Laudo judicial em `auditoria-laudo-pericial`. Cerceamento de defesa em `defesa-probatoria-especial`. Precedentes em `precedentes-previdenciarios`. Retificação do PPP em `retificacao-ppp`.

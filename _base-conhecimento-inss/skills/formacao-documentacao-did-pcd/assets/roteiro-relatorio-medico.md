@@ -30,17 +30,17 @@ Descrição dos achados ao exame. Amplitude de movimento articular, força muscu
 
 Listar todos os diagnósticos com CID completo. Exemplos aplicáveis.
 
-M17 — Gonartrose (artrose do joelho)
-M17.0 — Gonartrose primária bilateral
-M19.07 — Osteoartrose secundária do tornozelo
-M22.4 — Condromalácia patelar
-M72.2 — Fasceíte plantar
-M77.3 — Esporão calcâneo
-G57.6 — Lesão do nervo plantar (neuropatia de Baxter)
-M79.7 — Fibromialgia
-M51 — Transtornos de discos intervertebrais lombares
-G56.0 — Síndrome do túnel do carpo
-H90 — Perda de audição por transtorno de condução/neurossensorial
+M17. Gonartrose (artrose do joelho)
+M17.0. Gonartrose primária bilateral
+M19.07. Osteoartrose secundária do tornozelo
+M22.4. Condromalácia patelar
+M72.2. Fasceíte plantar
+M77.3. Esporão calcâneo
+G57.6. Lesão do nervo plantar (neuropatia de Baxter)
+M79.7. Fibromialgia
+M51. Transtornos de discos intervertebrais lombares
+G56.0. Síndrome do túnel do carpo
+H90. Perda de audição por transtorno de condução/neurossensorial
 
 ### 5. Exames Complementares Realizados
 

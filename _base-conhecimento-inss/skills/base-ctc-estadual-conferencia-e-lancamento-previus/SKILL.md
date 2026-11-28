@@ -33,7 +33,7 @@ Atenção, páginas digitalizadas costumam vir em duplicidade (cada folha escane
 
 ## 4. Consolidação das remunerações
 
-O salário-de-contribuição de cada competência é a SOMA dos valores dos PVs daquele mês, porque os vínculos foram concomitantes no mesmo regime. A partir da reforma, salários de atividades simultâneas somam-se, respeitado o teto. Confira sempre se a soma do mês supera o teto da época; abaixo do teto, some direto.
+O salário-de-contribuição de cada competência é a SOMA dos valores dos PVs daquele mês, porque os vínculos foram concomitantes no mesmo regime. Salários de atividades concomitantes somam-se, respeitado o teto (Lei 8.213/91, art. 32, redação da Lei 13.846/2019). Confira sempre se a soma do mês supera o teto da época; abaixo do teto, some direto.
 
 O 13º não entra como competência mensal na média do RGPS. Fica em base separada.
 
@@ -91,17 +91,13 @@ Primeiro excluir os intervalos fictícios e ajustar os contínuos. Depois import
 
 ## 9. Fundamentos
 
-Todos conferidos no repositório de fontes primárias `base-legislacao-fontes-primarias` e em fonte oficial, em 20/07/2026 (ver seção 14 para o carimbo de verificação).
+- Lei 8.213/91, art. 96: I, vedada a contagem em dobro ou em condições especiais; II, vedada a soma de tempo público e privado concomitantes; III, tempo usado para aposentadoria em um regime não se reconta no outro; IV, indenização do tempo anterior ou posterior à filiação obrigatória.
+- Lei 8.213/91, art. 24: carência é o número mínimo de contribuições mensais.
+- IN 128/2022, art. 70, redação da IN 167/2024: CTC no modelo do Anexo IX da Portaria MTP 1.467/2022, acompanhada da Relação das Bases de Cálculo de Contribuição do Anexo X para período posterior a 06/1994.
+- Lei 8.213/91, art. 32 (redação da Lei 13.846/2019): salários de atividades concomitantes somam-se, limitados ao teto.
+- EC 103/2019, art. 26, caput (média de 100% dos salários desde 07/1994) e §6º: "Poderão ser excluídas da média as contribuições que resultem em redução do valor do benefício, desde que mantido o tempo mínimo de contribuição exigido, vedada a utilização do tempo excluído para qualquer finalidade".
 
-Contagem recíproca e efeitos, art. 96 da Lei 8.213/91. O inciso I veda contagem em dobro ou em condições especiais na recíproca. O inciso II veda a contagem de tempo de serviço público com o de atividade privada, quando concomitantes. O inciso III veda reaproveitar por um sistema o tempo já usado para aposentadoria pelo outro. O inciso IV condiciona à indenização o tempo anterior ou posterior à obrigatoriedade de filiação.
-
-Carência como número de contribuições mensais, art. 24 da Lei 8.213/91 ("Período de carência é o número mínimo de contribuições mensais indispensáveis para que o beneficiário faça jus ao benefício").
-
-CTC acompanhada da Relação das Remunerações de Contribuições por competências para períodos posteriores a junho de 1994, art. 70 da IN PRES/INSS 128/2022 (a CTC segue o modelo do Anexo XV e é acompanhada da Relação das Remunerações conforme Anexo XXIII, quando o período for posterior à competência junho de 1994). Do lado do RPPS emissor, a Relação das Bases de Cálculo de Contribuição segue o Anexo X da Portaria MTP 1.467/2022.
-
-Descarte das competências que reduzem a média, mantido o tempo mínimo, art. 26, §6º, da EC 103/2019 ("Poderão ser excluídas da média as contribuições que resultem em redução do valor do benefício, desde que mantido o tempo mínimo de contribuição exigido, vedada a utilização do tempo excluído para qualquer finalidade"). O caput do art. 26 fixa a média de 100% do período contributivo desde a competência julho de 1994.
-
-A redação literal dos dispositivos confere-se em `base-legislacao-fontes-primarias` (arquivos da Lei 8.213/91, EC 103/2019 e IN 128/2022) ou no Planalto antes de citar em peça.
+Dispositivos conferidos no corpus de `base-legislacao-fontes-primarias` em 20/07/2026; art. 70 da IN 128/2022 reconferido na redação da IN 167/2024. O formato dos importadores do Prévius é do software, não é norma.
 
 ## 10. Entregáveis padrão
 
@@ -129,34 +125,6 @@ Para o direito à contagem recíproca e à CTC, `base-contagem-reciproca-rgps-rp
 
 Primeiro, o total bruto da CTC pode embutir dia contado em duplicidade por concomitância; o modelo correto pode ficar 1 dia abaixo, e isso é o certo. Segundo, remuneração de mês de substituição costuma ficar abaixo do salário mínimo da época, o que é normal na contagem recíproca e o Prévius trata pelo descarte. Terceiro, confira sempre se a correção do tempo antecipa o cumprimento do requisito, porque isso muda a DER e pode dispensar projeção e contribuições a pagar.
 
-## 14. Carimbo de verificação de fundamentos (Onda 74)
-
-Conferido em 20/07/2026 contra fonte primária, antes da criação desta skill.
-
-Art. 96, incisos I a IV, da Lei 8.213/91. CONFERIDO no arquivo local `Lei-8213-91-beneficios.md`. O inciso II trata de público versus privado concomitantes (ver a precisão da seção 7).
-
-Art. 24 da Lei 8.213/91 (carência como número de contribuições mensais). CONFERIDO no arquivo local.
-
-Art. 26, caput e §6º, da EC 103/2019 (média de 100% desde 07/1994 e exclusão das competências que reduzem a média mantido o tempo mínimo). CONFERIDO no arquivo local `EC-103-2019.md`, texto literal do §6º transcrito na seção 9.
-
-Art. 70 da IN PRES/INSS 128/2022 (CTC pelo Anexo XV, acompanhada da Relação das Remunerações pelo Anexo XXIII, período posterior a 06/1994). CONFERIDO no arquivo local `IN-128-2022-INSS-parte1`.
-
-Portaria MTP 1.467/2022, Anexo X (Relação das Bases de Cálculo de Contribuição, RBCC). CONFERIDO em fonte oficial (gov.br, Manual de CTC do INSS e Portal IN/INSS), por não constar do repositório local de legislação. Registrado nas notas de manutenção da `base-legislacao-fontes-primarias` como norma a baixar.
-
-Prévius. O formato dos importadores (colunas, tipos, separador) é do software de cálculo do escritório, não é norma. Descrição operacional, não jurídica.
-
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

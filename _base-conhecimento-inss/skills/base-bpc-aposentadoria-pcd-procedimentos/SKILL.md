@@ -1,203 +1,97 @@
 ---
 name: base-bpc-aposentadoria-pcd-procedimentos
-description: "Procedimentos administrativos e judiciais para BPC/LOAS e aposentadoria PCD, ótica pró-segurado. Use SEMPRE que mencionar procedimento BPC, procedimento aposentadoria PCD, pedido administrativo BPC, requerimento BPC pelo Meu INSS, Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, Teleperícia PCD, Portaria DPMF/INSS 19/2026, agendamento perícia biopsicossocial, recurso CRPS BPC, recurso CRPS aposentadoria PCD, juntada documentação perícia, TCQ administrativo e judicial, fluxograma pedido BPC, prazo resposta BPC, revisão bienal procedimento, Lei 15.157/2025 dispensa reavaliação, acompanhamento PA, silêncio administrativo BPC, MS por mora BPC, competência JEF BPC, competência Federal aposentadoria PCD, tutela urgência BPC, implantação judicial BPC, agilização perícia BPC, escala perícia BPC, reabertura PA BPC. Cruza com base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-aposentadoria-pcd-lc142, mandado-seguranca-previdenciario, orientacao-cliente-pericia e peticao-previdenciaria."
+description: "Procedimentos administrativos e judiciais para BPC/LOAS e aposentadoria PCD, ótica pró-segurado. Use SEMPRE que mencionar procedimento BPC, procedimento aposentadoria PCD, pedido administrativo BPC, requerimento BPC pelo Meu INSS, Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014, Teleperícia PCD, Portaria Conjunta DPMF/INSS 19/2026, agendamento perícia biopsicossocial, recurso CRPS BPC, recurso CRPS aposentadoria PCD, prazo recursal 30 dias, juntada documentação perícia, TCQ administrativo e judicial, fluxograma pedido BPC, prazo resposta BPC, revisão bienal procedimento, Lei 15.157/2025 dispensa reavaliação, acompanhamento PA, silêncio administrativo BPC, MS por mora BPC, competência MS Vara Federal, competência JEF BPC, tutela urgência BPC, implantação judicial BPC, reabertura PA BPC, Portaria 34/2025 procedimentos. Cruza com base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-aposentadoria-pcd-lc142, mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, orientacao-cliente-pericia e peticao-previdenciaria."
 ---
 
 # Procedimentos para BPC/LOAS e Aposentadoria PCD
 
 ## Escopo
 
-Skill temática operacional pró-segurado. Consolida procedimentos administrativos e judiciais para concessão e revisão de BPC/LOAS e aposentadoria PCD pela LC 142/2013. Foco na operação do processo administrativo, na Teleperícia, nos recursos ao CRPS, nos mandados de segurança e nas ações judiciais. Objetivo único é a agilização e o sucesso do pleito.
+Operação do processo administrativo e judicial do BPC e da aposentadoria PCD: requerimento, avaliação, recurso, mandado de segurança e ação. Os requisitos materiais estão em `base-bpc-loas-requisitos`, `base-bpc-impedimento-longo-prazo` e `base-aposentadoria-pcd-lc142`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 5º, LXIX (MS).
+- CF, art. 5º, LXIX e LXXVIII.
+- Lei 9.784/1999, arts. 49 (prazo de decisão) e 50 (motivação).
+- Lei 12.016/2009 (MS) e Lei 10.259/2001 (JEF).
+- Decreto 3.048/1999, art. 305, §1º (prazo de 30 dias para recurso).
+- LOAS e Decreto 6.214/2007; Portaria Conjunta MDS/INSS 34/2025 (procedimento do BPC; recurso em 30 dias no art. 16); Portaria Conjunta MDS/INSS 2/2015 (avaliação do BPC).
+- LC 142/2013, Decreto 3.048/1999, arts. 70-A a 70-J, e Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1/2014 (IF-BrA).
+- Portaria Conjunta DPMF/INSS 19/2026 (teleperícia).
 
-Lei 12.016/2009 (MS).
+## Fluxo do BPC
 
-Lei 10.259/2001 (JEF).
+1. Diagnóstico de viabilidade (requisitos, renda, grupo familiar).
+2. CadÚnico atualizado, CPF e biometria.
+3. Documentação médica (pessoa com deficiência) e comprovantes de renda.
+4. Requerimento pelo Meu INSS, 135 ou APS.
+5. Avaliação médica e social (pessoa com deficiência) ou conferência da idade (idoso).
+6. Decisão; em indeferimento, recurso ao CRPS em 30 dias.
+7. Ação judicial ou MS em recusa ou mora.
 
-Lei 8.213/1991 (supletivo processual previdenciário).
+## Fluxo da aposentadoria PCD
 
-Lei 8.742/1993 (LOAS).
-
-Lei 13.146/2015 (Estatuto da PCD).
-
-Lei 15.157/2025 (dispensa reavaliação).
-
-Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (IF-BrA) (auditoria 03/10/2026).
-
-Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (BPC biopsicossocial) (auditoria 03/10/2026).
-
-Portaria 34/2025 MDS. Portaria 37/2026 MDS.
-
-Portaria DPMF/INSS 19/2026 (Teleperícia).
-
-Decreto 6.214/2007 (BPC).
-
-Decreto 8.145/2013 (LC 142).
-
-CF/88, art. 203, V. Garantia constitucional do BPC à pessoa com deficiência e ao idoso sem meios de prover a própria manutenção.
-
-CF/88, art. 204. Diretrizes da assistência social, em especial a descentralização político-administrativa e a participação da população.
-
-## Fluxo administrativo BPC
-
-Primeiro, preparar documentação (requisitos estruturais, laudos, CadÚnico, composição familiar).
-
-Segundo, requerer pelo Meu INSS, APS ou 135.
-
-Terceiro, INSS agenda avaliação biopsicossocial (para PCD) ou verifica idade (para idoso).
-
-Quarto, perícia médica e avaliação social, presencial ou Teleperícia.
-
-Quinto, decisão administrativa.
-
-Sexto, em indeferimento, recurso ao CRPS (Junta de Recursos, depois Câmara de Julgamento).
-
-Sétimo, se mantido, ação judicial.
-
-## Fluxo administrativo Aposentadoria PCD
-
-Primeiro, documentação pretérita para DID.
-
-Segundo, requerimento pelo Meu INSS.
-
-Terceiro, avaliação biopsicossocial com IF-BrA.
-
-Quarto, decisão.
-
-Quinto, em indeferimento, recurso ao CRPS.
-
-Sexto, ação judicial.
+1. DID com documentação contemporânea (`base-pcd-did-retroativa`).
+2. Requerimento pelo Meu INSS.
+3. Avaliação médica e funcional pelo IF-BrA.
+4. Decisão; recurso ao CRPS em 30 dias.
+5. Ação judicial.
 
 ## Teleperícia
 
-Portaria DPMF/INSS 19/2026.
-
-Aplicável a casos de menor complexidade. Casos complexos exigem presencial. Recusa pode ser fundamentada por cerceamento de defesa. Orientar segurado.
-
-## CadÚnico
-
-Atualização contínua. Em cessação por CadÚnico desatualizado, regularizar e restabelecer retroativamente.
+A Portaria Conjunta DPMF/INSS 19/2026 admite a videoconferência, com o segurado na APS, na perícia inicial e na reavaliação do BPC. A norma não menciona a avaliação da LC 142. Em caso que dependa de exame físico, requerer a avaliação presencial e registrar falhas técnicas (conexão, áudio, imagem).
 
 ## Recurso ao CRPS
 
-Junta de Recursos. Instância inicial. Câmara de Julgamento. Instância recursal especial. Conselho Pleno em casos de divergência.
+Recurso ordinário à Junta de Recursos e recurso especial à Câmara de Julgamento, ambos em 30 dias (Decreto 3.048/1999, art. 305, §1º). Intempestividade e relevação em `admissibilidade-barreiras-crps`; instrução em `incidentes-instrucao-crps`; instâncias superiores em `recursos-superiores-crps`.
 
-Prazo recursal. 30 dias úteis.
+## Mora e mandado de segurança
 
-## MS por mora
+- **Prazos de análise.** Os prazos fixados no acordo homologado no RE 1.171.152 (ex-Tema 1066 STF, cancelado) e o art. 49 da Lei 9.784/1999.
+- **Competência.** Vara Federal comum. O JEF não processa MS (Lei 10.259/2001, art. 3º, §1º, I). MS contra ato do próprio juizado vai à Turma Recursal (Súmula 376 STJ).
+- **Autoridade coatora.** Gerente Executivo da área ou Gerente da CEAB em ato centralizado (`ms-competencia-autoridade-coatora`).
+- **Decadência.** 120 dias (Lei 12.016/2009, art. 23); na omissão continuada, o prazo se renova (`base-ms-decadencia-omissao-demora`).
+- **Descumprimento.** Lei 12.016/2009, art. 26 (crime de desobediência).
 
-MS por mora: competência sempre da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
+## Ação judicial
 
-Autoridade coatora. Gerente Executivo do INSS no domicílio, Gerente da CEAB em atos centralizados.
+JEF até 60 salários mínimos; Vara Federal acima. Requerimento administrativo prévio (Tema 350 STF) e instrução mínima do PA (`tema-1124-instrucao-administrativa`). Tutela de urgência com prova pré-constituída (`base-cpc-tutela-provisoria-previdenciaria`).
 
-## Tutela de urgência
+## Revisão e reavaliação
 
-Em ação judicial com prova pré-constituída, cabe tutela de urgência. Implantação imediata. Prazo razoável (30 dias úteis).
+- Reavaliação do BPC: contraditório prévio pelos arts. 47-B a 47-E do Decreto 6.214/2007.
+- Impedimento permanente, irreversível ou irrecuperável: dispensa da avaliação periódica (LOAS, art. 21, §5º, Lei 15.157/2025).
+- Revisão de aposentadoria comum para PCD: prazo decadencial do art. 103 da Lei 8.213/1991.
 
-## Dispensa de reavaliação
+## Cenários
 
-Lei 15.157/2025. Impedimento permanente, irreversível e irrecuperável. Requerer administrativamente.
+- **Indeferimento por renda.** Recurso e ação com análise concreta (Tema 27 STF).
+- **TCQ desfavorável.** Impugnação técnica e assistente técnico (`analise-bpc-loas`).
+- **DID tardia na aposentadoria PCD.** Reconstrução documental (`formacao-documentacao-did-pcd`).
+- **Teleperícia inadequada.** Pedido de avaliação presencial.
+- **Cessação por Bolsa Família.** Ação ou MS com arguição incidental contra o Decreto 12.534/2025 (`bpc-renda-grupo-familiar`).
+- **PA sem decisão.** MS por mora na Vara Federal.
 
-## Regra e estratégia pró-segurado
+## Refutação a argumentos típicos do INSS
 
-A regra geral é atuação cuidadosa em cada etapa.
+- **Indeferimento genérico.** Dever de motivação (Lei 9.784/1999, art. 50).
+- **Recurso intempestivo.** Conferir a data da ciência e a relevação.
+- **CadÚnico vencido.** Condição regularizável; atualizar e reapresentar.
+- **Extravio do PA.** Pedido de reconstituição e MS.
+- **Implantação não cumprida.** Multa, intimação pessoal e art. 26 da Lei 12.016/2009.
 
-Primeiro, documentação robusta antes da perícia.
+## Documentos
 
-Segundo, preparo do cliente para a avaliação.
+Número do requerimento; laudos e exames; composição familiar e comprovantes de renda; CadÚnico; procuração e contrato de honorários.
 
-Terceiro, acompanhamento do PA.
+## Integração
 
-Quarto, recursos tempestivos.
+Orientação ao cliente em `orientacao-cliente-pericia`; MS em `mandado-seguranca-previdenciario`; peça em `peticao-previdenciaria`; fungibilidade em `base-fungibilidade-previdenciaria`; portarias em `base-portarias-dpmf-inss-hub`; segurado especial em `base-segurado-especial-autodeclaracao-arts-92-93-94`.
 
-Quinto, MS em mora.
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
-Sexto, ação judicial com tutela de urgência.
-
-Sétimo, dispensa de reavaliação em impedimento permanente.
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015, com fato concreto e documento por ID, e cobrar os quatro incisos do art. 2º, §1º, na avaliação e no relatório.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Requisitos BPC em `base-bpc-loas-requisitos`.
-Impedimento em `base-bpc-impedimento-longo-prazo`.
-Renda em `base-bpc-renda-per-capita-miserabilidade`.
-Aposentadoria PCD em `base-aposentadoria-pcd-lc142`.
-Orientação ao cliente em `orientacao-cliente-pericia`.
-MS em `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`.
-Peça em `peticao-previdenciaria`.
-Recursos CRPS em `admissibilidade-barreiras-crps`, `incidentes-instrucao-crps`, `recursos-superiores-crps`.
-
-## Alertas
-
-Primeiro, protocolar requerimento administrativo antes da ação (Tema 350 STF, Tema 1124 STJ).
-
-Segundo, CadÚnico ativo é condição formal regularizável.
-
-Terceiro, Teleperícia tem limites.
-
-Quarto, MS por mora em prazo razoável inobservado.
-
-Quinto, tutela de urgência em prova pré-constituída.
-
-Sexto, dispensa de reavaliação pela Lei 15.157/2025.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado detalha procedimentos.
-
-Hugo Goes detalha recursos.
-
-Fábio Zambitte Ibrahim analisa acesso à justiça.
-
-Wladimir Novaes Martinez critica formalismos.
-
-Daniel Pulino aprofunda o processo.
-
-Marco Aurélio Serau Junior analisa a proteção social processual.
-
-O IBDP sustenta a proteção integral procedimental.
-
-## O que NÃO está nesta skill
-
-Requisitos substantivos estão em `base-bpc-loas-requisitos`, `base-bpc-impedimento-longo-prazo`, `base-bpc-renda-per-capita-miserabilidade`, `base-aposentadoria-pcd-lc142`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

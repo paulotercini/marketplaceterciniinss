@@ -1,84 +1,44 @@
-# Transição EC 103/2019 — Fundamentos e Cenários
+# Transição EC 103/2019. Fundamentos e Cenários
 
-## 1. Fundamentos normativos
+Requisitos e tabela anual estão no SKILL.md. Aqui ficam os pontos de cálculo e os cenários conferidos.
 
-EC 103/2019, arts. 15 a 18, 20 e 21. Regras de transição para segurados filiados ao RGPS até 13 de novembro de 2019; o art. 4º trata do servidor público federal (auditoria 03/10/2026).
+## 1. Pontos de cálculo
 
-EC 103/2019, art. 15. Regra dos pontos progressivos. Exige 35 anos de contribuição (homem) ou 30 anos (mulher), mais soma de idade e tempo que começou em 96 (homem) e 86 (mulher), progredindo 1 ponto por ano até 105 e 100 respectivamente.
+- Art. 15, §2º: idade e tempo apurados em dias; a fração conta.
+- Art. 17: elegível quem tinha mais de 33 anos (H) ou 28 (M) de contribuição em 13/11/2019. Pedágio = 50% do que faltava para 35/30 anos. Não há idade mínima. RMI = média × fator previdenciário (art. 29, §§7º a 9º, Lei 8.213/91).
+- Art. 20: pedágio = 100% do que faltava em 13/11/2019 para 35/30 anos. Quem já tinha 35/30 anos em 13/11/2019 tem direito adquirido e dispensa as transições (`base-aposentadoria-direito-adquirido`).
+- Art. 25, §2º: conversão de tempo especial em comum apenas para o período cumprido até 13/11/2019.
 
-EC 103/2019, art. 16. Regra da idade mínima progressiva. Exige 35 anos de contribuição (homem) ou 30 anos (mulher), mais idade mínima que começou em 61 anos (homem) e 56 anos (mulher), aumentando 6 meses por ano.
+## 2. Cenários
 
-EC 103/2019, art. 17. Pedágio de 50%. Para quem em 13 de novembro de 2019 contava mais de 33 anos de contribuição, se homem, ou mais de 28, se mulher, isto é, estava a menos de 2 anos de completar o tempo mínimo de 35/30 (auditoria 03/10/2026). Soma-se ao tempo restante mais 50% desse tempo.
+### Cenário 1. Pontos (art. 15)
+Homem com 61 anos e 35 anos de contribuição no início de 2024 soma 96 pontos; exigidos 101 em 2024. Contribuindo, ganha 2 pontos por ano: 98 em 2025 (exigidos 102), 100 em 2026 (103), 102 em 2027 (104), 104 em 2028 (105). Atinge 105 em meados de 2028, cerca de 4 anos e 6 meses depois. Pelo art. 16 ele também chega em 2028 (65 anos).
 
-EC 103/2019, art. 20. Pedágio de 100%. Exige idade mínima de 60 anos (homem) e 57 anos (mulher), mais tempo mínimo de 35/30 anos de contribuição, mais 100% do tempo que faltava em 13 de novembro de 2019. RMI de 100% da média, diferentemente das demais transições.
+### Cenário 2. Idade progressiva (art. 16)
+Mulher com 57 anos e 30 anos de contribuição em 2024; exigidos 58a6m em 2024, 59 em 2025, 59a6m em 2026 e 60 em 2027. Ela alcança a exigência em 2027, aos 60 anos. Avaliar o art. 17 se tinha mais de 28 anos em 13/11/2019.
 
-## 2. Professor nas regras de transição
+### Cenário 3. Pedágio 50% (art. 17)
+Mulher com 28 anos e 6 meses de contribuição em 13/11/2019. Faltavam 1 ano e 6 meses; pedágio de 9 meses. Precisa de 2 anos e 3 meses de contribuição após 13/11/2019 (fevereiro de 2022). RMI com fator previdenciário: simular antes de optar.
 
-EC 103/2019, art. 15, §3º (auditoria 03/10/2026). Pontos progressivos para professor. Começa em 81 pontos (mulher) e 91 pontos (homem), com tempo mínimo de 25 anos (mulher) e 30 anos (homem) de magistério.
+### Cenário 4. Pedágio 100% (art. 20)
+Homem com 34 anos de contribuição em 13/11/2019 e 60 anos em 2021. Faltava 1 ano; pedágio de 1 ano. Precisa de 2 anos de contribuição após 13/11/2019 e 60 anos de idade. Completa em novembro de 2021 com 36 anos de contribuição e RMI de 100% da média, superior aos 92% (60% + 2% × 16) do art. 15 ou 16.
 
-EC 103/2019, art. 16, §2º. Idade progressiva do professor. Começa em 51 anos (mulher) e 56 anos (homem).
+### Cenário 5. Professora (art. 16, §2º)
+Professora com 25 anos de magistério e 54 anos em 2025: exigência de 54 anos em 2025 (51 em 2019 + 6 meses por ano). Requisito cumprido.
 
-EC 103/2019, art. 20, §1º (auditoria 03/10/2026). Pedágio de 100% do professor. Idade mínima 52 anos (mulher) e 55 anos (homem), com tempo mínimo de 25 ou 30 anos de magistério.
+### Cenário 6. Comparação simultânea
+Homem com 36 anos de contribuição e 58 anos em 2026: 94 pontos contra 103 exigidos; idade abaixo dos 64a6m; tinha cerca de 29 anos em 13/11/2019, fora do art. 17; sem 60 anos para o art. 20. Nenhuma transição cumprida em 2026. Projetar o ano de acesso em cada regra e o efeito do art. 20 aos 60 anos (2028), se completado o pedágio.
 
-## 3. Cenários operacionais pró-segurado
+### Cenário 7. Conversão de tempo especial
+Homem com 20 anos comuns e 10 anos especiais (25 anos) até 13/11/2019: os 10 anos convertem-se em 14 (fator 1,4), total de 34 anos em 13/11/2019. Passa a ser elegível ao art. 17 (mais de 33 anos) com pedágio de 6 meses.
 
-### Cenário 1 — Regra dos pontos (art. 15)
+### Cenário 8. Diferença de RMI
+Com 36 anos de contribuição (H), arts. 15 e 16 dão 92% da média; art. 20 dá 100%; art. 17 dá média × fator, que varia com idade e expectativa de sobrevida. Calcular em `base-calculo-rmi-ec103`.
 
-Segurado homem com 35 anos de contribuição em 2024 e 61 anos de idade, totalizando 96 pontos. Em 2024 a pontuação exigida do homem é 101, e sobe 1 ponto por ano até 105 em 2028 (auditoria 03/10/2026). Contribuindo, ele soma 2 pontos por ano e alcança 105 em cerca de 4 anos e 6 meses; ou avaliar outra porta.
+## 3. Documentos
 
-### Cenário 2 — Idade progressiva (art. 16)
+CNIS completo; CTPS; PPP e LTCAT para tempo especial; certidão de tempo de contribuição de RPPS, se houver; para professor, declaração da escola com funções e período de magistério; documento de identidade para conferência da idade.
 
-Segurada mulher com 30 anos de contribuição e 57 anos em 2024. Idade exigida para o ano é 58 anos e 6 meses, com mais 6 meses a cada ano (auditoria 03/10/2026). Aguardar de 2 anos e 6 meses a 3 anos ou avaliar pedágio de 50%, se elegível.
+## 4. Pedidos
 
-### Cenário 3 — Pedágio de 50% (art. 17)
-
-Segurada mulher que em 13 de novembro de 2019 tinha 28 anos e 6 meses de contribuição. Faltavam 1 ano e 6 meses para 30 anos. Pedágio de 50% equivale a 9 meses adicionais. Tempo exigido após a reforma é 2 anos e 3 meses. Acesso antecipado, mas deve observar idade mínima alternativa se exigida.
-
-### Cenário 4 — Pedágio de 100% (art. 20)
-
-Segurado homem com 60 anos em 2024 e 35 anos de contribuição completados em 13 de novembro de 2019. Caso tenha faltado, ex., 1 ano, soma-se 2 anos adicionais. Mas com 60 anos e 35 anos já na reforma, aproveita idade e tempo mínimos já cumpridos. Vantagem na RMI integral (100% da média).
-
-### Cenário 5 — Comparativo professor
-
-Professora com 25 anos de magistério e 54 anos em 2025. Pela idade progressiva do professor (art. 16, §2º), exige 51 anos mais progressão de 6 meses por ano a partir de 2020. Em 2025, exige 54 anos, e ela já cumpre o requisito (auditoria 03/10/2026).
-
-### Cenário 6 — Comparação simultânea
-
-Segurado homem com 36 anos de contribuição e 58 anos em 2026. Elegível pelos pontos (requer 103 pontos, tem 94) ainda não atingido. Elegível pela idade progressiva (requer 64 anos e 6 meses em 2026, não atingido) (auditoria 03/10/2026). Elegível pelo pedágio 50% se faltava menos de 2 anos em 13/11/2019. Avaliar caso a caso.
-
-### Cenário 7 — Conversão de tempo especial na transição
-
-Segurado que em 13 de novembro de 2019 tinha 20 anos de atividade comum e 10 anos de atividade especial. Converte o tempo especial em comum pela regra do art. 25, §2º, da EC 103 (conversão limitada ao tempo já cumprido até a reforma). Agrega ao tempo comum para fins de transição.
-
-### Cenário 8 — Diferença de RMI entre transições
-
-Em mesmo acervo contributivo, a RMI do pedágio 100% (100% da média) pode superar a dos pontos ou idade progressiva (60% + 2% por ano excedente). Vantagem financeira precisa ser calculada em cada caso. Acionar `base-calculo-rmi-ec103`.
-
-## 4. Documentos essenciais
-
-CNIS completo com todos os vínculos.
-CTPS com páginas de anotações.
-PPP para tempo especial convertido.
-Certidão de tempo de contribuição de outros regimes, se aplicável.
-Declarações de tempo de magistério e diplomas para professor.
-Certidão de nascimento da segurada, da segurada e do segurado, para conferência da idade.
-
-## 5. Simulação obrigatória
-
-Em toda análise, apresentar planilha comparativa com as quatro transições, o direito adquirido (se houver) e a regra permanente. Exigir do INSS a apresentação dessa planilha no processo administrativo, com base no dever de informação.
-
-## 6. Cruzamento com outras skills
-
-Acionar `base-aposentadoria-direito-adquirido` para verificar se há acervo pré-reforma aproveitável.
-Acionar `base-aposentadoria-regra-permanente-ec103` para comparar com a regra definitiva.
-Acionar `base-calculo-rmi-ec103` para apurar a renda mensal inicial.
-Acionar `reafirmacao-der` para postergação estratégica.
-Acionar `auditoria-ppp` para aproveitamento de tempo especial.
-
-## 7. Alerta estratégico
-
-Primeiro, nunca aceitar a regra aplicada pelo INSS sem o comparativo com as demais portas. Se o segurado pode se aposentar por duas ou mais regras, tem direito à mais vantajosa.
-
-Segundo, cuidado com o ano-calendário de implementação dos requisitos nas regras progressivas. A exigência de pontos e idade mínima cresce ano a ano. A DIB deve ser fixada exatamente no dia do atingimento dos requisitos da regra eleita.
-
-Terceiro, em ações judiciais, pedir subsidiariamente a concessão pela regra mais vantajosa identificada pelo juízo. Pedido alternativo amplia a chance de êxito.
+Em juízo, pedir a concessão pela regra mais vantajosa e, subsidiariamente, por qualquer regra cujos requisitos se comprovem, com reafirmação da DER (Tema 995 STJ).

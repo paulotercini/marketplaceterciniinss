@@ -1,49 +1,13 @@
-# DIB por Espécie — Fundamentos e Cenários
+# DIB por Espécie. Cenários
 
-## 1. Marco normativo aplicável
+Quadro por espécie no SKILL.md.
 
-Lei 8.213/91, arts. 49, 60, 71, 74, 76, 80, 86. Lei 8.742/93, art. 21. Lei 13.846/2019. Lei 13.183/2015. IN INSS 128/2022.
+## Cenários
 
-## 2. Cenário 1 — Auxílio-doença empregado
-
-DIB no 16º dia do afastamento se DER em 30 dias. Após 30 dias, DER.
-
-## 3. Cenário 2 — Auxílio-doença não empregado
-
-DIB no afastamento se DER em 30 dias. Após, DER.
-
-## 4. Cenário 3 — Aposentadoria por idade
-
-DIB na DER (art. 49).
-
-## 5. Cenário 4 — Aposentadoria por tempo
-
-DIB na DER (art. 49). Possibilidade de reafirmação.
-
-## 6. Cenário 5 — Aposentadoria especial
-
-DIB na DER ou afastamento da atividade especial.
-
-## 7. Cenário 6 — Aposentadoria por incapacidade permanente (B32)
-
-DIB no afastamento ou DER conforme art. 60 c/c 49.
-
-## 8. Cenário 7 — Pensão por morte
-
-DIB no óbito se DER em 90 dias para menor de 16. Lei 13.846/2019 prazo de 180 dias para outros.
-
-## 9. Cenário 8 — Auxílio-acidente
-
-DIB no dia seguinte à cessação do auxílio-doença (art. 86).
-
-## 10. Cenário 9 — BPC
-
-DIB na DER (art. 21 LOAS).
-
-## 11. Cenário 10 — Salário-maternidade
-
-DIB no parto ou afastamento conforme art. 71.
-
-## 12. Documentos essenciais
-
-DER. Afastamento. Atestado médico. Óbito. CTPS. CNIS.
+- **A. Empregada afastada em 10/03, requerimento em 20/03.** Auxílio por incapacidade temporária desde o 16º dia do afastamento (25/03).
+- **B. Contribuinte individual incapaz desde 01/02, requerimento em 15/04.** Mais de 30 dias: DIB na DER (art. 60, §1º).
+- **C. Empregado desligado em 05/01, aposentadoria por idade requerida em 20/03.** Dentro de 90 dias: DIB no desligamento (art. 49, I, "a").
+- **D. Óbito em 01/06; filho de 10 anos requer em 15/11.** Dentro de 180 dias: DIB no óbito. Cônjuge que requer na mesma data, após 90 dias: DIB na DER (art. 74).
+- **E. Auxílio-doença cessado em 30/09, sequela reconhecida em juízo.** Auxílio-acidente desde 01/10 (art. 86, §2º; Tema 862 STJ), respeitada a prescrição quinquenal.
+- **F. BPC com perícia judicial fixando o impedimento antes da DER.** DIB na DER (Súmula 22 TNU).
+- **G. Aposentadoria por invalidez concedida em juízo sem requerimento prévio.** DIB na citação (Súmula 576 STJ).

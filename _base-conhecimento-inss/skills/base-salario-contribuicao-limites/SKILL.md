@@ -1,138 +1,60 @@
 ---
 name: base-salario-contribuicao-limites
-description: "Salário-de-contribuição, limites mínimo e máximo (teto), verbas integrantes e não integrantes, base de cálculo da contribuição previdenciária e reflexo no salário-de-benefício. Use SEMPRE que mencionar salário-de-contribuição, teto previdenciário, limite mínimo, art. 28 Lei 8.212, verbas integrantes, verbas não integrantes, adicional noturno, horas extras, comissões, gratificações, PLR, vale-transporte, vale-alimentação, abono, ajuda de custo, diárias, aviso prévio indenizado, férias indenizadas, terço de férias, licença-prêmio, adicional de insalubridade, adicional de periculosidade, base cálculo contribuição, limite 1/12 sobre 13º, Súmula 688 STF, Tema 20 STF ganhos habituais, incidência RPPS, natureza remuneratória, indenizatória, Portaria 990/2022, Portaria 1.316/2025. Cruza com peticao-previdenciaria, cnis-acerto-indicadores, base-calculo-rmi-ec103, base-aposentadoria-direito-adquirido, base-planejamento-previdenciario e contribuicoes-complementacao-ec103."
+description: "Salário-de-contribuição, limites mínimo e máximo (teto), verbas integrantes e não integrantes, base de cálculo da contribuição previdenciária e reflexo no salário-de-benefício. Use SEMPRE que mencionar salário-de-contribuição, teto previdenciário, limite mínimo, art. 28 Lei 8.212, verbas integrantes, verbas não integrantes, adicional noturno, horas extras, comissões, gratificações, PLR, vale-transporte, vale-alimentação, abono, ajuda de custo, diárias, aviso prévio indenizado, férias indenizadas, terço de férias, licença-prêmio, adicional de insalubridade, adicional de periculosidade, base cálculo contribuição, limite 1/12 sobre 13º, Súmula 688 STF, Tema 20 STF ganhos habituais, incidência RPPS, natureza remuneratória, indenizatória, Portaria 990/2022, Portaria 1.316/2025. Cruza com peticao-previdenciaria, base-cnis-acerto-indicadores, base-calculo-rmi-ec103, base-aposentadoria-direito-adquirido, base-planejamento-previdenciario e contribuicoes-complementacao-ec103."
 ---
 
 # Salário-de-Contribuição e Limites
 
-## Escopo
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação às teses do INSS em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Skill pró-segurado sobre o salário-de-contribuição, base de cálculo da contribuição previdenciária, com os limites mínimo (salário-mínimo) e máximo (teto previdenciário), verbas integrantes e verbas não integrantes, efeitos no salário-de-benefício e discussões sobre natureza remuneratória ou indenizatória das parcelas.
+## Base normativa
 
-## Marco normativo central
-
-Lei 8.212/91, arts. 20, 22 e 28. Base da contribuição.
-
-Lei 8.213/91. Salário-de-benefício.
-
-Decreto 3.048/99, arts. 201, 214.
-
-IN RFB 2.110/2022.
-
-EC 103/2019. Alíquotas progressivas.
-
-Portaria Interministerial anual. Teto e alíquotas.
-
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+- CF, art. 201, §11: os ganhos habituais do empregado, a qualquer título, incorporam-se ao salário para contribuição e repercutem nos benefícios.
+- Lei 8.212/91, art. 28: conceito de salário-de-contribuição por categoria (I empregado e avulso; II doméstico; III contribuinte individual; IV facultativo), limite mínimo (§3º) e máximo (§5º), 13º salário (§7º) e verbas excluídas (§9º, rol exaustivo: "exclusivamente").
+- Lei 8.212/91, art. 20, e EC 103/2019, art. 28: alíquotas progressivas do empregado, doméstico e avulso.
+- Lei 8.213/91, art. 29, §3º (Lei 8.870/94): entram no salário-de-benefício os ganhos habituais sobre os quais incidiu contribuição, exceto o 13º salário.
+- Decreto 3.048/99, art. 214. IN RFB 2.110/2022. Portaria interministerial anual fixa o teto e as faixas.
 
 ## Limites
 
-### Mínimo
+- Mínimo: salário mínimo, ou piso da categoria, mensal ou proporcional aos dias trabalhados (art. 28, §3º). Competência abaixo do mínimo, a partir de 13/11/2019, exige complementação, utilização de excedente ou agrupamento (EC 103, art. 29; `contribuicoes-complementacao-ec103`).
+- Máximo: teto reajustado na mesma data e índice dos benefícios (art. 28, §5º). O valor do ano consta da portaria interministerial do exercício.
+- Contribuição acima do teto não eleva o salário-de-benefício (Lei 8.213/91, art. 29, §2º).
 
-Salário-mínimo vigente.
+## Verbas integrantes (empregado)
 
-### Máximo (Teto)
+Salário-base, horas extras, adicional noturno, de insalubridade e de periculosidade, comissões, gratificações habituais, gorjetas e salário-maternidade (art. 28, I e §2º). O 13º integra o salário-de-contribuição para o custeio (art. 28, §7º; Súmula 688 STF), mas fica fora do salário-de-benefício desde a Lei 8.870/94 (art. 29, §3º, Lei 8.213/91).
 
-Fixado por portaria anual. Em 2026, valor conforme portaria MPS e MTPS do exercício.
+## Verbas não integrantes (art. 28, §9º, Lei 8.212/91)
 
-## Verbas integrantes
+- a) benefícios da previdência, salvo o salário-maternidade;
+- c) parcela in natura do PAT;
+- d) férias indenizadas e respectivo terço;
+- e) indenizações do item "e" (art. 479 CLT, incentivo à demissão, abono de férias dos arts. 143 e 144 CLT, ganhos eventuais e abonos desvinculados do salário, licença-prêmio indenizada, entre outras);
+- f) vale-transporte;
+- g) ajuda de custo em parcela única pela mudança de local de trabalho (art. 470 CLT);
+- h) diárias para viagens, sem limite percentual desde a Lei 13.467/2017 (até então, apenas as que não excedessem 50% da remuneração);
+- j) PLR paga conforme a Lei 10.101/2000;
+- z) prêmios e abonos (Lei 13.467/2017).
 
-Salário-base, horas extras, adicional noturno, adicional de insalubridade, adicional de periculosidade, comissões, gratificações regulares, prêmios regulares, 13º (na parcela anual), abonos sem caráter indenizatório.
+Aviso prévio indenizado: excluído do rol legal desde a Lei 9.528/97; a não incidência decorre da jurisprudência do STJ (REsp repetitivo 1.230.957/RS) [NÃO CONFIRMADO o número do tema].
 
-## Verbas não integrantes
+## Defesa do segurado
 
-Vale-transporte. Lei 7.418/1985, não integra.
+1. Auditar o CNIS contra holerites, termo de rescisão e folha de pagamento.
+2. Verba remuneratória habitual omitida pelo empregador: RAC com holerites (IN 128/2022, Anexo I-B). A falta de recolhimento não prejudica o empregado (Lei 8.212/91, art. 30, I; Lei 8.213/91, art. 34, I).
+3. Diferenças reconhecidas em reclamatória: averbação pela sentença trabalhista (`base-reclamatoria-trabalhista-prova-previdenciaria`).
+4. Contribuinte individual e facultativo abaixo do mínimo: complementação (`contribuicoes-complementacao-ec103`).
+5. Recalcular a RMI com os salários corrigidos (`base-calculo-rmi-ec103`). Na revisão de benefício concedido, observar a decadência (`decadencia-revisao-previdenciaria`).
 
-Vale-alimentação pago por PAT ou acordo coletivo, não integra.
+## Limite
 
-Aviso prévio indenizado (juízo controvertido).
-
-Férias indenizadas e terço constitucional das indenizadas.
-
-Licença-prêmio convertida em pecúnia.
-
-PLR conforme Lei 10.101/2000.
-
-Ajuda de custo, diárias até 50% do salário.
-
-Abono único coletivo de caráter indenizatório.
-
-## Espaço pró-segurado
-
-Primeiro, planejamento para elevar o salário-de-contribuição até o teto para maximizar salário-de-benefício.
-
-Segundo, requalificação de verbas indevidamente tributadas para aproveitar em cômputo.
-
-Terceiro, discussão sobre natureza das verbas em repetitivos do STJ. O Tema 985 do STF, já julgado, admite a contribuição patronal sobre o terço constitucional de férias gozadas [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-Quarto, revisão preventiva de salário-de-contribuição errado no CNIS.
-
-Quinto, o 13º salário integra o salário-de-contribuição para CUSTEIO (art. 28, §7º, Lei 8.212), mas NÃO integra o cálculo do salário de benefício desde a Lei 8.870/94 (art. 29, §3º, Lei 8.213) — não o utilize para elevar a média, salvo requisitos implementados antes de 16/04/1994.
-
-## Regra pró-segurado
-
-Primeiro, auditoria do CNIS.
-
-Segundo, identificação de verbas não tributadas mas integrantes.
-
-Terceiro, acionamento de RAC para correção.
-
-Quarto, cálculo do SB correto.
-
-Quinto, se necessário, ação de cômputo.
+O Tema 985 STF tem tese adversa ao contribuinte quanto ao custeio: "É legítima a incidência de contribuição social, a cargo do empregador, sobre os valores pagos ao empregado a título de terço constitucional de férias gozadas." [NÃO CONFIRMADO o texto e a modulação]. A matéria interessa à empresa, não ao cálculo do benefício.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para cálculo da RMI, acionar `base-calculo-rmi-ec103`.
-Para direito adquirido, acionar `base-aposentadoria-direito-adquirido`.
-Para planejamento, acionar `base-planejamento-previdenciario`.
-Para complementação, acionar `contribuicoes-complementacao-ec103`.
-Para CNIS, acionar `cnis-acerto-indicadores`.
-
-## Alertas
-
-Primeiro, natureza da verba é discussão recorrente no STJ.
-
-Segundo, teto pode mudar anualmente.
-
-Terceiro, contribuições acima do teto não geram salário-de-benefício acima do teto.
-
-Quarto, verbas pagas em rescisão têm natureza própria.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, salário-de-contribuição.
-
-Hugo Goes, contribuições.
-
-Marco Aurélio Serau Junior, base de cálculo.
-
-Daniel Pulino, contribuições.
-
-Jane Berwanger, cálculo.
-
-IBDP, advocacia previdenciária.
-
-## O que NÃO está nesta skill
-
-Cálculo da RMI em `base-calculo-rmi-ec103`. Complementação EC 103 em `contribuicoes-complementacao-ec103`. CNIS em `cnis-acerto-indicadores`.
+RMI: `base-calculo-rmi-ec103`. Direito adquirido: `base-aposentadoria-direito-adquirido`. Planejamento: `base-planejamento-previdenciario`. Complementação: `contribuicoes-complementacao-ec103`. CNIS: `base-cnis-acerto-indicadores`. Portarias: `base-portarias-dpmf-inss-hub`.

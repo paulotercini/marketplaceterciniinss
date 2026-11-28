@@ -1,14 +1,10 @@
 # Indicadores do CNIS na Validação Automática do Segurado Especial
 
-Onda 142 (18/09/2026). Conferido no Anexo V da Portaria DIRBEN/INSS nº 990/2022, baixado do `portalin.inss.gov.br` e lido na íntegra em 18/09/2026. A versão consultada traz a nota "Alterado pela Portaria DIRBEN/INSS nº 1.316, de 24 de novembro de 2025".
+Conferido no Anexo V da Portaria DIRBEN/INSS nº 990/2022, baixado do `portalin.inss.gov.br` e lido na íntegra em 18/09/2026. A versão consultada traz a nota "Alterado pela Portaria DIRBEN/INSS nº 1.316, de 24 de novembro de 2025".
 
-## Correção de nomenclatura, registrada com honestidade
+## Siglas inexistentes
 
-Material de divulgação em circulação em setembro de 2026 atribui ao CNIS os indicadores **"ASE VAUT"**, como período validado por batimento automático, e **"ASE IAUT"**, como período invalidado automaticamente.
-
-**Esses dois indicadores NÃO existem.** A conferência foi dupla. O Anexo V oficial, com oitenta e sete páginas, não os traz em nenhum ponto, e a busca por "VAUT" em todo o DOU entre 01/01/2025 e 18/09/2026 devolveu um único resultado, que é falso positivo, a razão social "VAUTO POSTO GRAND PRIX DE INTERLAGOS LTDA" num comunicado sobre combustíveis.
-
-O CONCEITO, porém, existe e é real. O INSS migra períodos de segurado especial de bases governamentais e os classifica automaticamente. O que está errado é a sigla, não a substância. Os indicadores verdadeiros são seis, e vêm abaixo com a redação oficial.
+Material de divulgação de 2026 cita os indicadores "ASE VAUT" e "ASE IAUT". Eles não constam do Anexo V da Portaria 990/2022 nem do DOU. O conceito de classificação automática existe; as siglas corretas são as seis abaixo.
 
 ## As duas bases de origem
 
@@ -32,19 +28,19 @@ Aparecem antes de qualquer tratamento e todos exigem providência no Portal CNIS
 
 **ASE-NSE, Acerto Período Não Segurado Especial.** Período excluído por requerimento no CNIS, após análise e conclusão quanto à descaracterização da condição de segurado especial.
 
-## O ALERTA que decide casos, e que a divulgação não traz
+## Alerta sobre exclusão
 
 O Anexo V diz, sobre o ASE-NSE, em texto literal. "Períodos excluídos com esse motivo só poderão ser comprovados posteriormente mediante decisão judicial ou recursal."
 
-A consequência é severa. Uma vez excluído o período com esse motivo, a via administrativa comum se fecha, e o segurado só o recupera por recurso ao CRPS ou por ação judicial. O ASE-RNEG produz efeito equivalente, porque registra que o próprio segurado CONFIRMOU a descaracterização.
+Uma vez excluído o período com esse motivo, a via administrativa comum se fecha, e o segurado só o recupera por recurso ao CRPS ou por ação judicial. O ASE-RNEG produz efeito equivalente, porque registra que o próprio segurado CONFIRMOU a descaracterização.
 
-**Regra do escritório.** Antes de qualquer ratificação ou exclusão no Portal CNIS, o período passa pela análise do escritório. Cliente que ratifica sozinho uma classificação negativa, ou que aceita a exclusão para "limpar pendência", entrega o período e transforma acerto administrativo simples em litígio. O alerta vale sobretudo para quem procura o escritório com o CNIS já tratado.
+Antes de qualquer ratificação ou exclusão no Portal CNIS, o período passa pela análise do escritório. Cliente que ratifica sozinho uma classificação negativa, ou que aceita a exclusão para "limpar pendência", entrega o período e transforma acerto administrativo simples em litígio. O alerta vale sobretudo para quem procura o escritório com o CNIS já tratado.
 
 ## Os quatro módulos fiscais e o Tema 1115 do STJ
 
-O critério automático do CAFIR é a área superior a quatro módulos fiscais, e ele NÃO é intransponível. O Tema 1115 do STJ trata da questão do tamanho da propriedade na caracterização do segurado especial, e a tese literal está em `base-precedentes-catalogo-vinculantes`, de consulta obrigatória antes da citação.
+O critério automático do CAFIR é a área superior a quatro módulos fiscais, mas não é definitivo. Tema 1115 STJ: "O tamanho da propriedade não descaracteriza, por si só, o regime de economia familiar, quando preenchidos os demais requisitos legais exigidos para a concessão da aposentadoria por idade rural."
 
-O que a classificação automática faz é inverter o ponto de partida, e não encerrar a discussão. O que caracteriza o segurado especial é o regime de economia familiar e o trabalho pessoal, não a metragem isolada, e a prova disso continua sendo a do art. 106 da Lei 8.213/91 e dos arts. 92 a 94 da Portaria 990/2022.
+A classificação automática inverte o ponto de partida, sem encerrar a discussão. O que caracteriza o segurado especial é o regime de economia familiar e o trabalho pessoal, não a metragem isolada, e a prova disso continua sendo a do art. 106 da Lei 8.213/91 e dos arts. 92 a 94 da Portaria 990/2022.
 
 ## Cruzamentos
 

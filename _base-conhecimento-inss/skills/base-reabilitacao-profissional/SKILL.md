@@ -1,124 +1,92 @@
 ---
 name: base-reabilitacao-profissional
-description: "Reabilitação profissional (B26), art. 89 e 93 Lei 8.213/91, PRP Programa de Reabilitação Profissional, alta programada, cota de PCD, inserção no mercado, estabilidade pós-alta e encerramento. Use SEMPRE que mencionar reabilitação profissional, B26, PRP, art. 89 Lei 8.213, art. 93 Lei 8.213, cota PCD, Lei de Cotas, readaptação, inserção no mercado, elegibilidade reabilitação, encerramento reabilitação, certificado de reabilitação, alta por reabilitação, art. 101 Lei 8.213, Tema 177 TNU, Portaria 991, IN 128 reabilitação, perícia de reabilitação, limbo previdenciário, limbo jurídico, estabilidade art. 118, conversão B31 B32 B26, contrarrazões cessação reabilitação, PRP inconclusa, atestado de reabilitação. Cruza com mandado-seguranca-previdenciario, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, analise-documental-incapacidade e ntep-nexo-acidentario."
+description: "Reabilitação profissional no RGPS como serviço (arts. 89 a 93 da Lei 8.213/91; arts. 136 a 141 do Decreto 3.048/99; arts. 415 a 423 da IN 128/2022), Programa de Reabilitação Profissional (PRP), manutenção do benefício por incapacidade durante o programa (art. 62 §1º Lei 8.213), certificado (art. 92), cota de reabilitados e PcD (art. 93), Tema 177 TNU. Use SEMPRE que mencionar reabilitação profissional, PRP, art. 62 Lei 8.213, art. 89 Lei 8.213, art. 92 Lei 8.213, art. 93 Lei 8.213, cota PCD, Lei de Cotas, readaptação, inserção no mercado, elegibilidade reabilitação, encerramento reabilitação, certificado de reabilitação, alta por reabilitação, art. 101 Lei 8.213, Tema 177 TNU, IN 128 reabilitação, perícia de reabilitação, limbo previdenciário, estabilidade art. 118, PRP inconcluso, recusa ao PRP. Cruza com base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-reabilitacao-profissional-portaria-1310-1333, base-limbo-previdenciario-tema300, ponte-workflow-reabilitacao-profissional, analise-documental-incapacidade e ntep-nexo-acidentario."
 ---
 
-# Reabilitação Profissional (B26)
+# Reabilitação profissional
 
-## Escopo
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 auxílio por incapacidade temporária acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 aposentadoria por incapacidade permanente acidentária; B94 auxílio-acidente.
 
-Skill pró-segurado sobre a reabilitação profissional no RGPS, abrangendo a espécie B26, o Programa de Reabilitação Profissional (PRP), os direitos do segurado no curso do programa, a inserção no mercado via cota (Lei 8.213/91 art. 93), alta, certificado e o fenômeno do limbo previdenciário-trabalhista.
+## Natureza jurídica
 
-## Marco normativo central
+A reabilitação profissional é serviço da Previdência Social (art. 18, III, "c", da Lei 8.213/91). Não constitui espécie de benefício nem tem código próprio de pagamento. Durante o PRP, o segurado recebe o benefício por incapacidade que já titularizava (B31, B91, B32 ou B92). O art. 62, §1º, da Lei 8.213/91 manda manter o auxílio por incapacidade temporária até que o segurado seja considerado reabilitado ou, se não recuperável, aposentado por incapacidade permanente.
 
-Lei 8.213/91, art. 89. Reabilitação como providência do INSS.
+## Marco normativo conferido
 
-Lei 8.213/91, art. 93. Cota de PCD no mercado de trabalho.
+| Dispositivo | Conteúdo |
+|---|---|
+| Lei 8.213/91, art. 62, caput e §1º | Segurado insuscetível de recuperação para a atividade habitual submete-se a reabilitação; benefício mantido até a reabilitação ou a aposentadoria |
+| Lei 8.213/91, art. 62, §2º | Alteração de atribuições compatível com a limitação não configura desvio de função do reabilitado |
+| Lei 8.213/91, art. 89 | Finalidade da habilitação e reabilitação; parágrafo único: prótese, órtese, reparo e transporte do acidentado |
+| Lei 8.213/91, art. 90 | Prestação obrigatória aos segurados, inclusive aposentados |
+| Lei 8.213/91, art. 92 | Certificado individual ao fim do processo, com as atividades que o beneficiário pode exercer |
+| Lei 8.213/91, art. 93 | Cota de 2% a 5% para empresas com 100 ou mais empregados; §1º condiciona a dispensa à contratação de substituto em condição semelhante |
+| Lei 8.213/91, art. 101, II | Obrigação de submeter-se ao processo de reabilitação prescrito e custeado pela Previdência, sob pena de suspensão |
+| Decreto 3.048/99, art. 136 | Caráter obrigatório e independente de carência |
+| Decreto 3.048/99, art. 137 e §1º-A | Funções básicas; elegibilidade avaliada pela Perícia Médica Federal |
+| Decreto 3.048/99, art. 140 e §§1º a 3º | Certificado; acompanhamento e pesquisa de fixação no mercado obrigatórios |
+| IN 128/2022, arts. 416 e 417 | Quem pode ser encaminhado; atendimento obrigatório aos incisos I a VI (redação da IN 195/2025) |
+| IN 128/2022, art. 419 | Recursos materiais (OPM, cursos, transporte, alimentação, diárias, implemento profissional) |
+| IN 128/2022, art. 423 | Não comparecimento ou abandono: suspensão e posterior cessação, conforme ato próprio |
 
-Lei 8.213/91, art. 101. Perícia e submissão.
-
-Decreto 3.048/99, arts. 136 a 140.
-
-IN 128/2022. Procedimentos.
-
-Portaria 991/2022 e sucessoras.
+Os atos operacionais da Perícia Médica Federal e da reabilitação estão em `base-reabilitacao-profissional-portaria-1310-1333` e em `base-portarias-dpmf-inss-hub`.
 
 ## Elegibilidade
 
-Primeiro, segurado inicialmente em B31 ou B32, identificado como passível de reabilitação.
+Primeiro, segurado em B31 ou B91 insuscetível de recuperação para a atividade habitual, com potencial para outra atividade (art. 62 da Lei 8.213/91; IN 128, art. 416, I).
 
-Segundo, incapacidade para a atividade original, mas potencial residual.
+Segundo, segurado sem carência para benefício por incapacidade, incapaz para a atividade habitual (IN 128, art. 416, II).
 
-Terceiro, idade e perfil compatíveis.
+Terceiro, aposentado por incapacidade permanente e pensionista inválido (IN 128, art. 416, III e IV).
 
-## Desenvolvimento do PRP
+Quarto, aposentado que volta à atividade e sofre redução funcional (IN 128, art. 416, V).
 
-Primeiro, avaliação funcional e psicossocial.
+A elegibilidade é avaliada pela Perícia Médica Federal (Decreto 3.048/99, art. 137, §1º-A).
 
-Segundo, curso profissionalizante ou programa pedagógico.
+## Precedente qualificado
 
-Terceiro, estágio em empresa parceira.
+Tema 177 TNU: "1. Constatada incapacidade parcial e permanente, a decisão judicial poderá determinar o encaminhamento para análise administrativa de elegibilidade à reabilitação profissional. 2. A análise administrativa deverá adotar como premissa a conclusão da decisão judicial." Consequência prática: o INSS não pode, na análise de elegibilidade, rediscutir a incapacidade parcial e permanente reconhecida em juízo.
 
-Quarto, inserção no mercado.
+Súmula 47 TNU trata da análise das condições pessoais e sociais quando a incapacidade é parcial. Ela fundamenta o pedido de aposentadoria quando a idade, a escolaridade e o histórico profissional tornam a reabilitação inviável.
 
-Quinto, alta com certificado.
+## Teses pró-segurado
 
-## Espaço pró-segurado
+| Situação | Tese | Fundamento |
+|---|---|---|
+| Cessação do B31 ou B91 durante o PRP | Benefício mantido até a conclusão do programa | Lei 8.213/91, art. 62, §1º |
+| Alta sem certificado | Encerramento irregular; restabelecimento | Lei 8.213/91, art. 92; Decreto 3.048/99, art. 140 |
+| Certificado para função incompatível com as limitações | Nulidade do encerramento; nova análise | Lei 8.213/91, arts. 62, §1º, e 92 |
+| Programa sem curso, sem recurso material ou com atividade meramente formal | Reabilitação não cumprida | Decreto 3.048/99, art. 137; IN 128, art. 419 |
+| Perfil sem potencial de reinserção (idade, escolaridade, histórico braçal) | Aposentadoria por incapacidade permanente | Lei 8.213/91, art. 62, §1º, parte final; Súmula 47 TNU |
+| Incapacidade parcial e permanente reconhecida em juízo | Determinar o encaminhamento ao PRP com a premissa judicial | Tema 177 TNU |
+| Ausência ao PRP por motivo de saúde, família ou deslocamento | Justificativa afasta suspensão; pedir recursos de transporte | Lei 8.213/91, art. 101, II; IN 128, arts. 419, V a VII, e 423 |
+| Empregador recusa o retorno após alta do INSS | Limbo previdenciário-trabalhista | `base-limbo-previdenciario-tema300` |
 
-Primeiro, manutenção do benefício B26 durante o PRP.
+## Limites a conhecer
 
-Segundo, cota de PCD no mercado (art. 93 Lei 8.213) facilita a recolocação.
+Primeiro, o Decreto 3.048/99, art. 140, §1º, afasta a obrigação do INSS de manter o segurado no emprego ou de colocá-lo em outro. O certificado encerra o programa.
 
-Terceiro, em caso de alta indevida, combate judicial.
+Segundo, a recusa injustificada ao PRP autoriza a suspensão (Lei 8.213/91, art. 101, II; IN 128, art. 423).
 
-Quarto, limbo previdenciário-trabalhista combate com retorno do benefício ou garantia de emprego.
+Terceiro, a estabilidade do art. 118 da Lei 8.213/91 depende de auxílio por incapacidade temporária acidentário (B91), conforme a Súmula 378, II, do TST. Ela não decorre do PRP em si.
 
-Quinto, no caso de recusa do empregador à readaptação, há direito à manutenção do benefício.
+## Roteiro
 
-## Regra pró-segurado
+Primeiro, conferir no CNIS e no extrato do benefício a data de encaminhamento ao PRP e a espécie mantida.
 
-Primeiro, acompanhamento do PRP com relatórios.
+Segundo, requerer cópia do processo de reabilitação (avaliação do potencial laborativo, plano, cursos, recursos materiais e certificado).
 
-Segundo, contestação de cessação indevida.
+Terceiro, cotejar a função certificada com as limitações descritas pelo médico assistente (`relatorio-medico-assistente`).
 
-Terceiro, articulação com equipe médica.
+Quarto, impugnar a alta sem certificado ou com função incompatível, no recurso administrativo ou na ação judicial.
 
-Quarto, pedido de revisão do PRP.
-
-Quinto, ação judicial em caso de alta forçada.
+Quinto, se o perfil inviabilizar a reinserção, pedir a aposentadoria por incapacidade permanente com base nas condições pessoais.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
+## Integração
 
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para B31, acionar `base-incapacidade-b31-temporaria`.
-Para B32, acionar `base-incapacidade-b32-permanente`.
-Para análise documental, acionar `analise-documental-incapacidade`.
-Para NTEP e acidentário, acionar `ntep-nexo-acidentario`.
-Para redação, acionar `peticao-previdenciaria`.
-
-## Alertas
-
-Primeiro, alta sem certificado é passível de revisão.
-
-Segundo, limbo trabalhista-previdenciário é recorrente.
-
-Terceiro, empregador não cumpridor de cota sujeito a sanção (Lei 8.213/91).
-
-Quarto, segurado com PRP inconcluso pode pleitear manutenção.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, reabilitação.
-
-Hugo Goes, reabilitação.
-
-Marco Aurélio Serau Junior, incapacidade e reabilitação.
-
-Daniel Pulino, benefícios por incapacidade.
-
-Jane Berwanger, reabilitação.
-
-IBDP, advocacia previdenciária.
-
-## O que NÃO está nesta skill
-
-Incapacidade B31/B32 está nas skills próprias. Auxílio-acidente em `auxilio-acidente-b94`. Lei de Cotas no aspecto trabalhista, em skills específicas.
+`base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-reabilitacao-profissional-portaria-1310-1333`, `ponte-workflow-reabilitacao-profissional`, `base-limbo-previdenciario-tema300`, `analise-documental-incapacidade`, `ntep-nexo-acidentario`, `peticao-previdenciaria`. Auxílio-acidente em `auxilio-acidente-b94`.

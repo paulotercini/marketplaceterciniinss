@@ -1,135 +1,61 @@
 ---
 name: base-tempo-especial-conversao
-description: "Conversão de tempo especial em comum, fator 1,4 (homem) e 1,2 (mulher), marco temporal 13/11/2019 da EC 103/2019, Tema 546 STJ (REsp 1.310.034), Tema 422 STJ, Súmula 50 TNU e regime jurídico aplicável. Use SEMPRE que mencionar conversão de tempo especial, fator de conversão, tempo especial em comum, 1,4 homem, 1,2 mulher, art. 70 Decreto 3.048/1999, art. 57 §5º Lei 8.213/91, EC 103/2019 art. 25 §2º, limite 13/11/2019, Tema 422 STJ, Tema 546 STJ, REsp 1.310.034, Súmula 50 TNU, tempus regit actum, lei vigente à prestação do serviço, regime jurídico do tempo especial, conversão antes Lei 9.032/1995, conversão de especial para comum, tempo trabalhado antes de 1998, tempo trabalhado entre 1995 e 1998, períodos especiais fracionados, direito adquirido conversão, Portaria 990/2022, Portaria 1.316/2025. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-ruido, base-aposentadoria-especial-transicao-ec103 e precedentes-previdenciarios."
+description: "Conversão de tempo especial em comum, fator 1,4 (homem) e 1,2 (mulher), marco temporal 13/11/2019 da EC 103/2019, Tema 546 STJ (REsp 1.310.034), Tema 422 STJ, Súmula 50 TNU e regime jurídico aplicável. Use SEMPRE que mencionar conversão de tempo especial, fator de conversão, tempo especial em comum, 1,4 homem, 1,2 mulher, art. 70 Decreto 3.048/1999, art. 188-P Decreto 3.048/1999, ADI 6309, Tema 423 STJ, art. 57 §5º Lei 8.213/91, EC 103/2019 art. 25 §2º, limite 13/11/2019, Tema 422 STJ, Tema 546 STJ, REsp 1.310.034, Súmula 50 TNU, tempus regit actum, lei vigente à prestação do serviço, regime jurídico do tempo especial, conversão antes Lei 9.032/1995, conversão de especial para comum, tempo trabalhado antes de 1998, tempo trabalhado entre 1995 e 1998, períodos especiais fracionados, direito adquirido conversão, Portaria 990/2022, Portaria 1.316/2025. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-ruido, base-aposentadoria-especial-transicao-ec103 e precedentes-previdenciarios."
 ---
 
-## NOTA DA ADI 6309 (inteiro teor conferido na Onda 170, 04/10/2026)
+# Conversão de tempo especial em comum
 
-O STF, na ADI 6309 (Plenário, Rel. Min. Luís Roberto Barroso, Red. p/ acórdão Min. André Mendonça, j. 03/06/2026, acórdão no DJe de 02/10/2026), declarou **constitucional o art. 25, §2º, da EC 103/2019**, por 9 votos a 2, vencidos Edson Fachin e Rosa Weber [CONFERIDO, inteiro teor e portal do STF]. A ementa registra que a regra "confere maior racionalidade e objetividade ao sistema" e que a EC 103 "assegurou a possibilidade de conversão do tempo de trabalho anterior à sua edição" (itens 5 e 6). O marco temporal desta skill fica reforçado, conversão pelo fator 1,4 ou 1,2 somente para tempo especial prestado ATÉ 13/11/2019 (Tema 422/STJ e art. 25, §2º, da EC 103). Não sustentar mais a inconstitucionalidade da vedação. O acórdão não fixa tese nem modula efeitos. Na mesma ação, o STF declarou inconstitucional apenas a idade mínima do art. 19, §1º, I, alíneas a, b e c, por 6 votos a 5, ver base-aposentadoria-especial-transicao-ec103.
+## 1. Regra
 
+O tempo especial prestado até 13/11/2019 converte-se em tempo comum pelos multiplicadores do art. 188-P, § 5º, do Decreto 3.048/99 (incluído pelo Decreto 10.410/2020, que revogou o antigo art. 70):
 
-# Conversão de Tempo Especial em Comum
+| Tempo a converter | Mulher (para 30) | Homem (para 35) |
+|---|---|---|
+| 15 anos | 2,00 | 2,33 |
+| 20 anos | 1,50 | 1,75 |
+| 25 anos | 1,20 | 1,40 |
 
-## Escopo
+Fundamentos:
+- **Lei 8.213/91, art. 57, § 5º.** Prevê a conversão. O Tema 422 do STJ assentou que a regra sobreviveu à MP 1.663 e à Lei 9.711/1998, de modo que a conversão vale também após 28/05/1998.
+- **EC 103/2019, art. 25, § 2º.** Assegura a conversão do tempo "cumprido até a data de entrada em vigor desta Emenda Constitucional, vedada a conversão para o tempo cumprido após esta data". A IN 128/2022 repete o marco (art. 206, §§ 3º e 4º; art. 269, § 2º).
+- **Decreto 3.048/99, art. 188-P, § 6º.** A caracterização e a comprovação do tempo especial obedecem à lei vigente à época da prestação do serviço.
+- **ADI 6309** (Plenário, Red. p/ acórdão Min. André Mendonça, j. 03/06/2026, DJe 02/10/2026). O STF declarou constitucional o art. 25, § 2º, da EC 103/2019, por 9 votos a 2. Não sustentar a inconstitucionalidade da vedação. Na mesma ação, declarou inconstitucional a idade mínima do art. 19, § 1º, I, da EC 103 (ver `base-aposentadoria-especial-transicao-ec103`).
 
-Skill temática pró-segurado. Orienta a conversão de tempo de serviço especial em comum, a partir dos fatores legais 1,4 para homem e 1,2 para mulher, e delimita o marco temporal 13/11/2019 da EC 103/2019, após o qual a conversão foi vedada para períodos posteriores. Também cobre o regime jurídico aplicável, em que a lei vigente ao tempo da prestação do serviço rege o respectivo cômputo (tempus regit actum).
+## 2. Três regimes no tempo
 
-## Marco normativo central
+1. **Caracterização do período.** Lei da época do trabalho: categoria profissional até 28/04/1995 (art. 269, § 1º, da IN 128/2022), sem exigência de permanência nesse período (Súmula 49 da TNU); depois, exposição efetiva ao agente nocivo, com formulário e laudo conforme a época.
+2. **Fator de conversão.** Lei vigente na aposentadoria (Tema 546 do STJ). O Tema 423 do STJ fixou que o fator é proporcional ao tempo exigido para a aposentadoria integral, e por isso o homem aplica 1,4 também a período anterior a 1991.
+3. **Conversão de comum em especial.** Vedada para quem reuniu os requisitos da aposentadoria após a Lei 9.032/1995, pelo Tema 546 do STJ (tese adversa). Na via administrativa, art. 264 da IN 128/2022. Caminho residual: direito adquirido com requisitos reunidos até 28/04/1995.
 
-CF/88, art. 201, §1º. Proteção aos trabalhadores expostos a agentes nocivos.
+## 3. Situações práticas
 
-Lei 8.213/91, art. 57, §5º. Conversão do tempo especial em comum.
+- **Atividade especial sem os 25 anos.** Converter o tempo até 13/11/2019 e somar ao comum, para regra de transição da EC 103 (arts. 15 a 17 e 20), direito adquirido ou aposentadoria por idade, quando o tempo convertido melhorar o coeficiente.
+- **Atividades especiais sucessivas com tempos mínimos diferentes.** Somam-se pela atividade preponderante, a de maior tempo antes da conversão (IN 128/2022, art. 266).
+- **Períodos fracionados.** Cada período especial converte-se pelo seu enquadramento; não se exige continuidade.
+- **Tempo especial posterior a 13/11/2019.** Não converte; serve apenas à aposentadoria especial (art. 21 da EC 103 ou regra permanente).
+- **Magistério.** Não se converte em comum (Decreto 3.048/99 e IN 128/2022); ver `aposentadoria-professor-rgps`.
+- **Pessoa com deficiência.** A conversão do tempo especial na aposentadoria da LC 142/2013 segue regra própria (art. 188-Q do Decreto 3.048/99); ver `base-pcd-conversao-tempo-especial-pcd`.
 
-Decreto 3.048/1999, art. 70. Fatores de conversão, 1,4 para homem e 1,2 para mulher, para conversão de tempo especial de 25 anos em tempo comum.
+## 4. Roteiro
 
-EC 103/2019, art. 25, §2º. Veda a conversão para períodos de atividade trabalhados após 13/11/2019, preservando a conversão do tempo anterior.
+1. Levantar CNIS, CTPS, PPP e LTCAT de todos os vínculos (`auditoria-ppp`).
+2. Enquadrar cada período pela lei da época (agente e código).
+3. Separar o tempo até 13/11/2019 do posterior.
+4. Aplicar o multiplicador da tabela conforme o sexo e o tempo mínimo da atividade.
+5. Simular as regras de transição, o direito adquirido e a aposentadoria especial, e escolher a mais vantajosa.
+6. Requerer administrativamente com todos os documentos (Tema 1124 do STJ; `tema-1124-instrucao-administrativa`).
 
-Lei 9.032/1995. Alterou o sistema de comprovação da atividade especial.
-
-Lei 9.528/1997. Reforçou a exigência de comprovação por PPP e LTCAT.
-
-Decreto 2.172/1997 e Decreto 3.048/1999. Regulamentos sucessivos dos agentes nocivos.
-
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
-
-## Marco jurisprudencial
-
-Tema 546 STJ, REsp 1.310.034. Fixou que a lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço. Precedente vinculante (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-Súmula 50 TNU. É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período. Após a EC 103/2019, o art. 25, §2º, limita a conversão ao tempo cumprido até 13/11/2019 (auditoria 03/10/2026).
-
-Fonte oficial em https://www.jf.jus.br
-
-Tema 546 STJ, tese adversa nesse ponto. A conversão de tempo comum em especial segue a lei vigente na aposentadoria e não alcança quem reuniu os requisitos depois da Lei 9.032/1995, ainda que o período seja anterior. O caminho do segurado é demonstrar direito adquirido, com os requisitos reunidos até 28/04/1995 (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-## Espaço pró-segurado
-
-Primeiro, conversão de tempo especial em comum para todos os períodos trabalhados até 13/11/2019, independentemente da data do requerimento.
-
-Segundo, segurados com atividade especial que não alcançam os 25 anos para aposentadoria especial podem converter o tempo especial em comum e aproveitar para aposentadoria por tempo de contribuição com pedágio, regra de transição ou direito adquirido.
-
-Terceiro, mulheres aplicam fator 1,2 quando convertem especial para comum, enquanto homens aplicam fator 1,4.
-
-Quarto, períodos fragmentados podem ser somados e convertidos, mesmo que o segurado não tenha exclusividade em atividade especial.
-
-Quinto, preservação do direito adquirido até 13/11/2019 para conversão futura.
-
-## Vedação à conversão para períodos pós EC 103/2019
-
-A conversão é vedada para períodos trabalhados após 13/11/2019. O período especial pós-EC, se existir, só é útil na aposentadoria especial pela regra de transição ou permanente, mas não pode ser convertido em tempo comum.
-
-## Regra pró-segurado
-
-Primeiro, levantar CNIS e PPP de todos os períodos.
-
-Segundo, verificar enquadramento especial período a período.
-
-Terceiro, aplicar fator de conversão adequado ao sexo do segurado.
-
-Quarto, computar o resultado em tempo comum.
-
-Quinto, verificar direito adquirido à aposentadoria por tempo de contribuição ou enquadramento em regra de transição.
-
-Sexto, requerimento administrativo antes do ajuizamento (Tema 1124 STJ).
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao auditar PPP, acionar `auditoria-ppp`.
-Ao redigir peça, acionar `peticao-previdenciaria`.
-Para análise de ruído, acionar `base-especial-ruido`.
-Para aposentadoria especial pós-reforma, acionar `base-aposentadoria-especial-transicao-ec103`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, períodos pós 13/11/2019 não admitem conversão. Cuidado para não integrar indevidamente no cálculo.
-
-Segundo, fator depende do sexo. Erros nesse ponto invalidam o cálculo.
-
-Terceiro, comprovação da atividade especial segue o regime vigente à época do trabalho.
-
-Quarto, enquadramento por categoria profissional vige até 28/04/1995.
+Detalhes em `references/FUNDAMENTOS-E-CENARIOS.md`. Precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## Doutrina de apoio
+## MCPs da casa
 
-Frederico Amado, conversão e Tema 422 STJ.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Hugo Goes, cálculo de tempo especial convertido.
 
-Fábio Zambitte Ibrahim, regime especial.
+## Integração com outras skills
 
-Wladimir Novaes Martinez, direito adquirido.
-
-Daniel Pulino, reforma previdenciária e conversão.
-
-Marco Aurélio Serau Junior, regras de transição.
-
-IBDP, defesa da conversão.
-
-## O que NÃO está nesta skill
-
-Auditoria de PPP está em `auditoria-ppp`. Aposentadoria especial pós-reforma está em `base-aposentadoria-especial-transicao-ec103`. Agentes nocivos específicos estão em `base-especial-ruido`, `base-especial-agentes-quimicos`, `base-especial-agentes-biologicos`, `base-especial-vibracao`, `base-especial-eletricidade-periculosidade`.
+PPP em `auditoria-ppp` e `retificacao-ppp`. Agentes em `base-especial-ruido`, `base-especial-agentes-quimicos`, `base-especial-agentes-biologicos`, `base-especial-vibracao` e `base-especial-eletricidade-periculosidade`. Categoria em `base-especial-categoria-profissional-pre1995`. Aposentadoria especial pós-reforma em `base-aposentadoria-especial-transicao-ec103`. Peças em `peticao-previdenciaria` e `tempo-especial-peticoes-por-rito`. Precedentes em `precedentes-previdenciarios`.

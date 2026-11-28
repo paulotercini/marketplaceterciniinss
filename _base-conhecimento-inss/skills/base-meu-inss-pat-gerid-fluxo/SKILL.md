@@ -3,152 +3,115 @@ name: base-meu-inss-pat-gerid-fluxo
 description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-acerto-indicadores, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
-# Sistemas Administrativos do INSS - Fluxo Operacional
+# Sistemas administrativos do INSS: fluxo operacional
 
 ## Escopo
 
-Skill operacional pró-segurado do escritório Paulo Roberto Tercini Filho. Documenta o uso correto e os atalhos dos sistemas administrativos do INSS para acompanhamento de benefícios e protocolos. A auditoria identificou que o escritório acessa diariamente Meu INSS (159 menções), HISCRE (129), PAT/GERID (116), CNIS (79) e Gov.br (62), mas não há padronização única documentada. Esta skill consolida o conhecimento.
+Uso padronizado, pelo escritório, dos sistemas do INSS para protocolo e acompanhamento de requerimentos e benefícios: Meu INSS, PAT/GERID, HISCRE, INFBEN, CNIS e Gov.br.
 
-## Premissa central
-
-Os sistemas do INSS funcionam como camadas diferentes do mesmo dado. Saber qual camada consultar para qual pergunta economiza tempo e evita erros. O Meu INSS é a vitrine do segurado. O PAT é o painel do procurador. O HISCRE é o histórico de créditos do benefício. O INFBEN é o detalhe técnico do benefício concedido. Cada um tem ciclo próprio de atualização e janela de acesso.
+Cada sistema é uma camada do mesmo dado. O Meu INSS é o canal do segurado. O PAT é o canal do advogado credenciado. O HISCRE registra os créditos pagos. O INFBEN detalha o benefício concedido.
 
 ## Sistemas e função
 
 ### Meu INSS (https://meu.inss.gov.br)
 
-Plataforma do segurado, acessada por login Gov.br. Permite ao segurado consultar requerimentos, agendar serviços, anexar documentos a exigências, acompanhar perícias agendadas, baixar carta de concessão, declaração de beneficiário, extrato de pagamento.
+Acesso pelo login Gov.br do segurado. Permite consultar requerimentos, agendar serviços, anexar documentos em exigência, acompanhar perícias e emitir carta de concessão, declaração de beneficiário e extrato de pagamento. O segurado pode cadastrar procurador no próprio Meu INSS.
 
-O escritório acessa via plataforma de procuradores (segurado precisa autorizar como procurador no Meu INSS). Acesso é nominal e logado. Cada protocolo do escritório fica vinculado ao login.
+Uso no escritório: protocolar requerimentos, cumprir exigências, acompanhar perícias, emitir comprovantes e conferir o andamento.
 
-**Como o escritório usa.** Protocolar requerimentos administrativos, anexar documentos a exigências do INSS, acompanhar perícias, baixar comprovantes, conferir status atualizado.
+Limitação: em regra não exibe a fundamentação completa do indeferimento. Para lê-la, baixe a cópia integral do processo administrativo ou consulte o PAT.
 
-**Limitação.** Não exibe motivos detalhados de indeferimento. Para isso, o PAT é melhor.
+### PAT (Portal de Atendimento) e GERID
 
-### PAT (Painel de Acompanhamento Tarifado) e GERID
+O PAT é o portal de atendimento do INSS aberto às entidades conveniadas. O advogado o acessa pelo acordo de cooperação técnica entre o INSS e a seccional da OAB (em SP, OAB/SP). O GERID (Gerenciador de Identidade) é o sistema de credenciamento e senha que dá acesso ao PAT; exige cadastro prévio, autenticação de múltiplo fator e, conforme a seccional, certificado digital A3.
 
-Painel administrativo interno do INSS, acessível pelo procurador devidamente cadastrado com certificado digital A3. Mostra detalhe técnico de cada requerimento, inclusive análise interna do servidor, fundamento de indeferimento, observações do analista, prazos internos.
+Uso no escritório: protocolar requerimentos e recursos como procurador, acompanhar tarefas, ler despachos, exigências e a análise que fundamentou o indeferimento, e conferir se o documento enviado entrou no processo.
 
-**Como o escritório usa.** Para diagnóstico fino do que aconteceu com um requerimento. Quando o Meu INSS só mostra "Indeferido" sem motivo, o PAT mostra a análise interna que permite formular recurso fundamentado.
-
-**Restrição.** Acesso apenas com certificado digital A3 do advogado. Janela de sessão curta. Demanda atualização periódica do certificado.
+Restrição: sessão curta, bloqueio periódico de senha do GERID e renovação do certificado. Bloqueio é causa recorrente de tarefa parada; registre a tentativa com captura de tela.
 
 ### HISCRE (Histórico de Créditos)
 
-Sistema que mostra os créditos pagos pelo INSS em determinado benefício. Permite verificar se houve pagamento, valor, competência, data de crédito.
+Lista os créditos de cada benefício: competência, valor, data e situação do pagamento.
 
-**Como o escritório usa.** Verificar implantação efetiva de benefício concedido (crédito caiu na conta), confirmar valor implantado, verificar pagamento de atrasados, identificar erro de cálculo de RMI.
-
-**Atualização.** Pode demorar até 30 dias entre concessão e aparição no HISCRE. Não é instantâneo.
+Uso no escritório: confirmar a implantação (crédito emitido), o valor implantado e o pagamento de atrasados, e detectar erro de RMI.
 
 ### INFBEN (Informação do Benefício)
 
-Sistema que mostra o detalhe técnico do benefício concedido, inclusive RMI inicial, fórmula de cálculo, espécie, DIB, DCB, DIP, número do benefício (NB).
+Mostra espécie, NB, RMI, DIB, DIP, DCB e situação do benefício.
 
-**Como o escritório usa.** Após concessão, conferir se o RMI está correto. Identificar oportunidade de revisão. Validar reafirmação da DER.
-
-### DataPrev
-
-Subsidiário ao INSS para informações cadastrais e de vínculos de trabalho. Em geral consulta-se via CNIS, que é a interface do segurado para os dados DataPrev.
-
-### Gov.br
-
-Plataforma de identidade unificada. Login nível Prata ou Ouro habilita o segurado a acessar Meu INSS. Senha do Gov.br confunde-se frequentemente com senha de banco. O escritório registra a senha do Gov.br do cliente em checklist da tarefa, em formato curto (8 a 12 caracteres).
-
-**Atenção a recadastramento.** Periodicamente o Gov.br força o usuário a renovar senha ou cadastrar segundo fator. Quando isso ocorre, o login do escritório falha e o cliente precisa recadastrar pessoalmente. É causa frequente de tarefa parada por incapacidade de acesso.
+Uso no escritório: conferir a RMI após a concessão, identificar revisão cabível e verificar se a DER reafirmada foi observada.
 
 ### CNIS (Cadastro Nacional de Informações Sociais)
 
-Histórico de vínculos de emprego, contribuições e remunerações do segurado. Acessível pelo Meu INSS ou diretamente pelo INSS Digital.
+Vínculos, remunerações e contribuições do segurado, mantido pela Dataprev. Consulta pelo Meu INSS ou pelo PAT.
 
-**Como o escritório usa.** Auditoria pré-protocolo. Identificar contribuições faltantes, lacunas, vínculos não computados, divergências entre CTPS e CNIS.
+Uso no escritório: auditoria antes do protocolo (lacunas, vínculos não computados, indicadores, divergência com a CTPS). Ver `base-cnis-acerto-indicadores`.
+
+### Gov.br
+
+Identidade unificada. O Meu INSS exige conta Gov.br; níveis prata e ouro liberam todos os serviços. O Gov.br pode exigir troca de senha ou segundo fator; nesse caso o acesso do escritório falha e o cliente precisa refazer a validação.
 
 ## Atalhos operacionais
 
-### Ordem de consulta padrão
+### Ordem de consulta
 
-1. Cliente diz que protocolou ou que algo está pendente. Primeiro abrir o **Meu INSS** para confirmar status visível pelo segurado.
-2. Se status indicar problema sem detalhe, abrir o **PAT** para diagnóstico fino.
-3. Se for caso de concessão, conferir **HISCRE** (pagamento) e **INFBEN** (cálculo).
-4. Se houver divergência de cálculo ou tempo, voltar ao **CNIS** para conferir base.
+1. Cliente relata protocolo ou pendência: abrir o Meu INSS e conferir o andamento.
+2. Andamento sem detalhe: consultar o PAT ou a cópia integral do processo administrativo.
+3. Concessão: conferir HISCRE (pagamento) e INFBEN (cálculo).
+4. Divergência de tempo ou de cálculo: voltar ao CNIS.
 
-### Senhas em checklist
+### Senhas
 
-Padrão atual do escritório armazena senha do Gov.br do cliente como item do checklist da tarefa, em formato curto. Risco de segurança identificado pela auditoria. Recomendação de longo prazo é migrar para gerenciador de senhas externo (Bitwarden ou 1Password) com integração via lookup. Por ora, manter o padrão e tratar a lista 🔒 Paulo Acessos como sensível.
+O escritório guarda a senha Gov.br do cliente em item do checklist da tarefa, na lista Paulo Acessos. Trate essa lista como sigilosa: nunca a copie para peça, chat, repositório ou mensagem. A migração para gerenciador de senhas é decisão pendente do titular.
 
-### Telegrama (OCAB) e comunicações eletrônicas
+### Comunicações do INSS
 
-INSS comunica decisões por telegrama postal e por mensagem no Meu INSS. O escritório acompanha pelo OCAB (Ofício Comunicado Anexo Benefício) que aparece no histórico do PAT. Sempre verificar comunicações nos dois canais. A skill `base-canais-falabr-corregedoria-cgu` cobre Ouvidoria.
+O INSS comunica decisões por mensagem no Meu INSS e por correspondência postal. Confira os dois canais e o histórico de tarefas no PAT. Reclamação na Ouvidoria: `base-canais-falabr-corregedoria-cgu`.
 
-### Anexar documentos a exigência
+### Anexar documentos em exigência
 
-Pelo Meu INSS o segurado anexa documentos para cumprir exigência. PDF de até 5 MB cada. Múltiplos arquivos podem ser anexados. Gerar PDFs do escritório com nome do cliente e tipo de documento ("CTPS_FulanoTal.pdf"). Após upload, confirmar no PAT que apareceu no protocolo.
+Envie PDF legível, um tipo de documento por arquivo, nomeado pelo tipo e pelo cliente (ex.: CTPS_[NOME].pdf). Após o envio, confira no PAT ou no Meu INSS se o documento entrou no processo e guarde o comprovante.
 
-### Tempo de processamento
+### Prazos de análise e de pagamento
 
-Após DER, INSS tem prazo legal de 30 dias, prorrogáveis por mais 30, para decidir (Lei 9.784/1999, art. 49); 45 dias é o prazo para o PRIMEIRO PAGAMENTO (art. 41-A, §5º, Lei 8.213/91); o acordo homologado no RE 1.171.152/STF (ex-acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021), cancelado em 22/02/2021) fixa 90 dias como parâmetro. Na prática a mediana é 90 a 180 dias. Após 90 dias sem decisão (parâmetro do acordo homologado no acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)), MS por mora cabível. Skill `base-ms-decadencia-omissao-demora`.
+- Lei 9.784/1999, art. 49: concluída a instrução, a Administração decide em até 30 dias, prorrogáveis por igual período mediante motivação expressa.
+- Lei 8.213/1991, art. 41-A, § 5º: o primeiro pagamento ocorre em até 45 dias após a apresentação da documentação necessária.
+- Acordo homologado pelo Plenário do STF no RE 1.171.152/SC (fevereiro de 2021; o processo saiu da sistemática da repercussão geral e o Tema 1066 foi cancelado): prazos de conclusão por espécie, nenhum acima de 90 dias, e prazo para realização da perícia médica. Confira a tabela por espécie no texto do acordo antes de citá-la.
+
+Prazo vencido sem decisão: MS por omissão (`base-ms-decadencia-omissao-demora`) ou acionamento da Central Unificada de Cumprimento Emergencial de Prazos prevista no acordo.
 
 ### Sistema fora do ar
 
-Quando Meu INSS está fora do ar, comum em fim de mês. Tentativas devem ser registradas com print no body da tarefa. Se afetar prazo, é causa de força maior para reabertura.
+Registre cada tentativa com captura de tela no corpo da tarefa. Se a indisponibilidade comprometer prazo, a prova sustenta pedido de relevação da intempestividade (`admissibilidade-barreiras-crps`).
 
-## Hipóteses-armadilha
+## Situações recorrentes
 
-**Cliente "concedido" mas sem pagamento.** Verificar HISCRE. Implantação pode atrasar 30 dias. Se passar disso sem crédito, MS de cumprimento. Skill `base-ms-cumprimento-inss`.
+- Concedido sem pagamento: conferir o HISCRE. Ultrapassados 45 dias da concessão sem crédito, MS de cumprimento (`base-ms-cumprimento-inss`).
+- Indeferimento por exigência não cumprida, com exigência cumprida: juntar o comprovante de envio e recorrer.
+- DIB diversa da DER pedida, em prejuízo do segurado: recorrer pedindo a DIB na DER ou a reafirmação da DER (`reafirmacao-der`).
+- RMI diversa da simulada: conferir o INFBEN. Revisão administrativa ou judicial no prazo decadencial de 10 anos (Lei 8.213/1991, art. 103).
+- Bloqueio ou suspensão por suspeita de irregularidade: obter o motivo no PAT ou no processo administrativo e apresentar defesa no prazo da notificação.
 
-**Indeferimento por exigência não cumprida.** Verificar PAT para identificar qual exigência. Se a exigência foi cumprida no Meu INSS mas o INSS alegou descumprimento, juntar prova do upload e formular recurso.
+## Estratégia
 
-**DIB diferente de DER.** INSS pode arbitrar DIB diferente da DER pedida. Se prejudicial ao cliente, recorrer reclamando reafirmação ou retroação.
+Esgote a via administrativa quando ela for rápida: o requerimento prévio é condição da ação (STF, RE 631.240, Tema 350). Mora ou descumprimento: MS. Divergência de cálculo, tempo especial ou retroativos: ação no JEF (até 60 salários mínimos) ou no rito comum. Erro material na concessão: `base-erro-administrativo-iea-13975`.
 
-**RMI diferente do simulado.** Conferir INFBEN para fórmula aplicada. Se erro identificado, revisão administrativa em 10 anos (decadência) ou ação ordinária.
+## Integração
 
-**Bloqueio por suspeita de fraude.** Cliente notificado de bloqueio. Verificar PAT para motivo. Pode ser causa de defesa administrativa via Ouvidoria + CGU.
+- `base-cnis-acerto-indicadores`: auditoria do CNIS.
+- `base-pericia-medica-federal-telepericia`: perícias agendadas.
+- `base-canais-falabr-corregedoria-cgu`: Ouvidoria e Fala.BR.
+- `base-pfe-inss-anpd-dpu-conade`: procuradoria federal.
+- `base-erro-administrativo-iea-13975`: revisão administrativa.
+- `base-ms-cumprimento-inss`: mora na implantação.
+- `base-aposentadoria-futura-pipeline`: protocolo na data de maturação.
 
-## Estratégia administrativa
+## Endereços
 
-Sempre tentar resolver pelo PAT/Meu INSS antes de judicializar. Após DER, oferecer ao INSS oportunidade de cumprir o que deve. Insistência administrativa é mais barata e rápida quando funciona, e quando falha justifica a judicialização.
-
-Em casos de erro material no INFBEN (RMI calculada errada), o pedido de revisão administrativa pode resolver em até 60 dias. Skill `base-erro-administrativo-iea-13975`.
-
-## Estratégia judicial
-
-Quando o sistema administrativo falha, MS é o remédio rápido para mora ou descumprimento. Ação ordinária para divergência de cálculo, especial não enquadrado, recálculo retroativo. JEF para causas até 60 salários mínimos. Cumprimento de sentença para implantação após decisão judicial.
-
-## Integração com outras skills do escritório
-
-- `base-cnis-acerto-indicadores` para auditoria CNIS pré-protocolo
-- `base-pericia-medica-federal-telepericia` para perícias agendadas no Meu INSS
-- `base-canais-falabr-corregedoria-cgu` para Ouvidoria
-- `base-pfe-inss-anpd-dpu-conade` para procuradoria federal
-- `base-erro-administrativo-iea-13975` para revisão administrativa
-- `base-ms-cumprimento-inss` para mora de implantação
-- `base-aposentadoria-futura-pipeline` para protocolo no momento da maturação
-
-## Métrica de sucesso
-
-- Tempo médio entre DER e diagnóstico no PAT (meta menos de 7 dias após disponibilidade da análise)
-- Tempo médio entre concessão e implantação efetiva no HISCRE (meta menos de 45 dias)
-- Quantidade de tarefas paradas por problema de acesso ao sistema (meta zero)
-
-## Link operacional
-
-- Meu INSS https://meu.inss.gov.br
-- Gov.br https://acesso.gov.br
-- Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
-- PAT (acesso restrito a advogados com certificado A3)
+- Meu INSS: https://meu.inss.gov.br
+- Gov.br: https://acesso.gov.br
+- PAT: acesso pelo GERID, para advogado credenciado no acordo da seccional da OAB.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

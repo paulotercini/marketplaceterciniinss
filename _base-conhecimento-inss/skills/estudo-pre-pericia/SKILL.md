@@ -3,7 +3,7 @@ name: estudo-pre-pericia
 description: Gera o ESTUDO PRÉ-PERÍCIA, documento INTERNO do advogado, em tópicos curtos, para conduzir a reunião com o cliente antes da perícia agendada. Não é a orientação entregue ao cliente (essa é a orientacao-cliente-pericia), é o roteiro lido na frente do cliente na reunião de preparação. Use SEMPRE que mencionar estudo pré-perícia, reunião pré-perícia, preparar reunião de perícia, explicar a perícia ao cliente, ponto decisivo da perícia, cópia integral do processo no Drive, OCR Stirling, linha do tempo do processo por ID. Identifica o ponto que decide a perícia do caso concreto por benefício, incapacidade na equação atividade habitual contra limitação, BPC nos domínios da Portaria Conjunta MDS/INSS 2/2015 com barreiras, aposentadoria PCD nos domínios do IF-BrA da Portaria Interministerial 1/2014 com a LBI, auxílio-acidente no nexo entre sequela e redução da capacidade. Cruza com orientacao-cliente-pericia e as skills do benefício. NÃO use para o entregável ao cliente nem para laudo já produzido.
 ---
 
-# Estudo Pré-Perícia — Roteiro Interno da Reunião com o Cliente
+# Estudo Pré-Perícia. Roteiro Interno da Reunião com o Cliente
 
 ## O que é e o que não é
 
@@ -13,15 +13,15 @@ Não confundir com a `orientacao-cliente-pericia`, que produz o documento ENTREG
 
 ## Princípio que organiza tudo
 
-Cada perícia tem UM ponto que a decide. O estudo existe para que o advogado saiba qual é esse ponto no caso concreto e concentre a reunião nele. Cliente que sai da reunião sabendo explicar o ponto decisivo com as próprias palavras ganha a perícia que o processo permite ganhar. Cliente afogado em dez instruções genéricas esquece todas.
+Cada perícia tem UM ponto que a decide. O estudo existe para que o advogado saiba qual é esse ponto no caso concreto e concentre a reunião nele. Cliente que sai da reunião sabendo explicar o ponto decisivo com as próprias palavras ganha a perícia que o processo permite ganhar. Cliente sobrecarregado com dez instruções genéricas esquece todas.
 
-Honestidade radical. A reunião NUNCA ensaia exagero ou simulação. Ensina o cliente a descrever a realidade da limitação dele em linguagem funcional. Perito desmascara teatro, e teatro desmascarado derruba caso tecnicamente forte.
+Honestidade radical. A reunião NUNCA ensaia exagero ou simulação. Ensina o cliente a descrever a realidade da limitação dele em linguagem funcional. O perito identifica a encenação, e a encenação identificada compromete caso tecnicamente consistente.
 
 ## Etapa zero, OBRIGATÓRIA. Puxar e ler a cópia integral do processo
 
 O estudo NUNCA se redige de memória ou de resumo. A cópia integral do processo fica na pasta do cliente no Google Drive, e a skill SEMPRE a localiza e lê antes de qualquer redação (localizar a pasta por nome ou CPF via search_files, baixar o PDF da cópia integral). Sem a cópia no Drive e sem PDF anexado na conversa, pedir o arquivo e PARAR.
 
-Protocolo de análise do processo, executar na ordem, só avançar após concluir o item anterior.
+Protocolo de análise do processo, executar na ordem, apenas avançar após concluir o item anterior.
 
 1. Pedir o PDF se não estiver anexado nem no Drive. Informar o total de páginas por contagem programática.
 
@@ -31,7 +31,7 @@ Protocolo de análise do processo, executar na ordem, só avançar após conclui
 
 4. Leitura INTEGRAL obrigatória de CNIS, PPP, documentos rurais, laudos e relatórios médicos, laudo pericial judicial, sentença, acórdão, demais decisões e, principalmente, da decisão atacada. Rasura ou dúvida, PARAR e perguntar.
 
-Só depois da etapa zero concluída o fluxo abaixo começa. A linha do tempo e a leitura integral alimentam diretamente as seções 1, 6 e 7 do estudo (o ponto decisivo sai do que o processo REALMENTE contém, os documentos da mão do cliente saem dos IDs reais, e a nota técnica registra o que a leitura revelou de fragilidade).
+Apenas depois da etapa zero concluída o fluxo abaixo começa. A linha do tempo e a leitura integral alimentam diretamente as seções 1, 6 e 7 do estudo (o ponto decisivo sai do que o processo REALMENTE contém, os documentos da mão do cliente saem dos IDs reais, e a nota técnica registra o que a leitura revelou de fragilidade).
 
 ## Fluxo de trabalho
 
@@ -48,8 +48,8 @@ Quinto, quando o usuário pedir, gerar NA SEQUÊNCIA a orientação entregável 
 ## Formato fixo do estudo
 
 ```
-ESTUDO PRÉ-PERÍCIA — [NOME DO CLIENTE]
-[Benefício] — Perícia em [data], [local], [rito]
+ESTUDO PRÉ-PERÍCIA. [NOME DO CLIENTE]
+[Benefício]. Perícia em [data], [local], [rito]
 
 1. O PONTO QUE DECIDE ESTA PERÍCIA
 - [uma a três linhas, a equação do caso]
@@ -80,7 +80,7 @@ ESTUDO PRÉ-PERÍCIA — [NOME DO CLIENTE]
 
 A equação é atividade habitual contra limitação. O perito não avalia doença, avalia se ESTA pessoa consegue exercer ESTA função. A reunião concentra em três coisas. O cliente sabe descrever a própria função em tarefas (quanto tempo em pé, quanto peso, qual movimento repetido). O cliente sabe ligar cada dor ou limitação a uma dessas tarefas. O cliente sabe contar a linha do tempo (quando começou, quando piorou, o que já tentou de tratamento).
 
-Detalhe que muda perícia, condições pessoais. Idade, escolaridade e histórico só de trabalho braçal entram na conversa quando a tese incluir a inviabilidade real de reabilitação (Súmula 47 da TNU).
+Detalhe que muda perícia, condições pessoais. Idade, escolaridade e histórico apenas de trabalho braçal entram na conversa quando a tese incluir a inviabilidade real de reabilitação (Súmula 47 da TNU).
 
 Em B32 ou B92, acrescentar o prognóstico, por que não há perspectiva de voltar a nenhuma função compatível. Em acidentário (B91/B92), o nexo com o trabalho entra no roteiro (CAT, NTEP, história do acidente contada sempre do mesmo jeito).
 
@@ -96,7 +96,7 @@ Nunca esquecer o outro lado do BPC, a avaliação social alcança renda e compos
 
 ### Aposentadoria PCD (LC 142/2013)
 
-O ponto decisivo é que NÃO se trata de incapacidade. O cliente pode estar trabalhando, e isso não prejudica nada. O que se avalia é a DEFICIÊNCIA funcional nos domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014), lida em conjunto com a LBI (Lei 13.146/2015), impedimento em interação com barreiras.
+O ponto decisivo é que NÃO se trata de incapacidade. O cliente pode estar trabalhando, e isso não prejudica nada. O que se avalia é a DEFICIÊNCIA funcional nos domínios do IF-BrA (Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014), lida em conjunto com a LBI (Lei 13.146/2015), impedimento em interação com barreiras.
 
 Erro clássico que a reunião existe para evitar, o cliente minimizar a limitação por orgulho ou por medo de parecer incapaz para o emprego atual. Explicar que a avaliação mede a dificuldade COM E SEM os apoios, e que relatar a rotina real (com as adaptações, os ajutórios da família, o esforço extra que ninguém vê) é o que pontua.
 
@@ -124,7 +124,7 @@ Aposentadoria PCD. `aposentadoria-deficiencia`, `base-aposentadoria-pcd-lc142`, 
 
 Auxílio-acidente. `auxilio-acidente-b94`, `base-auxilio-acidente-b94-pos-reforma`, `base-b94-sequela-minima-sumula88-tnu`, `base-b94-nexo-acidentario-ntep` e o reference AUXILIO-ACIDENTE da `orientacao-cliente-pericia`.
 
-Por patologia, somar a skill temática quando existir (`base-pcd-fibromialgia-lei15176` com o roteiro de individualização da Onda 87, `deficiencia-auditiva-previdenciaria`, TEA nas skills de BPC e PCD).
+Por patologia, somar a skill temática quando existir (`base-pcd-fibromialgia-lei15176` com o roteiro de individualização, `deficiencia-auditiva-previdenciaria`, TEA nas skills de BPC e PCD).
 
 ## Regras invioláveis
 
@@ -140,41 +140,29 @@ Quinta, o estudo é personalizado. Se o texto sobrevive à troca do nome do clie
 
 Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa.
 
-## Nota de grafia (registro de manutenção)
+## Nota de grafia
 
-A portaria do IF-BrA é a Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, conforme o texto oficial publicado no DOU de 30/01/2014 (auditoria 03/10/2026). A grafia "AGU/MPS/MF/MP/PR", que aparecia em parte da base, está errada e foi uniformizada.
+A portaria do IF-BrA é a Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014 (DOU de 30/01/2014).
 
 ## Extensão
 
-Teto de o estudo pré-perícia, 2 páginas, com o ponto que decide a perícia na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto de o estudo pré-perícia, 2 páginas, com o ponto que decide a perícia na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
 `orientacao-cliente-pericia` gera o entregável do cliente na sequência. `triagem-caso` fornece o dossiê quando o caso veio da fila. `auditoria-laudo-pericial` entra DEPOIS da perícia, sobre o laudo produzido, e a nota técnica do estudo (seção 7) alimenta os quesitos dela. `relatorio-medico-assistente` quando a reunião revelar que falta relatório do médico assistente.
 
-## Método Fuzzy, verificação obrigatória (Onda 106)
+## Método Fuzzy, verificação obrigatória
 
 Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
 
-A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
+A omissão é erro técnico frequente e impugnável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 O estudo pré-perícia existe para preparar o cliente no ponto que decide a perícia. Despachar o médico da área com os documentos, porque ele identifica o achado que o perito vai procurar e o que o cliente precisa saber demonstrar.
 
@@ -193,6 +181,6 @@ Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das �
 
 O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo acolhe o laudo pericial por fórmula fixa e confere a qualidade de segurado e a carência na DII que o perito fixar, e não na DER. O estudo pré-perícia leva à perícia exames e relatórios datados que permitam ao perito fixar a DII ou a data do agravamento, e prepara quesito sobre a assistência permanente de terceiro quando houver pedido dos 25%. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`, seção de benefício por incapacidade.

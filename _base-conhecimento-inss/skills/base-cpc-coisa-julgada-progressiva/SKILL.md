@@ -1,133 +1,54 @@
 ---
 name: base-cpc-coisa-julgada-progressiva
-description: "Coisa julgada progressiva no Direito Previdenciário, IRDR 18 TRF4, Tema 28 STF, estabilização parcial, capítulos autônomos da sentença, trânsito em julgado por capítulos e execução imediata da parte incontroversa. Use SEMPRE que mencionar coisa julgada progressiva, IRDR 18 TRF4, Tema 28 STF, capítulos da sentença, trânsito parcial, execução provisória, execução definitiva parcial, art. 1.013 CPC, art. 502 CPC, art. 523 CPC, art. 356 CPC julgamento antecipado parcial, recurso parcial do INSS, execução do incontroverso, implantação imediata de parte, cumprimento parcial de sentença, apelação parcial INSS previdenciária. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, execucao-cumprimento-previdenciario, base-cumprimento-sentenca-rpv-precatorio e base-cpc-fato-superveniente-art493."
+description: "Coisa julgada progressiva no Direito Previdenciário, Tema 28 STF, IRDR 18 TRF4, estabilização parcial, capítulos autônomos da sentença, trânsito em julgado por capítulos e execução imediata da parte incontroversa. Use SEMPRE que mencionar coisa julgada progressiva, IRDR 18 TRF4, Tema 28 STF, capítulos da sentença, trânsito parcial, execução provisória, execução definitiva parcial, art. 1.013 CPC, art. 502 CPC, art. 535 §4º CPC, art. 356 CPC julgamento antecipado parcial, recurso parcial do INSS, execução do incontroverso, implantação imediata de parte, cumprimento parcial de sentença, apelação parcial INSS previdenciária. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, execucao-cumprimento-previdenciario, base-cumprimento-sentenca-rpv-precatorio e base-cpc-fato-superveniente-art493."
 ---
 
 # Coisa Julgada Progressiva no Previdenciário
 
 ## Escopo
 
-Skill pró-segurado sobre coisa julgada progressiva, IRDR 18/TRF4, Tema 28/STF, capítulos autônomos da sentença, trânsito em julgado parcial e execução imediata do incontroverso.
+Trânsito em julgado por capítulos e execução imediata da parte incontroversa. Conceito de capítulo em `base-cpc-teoria-capitulos-sentenca`. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Marco normativo
 
-CPC, art. 502. Conceito de coisa julgada.
+CPC, art. 502. Coisa julgada material.
 
-CPC, art. 356. Julgamento antecipado parcial.
+CPC, art. 356. Julgamento antecipado parcial do pedido incontroverso ou maduro. A parte executa desde logo, sem caução, ainda que haja recurso (§2º); transitada a decisão parcial, a execução é definitiva (§3º). Impugnável por agravo de instrumento (§5º).
 
-CPC, art. 1.013 §§. Capítulos.
+CPC, arts. 1.002 e 1.013, caput. O recurso parcial devolve apenas a matéria impugnada; o capítulo não impugnado transita em julgado.
 
-CPC, art. 523. Cumprimento.
+CPC, art. 535, §4º. Na impugnação parcial do INSS ao cumprimento, a parte não questionada é cumprida desde logo.
 
-Lei 8.213/91, art. 102 §2º.
+CF/88, art. 100, §8º. Veda o fracionamento do valor da execução para enquadramento como RPV.
 
-## Marco jurisprudencial
+## Regra operacional
 
-### IRDR 18 TRF4
+Primeiro, obrigação de fazer (implantação do benefício). Concedida ou confirmada a tutela na sentença, a implantação é imediata (art. 1.012, §1º, V). Sem tutela, o capítulo da concessão transitado em julgado permite a implantação enquanto o recurso do INSS discute apenas DIB, juros ou correção.
 
-Coisa julgada progressiva em capítulos incontroversos.
+Segundo, obrigação de pagar. A parte incontroversa e autônoma transitada em julgado comporta RPV ou precatório, observada a importância total executada para o enquadramento como pequeno valor (Tema 28 STF; art. 100, §8º, da CF).
 
-Fonte oficial em https://www.trf4.jus.br
-
-### Tema 28 STF
-
-Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Súmula 729 STF
-
-Tutela contra Fazenda: a decisão na ADC 4 não se aplica à causa previdenciária (auditoria 03/10/2026).
-
-### Tema 1030 STJ
-
-Renúncia no JEF.
-
-## Conceito operacional
-
-Coisa julgada progressiva é a formação de coisa julgada em capítulos independentes da sentença, à medida que se torna incontroversa cada parte. Art. 356 CPC autoriza julgamento antecipado parcial. Art. 1.013 §§ admite capítulos autônomos em apelação.
+Terceiro, contra a Fazenda não há execução provisória da obrigação de pagar (art. 100, §§3º e 5º, da CF exigem trânsito em julgado). O que se executa é o capítulo já transitado.
 
 ## Aplicações pró-segurado
 
-Primeiro, se o INSS recorre apenas quanto ao tempo especial e concorda com tempo comum, há coisa julgada sobre o tempo comum. Execução imediata.
+Primeiro, o INSS recorre apenas do tempo especial. O capítulo do tempo comum transita e pode ser averbado.
 
-Segundo, se o INSS recorre quanto ao termo inicial mas não à concessão, o benefício é concedido com trânsito parcial.
+Segundo, o INSS recorre apenas do termo inicial ou dos juros. O capítulo da concessão transita e o benefício é implantado.
 
-Terceiro, RMI indiscutida. Execução imediata da RMI enquanto discute-se reajuste.
-
-Quarto, julgamento antecipado parcial (art. 356 CPC) permite implantação sem aguardar perícia.
-
-## Cenários pró-segurado
-
-Cenário A, INSS recorre só quanto ao auxílio-acidente, concordando com aposentadoria. Implantação imediata da aposentadoria.
-
-Cenário B, INSS recorre do tempo especial e aceita tempo comum. Execução do tempo comum.
-
-Cenário C, sentença concede benefício e juros. INSS recorre só dos juros. Implantação imediata do benefício.
-
-Cenário D [retirado em 13/10/2026]. A RVT não gera parte incontroversa, porque a tese vigente do Tema 1102/STF é adversa ao segurado.
-
-Cenário E, cumprimento de sentença com RPV da parte transitada enquanto pende apelação parcial.
-
-## Efeitos práticos
-
-Primeiro, implantação do benefício sem aguardar apelação integral.
-
-Segundo, RPV ou precatório parcial da parte incontroversa.
-
-Terceiro, honorários sobre a parte transitada, com reserva.
-
-Quarto, incidência da Tema 1070/STJ em revisão por concomitantes.
+Terceiro, o INSS impugna parte do cálculo. Expedição imediata do valor incontroverso (art. 535, §4º).
 
 ## Alertas
 
-Primeiro, necessário demonstrar que o capítulo é autônomo e que o recurso não o alcança.
+Primeiro, demonstrar que o capítulo é autônomo e que o recurso não o alcança. Fundamento não é capítulo.
 
-Segundo, INSS pode tentar argumentar que a apelação devolve integralmente. Refutar com art. 1.013 §1º CPC e IRDR 18.
+Segundo, a revisão da vida toda não gera parte incontroversa. A tese vigente do Tema 1102 STF é adversa ao segurado.
 
-Terceiro, cumprimento provisório contra Fazenda é restrito, mas a parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28/STF) [CONFERIDO] (auditoria 03/10/2026).
-
-Quarto, em JEF a dialeticidade é mais rigorosa. Súmula 284/STF.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Fredie Didier Jr, Leonardo Carneiro da Cunha.
-
-Cássio Scarpinella Bueno, Manual CPC.
-
-Teresa Arruda Alvim, Maria Lúcia Baptista.
-
-Marco Aurélio Serau Junior, Processo Previdenciário.
-
-José Antonio Savaris, Processual Previdenciário.
+Terceiro, o IRDR 18 do TRF4 (Corte Especial, 24/10/2019) admite o cumprimento definitivo imediato da parcela transitada; vincula a 4ª Região e é persuasivo no TRF3. Dados e tese em `execucao-cumprimento-previdenciario`, seção 1.2; conferir no portal do TRF4 antes de citar.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para cumprimento, acionar `execucao-cumprimento-previdenciario`.
-Para RPV e precatório, acionar `base-cumprimento-sentenca-rpv-precatorio`.
-Para redação, acionar `peticao-previdenciaria`.
-Para fato superveniente, acionar `base-cpc-fato-superveniente-art493`.
-
-## O que NÃO está nesta skill
-
-Execução contra INSS em `execucao-cumprimento-previdenciario`. RPV e precatório em `base-cumprimento-sentenca-rpv-precatorio`. Dialeticidade em `execucao-cumprimento-previdenciario`.
+Cumprimento da parte incontroversa (detalhe operacional) em `execucao-cumprimento-previdenciario`, seção 1. Requisição em `base-cumprimento-sentenca-rpv-precatorio`. Capítulos em `base-cpc-teoria-capitulos-sentenca`. Tutela em `base-cpc-tutela-provisoria-previdenciaria`. Fato superveniente em `base-cpc-fato-superveniente-art493`. Coisa julgada material e repropositura em `coisa-julgada-previdenciaria`.

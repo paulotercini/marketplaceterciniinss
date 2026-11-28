@@ -1,4 +1,4 @@
-# Decisões Monocráticas no CRPS – Art. 110 e Dispositivos Correlatos
+# Decisões Monocráticas no CRPS. Art. 110 e Dispositivos Correlatos
 
 ## Conceito e Estrutura
 
@@ -6,35 +6,35 @@ A decisão monocrática no CRPS é proferida por um conselheiro, de qualquer rep
 
 ## Hipóteses Taxativas do Art. 110
 
-### I – Renúncia tácita por ação judicial
+### I. Renúncia tácita por ação judicial
 
 Identificação de ação judicial com objeto idêntico ao recurso administrativo (art. 86). Resultado será de não conhecimento. O advogado pode impugnar demonstrando ausência de tríplice identidade ou enquadramento nas exceções do art. 86, §§5º e 7º.
 
-### II – Matéria exclusivamente médica com PMF corroborando o INSS
+### II. Matéria exclusivamente médica com PMF corroborando o INSS
 
 O recurso versa exclusivamente sobre matéria médica e a manifestação médico-pericial em sede recursal corrobora a decisão do INSS que indeferiu ou cessou o benefício. Resultado será de não provimento. O advogado deve verificar se o parecer da PMF atende aos requisitos de qualidade do art. 89, §5º. Parecer deficiente pode ser desconsiderado.
 
-### III – FAP, COMPREV e RPPS
+### III. FAP, COMPREV e RPPS
 
 Recursos de competência das alíneas "b", "d" e "e" do art. 1º, I, com distribuição equânime por representação. As contestações e recursos do FAP são sempre monocráticos (arts. 129 e 134), com homologação da Presidência da JR específica.
 
-### IV – Recurso especial sobre matéria de alçada exclusiva
+### IV. Recurso especial sobre matéria de alçada exclusiva
 
 Quando o recurso especial versa sobre matéria que é de alçada exclusiva das JRs (art. 89, §3º). Resultado será de não conhecimento. O advogado deve verificar se a matéria é realmente de alçada exclusiva, pois matéria mista (médica + jurídica) NÃO configura alçada exclusiva.
 
-### V – Reconhecimento do direito pelo INSS
+### V. Reconhecimento do direito pelo INSS
 
 Extinção do processo com resolução do mérito por reconhecimento do direito pelo INSS. Decisão favorável ao segurado. Verificar se a reforma foi integral ou parcial. Em caso de reforma parcial, o processo segue quanto à controvérsia remanescente (art. 82, parágrafo único).
 
-### VI – Incidentes processuais de inadmissão, rejeição ou não provimento
+### VI. Incidentes processuais de inadmissão, rejeição ou não provimento
 
 Embargos não conhecidos ou não providos, revisões rejeitadas, e demais incidentes inadmitidos. Decisão desfavorável. Cabem os mesmos recursos das colegiadas (art. 110, §2º).
 
-### VII – Não conhecimento do recurso
+### VII. Não conhecimento do recurso
 
 Processos extintos sem resolução de mérito por qualquer das causas do art. 112 (intempestividade, ilegitimidade, renúncia tácita, desistência, perda de objeto, preclusão). Submetido a homologação. O advogado deve verificar se a causa foi corretamente aplicada e se cabe relevação de intempestividade (art. 112, §§1º e 2º).
 
-### VIII – Cláusula de abertura
+### VIII. Cláusula de abertura
 
 Outros casos conforme ato da Presidência do CRPS. Permite ampliação das hipóteses por via administrativa, sem alteração do Regimento.
 

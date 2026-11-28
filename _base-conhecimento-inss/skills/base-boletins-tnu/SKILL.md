@@ -1,76 +1,52 @@
 ---
 name: base-boletins-tnu
-description: Acervo dos Boletins oficiais da TNU como fonte confiável de teses, com índice de 241 temas e 104 boletins (sessões de 18/02/2016 a 24/06/2026). Use SEMPRE que mencionar boletim da TNU, tese da TNU, tema TNU, PUIL, PEDILEF, representativo de controvérsia, questão de ordem da TNU, súmula da TNU, tese alterada em embargos, revisão de tese, sobrestamento de tema, e SEMPRE que a peça for para Turma Recursal ou TNU. Localiza em que boletim está cada tema, com data de sessão e processo, para leitura do inteiro teor na fonte. Traz a trava de homônimo de corte (Tema alto costuma ser do STF, não da TNU) e o alerta de tese alterada quando o mesmo tema aparece em mais de um boletim. Cruza com base-precedentes-catalogo-vinculantes, pesquisa-jurisprudencia-chrome, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu e base-recursos-jef.
+description: "Acervo dos Boletins oficiais da TNU como fonte de teses, com índice de 241 temas e 104 boletins (sessões de 18/02/2016 a 24/06/2026). Use SEMPRE que mencionar boletim da TNU, tese da TNU, tema TNU, PUIL, PEDILEF, representativo de controvérsia, questão de ordem da TNU, súmula da TNU, tese alterada em embargos, revisão de tese, sobrestamento de tema, e SEMPRE que a peça for para Turma Recursal ou TNU. Localiza em que boletim está cada tema, com data de sessão e processo, para leitura do inteiro teor na fonte. Traz a trava de homônimo de corte (tema de número alto costuma ser do STF) e o alerta de tese alterada quando o mesmo tema aparece em mais de um boletim. Cruza com base-precedentes-catalogo-vinculantes, pesquisa-jurisprudencia-chrome, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu e base-recursos-jef."
 ---
 
-# Boletins da TNU — Fonte Confiável Organizada
+# Boletins da TNU
 
-## O que é este acervo
+## O acervo
 
-Publicação oficial da Turma Nacional de Uniformização, veiculada pelo Conselho da Justiça Federal, que traz o inteiro teor de decisões de cada sessão. É fonte confiável de primeira linha para tese de TNU, e por isso vale como base de citação em peça, observada a regra de transcrição literal.
+O Boletim da TNU é publicação oficial do Conselho da Justiça Federal com as decisões de cada sessão. Serve de fonte de tese da TNU, com transcrição literal.
 
-Acervo do escritório na pasta `Boletins TNU`, 104 boletins processados, sessões de 18/02/2016 a 24/06/2026, com 241 temas indexados. A extração foi feita na Onda 105 (11/08/2026) pelo script `references/extrai_boletins_tnu.py`, que pode ser reexecutado a cada boletim novo.
+O escritório guarda 104 boletins na pasta `Boletins TNU`, sessões de 18/02/2016 a 24/06/2026, com 241 temas indexados pelo script `references/extrai_boletins_tnu.py` (extração de 11/08/2026), que se reexecuta a cada boletim novo. O MCP `iurisprudencia` (ferramentas `*_tnu`) complementa o acervo com os acórdãos da TNU.
 
-## Por que isso importa nas Turmas Recursais
+## Por que importa
 
-A tese da TNU é o que a Turma Recursal aplica. Em JEF, não cabe recurso especial (Súmula 203/STJ), e a via ao STJ é o PUIL do art. 14, § 4º, da Lei 10.259/2001. Na prática, a tese de TNU decide o caso do segurado, e o boletim é onde ela nasce com redação e data.
+No JEF não cabe recurso especial (Súmula 203 STJ), e a via ao STJ é o pedido de uniformização do art. 14, §4º, da Lei 10.259/2001. A tese da TNU orienta as Turmas Recursais, e o boletim registra sua redação e data.
 
-## Como usar, em três passos
+## Uso em três passos
 
-Primeiro, localizar. Abrir `references/INDICE-TEMAS-TNU.md`, achar o tema e ver o boletim e a data da sessão.
+1. Localizar o tema em `references/INDICE-TEMAS-TNU.md` (boletim e data da sessão) ou o boletim em `references/INDICE-BOLETINS.md`.
+2. Abrir o PDF e ler o inteiro teor, não apenas a tese.
+3. Transcrever na peça com número do tema, processo, data da sessão e boletim, marcando [CONFERIDO] com a data, na forma de `pesquisa-jurisprudencia-chrome`.
 
-Segundo, ler na fonte. Abrir o PDF do boletim na pasta e ler o inteiro teor da decisão, não só a tese.
+## Cautelas da extração
 
-Terceiro, transcrever literalmente na peça, com o número do tema, o processo, a data da sessão e o boletim de origem, marcando [CONFERIDO] com a data da conferência conforme a `pesquisa-jurisprudencia-chrome`.
+Homônimo de corte. Tema de número acima de 400 citado em boletim costuma ser de outra corte. Exemplo, o Boletim 105 registra o sobrestamento do Tema 387 TNU pela afetação do Tema 1.467 STF. Esses números foram excluídos do índice.
 
-## Índices disponíveis
+Tese alterada. Tema presente em mais de um boletim indica alteração, revisão, sobrestamento ou cancelamento. Exemplo, o Tema 223 teve tese fixada em 20/11/2020 e alterada em embargos em 25/02/2021 (Boletim 52). Ler sempre o boletim mais recente do tema.
 
-`references/INDICE-TEMAS-TNU.md`, ordenado por número do tema, com todos os boletins em que ele aparece, a primeira data de sessão e o processo.
+Formatos. Até cerca do Boletim 20, a tese vem junto ao processo ("REPRESENTATIVO DE CONTROVÉRSIA (TEMA 150)"). Nos posteriores, o índice lista "TEMA N. ... PUIL n. ..." e a tese vem após a fórmula "a TNU fixou a seguinte tese".
 
-`references/INDICE-BOLETINS.md`, ordenado por boletim, com data da sessão, temas tratados e o nome do arquivo.
+Pareamento. A associação automática entre tema e tese falha em boletim com vários temas. O índice não atribui tese a tema nesses casos; abrir o boletim.
 
-## Achados da extração (anotações de rigor)
+Cobertura. Houve uma falha de extração em 105 arquivos e um boletim sem data legível; ambos não constam de `INDICE-BOLETINS.md`.
 
-Primeiro, TRAVA DE HOMÔNIMO DE CORTE. A varredura capturou um "Tema 1467" que NÃO é da TNU, é do STF. O Boletim 105 registra o SOBRESTAMENTO do Tema 387/TNU em razão da afetação do Tema 1467/STF. Números altos (acima de 400) foram excluídos do índice justamente porque a TNU não tem temas nessa faixa, e a menção costuma ser a tema de outra corte citado dentro do boletim. Esse é o mesmo risco já documentado na base para os Temas 18, 1207 e correlatos.
+## Regra de citação
 
-Segundo, ALERTA DE TESE ALTERADA. Tema que aparece em MAIS DE UM boletim é sinal de alteração, revisão, sobrestamento ou cancelamento. O caso exemplar é o Tema 223, cuja tese foi FIXADA em sessão de 20/11/2020 e ALTERADA em embargos na sessão de 25/02/2021 (Boletim 52), que registra as duas redações. Citar a redação antiga de tese alterada é erro fatal em peça. Sempre ler o boletim MAIS RECENTE em que o tema aparece.
+Formato. "Tema N TNU, fixado na sessão de DD/MM/AAAA (PUIL n. XXXXX), com a seguinte tese, [transcrição literal]". O boletim de origem vai em nota quando útil ao cotejo.
 
-Terceiro, DOIS FORMATOS DE BOLETIM. Os boletins antigos (até cerca do 20) trazem a tese inline junto ao processo, no padrão "REPRESENTATIVO DE CONTROVÉRSIA (TEMA 150) – <tese>". Os mais novos separam, listando "TEMA N. 212 – PUIL n. ..." no índice e a tese adiante, após a fórmula "a TNU fixou a seguinte tese". Isso importa quando se busca a tese dentro do PDF.
-
-Quarto, PAREAMENTO AUTOMÁTICO NÃO É CONFIÁVEL. Quando o boletim traz vários temas e várias teses, a associação tema-tese por ordem no texto é heurística e falha. Por isso o índice NÃO afirma qual tese pertence a qual tema quando há mais de um, e manda abrir o boletim. Nenhuma tese deste acervo entra em peça sem leitura do inteiro teor.
-
-Quinto, sessões cobertas. Uma única falha de extração em 105 arquivos, e um boletim sem data legível na primeira página. Ambos identificáveis pela ausência no `INDICE-BOLETINS.md`.
-
-## Regra de citação em peça
-
-Formato recomendado. "Tema N/TNU, fixado na sessão de DD/MM/AAAA (PUIL n. XXXXX), cuja tese é a seguinte, [transcrição literal]". Acrescentar o boletim de origem em nota quando útil ao cotejo.
-
-Nunca citar tese de TNU de memória, de resumo de portal jurídico ou de post de rede social. O boletim está na pasta e a leitura leva um minuto.
-
-Quando a tese constar do `base-precedentes-catalogo-vinculantes` com redação verificada, ela prevalece como fonte de transcrição, e o boletim serve de confirmação e de contexto (voto, fundamentos, caso concreto).
+Nunca citar tese da TNU de memória, de portal jurídico ou de rede social. Quando a tese constar do `base-precedentes-catalogo-vinculantes` com redação verificada, ela prevalece, e o boletim serve de confirmação e contexto.
 
 ## Manutenção
 
-A cada boletim novo, salvar o PDF na pasta `Boletins TNU` e reexecutar `references/extrai_boletins_tnu.py`, regenerando os dois índices. O script usa `pdftotext`, que se mostrou mais robusto que a leitura por biblioteca Python nos boletins antigos (16 arquivos falhavam na leitura por pypdf e abriram normalmente pelo pdftotext).
-
-Tema novo com tese relevante para o escritório deve ser promovido ao `base-precedentes-catalogo-vinculantes` com redação literal, conforme a disciplina de alimentação do catálogo.
+Salvar cada boletim novo na pasta e reexecutar o script, que regenera os dois índices. O script usa `pdftotext`, mais robusto que o pypdf nos boletins antigos. Tese relevante para o escritório deve ser promovida ao `base-precedentes-catalogo-vinculantes` com redação literal.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-`base-precedentes-catalogo-vinculantes` é o destino das teses promovidas. `pesquisa-jurisprudencia-chrome` dá o protocolo de conferência e a base oficial do CJF para julgados recentes. `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu` cuidam da admissibilidade e do cotejo quando o caso for de PUIL. `base-recursos-jef` e `base-tru-trf3-sumulas-jurisprudencia` completam o quadro do microssistema dos Juizados. O agente `verificador-precedentes` pode usar este acervo como fonte local antes de sair para a rede.
+`base-precedentes-catalogo-vinculantes` recebe as teses promovidas. `pesquisa-jurisprudencia-chrome` dá o protocolo de conferência. `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu` tratam da admissibilidade e do cotejo. `base-recursos-jef` e `base-tru-trf3-sumulas-jurisprudencia` completam o microssistema dos Juizados. O agente `verificador-precedentes` pode usar este acervo como fonte local.

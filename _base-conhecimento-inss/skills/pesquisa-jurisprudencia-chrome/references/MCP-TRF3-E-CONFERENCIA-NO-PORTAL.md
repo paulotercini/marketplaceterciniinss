@@ -1,6 +1,6 @@
 # MCP trf3 e a Conferência Obrigatória no Portal
 
-Onda 144 (19/09/2026). Fluxo TESTADO de ponta a ponta nesta data, com busca real no MCP, obtenção de inteiro teor e conferência do mesmo acórdão no portal do TRF3. O que segue é o que funcionou, e não o que se supõe que funcione.
+Registro de 19/09/2026. Fluxo TESTADO de ponta a ponta nesta data, com busca real no MCP, obtenção de inteiro teor e conferência do mesmo acórdão no portal do TRF3. O que segue é o que funcionou, e não o que se supõe que funcione.
 
 ## O que o MCP é, e o que ele não é
 

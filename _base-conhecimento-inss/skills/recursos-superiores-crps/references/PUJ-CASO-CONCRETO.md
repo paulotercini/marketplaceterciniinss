@@ -1,4 +1,4 @@
-# Pedido de Uniformização de Jurisprudência em Caso Concreto – Arts. 121 e 122
+# Pedido de Uniformização de Jurisprudência em Caso Concreto. Arts. 121 e 122
 
 ## Hipóteses de Cabimento (Art. 121)
 
@@ -78,7 +78,7 @@ O pronunciamento do CP pode ser adiado, uma única vez, para a sessão seguinte,
 
 **Distinção entre direito e fato.** O PUJ não serve para rediscutir fatos e provas (art. 122, §4º, VI). A divergência deve ser sobre a interpretação da norma aplicável, não sobre a valoração das provas. Se o caso envolve, por exemplo, o enquadramento de atividade especial por categoria profissional, e uma CAJ reconhece e outra não, trata-se de divergência de direito. Se uma CAJ reconhece porque os PPPs são suficientes e outra não porque os PPPs são deficientes, trata-se de valoração de provas e o PUJ não cabe.
 
-**Instância correta da divergência.** A divergência deve ocorrer entre órgãos da mesma hierarquia. Divergência entre JR e CAJ NÃO fundamenta PUJ (art. 122, §4º, V). Divergência entre JRs só fundamenta PUJ em matéria de alçada exclusiva (art. 121, II).
+**Instância correta da divergência.** A divergência deve ocorrer entre órgãos da mesma hierarquia. Divergência entre JR e CAJ NÃO fundamenta PUJ (art. 122, §4º, V). Divergência entre JRs apenas fundamenta PUJ em matéria de alçada exclusiva (art. 121, II).
 
 **Via alternativa quando o PUJ não cabe.** Se a decisão viola enunciado, parecer vinculante ou súmula, a via adequada é a Reclamação ao Conselho Pleno (art. 123), não o PUJ. Se houver dúvida, optar pela Reclamação quando o fundamento for violação de norma vinculante, e pelo PUJ quando o fundamento for divergência entre acórdãos.
 

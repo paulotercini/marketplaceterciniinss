@@ -11,23 +11,7 @@ Esta é a versão aprimorada da skill `revisao-peticao` do escritório Paulo Rob
 
 A execução é AUTOMÁTICA e OBRIGATÓRIA após qualquer geração de peça pelas skills `peticao-previdenciaria` e `base-peticao-previdenciaria-padrao-visual`. Não depende de comando do usuário.
 
-Evolução desta versão em relação à anterior do escritório.
-
-1. **Integração com base-legislacao-fontes-primarias** (Onda 31) - protocolo de 5 níveis de verificação com cruzamento literal contra os arquivos verificados de Constituição, leis, decretos, IN 128/2022 e portarias.
-
-2. **Integração com base-tnu-admissibilidade-manual** (Onda 30) - protocolos vinculantes para PUIL/PEDILEF do Manual TNU 10ª edição (24/02/2026).
-
-3. **Taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022** (Onda 32) - elimina o erro "Portaria 992 cálculo RMI" persistido entre as Ondas 23 e 30.
-
-4. **Quinta camada de auditoria** - Integridade Probatória, antes ausente.
-
-5. **Quarto nível de severidade** - BLOQUEANTE, acima de CRÍTICO.
-
-6. **Catálogo expandido para 22 anti-patterns** com exemplos pró e contra.
-
-7. **Checklists adicionais por rito** - inclui TNU, recurso administrativo CRPS e cumprimento de sentença.
-
-8. **Rotina de verificação temporal Brasil** (Onda 45) - Cruzamento automático com fuso `America/Sao_Paulo` e idioma `pt-BR` antes de protocolo. Aciona comando de sistema `TZ='America/Sao_Paulo' date` em 3 cenários críticos. (i) prazo recursal (CPC, JEF, CRPS, TNU). (ii) decadência art. 103 Lei 8.213/91 e prescrição quinquenal. (iii) cessação iminente de benefício temporário (B31, BPC, B25). Detalhamento em `references/VERIFICACAO-TEMPORAL-BRASIL.md`.
+**Verificação temporal Brasil** (Onda 45). Antes do protocolo, o comando `TZ='America/Sao_Paulo' date` fixa a data de referência em 3 cenários. (i) prazo recursal (CPC, JEF, CRPS, TNU). (ii) decadência art. 103 Lei 8.213/91 e prescrição quinquenal. (iii) cessação iminente de benefício temporário (B31, BPC, B25). Detalhamento em `references/VERIFICACAO-TEMPORAL-BRASIL.md`.
 
 ## MOMENTO DE ATIVAÇÃO
 
@@ -44,15 +28,15 @@ Passo 5. Se houver achados BLOQUEANTES ou CRÍTICOS, perguntar se deseja correç
 A revisão segue esta sequência, sem pular etapa e sem inverter a ordem. Cada etapa recebe o resultado da anterior. Etapa cujo agente não esteja disponível na sessão roda inline, com as mesmas regras. As seções seguintes detalham cada etapa e não alteram esta ordem.
 
 Etapa 1. Regra Zero, cascata de verificação de toda citação (Níveis 1 a 5). Lote de três ou mais citações não confirmadas vai ao `verificador-precedentes`.
-Etapa 2. `analista-cnis`, só em peça cuja causa de pedir dependa de tempo, carência, qualidade de segurado ou salário-de-benefício. Fixa os números antes de qualquer tese.
+Etapa 2. `analista-cnis`, apenas em peça cuja causa de pedir dependa de tempo, carência, qualidade de segurado ou salário-de-benefício. Fixa os números antes de qualquer tese.
 Etapa 3. Camadas 1 a 5 desta skill, formal, normativa, fática, argumentativa e integridade probatória, e a cadeia de cada pedido (Camada 5-A).
 Etapa 4. Juristas Conferentes, de um a três pelo tema, mais o transversal quando cabível, disparados em paralelo.
 Etapa 5. Processualistas Conferentes, de um a três pela fase, disparados na mesma mensagem da Etapa 4. Na mesma mensagem segue o `conferente-tema-1124` em toda peça que fixe ou discuta o termo inicial dos efeitos financeiros (Onda 178).
 Etapa 6. `red-team-peticao`, a contestação do INSS.
 Etapa 7. `julgador-opositor`, o julgador que procura razão para não acolher, recebendo o relatório da Etapa 6.
 Etapa 7-A. `juiz-catanduva`, na mesma mensagem da Etapa 7, em toda peça dirigida à Subseção de Catanduva (Onda 179). Simula a sentença com os critérios e as fórmulas reais do juízo e aponta os trechos fora da linguagem da unidade.
-Etapa 8. Decisor administrativo simulado, só em peça dirigida ao INSS ou ao CRPS.
-Etapa 9. `black-team`, só em peça de ALTO RISCO ou por pedido expresso, recebendo todos os relatórios anteriores.
+Etapa 8. Decisor administrativo simulado, apenas em peça dirigida ao INSS ou ao CRPS.
+Etapa 9. `black-team`, apenas em peça de ALTO RISCO ou por pedido expresso, recebendo todos os relatórios anteriores.
 Etapa 10. Camada 6, aferição de extensão e passada de enxugamento sem meta, depois de recebidos todos os pareceres, porque o pipeline é aditivo e o enxugamento vem por último.
 Etapa 11. Relatório consolidado de duas páginas, com recepção dos achados pela disciplina da Onda 99 e fluxo pós-revisão.
 
@@ -118,18 +102,6 @@ Nunca aceitar o precedente citado por presunção quando houver dúvida. Sempre 
 
 Detalhamento operacional em `references/PROTOCOLO-VERIFICACAO-DINAMICA.md`, seção "Regra Comet para Julgados com Dúvida".
 
-### Exemplo Prático de Eliminação de Achados Passivos
-
-ANTES desta atualização, a skill emitia.
-
-```
-[IMPORTANTE] Verificação literal dos parágrafos não realizada em fonte primária.
-Os §§ 2º, 9º, 10 e 11 do art. 92 vieram da base verificada do escritório, sem
-abertura do inteiro teor oficial do RICRPS nesta sessão.
-```
-
-DEPOIS desta atualização, a skill executa a cascata e, em 90% dos casos, REGISTRA APROVADO automaticamente. Apenas se TUDO falhar, emite o IMPORTANTE com detalhamento de todas as 4 fontes tentadas.
-
 ### Log Estruturado de Verificações
 
 Toda revisão registra ao final.
@@ -148,11 +120,11 @@ Não verificadas (após cascata). 0.
 
 Antes de aceitar qualquer citação, conferir que o artigo, tema ou súmula EXISTE. Procedimento.
 
-Para normas (CF, EC, LC, Lei, Decreto, IN, Portaria) catalogadas em `base-legislacao-fontes-primarias`, abrir o arquivo correspondente em `C:\Users\VAIO\INSS\base-legislacao\` (no sandbox Linux, o mesmo repositório montado sob `/sessions/<sessão>/mnt/INSS/base-legislacao/`). Buscar o artigo com Grep ou Read.
+Para normas (CF, EC, LC, Lei, Decreto, IN, Portaria), conferir no MCP `normas` (`obter_artigo`) ou no corpus `_base-conhecimento-inss/mcp-normas/corpus/`, pela ordem de `base-legislacao-fontes-primarias`.
 
 Para precedentes (Tema STF/STJ/TNU, súmula, enunciado CRPS, IRDR, IAC), acionar a skill `precedentes-previdenciarios` para verificação dinâmica.
 
-Para doutrina, exigir referência completa (autor, obra, edição, página) e marcar como NÃO VERIFICADA se não for da lista de doutrinadores reconhecidos do escritório.
+Para doutrina, exigir referência completa e verificável (autor, obra, edição, página). Posição atribuída a autor nominado sem essa fonte sai da peça.
 
 ### Nível 2 - Vigência
 
@@ -160,7 +132,7 @@ Confirmar que o artigo, tema ou súmula está VIGENTE na data do caso concreto. 
 
 Para artigos, ler INTEIRO incluindo notas de rodapé. Verificar marcações de "Revogado pela Lei X.XXX" ou "Vide". Se revogado, alertar expressamente "O artigo X da Lei Y FOI REVOGADO pela Lei Z em ano W. Avaliar direito adquirido ou tempus regit actum se aplicável".
 
-Para precedentes, verificar se houve OVERRULING (Tema 503/STF que superou desaposentação, Súmula 86/TNU cancelada em 26/08/2021, etc).
+Para precedentes, verificar se houve superação ou cancelamento (por exemplo, a tese de 2022 do Tema 1102/STF, superada; a Súmula 86/TNU, cancelada em 26/08/2021).
 
 ### Nível 3 - Redação Literal
 
@@ -178,7 +150,7 @@ Verificar se há modulação temporal de efeitos. Procedimento.
 
 Para artigos alterados por lei posterior, verificar se a alteração tem efeitos retroativos ou apenas prospectivos.
 
-Para Temas STF/STJ/TNU, verificar se há ADI ou ADPF que modulou aplicação. Caso clássico. Tema 1102 STF (Revisão da Vida Toda), cuja tese de 2022 foi superada pela cogência do art. 3º da Lei 9.876/1999, com modulação até 05/04/2024 e trânsito em 15/05/2026.
+Para Temas STF/STJ/TNU, verificar se há ADI ou ADPF que modulou aplicação. Caso clássico. Tema 1102/STF (Revisão da Vida Toda), cuja tese de 2022 foi superada pela cogência do art. 3º da Lei 9.876/1999, com modulação para as decisões prolatadas até 05/04/2024 e trânsito em julgado em 15/05/2026.
 
 Para artigos da EC 103/2019, atentar à data de promulgação (13/11/2019) como marco temporal.
 
@@ -207,13 +179,13 @@ A revisão aprofundada despacha quatro frentes aos agentes do plugin, quando dis
 
 Primeiro, a leitura adversária. Antes de fechar o relatório, despachar a peça, o inventário de provas com IDs, o CNIS e o histórico administrativo ao agente `base-conhecimento-inss:red-team-peticao`. Ele simula a contestação do INSS, a Procuradoria e o voto contrário, devolve fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem recomendada e veredito de protocolo. Os achados do agente entram no relatório desta skill com a severidade mapeada (FATAL vira BLOQUEANTE, GRAVE vira CRÍTICO, MEDIA vira IMPORTANTE, MENOR vira MENOR).
 
-Segundo, o julgador opositor (Onda 140). Depois do red-team e antes de fechar o relatório, despachar a peça e o mesmo material ao agente `base-conhecimento-inss:julgador-opositor`. Ele não veste a pele do INSS, veste a do julgador que procura razão sustentável para NÃO acolher o pedido, e devolve, nesta ordem obrigatória, a tabela de vulnerabilidades (PONTO VULNERÁVEL, TRECHO DA PETIÇÃO, POSSÍVEL FUNDAMENTO PARA REJEIÇÃO, NÍVEL DE RISCO, O QUE PRECISO REVISAR), os três melhores fundamentos para rejeitar o pedido usando só as fragilidades da peça e dos documentos e, só então, como revisar ou fortalecer cada ponto. Na primeira passada ele não reescreve, não elogia e não melhora o texto. Conclusão que depende de informação ausente vem marcada VERIFICAÇÃO HUMANA NECESSÁRIA e NÃO se aplica sem o documento. Os achados entram no relatório desta skill com a severidade mapeada (ALTO vira CRÍTICO, e BLOQUEANTE quando o fundamento leva a extinção sem mérito ou a perda de efeitos financeiros, MÉDIO vira IMPORTANTE, BAIXO vira MENOR). Os três fundamentos de rejeição vão transcritos no relatório, porque são a lista de prioridade da correção.
+Segundo, o julgador opositor (Onda 140). Depois do red-team e antes de fechar o relatório, despachar a peça e o mesmo material ao agente `base-conhecimento-inss:julgador-opositor`. Ele não veste a pele do INSS, veste a do julgador que procura razão sustentável para NÃO acolher o pedido, e devolve, nesta ordem obrigatória, a tabela de vulnerabilidades (PONTO VULNERÁVEL, TRECHO DA PETIÇÃO, POSSÍVEL FUNDAMENTO PARA REJEIÇÃO, NÍVEL DE RISCO, O QUE PRECISO REVISAR), os três melhores fundamentos para rejeitar o pedido usando apenas as fragilidades da peça e dos documentos e, apenas então, como revisar ou fortalecer cada ponto. Na primeira passada ele não reescreve, não elogia e não melhora o texto. Conclusão que depende de informação ausente vem marcada VERIFICAÇÃO HUMANA NECESSÁRIA e NÃO se aplica sem o documento. Os achados entram no relatório desta skill com a severidade mapeada (ALTO vira CRÍTICO, e BLOQUEANTE quando o fundamento leva a extinção sem mérito ou a perda de efeitos financeiros, MÉDIO vira IMPORTANTE, BAIXO vira MENOR). Os três fundamentos de rejeição vão transcritos no relatório, porque são a lista de prioridade da correção.
 
 Segundo-A, o juiz de Catanduva (Onda 179). Em peça dirigida à Subseção de Catanduva, despachar na mesma mensagem do julgador opositor a peça e o mesmo material ao agente `base-conhecimento-inss:juiz-catanduva`. Ele decide com os critérios e as fórmulas extraídos de 78 sentenças e decisões do juízo (skill `base-juizo-catanduva`), devolve a sentença simulada, o que mudaria o resultado e até cinco trechos reescritos na linguagem da unidade. O resultado desfavorável entra como achado BLOQUEANTE quando aponta prova ausente ou extinção, e o achado de linguagem entra como MELHORIA.
 
 Terceiro, a verificação de citações em lote. Quando a peça tiver três ou mais citações não confirmadas no catálogo local, despachar o lote ao agente `base-conhecimento-inss:verificador-precedentes`, que confere existência, vigência e tese literal em fonte oficial e devolve classificação por item. Dúvida isolada (uma ou duas citações) segue o fluxo normal dos Níveis 1 a 5 com a Regra de Comet.
 
-Quarto-A, os MÉDICOS CONFERENTES (Onda 141). Havendo documento médico no caso, laudo pericial, relatório de assistente, exame de imagem ou audiometria, despachar o agente da área ANTES de conferir a tese, porque conferir argumento construído sobre leitura clínica errada é conferir a coisa errada, pela mesma razão que o `analista-cnis` roda antes nos casos de tempo. As áreas e os agentes são `medico-coluna` para coluna e hérnia de disco, `medico-membro-inferior` para joelho, quadril e pé, `medico-ombro` para manguito rotador, `medico-membro-superior` para punho, mão e dedo, `medico-psiquiatra` para transtorno mental, `medico-reumatologista` para fibromialgia e artrites, `medico-sensorial` para visão e audição, e `medico-doencas-graves` para câncer, coração, sistema nervoso, pulmão, rim e HIV. Até TRÊS por revisão, os das áreas que decidem. O parecer volta em uma página, em linguagem simples, e entra como camada CLÍNICA ao lado das demais. Achado clínico que derruba a tese sobe ao relatório principal no mesmo patamar do BLOQUEANTE. O parecer é INTERNO, não vai aos autos como prova e não substitui assistente técnico habilitado.
+Quarto-A, os MÉDICOS CONFERENTES. Havendo documento médico no caso, laudo pericial, relatório de assistente, exame de imagem ou audiometria, despachar o agente da área ANTES de conferir a tese, porque conferir argumento construído sobre leitura clínica errada é conferir a coisa errada, pela mesma razão que o `analista-cnis` roda antes nos casos de tempo. As áreas e os agentes são `medico-coluna` para coluna e hérnia de disco, `medico-membro-inferior` para joelho, quadril e pé, `medico-ombro` para manguito rotador, `medico-membro-superior` para punho, mão e dedo, `medico-psiquiatra` para transtorno mental, `medico-reumatologista` para fibromialgia e artrites, `medico-sensorial` para visão e audição, e `medico-doencas-graves` para câncer, coração, sistema nervoso, pulmão, rim e HIV. Até TRÊS por revisão, os das áreas que decidem. O parecer volta em uma página, em linguagem simples, e entra como camada CLÍNICA ao lado das demais. Achado clínico que derruba a tese sobe ao relatório principal no mesmo patamar do BLOQUEANTE. O parecer é INTERNO, não vai aos autos como prova e não substitui assistente técnico habilitado.
 
 Quarto, a banca máxima (Onda 100). Em peça de ALTO RISCO, despachar ao agente `base-conhecimento-inss:black-team` DEPOIS da revisão desta skill e do red-team, entregando a peça, o inventário de provas, o CNIS e os relatórios anteriores como insumo. Gatilhos objetivos de alto risco, recurso a STJ, STF ou TNU, ação rescisória, tese nova ou minoritária, revisão de grande valor, caso com derrota anterior no mesmo objeto, ou pedido expresso do usuário (black team, banca completa, conferência máxima). O black-team simula sete lentes jurídicas fixas MAIS lentes técnicas convocadas pela prova dos autos (médico do trabalho quando houver laudo, assistente social quando houver avaliação social, engenheiro de segurança do trabalho quando houver PPP ou LTCAT, contador previdenciário quando houver CNIS com pendência ou GPS, clínico da patologia dominante, perito agrário em rural, documentoscopista em suspeita de rasura, até quatro por sessão), todas com pareceres independentes antes do cruzamento, delibera em três rodadas e devolve veredito em três faixas com divergências declaradas. O parecer das lentes técnicas orienta o advogado e alimenta quesitos, não vai aos autos como prova nem substitui assistente técnico habilitado quando exigido. Os achados dele entram no relatório final com a mesma disciplina de recepção (verificar antes de aplicar, corrigir na causa raiz).
 
@@ -236,11 +208,11 @@ Itens auditados:
 - Títulos de seção em tabelas pretas com texto branco em negrito.
 - Recuo de 2 cm (rito judicial) ou 4 cm (CRPS).
 - Rodapé do escritório.
-- **Dois-pontos** só antes de citação literal ou enumeração, nunca antes de miniconclusão (Onda 163).
-- Documentos referenciados por ID nas peças intermediárias, e "em anexo" na petição inicial e no mandado de segurança, sempre com emitente, data e trecho decisivo em negrito e itálico (Onda 174).
+- **Dois-pontos** apenas antes de citação literal ou enumeração, nunca antes de miniconclusão (Onda 163).
+- Documentos referenciados por ID nas peças intermediárias, e "em anexo" na petição inicial e no mandado de segurança, sempre com emitente, data e trecho decisivo em negrito e itálico.
 - Estrutura do Método Tercini (`peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md`, Onda 174). Na petição inicial, endereçamento, qualificação copiada da procuração, nome da ação centralizado, 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS com a subseção do fato decisivo, 3. DO [BENEFÍCIO] com a lei transcrita apenas no dispositivo controvertido e o restante em remissão na frase (Onda 182), seções adicionais, REQUERIMENTOS na ordem do método, valor da causa pelo art. 292 do CPC, fecho "Termos em que," e "Pede deferimento." e QUESITOS quando houver perícia. Nas demais peças, o esqueleto da seção 4 do método. Desvio de ordem ou de fórmula é achado IMPORTANTE.
 - Voz do titular. "a Parte Autora", "a Autarquia Federal" depois da primeira menção na seção, virada "Entretanto, está equivocado o entendimento da Autarquia Federal, porque" e fecho do direito "Deste modo, Excelência". Os fatos ocupam a maior parte da peça, com data, documento e número, e a lei incontroversa transcrita em bloco é achado IMPORTANTE (Onda 182).
-- Linguagem do juízo (Onda 176, `peticao-previdenciaria/references/ESTILO-MODELO.md`). Em peça dirigida a Catanduva, a peça usa o vocabulário, os conectores e a sequência do bloco-modelo da matéria extraídos de 78 decisões do juízo (Onda 179, `base-juizo-catanduva`). Conferir, em silêncio, os dez pontos da auditoria do manual (padrão reproduzido, uma ideia por parágrafo, frase clara, conectores necessários, continuidade, vínculo entre fato, prova e direito, ausência de repetição, fluidez, possibilidade de redução e erro jurídico ou probatório), e reportar só o resultado. A vírgula isolada entre verbo e complemento é conferida aqui, porque o medidor não a detecta.
+- Linguagem do juízo (Onda 176, `peticao-previdenciaria/references/ESTILO-MODELO.md`). Em peça dirigida a Catanduva, a peça usa o vocabulário, os conectores e a sequência do bloco-modelo da matéria extraídos de 78 decisões do juízo (Onda 179, `base-juizo-catanduva`). Conferir, em silêncio, os dez pontos da auditoria do manual (padrão reproduzido, uma ideia por parágrafo, frase clara, conectores necessários, continuidade, vínculo entre fato, prova e direito, ausência de repetição, fluidez, possibilidade de redução e erro jurídico ou probatório), e reportar apenas o resultado. A vírgula isolada entre verbo e complemento é conferida aqui, porque o medidor não a detecta.
 
 ### Camada 2 - Conformidade Normativa
 
@@ -253,12 +225,12 @@ Skills acionadas conforme tipo de peça.
 - `base-tnu-admissibilidade-manual` - para PUIL/PEDILEF.
 - `pedilef-cotejo-analitico-tnu` - cotejo analítico em duas etapas.
 - `base-puil-pedilef-vedacao-materia-processual` - filtro Súmula 43/TNU.
-- `tema-1124-instrucao-administrativa` - prévio requerimento administrativo.
+- `tema-1124-instrucao-administrativa` - requerimento apto e termo inicial (Tema 1124/STJ).
 - `base-efeito-translativo-tema-1124-defesa` - aplicação de ofício.
 - `decadencia-revisao-previdenciaria` - art. 103 Lei 8.213/91.
 - `ms-competencia-autoridade-coatora` e `base-ms-competencia-autoridade-coatora-inss-crps` - MS.
 - `base-ms-cabimento-direito-liquido-certo` - cabimento MS.
-- `documentos-comprobatorios-in128` - matriz probatória.
+- `base-documentos-comprobatorios-in128` - matriz probatória.
 - `auditoria-ppp` - aposentadoria especial com PPP.
 - `admissibilidade-barreiras-crps` - recurso CRPS.
 - `recursos-superiores-crps` - recurso especial CRPS.
@@ -306,17 +278,17 @@ Critérios principais (ver detalhamento exaustivo no catálogo):
 7. Urgência sinalizada por formatação (Regra mostre-não-diga).
 8. Título argumentativo, narrativo ou informal (Onda 162, IMPORTANTE).
 9. Réplica como contestação da contestação.
-10. Memorial com mais de duas páginas.
+10. Memorial que repete a petição ou o recurso, em vez de reduzir ao essencial.
 11. Excesso de destaques por página (Regra Von Restorff).
 12. Latim desnecessário (Regra da Clareza).
 13. Teste do leigo na parte fática.
 14. **Cotejo analítico ausente em PUIL** (novo, derivado da Onda 30).
-15. **Paradigma de TRF ou de STF em PUIL** (art. 14, §2º, Lei 10.259/2001; QO 48/TNU veda o paradigma do STF, auditoria de 25/07/2026).
+15. **Paradigma de TRF ou de STF em PUIL** (art. 14, § 2º, da Lei 10.259/2001; QO 48/TNU veda o paradigma do STF).
 16. **Citação de Portaria 992/2022 como cálculo de RMI** (novo, derivado da Onda 32).
 17. **Citação de Súmula 86/TNU como vigente** (novo, foi cancelada em 26/08/2021).
-18. **Citação de tese de Revisão da Vida Toda sem mencionar a modulação** (novo).
+18. **Citação da tese de 2022 da Revisão da Vida Toda como vigente** (Tema 1102/STF superado, com modulação).
 19. **Pedido genérico de tutela sem demonstração concreta de urgência**.
-20. **Petição sem seção de Efeitos Financeiros** (Tema 1124/STJ).
+20. **Petição sem proteção do termo inicial** (Tema 1124/STJ), em DOS FATOS e no item 3 dos REQUERIMENTOS ou, quando exigida, na seção DOS EFEITOS FINANCEIROS.
 21. **Discussão de matéria processual em PUIL** (novo, derivado da Onda 30 - Súmula 43/TNU).
 22. **Citação de norma sem leitura do arquivo verificado** (novo, anti-pattern anti-alucinação).
 23. **Coloquialismo ou palavra informal no corpo da peça**, incluído o Parágrafo de Realidade ("só", "chega a", "mostra", "ficou nos motivos", "está fora do rol", "na roça"). Severidade MENOR, com a troca da tabela Registro formal de `peticao-previdenciaria/references/ESTILO-MODELO.md`; o `medir_peca.py` aponta as formas já corrigidas pelo titular (12/10/2026).
@@ -333,7 +305,7 @@ Verificações.
 - Documentos pendentes de juntada estão sendo pleiteados.
 - Pedidos de prova (perícia, testemunhas, ofícios) estão direcionados a fatos específicos.
 - Em réplicas, a especificação de provas segue a técnica da skill `especificacao-provas`.
-- CNIS cruzado com documentação comprobatória conforme `documentos-comprobatorios-in128`.
+- CNIS cruzado com documentação comprobatória conforme `base-documentos-comprobatorios-in128`.
 - Nenhum parágrafo veio de peça de outro cliente. Trecho do MCP `acervo` é ponto de partida para redação nova, e reaproveitamento automático é VEDADO. O sinal de alerta é o dado que não bate com os autos deste cliente, como data, protocolo ou valor que a peça afirma e o processo não confirma. Severidade BLOQUEANTE.
 
 Esta camada é especialmente crítica em.
@@ -352,11 +324,22 @@ Cada pedido é conferido sozinho, pela ligação entre o pedido, os fatos, as pr
 
 ### Camada 6 - Extensão de Referência e Legibilidade (Onda 120, revista na Onda 181)
 
-Esta camada existe porque o pipeline é aditivo. Os Juristas Conferentes, os Processualistas Conferentes e os Decisores Simulados devolvem sempre o fundamento que ficou de fora, e nunca o que sobra. Sem uma etapa que meça e retire a repetição, o crescimento da peça é o resultado natural do desenho. A medida, porém, é a compreensão do julgador, que lê uma vez só e decide, e não o número de páginas.
+Esta camada existe porque o pipeline é aditivo. Os Juristas Conferentes, os Processualistas Conferentes e os Decisores Simulados devolvem sempre o fundamento que ficou de fora, e nunca o que sobra. Sem uma etapa que meça e retire a repetição, o crescimento da peça é o resultado natural do desenho. A medida, porém, é a compreensão do julgador, que lê uma única vez e decide, e não o número de páginas.
 
 #### Extensão de referência por tipo de peça (preferencial, Onda 181)
 
-Petição inicial, 7 páginas. Recurso inominado, 4 páginas. Manifestação sobre laudo, 3 páginas. Recurso ao CRPS, 3 páginas. Embargos de declaração, 2 páginas. Petições comuns, 2 páginas. Memorial, 2 páginas. Jurisprudência somada em toda a peça, 1 página.
+Este é o único lugar da base com a tabela por tipo de peça. As demais skills remetem a ela, e o `medir_peca.py` a replica na constante PAGINAS.
+
+| Peça | Páginas | Seções |
+|---|---|---|
+| Petição inicial | cerca de 7 | cerca de 6 |
+| Recurso inominado e apelação | cerca de 4 | cerca de 5 |
+| Mandado de segurança | cerca de 5 | cerca de 4 |
+| Manifestação sobre laudo | cerca de 3 | |
+| Recurso ao CRPS | cerca de 3 | |
+| Embargos de declaração | cerca de 2 | |
+| Petição comum e memorial | cerca de 2 | |
+| Jurisprudência somada em toda a peça | 1, com até 15 linhas por precedente | |
 
 Desde 17/10/2026, por determinação do titular, essas medidas são **referência preferencial, e não limite obrigatório**. O teto obrigatório e a meta de corte de 20% produziam peças com fato, prova ou raciocínio retirados, que o juiz não conseguia compreender. A peça tem a extensão que a compreensão de cada pedido exige. Peça que resolve a matéria em menos páginas está certa e não se completa, e peça que precisa de mais páginas não se corta para caber.
 
@@ -425,7 +408,7 @@ Exemplos.
 - Citação de número de processo, súmula ou tema FABRICADO sem origem verificável.
 - Contradição frontal entre afirmação da petição e CNIS ou documento juntado.
 - Fato impugnado pelo INSS classificado como "incontroverso".
-- Pedido principal incompatível com o rito processual (ex. MS pedindo concessão direta sem prévia análise administrativa quando o caso exige Tema 1124).
+- Pedido principal incompatível com o rito processual (ex. MS pedindo concessão direta sem prévio requerimento administrativo, exigido pelo Tema 350/STF).
 - Ação rescisória contra benefício do próprio segurado (caso paradoxal).
 
 **CRÍTICO**.
@@ -437,7 +420,7 @@ Exemplos.
 - Erro de competência territorial ou material.
 - Precedente inexistente ou tese incorreta.
 - Violação da política de tutela de urgência.
-- Ausência de verificação do Tema 1124 quando aplicável.
+- Ausência de verificação do prévio requerimento (Tema 350/STF) ou do termo inicial (Tema 1124/STJ) quando aplicável.
 - Autoridade coatora errada em MS.
 - Pedido incompatível com o rito.
 - PUIL com paradigma de TRF (art. 14, §2º, Lei 10.259/2001) ou do STF (QO 48/TNU).
@@ -468,7 +451,7 @@ Exemplos.
 
 - Dois-pontos antes de miniconclusão ou de explicação que caberia no período.
 - Desvio de formatação.
-- Referência genérica a "documentos em anexo".
+- Referência genérica a "documentos em anexo" em peça intermediária.
 - Repetição argumentativa.
 - Excesso de destaques por página (Von Restorff).
 - Título argumentativo, narrativo ou informal, fora do padrão formal e nominal (Onda 162).
@@ -491,17 +474,17 @@ Estrutura padrão entregue após apresentação do .docx.
 
 **Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória → Extensão e Legibilidade). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
 
-**Teto do relatório e consolidação (Onda 133).** O relatório consolidado tem DUAS PÁGINAS. BLOQUEANTE e CRÍTICO entram sempre, na frente. IMPORTANTE e MENOR entram até o teto, e o excedente vira uma linha de contagem por camada. Os pareceres dos agentes despachados, juristas, processualistas, decisores, analista do CNIS, red-team e black-team, NÃO se empilham no relatório. Cada parecer vai gravado na subpasta Claude do cliente, com uma página cada, e NÃO vai ao chat, salvo pedido expresso do titular. O consolidado recebe só os achados deles que mudam o resultado, DEDUPLICADOS e com a linha de origem (agente e item) para rastreio, porque dois agentes apontando o mesmo vício por lentes diferentes é um achado, não dois. A regra de subida continua a mesma, PRECLUSÃO IMINENTE, BLOQUEANTE e CRÍTICO sobem sempre. O relatório que empilha pareceres é o que o titular apontou como "muitas folhas que cansam o leitor", e o objetivo dele é que o titular leia o consolidado em cinco minutos e só abra o parecer gravado se quiser a origem de um achado.
+**Teto do relatório e consolidação (Onda 133).** O relatório consolidado tem DUAS PÁGINAS. BLOQUEANTE e CRÍTICO entram sempre, na frente. IMPORTANTE e MENOR entram até o teto, e o excedente vira uma linha de contagem por camada. Os pareceres dos agentes despachados, juristas, processualistas, decisores, analista do CNIS, red-team e black-team, NÃO se empilham no relatório. Cada parecer vai gravado na subpasta Claude do cliente, com uma página cada, e NÃO vai ao chat, salvo pedido expresso do titular. O consolidado recebe apenas os achados deles que mudam o resultado, DEDUPLICADOS e com a linha de origem (agente e item) para rastreio, porque dois agentes apontando o mesmo vício por lentes diferentes é um achado, não dois. A regra de subida continua a mesma, PRECLUSÃO IMINENTE, BLOQUEANTE e CRÍTICO sobem sempre. O relatório que empilha pareceres é o que o titular apontou como "muitas folhas que cansam o leitor", e o objetivo dele é que o titular leia o consolidado em cinco minutos e apenas abra o parecer gravado se quiser a origem de um achado.
 
-**Resolver, não delegar de volta.** Achado do tipo "conferir X em fonte primária" só entra se a conferência foi TENTADA e falhou por bloqueio de acesso, e nesse caso diz qual fonte, qual via e qual o bloqueio. Achado que apenas recomenda ao titular fazer a conferência não é achado, é trabalho empurrado, e o titular pediu duas vezes que isso parasse. Regra 10 do protocolo.
+**Resolver, não delegar de volta.** Achado do tipo "conferir X em fonte primária" apenas entra se a conferência foi TENTADA e falhou por bloqueio de acesso, e nesse caso diz qual fonte, qual via e qual o bloqueio. Achado que apenas recomenda ao titular fazer a conferência não é achado, é trabalho empurrado, e o titular pediu duas vezes que isso parasse. Regra 10 do protocolo.
 
 **Modelo de achado individual.**
 
 ```
 [BLOQUEANTE] Camada 2 - Conformidade Normativa
-Citação fabricada. Tema 1.124/STJ atribuído a precedente sobre "prévio requerimento administrativo em aposentadoria especial". Verificação no repositório base-legislacao-fontes-primarias e em fonte primária mostra que o Tema 1124/STJ trata de outro tema. A citação não pode ser mantida.
-Localização. Seção "DO DIREITO", terceiro parágrafo, página 4.
-Correção sugerida. Verificar o tema correto que sustenta a tese pretendida ou suspender a citação.
+Tema atribuído a assunto diverso. A peça cita o Tema 1102/STF como fundamento para incluir os salários anteriores a 07/1994 no cálculo. A fonte oficial mostra que a tese de 2022 foi superada e que a tese vigente é adversa ao segurado. A citação não pode ser mantida.
+Localização. Seção "DO BENEFÍCIO", terceiro parágrafo, página 4.
+Correção sugerida. Retirar o fundamento e reavaliar o pedido de revisão com o titular.
 
 [CRÍTICO] Camada 1 - Conformidade Formal
 Competência territorial incorreta. A petição é dirigida à Subseção Judiciária de Catanduva, mas a qualificação do autor indica domicílio em Ribeirão Preto, que pertence à Subseção de Ribeirão Preto.
@@ -511,7 +494,7 @@ Correção sugerida. Redirecionar a peça à Subseção Judiciária de Ribeirão
 [IMPORTANTE] Camada 5 - Integridade Probatória
 Documento relevante não referenciado por ID. O CNIS (ID 13476890) confirma o vínculo em 03/2018 que sustenta a tese, mas a petição apenas menciona "conforme CNIS em anexo" sem ID.
 Localização. Seção "DOS FATOS", quinto parágrafo.
-Correção sugerida. Substituir por "conforme CNIS (ID 13476890)".
+Correção sugerida. Substituir por "conforme CNIS (ID 13476890)". Na petição inicial e no MS, que ainda não têm ID, o documento segue "em anexo".
 
 [MENOR] Camada 4 - Qualidade Argumentativa
 Excesso de destaques. A página 6 contém 7 trechos em negrito fora de títulos e citações. Faixa ideal entre 2 e 3 negritos por página.
@@ -533,7 +516,7 @@ Primeira regra, nem concordância performática, nem implementação cega. Cada 
 
 Segunda regra, achado incorreto se refuta por escrito, com a evidência. O relatório de revisão registra o achado, a verificação feita e a razão da recusa. Recusa sem evidência não existe, e acatamento sem verificação também não.
 
-Terceira regra, achado correto se aplica na CAUSA RAIZ, não no sintoma. Se o red-team apontou citação divergente em um parágrafo, a correção varre a peça inteira atrás da mesma citação, e o catálogo atrás da mesma divergência. Corrigir só o ponto apontado deixa os irmãos do erro vivos.
+Terceira regra, achado correto se aplica na CAUSA RAIZ, não no sintoma. Se o red-team apontou citação divergente em um parágrafo, a correção varre a peça inteira atrás da mesma citação, e o catálogo atrás da mesma divergência. Corrigir apenas o ponto apontado deixa os irmãos do erro vivos.
 
 Quarta regra, conflito entre achados se resolve pela hierarquia de fontes, fonte primária vence catálogo, catálogo vence memória, e nada vence o documento dos autos quanto aos fatos do caso.
 
@@ -551,7 +534,7 @@ Se houver achados CRÍTICOS, IMPORTANTES ou MENORES sem BLOQUEANTES, perguntar.
 
 Aguardar resposta. Se autorizado, gerar nova versão do .docx aplicando as correções e apresentar o arquivo corrigido. Se autorizado tratar apenas críticos, perguntar se também deseja sugestões para os demais.
 
-A extensão acima da referência preferencial se informa em uma frase, sem proposta de novo corte (Onda 181). Corte adicional só se faz a pedido do titular, com o que sairia listado antes.
+A extensão acima da referência preferencial se informa em uma frase, sem proposta de novo corte (Onda 181). Corte adicional apenas se faz a pedido do titular, com o que sairia listado antes.
 
 ## CHECKLIST POR RITO
 
@@ -567,11 +550,11 @@ Ver detalhamento completo em `references/CHECKLIST-POR-RITO.md`. Resumo abaixo.
 
 **PUIL/PEDILEF (TNU).** Verificação obrigatória das 4 hipóteses de cabimento (art. 12 §1º RITNU), paradigma válido (não TRF/STF/TST/TSE - QO 48), cotejo analítico em duas etapas, prequestionamento (QO 10/35/36 + Súmulas 282/356 STF + art. 1.025 CPC), não incidência das Súmulas 42/TNU (reexame fato) e 43/TNU (matéria processual), dialeticidade. Acionar OBRIGATORIAMENTE `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu`.
 
-**Títulos em todas as peças (Onda 162, determinação do titular).** O título de seção é formal, jurídico, numerado e nominal, iniciado por DA, DO, DOS ou DAS, nomeia o instituto, o requisito, o vício ou o pedido, tem até doze palavras e não traz fato, data, número, ID, adjetivo nem juízo de valor. A regra vale para petição inicial, recurso, réplica, mandado de segurança, recurso ao CRPS e peças às cortes superiores, e substitui a regra de títulos persuasivos e a exceção restrita às cortes superiores da Onda 157. Título fora do padrão é achado IMPORTANTE, e o `medir_peca.py` o aponta de forma mecânica.
+**Títulos em todas as peças (Onda 162).** Título nominal, iniciado por DA, DO, DOS ou DAS (salvo REQUERIMENTOS e QUESITOS), em até doze palavras, sem fato, data, valor nem juízo de valor, conforme a regra única de `peticao-previdenciaria/references/MECANICA-DOCX.md`. Título fora do padrão é achado IMPORTANTE, e o `medir_peca.py` o aponta acima de dezesseis palavras.
 
 **Réplica.** Estrutura de delimitação de pontos controvertidos/incontroversos (seção 1) + réplica compartimentalizada (seção 2) + reconsideração de tutela quando aplicável (seção 3) + pedidos de prova direcionados (seção 4). Tabela de fatos com colunas "Fato alegado", "Impugnação pelo INSS", "Situação processual".
 
-**Memorial.** Limite de duas páginas (CRÍTICO se exceder). Framework EVO. Apenas elementos essenciais (questão central, fundamento para reforma, provas e resultados, pedido final).
+**Memorial.** Referência de duas páginas (Camada 6). Framework EVO. Apenas elementos essenciais (questão central, fundamento para reforma, provas e resultados, pedido final).
 
 **Petição administrativa de cumprimento de exigência (B31/B91/B94).** Mapeamento de cada inciso do art. 2º das Portarias 13 ou 15/2026 ao documento correspondente. Distinção "documentação médica" vs "documento médico". Conclusão pede prosseguimento da análise (B31/B91) ou agendamento de perícia presencial (B94).
 
@@ -581,15 +564,15 @@ Ver detalhamento completo em `references/CHECKLIST-POR-RITO.md`. Resumo abaixo.
 
 Toda revisão DEVE executar as verificações abaixo, conforme política consolidada do escritório.
 
-1. **Competência territorial e material em toda petição inicial e MS.** Cruzar com domicílio do autor e foro pessoal. Acionar `ms-competencia-autoridade-coatora` para MS.
+1. **Competência territorial e material em toda petição inicial e MS.** Cruzar com o domicílio do autor. Monte Alto, Vista Alegre do Alto e Pirangi pertencem à Subseção Judiciária de Catanduva; Matão e Araraquara, à de Araraquara; Jaboticabal e Guariba, à de Ribeirão Preto. A ação acidentária corre na Justiça Estadual (art. 109, I, da CF). O JEF processa a causa de até 60 salários mínimos (art. 3º da Lei 10.259/2001), exceto o mandado de segurança, que vai sempre à Vara Federal (art. 3º, § 1º, I). Em MS, acionar `ms-competencia-autoridade-coatora`.
 
-2. **Política de tutela de urgência em toda petição inicial.** Verificar conformidade com a política do escritório sem necessidade de instrução expressa.
+2. **Política de tutela de urgência em toda petição inicial.** Tutela de urgência apenas por decisão expressa do titular, salvo a liminar do MS, incluída por padrão (política única na `peticao-previdenciaria`).
 
-3. **Tema 1124/STJ em toda petição de concessão ou revisão.** Verificar prévio requerimento administrativo. Alertar para risco de extinção sem mérito. Despachar o agente `conferente-tema-1124`.
+3. **Prévio requerimento e efeitos financeiros em toda petição de concessão ou revisão.** O prévio requerimento administrativo é exigido pelo Tema 350/STF (RE 631.240). O Tema 1124/STJ exige requerimento apto e a mesma prova levada ao INSS, sob pena de extinção sem mérito (item 1.6), e fixa o termo inicial conforme a prova (itens 2.1 a 2.3). Despachar o agente `conferente-tema-1124`.
 
-4. **Prazo decadencial em toda análise de revisão de benefício já concedido.** Art. 103 Lei 8.213/91. Acionar `decadencia-revisao-previdenciaria`. Alertar quando a menos de 12 meses do esgotamento.
+4. **Prazo decadencial em toda revisão de benefício já concedido.** Dez anos do art. 103 da Lei 8.213/91, contados do dia primeiro do mês seguinte ao do recebimento da primeira prestação. Não há decadência sobre o indeferimento, o cancelamento ou a cessação do benefício (ADI 6096 e Tema 313/STF). Acionar `decadencia-revisao-previdenciaria`. Alertar quando faltarem menos de 12 meses.
 
-5. **Documentação comprobatória conforme IN 128/2022.** Acionar `documentos-comprobatorios-in128` como fonte primária.
+5. **Documentação comprobatória conforme IN 128/2022.** Acionar `base-documentos-comprobatorios-in128` como fonte primária.
 
 6. **BPC para menores de 16 anos.** Aplicar critérios diferenciados de avaliação funcional e IFBrM.
 
@@ -597,7 +580,7 @@ Toda revisão DEVE executar as verificações abaixo, conforme política consoli
 
 8. **Cruzamento de CNIS com documentação.** Quando CNIS for apresentado com outros documentos, cruzar automaticamente identificando divergências, vínculos ausentes, indicadores de pendência e períodos sem cobertura.
 
-9. **Referência por ID em PJe.** Toda afirmação fática deve remeter ao ID. Vedado "conforme documentos em anexo".
+9. **Referência por ID em PJe.** Toda afirmação fática remete ao ID. Na petição inicial e no MS, que ainda não têm ID, o documento segue "em anexo", com emitente e data.
 
 10. **Cálculos previdenciários.** NÃO realizar cálculo de RMI ou renda mensal sem dados completos do CNIS. Indicar exatamente quais informações faltam.
 
@@ -616,7 +599,7 @@ Esta skill é HUB de integração e DEVE acionar.
 - `tema-1124-instrucao-administrativa` em concessão ou revisão.
 - `decadencia-revisao-previdenciaria` em revisão de benefício concedido.
 - `ms-competencia-autoridade-coatora` em MS.
-- `documentos-comprobatorios-in128` para matriz probatória.
+- `base-documentos-comprobatorios-in128` para matriz probatória.
 - `base-portarias-dpmf-inss-hub` para validar referências a Portarias 990-996/2022.
 - `reafirmacao-der` em concessão com requisitos completados após DER.
 - `analise-documental-incapacidade` em B31/B91/B94.
@@ -633,14 +616,9 @@ A revisão NÃO REALIZA cálculos previdenciários. Apenas verifica consistênci
 
 Esta skill deve evoluir conforme novos achados sistêmicos forem identificados. Sempre que uma nova falha for descoberta em peça já protocolada, esta skill deve ser atualizada para incluir o novo anti-pattern, e a Onda Corretiva correspondente deve ser executada para varrer o plugin inteiro.
 
-Histórico de evolução.
-
-- **V1 (escritório).** 4 camadas, 3 severidades, 13 anti-patterns.
-- **V2 (plugin Onda 33).** 5 camadas (adiciona Integridade Probatória), 4 severidades (adiciona BLOQUEANTE), 22 anti-patterns, integração com Manual TNU, fontes primárias verificadas e taxonomia das Portarias.
-
 ## LIMITAÇÃO CONHECIDA
 
-Esta skill depende da disponibilidade do workspace `INSS\base-legislacao\` para a verificação literal de artigos. Em sessões sem o workspace, a skill ainda funciona mas marca a verificação literal como NÃO REALIZADA, recomendando WebFetch direto das URLs oficiais do Planalto registradas no índice da skill `base-legislacao-fontes-primarias`.
+A verificação literal de artigos depende do MCP `normas` ou do corpus local. Sem eles, a verificação segue pela fonte oficial do Planalto, na ordem de `base-legislacao-fontes-primarias`, e apenas se marca NÃO REALIZADA depois de tentada.
 
 A skill `revisao-peticao` é apenas redirecionamento para esta desde a Onda 139. Não existe mais interpretação divergente a resolver.
 
@@ -650,7 +628,7 @@ Duas famílias de conferência. DEZESSETE Juristas Conferentes, dezesseis temát
 
 ### Regra de identidade dos Juristas Conferentes
 
-Eles discutem CORRENTES, nunca pessoas. É PROIBIDO a qualquer jurista atribuir posição, frase ou entendimento a autor, professor ou magistrado NOMINADO. A saída correta é "a corrente ampliativa sustenta", "a leitura restritiva do INSS afirma", "a doutrina majoritária entende". Doutrina nominada só entra na peça pela sessão principal, com referência bibliográfica verificável, ou não entra.
+Eles discutem CORRENTES, nunca pessoas. É PROIBIDO a qualquer jurista atribuir posição, frase ou entendimento a autor, professor ou magistrado NOMINADO. A saída correta é "a corrente ampliativa sustenta", "a leitura restritiva do INSS afirma", "a doutrina majoritária entende". Doutrina nominada apenas entra na peça pela sessão principal, com referência bibliográfica verificável, ou não entra.
 
 Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo vício que o protocolo anti-alucinação combate na jurisprudência, e o red-team adversário derruba essa citação com facilidade.
 
@@ -753,9 +731,9 @@ Segundo, NÃO são pró-segurado. Simulam o decisor com fidelidade institucional
 
 Terceiro, cada um devolve o resultado, a motivação no estilo do órgão, o porquê e a LISTA FECHADA do que mudaria o resultado. É essa lista que vira tarefa para a sessão principal.
 
-Quarto, regra de identidade. Simulam CARGO e LÓGICA INSTITUCIONAL, jamais pessoa nominada, e só usam motivação com base normativa citável.
+Quarto, regra de identidade. Simulam CARGO e LÓGICA INSTITUCIONAL, jamais pessoa nominada, e apenas usam motivação com base normativa citável.
 
-Quinto, o que cada um ensina ao escritório. O `servidor-chefe-inss` decide por checklist e trava de sistema, não aplica precedente judicial nem relativiza critério legal, de modo que pedido sustentado só em tese judicial cai na origem. O `conselheiro-junta-de-recursos` começa pela admissibilidade, porque não conhecer é a saída mais barata, e converte em diligência quando falta instrução que competia ao INSS. O `conselheiro-camara-de-julgamento` é o filtro mais letal, porque a Câmara não é terceira instância de mérito e a maioria dos recursos especiais cai por serem redigidos como novo recurso ordinário.
+Quinto, o que cada um ensina ao escritório. O `servidor-chefe-inss` decide por checklist e trava de sistema, não aplica precedente judicial nem relativiza critério legal, de modo que pedido sustentado apenas em tese judicial cai na origem. O `conselheiro-junta-de-recursos` começa pela admissibilidade, porque não conhecer é a saída mais barata, e converte em diligência quando falta instrução que competia ao INSS. O `conselheiro-camara-de-julgamento` é o filtro mais letal, porque a Câmara não é terceira instância de mérito e a maioria dos recursos especiais cai por serem redigidos como novo recurso ordinário.
 
 ### Combinação com os Conferentes
 
@@ -765,22 +743,10 @@ Em peça administrativa, a ordem correta é redigir, conferir com o `jurista-pro
 
 Toda peça cuja causa de pedir dependa de tempo de contribuição, carência, qualidade de segurado ou salário-de-benefício passa pelo agente `analista-cnis` antes dos Juristas e dos Processualistas.
 
-Razão da ordem. Conferir tese sobre contagem errada é conferir a coisa errada. O analista fixa os números, e só então o jurista discute a corrente e o processualista discute a técnica.
+Razão da ordem. Conferir tese sobre contagem errada é conferir a coisa errada. O analista fixa os números, e apenas então o jurista discute a corrente e o processualista discute a técnica.
 
 Achado dele com efeito BLOQUEANTE sobe ao relatório principal, no mesmo patamar da severidade PRECLUSÃO IMINENTE dos processualistas.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

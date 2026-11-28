@@ -1,4 +1,4 @@
-# Relevação de Intempestividade – Art. 112, §§1º a 6º
+# Relevação de Intempestividade. Art. 112, §§1º a 6º
 
 ## Natureza Jurídica
 
@@ -28,7 +28,7 @@ A relevação aplica-se apenas a recursos contra decisões do INSS nos processos
 
 ### 4. Resultado de provimento (Art. 112, §5º)
 
-A relevação aplica-se apenas às hipóteses de decisão de conhecimento e provimento (art. 111, V). O conselheiro só releva se, no mérito, concluir pelo provimento integral do recurso.
+A relevação aplica-se apenas às hipóteses de decisão de conhecimento e provimento (art. 111, V). O conselheiro releva apenas se, no mérito, concluir pelo provimento integral do recurso.
 
 ## Limitações Expressas
 
@@ -72,7 +72,7 @@ Se a relevação for aplicada em decisão monocrática, depende de homologação
 
 3. Requerer que o conselheiro verifique as bases de dados acessíveis para confirmar o direito
 
-4. Fundamentar o mérito de forma objetiva e conclusiva, porque a relevação só se aplica se o resultado for de provimento
+4. Fundamentar o mérito de forma objetiva e conclusiva, porque a relevação se aplica apenas se o resultado for de provimento
 
 ### Na impugnação de decisão que não relevou
 

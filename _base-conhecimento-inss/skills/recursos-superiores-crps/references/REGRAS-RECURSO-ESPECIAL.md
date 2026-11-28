@@ -1,4 +1,4 @@
-# Regras Processuais do Recurso Especial ao CRPS – Portaria MPS nº 125/2026
+# Regras Processuais do Recurso Especial ao CRPS. Portaria MPS nº 125/2026
 
 ## Base Normativa
 
@@ -10,9 +10,9 @@ Das decisões proferidas pelas Juntas de Recursos em sede de Recurso Ordinário 
 
 ### Exceções ao cabimento
 
-1. Matéria de alçada exclusiva das Juntas de Recursos (art. 89, §3º) – não comporta recurso especial
-2. Decisão de diligência (art. 90, §2º) – vedação expressa
-3. Recurso sobre matéria exclusivamente médica quando a PMF corrobora o INSS – pode ser decidido monocraticamente, mas o recurso em si é cabível
+1. Matéria de alçada exclusiva das Juntas de Recursos (art. 89, §3º), não comporta recurso especial
+2. Decisão de diligência (art. 90, §2º), vedação expressa
+3. Recurso sobre matéria exclusivamente médica quando a PMF corrobora o INSS, pode ser decidido monocraticamente, mas o recurso em si é cabível
 
 ## Efeito Devolutivo Amplo (Art. 90, §1º e Art. 146, §2º)
 

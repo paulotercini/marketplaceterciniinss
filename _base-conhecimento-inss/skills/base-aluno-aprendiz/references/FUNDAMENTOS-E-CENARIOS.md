@@ -1,113 +1,28 @@
-# Tempo de Aluno-Aprendiz — Fundamentos e Cenários
+# Tempo de Aluno-Aprendiz. Cenários e Metodologia
 
-## 1. Conceito operacional
+Base normativa e precedentes no SKILL.md.
 
-Aluno-aprendiz foi o regime jurídico aplicado a estudantes de escolas industriais, agrícolas e técnicas federais, anteriores à reorganização dos anos 1970, que combinavam ensino profissionalizante e trabalho efetivo no próprio estabelecimento, com retribuição pecuniária direta ou indireta à conta do orçamento da União.
+## Cenários favoráveis
 
-O cômputo desse período como tempo de contribuição previdenciária depende da comprovação do vínculo formal e da retribuição pecuniária.
+- A. Escola técnica ou industrial federal entre 1942 e 1959. Sob o Decreto-Lei 4.073/1942 o aluno-aprendiz era tratado como empregado; basta comprovar o vínculo (Portaria DIRBEN 990/2022, art. 128-A, I).
+- B. Escola agrícola federal, com alojamento, alimentação e material escolar custeados pela União e trabalho na produção vendida a terceiros. Os quatro elementos da Súmula 18 TNU ficam atendidos.
+- C. Curso do SENAI, SENAC ou escola mantida por empresa para seus aprendizes (Portaria 990, art. 128, II). Prova por certidão escolar que indique o patrocínio (art. 129, II).
+- D. Escola estadual equiparada ou municipal reconhecida, em ente sem RPPS à época. Prova por certidão escolar com os dados do art. 129, IV.
+- E. Ex-aluno que se tornou servidor público: o tempo segue para o RPPS por CTC (CF, art. 201, §9º; Lei 8.213/91, art. 96).
+- F. Segurado do RGPS que precisa do período para fechar o tempo de contribuição de regra de transição da EC 103/2019.
 
-## 2. Fundamento constitucional
+## Cenários desfavoráveis
 
-Art. 201, §9º, CF/88. Contagem recíproca.
+- Aluno regular, sem trabalho na execução de bens ou serviços para terceiros.
+- Ausência de prova de retribuição à conta do orçamento, direta ou indireta.
+- Aprendizado a partir de 16/12/1998 (IN 128/2022, art. 216, X).
+- Escola privada sem autorização do Governo Federal.
 
-Art. 5º, XXXVI, CF/88. Direito adquirido.
+## Metodologia
 
-## 3. Fundamento legal
-
-Lei 8.213/91, art. 55, I. Cômputo de tempo anterior à Lei 3.807/1960.
-
-Lei 8.213/91, art. 96. Contagem recíproca com RPPS.
-
-Decreto 4.073/1942. Lei Orgânica do Ensino Industrial.
-
-Lei 3.552/1959. Organização administrativa das escolas técnicas federais.
-
-IN 128/2022. Regras operacionais do INSS.
-
-## 4. Marco jurisprudencial central
-
-### Súmula 96 TCU
-
-Reconhecimento amplo do tempo de aluno-aprendiz.
-
-### Súmula 18 TNU
-
-Cômputo com retribuição, mesmo indireta, à conta do orçamento, como contraprestação por labor na execução de bens e serviços para terceiros, sem recorte temporal (redação revista em 14/02/2020, Tema 216) [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-### PEDILEFs TNU
-
-Reafirmam a tese.
-
-### Tema 1124 STJ
-
-Interesse de agir. Aplica-se ao requerimento administrativo.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Ex-aluno de Escola Técnica Federal de 1945 a 1950
-
-Com certificado, histórico escolar e declaração de remuneração indireta. Tempo plenamente cômputável.
-
-### Cenário B — Ex-aluno de Escola Agrícola Federal
-
-Na modalidade aluno-aprendiz, com retribuição por alojamento, alimentação e material. Tempo cômputável.
-
-### Cenário C — Contagem recíproca
-
-Ex-aluno que tornou-se servidor público pode levar o tempo para o RPPS por CTC.
-
-### Cenário D — Complementação de tempo para aposentadoria RGPS
-
-Soma com demais períodos contributivos para fechar tempo necessário.
-
-## 6. Cenários limitados
-
-### Cenário E — Aluno comum sem atividade
-
-Mero estudante regular, sem caráter aluno-aprendiz, não gera tempo.
-
-### Cenário F — Retribuição inexistente
-
-Sem prova de remuneração direta ou indireta, pedido indefere.
-
-### Cenário G — Escola privada
-
-O regime aluno-aprendiz reconhecido é o federal.
-
-## 7. Metodologia
-
-Primeiro, obter declaração oficial da instituição.
-
-Segundo, histórico escolar.
-
-Terceiro, prova de retribuição pecuniária (recibos, ata, regulamento).
-
-Quarto, cotejo com a Súmula 96 TCU e Súmula 18 TNU.
-
-Quinto, requerimento administrativo com documentação completa.
-
-Sexto, ação judicial em caso de indeferimento, com produção de prova testemunhal.
-
-## 8. Riscos processuais
-
-Risco de prova deficiente. Crítico.
-
-Risco de indeferimento administrativo. Alto. Via judicial costuma ser necessária.
-
-Risco de contestação do caráter aluno-aprendiz. Defesa documental.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, contato direto com a antiga instituição, normalmente atualmente Instituto Federal.
-
-Segundo, busca de atas, regulamentos internos e certificados.
-
-Terceiro, prova testemunhal de ex-colegas.
-
-Quarto, juntada de doutrina e jurisprudência.
-
-Quinto, ação judicial com pedido de reconhecimento do tempo e recálculo.
-
-## 10. Integração prática
-
-Contagem recíproca com RPPS é comum. Documentos-comprobatórios-in128 organiza a listagem probatória. Peticao-previdenciaria assegura o padrão da peça.
+1. Identificar a instituição e o sucessor atual (Instituto Federal, CEFET, universidade federal, SENAI).
+2. Requerer certidão com norma de funcionamento, datas de início e fim, frequência, forma de retribuição e encomendas executadas.
+3. Reunir histórico escolar, regulamento, atas, livros do Fundo de Caixa Escolar e fotografias da época.
+4. Conferir se o ente mantinha RPPS no período, o que define CTC ou certidão escolar como meio de prova.
+5. Requerimento administrativo com toda a documentação (Tema 1124 STJ).
+6. Na via judicial, prova testemunhal de ex-colegas e docentes como complemento.

@@ -2,195 +2,151 @@
 
 ## Visão geral
 
-A perícia administrativa tem particularidades que a distinguem significativamente da perícia judicial. Orientação ao cliente para perícia administrativa deve ser produzida em conjunto com a referência da espécie de benefício (INCAPACIDADE, AUXILIO-ACIDENTE, BPC-LOAS ou APOSENTADORIA-PCD), mas com os ajustes desta referência.
+A orientação para perícia administrativa usa a referência da espécie (INCAPACIDADE, AUXILIO-ACIDENTE, BPC-LOAS ou APOSENTADORIA-PCD) com os ajustes desta referência. Há três modalidades em 2026.
 
-Três modalidades principais coexistem no regime atual (2026).
+**Perícia presencial.** Realizada na agência por perito médico federal, em regra em poucos minutos.
 
-**Perícia presencial tradicional.** Modalidade padrão em agências da Previdência Social, conduzida por perito médico federal, 10 a 20 minutos.
+**Análise documental.** Para B31, B91 e B94 em requerimentos que atendem aos requisitos das Portarias Conjuntas MPS/INSS 13, 14 e 15 de 23/03/2026. Decisão baseada apenas nos documentos médicos anexados, sem exame físico.
 
-**Análise documental.** Para B31, B91 e B94 em requerimentos que atendem aos requisitos das Portarias Conjuntas MPS/INSS 13, 14 e 15 de 23/03/2026. Decisão baseada exclusivamente em documentos médicos anexados, sem exame físico.
-
-**Teleperícia (SAT Remoto).** Modalidade por videoconferência, regulamentada pela Portaria DPMF/INSS 19/2026, vigente a partir de 13/04/2026.
-
-Cada modalidade exige orientação específica.
+**Teleperícia.** Videoconferência com perito médico federal remoto, com o segurado presente em uma agência do INSS, regulamentada pela Portaria Conjunta DPMF/INSS 19/2026, vigente desde 13/04/2026.
 
 ## Diferença estrutural com a perícia judicial
 
 ### Perito
-Na judicial, o perito é profissional nomeado pelo juízo, vinculado ao conjunto probatório do processo, com quesitos prévios apresentados pelas partes. Na administrativa, o perito é servidor federal do INSS, sem quesitos prévios, decidindo com base no protocolo interno da autarquia.
+Na judicial, o perito é nomeado pelo juízo e responde aos quesitos das partes. Na administrativa, o perito médico federal decide sem quesitos, pelo protocolo médico-pericial.
 
 ### Tempo
-Na judicial, a perícia é agendada com antecedência, permite preparação detalhada, normalmente dura entre 15 e 40 minutos. Na administrativa, o tempo é mais curto, normalmente 10 a 15 minutos.
-
-### Quesitos
-Na judicial, há quesitos do autor e da autarquia direcionando o perito. Na administrativa, não há. O perito segue apenas o protocolo médico-pericial do INSS.
+A perícia administrativa costuma ser mais curta que a judicial.
 
 ### Documentos
-Na judicial, os documentos já estão nos autos. O perito pode ler antes. Na administrativa, os documentos estão no processo administrativo (PA) ou são levados fisicamente pelo cliente. Cliente precisa apresentar novamente, mesmo que já tenha anexado no Meu INSS.
+Na judicial, os documentos estão nos autos. Na administrativa, estão no processo administrativo ou são levados pelo cliente, que deve apresentá-los no ato, mesmo que já os tenha anexado no Meu INSS.
 
 ### Contestação
-Laudo judicial é impugnável por manifestação nos autos. Laudo administrativo desfavorável exige pedido de revisão ou recurso administrativo ao CRPS.
+O laudo judicial é impugnado nos autos. A decisão administrativa desfavorável admite recurso ao CRPS e, na análise documental, a reanálise do art. 8º-A da Portaria Conjunta 13/2026.
 
-## Dados específicos para o quadro de dados da perícia administrativa
-
-Substituir no quadro da Seção 1 do documento os campos de processo e vara por.
-
-- Número do requerimento
-- Protocolo ou número do benefício (NB)
-- Agência do INSS (nome, endereço, telefone)
-- Modalidade (presencial, análise documental ou Teleperícia)
-- Data e horário
-- Benefício pleiteado
-
-Em Teleperícia, acrescentar link da videoconferência, requisitos técnicos (câmera, microfone, conexão estável).
-
-## Perícia presencial tradicional na agência do INSS
-
-### Chegada
-Cliente deve chegar com pelo menos 30 minutos de antecedência. Levar documento com foto e comprovante de agendamento (impresso ou no Meu INSS).
-
-### Duração
-Entre 10 e 20 minutos, frequentemente mais curta. Perito trabalha em série, com dezenas de clientes por dia. Isso afeta a profundidade da avaliação.
+## Perícia presencial na agência do INSS
 
 ### Documentos
-Mesmo que já tenha anexado no Meu INSS, levar cópias físicas. Pericia presencial ainda se beneficia de exame documental.
+Mesmo que já tenha anexado no Meu INSS, levar cópias físicas.
 
 ### Comportamento
-Mais breve e objetivo que na judicial. Postura respeitosa, sem extensão. Perito tende a conduzir com perguntas fechadas. Cliente pode solicitar espaço para complementar. Frase útil. Doutor, posso acrescentar um detalhe importante antes de concluirmos.
-
-### Limitações do formato
-Sem exame físico detalhado. Sem tempo para anamnese completa. Sem possibilidade de diálogo aprofundado. Orientar o cliente a trazer os pontos essenciais de forma objetiva, sem retórica.
+O perito tende a conduzir com perguntas fechadas. O cliente traz os pontos essenciais logo no início e pode pedir espaço para completar: "Doutor, posso acrescentar um detalhe importante antes de concluirmos?"
 
 ## Análise documental
 
 ### Natureza
-Modalidade sem exame físico. A decisão é baseada exclusivamente nos documentos médicos que o cliente anexa no Meu INSS no momento do requerimento. Aplica-se a B31, B91 e B94 quando presentes os requisitos das Portarias Conjuntas MPS/INSS 13, 14 e 15/2026.
+Modalidade sem exame físico. A decisão se baseia nos documentos médicos que o cliente anexa no Meu INSS no momento do requerimento. Aplica-se a B31, B91 e B94 quando presentes os requisitos das Portarias Conjuntas MPS/INSS 13, 14 e 15/2026.
 
 ### Limites e travas
-Há prazos máximos definidos para cada CID. Há trava de 180 dias para nova análise documental depois de prorrogação indeferida por parecer contrário (art. 6º, V, da Portaria Conjunta 13/2026). Depois de indeferimento documental, o novo pedido documental espera 30 dias (art. 6º, VI). Depois de dois indeferimentos documentais sucessivos, o pedido seguinte vai à perícia presencial (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026).
+A soma dos benefícios concedidos por análise documental tem teto (30 dias, ampliado para 90 até aproximadamente 20/09/2027 pelas Portarias Conjuntas 14 e 43/2026), e o perito pode fixar duração menor com base no tempo médio por CID (art. 4º, §§ 3º e 4º, da Portaria Conjunta 13/2026). Há trava de 180 dias para nova análise documental depois de prorrogação indeferida por parecer contrário (art. 6º, V, da Portaria Conjunta 13/2026). Depois de indeferimento documental, o novo pedido documental espera 30 dias (art. 6º, VI). Depois de dois indeferimentos documentais sucessivos, o pedido seguinte vai à perícia presencial (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026).
 
 Indeferido o pedido, o cliente tem dez dias da ciência para pedir a reanálise da documentação médica, com documento novo (art. 8º-A, redação da Portaria Conjunta 54/2026). Orientar o cliente a avisar o escritório no mesmo dia em que vir a negativa no Meu INSS, porque o recurso protocolado antes preclui a reanálise.
 
-Essas travas impactam a estratégia. Cliente com quadro que ultrapassa o tempo médio do CID deve ser orientado a não usar análise documental repetidamente, sob pena de esgotar o acesso à modalidade e depois ter que esperar para perícia presencial.
+Cliente com quadro que ultrapassa o tempo médio do CID não deve repetir a análise documental sem estratégia, porque as travas podem atrasar o acesso à perícia presencial. Detalhe em `analise-documental-incapacidade`.
 
 ### Como orientar em análise documental
-O cliente não se apresenta para perícia. Não há interação. A orientação se converte em orientação sobre a documentação a anexar.
+O cliente não se apresenta à perícia, e a orientação trata da documentação a anexar.
 
 - Anexar relatório médico recente (preferencialmente dos últimos 30 dias) com diagnóstico, CID, história clínica, exame físico descrito, tratamentos em uso e prognóstico.
 - Anexar exames complementares que evidenciem a patologia.
 - Preencher corretamente a autodeclaração de sintomas no Meu INSS, sem minimizar.
-- Conferir antes de enviar se todos os documentos estão legíveis e se o CID consta expressamente.
+- Conferir antes de enviar se os documentos estão legíveis e se trazem diagnóstico por extenso ou CID, data de emissão e assinatura com registro do emitente (art. 2º da Portaria Conjunta 13/2026).
 
 ### Quando a análise documental não é adequada
-Quadros crônicos que já esgotaram o prazo do CID. Quadros de difícil visualização documental (transtornos mentais sem relatório psiquiátrico detalhado). Quadros em que o exame físico é essencial para caracterização da incapacidade. Nestes casos, orientar o cliente a preferir perícia presencial.
+Quadros crônicos que já esgotaram o teto, quadros de difícil demonstração documental (transtorno mental sem relatório psiquiátrico detalhado) e quadros em que o exame físico é essencial. Nesses casos, avaliar com o advogado a via presencial, observadas as hipóteses da Portaria Conjunta 13/2026.
 
-## Teleperícia (Portaria DPMF/INSS 19/2026)
+## Teleperícia (Portaria Conjunta DPMF/INSS 19/2026)
 
 ### Natureza
-Modalidade por videoconferência, vigente a partir de 13/04/2026. Conduz exame remoto via plataforma oficial do INSS.
+Videoconferência conduzida por perito médico federal remoto, com o segurado presente em uma agência do INSS. Abrange a perícia médica inicial, a avaliação médica inicial de BPC e a reavaliação de BPC. A triagem colhe o Termo de Consentimento Livre e Esclarecido para Teleavaliação e digitaliza os documentos antes da chamada.
 
-### Requisitos técnicos
-Câmera funcionando, microfone, conexão estável, ambiente iluminado, silencioso, privado. Cliente sem acesso a estes requisitos pode solicitar atendimento presencial.
-
-### Preparação específica
-Cliente deve testar a conexão com antecedência. Deve ter documentos médicos em mãos e também digitalizados para compartilhamento. Deve estar em ambiente com boa iluminação (para que o perito possa observar expressão facial, coloração da pele, estado geral). Deve estar com roupa que permita mostrar partes do corpo se necessário (braços, pernas, abdômen).
-
-### Termo de Consentimento
-Cliente precisa assinar Termo de Consentimento Livre e Esclarecido para Teleavaliação. É direito do segurado recusar e pedir perícia presencial. Cliente deve saber disso.
+### Consentimento
+O cliente pode não assinar o termo e pedir perícia presencial. A recusa, quando o quadro exige exame físico, não equivale a desistência do requerimento.
 
 ### Limitações do formato
-Sem exame físico. Sem palpação. Sem mensuração de amplitude articular. Sem avaliação de força muscular. Sem ausculta. Sem avaliação de marcha. Quadros que exigem esses elementos são incompatíveis com Teleperícia.
+Sem palpação, mensuração de amplitude articular, avaliação de força muscular, ausculta ou observação completa da marcha. Exemplos de quadros em que o exame físico decide:
 
-Se a condição do cliente exige exame físico, orientar a recusar a Teleperícia e solicitar perícia presencial. Alguns exemplos.
+- Hérnia de disco (manobras específicas).
+- Artrose avançada (amplitude articular).
+- Doença pulmonar obstrutiva (ausculta).
+- Doença neurológica com sinais de exame físico (força, reflexos).
 
-- Hérnia de disco (exige manobras específicas).
-- Artrose avançada (exige amplitude articular).
-- Doença pulmonar obstrutiva (exige ausculta).
-- Amputação ou deformidade (benefício com demonstração direta ao vivo, mesmo remota, mas com limites).
-- Doenças neurológicas com sinais de exame físico (força muscular, reflexos).
+Nesses casos, orientar o cliente a não consentir e a pedir perícia presencial, registrando o pedido por escrito na agência.
 
-### Recusa à Teleperícia
-Cliente tem direito de recusar. Orientar que a recusa não gera prejuízo ao direito. Segurado pode escrever via Meu INSS solicitando perícia presencial, alegando que a condição exige exame físico ou que as condições técnicas de videoconferência não são adequadas.
+### Falha técnica
+Se houver queda de conexão, áudio cortado ou vídeo congelado, o cliente pede o reagendamento e relata ao advogado o momento e a duração da falha.
 
-### Armadilha da falha técnica
-Se durante a Teleperícia houver queda de conexão, áudio cortado, vídeo congelado, o cliente deve exigir reagendamento. Laudo produzido com falha técnica é impugnável. Orientar a registrar o tempo da falha, tirar print, reclamar no momento.
-
-### Cerceamento de defesa
-Perito que afirma ter feito "exame físico" via Teleperícia produz documento falso, porque é materialmente impossível. Auditoria deste tipo de laudo encontra fundamento em cerceamento de defesa. Cliente deve relatar ao advogado a duração da perícia, o que foi pedido, o que foi mostrado.
+### Relato ao advogado
+O cliente relata a duração da perícia, o que foi pedido e o que foi mostrado. O laudo que registra exame físico incompatível com a videoconferência tem contradição interna e fundamenta impugnação.
 
 ## Avaliação biopsicossocial administrativa
 
 ### BPC
-Perícia médica e avaliação social na agência ou via Teleperícia, em datas separadas. Cliente deve chegar preparado para ambas. Referência `BPC-LOAS.md` cobre integralmente.
+Avaliação médica e avaliação social, na agência ou por Teleperícia (a médica), em regra em datas separadas. Ver `BPC-LOAS.md`.
 
 ### Aposentadoria PCD (LC 142/2013)
-Também tem perícia médica e avaliação social. Agenda-se no Meu INSS. Mesmo roteiro de preparo. Referência `APOSENTADORIA-PCD.md` cobre integralmente.
+Também tem avaliação médica e avaliação social, agendadas no Meu INSS. Ver `APOSENTADORIA-PCD.md`.
 
 ### Diferença para a judicial
-Avaliação administrativa usa a TCQ (Tabela Conclusiva de Qualificadores) diretamente. Judicial pode aceitar fundamentação mais flexível, incluindo interpretação do Protocolo de Gênero (Resolução CNJ 492/2023) em casos aplicáveis.
+A avaliação administrativa aplica diretamente a TCQ (Tabela Conclusiva de Qualificadores). Em juízo, a análise pode ser mais ampla, inclusive com o Protocolo para Julgamento com Perspectiva de Gênero (Resolução CNJ 492/2023) quando aplicável.
 
 ## Direitos do segurado na perícia administrativa
 
 ### Presença de acompanhante
-Cliente tem direito a acompanhante. Especialmente relevante em casos de deficiência, idade avançada, limitação cognitiva. A negativa é irregular.
+O cliente pode pedir acompanhante, o que é relevante em caso de deficiência, idade avançada ou limitação cognitiva. A recusa nesses casos é impugnável.
 
 ### Acessibilidade
-Cliente com deficiência tem direito a adaptação. Intérprete de Libras, material em braile, rampas, banheiros acessíveis. A agência deve prover.
+O cliente com deficiência tem direito a adaptação (intérprete de Libras, material em braile, acessibilidade física), a cargo da agência (Lei 13.146/2015).
 
 ### Tempo suficiente
-Cliente tem direito a tempo razoável para o exame. Perícia concluída em dois minutos, sem exame, com perguntas superficiais, é irregular. Cliente deve registrar mentalmente e relatar ao advogado.
+A perícia concluída em poucos minutos, sem exame e com perguntas superficiais, é impugnável. O cliente relata a duração ao advogado.
 
 ### Explicação do resultado
-Cliente tem direito a saber o resultado da perícia (concedido, indeferido, sobrestado) logo ou em curto prazo no Meu INSS. Cliente pode consultar e, se indeferido, iniciar recurso em 30 dias.
+O resultado aparece no Meu INSS. Se houver indeferimento, contam os prazos de dez dias para a reanálise (análise documental) e de 30 dias para o recurso.
 
 ### Documentação recebida
-Cliente deve sair da perícia com protocolo de atendimento. Não há entrega do laudo pericial no ato, mas o protocolo serve de comprovante de comparecimento.
+O cliente sai com o protocolo de atendimento, que comprova o comparecimento. O laudo não é entregue no ato.
 
 ## Armadilhas específicas da perícia administrativa
 
 ### A armadilha do perito apressado
-Peritos federais atendem muitos casos por dia. Cliente deve ser direto e objetivo, sem romper com a postura de colaboração. Trazer os pontos essenciais nos primeiros minutos. Se o perito concluir rapidamente, pedir para acrescentar pontos não cobertos.
+O cliente é direto e colaborativo, traz os pontos essenciais nos primeiros minutos e, se o perito concluir rapidamente, pede para acrescentar o que faltou.
 
 ### A armadilha da sala silenciosa
-Perícia administrativa costuma ser em sala pequena, com perito focado no computador. Cliente pode entender a postura como frieza e ficar retraído. Orientar a não se deixar intimidar e relatar com a mesma clareza.
+O perito costuma ficar focado no computador, e o cliente pode se retrair. Orientar a relatar com a mesma clareza.
 
 ### A armadilha da ausência de exame
-Perito que não toca no cliente, não pede para andar, não avalia amplitude, não testa força, produz laudo insuficiente. Cliente deve perceber e relatar ao advogado. Isso é matéria de impugnação.
-
-### A armadilha do "volte em 30 dias"
-Perito administrativo pode sugerir retorno em 30 dias ao invés de concessão. Isso tecnicamente não é indeferimento, mas também não é concessão. Cliente deve relatar e advogado deve considerar a estratégia (aguardar ou recorrer).
+Se o perito não toca no cliente, não pede para andar, não avalia amplitude nem testa força, o cliente relata ao advogado, para impugnação.
 
 ### A armadilha do Meu INSS mal preenchido
-Dados mal preenchidos no Meu INSS (sintomas mal descritos, autodeclaração genérica, documentos ausentes) comprometem a perícia administrativa mesmo antes dela acontecer. Advogado deve supervisionar o preenchimento antes do requerimento.
+Autodeclaração genérica e documentos ausentes comprometem a perícia antes dela. O advogado supervisiona o preenchimento (`analise-documental-incapacidade`, Protocolo de Autodeclaração).
 
 ### A armadilha do indeferimento por ausência
-Cliente que não comparece perde o benefício. Cliente que não comparece à Teleperícia também. Orientar a confirmar presença no Meu INSS na véspera e a solicitar reagendamento imediato se não puder comparecer, com motivo justificado.
+A ausência à perícia, presencial ou por Teleperícia, leva ao indeferimento. Orientar o cliente a conferir o agendamento no Meu INSS na véspera e a pedir reagendamento imediato, com motivo, se não puder comparecer.
 
 ## O que nunca fazer em perícia administrativa
 
 - Chegar atrasado ou não comparecer sem justificativa.
 - Aceitar Teleperícia se a condição exige exame físico.
-- Permitir que o perito encerre rapidamente sem que pontos centrais tenham sido abordados.
+- Deixar a perícia terminar sem mencionar os pontos centrais.
 - Confiar que os documentos anexados no Meu INSS bastam (levar cópias físicas).
 - Discutir com o perito sobre benefícios anteriores.
-- Tentar intimidar ou adular o perito (nenhum dos dois funciona, ambos prejudicam).
-- Dizer que o cliente já "perdeu" benefícios indevidamente (foco nos fatos clínicos, não em história processual).
+- Pressionar ou bajular o perito.
+- Falar de benefícios negados no passado em vez dos fatos clínicos.
 
 ## Documentação adicional para perícia administrativa
 
-Além do que as referências específicas listam, levar.
+Além do que as referências específicas listam, levar:
 
-- Comprovante de agendamento (Meu INSS impresso ou no celular).
-- Senha ou login do Meu INSS (pode ser solicitado para conferência).
-- Para Teleperícia, equipamento pessoal testado previamente.
-- Cadastro Único atualizado em BPC.
+- Comprovante de agendamento (impresso ou no celular).
+- Cadastro Único atualizado, em BPC.
 
 ## Pós-perícia administrativa
 
-Cliente deve verificar o resultado no Meu INSS nas 72 horas seguintes. Se houver indeferimento ou exigência, acionar o advogado em até 48 horas para preservar prazos recursais.
+O cliente confere o resultado no Meu INSS nos dias seguintes e avisa o advogado no mesmo dia em que vir indeferimento ou exigência.
 
-Prazo de recurso administrativo ao CRPS é de 30 dias corridos da ciência da decisão (art. 77, Portaria 462/2026). Prazo de revisão administrativa (art. 11 Lei 10.839/2003) é distinto do prazo recursal. Advogado deve diferenciar na análise.
+O prazo do recurso ao CRPS é de 30 dias da ciência da decisão (art. 77 do Regimento Interno do CRPS), contínuos (art. 78). Na análise documental, a reanálise tem prazo de dez dias e o recurso direto a preclui (arts. 8º-A e 9º, § 1º, da Portaria Conjunta 13/2026). A revisão administrativa tem regime próprio (ver `admissibilidade-barreiras-crps`).
 
 ## Integração com outras skills
 
-Quando a perícia administrativa resultar em indeferimento, acionar a skill `auditoria-laudo-pericial` com o relato do cliente e o laudo produzido, e a skill `peticao-previdenciaria` para o recurso ao CRPS ou a ação judicial. Quando a perícia for em regime de análise documental, acionar a skill `analise-documental-incapacidade`. Quando for Teleperícia com vícios, acionar a skill `auditoria-laudo-pericial` com os critérios específicos da Portaria DPMF/INSS 19/2026.
+Quando a perícia administrativa resultar em indeferimento, acionar a skill `auditoria-laudo-pericial` com o relato do cliente e o laudo produzido, e a skill `peticao-previdenciaria` para o recurso ao CRPS ou a ação judicial. Quando a perícia for em regime de análise documental, acionar a skill `analise-documental-incapacidade`. Quando for Teleperícia com vícios, acionar a skill `auditoria-laudo-pericial` com os critérios da Portaria Conjunta DPMF/INSS 19/2026.

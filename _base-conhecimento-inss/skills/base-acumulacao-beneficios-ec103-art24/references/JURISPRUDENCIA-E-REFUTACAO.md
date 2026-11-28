@@ -4,13 +4,13 @@
 
 ### 1.1. ADI 7051. Constitucionalidade do art. 23 da EC 103/2019
 
-Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, julgamento registrado no portal em 26/06/2023 (auditoria 03/10/2026).
+Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, julgamento registrado no portal em 26/06/2023.
 
 Tese fixada. "É constitucional o art. 23, caput, da Emenda Constitucional nº 103/2019, que fixa novos critérios de cálculo para a pensão por morte no Regime Geral e nos Regimes Próprios de Previdência Social".
 
 Vencidos parcialmente. Min. Edson Fachin e Min. Rosa Weber.
 
-Resultado. Improcedente, por maioria (auditoria 03/10/2026).
+Resultado. Improcedente, por maioria.
 
 Status. DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma.
 
@@ -66,7 +66,7 @@ Aplicação por analogia à acumulação de duas aposentadorias decorrentes de c
 
 ### 1.6. Tema 627/STF (RE 658.999)
 
-Plenário Virtual. Mérito em 17/12/2022, acórdão de 22/03/2023, trânsito em 21/04/2023 (auditoria 03/10/2026).
+Plenário Virtual. Mérito em 17/12/2022, acórdão de 22/03/2023, trânsito em 21/04/2023.
 
 Tese fixada. "Em se tratando de cargos constitucionalmente acumuláveis, descabe aplicar a vedação de acumulação de aposentadorias e pensões contida na parte final do artigo 11 da Emenda Constitucional 20/98, porquanto destinada apenas aos casos de que trata, ou seja, aos reingressos no serviço público por meio de concurso público antes da publicação da referida emenda e que envolvam cargos inacumuláveis." [CONFERIDO]
 
@@ -101,12 +101,6 @@ Texto. "Ressalvada a revisão prevista em lei, os proventos da inatividade regul
 Aplicação. Tempus regit actum. Direito adquirido se aperfeiçoa no momento do preenchimento dos requisitos.
 
 Status. FAVORÁVEL ao segurado quando aplicada à aposentadoria pré-reforma + pensão pós-reforma.
-
-### 2.2. Súmula Vinculante 33
-
-Texto. "Aplicam-se ao servidor público, no que couber, as regras do regime geral da previdência social sobre aposentadoria especial de que trata o art. 40, § 4º, inciso III, da Constituição Federal, até a edição de lei complementar específica".
-
-Aplicação subsidiária a vínculos especiais.
 
 ## 3. Controvérsia em construção na Primeira Turma do STF
 
@@ -154,7 +148,7 @@ Acompanhamento do desfecho dos recursos em curso na Primeira Turma sobre a maté
 
 ### 4.1. Tese 1 do INSS. "Não há direito adquirido a regime jurídico de acumulação"
 
-Refutação. O texto do art. 24, § 4º, da própria EC 103/2019 afasta expressamente a aplicação do redutor quando o direito ao benefício foi adquirido antes da entrada em vigor da Emenda. Não se trata de invocar direito adquirido a regime jurídico genérico, mas direito adquirido literalmente expresso na cláusula transitória da Emenda.
+Refutação. O texto do art. 24, § 4º, da própria EC 103/2019 afasta o redutor quando o direito aos benefícios foi adquirido antes da entrada em vigor da Emenda. Se apenas a aposentadoria é anterior, sustentar que o redutor incida somente sobre a pensão nova. Não se trata de invocar direito adquirido a regime jurídico genérico, mas direito adquirido literalmente expresso na cláusula transitória da Emenda.
 
 Reforço. Súmula 359/STF é diretamente aplicável.
 
@@ -198,7 +192,7 @@ Art. 37, XI, XVI, CF.
 
 Art. 40, § 6º, CF.
 
-Art. 201, § 4º, CF.
+Art. 201, § 15, CF.
 
 Art. 23 da EC 103/2019.
 
@@ -280,7 +274,7 @@ Mandado de segurança em `mandado-seguranca-previdenciario`.
 
 Tributação em `tributacao-beneficios-previdenciarios`.
 
-CNIS em `cnis-acerto-indicadores`.
+CNIS em `base-cnis-acerto-indicadores`.
 
 Precedentes em `precedentes-previdenciarios`.
 

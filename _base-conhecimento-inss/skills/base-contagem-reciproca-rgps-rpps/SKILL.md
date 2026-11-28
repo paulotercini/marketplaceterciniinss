@@ -1,146 +1,50 @@
 ---
 name: base-contagem-reciproca-rgps-rpps
-description: "Contagem recíproca entre RGPS e RPPS, emissão e aceitação de CTC, compensação financeira entre regimes e vedações. Procedimento operacional pela Portaria DIRBEN/INSS 998/2022 - Livro IX (Compensação Previdenciária), atualizada pela Portaria DIRBEN/INSS 1.250/2024. Use SEMPRE que mencionar contagem recíproca, RGPS e RPPS, CTC, Certidão de Tempo de Contribuição, compensação financeira entre regimes, servidor público tempo privado, tempo celetista no serviço público, Lei 9.796/1999, art. 201 §9º CF, arts. 94 a 99 Lei 8.213/91, Decreto 10.188/2019, Portaria MPS 1.400/2024, Portaria MTP 1.467/2022, Portaria DIRBEN/INSS 998/2022, Portaria DIRBEN/INSS 1.054/2022, Portaria DIRBEN/INSS 1.250/2024, Livro IX Compensação Previdenciária, Comprev, CADPREV, regime instituidor RI, regime de origem RO, estoque RGPS estoque RPPS, fluxo acumulado compensação, pró-rata mensal compensação, glosa compensação, revisão de ofício compensação financeira, Súmula 24 AGU, IN 128/2022 CTC, indenização de contribuições contagem recíproca, Enunciado 6 CRPS, desaverbação, cômputo de tempo rural CTC, cômputo especial CTC, conversão em RPPS vedada, averbação de tempo, migração de regime, RJU estatutário, EC 103/2019 contagem recíproca, art. 195 §14 CF compensação, Portaria 990/2022, Portaria 1.316/2025, contagem recíproca aluno aprendiz art. 43-A, decisão judicial compensação implantação. Cruza com cnis-acerto-indicadores, documentos-comprobatorios-in128, peticao-previdenciaria, base-aluno-aprendiz, base-servico-militar-obrigatorio, base-tempo-rural-anterior-1991, indenizacao-contribuicoes-atraso, base-rpps-na-otica-do-rgps, base-portarias-dpmf-inss-hub e precedentes-previdenciarios."
+description: "Contagem recíproca entre RGPS e RPPS, emissão e aceitação de CTC, compensação financeira entre regimes e vedações. Procedimento operacional pela Portaria DIRBEN/INSS 998/2022 - Livro IX (Compensação Previdenciária), atualizada pela Portaria DIRBEN/INSS 1.250/2024. Use SEMPRE que mencionar contagem recíproca, RGPS e RPPS, CTC, Certidão de Tempo de Contribuição, compensação financeira entre regimes, servidor público tempo privado, tempo celetista no serviço público, Lei 9.796/1999, art. 201 §9º CF, arts. 94 a 99 Lei 8.213/91, Decreto 10.188/2019, Portaria MTP 1.467/2022, Portaria DIRBEN/INSS 998/2022, Portaria DIRBEN/INSS 1.054/2022, Portaria DIRBEN/INSS 1.250/2024, Livro IX Compensação Previdenciária, Comprev, CADPREV, regime instituidor RI, regime de origem RO, estoque RGPS estoque RPPS, fluxo acumulado compensação, pró-rata mensal compensação, glosa compensação, revisão de ofício compensação financeira, IN 128/2022 CTC, indenização de contribuições contagem recíproca, Tema 609 STJ, Tema 942 STF, Enunciado 17 Jornada TRF4, desaverbação, cômputo de tempo rural CTC, cômputo especial CTC, conversão em RPPS vedada, averbação de tempo, migração de regime, RJU estatutário, EC 103/2019 contagem recíproca, art. 195 §14 CF compensação, Portaria 990/2022, Portaria 1.316/2025, contagem recíproca aluno aprendiz art. 43-A, decisão judicial compensação implantação. Cruza com base-cnis-acerto-indicadores, base-documentos-comprobatorios-in128, peticao-previdenciaria, base-aluno-aprendiz, base-servico-militar-obrigatorio, base-tempo-rural-anterior-1991, indenizacao-contribuicoes-atraso, base-rpps-na-otica-do-rgps, base-portarias-dpmf-inss-hub e precedentes-previdenciarios."
 ---
 
 # Contagem Recíproca RGPS e RPPS
 
-## Escopo
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação às teses do INSS e do ente em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Skill temática pró-segurado. Orienta o direito à contagem recíproca entre o Regime Geral de Previdência Social (RGPS) e o Regime Próprio de Previdência Social (RPPS), a emissão de Certidão de Tempo de Contribuição (CTC), o aproveitamento do tempo em um regime no outro e a compensação financeira entre os entes.
+## Base normativa
 
-## Marco normativo central
+- CF, art. 201, §9º (contagem recíproca, com compensação financeira) e art. 40, §9º (servidor).
+- Lei 8.213/91, arts. 94 a 99. Art. 96 fixa as vedações:
+  - I: vedada a contagem em dobro ou em outras condições especiais;
+  - II: vedado somar tempo público e privado concomitantes;
+  - III: tempo usado para aposentadoria em um regime não se conta no outro;
+  - IV: tempo anterior ou posterior à filiação obrigatória exige indenização;
+  - V: vedada CTC sem contribuição efetiva, salvo empregado, doméstico, avulso e, desde 01/04/2003, contribuinte individual prestador a empresa (Lei 10.666/2003, art. 4º, §5º); não se aplica ao tempo anterior à EC 20/1998 equiparado por lei a tempo de contribuição (parágrafo único);
+  - VI: RPPS emite CTC apenas para ex-servidor;
+  - VII: RPPS não conta tempo do RGPS sem CTC, ainda que prestado ao próprio ente;
+  - VIII: vedada a desaverbação de tempo que gerou vantagem remuneratória ao servidor ativo;
+  - IX: para aposentadoria especial, o tempo especial reconhecido na origem, sem conversão, vem discriminado na CTC.
+- Lei 9.796/1999 e Decreto 10.188/2019 (compensação financeira).
+- Decreto 3.048/99, arts. 125 a 130; IN 128/2022, art. 70, redação da IN 167/2024 (tempo de RPPS no RGPS por CTC no modelo do Anexo IX da Portaria MTP 1.467/2022, com a Relação das Bases de Cálculo de Contribuição do Anexo X para período posterior a 06/1994).
+- Portaria DIRBEN/INSS 998/2022, Livro IX (compensação previdenciária), alterada pela Portaria DIRBEN 1.250/2024, que inclui o art. 43-A sobre CTC de aluno-aprendiz.
 
-CF/88, art. 201, §9º. Garantia da contagem recíproca.
+Nenhum enunciado do CRPS trata de CTC; a tese se sustenta na lei e no regulamento.
 
-Lei 8.213/91, arts. 94 a 99. Disciplina a contagem recíproca, emissão de CTC e compensação.
+## Precedentes
 
-Lei 9.796/1999. Compensação financeira entre regimes.
+- Tema 609 STJ, adverso: o tempo rural anterior à Lei 8.213/91 dá direito à certidão, mas só se computa no regime estatutário com o comprovante de pagamento das contribuições. Antes de indenizar, comparar com a aposentadoria no próprio RGPS, em que esse tempo conta sem indenização, salvo para carência (art. 55, §2º).
+- Tema 942 STF: até a EC 103/2019, o servidor tem direito à conversão do tempo especial em comum, com as normas do RGPS. Após 13/11/2019, vedada a conversão do tempo posterior (EC 103/2019, art. 25, §2º, no RGPS; art. 10, §3º, no servidor federal). A EC 103/2019, art. 25, §3º, declara nula a aposentadoria de RPPS concedida com tempo do RGPS sem contribuição ou indenização do segurado obrigatório responsável.
+- Enunciado 17 da I Jornada de Direito Previdenciário do TRF4, adverso e não vinculante: "Não é possível a averbação no RGPS de período contributivo de RPPS relativo a vínculo ainda ativo." Defesa: provar exoneração ou encerramento do vínculo antes da DER (art. 96, VI).
 
-Decreto 10.188/2019. Regulamento da compensação financeira.
+## Roteiro pró-segurado
 
-IN 128/2022. Regras operacionais sobre CTC, desaverbação e cômputo.
-
-EC 103/2019. Regras de transição específicas para servidores públicos federais e teto.
-
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
-
-## Marco jurisprudencial
-
-Art. 201, §9º, da CF e arts. 94 a 99 da Lei 8.213/91 regem a contagem recíproca (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
-
-Fonte oficial em https://portal.stf.jus.br
-
-Art. 94 da Lei 8.213/91. Contagem recíproca do tempo de contribuição entre regimes, com compensação financeira (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
-
-Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
-
-Tema 609 STJ, tese adversa. O tempo rural anterior à Lei 8.213/91 dá direito à certidão, mas só se computa no regime estatutário com a prova do pagamento das contribuições. Caminho do segurado: no próprio RGPS esse tempo conta sem indenização, salvo para carência (art. 55, §2º, da Lei 8.213/91) (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022 e pelo Livro IX da Portaria DIRBEN/INSS 998/2022; o Tema 609 STJ é tese adversa, porque condiciona o cômputo do tempo rural no RPPS ao pagamento das contribuições (auditoria 03/10/2026, retirado o Tema 176 STF, que trata de ICMS).
-
-## Espaço pró-segurado
-
-Primeiro, servidor público com tempo anterior no RGPS pode averbar o tempo no RPPS por CTC emitida pelo INSS.
-
-Segundo, ex-servidor público que migrou para o RGPS pode averbar o tempo de RPPS no INSS por CTC emitida pelo ente público.
-
-Terceiro, tempo especial reconhecido no RGPS pode ser aproveitado no RPPS, com discussão sobre a conversão.
-
-Quarto, tempo de aluno-aprendiz e tempo militar podem ser aproveitados por contagem recíproca.
-
-Quinto, tempo rural pré-1991 só entra na contagem recíproca mediante indenização de contribuições, exigida pelo Tema 609 STJ, tese adversa; antes, comparar com a aposentadoria no próprio RGPS, em que esse tempo conta sem indenização (auditoria 03/10/2026).
-
-## Vedações e restrições
-
-Vedada a contagem de tempo em regime público sem desaverbação prévia. Sobreposições devem ser evitadas.
-
-Vedada a conversão de tempo especial em comum no RPPS, salvo situações específicas em que a jurisprudência admite.
-
-Necessidade de compensação financeira entre os regimes (Lei 9.796/1999).
-
-## Regra pró-segurado
-
-Primeiro, levantamento do tempo em cada regime.
-
-Segundo, solicitação de CTC ao regime de origem.
-
-Terceiro, apresentação da CTC ao regime de destino para averbação.
-
-Quarto, em caso de recusa, recurso administrativo e, se necessário, mandado de segurança.
-
-Quinto, se houver tempo rural sem recolhimento no período posterior a 1991, indenização de contribuições.
-
-Sexto, em servidor federal, seguir a sistemática SIPEC e a EC 103/2019.
+1. Levantar os períodos em cada regime e as concomitâncias.
+2. Comparar a aposentadoria em cada regime antes de emitir CTC; a certidão usada em um regime não serve ao outro (art. 96, III).
+3. Requerer a CTC ao regime de origem e conferir datas, categorias, remunerações desde 07/1994 e períodos especiais discriminados (art. 96, IX).
+4. Averbar no regime de destino. Compensação financeira é obrigação entre entes, não condição ao segurado.
+5. Recusa ou mora: recurso administrativo e mandado de segurança na Vara Federal (contra o INSS) ou na Justiça Estadual (contra ente estadual ou municipal). MS não tramita no JEF (Lei 10.259/2001, art. 3º, §1º, I).
+6. Tempo rural ou de contribuinte individual sem recolhimento: indenização (art. 96, IV; `indenizacao-contribuicoes-atraso`).
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para aluno-aprendiz, acionar `base-aluno-aprendiz`.
-Para serviço militar, acionar `base-servico-militar-obrigatorio`.
-Para tempo rural pré-1991, acionar `base-tempo-rural-anterior-1991`.
-Para indenização, acionar `indenizacao-contribuicoes-atraso`.
-Para conferir uma CTC estadual concreta e gerar os arquivos de importação do Prévius (tempo e salários), acionar `base-ctc-estadual-conferencia-e-lancamento-previus`.
-Ao redigir peça, acionar `peticao-previdenciaria`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, sobreposições devem ser evitadas para não gerar cômputo em duplicidade.
-
-Segundo, tempo especial aproveitado no RPPS tem restrições.
-
-Terceiro, CTC tem efeitos próprios. Aguardar emissão correta.
-
-Quarto, recusa administrativa de averbação permite mandado de segurança.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, contagem recíproca.
-
-Hugo Goes, cômputo.
-
-Fábio Zambitte Ibrahim, compensação financeira.
-
-Wladimir Novaes Martinez, regimes.
-
-Daniel Pulino, direito constitucional previdenciário.
-
-Marco Aurélio Serau Junior, reforma.
-
-IBDP, defesa da contagem recíproca.
-
-## O que NÃO está nesta skill
-
-Aluno-aprendiz está em `base-aluno-aprendiz`. Tempo militar está em `base-servico-militar-obrigatorio`. Tempo rural pré-1991 está em `base-tempo-rural-anterior-1991`. Conversão de tempo especial está em `base-tempo-especial-conversao`. Indenização de contribuições está em `indenizacao-contribuicoes-atraso`.
-
-## Enunciado 17 da I Jornada do TRF4, ALERTA (Onda 109)
-
-Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 22. "Não é possível a averbação no RGPS de período contributivo de RPPS relativo a vínculo ainda ativo."
-
-ALERTA DE SINAL CONTRÁRIO. Este enunciado é DESFAVORÁVEL ao segurado e o INSS pode invocá-lo. Registrado aqui para defesa antecipada, não para uso ofensivo.
-
-Fundamento invocado na justificativa. Art. 12 da Portaria MPS 154/2008 e art. 96, IV, da Lei 8.213/91, na redação da MP 871/2019 convertida na Lei 13.846/2019.
-
-Defesa possível. Primeiro, o enunciado tem caráter meramente doutrinário por declaração do próprio TRF4 e não vincula. Segundo, ele pressupõe vínculo ATIVO, de modo que a exoneração ou o encerramento do vínculo antes da DER afasta a hipótese, e a data do encerramento passa a ser o fato decisivo a provar. Terceiro, o marco da Lei 13.846/2019 abre discussão de direito adquirido para quem reuniu os requisitos antes dela.
+Aluno-aprendiz: `base-aluno-aprendiz`. Serviço militar: `base-servico-militar-obrigatorio`. Tempo rural: `base-tempo-rural-anterior-1991`. Indenização: `indenizacao-contribuicoes-atraso`. Conversão de tempo especial: `base-tempo-especial-conversao`. CTC estadual e importação no Prévius: `base-ctc-estadual-conferencia-e-lancamento-previus`. RPPS: `base-rpps-na-otica-do-rgps`. Peça: `peticao-previdenciaria`. Precedentes: `precedentes-previdenciarios`. Portarias: `base-portarias-dpmf-inss-hub`.

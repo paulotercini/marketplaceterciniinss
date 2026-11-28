@@ -13,7 +13,7 @@ Postura pró-segurado exclusiva. Uma citação falsa ou divergente na base conta
 
 ## 2. Quando acionar
 
-Quando o usuário pedir para averiguar a veracidade das skills ou dos Modelos Ouro. Quando pedir uma conferência de jurisprudência em massa. Como manutenção periódica da base, especialmente após lotes grandes de ondas novas.
+Quando o usuário pedir para averiguar a veracidade das skills ou dos Modelos Ouro. Quando pedir uma conferência de jurisprudência em massa. Como manutenção periódica da base, especialmente após lotes grandes de alterações.
 
 ## 3. As cinco etapas
 
@@ -35,23 +35,20 @@ NAO_CATALOGADO_NA_CORTE. O número existe no catálogo, mas em OUTRO tribunal. L
 
 NAO_CATALOGADO. Não consta do catálogo interno. NÃO significa falso. O catálogo é curado e mínimo por escolha. Segue para verificação na fonte.
 
-INFORMATIVO. O item consta do catálogo, mas o registro ainda não traz a tese literal transcrita (exemplo histórico, o registro do Tema 1124/STJ antes da transcrição da tese). Verificar e completar.
+INFORMATIVO. O item consta do catálogo, mas o registro ainda não traz a tese literal transcrita. Verificar e completar.
 
 ### Etapa 3. Verificação na fonte oficial
 
-Meio de verificação (Onda 96). A verificação na fonte roda pelo Claude in Chrome, na base oficial do tribunal de origem do item, seguindo a skill `pesquisa-jurisprudencia-chrome`. Firecrawl e SearXNG podem ser usados para localizar o documento, nunca para classificar o item. A classificação CONFIRMADO_FONTE_OFICIAL exige o inteiro teor ou a página do tema aberta na base do tribunal, com data da conferência registrada. Item verificado apenas em portal jurídico recebe, no máximo, PROVAVEL_FONTE_SECUNDARIA.
+A classificação CONFIRMADO_FONTE_OFICIAL exige o inteiro teor ou a página do tema aberta na base do tribunal, com a data da conferência registrada, na forma de `pesquisa-jurisprudencia-chrome`. Item visto apenas em portal jurídico recebe, no máximo, PROVAVEL_FONTE_SECUNDARIA.
 
-Item que for acórdão do TRF3 ou de Turma Recursal da 3ª Região passa primeiro por `buscar_acordaos_trf3` com o número CNJ. Achado no MCP classifica no máximo como PROVAVEL_FONTE_SECUNDARIA.
+A verificação roda em lotes de até doze itens, com resposta de uma linha por item, pelo agente `base-conhecimento-inss:verificador-precedentes`, invocado pela Agent tool. O agente recebe cada lote com ID normalizado, arquivo, linha e contexto, segue a ordem abaixo e devolve relatório no formato do catálogo complementar. Ele apenas verifica e reporta; a correção fica com a Etapa 4. Sem o agente na sessão, usar subagente genérico com as mesmas instruções.
 
-Verificação em lotes de dez a vinte itens pelo agente do plugin `base-conhecimento-inss:verificador-precedentes` (Onda 78), invocado pela Agent tool. O agente recebe cada lote com ID normalizado, arquivo, linha e contexto da afirmação, executa a ordem obrigatória e devolve relatório no formato do catálogo complementar, pronto para colagem. Ele somente verifica e reporta, sem editar arquivo algum (a correção fica com a Etapa 4, na sessão principal). Quando o agente do plugin não estiver disponível na sessão, usar subagente genérico com as mesmas instruções.
+Ordem obrigatória, por item:
 
-A ordem obrigatória, por item.
-
-Primeiro, catálogo interno e references locais verificados (incluído o próprio `CATALOGO-COMPLEMENTAR-VERIFICADO.md`).
-
-Segundo, WebSearch com o TRIBUNAL na string de busca (evita capturar homônimo de outra corte).
-
-Terceiro, WebFetch na fonte oficial. Vale a limitação de rede conhecida do sandbox (estado conferido em 25/07/2026). Costumam ABRIR o CJF (TNU), o Planalto, às vezes o STF, o processo.stj.jus.br/repetitivos (abriu na Onda 77), as páginas de notícia do STJ, o arquivocidadao.stj.jus.br, o TST e o gov.br. Costumam BLOQUEAR o STJ SCON (403), o TRF3, o eproc da TNU e o in.gov.br ao acesso automatizado. ATUALIZAÇÃO DA ONDA 90 (26/07/2026), o in.gov.br ABRE normalmente pelo navegador do usuário via Comet, inclusive a busca do DOU e o inteiro teor das matérias, de modo que norma publicada em DOU deixa de ser barreira quando o Comet estiver disponível. Quando o portal bloquear, registrar com honestidade que a conferência ficou em fonte secundária, sem fingir acesso. Como reforço, a Regra Comet da Onda 65 (`base-revisao-peticao-aprofundada`) permite abrir o navegador do usuário para o portal bloqueado, quando a sessão tiver o Comet disponível.
+1. Catálogo interno, references verificadas e o próprio `CATALOGO-COMPLEMENTAR-VERIFICADO.md`.
+2. MCPs da casa: `superiores` (`obter_tema`) para tema do STF e do STJ; `iurisprudencia` para TNU, CRPS e Turmas Recursais; `trf3` para acórdão do TRF3 pelo número CNJ. Achado de MCP classifica no máximo como PROVAVEL_FONTE_SECUNDARIA até a leitura no `link_oficial`.
+3. Busca na web com o tribunal na expressão, para não capturar homônimo de outra corte. A cota de buscas de uma sessão é limitada, e a conferência em massa deve poupá-la.
+4. Página oficial. Os portais do STF, do STJ, do CJF e do TST costumam recusar o acesso automatizado, e a conferência se faz no navegador. Portal bloqueado se registra com honestidade, sem fingir acesso.
 
 Cada item sai com uma de quatro classificações.
 
@@ -71,7 +68,7 @@ Número sem identificação possível. Retirar o número e reancorar a afirmaç�
 
 Tese divergente que muda a orientação ao cliente. Corrigir para a tese REAL, reposicionar o item como tese adversa a contornar (com a estratégia de distinguishing cabível) e SINALIZAR AO USUÁRIO EM DESTAQUE no relatório, porque a decisão de mérito sobre a estratégia é dele.
 
-Toda edição leva a nota "(auditoria DD/MM/AAAA)" no ponto alterado e preserva o restante do arquivo intacto.
+Toda edição registra a data da conferência no ponto alterado e preserva o restante do arquivo.
 
 Nos Modelos Ouro, a regra é citação `[CONFERIDO]` apenas no corpo do modelo. Vazamento de citação não conferida no corpo se corrige DIRETO no Drive (os modelos vivem lá, fora do git).
 
@@ -81,7 +78,7 @@ Reconferir cada correção por grep no arquivo alterado.
 
 Rodar a varredura da Etapa 1 novamente e demonstrar a contagem de pendências caindo.
 
-Commit e push das skills alteradas no repositório do plugin, com bump de versão na rotina de Onda. Os Modelos Ouro não entram no commit porque vivem no Drive.
+Commit das skills alteradas no repositório do plugin, com bump de versão. Os Modelos Ouro não entram no commit porque vivem no Drive.
 
 Entregar relatório por severidade. ERRO_CONFIRMADO corrigido, DIVERGENTE corrigido e sinalizado, NAO_LOCALIZADO tratado, PROVAVEL registrado, CONFIRMADO catalogado, portais bloqueados declarados.
 
@@ -105,39 +102,35 @@ JSON da varredura (`auditoria_citacoes.json`). Relatório por severidade com cad
 
 ## 7. Integração com outras skills
 
-O agente `verificador-precedentes` (pasta `agents/` do plugin) é o braço executor da Etapa 3, com as mesmas regras invioláveis desta skill e saída no formato do catálogo complementar. `base-precedentes-catalogo-vinculantes` é a referência de triagem da Etapa 2 e o destino natural de promoções futuras de itens consolidados. `base-revisao-peticao-aprofundada` é a irmã desta skill no plano das peças, e sua Regra Comet (Onda 65) vale aqui como reforço da Etapa 3. `base-legislacao-fontes-primarias` cobre as citações normativas, fora do escopo desta auditoria. `ingest-tema-base-inss` deve consultar o catálogo complementar antes de registrar tema novo, para não recriar quarentena de item já verificado.
+O agente `verificador-precedentes` (pasta `agents/` do plugin) é o braço executor da Etapa 3, com as mesmas regras invioláveis desta skill e saída no formato do catálogo complementar. `base-precedentes-catalogo-vinculantes` é a referência de triagem da Etapa 2 e o destino natural de promoções futuras de itens consolidados. `base-revisao-peticao-aprofundada` é a irmã desta skill no plano das peças,. `base-legislacao-fontes-primarias` cobre as citações normativas, fora do escopo desta auditoria. `ingest-tema-base-inss` deve consultar o catálogo complementar antes de registrar tema novo, para não recriar quarentena de item já verificado.
 
 ## 8. O que NÃO está nesta skill
 
 Revisão de petição individual (é da `base-revisao-peticao-aprofundada`). Verificação de texto de lei, decreto ou portaria (é da `base-legislacao-fontes-primarias`). Atualização de status do catálogo curado (rotina própria da `base-precedentes-catalogo-vinculantes`).
 
-## Correção completa, e não só da definição (Onda 143)
+## Correção completa, e não apenas da definição
 
-Duas falhas de método detectadas no caso do Tema 862, e que passam a integrar o roteiro.
+**Varredura de usos.** Corrigido um item na Etapa 4, a Etapa 5 roda `grep -rn` do número em toda a base e lê o contexto de cada ocorrência. Corrigir apenas a seção que define o tema deixa o erro vivo: no caso do Tema 862/STJ, vinte ocorrências sobreviveram em seis skills entre julho e setembro de 2026.
 
-**Primeira, a varredura de usos.** Corrigido um item na Etapa 4, a Etapa 5 roda `grep -rn` do número em toda a base e LÊ o contexto de cada ocorrência, uma a uma. Corrigir a seção onde o tema é definido e não varrer os usos deixa o erro vivo, e foi o que aconteceu entre julho e setembro de 2026, com vinte ocorrências sobreviventes em seis skills.
+**Nome do arquivo.** Número de tema, súmula ou enunciado no nome de diretório ou de seção também é citação. Estando errada a associação, o achado é bloqueante, o arquivo é renomeado por `git mv` e todas as referências cruzadas são atualizadas na mesma rodada. Exemplos: `base-b94-sequela-minima-tema201` passou a `base-b94-sequela-minima-sumula88-tnu`, e `base-devolucao-valores-irrepetibilidade-tema979-tema1034` passou a `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
 
-**Segunda, o nome do arquivo.** Número de tema, súmula ou enunciado no nome de diretório ou de seção também é citação, e é lido antes do conteúdo. Estando errada a associação, o achado é BLOQUEANTE, o arquivo é renomeado por `git mv` e todas as referências cruzadas são atualizadas na mesma Onda.
+**Aspas.** Tese entre aspas é transcrição e se confere caractere a caractere. Paráfrase não vai entre aspas e se identifica como resumo.
 
-**Terceira, menor.** Tese entre aspas é transcrição e se confere caractere a caractere. Paráfrase não vai entre aspas, e se identifica como resumo.
+Caso completo em `references/CORRECAO-PARCIAL-E-NOME-CONTAMINADO.md`.
 
-O caso completo está em `references/CORRECAO-PARCIAL-E-NOME-CONTAMINADO.md`.
+## Ementa de tribunal como vetor de erro
 
-## Ementa de tribunal como vetor de erro (Onda 144)
+Acórdão usado como fundamento carrega as citações do relator, que podem estar erradas. Achado na base um tema atribuído a assunto diverso do catálogo, verificar se a atribuição veio de ementa copiada. Vindo, corrige-se a citação e registra-se que o acórdão de origem a contém, para que ninguém a reintroduza ao reler o julgado.
 
-A auditoria varre skills e Modelos Ouro. Passa a varrer também as citações IMPORTADAS de ementas, porque acórdão que o escritório usa como fundamento carrega as citações do relator, e elas podem estar erradas.
+## Padrões de erro mais frequentes
 
-Achando na base um tema atribuído a assunto diverso do catálogo, verificar se a atribuição veio de ementa copiada. Vindo, a correção é dupla, corrige-se a citação e registra-se que o acórdão de origem a contém, para que ninguém a reintroduza ao reler o mesmo julgado.
+A rodada de 03/10/2026 encontrou três padrões, nesta ordem de frequência:
 
-## Lições da auditoria de veracidade (Onda 168)
+1. Número atribuído ao assunto de outro precedente, como a Súmula 47/TNU apresentada como regra de implantação imediata, quando trata das condições pessoais e sociais na incapacidade parcial.
+2. Homônimo de outra corte, como a Súmula 632/STJ (seguro) no lugar da Súmula 632/STF (prazo do mandado de segurança), a Súmula 44/TNU no lugar da Súmula 44/STJ e o Tema 640/STJ citado como do STF.
+3. Decisão real com número de processo, data ou resultado trocados.
 
-A rodada de 03/10/2026 encontrou três padrões de erro, nesta ordem de frequência. O primeiro é o número de tema ou de súmula atribuído ao assunto de outro precedente, como a Súmula 47 da TNU apresentada como regra de implantação imediata, quando ela trata das condições pessoais e sociais na incapacidade parcial. O segundo é o homônimo de outra corte, como a Súmula 632 do STJ (seguro) citada no lugar da Súmula 632 do STF (prazo do mandado de segurança), a Súmula 44 da TNU no lugar da Súmula 44 do STJ e o Tema 640 do STJ citado como do STF. O terceiro é a decisão real com número de processo, data ou resultado trocados.
-
-A Etapa 2 passou a ter o `scripts/triagem_catalogo.py`, que cruza a saída do `auditoria_citacoes.py` com o catálogo e aponta três suspeitas. São elas o número ausente do catálogo, o número que só existe em outra corte e a descrição colada à citação sem palavra em comum com a tese catalogada. O extrator deixou de contar a Súmula Vinculante como súmula comum do STF.
-
-A Etapa 3 trabalha em lotes de no máximo doze itens, com resposta de uma linha por item, porque lotes maiores esgotaram o limite de saída dos verificadores. Os portais do STF, do STJ, do CJF e do TST recusam o acesso automatizado por WebFetch. A conferência desses itens se faz no navegador, na forma da `pesquisa-jurisprudencia-chrome`, e a de TNU e TRF3 começa pelo MCP `iurisprudencia`. A cota de buscas na web de uma sessão se esgota em cerca de duzentas consultas, e a conferência em massa deve poupá-la.
-
-Nome de pasta com número de precedente errado se corrige pela regra da Onda 143, com `git mv` e atualização de todas as referências. Na rodada, `base-b94-sequela-minima-tema201` passou a `base-b94-sequela-minima-sumula88-tnu` e `base-devolucao-valores-irrepetibilidade-tema979-tema1034` passou a `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
+O `scripts/triagem_catalogo.py` cruza a saída do `auditoria_citacoes.py` com o catálogo e aponta três suspeitas: número ausente do catálogo, número que existe apenas em outra corte e descrição sem palavra em comum com a tese catalogada. O extrator não conta a Súmula Vinculante como súmula comum do STF.
 
 ## MCPs da casa
 

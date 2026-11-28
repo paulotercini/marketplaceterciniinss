@@ -7,7 +7,7 @@ description: Acervo do escritório Paulo Roberto Tercini Filho em base LOCAL, re
 
 ## O que é
 
-Terceiro MCP do escritório. O `trf3` responde pela jurisprudência do TRF3 e das Turmas Recursais. O `iurisprudencia` responde por TNU e CRPS. O `normas` responde pela legislação. O `acervo` é o único que responde **pelo que o próprio escritório escreveu**, e devolve o trecho argumentativo com a peça de origem.
+Um dos cinco MCPs do escritório. O `trf3` responde pela jurisprudência do TRF3 e das Turmas Recursais. O `iurisprudencia` responde por TNU e CRPS. O `normas` responde pela legislação. O `superiores` responde pelos temas e decisões do STF e do STJ. O `acervo` é o único que responde **pelo que o próprio escritório escreveu**, e devolve o trecho argumentativo com a peça de origem.
 
 Base **local**, na máquina do escritório. Nada do conteúdo sai do computador, nada vai para repositório, e a pasta de dados não entra em commit nenhum.
 
@@ -40,13 +40,13 @@ A consulta aceita aspas para expressão exata, `-palavra` para excluir, e ignora
 
 Não tem jurisprudência. Quando um trecho cita um precedente, a referência vem em `precedentes_citados` e o inteiro teor está no `trf3` ou no `iurisprudencia`. A articulação entre as bases é a **remissão**, nunca a cópia.
 
-Não tem rascunho. Só entra o que foi protocolado e o modelo, porque o rascunho em regra foi corrigido antes de ir aos autos.
+Não tem rascunho. Apenas entra o que foi protocolado e o modelo, porque o rascunho em regra foi corrigido antes de ir aos autos.
 
 Não tem laudo, CNIS, PPP nem documento pessoal de cliente. Indexa-se a produção do escritório.
 
 O trecho é anonimizado na ingestão, então nome, CPF, número de benefício e CID aparecem como marcadores do tipo `[NOME]` e `[CPF]`. O arquivo de origem **não** é anonimizado.
 
-## Roteiro de uso, quatro passos
+## Roteiro de uso, cinco passos
 
 1. `visao_geral_acervo`, para saber o que a base cobre.
 2. `buscar_tese_acervo` com os termos do caso e, quando útil, o filtro de `beneficio` e de `tipo_peca`.
@@ -60,7 +60,7 @@ Exemplo de consulta, "ruído sem NEN" ou "qualidade de segurado período de gra�
 
 O trecho sai anonimizado, com nome, CPF, número de benefício e CID trocados por marcadores como
 `[NOME]` e `[CPF]`. O nome do arquivo e o caminho também saem mascarados em todas as
-ferramentas, porque o nome do cliente costuma estar neles. O caminho real sai só por
+ferramentas, porque o nome do cliente costuma estar neles. O caminho real apenas sai por
 `caminho_da_peca_acervo`, que é um pedido separado e deliberado, e o arquivo de origem não é
 anonimizado.
 
@@ -76,7 +76,7 @@ O trecho tem no máximo cerca de 200 palavras, partido em fim de frase. Parágra
 em mais de um trecho seguido da mesma peça, e `obter_trecho_acervo` com `contexto` devolve os
 vizinhos para ler o argumento inteiro.
 
-Quando o cliente tem a mesma peça salva mais de uma vez, a busca mostra só uma versão, dando
+Quando o cliente tem a mesma peça salva mais de uma vez, a busca mostra apenas uma versão, dando
 preferência à assinada. A `visao_geral_acervo` informa em `versoes_ocultas` quantas ficaram
 fora. O mesmo parágrafo em peças de clientes diferentes continua aparecendo, porque isso é o
 escritório sustentando a mesma tese em casos distintos.
@@ -84,7 +84,7 @@ escritório sustentando a mesma tese em casos distintos.
 ## Manutenção da base
 
 A base é local e se atualiza por comando, com `uv run coletor.py` na pasta do MCP. A rodada
-termina com a auditoria de anonimização, que varre a base inteira. A base só deve ser usada
+termina com a auditoria de anonimização, que varre a base inteira. A base apenas deve ser usada
 quando a auditoria termina com `AUDITORIA OK` e zero vazamento. O comando
 `uv run coletor.py --versoes` remarca as versões sem reler arquivo nenhum.
 

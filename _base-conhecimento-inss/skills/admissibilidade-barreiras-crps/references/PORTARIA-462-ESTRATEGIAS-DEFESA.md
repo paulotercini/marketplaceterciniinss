@@ -1,4 +1,4 @@
-# Estratégias de Defesa e Prevenção — Portaria MPS 462/2026
+# Estratégias de Defesa e Prevenção. Portaria MPS 462/2026
 
 ## A. Estratégias Preventivas (Antes do Problema)
 
@@ -6,7 +6,7 @@
 
 A partir de 25/03/2026, sempre que o cliente tiver benefício indeferido e não possuir documentos novos para apresentar, a orientação padrão deve ser interpor recurso ordinário ao CRPS dentro do prazo de 30 dias, e NÃO pedir revisão administrativa na APS.
 
-O pedido de revisão administrativa na APS só deve ser utilizado quando houver documentação nova concreta e relevante para apresentar. Se a questão for exclusivamente de erro jurídico (interpretação normativa, enquadramento, valoração de prova existente), o recurso ordinário direto é a via obrigatória.
+O pedido de revisão administrativa na APS deve ser utilizado apenas quando houver documentação nova concreta e relevante para apresentar. Se a questão for exclusivamente de erro jurídico (interpretação normativa, enquadramento, valoração de prova existente), o recurso ordinário direto é a via obrigatória.
 
 ### A.2. Instruir completamente o requerimento inicial
 
@@ -24,7 +24,7 @@ A mera atualização de CNIS, com novos vínculos registrados ou contribuições
 
 Dentro do prazo de 30 dias do indeferimento original, interpor simultaneamente o recurso ordinário ao CRPS E o pedido de revisão administrativa na APS. Se a APS deferir a revisão, o recurso perde objeto. Se a APS mantiver, o recurso ordinário já estará protocolado contra o indeferimento original (não contra a decisão da revisão) e não será atingido pelo §7º.
 
-Risco desta estratégia — verificar se a APS, ao reformar parcialmente na revisão, não gera conflito com o recurso já protocolado. Também verificar se o CRPS não tratará como duplicidade.
+Risco desta estratégia, verificar se a APS, ao reformar parcialmente na revisão, não gera conflito com o recurso já protocolado. Também verificar se o CRPS não tratará como duplicidade.
 
 ## B. Estratégias de Enfrentamento (Depois do Problema)
 
@@ -32,12 +32,12 @@ Risco desta estratégia — verificar se a APS, ao reformar parcialmente na revi
 
 Em todo recurso que se enquadre na hipótese do §7º, incluir preliminar de inconstitucionalidade e ilegalidade, com a seguinte fundamentação (consultar ANALISE-JURIDICA.md para texto completo)
 
-1. Art. 5º, LV, CF — ampla defesa com recursos inerentes
-2. Art. 126 da Lei 8.213/91 — direito de recurso contra decisões do INSS, sem restrição
-3. Art. 56 da Lei 9.784/99 — recurso por razões de legalidade e de mérito, sem caução
-4. Art. 37, caput, CF — legalidade estrita da administração
-5. ADI 6096/STF — proteção contra atos negativos do INSS
-6. Art. 5º, IV, XIII e XV da Lei 13.460/2017 — direitos do usuário do serviço público
+1. Art. 5º, LV, CF, ampla defesa com recursos inerentes
+2. Art. 126 da Lei 8.213/91, direito de recurso contra decisões do INSS, sem restrição
+3. Art. 56 da Lei 9.784/99, recurso por razões de legalidade e de mérito, sem caução
+4. Art. 37, caput, CF, legalidade estrita da administração
+5. ADI 6096/STF, que afastou prazo extintivo sobre o indeferimento
+6. Art. 5º, IV, XIII e XV da Lei 13.460/2017, direitos do usuário do serviço público
 
 A preliminar deve argumentar que o conselheiro pode e deve exercer controle de legalidade do ato normativo infralegal, afastando a aplicação do §7º por incompatibilidade com lei federal.
 
@@ -60,23 +60,23 @@ A estratégia é interpretar "elementos novos" de forma ampla, incluindo element
 
 Se o recurso não for conhecido com base no §7º, impetrar mandado de segurança contra o ato do Presidente da JR que proferiu a decisão de não conhecimento.
 
-**Autoridade coatora** — Presidente da Junta de Recursos que proferiu a decisão de não conhecimento (consultar skill ms-competencia-autoridade-coatora)
+**Autoridade coatora.** Presidente da Junta de Recursos que proferiu a decisão de não conhecimento (consultar skill ms-competencia-autoridade-coatora)
 
-**Competência** — Vara Cível Federal ou Vara Previdenciária Federal do domicílio do segurado (art. 109, §2º, CF; Tema 374/STF, que cuida de ações contra autarquias federais; a extensão ao MS é argumento [NÃO CONFIRMADO]) (auditoria 03/10/2026)
+**Competência.** Vara Cível Federal ou Vara Previdenciária Federal do domicílio do segurado (art. 109, §2º, CF; Tema 374/STF, que cuida de ações contra autarquias federais; a extensão ao MS é argumento [NÃO CONFIRMADO])
 
-**Fundamento** — Direito líquido e certo de recurso administrativo (art. 126, Lei 8.213/91; art. 56, Lei 9.784/99; art. 5º, LV, CF), violado por ato normativo infralegal
+**Fundamento.** Direito líquido e certo de recurso administrativo (art. 126, Lei 8.213/91; art. 56, Lei 9.784/99; art. 5º, LV, CF), violado por ato normativo infralegal
 
-**Pedido liminar** — Determinar o conhecimento e julgamento do recurso pelo mérito, afastando a aplicação do art. 112, §7º
+**Pedido liminar.** Determinar o conhecimento e julgamento do recurso pelo mérito, afastando a aplicação do art. 112, §7º
 
-**Pedido definitivo** — Declarar a ilegalidade do art. 112, §7º da Portaria MPS 462/2026 e determinar o conhecimento e julgamento do recurso pelo CRPS
+**Pedido definitivo.** Declarar a ilegalidade do art. 112, §7º da Portaria MPS 462/2026 e determinar o conhecimento e julgamento do recurso pelo CRPS
 
-**IMPORTANTE** — Não incide renúncia tácita (art. 86, §5º da Portaria 125/2026), pois MS que visa dar celeridade ao recurso administrativo não configura ação judicial com objeto idêntico. Aplicar também a skill renuncia-tacita-crps.
+**IMPORTANTE.** Não incide renúncia tácita (art. 86, §5º da Portaria 125/2026), pois MS que visa dar celeridade ao recurso administrativo não configura ação judicial com objeto idêntico. Aplicar também a skill renuncia-tacita-crps.
 
 ### B.4. Recurso especial à CAJ
 
 Se a JR não conhecer o recurso com base no §7º, cabe recurso especial à Câmara de Julgamento por violação de lei (art. 91, §1º, I da Portaria 125/2026).
 
-Fundamento — a decisão da JR violou o art. 126 da Lei 8.213/91, o art. 56 da Lei 9.784/99 e o art. 5º, LV, CF, ao aplicar restrição infralegal incompatível com lei federal.
+Fundamento, a decisão da JR violou o art. 126 da Lei 8.213/91, o art. 56 da Lei 9.784/99 e o art. 5º, LV, CF, ao aplicar restrição infralegal incompatível com lei federal.
 
 A CAJ tem competência para anular a decisão da JR (art. 91, caput) e pode devolver os autos para reexame (art. 91, §3º, primeira parte) ou apreciar definitivamente o mérito (art. 91, §3º, segunda parte).
 
@@ -102,9 +102,9 @@ Se aplicável, incluir na preliminar a impugnação do §8º pelos mesmos fundam
 
 Ao redigir a preliminar, utilizar a skill peticao-previdenciaria com a seguinte estrutura
 
-SEÇÃO — DA ILEGALIDADE DA EXIGÊNCIA DE ELEMENTO NOVO PARA O CONHECIMENTO DO RECURSO
+SEÇÃO. DA ILEGALIDADE DA EXIGÊNCIA DE ELEMENTO NOVO PARA O CONHECIMENTO DO RECURSO
 
-O título nomeia o vício, e não o número do artigo (Onda 184). A seção abre pelo fato, isto é, o pedido de revisão, a decisão de indeferimento com o trecho literal e a data do recurso, e só depois passa à norma. O único texto transcrito é o trecho exato do §7º do art. 112, porque é a norma cuja aplicação se contesta, e o restante entra por remissão curta, em linguagem simples.
+O título nomeia o vício, e não o número do artigo. A seção abre pelo fato, isto é, o pedido de revisão, a decisão de indeferimento com o trecho literal e a data do recurso, e apenas depois passa à norma. O único texto transcrito é o trecho exato do §7º do art. 112, porque é a norma cuja aplicação se contesta, e o restante entra por remissão curta, em linguagem simples.
 
 Parágrafos sobre
 
@@ -112,7 +112,7 @@ Parágrafos sobre
 2. A hierarquia normativa e a impossibilidade de portaria restringir lei formal
 3. O direito irrestrito de recurso (art. 126 da Lei 8.213/91)
 4. A vedação de caução probatória (art. 56 da Lei 9.784/99)
-5. A ampla defesa com recursos (art. 5º, LV, CF) e a ADI 6096/STF, na proteção contra atos negativos
+5. A ampla defesa com recursos (art. 5º, LV, CF) e a ADI 6096/STF, que afastou prazo extintivo sobre o indeferimento
 6. O pedido de afastamento do §7º e conhecimento do recurso pelo mérito
 
-Extensão — 1 a 2 páginas no padrão JEF (enxuto) ou 2 a 3 páginas no rito ordinário/CRPS (denso)
+Extensão. 1 a 2 páginas no padrão JEF (enxuto) ou 2 a 3 páginas no rito ordinário/CRPS (denso)

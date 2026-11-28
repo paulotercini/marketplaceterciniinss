@@ -1,8 +1,8 @@
 # Modelo Base. Relatório Médico para Incapacidade
 
-Onda 165, 03/10/2026. Versão curta, de meia a uma página, a pedido do titular. Serve à incapacidade temporária (B31 previdenciária e B91 acidentária) e à permanente (B32 previdenciária e B92 acidentária), pela tabela oficial de espécies do INSS.
+Versão curta, de meia a uma página. Serve à incapacidade temporária (B31 previdenciária e B91 acidentária) e à permanente (B32 previdenciária e B92 acidentária), pela tabela oficial de espécies do INSS.
 
-O relatório não cita artigo de lei. A fundamentação jurídica fica na petição, e o médico escreve só o que examinou e o que os exames mostram, porque o laudo que cita a lei parece redigido pelo advogado e perde peso na perícia. Atende aos requisitos do art. 2º da Portaria Conjunta MPS/INSS 13/2026, que são a identificação do requerente, a data de emissão, o diagnóstico por extenso ou CID e a assinatura com identificação legível do emitente.
+O relatório não cita artigo de lei. A fundamentação jurídica fica na petição, e o médico escreve apenas o que examinou e o que os exames mostram, porque o laudo que cita a lei parece redigido pelo advogado e perde peso na perícia. Atende aos requisitos do art. 2º da Portaria Conjunta MPS/INSS 13/2026, que são a identificação do requerente, a data de emissão, o diagnóstico por extenso ou CID e a assinatura com identificação legível do emitente.
 
 ---
 
@@ -28,7 +28,7 @@ A doença está documentada desde [DD/MM/AAAA], e a incapacidade para o trabalho
 
 ## Orientação ao médico assistente
 
-1. Data de emissão, CPF e CRM legível são exigidos pela análise documental do INSS, e o relatório sem eles volta.
+1. Data de emissão, identificação do paciente, CID ou diagnóstico por extenso e assinatura com CRM legível são exigidos pela análise documental do INSS, e o relatório sem eles volta.
 2. CID com o quarto dígito, porque M17.0 (artrose primária dos dois joelhos) e M17.3 (artrose pós-traumática) contam histórias diferentes.
 3. As duas datas, sempre. A data em que a doença começou e a data em que a incapacidade começou, cada uma com o exame ou atendimento que a prova. Doença antiga não impede o benefício quando a incapacidade veio depois, por agravamento.
 4. A limitação em verbos com medida, ligada à profissão. "Não permanece em pé mais de vinte minutos e a função de pedreiro exige o dia inteiro" convence, e "incapacitado" não.

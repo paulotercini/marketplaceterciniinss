@@ -1,49 +1,13 @@
-# Reclamatória Trabalhista — Fundamentos e Cenários
+# Reclamatória Trabalhista como Prova. Cenários
 
-## 1. Marco normativo aplicável
+Base normativa no SKILL.md.
 
-CF/88, art. 5º LV. CPC, arts. 374, 442, 506. CLT, arts. 39, 40. Súmula 149/STJ. Tema 1188/STJ (a Súmula 31/TNU foi revogada em 22/11/2023, não citar como vigente). Lei 8.213/91, art. 55 §3º. IN 128/2022.
-
-## 2. Cenário 1 — Sentença com prova documental
-
-Sentença com base em folha de pagamento, contracheques. Plenamente aceita.
-
-## 3. Cenário 2 — Sentença com prova testemunhal exclusiva
-
-Sentença sem prova material. Súmula 149/STJ exige documento.
-
-## 4. Cenário 3 — Acordo homologado
-
-Acordo sem produção de prova. Considerado início de prova.
-
-## 5. Cenário 4 — Vínculo reconhecido na justiça do trabalho
-
-Vínculo declarado em sentença. CTPS anotada. INSS deve aceitar.
-
-## 6. Cenário 5 — Diferenças salariais
-
-Diferenças deferidas em sentença integram salário-de-contribuição. Tema 1.188/STF.
-
-## 7. Cenário 6 — Verbas indenizatórias
-
-Verbas não integram salário-de-contribuição. Cabe distinção.
-
-## 8. Cenário 7 — Participação do INSS no processo
-
-INSS pode participar como terceiro. Tema 1.188/STF.
-
-## 9. Cenário 8 — INSS ausente no processo trabalhista
-
-Sentença vincula apenas com prova material. INSS pode revisar administrativamente.
-
-## 10. Cenário 9 — CTPS anotada por sentença
-
-Fé pública após trânsito. INSS deve aceitar.
-
-## 11. Cenário 10 — Reclamatória com fraude
-
-Sentença suspeita de fraude. INSS pode impugnar.
-
-## 12. Documentos essenciais
-
-Sentença. Acordo. CTPS. Cópia integral do processo. Contracheques. CNIS.
+1. Sentença com prova documental contemporânea (holerites, cartões de ponto). Início de prova material válido (Tema 1188 STJ; IN 128/2022, art. 172, I e II).
+2. Sentença fundada apenas em testemunhas. Não basta (Súmula 149 STJ). Buscar documentos contemporâneos fora da RT e produzir prova testemunhal na ação previdenciária.
+3. Acordo homologado sem instrução. Vale apenas com elementos contemporâneos nos autos (Tema 1188 STJ). Reunir prova do período antes do requerimento.
+4. Diferenças salariais em vínculo já registrado. Dispensa prova material; as remunerações integram o salário de contribuição, nos limites legais (art. 172, IV; Enunciado 3, II, CRPS).
+5. Reintegração. Dispensa prova material se o vínculo anterior está comprovado (art. 173).
+6. Reconhecimento de vínculo de quem atuava como autônomo. Reenquadramento como empregado (art. 174).
+7. Verbas indenizatórias na sentença. Não integram o salário de contribuição (Lei 8.212/91, art. 28, §9º); conferir a natureza de cada rubrica nos cálculos homologados.
+8. Empregado doméstico antes de 06/2015 ou contribuinte individual até 03/2003. Depende de recolhimento efetivo (art. 172, §4º).
+9. Limbo previdenciário reconhecido na RT. Ver SKILL.md e `base-limbo-previdenciario-tema300`.

@@ -1,356 +1,48 @@
 ---
 name: base-contribuinte-em-dobro-lops-art9
-description: "Cômputo de contribuinte em dobro do art. 9º da Lei 3.807/60 (LOPS) para tempo de contribuição, três níveis de defesa pró-segurado. Use SEMPRE que mencionar contribuinte em dobro, LOPS art. 9º, Lei 3.807/60, autônomo em dobro pré-1991, contribuição em dobro INSS, art. 21 IN 128/2022, art. 11 §11 IN 128, recolhimento em dobro pré CLPS 1984, presunção continuidade, art. 3º Lei 10.666 desvinculação qualidade, reclassificação como facultativo, PUIL 5000577-65.2021.4.04.7126 TNU, ApCiv 5002176-54.2023 TRF3, ApCiv 5005822-78.2023 TRF3, ApCiv 5005407-17.2022 TRF3, ApRem 0004116-78.2005 TRF3, contribuinte em dobro 1985-1991, ABENT GPS antiga, GR-3 GR-4, CLPS 1984, contribuinte em dobro aposentadoria tempo. Cruza com peticao-previdenciaria, indenizacao-contribuicoes-atraso, cnis-acerto-indicadores, contribuinte-individual-in128, contribuicoes-complementacao-ec103, base-tempo-rural-anterior-1991, precedentes-previdenciarios."
+description: "Cômputo do contribuinte em dobro do art. 9º da Lei 3.807/60 (LOPS) como tempo de contribuição e carência, com defesa do segurado. Use SEMPRE que mencionar contribuinte em dobro, LOPS art. 9º, art. 9º §3º Lei 3.807/60, Lei 5.610/1970, CLPS 1976, CLPS 1984 (Decreto 89.312/84), recolhimento em dobro, contribuições de abril/1973 a fevereiro/1994, art. 21 IN 128/2022, art. 190 IN 128/2022, Parecer CONJUR/MPS 57/2009, microficha, carnê, GR-3, GR-4, art. 3º Lei 10.666/2003, PUIL 5000577-65.2021.4.04.7126 TNU, indicador PREC-CDCONC. Cruza com peticao-previdenciaria, indenizacao-contribuicoes-atraso, base-cnis-acerto-indicadores, contribuinte-individual-in128, contribuicoes-complementacao-ec103, base-tempo-rural-anterior-1991, precedentes-previdenciarios."
 ---
 
-# Contribuinte em Dobro do art. 9º da Lei 3.807/60 (LOPS). Defesa Pró-Segurado
+# Contribuinte em Dobro (art. 9º da Lei 3.807/60)
 
-## NOTA DE AUDITORIA (12/07/2026), LIMITE JURISPRUDENCIAL OBRIGATÓRIO
+Cenários e documentos em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação às teses do INSS em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-O representativo da TNU sobre a matéria é o **PUIL 5000577-65.2021.4.04.7126/RS** [NÃO CONFIRMADO]. O PUIL 0003636-92.2018.4.01.3810/MG, antes indicado aqui a partir do Boletim TNU do TRF3/GACO de abril de 2024, trata de registro no CRC (auditoria 03/10/2026). Conclusão firmada. O contribuinte em dobro do art. 9º da LOPS preordena-se a assegurar a manutenção da qualidade de segurado e PRESSUPÕE o pagamento tempestivo das contribuições ANTES de findar o período de graça. Recolhimentos vertidos APÓS encerrada a filiação ao RGPS não podem ser computados para carência nem tempo de serviço.
+## Base normativa
 
-Consequência para a tese desta skill. O cômputo "independentemente da qualidade de segurado posterior" vale para recolhimentos TEMPESTIVOS (feitos dentro do período de graça), que não se perdem com a perda superveniente da qualidade. Não vale para recolhimentos feitos depois de expirado o período de graça. A defesa deve sempre demonstrar a tempestividade, explorando o alongamento do período de graça (120 contribuições, desemprego involuntário, art. 15 da Lei 8.213/91).
+- Lei 3.807/60 (LOPS), art. 9º: "Ao segurado que deixar de exercer emprêgo ou atividade que o submeta ao regime desta lei é facultado manter a qualidade de segurado, desde que passe a efetuar em dôbro, o pagamento mensal da contribuição."
+  - §1º: pagamento iniciado a partir do segundo mês seguinte ao fim do período de graça do art. 8º, sem interrupção superior a 12 meses consecutivos, sob pena de perda da qualidade;
+  - §2º: novo pagamento exige a integralização das quotas do período interrompido;
+  - §3º (Lei 5.610/1970): os meses pagos em dobro contam como serviço efetivo para aposentadoria por tempo de serviço.
+- A figura subsistiu nas CLPS de 1976 (Decreto 77.077/76) e de 1984 (Decreto 89.312/84) até a Lei 8.213/91, que a substituiu pelo segurado facultativo (art. 13). A IN 128/2022, art. 190, fixa a data-limite de 24/07/1991 para o contribuinte em dobro e conta a carência da data da filiação.
+- IN 128/2022, art. 21: contribuições de contribuintes em dobro, entre outros, relativas a abril de 1973 a fevereiro de 1994, quitadas até essa data, consideram-se pagas em tempo hábil, dispensada a prova quando constem do CNIS ou da microficha (Lei 8.213/91, art. 29-A; Decreto 3.048/99, arts. 19 a 19-B; Parecer CONJUR/MPS 57/2009).
+- IN 128/2022, art. 190, §2º: nesse mesmo período, as contribuições sem data de pagamento no CNIS consideram-se recolhidas sem atraso.
+- Lei 10.666/2003, art. 3º: a perda da qualidade de segurado não se considera para as aposentadorias por tempo de contribuição e especial; §1º, para a aposentadoria por idade com a carência cumprida.
 
-O PUIL 5000577-65.2021.4.04.7126/RS ainda não teve o inteiro teor conferido na fonte oficial e só entra em peça depois dessa conferência. A Súmula 81 do TFR, antes citada na seção 9.6, não tem o texto que lhe era atribuído e saiu da skill (auditoria 03/10/2026). As ApCiv 5002176-54.2023, 5005822-78.2023, 5005407-17.2022 e ApRem 0004116-78.2005 do TRF3 não foram verificáveis por fonte pública indexada, conferir no sítio do TRF3 antes de citar em peça.
+## Limite jurisprudencial
 
-## 1. Quando acionar esta skill
+PUIL 5000577-65.2021.4.04.7126/RS (TNU, julgado em 17/04/2024; embargos rejeitados em 06/11/2024), adverso: o contribuinte em dobro exigia (a) segurado sem atividade de filiação obrigatória, ainda no período de graça, e (b) recolhimentos tempestivos. Perdida a qualidade, não havia autorização legal para recolher em dobro.
 
-Acione SEMPRE que houver discussão sobre cômputo de período como contribuinte em dobro do art. 9º da Lei 3.807/60 (LOPS).
+Consequência: a defesa demonstra que cada recolhimento foi feito dentro do período de graça e sem interrupção superior a 12 meses (art. 9º, §1º). Para as competências de 04/1973 a 02/1994, a tempestividade se presume pelo art. 21 e pelo art. 190, §2º, da IN 128/2022, e o ônus de demonstrar o atraso passa ao INSS.
 
-Hipóteses típicas. Períodos de recolhimento como autônomo em dobro entre 1960 e 1991. Recusa do INSS de cômputo do período. Indeferimento de aposentadoria por tempo de contribuição com falta de meses correspondentes a contribuinte em dobro. Cliente aposentado que descobre recolhimentos em dobro não computados na sua RMI.
+## Defesa do segurado, em ordem
 
-A skill é fonte primária pró-segurado para os três níveis de defesa do contribuinte em dobro.
+1. Principal: cômputo como tempo de contribuição e carência, com a presunção de pagamento tempestivo do art. 21 e do art. 190, §2º, da IN 128/2022 e o art. 9º, §3º, da LOPS.
+2. Prova da tempestividade: datas de pagamento nos carnês, autenticação bancária e microficha; reconstrução do período de graça anterior (último vínculo e prazo do art. 8º da LOPS).
+3. Subsidiário, para aposentadoria: a perda da qualidade posterior aos recolhimentos tempestivos é irrelevante (Lei 10.666/2003, art. 3º).
+4. Recolhimento posterior à perda da qualidade: não há tese segura (PUIL 5000577). Avaliar se o segurado exercia atividade de filiação obrigatória no período, o que permite indenização como contribuinte individual (`indenizacao-contribuicoes-atraso`).
 
-## 2. Histórico do contribuinte em dobro
+## Precedentes do TRF3 não conferidos
 
-### 2.1. Lei 3.807/60 (LOPS)
+ApCiv 5002176-54.2023.4.03, ApCiv 5005822-78.2023.4.03, ApCiv 5005407-17.2022.4.03 e ApRem 0004116-78.2005.4.03 [NÃO CONFIRMADO]: número e conteúdo não verificados em fonte oficial. Não citar sem leitura do inteiro teor no sítio do TRF3.
 
-Art. 9º. Estabelecia a condição de contribuinte em dobro para o segurado que mantinha sua filiação ao regime previdenciário sem exercer atividade remunerada.
+## Via processual
 
-Função histórica. Permitir a continuidade da qualidade de segurado para quem desempregava ou se afastava da atividade.
-
-### 2.2. CLPS 1984 (Decreto-Lei 89.312/84)
-
-Manutenção da figura do contribuinte em dobro.
-
-### 2.3. Lei 8.213/91
-
-Art. 14. Definição do segurado facultativo.
-
-A figura do contribuinte em dobro foi tacitamente substituída pela do facultativo, mas as contribuições anteriores devem ser computadas.
-
-### 2.4. Lei 10.666/2003
-
-Art. 3º. Desvinculação da qualidade de segurado para fins de cômputo do tempo de contribuição já recolhido.
-
-## 3. Tese central pró-segurado
-
-O período recolhido como contribuinte em dobro do art. 9º da LOPS deve ser computado como tempo de contribuição para fins de aposentadoria, independentemente da qualidade de segurado posterior.
-
-A defesa se estrutura em três níveis cumulativos.
-
-Nível 1. Convalidação administrativa pela presunção do art. 21 da IN 128/2022.
-
-Nível 2. Aproveitamento independentemente da qualidade pelo art. 3º da Lei 10.666/2003.
-
-Nível 3. Reclassificação como facultativo.
-
-## 4. Nível 1. Convalidação administrativa pelo art. 21 da IN 128/2022
-
-### 4.1. Texto do art. 21
-
-"Para efeito do cômputo do tempo de contribuição do contribuinte individual, considera-se aplicável a presunção de continuidade da atividade quando houver pelo menos uma contribuição mensal, observados os pressupostos do art. 92 desta Instrução Normativa".
-
-### 4.2. Aplicação ao contribuinte em dobro
-
-A LOPS reconhecia a continuidade da filiação por meio do recolhimento em dobro.
-
-A IN 128/2022, ao estabelecer a presunção de continuidade da atividade, permite a aplicação por analogia ao contribuinte em dobro pré-1991.
-
-### 4.3. Estratégia administrativa
-
-Pedido administrativo com fundamento expresso no art. 21 da IN 128/2022.
-
-Apresentação dos documentos comprobatórios do recolhimento em dobro (carnês antigos, GR-3, GR-4, ABENT, GPS antigas).
-
-Solicitação de retroação ao período anterior à Lei 8.213/91.
-
-## 5. Nível 2. Aproveitamento independentemente da qualidade pelo art. 3º da Lei 10.666/2003
-
-### 5.1. Texto do art. 3º
-
-"A perda da qualidade de segurado não será considerada para a concessão das aposentadorias por tempo de contribuição e especial".
-
-### 5.2. Aplicação ao contribuinte em dobro
-
-Mesmo se o INSS sustentar que o contribuinte em dobro perdeu a qualidade de segurado em algum momento, o art. 3º da Lei 10.666/2003 permite o aproveitamento das contribuições para fins de aposentadoria por tempo de contribuição.
-
-### 5.3. Estratégia
-
-Argumentar que a perda da qualidade não pode atingir o cômputo das contribuições recolhidas.
-
-Cruzamento com `periodo-graca-qualidade-segurado` e `base-carencia-por-especie-art27a`.
-
-## 6. Nível 3. Reclassificação como facultativo
-
-### 6.1. Hipótese
-
-Quando os Níveis 1 e 2 não forem aceitos, sustentar a reclassificação do contribuinte em dobro como facultativo.
-
-### 6.2. Fundamento
-
-Lei 8.213/91, art. 14. A figura do contribuinte em dobro foi sucedida pela do facultativo.
-
-A continuidade do recolhimento na ausência de atividade remunerada é o cerne da figura do facultativo.
-
-### 6.3. Estratégia
-
-Pedido de reclassificação retroativa.
-
-Manutenção do tempo de contribuição já recolhido com a nova classificação.
-
-## 7. Caso concreto. 74 meses (5 autônomo + 69 contribuinte em dobro 1985-1991)
-
-### 7.1. Quadro
-
-Cliente com 5 meses de recolhimento como autônomo + 69 meses como contribuinte em dobro entre 1985 e 1991.
-
-Total. 74 meses de contribuição não computados pelo INSS.
-
-### 7.2. Estratégia
-
-Aplicação dos três níveis cumulativos.
-
-Pedido principal pelo Nível 1 (convalidação pelo art. 21 da IN 128/2022).
-
-Pedido alternativo pelo Nível 2 (art. 3º da Lei 10.666/2003).
-
-Pedido subsidiário pelo Nível 3 (reclassificação como facultativo).
-
-### 7.3. Documentos
-
-Carnês antigos.
-
-GR-3, GR-4.
-
-ABENT (Associação dos Beneficiários e Empregados em Natureza Tributária - quando aplicável).
-
-GPS antigas.
-
-Microficha.
-
-CNIS atual com indicação dos períodos não computados.
-
-## 8. Marco normativo
-
-### 8.1. Lei 3.807/60 (LOPS)
-
-Art. 9º. Contribuinte em dobro.
-
-Vigência. 1960 até CLPS 1984.
-
-### 8.2. Decreto-Lei 89.312/84 (CLPS 1984)
-
-Manutenção da figura do contribuinte em dobro.
-
-Vigência. 1984 até Lei 8.213/91.
-
-### 8.3. Lei 8.213/91
-
-Art. 11. Segurados obrigatórios.
-
-Art. 14. Segurado facultativo.
-
-Art. 15. Manutenção da qualidade de segurado.
-
-Art. 55. Cômputo de tempo de serviço.
-
-### 8.4. Lei 10.666/2003
-
-Art. 3º. Desvinculação da qualidade.
-
-### 8.5. IN 128/2022
-
-Art. 21. Presunção de continuidade.
-
-Art. 92. Aplicação da presunção.
-
-Art. 11, § 11. Hipóteses específicas.
-
-### 8.6. Decreto 3.048/99
-
-Regulamento da Previdência Social.
-
-Aplicação subsidiária ao contribuinte em dobro.
-
-## 9. Jurisprudência
-
-### 9.1. PUIL TNU 5000577-65.2021.4.04.7126/RS
-
-Conteúdo. Cômputo do tempo de contribuição em dobro pré-1991.
-
-ATENÇÃO. Verificar inteiro teor antes de citar com número de processo.
-
-### 9.2. ApCiv 5002176-54.2023.4.03 (TRF3, 9ª Turma)
-
-Conteúdo. Reconhecimento do contribuinte em dobro.
-
-ATENÇÃO. Verificar inteiro teor antes de citar.
-
-### 9.3. ApCiv 5005822-78.2023.4.03 (TRF3, 7ª Turma)
-
-Conteúdo. Aplicação do art. 21 da IN 128/2022.
-
-ATENÇÃO. Verificar inteiro teor antes de citar.
-
-### 9.4. ApCiv 5005407-17.2022.4.03 (TRF3, 10ª Turma)
-
-Conteúdo. Cômputo do contribuinte em dobro pelo art. 3º da Lei 10.666/2003.
-
-ATENÇÃO. Verificar inteiro teor antes de citar.
-
-### 9.5. ApRem 0004116-78.2005.4.03 (TRF3)
-
-Conteúdo. Reconhecimento histórico do contribuinte em dobro.
-
-ATENÇÃO. Verificar inteiro teor antes de citar.
-
-
-
-
-
-
-
-## 10. Cenários práticos
-
-### 10.1. Cenário A. Aposentadoria por tempo de contribuição com falta de meses pré-1991
-
-Quadro. Cliente quase aposentado, faltam meses correspondentes a contribuinte em dobro.
-
-Estratégia. Pedido administrativo + ação judicial subsidiária com os três níveis.
-
-### 10.2. Cenário B. Revisão de aposentadoria já concedida
-
-Quadro. Cliente aposentado descobre recolhimentos em dobro não computados.
-
-Estratégia. Revisão administrativa + ação judicial em caso de indeferimento.
-
-Atenção à decadência decenal do art. 103 da Lei 8.213/91.
-
-Cruzamento com `decadencia-revisao-previdenciaria`.
-
-### 10.3. Cenário C. CNIS com indicador de pendência sobre contribuinte em dobro
-
-Quadro. CNIS com PEXT, PREC-MENOR-MIN, ou outro indicador relativo a período em dobro.
-
-Estratégia. Acerto do CNIS administrativo + pedido de cômputo.
-
-Cruzamento com `cnis-acerto-indicadores`.
-
-### 10.4. Cenário D. Contribuinte em dobro com lacuna entre os Níveis
-
-Quadro. Período intercalado de contribuinte em dobro com período sem contribuição.
-
-Estratégia. Aplicar os três níveis em conjunto, com fundamentação combinada.
-
-## 11. Documentos essenciais
-
-Carnês antigos com chancela bancária.
-
-GR-3 (antes de 1979).
-
-GR-4 (1979 em diante).
-
-ABENT (quando aplicável).
-
-GPS (após Lei 8.213/91 para os recolhimentos posteriores).
-
-Microficha do INSS.
-
-CNIS atual.
-
-Carteiras profissionais antigas (autônomo).
-
-Eventual decisão administrativa anterior.
-
-## 12. Estratégia processual
-
-### 12.1. Pedido administrativo
-
-Pedido de cômputo do tempo de contribuição em dobro com fundamento expresso nos três níveis.
-
-Apresentação dos documentos comprobatórios.
-
-### 12.2. Recurso ao CRPS
-
-Em caso de indeferimento administrativo, recurso ordinário com prequestionamento.
-
-### 12.3. Ação judicial
-
-Pedido principal. Cômputo do tempo de contribuição em dobro com fundamento no Nível 1.
-
-Pedido alternativo. Cômputo pelo Nível 2.
-
-Pedido subsidiário. Cômputo pelo Nível 3 (reclassificação como facultativo).
-
-Pedido cumulativo. Concessão da aposentadoria por tempo de contribuição com a nova RMI.
-
-### 12.4. Mandado de segurança
-
-Cabível quando o INSS recusar formalmente a análise do pedido.
-
-## 13. Cruzamento com outras skills
-
-`peticao-previdenciaria` para a petição.
-
-`indenizacao-contribuicoes-atraso` para indenização de contribuições.
-
-`cnis-acerto-indicadores` para o acerto do CNIS.
-
-`contribuinte-individual-in128` para o contribuinte individual.
-
-`contribuicoes-complementacao-ec103` para a complementação.
-
-`base-tempo-rural-anterior-1991` para o tempo rural pré-1991.
-
-`base-aluno-aprendiz` para o tempo de aluno-aprendiz.
-
-`base-servico-militar-obrigatorio` para o tempo militar.
-
-`precedentes-previdenciarios` para os precedentes.
-
-`base-aposentadoria-direito-adquirido` para o direito adquirido.
-
-`decadencia-revisao-previdenciaria` para a decadência.
-
-`mandado-seguranca-previdenciario` para o MS.
-
-`base-portarias-dpmf-inss-hub` para Portarias DPMF.
-
-## 14. O que NÃO está nesta skill
-
-Cálculo concreto da RMI em `base-calculo-rmi-ec103`.
-
-Indenização de contribuições em atraso em `indenizacao-contribuicoes-atraso`.
-
-Cômputo do tempo rural pré-1991 em `base-tempo-rural-anterior-1991`.
-
-## 15. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+Requerimento administrativo com a documentação; recurso ao CRPS; ação judicial com os pedidos em ordem subsidiária. Na revisão de benefício concedido, observar a decadência do art. 103 da Lei 8.213/91 (`decadencia-revisao-previdenciaria`). Mandado de segurança apenas para omissão na análise, na Vara Federal.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
+## Integração
 
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Peça: `peticao-previdenciaria`. CNIS: `base-cnis-acerto-indicadores` (indicador PREC-CDCONC, contribuinte em dobro concomitante). Indenização: `indenizacao-contribuicoes-atraso`. Contribuinte individual: `contribuinte-individual-in128`. Complementação: `contribuicoes-complementacao-ec103`. Tempo rural: `base-tempo-rural-anterior-1991`. Direito adquirido: `base-aposentadoria-direito-adquirido`. Cálculo: `base-calculo-rmi-ec103`. Portarias: `base-portarias-dpmf-inss-hub`.

@@ -4,7 +4,7 @@
 
 Checklist operacional obrigatório antes da assinatura e protocolo de qualquer PEDILEF em favor do segurado. Cada item corresponde a uma causa concreta de não conhecimento já mapeada nas QOs. A ausência de conferência equivale a protocolar peça vulnerável.
 
-## Bloco 1 — Tempestividade
+## Bloco 1. Tempestividade
 
 [ ] Data da intimação do acórdão recorrido confirmada em certidão dos autos.
 
@@ -14,15 +14,15 @@ Checklist operacional obrigatório antes da assinatura e protocolo de qualquer P
 
 [ ] Se acórdão da TRU mantendo recurso pelos mesmos fundamentos, NÃO há PEDILEF nacional (QO 32). Decisão tomada.
 
-## Bloco 2 — Cabimento e Natureza da Matéria
+## Bloco 2. Cabimento e Natureza da Matéria
 
 [ ] Tese redigida em chave de direito material, não processual (afastamento da Súmula 43).
 
 [ ] Tese redigida em chave de valoração jurídica de prova, não de reexame de fato (afastamento da Súmula 42).
 
-[ ] Ausência de tese inovadora — toda matéria foi ventilada nas fases anteriores e apreciada pelo acórdão recorrido, ou foi impugnada em embargos de declaração (QO 10).
+[ ] Ausência de tese inovadora, toda matéria foi ventilada nas fases anteriores e apreciada pelo acórdão recorrido, ou foi impugnada em embargos de declaração (QO 10).
 
-## Bloco 3 — Prequestionamento
+## Bloco 3. Prequestionamento
 
 [ ] Matéria controvertida foi efetivamente apreciada pelo acórdão recorrido (QO 35).
 
@@ -30,7 +30,7 @@ Checklist operacional obrigatório antes da assinatura e protocolo de qualquer P
 
 [ ] Se em voto vencido, questão satisfaz prequestionamento (QO 14).
 
-## Bloco 4 — Paradigma
+## Bloco 4. Paradigma
 
 Para cada paradigma apresentado, confirmar.
 
@@ -48,7 +48,7 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Trajetória do processo paradigma foi conferida em consulta atualizada para excluir alteração superveniente.
 
-## Bloco 5 — Similitude Fática
+## Bloco 5. Similitude Fática
 
 [ ] Identidade nos elementos nucleares confirmada entre recorrido e paradigma.
 
@@ -56,7 +56,7 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Possíveis distinções que a parte contrária poderia suscitar foram neutralizadas preventivamente na peça.
 
-## Bloco 6 — Cotejo Analítico
+## Bloco 6. Cotejo Analítico
 
 [ ] Tabela comparativa paradigma por paradigma está presente na peça, no formato do modelo padronizado.
 
@@ -68,7 +68,7 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Síntese integradora sucede a tabela, explicitando o conflito e a solução esperada da TNU.
 
-## Bloco 7 — Enfrentamento Integral do Acórdão Recorrido (QO 18)
+## Bloco 7. Enfrentamento Integral do Acórdão Recorrido (QO 18)
 
 [ ] Todos os fundamentos suficientes autônomos do acórdão recorrido foram mapeados.
 
@@ -76,19 +76,19 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Se algum fundamento não tem paradigma, a peça contempla a reformulação ou a via recursal foi reavaliada.
 
-## Bloco 8 — Filtro da QO 13 (Jurisprudência TNU)
+## Bloco 8. Filtro da QO 13 (Jurisprudência TNU)
 
 [ ] A jurisprudência da TNU não está no mesmo sentido do acórdão recorrido. Confirmada ausência de tese TNU contrária ao pleito do segurado.
 
 [ ] Se há tese TNU favorável ao segurado, está invocada como fundamento de mérito.
 
-## Bloco 9 — Filtro da QO 24 (Orientação STJ)
+## Bloco 9. Filtro da QO 24 (Orientação STJ)
 
 [ ] O acórdão recorrido não segue orientação do STJ firmada em IRDR, IAC ou repetitivo em sentido desfavorável ao segurado.
 
 [ ] Se há tese STJ favorável ao segurado, está invocada e identificada como paradigma válido nos termos da QO 5.
 
-## Bloco 10 — Estrutura da Peça
+## Bloco 10. Estrutura da Peça
 
 [ ] Tópicos I a VII conforme estrutura recomendada em METODOLOGIA-COTEJO.md.
 
@@ -98,11 +98,11 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Pedido subsidiário de aplicação da tese ao caso concreto, se cabível.
 
-## Bloco 11 — Formatação do Escritório
+## Bloco 11. Formatação do Escritório
 
 [ ] Fonte Bookman Old Style, 12pt, espaçamento 1,5.
 
-[ ] Recuo de 2cm (JEF/TRF) ou 5cm (CRPS) conforme rito — lembrar que o PEDILEF é no JEF, recuo 2cm.
+[ ] Recuo de 2cm (JEF/TRF) ou 5cm (CRPS) conforme rito, lembrar que o PEDILEF é no JEF, recuo 2cm.
 
 [ ] Timbre e rodapé do escritório presentes.
 
@@ -112,7 +112,7 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Revisão pela skill `revisao-peticao` executada após a geração da peça.
 
-## Bloco 12 — Anexos
+## Bloco 12. Anexos
 
 [ ] Paradigmas juntados em arquivos próprios ou links conferidos.
 
@@ -124,7 +124,7 @@ Para cada paradigma apresentado, confirmar.
 
 [ ] Decisão recorrida integral (não apenas ementa).
 
-## Bloco 13 — Verificação Final
+## Bloco 13. Verificação Final
 
 [ ] A peça foi submetida à skill `revisao-peticao` para auditoria formal, normativa, fática e argumentativa.
 

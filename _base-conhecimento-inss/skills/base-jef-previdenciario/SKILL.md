@@ -1,138 +1,72 @@
 ---
 name: base-jef-previdenciario
-description: "Juizado Especial Federal previdenciário, Lei 10.259/2001, competência pelo valor da causa, teto de 60 salários-mínimos, dispensa de reexame necessário, prova técnica simplificada. Use SEMPRE que mencionar JEF, Juizado Especial Federal, Lei 10.259, competência JEF, valor da causa JEF, 60 salários-mínimos JEF, renúncia excedente, prova técnica simplificada, Enunciado FONAJEF, competência absoluta JEF, Tema 1030 STJ, art. 3º Lei 10.259, art. 17 §4º Lei 10.259, teto JEF, art. 12 Lei 10.259, petição inicial JEF, citação JEF, contestação JEF, rito sumaríssimo previdenciário, competência delegada JEF, economicidade JEF, simplicidade JEF, oralidade JEF, informalidade, TRF3. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-recursos-jef, base-cumprimento-sentenca-rpv-precatorio e defesa-probatoria-especial."
+description: "Juizado Especial Federal previdenciário, Lei 10.259/2001, competência pelo valor da causa, teto de 60 salários-mínimos, dispensa de reexame necessário, prova técnica simplificada. Use SEMPRE que mencionar JEF, Juizado Especial Federal, Lei 10.259, competência JEF, valor da causa JEF, 60 salários-mínimos JEF, renúncia excedente, prova técnica simplificada, Enunciado FONAJEF, competência absoluta JEF, Tema 1030 STJ, art. 3º Lei 10.259, art. 17 §4º Lei 10.259, teto JEF, art. 12 Lei 10.259, art. 9º Lei 10.259 prazo simples, art. 13 Lei 10.259, Enunciado 71 FONAJEF, petição inicial JEF, citação JEF, contestação JEF, rito sumaríssimo previdenciário, competência delegada JEF, economicidade JEF, simplicidade JEF, oralidade JEF, informalidade, TRF3. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-recursos-jef, base-cumprimento-sentenca-rpv-precatorio e defesa-probatoria-especial."
 ---
 
 # Juizado Especial Federal Previdenciário
 
 ## Escopo
 
-Skill pró-segurado que orienta a atuação processual no JEF, competência pelo valor da causa (até 60 salários-mínimos), renúncia ao excedente, dispensa de reexame necessário, princípios (oralidade, simplicidade, informalidade, economia processual e celeridade) e prova técnica simplificada. Fonte operacional do escritório para demandas previdenciárias de médio valor.
+Atuação processual no JEF: competência, rito, prova técnica e execução. Recursos em `base-recursos-jef`; manual operacional do TRF3 em `base-jef-trf3-manual-2025`. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 98, §1º. Autorização para criação dos Juizados Especiais Federais.
+CF/88, art. 98, §1º. Lei 10.259/2001. Lei 9.099/1995, subsidiária (art. 1º da Lei 10.259/2001).
 
-Lei 10.259/2001. Estatui os Juizados Especiais Federais Cíveis e Criminais.
+Art. 3º. Competência para causas de até 60 salários mínimos; obrigações vincendas pela soma de doze parcelas (§2º); competência absoluta onde houver JEF instalado (§3º). Excluídas, entre outras, mandado de segurança e ações coletivas (§1º, I); admitida a anulação de ato administrativo previdenciário (§1º, III).
 
-Lei 9.099/1995. Aplicação subsidiária.
+Art. 9º. Sem prazo diferenciado para o INSS, inclusive para recorrer.
 
-Regimentos dos Juizados Especiais Federais (RI-JEF) de cada Região Federal.
+Art. 10. Representação por advogado facultativa em primeiro grau; obrigatória no recurso (art. 41, §2º, da Lei 9.099/95).
 
-TRF3, jurisprudência consolidada da Terceira Região, em especial pela 7ª, 8ª, 9ª e 10ª Turmas.
+Art. 12. Exame técnico por pessoa habilitada; nas ações previdenciárias e assistenciais, quesitos e assistentes em 10 dias (§2º).
 
-## Regras de competência
+Art. 13. Sem reexame necessário.
 
-Art. 3º, Lei 10.259/2001. Competência absoluta do JEF para causas de valor até 60 salários-mínimos no momento da distribuição.
+Art. 17. RPV em 60 dias, teto de 60 salários mínimos, renúncia ao excedente na execução (§4º). Detalhe em `execucao-cumprimento-previdenciario`.
 
-Art. 3º, §3º, Lei 10.259/2001. Competência absoluta, no foro onde há JEF instalado.
+CF/88, art. 109, §3º, e Lei 5.010/1966, art. 15, III, na redação da Lei 13.876/2019. Competência delegada à Justiça Estadual apenas quando a comarca do domicílio do segurado estiver a mais de 70 km de município sede de Vara Federal.
 
-Art. 17, §4º, Lei 10.259/2001. Execução no próprio JEF, RPV até o teto.
+## Valor da causa e renúncia
 
-Art. 109, §3º, CF/88, combinado com Súmulas. Competência delegada à Justiça Estadual onde não houver JEF.
-
-Tema 1030 STJ. Renúncia ao excedente valor da causa.
-
-Art. 3º, §2º, Lei 10.259/2001. Prestações vincendas entram na alçada pela soma de doze parcelas, e a renúncia do Tema 1030 STJ pode alcançá-las (auditoria 03/10/2026, retirado o Tema 1086/STJ, que trata de licença-prêmio de servidor).
-
-## Princípios processuais
-
-Oralidade. Audiência como momento central.
-
-Simplicidade. Peças enxutas, foco na tese e nos documentos.
-
-Informalidade. Rigidez formal mitigada.
-
-Economia processual. Menor número de atos.
-
-Celeridade. Duração razoável.
-
-Gratuidade da primeira instância.
+Valor da causa: parcelas vencidas até o ajuizamento mais doze vincendas (art. 292, §§1º e 2º, do CPC; art. 3º, §2º, da Lei 10.259/2001). Acima de 60 salários mínimos, o autor pode renunciar expressamente ao excedente para litigar no JEF (Tema 1030 STJ). Essa renúncia não limita a condenação, porque as parcelas vencidas no curso do processo são devidas integralmente, e a renúncia para receber por RPV é colhida na execução (Enunciado 71 FONAJEF).
 
 ## Espaço pró-segurado
 
-Primeiro, o JEF é o rito mais célere e econômico para segurados. Demandas de até 60 salários-mínimos devem, em regra, ser propostas no JEF.
+Primeiro, rito mais célere, sem custas em primeiro grau e sem reexame necessário.
 
-Segundo, renúncia ao excedente é estratégia para enquadramento no rito, quando vantajoso.
+Segundo, tutela de urgência por medida cautelar (art. 4º), recorrível de imediato (art. 5º).
 
-Terceiro, dispensa de reexame necessário. Decisão de 1º grau contra o INSS produz efeitos imediatos, exceto se houver recurso.
+Terceiro, prova técnica simplificada (art. 12) e audiência una com até três testemunhas por parte (art. 34 da Lei 9.099/95).
 
-Quarto, tutela de urgência é amplamente admitida.
+Quarto, prazos simples para o INSS (art. 9º).
 
-Quinto, prova técnica simplificada (perícia médica, social, contábil) é ágil.
+## Estratégia
 
-Sexto, execução da RPV no mesmo juízo, com prazo de 60 dias para pagamento após requisição.
-
-## Estratégia processual
-
-Primeiro, análise do valor da causa e estimativa dos atrasados.
-
-Segundo, se couber no teto, JEF. Se ultrapassar, avaliar renúncia ao excedente.
-
-Terceiro, petição inicial enxuta, com foco nos fatos, na tese e nos documentos.
-
-Quarto, requerimento de tutela de urgência quando cabível.
-
-Quinto, lista de documentos por ID.
-
-Sexto, audiência una preparada (testemunhas e perícia).
-
-## MCPs da casa
-
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao redigir petição, acionar `peticao-previdenciaria`.
-Ao manejar recursos no JEF, acionar `base-recursos-jef`.
-Ao cumprir sentença, acionar `base-cumprimento-sentenca-rpv-precatorio`.
-Em pedidos especiais, acionar `defesa-probatoria-especial`.
-Em casos com tutela, acionar a política do escritório de tutela de urgência.
+Primeiro, estimar os atrasados e o valor da causa na data do ajuizamento. Segundo, acima do teto, comparar JEF com renúncia e Vara Federal (`base-rito-ordinario-trf`). Terceiro, petição inicial enxuta com documentos por ID. Quarto, pedir tutela quando cabível. Quinto, preparar quesitos e testemunhas para a audiência.
 
 ## Alertas
 
-Primeiro, competência é absoluta. Erro de rito gera deslocamento.
+Primeiro, competência absoluta. Valor acima do teto sem renúncia leva à extinção ou remessa.
 
-Segundo, renúncia ao excedente é irretratável e vincula a execução.
+Segundo, a renúncia do Tema 1030 não se aproveita para a execução por RPV; nova renúncia na execução, se conveniente.
 
-Terceiro, o JEF não admite intervenção de terceiros, salvo assistência simples em regra restrita.
+Terceiro, não cabe ação rescisória no JEF (art. 59 da Lei 9.099/95).
 
-Quarto, FAZENDA pública recorre no JEF somente por recurso inominado, embargos de declaração, IUJEF e pedidos de uniformização.
+Quarto, intervenção de terceiros é vedada (art. 10 da Lei 9.099/95).
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## Doutrina de apoio
+## MCPs da casa
 
-Frederico Amado, processo previdenciário.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Hugo Goes, JEF.
+## Integração com outras skills
 
-Marco Aurélio Serau Junior, processo previdenciário.
+Redação em `peticao-previdenciaria`. Recursos em `base-recursos-jef`. Manual TRF3 em `base-jef-trf3-manual-2025`. Execução em `execucao-cumprimento-previdenciario` e `base-cumprimento-sentenca-rpv-precatorio`. Prova do tempo especial em `defesa-probatoria-especial`. Vara Federal em `base-rito-ordinario-trf`.
 
-Daniel Pulino, procedimento.
-
-Jane Berwanger, processo previdenciário.
-
-IBDP, advocacia previdenciária.
-
-## O que NÃO está nesta skill
-
-Rito ordinário em Vara Federal está em `base-rito-ordinario-trf`. Recursos no JEF estão em `base-recursos-jef`. CRPS está em `base-crps-panorama-geral`. Cumprimento de sentença está em `base-cumprimento-sentenca-rpv-precatorio`.
-
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O perfil do JEF de Catanduva, com as fórmulas de dispensa do relatório, de regularidade, de dispositivo e de fecho, está na skill `base-juizo-catanduva`, e o esqueleto completo da sentença em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`.

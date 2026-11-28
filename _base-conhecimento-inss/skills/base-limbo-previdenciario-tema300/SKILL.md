@@ -5,6 +5,8 @@ description: "Limbo previdenciário e manutenção da qualidade de segurado pelo
 
 # Limbo Previdenciário. Tema 300 da TNU
 
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente.
+
 ## 1. Quando acionar esta skill
 
 Acione sempre que o segurado tiver recebido alta do INSS, ou indeferimento, e o empregador houver recusado a reassunção do posto por considerá-lo inapto, mantendo o vínculo sem trabalho e sem salário.
@@ -15,9 +17,9 @@ Acione também, de forma retroativa, sempre que a análise do CNIS revelar vínc
 
 O limbo é a zona em que o INSS diz que o segurado pode trabalhar e o empregador diz que não pode. O trabalhador fica sem benefício e sem salário, com o contrato vivo.
 
-A TNU decidiu que, nessa situação, o art. 15, II, da Lei 8.213/91 não incide, porque o segurado não deixou de exercer atividade remunerada abrangida pela Previdência Social por vontade própria. A qualidade de segurado se mantém enquanto durar o vínculo, e o período de graça só começa a correr da rescisão contratual.
+A TNU decidiu que, nessa situação, o art. 15, II, da Lei 8.213/91 não incide, porque o segurado não deixou de exercer atividade remunerada abrangida pela Previdência Social por vontade própria. A qualidade de segurado se mantém enquanto durar o vínculo, e o período de graça apenas começa a correr da rescisão contratual.
 
-O ganho prático é grande. Um segurado que ficou seis anos em limbo permanece segurado no sexto ano, o que sustenta B31, B32, B94 e pensão por morte que o INSS indeferiria por perda da qualidade.
+Consequência prática: um segurado que ficou seis anos em limbo permanece segurado no sexto ano, o que sustenta B31, B32, B94 e pensão por morte que o INSS indeferiria por perda da qualidade.
 
 ## 3. Marco jurisprudencial
 
@@ -33,7 +35,7 @@ Não há tema repetitivo, súmula ou enunciado do STJ sobre a matéria. Declarar
 
 ## 4. Regra dura. A tese não se aplica sozinha
 
-O erro mais caro nesta matéria é supor que vínculo em aberto no CNIS basta. Não basta.
+Erro frequente nesta matéria é supor que vínculo em aberto no CNIS basta. Não basta.
 
 A 8ª Turma Recursal de São Paulo, no RI 5018508-56.2024.4.03.6301, negou o Tema 300 justamente por ausência de prova do impedimento, registrando que a tese se restringe às hipóteses de tentativa frustrada de retorno por conduta ilegítima do empregador. A segurada havia juntado apenas e-mails e mensagens de WhatsApp tardios e genéricos.
 
@@ -56,7 +58,7 @@ Ordem de força decrescente, detalhada em `references/FUNDAMENTOS-E-CENARIOS.md`
 
 **Nunca requerer RAC pedindo baixa do vínculo em aberto no CNIS.** O vínculo aberto é ativo processual, é ele que sustenta a manutenção da qualidade de segurado. Encerrá-lo administrativamente destrói a tese.
 
-Esse alerta prevalece sobre a rotina ordinária de saneamento de CNIS da skill `base-cnis-acerto-indicadores`, que em regra recomenda impugnar registros irregulares. Aqui a irregularidade aparente joga a favor do segurado.
+Esse alerta prevalece sobre a rotina ordinária de saneamento de CNIS da skill `base-cnis-acerto-indicadores`, que em regra recomenda impugnar registros irregulares. Aqui a irregularidade aparente favorece o segurado.
 
 ## 7. Estratégia por via
 
@@ -100,19 +102,7 @@ Para o nexo e a estabilidade do art. 118, acionar `ntep-nexo-acidentario`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## O que NÃO está nesta skill
 

@@ -1,158 +1,78 @@
 ---
 name: base-pcd-fibromialgia-lei15176
-description: "Fibromialgia como deficiência pela Lei 15.176/2025, repercussão na aposentadoria PCD da LC 142/2013 e no BPC/LOAS, prova diagnóstica, critérios ACR, avaliação biopsicossocial em dor crônica generalizada, fadiga, distúrbios do sono e cognição. Use SEMPRE que mencionar fibromialgia, Lei 15.176/2025, dor crônica generalizada, CID M79.7, FIQ, FIQR, FSQ, CSI, BPI, escala ACR 2010, ACR 2016, WPI, ESS, Guideline SBR 2026, diretrizes SBR fibromialgia, individualização de achados fibromialgia, relatório médico fibromialgia, laudo fibromialgia genérico, achado individual fibromialgia, alodínia, hiperalgesia, dor por região, fadiga em tarefa, sono não reparador, cognição fibro fog, resposta terapêutica fibromialgia, diretriz fibromialgia tratamento, amitriptilina duloxetina pregabalina, TCC ACT fibromialgia, neuromodulação tDCS rTMS, acupuntura fibromialgia, fadiga crônica fibromialgia, distúrbio do sono fibromialgia, cognição fog mental, fibromialgia BPC, fibromialgia aposentadoria PCD, IF-BrA fibromialgia, perícia biopsicossocial fibromialgia, doença sem prova objetiva, prova multidisciplinar, reumatologista neurologista, prejuízo funcional. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-if-bra-metodologia, base-pcd-did-retroativa, analise-bpc-loas e formacao-documentacao-did-pcd."
+description: "Fibromialgia e equiparação à pessoa com deficiência pela Lei 15.176/2025 (art. 1º-C da Lei 14.705/2023, condicionada à avaliação biopsicossocial), repercussão na aposentadoria PCD da LC 142/2013 e no BPC/LOAS, prova diagnóstica, critérios ACR, avaliação biopsicossocial em dor crônica generalizada, fadiga, distúrbios do sono e cognição. Use SEMPRE que mencionar fibromialgia, Lei 15.176/2025, Lei 14.705/2023, art. 1º-C, síndrome da fadiga crônica, síndrome complexa de dor regional, dor crônica generalizada, CID M79.7, MG30.01, FIQ, FIQR, FSQ, CSI, BPI, escala ACR 2010, ACR 2016, WPI, ESS, Guideline SBR 2026, diretrizes SBR fibromialgia, individualização de achados fibromialgia, relatório médico fibromialgia, laudo fibromialgia genérico, alodínia, hiperalgesia, dor por região, fadiga em tarefa, sono não reparador, cognição fibro fog, resposta terapêutica fibromialgia, amitriptilina duloxetina pregabalina, TCC ACT fibromialgia, neuromodulação tDCS rTMS, acupuntura fibromialgia, fibromialgia BPC, fibromialgia aposentadoria PCD, IF-BrA fibromialgia, perícia biopsicossocial fibromialgia, doença sem prova objetiva, prova multidisciplinar, prejuízo funcional. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-if-bra-metodologia, base-pcd-did-retroativa, analise-bpc-loas e formacao-documentacao-did-pcd."
 ---
 
-# Fibromialgia como Deficiência (Lei 15.176/2025)
+# Fibromialgia e Equiparação à Pessoa com Deficiência (Lei 15.176/2025)
 
 ## Escopo
 
-Skill pró-segurado sobre fibromialgia reconhecida como deficiência pela Lei 15.176/2025 e seus efeitos em aposentadoria PCD e BPC/LOAS.
+Efeitos da Lei 15.176/2025 na aposentadoria PCD e no BPC, prova clínica e funcional da fibromialgia e redação do relatório médico.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 201 §1º.
+- **Lei 15.176, de 23/07/2025** (DOU de 24/07/2025), em vigor 180 dias após a publicação (art. 2º). Acrescentou os arts. 1º-A a 1º-C à Lei 14.705/2023, que trata da Síndrome de Fibromialgia ou Fadiga Crônica, da Síndrome Complexa de Dor Regional e de doenças correlatas.
+- **Lei 14.705/2023, art. 1º-C.** "A equiparação da pessoa acometida pelas doenças de que trata o art. 1º desta Lei à pessoa com deficiência fica condicionada à realização de avaliação biopsicossocial por equipe multiprofissional e interdisciplinar", nos termos do art. 2º da Lei 13.146/2015.
+- LC 142/2013 e Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1/2014 (IF-BrA).
+- LOAS, art. 20, §§2º e 10, e Portaria Conjunta MDS/INSS 2/2015 (BPC).
+- Lei 13.146/2015, art. 2º, §1º.
 
-Lei 15.176/2025. Fibromialgia como deficiência.
+## Alcance da lei
 
-LC 142/2013.
-
-Lei 8.742/93. BPC.
-
-Decreto 6.214/2007.
-
-Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
-
-## Marco jurisprudencial
-
-### REsp 1.857.965 STJ
-
-Fibromialgia e prova multidisciplinar.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Repercussão social e funcional na avaliação (IF-BrA)
-
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
-
-### REsp 1.652.998 STJ
-
-Fibromialgia em incapacidade laboral.
-
-## Lei 15.176/2025
-
-Primeiro, reconhece fibromialgia como deficiência.
-
-Segundo, atribui direitos de pessoa com deficiência.
-
-Terceiro, alcança aposentadoria PCD e BPC.
-
-Quarto, integra Estatuto da PCD.
+A lei não declara que toda pessoa com fibromialgia é pessoa com deficiência. Ela admite a equiparação mediante avaliação biopsicossocial que considere funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação de atividades e restrição de participação. Na aposentadoria PCD, a avaliação é o IF-BrA; no BPC, a da Portaria Conjunta 2/2015. O ganho para o segurado: o INSS não pode recusar a avaliação sob o argumento de que a fibromialgia é condição subjetiva, e a avaliação deve seguir os quatro eixos do art. 2º, §1º, da Lei 13.146/2015.
 
 ## Critério diagnóstico
 
-Primeiro, ACR 2010 e 2016.
+- ACR 2010 e 2016: dor difusa por mais de 3 meses, WPI e escala de gravidade de sintomas.
+- Sintomas associados: fadiga, sono não reparador, alteração cognitiva.
+- CID-10 M79.7; CID-11 MG30.01.
+- Guideline SBR 2026 (Heymann RE e colaboradores, Advances in Rheumatology): parte I em 16/01/2026 (DOI 10.1186/s42358-025-00507-x) e parte II em 22/01/2026 (DOI 10.1186/s42358-025-00483-2). Instrumentos validados em português: FIQR, FSQ e CSI. Detalhe em `references/GUIDELINE-SBR-2026-ATUALIZACOES-CLINICAS.md`.
 
-Segundo, dor difusa por mais de 3 meses.
+## Individualização dos achados
 
-Terceiro, escala WPI e SS.
+O INSS raramente nega o diagnóstico; nega a repercussão funcional. Relatório que repete diagnóstico, CID e "dor difusa" não demonstra limitação.
 
-Quarto, sintomas associados de fadiga, sono e cognição.
+Cada afirmação do relatório responde, em sequência: qual o achado individual, nomeado, localizado e quantificado; qual capacidade ele suprime ou reduz; qual tarefa concreta deixa de ser executada.
 
-Quinto, Guideline SBR 2026 (Ondas 85 e 86). Diretrizes da Sociedade Brasileira de Reumatologia para o tratamento da fibromialgia, TEXTO INTEGRAL LIDO EM 26/07/2026, publicadas em Advances in Rheumatology, parte I em 16/01/2026 (DOI 10.1186/s42358-025-00507-x, monitoramento e tratamento não farmacológico) e parte II em 22/01/2026 (DOI 10.1186/s42358-025-00483-2, tratamento farmacológico), acesso aberto, autoria de Heymann RE e colaboradores. Instrumentos validados em português FIQR, FSQ e CSI, sem preferência por instrumento específico. Fármacos com evidência, amitriptilina, ciclobenzaprina, duloxetina, milnaciprano e pregabalina. Sem evidência ou não recomendados, ISRS, gabapentina, opioides, tramadol, naltrexona em baixa dose, analgésicos simples, AINEs, canabinoides, benzodiazepínicos, hipnóticos, psicoestimulantes, terapias intravenosas, venlafaxina, desvenlafaxina, trazodona, bupropiona, mirtazapina e combinações de rotina. TCC e ACT com evidência, demais psicoterapias sem evidência robusta. Combinação de aeróbico com força superior a cada modalidade isolada. Acupuntura recomendada para dor, tDCS e rTMS eficazes, espiritualidade e religiosidade com papel significativo, cuidado interdisciplinar superior ao exclusivamente médico, e ausência de evidência para terapias complementares e alternativas em bloco. Consensos literais, confronto com o material de origem e cinco usos previdenciários em `references/GUIDELINE-SBR-2026-ATUALIZACOES-CLINICAS.md`. Regra dura, o guideline é de TRATAMENTO, para critério diagnóstico citar o ACR 2016 diretamente, e a posologia de exercício apoia-se na prescrição do caso, não no documento.
+Seis eixos: dor por região e comportamento (alodínia e hiperalgesia localizadas); fadiga medida em tarefa, tempo e pausas; sono não reparador com consequência diurna; cognição com exemplo de erro concreto; humor com nexo funcional, sem convertê-lo em causa alternativa; resposta terapêutica com doses, tempo, intolerâncias e medidas não farmacológicas.
 
-## Individualização dos achados (Onda 87, regra central da skill)
+Instrumentos FIQR, FSQ e CSI transcritos por domínio, com data, e aplicações seriadas para demonstrar cronicidade. Roteiro, modelos de frase, tradução por benefício e checklist em `references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`, de aplicação obrigatória nos modelos de relatório médico do escritório e como pauta de quesitos em `auditoria-laudo-pericial`.
 
-O diagnóstico de fibromialgia quase nunca é negado. O que se nega é a INCAPACIDADE. Relatório que repete diagnóstico, CID e "dor difusa" entrega ao perito a conclusão de doença sem repercussão funcional, e é a causa mais frequente de indeferimento nesta matéria.
+## Aplicação
 
-Regra de ouro. Toda afirmação do relatório responde a três perguntas em sequência. Qual o achado individual, nomeado, localizado e quantificado quando houver instrumento. Qual capacidade concreta ele suprime ou reduz. Qual tarefa específica da ocupação real do segurado deixa de ser executada.
+- **Aposentadoria PCD.** IF-BrA com pontuação dispersa por vários domínios (mobilidade, vida doméstica, cuidados pessoais, trabalho, socialização). Conferir o Fuzzy quando a deficiência for classificada como motora (`base-pcd-if-bra-metodologia`).
+- **BPC.** Impedimento de longo prazo com barreiras, avaliado pela Portaria Conjunta 2/2015 (`base-bpc-impedimento-longo-prazo`).
+- **DID.** Primeira documentação clínica da síndrome com repercussão funcional (`base-pcd-did-retroativa`).
+- **Prova.** Reumatologia, com apoio de psiquiatria, neurologia, fisioterapia ou terapia ocupacional quando pertinente.
 
-Seis eixos obrigatórios. Dor por região e comportamento (com alodínia e hiperalgesia à palpação localizadas). Fadiga medida em tarefa, tempo e número de pausas. Sono não reparador com a consequência diurna. Cognição com exemplo de erro concreto na função real. Humor com nexo funcional, jamais como causa alternativa que converta o caso em psiquiátrico transitório. Resposta terapêutica com doses, tempo de uso, intolerâncias e medidas não farmacológicas em curso.
+## Cenários
 
-Instrumentos. FIQR, FSQ e CSI, validados em português. Transcrever POR DOMÍNIO ou por item relevante, com data, nunca apenas o escore total. Aplicações seriadas demonstram cronicidade e resistência ao tratamento.
+- **Fibromialgia de longa duração com tratamentos falhos.** Relatório com resposta terapêutica detalhada e instrumentos seriados; IF-BrA ou avaliação do BPC.
+- **Dor, fadiga e alteração cognitiva.** Pontuação em vários domínios; exemplos concretos de erro na função.
+- **Idosa de baixa renda.** BPC idoso dispensa a avaliação da deficiência; avaliar a via mais simples.
+- **Diagnóstico recente (menos de 3 meses).** Pode não atender ao critério ACR nem ao prazo de longo prazo.
+- **Dor localizada.** Não atende ao critério de dor difusa.
 
-Roteiro completo, modelos de frase, tradução por benefício (B31, B32, B91 e B92 na atividade habitual, LC 142 nos sete domínios do IF-BrA, BPC no impedimento com barreiras), sete anti-patterns e checklist de fechamento em `references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`. Aplicação obrigatória nos três modelos de relatório médico do escritório e como pauta de quesitos na `auditoria-laudo-pericial`.
+## Refutação a argumentos típicos do INSS
 
-## Aplicação pró-segurado
+- **Ausência de exame objetivo.** O diagnóstico é clínico (ACR) e o guideline SBR 2026 não exige imagem ou exame laboratorial.
+- **Condição subjetiva.** Lei 14.705/2023, art. 1º-C: cabe avaliação biopsicossocial, e não a recusa prévia.
+- **Estabilização.** Estabilidade clínica não remove limitação de atividade nem restrição de participação.
+- **Avaliação sem eixo social.** O art. 1º-C exige equipe multiprofissional e os quatro eixos do art. 2º, §1º, da Lei 13.146/2015.
+- **DID na DER.** Prova documental anterior permite DID retroativa.
 
-Primeiro, fibromialgia gera direito à aposentadoria PCD ou BPC.
+## Jurisprudência
 
-Segundo, prova multidisciplinar (reumatologista, neurologista, psiquiatra).
+REsp 1.857.965 e REsp 1.652.998, citados em versões anteriores como precedentes sobre fibromialgia: [NÃO CONFIRMADO]. Precedente vinculante sobre o art. 1º-C da Lei 14.705/2023: Não localizado.
 
-Terceiro, IF-BrA aplicado por domínios.
+## Integração
 
-Quarto, repercussão social e ocupacional documentada.
+Aposentadoria PCD em `aposentadoria-deficiencia`; IF-BrA em `base-pcd-if-bra-metodologia`; BPC em `analise-bpc-loas`; DID em `base-pcd-did-retroativa` e `formacao-documentacao-did-pcd`; perspectiva de gênero em `perspectiva-genero-previdenciario`; auditoria do laudo em `auditoria-laudo-pericial`; portarias em `base-portarias-dpmf-inss-hub`; peça em `peticao-previdenciaria`.
 
-## Cenários pró-segurado
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
-Cenário A, segurada com fibromialgia há 10 anos. CID M79.7. Indenização indeferida. Lei 15.176 reconhece.
-
-Cenário B, segurado com dor difusa, fadiga e fog mental. Múltiplos domínios IF-BrA.
-
-Cenário C, idosa com fibromialgia e baixa renda. BPC com avaliação biopsicossocial.
-
-Cenário D, segurada perdeu emprego por fibromialgia. Lei 15.176 e art. 7º XXXI CF.
-
-## Alertas
-
-Primeiro, perícia que descarta por ausência de exame objetivo erra. Critério é clínico.
-
-Segundo, exigência exclusiva de exame de imagem é desconhecida em fibromialgia.
-
-Terceiro, prova multidisciplinar é direito do segurado.
-
-Quarto, IF-BrA em fibromialgia exige avaliação social.
-
-## Hub de portarias administrativas
-
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Jane Berwanger, deficiência e fibromialgia.
-
-Frederico Amado.
-
-Marco Aurélio Serau Junior.
-
-Daniel Pulino.
-
-IBDP.
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015 (urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica), com fato concreto e documento por ID, e cobrar os quatro incisos do art. 2º, §1º, na avaliação e no relatório. O art. 1º-C da Lei 14.705/2023 remete expressamente a esse dispositivo.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Para aposentadoria PCD, acionar `aposentadoria-deficiencia`.
-Para metodologia IF-BrA, acionar `base-pcd-if-bra-metodologia`.
-Para BPC, acionar `analise-bpc-loas`.
-Para DID retroativa, acionar `base-pcd-did-retroativa`.
-Para redação, acionar `peticao-previdenciaria`.
-
-## O que NÃO está nesta skill
-
-Metodologia IF-BrA em `base-pcd-if-bra-metodologia`. DID retroativa em `base-pcd-did-retroativa`. BPC em `analise-bpc-loas`. Auditoria de laudo em `auditoria-laudo-pericial`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

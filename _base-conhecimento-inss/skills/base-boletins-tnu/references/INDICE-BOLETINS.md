@@ -1,35 +1,35 @@
 # Índice de Boletins da TNU (acervo do escritório)
 
-Gerado na Onda 105 (11/08/2026). 104 boletins processados, sessões de 18/02/2016 a 24/06/2026. A coluna Teses traz a contagem de blocos de tese capturados na extração automática, e serve de indicador de densidade, não de número exato de teses do boletim.
+Gerado em 11/08/2026. 104 boletins processados, sessões de 18/02/2016 a 24/06/2026. A coluna Teses traz a contagem de blocos de tese capturados na extração automática, e serve de indicador de densidade, não de número exato de teses do boletim.
 
 | Boletim | Sessão | Temas tratados | Teses capt. | Arquivo |
 |---|---|---|---|---|
-| B2 | 18/02/2016 | — | 0 | `BoletimTNU_2_ativo.pdf` |
-| B3 | 16/03/2016 | — | 0 | `BoletimTNU_3_versao4_final.pdf` |
-| B4 | 14/04/2016 | — | 0 | `BoletimTNU_4.pdf` |
-| B5 | 12/05/2016 | — | 0 | `BoletimTNU_5.pdf` |
-| B6 | 16/06/2016 | — | 0 | `BoletimTNU_6_final.pdf` |
-| B7 | 20/07/2016 | — | 0 | `BoletimTNU_7.pdf` |
-| B8 | 17/08/2016 | — | 0 | `BoletimTNU_8_links.pdf` |
+| B2 | 18/02/2016 | - | 0 | `BoletimTNU_2_ativo.pdf` |
+| B3 | 16/03/2016 | - | 0 | `BoletimTNU_3_versao4_final.pdf` |
+| B4 | 14/04/2016 | - | 0 | `BoletimTNU_4.pdf` |
+| B5 | 12/05/2016 | - | 0 | `BoletimTNU_5.pdf` |
+| B6 | 16/06/2016 | - | 0 | `BoletimTNU_6_final.pdf` |
+| B7 | 20/07/2016 | - | 0 | `BoletimTNU_7.pdf` |
+| B8 | 17/08/2016 | - | 0 | `BoletimTNU_8_links.pdf` |
 | B9 | 14/09/2016 | 138, 140, 148 | 3 | `BoletimTNU_9.pdf` |
 | B10 | 20/10/2016 | 126, 131, 149, 150 | 4 | `BoletimTNU_10.pdf` |
-| B11 | 24/11/2016 | — | 0 | `BoletimTNU_11.pdf` |
+| B11 | 24/11/2016 | - | 0 | `BoletimTNU_11.pdf` |
 | B12 | 15/12/2016 | 125 | 1 | `BoletimTNU_12_links.pdf` |
-| B13 | 23/02/2017 | — | 0 | `BoletimTNU_13.pdf` |
-| B14 | 30/03/2017 | — | 0 | `BoletimTNU_14_v2.pdf` |
-| B15 | 27/04/2017 | — | 0 | `BoletimTNU_15.pdf` |
+| B13 | 23/02/2017 | - | 0 | `BoletimTNU_13.pdf` |
+| B14 | 30/03/2017 | - | 0 | `BoletimTNU_14_v2.pdf` |
+| B15 | 27/04/2017 | - | 0 | `BoletimTNU_15.pdf` |
 | B16 | 25/05/2017 | 137 | 1 | `BoletimTNU_16_links.pdf` |
-| B17 | 22/06/2017 | — | 0 | `BoletimTNU_17.pdf` |
-| B18 | 30/08/2017 | — | 0 | `BoletimTNU_18.pdf` |
-| B19 | 14/09/2017 | — | 0 | `BoletimTNU_19.pdf` |
-| B20 | 25/10/2017 | — | 0 | `BoletimTNU_20.pdf` |
+| B17 | 22/06/2017 | - | 0 | `BoletimTNU_17.pdf` |
+| B18 | 30/08/2017 | - | 0 | `BoletimTNU_18.pdf` |
+| B19 | 14/09/2017 | - | 0 | `BoletimTNU_19.pdf` |
+| B20 | 25/10/2017 | - | 0 | `BoletimTNU_20.pdf` |
 | B21 | 22/11/2017 | 153 | 0 | `BoletimTNU_21.pdf` |
-| B22 | 13/12/2017 | — | 0 | `BoletimTNU_22.pdf` |
-| B23 | 22/02/2018 | — | 0 | `BoletimTNU_23.pdf` |
+| B22 | 13/12/2017 | - | 0 | `BoletimTNU_22.pdf` |
+| B23 | 22/02/2018 | - | 0 | `BoletimTNU_23.pdf` |
 | B24 | 22/03/2018 | 162 | 0 | `BoletimTNU_24.pdf` |
 | B25 | 19/04/2018 | 151, 164 | 0 | `BoletimTNU_25.pdf` |
-| B26 | 24/05/2018 | — | 0 | `BoletimTNU_26.pdf` |
-| B27 | 21/06/2018 | — | 0 | `BoletimTNU_27 (002).pdf` |
+| B26 | 24/05/2018 | - | 0 | `BoletimTNU_26.pdf` |
+| B27 | 21/06/2018 | - | 0 | `BoletimTNU_27 (002).pdf` |
 | B28 | 17/08/2018 | 168, 170, 176, 180 | 0 | `BoletimTNU_28.pdf` |
 | B29 | 12/09/2018 | 183, 185 | 0 | `BoletimTNU_29.pdf` |
 | B30 | 26/10/2018 | 166, 168, 171, 175, 184, 194, 195 | 0 | `BoletimTNU_30.pdf` |
@@ -70,7 +70,7 @@ Gerado na Onda 105 (11/08/2026). 104 boletins processados, sessões de 18/02/201
 | B66 | 23/06/2022 | 219, 286, 295, 296, 298, 305, 306 | 5 | `Boletim_TNU_66.pdf` |
 | B67 | 18/08/2022 | 284, 303, 307, 308, 309 | 1 | `Boletim_TNU_67.pdf` |
 | B68 | 15/09/2022 | 197, 301, 305 | 1 | `Boletim_TNU_68.pdf` |
-| B69 | — | 310, 311 | 0 | `Boletim_TNU_69.pdf` |
+| B69 | - | 310, 311 | 0 | `Boletim_TNU_69.pdf` |
 | B70 | 10/11/2022 | 312, 313, 314, 315, 316, 317 | 0 | `Boletim_TNU_70 atualizado.pdf` |
 | B71 | 07/12/2022 | 300, 306 | 0 | `Boletim_TNU_71.pdf` |
 | B72 | 15/02/2023 | 292, 297, 318, 319, 320 | 1 | `Boletim_TNU_72.pdf` |

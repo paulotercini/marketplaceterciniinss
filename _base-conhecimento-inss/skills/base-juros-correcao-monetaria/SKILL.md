@@ -9,7 +9,7 @@ description: "Juros e correção monetária em benefícios previdenciários pelo
 
 Skill pró-segurado sobre os critérios de juros de mora e correção monetária aplicáveis a créditos previdenciários contra o INSS, atualizada pela edição 2026 do Manual de Orientação de Procedimentos para os Cálculos na Justiça Federal (Resolução CJF 990, de 03/07/2026, Processo 0001401-23.2019.4.90.8000, Nota Técnica 1/2026 da Comissão Permanente).
 
-Fonte primária incorporada na Onda 76 (25/07/2026) a partir do PDF oficial do Manual. Os quadros literais completos, período a período, estão em `references/MANUAL-CJF-2026-QUADROS.md`.
+Os quadros literais do Manual, período a período, estão em `references/MANUAL-CJF-2026-QUADROS.md`.
 
 ## O regime de TRÊS FASES (síntese operacional)
 
@@ -33,7 +33,7 @@ Inconstitucionalidade parcial do art. 1º-F. IPCA-E para correção das condena�
 
 ### Tema 905 STJ (REsps 1.492.221, 1.495.144 e 1.495.146)
 
-Critérios específicos. INPC para benefícios previdenciários após a Lei 11.430/2006 e juros de mora pela remuneração da caderneta de poupança (item 3.2), ressalvada a coisa julgada que tenha fixado índices diversos (item 4) [CONFERIDO] (auditoria 03/10/2026). Fonte oficial em https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=905&cod_tema_final=905
+Critérios específicos. INPC para benefícios previdenciários após a Lei 11.430/2006 e juros de mora pela remuneração da caderneta de poupança (item 3.2), ressalvada a coisa julgada que tenha fixado índices diversos (item 4) [CONFERIDO]. Fonte oficial em https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=905&cod_tema_final=905
 
 ### Tema 1419 STF (ARE 1.557.312/SP)
 
@@ -49,7 +49,7 @@ Juros de mora da citação em benefícios. Fonte oficial em https://www.stj.jus.
 
 ### Súmula 148 STJ
 
-Correção monetária plena desde cada vencimento (o enunciado não menciona a Súmula 71 TFR, tida por superada [NÃO CONFIRMADO], ressalvada coisa julgada que a tenha determinado) (auditoria 03/10/2026).
+Correção monetária plena desde cada vencimento Débitos de benefício cobrados em juízo corrigem-se pela Lei 6.899/81. O Manual registra a Súmula 71 do TFR como superada, ressalvada coisa julgada que a tenha determinado.
 
 ## Notas operacionais do Manual 2026 (uso direto em impugnação de cálculo)
 
@@ -81,19 +81,7 @@ Primeiro, mapear termos iniciais (competência para correção, citação para j
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
@@ -101,7 +89,7 @@ Em petição, acionar `peticao-previdenciaria`. Em cumprimento, `base-cumpriment
 
 ## Alertas
 
-Primeiro, TR é inconstitucional para correção. Combater sempre.
+Primeiro, a TR não corrige condenação da Fazenda (Tema 810 STF). Nos benefícios previdenciários, o índice até 11/2021 é o INPC (Tema 905 STJ; Lei 8.213/91, art. 41-A), e não o IPCA-E.
 
 Segundo, o Manual CJF é o parâmetro que pacifica divergência com a contadoria. A edição vigente é a de 2026 (Resolução CJF 990/2026). Citar edição e item.
 
@@ -114,10 +102,6 @@ Quinto, a EC 136/2025 também alterou o regime da fase PÓS-requisitório. O Man
 ## Hub de portarias administrativas
 
 Acionar `base-portarias-dpmf-inss-hub` para identificar as Portarias do procedimento administrativo no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, correção monetária. Hugo Goes, juros. Marco Aurélio Serau Junior, cálculo previdenciário. Daniel Pulino, execução. Jane Berwanger, execução. IBDP, advocacia previdenciária.
 
 ## O que NÃO está nesta skill
 

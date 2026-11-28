@@ -1,10 +1,10 @@
-# LBI — Barreiras, Dispositivos Literais e Aplicação Previdenciária
+# LBI. Barreiras, Dispositivos Literais e Aplicação Previdenciária
 
-Criado na Onda 89 (26/07/2026) a partir do texto consolidado da Lei 13.146/2015 (Planalto), fornecido ao escritório e lido integralmente.
+Texto consolidado da Lei 13.146/2015 (Planalto), conferido no corpus do MCP `normas`.
 
 ## As seis barreiras, transcrição literal do art. 3º, IV
 
-Caput do inciso. "barreiras. qualquer entrave, obstáculo, atitude ou comportamento que limite ou impeça a participação social da pessoa, bem como o gozo, a fruição e o exercício de seus direitos à acessibilidade, à liberdade de movimento e de expressão, à comunicação, ao acesso à informação, à compreensão, à circulação com segurança, entre outros, classificadas em."
+Caput do inciso. "barreiras: qualquer entrave, obstáculo, atitude ou comportamento que limite ou impeça a participação social da pessoa, bem como o gozo, a fruição e o exercício de seus direitos à acessibilidade, à liberdade de movimento e de expressão, à comunicação, ao acesso à informação, à compreensão, à circulação com segurança, entre outros, classificadas em."
 
 Alínea a, barreiras urbanísticas. "as existentes nas vias e nos espaços públicos e privados abertos ao público ou de uso coletivo."
 
@@ -20,7 +20,7 @@ Alínea f, barreiras tecnológicas. "as que dificultam ou impedem o acesso da pe
 
 ## Matriz de prova por barreira
 
-Cada barreira alegada precisa de ancoragem documental identificável por ID nos autos. Sem isso, o INSS trata como narrativa.
+Cada barreira alegada precisa de ancoragem documental identificável por ID nos autos. Sem documento, o INSS trata a alegação como narrativa.
 
 Urbanística. Fotografias do trajeto real, endereço e distância até o serviço de saúde ou o trabalho, declaração de vizinhança ou de agente comunitário, relatório do serviço social, laudo do CRAS.
 
@@ -40,7 +40,7 @@ Bloco de definição. "A deficiência, no direito brasileiro, não se resume ao 
 
 Bloco de barreira concreta. "No caso da parte autora, a barreira [espécie do art. 3º, IV, alínea] se materializa em [fato concreto], conforme [documento e ID], de modo que [restrição de participação específica], o que se enquadra nos incisos II, III e IV do § 1º do art. 2º da Lei 13.146/2015."
 
-Bloco contra laudo que só olha o corpo. "A avaliação da deficiência, por expressa determinação do § 1º do art. 2º da Lei 13.146/2015, é biopsicossocial e considera não apenas os impedimentos nas funções e nas estruturas do corpo, mas também os fatores socioambientais, psicológicos e pessoais, a limitação no desempenho de atividades e a restrição de participação. O laudo que se limita ao primeiro inciso deixa de avaliar três quartos do que a lei manda avaliar."
+Bloco contra laudo que olha apenas o corpo. "A avaliação da deficiência, por expressa determinação do § 1º do art. 2º da Lei 13.146/2015, é biopsicossocial e considera não apenas os impedimentos nas funções e nas estruturas do corpo, mas também os fatores socioambientais, psicológicos e pessoais, a limitação no desempenho de atividades e a restrição de participação. O laudo que se limita ao primeiro inciso deixa de avaliar três quartos do que a lei manda avaliar."
 
 Bloco contra exigência de aptidão plena. "O § 3º do art. 34 da Lei 13.146/2015 veda expressamente a exigência de aptidão plena, inclusive nas etapas de exames periódicos, permanência no emprego e reabilitação profissional. A alegação de capacidade residual, desacompanhada da demonstração de posto de trabalho real, acessível e compatível, contraria a norma."
 

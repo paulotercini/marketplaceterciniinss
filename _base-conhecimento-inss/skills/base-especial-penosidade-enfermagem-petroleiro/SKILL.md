@@ -1,154 +1,50 @@
 ---
 name: base-especial-penosidade-enfermagem-petroleiro
-description: "Atividade especial por penosidade, enfermagem hospitalar pelo Tema 208 TNU, atividade petroleira pela Lei 5.811/72, vigilantes Tema 1031 STJ, eletricistas e atividades penosas tradicionais. Use SEMPRE que mencionar penosidade aposentadoria especial, enfermagem hospitalar especial, técnico enfermagem especial, auxiliar enfermagem especial, Tema 208 TNU enfermagem, atividade petroleira aposentadoria, Lei 5.811/72, plataforma petróleo aposentadoria, vigilante Tema 1031 STJ, eletricista alta tensão especial, motorista ônibus rodoviário, frentista aposentadoria, atividade penosa pré-1995, código 2.1.3 Decreto 53.831, código 1.1.6 Decreto 83.080, biológico hospital, paciente sem isolamento. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-calor-nho06, base-especial-frio-camara-frigorifica, base-especial-radiacao-ionizante, base-especial-categoria-profissional-pre1995 e defesa-probatoria-especial."
+description: "Atividades classificadas como penosas ou perigosas nos decretos antigos e seu tratamento atual: penosidade (Decreto 53.831/64, códigos 2.1.4 e 2.4.4), enfermagem (códigos 1.3.2 e 2.1.3; Anexo IV, 3.0.1), petroleiro (Decreto 83.080/79, Anexo II, 2.3.5; hidrocarbonetos e benzeno após 1997; Lei 5.811/72 como regime de trabalho) e vigilante (código 2.5.7 até 28/04/1995; Tema 1031 do STJ superado pelo Tema 1209 do STF). Use SEMPRE que mencionar penosidade aposentadoria especial, atividade penosa, enfermagem especial, técnico ou auxiliar de enfermagem, atividade petroleira, plataforma de petróleo, refinaria, Lei 5.811/72, vigilante, vigia, guarda, Tema 1031 STJ, Tema 1209 STF, periculosidade após EC 103, motorista após 1995. Cruza com base-especial-agentes-biologicos, base-tema383-tnu-fundacentro-epi-biologicos, base-especial-agentes-quimicos, base-especial-eletricidade-periculosidade, base-especial-categoria-profissional-pre1995, auditoria-ppp e defesa-probatoria-especial."
 ---
 
-# Penosidade, Enfermagem e Petroleiro
+# Penosidade, enfermagem, petroleiro e vigilante
 
-## Escopo
+## Escopo e limite constitucional
 
-Skill pró-segurado sobre penosidade no enquadramento especial, enfermagem hospitalar, atividade petroleira e atividades penosas tradicionais.
-
-## Marco normativo central
-
-CF/88, art. 201 §1º.
-
-Lei 8.213/91, arts. 57 e 58.
-
-Lei 5.811/72.
-
-Decreto 53.831/64.
-
-Decreto 83.080/79.
-
-Decreto 3.048/99.
-
-IN 128/2022.
-
-## Marco jurisprudencial
-
-### Tema 208 TNU
-
-Enfermagem hospitalar.
-
-Fonte oficial em https://www.cjf.jus.br
-
-### Tema 1031 STJ
-
-Vigilantes.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 198 TFR
-
-Categoria profissional.
-
-### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
-
-O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
+Desde a EC 103/2019, o art. 201, § 1º, II, da CF admite aposentadoria especial apenas por "efetiva exposição a agentes químicos, físicos e biológicos prejudiciais à saúde, ou associação desses agentes, vedada a caracterização por categoria profissional ou ocupação". Penosidade e periculosidade não constam do texto. Para trabalho anterior, vale a lei da época da prestação do serviço.
 
 ## Penosidade
 
-Primeiro, penosidade integra o conceito de nocividade.
+- **Até 28/04/1995.** O Decreto 53.831/64 classifica como "penoso" o magistério (código 2.1.4) e o transporte rodoviário (código 2.4.4, motoristas e cobradores de ônibus, motoristas e ajudantes de caminhão). Enquadramento pela categoria: `base-especial-categoria-profissional-pre1995`. Magistério: `aposentadoria-professor-rgps`.
+- **Após 28/04/1995.** O Anexo IV dos Decretos 2.172/97 e 3.048/99 não prevê penosidade. O caminho é o agente nocivo: ruído, vibração de corpo inteiro (`base-especial-vibracao`), calor. A Súmula 198 do TFR permite a perícia, mas o enquadramento por penosidade isolada após 1995 é Não localizado como tese uniformizada.
 
-Segundo, atividades históricas até 28/04/1995 enquadram por categoria.
+## Enfermagem
 
-Terceiro, jurisprudência preserva categorias.
-
-Quarto, biológico em hospital pode ser cumulativo.
-
-## Enfermagem hospitalar
-
-Primeiro, técnico e auxiliar de enfermagem em hospital.
-
-Segundo, exposição a agentes biológicos.
-
-Terceiro, Tema 208 TNU consagra.
-
-Quarto, código 1.3.2 e 1.3.4 Decreto 53.831.
+- **Até 05/03/1997.** Decreto 53.831/64, código 1.3.2 (assistência médica, odontológica e hospitalar com contato obrigatório com doentes ou materiais infecto-contagiantes) e código 2.1.3 (enfermeiros, até 28/04/1995). Decreto 83.080/79, Anexo I, código 1.3.4, e Anexo II, código 2.1.3. A IN 128/2022, art. 299, I, admite o enquadramento até 05/03/1997 mesmo fora de estabelecimento de saúde.
+- **Após 05/03/1997.** Anexo IV, código 3.0.1, "a": trabalhos em estabelecimentos de saúde em contato com pacientes portadores de doenças infecto-contagiosas ou com manuseio de materiais contaminados. A IN 128/2022, art. 299, II, restringe às atividades relacionadas no Anexo IV.
+- Desenvolvimento completo, EPI e Tema 383 da TNU: `base-especial-agentes-biologicos` e `base-tema383-tnu-fundacentro-epi-biologicos`.
 
 ## Petroleiro
 
-Primeiro, Lei 5.811/72 disciplina atividade.
+- **Até 28/04/1995.** Decreto 83.080/79, Anexo II, código 2.3.5: "trabalhadores ocupados em caráter permanente na perfuração de poços petrolíferos e na extração de petróleo", com parecer administrativo que equipara produção, perfuração e extração.
+- **Após 28/04/1995.** Pelo agente: hidrocarbonetos e benzeno (Anexo IV, código 1.0.3; avaliação qualitativa do benzeno como cancerígeno, Tema 170 da TNU), ruído, calor. Indicar o agente específico; a menção genérica a "hidrocarbonetos" não basta após o Decreto 2.172/97 (Tema 298 da TNU). Ver `base-especial-agentes-quimicos`.
+- A Lei 5.811/72 regula o regime de turnos e sobreaviso do petroleiro. Não é norma de enquadramento previdenciário; serve apenas para provar a jornada e a permanência no local de trabalho.
 
-Segundo, plataforma e refinaria enquadram.
+## Vigilante
 
-Terceiro, regime especial preservado.
+- **Até 28/04/1995.** Decreto 53.831/64, código 2.5.7 ("bombeiros, investigadores, guardas"). Enunciado 14 do CRPS e Súmula 26 da TNU, esta com ressalva após o Tema 1209 do STF.
+- **Após 28/04/1995.** O Tema 1031 do STJ admitia a especialidade com prova da nocividade. O STF, no Tema 1209 (RE 1.368.225, julgado em 18/02/2026, acórdão publicado em 04/03/2026), firmou: "A atividade de vigilante, com ou sem o uso de arma de fogo, não se caracteriza como especial, para fins de concessão da aposentadoria de que trata o art. 201, § 1º, da Constituição." O Tema 1031 do STJ fica superado. Estratégias residuais: período até 28/04/1995 por categoria, direito adquirido e eventual modulação no inteiro teor (conferir antes de peticionar).
 
-Quarto, hidrocarbonetos cumulativos.
+## Eletricista
 
-## Vigilantes
+Eletricidade acima de 250 volts após 05/03/1997 (Tema 534 do STJ): `base-especial-eletricidade-periculosidade`.
 
-Primeiro, Tema 1031 STJ admite especial.
-
-Segundo, periculosidade arma de fogo.
-
-Terceiro, art. 193 CLT por extensão.
-
-Quarto, atividade habitual.
-
-## Cenários pró-segurado
-
-Cenário A, técnico enfermagem hospital. Especial.
-
-Cenário B, médico clínica. Análise específica.
-
-Cenário C, petroleiro plataforma. Especial.
-
-Cenário D, vigilante armado. Especial.
-
-Cenário E, eletricista alta tensão. Especial.
-
-## Alertas
-
-Primeiro, INSS resiste em penosidade. Súmula 198 TFR.
-
-Segundo, atividade até 28/04/1995 por categoria.
-
-Terceiro, biológico cumulativo é frequente.
-
-Quarto, perícia judicial cabível.
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`. Refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## Hub de portarias administrativas
 
-Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
-
-## Doutrina de apoio
-
-Sebastião Geraldo de Oliveira.
-
-Frederico Amado.
-
-Hugo Goes.
-
-Marco Aurélio Serau Junior.
-
-IBDP.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
-
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Integração com outras skills
 
-Para auditoria de PPP, acionar `auditoria-ppp`.
-Para calor, acionar `base-especial-calor-nho06`.
-Para frio, acionar `base-especial-frio-camara-frigorifica`.
-Para radiação, acionar `base-especial-radiacao-ionizante`.
-Para categoria pré-1995, acionar `base-especial-categoria-profissional-pre1995`.
-
-## O que NÃO está nesta skill
-
-Calor em `base-especial-calor-nho06`. Frio em `base-especial-frio-camara-frigorifica`. Radiação em `base-especial-radiacao-ionizante`. Categoria em `base-especial-categoria-profissional-pre1995`.
+Biológicos em `base-especial-agentes-biologicos` e `base-tema383-tnu-fundacentro-epi-biologicos`. Químicos em `base-especial-agentes-quimicos`. Eletricidade em `base-especial-eletricidade-periculosidade`. Categoria em `base-especial-categoria-profissional-pre1995`. Auditoria do PPP em `auditoria-ppp`. Prova em `defesa-probatoria-especial`.

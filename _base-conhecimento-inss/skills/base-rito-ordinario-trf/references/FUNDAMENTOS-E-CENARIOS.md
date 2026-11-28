@@ -1,121 +1,28 @@
-# Rito Ordinário TRF — Fundamentos e Cenários
+# Rito Ordinário TRF. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-Rito ordinário é o procedimento comum do CPC aplicado em Vara Federal, destinado a demandas previdenciárias de valor superior a 60 salários-mínimos ou não compatíveis com o JEF. Apelação ao TRF, reexame necessário com limite da Súmula 490 STJ, recursos superiores STJ e STF.
+CF, art. 109, I (competência federal) e §3º (competência delegada, hoje restrita a comarca a mais de 70 km de Vara Federal, Lei 5.010/66, art. 15, III, na redação da Lei 13.876/2019). CF, arts. 102, III, e 105, III, para os recursos extraordinários. CPC, procedimento comum. Lei 10.259/2001, art. 3º, para a fronteira de 60 salários mínimos.
 
-## 2. Fundamento constitucional
+## 2. Cenários pró-segurado
 
-Art. 109 CF/88. Competência da Justiça Federal.
+Cenário A. Atrasados acima de 60 salários mínimos sem interesse na renúncia. Rito comum, com tutela de urgência na inicial.
+Cenário B. Aposentadoria especial com vários vínculos e perícia técnica complexa. Rito comum, com quesitos por período.
+Cenário C. Tese que depende de REsp (divergência no TRF3 ou matéria infraconstitucional aberta). Rito comum, com prequestionamento desde a inicial.
+Cenário D. Rescisória de julgado do rito comum. Competência do TRF (CF, art. 108, I, b).
 
-Art. 102, III, CF/88. RE.
+## 3. Cenários em que o JEF serve melhor
 
-Art. 105, III, CF/88. REsp.
+Valor abaixo de 60 salários mínimos, prova simples ou matéria pacificada em repetitivo. A renúncia expressa ao excedente leva ao JEF (Tema 1030 STJ), com execução mais rápida por RPV.
 
-## 3. Fundamento legal
+## 4. Riscos
 
-CPC, Lei 13.105/2015.
+Demora maior que no JEF. Honorários de sucumbência contra o segurado vencido, suspensos pela gratuidade (CPC, art. 98, §3º). Recurso superior perdido por falta de prequestionamento. Remessa necessária, rara pelo teto de 1.000 salários mínimos.
 
-Lei 8.213/91.
+## 5. Metodologia
 
-Decreto 3.048/99.
-
-Regimentos internos dos TRFs.
-
-## 4. Marco jurisprudencial central
-
-### Súmula 490 STJ
-
-Reexame necessário em Fazenda Pública com limite de alçada.
-
-### Tema 1030 STJ
-
-Renúncia ao excedente, vinculação.
-
-### Tema 810 STF
-
-Juros e correção.
-
-### Tema 905 STJ
-
-Juros e correção em benefícios previdenciários.
-
-### Tema 350 STF
-
-Prévio requerimento administrativo.
-
-## 5. Cenários pró-segurado
-
-### Cenário A — Atrasados altos (mais de 60 SM)
-
-Rito ordinário em Vara Federal, com tutela.
-
-### Cenário B — Ação rescisória
-
-Rito ordinário, no TRF.
-
-### Cenário C — Mandado de segurança coletivo previdenciário
-
-Rito próprio, Vara Federal.
-
-### Cenário D — Aposentadoria especial complexa
-
-Rito ordinário, com perícia técnica ampla.
-
-### Cenário E — Revisões com impacto sistêmico
-
-Rito ordinário.
-
-## 6. Cenários limitados
-
-### Cenário F — Valor baixo
-
-JEF adequado.
-
-### Cenário G — Provimento simples
-
-JEF adequado.
-
-### Cenário H — Matéria pacificada em repetitivo
-
-Rito ordinário com aplicação imediata.
-
-## 7. Metodologia
-
-Primeiro, valor da causa.
-
-Segundo, petição inicial densa.
-
-Terceiro, tutela se cabível.
-
-Quarto, especificação de provas.
-
-Quinto, instrução robusta.
-
-Sexto, prequestionamento.
-
-## 8. Riscos processuais
-
-Risco de demora. Alto.
-
-Risco de reexame necessário reverter sentença.
-
-Risco de sucumbência recíproca. Calcular.
-
-Risco de REsp e RE sem prequestionamento. Reverter pelos embargos.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, tutela de urgência imediata.
-
-Segundo, fundamentação jurisprudencial robusta.
-
-Terceiro, perícia bem instruída.
-
-Quarto, honorários bem pedidos.
-
-Quinto, recurso técnico de primeira.
-
-## 10. Integração prática
-
-Acionar `peticao-previdenciaria`, `revisao-peticao`, `precedentes-previdenciarios`, `base-cumprimento-sentenca-rpv-precatorio`, `execucao-cumprimento-previdenciario`, `honorarios-contrato-previdenciario`.
+Primeiro, calcular o valor da causa e decidir o rito.
+Segundo, inicial com fundamento constitucional, legal e jurisprudencial e pedido de tutela.
+Terceiro, especificação de provas dirigida (`especificacao-provas`).
+Quarto, prequestionamento e embargos de declaração quando preciso.
+Quinto, apelação ou contrarrazões com dialeticidade.

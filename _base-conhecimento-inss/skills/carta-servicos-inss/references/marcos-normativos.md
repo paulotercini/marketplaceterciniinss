@@ -12,7 +12,7 @@ Direito adquirido EC 103/2019, art. 3º. Súmula 359 STF. Tema 334 STF (melhor b
 
 Regras de transição EC 103/2019, arts. 15 a 17 e 20. Reafirmação da DER (Tema 995 STJ).
 
-Aluno-aprendiz (Súmula 96 TCU, Súmula 18 TNU). Tempo militar (art. 55 I Lei 8.213/91) (auditoria 03/10/2026). Atividades concomitantes (Tema 1.070 STJ).
+Aluno-aprendiz (Súmula 96 TCU, Súmula 18 TNU). Tempo militar (art. 55 I Lei 8.213/91). Atividades concomitantes (Tema 1.070 STJ).
 
 ### Aposentadoria por Idade
 
@@ -30,7 +30,7 @@ Documentos comprobatórios incisos do art. 116 IN 128/2022. Tema 327 TNU (cônju
 
 Art. 57 e 58 Lei 8.213/91. Anexo IV Decreto 3.048/99. EC 103/2019 art. 21 (transição).
 
-Ruído (Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024). EPI (Tema 555 STF, Tema 1090 STJ, Tema 213 TNU) (auditoria 03/10/2026, retirado o Tema 218 TNU, que trata de outra matéria). Agentes biológicos (Tema 383 TNU, Pareceres Fundacentro 2/2025 e 3/2025, Ofício 221/2025/PRES).
+Ruído (Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024). EPI (Tema 555 STF, Tema 1090 STJ, Tema 213 TNU). Agentes biológicos (Tema 383 TNU, Pareceres Fundacentro 2/2025 e 3/2025, Ofício 221/2025/PRES).
 
 Conversão de tempo especial em comum até 13/11/2019 (Tema 422 STJ, Súmula 50 TNU).
 
@@ -44,13 +44,13 @@ Arts. 42 a 48 Lei 8.213/91. Acréscimo 25%, art. 45 Lei 8.213/91 e Anexo I Decre
 
 RMI EC 103/2019 art. 26 §2º III (60% mais 2% por ano excedente).
 
-Art. 42, §2º, da Lei 8.213/91 (agravamento de doença preexistente) (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). Portaria Conjunta MPS/INSS 14/2026 (análise documental).
+Art. 42, §2º, da Lei 8.213/91 (agravamento de doença preexistente). Portaria Conjunta MPS/INSS 14/2026 (análise documental).
 
 ### Aposentadoria por Incapacidade Permanente Acidentária B92
 
 Arts. 19 a 21 Lei 8.213/91. NTEP art. 21-A Lei 8.213/91. ADI 3931 STF.
 
-RMI EC 103/2019 art. 26 §3º II — para B92 a regra é 100% da média.
+RMI EC 103/2019 art. 26 §3º II, para B92 a regra é 100% da média.
 
 Lista B Anexo II Decreto 3.048/99 (NTEP por CID e CNAE). Burnout QD85 (Portaria MTE 1.419/2024). Riscos psicossociais NR-1 atualizada.
 
@@ -72,7 +72,7 @@ ADI 3931 STF (presunção do NTEP).
 
 Art. 86 Lei 8.213/91. Anexo III Decreto 3.048/99 (caráter exemplificativo).
 
-Tema 416 STJ (benefício devido ainda que mínima a lesão; Anexo III exemplificativo). Súmula 88 TNU (limitação ainda que leve enseja concessão, 17/04/2024). Súmula 89 TNU (limite negativo, sem redução nem maior esforço não há benefício, 17/04/2024). Tema 201 TNU (contribuinte individual não faz jus ao B94, regra geral com exceção jurisprudencial no período de graça). Súmula 89 STJ (ação acidentária prescinde do exaurimento da via administrativa). Tema 862 STJ (termo inicial do B94, dia seguinte à cessação do B31). Art. 31 da Lei 8.213/91 (integração ao salário-de-benefício). Súmula 507 STJ (acumulação para B94 com lesão e aposentadoria anteriores a 11/11/1997). Citações conferidas na auditoria de 11/07/2026.
+Tema 416 STJ (benefício devido ainda que mínima a lesão; Anexo III exemplificativo). Súmula 88 TNU (limitação ainda que leve enseja concessão, 17/04/2024). Súmula 89 TNU (limite negativo, sem redução nem maior esforço não há benefício, 17/04/2024). Tema 201 TNU (contribuinte individual não faz jus ao B94, regra geral com exceção jurisprudencial no período de graça). Súmula 89 STJ (ação acidentária prescinde do exaurimento da via administrativa). Tema 862 STJ (termo inicial do B94, dia seguinte à cessação do B31). Art. 31 da Lei 8.213/91 (integração ao salário-de-benefício). Súmula 507 STJ (acumulação para B94 com lesão e aposentadoria anteriores a 11/11/1997).
 
 Vedação a contribuintes individuais e facultativos pelo art. 18 §1º Lei 8.213/91.
 
@@ -96,7 +96,7 @@ Lei 15.326/2026 (educação infantil, creche, cargo híbrido).
 
 ### Aposentadoria PCD por Tempo (LC 142/2013)
 
-LC 142/2013. Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (IF-BrA) (auditoria 03/10/2026).
+LC 142/2013. Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014 (IF-BrA).
 
 Lei 15.176/2025 (fibromialgia equiparada). Lei 14.768/2023 (deficiência auditiva). Súmula 552 STJ (cegueira monocular). Decreto 5.296/2004.
 
@@ -106,7 +106,7 @@ LC 142/2013 art. 3º III. Mesmo critério de avaliação biopsicossocial.
 
 ### BPC PCD
 
-Art. 203 V CF. Lei 8.742/1993, art. 20. Decreto 6.214/2007. Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026).
+Art. 203 V CF. Lei 8.742/1993, art. 20. Decreto 6.214/2007. Portaria Conjunta MDS/INSS nº 2, de 30/03/2015.
 
 Avaliação biopsicossocial pelo IFBrM. TCQ atualizado pela Portaria 37/2026. Portaria 34/2025 (renda e despesas dedutíveis).
 
@@ -114,19 +114,19 @@ Lei 15.157/2025 (dispensa de reavaliação para impedimento permanente). Decreto
 
 Portaria DPMF/INSS 19/2026 (Teleperícia BPC).
 
-Tema 27 STF (RE 567985, flexibilização do critério de renda). Enunciado 17 CRPS (repetíveis os pagamentos indevidos por erro administrativo, salvo boa-fé objetiva comprovada; no BPC, inciso II, só com má-fé comprovada) (auditoria 03/10/2026).
+Tema 27 STF (RE 567985, flexibilização do critério de renda). Enunciado 17 CRPS (repetíveis os pagamentos indevidos por erro administrativo, salvo boa-fé objetiva comprovada; no BPC, inciso II, apenas com má-fé comprovada).
 
 ### BPC Idoso
 
 Mesma base da LOAS. Idade 65 anos. Sem perícia médica.
 
-Estatuto do Idoso (Lei 10.741/2003) — exclusão do BPC e da aposentadoria de até 1 SM de outro idoso da família do cômputo.
+Estatuto do Idoso (Lei 10.741/2003), exclusão do BPC e da aposentadoria de até 1 SM de outro idoso da família do cômputo.
 
 ### Pensão por Morte B21/B93
 
 Arts. 74 a 80 Lei 8.213/91. Art. 16 (dependentes). Art. 77 §2º (duração escalonada). EC 103/2019 art. 23 (cota familiar 50% mais 10% por dependente).
 
-Lei 13.135/2015 (duração escalonada). Lei 13.846/2019 (dependentes e prazos de retroação). Lei 15.108/2025 (menor sob guarda equiparado a filho, art. 16 §2º da Lei 8.213/91, correção de auditoria de 12/07/2026, o rótulo anterior de complementação post mortem estava errado). Portaria DIRBEN 4/2025 (complementação post mortem, com o Tema 286/TNU).
+Lei 13.135/2015 (duração escalonada). Lei 13.846/2019 (dependentes e prazos de retroação). Lei 15.108/2025 (menor sob guarda equiparado a filho, art. 16 §2º da Lei 8.213/91, o rótulo anterior de complementação post mortem estava errado). Portaria DIRBEN 4/2025 (complementação post mortem, com o Tema 286/TNU).
 
 Tema 526 STF. Súmula 63 TNU (fatos geradores até a MP 871/2019, redação de 18/09/2025). REsp 2103603 STJ. Tema 1421 STJ (sem retroação da DIB para menor de 16 anos com requerimento após 180 dias do óbito, regime da Lei 13.846/2019). IRDR 35 TRF4 (absorvido pelo Tema 1421 STJ).
 
@@ -134,13 +134,13 @@ Tema 526 STF. Súmula 63 TNU (fatos geradores até a MP 871/2019, redação de 1
 
 Art. 80 Lei 8.213/91. Carência 24 contribuições mensais (Lei 13.846/2019).
 
-Tema 1162 STJ (flexibilização só pré-MP 871/2019, com modulação). Tema 896 STJ (renda zero do desempregado, prisão anterior à MP 871/2019). Tema 357 TNU (progressão para o semiaberto em prisão anterior à MP). Tema 310 TNU (divisor da média). Tema 89 STF (renda do preso, e não dos dependentes) (auditoria 03/10/2026). Tema 1421 STJ (REsp 2240220 e 2256869, sem retroação da DIB para menor de 16 anos após 180 dias da prisão). IRDR 35 TRF4 (absorvido).
+Tema 1162 STJ (flexibilização apenas pré-MP 871/2019, com modulação). Tema 896 STJ (renda zero do desempregado, prisão anterior à MP 871/2019). Tema 357 TNU (progressão para o semiaberto em prisão anterior à MP). Tema 310 TNU (divisor da média). Tema 89 STF (renda do preso, e não dos dependentes). Tema 1421 STJ (REsp 2240220 e 2256869, sem retroação da DIB para menor de 16 anos após 180 dias da prisão). IRDR 35 TRF4 (absorvido).
 
 ### Salário-Maternidade
 
 Art. 71 e seguintes Lei 8.213/91. LC 146/2014 (prorrogação por morte da mãe). Lei 12.873/2013 (pai adotante).
 
-Carência inexigível em todas as categorias. O art. 25, III (10 contribuições para CI, facultativa e segurada especial) foi declarado inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), o Enunciado 19/CRPS exige só a qualidade de segurada, e a empregada já era isenta pelo art. 26, VI (auditoria 03/10/2026).
+Carência inexigível em todas as categorias. O art. 25, III (10 contribuições para CI, facultativa e segurada especial) foi declarado inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), o Enunciado 19/CRPS exige apenas a qualidade de segurada, e a empregada já era isenta pelo art. 26, VI.
 
 ### Acerto de CNIS
 
@@ -152,7 +152,7 @@ Memorando-Circular 14. Indicadores PEXT, PREC-MENOR-MIN, PVIN-IRREG, PADM-EMPR, 
 
 Art. 45-A Lei 8.212/91. Art. 96 IV Lei 8.213/91 (contagem recíproca). Art. 59 Decreto 10.410/2020.
 
-Súmula 272 STJ, tese adversa: o segurado especial só faz jus à aposentadoria por tempo de serviço se recolher contribuições facultativas. O tempo rural anterior a 11/1991 conta no RGPS sem contribuição, exceto para carência (art. 55, §2º, Lei 8.213/91) (auditoria 03/10/2026). Tema 1103 STJ. Tema 609 STJ.
+Súmula 272 STJ, tese adversa: o segurado especial apenas faz jus à aposentadoria por tempo de serviço se recolher contribuições facultativas. O tempo rural anterior a 11/1991 conta no RGPS sem contribuição, exceto para carência (art. 55, §2º, Lei 8.213/91). Tema 1103 STJ. Tema 609 STJ.
 
 Comunicado DIVBEN3. Enunciado 5 CRPS.
 
@@ -160,7 +160,7 @@ Comunicado DIVBEN3. Enunciado 5 CRPS.
 
 Decadência art. 103 Lei 8.213/91 (10 anos). Tema 975 STJ. Tema 256 TNU. Tema 1370 STJ. ADI 6096 STF.
 
-Revisão da Vida Toda (Tema 1102 STF, modulação). Revisão art. 29, II, da Lei 8.213/91 (auditoria 03/10/2026, retirada a atribuição ao Tema 334 STF, que trata do melhor benefício). Revisão do teto (Tema 76 STF, RE 564.354, art. 144 e art. 26 Lei 8.870/94). Revisão IRSM 39,67% (art. 21, §1º, da Lei 8.880/1994 e Lei 10.999/2004 [NÃO CONFIRMADO]) (auditoria 03/10/2026). Revisão por atividades concomitantes (Tema 1.070 STJ).
+Revisão da Vida Toda: superada, pois o STF declarou constitucional o art. 3º da Lei 9.876/1999 nas ADI 2110 e 2111 (2024); não ofertar como tese vigente (ver `base-revisao-vida-toda-rvt`). Revisão art. 29, II, da Lei 8.213/91. Revisão do teto (Tema 76 STF, RE 564.354, art. 144 e art. 26 Lei 8.870/94). Revisão IRSM 39,67% (art. 21, §1º, da Lei 8.880/1994 e Lei 10.999/2004 [NÃO CONFIRMADO]). Revisão por atividades concomitantes (Tema 1.070 STJ).
 
 ## Critérios de inclusão de novo marco
 

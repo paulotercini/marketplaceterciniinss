@@ -3,26 +3,21 @@ name: ponte-workflow-replica-contestacao
 description: "Workflow pró-segurado para responder à contestação do INSS, do diagnóstico à arquitetura da réplica, fixando o incontroverso, repelindo preliminares e desmontando o mérito defensivo ponto a ponto até a peça. Use SEMPRE que mencionar workflow réplica, pipeline réplica, arquitetura da réplica, responder contestação, impugnar contestação, réplica à contestação, preliminares do INSS, fatos incontroversos, impugnação específica, especificação de provas, próximo passo após contestação. Encadeia base-analise-contestacao-inss, os eixos do CPC e a redação da peça. Cruza com base-analise-contestacao-inss, base-cpc-onus-prova-art373, base-cpc-prova-documental-juntada, base-cpc-nulidades-cerceamento, base-cpc-prescricao-decadencia-processual, tema-1124-instrucao-administrativa, coisa-julgada-previdenciaria, especificacao-provas, base-precedentes-catalogo-vinculantes, peticao-previdenciaria e revisao-peticao. NÃO use para decisão judicial (use ponte-workflow-recurso-sentenca) nem para mandado de segurança."
 ---
 
-## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
-
-O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
-
-
 # Workflow Réplica à Contestação
 
 ## 1. Quando acionar
 
-Sempre que houver contestação do INSS a responder. Pressupõe o mapa de ataque já produzido pela `base-analise-contestacao-inss`. A réplica é devida quando o INSS arguiu preliminar, juntou documento ou alegou fato impeditivo, modificativo ou extintivo. Sem gatilho, avaliar se a réplica agrega.
+Sempre que houver contestação do INSS a responder. Pressupõe o mapa da réplica já produzido pela `base-analise-contestacao-inss`. A réplica cabe quando o INSS alega fato impeditivo, modificativo ou extintivo (CPC, art. 350), argui preliminar do art. 337 (art. 351) ou junta documento (art. 437, §1º), sempre em 15 dias. Sem gatilho, avaliar se a réplica agrega.
 
 ## 2. Pipeline executável
 
-### Passo 1. Importar o mapa de ataque
+### Passo 1. Importar o mapa da réplica
 
 Trazer da `base-analise-contestacao-inss` os cinco blocos, preliminares, fatos incontroversos, mérito defensivo, impugnação à prova e provas a especificar.
 
 ### Passo 2. Fixar o incontroverso
 
-Abrir a réplica fixando os fatos que a contestação não impugnou de forma específica, art. 341 do CPC, cada um por ID. Isso reduz a controvérsia e blinda o núcleo do direito. Acionar `base-peticao-previdenciaria-padrao-visual` para o quadro de fatos incontroversos.
+Abrir a réplica fixando os fatos que a contestação não impugnou de forma específica, art. 341 do CPC, cada um por ID. Contra o INSS a presunção do art. 341 é atenuada por envolver direito indisponível (art. 341, I), mas o fato não impugnado se torna incontroverso para o art. 374, III. Isso reduz a controvérsia e blinda o núcleo do direito. Acionar `base-peticao-previdenciaria-padrao-visual` para o quadro de fatos incontroversos.
 
 ### Passo 3. Repelir as preliminares
 
@@ -42,7 +37,7 @@ Encadear com a fase de especificação de provas, fixando os pontos controvertid
 
 ### Passo 7. Precedentes conferidos
 
-Para cada tese oposta, confirmar o precedente na fonte, na ordem STF, STJ, TNU, Enunciado do CRPS e Súmula da TRU3. Acionar `base-precedentes-catalogo-vinculantes`. Só entra citação [CONFERIDO].
+Para cada tese oposta, confirmar o precedente na fonte, na ordem STF, STJ, TNU, Enunciado do CRPS e Súmula da TRU3. Acionar `base-precedentes-catalogo-vinculantes`. Entra apenas citação [CONFERIDO].
 
 ### Passo 8. Arquitetura da peça
 
@@ -52,19 +47,23 @@ Montar a estrutura na ordem, fatos incontroversos, repulsa das preliminares, imp
 
 Acionar `peticao-previdenciaria` para a peça e `base-peticao-previdenciaria-padrao-visual` para o padrão visual. Acionar `revisao-peticao` e `base-revisao-peticao-aprofundada` para a auditoria pós-redação.
 
+## Skills paralelas
+
+A família `base-auditoria-adversarial-contestacao-inss` e `base-auditoria-adversarial-decisao-judicial` cobre o mesmo terreno que `base-analise-contestacao-inss` e esta ponte. Usar as duas de forma complementar; em conflito, prevalece a que tiver citação [CONFERIDO] em fonte primária.
+
 ## 3. Documentos essenciais
 
 Contestação e seus anexos. Petição inicial e documentos por ID. CNIS atualizado. Documentos que provam os fatos afirmados na inicial.
 
 ## 4. Pontos críticos pró-segurado
 
-Ônus da impugnação específica, art. 341. O que o INSS não negou de forma específica presume-se verdadeiro. Fixar isso primeiro.
+Ônus da impugnação específica, art. 341. O que o INSS não negou de forma específica fica incontroverso (art. 374, III), com a ressalva do direito indisponível. Fixar isso primeiro.
 
 Não reabrir o incontroverso. Réplica que rediscute o que já está a favor do segurado enfraquece a peça.
 
 Especificar prova. Não responder de forma genérica na fase probatória, sob risco de preclusão e julgamento antecipado desfavorável.
 
-Precedente só [CONFERIDO], com conferência na fonte.
+Precedente apenas [CONFERIDO], com conferência na fonte.
 
 ## 5. Postura
 
@@ -76,20 +75,8 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis. Acionar `base-portarias-dpmf-ins
 
 ## MCPs da casa
 
-Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
+Consulta obrigatória aos MCPs. Toda análise, peça ou orientação feita com esta skill parte de pesquisa prévia nos MCPs, antes da redação. O `normas` dá o dispositivo e o `norma_inss` do `iurisprudencia` dá a IN 128/2022; o `superiores` dá o tema e a decisão do STF e do STJ; o `iurisprudencia` e o `trf3` dão os acórdãos da TNU, do CRPS, do TRF3 e das Turmas Recursais de SP e MS sobre a mesma questão; o `acervo` dá o que o escritório já sustentou. As decisões localizadas servem de controle da tese. A resposta informa se elas confirmam ou contrariam o caminho adotado, e a divergência é enfrentada antes do protocolo. Norma, súmula, tema, enunciado ou acórdão não localizado no MCP nem lido na fonte oficial leva [NÃO CONFIRMADO] e fica fora da peça. A ordem de consulta, a cobertura de cada base e os catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) estão em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O reaproveitamento automático de texto do acervo de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
-
-Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
-
-Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
-
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
-
-Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
-
-Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
