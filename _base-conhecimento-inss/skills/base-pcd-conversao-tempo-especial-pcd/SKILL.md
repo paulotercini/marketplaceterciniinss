@@ -5,10 +5,6 @@ description: "Conversão de tempo de contribuição em aposentadoria PCD da LC 1
 
 # Conversão de Tempo na Aposentadoria PCD
 
-## CORREÇÃO DE AUDITORIA (12/07/2026)
-
-Skill reescrita integralmente com extração literal dos arts. 70-A a 70-J do Decreto 3.048/99 no repositório de legislação verificada do escritório. A versão original continha pisos errados por grau e atribuía teses trocadas ao Tema 173/TNU e ao Tema 694/STJ. Os valores abaixo são os oficiais.
-
 ## Escopo
 
 Skill pró-segurado sobre conversão de tempo na aposentadoria da pessoa com deficiência (LC 142/2013), multiplicadores por grau, grau preponderante, integração com tempo especial por agente nocivo e escolha da regra mais favorável.
@@ -27,7 +23,7 @@ Deficiência LEVE. 33 anos, se homem, e 28 anos, se mulher.
 
 Por IDADE (art. 70-C). 60 anos, se homem, e 55 anos, se mulher, com mínimo de 15 anos de tempo de contribuição cumpridos na condição de pessoa com deficiência, independentemente do grau.
 
-A LC 142 não foi alterada pela EC 103/2019 nesses parâmetros, e não há idade mínima na modalidade por tempo de contribuição nem incidência de fator previdenciário obrigatório.
+A LC 142 não foi alterada pela EC 103/2019 nesses parâmetros, e não há idade mínima na modalidade por tempo de contribuição; o fator previdenciário incide apenas se mais vantajoso (LC 142, art. 9º, I).
 
 ## RMI (art. 70-J, incluído pelo Decreto 10.410/2020)
 
@@ -47,7 +43,7 @@ Regras de aplicação. §1º do art. 70-E, o grau PREPONDERANTE é aquele em que
 
 Caput. A redução da PCD NÃO acumula, no mesmo período contributivo, com a redução da atividade especial. Escolhe-se uma por período.
 
-§1º. É GARANTIDA a conversão do tempo cumprido em condições especiais (15, 20 ou 25 anos), inclusive da pessoa com deficiência, para os parâmetros da aposentadoria PCD do art. 70-B, se resultar mais favorável, pelas tabelas próprias do §1º. Ressalva: a IN 128, art. 310, §1º, limita a conversão a períodos trabalhados até 13/11/2019; antecipar a limitação ou sustentar a tese contrária de forma expressa (auditoria 03/10/2026).
+§1º. É GARANTIDA a conversão do tempo cumprido em condições especiais (15, 20 ou 25 anos), inclusive da pessoa com deficiência, para os parâmetros da aposentadoria PCD do art. 70-B, se resultar mais favorável, pelas tabelas próprias do §1º. A IN 128/2022, art. 310, §1º, limita a conversão aos períodos trabalhados até 13/11/2019, em linha com a vedação de conversão do art. 25, §2º, da EC 103/2019. O art. 70-F, §1º, não traz esse limite; a tese contrária ao limite deve ser sustentada de forma expressa e com risco declarado.
 
 MULHER (destino Para 15, Para 20, Para 24, Para 25, Para 28). De 15 anos, 1,00, 1,33, 1,60, 1,67, 1,87. De 20 anos, 0,75, 1,00, 1,20, 1,25, 1,40. De 24 anos, 0,63, 0,83, 1,00, 1,04, 1,17. De 25 anos, 0,60, 0,80, 0,96, 1,00, 1,12. De 28 anos, 0,54, 0,71, 0,86, 0,89, 1,00.
 
@@ -57,25 +53,21 @@ HOMEM (destino Para 15, Para 20, Para 25, Para 29, Para 33). De 15 anos, 1,00, 1
 
 O §3º (conversão para cálculo na aposentadoria por idade PCD) foi REVOGADO pelo Decreto 10.410/2020, não citar como vigente.
 
-## Marco jurisprudencial (conferido, com ressalvas)
-
-ADI 5760/STF. Rel. Min. Alexandre de Moraes, Tribunal Pleno, julgada em 13/09/2019, unânime. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91. Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a LC 142 (auditoria 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5247635).
+## Marco jurisprudencial
 
 Tema 546/STJ (tese literal no catálogo). A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço. Usar por analogia para fixar o regime da conversão na DER.
 
 Tema 422/STJ. Permanece possível a conversão de tempo especial em comum após 1998. Usar apenas nesse contexto, não como fundamento de segmentação de graus.
 
-Tema 173/TNU trata do impedimento de longo prazo de 2 anos no BPC, não desta matéria. A versão anterior desta skill o citava com tese trocada, não repetir.
-
 A segmentação por períodos e graus tem fundamento direto no art. 70-D, II (a avaliação deve identificar a variação do grau e indicar os períodos em cada grau) e no art. 70-E, não precisa de precedente para ser exigida.
 
 ## Aplicação pró-segurado
 
-Primeiro, calcular sempre os caminhos alternativos (especial pura quando houver direito, PCD por tempo, PCD por idade, regras comuns) e optar pelo mais vantajoso (art. 70-G, direito de opção expresso).
+Primeiro, calcular os caminhos alternativos (especial quando houver direito, PCD por tempo, PCD por idade, regras comuns) e optar pelo mais vantajoso (art. 70-G).
 
-Segundo, exigir da avaliação a fixação da DID e dos períodos em cada grau (art. 70-D, I e II), a perícia que aplica grau único a todo o histórico contraria o regulamento.
+Segundo, exigir da avaliação a fixação da DID e dos períodos em cada grau (art. 70-D, I e II). A perícia que aplica grau único a todo o histórico contraria o regulamento.
 
-Terceiro, prova da deficiência anterior à LC 142/2013 é documental, vedada a exclusivamente testemunhal (art. 70-D, §1º), acionar formacao-documentacao-did-pcd quando faltar acervo.
+Terceiro, prova da deficiência anterior à LC 142/2013 é documental, vedada a exclusivamente testemunhal (art. 70-D, §1º). Acionar `formacao-documentacao-did-pcd` quando faltar acervo.
 
 Quarto, tempo rural pré-1991, militar e aluno-aprendiz entram como tempo comum e são convertidos pela tabela do 70-E para o parâmetro do grau preponderante.
 
@@ -89,21 +81,24 @@ Cenário C. Segurado homem com 10 anos em atividade especial de 25 e 16 anos com
 
 ## Alertas
 
-Primeiro, o INSS costuma aplicar grau único a todo o histórico, impugnar com o art. 70-D, II.
+Primeiro, o INSS costuma aplicar grau único a todo o histórico; impugnar com o art. 70-D, II.
 
-Segundo, nunca prometer acumulação de reduções PCD e especial no mesmo período, o art. 70-F veda.
+Segundo, nunca prometer acumulação de reduções PCD e especial no mesmo período (art. 70-F, caput).
 
-Terceiro, a conversão PCD para aposentadoria especial é vedada (art. 70-F, §2º), o sentido permitido é especial para PCD quando favorável.
+Terceiro, a conversão do tempo PCD para a aposentadoria especial é vedada (art. 70-F, §2º); o sentido permitido é do especial para a PCD, quando favorável.
 
-Quarto, na modalidade por idade PCD não há conversão para efeito de carência, e o antigo §3º do 70-F está revogado.
+Quarto, na modalidade por idade PCD não há conversão para efeito de carência, e o antigo §3º do art. 70-F está revogado.
+
+## Refutação a argumentos típicos do INSS
+
+- **Grau único.** Art. 70-D, II, e art. 70-E: os períodos de cada grau são convertidos separadamente.
+- **Tempo especial não converte para PCD.** Art. 70-F, §1º, para períodos até 13/11/2019 (IN 128/2022, art. 310, §1º).
+- **Sem prova do grau de cada período.** Prova documental contemporânea; a testemunhal isolada é vedada (art. 70-D, §1º).
+- **Rural anterior a 1991, militar e aluno-aprendiz.** Contam como tempo comum, convertido pelo art. 70-E (aluno-aprendiz: Súmula 96 TCU e `base-aluno-aprendiz`).
 
 ## Hub de portarias administrativas
 
 Acionar `base-portarias-dpmf-inss-hub` para o procedimento administrativo, cálculo, ratificações e recursos do caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado. Hugo Goes. Jane Berwanger. Daniel Pulino. Marco Aurélio Serau Junior. IBDP.
 
 ## MCPs da casa
 
@@ -117,7 +112,7 @@ Para metodologia IF-BrA, acionar `base-pcd-if-bra-metodologia`. Para DID retroat
 
 Metodologia em `base-pcd-if-bra-metodologia`. DID em `base-pcd-did-retroativa`. Fibromialgia em `base-pcd-fibromialgia-lei15176`.
 
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
 Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
 
@@ -127,7 +122,7 @@ Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Im
 
 O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
 
-## Método Fuzzy, verificação obrigatória (Onda 106)
+## Método Fuzzy, verificação obrigatória
 
 Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
 

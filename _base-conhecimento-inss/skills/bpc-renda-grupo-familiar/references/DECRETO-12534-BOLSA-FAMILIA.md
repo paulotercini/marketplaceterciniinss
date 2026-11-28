@@ -7,7 +7,7 @@ Esta skill cobre o enfrentamento jurídico do Decreto nº 12.534, de 25 de junho
 ## Regras Críticas
 
 ### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
+Dois-pontos apenas antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas.
 
 ### Posição Firme
 O Decreto 12.534/2025 é inconstitucional por excesso de poder regulamentar e por violação ao mínimo existencial, à dignidade humana e à vedação ao retrocesso social. Esta é a posição do escritório. Não relativizar.
@@ -15,10 +15,10 @@ O Decreto 12.534/2025 é inconstitucional por excesso de poder regulamentar e po
 ## O Que o Decreto Alterou
 
 ### Situação Anterior (Decreto 6.214/2007, redação pré-junho/2025)
-O art. 4º, §2º do Decreto 6.214/2007 excluía expressamente do cálculo da renda familiar per capita os rendimentos de natureza eventual ou temporária (inciso I) e os valores percebidos a título de programas de transferência de renda (inciso II). Bolsa Família e programas equivalentes ficavam fora da conta.
+O art. 4º, §2º, do Decreto 6.214/2007 excluía do cálculo da renda per capita os benefícios e auxílios assistenciais de natureza eventual e temporária (inciso I), os valores de programas sociais de transferência de renda (inciso II), a pensão especial indenizatória e os benefícios de assistência médica (inciso IV) e as rendas de natureza eventual ou sazonal (inciso V). Bolsa Família e programas equivalentes ficavam fora da conta.
 
 ### Situação Atual (Decreto 12.534/2025)
-O Decreto revogou os incisos I e II do §2º do art. 4º do Decreto 6.214/2007. O art. 4º, VI passou a definir renda mensal bruta familiar como a soma dos rendimentos, vedadas as deduções não previstas em lei. O efeito prático é que o Bolsa Família passou a integrar a renda per capita.
+O Decreto revogou os incisos I, II, IV e V do §2º do art. 4º do Decreto 6.214/2007. O art. 4º, VI passou a definir renda mensal bruta familiar como a soma dos rendimentos, vedadas as deduções não previstas em lei. O efeito prático é que o Bolsa Família passou a integrar a renda per capita.
 
 ### Permaneceram Excluídos da Renda
 Estas exclusões NÃO foram atingidas pelo Decreto 12.534/2025 e permanecem vigentes conforme art. 8º, I, da Portaria Conjunta MDS/INSS nº 34/2025. São elas: BPC de outro membro idoso ou PCD do grupo familiar; benefício previdenciário de até 1 salário mínimo concedido a idoso 65+ ou PCD; auxílio-inclusão e remuneração do beneficiário do auxílio-inclusão; bolsas de estágio e contrato de aprendizagem; auxílio financeiro por rompimento de barragem.
@@ -44,7 +44,7 @@ O BPC e o Bolsa Família atendem a funções distintas e complementares. Nenhum 
 
 ### 3. Conflito com Temas Vinculantes
 
-**Tema 312/STF.** O STF declarou a inconstitucionalidade por omissão parcial do parágrafo único do art. 34 do Estatuto do Idoso, que exclui do cálculo de renda apenas o BPC de idoso, quando deveria excluir também benefícios de valor mínimo de natureza previdenciária ou assistencial (auditoria 03/10/2026). O Decreto 12.534 vai na direção diametralmente oposta, incluindo na renda o que o STF mandou excluir.
+**Tema 312/STF.** O STF declarou a inconstitucionalidade por omissão parcial do parágrafo único do art. 34 do Estatuto do Idoso, que exclui do cálculo de renda apenas o BPC de idoso, quando deveria excluir também benefícios de valor mínimo de natureza previdenciária ou assistencial. O Decreto 12.534 vai na direção diametralmente oposta, incluindo na renda o que o STF mandou excluir.
 
 **Tema 27/STF.** O critério de ¼ do salário mínimo não é absoluto. A vulnerabilidade pode ser demonstrada por outros meios. O Decreto, ao incluir Bolsa Família na renda, pode levar a renda per capita para acima de ¼ SM sem que a família tenha efetivamente saído da miserabilidade.
 
@@ -54,11 +54,11 @@ O BPC e o Bolsa Família atendem a funções distintas e complementares. Nenhum 
 
 ## Estratégia Processual
 
-### Via Principal. Ação com Tutela Antecipada (JEF ou Vara Federal)
+### Via Principal. Ação com Tutela Antecipada (JEF ou Vara Federal, conforme o valor da causa)
 
 **Pedidos**
 1. Restabelecimento imediato do BPC (em caso de cessação) ou concessão (em caso de indeferimento)
-2. Reconhecimento incidental da inconstitucionalidade ou ilegalidade do art. 3º, I, "a", item 2.1 do Decreto 12.534/2025
+2. Reconhecimento incidental da ilegalidade ou inconstitucionalidade da revogação do art. 4º, §2º, II, do Decreto 6.214/2007 pelo Decreto 12.534/2025, no caso concreto
 3. Manutenção do Bolsa Família (sem exigência de renúncia)
 4. Pagamento das parcelas vencidas e vincendas com correção monetária e juros
 
@@ -82,15 +82,15 @@ Liminar para restabelecimento imediato. No mérito, afastar o dispositivo do Dec
 Em regra, o MS não é via própria para cobrança de atrasados. Parcelas vencidas entre a cessação e a liminar podem ser cobradas em execução invertida ou ação autônoma.
 
 **Autoridade coatora**
-Gerente Executivo da APS ou Gerente da CEAB responsável pelo ato de cessação. Consultar a skill `ms-competencia-autoridade-coatora` para definição precisa.
+Gerente Executivo da APS ou Gerente da CEAB responsável pelo ato de cessação, conforme `ms-competencia-autoridade-coatora`. O MS tramita na Vara Federal comum, nunca no JEF (Lei 10.259/2001, art. 3º, §1º, I).
 
 ### Via Administrativa. Recurso ao CRPS
 
-O recurso administrativo pode ser interposto, mas possui limitações relevantes nesse contexto. O CRPS não tem competência para declarar a inconstitucionalidade do Decreto. Contudo, pode reconhecer que o cômputo do Bolsa Família viola o art. 20, §4º da LOAS por excesso regulamentar, com base no Enunciado 1 do CRPS (melhor benefício) e no art. 109 da Portaria MPS 125/2026 (precedentes judiciais como fonte normativa).
+O recurso administrativo pode ser interposto, mas possui limitações relevantes nesse contexto. O CRPS não tem competência para declarar a inconstitucionalidade do Decreto. Contudo, pode reconhecer que o cômputo do Bolsa Família viola o art. 20, §4º da LOAS por excesso regulamentar, com apoio nos precedentes judiciais favoráveis.
 
 ### Renúncia ao Bolsa Família. Último Recurso
 
-A renúncia ao Bolsa Família é uma alternativa pragmática em casos excepcionais. NUNCA recomendar como primeira opção. Só cogitar se todas as vias jurídicas falharem e o beneficiário preferir o BPC ao Bolsa Família. A orientação ao cliente deve incluir a análise comparativa de valores (BPC = 1 SM vs Bolsa Família = valor variável) e os efeitos colaterais da renúncia (perda de acesso a programas vinculados ao Bolsa Família).
+A renúncia ao Bolsa Família é uma alternativa pragmática em casos excepcionais. Nunca recomendar como primeira opção. Cogitar apenas se todas as vias jurídicas falharem e o beneficiário preferir o BPC ao Bolsa Família. A orientação ao cliente deve incluir a análise comparativa de valores (BPC = 1 SM vs Bolsa Família = valor variável) e os efeitos colaterais da renúncia (perda de acesso a programas vinculados ao Bolsa Família).
 
 ## Precedentes Judiciais Favoráveis
 
@@ -107,14 +107,14 @@ Notícia publicada pelo TRF3 confirmando decisão do JEF de Registro/SP sobre a 
 
 Ao atuar em caso envolvendo Decreto 12.534/2025, acionar automaticamente as seguintes skills conforme pertinência
 
-- `analise-bpc-loas`. Para análise completa do IFBrM e da avaliação biopsicossocial
+- `analise-bpc-loas`. Para o instrumento da Portaria Conjunta 2/2015
 - `bpc-renda-grupo-familiar`. Para verificação da composição do grupo familiar e exclusões de renda
 - `peticao-previdenciaria`. Para geração da petição no padrão do escritório
 - `ms-competencia-autoridade-coatora`. Se a via eleita for mandado de segurança
-- `regras-tutela-urgencia`. Para verificação da política do escritório sobre tutela antecipada
+- `base-cpc-tutela-provisoria-previdenciaria`. Para a tutela de urgência
 - `tema-1124-instrucao-administrativa`. Para verificação de prévio requerimento administrativo
 - `precedentes-previdenciarios`. Para fundamentação jurisprudencial vinculante
-- `Enunciado 17 do CRPS`. Se houver cobrança de devolução de valores pelo INSS
+- `base-devolucao-valores-irrepetibilidade-tema979-tema692`. Se houver cobrança de devolução de valores pelo INSS (Enunciado 17, II, do CRPS)
 
 ## Alerta Especial. Vigência do Decreto
 

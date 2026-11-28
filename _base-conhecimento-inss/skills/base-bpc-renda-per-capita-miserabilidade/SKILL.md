@@ -1,129 +1,76 @@
 ---
 name: base-bpc-renda-per-capita-miserabilidade
-description: "BPC/LOAS critério de renda per capita, miserabilidade e Decreto 12.534/2025 (Bolsa Família), ótica pró-segurado. Use SEMPRE que mencionar renda per capita BPC, miserabilidade BPC, 1/4 salário mínimo, grupo familiar BPC, art. 20 §3º LOAS, Tema 27 STF, RE 567985, REsp 1112557 STJ, flexibilização critério renda, exclusões renda BPC, benefício excluído cálculo, art. 20 §14 LOAS, renda conjuntural temporária, deduções despesas saúde Anexo I Portaria 34 MDS, Decreto 12.534/2025, Bolsa Família renda BPC, cessação BPC Bolsa Família, revogação art. 4º §2º Decreto 6.214, inconstitucionalidade Decreto 12.534, retrocesso social, irrepetibilidade BPC, Enunciado 17 CRPS, Tema 73 TNU, Tema 312 STF, Tema 640 STJ, rol taxativo família BPC, composição grupo familiar, cunhado sobrinho grupo familiar, renda informal BPC, PBF Programa Bolsa Família, auxílio-inclusão. Aciona analise-bpc-loas. Cruza com base-bpc-loas-requisitos, bpc-renda-grupo-familiar, analise-bpc-loas, peticao-previdenciaria e precedentes-previdenciarios."
+description: "BPC/LOAS critério de renda per capita e miserabilidade na jurisprudência, ótica pró-segurado. Use SEMPRE que mencionar renda per capita BPC, miserabilidade BPC, 1/4 salário mínimo, art. 20 §3º LOAS, art. 20 §11 LOAS, art. 20 §11-A meio salário mínimo, Tema 27 STF, RE 567985, Tema 312 STF, RE 580963, Tema 185 STJ, REsp 1112557, Tema 640 STJ, REsp 1355052, Tema 122 TNU presunção relativa, Tema 369 TNU, Súmula 79 TNU, Súmula 80 TNU, flexibilização critério renda, presunção absoluta abaixo de 1/4, prova da miserabilidade, estudo social, auto de constatação, renda conjuntural temporária, renda informal BPC, art. 20 §14 LOAS, Decreto 12.534/2025 Bolsa Família renda BPC, irrepetibilidade BPC. Grupo familiar, exclusões e deduções em bpc-renda-grupo-familiar e base-bpc-comprometimento-renda. Cruza com base-bpc-loas-requisitos, bpc-renda-grupo-familiar, analise-bpc-loas, peticao-previdenciaria e precedentes-previdenciarios."
 ---
 
-# BPC/LOAS. Renda Per Capita e Miserabilidade
+# BPC/LOAS. Miserabilidade na Jurisprudência
 
 ## Escopo
 
-Skill temática pró-segurado. Focaliza o critério de renda per capita familiar não superior a 1/4 do salário mínimo, suas exclusões, flexibilização jurisprudencial e o impacto do Decreto 12.534/2025 (inclusão do Bolsa Família na renda). Objetivo único é a defesa integral do requerente do BPC.
+Critério judicial de aferição da miserabilidade no BPC. A composição do grupo familiar, as exclusões de renda e o Decreto 12.534/2025 estão em `bpc-renda-grupo-familiar`; as deduções de gastos de saúde, em `base-bpc-comprometimento-renda`; os requisitos gerais, em `base-bpc-loas-requisitos`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 203, V. Garantia constitucional.
+- CF, art. 203, V.
+- LOAS, art. 20, §3º: renda per capita igual ou inferior a 1/4 do salário mínimo (redação da Lei 14.176/2021).
+- Art. 20, §11: outros elementos probatórios da miserabilidade e da vulnerabilidade, conforme regulamento.
+- Art. 20, §11-A: o regulamento pode ampliar o limite para até 1/2 salário mínimo, observado o art. 20-B. A ampliação depende de regulamento e não opera por si.
+- Art. 20-B, I a III: grau da deficiência, dependência de terceiros e comprometimento do orçamento com gastos de saúde.
+- Art. 20, §14: exclusão do BPC ou do benefício previdenciário de até 1 salário mínimo de idoso acima de 65 anos ou de pessoa com deficiência (Lei 13.982/2020).
+- Decreto 6.214/2007, arts. 4º, VI, e 4º, §2º, na redação do Decreto 12.534/2025.
 
-Lei 8.742/1993 (LOAS), art. 20, §3º. Critério objetivo de ¼ do salário mínimo.
+## Precedentes
 
-Lei 8.742/1993, art. 20, §1º (redação da Lei 12.435/2011). Rol taxativo do grupo familiar: o requerente, o cônjuge ou companheiro, os pais (na ausência de um deles, a madrasta ou o padrasto), os irmãos solteiros, os filhos e enteados solteiros e os menores tutelados, desde que vivam sob o mesmo teto.
+| Precedente | Tese | Uso |
+|---|---|---|
+| Tema 27 STF (RE 567.985) | Declarada a inconstitucionalidade do §3º do art. 20 como critério exclusivo; a miserabilidade pode ser aferida por outros meios | Renda acima de 1/4 com vulnerabilidade concreta |
+| Tema 312 STF (RE 580.963) | Inconstitucionalidade por omissão parcial do art. 34, parágrafo único, da Lei 10.741/2003, que excluía apenas o BPC de idoso | Excluir benefício de valor mínimo de idoso ou pessoa com deficiência |
+| Tema 185 STJ (REsp 1.112.557) | A limitação do valor da renda per capita não é o único meio de prova; abaixo de 1/4 a miserabilidade é presumida de modo absoluto | Prova ampla; presunção abaixo do limite |
+| Tema 640 STJ (REsp 1.355.052) | Aplica-se por analogia o art. 34, parágrafo único, da Lei 10.741/2003 ao BPC da pessoa com deficiência, excluindo o benefício previdenciário de 1 salário mínimo de idoso | Exclusão da aposentadoria mínima |
+| Tema 122 TNU | O critério de 1/4 gera presunção relativa de miserabilidade, que pode ser afastada por outras provas | Tese adversa: rebater com prova social completa |
+| Tema 369 TNU | Do benefício de idoso ou de pessoa com deficiência superior a 1 salário mínimo, exclui-se 1 salário mínimo, e apenas o excedente entra na divisão | Cálculo do excedente |
+| Súmula 79 TNU | A condição socioeconômica se prova por laudo de assistente social, auto de constatação do oficial de justiça ou, inviáveis esses meios, por testemunhas | Exigir estudo social |
+| Súmula 80 TNU | Nos pedidos de BPC da pessoa com deficiência, é necessária avaliação social para valorar os fatores ambientais, sociais, econômicos e pessoais | Nulidade da sentença sem avaliação social |
 
-Lei 8.742/1993, art. 20, §14. Exclusão, do cálculo da renda, de outro BPC ou benefício previdenciário de até 1 salário mínimo pago a idoso ou PCD do grupo familiar.
+Divergência a enfrentar: o Tema 185 STJ trata a renda abaixo de 1/4 como presunção absoluta, e o Tema 122 TNU, como relativa. No JEF, antecipar a prova social para afastar a inversão.
 
-Lei 8.742/1993, art. 20, §11. Possibilidade de avaliação de outros elementos probatórios.
+## Aferição
 
-Lei 8.742/1993, art. 20-B, I a III (Lei 14.176/2021). Consideração de gastos com medicamentos, fraldas e alimentação especial (o §12 do art. 20 exige CPF e CadÚnico).
+1. **Data.** A miserabilidade é aferida na DER; a alteração posterior pode fixar DIB diversa ou fundamentar novo pedido.
+2. **Renda.** Soma dos rendimentos dos membros do rol do art. 20, §1º, com as exclusões legais (`bpc-renda-grupo-familiar`).
+3. **Renda informal ou instável.** Considerar a média e a natureza conjuntural; rendimento eventual não reflete capacidade de sustento, tese a sustentar com o estudo social (art. 20, §11).
+4. **Deduções.** Gastos de saúde do Anexo I da Portaria Conjunta MDS/INSS 34/2025, na redação da Portaria Conjunta 45/2026, ou valor efetivo comprovado (`base-bpc-comprometimento-renda`).
+5. **Análise global.** Moradia, bens, despesas fixas, dependência de terceiros, ajuda de parentes fora do rol (ponderável, sem compor a conta).
 
-Decreto 6.214/2007. Regulamentação do BPC, inclusive definições de renda.
+## Decreto 12.534/2025
 
-Decreto 6.214/2007, art. 4º, §2º (revogado). Antes do Decreto 12.534/2025, Bolsa Família não compunha a renda.
+A revogação das exclusões dos antigos incisos I, II, IV e V do art. 4º, §2º, do Decreto 6.214/2007 levou o INSS a computar o Bolsa Família. Tese pró-segurado: excesso regulamentar diante do art. 20, §4º, da LOAS (acumulação autorizada), Temas 27 e 312 STF e vedação ao retrocesso social. Argumento subsidiário: superação de 1/4 não afasta a miserabilidade (Tema 27 STF). Estratégia completa em `bpc-renda-grupo-familiar/references/DECRETO-12534-BOLSA-FAMILIA.md`.
 
-Decreto 12.534/2025. Passou a incluir o Bolsa Família na renda. Retrocesso social em discussão.
+## Refutação a argumentos típicos do INSS
 
-Portaria Conjunta MDS/INSS 34/2025, art. 8º, §§ 4º a 7º, e Anexo I. Regulamenta as deduções de despesas de saúde. Os valores do Anexo I vigoram desde 30/09/2026 na redação da Portaria Conjunta MDS/INSS 45/2026 [CONFERIDO, DOU, 04/10/2026].
+- **Renda acima de 1/4.** Tema 27 STF, Tema 185 STJ e art. 20, §11.
+- **Cunhado, tio ou sobrinho na conta.** Rol taxativo do art. 20, §1º.
+- **Avó que cria o neto.** Fora do rol; o grupo do menor se forma pelos pais ou pelo tutor.
+- **Bolsa de estágio ou aprendizagem.** Excluídas (art. 20, §9º, Lei 14.809/2024).
+- **Aposentadoria de 1 salário mínimo do cônjuge idoso.** Art. 20, §14, e Tema 640 STJ.
+- **Pensão especial indenizatória.** Acumulável com o BPC (art. 20, §4º); seu cômputo na renda deve ser confrontado com a natureza reparatória.
+- **Presunção relativa do Tema 122 TNU.** Estudo social detalhado e prova das despesas.
+- **Sentença sem estudo social.** Súmulas 79 e 80 TNU.
 
-CF/88, art. 203, V. Garantia constitucional do BPC à pessoa com deficiência e ao idoso sem meios de prover a própria manutenção.
+## Roteiro pró-segurado
 
-CF/88, art. 204. Diretrizes da assistência social, em especial a descentralização político-administrativa e a participação da população.
+1. Mapear o grupo familiar pelo rol taxativo.
+2. Aplicar exclusões e deduções.
+3. Requerer estudo social ou auto de constatação.
+4. Em excesso marginal, sustentar a análise concreta.
+5. Em cessação pelo Bolsa Família, impugnar o Decreto 12.534/2025 no caso concreto.
+6. Mandado de segurança por mora tramita na Vara Federal comum; o JEF não processa MS (Lei 10.259/2001, art. 3º, §1º, I).
+7. Devolução de valores recebidos de boa-fé: Decreto 6.214/2007, art. 49, e `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
 
-## Rol taxativo do grupo familiar
+## Integração
 
-Requerente. Cônjuge ou companheiro. Pais (na ausência de um deles, madrasta ou padrasto). Irmãos solteiros. Filhos e enteados solteiros. Menores tutelados. Tudo desde que vivam sob o mesmo teto (Lei 12.435/2011).
-
-Não compõem o grupo familiar. Cunhados. Tios. Sobrinhos. Avós. Netos. Parentes colaterais. Mesmo vivendo sob o mesmo teto.
-
-## Exclusões de renda
-
-Primeiro, outro BPC ou aposentadoria de até 1 SM de idoso ou PCD no mesmo grupo (§14 art. 20).
-
-Segundo, rendimentos eventuais e irrepetíveis (remuneração eventual).
-
-Terceiro, renda com medicamentos, fraldas, alimentação especial e outros gastos essenciais não cobertos pelo SUS (art. 20-B).
-
-Quarto, rendimentos de estágio supervisionado e de aprendizagem, por exclusão legal do art. 20, §9º, da LOAS, na redação da Lei 14.809/2024 (auditoria 03/10/2026).
-
-Quinto, pensão especial indenizatória (hanseníase, vítimas de acidente nuclear, vítimas da ditadura).
-
-Sexto, auxílio-inclusão, dentro de limites.
-
-Sétimo, 13º salário eventual (discussão em curso).
-
-## Decreto 12.534/2025. Bolsa Família
-
-Antes do Decreto 12.534/2025, Bolsa Família era excluído da renda por força do art. 4º §2º do Decreto 6.214/2007. O Decreto 12.534/2025 revogou essa exclusão. A alteração é combatida por violação ao princípio da proibição do retrocesso social, por ofensa à Lei 10.836/2004 (Bolsa Família) e por configurar indevida invasão de competência legislativa via decreto.
-
-## Flexibilização jurisprudencial
-
-Tema 27 STF abre a flexibilização em caso concreto. REsp 1.112.557 STJ autoriza prova ampla da miserabilidade por todas as circunstâncias. O Tema 185/STJ (REsp 1.112.557) integra a leitura pró-segurado. O RE 580.963/STF e o Tema 640/STJ complementam (auditoria 25/07/2026).
-
-## Deduções de despesas de saúde
-
-Portaria Conjunta MDS/INSS 34/2025, art. 8º, §4º. Deduzem-se exclusivamente os gastos com tratamentos de saúde, médicos, fraldas, alimentos especiais e medicamentos não fornecidos pelo SUS, e com o Centro-dia não prestado pelo SUAS, de natureza contínua [CONFERIDO, DOU, 04/10/2026]. Órtese, prótese e suplemento não estão nominados, e enquadrá-los como tratamento de saúde é tese. Cada categoria se deduz uma vez pelo valor médio do Anexo I, na redação da Portaria Conjunta MDS/INSS 45/2026, e o gasto efetivo maior se prova pelos recibos dos doze meses anteriores ao requerimento (§§ 6º e 7º). Ver `base-bpc-comprometimento-renda`.
-
-## Regra e estratégia pró-segurado
-
-A regra é o direito ao BPC quando a renda per capita está até 1/4 do SM. O excesso marginal não afasta o direito quando há miserabilidade concreta.
-
-Primeiro, mapear o grupo familiar pelo rol taxativo.
-
-Segundo, identificar e aplicar todas as exclusões de renda.
-
-Terceiro, computar deduções de saúde com documentação.
-
-Quarto, invocar flexibilização do Tema 27 STF e REsp 1.112.557 STJ quando o excesso é marginal.
-
-Quinto, em cessação por inclusão do Bolsa Família na renda, impugnar o Decreto 12.534/2025.
-
-Em MS por mora, competência da Vara Federal comum (MS não tramita no JEF, art. 3º, §1º, I, da Lei 10.259/2001).
+Requisitos em `base-bpc-loas-requisitos`; grupo familiar em `bpc-renda-grupo-familiar`; deduções em `base-bpc-comprometimento-renda`; anuência ao desligamento do PBF em `base-bpc-pbf-anuencia-in54-2026`; impedimento em `base-bpc-impedimento-longo-prazo`; fungibilidade em `base-fungibilidade-previdenciaria`; portarias em `base-portarias-dpmf-inss-hub`; peça em `peticao-previdenciaria`; precedentes em `precedentes-previdenciarios`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Requisitos estruturais em `base-bpc-loas-requisitos`.
-Grupo familiar e exclusões em `bpc-renda-grupo-familiar`.
-Avaliação biopsicossocial em `base-bpc-impedimento-longo-prazo`.
-Análise de domínios e TCQ em `analise-bpc-loas`.
-Peça em `peticao-previdenciaria`.
-Precedentes em `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, miserabilidade é aferida na DER, mas pode evoluir. Monitorar.
-
-Segundo, exclusões exigem prova cabal.
-
-Terceiro, Decreto 12.534/2025 é combatível.
-
-Quarto, rol taxativo é literal. Sobrinho, cunhado, tio, avó não compõem.
-
-Quinto, indeferimento fora desses critérios é ilegal.
-
-Sexto, irrepetibilidade de valores de boa-fé segue pelo Enunciado 17 CRPS.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Cruzamento com Onda 24
-
-Para anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e Termo de Anuência Condicional, acionar `base-bpc-pbf-anuencia-in54-2026`. Esta skill é diretamente complementar pelo Decreto 12.534/2025.
-
-## O que NÃO está nesta skill
-
-Requisitos estruturais gerais estão em `base-bpc-loas-requisitos`. Impedimento de longo prazo está em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`.

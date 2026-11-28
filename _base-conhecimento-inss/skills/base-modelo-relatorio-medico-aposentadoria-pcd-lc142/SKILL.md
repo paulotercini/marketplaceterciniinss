@@ -1,247 +1,61 @@
 ---
 name: base-modelo-relatorio-medico-aposentadoria-pcd-lc142
-description: "Modelo narrativo enxuto (1 folha) de relatório médico para aposentadoria da pessoa com deficiência pela LC 142/2013, com abordagem dos 7 domínios do IF-BrA, DID retroativa, grau de deficiência e sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico aposentadoria PCD, modelo laudo LC 142, modelo laudo IF-BrA, relatório médico para aposentadoria PCD, relatório ortopedista PCD, relatório psiquiatra PCD, relatório reumatologista PCD, relatório clínico geral PCD, relatório oftalmologista PCD, relatório cardiologista PCD, DID retroativa LC 142, sete domínios IF-BrA, grau leve moderado grave, impedimento longo prazo, fibromialgia Lei 15.176/2025, autismo dupla codificação, surdez Lei 14.768/2023, carta médico aposentadoria PCD. Cruza com base-validacao-formal-laudo-medico-checklist-ab, aposentadoria-deficiencia, base-aposentadoria-pcd-lc142, base-pcd-if-bra-metodologia, base-pcd-did-retroativa, base-pcd-fibromialgia-lei15176, formacao-documentacao-did-pcd, peticao-previdenciaria."
+description: "Modelo narrativo enxuto (1 folha) de relatório médico para aposentadoria da pessoa com deficiência pela LC 142/2013, com abordagem dos 7 domínios do IF-BrA, DID retroativa, grau de deficiência e sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico aposentadoria PCD, modelo laudo LC 142, modelo laudo IF-BrA, relatório médico para aposentadoria PCD, relatório ortopedista PCD, relatório psiquiatra PCD, relatório reumatologista PCD, relatório clínico geral PCD, relatório oftalmologista PCD, relatório cardiologista PCD, DID retroativa LC 142, sete domínios IF-BrA, grau leve moderado grave, impedimento longo prazo, fibromialgia Lei 15.176/2025 art. 1º-C Lei 14.705/2023, visão monocular Lei 14.126/2021, autismo dupla codificação, surdez Lei 14.768/2023, carta médico aposentadoria PCD. Cruza com base-validacao-formal-laudo-medico-checklist-ab, aposentadoria-deficiencia, base-aposentadoria-pcd-lc142, base-pcd-if-bra-metodologia, base-pcd-did-retroativa, base-pcd-fibromialgia-lei15176, formacao-documentacao-did-pcd, peticao-previdenciaria."
 ---
 
 # Modelo de Relatório Médico para Aposentadoria PCD (LC 142/2013)
 
-## 1. Quando acionar esta skill
+## Quando acionar
 
-Acione SEMPRE que houver necessidade de gerar modelo de relatório médico para encaminhar a médico assistente, com finalidade de instruir requerimento administrativo ou ação judicial de aposentadoria da pessoa com deficiência pela LC 142/2013 (aposentadoria por tempo de contribuição ou aposentadoria por idade da PCD).
+Gerar o modelo de relatório que o escritório encaminha ao médico assistente para instruir requerimento ou ação de aposentadoria da pessoa com deficiência, por tempo de contribuição ou por idade. Modelo narrativo de uma folha, com foco em data de início da deficiência (DID), sete domínios do IF-BrA, impressão de grau e barreiras.
 
-A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (cabe em 1 folha) no estilo do escritório Paulo Roberto Tercini Filho, focado em.
+## Diferença em relação ao laudo de incapacidade
 
-DID (data de início da deficiência) retroativa.
+O objeto é a deficiência funcional, e não a incapacidade para o trabalho; o segurado pode continuar trabalhando. O relatório descreve, conforme a CIF:
+- impedimentos nas funções e estruturas do corpo;
+- desempenho nos sete domínios do IF-BrA (Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014): Sensorial; Comunicação; Mobilidade; Cuidados Pessoais; Vida Doméstica; Educação, Trabalho e Vida Econômica; Socialização e Vida Comunitária;
+- barreiras do art. 3º, IV, da Lei 13.146/2015;
+- DID com documento pretérito;
+- impressão clínica do grau (leve, moderado ou grave), sem substituir o IF-BrA.
 
-Abordagem dos 7 domínios do IF-BrA (sensorial; comunicação; mobilidade; cuidados pessoais; vida doméstica; educação, trabalho e vida econômica; socialização e vida comunitária).
+Texto que conclui pela impossibilidade de trabalhar desloca a análise para a incapacidade e não serve a este benefício.
 
-Grau de deficiência (leve, moderada, grave) para aplicação dos multiplicadores.
+## Estrutura
 
-Impedimento de longo prazo.
+1. **Cabeçalho.** Nome, CPF, nascimento e data de emissão.
+2. **Diagnósticos.** CID-10 ou CID-11; no autismo e nos transtornos mentais, dupla codificação CID-11 e DSM-5-TR.
+3. **Histórico.** Evolução, marco temporal da deficiência, tratamentos e resposta.
+4. **Sete domínios.** Um parágrafo por domínio, com limitação em verbos e medida (caminhar X metros, subir X degraus, permanecer em pé X minutos, uso de bengala ou órtese).
+5. **DID.** Data e documento que a sustenta (exame, prontuário, atestado, declaração do empregador); agravamentos datados.
+6. **Longo prazo e grau.** Natureza do impedimento, caráter permanente ou progressivo e impressão do grau. A LC 142, art. 2º, não fixa prazo mínimo; o prazo de 2 anos é do BPC (LOAS, art. 20, §10).
+7. **Barreiras.** Fatos concretos por espécie.
+8. **Assinatura.** Local, data, nome, especialidade e CRM legível.
 
-## 2. Diferença fundamental do modelo PCD
+Modelo completo em `references/MODELO-BASE.md`; sub-modelos de ortopedia, psiquiatria, reumatologia, clínica geral, oftalmologia e cardiologia em `references/MODELOS-POR-ESPECIALIDADE.md`; carta ao médico em `references/CARTA-AO-MEDICO.md`. Os roteiros de `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` podem ser aproveitados, traduzidos para os sete domínios e para a DID.
 
-Diferentemente dos benefícios por incapacidade (B31/B32/B91/B92), o foco do laudo para LC 142/2013 NÃO é a INCAPACIDADE para o trabalho, mas a DEFICIÊNCIA FUNCIONAL.
+## Particularidades por condição
 
-O segurado pode CONTINUAR trabalhando. A LC 142/2013 reconhece o direito a uma aposentadoria mais cedo em razão da deficiência.
+- **Autismo.** CID-11 6A02 e DSM-5-TR, com nível de suporte (1, 2 ou 3).
+- **Fibromialgia.** CID M79.7; critérios ACR 2010, com revisões de 2011 e 2016. A Lei 14.705/2023, art. 1º-C (incluído pela Lei 15.176/2025), condiciona a equiparação à avaliação biopsicossocial; a pontuação decorre do detalhamento funcional. Aplicar o roteiro de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`, com os seis eixos traduzidos para os sete domínios, FIQR ou FSQ transcritos por domínio e com data, e DID por documento pretérito (`base-pcd-did-retroativa`).
+- **Surdez.** Audiometria com limiares em dB; Lei 14.768/2023 (`deficiencia-auditiva-previdenciaria`).
+- **Visão monocular.** Lei 14.126/2021 (`base-pcd-deficiencia-auditiva-visual`).
 
-O laudo deve abordar.
+## Erros a evitar
 
-Funcionalidade conforme CIF (Classificação Internacional de Funcionalidade).
+- Laudo de incapacidade em vez de descrição funcional.
+- Ausência de DID, que impede a contagem retroativa e a conversão proporcional.
+- Domínio omitido, que tende a ser pontuado sem limitação.
+- Diagnóstico sem descrição funcional.
+- Ausência de data de emissão, CPF e CRM legível. Os requisitos mínimos da análise documental do auxílio por incapacidade temporária (Portaria Conjunta MPS/INSS 13/2026, art. 2º) servem de padrão formal também aqui.
+- Exames sem data ou fora de sequência; a série datada, com o grau da escala quando houver (Kellgren-Lawrence na artrose), prova a permanência e a data de início.
 
-Sete domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014) (auditoria 03/10/2026).
+## Método Fuzzy
 
-Barreiras enfrentadas (físicas, atitudinais, de comunicação, tecnológicas).
+Em todo caso de aposentadoria PCD, verificar se o Fuzzy era aplicável e se foi aplicado. Gatilhos, bastando um: atividade do domínio sensível com 25 ou 50, ou todas com 75; ausência de auxílio de terceiros sempre que necessário; resposta positiva à questão emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que pode mudar o grau. Checklist e quesitos em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
 
-DID retroativa, com fixação por documentação pretérita ou método retrospectivo.
+## Médicos conferentes
 
-Grau de deficiência (leve, moderada, grave).
-
-## 3. Estrutura do modelo base
-
-### 3.1. Cabeçalho
-
-```
-RELATÓRIO MÉDICO
-
-Paciente: [NOME COMPLETO]
-Data de nascimento: [DD/MM/AAAA]. Idade: [XX] anos
-```
-
-### 3.2. Diagnósticos
-
-CID-10 ou CID-11. Dupla codificação CID-11 + DSM-5-TR para autismo e transtornos mentais.
-
-### 3.3. Histórico clínico
-
-Parágrafo narrativo focado em FUNCIONALIDADE e EVOLUÇÃO. Marco temporal da deficiência (DID). Tratamentos. Barreiras enfrentadas.
-
-### 3.4. Avaliação funcional (7 domínios do IF-BrA)
-
-CRÍTICO. Abordagem expressa dos 7 domínios.
-
-Sensorial. Visão, audição, demais sentidos.
-
-Cognição. Memória, atenção, raciocínio.
-
-Mobilidade. Deslocamento, transferências.
-
-Interações. Relacionamento, comunicação.
-
-Cuidados pessoais. Higiene, alimentação.
-
-Vida doméstica. Tarefas domésticas.
-
-Vida em sociedade. Educação, trabalho, recreação.
-
-### 3.5. Data de início da deficiência (DID)
-
-CRÍTICO para retroatividade do tempo computado.
-
-Fixação por documentação pretérita (exames antigos, prontuários, atestados).
-
-Justificativa técnica da retroatividade.
-
-Presunção de continuidade (se aplicável).
-
-### 3.6. Grau de deficiência
-
-Indicar grau (leve, moderada, grave) com fundamentação técnica.
-
-### 3.7. Impedimento de longo prazo
-
-Texto fixando duração mínima de 2 anos (art. 2º da Lei 13.146/2015).
-
-### 3.8. Encerramento
-
-```
-[Local], [UF], [data].
-
-________________________________________
-[Nome do Médico]
-[Especialidade]
-CRM [número]
-```
-
-## 4. Modelo base completo
-
-Ver `references/MODELO-BASE.md`.
-
-## 5. Sub-modelos por especialidade
-
-Ortopedista PCD. Deficiência física (limitação motora, amputação, lesão medular).
-
-Psiquiatra PCD. Deficiência mental (transtornos crônicos), autismo, deficiência intelectual.
-
-Reumatologista PCD. Fibromialgia (Lei 15.176/2025), doenças autoimunes crônicas.
-
-Clínico Geral PCD. Deficiência multissistêmica (DM complicado, DRC, esclerose múltipla).
-
-Oftalmologista PCD. Deficiência visual (cegueira, baixa visão, Súmula 377/STJ cegueira monocular).
-
-Cardiologista PCD. Cardiopatias graves com limitação funcional permanente.
-
-Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
-
-Ver também `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68). Os roteiros de ortopedia, psiquiatria e neurologia podem ser reaproveitados na aposentadoria PCD, sempre cruzados com os 7 domínios do IF-BrA e com a comprovação da Data de Início da Deficiência (DID).
-
-## 6. Pontos críticos pró-segurado
-
-### 6.1. NÃO é laudo de incapacidade
-
-Erro comum. Médico redige laudo de "incapacidade", quando deveria abordar "funcionalidade".
-
-CORRETO. Focar em IMPEDIMENTOS e BARREIRAS, não em incapacidade.
-
-### 6.2. Abordagem expressa dos 7 domínios
-
-JAMAIS deixar domínio sem abordagem. Cada um deve ter parágrafo descritivo.
-
-### 6.3. DID retroativa fundamentada
-
-Citar exames, prontuários, atestados antigos.
-
-Em casos sem documentação pretérita, presunção de continuidade da deficiência (cruzamento com `formacao-documentacao-did-pcd`).
-
-### 6.4. Grau de deficiência
-
-Conforme metodologia do IF-BrA. Pontuação por domínio (25, 50, 75, 100).
-
-Indicar grau final (leve, moderada, grave).
-
-### 6.5. Particularidades por patologia
-
-Autismo. Dupla codificação CID-11 6A02 + DSM-5-TR. Nível de suporte (1, 2, 3).
-
-Fibromialgia. Lei 15.176/2025. CID M79.7. Critérios ACR 2010, com modificações de 2011 e 2016. Individualização OBRIGATÓRIA pelo roteiro de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87), com os seis eixos (dor por região e comportamento, fadiga medida em tarefa, sono com consequência diurna, cognição com erro concreto, humor com nexo funcional, resposta terapêutica com doses e intolerâncias) TRADUZIDOS para os sete domínios do IF-BrA. A pontuação não vem do diagnóstico nem da lei, vem do detalhamento funcional. Aplicar FIQR ou FSQ (validados em português, sem preferência de instrumento no Guideline SBR 2026) e transcrever por domínio, com data. DID ancorada em documento pretérito conforme `base-pcd-did-retroativa`.
-
-Surdez. Lei 14.768/2023. Audiometria com dB.
-
-Cegueira monocular. Súmula 377/STJ.
-
-## 7. Armadilhas a evitar
-
-Laudo de "incapacidade". MATA O PEDIDO.
-
-Falta de DID. Inviabiliza a retroatividade.
-
-Domínios não abordados. IF-BrA defeituoso.
-
-Falta de grau. INSS não tem como calcular o multiplicador.
-
-Laudo apenas com diagnóstico sem descrição funcional. Insuficiente.
-
-Data de emissão, CPF e CRM legível. A análise documental do INSS devolve o relatório sem eles (art. 2º da Portaria Conjunta MPS/INSS 13/2026).
-
-Exames de imagem datados e em sequência, com o grau da escala quando houver (Kellgren-Lawrence na artrose). A sequência prova a permanência do impedimento e a data de início.
-
-Limitação em verbos com medida (caminhar X metros, subir X degraus, permanecer em pé X minutos, uso de bengala ou órtese), distribuída pelos domínios.
-
-Relatório de incapacidade copiado. O texto que conclui pela impossibilidade de trabalhar não serve aqui; descreve-se o impedimento e as barreiras.
-
-## 8. Carta ao médico assistente
-
-Em `references/CARTA-AO-MEDICO.md`.
-
-## 9. Cruzamento com a skill validadora
-
-Após o médico preencher, validar com `base-validacao-formal-laudo-medico-checklist-ab` (Checklist B).
-
-## 10. Cruzamento com outras skills
-
-`base-validacao-formal-laudo-medico-checklist-ab` para validação formal (Checklist B).
-
-`aposentadoria-deficiencia` para a aposentadoria PCD.
-
-`base-aposentadoria-pcd-lc142` para o regime da LC 142.
-
-`base-pcd-if-bra-metodologia` para o IF-BrA.
-
-`base-pcd-did-retroativa` para a DID retroativa.
-
-`base-pcd-fibromialgia-lei15176` para fibromialgia.
-
-`base-pcd-deficiencia-auditiva-visual` para deficiências sensoriais.
-
-`base-pcd-conversao-tempo-especial-pcd` para conversão de tempo.
-
-`formacao-documentacao-did-pcd` para formação de documentação pretérita.
-
-`direitos-pcd-previdenciarios` para direitos extraprevidenciários.
-
-`peticao-previdenciaria` para a petição.
-
-## 11. O que NÃO está nesta skill
-
-Modelo para incapacidade B31/B32/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
-
-Modelo para auxílio-acidente B94 está em `base-modelo-relatorio-medico-auxilio-acidente-b94`.
-
-Modelo para BPC/LOAS está em `base-modelo-relatorio-medico-bpc-loas-deficiente`.
-
-## 12. Fontes
-
-Consulte `references/MODELO-BASE.md` e `references/MODELOS-POR-ESPECIALIDADE.md`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
-
-## Método Fuzzy, verificação obrigatória (Onda 106)
-
-Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
-
-A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
-
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
-
-Antes de redigir o modelo, despachar o médico da área com os documentos, porque o relatório para a LC 142/2013 precisa demonstrar funcionalidade e data de início da deficiência, e não apenas o diagnóstico.
+Antes de redigir o modelo, despachar o agente médico da área com os documentos.
 
 | Se os documentos tratarem de | Despachar ao agente |
 |---|---|
@@ -254,9 +68,16 @@ Antes de redigir o modelo, despachar o médico da área com os documentos, porqu
 | Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
 | Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
 
-Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no conteúdo que o modelo pede ao assistente, sobretudo na DID.
 
-O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+Havendo mais de uma área, despachar até três agentes, os das áreas que decidem o caso. O parecer volta em uma página e orienta o conteúdo pedido ao médico assistente, sobretudo a DID. É instrumento interno: não vai aos autos nem substitui laudo de assistente técnico.
+
+## Validação e integração
+
+Após o preenchimento, validar com `base-validacao-formal-laudo-medico-checklist-ab` (Checklist B). Aposentadoria em `aposentadoria-deficiencia` e `base-aposentadoria-pcd-lc142`; IF-BrA em `base-pcd-if-bra-metodologia`; DID em `base-pcd-did-retroativa` e `formacao-documentacao-did-pcd`; conversão em `base-pcd-conversao-tempo-especial-pcd`; peça em `peticao-previdenciaria`. Modelos de incapacidade, B94 e BPC em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`, `base-modelo-relatorio-medico-auxilio-acidente-b94` e `base-modelo-relatorio-medico-bpc-loas-deficiente`.
+
+## Lei Brasileira de Inclusão como fundamento obrigatório
+
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015, com fato concreto e documento por ID, e cobrar no relatório os quatro incisos do art. 2º, §1º.
 
 ## MCPs da casa
 

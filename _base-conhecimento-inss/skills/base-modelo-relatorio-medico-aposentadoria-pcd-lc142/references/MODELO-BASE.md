@@ -27,19 +27,19 @@ O tratamento instituído inclui [medicamentos com posologia, fisioterapia, inter
 
 **Avaliação funcional (sete domínios do IF-BrA)**
 
-Sensorial. [Descrição do domínio. Visão, audição, integração sensorial. Limitações observadas].
+Sensorial. [Visão, audição e demais sentidos; limitações observadas].
 
-Cognição. [Memória, atenção, raciocínio, capacidade de aprendizado. Limitações].
+Comunicação. [Compreender e produzir mensagens orais, escritas e por sinais; uso de telefone e meios de comunicação].
 
-Mobilidade. [Capacidade de deslocamento, transferências, manuseio de objetos. Limitações].
+Mobilidade. [Deslocamento, transferências, mudança de posição, manuseio de objetos, uso de transporte].
 
-Interações. [Relacionamento interpessoal, comunicação, vida social. Limitações].
+Cuidados pessoais. [Higiene, vestir-se, alimentar-se, cuidar da saúde].
 
-Cuidados pessoais. [Higiene, alimentação, vestir-se. Capacidade de autocuidado. Limitações].
+Vida doméstica. [Preparar refeições, tarefas domésticas, compras, cuidar do lar].
 
-Vida doméstica. [Tarefas domésticas, preparo de alimentos, organização do lar. Limitações].
+Educação, trabalho e vida econômica. [Aprender e aplicar conhecimento, atenção e memória nas tarefas, manter o trabalho, gerir dinheiro].
 
-Vida em sociedade. [Educação, trabalho, recreação, participação cívica. Limitações].
+Socialização e vida comunitária. [Relações interpessoais, participação comunitária, lazer, vida política e religiosa].
 
 **Data de início da deficiência (DID)**
 
@@ -47,11 +47,11 @@ A DID é fixada em [DD/MM/AAAA], conforme [exame de (data) que evidencia (achado
 
 **Impedimento de longo prazo e grau de deficiência**
 
-Tempo de impedimento. Superior a 2 anos ininterruptos (desde [DD/MM/AAAA]), conforme exigido pelo art. 2º da Lei 13.146/2015 c/c [Lei 15.176/2025 para fibromialgia / Lei 14.768/2023 para surdez].
+Tempo de impedimento. Longo prazo, desde [DD/MM/AAAA], com caráter [permanente / progressivo], nos termos do art. 2º da LC 142/2013 e do art. 2º da Lei 13.146/2015 [e da Lei 14.768/2023 para surdez / da Lei 14.705/2023, art. 1º-C, para fibromialgia].
 
 Natureza do impedimento. [Físico / Mental / Intelectual / Sensorial visual / Sensorial auditivo / Múltipla].
 
-Grau de deficiência. Considerando a pontuação dos domínios e a interação com as barreiras enfrentadas, classifica-se como [LEVE / MODERADA / GRAVE], conforme metodologia do IF-BrA (Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014).
+Grau de deficiência. Considerando a pontuação dos domínios e a interação com as barreiras enfrentadas, a impressão clínica é de grau [LEVE / MODERADO / GRAVE], a ser aferido pelo IF-BrA (Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014).
 
 **Barreiras enfrentadas**
 
@@ -72,23 +72,23 @@ Ao redigir.
 
 1. NÃO redija laudo de incapacidade. Foque em FUNCIONALIDADE conforme CIF.
 
-2. Aborde EXPRESSAMENTE os 7 domínios do IF-BrA. Sem isso, a perícia oficial considera o laudo defeituoso.
+2. Aborde EXPRESSAMENTE os 7 domínios do IF-BrA. Domínio omitido tende a ser pontuado sem limitação.
 
 3. Fixe a DID com fundamentação documental. Não invente datas. Use exames antigos, prontuários, atestados, declaração da empresa.
 
-4. Indique o grau de deficiência (leve, moderada, grave). Cada grau tem multiplicador próprio na LC 142.
+4. Indique a impressão clínica do grau (leve, moderado, grave), sem substituir o IF-BrA. Cada grau tem tempo e multiplicador próprios na LC 142.
 
 5. Descreva as BARREIRAS enfrentadas pelo paciente. A deficiência é a interação entre impedimento e barreiras.
 
 6. Para autismo, use dupla codificação CID-11 6A02 + DSM-5-TR, indicando o nível de suporte.
 
-7. Para fibromialgia, cite a Lei 15.176/2025 que reconhece como deficiência.
+7. Para fibromialgia, descreva os achados individualizados; a Lei 14.705/2023, art. 1º-C (Lei 15.176/2025), condiciona a equiparação à avaliação biopsicossocial.
 
 8. Para surdez, use audiometria com dB. Cite Lei 14.768/2023.
 
-9. Para cegueira monocular, cite Súmula 377/STJ.
+9. Para visão monocular, cite a Lei 14.126/2021.
 
-10. Demonstre que o impedimento é de LONGO PRAZO (mínimo 2 anos, art. 2º Lei 13.146/2015).
+10. Demonstre que o impedimento é de LONGO PRAZO, com data de início e caráter permanente ou progressivo. A LC 142 não fixa prazo mínimo; o de 2 anos é do BPC (LOAS, art. 20, §10).
 
 ## Particularidades da LC 142/2013
 
@@ -102,6 +102,6 @@ Grau grave. Homem 25 anos / Mulher 20 anos.
 
 Aposentadoria por idade PCD.
 
-Homem 60 anos. Mulher 55 anos. Mínimo 15 anos como PCD.
+Homem 60 anos. Mulher 55 anos. Mínimo de 15 anos de contribuição com deficiência, em qualquer grau (LC 142, art. 3º, IV).
 
 Conversão de tempo. Multiplicadores próprios. Cruzamento com `base-pcd-conversao-tempo-especial-pcd`.

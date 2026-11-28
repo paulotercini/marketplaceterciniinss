@@ -12,7 +12,7 @@ Prontuário do SUS contendo histórico de consultas, diagnósticos, prescriçõe
 
 ### Fundamento legal
 
-Resolução CFM 1.821/2007. Portaria GM/MS 1.820/2009 (Carta dos Direitos dos Usuários da Saúde). Lei 13.460/2017 (Código de Defesa do Usuário do Serviço Público), art. 6º, III. LGPD (Lei 13.709/2018), art. 9º e 18. Constituição Federal, art. 5º, XIV. Prazo de guarda mínimo de 20 anos (Res. CFM 1.821/2007).
+Código de Ética Médica (Resolução CFM 2.217/2018), art. 88; Resolução CFM 1.821/2007 (guarda do prontuário); Portaria GM/MS 1.820/2009 (Carta dos Direitos dos Usuários da Saúde). Lei 13.460/2017 (Código de Defesa do Usuário do Serviço Público), art. 6º, III. LGPD (Lei 13.709/2018), art. 9º e 18. Constituição Federal, art. 5º, XIV. Prazo de guarda mínimo de 20 anos (Res. CFM 1.821/2007).
 
 ### Destinatário
 
@@ -20,7 +20,7 @@ Protocolar requerimento na própria UBS em que a paciente é cadastrada. Se mudo
 
 ### Prazo de resposta
 
-Variável por município. Razoável entre 15 e 30 dias. Lei 13.460/2017 e LGPD não fixam prazo específico, mas jurisprudência aceita 30 dias como razoável.
+Variável por município. Razoável entre 15 e 30 dias. Lei 13.460/2017 e LGPD não fixam prazo específico, e 30 dias é prazo razoável a pedir.
 
 ### Estratégia em caso de recusa
 
@@ -56,7 +56,7 @@ Histórico completo de utilização do plano por CPF. Guias TISS de consultas, e
 
 ### Fundamento legal
 
-RN ANS 389/2015 (direito do beneficiário a informações). LGPD, art. 18, especialmente direito de portabilidade e acesso. Lei 13.787/2018, art. 6º [NÃO CONFIRMADO] (guarda do prontuário por no mínimo 20 anos a partir do último registro) (auditoria 03/10/2026).
+RN ANS 389/2015 (direito do beneficiário a informações). LGPD, art. 18, especialmente direito de portabilidade e acesso. Lei 13.787/2018, art. 6º (guarda do prontuário por no mínimo 20 anos a partir do último registro).
 
 ### Destinatário
 
@@ -72,7 +72,7 @@ Em caso de recusa, reclamação na ANS (canal de reclamações regulado) e no PR
 
 ### Dica operacional
 
-No caso concreto da paciente atendida pelo convênio Sistema Vida (identificado nos exames de 23/05/2024), solicitar expressamente histórico dos últimos 10 anos, por CPF, com listagem de todas as autorizações, consultas e exames utilizados.
+Identificada a operadora nos exames do cliente, solicitar expressamente histórico dos últimos 10 anos, por CPF, com listagem de todas as autorizações, consultas e exames utilizados.
 
 ## Fonte 4. Farmácias (incluindo Farmácia Popular)
 
@@ -104,7 +104,7 @@ Ficha clínica de medicina do trabalho (SESMT ou serviço terceirizado). ASO adm
 
 ### Fundamento legal
 
-CLT, art. 168. NR-07 (PCMSO), item 7.4.5 (obrigação de guarda do prontuário clínico individual por no mínimo 20 anos após desligamento do trabalhador). LGPD, art. 18. Portaria MTE 3.214/78.
+CLT, art. 168. NR-07 (PCMSO), item sobre guarda do prontuário clínico individual [NÃO CONFIRMADO quanto à numeração na redação vigente da NR-07] (obrigação de guarda do prontuário clínico individual por no mínimo 20 anos após desligamento do trabalhador). LGPD, art. 18. Portaria MTE 3.214/78.
 
 ### Destinatário
 
@@ -116,7 +116,7 @@ Ofício formal com fundamentação legal completa. Prazo de resposta de 15 dias.
 
 ### Impacto estratégico
 
-Este é o documento de maior potencial transformador do caso. Se houver exame periódico entre 2003 e 2011 com registro de queixa articular, dor em joelhos, limitação funcional, a DID recua automaticamente para a data daquele registro, e a ligação com a atividade especial fica estabelecida. Não é mero período contributivo reduzido. É etiologia da deficiência.
+Este é o documento de maior potencial transformador do caso. Se houver exame periódico do período que se pretende provar com registro de queixa articular, dor em joelhos, limitação funcional, a DID pode recuar para a data daquele registro, e a ligação com a atividade especial fica estabelecida. Não é mero período contributivo reduzido. É etiologia da deficiência.
 
 ## Fonte 6. INSS (Benefícios Anteriores e Perícias)
 

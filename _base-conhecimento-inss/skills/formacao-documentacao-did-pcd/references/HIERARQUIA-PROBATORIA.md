@@ -14,7 +14,7 @@ Documento contemporâneo à época dos fatos tem peso superior a documento retro
 
 Prontuários de UBS, hospitais, clínicas e convênios, quando resgatados, têm peso máximo. São contemporâneos, assinados, registrados em sistema, com datas verificáveis. O INSS e o Judiciário raramente contestam prontuário regular.
 
-Fundamento. Prontuário médico é documento oficial regido pela Resolução CFM 1.821/2007. Pertence ao paciente (art. 88 Código de Ética Médica). Deve ser fornecido mediante solicitação, mesmo após anos.
+Fundamento. Guarda regida pela Resolução CFM 1.821/2007 e pela Lei 13.787/2018 (art. 6º, 20 anos do último registro). É vedado ao médico negar ao paciente acesso ou cópia do prontuário (Código de Ética Médica, art. 88). Deve ser fornecido mediante solicitação, mesmo após anos.
 
 Estratégia de busca. Não confiar na memória do cliente. Solicitar nos seguintes destinos mesmo quando o cliente não lembra de ter sido atendido.
 
@@ -30,7 +30,7 @@ ASOs admissional, periódicos e demissional, exames ocupacionais, fichas clínic
 
 Fundamento. NR-07 (PCMSO) e art. 168 da CLT obrigam empresa a manter registro médico ocupacional por 20 anos. Empregado tem direito de acesso.
 
-Atenção. Se houver exame periódico entre 2003 e 2011 com registro de queixa articular, dor em joelhos, limitação de mobilidade, isso ancora DID retroativa e liga diretamente ao período de atividade especial. É a prova de maior impacto para a tese combinada PCD + tempo especial.
+Atenção. Se houver exame periódico do período que se pretende provar com registro de queixa articular, dor em joelhos, limitação de mobilidade, isso ancora DID retroativa e liga diretamente ao período de atividade especial. É a prova de maior impacto para a tese combinada PCD + tempo especial.
 
 ### 1.4. Registros de CAT e Benefícios Previdenciários Anteriores
 
@@ -52,7 +52,7 @@ Fraqueza intrínseca. Retrospectividade sem contemporaneidade. O INSS pode alega
 
 Laudo técnico produzido por perito ortopedista, reumatologista ou especialista independente, com registro, experiência em perícias previdenciárias, idealmente com produção acadêmica. Valor probatório reconhecido.
 
-Fundamento. Art. 369 e 464 do CPC admitem provas não típicas. STJ admite prova pericial extrajudicial como elemento de convencimento. TRF3 e TRF4 aceitam laudos particulares quando tecnicamente robustos.
+Fundamento. CPC, art. 369 (meios de prova legais e moralmente legítimos) e art. 472 (o juiz pode dispensar a perícia quando as partes apresentam pareceres técnicos suficientes).
 
 Estratégia. Custo mais elevado. Reservar para casos em que o relatório do médico assistente seja insuficiente ou para fase judicial avançada.
 
@@ -123,20 +123,10 @@ Relatório médico circunstanciado pronto. Análise do que efetivamente foi recu
 Semana 12+. Requerimento administrativo ou ação judicial
 Instrução pronta para o INSS ou para o Judiciário.
 
-## Jurisprudência Relevante
+## Jurisprudência
 
-### STJ
-
-Súmula 577. Reconhece a prova pericial extrajudicial como elemento de convencimento.
-
-### TRF3
-
-Admite relatório médico circunstanciado como prova apta à fixação da DID, desde que fundamentado em achados clínicos objetivos e em fisiopatologia da doença. Exige descrição técnica e não mero atestado.
-
-### TRF4
-
-Firma que a ausência de documentação contemporânea não é óbice absoluto ao reconhecimento da deficiência pretérita, desde que a reconstituição seja tecnicamente sólida. Admite cruzamento de fontes documentais como substitutivo parcial da contemporaneidade.
+Súmula 577 STJ, antes citada aqui, trata de tempo rural e não de prova pericial extrajudicial; foi retirada. Precedentes do TRF3 e do TRF4 sobre relatório médico circunstanciado e reconstituição da DID: Não localizado com número; pesquisar nos MCPs `trf3` e `iurisprudencia` antes de citar.
 
 ## Sinais de Alerta
 
-Documento isolado raramente fixa DID. Combinação de fontes é regra. Médico assistente sem histórico de acompanhamento da paciente produz relatório frágil, precisa de fundamentação mais detalhada. PPP sem confirmação de especialidade não sustenta nexo causal. Autodeclaração sem prova documental de apoio é tratada como não-prova. Fixar DID anterior ao início da vida contributiva é tecnicamente absurdo e fragiliza todo o caso. Fixar DID em data conveniente sem suporte médico é identificado por perito judicial como forçamento e rejeitado.
+Documento isolado raramente fixa DID. Combinação de fontes é regra. Médico assistente sem histórico de acompanhamento da paciente produz relatório frágil, precisa de fundamentação mais detalhada. PPP sem confirmação de especialidade não sustenta nexo causal. Autodeclaração sem prova documental de apoio é tratada como não-prova. Fixar DID sem suporte técnico compromete a credibilidade de todo o conjunto. Fixar DID em data conveniente sem suporte médico é identificado por perito judicial como forçamento e rejeitado.

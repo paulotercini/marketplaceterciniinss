@@ -1,6 +1,6 @@
 # Método Fuzzy. Verificação Obrigatória em Todo Caso de Deficiência
 
-Onda 106 (11/08/2026). Mecânica operacional do Modelo Linguístico Fuzzy na avaliação biopsicossocial, incorporada de artigo do IEPREV (Laura dos Santos Brum, OAB/RS 127.086, publicado em 03/08/2026). Aplica-se à aposentadoria da pessoa com deficiência da LC 142/2013, por tempo de contribuição e por idade, e ao BPC no que couber.
+Mecânica do Modelo Linguístico Fuzzy do IF-BrA (Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014). Aplica-se à aposentadoria da pessoa com deficiência da LC 142/2013, por tempo de contribuição e por idade. Não se aplica ao BPC, cujo instrumento (Portaria Conjunta MDS/INSS 2/2015) não tem Fuzzy.
 
 ## Por que isso é de verificação OBRIGATÓRIA
 
@@ -16,9 +16,9 @@ Primeiro, pontuam-se as 41 atividades funcionais distribuídas nos sete domínio
 
 Segundo, VERIFICA-SE a necessidade de aplicar o Modelo Linguístico Fuzzy.
 
-Terceiro, só então se somam as pontuações e se define o grau (leve, moderada ou grave).
+Terceiro, apenas então se somam as pontuações e se define o grau (leve, moderada ou grave).
 
-Perito que soma direto, pulando a segunda etapa, produz resultado viciado.
+Perito que soma direto produz resultado viciado.
 
 ## Escala de pontuação por ATIVIDADE
 
@@ -62,11 +62,11 @@ Razão de ser. Dar peso à limitação mais relevante para aquele tipo de defici
 | Auditiva | A surdez ocorreu antes dos seis anos de idade? |
 | Visual | A pessoa já não enxergava ao nascer? |
 | Motora | A pessoa se desloca exclusivamente em cadeira de rodas? |
-| Intelectual ou mental | Não pode ficar sozinho em segurança? (auditoria 03/10/2026) |
+| Intelectual ou mental | Não pode ficar sozinho em segurança? |
 
 As perguntas costumam constar ao FINAL dos laudos médico e social. Resposta positiva aciona o Fuzzy.
 
-Atenção na deficiência intelectual ou mental. A pergunta é formulada pela negativa ("não pode ficar sozinho em segurança"), e a resposta afirmativa, que revela a impossibilidade de permanecer só com segurança, aciona o Fuzzy em favor do segurado (auditoria 03/10/2026). Ler a pergunta com cuidado antes de concluir pela aplicação, e registrar no relatório do assistente a realidade concreta da supervisão que a pessoa exige.
+Atenção na deficiência intelectual ou mental. A pergunta é formulada pela negativa ("não pode ficar sozinho em segurança"), e a resposta afirmativa, que revela a impossibilidade de permanecer só com segurança, aciona o Fuzzy em favor do segurado. Ler a pergunta com cuidado antes de concluir pela aplicação, e registrar no relatório do assistente a realidade concreta da supervisão que a pessoa exige.
 
 ## Checklist de verificação obrigatória (rodar em todo caso)
 
@@ -105,8 +105,6 @@ Bloco de auxílio de terceiros. Quando o laudo presumiu a existência de auxíli
 
 Bloco de pedido. Esclarecimentos e complementação em primeiro lugar. Persistindo a falha metodológica, nova avaliação, com fundamento nos arts. 477 e 480 do CPC, conforme a `base-cpc-prova-pericial-arts464-480`.
 
-## Rigor de fonte e pendência
+## Fonte
 
-Fonte deste reference. Artigo do IEPREV de 03/08/2026, fonte especializada de reconhecida qualidade no meio previdenciário. A mecânica descrita (três hipóteses, replicação da menor pontuação, tabelas de domínios sensíveis e perguntas emblemáticas) é coerente com a estrutura de sete domínios e escala 25/50/75/100 que a base já registra a partir da Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
-
-PENDÊNCIA DE CONFERÊNCIA. O artigo nomeia o instrumento como IFBrM (Índice de Funcionalidade Brasileiro Modificado), enquanto a base trata, na aposentadoria PCD da LC 142/2013, do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) da Portaria Interministerial 1/2014. Os dois instrumentos compartilham a estrutura de sete domínios e a escala de pontuação, e o IFBrM é o nome usado no BPC. Antes de citar o NOME do instrumento em peça, conferir qual se aplica ao benefício do caso, IF-BrA para LC 142 e IFBrM para BPC. A MECÂNICA do Fuzzy aqui descrita vale para a avaliação biopsicossocial em ambos, mas a nomenclatura não é intercambiável em citação formal. Conferir a redação literal da metodologia na Portaria Interministerial 1/2014 pelo repositório da `base-legislacao-fontes-primarias` antes de transcrever regra em peça.
+Estrutura de sete domínios, 41 atividades, escala 25/50/75/100 e regras do Fuzzy: Portaria Interministerial 1/2014, que aprova o IF-BrA. Antes de transcrever regra em peça, conferir a redação literal da portaria pelo repositório da `base-legislacao-fontes-primarias`. O nome do instrumento em citação formal é IF-BrA; IFBrM é outro instrumento, sem adoção normativa vigente.

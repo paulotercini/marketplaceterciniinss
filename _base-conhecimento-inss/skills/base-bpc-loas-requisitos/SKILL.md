@@ -1,235 +1,128 @@
 ---
 name: base-bpc-loas-requisitos
-description: "BPC/LOAS requisitos estruturais e marco normativo, ótica pró-segurado, atualizada para o Decreto 12.534/2025 que reformou o Decreto 6.214/2007. Use SEMPRE que mencionar BPC, LOAS, benefício assistencial, idoso 65 anos, PCD assistencial, Lei 8.742/1993, art. 20 LOAS, Decreto 6.214/2007, Decreto 12.534/2025, Portaria Conjunta MDS/INSS nº 2 de 30/03/2015, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025, Lei 15.077/2024 prazos CadÚnico, critério renda igual ou inferior 1/4 SM, novas exclusões de renda art. 4º §2º (rompimento barragens VII, BPC concedido a outro idoso ou PcD da mesma família VIII, benefício previdenciário 1 SM idoso 65+/PcD IX, auxílio-inclusão X), revogação exclusões antigas I II IV V Decreto 12.534/2025, acumulação com transferências de renda Bolsa Família Renda Básica Cidadania Lei 10.835/2004 art. 203 VI CF, avaliação biopsicossocial pela perícia médica federal e serviço social INSS, registro obrigatório CID, registro biométrico requisito, art. 47-B 47-C 47-D 47-E notificação bloqueio suspensão cessação, revogação art. 19 par. único, revogação art. 16 §11 dispensa reavaliação, revogação art. 42 §3º §5º critérios decisão judicial em revisão, retrocesso social BPC, inconstitucionalidade Decreto 12.534, coisa julgada decisão judicial BPC, avaliação biopsicossocial requisitos, impedimento longo prazo requisito, deficiência equiparável, PCD idosa, idoso 65 requisitos, inscrição CadÚnico BPC, revisão bienal BPC, cessação BPC, reativação BPC, auxílio-inclusão, irrepetibilidade valores BPC, Enunciado 17 CRPS, acúmulo BPC aposentadoria vedação, dispensa reavaliação impedimento permanente, CadÚnico atualizado, Teleperícia BPC, Portaria 19/2026 BPC, art. 203 V CF, princípio da dignidade BPC, assistência social, prescrição quinquenal BPC. Cruza com analise-bpc-loas, bpc-renda-grupo-familiar, base-bpc-renda-per-capita-miserabilidade, base-bpc-comprometimento-renda, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, documentos-comprobatorios-in128, mandado-seguranca-previdenciario, coisa-julgada-previdenciaria, base-devolucao-valores-irrepetibilidade-tema979-tema692 e precedentes-previdenciarios."
+description: "BPC/LOAS requisitos estruturais e marco normativo, ótica pró-segurado, atualizada para o Decreto 12.534/2025 que reformou o Decreto 6.214/2007. Use SEMPRE que mencionar BPC, LOAS, benefício assistencial, idoso 65 anos, PCD assistencial, Lei 8.742/1993, art. 20 LOAS, Decreto 6.214/2007, Decreto 12.534/2025, Portaria Conjunta MDS/INSS nº 2 de 30/03/2015, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025, Lei 15.077/2024 prazos CadÚnico, critério renda igual ou inferior 1/4 SM, novas exclusões de renda art. 4º §2º (rompimento barragens VII, BPC concedido a outro idoso ou PcD da mesma família VIII, benefício previdenciário 1 SM idoso 65+/PcD IX, auxílio-inclusão X), revogação exclusões antigas I II IV V Decreto 12.534/2025, acumulação com transferências de renda Bolsa Família Renda Básica Cidadania Lei 10.835/2004 art. 203 VI CF, avaliação biopsicossocial pela perícia médica federal e serviço social INSS, registro obrigatório CID, registro biométrico requisito, art. 47-B 47-C 47-D 47-E notificação bloqueio suspensão cessação, revogação art. 19 par. único, revogação art. 16 §11, revogação art. 42 §3º §5º critérios decisão judicial em revisão, retrocesso social BPC, coisa julgada decisão judicial BPC, Tema 385 TNU incapacidade não exigida, rol taxativo grupo familiar, estrangeiro residente Tema 173 STF, impedimento longo prazo requisito, idoso 65 requisitos, inscrição CadÚnico BPC, revisão bienal BPC, cessação BPC, reativação BPC, auxílio-inclusão, irrepetibilidade valores BPC, acúmulo BPC vedação, dispensa reavaliação impedimento permanente art. 21 §5º LOAS, Teleperícia BPC, Portaria 19/2026 BPC, art. 203 V CF, prescrição quinquenal BPC. Cruza com analise-bpc-loas, bpc-renda-grupo-familiar, base-bpc-renda-per-capita-miserabilidade, base-bpc-comprometimento-renda, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, base-documentos-comprobatorios-in128, mandado-seguranca-previdenciario, coisa-julgada-previdenciaria, base-devolucao-valores-irrepetibilidade-tema979-tema692 e precedentes-previdenciarios."
 ---
 
-# BPC/LOAS. Requisitos Estruturais Pós EC 103/2019
+# BPC/LOAS. Requisitos Estruturais
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Consolida os requisitos estruturais do Benefício de Prestação Continuada (BPC/LOAS) de 1 salário mínimo mensal, tanto para o idoso de 65 anos ou mais em miserabilidade, quanto para a pessoa com deficiência (PCD) com impedimento de longo prazo e renda insuficiente. Objetivo único é a defesa integral do requerente.
+Hub dos requisitos do Benefício de Prestação Continuada de 1 salário mínimo, para o idoso de 65 anos ou mais e para a pessoa com deficiência, ambos sem meios de prover a própria manutenção. Detalhes em skills próprias: grupo familiar, exclusões e deduções em `bpc-renda-grupo-familiar`; critério judicial de miserabilidade em `base-bpc-renda-per-capita-miserabilidade`; impedimento e avaliação em `base-bpc-impedimento-longo-prazo`; instrumento e TCQ em `analise-bpc-loas`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 203, V. Garantia de 1 salário mínimo mensal à pessoa com deficiência e ao idoso que não tenham meios de prover a própria manutenção ou de tê-la provida por sua família.
-
-Lei 8.742/1993 (LOAS), art. 20. Conceito, requisitos, composição do grupo familiar e renda.
-
-Lei 8.742/1993, art. 21. Revisão bienal.
-
-Lei 8.742/1993, art. 21-A. Suspensão e reabertura em razão de trabalho da PCD.
-
-Decreto 6.214/2007. Regulamenta o BPC.
-
-Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026). Avaliação biopsicossocial, TCQ (Tabela Conclusiva de Qualificadores), critérios de enquadramento.
-
-Portaria 34/2025 MDS. Atualiza critérios.
-
-Portaria 37/2026 MDS. Revisão de critérios.
-
-Lei 15.157/2025. Dispensa de reavaliação para impedimento permanente, irreversível e irrecuperável.
-
-Lei Complementar 142/2013. Remete indiretamente ao conceito de deficiência usado no BPC.
-
-EC 103/2019. Não alterou estruturalmente o BPC/LOAS.
-
-CF/88, art. 203, V. Garantia constitucional do BPC à pessoa com deficiência e ao idoso sem meios de prover a própria manutenção.
-
-CF/88, art. 204. Diretrizes da assistência social, em especial a descentralização político-administrativa e a participação da população.
+- CF, art. 203, V.
+- LOAS (Lei 8.742/1993), arts. 20, 20-B, 21, 21-A, 21-B e 26-A a 26-C.
+- Decreto 6.214/2007, com a reforma do Decreto 12.534/2025.
+- Portaria Conjunta MDS/INSS 2/2015 (avaliação da deficiência), alterada pela Portaria Conjunta 37/2026.
+- Portaria Conjunta MDS/INSS 34/2025 (procedimentos de requerimento, concessão, manutenção e revisão).
+- Lei 15.157/2025 (art. 21, §5º, da LOAS: dispensa de avaliação periódica).
+- Lei 13.146/2015, art. 2º.
 
 ## Requisitos comuns
 
-Primeiro, nacionalidade brasileira ou estrangeiro residente (Lei 13.146/2015, Estatuto da Pessoa com Deficiência).
+1. Brasileiro, nato ou naturalizado, ou estrangeiro residente no País (Tema 173 STF, RE 587.970).
+2. Renda familiar per capita igual ou inferior a 1/4 do salário mínimo (LOAS, art. 20, §3º; Decreto 6.214/2007, arts. 8º, II, e 9º, II), sem prejuízo de outros meios de prova da miserabilidade (art. 20, §11; Tema 27 STF).
+3. Inscrição no CPF e no CadÚnico (art. 20, §12) e registro biométrico (art. 20, §12-A, Lei 14.973/2024; Decreto 6.214/2007, art. 12).
+4. Não receber outro benefício da seguridade social ou de outro regime, salvo assistência médica, pensão especial de natureza indenizatória e as transferências de renda do art. 6º, parágrafo único, e do art. 203, VI, da CF e da Lei 10.835/2004 (art. 20, §4º, redação da Lei 14.601/2023).
 
-Segundo, renda per capita familiar não superior a 1/4 do salário mínimo (com flexibilização pelo Tema 27 STF, REsp 1.112.557 STJ e pelas exclusões expressas).
+## Requisitos específicos
 
-Terceiro, inscrição e atualização do CadÚnico.
+- **Idoso.** 65 anos completos, provados por documento oficial. Dispensa a avaliação da deficiência.
+- **Pessoa com deficiência.** Impedimento de longo prazo, com efeitos por no mínimo 2 anos (art. 20, §10), avaliado nos aspectos biopsicossociais pela perícia médica federal e pelo serviço social do INSS (art. 20, §6º; Decreto 6.214/2007, art. 16, §3º). A incapacidade para o trabalho não é exigida (Tema 385 TNU, abaixo).
 
-Quarto, não acumular com outro benefício da Seguridade Social (salvo assistência médica, pensão especial de natureza indenizatória e as transferências de renda do parágrafo único do art. 6º e do art. 203, VI, da CF e da Lei 10.835/2004, incluídas no art. 20, §4º, da LOAS pela Lei 14.601/2023) (auditoria 03/10/2026).
+## Valor e natureza
 
-Quinto, residência e domicílio no Brasil.
+Um salário mínimo, sem contribuição, sem 13º e sem pensão por morte. O benefício é pessoal e intransferível; resíduos não recebidos em vida são pagos aos herdeiros (Decreto 6.214/2007, art. 23, parágrafo único). Detalhe em `bpc-renda-grupo-familiar`.
 
-## Requisitos específicos. Idoso
+## Revisão, suspensão e cessação
 
-Idade de 65 anos ou mais completos, comprovada por documento oficial.
+- Revisão a cada 2 anos (art. 21). A convocação de benefício judicial ou administrativo tem base no art. 21, §5º, na redação da Lei 14.176/2021, depois substituída pela Lei 15.157/2025.
+- **Dispensa de reavaliação.** Impedimento permanente, irreversível ou irrecuperável dispensa a avaliação médico-pericial periódica, salvo fundada suspeita de fraude ou erro (art. 21, §5º, Lei 15.157/2025). Síndrome congênita do vírus Zika: art. 21, §6º (Lei 15.156/2025).
+- **Trabalho da pessoa com deficiência.** Suspensão e reativação (art. 21-A) e auxílio-inclusão (arts. 26-A a 26-C), em `bpc-renda-grupo-familiar`.
+- **Procedimento.** Notificação, bloqueio, suspensão e cessação pelos arts. 47-B a 47-E e 48 do Decreto 6.214/2007, em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
+- **Devolução.** O art. 49 do Decreto 6.214/2007 ressalva o recebimento de boa-fé. Ver `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
+- **Prescrição.** Quinquenal das parcelas (Decreto 20.910/1932, art. 1º; Lei 8.213/1991, art. 103, parágrafo único, por analogia). O prazo decadencial do art. 103, caput, da Lei 8.213/1991 não se aplica ao benefício assistencial.
 
-## Requisitos específicos. PCD
+## Decreto 12.534/2025. Síntese
 
-Impedimento de longo prazo (mínimo 2 anos) de natureza física, mental, intelectual ou sensorial, que em interação com as barreiras impede a participação plena na sociedade. Avaliação biopsicossocial. Reavaliação bienal, dispensada nas hipóteses da Lei 15.157/2025.
+**Avanços.**
+- Critério de renda "igual ou inferior" a 1/4 (arts. 8º, II, e 9º, II).
+- Acumulação expressa com as transferências de renda (art. 5º).
+- Exclusões do art. 4º, §2º: VII (barragens), VIII (BPC de outro idoso ou pessoa com deficiência da família), IX (benefício previdenciário de até 1 salário mínimo de idoso acima de 65 anos ou pessoa com deficiência, em linha com o art. 20, §14, da LOAS) e X (auxílio-inclusão e remuneração do seu titular, para manter o BPC de outro membro).
+- Registro obrigatório do CID no instrumento, resguardado o sigilo (art. 16, §3º-A).
 
-## Marco da idade para dispensa de PCD
+**Pontos desfavoráveis.**
+- Revogação das exclusões dos antigos incisos I (benefícios eventuais), II (transferências de renda), IV (pensão indenizatória e assistência médica) e V (rendas eventuais ou sazonais) do art. 4º, §2º.
+- Revogação do art. 42, §§3º e 5º, que mandavam observar os critérios da decisão judicial ou da ação civil pública na revisão.
+- Prazos dos arts. 47-B a 47-E: 30 dias para defesa, 30 dias para agendar reavaliação, 45 ou 90 dias para o CadÚnico e 90 dias para a biometria.
+- A revogação do art. 16, §11, não afasta a dispensa legal do art. 21, §5º, da LOAS.
 
-Idoso com 65 anos pode optar pelo BPC idoso, que dispensa a avaliação biopsicossocial.
+**Estratégia.**
+- Reavaliação que aplica critério jurídico diverso da sentença, sem alteração fática: sustentar a coisa julgada (CF, art. 5º, XXXVI; CPC, arts. 502 e 503), cruzando com `coisa-julgada-previdenciaria`.
+- Cessação por falta de biometria: pedir o registro pelo responsável legal (art. 20, §12-B) ou a dispensa por impossibilidade física.
+- Cessação por CadÚnico: conferir o prazo do art. 47-D, III, e a ciência da notificação.
+- Exclusões revogadas: sustentar no caso concreto a análise global da miserabilidade (Tema 27 STF) e a vedação ao retrocesso social.
 
-## Regra e estratégia pró-segurado
+Mapa completo em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
 
-A regra geral é o direito ao BPC com leitura ampla da miserabilidade e da deficiência. O INSS tende a indeferir por renda, por deficiência não configurada ou por falta de CadÚnico.
+## Tema 385 TNU. Incapacidade para o trabalho não é exigida
 
-Primeiro, em idoso, atentar para a renda per capita e exclusões.
+PEDILEF 1005655-57.2022.4.01.3602/MT, julgado em 24/06/2026, por maioria, Rel. Juiz Federal Fábio de Souza Silva.
 
-Segundo, em PCD, reunir documentação médica robusta e preparar o cliente para a avaliação biopsicossocial.
+**Tese.** "Para fins de concessão do BPC/LOAS, a caracterização da deficiência não exige a demonstração de incapacidade para o trabalho." O requisito é o impedimento de longo prazo que, em interação com barreiras, obstrua a participação plena e efetiva, aferido por avaliação biopsicossocial.
 
-Terceiro, em cessação, verificar revisão bienal, Lei 15.157/2025 e possibilidade de restabelecimento.
+**Parâmetros de economia processual.**
+1. Perícia judicial que constata inexistência de impedimento, impedimento leve ou passível de resolução em menos de 2 anos dispensa a avaliação biopsicossocial.
+2. Incapacidade total de longo prazo para qualquer atividade gera presunção relativa de deficiência e dispensa a avaliação social, salvo elementos concretos de ausência de barreiras relevantes.
+3. Impedimento moderado ou grave sem incapacidade total exige a avaliação biopsicossocial, com análise do assistente social sobre fatores ambientais, limitações de atividade e restrições de participação.
 
-Quarto, em acúmulo indevido segundo o INSS, debater natureza dos benefícios.
+A avaliação biopsicossocial não se confunde com a análise da miserabilidade. Exigir incapacidade laborativa configura capacitismo (item 3 da ementa). O art. 21-A da LOAS pressupõe que a pessoa com deficiência pode trabalhar. Fundamentação integral em `base-precedentes-catalogo-vinculantes/references/TEMA-385-TNU-FUNDAMENTACAO-COMPLETA.md`.
 
-Quinto, em indeferimento por CadÚnico, exigir regularização e ressalva pela boa-fé.
+## Rol taxativo do grupo familiar
 
-Em MS por mora, competência sempre da Vara Federal comum (MS não tramita no JEF, art. 3º, §1º, I, da Lei 10.259/2001).
+PEDILEF 5001885-13.2023.4.04.7209/SC (TNU, 10/12/2025, unânime): o rol do art. 20, §1º, da LOAS é taxativo, e a renda de parente fora do rol não entra no cálculo per capita, podendo apenas ser ponderada na análise global. PEDILEF 0003636-52.2018.4.01.3306/BA (TNU, 23/09/2025) no mesmo sentido. Um terceiro PEDILEF (TNU, 19/06/2020) consta com numeração inconsistente (0000020-09.3808.7.01.3419/DF) e deve ser conferido na fonte antes de qualquer citação: [NÃO CONFIRMADO]. Catálogo em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
+
+## Cenários
+
+- **Idoso com cônjuge que recebe aposentadoria de 1 salário mínimo.** Renda excluída (art. 20, §14).
+- **Renda pouco acima de 1/4.** Análise concreta da miserabilidade e deduções de saúde (`base-bpc-comprometimento-renda`).
+- **Criança com TEA.** Avaliação pelos anexos da Portaria Conjunta 2/2015 para menores de 16 anos.
+- **Cessação em revisão.** Contraditório prévio, recurso ao CRPS e art. 21, §5º, quando o impedimento for permanente.
+- **CadÚnico desatualizado.** Condição regularizável; atualizar e reapresentar o pedido.
+- **Pensão especial indenizatória.** Acumulável (art. 20, §4º).
+- **Estrangeiro residente.** Tema 173 STF.
+- **Idade sem documento suficiente.** Justificação administrativa e documentos antigos (batismo, registros escolares, CNIS).
+
+## Refutação a argumentos típicos do INSS
+
+- **Renda acima de 1/4 por pequena diferença.** Tema 27 STF, art. 20, §11, e deduções.
+- **Grupo familiar com todos os moradores.** Rol taxativo do art. 20, §1º.
+- **Bolsa de estágio ou aprendizagem do filho.** Excluídas (art. 20, §9º).
+- **Benefício de outro idoso ou pessoa com deficiência na renda.** Excluído até 1 salário mínimo (art. 20, §14; Tema 640 STJ).
+- **Doença recente.** O prazo de 2 anos é prognóstico, e não exige decurso efetivo.
+- **Exigência de incapacidade laboral.** Tema 385 TNU.
+
+## Roteiro pró-segurado
+
+1. Idoso: comprovar idade, composição do grupo e renda, aplicando as exclusões.
+2. Pessoa com deficiência: reunir documentação médica e preparar a avaliação (`orientacao-cliente-pericia`).
+3. Cessação: conferir notificação, prazos, art. 21, §5º, e restabelecimento.
+4. Acumulação apontada pelo INSS: verificar a natureza do outro benefício.
+5. Mandado de segurança por mora: Vara Federal comum; o JEF não processa MS (Lei 10.259/2001, art. 3º, §1º, I).
+
+## Documentos
+
+Identidade e CPF do requerente; certidões dos membros do grupo; comprovante de residência; CadÚnico atualizado; comprovantes de renda; laudos, exames e receituários (pessoa com deficiência); comprovantes de gastos com saúde. Ver `base-documentos-comprobatorios-in128`.
+
+## Integração
+
+Grupo familiar e renda em `bpc-renda-grupo-familiar`; impedimento em `base-bpc-impedimento-longo-prazo`; instrumento em `analise-bpc-loas`; procedimentos em `base-bpc-aposentadoria-pcd-procedimentos`; anuência ao desligamento do PBF em `base-bpc-pbf-anuencia-in54-2026`; Cadastro Domiciliar em `base-cadastro-domiciliar-cadunico-in21-2026` (a integração CadÚnico-CNIS não autoriza excluir membro do grupo, IN 21/2026, Anexo I, item 5.5); validação do laudo em `base-validacao-formal-laudo-medico-checklist-ab`; segurado especial em `base-segurado-especial-autodeclaracao-arts-92-93-94`; fungibilidade em `base-fungibilidade-previdenciaria`; portarias em `base-portarias-dpmf-inss-hub`; peça em `peticao-previdenciaria`.
+
+## Lei Brasileira de Inclusão como fundamento obrigatório
+
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015 (urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica), com fato concreto e documento por ID, e cobrar os quatro incisos do art. 2º, §1º, na avaliação e no relatório. O conceito convencional tem estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009) e não pode ser restringido por ato infralegal.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Ao analisar a miserabilidade e grupo familiar, acione `bpc-renda-grupo-familiar`.
-Ao verificar impedimento de longo prazo, acione `base-bpc-impedimento-longo-prazo`.
-Ao analisar domínios e TCQ, acione `analise-bpc-loas`.
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao reunir documentação, acione `documentos-comprobatorios-in128`.
-Ao buscar precedentes, acione `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, o BPC não gera 13º salário nem pensão por morte.
-
-Segundo, o BPC é devido desde a DER quando preenchidos os requisitos.
-
-Terceiro, valores recebidos de boa-fé são irrepetíveis (Enunciado 17 CRPS).
-
-Quarto, a revisão bienal pode gerar cessação. Preparar documentação prévia.
-
-Quinto, Lei 15.157/2025 dispensa reavaliação em impedimento permanente, irreversível e irrecuperável.
-
-Sexto, decadência da revisão é de 10 anos (art. 103 Lei 8.213). Prescrição quinquenal das parcelas.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Cruzamento com Onda 24
-
-Para anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e Termo de Anuência Condicional, acionar `base-bpc-pbf-anuencia-in54-2026`.
-
-Para validação formal de laudo médico de deficiência funcional pelo Checklist B do escritório (BPC e Aposentadoria PCD), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
-
-## Cruzamento com Onda 27
-
-Para Cadastro Domiciliar do CadÚnico pelas INs SAGICAD/MDS 20/2026 e 21/2026, modalidade preferencial para PCD com mobilidade reduzida, obrigatoriedade para famílias unipessoais com BPC, dispensa em 8 hipóteses excepcionais (área de violência, indígena, quilombola, situação de rua, domicílio coletivo, etc.) e vedação ao caráter fiscalizatório, acionar `base-cadastro-domiciliar-cadunico-in21-2026`.
-
-REGRA CRÍTICA. A integração CadÚnico-CNIS NÃO autoriza a exclusão de membro do grupo familiar (Anexo I item 5.5 da IN 21/2026).
-
-## DECRETO 12.534/2025 - REFORMA PROFUNDA DO REGULAMENTO DO BPC (Onda 48)
-
-O Decreto 12.534/2025 promoveu reforma estrutural do Decreto 6.214/2007. Síntese pró-segurado.
-
-### Avanços (pró-segurado)
-
-1. Critério renda. **"igual ou inferior" a 1/4 SM** (era apenas "inferior"). Art. 8º II e art. 9º II. Amplia o universo de beneficiários.
-
-2. **Acumulação com Bolsa Família** e Renda Básica de Cidadania (Lei 10.835/2004) e art. 203 VI CF expressamente permitida. Art. 5º caput e arts. 8º III, 9º III.
-
-3. Novas exclusões de renda no art. 4º §2º.
-   - VII - rompimento e colapso de barragens.
-   - VIII - BPC concedido a outra pessoa idosa OU pessoa com deficiência da mesma família (consagrando regulamentarmente a Súmula 14 TRU 3 ampliada para PcD).
-   - IX - benefício previdenciário até 1 SM a idoso 65+ ou PcD (Estatuto do Idoso art. 34 par. único agora positivado).
-   - X - auxílio-inclusão e remuneração de seu beneficiário.
-
-4. Avaliação biopsicossocial pela perícia médica federal e serviço social do INSS. Art. 16 §3º.
-
-5. **CID obrigatório** no laudo, com sigilo médico. Art. 16 §3º-A. Facilita auditoria.
-
-### Retrocessos (anti-segurado)
-
-1. **REVOGADAS** as exclusões antigas do art. 4º §2º (I auxílios eventuais, II Bolsa Família, IV pensão indenizatória, V renda sazonal). A pensão indenizatória ficou só como exceção de acumulação no caput do art. 5º.
-
-2. **REVOGADA** a hipótese de dispensa de reavaliação por impedimento permanente. Art. 16 §11 (excluído).
-
-3. **REVOGADO** o critério de revisão observando a decisão judicial. Art. 42 §3º e §5º (excluídos). Decisões judiciais transitadas em julgado agora podem ser reavaliadas com critérios diferentes da sentença - violação possível de coisa julgada (art. 5º XXXVI CF). Cabe MS.
-
-4. Novo procedimento de NOTIFICAÇÃO/BLOQUEIO/SUSPENSÃO/CESSAÇÃO nos arts. 47-B a 47-E com 30 dias para defesa após notificação, 30 dias para reavaliação, 45/90 dias para CadÚnico, 90 dias para biometria. Aumenta carga formal.
-
-5. **Registro biométrico** como requisito (Art. 12). Obstáculo para idosos/PcD com mobilidade reduzida.
-
-### Estratégia pró-segurado
-
-Em casos concretos.
-- Em cessação por reavaliação aplicando critério diferente da sentença, **MS por descumprimento de coisa julgada** (cruzar com `mandado-seguranca-previdenciario`, `coisa-julgada-previdenciaria`).
-- Em cessação por falta de biometria, requerer DISPENSA por impossibilidade física.
-- Em cessação por falta de CadÚnico, conferir prazo (45 dias pequeno porte, 90 médio/grande).
-- Em revisão de cálculo de renda, aplicar a regra mais favorável (transição) e arguir incidentalmente o retrocesso social das revogações.
-
-Mapa exaustivo das alterações em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
-
-## TEMA 385/TNU (Onda 52 corrigida na Onda 53) - BPC NÃO EXIGE INCAPACIDADE PARA O TRABALHO
-
-**PEDILEF 1005655-57.2022.4.01.3602/MT.** Julgado em 24/06/2026 pela TNU **POR MAIORIA**, Rel. Juiz Federal FÁBIO DE SOUZA SILVA. Voto vencido parcial da Juíza Federal LILIAN OLIVEIRA DA COSTA TOURINHO. Precedente PARADIGMÁTICO para toda ação de BPC.
-
-**Fundamentação convencional/constitucional.** Convenção de Nova Iorque com **status de emenda constitucional** (Decreto 6.949/2009 com quórum EC). Resolução CNJ nº 630/2025 (Instrumento Unificado de Avaliação Biopsicossocial, vigência 02/03/2026). Portaria Conjunta MDS/INSS nº 2/2015. CIF/OMS.
-
-**Tese central pró-segurado.** "Para fins de concessão do BPC/LOAS, a caracterização da deficiência NÃO EXIGE a demonstração de incapacidade para o trabalho. O requisito legal é o impedimento de longo prazo de natureza física, mental, intelectual ou sensorial, entendido como alteração ou perda significativas na função ou estrutura do corpo, que, em interação com barreiras, obstrua a participação plena e efetiva do requerente na sociedade em igualdade de condições com as demais pessoas, devendo sua aferição ser realizada por meio de avaliação biopsicossocial."
-
-**3 Parâmetros de Economia Processual - REDAÇÃO LITERAL VERIFICADA NO ACÓRDÃO.**
-
-**Parâmetro (i).** Constatação judicial, com base em perícia médica, de INEXISTÊNCIA de impedimento, IMPEDIMENTO DE GRAU LEVE ou IMPEDIMENTO PASSÍVEL DE RESOLUÇÃO EM MENOS DE 2 ANOS = **DISPENSA a realização de AVALIAÇÃO BIOPSICOSSOCIAL** (afasta pressuposto necessário à caracterização da deficiência).
-
-**Parâmetro (ii).** Constatação de INCAPACIDADE TOTAL DE LONGO PRAZO para qualquer atividade laborativa = gera PRESUNÇÃO RELATIVA (iuris tantum) DE DEFICIÊNCIA, **DISPENSANDO A AVALIAÇÃO SOCIAL** (não a biopsicossocial completa). Ressalvada a possibilidade de o julgador afastá-la diante de elementos concretos que indiquem ausência de barreiras relevantes no caso específico. **CORREÇÃO IMPORTANTE.** A redação literal fala "avaliação social" (não biopsicossocial). Basta a perícia médica que atestou a incapacidade total.
-
-**Parâmetro (iii).** Constatação de impedimento de GRAU MODERADO ou GRAVE sem incapacidade total de longo prazo = EXIGE a avaliação biopsicossocial, com análise, feita por assistente social, dos fatores ambientais, das limitações de atividade e das restrições de participação social.
-
-**A avaliação biopsicossocial NÃO SE CONFUNDE com a análise de miserabilidade** exigida para o segundo requisito do BPC.
-
-**Argumentos-chave pró-segurado extraídos da ementa.**
-
-1. **Distinção estrutural.** Deficiência (Direito Assistencial/Constitucional) ≠ Incapacidade laborativa (Direito Previdenciário).
-
-2. **CAPACITISMO VEDADO.** "Exigir incapacidade laborativa como condição para o reconhecimento da deficiência configura capacitismo vedado pelo ordenamento constitucional e convencional." (Item 3 da ementa).
-
-3. **Art. 21-A LOAS** pressupõe que PCD pode exercer atividade remunerada.
-
-4. **Requisitos autônomos e cumulativos.** "Não possuir meios de prover à própria manutenção" refere-se à ausência de RENDA, não à impossibilidade de trabalhar.
-
-5. **Sem impedimento moderado, não há BPC.** Item 4 da ementa.
-
-**Aplicação combinada com o Parâmetro (ii).** Em segurados com laudo de incapacidade total permanente (B32), há PRESUNÇÃO iuris tantum de deficiência para fins de BPC, dispensando apenas a AVALIAÇÃO SOCIAL. Cabe pedido cumulativo ou sucessivo.
-
-Detalhamento integral em `base-precedentes-catalogo-vinculantes/references/TEMA-385-TNU-FUNDAMENTACAO-COMPLETA.md` (Onda 53) com os 9 itens da ementa transcritos literalmente do acórdão.
-
-## PEDILEF 5001885-13.2023.4.04.7209/SC TNU (Onda 51) - TAXATIVIDADE DO ROL DO §1º ART. 20 LOAS
-
-Julgado em 10/12/2025 pela TNU, Rel. Juiz Federal João Carlos Cabrelon de Oliveira, decisão UNÂNIME.
-
-**Tese pró-segurado.** O rol do §1º do art. 20 da Lei 8.742/1993 é TAXATIVO. Para cálculo da renda mensal per capita do BPC, somente entram os valores recebidos por pessoas elencadas no rol legal (requerente, cônjuge ou companheiro, pais, irmãos solteiros, filhos e enteados solteiros, menores tutelados, desde que vivam sob o mesmo teto).
-
-Outros parentes que residam no mesmo imóvel e contribuam para o sustento (irmão casado, cunhado, sobrinho, tia, prima, avó sem guarda, etc) NÃO entram no cálculo. Eventual ajuda financeira deles pode ser ponderada na análise GLOBAL da miserabilidade, mas não compõe matematicamente o cálculo da renda per capita.
-
-**Aplicação operacional.** QO 20/TNU. Acórdão recorrido que somar renda de pessoa fora do rol é anulado, com retorno à TR de origem para readequação.
-
-**CONTEXTO CRÍTICO PÓS DECRETO 12.534/2025.** A reforma do BPC revogou exclusões antigas do art. 4º §2º Decreto 6.214 (auxílios eventuais, Bolsa Família, pensão indenizatória, renda sazonal). Este PEDILEF AFIRMA a TAXATIVIDADE do rol legal do §1º art. 20 LOAS, contrapondo eventual interpretação ampliativa que o INSS possa fazer com base na nova redação do Decreto.
-
-**Estratégia pró-segurado.** Em casos de indeferimento de BPC por cômputo de renda de parentes extra-rol, invocar este PEDILEF + PEDILEF (numeração a conferir em fonte primária antes de citar, registro original inconsistente: 0000020-09.3808.7.01.3419/DF) (TNU, 19/06/2020) + PEDILEF 0003636-52.2018.4.01.3306/BA (TNU, 23/09/2025).
-
-Detalhamento integral em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
-
-## O que NÃO está nesta skill
-
-Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`. Cadastro Domiciliar do CadÚnico está em `base-cadastro-domiciliar-cadunico-in21-2026`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.

@@ -20,7 +20,7 @@ Eu, [NOME COMPLETO DA SEGURADA], brasileira, [ESTADO CIVIL], [PROFISSÃO ATUAL O
 
 ## Sobre o Início dos Sintomas
 
-Os sintomas que hoje me incapacitam começaram gradualmente. Lembro que por volta de [ANO APROXIMADO] comecei a sentir [DESCREVER OS PRIMEIROS SINTOMAS, dor em joelhos, dor nos pés, dificuldade para andar, dor na coluna, fadiga, etc.]. No início, pensei que era apenas cansaço normal do trabalho e não procurei atendimento médico imediatamente.
+Os sintomas que hoje me limitam começaram gradualmente. Lembro que por volta de [ANO APROXIMADO] comecei a sentir [DESCREVER OS PRIMEIROS SINTOMAS, dor em joelhos, dor nos pés, dificuldade para andar, dor na coluna, fadiga, etc.]. No início, pensei que era apenas cansaço normal do trabalho e não procurei atendimento médico imediatamente.
 
 Com o passar dos anos, os sintomas foram piorando. A dor em [LOCALIZAÇÃO] ficou mais frequente. Percebi que não conseguia mais [CITAR ATIVIDADES ESPECÍFICAS, subir escadas, ficar em pé muito tempo, andar longas distâncias, agachar, etc.] como antes.
 

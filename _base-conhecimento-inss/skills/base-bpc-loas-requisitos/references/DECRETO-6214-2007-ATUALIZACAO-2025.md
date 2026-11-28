@@ -2,7 +2,7 @@
 
 Reference operacional do Regulamento do BPC com mapeamento exaustivo das alterações vigentes. Especial atenção ao **Decreto 12.534/2025** que promoveu reforma profunda do regulamento, com efeitos pró-segurado em algumas frentes e CONTRA o segurado em outras (esta reference sinaliza ambas, sob postura pró-segurado).
 
-Verificação efetuada em 19/06/2026 a partir do PDF compilado oficial baixado de `https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6214.htm` enviado pelo usuário.
+Texto conferido no compilado oficial do Planalto (`https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6214.htm`).
 
 ## SUMÁRIO DE ALTERAÇÕES POR DECRETO MODIFICADOR
 
@@ -58,9 +58,9 @@ INCLUÍDOS pelo Decreto 12.534/2025.
 - **IX** - o **benefício previdenciário no valor de até um salário mínimo concedido a pessoa idosa acima de 65 anos de idade ou a pessoa com deficiência**.
 - **X** - o valor do **auxílio-inclusão** e da **remuneração do beneficiário do auxílio-inclusão** percebidos por um membro da família, exclusivamente para fins de manutenção do BPC concedido anteriormente a outra pessoa do mesmo grupo familiar.
 
-**EFEITO PRÓ-SEGURADO CRÍTICO.** O inciso IX é a CONSAGRAÇÃO REGULAMENTAR da exclusão do benefício previdenciário de 1 SM percebido por idoso 65+. Antes derivava apenas do art. 34 par. único do Estatuto do Idoso (Lei 10.741/2003) e da Súmula 14/TRU 3 (skill `base-tru-trf3-sumulas-jurisprudencia`). Agora está expressamente no regulamento.
+**Efeito pró-segurado.** O inciso IX reproduz no regulamento a exclusão já prevista no art. 20, §14, da LOAS (incluído pela Lei 13.982/2020) e no art. 34, parágrafo único, da Lei 10.741/2003, e alinha o decreto ao Tema 640 STJ.
 
-**REGRESSÃO.** A revogação dos antigos incisos I, II, IV e V é GRAVE retrocesso. Antes excluíam-se da renda os benefícios eventuais, bolsa família, pensão indenizatória e renda sazonal. Agora apenas as hipóteses taxativas dos novos VII-X. A inconstitucionalidade por retrocesso social pode ser arguida (art. 60 §4º IV CF + princípio da vedação do retrocesso). Cruzar com `bpc-renda-grupo-familiar` para estratégia em caso concreto.
+**Efeito anti-segurado.** A revogação dos antigos incisos I, II, IV e V retirou do regulamento a exclusão expressa de benefícios eventuais, transferências de renda, pensão indenizatória e rendas sazonais. A transferência de renda do art. 203, VI, da CF continua acumulável (art. 5º). Cabe sustentar, no caso concreto, a vedação ao retrocesso social e a análise global da miserabilidade (Tema 27 STF). Estratégia em `bpc-renda-grupo-familiar`.
 
 ### ACUMULAÇÃO E DESPESAS (Art. 5º)
 
@@ -68,7 +68,7 @@ REDAÇÃO ALTERADA pelo Decreto 12.534/2025.
 
 "O beneficiário não pode acumular o Benefício de Prestação Continuada com outro benefício no âmbito da Seguridade Social ou de outro regime, inclusive o seguro-desemprego, **exceto** os da **assistência médica** e da **pensão especial de natureza indenizatória**, e as **transferências de renda** de que tratam o art. 6º, parágrafo único, e o art. 203, caput, inciso VI, da Constituição, e o art. 1º, caput e §1º, da Lei nº 10.835, de 8 de janeiro de 2004."
 
-**EFEITO PRÓ-SEGURADO.** A acumulação fica EXPRESSAMENTE permitida com Bolsa Família/Programa de Transferência de Renda do art. 203 VI CF e com a Renda Básica de Cidadania da Lei 10.835/2004.
+**Efeito pró-segurado.** A acumulação fica expressamente permitida com Bolsa Família/Programa de Transferência de Renda do art. 203 VI CF e com a Renda Básica de Cidadania da Lei 10.835/2004.
 
 ### REQUISITOS DE CONCESSÃO (Arts. 8º e 9º)
 
@@ -110,18 +110,15 @@ NOVA REDAÇÃO. "As avaliações de que trata o §1º observarão os aspectos **
 
 "O médico perito deverá registrar o **código da Classificação Internacional de Doenças - CID** ao preencher o instrumento de que trata o §3º, **resguardado o sigilo médico**."
 
-**EFEITO PRÓ-SEGURADO.** O CID passa a ser obrigatoriamente registrado. Facilita auditoria do laudo pelos critérios técnicos da deficiência. Cruza com `auditoria-laudo-pericial` e `base-validacao-formal-laudo-medico-checklist-ab`.
+**Efeito pró-segurado.** O CID passa a ser registrado obrigatoriamente, o que permite o controle do laudo pelos critérios técnicos da deficiência. Cruza com `auditoria-laudo-pericial` e `base-validacao-formal-laudo-medico-checklist-ab`.
 
 #### Art. 16, §11 (REVOGADO pelo Decreto 12.534/2025)
 
 ANTES (Decreto 9.462/2018). "Ato do Ministro de Estado do Desenvolvimento Social estabelecerá diretrizes para o escalonamento, a priorização e os casos que serão dispensados das reavaliações em razão da deficiência constatada."
 
-REVOGADO. **RETROCESSO.** A possibilidade de DISPENSA DE REAVALIAÇÃO em casos de impedimento permanente foi REVOGADA. A reavaliação periódica passa a ser regra geral, sem hipótese expressa de dispensa.
+Revogado. O dispositivo delegava a ato ministerial a definição dos casos dispensados de reavaliação. A dispensa passou a ter base legal no art. 21, §5º, da LOAS (redação da Lei 15.157/2025): impedimento permanente, irreversível ou irrecuperável dispensa a avaliação médico-pericial periódica, salvo fundada suspeita de fraude ou erro. O art. 21, §6º (Lei 15.156/2025), trata da síndrome congênita do vírus Zika. A revogação regulamentar não afasta a lei.
 
-**ESTRATÉGIA PRÓ-SEGURADO.** Reivindicar a dispensa via MS ou ação anulatória de cessação, fundada em.
-- Lei 15.157/2025 (que ampliou critérios de dispensa de reavaliação).
-- Portaria 34/2025 e Portaria 37/2026 (dispensa para impedimento permanente, irreversível, irrecuperável).
-- Cruzar com `analise-bpc-loas`.
+**Estratégia pró-segurado.** Contra convocação ou cessação de beneficiário com impedimento permanente, invocar o art. 21, §5º, da LOAS e a Portaria Conjunta MDS/INSS 37/2026 (definições de permanente, irreversível e irrecuperável). Detalhe em `base-bpc-impedimento-longo-prazo`.
 
 ### AVALIAÇÃO E DISPENSA DE REAVALIAÇÃO (Art. 16, §7º)
 
@@ -143,11 +140,11 @@ NOVA REDAÇÃO. "O Benefício de Prestação Continuada, **concedido por via adm
 
 REVOGADO o §3º que dizia. "A revisão de que trata o caput poderá ser realizada para os benefícios concedidos ou reativados judicialmente, observados os critérios definidos na decisão judicial."
 
-**EFEITO ANTI-SEGURADO.** Antes, BPC concedido por decisão judicial era revisto OBSERVANDO os critérios da própria decisão judicial. Por exemplo, benefício concedido por critério de miserabilidade flexibilizado (Tema 640/STJ, corte corrigida na auditoria 25/07/2026) era reavaliado com o MESMO critério da sentença. Agora, com a revogação, a Administração pode reavaliar com os critérios EXCLUSIVAMENTE regulamentares - ignorando o entendimento que justificou a concessão.
+**EFEITO ANTI-SEGURADO.** Antes, BPC concedido por decisão judicial era revisto OBSERVANDO os critérios da própria decisão judicial. Por exemplo, benefício concedido por critério de miserabilidade flexibilizado (Tema 640 STJ) era reavaliado com o MESMO critério da sentença. Agora, com a revogação, a Administração pode reavaliar com os critérios EXCLUSIVAMENTE regulamentares - ignorando o entendimento que justificou a concessão.
 
 **ESTRATÉGIA PRÓ-SEGURADO.**
 - Em caso de cessação por reavaliação com critério diferente do da decisão judicial, IMPETRAR MS por descumprimento de coisa julgada.
-- Fundamento. Art. 5º XXXVI CF (coisa julgada), art. 502 e art. 503 CPC (auditoria 03/10/2026, retirada a Súmula 343/STF, que trata de ação rescisória).
+- Fundamento. CF, art. 5º, XXXVI; CPC, arts. 502 e 503. O art. 21, §5º, da LOAS (redação da Lei 14.176/2021) já admitia a convocação de benefício judicial; o debate se concentra na alteração das circunstâncias fáticas, e não na revisão do critério jurídico fixado na sentença.
 - Cruzar com `mandado-seguranca-previdenciario`, `coisa-julgada-previdenciaria` e `base-cpc-coisa-julgada-progressiva`.
 
 #### Art. 42, §5º (REVOGADO pelo Decreto 12.534/2025)
@@ -162,7 +159,7 @@ ANTES (Decreto 12.534/2025 ainda mantinha). "O valor do Benefício de Prestaçã
 
 REVOGADO pelo Decreto 12.534/2025.
 
-**ESCLARECIMENTO.** A revogação NÃO PREJUDICA o segurado nesse ponto específico, pois a EXCLUSÃO migrou para o novo art. 4º §2º VIII (BPC concedido a outra pessoa idosa OU pessoa com deficiência da mesma família). Antes só idoso. Agora idoso E PcD. Houve AMPLIAÇÃO da exclusão.
+**Esclarecimento.** A revogação não prejudica o segurado nesse ponto, pois a exclusão migrou para o novo art. 4º, §2º, VIII (BPC concedido a outra pessoa idosa ou pessoa com deficiência da mesma família). Antes alcançava apenas o idoso; agora alcança o idoso e a pessoa com deficiência, o que ampliou a exclusão.
 
 ### NOVOS ARTIGOS DE PROCEDIMENTO DE SUSPENSÃO/CESSAÇÃO (Arts. 47-B a 47-E)
 
@@ -189,7 +186,7 @@ Hipótese de o INSS NÃO PODER COMPROVAR a ciência da notificação do art. 47-
 
 § 2º. Desbloqueio após contato do beneficiário (presencial ou remoto).
 
-§ 3º. Pagamento da competência seguinte só após desbloqueio.
+§ 3º. Pagamento da competência seguinte apenas após desbloqueio.
 
 § 4º. No momento do desbloqueio, o INSS notifica formalmente.
 
@@ -214,7 +211,7 @@ V. Não agendar reavaliação em 30 dias.
 VI. Não efetivar biometria em 90 dias.
 VII. Benefício pago via cartão magnético não sacado por mais de 60 dias.
 
-**ESTRATÉGIA PRÓ-SEGURADO.** A estrutura dos arts. 47-B a 47-E é COMPLEXA mas dá várias OPORTUNIDADES de defesa por intempestividade da notificação ou erro de procedimento.
+**Estratégia pró-segurado.** Os arts. 47-B a 47-E abrem defesa por falta de ciência comprovada, intempestividade ou erro de procedimento.
 
 **ALERTAS CRÍTICOS.**
 
@@ -253,12 +250,12 @@ VIII. Não comparecimento ou não reagendamento à reavaliação da deficiência
 
 | Tema | Norma | Impacto |
 |------|-------|---------|
-| Critério de renda 1/4 SM | Art. 8º II e 9º II | "igual ou inferior" (era só "inferior") |
+| Critério de renda 1/4 SM | Art. 8º II e 9º II | "igual ou inferior" (era "inferior") |
 | Acumulação com BF/Bolsa Família | Art. 5º | Permitida expressamente |
 | BPC a outro idoso/PcD | Art. 4º §2º VIII | Exclusão consagrada |
-| Benefício 1 SM idoso 65+/PcD | Art. 4º §2º IX | Exclusão expressa (era apenas Súmula 14/TRU 3) |
+| Benefício 1 SM idoso 65+/PcD | Art. 4º §2º IX | Exclusão expressa, em linha com o art. 20, §14, da LOAS |
 | Indenização barragens | Art. 4º §2º VII | Exclusão expressa |
-| CID obrigatório no laudo | Art. 16 §3º-A | Facilita auditoria |
+| CID obrigatório no laudo | Art. 16 §3º-A | Permite o controle do laudo |
 | Boa-fé | Art. 49 | Mantida |
 
 ### Mudanças ANTI-segurado (RETROCESSO)
@@ -269,7 +266,7 @@ VIII. Não comparecimento ou não reagendamento à reavaliação da deficiência
 | Exclusão de Bolsa Família | Art. 4º §2º II (revogado) | Já não exclui mais |
 | Exclusão de pensão indenizatória | Art. 4º §2º IV (revogado) | Já não exclui mais (mas mantido no caput do art. 5º) |
 | Exclusão de renda sazonal | Art. 4º §2º V (revogado) | Já não exclui mais |
-| Dispensa de reavaliação | Art. 16 §11 (revogado) | Sem hipótese expressa de dispensa no regulamento |
+| Dispensa de reavaliação | Art. 16 §11 (revogado) | Sem efeito prático: a dispensa está no art. 21, §5º, da LOAS |
 | Critério judicial em revisão | Art. 42 §3º (revogado) | Pode reavaliar com critério diferente da sentença |
 | Critério ACP em revisão | Art. 42 §5º (revogado) | Mesmo problema do §3º |
 | Biometria | Art. 12 | Novo obstáculo para idosos/PcD com dificuldade |
@@ -278,11 +275,11 @@ VIII. Não comparecimento ou não reagendamento à reavaliação da deficiência
 
 ### Inconstitucionalidade por retrocesso social
 
-A revogação das exclusões de renda (incisos I, II, IV, V do antigo art. 4º §2º) e da dispensa de reavaliação (art. 16 §11) configuram retrocesso social.
+A revogação das exclusões de renda dos incisos I, II, IV e V do antigo art. 4º, §2º, pode ser impugnada como retrocesso social.
 
 **Fundamento.**
 - Art. 60 §4º IV CF (cláusula pétrea dos direitos individuais).
-- Art. 7º CF (direitos sociais).
+- CF, art. 6º (direitos sociais).
 - Princípio da proibição do retrocesso (jurisprudência STF).
 - Convenção sobre Direitos das Pessoas com Deficiência (Decreto 6.949/2009, status constitucional).
 
@@ -294,7 +291,7 @@ Para benefícios concedidos por sentença transitada em julgado.
 
 **Fundamento.**
 - Art. 5º XXXVI CF.
-- Art. 502 e art. 503 CPC (auditoria 03/10/2026, retirada a Súmula 343/STF, que trata de ação rescisória).
+- CPC, arts. 502 e 503.
 
 **Estratégia.** Em caso de reavaliação que aplique critério diferente da sentença, IMPETRAR MS por descumprimento de coisa julgada.
 
@@ -316,8 +313,8 @@ Esta reference deve ser acionada AUTOMATICAMENTE em conjunto com.
 
 ## FONTE PRIMÁRIA
 
-Decreto 6.214/2007 - **Texto compilado em 19/06/2026** verificado a partir do PDF oficial do Planalto fornecido pelo usuário. URL canônica `https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6214.htm`.
+Decreto 6.214/2007, texto compilado do Planalto. URL canônica `https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6214.htm`.
 
-Decreto 12.534/2025 - Decreto modificador principal. Confirmar publicação no DOU correspondente.
+Decreto 12.534/2025, decreto modificador principal. Data de publicação no DOU: [NÃO CONFIRMADO].
 
 ALERTA. Em caso de aplicação literal, sempre cotejar com o texto compilado oficial mais recente no Planalto. Esta reference é GUIA OPERACIONAL pró-segurado, não substitui a leitura do texto vigente no momento do ato.

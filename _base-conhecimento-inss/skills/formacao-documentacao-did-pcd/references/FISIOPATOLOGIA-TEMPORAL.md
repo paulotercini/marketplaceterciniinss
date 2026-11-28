@@ -113,7 +113,7 @@ Evolução. Quadro consolidado com atrofia do interósseo e hipotrofia da eminê
 
 ### Fibromialgia (CID M79.7 ou CID-11 MG30.01)
 
-Reconhecida como deficiência pela Lei 15.176/2025. Quadro de dor crônica generalizada, fadiga, distúrbio de sono, fibrofog. Diagnóstico clínico pelos critérios ACR 2010/2016.
+Equiparação à deficiência condicionada à avaliação biopsicossocial (Lei 14.705/2023, art. 1º-C, incluído pela Lei 15.176/2025). Quadro de dor crônica generalizada, fadiga, distúrbio de sono, fibrofog. Diagnóstico clínico pelos critérios ACR 2010/2016.
 
 Evolução. Diagnóstico formal frequentemente tardio. Pacientes referem sintomas por 2 a 10 anos antes do diagnóstico. Anamnese cuidadosa permite recuo da DID.
 

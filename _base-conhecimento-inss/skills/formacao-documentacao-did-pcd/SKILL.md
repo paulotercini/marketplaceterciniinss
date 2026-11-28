@@ -1,154 +1,80 @@
 ---
 name: formacao-documentacao-did-pcd
-description: "Formação de documentação médica pretérita para ancorar a Data de Início da Deficiência (DID) em aposentadoria PCD da LC 142/2013 quando o segurado NÃO possui documentos médicos antigos. Use SEMPRE que mencionar ausência de documentos médicos pretéritos, formar documentação DID, reconstruir histórico médico, DID sem prova, fixação retroativa da deficiência, laudo médico retrospectivo, prova médica reconstitutiva, roteiro ao médico assistente, busca prontuário retroativo, prontuário UBS antigo, ASO retroativo, ficha medicina do trabalho, fisiopatologia temporal, história natural da doença previdenciário, requerer documentação clínica, cliente sem documentos médicos. Acionar AUTOMATICAMENTE em casos de aposentadoria PCD quando o cliente não apresenta documentação médica anterior. Complementar a aposentadoria-deficiencia, documentos-comprobatorios-in128, peticao-previdenciaria. NÃO use para B31/B32 ou BPC sem componente PCD."
+description: "Formação de documentação médica pretérita para ancorar a Data de Início da Deficiência (DID) em aposentadoria PCD da LC 142/2013 quando o segurado NÃO possui documentos médicos antigos. Use SEMPRE que mencionar ausência de documentos médicos pretéritos, formar documentação DID, reconstruir histórico médico, DID sem prova, fixação retroativa da deficiência, laudo médico retrospectivo, prova médica reconstitutiva, roteiro ao médico assistente, busca prontuário retroativo, prontuário UBS antigo, ASO retroativo, ficha medicina do trabalho, fisiopatologia temporal, história natural da doença previdenciário, requerer documentação clínica, cliente sem documentos médicos. Acionar AUTOMATICAMENTE em casos de aposentadoria PCD quando o cliente não apresenta documentação médica anterior. Complementar a aposentadoria-deficiencia, base-documentos-comprobatorios-in128, peticao-previdenciaria. NÃO use para B31/B32 ou BPC sem componente PCD."
 ---
 
-# Skill de Formação de Documentação Médica Pretérita para Fixação de DID em Aposentadoria PCD
+# Formação de Documentação Médica Pretérita para a DID na Aposentadoria PCD
 
-## Visão Geral
+## Escopo
 
-Esta skill estrutura a formação ativa de documentação médica pretérita para ancorar a Data de Início da Deficiência (DID) em casos de aposentadoria da pessoa com deficiência (LC 142/2013), especificamente nos cenários em que o segurado não possui documentos médicos antigos arquivados. A skill opera em três frentes complementares: busca estruturada em fontes existentes que o cliente desconhece, produção de documentos novos com valor probatório, e redação de peças instrumentais (requerimentos de cópia de prontuário, roteiros ao médico assistente, ofícios a empregadores). O objetivo é converter ausência aparente de prova em conjunto probatório sólido que resista ao contraditório administrativo e judicial.
+Formar o conjunto probatório da data de início da deficiência (DID) quando o segurado não guarda documentos médicos antigos, em três frentes: busca em fontes que o cliente desconhece, produção de documentos novos e redação de peças instrumentais (requerimento de prontuário, roteiro ao médico, ofício ao empregador). Regras de fixação da DID em `base-pcd-did-retroativa`.
 
-## Fluxo de Trabalho
+## Fluxo
 
-1. Leia este SKILL.md completamente
-2. Leia `references/HIERARQUIA-PROBATORIA.md` para compreender o peso relativo de cada tipo de documento e a ordem estratégica de produção
-3. Leia `references/FISIOPATOLOGIA-TEMPORAL.md` para os parâmetros médicos de evolução das patologias mais comuns em aposentadoria PCD
-4. Leia `references/FONTES-DOCUMENTAIS.md` para o mapa completo de fontes de documentação preexistente que o cliente pode não conhecer
-5. Receba o caso do usuário com identificação das patologias, período laboral e eventual PPP
-6. Execute o diagnóstico documental do caso conforme o modo de operação aplicável
-7. Gere o plano de formação documental e as peças instrumentais solicitadas
-8. Use os modelos em `assets/` para requerimentos, roteiros e ofícios
+1. Ler `references/HIERARQUIA-PROBATORIA.md` (peso de cada documento e ordem de produção), `references/FISIOPATOLOGIA-TEMPORAL.md` (evolução típica das patologias) e `references/FONTES-DOCUMENTAIS.md` (mapa de fontes).
+2. Receber o caso com patologias, período laboral e PPP.
+3. Fazer o diagnóstico documental, o plano de formação e as peças pedidas, com os modelos de `assets/`.
 
-## Regras Críticas
+## Regras
 
-### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
+- **Limite técnico.** Não projetar DID anterior ao que a evolução da doença sustenta. DID recente ainda pode viabilizar o benefício combinada com a conversão de tempo especial (Decreto 3.048/1999, art. 70-F, §1º, para períodos até 13/11/2019).
+- **Nada inventado.** A skill orienta a busca e a organização de prova real. Falsificar documento médico configura crime (CP, arts. 171 e 299) e inviabiliza o caso.
+- **Prova existente e prova nova.** Separar documentos em arquivo de terceiros (prontuários, ASO, prescrições, autorizações de convênio) dos documentos a produzir (relatório circunstanciado, laudo extrajudicial, autodeclaração).
+- **Prova testemunhal.** O tempo anterior à vigência da LC 142 (novembro de 2013) não se prova por prova exclusivamente testemunhal (LC 142, art. 6º, §2º; Decreto 3.048/1999, art. 70-D, §1º). Testemunhas complementam.
 
-### Honestidade Radical sobre Limites Probatórios
-Não forçar DID em período anterior ao que a medicina baseada em evidências suporta. Perito judicial e perito do INSS identificam forçamento e rejeitam. O caso da aposentadoria PCD pode ser viável mesmo com DID relativamente recente, desde que articulado com conversão de tempo especial pelo art. 70-F, §1º, do Decreto 3.048/99. Primar pela DID defensável e tecnicamente ancorada, não pela DID conveniente.
+## Marco normativo
 
-### Proibição de Invenção
-NÃO inventar datas, diagnósticos, nomes de médicos ou fatos clínicos. A skill orienta BUSCA e ORGANIZAÇÃO de prova real, não fabricação. A falsificação de documentação médica configura estelionato (art. 171 CP) e falsidade ideológica (art. 299 CP), além de inviabilizar o caso.
+- LC 142/2013, art. 6º, §1º: fixação obrigatória da data provável de início na primeira avaliação.
+- Decreto 3.048/1999, art. 70-D, I e II, e §1º: DID, períodos por grau e documentos que subsidiem a avaliação.
+- Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1/2014 (IF-BrA).
+- Acesso a dados: CF, art. 5º, XIV e XXXIV; Lei 13.709/2018 (LGPD), arts. 9º e 18; Lei 13.460/2017, art. 6º; Código de Ética Médica (Resolução CFM 2.217/2018), art. 88; guarda do prontuário por 20 anos do último registro (Lei 13.787/2018, art. 6º; Resolução CFM 1.821/2007).
+- Medicina do trabalho: CLT, art. 168, e NR-07 (PCMSO).
+- Prova técnica: CPC, arts. 369 e 472.
 
-### Separação entre Prova Existente e Prova Nova
-A skill distingue rigorosamente entre dois universos: documentos que existem em arquivos de terceiros (prontuários, ASOs, prescrições, autorizações de convênio) e documentos novos a produzir (relatório médico circunstanciado, laudo pericial extrajudicial, autodeclaração). A estratégia combina os dois, mas com tratamento diferenciado.
+## Modos de operação
 
-### Vedação à Prova Exclusivamente Testemunhal (art. 6º, §2º, LC 142/2013)
-A comprovação de tempo de contribuição na condição de PCD em período anterior a 09/11/2013 não admite prova exclusivamente testemunhal. Testemunhas podem complementar, nunca substituir prova documental.
+**1. Diagnóstico documental.**
+1. Patologias, CID e achados dos exames atuais.
+2. Período contributivo e vínculos, sobretudo com PPP ou tempo especial.
+3. Idade de início típica das patologias.
+4. DID tecnicamente sustentável pela história natural da doença.
+5. Fontes pretéritas prováveis.
+6. Documentos a produzir, por impacto probatório.
 
-## Marco Normativo Essencial
+**2. Plano em quatro camadas.**
+1. Busca em fontes existentes: UBS, hospitais, convênio, farmácias, empregadores, SUS, com base legal e prazo.
+2. Documentos novos: relatório circunstanciado do especialista assistente, laudo extrajudicial quando pertinente, autodeclaração assistida.
+3. Nexo com o trabalho: cruzamento do PPP com as patologias; laudo de nexo pode recuar a DID ao início da exposição.
+4. Prova complementar: fotografias, receitas, compra de órteses, declarações de médicos que atenderam pontualmente.
 
-### Fundamento da DID na LC 142/2013
+**3. Peças instrumentais.**
+- A. Requerimento de cópia integral de prontuário (UBS, hospital, convênio), com prazo e registro da recusa para habeas data.
+- B. Roteiro ao médico assistente: estrutura, CID, evolução temporal, DID estimada e limitações nos domínios do IF-BrA.
+- C. Ofício ao antigo empregador: ficha clínica, ASO admissional, periódicos e demissional, exames ocupacionais (CLT, art. 168, e NR-07).
 
-O art. 6º, §1º, da LC 142/2013 estabelece que a existência de deficiência anterior à vigência da lei deve ser certificada por ocasião da primeira avaliação, com fixação obrigatória da data provável do início da deficiência. A Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 regulamenta a avaliação funcional, exigindo fundamentação documental para retroação da DID.
+## Estrutura da saída
 
-### Direito de Acesso à Documentação Pessoal
+1. Diagnóstico documental: patologias, período relevante, DID sustentável com justificativa e inventário do que existe e do que falta.
+2. Plano de formação: quatro camadas, prioridade e cronograma.
+3. Peças a gerar.
+4. Orientação ao cliente, em linguagem acessível, com prazos.
+5. Alertas: fragilidades e alternativa.
 
-A LGPD (Lei 13.709/2018), no art. 9º e art. 18, assegura ao titular o direito de acesso aos dados pessoais, incluindo dados de saúde. A Lei 13.460/2017, no art. 6º, III, garante ao usuário do serviço público o direito de obter informações sobre o próprio cadastro. O art. 5º, XIV, da Constituição Federal assegura o acesso à informação. O Conselho Federal de Medicina, na Resolução CFM 1.821/2007, estabelece que o prontuário pertence ao paciente e deve ser fornecido mediante solicitação.
+## Integração
 
-### Prova Documental e Prova Pericial Extrajudicial
+`aposentadoria-deficiencia` (IF-BrA e art. 70-F, §1º); `base-pcd-did-retroativa` (regras da DID); `auditoria-ppp` (nexo e período especial); `base-documentos-comprobatorios-in128` (documentos aceitos pelo INSS); `requerimento-administrativo-inss`; `peticao-previdenciaria`; `tema-1124-instrucao-administrativa`; `perspectiva-genero-previdenciario` (trabalho doméstico ou rural informal, em que a falta de documento é estrutural).
 
-O Código de Processo Civil admite prova pericial extrajudicial (art. 369 e art. 464). Laudos médicos particulares produzidos por profissionais qualificados têm valor probatório reconhecido pelo STJ e pelos TRFs. Súmula 577 do STJ admite a prova pericial produzida fora do processo como elemento de convencimento.
+## Modelos em assets
 
-## Modos de Operação
+- `assets/requerimento-prontuario-UBS.md`
+- `assets/requerimento-prontuario-convenio.md`
+- `assets/oficio-empregador-medicina-trabalho.md`
+- `assets/roteiro-relatorio-medico.md`
+- `assets/autodeclaracao-assistida.md`
 
-### Modo 1. Diagnóstico Documental do Caso
+## Observação final
 
-O usuário apresenta um caso em que o cliente alega não ter documentos médicos pretéritos. A skill executa o seguinte diagnóstico antes de planejar a estratégia.
-
-Primeiro passo. Identificar todas as patologias alegadas, CIDs aplicáveis e achados dos exames atuais (quando disponíveis).
-
-Segundo passo. Mapear o período contributivo relevante e os vínculos empregatícios, especialmente aqueles com PPP ou com tempo especial potencial.
-
-Terceiro passo. Identificar a idade de início típica das patologias segundo literatura médica (`references/FISIOPATOLOGIA-TEMPORAL.md`).
-
-Quarto passo. Projetar a DID tecnicamente defensável com base na história natural das doenças.
-
-Quinto passo. Mapear as fontes documentais pretéritas que o cliente provavelmente desconhece (`references/FONTES-DOCUMENTAIS.md`).
-
-Sexto passo. Ranquear os documentos a produzir por impacto probatório (`references/HIERARQUIA-PROBATORIA.md`).
-
-### Modo 2. Geração de Plano de Formação Documental
-
-A partir do diagnóstico, gerar plano estruturado com quatro camadas.
-
-Camada 1. Busca estruturada em fontes existentes. Lista de destinos de requerimentos (UBS, convênio, farmácias, empregadores, hospitais, SUS), com base legal e prazos. Cliente executa mediante orientação.
-
-Camada 2. Produção de documentos novos de alto impacto. Relatório médico circunstanciado do ortopedista/especialista assistente, laudo pericial extrajudicial quando pertinente, autodeclaração assistida da segurada.
-
-Camada 3. Construção do nexo com atividade laboral. Cruzamento do PPP com patologias atuais, laudo afirmando nexo causal entre condições de trabalho e deficiência, o que potencialmente recua a DID para o início da exposição.
-
-Camada 4. Prova complementar robustecedora. Fotografias, receituários, comprovantes de compra de órteses, declaração de médicos que tenham atendido pontualmente.
-
-### Modo 3. Redação de Peças Instrumentais
-
-A skill gera três tipos de peças sob demanda. Cada peça usa modelo em `assets/` como base, adaptada ao caso concreto.
-
-Peça tipo A. Requerimento de cópia integral de prontuário, personalizável para UBS, hospital, convênio. Fundamentação legal completa. Prazo de resposta estipulado. Pedido de notificação em caso de recusa para fins de habeas data.
-
-Peça tipo B. Roteiro de orientação ao médico assistente para redação do relatório circunstanciado, com estrutura sugerida, CIDs aplicáveis ao caso, pontos obrigatórios sobre fisiopatologia temporal, DID estimada e limitações funcionais para IF-BrA.
-
-Peça tipo C. Ofício aos antigos empregadores solicitando cópia integral da ficha clínica de medicina do trabalho, ASOs admissional, periódicos e demissional, exames ocupacionais, com fundamentação no art. 168 CLT e NR-07.
-
-## Estrutura da Saída
-
-Ao executar a skill, apresentar a análise ao usuário na seguinte ordem.
-
-### 1. DIAGNÓSTICO DOCUMENTAL
-Síntese das patologias identificadas, período contributivo relevante, DID tecnicamente defensável com justificativa médica, e inventário do que provavelmente existe em fontes terceiras versus o que precisa ser produzido.
-
-### 2. PLANO DE FORMAÇÃO DOCUMENTAL
-Plano em quatro camadas (busca existente, produção nova, nexo laboral, prova complementar), com priorização por impacto probatório e sequenciamento temporal de execução.
-
-### 3. PEÇAS INSTRUMENTAIS A GERAR
-Lista das peças que a skill pode gerar imediatamente, com identificação de qual peça gera qual documento.
-
-### 4. ORIENTAÇÃO AO CLIENTE
-Instruções concretas sobre o que o cliente precisa fazer pessoalmente, com linguagem acessível, prazos e próximos passos.
-
-### 5. ALERTAS
-Riscos, fragilidades, limites probatórios do caso. Exposição franca dos pontos em que a estratégia pode não funcionar, com plano B.
-
-## Cruzamento Obrigatório com Outras Skills
-
-Esta skill é complementar, não substitutiva. Acionar em conjunto com as seguintes.
-
-**aposentadoria-deficiencia.** Para o enquadramento no IF-BrA e para a aplicação correta do art. 70-F, §1º, do Decreto 3.048/99 na conversão de tempo especial. O roteiro do relatório médico circunstanciado deve alimentar os domínios do IF-BrA.
-
-**auditoria-ppp.** Sempre que houver PPP do período em que se pretende ancorar a DID ou em período contemporâneo. O PPP pode fundamentar nexo causal entre atividade e deficiência, o que potencialmente recua a DID ao início da exposição.
-
-**documentos-comprobatorios-in128.** Para o mapeamento de documentos aceitos pelo INSS em processos administrativos.
-
-**requerimento-administrativo-inss.** Quando a estratégia envolver requerimento administrativo com pedido de avaliação biopsicossocial.
-
-**peticao-previdenciaria.** Quando a estratégia for judicial e a DID precisar ser fundamentada em petição inicial.
-
-**tema-1124-instrucao-administrativa.** Para evitar extinção sem mérito por ausência de instrução administrativa prévia.
-
-**perspectiva-genero-previdenciario.** Quando a segurada for mulher em contexto de trabalho doméstico ou rural informal, cenário em que a ausência de documentação é estrutural e pode ser superada por flexibilização probatória.
-
-## Referências
-
-Antes de executar a skill, leia os seguintes arquivos conforme o modo de operação.
-
-- `references/HIERARQUIA-PROBATORIA.md`. Hierarquia de impacto probatório de cada tipo de documento, ordem estratégica de produção, jurisprudência sobre valoração de laudos particulares
-- `references/FISIOPATOLOGIA-TEMPORAL.md`. Parâmetros médicos de evolução das patologias mais comuns em aposentadoria PCD (osteoartrose, condropatia, fasceíte plantar, fibromialgia, hérnia de disco, síndrome do túnel do carpo, neuropatias)
-- `references/FONTES-DOCUMENTAIS.md`. Mapa completo de fontes de documentação preexistente com base legal, contatos típicos e estratégias de acesso
-
-## Modelos em Assets
-
-- `assets/requerimento-prontuario-UBS.md`. Modelo de requerimento de cópia de prontuário para UBS
-- `assets/requerimento-prontuario-convenio.md`. Modelo de requerimento para operadoras de planos de saúde
-- `assets/oficio-empregador-medicina-trabalho.md`. Modelo de ofício ao empregador para ficha clínica de medicina do trabalho
-- `assets/roteiro-relatorio-medico.md`. Roteiro de orientação ao médico assistente para redação do relatório circunstanciado
-- `assets/autodeclaracao-assistida.md`. Modelo de autodeclaração da segurada sobre histórico de queixas e limitações
-
----
-
-## Alerta Final
-
-A ausência de documentação médica pretérita NÃO inviabiliza a aposentadoria PCD. A LC 142/2013 exige fixação da DID por ocasião da primeira avaliação, e essa fixação pode ser feita com base em relatório médico atual fundamentado em fisiopatologia temporal, ainda que sem prontuário antigo. A estratégia correta combina produção de documentos novos de qualidade técnica elevada com busca estruturada em fontes que o cliente desconhece. O erro estratégico mais comum é desistir da tese retroativa por ausência aparente de documentação. O segundo erro mais comum é forçar DID anterior à sustentabilidade médica. Este skill previne ambos os erros.
+A falta de documentos antigos não inviabiliza o benefício. O relatório atual fundamentado na evolução da doença é documento e subsidia a avaliação, mas a DID ganha força com a busca nas fontes de terceiros. Os dois desvios a evitar são desistir da DID retroativa por ausência aparente de prova e projetar DID sem suporte técnico.
 
 ## MCPs da casa
 

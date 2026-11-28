@@ -1,237 +1,58 @@
 ---
 name: base-modelo-relatorio-medico-bpc-loas-deficiente
-description: "Modelo narrativo enxuto (1 folha) de relatório médico para BPC/LOAS da pessoa com deficiência, abordagem biopsicossocial, IFBrM, impedimento de longo prazo e sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico BPC, modelo laudo BPC LOAS, modelo laudo IFBrM, modelo laudo biopsicossocial, relatório ortopedista BPC, relatório psiquiatra BPC, relatório reumatologista BPC, relatório clínico geral BPC, relatório oftalmologista BPC, relatório cardiologista BPC, BPC criança, BPC menor 16 anos, impedimento longo prazo 2 anos, barreiras CIF, Portaria Conjunta 2/2015, Portaria 37/2026 IFBrM, Lei 15.157/2025, Lei 15.176/2025 fibromialgia, carta médico BPC. Cruza com base-validacao-formal-laudo-medico-checklist-ab, analise-bpc-loas, base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-bpc-aposentadoria-pcd-procedimentos, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, peticao-previdenciaria."
+description: "Modelo narrativo enxuto (1 folha) de relatório médico para BPC/LOAS da pessoa com deficiência, pela avaliação biopsicossocial da Portaria Conjunta MDS/INSS 2/2015 (Funções do Corpo b1 a b8, Atividades d1 a d5, agravante de estrutura, prognóstico e permanência do art. 7º na redação da Portaria Conjunta 37/2026), impedimento de longo prazo de 2 anos e sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico BPC, modelo laudo BPC LOAS, modelo laudo biopsicossocial, relatório ortopedista BPC, relatório psiquiatra BPC, relatório reumatologista BPC, relatório clínico geral BPC, relatório oftalmologista BPC, relatório cardiologista BPC, BPC criança, BPC menor 16 anos, impedimento longo prazo 2 anos, art. 20 §10 LOAS, barreiras CIF, Portaria Conjunta 2/2015, Portaria 37/2026, impedimento permanente irreversível irrecuperável, Lei 15.157/2025, fibromialgia Lei 15.176/2025, IFBrM, carta médico BPC. Cruza com base-validacao-formal-laudo-medico-checklist-ab, analise-bpc-loas, base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-bpc-aposentadoria-pcd-procedimentos e peticao-previdenciaria."
 ---
 
-# Modelo de Relatório Médico para BPC/LOAS Deficiente
+# Modelo de Relatório Médico para BPC/LOAS da Pessoa com Deficiência
 
-## 1. Quando acionar esta skill
+## Quando acionar
 
-Acione SEMPRE que houver necessidade de gerar modelo de relatório médico para encaminhar a médico assistente, com finalidade de instruir requerimento administrativo ou ação judicial de BPC/LOAS (Benefício de Prestação Continuada, Lei 8.742/93 art. 20) para pessoa com deficiência.
+Gerar o modelo de relatório que o escritório encaminha ao médico assistente para instruir requerimento ou ação de BPC da pessoa com deficiência (LOAS, art. 20). Modelo narrativo de uma folha.
 
-A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (cabe em 1 folha) no estilo do escritório Paulo Roberto Tercini Filho, focado em.
+## O que o perito médico qualifica
 
-Impedimento de longo prazo (mínimo 2 anos, art. 20 §10 da LOAS).
+A avaliação do BPC segue a Portaria Conjunta MDS/INSS 2/2015, na redação da Portaria Conjunta MDS/MPS/INSS 37/2026. O IF-BrA é da LC 142, e o IFBrM não foi adotado normativamente pelo INSS. O relatório deve fornecer ao perito médico o que ele qualifica:
+- **Funções do Corpo.** b1 mentais; b2 sensoriais e dor; b3 voz e fala; b4 cardiovascular, hematológico, imunológico e respiratório; b5 digestivo, metabólico e endócrino; b6 geniturinárias e reprodutivas; b7 neuromusculoesqueléticas e de movimento; b8 pele.
+- **Atividades e Participação d1 a d5.** Aprendizagem e aplicação do conhecimento; tarefas e demandas gerais; comunicação; mobilidade; cuidado pessoal. Os domínios d6 a d9 e os fatores ambientais cabem ao assistente social.
+- **Art. 7º.** Agravante de estrutura do corpo (I) e prognóstico desfavorável (II), que elevam Funções do Corpo em um nível; caráter permanente, irreversível ou irrecuperável (IV).
+- **Duração.** Impedimento com efeitos por no mínimo 2 anos (LOAS, art. 20, §10), contado do início até a data prevista para a cessação (Súmula 48 TNU).
 
-Avaliação biopsicossocial conforme Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026).
+O BPC não exige incapacidade para o trabalho (Tema 385 TNU), e o requerente pode nunca ter trabalhado (criança, pessoa com deficiência desde o nascimento).
 
-IFBrM (Índice de Funcionalidade Brasileiro Modificado), Portaria 37/2026.
+## Estrutura
 
-Barreiras enfrentadas (CIF).
+1. **Cabeçalho.** Nome, CPF, nascimento e data de emissão.
+2. **Diagnósticos.** CID-10 ou CID-11; no autismo, CID-11 6A02 e DSM-5-TR com nível de suporte.
+3. **Histórico.** Início, evolução, tratamentos e resposta.
+4. **Funções, estruturas e atividades.** Grupos b pertinentes com dado objetivo; alteração estrutural; d1 a d5 com limitação em verbos e medida.
+5. **Prognóstico.** Favorável, reservado ou desfavorável, com justificativa.
+6. **Barreiras.** Espécies do art. 3º, IV, da Lei 13.146/2015, com fato concreto.
+7. **Duração e caráter.** Data de início, previsão de duração igual ou superior a 2 anos e, se for o caso, caráter permanente, irreversível ou irrecuperável.
+8. **Conclusão e assinatura.** Local, data, nome, especialidade e CRM legível.
 
-Particularidades para menores de 16 anos.
+Modelo completo em `references/MODELO-BASE.md`; sub-modelos de ortopedia, psiquiatria, reumatologia, clínica geral, oftalmologia e cardiologia em `references/MODELOS-POR-ESPECIALIDADE.md`. Os roteiros de `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` podem ser aproveitados, traduzidos para os itens acima.
 
-## 2. Diferença fundamental do modelo BPC
+## Particularidades
 
-Diferentemente da LC 142/2013 (que tem 7 domínios do IF-BrA e busca classificação por grau), o BPC usa.
+- **Menores de 16 anos.** Anexos próprios da Portaria Conjunta 2/2015; comparação com o desenvolvimento esperado para a idade; escolarização, terapia ocupacional e fonoaudiologia.
+- **Impedimento permanente.** Declarar e justificar o caráter permanente, irreversível ou irrecuperável, que dispensa a reavaliação periódica (LOAS, art. 21, §5º, Lei 15.157/2025).
+- **Fibromialgia.** CID M79.7; critérios ACR 2010, com revisões de 2011 e 2016. A Lei 14.705/2023, art. 1º-C (incluído pela Lei 15.176/2025), condiciona a equiparação à avaliação biopsicossocial; o BPC se decide no impedimento de longo prazo em interação com barreiras. Aplicar o roteiro de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (seis eixos), registrar barreiras concretas, projetar a duração de 2 anos e transcrever FIQR ou FSQ por domínio, com data.
+- **Autismo.** Dupla codificação e nível de suporte; b1, d1, d3 e d5 em destaque (`analise-bpc-loas`).
+- **Visão monocular.** Lei 14.126/2021, somada à prova das barreiras.
 
-IFBrM (Índice de Funcionalidade Brasileiro Modificado).
+## Erros a evitar
 
-Domínios. Físico, Mental, Intelectual, Sensorial.
+- Laudo de incapacidade laboral em vez de descrição do impedimento.
+- Ausência da previsão de duração de 2 anos.
+- Ausência de prognóstico ou de alteração estrutural quando existentes, o que impede a elevação do art. 7º.
+- Ausência de barreiras.
+- Criança avaliada sem referência à faixa etária.
+- Ausência de data de emissão, CPF e CRM legível; os requisitos mínimos da Portaria Conjunta MPS/INSS 13/2026, art. 2º (análise documental do auxílio por incapacidade temporária), servem de padrão formal.
+- Exames sem data ou fora de sequência; a série datada prova a permanência e a data de início.
 
-Avaliação biopsicossocial integrada (médica + social).
+## Médicos conferentes
 
-Foco em IMPEDIMENTO DE LONGO PRAZO (≥ 2 anos) que, em interação com barreiras, dificulta a participação plena e efetiva na sociedade em igualdade de condições.
-
-O BPC NÃO depende de tempo de contribuição. Depende.
-
-Deficiência (impedimento de longo prazo + barreiras).
-
-Renda per capita ≤ 1/4 SM (regra geral, com flexibilizações).
-
-Inscrição atualizada no CadÚnico.
-
-## 3. Estrutura do modelo base
-
-### 3.1. Cabeçalho
-
-```
-RELATÓRIO MÉDICO
-
-Paciente: [NOME COMPLETO]
-Data de nascimento: [DD/MM/AAAA]. Idade: [XX] anos
-```
-
-### 3.2. Diagnósticos
-
-CID-10 ou CID-11. Dupla codificação para autismo (CID-11 6A02 + DSM-5-TR).
-
-### 3.3. Histórico clínico
-
-Parágrafo narrativo. Marco temporal. Tratamentos. Resposta.
-
-### 3.4. Avaliação biopsicossocial e IFBrM (domínios)
-
-CRÍTICO. Abordagem dos domínios do IFBrM.
-
-Físico. Mobilidade, manuseio, esforço.
-
-Mental. Saúde mental, comportamento.
-
-Intelectual. Capacidade cognitiva, aprendizado.
-
-Sensorial. Visão, audição.
-
-### 3.5. Barreiras enfrentadas (CIF)
-
-Físicas. Atitudinais. De comunicação. Tecnológicas. Geográficas.
-
-### 3.6. Impedimento de longo prazo
-
-Texto fixando duração mínima de 2 anos (art. 20 §10 da LOAS).
-
-Para PCD permanente irrecuperável, citar Lei 15.157/2025 (dispensa de reavaliação).
-
-### 3.7. Particularidades para menores de 16 anos
-
-Quando aplicável. Avaliação adaptada à faixa etária. Marco do desenvolvimento. Portaria 37/2026.
-
-### 3.8. Encerramento
-
-```
-[Local], [UF], [data].
-
-________________________________________
-[Nome do Médico]
-[Especialidade]
-CRM [número]
-```
-
-## 4. Modelo base completo
-
-Ver `references/MODELO-BASE.md`.
-
-## 5. Sub-modelos por especialidade
-
-Ortopedista BPC. Deficiência física para BPC.
-
-Psiquiatra BPC. Deficiência mental, intelectual, autismo (com particularidades para criança).
-
-Reumatologista BPC. Fibromialgia (Lei 15.176/2025) e doenças autoimunes.
-
-Clínico Geral BPC. Deficiência multissistêmica.
-
-Oftalmologista BPC. Deficiência visual.
-
-Cardiologista BPC. Cardiopatias com limitação grave.
-
-Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
-
-Ver também `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68). Os roteiros de ortopedia, psiquiatria e neurologia podem ser reaproveitados no BPC/LOAS, sempre cruzados com os 7 domínios do IFBrM e com a demonstração de impedimento de longo prazo de no mínimo 2 anos.
-
-## 6. Pontos críticos pró-segurado
-
-### 6.1. Impedimento de longo prazo
-
-OBRIGATÓRIO afirmar duração mínima de 2 anos. Citar art. 20 §10 da LOAS.
-
-Para PCD permanente irrecuperável, citar Lei 15.157/2025 (dispensa de reavaliação bienal).
-
-### 6.2. Abordagem biopsicossocial
-
-Não é apenas médica. Deve mencionar barreiras CIF (físicas, atitudinais, de comunicação, tecnológicas, geográficas).
-
-### 6.3. IFBrM (domínios físico, mental, intelectual, sensorial)
-
-Abordagem de todos os domínios pertinentes.
-
-### 6.4. Particularidades para menores de 16 anos
-
-Portaria 37/2026. Avaliação adaptada à faixa etária.
-
-Marcos do desenvolvimento conforme idade.
-
-Necessidades específicas (escolarização, terapia ocupacional, fonoaudiologia).
-
-### 6.5. Fibromialgia (Lei 15.176/2025)
-
-Reconhecida como deficiência para fins de BPC.
-
-CID M79.7. Critérios ACR 2010, com modificações de 2011 e 2016.
-
-Individualização OBRIGATÓRIA pelo roteiro de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87). O reconhecimento legal abre a porta, mas o BPC se decide no impedimento de longo prazo em interação com barreiras, e isso exige achado individual. Percorrer os seis eixos (dor por região e comportamento, fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto, humor com nexo funcional, resposta terapêutica com doses e intolerâncias), somar o registro das barreiras concretas do caso (transporte, jornada incompatível, ambiente que agrava, ausência de apoio familiar) e projetar a duração mínima de dois anos. Aplicar FIQR ou FSQ, com transcrição por domínio e data, jamais apenas o escore total.
-
-### 6.6. Autismo
-
-Dupla codificação CID-11 6A02 + DSM-5-TR.
-
-Nível de suporte (1, 2, 3).
-
-## 7. Armadilhas a evitar
-
-Laudo de "incapacidade laboral". BPC é para PCD, mesmo sem capacidade laboral originária (caso de criança e idoso).
-
-Falta de "impedimento de longo prazo". MATA O PEDIDO.
-
-Domínios IFBrM não abordados. Avaliação biopsicossocial defeituosa.
-
-Falta de barreiras. A deficiência é interação entre impedimento e barreiras.
-
-Para criança. Falta de avaliação adaptada à faixa etária.
-
-Data de emissão, CPF e CRM legível. A análise documental do INSS devolve o relatório sem eles (art. 2º da Portaria Conjunta MPS/INSS 13/2026).
-
-Exames de imagem datados e em sequência, com o grau da escala quando houver (Kellgren-Lawrence na artrose). A sequência prova a permanência do impedimento e a data de início.
-
-Limitação em verbos com medida (caminhar X metros, subir X degraus, permanecer em pé X minutos, uso de bengala ou órtese), distribuída pelos domínios.
-
-Relatório de incapacidade copiado. O texto que conclui pela impossibilidade de trabalhar não serve aqui; descreve-se o impedimento e as barreiras.
-
-## 8. Cruzamento com a skill validadora
-
-Após o médico preencher, validar com `base-validacao-formal-laudo-medico-checklist-ab` (Checklist B).
-
-## 9. Cruzamento com outras skills
-
-`base-validacao-formal-laudo-medico-checklist-ab` para validação formal (Checklist B).
-
-`analise-bpc-loas` para análise técnica do BPC.
-
-`base-bpc-loas-requisitos` para requisitos estruturais.
-
-`base-bpc-impedimento-longo-prazo` para o impedimento de longo prazo.
-
-`base-bpc-aposentadoria-pcd-procedimentos` para procedimentos.
-
-`base-bpc-renda-per-capita-miserabilidade` para a renda.
-
-`bpc-renda-grupo-familiar` para o grupo familiar.
-
-`base-bpc-pbf-anuencia-in54-2026` para a relação BPC-PBF.
-
-`base-cadastro-domiciliar-cadunico-in21-2026` para o Cadastro Domiciliar.
-
-`base-pcd-fibromialgia-lei15176` para fibromialgia.
-
-`base-pcd-deficiencia-auditiva-visual` para deficiências sensoriais.
-
-`peticao-previdenciaria` para a petição.
-
-## 10. O que NÃO está nesta skill
-
-Modelo para incapacidade B31/B32/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
-
-Modelo para B94 está em `base-modelo-relatorio-medico-auxilio-acidente-b94`.
-
-Modelo para aposentadoria PCD (LC 142/2013) está em `base-modelo-relatorio-medico-aposentadoria-pcd-lc142`.
-
-## 11. Fontes
-
-Consulte `references/MODELO-BASE.md` e `references/MODELOS-POR-ESPECIALIDADE.md`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
-
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
-
-Antes de redigir o modelo, despachar o médico da área com os documentos, porque o relatório para BPC precisa falar a língua da avaliação biopsicossocial e não a do diagnóstico.
+Antes de redigir o modelo, despachar o agente médico da área com os documentos.
 
 | Se os documentos tratarem de | Despachar ao agente |
 |---|---|
@@ -244,9 +65,16 @@ Antes de redigir o modelo, despachar o médico da área com os documentos, porqu
 | Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
 | Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
 
-Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no conteúdo que o modelo pede ao assistente, ligado aos domínios.
 
-O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+Havendo mais de uma área, despachar até três agentes. O parecer volta em uma página e orienta o conteúdo pedido ao médico assistente. É instrumento interno: não vai aos autos nem substitui laudo de assistente técnico.
+
+## Validação e integração
+
+Após o preenchimento, validar com `base-validacao-formal-laudo-medico-checklist-ab` (Checklist B). Análise do laudo e TCQ em `analise-bpc-loas`; requisitos em `base-bpc-loas-requisitos`; impedimento em `base-bpc-impedimento-longo-prazo`; procedimento em `base-bpc-aposentadoria-pcd-procedimentos`; renda em `base-bpc-renda-per-capita-miserabilidade` e `bpc-renda-grupo-familiar`; CadÚnico em `base-cadastro-domiciliar-cadunico-in21-2026`; sensorial em `base-pcd-deficiencia-auditiva-visual`; peça em `peticao-previdenciaria`. Modelos de incapacidade, B94 e LC 142 nas skills `base-modelo-relatorio-medico-*` correspondentes.
+
+## Lei Brasileira de Inclusão como fundamento obrigatório
+
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015, com fato concreto e documento por ID, e cobrar no relatório os quatro incisos do art. 2º, §1º.
 
 ## MCPs da casa
 

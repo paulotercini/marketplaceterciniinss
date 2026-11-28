@@ -1,6 +1,6 @@
 # Portaria Conjunta MDS/MPS/INSS nº 37, de 1º/04/2026. Conferência no DOU
 
-Onda 90 (26/07/2026). A pendência de conferência estava aberta porque o in.gov.br bloqueia acesso automatizado do sandbox e a portaria constava apenas de fontes secundárias convergentes. A conferência foi feita AGORA, no inteiro teor da fonte oficial, pelo navegador do usuário.
+Texto conferido no inteiro teor do DOU.
 
 ## Fonte oficial
 
@@ -59,7 +59,3 @@ Terceiro, a definição de IRRECUPERÁVEL do inciso III fala em superação das 
 Quarto, cautela com o parágrafo único do art. 8º. Ele autoriza o indeferimento quando as alterações de Funções ou Estruturas do Corpo puderem ser resolvidas em menos de dois anos. É dispositivo desfavorável, e a resposta está em demonstrar que a resolução em dois anos precisa ser concreta e provável para AQUELE segurado, com acesso real ao tratamento, e não hipotética.
 
 Quinto, o Anexo IV intacto preserva a estratégia já consolidada na base sobre a Tabela Conclusiva de Qualificadores.
-
-## Nota de manutenção
-
-Conferido em 26/07/2026 no inteiro teor do DOU. Registrar no `CATALOGO-COMPLEMENTAR-VERIFICADO.md` da `auditoria-citacoes` como item de norma conferido em fonte oficial. Descoberta operacional para o mapa de rede da auditoria, o in.gov.br ABRE pelo navegador do usuário (Comet), ainda que bloqueie o acesso automatizado do sandbox.

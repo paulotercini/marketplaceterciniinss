@@ -1,383 +1,247 @@
 ---
 name: aposentadoria-deficiencia
-description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, fibromialgia (Lei 15.176/2025) e TEA na aposentadoria PCD. Use SEMPRE que mencionar LC 142, aposentadoria PCD, aposentadoria pessoa com deficiência, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial, perícia funcional INSS, Portaria Interministerial 1/2014, domínios da deficiência, conversão tempo deficiência, impedimento de longo prazo, fibromialgia, Lei 15.176, CID M79.7, dor crônica generalizada. Use TAMBÉM em casos de TEA, autismo, Asperger, F84, 6A02, CID 11 autismo, Lei 12.764, Berenice Piana, CIPTEA, comorbidades autismo, dupla codificação CID DSM-5-TR, DID autismo, IF-BrA autismo, domínios sensíveis autismo, Fuzzy autismo, diagnóstico tardio autismo. Abrange requerimento administrativo, fase judicial, análise de laudo funcional, revisão de pontuação, Fuzzy e conversão. NÃO use para BPC/LOAS, incapacidade ou consultas genéricas sem vínculo com aposentadoria."
+description: "Análise técnico-jurídica completa da aposentadoria da pessoa com deficiência pela LC 142/2013, inclusive fibromialgia (Lei 14.705/2023, art. 1º-C, incluído pela Lei 15.176/2025) e TEA. Use SEMPRE que mencionar LC 142, aposentadoria PCD, aposentadoria pessoa com deficiência, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial, perícia funcional INSS, Portaria Interministerial 1/2014, domínios da deficiência, conversão tempo deficiência, art. 70-E, art. 70-F, tempo especial PCD, impedimento de longo prazo, fibromialgia, Lei 15.176, CID M79.7, dor crônica generalizada. Use TAMBÉM em casos de TEA, autismo, Asperger, F84, 6A02, CID 11 autismo, Lei 12.764, Berenice Piana, CIPTEA, comorbidades autismo, dupla codificação CID DSM-5-TR, DID autismo, IF-BrA autismo, domínios sensíveis autismo, Fuzzy autismo, diagnóstico tardio autismo. Abrange requerimento administrativo, fase judicial, análise de laudo funcional, revisão de pontuação, Fuzzy e conversão. Resumo operacional em base-aposentadoria-pcd-lc142. NÃO use para BPC/LOAS, incapacidade ou consultas genéricas sem vínculo com aposentadoria."
 ---
 
-# Skill de Análise de Aposentadoria da Pessoa com Deficiência (LC 142/2013)
+# Aposentadoria da Pessoa com Deficiência (LC 142/2013). Análise Completa
 
-## Visão Geral
+## Visão geral
 
-Esta skill realiza análise técnico-jurídica completa de requerimentos de aposentadoria da pessoa com deficiência, com foco na avaliação do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado para Fins de Aposentadoria), na verificação da pontuação por domínios, na aplicação do Método Linguístico Fuzzy e no enquadramento nos graus de deficiência previstos na LC 142/2013. O objetivo é sempre defender a tese mais favorável ao segurado, identificando erros na avaliação funcional do INSS e fundamentando a revisão judicial ou administrativa.
+Skill detentora do conteúdo detalhado da aposentadoria PCD: requisitos, conversões, análise do laudo funcional, relatório e TEA. O resumo operacional fica em `base-aposentadoria-pcd-lc142`; a metodologia do instrumento, em `base-pcd-if-bra-metodologia`. A análise busca a tese mais favorável ao segurado e declara com transparência quando a avaliação do INSS está correta.
 
-## Fluxo de Trabalho
+## Fluxo de trabalho
 
-1. Leia este SKILL.md completamente
-2. Leia `references/IF-BRA.md` para obter a estrutura completa do instrumento IF-BrA com domínios, atividades, escala de pontuação, Fuzzy e classificação
-3. Leia `references/LEGISLACAO.md` para obter o quadro normativo completo (LC 142/2013, Portaria Interministerial 1/2014, Lei 13.146/2015, Decreto 3.048/99, IN 128/2022)
-4. Receba o caso do usuário (pode ser laudo funcional do INSS, decisão administrativa, sentença judicial, dados do segurado, ou combinação desses documentos)
-5. Execute a análise conforme o modo de operação aplicável
-6. Gere o relatório analítico ou oriente a estratégia processual
+1. Ler este SKILL.md e `base-pcd-if-bra-metodologia` (estrutura, pontuação, faixas e Fuzzy).
+2. Receber o caso: laudo funcional, decisão administrativa, sentença, CNIS ou dados do segurado.
+3. Executar o modo de operação aplicável.
+4. Gerar o relatório analítico ou orientar a estratégia processual.
 
-## Regras Críticas
+## Regras de análise
 
-### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
+- **Transparência.** Avaliação correta é declarada como tal. O método Fuzzy é sempre conferido, por ser a etapa mais omitida.
+- **Fonte.** Nenhum artigo, súmula ou precedente sem conferência. Ausência de precedente é declarada.
+- **Redação.** Dois-pontos apenas antes de citação literal ou enumeração; parágrafos curtos e técnicos, sem adjetivo de intensidade.
 
-### Honestidade Radical
-Se a avaliação funcional do INSS estiver correta e a pontuação refletir adequadamente a condição do segurado, diga isso com transparência. Não force enquadramentos em graus superiores sem fundamento. Entretanto, sempre verifique se o método Fuzzy foi aplicado corretamente, pois esse é o ponto mais negligenciado nas avaliações.
+## Marco normativo
 
-### Verificação de Fontes
-Todos os fundamentos normativos citados devem ser conferidos. Nunca invente artigos, enunciados, súmulas ou precedentes. Se não houver base normativa para determinada tese, declare a controvérsia ou a ausência de precedentes.
+CF, art. 201, §1º, I. LC 142/2013. EC 103/2019, art. 22 (aplicação da LC 142 até lei nova, inclusive quanto ao cálculo). Decreto 3.048/1999, arts. 70-A a 70-J (Decreto 8.145/2013 e Decreto 10.410/2020). IN PRES/INSS 128/2022, arts. 306 e seguintes. Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014, que aprovou o IF-BrA. Lei 13.146/2015, art. 2º.
 
-### Tom e Estilo
-A análise deve ser contundente, técnica e persuasiva. Opiniões firmes sem hesitação. Parágrafos curtos. Tópicos integrados de forma lógica, clara e fundamentada.
+**Conceito.** Pessoa com impedimento de longo prazo de natureza física, mental, intelectual ou sensorial que, em interação com barreiras, pode obstruir a participação plena e efetiva em igualdade de condições (LC 142/2013, art. 2º; Lei 13.146/2015, art. 2º).
 
-## Marco Normativo Essencial
+**Longo prazo.** Impedimento com efeitos pelo prazo mínimo de 2 anos ininterruptos, conforme a Portaria Interministerial nº 1/2014.
 
-A aposentadoria da pessoa com deficiência está fundamentada no art. 201, §1º, da Constituição Federal, regulamentada pela Lei Complementar nº 142, de 8 de maio de 2013, e operacionalizada pela Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27 de janeiro de 2014, que aprovou o IF-BrA como instrumento de avaliação. A Lei 13.146/2015 (Estatuto da Pessoa com Deficiência) complementa o conceito de pessoa com deficiência e reforça o modelo biopsicossocial baseado na CIF.
+**Vigência da portaria.** A republicação de 2015 foi tornada sem efeito, e a portaria de 27/01/2014 permanece aplicável. Rebater a alegação contrária com a data e o DOU de 30/01/2014.
 
-### Conceito de Pessoa com Deficiência (para fins de aposentadoria)
-Aquela que tem impedimentos de longo prazo de natureza física, mental, intelectual ou sensorial, os quais, em interação com diversas barreiras, podem obstruir sua participação plena e efetiva na sociedade em igualdade de condições com as demais pessoas (art. 2º da LC 142/2013, harmonizado com art. 2º da Lei 13.146/2015).
+## Requisitos
 
-### Impedimento de Longo Prazo
-Aquele que produza efeitos de natureza física, mental, intelectual ou sensorial pelo prazo mínimo de 2 (dois) anos, contados de forma ininterrupta (art. 3º da Portaria Interministerial 1/2014).
+| Modalidade | Homem | Mulher | Fonte |
+|---|---|---|---|
+| Deficiência grave | 25 anos de contribuição | 20 anos | LC 142, art. 3º, I |
+| Deficiência moderada | 29 anos | 24 anos | art. 3º, II |
+| Deficiência leve | 33 anos | 28 anos | art. 3º, III |
+| Por idade, qualquer grau | 60 anos de idade | 55 anos | art. 3º, IV |
 
-### Requisitos por Modalidade
+Na aposentadoria por idade, exigem-se, além da carência, 15 anos de contribuição cumpridos na condição de pessoa com deficiência (LC 142, art. 3º, IV; Decreto 3.048/1999, art. 70-C). Nas modalidades por tempo, o tempo exigido é o cumprido na condição de pessoa com deficiência, ajustado pelo art. 70-E quando houver período sem deficiência (Decreto 3.048/1999, art. 70-B).
 
-**Aposentadoria por Tempo de Contribuição da PCD (art. 3º, I a III, da LC 142/2013)**
+## Renda mensal
 
-Deficiência Grave
-- Homem com 25 anos de contribuição
-- Mulher com 20 anos de contribuição
+- **Por tempo de contribuição.** 100% do salário de benefício (LC 142, art. 8º, I).
+- **Por idade.** 70% mais 1% a cada grupo de 12 contribuições, até 30% (art. 8º, II).
+- **Fator previdenciário.** Apenas se resultar em renda maior (art. 9º, I).
+- **Salário de benefício.** O INSS aplica a média de 100% dos salários desde 07/1994 (Decreto 3.048/1999, art. 70-J c/c art. 32). Tese pró-segurado: o art. 22 da EC 103/2019 manda conceder "na forma da Lei Complementar nº 142", "inclusive quanto aos critérios de cálculo", e a LC 142, art. 8º, remete ao art. 29 da Lei 8.213/1991, que usava os 80% maiores salários. Jurisprudência firmada sobre a tese: Não localizado. Tratar como tese e simular os dois cálculos.
+- **Opção.** O segurado pode optar pela aposentadoria mais vantajosa (art. 9º, V).
 
-Deficiência Moderada
-- Homem com 29 anos de contribuição
-- Mulher com 24 anos de contribuição
+## Variação de grau. Art. 70-E do Decreto 3.048/1999
 
-Deficiência Leve
-- Homem com 33 anos de contribuição
-- Mulher com 28 anos de contribuição
+Se a pessoa se tornou deficiente após a filiação ou teve o grau alterado, os tempos são ajustados proporcionalmente (LC 142, art. 7º). O grau preponderante é aquele em que o segurado cumpriu maior tempo, e ele define a tabela de conversão (art. 70-E, §1º). A tabela também converte tempo sem deficiência (linhas "De 30" e "De 35").
 
-Em todas as hipóteses, exige-se carência de 180 contribuições mensais. A renda mensal corresponde a 100% do salário de benefício, sem aplicação do fator previdenciário, salvo se mais vantajoso (art. 9º, I, da LC 142/2013).
+**Mulher**
 
-**Aposentadoria por Idade da PCD (art. 3º, IV, da LC 142/2013)**
-- Homem com 60 anos de idade
-- Mulher com 55 anos de idade
-- Independentemente do grau de deficiência
-- Carência de 180 contribuições mensais na condição de pessoa com deficiência
-- Renda mensal de 70% + 1% por grupo de 12 contribuições, até o máximo de 30%
+| Tempo a converter | Para 20 | Para 24 | Para 28 | Para 30 |
+|---|---|---|---|---|
+| De 20 anos | 1,00 | 1,20 | 1,40 | 1,50 |
+| De 24 anos | 0,83 | 1,00 | 1,17 | 1,25 |
+| De 28 anos | 0,71 | 0,86 | 1,00 | 1,07 |
+| De 30 anos | 0,67 | 0,80 | 0,93 | 1,00 |
 
-### Conversão de Tempos com Graus Variáveis (art. 7º da LC 142/2013)
-Se o segurado tornar-se pessoa com deficiência após a filiação ao RGPS, ou tiver alteração no grau de deficiência, os parâmetros são proporcionalmente ajustados. A conversão segue a tabela do art. 70-E do Decreto 3.048/99.
+**Homem**
 
-### Aproveitamento de Tempo Especial na Aposentadoria PCD (art. 10 da LC 142/2013 e art. 70-F, §1º, do Decreto 3.048/99)
+| Tempo a converter | Para 25 | Para 29 | Para 33 | Para 35 |
+|---|---|---|---|---|
+| De 25 anos | 1,00 | 1,16 | 1,32 | 1,40 |
+| De 29 anos | 0,86 | 1,00 | 1,14 | 1,21 |
+| De 33 anos | 0,76 | 0,88 | 1,00 | 1,06 |
+| De 35 anos | 0,71 | 0,83 | 0,94 | 1,00 |
 
-A interpretação CORRETA do art. 10 da LC 142/2013 é absolutamente CRÍTICA e frequentemente mal aplicada. NÃO interpretar o art. 10 como vedação geral ao aproveitamento de tempo especial na aposentadoria PCD.
+Detalhamento das conversões em `base-pcd-conversao-tempo-especial-pcd`.
 
-**Alcance exato da vedação do art. 10 da LC 142/2013.** O dispositivo proíbe apenas a acumulação, NO MESMO PERÍODO CONTRIBUTIVO, dos DOIS REDUTORES (redução pela LC 142/2013 + redução pela atividade especial do art. 57 da Lei 8.213/91). A vedação impede uma aposentadoria especial duplamente reduzida, ou seja, impede que o mesmo período seja contado duas vezes com os dois redutores simultaneamente.
+## Tempo especial na aposentadoria PCD. Art. 70-F do Decreto 3.048/1999
 
-**O que é expressamente PERMITIDO pelo art. 70-F, §1º, do Decreto 3.048/99 (incluído pelo Decreto 8.145/2013).** É garantida a conversão do tempo de contribuição cumprido em condições especiais, inclusive da pessoa com deficiência, para fins da aposentadoria PCD, se resultar mais favorável ao segurado. A tabela do §1º estabelece os multiplicadores específicos para essa conversão, distintos dos fatores da conversão comum do art. 70 do Decreto 3.048/99.
+**Alcance do art. 10 da LC 142.** A vedação impede apenas somar, no mesmo período, a redução da LC 142 e a redução da atividade especial. O dispositivo não proíbe aproveitar o tempo especial na aposentadoria PCD.
 
-**Tabela do art. 70-F, §1º, do Decreto 3.048/99 (MULHER)**
+**Conversão autorizada (art. 70-F, §1º).** O tempo especial, inclusive o da pessoa com deficiência, converte-se para a aposentadoria PCD quando mais favorável. A IN 128/2022, art. 310, §1º, limita essa conversão aos períodos trabalhados até 13/11/2019, em linha com o art. 25, §2º, da EC 103/2019.
 
-Para 15 anos (carência mínima): De 15 1,00; De 20 0,75; De 24 0,63; De 25 0,60; De 28 0,54
-Para 20 anos (grave mulher): De 15 1,33; De 20 1,00; De 24 0,83; De 25 0,80; De 28 0,71
-Para 24 anos (moderada mulher): De 15 1,60; De 20 1,20; De 24 1,00; De 25 0,96; De 28 0,86
-Para 25 anos (grave homem): De 15 1,67; De 20 1,25; De 24 1,04; De 25 1,00; De 28 0,89
-Para 28 anos (leve mulher): De 15 1,87; De 20 1,40; De 24 1,17; De 25 1,12; De 28 1,00
+**Mulher**
 
-**Tabela do art. 70-F, §1º, do Decreto 3.048/99 (HOMEM)**
+| Tempo a converter | Para 15 | Para 20 | Para 24 | Para 25 | Para 28 |
+|---|---|---|---|---|---|
+| De 15 anos | 1,00 | 1,33 | 1,60 | 1,67 | 1,87 |
+| De 20 anos | 0,75 | 1,00 | 1,20 | 1,25 | 1,40 |
+| De 24 anos | 0,63 | 0,83 | 1,00 | 1,04 | 1,17 |
+| De 25 anos | 0,60 | 0,80 | 0,96 | 1,00 | 1,12 |
+| De 28 anos | 0,54 | 0,71 | 0,86 | 0,89 | 1,00 |
 
-Para 15 anos: De 15 1,00; De 20 0,75; De 25 0,60; De 29 0,52; De 33 0,45
-Para 20 anos: De 15 1,33; De 20 1,00; De 25 0,80; De 29 0,69; De 33 0,61
-Para 25 anos (grave homem): De 15 1,67; De 20 1,25; De 25 1,00; De 29 0,86; De 33 0,76
-Para 29 anos (moderada homem): De 15 1,93; De 20 1,45; De 25 1,16; De 29 1,00; De 33 0,88
-Para 33 anos (leve homem): De 15 2,20; De 20 1,65; De 25 1,32; De 29 1,14; De 33 1,00
+**Homem**
 
-**Lógica da tabela.** O "tempo a converter" é o patamar da atividade especial original (15, 20, 25 anos conforme o agente nocivo). O "para" indica o patamar da aposentadoria PCD pretendida (20, 24, 28 para mulher; 25, 29, 33 para homem). Cada célula indica o multiplicador aplicável.
+| Tempo a converter | Para 15 | Para 20 | Para 25 | Para 29 | Para 33 |
+|---|---|---|---|---|---|
+| De 15 anos | 1,00 | 1,33 | 1,67 | 1,93 | 2,20 |
+| De 20 anos | 0,75 | 1,00 | 1,25 | 1,45 | 1,65 |
+| De 25 anos | 0,60 | 0,80 | 1,00 | 1,16 | 1,32 |
+| De 29 anos | 0,52 | 0,69 | 0,86 | 1,00 | 1,14 |
+| De 33 anos | 0,45 | 0,61 | 0,76 | 0,88 | 1,00 |
 
-**Exemplo concreto.** Mulher com tempo especial de 25 anos (agente nocivo) cuja deficiência é enquadrada como leve. O patamar-meta da aposentadoria PCD leve para mulher é 28 anos. O multiplicador aplicável é 1,12 (da linha "De 25" para a coluna "Para 28"). Esse fator é menor que o fator 1,20 da conversão comum pré-EC 103/2019, e não há ganho, porque os fatores são proporcionais às metas de 28 e 30 anos (Decreto 3.048/99, art. 70-F, §1º) (auditoria 03/10/2026).
+**Exemplo.** Mulher com atividade especial de 25 anos e deficiência leve: linha "De 25", coluna "Para 28", multiplicador 1,12. O fator é menor que o 1,20 da conversão comum porque acompanha a meta de 28 anos, e não a de 30.
 
-**Vedação específica do §2º do art. 70-F.** É vedada a conversão do tempo de contribuição da PCD para fins de concessão da aposentadoria ESPECIAL do art. 57 da Lei 8.213/91. Ou seja, o caminho inverso (usar tempo PCD para obter aposentadoria especial) é proibido.
+**Vedação do art. 70-F, §2º.** O tempo da pessoa com deficiência não se converte para a aposentadoria especial do art. 57 da Lei 8.213/1991.
 
-**Alcance temporal do §1º do art. 70-F (auditoria 03/10/2026).** A regra do §1º do art. 70-F não faz distinção temporal quanto à data da deficiência. A conversão aplica-se a tempo especial laborado antes ou depois da DID. A expressão literal do dispositivo ("inclusive da pessoa com deficiência") autoriza expressamente a aplicação aos tempos especiais em qualquer momento da vida contributiva. Ressalva: a IN 128, art. 310, §1º, limita a conversão a períodos trabalhados até 13/11/2019; antecipar a limitação ou sustentar a tese contrária de forma expressa (auditoria 03/10/2026).
+**Roteiro de cálculo.**
+1. Identificar os períodos especiais (PPP) e o patamar do agente (15, 20 ou 25 anos).
+2. Fixar a DID e os graus por período.
+3. Identificar a meta da aposentadoria PCD conforme sexo e grau.
+4. Aplicar o multiplicador do art. 70-F, §1º, ao tempo especial anterior a 13/11/2019.
+5. Somar ao tempo como PCD e ao tempo ajustado pelo art. 70-E.
+6. Comparar com aposentadoria comum, especial e por idade PCD e optar pela mais favorável.
 
-**Regra geral de opção (art. 9º, V, da LC 142/2013).** O segurado sempre pode optar pela aposentadoria mais vantajosa, inclusive pela aposentadoria comum ou especial do art. 57, se lhe for mais favorável do que a LC 142/2013. O advogado deve simular os cenários comparativamente.
+## Modos de operação
 
-**Roteiro de cálculo obrigatório em casos com tempo especial + deficiência.**
+### Modo 1. Análise do laudo funcional (IF-BrA)
 
-Primeiro passo. Identificar todos os períodos especiais (PPP) e definir o tempo a converter (15, 20 ou 25 anos conforme o agente).
+Roteiro, na ordem.
 
-Segundo passo. Fixar a DID e identificar o grau de deficiência (leve, moderada, grave).
+1. **Completude formal.** Formulários preenchidos; avaliação por perito médico e por assistente social; tipo de deficiência identificado; DID fixada; impedimento de longo prazo reconhecido; períodos de cada grau identificados (Decreto 3.048/1999, art. 70-D, I e II).
+2. **Domínio a domínio.** Todas as 41 atividades pontuadas pelos dois avaliadores; pontuação pelo desempenho no ambiente habitual, e não pela capacidade teórica; incoerências entre médico e assistente social.
+3. **Fuzzy.** Domínios sensíveis do tipo de deficiência, hipóteses de incidência, questão emblemática e replicação da menor nota. Checklist em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
+4. **Soma e classificação.** Total entre 2.050 e 8.200; grave até 5.739; moderada de 5.740 a 6.354; leve de 6.355 a 7.584; 7.585 ou mais é insuficiente.
+5. **Confronto documental.** CIDs divergentes, limitações documentadas sem reflexo na pontuação, histórico de tratamento.
+6. **Barreiras.** Produtos e tecnologia, ambiente, apoio e relacionamentos, atitudes, serviços, sistemas e políticas. A omissão compromete a avaliação (Lei 13.146/2015, art. 2º, §1º).
 
-Terceiro passo. Identificar o patamar-meta (tempo para aposentadoria PCD) conforme gênero e grau.
+### Modo 2. Caso para requerimento
 
-Quarto passo. Aplicar o multiplicador da tabela do art. 70-F, §1º, sobre o tempo especial, obtendo o tempo convertido.
+Projeta o enquadramento provável, a documentação necessária e a estratégia. DID e prova documental em `base-pcd-did-retroativa` e `formacao-documentacao-did-pcd`.
 
-Quinto passo. Somar o tempo convertido ao tempo comum na condição de PCD (se houver) e ao tempo comum sem deficiência ajustado pelo art. 70-E (quando houver variação ao longo da vida contributiva).
+### Modo 3. Revisão de decisão
 
-Sexto passo. Comparar o resultado com cenários alternativos (aposentadoria comum, aposentadoria especial do art. 57 se atingido o patamar, aposentadoria por idade PCD). Optar pelo mais favorável.
+Identifica erros na aplicação do IF-BrA, omissão do Fuzzy, desconsideração de barreiras e inobservância da portaria. Revisão de aposentadoria comum para PCD observa o prazo decadencial do art. 103 da Lei 8.213/1991.
 
-**Alerta crítico para o advogado.** NÃO afirmar que há vedação de cumulação entre tempo especial e aposentadoria PCD. A vedação do art. 10 é técnica e restrita aos dois redutores sobre o MESMO período com FINS da mesma aposentadoria especial. A tabela do art. 70-F, §1º, é o mecanismo autorizado para aproveitamento do tempo especial nas aposentadorias da LC 142/2013.
+## Pontos de atenção
 
-## Modos de Operação
+- **Tempo anterior à LC 142.** Reconhecido com prova documental; a prova exclusivamente testemunhal é vedada (LC 142, art. 6º, §§1º e 2º; Decreto 3.048/1999, art. 70-D, §1º).
+- **Grau decorre da pontuação.** O diagnóstico isolado não define o grau.
+- **Variação de grau.** Exige a identificação dos períodos para a conversão do art. 70-E.
+- **Mandado de segurança.** Tramita na Vara Federal comum; o JEF não processa MS (Lei 10.259/2001, art. 3º, §1º, I). Ver `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`.
 
-### Modo 1. Análise de Laudo Funcional do INSS (IF-BrA)
-Quando o usuário fornece o laudo/formulário de avaliação funcional do INSS (Formulários 1 a 4 da Portaria Interministerial 1/2014). A análise verifica, domínio a domínio, a pontuação atribuída pelo perito médico e pelo assistente social, a correta aplicação do método Fuzzy, e o enquadramento no grau de deficiência.
+## Estrutura do relatório
 
-Roteiro de verificação obrigatório (seguir na ordem)
+Relatório formal em .docx segue `base-peticao-previdenciaria-padrao-visual`. Título: "ANÁLISE TÉCNICA. APOSENTADORIA DA PESSOA COM DEFICIÊNCIA (LC 142/2013)", seguido de [NOME], NIT, NB, tipo de deficiência e data da avaliação.
 
-1. IDENTIFICAÇÃO E COMPLETUDE FORMAL
-   - Todos os 4 formulários foram preenchidos (Identificação, Funções Corporais, Matriz, Fuzzy)?
-   - A avaliação foi realizada por DOIS profissionais (perito médico E assistente social)?
-   - O tipo de deficiência está corretamente identificado (física, mental, intelectual, sensorial)?
-   - A data provável de início da deficiência (DID) foi fixada?
-   - O impedimento de longo prazo (mínimo 2 anos ininterruptos) foi reconhecido?
+1. **Síntese do caso.** Modalidade pretendida, tempo, idade, tipo e grau alegados, histórico.
+2. **Análise do IF-BrA.** Por domínio: atividades, notas do médico e do assistente social, subtotal e crítica.
+3. **Fuzzy.** Domínios sensíveis, hipóteses de incidência, cálculo com e sem replicação, impacto no grau.
+4. **Classificação.** Total e grau, com demonstração numérica da divergência.
+5. **Requisitos.** Tempo total, tempo como PCD, carência, idade e conversões.
+6. **Conclusão e estratégia.** Requerimento, recurso ao CRPS, ação judicial, impugnação da avaliação, nova avaliação ou perícia judicial.
+7. **Quesitos.** Dirigidos aos pontos controvertidos de cada domínio.
 
-2. ANÁLISE DOMÍNIO A DOMÍNIO
-   Para cada um dos 7 domínios, verificar se todas as atividades foram pontuadas, se a pontuação reflete o desempenho real (e não a capacidade teórica), e se há incoerência entre a pontuação do perito médico e a do assistente social. Consulte `references/IF-BRA.md` para a lista completa de atividades por domínio.
+## Fibromialgia
 
-3. VERIFICAÇÃO DO MÉTODO FUZZY
-   Este é o ponto mais crítico e mais frequentemente negligenciado. Verificar se o Formulário 4 foi preenchido, se os domínios sensíveis foram corretamente identificados conforme o tipo de deficiência, se as condições de aplicação do Fuzzy foram verificadas, e se a redistribuição de pontuação foi realizada corretamente. Consulte `references/IF-BRA.md` para os critérios completos de aplicação do Fuzzy.
+A Lei 15.176/2025 incluiu o art. 1º-C na Lei 14.705/2023. A equiparação da pessoa com fibromialgia à pessoa com deficiência depende de avaliação biopsicossocial, e a lei não a reconhece como deficiência de forma automática. Na LC 142, essa avaliação é o IF-BrA. CID-10 M79.7; CID-11 MG30.01. A pontuação tende a se dispersar por vários domínios (dor, fadiga, distúrbio cognitivo e de sono). Prova: laudo reumatológico com descrição funcional, histórico de tratamento e relatório de impacto nas atividades. Detalhamento em `base-pcd-fibromialgia-lei15176`.
 
-4. CÁLCULO E CLASSIFICAÇÃO
-   Conferir a soma das pontuações por domínio (perito + assistente social), verificar a pontuação total, e comparar com os intervalos de classificação. Conferir também se a pontuação está dentro dos limites possíveis (mínimo 2.050, máximo 8.200).
+## Transtorno do espectro autista
 
-5. CONFRONTO COM DOCUMENTAÇÃO MÉDICA
-   Se houver documentos médicos particulares, confrontar as pontuações atribuídas com a realidade documentada. Atentar especialmente para CIDs divergentes, limitações documentadas mas não refletidas na pontuação, e histórico de tratamentos que demonstrem gravidade.
+### Equiparação legal
 
-### Modo 2. Análise de Caso para Requerimento
-Quando o usuário apresenta dados do segurado para orientar o requerimento administrativo ou a ação judicial. A análise projeta o provável enquadramento, identifica a documentação necessária, e orienta a estratégia.
+A Lei 12.764/2012, art. 1º, §2º, considera a pessoa com TEA pessoa com deficiência "para todos os efeitos legais", o que alcança a LC 142. A equiparação dispensa provar que o TEA é deficiência, mas não dispensa o IF-BrA, que mede o grau. Em peça, sustentar que a avaliação não pode negar a deficiência, apenas mensurar o grau.
 
-### Modo 3. Revisão de Decisão Administrativa ou Judicial
-Quando o usuário apresenta uma decisão (indeferimento do INSS, sentença, acórdão) para identificar fundamentos de recurso. A análise foca em erros de aplicação do IF-BrA, desconsideração do Fuzzy, e inobservância da Portaria Interministerial 1/2014.
+### Tipo de deficiência no IF-BrA
 
-## Pontos Críticos de Atenção na Advocacia da PCD
+- **TEA sem deficiência intelectual.** Classificar como deficiência mental. Domínios sensíveis: Vida Doméstica e Socialização e Vida Comunitária; questão emblemática: "não pode ficar sozinho em segurança".
+- **TEA com deficiência intelectual.** A classificação como intelectual mantém os mesmos domínios sensíveis, porque a portaria agrupa intelectual e mental. A classificação como múltipla acrescenta domínios apenas quando há também deficiência motora, visual ou auditiva.
+- **TEA sindrômico (Rett, X frágil, Angelman).** Em regra, deficiência múltipla.
 
-### A Portaria Interministerial 1/2014 está em vigor
-Apesar da Portaria SEDH nº 30/2015 ter tentado torná-la sem efeito, a posição consolidada é de que a Portaria 1/2014 permanece vigente. A TNU já decidiu que a aferição da deficiência deve obedecer as diretrizes da Portaria Interministerial de 2014, baseada na CIF. Essa questão pode surgir como argumento da defesa do INSS e deve ser prontamente rebatida.
+### CID-10 e CID-11
 
-### Método Fuzzy é obrigatório quando cabível
-Muitas avaliações do INSS simplesmente não aplicam o método Fuzzy, mesmo quando as condições de aplicação estão presentes. Isso distorce gravemente a pontuação e pode rebaixar indevidamente o grau de deficiência. A não aplicação do Fuzzy, quando cabível, é vício que invalida a avaliação.
+Os subtipos F84.0, F84.1, F84.3, F84.5, F84.8 e F84.9 unificam-se em 6A02, com dois eixos: presença de transtorno do desenvolvimento intelectual e nível de linguagem funcional, resultando nos subcódigos 6A02.0 a 6A02.5. A data de adoção sistêmica da CID-11 pelo INSS: [NÃO CONFIRMADO]. O laudo deve trazer o subcódigo CID-11 e, em separado, o nível de suporte do DSM-5-TR (1, 2 ou 3), que é classificação da Associação Americana de Psiquiatria, e não da OMS.
 
-### Desempenho versus Capacidade
-A pontuação no IF-BrA deve refletir o desempenho do indivíduo em seu ambiente habitual, e não a sua capacidade teórica. Se o perito pontuou pela capacidade e não pelo desempenho, a avaliação está viciada. A exceção é quando o indivíduo não realiza a atividade por opção pessoal, e não por barreira externa ou limitação.
+### Domínios afetados
 
-### Barreiras Externas
-O IF-BrA exige a identificação de barreiras externas (Produtos e Tecnologia, Ambiente Natural, Apoio e Relacionamentos, Atitudes, Serviços, Sistemas e Políticas). A omissão das barreiras externas compromete a integralidade da avaliação e pode ser objeto de impugnação.
+- **Socialização e Vida Comunitária.** Interação, reciprocidade e participação comunitária. Domínio sensível.
+- **Vida Doméstica.** Planejamento, autonomia e flexibilidade. Domínio sensível.
+- **Comunicação.** Afetada nos quadros com prejuízo de linguagem. Não é domínio sensível da deficiência mental ou intelectual, mas a nota 25 ou 50 deve refletir a limitação documentada por fonoaudiologia e neuropsicologia.
+- **Educação, Trabalho e Vida Econômica.** Vínculos curtos, demissões por inadaptação, dependência financeira.
+- **Cuidados Pessoais.** Seletividade alimentar, hipersensibilidade sensorial, rigidez de rotina.
 
-### Variação de Grau ao Longo do Tempo
-A LC 142/2013 prevê expressamente a possibilidade de variação no grau de deficiência ao longo da vida contributiva do segurado. A avaliação deve identificar os períodos em cada grau para possibilitar a conversão proporcional do tempo.
+### Comorbidades
 
-### Relação com a Lei 13.146/2015 (Estatuto da Pessoa com Deficiência)
-O conceito de pessoa com deficiência da Lei 13.146/2015 (art. 2º) reforça o modelo biopsicossocial e a interação entre impedimentos e barreiras. Esse conceito deve ser invocado para ampliar a proteção do segurado, especialmente quando o INSS adotar visão restritiva focada apenas no aspecto médico.
+Cada comorbidade acrescenta limitação pontuável: TDAH (educação e trabalho, comunicação), transtornos motores (mobilidade, cuidados pessoais), ansiedade e TOC (socialização, vida doméstica), epilepsia (mobilidade, vida comunitária, trabalho). Percentuais epidemiológicos entram em peça apenas com a fonte primária lida.
 
-### Prova do Tempo de Deficiência Anterior à LC 142/2013
-O art. 6º, §2º, da LC 142/2013 veda a comprovação de tempo de contribuição na condição de segurado com deficiência, em período anterior à vigência da lei, por meio de prova exclusivamente testemunhal. A prova documental (laudos médicos, atestados, histórico de tratamento) é essencial para reconhecer períodos pretéritos.
+### DID no TEA
 
-## Estrutura do Relatório de Análise
+O TEA é de manifestação precoce, e o diagnóstico tardio em adulto não cria a deficiência, apenas a identifica. Fixar a DID o mais cedo que a prova documental permitir, em regra na primeira manifestação registrada. A migração de F84 para 6A02 é taxonômica e não rompe a continuidade do diagnóstico. Documentos: relatórios escolares, AEE, PEI, prontuários do SUS, CAPSi, laudos de fonoaudiologia, terapia ocupacional, psicologia e neuropsicologia, declarações do CRAS e CREAS.
 
-Se o usuário solicitar um relatório formal, gerar em .docx usando a skill `peticao-previdenciaria` para formatação (Bookman Old Style 12pt, espaçamento 1,5, cabeçalho timbrado). A estrutura do relatório deve conter as seguintes seções.
+### Estratégia documental
 
-### Cabeçalho
-Título centralizado, negrito, caixa alta. "ANÁLISE TÉCNICA – APOSENTADORIA DA PESSOA COM DEFICIÊNCIA (LC 142/2013)"
-Abaixo, os dados de identificação do segurado (nome, NIT/PIS, NB se houver, tipo de deficiência, data da avaliação IF-BrA).
+1. Laudo atual com CID-10, CID-11, nível de suporte do DSM-5-TR, descrição funcional por domínio e comorbidades.
+2. CIPTEA (Lei 13.977/2020).
+3. Documentação retroativa para a DID.
+4. Relatórios terapêuticos cronológicos.
+5. Prova trabalhista: CNIS, vínculos fragmentados, declarações de empregadores.
 
-### 1. SÍNTESE DO CASO
-Resumo objetivo contendo o tipo de aposentadoria pretendida (por tempo de contribuição ou por idade), os dados do segurado relevantes para o benefício (tempo de contribuição, idade, tipo e grau de deficiência alegados), e o histórico administrativo ou judicial.
+### Quesitos suplementares
 
-### 2. ANÁLISE DO IF-BrA
-Análise domínio a domínio da pontuação obtida, com a seguinte estrutura para cada domínio.
+- Classificação adotada (mental, intelectual ou múltipla) e fundamento.
+- Domínios sensíveis identificados, aplicação do Fuzzy e resposta à questão emblemática.
+- Consideração das comorbidades na pontuação.
+- Base documental da DID.
+- CID utilizada e subcódigo CID-11.
+- Pontuação por desempenho no ambiente habitual.
 
-Para cada domínio, apresentar o nome do domínio e o número de atividades, a pontuação atribuída pelo perito médico (atividade a atividade, quando disponível), a pontuação atribuída pelo assistente social (atividade a atividade, quando disponível), o subtotal do domínio (soma perito + assistente social), e a avaliação crítica das pontuações (coerência com a documentação médica, omissões, subpontuações injustificadas).
+### Jurisprudência
 
-### 3. VERIFICAÇÃO DO MÉTODO FUZZY
-Identificação do tipo de deficiência e dos domínios sensíveis correspondentes. Verificação se as condições de aplicação do Fuzzy foram preenchidas. Análise de se o Fuzzy foi corretamente aplicado ou indevidamente omitido. Cálculo ou recálculo da pontuação com e sem o Fuzzy. Impacto da aplicação ou não aplicação do Fuzzy no grau de deficiência.
+Precedente vinculante do STF, STJ ou TNU sobre TEA na aposentadoria da LC 142: Não localizado. TRF4, AC 5009827-05.2022.4.04.9999, sobre deficiência explícita no autismo: [NÃO CONFIRMADO]. Fundamentação direta: Lei 12.764/2012, Lei 13.146/2015, LC 142/2013 e Decreto 6.949/2009, arts. 1º, 5º, 27 e 28.
 
-### 4. CLASSIFICAÇÃO E ENQUADRAMENTO
-Pontuação total obtida (com e sem Fuzzy, se aplicável). Enquadramento no grau de deficiência (grave, moderado, leve, ou sem deficiência para fins previdenciários). Se houver divergência entre o grau atribuído pelo INSS e o grau que a análise técnica aponta, demonstrar a divergência com os números.
+## Teleperícia
 
-### 5. REQUISITOS DA APOSENTADORIA
-Verificação do preenchimento dos requisitos específicos conforme o grau de deficiência apurado. Tempo de contribuição total, tempo na condição de PCD, carência, idade (se aposentadoria por idade), e eventual necessidade de conversão proporcional por variação de grau.
+A Portaria Conjunta DPMF/INSS 19/2026 instituiu a teleperícia para perícia médica inicial e BPC. A norma não menciona a avaliação biopsicossocial da LC 142. Havendo extensão por ato posterior, aplicar os critérios de recusa e impugnação de `analise-bpc-loas` e `auditoria-laudo-pericial`.
 
-### 6. CONCLUSÃO E ESTRATÉGIA
-Avaliação global do caso e recomendação entre as seguintes opções.
-- Requerimento administrativo, se ainda não realizado, com orientação sobre documentação
-- Recurso administrativo ao CRPS, se houve indeferimento
-- Ação judicial, se a via administrativa foi esgotada ou se há urgência
-- Impugnação à avaliação funcional, se a pontuação do IF-BrA apresenta vícios
-- Pedido de nova avaliação funcional, se o método Fuzzy não foi aplicado ou se houve omissão de domínios
-- Produção de prova pericial judicial, com indicação de quesitos específicos sobre os pontos controvertidos
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
-### 7. QUESITOS SUGERIDOS PARA PERÍCIA JUDICIAL (quando aplicável)
-Lista de quesitos direcionados aos pontos controvertidos, redigidos de forma a expor as inconsistências da avaliação administrativa e a obter esclarecimentos sobre cada domínio do IF-BrA.
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015 (urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica), com fato concreto e documento por ID. Cobrar os quatro incisos do art. 2º, §1º, na avaliação e no relatório. O conceito convencional tem estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009) e não pode ser restringido por ato infralegal.
 
-## Referências
+## Redação da peça
 
-Antes de realizar qualquer análise, leia obrigatoriamente os seguintes arquivos.
+Seguir o bloco "Aposentadoria da pessoa com deficiência" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`: afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência.
 
-- `references/IF-BRA.md`. Estrutura completa do IF-BrA com domínios, atividades, escala de pontuação, método Fuzzy, critérios de classificação e tabela de domínios sensíveis por tipo de deficiência
-- `references/LEGISLACAO.md`. Quadro normativo completo com LC 142/2013, Portaria Interministerial 1/2014, Lei 13.146/2015, Decreto 3.048/99 (arts. 70-A a 70-I), IN 128/2022, e jurisprudência relevante da TNU, TRF3 e TRF4
-- `references/FIBROMIALGIA-LEI-15176.md`. Fibromialgia como deficiência pela Lei 15.176/2025, CID M79.7/MG30.01, domínios sensíveis, estratégias de prova e particularidades do IF-BrA
+## Médicos conferentes
 
----
-
-## Fibromialgia como Deficiência. Lei 15.176/2025
-
-### Marco Legal
-
-A Lei 15.176, de 04/04/2025, reconhece expressamente a fibromialgia como deficiência para todos os fins legais. É autoaplicável. O reconhecimento independe de regulamentação e se aplica imediatamente à LC 142/2013 (aposentadoria PCD) e à Lei 8.742/93 (BPC/LOAS).
-
-### CID
-
-CID-10 M79.7 (fibromialgia). CID-11 MG30.01 (síndrome da dor crônica generalizada primária). Ambas são aceitas.
-
-### Impacto na Aposentadoria PCD
-
-A fibromialgia, como deficiência reconhecida por lei, permite enquadramento na LC 142/2013. O grau (grave, moderado, leve) dependerá da avaliação biopsicossocial pelo IF-BrA. Os domínios mais impactados pela fibromialgia são tipicamente Vida Doméstica, Mobilidade e Socialização e Vida Comunitária, domínios do IF-BrA (auditoria 03/10/2026).
-
-### Particularidades no IF-BrA
-
-A fibromialgia produz impacto funcional variável e multidimensional. A avaliação deve considerar a dor crônica generalizada, a fadiga, os distúrbios cognitivos (fibrofog) e os transtornos de sono como fatores que afetam todas as dimensões da vida do segurado. A pontuação tende a ser dispersa entre múltiplos domínios, diferentemente de deficiências físicas localizadas.
-
-### Estratégia Probatória
-
-Laudo reumatológico com diagnóstico de fibromialgia e descrição funcional detalhada. Documentação de tratamentos realizados (medicamentos, fisioterapia, psicoterapia). Relatório de impacto nas atividades diárias e laborais. Se possível, avaliação funcional por terapeuta ocupacional ou fisioterapeuta documentando as limitações concretas.
-
-Consulte `references/FIBROMIALGIA-LEI-15176.md` para fundamentação completa, Lei 15.176/2025, histórico legislativo, particularidades por tipo de deficiência e estratégias detalhadas.
-
-## Transtorno do Espectro Autista (TEA) na Aposentadoria PCD
-
-### Equiparação legal automática a PCD
-
-O autista é pessoa com deficiência por presunção legal absoluta, fundamento de hierarquia constitucional e legal especial. O **Decreto 6.949/2009** promulgou a Convenção da ONU sobre os Direitos das Pessoas com Deficiência com status de emenda constitucional (CF, art. 5º, §3º). A **Lei 12.764/2012 (Lei Berenice Piana), art. 1º, §2º**, dispõe textualmente que "a pessoa com transtorno do espectro autista é considerada pessoa com deficiência, para todos os efeitos legais". Os "todos os efeitos legais" incluem a LC 142/2013.
-
-A consequência prática para a aposentadoria PCD é central. **A equiparação legal automática dispensa o autista de provar que o TEA é deficiência, mas NÃO dispensa o IF-BrA**. O autista É deficiente por presunção legal, mas o **GRAU** (leve, moderado, grave) é necessariamente aferido pelo IF-BrA. Confundir esses dois planos é erro técnico frequente. Em peça processual, sustentar que a avaliação biopsicossocial não pode questionar a existência da deficiência (ela é dada por lei), apenas mensurar seu grau funcional para fins de definição da carência aplicável.
-
-### Tipo de deficiência no IF-BrA. mental, intelectual ou múltipla
-
-O IF-BrA classifica a deficiência em auditiva, mental, intelectual, motora, visual ou múltipla. **A classificação correta para o autismo varia conforme o quadro**.
-
-**TEA sem Deficiência Intelectual associada (6A02.0 ou 6A02.2 da CID-11; antiga F84.5 Asperger ou F84.0/F84.1 da CID-10).** Classificar como **deficiência mental** (transtorno mental e de comportamento, conforme nomenclatura tradicional do INSS e da Portaria Interministerial 1/2014). Nessa classificação, os domínios sensíveis do Fuzzy são Vida Doméstica e Socialização, e a questão emblemática é "não pode ficar sozinho em segurança" (Portaria Interministerial 1/2014, anexo, item 4.c, Quadro 2) (auditoria 03/10/2026).
-
-**TEA com Deficiência Intelectual associada (6A02.1, 6A02.3 ou 6A02.5 da CID-11; antiga F84.0 com DI ou F84.1 com DI da CID-10).** Há duas linhas argumentativas. Primeira, classificar como **deficiência intelectual**, hipótese em que os domínios sensíveis do Fuzzy não mudam, porque o Quadro 2 agrupa a deficiência intelectual-cognitiva e a mental em Vida Doméstica e Socialização (auditoria 03/10/2026). Segunda, classificar como **deficiência múltipla**. Como o Quadro 2 agrupa intelectual e mental, a múltipla só acrescenta domínios sensíveis quando há também deficiência motora, visual ou auditiva (auditoria 03/10/2026). **A classificação como múltipla é a mais favorável ao segurado quando, além do TEA e da DI, houver deficiência motora, visual ou auditiva**.
-
-**TEA sindrômico (Rett, X frágil, Angelman e outros).** Geralmente classificado como múltipla, dada a presença de impedimentos motores, intelectuais e/ou sensoriais associados.
-
-### Migração CID-10 para CID-11 em 2027
-
-A adoção da CID-11 no Brasil está prevista para **1º de janeiro de 2027**, conforme Nota Técnica nº 91/2024-CGIAE/DAENT/SVSA/MS. A CID-10 versão 2019 permanece vigente até a efetiva implementação sistêmica do INSS.
-
-A tabela de equivalência aplicável à aposentadoria PCD é a seguinte. Os subtipos **F84.0, F84.1, F84.3, F84.5, F84.8 e F84.9** unificam-se sob **6A02**, com especificadores dimensionais. **F84.2 (Rett) migra para LD90.4** (anomalias do desenvolvimento). A CID-11 traz dois eixos descritivos do TEA, presença ou ausência de Transtorno do Desenvolvimento Intelectual (cruzamento com 6A00) e três níveis de comprometimento da linguagem funcional (preservada/leve, prejudicada, ausente). A combinação 2×3 produz seis subcódigos clínicos (6A02.0 a 6A02.5).
-
-A estrutura dimensional da CID-11 **favorece o segurado autista no IF-BrA** porque fornece ao perito substrato objetivo direto para acionar gatilhos Fuzzy. Subcódigos 6A02.1, 6A02.3 ou 6A02.5 (com DI associada) ou 6A02.2 a 6A02.5 (com comprometimento de linguagem) sustentam o rebaixamento Fuzzy nos domínios de Vida Doméstica e Socialização, os sensíveis da deficiência intelectual e mental no Quadro 2; Comunicação é domínio sensível da auditiva (auditoria 03/10/2026). O laudo deve **explicitar o subcódigo CID-11** e, em paralelo, o nível de suporte do DSM-5-TR (1, 2 ou 3), tratando-os como classificações complementares e não fundidas. **Os "níveis de suporte" são do DSM-5-TR da Associação Americana de Psiquiatria, não da CID-11 da OMS**, confundir os dois é erro técnico que pode invalidar o laudo.
-
-### Domínios sensíveis do TEA no IF-BrA
-
-A análise dos domínios sensíveis exige consulta direta ao arquivo `references/IF-BRA.md`. O panorama típico para o TEA é o seguinte.
-
-**Domínio de Comunicação.** Domínio nuclear do TEA. Atividade emblemática e demais atividades amplamente afetadas, especialmente em quadros 6A02.2 a 6A02.5. Comunicação não é domínio sensível da deficiência mental ou intelectual no Quadro 2, que o reserva à auditiva; no TEA, o Fuzzy se aciona em Vida Doméstica e Socialização ou pela questão "não pode ficar sozinho em segurança" (auditoria 03/10/2026). Em autista com comprometimento de linguagem documentado, a não atribuição de pontuação 25 (não realiza) ou 50 (realiza com muita dificuldade) na atividade emblemática é vício técnico central, sustentado por documentação fonoaudiológica, neuropsicológica e relatórios escolares.
-
-**Domínio de Socialização e Vida Comunitária.** Domínio nuclear do TEA. Déficits de interação social, dificuldades em reciprocidade emocional, em contato visual, em iniciar e manter conversas, em participar de atividades comunitárias. Ponto óbvio de Fuzzy em autistas com qualquer subcódigo 6A02. A pontuação em capacidade teórica (autista "consegue" interagir) e não em desempenho real (frequência, qualidade e impacto da interação) é vício processualmente impugnável.
-
-**Domínio de Educação, Trabalho e Vida Econômica.** Frequentemente afetado, sobretudo em adultos autistas com diagnóstico tardio que apresentam **histórico fragmentado de empregos, demissões por dificuldade de adaptação, dependência financeira da família, incapacidade de gerir orçamento doméstico**. Documentação trabalhista, CNIS irregular, cartas de demissão, declarações da família e do empregador anterior são essenciais.
-
-**Domínio de Cuidados Pessoais.** Afetado em quadros com suporte intenso ou DI associada, hiperseletividade alimentar, dificuldades sensoriais com banho/escovação/higiene, comportamentos restritivos, rigidez de rotina. Documentação por TO, psicólogo e relatórios da família são essenciais.
-
-**Domínio de Vida Doméstica.** Afetado por déficit em planejamento, autonomia, flexibilidade, iniciativa, capacidade de prever consequências.
-
-### Comorbidades como amplificador do quadro funcional no IF-BrA
-
-Estudos epidemiológicos demonstram alta taxa de comorbidades no TEA. Cada comorbidade adiciona impedimentos pontuáveis em domínios distintos do IF-BrA, podendo justificar reclassificação para **deficiência múltipla** (mais favorável ao segurado).
-
-Citação acadêmica recomendada em juízo. **Simonoff et al. (*J Am Acad Child Adolesc Psychiatry*, 2008)** identificou 70% de pelo menos uma comorbidade psiquiátrica e 41% de duas ou mais. **Lai et al. (*Lancet Psychiatry*, 2019)** consolidou metanálise de 96 estudos com prevalências de ansiedade 20%, depressão 11%, TOC 9%, TDAH 28%, autoagressão 42%, transtornos do sono 13%. **CDC/ADDM (Surveillance Summaries, 2023)** registrou comorbidade de Deficiência Intelectual em 37,9% dos autistas.
-
-Material de divulgação informal (Amaii Autismo e similares) trabalha com percentuais mais altos (TDAH 77%, transtornos motores 83%, TOD acima de 60%, ansiedade/TOC 40 a 60%, DI 30 a 40%, epilepsia 30 a 35%). Esses números podem ser usados como referência subsidiária na orientação do cliente, mas **não devem ancorar argumentação processual sem citação da fonte primária**, pois variam significativamente conforme metodologia. Em juízo, sempre ancorar em fonte acadêmica primária.
-
-A consequência prática é direta. Avaliação IF-BrA de autista que ignora as comorbidades é tecnicamente deficiente. Cada comorbidade deve adicionar peso em domínios específicos. **TDAH** afeta domínios de Educação/Trabalho, Comunicação, Cuidados Pessoais. **Transtornos motores** podem afetar Mobilidade e Cuidados Pessoais. **Ansiedade/TOC** afeta Socialização e Vida Comunitária, Vida Doméstica. **DI** justifica reclassificação para múltipla. **Epilepsia** afeta Mobilidade (risco de quedas), Vida Comunitária (limitações de direção, de exposição a estímulos) e Educação/Trabalho.
-
-### Data de Início da Deficiência (DID) em TEA
-
-Ponto sensível e estrategicamente decisivo. O TEA é congênito ou de manifestação muito precoce (antes dos 3 anos de idade pela CID-10, podendo ser identificado mais tarde por mascaramento ou diagnóstico tardio). Para fins de aposentadoria PCD, **a DID deve ser fixada o mais retroativamente possível**, ideal o nascimento ou a primeira manifestação documentada, para maximizar o tempo de contribuição na condição de PCD.
-
-**Risco específico durante a transição CID-10 → CID-11.** O INSS pode tentar questionar a continuidade do diagnóstico ao migrar registros de F84.0/F84.1/F84.5 para 6A02.x, alegando ruptura documental. **A defesa apoia-se em três pilares**. Primeiro, a migração CID é mero aprimoramento taxonômico que **não altera o substrato fático da deficiência** (CF art. 5º XXXVI, LINDB art. 6º, art. 2º da LBI). Segundo, as tabelas de equivalência da OMS demonstram a unificação direta dos subtipos de F84 sob 6A02. Terceiro, o **art. 6º, §1º, da LC 142/2013** autoriza prova retroativa por documentos cumulativos.
-
-**Documentação aceita para fixação retroativa da DID em TEA.** Relatórios escolares antigos (atrasos no desenvolvimento, dificuldade de socialização, comportamentos atípicos, AEE, PEI, mediador). Prontuários SUS antigos com queixas relacionadas. Atendimentos em CAPSi, CAPS-AD, neuropediatria, pediatria do desenvolvimento. Laudos terapêuticos cumulativos (fonoaudiologia, terapia ocupacional, psicologia, ABA, psicopedagogia). Declarações do CRAS/CREAS sobre encaminhamentos para BPC ou serviços especializados. Avaliações neuropsicológicas. Se cliente for adulto com diagnóstico tardio, declarações da família sobre histórico desde a infância.
-
-**Diagnóstico tardio em adulto.** Cenário cada vez mais frequente, especialmente em mulheres autistas (mascaramento social) e em pessoas com TEA sem DI (antiga Asperger). O diagnóstico recente **não impede a fixação retroativa da DID**. A literatura científica e as Leis 12.764/2012 e 13.146/2015 reconhecem que o diagnóstico tardio não cria a deficiência, apenas a identifica. Pleitear DID retroativa com base em documentação cumulativa do histórico de vida.
-
-### Estratégia documental para aposentadoria PCD do autista
-
-**Primeiro pilar, diagnóstico atual com dupla codificação.** Laudo médico recente com CID-10 (F84.x), CID-11 (6A02.x) e nível de suporte do DSM-5-TR (1, 2 ou 3). Descrição funcional detalhada por domínio do IF-BrA. Indicação expressa de comorbidades com seus respectivos CIDs. Indicação de classificação como deficiência mental, intelectual ou múltipla (preferência por múltipla quando há comorbidade ou DI).
-
-**Segundo pilar. CIPTEA.** Carteira atualizada (Lei 13.977/2020), válida independentemente da versão da CID utilizada, prova oficial da equiparação legal a PCD.
-
-**Terceiro pilar, documentação retroativa para DID.** Relatórios escolares, AEE, PEI, prontuários SUS antigos, CAPSi, declarações de profissionais que acompanharam o segurado desde a infância, históricos de tratamentos.
-
-**Quarto pilar, documentação funcional cumulativa.** Relatórios de fonoaudiologia, terapia ocupacional, psicologia, ABA, neuropsicologia, com indicação cronológica do impacto funcional ao longo da vida do segurado.
-
-**Quinto pilar, prova trabalhista.** CNIS detalhado, vínculos curtos e fragmentados, demissões por inadaptação, declarações de empregadores anteriores, relatos do próprio segurado e da família.
-
-### Quesitos suplementares para perícia funcional do IF-BrA em autista
-
-**Sobre a classificação.** O perito classificou o segurado como deficiente mental, intelectual ou múltipla? Há fundamento técnico para a classificação? Foi considerada a possibilidade de classificação como múltipla diante das comorbidades documentadas?
-
-**Sobre o Fuzzy.** O perito identificou os domínios sensíveis correspondentes ao tipo de deficiência? O método Fuzzy foi aplicado? Em qual domínio a atividade emblemática teve resposta afirmativa? A redistribuição de pontuação pelo Fuzzy foi corretamente realizada?
-
-**Sobre as comorbidades.** As comorbidades documentadas (TDAH, ansiedade, depressão, DI, epilepsia, transtornos do sono e similares) foram consideradas na pontuação dos domínios? Os impedimentos adicionais decorrentes das comorbidades foram pontuados separadamente?
-
-**Sobre a DID.** A DID foi fixada com base em documentação retroativa? Foram considerados os relatórios escolares, prontuários SUS antigos e laudos terapêuticos cumulativos para fixação da DID o mais retroativamente possível?
-
-**Sobre a CID.** O perito utilizou CID-10 (F84.x) ou CID-11 (6A02.x)? A subclassificação na CID-11 (presença/ausência de DI; nível de comprometimento da linguagem) foi explicitada?
-
-**Sobre a pontuação por desempenho.** A pontuação reflete o desempenho real do segurado em seu ambiente habitual ou a sua capacidade teórica?
-
-### Síntese da jurisprudência aplicável ao TEA na aposentadoria PCD
-
-**Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre TEA em aposentadoria PCD da LC 142/2013** (a maior parte da jurisprudência recente concentra-se em BPC, Tema 376/TNU). A defesa apoia-se em fundamentação legal direta. Lei 12.764/2012, Lei 13.146/2015, LC 142/2013, Portaria Interministerial 1/2014. **TRF4, AC 5009827-05.2022.4.04.9999** (6ª Turma, Rel. Des. João Batista Pinto Silveira, j. 30/09/2022) firmou a tese de que "a deficiência, em casos como o dos autos, é explícita e, portanto, desnecessária se faz a análise da incapacidade x deficiência" para o autista. Em fundamentação principiológica, invocar o **Decreto 6.949/2009** (Convenção da ONU sobre Direitos das Pessoas com Deficiência, status constitucional pelo art. 5º, §3º, da CF), especialmente os arts. 1º, 5º (igualdade), 27 (trabalho) e 28 (padrão de vida adequado).
-
-## Vigilância Normativa. Teleperícia
-
-A Portaria Conjunta DPMF/INSS 19/2026 introduziu a Teleperícia (videoconferência com presença do segurado na APS) para perícia médica inicial, BPC inicial e reavaliação de BPC, com vigência em 13/04/2026. Embora a norma não cite expressamente a avaliação biopsicossocial da LC 142/2013, há risco de extensão futura por ato administrativo. Acompanhar atos posteriores do DPMF e do INSS sobre essa eventual ampliação. Em caso de extensão, aplicar os mesmos critérios de recusa e impugnação tratados nas skills `analise-bpc-loas` e `auditoria-laudo-pericial`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
-
-## Método Fuzzy, verificação obrigatória (Onda 106)
-
-Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
-
-A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria da pessoa com deficiência" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
-
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
-
-No IF-BrA, o que decide a pontuação é a funcionalidade, e não o diagnóstico. Despachar o médico da área com os documentos, porque é ele que liga o achado clínico aos sete domínios e às atividades funcionais, e que sustenta a data de início da deficiência.
+No IF-BrA, a pontuação decorre da funcionalidade. O médico da área liga o achado clínico aos domínios e sustenta a DID.
 
 | Se os documentos tratarem de | Despachar ao agente |
 |---|---|
-| Coluna, lombar, cervical, hérnia de disco, ciática, estenose, artrodese, CID M40 a M54 | `base-conhecimento-inss:medico-coluna` |
-| Joelho, menisco, ligamento cruzado, artrose de joelho, prótese, quadril, tornozelo, fascite plantar | `base-conhecimento-inss:medico-membro-inferior` |
-| Ombro, manguito rotador, supraespinhal, bursite, capsulite, CID M75 | `base-conhecimento-inss:medico-ombro` |
-| Punho, mão, dedo, amputação, túnel do carpo, tenossinovite, epicondilite, LER e DORT | `base-conhecimento-inss:medico-membro-superior` |
-| Depressão, ansiedade, bipolar, esquizofrenia, TEPT, burnout, CAPS, CID F20 a F48 | `base-conhecimento-inss:medico-psiquiatra` |
-| Fibromialgia, artrite reumatoide, lúpus, espondilite, artrose difusa, osteoporose | `base-conhecimento-inss:medico-reumatologista` |
-| Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
-| Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
+| Coluna, hérnia de disco, estenose, artrodese, CID M40 a M54 | `base-conhecimento-inss:medico-coluna` |
+| Joelho, quadril, tornozelo, prótese, fascite plantar | `base-conhecimento-inss:medico-membro-inferior` |
+| Ombro, manguito rotador, capsulite, CID M75 | `base-conhecimento-inss:medico-ombro` |
+| Punho, mão, amputação, túnel do carpo, LER e DORT | `base-conhecimento-inss:medico-membro-superior` |
+| Depressão, bipolaridade, esquizofrenia, TEPT, CID F20 a F48 | `base-conhecimento-inss:medico-psiquiatra` |
+| Fibromialgia, artrite reumatoide, lúpus, espondilite | `base-conhecimento-inss:medico-reumatologista` |
+| Visão monocular, cegueira, glaucoma, surdez, implante coclear | `base-conhecimento-inss:medico-sensorial` |
+| Câncer, cardiopatia, AVC, epilepsia, Parkinson, DPOC, HIV | `base-conhecimento-inss:medico-doencas-graves` |
 
-Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra nos domínios do IF-BrA, nos quesitos e na fixação da DID.
+Até três agentes por caso. O parecer é interno: orienta a peça e os quesitos e não vai aos autos como prova.
 
-O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+## Integração
+
+Resumo operacional em `base-aposentadoria-pcd-lc142`; metodologia em `base-pcd-if-bra-metodologia`; DID em `base-pcd-did-retroativa` e `formacao-documentacao-did-pcd`; conversões em `base-pcd-conversao-tempo-especial-pcd`; deficiência sensorial em `base-pcd-deficiencia-auditiva-visual`; fibromialgia em `base-pcd-fibromialgia-lei15176`; relatório médico em `base-modelo-relatorio-medico-aposentadoria-pcd-lc142`.
 
 ## MCPs da casa
 

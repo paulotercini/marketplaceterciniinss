@@ -7,15 +7,15 @@ description: Lei Brasileira de Inclusão (Lei 13.146/2015, Estatuto da Pessoa co
 
 ## Escopo e postura
 
-A LBI não é norma de reforço retórico. É o marco conceitual que DEFINE deficiência no direito brasileiro e que muda o eixo da prova. Deficiência não é a doença nem o CID. É o impedimento de longo prazo QUE, EM INTERAÇÃO COM BARREIRAS, obstrui a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso fica reduzido a diagnóstico, e diagnóstico isolado o INSS indefere.
+A LBI define deficiência no direito brasileiro e desloca a prova do diagnóstico para a participação. Deficiência é o impedimento de longo prazo que, em interação com barreiras, obstrui a participação plena e efetiva em igualdade de condições; a doença e o CID não bastam. Sem barreira demonstrada, o caso fica reduzido a diagnóstico, e diagnóstico isolado o INSS indefere.
 
-Postura pró-segurado exclusiva. Toda vez que o caso envolver deficiência, limitação funcional, restrição de participação ou barreira concreta, esta skill é acionada junto da skill do benefício.
+Toda vez que o caso envolver deficiência, limitação funcional, restrição de participação ou barreira concreta, esta skill é acionada junto da skill do benefício.
 
 ## Fonte primária
 
-Lei 13.146, de 06/07/2015. Texto consolidado do Planalto, com as alterações posteriores (entre elas as Leis 14.624/2023, 14.724/2023 e 14.768/2023), conferido em 26/07/2026 a partir do documento oficial fornecido ao escritório.
+Lei 13.146, de 06/07/2015, texto consolidado do Planalto, com as alterações posteriores (entre elas as Leis 14.624/2023 e 14.724/2023), conferido no corpus do MCP `normas`.
 
-Base convencional. Convenção sobre os Direitos das Pessoas com Deficiência e seu Protocolo Facultativo, aprovados pelo Decreto Legislativo 186/2008 pelo rito do art. 5º, § 3º, da CF (status de emenda constitucional) e promulgados pelo Decreto 6.949/2009. Isso significa que o conceito de deficiência da LBI tem estatura constitucional, argumento decisivo contra interpretação restritiva de norma infralegal do INSS.
+Base convencional. Convenção sobre os Direitos das Pessoas com Deficiência e seu Protocolo Facultativo, aprovados pelo Decreto Legislativo 186/2008 pelo rito do art. 5º, § 3º, da CF (status de emenda constitucional) e promulgados pelo Decreto 6.949/2009. O conceito de deficiência da LBI tem, por isso, estatura constitucional, o que afasta interpretação restritiva por norma infralegal do INSS.
 
 ## Dispositivos literais essenciais
 
@@ -23,15 +23,15 @@ Art. 1º, caput. "É instituída a Lei Brasileira de Inclusão da Pessoa com Def
 
 Art. 2º, caput. "Considera-se pessoa com deficiência aquela que tem impedimento de longo prazo de natureza física, mental, intelectual ou sensorial, o qual, em interação com uma ou mais barreiras, pode obstruir sua participação plena e efetiva na sociedade em igualdade de condições com as demais pessoas."
 
-Art. 2º, § 1º. "A avaliação da deficiência, quando necessária, será biopsicossocial, realizada por equipe multiprofissional e interdisciplinar e considerará. I - os impedimentos nas funções e nas estruturas do corpo; II - os fatores socioambientais, psicológicos e pessoais; III - a limitação no desempenho de atividades; e IV - a restrição de participação."
+Art. 2º, § 1º. "A avaliação da deficiência, quando necessária, será biopsicossocial, realizada por equipe multiprofissional e interdisciplinar e considerará: I - os impedimentos nas funções e nas estruturas do corpo; II - os fatores socioambientais, psicológicos e pessoais; III - a limitação no desempenho de atividades; e IV - a restrição de participação."
 
 Art. 2º, § 3º (incluído pela Lei 14.724/2023). O exame médico-pericial componente da avaliação biopsicossocial "poderá ser realizado com o uso de tecnologia de telemedicina ou por análise documental conforme situações e requisitos definidos em regulamento."
 
 Art. 2º-A (incluído pela Lei 14.624/2023). Institui o cordão de fita com desenhos de girassóis como símbolo nacional de identificação de pessoas com DEFICIÊNCIAS OCULTAS. O § 1º diz que o uso é opcional e sua ausência não prejudica o exercício de direitos.
 
-Art. 3º, IV. "Barreiras. qualquer entrave, obstáculo, atitude ou comportamento que limite ou impeça a participação social da pessoa, bem como o gozo, a fruição e o exercício de seus direitos à acessibilidade, à liberdade de movimento e de expressão, à comunicação, ao acesso à informação, à compreensão, à circulação com segurança, entre outros, classificadas em." As seis espécies estão transcritas no reference.
+Art. 3º, IV. "barreiras: qualquer entrave, obstáculo, atitude ou comportamento que limite ou impeça a participação social da pessoa, bem como o gozo, a fruição e o exercício de seus direitos à acessibilidade, à liberdade de movimento e de expressão, à comunicação, ao acesso à informação, à compreensão, à circulação com segurança, entre outros, classificadas em:". As seis espécies estão transcritas no reference.
 
-Art. 3º, VI. "Adaptações razoáveis. adaptações, modificações e ajustes necessários e adequados que não acarretem ônus desproporcional e indevido, quando requeridos em cada caso, a fim de assegurar que a pessoa com deficiência possa gozar ou exercer, em igualdade de condições e oportunidades com as demais pessoas, todos os direitos e liberdades fundamentais."
+Art. 3º, VI. "adaptações razoáveis: adaptações, modificações e ajustes necessários e adequados que não acarretem ônus desproporcional e indevido, quando requeridos em cada caso, a fim de assegurar que a pessoa com deficiência possa gozar ou exercer, em igualdade de condições e oportunidades com as demais pessoas, todos os direitos e liberdades fundamentais."
 
 Art. 4º, caput e § 1º. Direito à igualdade de oportunidades e vedação de discriminação, sendo discriminação "toda forma de distinção, restrição ou exclusão, por ação ou omissão, que tenha o propósito ou o efeito de prejudicar, impedir ou anular o reconhecimento ou o exercício dos direitos e das liberdades fundamentais de pessoa com deficiência, incluindo a recusa de adaptações razoáveis e de fornecimento de tecnologias assistivas."
 
@@ -45,7 +45,7 @@ Art. 84. Direito ao exercício da capacidade legal em igualdade de condições, 
 
 ## As seis barreiras como método de prova
 
-Este é o uso mais produtivo da LBI e o que costuma faltar nos autos. Para cada caso, percorrer as seis espécies e registrar a barreira CONCRETA, com prova.
+É o uso que costuma faltar nos autos. Para cada caso, percorrer as seis espécies e registrar a barreira CONCRETA, com prova.
 
 Urbanística. Vias, calçadas e espaços públicos do trajeto real do segurado.
 
@@ -59,19 +59,19 @@ Atitudinal. Recusa de contratação, isolamento, estigma, tratamento discriminat
 
 Tecnológica. Falta de acesso a tecnologia assistiva, órtese, prótese, AASI, implante, software leitor.
 
-Regra de ouro. Barreira alegada sem prova é retórica. Cada barreira precisa de ancoragem, declaração escolar ou do empregador, foto, comprovante de deslocamento, relatório social, negativa do poder público, declaração do CRAS, orçamento de tecnologia assistiva não custeada.
+Barreira alegada sem prova não convence. Cada barreira precisa de documento: declaração escolar ou do empregador, foto, comprovante de deslocamento, relatório social, negativa do poder público, declaração do CRAS, orçamento de tecnologia assistiva não custeada.
 
 ## Aplicação por benefício
 
-BPC/LOAS. A LBI é a definição matriz do impedimento de longo prazo. A avaliação social do INSS existe precisamente para captar barreiras, e laudo que só descreve o corpo ignora os incisos II, III e IV do art. 2º, § 1º. Acionar com `base-bpc-impedimento-longo-prazo` e `analise-bpc-loas`.
+BPC/LOAS. A LBI é a definição matriz do impedimento de longo prazo. A avaliação social do INSS existe precisamente para captar barreiras, e laudo que descreve apenas o corpo ignora os incisos II, III e IV do art. 2º, § 1º. Acionar com `base-bpc-impedimento-longo-prazo` e `analise-bpc-loas`.
 
-Aposentadoria PCD da LC 142/2013. O grau de deficiência no IF-BrA se decide nos domínios de participação, que são leitura direta da LBI. Barreira não registrada é ponto perdido. Acionar com `base-aposentadoria-pcd-lc142` e `base-pcd-if-bra-metodologia`.
+Aposentadoria PCD da LC 142/2013. O grau de deficiência no IF-BrA se decide nos domínios de participação, que são leitura direta da LBI. Barreira não registrada deixa de pontuar. Acionar com `base-aposentadoria-pcd-lc142` e `base-pcd-if-bra-metodologia`.
 
-Incapacidade (B31, B32, B91, B92). O art. 34, § 3º, veda a exigência de APTIDÃO PLENA, argumento forte contra o INSS que nega benefício alegando capacidade residual sem posto de trabalho real e acessível, e contra a alta sem reabilitação efetiva. Combinar com `base-reabilitacao-profissional`, `base-limbo-previdenciario-tema300` e `base-incapacidade-b31-temporaria`.
+Incapacidade (B31, B32, B91, B92). O art. 34, § 3º, veda a exigência de APTIDÃO PLENA, argumento contra o INSS que nega benefício alegando capacidade residual sem posto de trabalho real e acessível, e contra a alta sem reabilitação efetiva. Combinar com `base-reabilitacao-profissional`, `base-limbo-previdenciario-tema300` e `base-incapacidade-b31-temporaria`.
 
 Perícia e processo. O art. 4º, § 1º, transforma a recusa de adaptação razoável em DISCRIMINAÇÃO, e o art. 79 garante adaptações e tecnologia assistiva no acesso à justiça. Perícia sem intérprete de Libras, sem acessibilidade física ou sem acompanhante quando necessário é nulidade arguível. Acionar com `base-cpc-nulidades-cerceamento` e `base-pericia-medica-federal-telepericia`.
 
-Relatório médico. Os quatro incisos do art. 2º, § 1º, são a espinha do relatório. Impedimento em funções e estruturas, fatores socioambientais e pessoais, limitação de atividades e restrição de participação. Acionar com os três modelos de relatório médico do escritório.
+Relatório médico. Os quatro incisos do art. 2º, § 1º, estruturam o relatório: Impedimento em funções e estruturas, fatores socioambientais e pessoais, limitação de atividades e restrição de participação. Acionar com os três modelos de relatório médico do escritório.
 
 ## Alertas
 

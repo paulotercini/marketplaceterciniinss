@@ -1,121 +1,97 @@
 ---
 name: base-pcd-if-bra-metodologia
-description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, método fuzzy, modelo linguístico fuzzy, domínios sensíveis, perguntas emblemáticas, replicação da menor pontuação, ausência de auxílio de terceiros, 41 atividades funcionais, quesitos fuzzy, impugnação por não aplicação do fuzzy, deficiência leve moderada grave LC 142, Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
+description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) da aposentadoria da pessoa com deficiência da LC 142/2013: sete domínios, 41 atividades, pontuação 25 50 75 100 por atividade, método linguístico Fuzzy, faixas de grau leve, moderada e grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial comunicação mobilidade cuidados pessoais vida doméstica educação trabalho socialização, pontuação 25 50 75 100, domínios sensíveis, perguntas emblemáticas, replicação da menor pontuação, ausência de auxílio de terceiros, 41 atividades funcionais, quesitos fuzzy, impugnação por não aplicação do fuzzy, 5.739 6.354 7.584 pontos, deficiência leve moderada grave LC 142, Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1 de 27/01/2014, perícia biopsicossocial aposentadoria PCD, avaliação funcional INSS. Cruza com base-aposentadoria-pcd-lc142, aposentadoria-deficiencia, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd. NÃO use para o BPC, cujo instrumento é a Portaria Conjunta 2/2015 (analise-bpc-loas)."
 ---
 
 # Metodologia do IF-BrA na Aposentadoria PCD
 
 ## Escopo
 
-Skill pró-segurado sobre a metodologia do IF-BrA na aposentadoria da pessoa com deficiência. Sete domínios, lógica fuzzy, escala de Genebra, classificação por grau.
+Instrumento de avaliação médica e funcional da deficiência para a aposentadoria da LC 142/2013: estrutura, pontuação, método Fuzzy, faixas de grau e controle do laudo. O IF-BrA não se aplica ao BPC, cujo instrumento é o da Portaria Conjunta MDS/INSS 2/2015 (`analise-bpc-loas`). O IFBrM (Índice de Funcionalidade Brasileiro Modificado) é instrumento validado para uso unificado, sem adoção normativa vigente no INSS; não se confunde com o IF-BrA em citação formal.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 201 §1º.
+LC 142/2013, arts. 4º (avaliação médica e funcional) e 5º (perícia própria do INSS, com instrumentos desenvolvidos para esse fim). Decreto 3.048/1999, arts. 70-A e 70-D (avaliação biopsicossocial, fixação da data provável de início e do grau, variação de grau por períodos), na redação dos Decretos 8.145/2013 e 10.410/2020. Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014 (DOU de 30/01/2014), que aprova o IF-BrA e define impedimento de longo prazo como o que produz efeitos pelo prazo mínimo de 2 anos, contados de forma ininterrupta. A republicação de 2015 dessa portaria foi tornada sem efeito; citar sempre a data de 27/01/2014. Lei 13.146/2015, art. 2º, §1º.
 
-LC 142/2013.
+## Estrutura do instrumento
 
-Decreto 8.145/2013.
+Avaliação conjunta por perito médico e assistente social do INSS, cada um pontuando as mesmas 41 atividades, distribuídas em sete domínios: Sensorial; Comunicação; Mobilidade; Cuidados Pessoais; Vida Doméstica; Educação, Trabalho e Vida Econômica; Socialização e Vida Comunitária.
 
-Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
+### Pontuação por atividade
 
-IN 128/2022.
+A escala é atribuída a cada atividade, e não ao domínio, e reflete o desempenho no ambiente habitual, não a capacidade em situação ideal.
 
-Lei 13.146/2015, Estatuto da PCD.
+| Pontos | Nível de independência |
+|---|---|
+| 25 | Não realiza a atividade ou é totalmente dependente de terceiros |
+| 50 | Realiza com auxílio de terceiros |
+| 75 | Realiza de forma adaptada, diferente da habitual ou mais lentamente |
+| 100 | Realiza de forma independente, sem adaptação, na velocidade habitual e com segurança |
 
-## Marco jurisprudencial
+A escala deriva da Medida de Independência Funcional (MIF), adaptada pela portaria. A referência a "escala de Genebra" é incorreta e não deve ser usada.
 
-### ADI 5760 STF
+### Faixas de grau
 
-Objeto real. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 (Rel. Min. Alexandre de Moraes, 13/09/2019, unânime). Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a avaliação biopsicossocial (auditoria 03/10/2026).
+A soma das pontuações do médico e do assistente social vai de 2.050 (41 x 2 x 25) a 8.200 (41 x 2 x 100).
 
-Fonte oficial em https://portal.stf.jus.br
+| Grau | Pontuação total |
+|---|---|
+| Grave | até 5.739 |
+| Moderada | 5.740 a 6.354 |
+| Leve | 6.355 a 7.584 |
+| Insuficiente para caracterizar deficiência | 7.585 ou mais |
 
-### Tema 173 TNU
+Cada grau define o tempo de contribuição do art. 3º da LC 142/2013 (`base-aposentadoria-pcd-lc142`).
 
-Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
+## Método linguístico Fuzzy
 
-Fonte oficial em https://www.cjf.jus.br
+Verificação obrigatória em todo caso, antes de aceitar o resultado. A ordem é: pontuar as 41 atividades; verificar a incidência do Fuzzy; somar e classificar. Perito que soma direto omite etapa e produz resultado viciado.
 
-### Repercussão social e funcional na avaliação (IF-BrA)
+**Hipóteses de incidência (basta uma).** Alguma atividade de domínio sensível do tipo de deficiência recebeu 25 ou 50, ou todas as atividades desse domínio receberam 75; a pessoa não dispõe de auxílio de terceiros sempre que necessário; resposta positiva à questão emblemática do tipo de deficiência.
 
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
+**Consequência.** A menor pontuação atribuída a uma atividade do domínio sensível é replicada para todas as atividades desse domínio, de modo que a limitação mais grave não seja compensada por notas altas no mesmo domínio.
 
-## Sete domínios do IF-BrA
+| Tipo de deficiência | Domínios sensíveis | Questão emblemática |
+|---|---|---|
+| Auditiva | Comunicação; Socialização e Vida Comunitária | A surdez ocorreu antes dos 6 anos? |
+| Visual | Mobilidade; Vida Doméstica | A pessoa já não enxergava ao nascer? |
+| Motora | Mobilidade; Cuidados Pessoais | Desloca-se exclusivamente em cadeira de rodas? |
+| Intelectual, cognitiva ou mental | Vida Doméstica; Socialização e Vida Comunitária | Não pode ficar sozinho em segurança? |
 
-Primeiro, sensorial.
+A questão da deficiência intelectual é formulada pela negativa: a resposta afirmativa revela a impossibilidade de permanecer só com segurança e aciona o Fuzzy.
 
-Segundo, comunicação.
+Checklist de sete pontos, oito quesitos e roteiro de impugnação em `references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
 
-Terceiro, mobilidade.
+## Controle do laudo
 
-Quarto, cuidados pessoais.
+Vícios recorrentes e fundamento da impugnação.
 
-Quinto, vida doméstica.
+1. **Avaliação apenas médica.** A avaliação é médica e funcional (LC 142/2013, art. 4º; Decreto 3.048/1999, art. 70-A). Ausência do assistente social ou pontuação de uma única avaliação compromete o resultado.
+2. **Pontuação genérica.** Cada atividade deve ser pontuada; domínio sem pontuação discriminada impede o controle.
+3. **Capacidade em vez de desempenho.** A portaria manda pontuar o desempenho no ambiente habitual.
+4. **Fuzzy omitido.** Demonstrar aritmeticamente o total e o grau antes e depois da replicação.
+5. **Data de início e variação de grau.** O perito deve fixar a data provável de início e identificar os períodos em cada grau (Decreto 3.048/1999, art. 70-D, I e II). Omissão impede a conversão do art. 70-E (`base-pcd-did-retroativa`, `base-pcd-conversao-tempo-especial-pcd`).
+6. **Barreiras ignoradas.** A matriz associa a pontuação de cada atividade às barreiras externas; laudo sem barreiras descumpre o art. 2º, §1º, da Lei 13.146/2015.
 
-Sexto, educação, trabalho e vida econômica.
+Em juízo, requerer esclarecimentos e complementação (CPC, art. 477, §2º) e, persistindo a falha, nova perícia (CPC, art. 480), conforme `base-cpc-prova-pericial-arts464-480`. Quesitos padronizados também em `base-modelo-relatorio-medico-aposentadoria-pcd-lc142`.
 
-Sétimo, socialização e vida comunitária.
+## Refutação a argumentos típicos do INSS
 
-## Pontuação na escala de Genebra
+- **Restrição clínica isolada.** O grau resulta da pontuação funcional, não do diagnóstico.
+- **Estabilização do quadro.** Estabilidade clínica não eleva a pontuação se o desempenho nas atividades continua limitado; doença crônica com recidivas exige análise do histórico.
+- **Deficiência apenas a partir da DER.** A deficiência anterior pode ser reconhecida com prova documental contemporânea (LC 142/2013, art. 6º, §§1º e 2º; Decreto 3.048/1999, art. 70-D, §1º), vedada a prova exclusivamente testemunhal.
+- **Fibromialgia como condição subjetiva.** A Lei 14.705/2023, art. 1º-C, incluído pela Lei 15.176/2025, condiciona a equiparação à pessoa com deficiência à avaliação biopsicossocial; o IF-BrA é essa avaliação para a LC 142/2013 (`base-pcd-fibromialgia-lei15176`).
 
-Cada ATIVIDADE recebe pontuação 25, 50, 75 ou 100 (correção da Onda 106, a pontuação é por atividade e não por domínio, e o instrumento contempla 41 atividades distribuídas nos sete domínios). 25, não realiza ou é totalmente dependente de terceiros. 50, realiza com auxílio de terceiros. 75, realiza de forma adaptada, diferente da habitual ou mais lentamente. 100, realiza de forma independente, sem adaptação, na velocidade habitual e em segurança.
+## Cenários
 
-## Classificação por grau
+- **Visão monocular.** Deficiência sensorial visual por lei (Lei 14.126/2021); o grau depende da pontuação, com Mobilidade e Vida Doméstica como domínios sensíveis.
+- **Surdez bilateral desde a infância.** Questão emblemática positiva; replicação em Comunicação e Socialização (Lei 14.768/2023 para o conceito de deficiência auditiva).
+- **Paraplegia com cadeira de rodas.** Questão emblemática positiva; Mobilidade e Cuidados Pessoais replicados; grau grave esperado.
+- **Deficiência intelectual ou TEA.** "Não pode ficar sozinho em segurança" afirmativo; Vida Doméstica e Socialização replicados.
 
-Primeiro, grave. Soma dos pontos compatível com pontuação inferior estabelecida pela tabela.
+## Integração
 
-Segundo, moderada. Faixa intermediária.
-
-Terceiro, leve. Faixa superior.
-
-Quarto, conversão de tempo aplicável a cada grau.
-
-## Modelo Linguístico Fuzzy. VERIFICAÇÃO OBRIGATÓRIA (Onda 106)
-
-A Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026) adotou a lógica fuzzy. A mecânica é objetiva e sua omissão é erro técnico atacável.
-
-Ordem da avaliação. Primeiro pontuam-se as 41 atividades. SEGUNDO verifica-se a necessidade de aplicar o Fuzzy. Só então se somam os pontos e se define o grau. Perito que soma direto pulou etapa e produziu resultado viciado.
-
-TRÊS hipóteses de aplicação, bastando UMA. Primeira, alguma atividade do domínio sensível com pontuação 25 ou 50, ou TODAS as atividades daquele domínio com 75. Segunda, ausência de auxílio de terceiros sempre que necessário. Terceira, resposta positiva à pergunta emblemática do tipo de deficiência.
-
-Consequência única. A MENOR pontuação atribuída a uma atividade do domínio sensível é REPLICADA para todas as demais atividades daquele domínio, impedindo que a limitação mais grave seja compensada por notas altas no mesmo domínio.
-
-Domínios sensíveis. Auditiva, comunicação e socialização. Visual, mobilidade e vida doméstica. Motora, mobilidade e cuidados pessoais. Intelectual ou mental, vida doméstica e socialização.
-
-Perguntas emblemáticas. Auditiva, a surdez ocorreu antes dos seis anos. Visual, já não enxergava ao nascer. Motora, desloca-se exclusivamente em cadeira de rodas. Intelectual ou mental, "não pode ficar sozinho em segurança" (auditoria 03/10/2026).
-
-Checklist obrigatório de sete pontos, oito quesitos prontos para a perícia, roteiro de impugnação em cinco blocos e a pendência de nomenclatura entre IF-BrA e IFBrM em `references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`. A verificação do Fuzzy é OBRIGATÓRIA em todo caso de deficiência, antes de aceitar o resultado da avaliação.
-
-## Aplicação pró-segurado
-
-Primeiro, exigir aplicação correta da fuzzy.
-
-Segundo, contestar pontuação binária.
-
-Terceiro, juntar prova robusta de cada domínio.
-
-Quarto, defender o cômputo retroativo da DID.
-
-## Cenários pró-segurado
-
-Cenário A, segurado com cegueira em apenas um olho. Domínio sensorial parcial. Combinar com social e econômico. Pode atingir grau leve.
-
-Cenário B, segurada com fibromialgia. Lei 15.176/2025 reconhece deficiência. Avaliação biopsicossocial.
-
-Cenário C, segurado com transtorno mental crônico. Múltiplos domínios atingidos. Grau moderado ou grave.
-
-Cenário D, segurada com paraplegia. Mobilidade comprometida. Grau grave esperado.
-
-## Alertas
-
-Primeiro, perícia que classifica isoladamente o domínio físico erra. Avaliação é biopsicossocial.
-
-Segundo, falta de assistente social na avaliação invalida.
-
-Terceiro, ausência de pontuação domínio a domínio é vício.
-
-Quarto, retroatividade da DID exige prova de cada momento.
+Aposentadoria PCD e cálculo em `base-aposentadoria-pcd-lc142`; data de início retroativa em `base-pcd-did-retroativa`; conversão em `base-pcd-conversao-tempo-especial-pcd`; deficiência sensorial em `base-pcd-deficiencia-auditiva-visual`; fibromialgia em `base-pcd-fibromialgia-lei15176`; prova documental em `formacao-documentacao-did-pcd`; auditoria do laudo em `auditoria-laudo-pericial`.
 
 ## Hub de portarias administrativas
 
@@ -125,24 +101,6 @@ As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso est�
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
-Para detalhes operacionais, acionar `aposentadoria-deficiencia`.
-Para DID retroativa, acionar `base-pcd-did-retroativa`.
-Para conversão de tempo, acionar `base-pcd-conversao-tempo-especial-pcd`.
-Para fibromialgia, acionar `base-pcd-fibromialgia-lei15176`.
-Para deficiência sensorial, acionar `base-pcd-deficiencia-auditiva-visual`.
-
-## O que NÃO está nesta skill
-
-DID retroativa em `base-pcd-did-retroativa`. Fibromialgia em `base-pcd-fibromialgia-lei15176`. Conversão em `base-pcd-conversao-tempo-especial-pcd`. Deficiência sensorial em `base-pcd-deficiencia-auditiva-visual`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015, com fato concreto e documento por ID, e cobrar os quatro incisos do art. 2º, §1º, na avaliação e no relatório. O conceito convencional de deficiência tem estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009) e não pode ser restringido por ato infralegal.

@@ -1,171 +1,100 @@
 ---
 name: base-bpc-impedimento-longo-prazo
-description: "BPC/LOAS, impedimento de longo prazo, avaliação biopsicossocial, TCQ e IFBrM, ótica pró-segurado. Use SEMPRE que mencionar impedimento de longo prazo BPC, avaliação biopsicossocial, IFBrM, TCQ Tabela Conclusiva de Qualificadores, Portaria Conjunta MDS/INSS nº 2, de 30/03/2015, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025 dispensa reavaliação, avaliação social, avaliação médica, domínios funcionais BPC, gatilho elevação funções corpo, agravante estrutura, prognóstico desfavorável BPC, Teleperícia BPC, Portaria 19/2026, impedimento mínimo 2 anos, impedimento físico mental intelectual sensorial, barreiras CIF Classificação Internacional de Funcionalidade, deficiência biopsicossocial, fibromialgia BPC Lei 15.176/2025, autismo BPC, transtorno mental BPC, esquizofrenia BPC, HIV BPC, menor 16 anos BPC IFBrM, qualificador N L, supressão incisos art 8. Cruza com base-bpc-loas-requisitos, analise-bpc-loas, peticao-previdenciaria, precedentes-previdenciarios e orientacao-cliente-pericia."
+description: "BPC/LOAS, impedimento de longo prazo e avaliação biopsicossocial da Portaria Conjunta MDS/INSS 2/2015 (TCQ), ótica pró-segurado. Use SEMPRE que mencionar impedimento de longo prazo BPC, avaliação biopsicossocial, TCQ Tabela Conclusiva de Qualificadores, Portaria Conjunta MDS/INSS nº 2, de 30/03/2015, Portaria 34/2025, Portaria Conjunta 37/2026, Lei 15.157/2025 dispensa reavaliação, art. 21 §5º LOAS, impedimento permanente irreversível irrecuperável, avaliação social, avaliação médica, funções do corpo, atividades e participação, fatores ambientais, elevação funções do corpo, agravante estrutura, prognóstico desfavorável BPC, Teleperícia BPC, Portaria 19/2026, impedimento mínimo 2 anos art. 20 §10, Súmula 48 TNU, Súmula 80 TNU, Tema 385 TNU, impedimento físico mental intelectual sensorial, barreiras CIF, deficiência biopsicossocial, fibromialgia BPC Lei 15.176/2025, autismo BPC, transtorno mental BPC, esquizofrenia BPC, HIV BPC art. 20 §16, menor 16 anos BPC, qualificador N L M G C, nova redação art. 8 Portaria 2/2015. Cruza com base-bpc-loas-requisitos, analise-bpc-loas, peticao-previdenciaria, precedentes-previdenciarios e orientacao-cliente-pericia."
 ---
 
 # BPC/LOAS. Impedimento de Longo Prazo e Avaliação Biopsicossocial
 
 ## Escopo
 
-Skill temática pró-segurado. Focaliza o requisito específico do impedimento de longo prazo para concessão do BPC à pessoa com deficiência. Trata da avaliação biopsicossocial (conjunta médica e social), do Índice de Funcionalidade Brasileiro Modificado (IFBrM), da TCQ (Tabela Conclusiva de Qualificadores), dos gatilhos de elevação e da jurisprudência dominante. Objetivo único é a defesa integral do requerente.
+Requisito do impedimento de longo prazo no BPC da pessoa com deficiência e regras da avaliação. O cálculo do instrumento (fórmulas, TCQ e análise do laudo) fica em `analise-bpc-loas`; o texto conferido da Portaria Conjunta 37/2026, em `references/PORTARIA-CONJUNTA-37-2026-CONFERIDA-DOU.md`.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, art. 203, V. Previsão constitucional.
+- CF, art. 203, V.
+- LOAS, art. 20, §2º (conceito), §6º (avaliação médica e social pelo INSS), §10 (prazo mínimo de 2 anos) e §16 (infectologista na perícia de pessoa com aids).
+- LOAS, art. 21, §5º (Lei 15.157/2025): dispensa de avaliação periódica no impedimento permanente, irreversível ou irrecuperável.
+- Decreto 6.214/2007, art. 16, §§3º e 3º-A (avaliação biopsicossocial e registro do CID).
+- Portaria Conjunta MDS/INSS 2/2015, com a redação da Portaria Conjunta MDS/MPS/INSS 37/2026.
+- Lei 13.146/2015, art. 2º; Decreto 6.949/2009.
 
-Lei 8.742/1993 (LOAS), art. 20, §2º. Conceito de impedimento de longo prazo. Impedimento físico, mental, intelectual ou sensorial que, em interação com barreiras, pode obstruir a participação plena e efetiva na sociedade em igualdade de condições.
+## Conceito
 
-Lei 8.742/1993, art. 20, §10. Prazo mínimo de 2 anos.
+Impedimento de natureza física, mental, intelectual ou sensorial, com efeitos por no mínimo 2 anos, que em interação com barreiras pode obstruir a participação plena e efetiva em igualdade de condições. Não se confunde com incapacidade laboral (Súmula 48 TNU; Tema 385 TNU). O prazo de 2 anos conta do início do impedimento até a data prevista para sua cessação (Súmula 48 TNU).
 
-Lei 13.146/2015 (Estatuto da PCD). Referência biopsicossocial da deficiência.
+## Avaliação
 
-Convenção sobre os Direitos das Pessoas com Deficiência (Decreto 6.949/2009). Base do modelo biopsicossocial.
+**Componentes.** Avaliação médica pela perícia médica federal e avaliação social pelo serviço social do INSS (LOAS, art. 20, §6º; Decreto 6.214/2007, art. 16, §3º).
 
-Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026). Avaliação biopsicossocial, TCQ, IFBrM.
+**Estrutura da Portaria Conjunta 2/2015.**
+- Fatores ambientais (e1 a e5): assistente social.
+- Atividades e participação (d1 a d9): d1 a d5 pelo médico (aprendizagem, tarefas gerais, comunicação, mobilidade, cuidado pessoal) e d6 a d9 pelo assistente social (vida doméstica, relações interpessoais, áreas principais da vida, vida comunitária).
+- Funções do corpo (b1 a b8): médico.
+- Qualificadores N (nenhuma), L (leve), M (moderada), G (grave) e C (completa), equivalentes a 0 a 4.
+- A Tabela Conclusiva de Qualificadores (Anexo IV) combina os três componentes. O Anexo IV não foi alterado pela Portaria Conjunta 37/2026.
 
-Portaria 34/2025 MDS. Atualiza critérios.
+O IF-BrA e o método Fuzzy pertencem à aposentadoria da LC 142 e não se aplicam ao BPC. O IFBrM não foi adotado normativamente pelo INSS.
 
-Portaria 37/2026 MDS. Revisões.
+**Elevação de Funções do Corpo (art. 7º).** O qualificador de Funções do Corpo sobe um nível, sem acumular, quando houver agravante de estrutura do corpo (I) ou prognóstico desfavorável (II). O inciso IV, incluído pela Portaria Conjunta 37/2026, manda informar se o impedimento é permanente, irreversível ou irrecuperável; os §§1º e 2º obrigam o perito a considerar barreiras, limitações e participação e definem os três termos.
 
-Lei 15.157/2025. Dispensa reavaliação em impedimento permanente, irreversível e irrecuperável.
-
-Portaria DPMF/INSS 19/2026. Teleperícia aplicável ao BPC.
-
-Decreto 6.214/2007, art. 16. Avaliação.
-
-CF/88, art. 203, V. Garantia constitucional do BPC à pessoa com deficiência e ao idoso sem meios de prover a própria manutenção.
-
-CF/88, art. 204. Diretrizes da assistência social, em especial a descentralização político-administrativa e a participação da população.
-
-## Conceito de impedimento de longo prazo
-
-Impedimento de natureza física, mental, intelectual ou sensorial. Duração mínima de 2 anos. Interação com barreiras sociais, ambientais, atitudinais, comunicacionais, tecnológicas. Obstrução da participação plena e efetiva em igualdade de condições. Não se confunde com incapacidade laboral da Lei 8.213/91.
-
-## Avaliação biopsicossocial
-
-Dois componentes. Primeiro, avaliação médica por perito do INSS. Segundo, avaliação social por assistente social do INSS. As duas somadas resultam na conclusão.
-
-Domínios funcionais. Sensoriais. Comunicação e relacionamento interpessoal. Mobilidade. Cuidados pessoais. Vida doméstica. Educação. Trabalho. Vida econômica. Socialização e vida comunitária.
-
-## TCQ. Tabela Conclusiva de Qualificadores
-
-Tabela oficial que combina qualificadores funcionais (médico) e qualificadores contextuais (social) para resultar em classificação conclusiva.
-
-Qualificadores. 0 (sem dificuldade), 1 (leve), 2 (moderada), 3 (grave), 4 (completa).
-
-Na Portaria Conjunta MDS/INSS nº 2/2015 os qualificadores vêm em letras. N (nenhuma), L (leve), M (moderada), G (grave) e C (completa), na mesma escala acima (auditoria 03/10/2026).
-
-Lei 15.157/2025. Deu nova redação ao §5º do art. 21 da LOAS, que dispensa da avaliação médico-pericial periódica o beneficiário com impedimento permanente, irreversível ou irrecuperável, salvo fundamentada suspeita de fraude ou erro. A supressão dos antigos incisos I e II do art. 8º veio da Portaria Conjunta 37/2026, que reescreveu esse artigo da Portaria Conjunta 2/2015 (auditoria 03/10/2026).
-
-## IFBrM (Índice de Funcionalidade Brasileiro Modificado, aplicado ao BPC)
-
-Diferente do IF-BrA aplicado à aposentadoria PCD pela LC 142/2013. Não aplica o método Fuzzy, usado apenas no IF-BrA. No BPC, soma-se avaliação médica + social.
+**Indeferimento (art. 8º, parágrafo único).** Alterações de funções ou estruturas que possam ser resolvidas em menos de 2 anos autorizam o indeferimento. Os antigos incisos I e II do art. 8º deixaram de existir pela substituição integral do artigo, com a marca (NR), e não por revogação expressa.
 
 ## Menores de 16 anos
 
-Critérios diferenciados. Avaliação considera o ambiente escolar, familiar e de desenvolvimento infantil. Particularidades da Portaria 34/2025 e jurisprudência. Indispensável preparo prévio do responsável e documentação médica.
+Avaliação pelos anexos próprios da Portaria Conjunta 2/2015, com comparação ao desenvolvimento esperado para a idade e atenção ao ambiente escolar e familiar. Reunir relatórios escolares, AEE, PEI e laudos terapêuticos.
 
-## Gatilhos de elevação e agravantes
+## Dispensa de reavaliação
 
-Primeiro, gatilho de elevação das funções do corpo, quando a combinação de qualificadores sugere impedimento mais grave.
+Impedimento permanente, irreversível ou irrecuperável dispensa a avaliação periódica, salvo fundada suspeita de fraude ou erro (LOAS, art. 21, §5º). O laudo deve responder ao art. 7º, IV, da Portaria Conjunta 2/2015. A definição de irreversível admite a limitação de acesso a tratamento e tecnologia ou o contexto ambiental como causa.
 
-Segundo, agravantes da estrutura do corpo, por exemplo amputação.
+## Fibromialgia
 
-Terceiro, prognóstico desfavorável, por exemplo doenças progressivas.
+A Lei 15.176/2025 incluiu o art. 1º-C na Lei 14.705/2023: a pessoa com fibromialgia pode ser equiparada à pessoa com deficiência, mediante avaliação biopsicossocial. No BPC, essa avaliação é a da Portaria Conjunta 2/2015. Ver `base-pcd-fibromialgia-lei15176`.
 
-Quarto, barreira ambiental significativa (ausência de transporte, moradia inadequada, acesso precário à saúde).
+## Teleperícia
 
-## Fibromialgia pela Lei 15.176/2025
+A Portaria Conjunta DPMF/INSS 19/2026 admite a teleperícia na perícia inicial e na reavaliação do BPC. Em caso que dependa de exame físico, requerer a avaliação presencial e registrar a recusa como cerceamento. Critérios em `analise-bpc-loas`.
 
-A fibromialgia foi reconhecida como deficiência pela Lei 15.176/2025. Cabe BPC e aposentadoria PCD quando preenchidos os demais requisitos. Acionar `aposentadoria-deficiencia` em casos de aposentadoria.
+## Cenários
 
-## Teleperícia no BPC
+- **Esquizofrenia com internações.** Funções mentais (b1) graves, prognóstico desfavorável e barreiras de apoio; prontuários de CAPS e internações.
+- **TEA em criança.** Anexos para menores de 16 anos; relatórios escolares e terapêuticos.
+- **Cegueira bilateral.** Funções sensoriais (b2) completas; barreiras de mobilidade e comunicação.
+- **Doença progressiva (ELA, Parkinson).** Prognóstico desfavorável eleva Funções do Corpo; pedir registro de impedimento irreversível.
+- **HIV.** Perícia com infectologista (art. 20, §16) e análise do estigma como barreira atitudinal.
+- **Lesão medular.** Agravante de estrutura do corpo; mobilidade e cuidado pessoal.
 
-Portaria DPMF/INSS 19/2026. Aplica-se a parte da avaliação biopsicossocial. Em casos complexos, requerer perícia presencial. Recusa pode ser questionada por cerceamento de defesa.
+## Refutação a argumentos típicos do INSS
 
-## Regra e estratégia pró-segurado
+- **Impedimento inferior a 2 anos.** O prazo é prognóstico, e não exige decurso efetivo (Súmula 48 TNU); juntar relatório com estimativa de duração.
+- **Aptidão para o trabalho.** Incapacidade não é requisito (Tema 385 TNU).
+- **Qualificadores baixos em atividades.** Confrontar com prontuários e com o desempenho no ambiente habitual.
+- **Avaliação social ignorada.** Súmula 80 TNU.
+- **Fibromialgia não é deficiência.** Lei 14.705/2023, art. 1º-C: cabe a avaliação biopsicossocial.
+- **Estabilização clínica.** Estabilidade não remove barreiras nem limitações de participação.
+- **Impedimento leve.** Conferir a elevação do art. 7º e os fatores ambientais antes de aceitar a classificação.
 
-A regra geral é o impedimento devidamente comprovado com documentação médica robusta e avaliação social fundamentada.
+## Roteiro pró-segurado
 
-Primeiro, reunir todos os laudos, prontuários, exames e relatórios.
+1. Reunir laudos, prontuários, exames e relatórios com estimativa de duração.
+2. Preparar o requerente (`orientacao-cliente-pericia`).
+3. Pedir ao médico assistente a descrição de agravantes, prognóstico e permanência.
+4. Conferir o laudo pela TCQ (`analise-bpc-loas`).
+5. Em impedimento permanente, invocar o art. 21, §5º, da LOAS.
+6. Mandado de segurança por mora tramita na Vara Federal comum; o JEF não processa MS (Lei 10.259/2001, art. 3º, §1º, I).
 
-Segundo, orientar o requerente sobre a avaliação biopsicossocial (acionar `orientacao-cliente-pericia`).
+## Integração
 
-Terceiro, explorar gatilhos de elevação e agravantes.
+Requisitos em `base-bpc-loas-requisitos`; renda em `base-bpc-renda-per-capita-miserabilidade` e `bpc-renda-grupo-familiar`; instrumento em `analise-bpc-loas`; relatório médico em `base-modelo-relatorio-medico-bpc-loas-deficiente`; procedimentos em `base-bpc-aposentadoria-pcd-procedimentos`; aposentadoria PCD em `base-aposentadoria-pcd-lc142`; fungibilidade em `base-fungibilidade-previdenciaria`; portarias em `base-portarias-dpmf-inss-hub`.
 
-Quarto, em menor de 16 anos, documentação escolar e desenvolvimental.
+## Lei Brasileira de Inclusão como fundamento obrigatório
 
-Quinto, em impedimento permanente, invocar Lei 15.157/2025.
+Acionar sempre `base-lbi-inclusao-barreiras-lei13146`. Percorrer as seis barreiras do art. 3º, IV, da Lei 13.146/2015 (urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica), com fato concreto e documento por ID, e cobrar os quatro incisos do art. 2º, §1º, na avaliação e no relatório. O §1º do art. 7º da Portaria Conjunta 2/2015, na redação de 2026, incorpora essa lógica à perícia do BPC.
 
-Sexto, em Teleperícia, avaliar se há cerceamento.
+## Portaria Conjunta MDS/MPS/INSS 37/2026
 
-Sétimo, em recurso, impugnar TCQ com crítica técnica.
-
-Em MS por mora, competência da Vara Federal comum (MS não tramita no JEF, art. 3º, §1º, I, da Lei 10.259/2001).
+DOU de 02/04/2026, edição 63, seção 1, página 46, em vigor na publicação. Altera os arts. 7º e 8º da Portaria Conjunta 2/2015 e acrescenta quesito aos Anexos I e II; o Anexo IV permanece. Redação literal e leitura pró-segurado em `references/PORTARIA-CONJUNTA-37-2026-CONFERIDA-DOU.md`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
-
-## Integração com outras skills
-
-Requisitos estruturais em `base-bpc-loas-requisitos`.
-Renda e miserabilidade em `base-bpc-renda-per-capita-miserabilidade`.
-Análise técnica da TCQ e domínios em `analise-bpc-loas`.
-Orientação do cliente em `orientacao-cliente-pericia`.
-Aposentadoria PCD em `base-aposentadoria-pcd-lc142`.
-Procedimentos em `base-bpc-aposentadoria-pcd-procedimentos`.
-Peça em `peticao-previdenciaria`.
-Precedentes em `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, impedimento de longo prazo é diferente de incapacidade laboral.
-
-Segundo, avaliação biopsicossocial é médica + social, ambas obrigatórias.
-
-Terceiro, TCQ deve refletir fielmente a realidade. Crítica técnica em recurso.
-
-Quarto, Lei 15.157/2025 dispensa reavaliação em impedimento permanente.
-
-Quinto, fibromialgia foi reconhecida como deficiência pela Lei 15.176/2025.
-
-Sexto, menor de 16 anos exige critérios diferenciados.
-
-Sétimo, Teleperícia tem limites. Recusa pode ser legítima.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## O que NÃO está nesta skill
-
-Requisitos estruturais estão em `base-bpc-loas-requisitos`. Renda em `base-bpc-renda-per-capita-miserabilidade`. Aposentadoria PCD LC 142 em `base-aposentadoria-pcd-lc142`. Procedimentos em `base-bpc-aposentadoria-pcd-procedimentos`.
-
-## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
-
-Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
-
-Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
-
-Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
-
-O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
-
-## Portaria Conjunta MDS/MPS/INSS 37/2026, conferida no DOU (Onda 90)
-
-CONFERIDA EM FONTE OFICIAL em 26/07/2026. DOU de 02/04/2026, Edição 63, Seção 1, página 46. Entrou em vigor na data da publicação (art. 3º). Altera a Portaria Conjunta MDS/INSS 2/2015.
-
-O que mudou. O art. 7º ganhou o inciso IV (informar se o impedimento é permanente, irreversível ou irrecuperável), o § 1º (o Perito Médico DEVE observar as alterações corporais na perspectiva interacional e multidimensional, considerando barreiras ambientais, limitações funcionais, desempenho de atividades e restrições de participação, além da disponibilidade de produtos e tecnologias para inclusão social) e o § 2º com as definições de permanente, irreversível e irrecuperável. O art. 8º foi reescrito por inteiro. Os Anexos I e II ganharam uma terceira pergunta.
-
-O ANEXO IV NÃO FOI ALTERADO. A Tabela Conclusiva de Qualificadores segue íntegra e o novo art. 8º continua remetendo a ela. A estratégia da base apoiada no Anexo IV permanece válida.
-
-CORREÇÃO DE RIGOR. A portaria NÃO tem dispositivo revogatório expresso. Os antigos incisos I e II do art. 8º desapareceram por SUBSTITUIÇÃO INTEGRAL do artigo com a marca (NR), não por revogação. Em peça, escrever que o art. 8º passou a vigorar com nova redação, jamais que os incisos foram revogados.
-
-Ganho pró-segurado. O § 1º do art. 7º incorpora a lógica da LBI à norma administrativa que rege a perícia do BPC, e a definição de irreversível do inciso II admite que a irreversibilidade decorra da limitação de acesso a tratamentos e tecnologias ou do contexto ambiental. Cautela com o parágrafo único do art. 8º, que autoriza indeferimento quando as alterações puderem ser resolvidas em menos de dois anos.
-
-Redação literal de todos os dispositivos, do quesito acrescido aos Anexos I e II e a leitura pró-segurado em cinco pontos em `references/PORTARIA-CONJUNTA-37-2026-CONFERIDA-DOU.md`.
