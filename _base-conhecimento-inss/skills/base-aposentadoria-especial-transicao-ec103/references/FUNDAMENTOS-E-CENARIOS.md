@@ -4,27 +4,27 @@
 
 EC 103/2019, art. 21. Regra de transição da aposentadoria especial por pontos. Exige tempo mínimo de 15, 20 ou 25 anos de atividade especial. Pontuação (idade mais tempo de contribuição) de 66, 76 e 86 pontos respectivamente. A IN 128/2022, art. 262, aplica essa regra ao filiado até 13/11/2019. O Decreto 3.048/99, art. 188-P, caput, ressalva a esse segurado o direito de opção pela aposentadoria do art. 64 [CONFERIDO, norma_inss e Planalto, 04/10/2026]. Não foi objeto da ADI 6309 e permanece em vigor.
 
-EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial, que a IN 128/2022, art. 260, aplica ao filiado a partir de 14/11/2019. Exige exposição de 15, 20 ou 25 anos e carência. As idades de 55, 58 e 60 anos das alíneas a, b e c foram declaradas inconstitucionais na ADI 6309 (STF, Plenário, j. 03/06/2026, Red. p/ acórdão Min. André Mendonça, 6 votos a 5, acórdão no DJe de 02/10/2026) [CONFERIDO, inteiro teor, Onda 170]. O Decreto 3.048/99, art. 64, I a III, e a IN 128/2022, art. 260, I a III, ainda reproduziam essas idades em 04/10/2026. A opção do filiado anterior à reforma por esta regra, agora sem idade, é tese a sustentar, detalhada no alerta de alcance da SKILL.md.
+EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial, que a IN 128/2022, art. 260, aplica ao filiado a partir de 14/11/2019. Exige exposição de 15, 20 ou 25 anos e carência. As idades de 55, 58 e 60 anos das alíneas a, b e c foram declaradas inconstitucionais na ADI 6309 (STF, Plenário, j. 03/06/2026, Red. p/ acórdão Min. André Mendonça, 6 votos a 5, acórdão no DJe de 02/10/2026) [CONFERIDO, inteiro teor]. O Decreto 3.048/99, art. 64, I a III, e a IN 128/2022, art. 260, I a III, ainda reproduziam essas idades em 04/10/2026. A opção do filiado anterior à reforma por esta regra, agora sem idade, é tese a sustentar, detalhada no alerta de alcance da SKILL.md.
 
 EC 103/2019, art. 25, §2º. Permite a conversão de tempo especial em comum para períodos cumpridos até 13 de novembro de 2019 e a veda para o tempo posterior. Declarado constitucional na ADI 6309, por 9 votos a 2.
 
 Lei 8.213/91, art. 57. Disciplina a aposentadoria especial.
 
-Lei 8.213/91, art. 57, §3º. Considera-se especial o tempo de trabalho permanente em exposição a agentes nocivos acima dos limites de tolerância, de forma habitual e não ocasional.
+Lei 8.213/91, art. 57, §3º. Exige a comprovação do tempo de trabalho permanente, não ocasional nem intermitente, em condições especiais que prejudiquem a saúde ou a integridade física.
 
 Lei 8.213/91, art. 57, §8º. Veda o retorno à atividade especial após a concessão.
 
-Decreto 3.048/99, arts. 64 a 70. Regulamenta a aposentadoria especial.
+Decreto 3.048/99, arts. 64 a 69 e 188-P. Regulamenta a aposentadoria especial (o art. 70 foi revogado pelo Decreto 10.410/2020).
 
 ## 2. Tabela de pontos da transição (art. 21 EC 103)
 
-Risco alto (15 anos de efetiva exposição, agentes de maior nocividade). Pontuação FIXA de 66 pontos (art. 21, I, da EC 103/2019).
+Atividade de 15 anos (mineração subterrânea em frente de produção). Pontuação fixa de 66 pontos (art. 21, I, da EC 103/2019).
 
-Risco médio (20 anos de efetiva exposição, agentes de nocividade intermediária). Pontuação FIXA de 76 pontos (art. 21, II, da EC 103/2019).
+Atividade de 20 anos (amianto; mineração subterrânea afastada da frente de produção). Pontuação fixa de 76 pontos (art. 21, II, da EC 103/2019).
 
-Risco baixo (25 anos de efetiva exposição, agentes de menor nocividade relativa). Pontuação FIXA de 86 pontos (art. 21, III, da EC 103/2019).
+Atividade de 25 anos (demais agentes). Pontuação fixa de 86 pontos (art. 21, III, da EC 103/2019).
 
-**CORREÇÃO DE AUDITORIA (Onda 121, 04/09/2026).** A redação anterior deste arquivo afirmava que a pontuação do art. 21 "progredia 1 ponto por ano". Isso é FALSO e foi corrigido após apontamento do escritório, conferido no texto da EC 103/2019 no Planalto. O art. 21 tem apenas os incisos I a III, com 66, 76 e 86 pontos, e os §§ 1º a 3º, que tratam da apuração de idade e tempo em dias, do valor do benefício e dos servidores estaduais. Não existe dispositivo de progressão no art. 21. A pontuação da aposentadoria especial de transição é FIXA, e o PRISMA confirma ("Pontuação exigida: 86 anos" em DER de 2026). A progressão anual de 1 ponto pertence ao art. 15 (regra de pontos da aposentadoria por tempo de contribuição, até 100 pontos para a mulher e 105 para o homem), e a progressão de 6 meses ao art. 16 (idade progressiva). Confundir os regimes leva a exigir do segurado pontos que a Constituição não exige e a adiar indevidamente a DER.
+A pontuação do art. 21 é fixa. O artigo tem apenas os incisos I a III e os §§ 1º a 3º (apuração de idade e tempo em dias, valor do benefício e servidores), sem progressão. A progressão anual de 1 ponto é do art. 15, e a de 6 meses, do art. 16.
 
 ## 3. Cenários operacionais pró-segurado
 
@@ -34,27 +34,27 @@ Direito adquirido à aposentadoria especial pré-reforma. Acionar `base-aposenta
 
 ### Cenário 2. Metalúrgico com 22 anos em 13/11/2019
 
-Se continuar exposto até 25 anos e atingir 86 pontos (idade mais tempo), elegível pela transição por pontos. Se preferir, converte em comum pelo fator 1,40 só os 22 anos cumpridos até 13/11/2019; os anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras (auditoria 03/10/2026). Comparação obrigatória.
+Se continuar exposto até 25 anos e atingir 86 pontos (idade mais tempo), elegível pela transição por pontos. Se preferir, converte em comum pelo fator 1,40 apenas os 22 anos cumpridos até 13/11/2019; os anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras. Comparação obrigatória.
 
 ### Cenário 3. Enfermeira com 18 anos de exposição a biológicos em 13/11/2019
 
-Tempo especial de risco médio (20 anos). Para transição por pontos, precisa de 20 anos de exposição mais 76 pontos. Se atingir em 2024, elegível. Se não, converter períodos pré-reforma e aposentar por regra comum. Acionar `base-especial-agentes-biologicos`.
+Agente biológico é atividade de 25 anos (Portaria DIRBEN 991/2022, art. 285, III). Para a transição, precisa de 25 anos de exposição e 86 pontos. Se não atingir, converter os períodos até 13/11/2019 (fator 1,20) e aposentar por regra comum. Acionar `base-especial-agentes-biologicos`.
 
 ### Cenário 4. Eletricitário com 10 anos em 13/11/2019
 
-Insuficiente para direito adquirido. Se continuar exposto até 15 anos (risco alto) e atingir 66 pontos, elegível pela transição. Acionar `base-especial-eletricidade-periculosidade`.
+Eletricidade é atividade de 25 anos. Insuficiente para direito adquirido; para a transição, 25 anos de exposição e 86 pontos, com o risco de a periculosidade não ser aceita após a EC 103. Acionar `base-especial-eletricidade-periculosidade`.
 
 ### Cenário 5. Operador de motosserra com 20 anos em 13/11/2019
 
-Exposição a vibração como risco médio. Transição por 76 pontos. Acionar `base-especial-vibracao`.
+Vibração é atividade de 25 anos. Transição com 25 anos de exposição e 86 pontos. Acionar `base-especial-vibracao`.
 
 ### Cenário 6. Químico industrial exposto a hidrocarbonetos
 
-Agente classificado como de alto risco (cancerígeno se ativo na LINACH). Acionar `base-especial-agentes-quimicos` e `base-especial-epi` para refutação.
+Atividade de 25 anos. Se o agente for cancerígeno do Grupo 1 da LINACH com CAS e previsto no Anexo IV, avaliação qualitativa (IN 128/2022, art. 298). Acionar `base-especial-agentes-quimicos` e `base-especial-epi` para refutação.
 
 ### Cenário 7. Frentista exposto a benzeno
 
-Agente cancerígeno LINACH. Aposentadoria especial qualitativa. Tema 1090 STJ afasta neutralização por EPI. Acionar `base-especial-agentes-quimicos`.
+Agente cancerígeno LINACH. Avaliação qualitativa (Tema 170 da TNU). Os EDcl no REsp 2.116.343/RJ (Tema 1090 do STJ) reconhecem os cancerígenos como hipótese excepcional quanto ao EPI. Acionar `base-especial-agentes-quimicos`.
 
 ### Cenário 8. Conversão de tempo especial em comum
 
@@ -62,13 +62,13 @@ Segurado com 18 anos de atividade especial (risco baixo) em 13/11/2019. Convers�
 
 ## 4. Agentes nocivos e classificação de risco
 
-Quinze anos, pelo art. 285, I, da Portaria DIRBEN 991/2022. Mineração subterrânea em frentes de produção, com exposição à associação de agentes físicos, químicos ou biológicos (auditoria 03/10/2026).
+Quinze anos, pelo art. 285, I, da Portaria DIRBEN 991/2022. Mineração subterrânea em frentes de produção, com exposição à associação de agentes físicos, químicos ou biológicos.
 
-Vinte anos, pelo art. 285, II. Exposição ao amianto e mineração subterrânea afastada das frentes de produção, com associação de agentes (auditoria 03/10/2026).
+Vinte anos, pelo art. 285, II. Exposição ao amianto e mineração subterrânea afastada das frentes de produção, com associação de agentes.
 
-Vinte e cinco anos, pelo art. 285, III, para as demais situações, entre elas cancerígenos da LINACH, radiações ionizantes, sílica, agentes biológicos, ruído, calor e vibração (auditoria 03/10/2026).
+Vinte e cinco anos, pelo art. 285, III, para as demais situações, entre elas cancerígenos da LINACH, radiações ionizantes, sílica, agentes biológicos, ruído, calor e vibração.
 
-A classificação específica depende do quadro anexo ao Decreto 3.048/99 e da jurisprudência consolidada. Em caso de dúvida, aplicar a interpretação mais favorável ao segurado.
+A regra é de 25 anos; os tempos de 15 e 20 anos ficam restritos à mineração subterrânea e ao amianto (Anexo IV do Decreto 3.048/99).
 
 ## 5. Documentos essenciais
 
@@ -76,9 +76,7 @@ PPP (Perfil Profissiográfico Previdenciário) de cada empregador.
 LTCAT (Laudo Técnico das Condições do Ambiente de Trabalho).
 SB-40 e DSS-8030 para períodos anteriores à obrigatoriedade do PPP.
 CAT (Comunicação de Acidente de Trabalho) se houver nexo acidentário.
-NR-15 e quadro de anexos.
 PGR (Programa de Gerenciamento de Riscos).
-NR-1 item 1.5.7 e plano de ação.
 Histórico de saúde do segurado.
 
 ## 6. Conversão de tempo especial
@@ -107,6 +105,6 @@ Primeiro, sempre iniciar pela auditoria do PPP. Sem PPP auditado, não há cálc
 
 Segundo, converter mentalmente o tempo especial em comum e simular aposentadoria por tempo comum pós-reforma. Comparar com aposentadoria especial pura e com direito adquirido se houver.
 
-Terceiro, em caso de indeferimento administrativo por suposta ausência de habitualidade, invocar o Enunciado 11, I, do CRPS e, em agentes biológicos, os Temas 211 e 205 da TNU (auditoria 03/10/2026).
+Terceiro, em caso de indeferimento administrativo por suposta ausência de habitualidade, invocar o art. 65 do Decreto 3.048/99 e, em agentes biológicos, os Temas 205 e 211 da TNU.
 
 Quarto, em caso de negativa por EPI eficaz, invocar Tema 1090 STJ e Tema 555 STF. Acionar `base-especial-epi`.

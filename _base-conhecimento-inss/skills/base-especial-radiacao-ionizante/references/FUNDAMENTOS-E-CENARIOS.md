@@ -1,125 +1,30 @@
-# Radiação Ionizante. Fundamentos e Cenários
+# Radiação ionizante. Fundamentos e cenários
 
-## 1. Conceito operacional
+## 1. Fundamento legal
 
-Radiação ionizante é agente físico nocivo de avaliação qualitativa. Anexo IV Decreto 3.048/99 enquadra exposição habitual e permanente.
+- CF, art. 201, § 1º, II; Lei 8.213/91, arts. 57 e 58.
+- Decreto 53.831/64, código 1.1.4; Decreto 83.080/79, Anexo I, código 1.1.3; Decretos 2.172/97 e 3.048/99, Anexo IV, código 2.0.3 (textos no SKILL.md).
+- Decreto 3.048/99, art. 68, § 4º (cancerígenos): redação do Decreto 8.123/2013 (presença no ambiente, com possibilidade de exposição, basta) e redação do Decreto 10.410/2020 (avaliação qualitativa, com descaracterização se as medidas de controle eliminarem a nocividade).
+- IN 128/2022: art. 294 (qualitativo até 05/03/1997; Anexo 5 da NR-15 depois); art. 295 (NHO-05 para raios X em radiologia; CNEN NN-3.01 nos demais casos); art. 298 (cancerígenos da LINACH, Portaria Interministerial 9/2014).
+- Até 28/04/1995, a categoria também enquadra: médicos-radiologistas ou radioterapeutas e técnicos de raios X (Decreto 83.080/79, Anexo II, código 2.1.3) e técnicos de radioatividade (código 2.1.2).
 
-## 2. Fundamento constitucional
+## 2. Cenários favoráveis
 
-CF/88, art. 201 §1º.
+- **Técnico ou operador de raios X em hospital ou clínica.** Enquadramento qualitativo em todo o período, na linha do PUIL 0500215-20.2019.4.05.8101.
+- **Médico radiologista, hemodinamicista ou ortopedista com uso habitual de fluoroscopia.** Exige prova da habitualidade da exposição na sala.
+- **Medicina nuclear e radioterapia.** Manipulação de fontes radioativas; código 2.0.3, alíneas "d" e "e".
+- **Gamagrafia e radiografia industrial.** Fins industriais, código 2.0.3, alínea "e".
+- **Mineração de minerais radioativos.** Código 2.0.3, alíneas "a" a "c".
 
-CF/88, art. 7º XXII.
+## 3. Cenários de risco
 
-CF/88, art. 6º.
+- Função administrativa ou de recepção em clínica de imagem sem acesso às salas.
+- Exposição eventual (plantão esporádico em centro cirúrgico com arco cirúrgico).
+- Períodos a partir de 01/07/2020 com prova de eliminação da nocividade por medidas de controle (art. 68, § 4º, redação do Decreto 10.410/2020).
 
-## 3. Fundamento legal
+## 4. Prova
 
-Lei 8.213/91, arts. 57 e 58.
-
-Lei 7.394/85.
-
-NR-15, Anexo 5.
-
-CNEN-NN-3.01.
-
-Decreto 3.048/99, Anexo IV.
-
-IN 128/2022.
-
-## 4. Marco jurisprudencial central
-
-### Súmula 198 TFR
-
-Categoria profissional.
-
-### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
-
-O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
-
-### Tema 174 TNU
-
-Metodologia.
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Técnico raios X
-
-Especial.
-
-### Cenário B. Médico radiologista
-
-Especial.
-
-### Cenário C. Medicina nuclear
-
-Especial.
-
-### Cenário D. Radioterapia
-
-Especial.
-
-### Cenário E. Tomografia
-
-Especial.
-
-### Cenário F. Densitometria
-
-Análise específica.
-
-### Cenário G. Auxiliar de radiologia
-
-Especial.
-
-## 6. Cenários limitados
-
-### Cenário H. Sem exposição habitual
-
-Não enquadra.
-
-### Cenário I. Profissional administrativo
-
-Sem nocividade.
-
-### Cenário J. Sem comprovação
-
-Análise difícil.
-
-## 7. Metodologia
-
-Primeiro, identificar exposição.
-
-Segundo, comparar com Anexo IV.
-
-Terceiro, qualitativa, não quantitativa.
-
-Quarto, habitualidade.
-
-Quinto, requerimento ou ação.
-
-Sexto, monitoramento.
-
-## 8. Riscos processuais
-
-Risco de exigência quantitativa.
-
-Risco de PPP deficiente.
-
-Risco de empresa extinta.
-
-Risco de EPI alegado eficaz.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, perícia técnica.
-
-Segundo, fundamentação Anexo IV.
-
-Terceiro, recurso ou ação.
-
-Quarto, monitoramento.
-
-Quinto, dialeticidade.
-
-## 10. Integração prática
-
-`auditoria-ppp`, `base-especial-calor-nho06`, `base-especial-frio-camara-frigorifica`, `base-especial-penosidade-enfermagem-petroleiro`, `base-especial-categoria-profissional-pre1995`, `peticao-previdenciaria`.
+1. PPP com fator "radiação ionizante", setor, descrição das tarefas e responsável técnico (Tema 208 da TNU).
+2. Histórico de dosimetria individual: comprova a exposição, ainda que a dose fique abaixo do limite.
+3. Plano de proteção radiológica e licença da CNEN ou vigilância sanitária do estabelecimento.
+4. Perícia judicial, inclusive por similaridade.

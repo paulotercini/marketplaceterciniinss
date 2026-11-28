@@ -3,62 +3,40 @@ name: base-especial-vibracao
 description: "Base de teses pró-segurado sobre vibração em aposentadoria especial. Use SEMPRE que mencionar vibração, vibração ocupacional, vibração de corpo inteiro, VCI, vibração mão-braço, VMB, motorista de caminhão, caminhoneiro, motorista de ônibus, tratorista, operador de máquina pesada, britadeira, retroescavadeira, rompedor, motosserra, bate-estacas, Parecer 00212/2024 CONJUR-MTP, NHO-09, NHO-10, ISO 2631, ISO 5349, Fundacentro, A(8), aren, VDV, Anexo 8 NR-15, Decreto 2.172/97, Decreto 3.048/99 Anexo IV, IAC 5 TRF4, Tema 298 TNU, Tema 211 TNU, Tema 213 TNU, Tema 1090 STJ, dosimetria vibração, limites de exposição, Frederico Amado, Hugo Goes, Fábio Zambitte, Wladimir Novaes, IBDP. Traz critérios metrológicos, refutação de exigência indevida e roteiro pró-segurado. NÃO use para ruído, químicos ou biológicos. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria e base-especial-epi."
 ---
 
-# Base Temática. Vibração em Aposentadoria Especial
+# Vibração em aposentadoria especial
 
 ## Escopo
 
-Skill de referência exclusiva para defesa do segurado exposto a vibração ocupacional, tanto de corpo inteiro quanto de mão-braço, em aposentadoria especial. Complementa `auditoria-ppp`, `base-especial-epi` e `peticao-previdenciaria`. Não trata de ruído, agentes químicos ou biológicos.
+Defesa do segurado exposto a vibração de corpo inteiro (VCI) ou de mãos e braços (VMB). Fundamentos e cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Postura
+## Tese da TNU por período
 
-Exclusivamente pró-segurado. A skill rejeita a alegação adversária de ausência de parâmetro quantitativo e opera com a inversão do ônus da prova em caso de PPP omisso.
+PUIL 0001365-66.2020.4.03.6306/SP (TNU, Rel. Juiz Federal Caio Moyses de Lima), tese fixada:
 
-## Fluxo de trabalho
+| Período | Critério |
+|---|---|
+| Até 05/03/1997 | Qualitativo, códigos 1.1.5 do Decreto 53.831/64 e 1.1.4 do Anexo I do Decreto 83.080/79, para operação de perfuratrizes e marteletes pneumáticos; ou quantitativo, código 1.1.5, para equipamento com velocidade acima de 120 golpes por minuto |
+| Desde 06/03/1997 | Qualitativo, códigos 2.0.0 e 2.0.2 do Anexo IV dos Decretos 2.172/97 e 3.048/99, apenas para perfuratrizes e marteletes pneumáticos |
+| Desde 14/08/2014 | Quantitativo, para qualquer atividade, acima dos limites do Anexo 8 da NR-15 (Portaria MTE 1.297/2014), pelas NHO-09 e NHO-10 da Fundacentro: VMB com aren acima de 5 m/s²; VCI com aren acima de 1,1 m/s² ou VDVR acima de 21,0 m/s^1,75 |
 
-1. Leia este SKILL.md integralmente
-2. Leia `references/FUNDAMENTOS-E-CENARIOS.md` para o marco normativo, NHO-09, NHO-10, Anexo 8 da NR-15, ISO 2631 e ISO 5349, e os cenários por função
-3. Leia `references/JURISPRUDENCIA-E-REFUTACAO.md` para teses verificadas e contra-argumentação ao INSS
-4. Ao redigir peça, acione `peticao-previdenciaria`
-5. Ao auditar o PPP concreto, acione `auditoria-ppp`
-6. Ao impugnar alegação de EPI eficaz, acione `base-especial-epi`
+Consequência. Para motorista, tratorista e operador de máquinas, a vibração apenas enquadra o período desde 14/08/2014, com medição acima do limite de exposição. O nível de ação da NHO-09 não basta. Entre 06/03/1997 e 13/08/2014, a TNU restringe o enquadramento às perfuratrizes e marteletes; sustentar perícia (Súmula 198 do TFR) é tese residual.
 
-## Síntese pró-segurado
+## Outras teses
 
-A aferição da vibração ocupacional é normatizada pela NHO-09 (vibração de corpo inteiro) e pela NHO-10 (vibração mão-braço) da Fundacentro, com base nas normas ISO 2631 e ISO 5349. Os Decretos 2.172/97 e 3.048/99 não trazem limites numéricos expressos para vibração, o que historicamente gerou controvérsia administrativa. O Parecer 00212/2024 CONJUR-MTP consolidou a posição favorável ao uso da NHO-09 e NHO-10 como parâmetros técnicos, com acolhimento pela TNU em superação da antiga tese de ausência de limite.
-
-O Tema 211 TNU firma que a habitualidade não exige permanência contínua. O Tema 213 TNU impõe standard probatório atenuado para o segurado. O Tema 1090 STJ afasta o efeito neutralizante do EPI em hipóteses excepcionais, aplicáveis à vibração quando houver comprovação de ineficácia real.
-
-## Regras rígidas de redação
-
-Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
-
-Segundo, nunca admitir que a ausência de limite expresso nos Decretos 2.172/97 e 3.048/99 afasta o enquadramento. A remissão à NR-15 e às NHO da Fundacentro é pacífica.
-
-Terceiro, jurisprudência somente após verificação em fonte primária oficial.
-
-Quarto, quando o PPP for omisso, acionar `retificacao-ppp` e requerer perícia técnica, porque o PPP deve refletir o LTCAT e as atividades do trabalhador (art. 58, §§ 1º e 4º, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 213/TNU, que trata da eficácia do EPI e não inverte o ônus da prova).
+1. **Permanência.** O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço. O Tema 211 da TNU é específico de biológicos.
+2. **EPI.** Luvas antivibração e assentos com amortecimento atenuam pouco a exposição em campo. Impugnar a anotação de EPI eficaz pelos itens II e III do Tema 1090 do STJ (`base-especial-epi`).
+3. **Até 28/04/1995.** Motorista de ônibus e caminhão enquadra-se por categoria (código 2.4.4 do Decreto 53.831/64; `base-especial-categoria-profissional-pre1995`).
+4. **PPP omisso.** O PPP deve refletir o LTCAT (Lei 8.213/91, art. 58, §§ 1º e 4º). Pedir retificação (`retificacao-ppp`), exibição do LTCAT ou perícia.
 
 ## Hub de portarias administrativas
 
 As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## Doutrina reconhecida
-
-Frederico Amado, em Direito Previdenciário, sustenta o uso das NHO da Fundacentro como critério técnico-legal para vibração. Hugo Goes, em Manual, reforça que a ausência de limite numérico no regulamento previdenciário não pode prejudicar o segurado. Fábio Zambitte Ibrahim, em Curso, defende a integração sistemática com a NR-15. Wladimir Novaes Martinez enfrenta a dinâmica do risco em motoristas, tratoristas e operadores de máquinas. O IBDP, em teses institucionais, sustenta a superação de barreiras metrológicas indevidas, com ônus probatório invertido em favor do segurado.
-
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
+
 ## Integração com outras skills
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao auditar PPP, acione `auditoria-ppp`.
-Ao refutar EPI eficaz, acione `base-especial-epi`.
-Ao discutir cerceamento de defesa por ausência de perícia, acione `defesa-probatoria-especial`.
-Ao verificar precedentes vinculantes, acione `precedentes-previdenciarios`.
-Ao pedir retificação do PPP à empresa, acione `retificacao-ppp`.
-
-## O que NÃO está nesta skill
-
-Não há regras sobre ruído, eletricidade, periculosidade, calor, químicos ou biológicos. Cada um tem skill específica.
+Peça em `peticao-previdenciaria`. PPP em `auditoria-ppp`. EPI em `base-especial-epi`. Cerceamento de defesa em `defesa-probatoria-especial`. Precedentes em `precedentes-previdenciarios`. Retificação do PPP em `retificacao-ppp`. Ruído do mesmo posto em `base-especial-ruido`.

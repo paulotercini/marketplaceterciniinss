@@ -3,9 +3,9 @@ name: base-tema383-tnu-fundacentro-epi-biologicos
 description: "Tema 383/TNU sobre EPI e agentes biológicos, JULGADO em 24/09/2026 (tese literal, campos 13.3, 13.7, 14.2 e 15.9 do PPP, notificação e ação trabalhista com pedido certo, prova sem PPP), ancorado nos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA da Fundacentro (Ofício 221/2025/PRES de 30/10/2025). Use SEMPRE que mencionar Tema 383 TNU, agentes biológicos aposentadoria especial, EPI biológico, EPI eficaz biológico, Parecer Fundacentro 2/2025, Parecer Fundacentro 3/2025, SLEP, SATP, FPA, FPMR, N95 PFF2, ensaio vedação respirador, Lenhart 2004 opinião especialistas, ALARP NBR IEC 31010, hierarquia controle NIOSH, eficácia versus efetividade EPI, Portaria MTP 672/2021, PPR Fundacentro 2016, NR-32, Cartilha ANVISA 2009, TIAN 2022 metanálise, VIMIEIRO 2025, ARAÚJO 2023 hepatites, BELLINI 2022, profissional saúde, ACS Aedes aegypti, Covid frente saúde. Cruza com base-especial-agentes-biologicos, base-especial-epi, defesa-probatoria-especial, auditoria-ppp, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
-# Tema 383/TNU. Pareceres Fundacentro sobre EPI e Agentes Biológicos
+# Tema 383 da TNU e Pareceres da Fundacentro sobre EPI e agentes biológicos
 
-## 0. Tese firmada (Onda 177)
+## 0. Tese firmada
 
 Tese literal conferida em 10/10/2026 na página oficial do tema no CJF [CONFERIDO], https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/temas-representativos/tema-383. PEDILEF 1004356-32.2019.4.01.3802/MG, relatora Juíza Federal Lilian Oliveira da Costa Tourinho, relator para o acórdão Juiz Federal Rodrigo Rigamonte Fonseca. Afetado em 25/06/2025, julgado em 24/09/2026 e acórdão publicado em 28/09/2026. A página não registrava trânsito em julgado na conferência.
 
@@ -36,277 +36,51 @@ A notificação à empregadora pede o setor no campo 13.3 e os procedimentos no 
 
 A inicial requer prova oral e pericial dirigida aos fatos do item I e demonstra por que o PPP não basta (`especificacao-provas`). Indeferida a prova e julgado o pedido pela insuficiência do PPP, o recurso argui o cerceamento de defesa e impugna especificamente esse fundamento da sentença (`base-cpc-nulidades-cerceamento`). Questão probatória não suscitada no momento próprio preclui, e o cerceamento não se demonstra depois.
 
-## 1. Quando acionar esta skill
+## 1. Quando usar
 
-Acione SEMPRE que houver discussão sobre EPI eficaz contra agentes biológicos em aposentadoria especial. Use em casos de profissionais da saúde, agentes comunitários de saúde (ACS), agentes de combate a endemias (ACE), técnicos de enfermagem, médicos, enfermeiros, fisioterapeutas, dentistas, auxiliares de saúde bucal, coletores de lixo hospitalar, manipuladores de resíduos infectantes, trabalhadores de laboratórios clínicos, biólogos, biomédicos, agentes funerários, policiais, agentes prisionais e quaisquer trabalhadores expostos a agentes biológicos.
+Discussão de EPI eficaz contra agente biológico em tempo especial: profissionais de saúde em hospital (item I do Tema 383), e também laboratório, odontologia, coleta de resíduos de serviço de saúde, agente comunitário de saúde e agente de combate a endemias. Para estes últimos, o Tema 383 não se aplica diretamente, e a tese segue os Temas 205, 211 e 213 da TNU e o Tema 1090 do STJ, com os pareceres da Fundacentro como prova técnica.
 
-A skill é fonte primária para refutar a tese de que o EPI declarado eficaz no PPP descaracteriza a especialidade da atividade exposta a agentes biológicos. A Fundacentro firmou tese pró-segurado contundente nos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA.
+## 2. Pareceres da Fundacentro
 
-## 2. Marco normativo
+**Origem.** Ofício Eletrônico nº 221/2025/GABINETE PRES/PRES-FUNDACENTRO, assinado em 30/10/2025 pelo Presidente da Fundacentro, em resposta à relatora do PEDILEF 1004356-32.2019.4.01.3802/MG (Tema 383). Anexos: Parecer nº 2/2025/SLEP/CAP/DPA (SEI 0353163) e Parecer nº 3/2025/SATP/DPA (SEI 0353215). Publicados pela Fundacentro em 2026 (ISBN 978-65-88344-22-4; DOI 10.63685/LSLG2386). Detalhes e quesitos em `references/FUNDAMENTOS-E-CENARIOS.md`.
 
-CF/88, art. 201, §1º, com redação da EC 103/2019. Aposentadoria especial.
+**Parecer 2/2025 (métodos de validação).**
+- Distingue eficácia (desempenho em ensaio, base do Certificado de Aprovação da Portaria MTP 672/2021) de efetividade (desempenho real no posto de trabalho).
+- O fator de proteção de respirador é conceito de agente químico. Sem limite de exposição para agente biológico, não há fator de proteção mínimo requerido, e a seleção do respirador se faz por opinião de especialistas (Lenhart, 2004).
+- Mesmo com Programa de Proteção Respiratória completo, o respirador atenua e não elimina o risco.
 
-Lei 8.213/1991, art. 57. Tempo especial.
+**Parecer 3/2025 (variáveis de falha e risco residual).**
+- A proteção cai com o tempo de uso, a perda de vedação, o calor e a umidade, a reutilização e os procedimentos geradores de aerossol.
+- Luvas se contaminam e perfuram, muitas vezes sem percepção do profissional.
+- Na metanálise de Tian et al. (2022), o uso de EPI reduziu o risco médio de infecção de 20,68% para 10,28%, isto é, cerca de 10 pontos percentuais.
+- O EPI é a última medida da hierarquia de controle (NIOSH, 2024).
+- Não há EPI previsto na NR-6 contra a picada do Aedes aegypti, o que interessa ao agente comunitário e ao agente de endemias.
 
-Decreto 3.048/1999, Anexo IV. Relação de agentes nocivos. Inclui agentes biológicos.
+Conclusão literal do Parecer 3: "Os EPIs constantes do PPP, se utilizados isoladamente como única medida de proteção, são incapazes de eliminar ou neutralizar a exposição nociva ou minimizar o risco a um nível aceitável, impossibilitando a descaracterização da atividade como especial".
 
-Portaria MTP nº 672, de 08/11/2021. Disciplina os procedimentos, programas e condições de segurança e saúde no trabalho. Regula o processo de avaliação de EPI para fins de Certificado de Aprovação (CA).
+**Valor jurídico.** Os pareceres são manifestação técnica de fundação pública vinculada ao Ministério do Trabalho e Emprego, produzida a pedido da TNU. Não vinculam o juiz. Servem como prova técnica que sustenta a dúvida razoável do item III do Tema 1090 do STJ e do item II do Tema 213 da TNU, e como fundamento da impugnação específica exigida pelo item II do Tema 383.
 
-NR-1. Norma Regulamentadora 1. Disposições gerais e gerenciamento de riscos ocupacionais. Estabelece a hierarquia de controle de riscos.
+## 3. Uso na peça
 
-NR-6. Equipamentos de Proteção Individual.
+1. **Item I do Tema 383.** Provar o setor e o procedimento (seção 0.1) e citar a tese. Os pareceres reforçam, mas a prova do fato decide.
+2. **Item II e demais casos.** Impugnar o EPI na causa de pedir com os fundamentos (i) a (v) do Tema 213 da TNU ou os incisos do item II do Tema 1090 do STJ. Os pareceres sustentam o fundamento (i), inadequação ao risco, e o (v), outro motivo de ineficácia. Fechar pela dúvida razoável.
+3. **Juntada.** Anexar a cópia integral dos dois pareceres e do ofício, e não apenas citá-los.
+4. **Via administrativa.** Juntar os pareceres ao requerimento e ao recurso ao CRPS e pedir a reanálise do campo de EPI do PPP.
+5. **Inversão do ônus.** Não pedir pelo art. 373, § 1º, do CPC: o Tema 1090 a rejeitou (ver `base-especial-epi`).
 
-NR-7. Programa de Controle Médico de Saúde Ocupacional (PCMSO). Portaria MTP nº 6.734/2020.
+## 4. Refutação
 
-NR-32. Segurança e Saúde no Trabalho em Estabelecimentos de Saúde. Item 32.2.2.1, 32.2.2.3, 32.2.3.5 (CAT).
+| Argumento do INSS | Resposta |
+|---|---|
+| O PPP declara EPI eficaz. | No item I do Tema 383, a declaração não obsta. Fora dele, impugnação específica (item II; Tema 213 da TNU) com o Parecer 2/2025: o CA atesta eficácia de ensaio, e não efetividade no uso. |
+| O respirador tem fator de proteção 10. | Conceito de agente químico; sem limite de exposição para agente biológico (Parecer 2/2025). |
+| EPI reduz a contaminação. | Reduz e não elimina; risco residual médio de 10,28% (Tian, 2022, no Parecer 3/2025). |
+| Os pareceres são opinião isolada. | Encaminhados pelo Presidente da Fundacentro em ofício institucional, a pedido da própria TNU. |
+| Os estudos tratam apenas de vírus respiratórios. | O Parecer 3/2025 também cita estudos sobre luvas, cirurgia e hepatites B e C de origem ocupacional. |
 
-ABNT NBR ISO 9000:2015. Definições de eficácia e efetividade.
+## 5. Covid e profissionais de saúde
 
-ABNT NBR IEC 31010:2021. Gestão de Riscos. Critério ALARP.
-
-Decreto 8.539/2015. Assinatura digital.
-
-Cartilha ANVISA 2009. Proteção respiratória contra agentes biológicos para trabalhadores de saúde.
-
-Programa de Proteção Respiratória (PPR). Fundacentro, TORLONI, 2016. Recomendado pela Portaria MTP nº 672/2021 (art. 44, §2º).
-
-## 3. Pareceres da Fundacentro. Conteúdo central
-
-### 3.1. Origem e processo
-
-Ofício Eletrônico nº 221/2025/GABINETE PRES/PRES-FUNDACENTRO, datado de 07/02/2024 e assinado em 30/10/2025 pelo Presidente Pedro Tourinho de Siqueira.
-
-Processo nº 1004356-32.2019.4.01.3802/MG. Tema 383 da TNU. Juíza Relatora Lílian Oliveira da Costa Tourinho.
-
-Anexos.
-
-Parecer nº 2/2025/SLEP/CAP/DPA (SEI 0353163). Pareceristas Fernanda de Freitas Ventura e Silvia Helena de Araújo Nicolai.
-
-Parecer nº 3/2025/SATP/DPA (SEI 0353215). Parecerista Érica Lui Reinhardt.
-
-### 3.2. Parecer nº 2/2025/SLEP/CAP/DPA. Pontos centrais
-
-Distingue eficácia (desempenho em laboratório) e efetividade (desempenho real no ambiente de trabalho).
-
-Avaliação para CA (Portaria MTP 672/2021) afere apenas eficácia, não efetividade.
-
-A efetividade do EPI no ambiente de trabalho depende de uma ampla gama de fatores. Adoção de critérios adequados de seleção, uso, guarda, higienização/limpeza, manutenção e substituição. Treinamento. Fatores individuais. Procedimentos de uso correto.
-
-Não é cientificamente correto equiparar o conceito de Fator de Proteção (FP) de respirador para agente químico com a capacidade de impedir a contaminação por um agente biológico.
-
-FPA (Fator de Proteção Atribuído). Para PFF2/N95, FPA = 10 (mínimo do PPR). Significa que para 95% dos usuários treinados, a concentração do contaminante no ar inalado será no mínimo 10 vezes menor.
-
-FPMR (Fator de Proteção Mínimo Requerido). C/LE. Calculado para agentes químicos. Não se aplica a agentes biológicos por ausência de Limite de Exposição Ocupacional (LEO) para esses agentes.
-
-Método de seleção para agentes biológicos. Opinião de especialistas (LENHART, 2004). Abordagem qualitativa, não quantitativa.
-
-No Brasil não existe regulamentação específica sobre proteção respiratória contra agentes biológicos para trabalhadores da saúde. Apenas Cartilha ANVISA 2009.
-
-CDC/NIOSH desde 1995 recomenda N95 como mínimo para agentes biológicos.
-
-EPI sozinho não neutraliza o risco. FP = Co/Ci e Ci nunca será zero.
-
-### 3.3. Parecer nº 3/2025/SATP/DPA. Pontos centrais
-
-A eficácia do EPI biológico não é constante. É afetada por.
-
-Tempo de uso contínuo. Saturação após 8 a 12 horas.
-
-Vedação/ajuste ao corpo do usuário. Falhas progressivas.
-
-Carga viral/bacteriana do ambiente.
-
-Procedimentos de alto risco (intubação aumenta 2,5x o risco de transmissão; intubação isolada 4,7x).
-
-Reutilização de N95/PFF2. 13% rompimento de tirantes após 20 paramentações. 30% após 4 dias. Mais de 90% mantém vedação no primeiro turno de 8-12h, mas decai e chega a 92,8% de falhas após 5 turnos consecutivos. 50% falham na vedação após 5 ciclos de paramentação.
-
-Falhas > 5% são inaceitáveis no ensaio de vedação. Ensaio anual obrigatório (OSHA, ABNT, recomendação NIOSH baseada em ZHUANG et al. 2016).
-
-Calor/umidade. Trabalhador sua e quebra a barreira instintivamente.
-
-Luvas. Contaminam-se 50-70% das vezes após contato com superfícies/paciente. 5-29% mantêm contaminação residual após retirada. Rompimento até 100% em cirurgia geral. 96% das quebras de barreira são indetectáveis. Estudo HENTZ et al. 2001 reportou 278 incidentes em 111 cirurgias.
-
-EPI permite apenas MINIMIZAÇÃO do risco. Critério ALARP (NBR IEC 31010:2021). Três níveis de risco: intolerável, tolerável, aceitável.
-
-Hierarquia de controle de riscos (NIOSH, 2024). EPI é a medida menos efetiva, último recurso. Ordem preferencial. (a) eliminar os riscos, (b) substituir os riscos, (c) controles de engenharia, (d) controles administrativos, (e) EPI.
-
-Estudo TIAN et al. (2022). Metanálise. 191.004 trabalhadores da saúde, 5 vírus respiratórios (Covid-19, MERS, SARS, H1N1, H5N1). Trabalhadores de linha de frente têm 1,66 vezes mais chance de infecção que os não de linha de frente.
-
-Tabela TIAN 2022 (Tabela 1 do Parecer 3). Redução do risco de infecção pelo uso de EPIs.
-
-Luvas. 25,7% sem vs 14,3% com. Redução -11,5%.
-
-Vestimenta. 30,6% sem vs 16,9% com. Redução -13,7%.
-
-Máscara cirúrgica. 20,6% sem vs 8,8% com. Redução -11,9%.
-
-Respirador N95/PFF2. 6,6% sem vs 2,2% com. Redução -4,4%.
-
-Protetor facial. 19,9% sem vs 9,2% com. Redução -10,6%.
-
-Média. 20,68% sem vs 10,28% com. Redução -10,42%.
-
-Estudo VIMIEIRO et al. (2025). Revisão sistemática. Reutilização de N95 compromete vedação por desgaste e ruptura de tirantes.
-
-Estudo ARAÚJO et al. (2023). Aproximadamente 40% das infecções por hepatites B e C entre trabalhadores da saúde são ocupacionais. Não há EPI capaz de proteger ACS/ACE da picada do Aedes aegypti.
-
-Estudo BELLINI et al. (2022). Luvas criam falsa segurança e podem aumentar paradoxalmente o risco de infecção pela diminuição da higienização das mãos.
-
-### 3.4. Conclusão da Fundacentro
-
-"Os EPIs constantes do PPP, se utilizados isoladamente como única medida de proteção, são incapazes de eliminar ou neutralizar a exposição nociva ou minimizar o risco a um nível aceitável, impossibilitando a descaracterização da atividade como especial".
-
-## 4. Eixos pró-segurado consolidados
-
-A Fundacentro é o órgão técnico oficial vinculado ao Ministério do Trabalho e Emprego (FUNDAÇÃO JORGE DUPRAT FIGUEIREDO DE SEGURANÇA E MEDICINA DO TRABALHO).
-
-A manifestação dos pareceres nº 2 e nº 3/2025 é institucional, técnica e baseada em literatura científica robusta. Tem peso decisivo no Tema 383/TNU.
-
-A distinção entre eficácia (laboratório) e efetividade (ambiente real) é o eixo central. Eliminação total do risco é cientificamente impossível com EPI isolado.
-
-A hierarquia de controle (NIOSH 2024) coloca o EPI como ÚLTIMO recurso. Sua utilização isolada não satisfaz o critério ALARP (NBR IEC 31010:2021).
-
-A redução de 50% no risco com uso de EPI (TIAN, 2022) ainda mantém risco residual de 10,28% em média. Esta probabilidade residual de contaminação, combinada com a impossibilidade de neutralização total, caracteriza a exposição nociva persistente.
-
-A insegurança intrínseca do EPI biológico (ensaios anuais obrigatórios, perda de peso, alteração dentária, barba, cicatriz, calor, umidade, paramentações sucessivas) torna a presunção de eficácia em PPP juridicamente insustentável.
-
-## 5. Estratégia processual
-
-### 5.1. Em fase administrativa
-
-Anexar cópia integral dos Pareceres Fundacentro 2/2025 e 3/2025 ao requerimento administrativo de aposentadoria especial e ao recurso ao CRPS.
-
-Citar expressamente a conclusão final do Parecer 3.
-
-Pedir reanálise do PPP à luz dos pareceres.
-
-Em PPP com declaração de "EPI eficaz", refutar com a manifestação técnica.
-
-### 5.2. Em fase judicial
-
-Na petição inicial ou recurso inominado, invocar diretamente os pareceres como prova técnica oficial e independente.
-
-Em tempo especial fundado em agente biológico, o Parecer Fundacentro 3/2025 é prova científica que corrobora a tese pró-segurado independentemente de perícia complementar.
-
-Em caso de sentença que reputar EPI eficaz com base no PPP, recurso com fundamento na manifestação institucional da Fundacentro.
-
-Em PUIL/PEDILEF na TNU, citar o parecer como manifestação oficial vinculante institucionalmente nos termos do art. 8º da Lei 12.527/2011 e como fundamento de cotejo analítico.
-
-### 5.3. Em sede recursal STJ
-
-Em REsp ou agravo, invocar o parecer como manifestação técnica oficial de órgão público competente para validação de EPI no Brasil. Reforça a tese pró-segurado contra Tema 1090/STJ ou para distinguishing.
-
-## 6. Refutação a alegações comuns do INSS
-
-### 6.1. "PPP declara EPI eficaz, então a exposição é descaracterizada"
-
-Refutação. O Parecer Fundacentro 2/2025 esclarece que o PPP isolado não dispõe de informações que permitam uma avaliação precisa da efetividade do EPI no uso real. A simples declaração de "eficácia" no PPP refere-se ao certificado de aprovação (CA) baseado em ensaios laboratoriais, não à efetividade real no ambiente de trabalho.
-
-### 6.2. "FPA = 10 garante proteção"
-
-Refutação. O Parecer 2/2025 esclarece que FPA é conceito de agente químico, não aplicável a agentes biológicos. Não há LEO para agentes biológicos, então não há FPMR. A seleção é feita por opinião de especialistas (LENHART, 2004), método qualitativo, não quantitativo.
-
-### 6.3. "Estudos mostram que EPI reduz contaminação"
-
-Refutação. Sim, mas redução não é eliminação. TIAN et al. (2022) demonstrou redução média de 10,42% no risco com uso de EPIs, com risco residual médio de 10,28%. Há contaminação ocupacional persistente. ARAÚJO et al. (2023) reporta 40% de hepatites B e C como ocupacionais.
-
-### 6.4. "EPI eficaz neutraliza exposição"
-
-Refutação. O Parecer 3/2025 conclui categoricamente que "os EPIs constantes do PPP, se utilizados isoladamente como única medida de proteção, são incapazes de eliminar ou neutralizar a exposição nociva ou minimizar o risco a um nível aceitável, impossibilitando a descaracterização da atividade como especial".
-
-### 6.5. "Tema 1090/STJ exclui especialidade quando há EPI eficaz"
-
-Refutação. O Tema 1090/STJ trata de hipóteses excepcionais. O Tema 555/STF firmou exceção expressa para o ruído; para cancerígenos e biológicos, as exceções decorrem do Tema 1090/STJ e do IRDR 15/TRF4. O Parecer Fundacentro reforça a hipótese excepcional para biológicos. Em IRDR 15/TRF4 e Tema 213/TNU, há flexibilização do ônus probatório quando EPI declarado não corresponde à efetividade real.
-
-## 7. Documentos essenciais
-
-Cópia integral do Parecer nº 2/2025/SLEP/CAP/DPA (SEI 0353163).
-
-Cópia integral do Parecer nº 3/2025/SATP/DPA (SEI 0353215).
-
-Ofício Eletrônico nº 221/2025/PRES-FUNDACENTRO de 30/10/2025.
-
-Cópia da publicação Fundacentro 2026 contendo os pareceres.
-
-Cópia integral do PPP do segurado.
-
-Eventual LTCAT, PGR, PCMSO, NR-32, Cartilha ANVISA 2009.
-
-Estudos científicos citados no parecer (TIAN 2022, VIMIEIRO 2025, ARAÚJO 2023, BELLINI 2022, HENTZ 2001, ZHUANG 2016, VERBEEK 2020, MAJCHRZYCKA 2021, SOLDÁ 2009).
-
-## 8. Integração com outras skills
-
-Agentes biológicos em `base-especial-agentes-biologicos`.
-
-EPI eficaz em `base-especial-epi`.
-
-Defesa probatória em aposentadoria especial em `defesa-probatoria-especial`.
-
-Auditoria do PPP em `auditoria-ppp`.
-
-PPP histórico em `base-especial-ppp-mudanca-layout-historico`.
-
-Categoria profissional em `base-especial-categoria-profissional-pre1995`.
-
-Mudança da Lei 14.128/2021 (Covid e profissionais de saúde) em `lei-14128-covid-saude`.
-
-Covid e NTEP em `ntep-nexo-acidentario`.
-
-Precedentes vinculantes em `precedentes-previdenciarios`.
-
-Petição em `peticao-previdenciaria` e `tempo-especial-peticoes-por-rito`.
-
-## 9. Alertas
-
-Primeiro, sempre anexe a cópia integral dos pareceres ao processo. Não se limite a citar.
-
-Segundo, em PPP com declaração de "EPI eficaz", o parecer é fundamento autônomo para refutação. Combine com IRDR 15/TRF4 e Tema 213/TNU.
-
-Terceiro, em casos de profissionais da saúde durante pandemia (Covid), intersecione com Lei 14.128/2021 e Tema 362/TNU.
-
-Quarto, em ACS/ACE expostos a Aedes aegypti (dengue, zika, chikungunya), invoque o Parecer 3/2025, item 6.14, que reconhece ausência de EPI capaz de proteger.
-
-Quinto, em hepatites B e C ocupacionais, invoque o Parecer 3/2025 com base em ARAÚJO et al. 2023 (40% das infecções são ocupacionais).
-
-Sexto, em N95/PFF2 reutilizado, invoque VIMIEIRO et al. 2025 e os dados de rompimento de tirantes (13% após 20 paramentações).
-
-Sétimo, sempre cite a hierarquia de controle NIOSH 2024 e o critério ALARP (NBR IEC 31010:2021) para descontruir a tese de neutralização por EPI.
-
-Oitavo, em Tema 383/TNU, o parecer é manifestação oficial. Sustente que a Fundacentro é órgão técnico vinculante.
-
-Nono, o Tema 383 foi julgado em 24/09/2026 (seção 0). Nas hipóteses do item I, cite a tese. Fora delas, impugne o EPI de forma específica, pelo item II.
-
-## 10. Doutrina de apoio
-
-Wladimir Novaes Martinez. Comentários à Lei Básica da Previdência Social. Aprofunda o tema do EPI e da especialidade.
-
-Hugo Goes. Manual de Direito Previdenciário. Detalha o regime do EPI e os enquadramentos.
-
-Frederico Amado. Direito Previdenciário. Aprofunda a aposentadoria especial e a refutação do EPI eficaz.
-
-Daniel Pulino. Aposentadoria por Invalidez. Aprofunda a perícia e o nexo.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário.
-
-João Batista Lazzari, Carlos Alberto Pereira de Castro. Manual de Direito Previdenciário.
-
-Adriana Andrade. Aposentadoria Especial.
-
-Roberta Densa Pereira. Aposentadoria Especial e EPI.
-
-## 11. O que NÃO está nesta skill
-
-Aspectos gerais do EPI eficaz em outros agentes (ruído, químicos) em `base-especial-epi`.
-
-Outros agentes biológicos específicos em `base-especial-agentes-biologicos`.
-
-Defesa probatória ampla em `defesa-probatoria-especial`.
-
-Auditoria geral do PPP em `auditoria-ppp`.
-
-## 12. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+A Lei 14.128/2021 trata da compensação financeira a profissionais de saúde incapacitados por Covid-19 e aos dependentes dos falecidos. O Tema 362 da TNU fixou que a lei é autoaplicável e pode ser satisfeita judicialmente por requisição de pagamento (PUIL 5013781-29.2023.4.02.5101, j. 06/11/2024). O tema não trata de tempo especial nem de nexo causal. Ver `lei-14128-covid-saude`.
 
 ## Hub de portarias administrativas
 
@@ -315,3 +89,7 @@ As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso est�
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Integração com outras skills
+
+Agentes biológicos em `base-especial-agentes-biologicos`. EPI e Tema 1090 do STJ em `base-especial-epi`. Prova em `defesa-probatoria-especial` e `especificacao-provas`. PPP em `auditoria-ppp`, `retificacao-ppp` e `base-especial-ppp-mudanca-layout-historico`. Cerceamento em `base-cpc-nulidades-cerceamento`. Covid em `lei-14128-covid-saude` e `ntep-nexo-acidentario`. Peças em `peticao-previdenciaria` e `tempo-especial-peticoes-por-rito`. Precedentes em `precedentes-previdenciarios`.

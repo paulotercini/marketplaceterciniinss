@@ -13,7 +13,7 @@ Sempre que o caso envolver aposentadoria especial, conversão de tempo especial 
 
 ### Passo 1. Triagem documental
 
-Solicitar ao cliente todos os PPP, LTCAT, PGR, laudos técnicos, CAT e CTPS. Solicitar também CNIS atualizado. Acionar `cnis-acerto-indicadores` para identificar indicadores bloqueantes ou pendências de vínculo.
+Solicitar ao cliente todos os PPP, LTCAT, PGR, laudos técnicos, CAT e CTPS. Solicitar também CNIS atualizado. Acionar `base-cnis-acerto-indicadores` para identificar indicadores bloqueantes ou pendências de vínculo.
 
 ### Passo 2. Auditoria do PPP
 
@@ -40,7 +40,7 @@ Quando o PPP atravessar mudança de layout, acionar adicionalmente `base-especia
 
 ### Passo 4. Enquadramento temporal
 
-Identificar regime aplicável. Antes de 13/11/2019, regra do art. 57 da Lei 8.213/91 com `base-aposentadoria-direito-adquirido`. Após 13/11/2019, EC 103 com `base-aposentadoria-especial-transicao-ec103`. Conversão de tempo via `base-tempo-especial-conversao`.
+Identificar o regime aplicável. Requisitos reunidos até 13/11/2019: regra do art. 57 da Lei 8.213/91, com `base-aposentadoria-direito-adquirido`. Requisitos posteriores: art. 21 ou art. 19, § 1º, I, da EC 103, com `base-aposentadoria-especial-transicao-ec103`. Conversão do tempo até 13/11/2019 em `base-tempo-especial-conversao`. A caracterização de cada período segue a lei da época do trabalho.
 
 ### Passo 5. Definição de rito processual
 
@@ -68,17 +68,17 @@ PPP completo (todos os campos), LTCAT (mesmo extemporâneo), PGR atual, laudos t
 
 ## 4. Pontos críticos pró-segurado
 
-Tema 555/STF não neutraliza ruído acima de 85 dB. Refutar EPI eficaz para ruído mediante `defesa-probatoria-especial`.
+No ruído acima do limite da época (80 dB até 05/03/1997, 90 dB até 18/11/2003, 85 dB depois), a declaração de EPI eficaz não descaracteriza o tempo especial (Tema 555 do STF, item II). Ver `base-especial-ruido`.
 
-PPP que não traz NEN para ruído após 18/11/2003 é insuficiente apenas se outros elementos não permitirem aferir a habitualidade. Refutar com `base-especial-ruido` e Comunicado CRPS 99/2025.
+PPP de ruído posterior a 18/11/2003 sem NEN ou sem técnica: na via judicial, presunção relativa de regularidade quando menciona a NHO-01 ou a NR-15 (TNU, PUIL 0001717-22.2019.4.03.6318/SP) e pico de ruído com perícia pelo Tema 1083 do STJ; Tema 317 da TNU adverso quando consta apenas "dosimetria". Ver `base-especial-ruido`.
 
-Empresa extinta ou recusa em retificar PPP. Acionar `documentos-comprobatorios-in128` para perícia indireta e prova testemunhal nos termos da Súmula 198/TFR.
+Empresa extinta ou recusa em retificar PPP. Acionar `base-documentos-comprobatorios-in128` e `defesa-probatoria-especial` para laudo de empresa similar, perícia indireta e prova testemunhal (Súmula 198 do TFR).
 
-Categoria profissional pré-1995 enquadrada por presunção de exposição. Acionar `base-especial-categoria-profissional-pre1995` para evitar exigência indevida de PPP em períodos anteriores aos Decretos 53.831/64 e 83.080/79.
+Categoria profissional até 28/04/1995: a CTPS basta quando a função anotada permite o enquadramento nos Decretos 53.831/64 e 83.080/79 (IN 128/2022, art. 274, § 1º). Ver `base-especial-categoria-profissional-pre1995`.
 
 ## 5. Postura
 
-Pró-segurado integral. Identificar fragilidades probatórias da posição do INSS, explorar a presunção qualitativa para agentes biológicos, químicos e cancerígenos, e levar o caso ao rito mais favorável.
+Pró-segurado. Identificar as fragilidades probatórias da posição do INSS, usar a avaliação qualitativa onde a norma a prevê (agentes biológicos, cancerígenos do Grupo 1 da LINACH e agentes do Anexo 13 da NR-15) e levar o caso ao rito mais favorável. Registrar as teses adversas: vigilante (Tema 1209 do STF), motociclista (`base-especial-periculosidade-motociclista-nr16-anexov`) e tolueno (Tema 382 da TNU).
 
 ## Fungibilidade aplicável
 
@@ -96,6 +96,6 @@ Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.

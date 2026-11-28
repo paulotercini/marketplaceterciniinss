@@ -1,129 +1,37 @@
-# Conversão de Tempo Especial. Fundamentos e Cenários
+# Conversão de tempo especial. Fundamentos e cenários
 
-## 1. Conceito operacional
+## 1. Base normativa
 
-A conversão de tempo especial em comum é a operação matemática de aplicar um fator multiplicativo sobre o período trabalhado sob exposição a agentes nocivos, com o objetivo de aproveitar esse tempo em aposentadorias que exigem tempo comum.
+- CF, art. 5º, XXXVI (direito adquirido) e art. 201, § 1º.
+- Lei 8.213/91, art. 57, § 5º.
+- EC 103/2019, art. 25, § 2º (conversão apenas do tempo cumprido até 13/11/2019).
+- Decreto 3.048/99, art. 188-P, §§ 5º e 6º (tabela de multiplicadores e lei da época para a caracterização), incluídos pelo Decreto 10.410/2020. O antigo art. 70, com a mesma tabela desde o Decreto 4.827/2003, foi revogado.
+- IN 128/2022: art. 206, §§ 3º e 4º (cômputo até 13/11/2019 e vedação a partir de 14/11/2019); art. 264 (vedada a conversão de comum em especial); art. 266 (atividades sucessivas e atividade preponderante); art. 269, §§ 1º e 2º (categoria até 28/04/1995 e conversão até 13/11/2019).
 
-Fator 1,4 para homem. Cada ano de atividade especial equivale a 1 ano e 146 dias de tempo comum.
+## 2. Conta
 
-Fator 1,2 para mulher. Cada ano de atividade especial equivale a 1 ano e 73 dias de tempo comum.
+Um ano especial de 25 anos vale 1 ano e 146 dias para o homem (1,4) e 1 ano e 73 dias para a mulher (1,2). Na atividade de 15 anos (mineração subterrânea em frente de produção), os multiplicadores são 2,33 e 2,00; na de 20 anos, 1,75 e 1,50.
 
-## 2. Fundamento constitucional
+Exemplos:
+- **Homem, 20 anos especiais de 25 e 10 anos comuns.** 20 × 1,4 = 28; total de 38 anos de tempo de contribuição.
+- **Mulher, 15 anos especiais de 25 e 10 anos comuns.** 15 × 1,2 = 18; total de 28 anos.
+- **Homem com 10 anos em mina subterrânea.** 10 × 2,33 = 23,3 anos.
 
-Art. 201, §1º, CF/88. Proteção aos segurados expostos a agentes nocivos.
+## 3. Cenários favoráveis
 
-Art. 5º, XXXVI, CF/88. Direito adquirido.
+- Tempo especial até 13/11/2019 convertido em qualquer requerimento posterior, inclusive para as regras de transição dos arts. 15, 16, 17 e 20 da EC 103.
+- Direito adquirido: quem, com a conversão, reuniu os requisitos da aposentadoria por tempo de contribuição até 13/11/2019 tem direito às regras anteriores (`base-aposentadoria-direito-adquirido`).
+- Homem com período especial anterior a 1991: fator 1,4 (Tema 423 do STJ).
+- Períodos fracionados e em empregadores diferentes, cada um com seu enquadramento.
 
-## 3. Fundamento legal
+## 4. Cenários vedados ou de risco
 
-Lei 8.213/91, art. 57, §5º. Previsão expressa da conversão.
+- Tempo especial após 13/11/2019: não converte.
+- Conversão de comum em especial para requisitos reunidos após 28/04/1995: vedada (Tema 546 do STJ; IN 128/2022, art. 264).
+- Categoria profissional após 28/04/1995: não serve; exige agente nocivo.
+- Magistério: não converte em comum.
+- Ruído e demais agentes: período sem prova adequada para a época fica fora da conversão; resolver a prova antes da conta (`defesa-probatoria-especial`, `retificacao-ppp`).
 
-Decreto 3.048/1999, art. 70. Fatores de conversão.
+## 5. Documentos
 
-EC 103/2019, art. 25, §2º. Vedação para períodos posteriores a 13/11/2019.
-
-Lei 9.032/1995, Lei 9.528/1997, Decretos 53.831/1964, 83.080/1979, 2.172/1997 e 3.048/1999. Regulamentos sucessivos.
-
-## 4. Marco jurisprudencial central
-
-### Tema 546 STJ, REsp 1.310.034
-
-Tese. A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 546 STJ, conversão de tempo comum em especial
-
-Tese adversa. A conversão de tempo comum em especial segue a lei vigente na aposentadoria e não alcança quem reuniu os requisitos depois da Lei 9.032/1995, ainda que o período seja anterior. O caminho do segurado é demonstrar direito adquirido, com os requisitos reunidos até 28/04/1995 (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 50 TNU
-
-Tese. É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período, observado, após a EC 103/2019, o limite de 13/11/2019 do art. 25, §2º (auditoria 03/10/2026).
-
-Fonte oficial em https://www.jf.jus.br
-
-### Súmula 49 TNU
-
-Tese. Para reconhecimento de condição especial de trabalho antes de 29/4/1995, a exposição a agentes nocivos à saúde ou à integridade física não precisa ocorrer de forma permanente (auditoria 03/10/2026).
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Trabalhador com 20 anos especiais e 10 anos comuns, homem
-
-20 × 1,4 = 28 anos comuns. Somados aos 10 anos comuns, totaliza 38 anos de tempo comum. Possibilita enquadramento em regras de transição ou direito adquirido.
-
-### Cenário B. Trabalhadora com 15 anos especiais e 10 anos comuns, mulher
-
-15 × 1,2 = 18 anos comuns. Somados aos 10 anos comuns, totaliza 28 anos comuns.
-
-### Cenário C. Períodos especiais até 13/11/2019
-
-Podem ser convertidos integralmente, independentemente da data do requerimento.
-
-### Cenário D. Combinação de regras de transição
-
-Segurado em regime pedágio 50% ou pedágio 100% pode aproveitar o tempo especial convertido.
-
-### Cenário E. Direito adquirido
-
-Segurado que, com conversão, completa os requisitos antes de 13/11/2019 tem direito adquirido à regra anterior.
-
-## 6. Cenários vedados
-
-### Cenário F. Períodos após 13/11/2019
-
-Vedada a conversão. Período só é útil para aposentadoria especial pura.
-
-### Cenário G. Tempo comum convertido em especial após Lei 9.032/1995
-
-Vedada.
-
-### Cenário H. Enquadramento por categoria após 28/04/1995
-
-Vedada. A partir dessa data, exige-se comprovação individualizada do agente nocivo.
-
-## 7. Metodologia
-
-Primeiro, auditar PPP e LTCAT.
-
-Segundo, identificar cada período especial com início e fim.
-
-Terceiro, aplicar o fator adequado.
-
-Quarto, somar com o tempo comum restante.
-
-Quinto, verificar enquadramento na regra de transição ou direito adquirido.
-
-Sexto, calcular a RMI pela regra aplicável.
-
-Sétimo, requerimento administrativo com planilha anexa.
-
-## 8. Riscos processuais
-
-Risco de enquadramento indevido. Crítico na atividade a partir de 1995.
-
-Risco de PPP com vícios. Retificação cabível, acionar `retificacao-ppp`.
-
-Risco de EPI eficaz alegado. Defesa probatória, acionar `defesa-probatoria-especial`.
-
-Risco de conversão vedada pós EC 103. Nulidade do cálculo.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, auditoria técnica rigorosa de cada PPP.
-
-Segundo, aplicação correta do fator de conversão.
-
-Terceiro, cálculo completo com soma do tempo.
-
-Quarto, requerimento administrativo.
-
-Quinto, ação judicial com pedidos cumulativos em caso de indeferimento.
-
-Sexto, cumulação com revisão ou complementação conforme o caso.
-
-## 10. Integração prática
-
-Auditoria-ppp é acionada rotineiramente. Retificação-ppp, se houver vício. Defesa-probatória-especial, para EPI e categoria. Base-aposentadoria-especial-transicao-ec103, para regras de transição pós-reforma.
+CNIS, CTPS, PPP, LTCAT ou laudo da época, formulários antigos (SB-40, DSS-8030, DIRBEN-8030) até 31/12/2003 e planilha de contagem com a separação do tempo anterior e posterior a 13/11/2019.

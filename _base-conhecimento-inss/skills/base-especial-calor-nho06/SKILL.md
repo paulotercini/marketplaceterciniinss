@@ -1,89 +1,40 @@
 ---
 name: base-especial-calor-nho06
-description: "Exposição ao calor para aposentadoria especial pela NHO-06 da Fundacentro, IBUTG, Anexo 3 NR-15, taxa metabólica e enquadramento qualitativo histórico até 1997. Use SEMPRE que mencionar calor aposentadoria especial, NHO-06, IBUTG, Índice de Bulbo Úmido Termômetro de Globo, Anexo 3 NR-15, taxa metabólica calor, atividade pesada calor, atividade moderada calor, atividade leve calor, siderurgia calor, fundição calor, vidraria calor, padaria calor, cozinha industrial calor, fornos calor, caldeiraria calor, enquadramento calor pré-1997, ruído e calor, calor LTCAT, calor PPP campo 15.5, exposição habitual e permanente calor, fator de risco térmico. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-frio-camara-frigorifica, base-especial-radiacao-ionizante, base-especial-penosidade-enfermagem-petroleiro, base-especial-categoria-profissional-pre1995 e defesa-probatoria-especial."
+description: "Exposição ao calor para aposentadoria especial: código 1.1.1 do Decreto 53.831/64 (acima de 28 graus) e do Anexo I do Decreto 83.080/79, código 2.0.4 do Anexo IV dos Decretos 2.172/97 e 3.048/99, NR-15 Anexo 3, IBUTG, taxa metabólica, NHO-06 da Fundacentro, art. 293 da IN 128/2022 e Tema 323 da TNU (informações do PPP e LTCAT sobre calor). Use SEMPRE que mencionar calor aposentadoria especial, NHO-06, IBUTG, Anexo 3 NR-15, taxa metabólica, atividade leve, moderada ou pesada, regime intermitente, siderurgia, fundição, vidraria, padaria, cozinha industrial, forno, caldeira, forneiro, calor de fonte natural, trabalho a céu aberto, Portaria 1.359/2019, calor LTCAT, calor PPP. Cruza com auditoria-ppp, base-especial-epi, base-especial-frio-camara-frigorifica, base-especial-categoria-profissional-pre1995, tempo-especial-peticoes-por-rito e defesa-probatoria-especial."
 ---
 
-# Calor e Aposentadoria Especial
+# Calor e aposentadoria especial
 
-## Escopo
+## Quadro normativo por período (IN 128/2022, art. 293)
 
-Skill pró-segurado sobre exposição ao calor para aposentadoria especial, metodologia NHO-06, IBUTG e Anexo 3 NR-15.
+| Período | Critério |
+|---|---|
+| Até 05/03/1997 | Fonte artificial. Alternativamente, o mais favorável: (1) temperatura acima de 28 °C, sem exigência de IBUTG (Decreto 53.831/64, código 1.1.1, "jornada normal em locais com TE acima de 28°"); ou (2) atividades do Decreto 83.080/79, Anexo I, código 1.1.1 (indústria metalúrgica e mecânica dos códigos 2.5.1 e 2.5.2 do Anexo II, fabricação de vidros e cristais, alimentação de caldeiras a vapor a carvão ou lenha), por presunção. |
+| 06/03/1997 a 18/11/2003 | Decretos 2.172/97 e 3.048/99, Anexo IV, código 2.0.4: calor acima dos limites da NR-15, Anexo 3, Quadros 1, 2 e 3, considerada a taxa de metabolismo por tipo de atividade e o regime de descanso. |
+| 01/01/2004 a 10/12/2019 | Limites do Anexo 3 da NR-15 na redação anterior à Portaria SEPRT 1.359/2019, com avaliação pela NHO-06 da Fundacentro (facultada desde 19/11/2003). |
+| A partir de 11/12/2019 | Anexo 3 da NR-15 na redação da Portaria 1.359/2019, aplicável a ambientes fechados ou com fonte artificial de calor; o próprio Anexo exclui atividades a céu aberto sem fonte artificial (item 1.1.1). Avaliação pela NHO-06. |
 
-## Marco normativo central
+Na redação anterior do Anexo 3, Quadro 1, em regime contínuo, o limite de IBUTG era 30,0 °C para atividade leve, 26,7 °C para moderada e 25,0 °C para pesada. Em regime intermitente os limites sobem conforme a proporção de descanso. Os períodos de descanso no próprio local contam como tempo de serviço (IN 128/2022, art. 293, parágrafo único; CLT, art. 253).
 
-CF/88, art. 201 §1º.
+## Tema 323 da TNU (informações exigidas no PPP ou LTCAT)
 
-Lei 8.213/91, arts. 57 e 58.
+PUIL 0510577-41.2020.4.05.8200, Rel. Juiz Federal Rodrigo Rigamonte Fonseca, D.E. 13/11/2025. Tese em três partes:
 
-NR-15, Anexo 3.
+- a) de 06/03/1997 a 18/11/2003, regime intermitente com descanso no próprio local (Quadro 1): a taxa de metabolismo não precisa constar; o tipo de atividade (leve, moderada ou pesada) sai da descrição do trabalho, se enquadrada em uma única categoria;
+- b) no mesmo período, descanso em local diverso, ou atividades de categorias diferentes: a taxa de metabolismo média ponderada para uma hora (Kcal/h) é imprescindível (Quadro 2);
+- c) a partir de 01/01/2004 (facultativamente 19/11/2003): são imprescindíveis a metodologia da NHO-06 e a taxa de metabolismo média ponderada em watts.
 
-NHO-06 Fundacentro.
+Calor de fonte natural: a TNU admitiu o enquadramento até 08/12/2019 (PUIL 0501381-83.2021.4.05.8306, D.E. 23/02/2023, citado no acórdão do Tema 323). O INSS, desde a IN 141/2022, restringe o inciso I do art. 293 a fonte artificial.
 
-Decreto 3.048/99.
+## Roteiro do caso
 
-IN 128/2022.
+1. Separar os períodos da tabela.
+2. Até 05/03/1997: buscar temperatura acima de 28 °C ou atividade do Decreto 83.080/79; a categoria profissional pode enquadrar sozinha (forneiro, fundidor, caldeireiro: `base-especial-categoria-profissional-pre1995`).
+3. De 1997 a 2003: conferir se o PPP traz IBUTG, regime de trabalho e descrição que permita classificar a atividade. Faltando a taxa metabólica, aplicar o item "a" do Tema 323 quando o descanso for no próprio local.
+4. Desde 2004: exigir NHO-06 e taxa metabólica no PPP; se faltarem, pedir o LTCAT à empresa e, persistindo a omissão, perícia judicial (CPC, art. 464), em vez de aceitar a improcedência.
+5. EPI: calor raramente é neutralizado por EPI; aplicar o Tema 1090 do STJ e impugnar o PPP (Tema 213 da TNU). Ver `base-especial-epi`.
 
-## Marco jurisprudencial
-
-### Súmula 198 TFR
-
-Categoria profissional.
-
-### Tema 174 TNU
-
-Metodologia.
-
-Fonte oficial em https://www.cjf.jus.br
-
-### Tema 208 TNU
-
-Enquadramento.
-
-### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
-
-O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
-
-## Metodologia NHO-06
-
-Primeiro, IBUTG é o índice oficial.
-
-Segundo, taxa metabólica define limite.
-
-Terceiro, comparação com Anexo 3 NR-15.
-
-Quarto, exposição habitual e permanente.
-
-## Aplicação pró-segurado
-
-Primeiro, atividade pesada com IBUTG acima de 25 enquadra.
-
-Segundo, moderada acima de 26,7 enquadra.
-
-Terceiro, leve acima de 30 enquadra.
-
-Quarto, métodos antigos preservam direitos.
-
-## Cenários pró-segurado
-
-Cenário A, siderurgia. Calor intenso. Especial.
-
-Cenário B, fundição. Calor intenso. Especial.
-
-Cenário C, padaria com fornos. Calor moderado. Especial.
-
-Cenário D, cozinha industrial. Calor moderado. Especial.
-
-Cenário E, atividade pré-1995. Categoria profissional.
-
-## Alertas
-
-Primeiro, INSS pode exigir avaliação NHO-06 estrita. NR-15 supre quando suficiente.
-
-Segundo, taxa metabólica precisa estar correta no PPP.
-
-Terceiro, ausência de medição não afasta enquadramento histórico.
-
-Quarto, perícia judicial cabível.
+Cenários e prova em `references/FUNDAMENTOS-E-CENARIOS.md`. Refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## Hub de portarias administrativas
 
@@ -95,12 +46,4 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 ## Integração com outras skills
 
-Para auditoria de PPP, acionar `auditoria-ppp`.
-Para frio, acionar `base-especial-frio-camara-frigorifica`.
-Para radiação, acionar `base-especial-radiacao-ionizante`.
-Para penosidade, acionar `base-especial-penosidade-enfermagem-petroleiro`.
-Para categoria pré-1995, acionar `base-especial-categoria-profissional-pre1995`.
-
-## O que NÃO está nesta skill
-
-Frio em `base-especial-frio-camara-frigorifica`. Radiação em `base-especial-radiacao-ionizante`. Penosidade em `base-especial-penosidade-enfermagem-petroleiro`. Categoria em `base-especial-categoria-profissional-pre1995`.
+Auditoria do PPP em `auditoria-ppp`. EPI em `base-especial-epi`. Frio em `base-especial-frio-camara-frigorifica`. Categoria profissional em `base-especial-categoria-profissional-pre1995`. Prova em `defesa-probatoria-especial`. Peça por rito em `tempo-especial-peticoes-por-rito`.

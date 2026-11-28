@@ -1,121 +1,23 @@
-# Frio. Jurisprudência e Refutação
+# Frio. Jurisprudência e refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 323 TNU
+- **Súmula 198 do TFR.** "Atendidos os demais requisitos, é devida a aposentadoria especial, se perícia judicial constata que a atividade exercida pelo segurado é perigosa, insalubre ou penosa, mesmo não inscrita em Regulamento." Fundamento do enquadramento do frio após 05/03/1997.
+- **Tema 534 do STJ.** A tese trata de eletricidade após o Decreto 2.172/97. A ratio (rol de agentes exemplificativo) sustenta o frio; citar apenas como reforço da Súmula 198 do TFR (nota de uso do catálogo `base-precedentes-catalogo-vinculantes`).
+- **TNU, PEDILEF 5000849-03.2013.4.04.7203**, Rel. Juíza Federal Gisele Chaves Sampaio Alcântara, j. 20/10/2016: a entrada e saída do trabalhador em câmaras frias durante a jornada não descaracteriza a permanência exigida para o enquadramento pelo frio, agente previsto no item 1.1.2 dos Decretos 53.831/64 e 83.080/79. Reafirmado em Rcl 5000133-08.2023.4.90.0000 (j. 06/11/2024).
+- **TNU, PUIL 5040240-07.2018.4.04.7100**, Rel. Juiz Federal Gustavo Melo Barbosa, j. 10/02/2022: a TNU admite a constante entrada e saída do ambiente frio sem descaracterizar a habitualidade e a permanência; a entrada eventual não basta.
+- **TNU, PUIL 5002795-64.2023.4.04.7007**, j. 21/10/2025: registra que a jurisprudência da TNU admite o frio após o Decreto 2.172/97 quando comprovadas a insalubridade e a ineficácia do EPI; o acórdão de origem (TR do Paraná) aplicou a TRU da 4ª Região (IUJEF 0001574-09.2010.4.04.7195) e a temperatura inferior a 12 °C como parâmetro.
+- **Tema 1090 do STJ** e **Tema 213 da TNU** (EPI): teses literais em `base-especial-epi`.
 
-Frio enquadrável.
+O TRF3 não foi conferido nesta revisão (MCP indisponível). Antes de peticionar, buscar no MCP `trf3` "frio" com "câmara" e "12".
 
-Fonte oficial em https://www.cjf.jus.br
+## 2. Refutação
 
-### Súmula 198 TFR
-
-Categoria profissional.
-
-### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
-
-O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 174 TNU
-
-Metodologia.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 57 e 58
-
-Fonte oficial em https://www.planalto.gov.br
-
-### NR-15, Anexo 9
-
-Fonte oficial em https://www.gov.br
-
-### NHO-06 Fundacentro
-
-Fonte oficial em https://fundacentro.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Sem medição IBUTG
-
-Argumento adversário. Forma.
-
-Refutação. Tema 323 TNU admite.
-
-### Argumento 2. Sem categoria literal
-
-Argumento adversário. Restrição.
-
-Refutação. Súmula 198 TFR.
-
-### Argumento 3. EPI eficaz
-
-Argumento adversário. Neutralização.
-
-Refutação. Tema 1090 STJ admite exceções.
-
-### Argumento 4. Frio natural não conta
-
-Argumento adversário. Origem.
-
-Refutação. Frio próprio do trabalho conta.
-
-### Argumento 5. Sem PPP
-
-Argumento adversário. Forma.
-
-Refutação. LTCAT, perícia, similar.
-
-### Argumento 6. Empresa extinta
-
-Argumento adversário. Prova.
-
-Refutação. Súmula 198 TFR e perícia indireta.
-
-### Argumento 7. Sem laudo técnico
-
-Argumento adversário. Forma.
-
-Refutação. Perícia judicial supre.
-
-### Argumento 8. Categoria não consta no decreto
-
-Argumento adversário. Restrição.
-
-Refutação. Rol exemplificativo até 1995.
-
-### Argumento 9. Sem habitualidade
-
-Argumento adversário. Tempo.
-
-Refutação. Atividade contínua afasta.
-
-### Argumento 10. Doença degenerativa
-
-Argumento adversário. Origem.
-
-Refutação. Concausa admite.
-
-## 5. Estratégia integrada
-
-Primeiro, perícia técnica.
-
-Segundo, fundamentação Tema 323 TNU.
-
-Terceiro, recurso ou ação.
-
-Quarto, monitoramento.
-
-Quinto, dialeticidade.
-
-Sexto, conversão tempo especial.
-
-## 6. Diligência de atualização
-
-Acompanhar Tema 323 TNU.
-
-Revalidar NR-15 Anexo 9.
-
-Monitorar NHO-06.
+| Argumento do INSS | Refutação |
+|---|---|
+| Frio não consta do Anexo IV do Decreto 3.048/99; IN 128/2022, art. 301. | A IN vincula apenas a Administração. O rol é exemplificativo (Súmula 198 do TFR; ratio do Tema 534 do STJ) e a NR-15, Anexo 9, mantém o frio como agente insalubre. Exigir laudo ou perícia, não negar em tese. |
+| Falta medição de temperatura. | Até 05/03/1997, o Decreto 83.080/79 enquadra pela atividade (câmaras frigoríficas, fabricação de gelo), sem número. O Anexo 9 da NR-15 é qualitativo. Na falta de dado no PPP, cabe perícia (CPC, art. 464). |
+| A exposição era intermitente. | Até 28/04/1995 não se exige permanência (IN 128/2022, art. 286, § 2º). Depois, a entrada e saída constante não descaracteriza a permanência (PEDILEF 5000849-03.2013.4.04.7203). |
+| EPI térmico eficaz. | Exigir a prova dos requisitos do art. 291 da IN 128/2022 (CA, troca, higienização, treinamento). Dúvida sobre a eficácia favorece o segurado (Tema 1090 do STJ, item III). Impugnar o PPP item a item (Tema 213 da TNU). |
+| PPP sem responsável técnico. | Suprir por LTCAT contemporâneo ou, se extemporâneo, acompanhado de declaração do empregador de que o ambiente não se alterou (Tema 208 da TNU). |
+| Empresa extinta. | Perícia por similaridade e prova emprestada; ver `defesa-probatoria-especial`. |

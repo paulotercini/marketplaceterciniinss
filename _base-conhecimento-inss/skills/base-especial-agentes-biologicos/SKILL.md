@@ -1,90 +1,45 @@
 ---
 name: base-especial-agentes-biologicos
-description: "Base de teses pró-segurado sobre agentes biológicos em aposentadoria especial. Use SEMPRE que mencionar agentes biológicos, saúde, enfermeiro, enfermagem, técnico enfermagem, auxiliar enfermagem, médico, cirurgião-dentista, odontologia, dentista, laboratório, hospital, UTI, UBS, SAMU, ambulância, socorrista, motorista SAMU, resgate, fisioterapeuta, fonoaudiólogo, farmácia hospitalar, limpeza hospitalar, lavanderia hospitalar, coleta de lixo infectante, necrópsia, necrotério, agente funerário, tuberculose, hepatite, HIV, Covid-19, vírus, bactéria, fungo, SARS-CoV-2, EPI biológico, Tema 211 TNU, Tema 205 TNU, Tema 1090 STJ, Tema 555 STF, Tema 383 TNU, Parecer Fundacentro Tema 383, NR-32, Anexo 14 NR-15, habitualidade biológica, exposição intermitente biológica. Inclui o catálogo de odontologia conferido em TRF3 e TRF4 (Onda 108), acionado por dentista contribuinte individual, PPP do próprio consultório, ácido fosfórico, orto-cresol, hidróxido de cálcio, auxiliar de consultório dentário, art. 64 Decreto 3.048, Tema 1291 STJ, Súmula 68 TNU, Pet 10.262 STJ, Portaria 450/2020 autodeclaração. CORREÇÃO, o Tema 1090 STJ não lista biológicos na tese literal, quem lista é o IRDR 15 TRF4. Traz enquadramento qualitativo, refutação da tese de exposição eventual e roteiro pró-segurado. NÃO use para ruído, químicos ou físicos. Cruza com base-tema383-tnu-fundacentro-epi-biologicos, auditoria-ppp, base-especial-epi e peticao-previdenciaria."
+description: "Base de teses pró-segurado sobre agentes biológicos em aposentadoria especial. Use SEMPRE que mencionar agentes biológicos, saúde, enfermeiro, enfermagem, técnico enfermagem, auxiliar enfermagem, médico, cirurgião-dentista, odontologia, dentista, laboratório, hospital, UTI, UBS, SAMU, ambulância, socorrista, motorista SAMU, resgate, fisioterapeuta, fonoaudiólogo, farmácia hospitalar, limpeza hospitalar, lavanderia hospitalar, coleta de lixo infectante, necrópsia, necrotério, agente funerário, tuberculose, hepatite, HIV, Covid-19, vírus, bactéria, fungo, SARS-CoV-2, EPI biológico, Tema 211 TNU, Tema 205 TNU, Tema 1090 STJ, Tema 555 STF, Tema 383 TNU, Parecer Fundacentro Tema 383, NR-32, Anexo 14 NR-15, habitualidade biológica, exposição intermitente biológica. Inclui o catálogo de odontologia conferido em TRF3 e TRF4, acionado por dentista contribuinte individual, PPP do próprio consultório, ácido fosfórico, orto-cresol, hidróxido de cálcio, auxiliar de consultório dentário, art. 64 Decreto 3.048, Tema 1291 STJ, Súmula 68 TNU, Pet 10.262 STJ, Portaria 450/2020 autodeclaração. CORREÇÃO, o Tema 1090 STJ não lista biológicos na tese literal, quem lista é o IRDR 15 TRF4. Traz enquadramento qualitativo, refutação da tese de exposição eventual e roteiro pró-segurado. NÃO use para ruído, químicos ou físicos. Cruza com base-tema383-tnu-fundacentro-epi-biologicos, auditoria-ppp, base-especial-epi e peticao-previdenciaria."
 ---
 
-# Base Temática. Agentes Biológicos em Aposentadoria Especial
+# Agentes biológicos em aposentadoria especial
 
 ## Escopo
 
-Skill de referência exclusiva para defesa do segurado exposto a agentes biológicos, em aposentadoria especial. Complementa `auditoria-ppp`, `base-especial-epi` e `peticao-previdenciaria`. Não trata de agentes químicos, ruído ou físicos isoladamente.
+Defesa do segurado exposto a agentes biológicos. Marco normativo e cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`; odontologia em `references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`. EPI em `base-especial-epi`; Tema 383 da TNU em `base-tema383-tnu-fundacentro-epi-biologicos`.
 
-## Postura
+## Enquadramento por período
 
-Exclusivamente pró-segurado. A tese adversária de exposição eventual é sistematicamente refutada nesta skill.
+| Período | Fundamento |
+|---|---|
+| Até 05/03/1997 | Decreto 53.831/64, código 1.3.2; Decreto 83.080/79, Anexo I, código 1.3.4. A IN 128/2022, art. 299, I, admite o enquadramento mesmo fora de estabelecimento de saúde |
+| Desde 06/03/1997 | Anexo IV dos Decretos 2.172/97 e 3.048/99, código 3.0.1, com as atividades listadas nas alíneas; a IN 128/2022, art. 299, II, restringe às atividades do Anexo IV |
+| Categoria até 28/04/1995 | Médicos, dentistas e enfermeiros, código 2.1.3 dos dois decretos (`base-especial-categoria-profissional-pre1995`) |
 
-## Fluxo de trabalho
+A avaliação é qualitativa. O Anexo 14 da NR-15 classifica a insalubridade por atividade e ambiente, sem limite de tolerância.
 
-1. Leia este SKILL.md integralmente
-2. Leia `references/FUNDAMENTOS-E-CENARIOS.md` para o marco normativo, NR-32, Anexo 14 da NR-15 e os cenários por função
-3. Leia `references/JURISPRUDENCIA-E-REFUTACAO.md` para teses verificadas e contra-argumentação ao INSS
-4. Ao redigir peça, acione `peticao-previdenciaria`
-5. Ao auditar o PPP concreto, acione `auditoria-ppp`
-6. Ao impugnar alegação de EPI eficaz, acione `base-especial-epi`
+## Teses centrais
 
-## Síntese pró-segurado
+1. **Rol exemplificativo, risco concreto (Tema 205 da TNU).** "a) O rol de atividades com exposição a agentes biológicos nos decretos é exemplificativo; b) é necessária a comprovação em concreto do risco de exposição a microorganismos ou parasitas infectocontagiosos."
+2. **Permanência como indissociabilidade (Tema 211 da TNU).** "Para aplicação do art. 57, §3º, da Lei 8.213/91 a agentes biológicos, exige-se a probabilidade da exposição ocupacional, avaliando-se o seu caráter indissociável da produção do bem ou da prestação do serviço, independente de tempo mínimo de exposição durante a jornada." Usar os Temas 205 e 211 juntos contra a alegação de exposição eventual.
+3. **EPI.** O Tema 1090 do STJ não enumera as hipóteses excepcionais do item I. Os EDcl no REsp 2.080.584/PR registram que a lista ficou aberta, de modo que sustentar os biológicos como hipótese excepcional não contraria o repetitivo. O item III favorece o autor quando houver dúvida sobre a eficácia. Em ambiente hospitalar, o Tema 383 da TNU (julgado em 24/09/2026) afasta o EPI eficaz do PPP nas hipóteses do item I; fora delas, impugnação específica pelo Tema 213 da TNU e pelo item II do Tema 1090.
+4. **Pareceres da Fundacentro.** O Ofício Eletrônico 221/2025/PRES-FUNDACENTRO, de 30/10/2025, juntou ao Tema 383 os Pareceres 2/2025/SLEP/CAP/DPA e 3/2025/SATP/DPA, que negam a neutralização do risco biológico pelo EPI isolado. Conteúdo e uso em `base-tema383-tnu-fundacentro-epi-biologicos`.
+5. **Prova quantitativa.** Não se exige medição de agente biológico. Exigir a descrição da rotina (coleta, curativo, descarte de perfurocortante, contato com secreções).
 
-A aferição de nocividade por agentes biológicos é qualitativa. O Anexo 14 da NR-15 elenca atividades e ambientes com presunção de insalubridade. O Tema 211 TNU firmou que a habitualidade da exposição não exige permanência contínua, bastando contato integrado ao curso natural da jornada, ainda que intermitente.
+## Juízo de Catanduva
 
-O Tema 205 TNU consolidou a desnecessidade de contato permanente para configuração da exposição biológica. O Tema 1090 STJ fixou que a dúvida sobre a real eficácia do EPI se resolve em favor do autor, e o IRDR 15 do TRF4, na origem, reconheceu a ineficácia em agentes biológicos pela natureza do risco e pela falibilidade concreta dos equipamentos. CORREÇÃO DE AUDITORIA (Onda 108). ATUALIZADO na Onda 109 com a conferência em fonte oficial. O Tema 1090 do STJ NÃO enumera as hipóteses excepcionais na tese. Quem enumera os CANCERÍGENOS é o próprio STJ nos EDcl no REsp 2.116.343/RJ (10/09/2025), e os EDcl no REsp 2.080.584/PR registram que a Primeira Seção PROPOSITADAMENTE deixou a lista aberta, de modo que sustentar BIOLÓGICOS como hipótese excepcional não contraria o repetitivo. A âncora dos biológicos é o IRDR 15 do TRF4, citado como jurisprudência relevante nos próprios acórdãos do Tema 1090, somado ao Tema 383 da TNU com os Pareceres 2/2025 e 3/2025 da Fundacentro e ao Tema 213 da TNU. Tese literal e roteiro dos cinco caminhos do ônus em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`. A NR-32 estabelece a realidade do ambiente de saúde, com presunção de exposição para trabalhadores de hospitais, UBS, UTIs, laboratórios, consultórios odontológicos, SAMU e serviços correlatos.
-
-## Pareceres Fundacentro Tema 383/TNU
-
-A Fundacentro, fundação pública vinculada ao Ministério do Trabalho e Emprego, emitiu manifestação técnica oficial no Tema 383/TNU mediante o Ofício Eletrônico nº 221/2025/PRES-FUNDACENTRO de 30/10/2025, com dois pareceres anexos.
-
-Parecer nº 2/2025/SLEP/CAP/DPA. Distingue eficácia (ensaio laboratorial) de efetividade (ambiente real). Estabelece que não é cientificamente correto equiparar o conceito de Fator de Proteção (FP) de respirador para agente químico com a capacidade de impedir contaminação por agente biológico. O FPMR (C/LE) não se aplica a agentes biológicos por inexistência de Limites de Exposição Ocupacional. A seleção é feita por método qualitativo de opinião de especialistas (LENHART, 2004).
-
-Parecer nº 3/2025/SATP/DPA. Comprova cientificamente que a eficácia do EPI biológico não é constante. É afetada por tempo de uso (saturação após 8 a 12 horas), vedação/ajuste, carga viral/bacteriana, procedimentos de risco (intubação aumenta 2,5x o risco de transmissão; intubação isolada 4,7x). Reutilização de N95/PFF2 compromete vedação (13% rompimento de tirantes após 20 paramentações). Falhas em luvas (rompimento até 100% em cirurgia geral, 96% das quebras indetectáveis).
-
-Estudo TIAN et al. (2022). Metanálise com 191.004 trabalhadores da saúde em 5 vírus respiratórios. Redução média de 10,42% no risco com uso de EPIs. Risco residual médio de 10,28%.
-
-Estudo VIMIEIRO et al. (2025). Revisão sistemática sobre reutilização de N95.
-
-Estudo ARAÚJO et al. (2023). 40% das infecções por hepatites B e C entre trabalhadores da saúde são ocupacionais.
-
-Conclusão da Fundacentro. "Os EPIs constantes do PPP, se utilizados isoladamente como única medida de proteção, são incapazes de eliminar ou neutralizar a exposição nociva ou minimizar o risco a um nível aceitável, impossibilitando a descaracterização da atividade como especial".
-
-O Tema 383/TNU foi julgado em 24/09/2026. O EPI eficaz do PPP não obsta a especialidade do profissional de saúde em ambiente hospitalar que realiza ou auxilia procedimento gerador de aerossol, atende urgência ou emergência em setor crítico ou atua em ala de doença infectocontagiosa (item I). Fora dessas hipóteses, vale a impugnação específica do Tema 213/TNU e do Tema 1090/STJ (item II). Detalhamento completo, com a tese literal e os campos do PPP, em `base-tema383-tnu-fundacentro-epi-biologicos`.
-
-## Regras rígidas de redação
-
-Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
-
-Segundo, nunca admitir que o segurado tem ônus de produzir prova quantitativa de exposição biológica.
-
-Terceiro, jurisprudência somente após verificação em fonte primária oficial.
-
-Quarto, invocar sempre de forma combinada o Tema 211 TNU e o Tema 205 TNU para afastar a tese da exposição eventual.
+Depois de 05/03/1997, o juízo exige contato direto e habitual com pacientes portadores de doenças infectocontagiosas ou com material contaminado e "acentuado risco de contaminação". Atividade de apoio foi recusada, e o EPI anotado como eficaz afastou o agente. A peça impugna o EPI, com prova, já na inicial (Tema 1090 do STJ, item II). Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 3.
 
 ## Hub de portarias administrativas
 
 As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
-## Doutrina reconhecida
-
-Frederico Amado, em Direito Previdenciário, sustenta que o Anexo 14 da NR-15 traz presunção de insalubridade para atividades em ambiente hospitalar e afins. Hugo Goes, em Manual, reforça a avaliação qualitativa em biológicos. Fábio Zambitte Ibrahim, em Curso, defende interpretação ampla do rol diante da natureza do risco biológico. Wladimir Novaes Martinez enfrenta a falácia da exposição eventual, lembrando que a jornada de profissionais da saúde integra o risco de forma indissociável. O IBDP, em teses institucionais, sustenta a irrelevância do EPI em biológicos, salvo demonstração robusta e impossível em regra pelo INSS.
-
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
+
 ## Integração com outras skills
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao auditar PPP, acione `auditoria-ppp`.
-Ao refutar EPI eficaz, acione `base-especial-epi`.
-Ao discutir cerceamento de defesa por ausência de perícia, acione `defesa-probatoria-especial`.
-Ao verificar precedentes vinculantes, acione `precedentes-previdenciarios`.
-Ao pedir retificação do PPP à empresa, acione `retificacao-ppp`.
-
-## O que NÃO está nesta skill
-
-Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes químicos. Cada um tem skill específica.
-
-## Odontologia, jurisprudência conferida de TRF3 e TRF4 (Onda 108)
-
-Treze acórdãos de cirurgião-dentista, auxiliar e atendente de consultório, por biológicos e químicos, com o recorte do contribuinte individual, em `references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`. Fichas conferidas em fonte oficial em 13/08/2026. Traz a linha do TRF3 para uso direto, a do TRF4 como persuasivo com sinalização de Região, a contra-linha do próprio TRF4 sobre químicos "ordinariamente empregados no mister" com o distinguishing do ato-fim odontológico, e quatro pontos de rigor, entre eles a correção sobre o alcance do Tema 1090.
-
-## Juízo de Catanduva (Onda 179)
-
-Depois de 05/03/1997, o juízo exige contato direto e habitual com pacientes portadores de doenças infectocontagiosas ou com material contaminado e "acentuado risco de contaminação". Atividade de apoio foi recusada, e o EPI anotado como eficaz afastou o agente. A peça ataca o EPI, com prova, na inicial (Tema 1090/STJ [NÃO CONFIRMADO]). Blocos literais em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 3.
+Peça em `peticao-previdenciaria`. PPP em `auditoria-ppp`. EPI em `base-especial-epi`. Cerceamento de defesa em `defesa-probatoria-especial`. Precedentes em `precedentes-previdenciarios`. Retificação do PPP em `retificacao-ppp`. Enfermagem por categoria em `base-especial-penosidade-enfermagem-petroleiro`.

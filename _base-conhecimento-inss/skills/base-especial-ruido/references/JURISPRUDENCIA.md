@@ -1,77 +1,53 @@
-# Jurisprudência sobre Ruído em Aposentadoria Especial
+# Ruído. Jurisprudência
 
-Todas as teses abaixo foram verificadas em fontes primárias oficiais. Quando o precedente não se aplicar ao caso concreto, descartar a citação.
+Antes de citar em peça, conferir a tese na página oficial (CJF, STF, STJ). O TRF3 não foi conferido nesta revisão.
 
-## 1. Tema 174 TNU. NHO-01 e NR-15 como metodologias válidas
+## 1. Tema 174 da TNU
 
-Tese firmada. A partir de 19/11/2003, a aferição do ruído contínuo ou intermitente deve usar a NHO-01 da FUNDACENTRO ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma. Havendo omissão ou dúvida sobre a metodologia, o PPP não basta e deve ser apresentado o LTCAT (auditoria 03/10/2026).
+Tese literal: "(a) A partir de 19 de novembro de 2003, para a aferição de ruído contínuo ou intermitente, é obrigatória a utilização das metodologias contidas na NHO-01 da FUNDACENTRO ou na NR-15, que reflitam a medição de exposição durante toda a jornada de trabalho, vedada a medição pontual, devendo constar do Perfil Profissiográfico Previdenciário (PPP) a técnica utilizada e a respectiva norma; (b) Em caso de omissão ou dúvida quanto à indicação da metodologia empregada para aferição da exposição nociva ao agente ruído, o PPP não deve ser admitido como prova da especialidade, devendo ser apresentado o respectivo laudo técnico (LTCAT), para fins de demonstrar a técnica utilizada na medição, bem como a respectiva norma."
 
-Fonte oficial. Turma Nacional de Uniformização. Pesquisa no sistema de jurisprudência da TNU em https://www.cjf.jus.br
+Uso. Afastar o indeferimento fundado apenas na falta da expressão "NHO-01" quando o PPP indica a NR-15. Na omissão, juntar o LTCAT antes de qualquer pedido de perícia.
 
-Aplicação prática para o segurado. Em todo recurso administrativo ou inicial, invocar o Tema 174 para afastar indeferimento baseado na mera ausência da NHO-01. A tese vale para períodos a partir de 19/11/2003; para os anteriores, a referência administrativa é o inciso II do Enunciado 13 do CRPS (auditoria 03/10/2026).
+## 2. Tema 317 da TNU (contrário ao segurado)
 
-## 2. Tema 317 TNU. Indicação da norma técnica
+PUIL 5000648-28.2020.4.02.5002/ES, Rel. Juiz Federal Nagibe de Melo Jorge Neto, julgado em 18/09/2025, por maioria, recurso do INSS provido. Tese: "A menção à dose, dosímetro ou dosimetria no PPP não é suficiente para se concluir pela observância das determinações da Norma de Higiene Ocupacional (NHO-01) da FUNDACENTRO e/ou da NR-15, nos termos do Tema 174 da TNU. É necessário menção expressa às referidas normas para indicar que as técnicas e metodologias utilizadas [...]" (íntegra no `base-precedentes-catalogo-vinculantes`).
 
-Tese firmada. A simples menção a "dosimetria" ou "dosímetro" no PPP, sem indicação expressa da norma técnica aplicada, não é suficiente para caracterizar o atendimento à NHO-01 ou à NR-15 para fins de reconhecimento da especialidade por ruído.
+A tese anterior, de 26/06/2024, favorável ao segurado, foi anulada em 14/05/2025 por embargos de declaração. Os embargos do IBDP contra o rejulgamento foram rejeitados em 03/12/2025.
 
-Fonte oficial. Turma Nacional de Uniformização. Pesquisa no sistema de jurisprudência da TNU em https://www.cjf.jus.br
+Uso. Juntar o LTCAT que nomeie a norma, requerer sua exibição pelo empregador ou pedir a retificação do PPP.
 
-Aplicação prática para o segurado. O Tema 317 tem efeito ambíguo. Para o segurado, a leitura correta é que ele não derroga o Tema 174 e não inviabiliza o reconhecimento quando há NEN expresso no campo 15.4, pois a grandeza NEN já pressupõe metodologia normalizada. Se a auditoria identificar ausência completa de norma técnica e de NEN, a estratégia muda para retificação do PPP pela empresa empregadora.
+## 3. PUIL 0001717-22.2019.4.03.6318/SP
 
-## 3. PEDILEF 0001717 e a presunção relativa de regularidade da NR-15
+TNU, Rel. Juiz Federal Nagibe de Melo Jorge Neto; prevaleceu o voto-vista, com provimento parcial. Ementa: "a simples menção à NHO-01 ou à NR-15 no PPP induz à presunção relativa de que a aferição foi realizada conforme as diretrizes técnicas adequadas para medição durante toda a jornada de trabalho". O acórdão transcreve precedente da TNU segundo o qual a menção à NR-15 ou à NHO-01 "gera presunção relativa de observância das metodologias adequadas, cabendo à parte contrária o ônus de impugnar fundamentadamente a regularidade da medição". Data de julgamento não localizada no acervo.
 
-Tese complementar ao Tema 174. A menção à NR-15 no PPP gera presunção relativa de regularidade da aferição, cabendo ao INSS demonstrar que a medição foi pontual e sem normalização para afastar a especialidade.
+Uso. Exigir do INSS impugnação concreta da medição, em vez de impor ao segurado a prova da regularidade.
 
-Fonte oficial. TNU, PEDILEF 0001717. Acessar em https://www.cjf.jus.br
+## 4. Enunciado 13 do CRPS
 
-Aplicação prática para o segurado. Inverter o ônus da prova em recurso, demandando do INSS a demonstração concreta da irregularidade da medição, em vez de o segurado demonstrar a regularidade.
+Redação da Resolução 29/CRPS, de 09/12/2024 (DOU de 19/12/2024): "Atendidas as demais condições legais, considera-se especial, no âmbito do RGPS, a atividade exercida com exposição a ruído superior a 80 decibéis até 05/03/97, superior a 90 decibéis desta data até 18/11/2003, e superior a 85 decibéis a partir de então." Os incisos I, II e IV foram mantidos; o inciso III, que exigia a menção conjunta à NR-15 e ao NEN, foi revogado.
 
-## 4. Revisão do Enunciado 13 do CRPS em 09/12/2024
+Uso. Citar a revogação no recurso ordinário e no recurso especial. Se o órgão julgador aplicar o inciso revogado, opor embargos de declaração.
 
-O Conselho Pleno do CRPS, em sessão de 09 de dezembro de 2024, revogou o inciso III do Enunciado 13. A redação revogada afirmava que era indispensável a menção à NR-15 com NEN expresso. Com a revogação, admite-se o reconhecimento por indicação isolada da NHO-01 e por indicação isolada do NEN.
+## 5. Nota 00792/2025/CONJUR-MPS/CGU/AGU
 
-Fonte oficial. Ata da sessão do Conselho Pleno do CRPS. Acessar em https://www.gov.br/previdencia/pt-br/acesso-a-informacao/conselhos-e-orgaos-colegiados/crps
+Aplicada pela 4ª Câmara de Julgamento do CRPS no Acórdão 9955/2026 (sessão de 19/10/2026), com o Parecer 00217/2023/CONJUR-MPS/CGU/AGU. Os quatro registros válidos do ruído no PPP estão descritos no SKILL.md, Tese 6; o teor depende de fonte secundária [NÃO CONFIRMADO].
 
-Aplicação prática para o segurado. Em todo recurso ordinário a Junta de Recursos e em recurso especial a Câmara de Julgamento, citar expressamente a revogação do inciso III do Enunciado 13. Se o órgão julgador invocar a redação anterior do Enunciado 13 para manter indeferimento, cabe embargos com pedido de atualização normativa.
+O "Comunicado CRPS 99/2025", citado em outras skills como origem dos mesmos quatro cenários, Não localizado no acervo do CRPS [NÃO CONFIRMADO]. Preferir a Nota 00792/2025 e o Enunciado 13.
 
-## 5. Comunicado CRPS 99/2025. Quatro cenários para ruído
+## 6. Tema 555 do STF (ARE 664.335)
 
-O Comunicado 99/2025 do CRPS consolidou a sistemática de aceitação de quatro cenários para aferição de ruído a partir de 19/11/2003.
+Item II: "Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do Perfil Profissiográfico Previdenciário (PPP), no sentido da eficácia do Equipamento de Proteção Individual - EPI, não descaracteriza o tempo de serviço especial para aposentadoria."
 
-Cenário 1, NHO-01 isoladamente indicada, com presunção de NEN.
+Uso. A anotação de EPI eficaz não fundamenta indeferimento por ruído.
 
-Cenário 2, NEN isolado sem menção de norma, aceito por ser tecnologia rastreável à NHO-01.
+## 7. Tema 694 do STJ (REsp 1.398.260/PR)
 
-Cenário 3, NEN acompanhado da indicação da NHO-01.
+Limite de 90 dB entre 06/03/1997 e 18/11/2003, sem retroação dos 85 dB do Decreto 4.882/2003. Tese adversa. O caminho do segurado é provar exposição acima de 90 dB ou enquadrar o período por outro agente.
 
-Cenário 4, NR-15 com NEN expresso.
+## 8. Súmula 68 da TNU
 
-Fonte oficial. Comunicado CRPS. Acessar em https://www.gov.br/previdencia/pt-br/acesso-a-informacao/conselhos-e-orgaos-colegiados/crps
+"O laudo pericial não contemporâneo ao período trabalhado é apto à comprovação da atividade especial do segurado." Uso contra a recusa do LTCAT extemporâneo.
 
-## 6. Tema 555 STF. EPI e ruído
+## 9. Conversão
 
-Tese firmada. O uso de EPI eficaz afasta a nocividade, mas há exceção expressa para exposição a ruído acima do limite, em que a especialidade se mantém mesmo com EPI certificado, dadas as limitações da proteção auricular em condições reais.
-
-Fonte oficial. STF, ARE 664.335, Tema 555. Acessar em https://portal.stf.jus.br
-
-Aplicação prática para o segurado. Não admitir que a anotação no campo 15.7 do PPP afirmando EPI eficaz seja motivo de indeferimento para ruído. A exceção é expressa no próprio precedente do STF.
-
-## 7. Súmula 68 TNU. Laudo extemporâneo
-
-Tese firmada. O laudo técnico pericial utilizado para reconhecimento de tempo especial pode ser extemporâneo quando demonstrar que as condições ambientais se mantiveram estáveis no período laborado.
-
-Fonte oficial. Turma Nacional de Uniformização.
-
-Aplicação prática para o segurado. Em caso de PPP baseado em LTCAT posterior ao período, invocar a Súmula 68 para afastar a tese do INSS de extemporaneidade.
-
-## 8. Art. 25, §2º, da EC 103/2019. Conversão de tempo especial em comum
-
-Regra constitucional. A conversão de tempo especial em comum é assegurada para atividades exercidas até 13/11/2019, data de publicação da EC 103/2019, e vedada para o tempo posterior (auditoria 03/10/2026).
-
-Fonte oficial. Art. 25, §2º, da EC 103/2019, em https://www.planalto.gov.br (auditoria 03/10/2026).
-
-Aplicação prática para o segurado. Em planejamento previdenciário, identificar todo tempo especial pré EC 103 como convertível em tempo comum, com acréscimo de 40% para homens e 20% para mulheres.
-
-## Diligências de atualização
-
-Antes de citar qualquer precedente em peça decisiva, reexecutar busca no sistema oficial da corte indicada, verificando se a tese permanece vigente, se houve superação ou se há novo tema pendente de julgamento. A skill `precedentes-previdenciarios` é a fonte primária para essa conferência.
+Conversão do tempo especial em comum apenas para o trabalho até 13/11/2019 (EC 103/2019, art. 25, § 2º). Desenvolvimento em `base-tempo-especial-conversao`.

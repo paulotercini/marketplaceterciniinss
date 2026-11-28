@@ -1,8 +1,8 @@
 # Odontologia e Profissionais de Saúde. Jurisprudência de TRF3 e TRF4
 
-Onda 108 (13/08/2026). Catálogo de acórdãos sobre tempo especial de cirurgião-dentista, auxiliar e atendente de consultório odontológico, por agentes biológicos e químicos, com o recorte do contribuinte individual. Fichas conferidas nas bases oficiais `web.trf3.jus.br/jurisprudencia` e `jurisprudencia.trf4.jus.br` em 13/08/2026, no formato da `pesquisa-jurisprudencia-chrome`.
+Catálogo de acórdãos sobre tempo especial de cirurgião-dentista, auxiliar e atendente de consultório odontológico, por agentes biológicos e químicos, com o recorte do contribuinte individual. Fichas conferidas nas bases oficiais `web.trf3.jus.br/jurisprudencia` e `jurisprudencia.trf4.jus.br` em 13/08/2026, no formato da `pesquisa-jurisprudencia-chrome`.
 
-Hierarquia de uso. O TRF3 é a nossa Região e entra como precedente de aplicação direta. O TRF4 entra como persuasivo, e a peça DEVE sinalizar a Região de origem, sob pena de o INSS explorar a omissão.
+Hierarquia de uso. O TRF3 é a nossa Região e entra como precedente de aplicação direta. O TRF4 entra como persuasivo, e a peça deve sinalizar a Região de origem, sob pena de o INSS explorar a omissão.
 
 ## TRF3, uso direto
 
@@ -20,7 +20,7 @@ Hierarquia de uso. O TRF3 é a nossa Região e entra como precedente de aplicaç
 
 **7. ApCiv 5004556-86.2019.4.03.6106.** 10ª Turma, Rel. Mauricio Yukikazu Kato, ementa da Juíza Fed. Tais Vargas Ferracini de Campos Gurgel, j. 16/03/2026, DJEN 24/03/2026. Atendente de consultório dentário. Tese EXPRESSA de que o EPI é incapaz de neutralizar biológicos. Súmula 68 da TNU.
 
-ALERTA de uso. A tese 3 deste acórdão fixa a DIB na CITAÇÃO quando a prova decisiva só surge em juízo, espelho do item 2.3 do Tema 1124/STJ. Antes de citar, conferir se o PPP já estava no processo administrativo. Se estava, DISTINGUIR, porque a peça pode terminar entregando ao INSS o argumento de deslocamento da DIB. [CONFERIDO em 13/08/2026]
+ALERTA de uso. A tese 3 deste acórdão fixa a DIB na CITAÇÃO quando a prova decisiva apenas surge em juízo, espelho do item 2.3 do Tema 1124/STJ. Antes de citar, conferir se o PPP já estava no processo administrativo. Se estava, DISTINGUIR, porque a peça pode terminar entregando ao INSS o argumento de deslocamento da DIB. [CONFERIDO em 13/08/2026]
 
 **8. Ap 0030294-30.2016.4.03.9999 (2188298).** 10ª Turma, Rel. Sergio Nascimento, j. 25/07/2017, e-DJF3 02/08/2017. Dentista autônoma. Especialidade reconhecida por biológicos (saliva, secreções, sangue) E por químicos nominados na ementa, mercúrio vivo, óxido de zinco, eugenol, resinas, ÁCIDO FOSFÓRICO e anestésicos tópicos. Precedente antigo e útil justamente por nominar os químicos do ato-fim odontológico. [CONFERIDO em 13/08/2026]
 
@@ -42,7 +42,7 @@ Existe linha contrária no próprio TRF4. AC 5051700-54.2019.4.04.7100 (6ª Turm
 
 Distinguishing para odontologia. O orto-cresol, o ácido fosfórico e o hidróxido de cálcio NÃO são produtos de limpeza acessórios ao trabalho. São insumos clínicos do ATO-FIM, de manuseio direto e diário pelo próprio profissional, com classificação técnica no Anexo 13 da NR-15 demonstrável por laudo. A contra-linha trata de produto periférico à atividade, o nosso caso trata de produto que é a atividade.
 
-Regra do escritório. Levantar a contra-linha na PRÓPRIA peça e distinguir, em vez de esperar a contestação. Contra-linha antecipada perde força, contra-linha revelada pelo INSS ganha ares de omissão do autor.
+Regra do escritório. Levantar a contra-linha na PRÓPRIA peça e distinguir, em vez de esperar a contestação. A contra-linha revelada apenas pelo INSS parece omissão do autor.
 
 ## Pontos de rigor registrados
 
@@ -52,7 +52,7 @@ Regra do escritório. Levantar a contra-linha na PRÓPRIA peça e distinguir, em
 
 **Tema 1291/STJ** já foi aplicado pela 7ª Turma do TRF3 em caso de dentista (ficha 1). RE pendente, não afirmar trânsito em julgado.
 
-**Tema 1090/STJ.** [ATUALIZADO na Onda 109, tese literal integral conferida no SCON/STJ em 14/08/2026.] A tese não enumera as hipóteses excepcionais, mas os EDcl no REsp 2.116.343/RJ (10/09/2025) afirmam que os CANCERÍGENOS são uma delas, e os EDcl no REsp 2.080.584/PR registram que a lista foi deixada aberta propositadamente. Para biológicos, a âncora é o IRDR 15 do TRF4, citado nos próprios acórdãos do Tema 1090, mais o Tema 383 da TNU com os Pareceres da Fundacentro e o Tema 213 da TNU. Tese literal e roteiro dos cinco caminhos do ônus em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`.
+**Tema 1090/STJ.** [Tese literal conferida no SCON/STJ em 14/08/2026.] A tese não enumera as hipóteses excepcionais, mas os EDcl no REsp 2.116.343/RJ (10/09/2025) afirmam que os CANCERÍGENOS são uma delas, e os EDcl no REsp 2.080.584/PR registram que a lista foi deixada aberta propositadamente. Para biológicos, a âncora é o IRDR 15 do TRF4, citado nos próprios acórdãos do Tema 1090, mais o Tema 383 da TNU com os Pareceres da Fundacentro e o Tema 213 da TNU. Tese literal e roteiro dos cinco caminhos do ônus em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`.
 
 ## Roteiro de aproveitamento
 

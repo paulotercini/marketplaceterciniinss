@@ -13,7 +13,7 @@ Não se confunde com o benefício acidentário pago pelo INSS (B91, B92, B94), q
 
 As duas frentes são CUMULÁVEIS e independentes. O art. 121 da Lei 8.213/91 dispõe que o pagamento de prestação por acidente do trabalho pela Previdência Social não exclui a responsabilidade civil da empresa. O segurado pode receber B91/B92/B94 do INSS e, paralelamente, indenização do empregador.
 
-O escritório é pró-segurado em matéria previdenciária. Esta skill é registrada como conhecimento de fronteira, útil para orientar o cliente e encaminhar a demanda trabalhista, não para fundamentar pedido de benefício.
+Esta skill registra conhecimento de fronteira, útil para orientar o cliente e encaminhar a demanda trabalhista, e não para fundamentar pedido de benefício.
 
 ## 1. Tese literal do Tema 932 STF
 
@@ -71,6 +71,8 @@ Art. 202, §4º. "A atividade econômica preponderante da empresa e os respectiv
 
 Art. 202, §5º. O enquadramento no correspondente grau de risco é de responsabilidade da EMPRESA, observada a sua atividade econômica preponderante, cabendo revisão do autoenquadramento a qualquer tempo.
 
+Art. 202, § 1º. As alíquotas são acrescidas de 12, 9 ou 6 pontos percentuais quando a atividade do segurado enseja aposentadoria especial após 15, 20 ou 25 anos, acréscimo que incide apenas sobre a remuneração do segurado exposto (§ 2º). Esse adicional corresponde ao código de ocorrência da GFIP informado no PPP e é a ligação entre o custeio e o tempo especial (`auditoria-ppp`).
+
 Fonte oficial em https://www.planalto.gov.br/ccivil_03/decreto/d3048.htm
 
 ## 5. Por que o RAT não prova o nexo. Cinco descompassos estruturais
@@ -111,11 +113,11 @@ NTEP, quando presente, pela conjugação CNAE e CID (art. 21-A da Lei 8.213/91),
 
 Laudo de acidente do trabalho e documentação do órgão de fiscalização, quando houver.
 
-## 8. Auditoria de citação. Como verificar transcrição de tese
+## 8. Conferência de citação da tese
 
-Regra do escritório derivada da Onda 65. Toda citação de tese de repercussão geral entre aspas deve ser conferida palavra por palavra na fonte oficial antes de ir para a peça.
+Toda citação de tese de repercussão geral entre aspas deve ser conferida palavra por palavra na fonte oficial antes de ir para a peça.
 
-Marcadores de paráfrase disfarçada de citação literal, em material de divulgação sobre o Tema 932.
+Material de divulgação sobre o Tema 932 costuma trazer paráfrase entre aspas. Indicam que o texto não é a tese oficial:
 
 Presença das palavras RAT, CNAE, grau 3, Anexo V ou Tabela dentro das aspas. Nenhuma consta da tese.
 
@@ -139,7 +141,7 @@ Frente de responsabilidade civil, matéria trabalhista. Ação indenizatória co
 
 Alertar o cliente de que as duas frentes são cumuláveis (art. 121 da Lei 8.213/91) e que a percepção do benefício previdenciário não quita nem reduz a indenização civil, embora possa ser considerada na liquidação de danos materiais conforme o entendimento do juízo.
 
-## 10. Integração com outras skills
+## Integração com outras skills
 
 `ntep-nexo-acidentario` para o nexo técnico epidemiológico e o regime dos arts. 19 a 21-A da Lei 8.213/91.
 
@@ -158,16 +160,6 @@ Concessão de benefício acidentário pelo INSS. Ver as skills previdenciárias 
 Quantificação de dano moral e material trabalhista, matéria fora do acervo do escritório.
 
 Aposentadoria especial por agente nocivo. Ver `auditoria-ppp` e as skills `base-especial-*`.
-
-## 12. Registro de auditoria (Onda 72)
-
-Material de origem. Carrossel de divulgação sobre Tabela RAT e Tema 932, recebido em 18/07/2026.
-
-Verificado e INCORPORADO. Existência do Tema 932 e do RE 828.040. Estrutura da Tabela RAT em graus 1, 2 e 3 no Anexo V do Decreto 3.048/99, com as alíquotas de 1, 2 e 3 por cento do art. 202. Pertinência do art. 927, parágrafo único, do CC e do art. 7º, XXVIII, da CF.
-
-Verificado e RECUSADO. A afirmação de que o grau 3 prova o nexo causal ou ativa automaticamente a responsabilidade objetiva. A tese literal não contém RAT, CNAE nem grau, e exige três requisitos cumulativos aferidos sobre a atividade concreta do trabalhador. A responsabilidade objetiva dispensa culpa, não nexo.
-
-Ressalva sobre citação. Não foi possível confrontar o texto entre aspas do material de divulgação com a tese oficial, por não ter sido fornecida a transcrição literal do slide. Aplicar a seção 8 antes de qualquer aproveitamento. A tese oficial é a da seção 1, e apenas ela deve ser transcrita entre aspas.
 
 ## MCPs da casa
 

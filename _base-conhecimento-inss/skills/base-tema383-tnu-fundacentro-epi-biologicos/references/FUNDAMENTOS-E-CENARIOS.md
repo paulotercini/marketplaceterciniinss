@@ -6,11 +6,11 @@
 
 Processo nº 47648.001965/2023-72.
 
-Ofício Eletrônico nº 221/2025/GABINETE PRES/PRES-FUNDACENTRO. Datado de 07/02/2024 (data de cabeçalho) e assinado eletronicamente em 30/10/2025 pelo Presidente Pedro Tourinho de Siqueira.
+Ofício Eletrônico nº 221/2025/GABINETE PRES/PRES-FUNDACENTRO, assinado eletronicamente em 30/10/2025 pelo Presidente da Fundacentro.
 
 Endereçado à Excelentíssima Senhora Juíza Relatora Lílian Oliveira da Costa Tourinho.
 
-Anexos.
+Anexos:
 
 I. Parecer nº 2/2025/SLEP/CAP/DPA (SEI nº 0353163).
 
@@ -30,9 +30,9 @@ Despacho nº 90/2025/SATP/DPA do mesmo Serviço.
 
 ### 1.3. Pareceristas
 
-Parecer nº 2/2025/SLEP/CAP/DPA. Fernanda de Freitas Ventura (Técnica) e Silvia Helena de Araújo Nicolai (Tecnologista). Assinados eletronicamente em 28/10/2025.
+Parecer nº 2/2025/SLEP/CAP/DPA, assinado eletronicamente em 28/10/2025 por duas servidoras do Serviço de Laboratório de EPI.
 
-Parecer nº 3/2025/SATP/DPA. Érica Lui Reinhardt (Pesquisadora). Assinado eletronicamente em 29/10/2025.
+Parecer nº 3/2025/SATP/DPA, assinado eletronicamente em 29/10/2025 por pesquisadora do Serviço de Apoio Técnico e Pesquisa.
 
 ### 1.4. Publicação
 
@@ -52,7 +52,7 @@ Disponível também em https://www.gov.br/fundacentro/pt-br.
 
 ### 2.2. Questão 2 (respondida pelo Parecer 3/2025)
 
-"A eficácia de um EPI (como uma máscara N95/PFF2 ou luvas de procedimento) é uma constante ou pode ser afetada por variáveis como. (a) o tempo de uso contínuo, (b) a correta e ininterrupta vedação/ajuste ao corpo do usuário, (c) a carga viral/bacteriana do ambiente, e (d) a ocorrência de procedimentos de alto risco e intercorrências emergenciais? Existe um ponto de saturação ou falha previsível do EPI em condições reais de uso hospitalar?"
+"A eficácia de um EPI (como uma máscara N95/PFF2 ou luvas de procedimento) é uma constante ou pode ser afetada por variáveis como: (a) o tempo de uso contínuo, (b) a correta e ininterrupta vedação/ajuste ao corpo do usuário, (c) a carga viral/bacteriana do ambiente, e (d) a ocorrência de procedimentos de alto risco e intercorrências emergenciais? Existe um ponto de saturação ou falha previsível do EPI em condições reais de uso hospitalar?"
 
 ### 2.3. Questão 3
 
@@ -74,7 +74,7 @@ Maximiano (2018). Efetividade é uma medida de desempenho utilizada em alguns co
 
 Para fins de obtenção ou renovação do Certificado de Aprovação (CA), todo EPI passa pelo processo da Portaria/MTP nº 672/2021. Essa avaliação é de eficácia.
 
-A efetividade do EPI no ambiente real depende de.
+A efetividade do EPI no ambiente real depende de:
 
 Adoção/registro de critérios adequados de seleção, uso, guarda, higienização/limpeza, manutenção e substituição.
 
@@ -112,7 +112,7 @@ Hierarquia art. 1.4.1 "g" da NR-01, item 1.5.5.1.2 da NR-01, art. 6.5.1 "c" da N
 
 ### 3.3. Programa de Proteção Respiratória (PPR)
 
-PPR (TORLONI, 2016, Fundacentro). Recomendação obrigatória pela Portaria MTP nº 672/2021 (art. 44, §2º).
+PPR (Torloni, 2016, Fundacentro), referido pela Portaria MTP nº 672/2021 (art. 44, § 2º, conforme o parecer).
 
 Ensaio de vedação. Indispensável.
 
@@ -120,7 +120,7 @@ Ensaio de vedação. Indispensável.
 
 Frequência. Pelo menos a cada 12 meses.
 
-Repetição obrigatória quando.
+Repetição obrigatória quando:
 
 Alteração de 10% ou mais na massa corpórea.
 
@@ -142,7 +142,7 @@ OSHA recomenda ensaio anual. Brasil adotou.
 
 ### 3.4. Fontes de informação para efetividade
 
-Documentações que podem servir de base para conclusão sobre efetividade.
+Documentações que podem servir de base para conclusão sobre efetividade:
 
 PPR (Programa de Proteção Respiratória).
 
@@ -158,7 +158,7 @@ CAT (NR-32, item 32.2.3.5).
 
 PCMSO (NR-07). Registros de saúde ocupacional antes/depois da adoção do EPI.
 
-A Coordenação Geral de Benefícios de Risco e Reabilitação Profissional (Ofício Eletrônico nº 1/2022/PRES-FUNDACENTRO) já manifestou que.
+O parecer transcreve manifestação da Coordenação-Geral de Benefícios de Risco e Reabilitação Profissional do INSS, referida como Ofício Eletrônico nº 1/2022/PRES-FUNDACENTRO [NÃO CONFIRMADO quanto ao órgão emissor]:
 
 "A informação prestada pela empresa no PPP acerca da eficácia ou não do EPI, por si só é suficiente para reconhecimento ou não de tempo de atividade especial. Porém, diante de insegurança quanta à informação prestada, é facultado ao Perito Médico Federal exigir que a empresa apresente os documentos que a subsidiaram, para que seja dada maior segurança à sua análise e decisão. Quanto à aferição em abstrato de ineficácia de EPI, entende-se que assim como aferição de eficácia, necessita estar baseada em LTCAT ou em documento que possa substituí-lo".
 
@@ -186,7 +186,7 @@ Adução de ar máscara autônoma de demanda com pressão positiva, peça facial
 
 Para 95% dos usuários treinados, a concentração do contaminante no ar inalado será no mínimo 10 vezes menor (no caso de PFF2/N95).
 
-Ci nunca será zero por.
+Ci nunca será zero por:
 
 Vazamentos na válvula de exalação.
 
@@ -214,7 +214,7 @@ Se aplicado o procedimento de seleção dos respiradores para químicos, conside
 
 Caminho real. Método de opinião de especialistas (LENHART, 2004). Abordagem qualitativa baseada no julgamento profissional subjetivo de um ou mais especialistas.
 
-Critérios LENHART 2004.
+Critérios LENHART 2004:
 
 (a) estado de conhecimento do agente infeccioso.
 
@@ -322,7 +322,7 @@ Média. 20,68% / 10,28% / -10,42%.
 
 ### 4.5.2. Conclusão do estudo TIAN
 
-EPIs reduziram o risco em ~10,42% em média. Redução da ordem de 50% no risco estimado de infecção sem o item de proteção.
+EPIs reduziram o risco médio de 20,68% para 10,28%, cerca de 10 pontos percentuais, o que corresponde a uma redução relativa da ordem de 50%.
 
 Mesmo assim, chance de infecção mantida em 2,2% a 16,9% dos trabalhadores.
 
@@ -340,7 +340,7 @@ Aids, hepatites e outras infecções em sangue/fluidos. Luvas de procedimento n�
 
 ### 4.7. Critério ALARP (NBR IEC 31010:2021)
 
-Três níveis de risco.
+Três níveis de risco:
 
 (a) Intolerável. Não é possível justificar o risco, exceto em circunstâncias extraordinárias.
 
@@ -352,7 +352,7 @@ Norma técnica recomendada pela Coordenação-Geral de Segurança e Saúde no Tr
 
 ### 4.8. Hierarquia de controle de riscos. NIOSH 2024
 
-Ordem preferencial.
+Ordem preferencial:
 
 (a) Eliminar os riscos.
 
@@ -382,37 +382,37 @@ Médico, enfermeiro, técnico de enfermagem, fisioterapeuta exposto a agentes bi
 
 PPP indica EPI eficaz (luvas, N95/PFF2, vestimenta, óculos). INSS pode descaracterizar especialidade.
 
-Refutação. Parecer Fundacentro 3/2025. EPIs isolados não eliminam risco.
+Fundamento. Item I do Tema 383 quando houver setor crítico ou procedimento gerador de aerossol; nos demais casos, item II com o Parecer 3/2025 (EPIs isolados não eliminam o risco).
 
 ### 5.2. Agente Comunitário de Saúde (ACS) e Agente de Combate a Endemias (ACE)
 
 Exposição a Aedes aegypti, dengue, zika, chikungunya, leishmaniose, doença de Chagas.
 
-Refutação. Parecer Fundacentro 3/2025, item 6.14. NÃO há EPI capaz de proteger contra picada de Aedes aegypti.
+Fundamento. Parecer Fundacentro 3/2025, item 6.14. NÃO há EPI capaz de proteger contra picada de Aedes aegypti.
 
 ### 5.3. Profissional de laboratório clínico
 
 Exposição a sangue, secreções, agentes biológicos diversos.
 
-Refutação. Falhas em luvas (BELLINI 2022, HENTZ 2001, SOLDÁ 2009). 96% das quebras de barreira indetectáveis.
+Fundamento. Falhas em luvas (BELLINI 2022, HENTZ 2001, SOLDÁ 2009). 96% das quebras de barreira indetectáveis.
 
 ### 5.4. Coletor de lixo hospitalar e manipulador de resíduos infectantes
 
 Exposição a perfurocortantes contaminados, resíduos de saúde.
 
-Refutação. Hepatites ocupacionais (ARAÚJO 2023, 40% das infecções B e C).
+Fundamento. Hepatites ocupacionais (ARAÚJO 2023, 40% das infecções B e C).
 
 ### 5.5. Agente prisional, policial, agente funerário
 
 Exposição a tuberculose, HIV, hepatites, agentes infecciosos diversos.
 
-Refutação. Hierarquia de controle NIOSH 2024. EPI é último recurso. Ambiente hostil ao uso adequado de EPI.
+Fundamento. Hierarquia de controle NIOSH 2024. EPI é último recurso. Ambiente hostil ao uso adequado de EPI.
 
 ### 5.6. Trabalhador da saúde durante pandemia (Covid-19)
 
-Combinar com Lei 14.128/2021 (indenização por incapacitação ou morte) e Tema 362/TNU.
+A Lei 14.128/2021 (compensação financeira por incapacidade ou morte por Covid-19) e o Tema 362 da TNU (autoaplicabilidade dessa lei) não tratam de tempo especial. Para o tempo especial, valem o item I do Tema 383 e os pareceres.
 
-Refutação. Risco residual 2,2% mesmo com N95 (TIAN 2022). 191.004 trabalhadores estudados.
+Fundamento. Risco residual 2,2% mesmo com N95 (TIAN 2022). 191.004 trabalhadores estudados.
 
 ## 6. Documentação institucional
 

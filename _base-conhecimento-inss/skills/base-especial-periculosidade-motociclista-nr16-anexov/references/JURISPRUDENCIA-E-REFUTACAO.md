@@ -1,123 +1,24 @@
-# Periculosidade Motociclista. Jurisprudência e Refutação
+# Periculosidade do motociclista. Jurisprudência e refutação
 
-## 1. Precedentes relevantes
+O TRF3 não foi conferido nesta revisão.
 
-O Tema 132 STJ, antes listado aqui, trata de ISS bancário e foi retirado (auditoria 03/10/2026).
+## 1. Precedentes
 
-### Súmula 198 TFR
+- **PUIL 1008245-93.2021.4.01.3811** (TNU, Rel. Juíza Federal Marina Vasques Duarte, disponibilizado em 25/11/2026, desprovido). Contrário: a periculosidade do art. 193, § 4º, da CLT e do Anexo 5 da NR-16 não basta, por autonomia entre as legislações e pela vedação ao enquadramento por categoria ou presunção de risco após a Lei 9.032/95. Ler o inteiro teor antes de citar, inclusive o trecho sobre o laudo técnico.
+- **PUIL 0000807-12.2021.4.03.6322** (TNU, Rel. Juiz Federal Wagmar Roberto Silva, disponibilizado em 10/11/2026, parcialmente provido). Acórdão da Turma Recursal anulado por omissão sobre a periculosidade registrada no PPP (Questão de Ordem 47 da TNU).
+- **Tema 1209 do STF** (RE 1.368.225). Vigilante, com ou sem arma de fogo, não tem atividade especial. Indica a resistência do STF à periculosidade como fundamento após a Lei 9.032/95.
+- **Tema 1031 do STJ.** Superado pelo Tema 1209 do STF; não usar por analogia.
+- **Súmula 198 do TFR.** Perícia judicial supre a falta de previsão regulamentar.
+- **Tema 198 da TNU.** Analogia com categoria prevista exige prova da equivalência pela profissiografia.
 
-Atividade especial por categoria profissional. Aplicação por analogia ao motociclista anterior à Lei 12.997/2014. Fonte oficial em https://www.cjf.jus.br
+## 2. Refutação
 
-### Tema 1031 STJ
-
-Vigilantes. Aplica-se por analogia ao motociclista profissional. Fonte oficial em https://www.stj.jus.br
-
-### CLT, art. 193, §4º
-
-Periculosidade do motociclista. Fonte oficial em https://www.planalto.gov.br
-
-### Lei 12.997/2014
-
-Inclui periculosidade do motociclista. Fonte oficial em https://www.planalto.gov.br
-
-### NR-16 Anexo V
-
-Atividades perigosas em motocicleta.
-
-### Portaria MTE 2.021/2025
-
-Atualização da NR-16 Anexo V.
-
-### Lei 12.009/2009
-
-Mototaxistas. Fonte oficial em https://www.planalto.gov.br
-
-## 2. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Motociclista não consta no Anexo IV do Decreto 3.048/99
-
-Argumento adversário. Sem rol, sem reconhecimento.
-
-Refutação. O art. 193, §4º, da CLT qualifica a atividade como perigosa, fora do rol regulamentar previdenciário (auditoria 03/10/2026). A NR-16 Anexo V supre.
-
-### Argumento 2. Lei 12.997/2014 não retroage
-
-Argumento adversário. Período anterior não é especial.
-
-Refutação. A Lei apenas explicitou direito preexistente. Súmula 198 TFR e Decreto 53.831/64 reconhecem por analogia.
-
-### Argumento 3. EPI neutraliza periculosidade
-
-Argumento adversário. Capacete elimina risco.
-
-Refutação. Tema 555 STF e Tema 1090 STJ não se aplicam à periculosidade. Risco de acidente é inerente e não eliminável.
-
-### Argumento 4. Falta de habitualidade
-
-Argumento adversário. Uso eventual da moto descaracteriza.
-
-Refutação. No profissional de motocicleta, a exposição ao risco da via pública é indissociável da prestação do serviço, o que caracteriza a permanência (art. 65 do Decreto 3.048/99). A Súmula 49 TNU não serve aqui, pois apenas dispensa a permanência antes de 29/4/1995 (auditoria 03/10/2026). Cabe ao INSS provar a eventualidade.
-
-### Argumento 5. Sem LTCAT específico
-
-Argumento adversário. Periculosidade demanda LTCAT.
-
-Refutação. Os arts. 281 e 282 IN 128/2022 admitem PPP como prova suficiente.
-
-### Argumento 6. Empresa sem registro
-
-Argumento adversário. Sem PPP, sem reconhecimento.
-
-Refutação. Súmula 198 TFR autoriza prova indireta.
-
-### Argumento 7. Plataforma digital descaracteriza vínculo
-
-Argumento adversário. Autônomo não tem direito a especial.
-
-Refutação. A Lei 8.213/91 admite contribuinte individual com tempo especial. Periculosidade independe da modalidade contratual.
-
-### Argumento 8. Periculosidade trabalhista não vincula INSS
-
-Argumento adversário. Norma de outra esfera.
-
-Refutação. A NR-16 é norma técnica integradora. O caput do art. 193 da CLT remete a essa regulamentação (auditoria 03/10/2026).
-
-### Argumento 9. Portaria MTE 2.021/2025 restringiu
-
-Argumento adversário. Atualização excluiu motociclistas.
-
-Refutação. A Portaria manteve o reconhecimento, excluindo apenas deslocamentos eventuais.
-
-### Argumento 10. Concomitância com outros adicionais
-
-Argumento adversário. Periculosidade exclui insalubridade.
-
-Refutação. Para fins previdenciários, podem coexistir critérios distintos. Tempo especial por periculosidade é autônomo.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira reconhece o motociclista como profissional em risco extremo.
-
-Hugo Goes admite a conversão por periculosidade na NR-16 Anexo V.
-
-Marco Aurélio Serau Junior critica a recusa administrativa sistêmica do INSS.
-
-IBDP defende reconhecimento integral desde o Decreto 53.831/64.
-
-## 4. Estratégia integrada
-
-Primeiro, perícia direta ou indireta para comprovar exposição.
-
-Segundo, fundamentação NR-16 Anexo V e art. 193, §4º, da CLT (auditoria 03/10/2026).
-
-Terceiro, conversão de tempo especial.
-
-Quarto, recurso ao CRPS ou ação judicial.
-
-Quinto, dialeticidade nas razões finais.
-
-Sexto, monitoramento de Portarias futuras.
-
-## 5. Diligência de atualização
-
-Acompanhar Portaria MTE futura. Monitorar TNU sobre periculosidade do motociclista (auditoria 03/10/2026).
+| Argumento do INSS | Resposta |
+|---|---|
+| Motociclista não consta do Anexo IV. | Rol exemplificativo (Súmula 198 do TFR), mas a TNU exige mais do que a norma trabalhista. Provar agente nocivo ou risco por laudo técnico. |
+| Periculosidade trabalhista não vincula o INSS. | Posição acolhida pela TNU (PUIL 1008245-93.2021.4.01.3811). Deslocar a tese para ruído, vibração ou perícia. |
+| EPI neutraliza. | Para ruído, Tema 555 do STF. Para vibração e periculosidade, impugnação específica pelo Tema 1090 do STJ. |
+| Uso eventual da motocicleta. | Provar a rotina diária por rotas, quilometragem e testemunhas; o ônus é do segurado. |
+| Falta LTCAT. | O PPP com responsável técnico basta como formulário (IN 128/2022, art. 281); para a periculosidade, porém, o laudo técnico é o que a TNU valoriza. |
+| Plataforma digital, segurado autônomo. | O contribuinte individual pode ter tempo especial (Tema 1291 do STJ), desde que prove o agente nocivo. |
+| Trabalho após a EC 103/2019. | O art. 201, § 1º, II, da CF exclui a periculosidade; restringir o pedido a agente nocivo. |

@@ -3,156 +3,86 @@ name: defesa-probatoria-especial
 description: "EPI na aposentadoria especial (Tema 1090/STJ, IRDR 15/TRF4, Tema 555/STF, Tema 213/TNU), cerceamento de defesa por julgamento antecipado, PGR/NR-1 como prova, Enunciados FONAJEF e tolueno pós-Tema 382/TNU. Use SEMPRE que mencionar EPI eficaz, neutralização EPI, Tema 1090, IRDR 15, Tema 555, Tema 213, hipóteses excepcionais EPI, standard probatório atenuado, ônus EPI, cancerígenos EPI, biológicos EPI, cerceamento de defesa, julgamento antecipado, PPP deficiente, indeferimento de perícia, perícia similaridade, empresa extinta, Súmula 198 TFR, Tema 1031, REsp 2.152.968, prova testemunhal especial, IEAN, PGR como prova, NR-1, Enunciado 91 FONAJEF, Enunciado 225 FONAJEF, prova técnica simplificada, art. 12 Lei 10.259, Tema 382, tolueno via cutânea, tolueno Anexo 13, ACGIH 20 ppm, NR-15 78 ppm, co-exposição LINACH, distinguishing Tema 382, PUIL 5012678. Acionar com auditoria-ppp e peticao-previdenciaria. NÃO use para EPI fora de aposentadoria especial."
 ---
 
-# Defesa Probatória na Aposentadoria Especial. EPI, Cerceamento e PGR
+# Defesa probatória na aposentadoria especial
 
-## Visão Geral
+Três frentes: impugnação do EPI, produção de prova quando o PPP falha e uso do PGR. A tese de cada agente está na `base-especial-*` correspondente.
 
-Esta skill consolida os três eixos de defesa probatória na aposentadoria especial. O regime do EPI (Tema 1090/STJ, IRDR 15/TRF4, Tema 555/STF, Tema 213/TNU), o cerceamento de defesa por julgamento antecipado sem perícia, e o uso do PGR/NR-1 como prova complementar ou confrontadora do PPP.
+## 1. EPI
 
-## Fluxo de Trabalho
+**Precedentes.**
+- **Tema 555 do STF** (ARE 664.335). Item I: se o EPI for "realmente capaz de neutralizar a nocividade", não há aposentadoria especial. Item II: no ruído acima do limite, a declaração de EPI eficaz no PPP não descaracteriza o tempo especial. O acórdão registra que, havendo divergência ou dúvida sobre a real eficácia do EPI, a premissa é o reconhecimento do direito.
+- **Tema 1090 do STJ** (REsp 2.080.584/PR, 2.082.072/RS e 2.116.343/RJ, j. 09/04/2025). Item I: o EPI do PPP descaracteriza "em princípio" o tempo especial, ressalvadas hipóteses excepcionais não enumeradas. Item II: cabe ao autor provar a ineficácia por um de cinco fundamentos (inadequação ao risco, certificado inexistente ou irregular, descumprimento de manutenção, substituição e higienização, falta de orientação e treinamento, outro motivo). Item III: divergência ou dúvida favorecem o autor. Os EDcl no REsp 2.116.343/RJ incluem os cancerígenos entre as hipóteses excepcionais; os EDcl no REsp 2.080.584/PR registram que a lista ficou aberta. Modulação afastada. Tese literal e roteiro em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`.
+- **Tema 213 da TNU.** A impugnação do EPI exige alegação específica e motivada na causa de pedir, por um dos mesmos cinco fundamentos; com impugnação fundamentada e dúvida razoável, o período é especial. Impugnação genérica é rejeitada.
+- **IRDR 15 do TRF4.** Vinculante apenas na 4ª Região; fora dela, persuasivo. A lista de situações em que o EPI é irrelevante (trabalho antes de 03/12/1998, categoria profissional, ruído, cancerígenos, biológicos, periculosidade) consta do voto condutor, conforme a versão anterior desta skill [NÃO CONFIRMADO o texto literal].
 
-1. Leia este SKILL.md para o regime do EPI (conteúdo principal)
-2. Quando a impugnação do EPI exigir roteiro detalhado, leia `references/IMPUGNACAO-EPI.md`
-3. Para cerceamento de defesa e julgamento antecipado, leia `references/CERCEAMENTO-DEFESA.md`
-4. Para uso do PGR como prova, leia `references/PGR-NR1-PROVA.md`
+**Onde o EPI não se discute.**
+- Período anterior a 03/12/1998: a IN 128/2022, art. 291, considera o EPI apenas nas demonstrações ambientais emitidas a partir dessa data.
+- Categoria profissional até 28/04/1995.
+- Ruído (Tema 555, item II; IN 128/2022, art. 291, § 2º).
+- Cancerígenos do Grupo 1 da LINACH (EDcl no REsp 2.116.343/RJ; IN 128/2022, art. 298).
 
-## PARTE I. EPI NA APOSENTADORIA ESPECIAL
+**Roteiro.**
+1. Verificar se o caso está numa das situações acima.
+2. Se não estiver, impugnar na inicial por dois ou três dos cinco fundamentos, com documento indicado por ID: CA vencido ou inadequado, ficha de entrega sem troca, falta de treinamento, campo 15.9 do PPP negativo ou em branco, código GFIP 02, 03 ou 04 (exposição declarada pela própria empresa) contra EPI eficaz.
+3. Pedir a perícia ou a prova oral sobre o uso real do EPI.
+4. Fechar pela dúvida razoável (Tema 1090, item III; Tema 213, item II).
+5. Não pedir a inversão do ônus pelo art. 373, § 1º, do CPC; o Tema 1090 a rejeitou.
 
-### Hierarquia dos Precedentes
+## 2. PPP insuficiente e produção de prova
 
-**STF. Tema 555 (ARE 664.335).** Vinculante. Na exposição a ruído acima dos limites, a declaração do empregador sobre eficácia do EPI não descaracteriza tempo especial. Na dúvida sobre eficácia, a conclusão deve ser pelo reconhecimento.
+PPP deficiente (sem agente nomeado, sem intensidade, sem técnica, sem responsável técnico) leva à produção de prova, e não à improcedência. Fundamentos: arts. 369 e 370 do CPC; Súmula 198 do TFR (perícia judicial supre a falta de previsão regulamentar); perícia por similaridade em empresa extinta. Indeferida a prova e julgado o pedido pela insuficiência do PPP, arguir o cerceamento de defesa no recurso, com impugnação específica do fundamento da sentença (`base-cpc-nulidades-cerceamento`). Requerer a prova no momento próprio, demonstrando por que o PPP não basta (`especificacao-provas`); a questão não suscitada preclui.
 
-**STJ. Tema 1090 (REsp 2.080.584, j. 09/04/2025).** Três teses.
-Tese I. EPI informado no PPP descaracteriza, em princípio, o tempo especial, ressalvadas hipóteses excepcionais.
-Tese II. Ônus do autor de comprovar (i) inadequação ao risco, (ii) inexistência/irregularidade do certificado de conformidade, (iii) descumprimento de manutenção/substituição/higienização, (iv) ausência de treinamento, ou (v) qualquer outro motivo de ineficácia.
-Tese III. Standard probatório atenuado. Dúvida favorece o segurado (art. 373, I, CPC + Tema 555/STF).
+Precedentes citados na versão anterior e não conferidos: REsp 2.152.968/RS (Min. Regina Helena Costa, j. 13/08/2024) e TRF4, AC 5001814-57.2022.4.04.7108 (5ª Turma, j. 17/03/2026) [NÃO CONFIRMADO ambos].
 
-Embargos de declaração rejeitados. O STJ deliberadamente não detalhou quais são as hipóteses excepcionais. Afastou modulação de efeitos.
+Indícios que justificam a perícia:
+- adicional de insalubridade ou periculosidade no holerite;
+- indicador de exposição no CNIS ou código GFIP 02, 03 ou 04;
+- atividade descrita com máquina ruidosa ou produto químico;
+- intensidade implausível no PPP;
+- EPIs fornecidos que revelam o agente;
+- PPP sem técnica, com agente genérico ou sem NEN;
+- empresa extinta.
 
-**TRF4. IRDR 15.** Vinculante na 4ª Região. Rol de agentes com presunção de ineficácia do EPI. Reclamação 5043858-07.2024.4.04.0000 (Des. Paulo Brum Vaz, j. 25/06/2025) confirmou compatibilidade com o Tema 1090.
+No JEF, a perícia técnica simplificada tem amparo no art. 12 da Lei 10.259/2001; o Enunciado 225 do FONAJEF é citado com [NÃO CONFIRMADO]. O Enunciado 91 do FONAJEF pode ser invocado pelo INSS para afastar perícia complexa no JEF.
 
-**TNU. Tema 213.** Impugnação do EPI deve constar desde a inicial. Admite prova testemunhal e perícia técnica.
+## 3. PGR e NR-1 como prova
 
-### Hipóteses Excepcionais. EPI Irrelevante
+O PGR (NR-1, item 1.5) descreve o mesmo ambiente que o PPP e o LTCAT.
+1. **Substituição do LTCAT.** A IN 128/2022, art. 277, V, "b", aceita o PGR da NR-1 a partir de 03/01/2022, e o inciso V, "a", o PPRA até 02/01/2022.
+2. **Confronto.** Risco classificado como alto ou moderado no inventário do PGR, ao lado de EPI eficaz no PPP, sustenta a dúvida do item III do Tema 1090.
+3. **Terceirizado.** O PGR da tomadora descreve o ambiente real.
+4. **Requisição.** Exibição de documento pelo art. 396 do CPC, com a consequência do art. 400 em caso de recusa. O histórico do inventário de riscos deve ser mantido por 20 anos (NR-1, item 1.5.7.3.3.1).
 
-(a) Atividade exercida antes de 03/12/1998
-(b) Enquadramento por categoria profissional (até 28/04/1995)
-(c) Sujeição a ruído (Tema 555/STF, autoaplicável)
-(d) Agentes reconhecidamente cancerígenos, até 30/06/2020
-(e) Agentes biológicos, até 30/06/2020
-(f) Atividade periculosa
-Ampliação pelo voto do Des. Paulo Brum Vaz, calor, radiações ionizantes, condições hiperbáricas.
+## 4. Contribuinte individual não cooperado
 
-### Alcance Nacional vs Regional
+**Tema 1291 do STJ** (REsp 2.163.429/RS e 2.163.998/RS, Rel. Min. Gurgel de Faria, j. 10/09/2025, RE pendente): "a) O contribuinte individual não cooperado tem direito ao reconhecimento de tempo de atividade especial exercido após a Lei n. 9.032/95, desde que comprove a exposição a agentes nocivos. b) A exigência de comprovação da atividade especial por formulário emitido por empresa não se aplica a contribuintes individuais."
 
-O STJ deixou em aberto o rol de agentes com presunção de ineficácia. O IRDR 15/TRF4 não vincula fora da 4ª Região, mas é precedente persuasivo de alta força. Para TRF3, invocar como referência qualificada e a ratio do Tema 555/STF.
+Prova: laudo ambiental contratado pelo próprio segurado, notas fiscais e contratos que identifiquem o local e a atividade, declarações e laudos das empresas contratantes, prova oral e perícia por similaridade. Ver `contribuinte-individual-in128`.
 
-### Estratégia de Impugnação. 5 Caminhos (Tese II do Tema 1090)
+## 5. Tolueno
 
-1. Identificar se o agente integra as hipóteses excepcionais (se sim, EPI é irrelevante)
-2. Se não, impugnar por ao menos um dos cinco caminhos da Tese II
-3. Requerer perícia técnica (Tema 213/TNU)
-4. Invocar standard atenuado da Tese III (dúvida favorece segurado)
-5. Se PPP indica EPI eficaz mas PGR classifica risco residual alto, usar como prova de ineficácia
+O Tema 382 da TNU afastou a avaliação qualitativa do tolueno pela via cutânea. Os caminhos são a medição acima de 78 ppm, a co-exposição a benzeno ou a outro cancerígeno do Grupo 1 da LINACH (Tema 170 da TNU), o enquadramento pela atividade listada no Anexo 13 da NR-15 quando a função for de manipulação de óleos minerais, alcatrão ou outra atividade ali prevista, e os períodos até 05/03/1997 pelos decretos antigos. Roteiro completo em `base-tolueno-tema-382-tnu-via-cutanea`.
 
-Consulte `references/IMPUGNACAO-EPI.md` para roteiro detalhado.
+## 6. Teleperícia
 
-## PARTE II. CERCEAMENTO DE DEFESA. Síntese
+O mesmo raciocínio de cerceamento vale para a perícia médica por videoconferência em quadro que exige exame físico; ver `auditoria-laudo-pericial` e `base-pericia-medica-federal-telepericia`.
 
-PPP deficiente (sem NEN, sem técnica, sem nome do agente) não é causa de improcedência. É causa de produção de prova pericial. Julgamento antecipado sem perícia quando há controvérsia é nulidade.
+Retirados nesta revisão:
+- remissões a três arquivos de referência inexistentes;
+- o Tema 1031 do STJ como fundamento de prova, por estar superado pelo Tema 1209 do STF;
+- o código GFIP 01 como indício de exposição, já que o código indica ausência de exposição;
+- a Portaria MTE 2.021/2025 como fonte de acesso a laudos, porque ela aprova o Anexo V da NR-16;
+- o Tema 555 do STF como regra para hidrocarbonetos;
+- a NHO-08 como técnica para vapores.
 
-Precedentes centrais. REsp 2.152.968/RS (Min. Regina Helena Costa, j. 13/08/2024). Súmula 198/TFR e art. 369 do CPC para a perícia por similaridade (auditoria 03/10/2026, retirado o Tema 1031/STJ, que trata da especialidade do vigilante). TRF4, AC 5001814-57.2022.4.04.7108 (5ª Turma, j. 17/03/2026, anulação de sentença). Tema 213/TNU (a informação de EPI eficaz no PPP pode ser desafiada judicialmente, e a dúvida razoável favorece o segurado) (auditoria 03/10/2026).
+## Hub de portarias administrativas
 
-Evidências que justificam perícia (checklist). Pagamento de adicional de insalubridade. IEAN no CNIS. Código GFIP 01. Descrição de atividades com máquinas ruidosas ou produtos químicos. Ruído implausível no PPP. Lista de EPIs que confirma agentes. PPP sem técnica no campo 15.5. PPP com denominação genérica no 15.3. PPP sem NEN. Empresa extinta.
-
-Consulte `references/CERCEAMENTO-DEFESA.md` para fundamentação completa, estratégia por rito (JEF, ordinário, CRPS) e jurisprudência detalhada.
-
-## PARTE III. PGR/NR-1 COMO PROVA. Síntese
-
-O PGR é documento trabalhista (NR-1, itens 1.5.3 a 1.5.7.4), mas descreve o mesmo ambiente que o PPP e o LTCAT. Contradição entre PGR e PPP favorece o segurado.
-
-5 aplicações estratégicas.
-
-1. **Confronto PGR vs PPP**, risco alto no PGR com EPI eficaz no PPP desacredita o formulário previdenciário
-2. **PGR como substituto de LTCAT**, quando empresa extinta ou documento extraviado (art. 277, V, "b", da IN 128/2022)
-3. **Auditoria reversa**, dispensa de PPP por PGR sem risco pode ser impugnada se o PGR foi deficiente
-4. **PGR e EPI**, risco residual moderado/alto no PGR é prova direta de dúvida sobre eficácia (Tese III do Tema 1090)
-5. **Empresa terceirizada.** PGR da tomadora cobre o ambiente real de trabalho
-
-Requisição judicial do PGR pelo art. 396 CPC. Guarda obrigatória de 20 anos (NR-1, item 1.5.7.3). Recusa gera presunção do art. 400 CPC.
-
-Consulte `references/PGR-NR1-PROVA.md` para fundamentação completa e roteiro de requisição.
-
-## PARTE IV. APOSENTADORIA ESPECIAL DO CI NÃO COOPERADO (Tema 1291/STJ)
-
-**Tema 1291/STJ** (REsp 2.163.429/RS, Primeira Seção, Rel. Min. Gurgel de Faria, j. 10/09/2025). O CI não cooperado exposto a agentes nocivos tem direito à aposentadoria especial. O art. 64 do Decreto 3.048/99 foi declarado ilegal na parte que restringia o benefício a empregados, avulsos e cooperados.
-
-### Impacto probatório
-
-O PPP não é o único meio de prova admissível para o CI não cooperado. A comprovação pode ser feita por laudos técnicos ambientais contratados pelo próprio CI, notas fiscais de serviço identificando o local e a natureza da atividade, contratos de prestação de serviço com empresas que operam em ambientes insalubres, declarações de empresas contratantes descrevendo os agentes nocivos no ambiente, e perícia judicial por similaridade quando a atividade for exercida em múltiplos locais.
-
-### Estratégia operacional
-
-Na via administrativa, o INSS continua indeferindo por falta de PPP do CI. O mandado de segurança é cabível com invocação direta do Tema 1291.
-
-Na via judicial, a petição deve requerer expressamente a produção de prova pericial (perícia técnica ou por similaridade) e a juntada de laudos ambientais das empresas contratantes. A prova testemunhal sobre condições de trabalho é admissível como complementar.
-
-Acionar `auditoria-ppp` para verificação de documentos disponíveis e `contribuinte-individual-in128` para enquadramento da subcategoria do CI.
-
-## PARTE V. CERCEAMENTO POR TELEPERÍCIA INADEQUADA
-
-Embora esta skill trate especificamente de cerceamento de defesa em aposentadoria especial, a tese é replicável à Teleperícia produzida ao arrepio do quadro clínico. A imposição de videoconferência em quadros que exigem exame físico configura cerceamento. Cruzar com `analise-documental-incapacidade`, `analise-bpc-loas` e `auditoria-laudo-pericial` para o protocolo aplicável.
-
-## PARTE VI. TOLUENO PÓS-TEMA 382/TNU. DEFESA DO SEGURADO
-
-### Diagnóstico estratégico
-O Tema 382/TNU (PUIL 5012678) fixou tese de que a simples exposição a tolueno por via cutânea, inclusive na forma líquida, **não autoriza** o reconhecimento de atividade especial pela análise qualitativa do Anexo 13 da NR-15. A defesa migrou para frentes argumentativas alternativas. Status do trânsito em julgado deve ser confirmado em `precedentes-previdenciarios` (entrada em `novos_especial_2025_2026.md`) antes de cada peça.
-
-### Frente 1. Co-exposição a cancerígenos LINACH Grupo 1
-Em atividades industriais com tolueno (pintura, gráfica, posto de combustíveis, química, plástica, calçadista, metalurgia), há quase sempre co-exposição a **benzeno**, hidrocarbonetos policíclicos aromáticos (HPA), nitroderivados, aminoderivados, óleo mineral usado e outros aromáticos da LINACH. Sustentar Tema 170/TNU integralmente. PEDILEF 5003231 (petróleo e derivados, qualitativa para LINACH) é fundamento direto (auditoria 03/10/2026, retirado o PEDILEF 0001717-22.2019.4.03.6318/SP, que trata de ruído).
-
-Pedido em juízo. Diligência de retificação do PPP pela empresa para inclusão de agentes coexpostos (acionar `retificacao-ppp`). Subsidiariamente, perícia técnica para constatação da co-exposição.
-
-### Frente 2. Enquadramento por atividade no Anexo 13 da NR-15
-O Anexo 13 lista atividades de "Hidrocarbonetos e outros compostos de carbono" como insalubres independentemente de medição. Manipulação de óleos minerais, óleo queimado, alcatrão, breu, betume, antraceno, parafina, e fabricação de fenóis, cresóis, naftóis, nitroderivados, aminoderivados, derivados halogenados independem de quantificação.
-
-Aplicar quando a função for compatível, mesmo que o tolueno apareça apenas como solvente acessório. A atividade-fim é que enquadra.
-
-### Frente 3. Rito ordinário no TRF3 com vinculação flexibilizada
-A vinculação dos juízos federais comuns à tese da TNU é menos rígida do que a vinculação dos JEF. O art. 14 §8º da Lei 10.259/2001 alcança o microssistema dos juizados. No rito ordinário, sustentar análise qualitativa por outros fundamentos.
-
-Argumentos. Tema 555/STF e ARE 664.335 (EPI ineficaz para hidrocarbonetos com potencial cancerígeno). IRDR 15/TRF4 (hipóteses excepcionais de neutralização por EPI). Doutrina da nocividade qualitativa para agentes com absorção dérmica reconhecida pela própria NR-15 (item 5 do Anexo 11, coluna "ABSORÇÃO TAMBÉM PELA PELE", que inclui o tolueno).
-
-### Frente 4. Argumento ACGIH 20 ppm como reforço subsidiário
-Cabível **apenas** quando a medição do PPP está entre 20 e 78 ppm e o caso tramita em rito ordinário. Sustentar que o critério quantitativo, agora exigido pela TNU, deve ser interpretado conforme a melhor técnica científica disponível, com remissão à NHO-08 da Fundacentro e ao TLV-TWA da ACGIH (20 ppm).
-
-Risco assumido. Não há tese vinculante TNU/STJ adotando ACGIH como parâmetro substitutivo da NR-15 para fins previdenciários. Empregar como reforço subsidiário, jamais como fundamento isolado.
-
-### Frente 5. Cerceamento por julgamento antecipado
-Quando o juiz julgar improcedente sem deferir perícia para apuração de co-exposição cancerígena ou enquadramento por atividade, sustentar cerceamento de defesa. Súmula 198/TFR, Tema 1031/STJ, REsp 2.152.968, arts. 369 e 370 do CPC, Enunciado 225/FONAJEF [NÃO CONFIRMADO]. O Enunciado 91/FONAJEF não ampara o pedido, porque declara o JEF incompetente para perícia complexa ou onerosa e pode ser invocado pelo INSS (auditoria 03/10/2026). Aplicar PARTE II desta skill (`references/CERCEAMENTO-DEFESA.md` quando disponível).
-
-### Frente 6. Diligência via PGR/NR-1 e Portaria MTE 2.021/2025
-A Portaria MTE 2.021/2025 obriga o empregador a disponibilizar laudos caracterizadores de insalubridade ao trabalhador. Usar como alavanca para acesso a PGR, PPRA histórico, LTCAT, laudos NR-15 e NR-16. Aplicar PARTE III desta skill.
-
-### Estratégia processual integrada
-Em petição inicial (JEF ou rito ordinário), formular pedido principal com fundamento em co-exposição cancerígena (Frente 1) e enquadramento por atividade (Frente 2). Pedido subsidiário com base em medição quantitativa do Anexo 11 da NR-15 (acima de 78 ppm). Pedido subsidiário ulterior, em rito comum, com argumento ACGIH (Frente 4).
-
-Em recurso contra acórdão que aplica isoladamente o Tema 382, sustentar **distinguishing** demonstrando que o caso concreto envolve co-exposição ou atividade típica do Anexo 13, fugindo da ratio decidendi do Tema 382 (que tratou de tolueno **isolado** por via cutânea).
-
-### Distinção crítica
-Tolueno e benzeno têm regimes radicalmente distintos. O Tema 382 não se estende automaticamente a outros hidrocarbonetos aromáticos. Para benzeno, segue íntegra a análise qualitativa pelo Anexo 13-A da NR-15 e Tema 170/TNU. Para xileno, etilbenzeno e demais, verificar caso a caso a integração ao Grupo 1 da LINACH.
-
-### Crosscheck obrigatório
-Antes de redigir defesa em caso com tolueno, consultar `precedentes-previdenciarios` (Tema 382 atualizado em `novos_especial_2025_2026.md`) e `auditoria-ppp` (seção 4-A. Tolueno pós-Tema 382).
-
-## Referências
-
-- `references/IMPUGNACAO-EPI.md`. Roteiro detalhado de impugnação do EPI
-- `references/CERCEAMENTO-DEFESA.md`. Cerceamento de defesa, precedentes, checklist de evidências e estratégia por rito
-- `references/PGR-NR1-PROVA.md`. PGR como prova, 5 aplicações estratégicas e roteiro de requisição judicial
-
-Sempre leia os arquivos de referência pertinentes antes de analisar questão probatória na aposentadoria especial.
+As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Integração com outras skills
+
+EPI em `base-especial-epi` e `base-tema383-tnu-fundacentro-epi-biologicos`. PPP em `auditoria-ppp` e `retificacao-ppp`. Prova em `especificacao-provas`, `base-cpc-prova-pericial-arts464-480` e `base-cpc-nulidades-cerceamento`. Peças em `peticao-previdenciaria` e `tempo-especial-peticoes-por-rito`.
