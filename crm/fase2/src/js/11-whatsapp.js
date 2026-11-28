@@ -88,7 +88,7 @@ async function enviarAgendarIA(cliId){
   if(motivo.length<4) return aviso("Informe o motivo do atendimento");
   if(q==="data" && !(v("ag-data") && v("ag-hora"))) return aviso("Informe o dia e o horário");
   try{
-    const r = await api(`/rest/v1/rpc/agendar_pedir`,{method:"POST", body:JSON.stringify({p_cliente:cliId, p_quando:q, p_prof:v("ag-prof"),
+    const r = await api(`/rest/v1/rpc/agendar_programar`,{method:"POST", body:JSON.stringify({p_cliente:cliId, p_quando:q, p_prof:v("ag-prof"),
       p_motivo:motivo, p_caso:v("ag-caso"), p_data:q==="data"?v("ag-data"):null, p_hora:q==="data"?v("ag-hora"):null, p_enviar_em:v("ag-enviar")?new Date(v("ag-enviar")).toISOString():null})});
     if(r && r.erro) return aviso(r.erro);
     fecharCaixa(); aviso(r&&r.programado?"Pedido programado: a mensagem sai no horário escolhido":"Pedido enviado: a assistente virtual escreveu ao cliente");

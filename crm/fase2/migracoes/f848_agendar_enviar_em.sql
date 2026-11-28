@@ -1,7 +1,6 @@
 -- F848 · botão Agendar: o advogado escolhe quando a primeira mensagem sai (Paulo, 28.11.2026); por padrão, em dia útil.
 -- O pedido programado fica em zap_conversas.agendar com estado 'programado' até agendar_enviar_programados mandar.
-drop function if exists public.agendar_pedir(uuid, text, text, text, uuid, text, text);
-create or replace function public.agendar_pedir(p_cliente uuid, p_quando text, p_prof text, p_motivo text,
+create or replace function public.agendar_programar(p_cliente uuid, p_quando text, p_prof text, p_motivo text,
   p_caso uuid default null, p_data text default null, p_hora text default null, p_enviar_em timestamptz default null) returns jsonb
 language plpgsql security definer set search_path = public as $$
 declare c clientes; v_conv uuid; v_fone text; v_por text; v_com text; v_prog boolean := p_enviar_em is not null and p_enviar_em > now() + interval '2 minutes';
@@ -61,5 +60,5 @@ begin
 end $$;
 
 revoke all on function public.agendar_enviar(uuid), public.agendar_enviar_programados() from public, anon, authenticated;
-grant execute on function public.agendar_pedir(uuid, text, text, text, uuid, text, text, timestamptz) to authenticated;
+grant execute on function public.agendar_programar(uuid, text, text, text, uuid, text, text, timestamptz) to authenticated;
 select cron.schedule('agendar-programados', '*/5 * * * *', 'select public.agendar_enviar_programados()');
