@@ -29,7 +29,7 @@ Eixo 3. Tabela progressiva vigente e impacto no valor líquido
 
 ### 1.2 Normas internas do INSS
 
-**Portaria INSS 992/2022.** Art. 236 determina emissão de complemento positivo (CP) único para todo o período de atrasados, permitindo aplicação correta do regime de RRA
+**Portaria DIRBEN/INSS 992/2022.** Art. 236: prioriza a emissão de complemento positivo (CP) único para períodos sucessivos, para aplicação do regime de RRA
 
 **IN 128/2022.** Procedimentos operacionais de concessão e pagamento de benefícios
 
@@ -55,9 +55,9 @@ O Tema 368/STF vincula todo o Judiciário e a Administração. O regime de caixa
 
 ### 2.2 Complemento Positivo (CP) e o problema do fracionamento
 
-O art. 236 da Portaria INSS 992/2022 determina que o INSS emita um único CP para todo o período de atrasados. Na prática, o INSS frequentemente fraciona os CPs em múltiplos pagamentos, o que gera retenção de IR mês a mês pelo regime de caixa, em vez de permitir o cálculo pelo RRA.
+O art. 236 da Portaria DIRBEN/INSS 992/2022 manda priorizar "a emissão de um único comando de CP para todo o período", para que o crédito siga as regras do RRA. Na prática, o INSS frequentemente fraciona os CPs em múltiplos pagamentos, o que gera retenção de IR mês a mês pelo regime de caixa, em vez de permitir o cálculo pelo RRA.
 
-**Consequência prática.** O segurado paga IR significativamente a maior. O exemplo típico é o seguinte. Benefício de R$ 4.500/mês com 12 meses de atrasados pagos em CP único resulta em tabela multiplicada por 12 (faixa de isenção ampliada), com IR mínimo ou zero. Os mesmos valores pagos em 3 CPs separados de 4 meses cada geram tributação mês a mês com alíquota efetiva muito superior.
+**Consequência prática.** O segurado paga IR significativamente a maior. Exemplo: benefício de R$ 4.500/mês com 12 meses de atrasados pagos em CP único resulta em tabela multiplicada por 12 (faixa de isenção ampliada), com IR mínimo ou zero. Os mesmos valores pagos em 3 CPs separados de 4 meses cada geram tributação mês a mês com alíquota efetiva muito superior.
 
 ### 2.3 Protocolo de verificação em cumprimento de sentença
 
@@ -77,7 +77,7 @@ O art. 27 da Lei 10.833/2003 prevê retenção de 3% na fonte sobre rendimentos 
 
 ### 3.1 Hipóteses legais
 
-O art. 6º, XIV, da Lei 7.713/88 isenta do IR os proventos de aposentadoria ou reforma percebidos por portadores das seguintes moléstias, com base em conclusão da medicina especializada, ainda que contraídas após a aposentadoria. Moléstia profissional, tuberculose ativa, alienação mental, esclerose múltipla, neoplasia maligna, cegueira (inclusive monocular), hanseníase, paralisia irreversível e incapacitante, cardiopatia grave, doença de Parkinson, espondiloartrose anquilosante, nefropatia grave, hepatopatia grave, estados avançados da doença de Paget (osteíte deformante), contaminação por radiação, síndrome da imunodeficiência adquirida (AIDS).
+O art. 6º, XIV, da Lei 7.713/88 (redação da Lei 11.052/2004) isenta do IR os proventos de aposentadoria ou reforma motivada por acidente em serviço e os percebidos por portadores das seguintes moléstias, com base em conclusão da medicina especializada, ainda que contraídas após a aposentadoria: moléstia profissional, tuberculose ativa, alienação mental, esclerose múltipla, neoplasia maligna, cegueira (inclusive monocular), hanseníase, paralisia irreversível e incapacitante, cardiopatia grave, doença de Parkinson, espondiloartrose anquilosante, nefropatia grave, hepatopatia grave, estados avançados da doença de Paget (osteíte deformante), contaminação por radiação e síndrome da imunodeficiência adquirida. A fibrose cística (mucoviscidose) consta do art. 30, §2º, da Lei 9.250/95 [NÃO CONFIRMADO: conferir a redação vigente].
 
 O art. 6º, XXI, estende a isenção aos valores de pensão quando o beneficiário pensionista for portador das mesmas doenças (exceto moléstia profissional).
 
@@ -91,7 +91,7 @@ O art. 6º, XXI, estende a isenção aos valores de pensão quando o beneficiár
 
 **Dispensa de requerimento administrativo.** Tema 1373/STF (RE 1.525.407/CE, Rel. Min. Luís Roberto Barroso, Plenário Virtual, unanimidade). Trânsito em julgado. Não se aplica o Tema 350/STF a essas demandas
 
-**Rol taxativo das doenças.** A jurisprudência prevalente no STJ e nos TRFs trata o rol do art. 6º, XIV, como taxativo. Doenças não listadas, ainda que graves, não geram isenção (REsp 1.116.620/BA). A exceção prática é a cegueira monocular, expressamente incluída pela Lei 14.126/2021
+**Rol taxativo das doenças.** O rol do art. 6º, XIV, é taxativo (STJ, REsp 1.116.620/BA; STF, ADI 6025). Doenças não listadas, ainda que graves, não geram isenção. A cegueira do rol abrange a monocular na jurisprudência do STJ [NÃO CONFIRMADO: localizar o precedente]. A Lei 14.126/2021 classificou a visão monocular como deficiência sensorial e não trata de imposto de renda
 
 ### 3.3 Procedimento administrativo
 
@@ -127,20 +127,22 @@ Rendimentos tributáveis anuais até R$ 60.000, redução de até R$ 2.694,15, z
 De R$ 60.000,01 a R$ 88.200, redução pela fórmula R$ 8.429,73 − (0,095575 × renda anual)
 A partir de R$ 88.200,01, sem redução
 
-### 4.4 Tabela progressiva anual de incidência (declaração 2027, ano-calendário 2026)
+### 4.4 Tabela progressiva anual de incidência (ano-calendário 2026)
 
-Base de cálculo até R$ 28.467,20, isento
-De R$ 28.467,21 a R$ 33.919,80. 7,5% (dedução R$ 2.135,04)
-De R$ 33.919,81 a R$ 45.012,60. 15% (dedução R$ 4.679,03)
-De R$ 45.012,61 a R$ 55.976,16. 22,5% (dedução R$ 8.054,97)
-Acima de R$ 55.976,16. 27,5% (dedução R$ 10.853,78)
+A tabela anual corresponde a 12 vezes a mensal, se mantida sem alteração [NÃO CONFIRMADO: conferir a tabela publicada pela RFB]. A tabela que constava aqui (isenção até R$ 28.467,20) é a do ano-calendário 2025, que mesclou meses com tabelas diferentes.
+
+Base de cálculo até R$ 29.145,60, isento
+De R$ 29.145,61 a R$ 33.919,80. 7,5% (dedução R$ 2.185,92)
+De R$ 33.919,81 a R$ 45.012,60. 15% (dedução R$ 4.729,92)
+De R$ 45.012,61 a R$ 55.976,16. 22,5% (dedução R$ 8.105,88)
+Acima de R$ 55.976,16. 27,5% (dedução R$ 10.904,76)
 
 ### 4.5 Deduções mantidas
 
 Dependentes. R$ 189,59/mês
 Desconto simplificado mensal, até R$ 607,20
 Educação, até R$ 3.561,50/pessoa/ano
-Desconto simplificado anual, até R$ 17.640,00
+Desconto simplificado anual [NÃO CONFIRMADO: conferir o limite do ano-calendário 2026]
 
 ### 4.6 Impacto operacional para a advocacia previdenciária
 

@@ -1,121 +1,17 @@
-# Educação Infantil Lei 15.326/2026. Jurisprudência e Refutação
+# Educação Infantil. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes e normas
 
-### ADI 3772 STF
+- ADI 3772: contam direção, coordenação e assessoramento pedagógico exercidos por professores em estabelecimentos de educação básica.
+- Súmula 726 STF: superada pela ADI 3772 quanto a essas funções (AI 595.589 AgR, 2ª Turma, 2010).
+- Lei 15.326/2026: Lei 11.738/2008, art. 2º, §2º, e LDB, art. 61, §2º (texto no SKILL.md).
+- Jurisprudência específica sobre a Lei 15.326/2026 no RGPS: não localizada.
 
-Funções de magistério. Julgamento em 29/10/2008, procedência parcial com interpretação conforme ao art. 1º da Lei 11.301/2006. Tese da ementa: "As funções de direção, coordenação e assessoramento pedagógico integram a carreira do magistério, desde que exercidos, em estabelecimentos de ensino básico, por professores de carreira, excluídos os especialistas em educação, fazendo jus aqueles que as desempenham ao regime especial de aposentadoria estabelecido nos arts. 40, § 5º, e 201, § 8º, da Constituição Federal." (auditoria 03/10/2026)
+## 2. Refutação
 
-Fonte oficial em https://portal.stf.jus.br/processos/detalhe.asp?incidente=2399227
-
-### Tema 1011 STJ
-
-Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 1091 STF
-
-Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2020). Tese. "É constitucional o fator previdenciário previsto no art. 29, caput, incisos e parágrafos, da Lei nº 8.213/91, com a redação dada pelo art. 2º da Lei nº 9.876/99." Tese adversa. Só pesa no benefício calculado com fator, como a aposentadoria por tempo de contribuição com requisitos reunidos entre a Lei 9.876/99 e a EC 103/2019; nas regras de transição do professor o valor segue o art. 26 da EC 103/2019, sem fator (auditoria 03/10/2026).
-
-### Súmula 726/STF (restritiva) e sua mitigação
-
-Texto real. "Para efeito de aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula." Aplicação mitigada pela Lei 11.301/2006 e pela ADI 3772, que asseguram o cômputo de direção, coordenação e assessoramento pedagógico exercidos por professor de carreira (auditoria 25/07/2026).
-
-## 2. Marco legislativo
-
-### Lei 15.326/2026
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 11.301/2006
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 9.394/96, LDB
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Auxiliar de creche não é professor
-
-Argumento adversário. Nomenclatura.
-
-Refutação. Lei 15.326/2026 assegura cômputo com função pedagógica efetiva.
-
-### Argumento 2. Cuidado não é magistério
-
-Argumento adversário. Separação.
-
-Refutação. Se há função pedagógica efetiva, conta. LDB arts. 29-31.
-
-### Argumento 3. Educação infantil não tem regência
-
-Argumento adversário. Restrição.
-
-Refutação. LDB arts. 29-31 e Lei 11.301 asseguram docência em pré-escola e creche.
-
-### Argumento 4. Lei nova não retroage
-
-Argumento adversário. Irretroatividade.
-
-Refutação. Lei 15.326/2026 é norma interpretativa e de cômputo. Alcança tempo anterior se a função era pedagógica.
-
-### Argumento 5. Cargo híbrido descaracteriza
-
-Argumento adversário. Desclassificação.
-
-Refutação. Lei 15.326/2026 preserva cômputo do tempo efetivo.
-
-### Argumento 6. Exigência de habilitação superior
-
-Argumento adversário. Magistério superior.
-
-Refutação. LDB autoriza normal médio para educação infantil e séries iniciais.
-
-### Argumento 7. Prova formal exigida
-
-Argumento adversário. Forma.
-
-Refutação. Prova material e testemunhal.
-
-### Argumento 8. Não se aplica à regra de pontos
-
-Argumento adversário. Restrição.
-
-Refutação. A lei integra as regras de magistério para fins de EC 103.
-
-### Argumento 9. Professor universitário
-
-Argumento adversário. Extensão.
-
-Refutação. O texto exclui o universitário ao limitar a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, arts. 15, §3º, 16, §2º, e 20, §1º) (auditoria 03/10/2026). Lei 15.326 se aplica à educação básica.
-
-### Argumento 10. Função de cuidado predomina
-
-Argumento adversário. Predominância.
-
-Refutação. Se há função pedagógica concomitante, cômputo é cabível.
-
-## 5. Estratégia integrada
-
-Primeiro, documentação das atribuições.
-
-Segundo, plano pedagógico.
-
-Terceiro, diário de classe.
-
-Quarto, depoimento testemunhal.
-
-Quinto, fundamentação normativa.
-
-Sexto, requerimento e recurso.
-
-## 6. Diligência de atualização
-
-Acompanhar regulamentação da Lei 15.326/2026.
-
-Monitorar jurisprudência sobre cargo híbrido.
-
-Revalidar ADI 3772 e Tema 1011.
+1. **"Auxiliar de creche não é professora."** LDB, art. 61, §2º: é professora da educação infantil quem exerce função docente com as crianças, independentemente da designação do cargo. Fora do serviço público, prevalece a prova da função docente.
+2. **"Cuidar não é ensinar."** Lei 11.738/2008, art. 2º, §2º, reconhece "a integralidade entre cuidar, brincar e educar". Exige-se prova de atividade pedagógica, ainda que concomitante ao cuidado.
+3. **"A lei de 2026 não alcança tempo anterior."** O fundamento do tempo anterior é o art. 201, §8º, da CF, que inclui a educação infantil desde 1998, e a prova da função docente.
+4. **"Exige-se nível superior."** LDB, art. 62: admite-se a formação em nível médio, modalidade normal, para a educação infantil.
+5. **"A regra de pontos não alcança a educação infantil."** EC 103, art. 15, §3º, menciona expressamente a educação infantil.
+6. **"Prova apenas documental."** Início de prova material complementado por testemunhal (Lei 8.213/91, art. 55, §3º).

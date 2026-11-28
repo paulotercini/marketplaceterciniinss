@@ -9,7 +9,7 @@ description: "Juros e correção monetária em benefícios previdenciários pelo
 
 Skill pró-segurado sobre os critérios de juros de mora e correção monetária aplicáveis a créditos previdenciários contra o INSS, atualizada pela edição 2026 do Manual de Orientação de Procedimentos para os Cálculos na Justiça Federal (Resolução CJF 990, de 03/07/2026, Processo 0001401-23.2019.4.90.8000, Nota Técnica 1/2026 da Comissão Permanente).
 
-Fonte primária incorporada na Onda 76 (25/07/2026) a partir do PDF oficial do Manual. Os quadros literais completos, período a período, estão em `references/MANUAL-CJF-2026-QUADROS.md`.
+Os quadros literais do Manual, período a período, estão em `references/MANUAL-CJF-2026-QUADROS.md`.
 
 ## O regime de TRÊS FASES (síntese operacional)
 
@@ -33,7 +33,7 @@ Inconstitucionalidade parcial do art. 1º-F. IPCA-E para correção das condena�
 
 ### Tema 905 STJ (REsps 1.492.221, 1.495.144 e 1.495.146)
 
-Critérios específicos. INPC para benefícios previdenciários após a Lei 11.430/2006 e juros de mora pela remuneração da caderneta de poupança (item 3.2), ressalvada a coisa julgada que tenha fixado índices diversos (item 4) [CONFERIDO] (auditoria 03/10/2026). Fonte oficial em https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=905&cod_tema_final=905
+Critérios específicos. INPC para benefícios previdenciários após a Lei 11.430/2006 e juros de mora pela remuneração da caderneta de poupança (item 3.2), ressalvada a coisa julgada que tenha fixado índices diversos (item 4) [CONFERIDO]. Fonte oficial em https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=905&cod_tema_final=905
 
 ### Tema 1419 STF (ARE 1.557.312/SP)
 
@@ -49,7 +49,7 @@ Juros de mora da citação em benefícios. Fonte oficial em https://www.stj.jus.
 
 ### Súmula 148 STJ
 
-Correção monetária plena desde cada vencimento (o enunciado não menciona a Súmula 71 TFR, tida por superada [NÃO CONFIRMADO], ressalvada coisa julgada que a tenha determinado) (auditoria 03/10/2026).
+Correção monetária plena desde cada vencimento Débitos de benefício cobrados em juízo corrigem-se pela Lei 6.899/81. O Manual registra a Súmula 71 do TFR como superada, ressalvada coisa julgada que a tenha determinado.
 
 ## Notas operacionais do Manual 2026 (uso direto em impugnação de cálculo)
 
@@ -89,7 +89,7 @@ Em petição, acionar `peticao-previdenciaria`. Em cumprimento, `base-cumpriment
 
 ## Alertas
 
-Primeiro, TR é inconstitucional para correção. Combater sempre.
+Primeiro, a TR não corrige condenação da Fazenda (Tema 810 STF). Nos benefícios previdenciários, o índice até 11/2021 é o INPC (Tema 905 STJ; Lei 8.213/91, art. 41-A), e não o IPCA-E.
 
 Segundo, o Manual CJF é o parâmetro que pacifica divergência com a contadoria. A edição vigente é a de 2026 (Resolução CJF 990/2026). Citar edição e item.
 
@@ -102,10 +102,6 @@ Quinto, a EC 136/2025 também alterou o regime da fase PÓS-requisitório. O Man
 ## Hub de portarias administrativas
 
 Acionar `base-portarias-dpmf-inss-hub` para identificar as Portarias do procedimento administrativo no caso concreto.
-
-## Doutrina de apoio
-
-Frederico Amado, correção monetária. Hugo Goes, juros. Marco Aurélio Serau Junior, cálculo previdenciário. Daniel Pulino, execução. Jane Berwanger, execução. IBDP, advocacia previdenciária.
 
 ## O que NÃO está nesta skill
 

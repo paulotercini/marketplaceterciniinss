@@ -1,101 +1,50 @@
-# Cálculo da RMI Pós EC 103/2019. Fundamentos e Cenários
+# Cálculo da RMI após a EC 103/2019. Fórmula e Cenários
 
-## 1. Fundamentos normativos
+Fundamentos e coeficientes estão no SKILL.md.
 
-EC 103/2019, art. 26. Estabelece a fórmula de cálculo do salário-de-benefício pós-reforma.
+## 1. Fórmula
 
-Art. 26, §2º (auditoria 03/10/2026). Para aposentadoria por tempo de contribuição em regra de transição ou permanente, aplica-se 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher).
+1. Listar os salários de contribuição desde 07/1994 ou desde o início das contribuições.
+2. Corrigir cada um pelo INPC até o mês anterior ao da DIB (Lei 8.213/91, art. 29-B).
+3. Limitar cada competência ao teto vigente no mês.
+4. Testar a exclusão do art. 26, §6º, das competências que reduzem a média, mantido o tempo mínimo.
+5. Somar e dividir pelo número de competências consideradas (observado o divisor mínimo de 108 para o filiado até 07/1994): resultado é o salário de benefício.
+6. Aplicar o coeficiente da regra (ou o fator, no art. 17): resultado é a RMI, observados piso e teto.
 
-Art. 26, §3º, I. Para aposentadoria do pedágio de 100% (art. 20), aplica-se 100% da média.
+## 2. Cenários
 
-Art. 26, §2º, II. Para aposentadoria do servidor público pela regra específica, regra própria.
+### Cenário 1. Pontos, homem, 38 anos
+Média de R$ 5.000,00. Excedente de 18 anos sobre 20. Coeficiente de 96% (60% + 36%). RMI de R$ 4.800,00.
 
-Lei 8.213/91, art. 61, com a média do art. 26, caput, da EC 103/2019. Para auxílio por incapacidade temporária (B31 e B91), 91% do salário de benefício.
+### Cenário 2. Regra permanente, mulher filiada após a reforma, 15 anos
+Média de R$ 3.000,00. Coeficiente de 60%. RMI de R$ 1.800,00.
 
-Art. 26, §2º, III, e §5º. Para aposentadoria por incapacidade permanente (B32) não acidentária, 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher). Para B92 acidentária, 100% da média (art. 26, §3º, II).
+### Cenário 3. Pedágio 100%
+Média de R$ 8.000,00. Coeficiente de 100%. RMI de R$ 8.000,00, limitada ao teto da DIB (em 2024, R$ 7.786,02).
 
-Art. 26, caput. Média calculada sobre 100% das contribuições desde julho de 1994 ou filiação posterior, sem descarte automático; o §6º permite excluir, a pedido, as contribuições que reduzam o valor, mantido o tempo mínimo (auditoria 03/10/2026).
+### Cenário 4. Pedágio 50%
+Homem com 36 anos de contribuição. RMI = média × fator previdenciário calculado na DIB pela idade, tempo e expectativa de sobrevida (tabela do IBGE). Comparar com os 92% dos arts. 15 e 16 quando também cumpridos.
 
-## 2. Fórmula de cálculo
+### Cenário 5. B32 previdenciária
+Homem com 22 anos de contribuição e média de R$ 4.000,00. Coeficiente de 64%. RMI de R$ 2.560,00. Investigar nexo com o trabalho, inclusive concausa (Lei 8.213/91, art. 21, I).
 
-Passo 1. Identificar todos os salários de contribuição desde julho de 1994 ou filiação posterior.
+### Cenário 6. B92
+Mesmo segurado com nexo acidentário reconhecido: 100% da média, RMI de R$ 4.000,00.
 
-Passo 2. Atualizar monetariamente cada salário de contribuição pelos índices oficiais (INPC mensal).
+### Cenário 7. Pensão com cônjuge e dois filhos menores
+Cota familiar de 50% + 30 pontos = 80% da aposentadoria do instituidor ou da que ele teria por incapacidade permanente na data do óbito. As cotas cessam sem reversão, salvo com 5 ou mais dependentes remanescentes (art. 23, §1º).
 
-Passo 3. Somar todos os salários de contribuição atualizados.
+### Cenário 8. Exclusão do §6º
+Homem com 25 anos de contribuição, 5 deles sobre o salário mínimo. Coeficiente de 70% sem exclusão. Excluindo os 5 anos baixos, mantidos os 20 anos mínimos, a média sobe e o coeficiente cai para 60%. Calcular as duas hipóteses e adotar a maior RMI.
 
-Passo 4. Dividir pelo número de contribuições para obter a média.
+## 3. Documentos
 
-Passo 5. Aplicar o percentual conforme a regra de aposentadoria escolhida.
+CNIS com indicadores conferidos; carta de concessão com memória de cálculo; extrato de contribuições; guias de recolhimento; holerites quando CTPS e CNIS divergirem.
 
-Passo 6. Resultado é o salário-de-benefício, que corresponde à RMI quando não houver limitação ao teto.
+## 4. Conferência do cálculo do INSS
 
-## 3. Cenários de cálculo
+Exigir demonstrativo mês a mês. Divergência: recurso administrativo ou ação. No cumprimento de sentença, conferir o cálculo do INSS de forma independente (`impugnacao-cumprimento-concomitantes`).
 
-### Cenário 1. Regra dos pontos com 38 anos de contribuição (homem)
+## 5. Revisão por erro de cálculo
 
-Média = R$ 5.000,00 (exemplo). Tempo excedente a 20 anos = 18 anos. RMI = 60% + 2% × 18 = 96%. RMI = R$ 4.800,00 (desde que abaixo do teto).
-
-### Cenário 2. Regra permanente (art. 19) com 15 anos de contribuição (mulher, filiada pós-reforma)
-
-Média = R$ 3.000,00. Tempo excedente a 15 anos = 0. RMI = 60%. RMI = R$ 1.800,00. O cenário é o da regra permanente, pois a idade progressiva do art. 16 exige filiação até 13/11/2019 e 30 anos de contribuição (auditoria 03/10/2026).
-
-### Cenário 3. Pedágio de 100%
-
-Média = R$ 8.000,00. RMI = 100%. Se abaixo do teto, RMI = R$ 8.000,00. Se acima, teto vigente.
-
-### Cenário 4. B32 não acidentária
-
-Segurado com 22 anos de contribuição (homem). Média = R$ 4.000,00. RMI = 60% + 2% × 2 = 64%. RMI = R$ 2.560,00. Verificar possibilidade de conversão para B92 acidentária pela concausa do art. 21, I, da Lei 8.213/91, quando a atividade agravou incapacidade preexistente (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído).
-
-### Cenário 5. B92 acidentária
-
-Mesmo cenário anterior, mas com caráter acidentário reconhecido (doença profissional ou acidente de trabalho). RMI = 100% = R$ 4.000,00. Vantagem expressiva.
-
-### Cenário 6. Pensão por morte com cônjuge e 2 filhos menores
-
-RMI = 50% + 10% × 3 = 80% da aposentadoria que o falecido recebia ou teria direito. Acionar `pensao-por-morte`.
-
-### Cenário 7. Análise crítica do divisor mínimo
-
-Segurado com 400 contribuições desde 1994, mas 100 delas em valor mínimo. Média computa todas, inclusive as mínimas, reduzindo a média. Verificar se contribuições mínimas foram complementadas (art. 195 §14 CF).
-
-### Cenário 8. Contribuição acima do teto
-
-Segurado contribuiu sobre remuneração de R$ 12.000,00, mas o salário de contribuição foi limitado ao teto de R$ 7.786,02 (2024). Apenas o teto entra no cálculo da média. Revisão do teto em cada ano conforme portaria vigente.
-
-## 4. Documentos essenciais
-
-CNIS completo com indicadores conferidos.
-Carta de Concessão do benefício com demonstrativo de cálculo.
-Extrato de contribuições pelo Meu INSS.
-GPS e DARFs de contribuições individuais e facultativas.
-Comprovantes de salário quando houver divergência entre CTPS e CNIS.
-
-## 5. Alerta crítico sobre o cálculo pelo INSS
-
-O INSS, com frequência, utiliza cálculos importados via sistema sem detalhamento. Exigir a apresentação de demonstrativo mês a mês. Em caso de divergência com o cálculo do advogado, impugnar em recurso administrativo ou em ação judicial.
-
-Em cumprimento de sentença, a Fábrica de Cálculos do INSS pode apresentar cálculos inferiores aos devidos. Sempre conferir independentemente. Acionar `impugnacao-cumprimento-concomitantes`.
-
-## 6. Revisão por erro de cálculo
-
-Art. 103 da Lei 8.213/91. Prazo decadencial de 10 anos contado do dia primeiro do mês seguinte ao do recebimento da primeira prestação (inciso I); o inciso II, que conta da ciência do indeferimento, cancelamento ou cessação, deve ser lido com a ADI 6096 (auditoria 03/10/2026).
-
-Tema 966/STJ. Incide o prazo decadencial do art. 103 sobre o direito adquirido ao benefício mais vantajoso, tese adversa (auditoria 03/10/2026, corrigida a atribuição ao Tema 350/STF, que trata do prévio requerimento).
-
-Revisão é cabível em caso de:
-Primeiro, contribuição omitida no CNIS e posteriormente acertada.
-Segundo, salário de contribuição inferior ao devido (retenção sem repasse, por exemplo).
-Terceiro, aplicação incorreta do percentual da regra de aposentadoria.
-Quarto, atualização monetária inadequada.
-Quinto, inclusão de período especial não computado (acionar `auditoria-ppp`).
-
-## 7. Cruzamento com outras skills
-
-Acionar `cnis-acerto-indicadores` para verificação de pendências.
-Acionar `auditoria-ppp` para tempo especial.
-Acionar `ntep-nexo-acidentario` para converter B32 em B92.
-Acionar `reafirmacao-der` para postergação vantajosa.
-Acionar `impugnacao-cumprimento-concomitantes` para execução.
-Acionar `revisao-peticao` para revisar petição.
+Prazo de 10 anos contado do primeiro dia do mês seguinte ao do recebimento da primeira prestação (Lei 8.213/91, art. 103, I). A parte do art. 103 que alcançava indeferimento, cancelamento ou cessação foi declarada inconstitucional (ADI 6096). Hipóteses: competência omitida e depois acertada; salário de contribuição inferior ao devido; coeficiente errado; correção monetária inadequada; período especial não computado (`auditoria-ppp`).

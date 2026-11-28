@@ -1,58 +1,46 @@
 ---
 name: base-revisao-atividades-concomitantes-tema1070
-description: "Skill base sobre revisão por atividades concomitantes no RGPS, com fundamento no Tema 1.070/STJ, na Lei 13.846/2019, art. 32 da Lei 8.213/91 e arts. 246 e 247 da IN 128/2022. Use SEMPRE que mencionar atividades concomitantes, Tema 1070 STJ, soma de salários de contribuição, atividades simultâneas, art. 32 Lei 8.213, atividade principal e secundária, professor com outra atividade, médico em duas funções, vereador com vínculo CLT, sócio com emprego, dois empregos formais, MEI com CLT, segurado especial com vínculo, revisão atividades concomitantes, RMI revisada por concomitância, soma para teto, divisor 12 ou número de contribuições, Lei 13.846/2019, MP 871/2019, EC 103/2019. Hub teórico para concessão e revisão por atividades concomitantes, complementar à skill processual impugnacao-cumprimento-concomitantes. NÃO use exclusivamente para impugnação ao cumprimento de sentença (skill própria). Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria e revisao-peticao."
+description: "Skill base sobre revisão por atividades concomitantes no RGPS, com fundamento no Tema 1.070/STJ, na Lei 13.846/2019, art. 32 da Lei 8.213/91 e art. 225 da IN 128/2022. Use SEMPRE que mencionar atividades concomitantes, Tema 1070 STJ, soma de salários de contribuição, atividades simultâneas, art. 32 Lei 8.213, atividade principal e secundária, professor com outra atividade, médico em duas funções, vereador com vínculo CLT, sócio com emprego, dois empregos formais, MEI com CLT, segurado especial com vínculo, revisão atividades concomitantes, RMI revisada por concomitância, soma para teto, Lei 13.846/2019, MP 871/2019, EC 103/2019. Hub teórico para concessão e revisão por atividades concomitantes, complementar à skill processual impugnacao-cumprimento-concomitantes. NÃO use exclusivamente para impugnação ao cumprimento de sentença (skill própria). Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria e revisao-peticao."
 ---
 
-# Atividades Concomitantes no RGPS. Tema 1.070/STJ
+# Atividades Concomitantes no RGPS. Tema 1070 STJ
 
-## 1. Quando acionar esta skill
+## Quando acionar
 
-Acione SEMPRE que houver atividades simultâneas no período básico de cálculo (PBC) ou ao longo do tempo de contribuição. A skill foca o aspecto teórico e probatório, complementando a skill `impugnacao-cumprimento-concomitantes` voltada à fase executiva.
+Atividades simultâneas no período básico de cálculo, na concessão ou na revisão. A fase de cumprimento de sentença fica em `impugnacao-cumprimento-concomitantes`.
 
-## 2. Marco normativo
+## Base normativa
 
-A Lei 13.846/2019 alterou o art. 32 da Lei 8.213/91, eliminando a distinção entre atividade principal e secundária. A partir de 18/01/2019 (vigência da MP 871/2019, convertida na Lei 13.846/2019, publicada em 18/06/2019), a regra é a soma integral dos salários de contribuição, observado o teto.
+- **Lei 8.213/91, art. 32, redação original:** soma integral dos salários de contribuição apenas quando o segurado cumpria, em cada atividade, as condições do benefício. Caso contrário, a atividade secundária entrava de forma proporcional (incisos I e II).
+- **Lei 13.846/2019 (publicada em 18/06/2019):** revogou os incisos I e II. O salário de benefício passou a ser calculado com a soma dos salários de contribuição de todas as atividades do PBC, observado o teto.
+- **IN 128/2022, art. 225:** soma integral; para DIB (ou DII, nos benefícios por incapacidade) anterior a 18/06/2019, a IN manda observar a múltipla atividade (§1º).
 
-Antes disso, vigorava a redação original do art. 32, com cálculo proporcional. O Tema 1.070/STJ pacificou a possibilidade de revisão para benefícios concedidos sob a redação anterior, com aplicação favorável da nova redação a partir da Lei 9.876/99 quando comprovada a soma adequada.
+## Tema 1070 STJ
 
-A IN INSS 128/2022 nos arts. 246 e 247 regulamenta o procedimento administrativo.
+"Após o advento da Lei 9.876/99, para fins de cálculo do benefício de aposentadoria, no caso do exercício de atividades concomitantes pelo segurado, o salário-de-contribuição deverá ser composto da soma de todas as contribuições previdenciárias por ele vertidas ao sistema, respeitado o teto previdenciário."
 
-## 3. Eixos centrais pró-segurado
+O tema afasta a proporcionalidade do art. 32 original nas aposentadorias calculadas pela Lei 9.876/99, contra o que ainda dispõe o art. 225, §1º, da IN 128.
 
-A regra atual é a soma integral dos salários de contribuição até o teto. Não há mais redução proporcional pela atividade secundária.
+## Janela da revisão
 
-Os benefícios concedidos antes da vigência da MP 871/2019 (18/01/2019), com cálculo proporcional, são revisáveis com fundamento no Tema 1.070/STJ.
+- **DIB entre 29/11/1999 e 17/06/2019:** revisável pelo Tema 1070, dentro do prazo decadencial.
+- **DIB a partir de 18/06/2019:** a soma já é a regra legal; conferir apenas se o INSS a aplicou.
+- **DIB anterior a 29/11/1999:** vale o art. 32 original, com proporcionalidade.
+- **Decadência:** 10 anos do primeiro dia do mês seguinte ao do primeiro pagamento (Lei 8.213/91, art. 103). Benefícios com primeiro pagamento até 2016 tendem a estar decaídos em 2026. Prescrição das parcelas anteriores ao quinquênio (Súmula 85 STJ).
+- **Ganho real:** existe apenas quando a soma, limitada ao teto em cada competência, eleva a média. Segurado cuja atividade principal já atingia o teto não tem diferença.
 
-A revisão alcança os 5 anos anteriores ao requerimento administrativo (Súmula 85 STJ) e respeita o prazo decadencial do art. 103 da Lei 8.213/91.
+## Situações típicas
 
-A definição de atividade principal e secundária era arbitrária e prejudicava o segurado quando o "principal" era o de menor remuneração.
+Dois empregos; empregado e contribuinte individual (sócio com pró-labore, autônomo, MEI, cooperado); empregado e exercente de mandato eletivo. Em todas, a contribuição de cada atividade precisa constar do CNIS ou ser provada.
 
-## 4. Fragilidades adversárias mais comuns
+## Documentos
 
-Atenção ao alcance: o Tema 1.070/STJ é ancorado no período APÓS a Lei 9.876/99, a janela revisável é, em regra, DIB entre 29/11/1999 e 17/06/2019; para DIB anterior vigora o art. 32 original (cálculo proporcional).
-
-O INSS recusa o cômputo de atividade autônoma concomitante. Refute com art. 32 Lei 8.213/91 e CNIS.
-
-O INSS aplica divisor 12 fixo. Refute com a regra de divisor pelo número de contribuições efetivas.
-
-O INSS desconsidera contribuições de cooperativas e Câmaras Municipais. Refute com a integração no PBC.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em revisão administrativa, recurso ao CRPS, ação ordinária ou JEF, com produção de CNIS detalhado, certidão de tempo de contribuição e cálculo independente. Combinar com `impugnacao-cumprimento-concomitantes`, `base-calculo-rmi-ec103` e `base-revisao-art29-melhor-beneficio`.
-
-## 6. Documentos essenciais
-
-CNIS com todos os vínculos. CTPS. Carta de concessão. Memória de cálculo. Histórico salarial. Quando cooperado, Câmara ou autônomo, recibos de pagamento.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
+CNIS com todos os vínculos e remunerações, carta de concessão, memória de cálculo, CTPS, recibos de pró-labore ou de cooperativa e guias de contribuinte individual.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Integração
+
+`impugnacao-cumprimento-concomitantes`, `base-calculo-rmi-ec103`, `base-revisao-art29-melhor-beneficio`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`, `revisao-peticao`, `base-portarias-dpmf-inss-hub`.

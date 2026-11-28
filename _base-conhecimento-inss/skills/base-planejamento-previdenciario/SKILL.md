@@ -1,115 +1,55 @@
 ---
 name: base-planejamento-previdenciario
-description: "Planejamento previdenciário do segurado do INSS, simulação da melhor DER, direito adquirido pré-EC 103/2019, regras de transição, reafirmação da DER, melhor benefício e revisão preventiva. Use SEMPRE que mencionar planejamento previdenciário, melhor DER, simulação de benefício, direito adquirido EC 103, regra de transição, reafirmação DER, Tema 995 STJ, Tema 334 STF, melhor benefício, fator previdenciário, 100 por cento salário benefício, cenários de aposentadoria, contribuição facultativa estratégica, complementação EC 103, carência futura, período de graça, teto previdenciário, simulação Meu INSS, salário-de-benefício, mês competente, revisão preventiva, checklist pré-aposentadoria, estratégia do segurado, auditoria CNIS pré-aposentadoria. Cruza com peticao-previdenciaria, cnis-acerto-indicadores, base-calculo-rmi-ec103, base-aposentadoria-direito-adquirido, base-aposentadoria-transicao-ec103, reafirmacao-der e contribuicoes-complementacao-ec103."
+description: "Planejamento previdenciário do segurado do INSS, simulação da melhor DER, direito adquirido pré-EC 103/2019, regras de transição, reafirmação da DER, melhor benefício e revisão preventiva. Use SEMPRE que mencionar planejamento previdenciário, melhor DER, simulação de benefício, direito adquirido EC 103, regra de transição, reafirmação DER, Tema 995 STJ, Tema 334 STF, melhor benefício, fator previdenciário, 100 por cento salário benefício, cenários de aposentadoria, contribuição facultativa estratégica, complementação EC 103, carência futura, período de graça, teto previdenciário, simulação Meu INSS, salário-de-benefício, mês competente, revisão preventiva, checklist pré-aposentadoria, estratégia do segurado, auditoria CNIS pré-aposentadoria. Cruza com peticao-previdenciaria, base-cnis-acerto-indicadores, base-calculo-rmi-ec103, base-aposentadoria-direito-adquirido, base-aposentadoria-transicao-ec103, reafirmacao-der e contribuicoes-complementacao-ec103."
 ---
 
 # Planejamento Previdenciário
 
 ## Escopo
 
-Skill pró-segurado dedicada ao planejamento previdenciário, isto é, à simulação de cenários de aposentadoria para identificar a melhor DER, a regra mais vantajosa, ajustes em contribuição, reafirmação, revisões preventivas e estratégia de gerenciamento de carência e qualidade de segurado.
+Simulação de cenários para identificar a regra mais vantajosa, a melhor DER e as contribuições que valem o custo. Postura pró-segurado: o parecer compara todas as regras cabíveis antes de recomendar.
 
-## Marco normativo central
+## Fundamentos
 
-CF/88, art. 201.
+- CF, art. 5º, XXXVI (direito adquirido); art. 201 (RGPS); art. 195, §14 (competência abaixo do mínimo não conta).
+- EC 103/2019: art. 3º (direito adquirido até 13/11/2019); arts. 15 a 21 (transições); art. 26 (cálculo); art. 29 (complementação, agrupamento e utilização do excedente).
+- Lei 8.213/91 e Lei 9.876/99 (fator previdenciário); Lei 8.212/91, art. 21 (alíquotas do contribuinte individual e do facultativo).
+- IN 128/2022, art. 577 (reafirmação da DER e melhor benefício na via administrativa).
 
-EC 20/98, EC 41/03, EC 103/2019.
+## Pilares
 
-Lei 8.213/91.
+1. Auditoria do CNIS antes de qualquer simulação (agente `analista-cnis`; `base-cnis-acerto-indicadores`). Pendência, competência abaixo do mínimo e alíquota reduzida mudam a data do direito e a média.
+2. Direito adquirido até 13/11/2019 (`base-aposentadoria-direito-adquirido`).
+3. Transições: pontos (art. 15), idade progressiva (art. 16), pedágio de 50% (art. 17), pedágio de 100% (art. 20), especial por pontos (art. 21) e regras do professor.
+4. Regra permanente (`base-aposentadoria-regra-permanente-ec103`).
+5. Cálculo da RMI em cada regra (`base-calculo-rmi-ec103`), inclusive o descarte do art. 26, §6º.
+6. Gestão das contribuições futuras: valor, alíquota e complementação.
+7. Melhor DER e reafirmação.
 
-Lei 9.876/1999. Fator previdenciário.
+## Pontos que decidem
 
-Decreto 3.048/99 e IN 128/2022.
+- O fator previdenciário incide apenas no pedágio de 50% (art. 17, parágrafo único) e nas regras de direito adquirido que o preveem. Nas demais transições o coeficiente é de 60% mais 2% por ano acima de 20 (H) ou 15 (M), salvo o pedágio de 100%, com 100% da média.
+- Cada ano adicional de contribuição soma 2 pontos percentuais no coeficiente; o descarte do art. 26, §6º, eleva a média, mas o tempo descartado sai do cômputo.
+- Contribuição abaixo do salário mínimo após 13/11/2019 não conta sem complementação, agrupamento ou utilização do excedente (EC 103, art. 29; `contribuicoes-complementacao-ec103`).
+- Contribuinte individual e facultativo: 20% sobre o salário de contribuição (Lei 8.212/91, art. 21). O plano simplificado de 11% ou 5% não conta para a aposentadoria por tempo de contribuição sem complementação (art. 21, §3º).
+- Salário de contribuição alto em poucos meses tem efeito diluído na média de todos os salários desde 07/1994; simular antes de recomendar contribuição pelo teto.
+- Contribuição em atraso de contribuinte individual exige prova da atividade e, fora do período de graça, não conta para carência (`indenizacao-contribuicoes-atraso`).
 
-CF/88, art. 194. Seguridade social como direito social, competência da União para legislar sobre previdência (princípios da universalidade, uniformidade e equivalência).
+## Alertas
 
-## Pilares do planejamento
+- A simulação do Meu INSS não substitui o cálculo manual; conferir o CNIS e cada regra.
+- O requerimento fixa a DER. Pedido prematuro pode gerar concessão em regra pior; pedir reafirmação expressa (IN 128, art. 577; Tema 995 STJ).
+- Benefício concedido: a decadência de 10 anos alcança o direito ao melhor benefício (Tema 966 STJ). Revisão preventiva dentro do prazo (`decadencia-revisao-previdenciaria`).
+- A aposentadoria é irrenunciável. A desistência exige pedido de arquivamento antes do primeiro pagamento ou do saque do FGTS ou do PIS (Decreto 3.048/99, art. 181-B, §2º).
 
-Primeiro, diagnóstico do CNIS e de vínculos.
+## Parecer
 
-Segundo, simulação em múltiplas regras.
-
-Terceiro, avaliação de direito adquirido.
-
-Quarto, escolha da melhor DER.
-
-Quinto, gestão de contribuições futuras.
-
-Sexto, reafirmação da DER quando vantajosa.
-
-Sétimo, revisão preventiva de possíveis vícios.
-
-## Espaço pró-segurado
-
-Primeiro, identificar direito adquirido pré-EC 103/2019, por vezes mais vantajoso que a regra nova.
-
-Segundo, comparar regras de transição (pedágio 50%, 100%, idade progressiva, pontos, pedágio 100% aposentadoria especial, transição do professor).
-
-Terceiro, usar Tema 995 STJ para reafirmação quando gerar benefício melhor.
-
-Quarto, ajustar contribuições futuras em montante ótimo para o salário-de-benefício.
-
-Quinto, verificar vínculos a acertar e pendências CNIS.
-
-Sexto, considerar contagem recíproca RPPS.
-
-Sétimo, formar dossiê documental robusto para evitar indeferimentos.
-
-## Regra pró-segurado
-
-Primeiro, auditoria CNIS.
-
-Segundo, simulação de cenários.
-
-Terceiro, confronto com o fator previdenciário.
-
-Quarto, recomendação escrita ao cliente.
-
-Quinto, acompanhamento até o requerimento.
-
-## Extensão
-
-Teto de o parecer de planejamento, 1 página, cenários ranqueados em a, b e c com o número que decide cada um. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Uma página, com cenários ranqueados (a, b, c) e o número que decide cada um: DER, coeficiente, RMI estimada e custo das contribuições. Escrita conforme `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Para cálculo da RMI, acionar `base-calculo-rmi-ec103`.
-Para direito adquirido, acionar `base-aposentadoria-direito-adquirido`.
-Para transição, acionar `base-aposentadoria-transicao-ec103` e `base-aposentadoria-regra-permanente-ec103`.
-Para reafirmação, acionar `reafirmacao-der`.
-Para CNIS, acionar `cnis-acerto-indicadores`.
-Para complementação, acionar `contribuicoes-complementacao-ec103`.
-
-## Alertas
-
-Primeiro, planejamento exige dados completos. Sem CNIS confiável, alertar o cliente.
-
-Segundo, decadência de revisões preventivas deve ser controlada.
-
-Terceiro, contribuição facultativa estratégica exige análise de custo benefício.
-
-Quarto, simulações Meu INSS podem ser imprecisas. Conferir.
-
-Quinto, reforma pode reduzir benefício quando se opta por regra errada. Comparar.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## O que NÃO está nesta skill
-
-Cálculo técnico de RMI em `base-calculo-rmi-ec103`. Direito adquirido em `base-aposentadoria-direito-adquirido`. Reafirmação em `reafirmacao-der`.
-
-## CNIS antes do cenário (Onda 117)
-
-Nenhum cenário se projeta sobre CNIS não auditado. Despachar ao agente `analista-cnis` ANTES de simular qualquer regra, porque pendência bloqueante, competência zerada e alíquota reduzida mudam a data em que o direito se aperfeiçoa e mudam o salário-de-benefício.
-
-Regra prática. Contribuir para alcançar carência ou tempo sem antes limpar o CNIS é dinheiro parado, e recomendar espera com base em contagem errada custa meses ao cliente.
+`base-calculo-rmi-ec103`, `base-aposentadoria-direito-adquirido`, `base-aposentadoria-transicao-ec103`, `base-aposentadoria-regra-permanente-ec103`, `reafirmacao-der`, `base-cnis-acerto-indicadores`, `contribuicoes-complementacao-ec103`, `base-contagem-reciproca-rgps-rpps`, `base-fungibilidade-previdenciaria`, `base-portarias-dpmf-inss-hub`.

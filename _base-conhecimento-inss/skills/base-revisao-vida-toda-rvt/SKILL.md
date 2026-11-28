@@ -1,127 +1,35 @@
 ---
 name: base-revisao-vida-toda-rvt
-description: "Revisão da Vida Toda (RVT), Tema 1102 STF, ADIs 2110 e 2111 STF e modulação, ótica pró-segurado com honestidade radical. Tese vigente do Tema 1102 ADVERSA (art. 3º da Lei 9.876/1999 cogente, trânsito 15/05/2026); a antiga tese da opção mais favorável está superada. Use SEMPRE que mencionar Revisão da Vida Toda, RVT, Tema 1102 STF, RE 1.276.977, ADI 2110 e ADI 2111, inconstitucionalidade art. 3º Lei 9.876/1999, regra de transição Lei 9.876, PBC Período Básico de Cálculo julho 1994, salários anteriores a julho 1994, maior benefício vida toda, modulação RVT 2024, benefícios concedidos antes novembro 1999, direito adquirido RVT, coisa julgada RVT, decadência art. 103 RVT, RVT com fibromialgia, RVT com segurada especial rural, RVT após EC 103/2019, reajuste pós-julgamento, prescrição quinquenal parcelas RVT, RMI vida toda, RVT em aposentadoria por idade, cálculo mais vantajoso. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
+description: "Revisão da Vida Toda (RVT), Tema 1102 STF, ADIs 2110 e 2111 STF e modulação, ótica pró-segurado com franqueza sobre a tese adversa. Tese vigente do Tema 1102 ADVERSA (art. 3º da Lei 9.876/1999 cogente, trânsito 15/05/2026); a antiga tese da opção mais favorável está superada. Use SEMPRE que mencionar Revisão da Vida Toda, RVT, Tema 1102 STF, RE 1.276.977, ADI 2110 e ADI 2111, inconstitucionalidade art. 3º Lei 9.876/1999, regra de transição Lei 9.876, PBC Período Básico de Cálculo julho 1994, salários anteriores a julho 1994, maior benefício vida toda, modulação RVT 2024, benefícios concedidos antes novembro 1999, direito adquirido RVT, coisa julgada RVT, decadência art. 103 RVT, RVT com fibromialgia, RVT com segurada especial rural, RVT após EC 103/2019, reajuste pós-julgamento, prescrição quinquenal parcelas RVT, RMI vida toda, RVT em aposentadoria por idade, cálculo mais vantajoso. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
 ---
 
 # Revisão da Vida Toda (RVT)
 
-## Escopo
+## O que era a tese
 
-Skill temática pró-segurado com honestidade radical. Orienta a discussão da Revisão da Vida Toda (RVT), que inclui contribuições anteriores a julho/1994 no Período Básico de Cálculo (PBC) do benefício, após a ampla controvérsia gerada pelo Tema 1102 STF (2022) e pelas ADIs 2110 e 2111 STF (2024) com declaração de constitucionalidade do art. 3º da Lei 9.876/1999 e modulação de efeitos. A tese ficou restrita a hipóteses residuais. Esta skill é franca. Onde não há espaço, a skill alerta.
+O segurado filiado antes da Lei 9.876/99 (29/11/1999), com requisitos cumpridos depois dela e antes da EC 103, pedia o cálculo pela regra definitiva do art. 29, I e II, da Lei 8.213/91 (média de todo o período contributivo, inclusive antes de 07/1994), em vez da regra de transição do art. 3º da Lei 9.876/99 (média apenas desde 07/1994, com divisor mínimo do §2º). Benefício com DIB anterior a 29/11/1999 segue a regra original e não é caso de RVT, e sim de direito adquirido comum.
 
-## Marco normativo central
+## Situação atual (adversa)
 
-CF/88, art. 201, §1º e §7º. Base da aposentadoria.
+- **ADIs 2110 e 2111 (21/03/2024):** o art. 3º da Lei 9.876/99 é constitucional. Embargos na ADI 2111 julgados em 10/04/2025; trânsito em 09/07/2026.
+- **Tema 1102 STF (RE 1.276.977), tese vigente, trânsito em 15/05/2026:** "O segurado do INSS que se enquadre no dispositivo não pode optar pela regra definitiva prevista no art. 29, I e II, da Lei n. 8.213/1991, independentemente de lhe ser mais favorável." Tese literal completa em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`. A tese de 2022, que admitia a opção, está superada.
+- **Modulação:** (a) irrepetibilidade dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024; (b) dispensa de honorários de sucumbência, custas e perícias contábeis nas ações pendentes naquela data. A modulação não preserva o direito à revisão.
 
-Lei 8.213/91, art. 29. Cálculo do benefício, redação original.
+## O que resta
 
-Lei 9.876/1999, art. 3º. Regra de transição após novembro/1999, com PBC a partir de julho/1994, desprezando salários anteriores ao início do PBC.
+1. **Ação pendente:** sustentar apenas a modulação (irrepetibilidade e dispensa de ônus). Avaliar desistência, que não afasta a dispensa de ônus para ação pendente em 05/04/2024 [NÃO CONFIRMADO: conferir a aplicação pelos tribunais].
+2. **Título transitado antes de 2024 em favor do segurado:** a coisa julgada subsiste; acompanhar eventual impugnação com base no art. 535, §5º, do CPC (`execucao-cumprimento-previdenciario`).
+3. **DIB anterior a 29/11/1999:** cálculo pela regra original, por direito adquirido (`base-aposentadoria-direito-adquirido`), sujeito à decadência.
+4. **Ação nova de RVT:** não ajuizar.
 
-Lei 9.876/1999, art. 3º, §2º. Regra acessória sobre o divisor mínimo.
+## Juízo de Catanduva
 
-Lei 8.213/91, art. 103. Decadência decenal da revisão.
-
-EC 103/2019, art. 26. Nova regra de cálculo para benefícios concedidos após 13/11/2019, afastando o fator previdenciário e fixando a média aritmética sem desprezar os menores salários.
-
-## Marco jurisprudencial
-
-[TESE ANTIGA SUPERADA, não citar como vigente] Em 2022, o Tema 1102 admitia ao segurado filiado antes da Lei 9.876/1999 a opção pela regra definitiva do art. 29 da Lei 8.213/1991. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
-
-ADIs 2110 e 2111 STF. Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999. O art. 3º é cogente, e o segurado que nele se enquadra não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/91; a modulação (ADI 2111 ED-ED, 10/04/2025) só alcança a devolução de valores e os ônus de sucumbência, como descrito adiante (auditoria 03/10/2026).
-
-[Retirado na auditoria 25/07/2026] O antes citado Tema 1117/STF trata de previdência complementar privada e não tem relação com a RVT.
-
-[Retirado na auditoria 25/07/2026] O antes citado Tema 1157/STF trata de reenquadramento de servidor; a modulação da RVT está nas ADIs 2110 e 2111 (21/03/2024).
-
-Honestidade radical. Após o julgamento das ADIs 2110 e 2111 em 2024, a RVT foi fortemente restringida. O espaço remanescente é limitado.
-
-## Espaço remanescente pró-segurado
-
-Primeiro, benefícios com DIB anterior a 29/11/1999 (vigência da Lei 9.876/1999): tecnicamente não é RVT, é direito adquirido comum ao cálculo pela regra originária do art. 29, sem a regra de transição.
-
-Segundo, processos com coisa julgada formada antes do julgamento das ADIs, em que a revisão já foi deferida.
-
-Terceiro, a modulação, que torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data.
-
-[Retirado em 13/10/2026] A renda maior pelo cálculo originário e o direito adquirido entre 29/11/1999 e 13/11/2019 não abrem espaço à revisão, porque a tese vigente veda a opção "independentemente de lhe ser mais favorável".
-
-## Controvérsias vivas
-
-A modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da RVT [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar o direito à revisão (auditoria 03/10/2026).
-
-## Decadência e prescrição
-
-Art. 103 da Lei 8.213/91. Prazo decadencial de 10 anos contado a partir do primeiro pagamento do benefício.
-
-Prescrição quinquenal das parcelas vencidas (Súmula 85 STJ).
-
-Em benefício concedido em 2015 ou anterior, decadência tende a estar esgotada. Em benefício posterior, verificar prazo remanescente.
-
-## Regra e estratégia pró-segurado
-
-A regra geral, após 2024, é restrita. Honestidade radical obriga a verificar caso a caso.
-
-Primeiro, diagnóstico sobre a DIB e o direito adquirido antes de 13/11/2019.
-
-Segundo, cálculo de simulação pela regra originária do art. 29, com inclusão de salários pré-PBC, contra a regra de transição. Só prosseguir se houver vantagem concreta.
-
-Terceiro, cálculo do prazo decadencial.
-
-Quarto, se a decadência estiver esgotada, comunicar franca e imediatamente.
-
-Quinto, em ações já ajuizadas, aguardar o desfecho e estudar transação ou desistência conforme jurisprudência atualizada.
-
-Sexto, não ajuizar nova ação de RVT, porque a tese vigente do Tema 1102/STF a afasta. Em ação pendente, sustentar apenas a modulação.
+O juízo julga improcedente a RVT pelo Tema 1102 STF e pelas ADIs 2110 e 2111, com dispensa de honorários pela modulação. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 9.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça de revisão, acionar `peticao-previdenciaria`.
-Ao simular cálculo, acionar `base-calculo-rmi-ec103`.
-Ao verificar decadência, acionar `decadencia-revisao-previdenciaria`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
-Em fase executiva, acionar `execucao-cumprimento-previdenciario`.
-Em revisão geral, acionar `revisao-peticao`.
-
-## Alertas
-
-Primeiro, RVT está restrita após julgamento das ADIs 2110 e 2111 STF em 2024.
-
-Segundo, só propor com simulação vantajosa.
-
-Terceiro, decadência decenal é crítica.
-
-Quarto, honorários podem depender do êxito (auditoria 03/10/2026, retirada a remissão ao Tema 1050/STJ, que trata da base dos honorários após pagamento administrativo posterior à citação). Cautela.
-
-Quinto, comunicar ao cliente com honestidade radical o risco processual.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Doutrina de apoio
-
-Wladimir Novaes Martinez, pioneiro da discussão da RVT, sustenta direito adquirido à melhor renda.
-
-Fábio Zambitte Ibrahim sustenta a RVT como decorrência do princípio do melhor benefício.
-
-Frederico Amado discute detalhadamente o Tema 1102 STF.
-
-Hugo Goes detalha o cálculo.
-
-Daniel Pulino analisa a modulação.
-
-Marco Aurélio Serau Junior analisa o regime de transição.
-
-O IBDP tem posicionamento institucional sobre a matéria.
-
-## O que NÃO está nesta skill
-
-Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Revisão do art. 29 II e melhor benefício em `base-revisao-art29-melhor-beneficio`. Revisão por reajustes ORTN/OTN em `base-revisao-reajuste-ortn-otn`.
-
-## Juízo de Catanduva (Onda 179)
-
-O juízo julga improcedente a revisão da vida toda pelo Tema 1102/STF [NÃO CONFIRMADO] e pelas ADIs 2.110 e 2.111, sem aguardar o trânsito, com dispensa de honorários pela modulação. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 9.
+`decadencia-revisao-previdenciaria`, `peticao-previdenciaria`, `revisao-peticao`, `base-calculo-rmi-ec103`, `precedentes-previdenciarios`, `execucao-cumprimento-previdenciario`, `coisa-julgada-previdenciaria`, `base-portarias-dpmf-inss-hub`.

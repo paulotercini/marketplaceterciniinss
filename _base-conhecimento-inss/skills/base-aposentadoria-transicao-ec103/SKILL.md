@@ -1,109 +1,68 @@
 ---
 name: base-aposentadoria-transicao-ec103
-description: "Regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição, sob a ótica exclusiva do segurado. Use SEMPRE que mencionar regra de transição EC 103, art. 15 EC 103, art. 16 EC 103, art. 17 EC 103, art. 20 EC 103, pontos progressivos, fórmula 86/96 progressiva, pedágio 50%, pedágio 100%, idade mínima progressiva, professor transição, art. 20 §1º EC 103, escolha da regra mais vantajosa, comparativo entre regras, melhor regra de transição, mitigar impacto reforma, art. 4º EC 103, tempo de contribuição mínimo 35 30, carência 180, Tema 334 STF melhor benefício na transição, aplicação simultânea Lei 13.183/2015 na transição, direito de escolha, fator previdenciário nas transições, divisor mínimo nas transições. Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-direito-adquirido, base-aposentadoria-regra-permanente-ec103, base-calculo-rmi-ec103, reafirmacao-der, precedentes-previdenciarios e revisao-peticao."
+description: "Regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição, sob a ótica do segurado. Use SEMPRE que mencionar regra de transição EC 103, art. 15 EC 103, art. 16 EC 103, art. 17 EC 103, art. 20 EC 103, pontos progressivos, fórmula 86/96 progressiva, pedágio 50%, pedágio 100%, idade mínima progressiva, professor transição, art. 20 §1º EC 103, escolha da regra mais vantajosa, comparativo entre regras, melhor regra de transição, tempo de contribuição mínimo 35 30, carência 180, Tema 334 STF melhor benefício, direito de escolha, fator previdenciário nas transições. Aciona peticao-previdenciaria. Cruza com base-aposentadoria-direito-adquirido, base-aposentadoria-regra-permanente-ec103, base-calculo-rmi-ec103, reafirmacao-der e precedentes-previdenciarios."
 ---
 
 # Regras de Transição da EC 103/2019 (Aposentadoria por Tempo)
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Trata das regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição. Objetivo único é orientar a escolha da regra mais vantajosa ao segurado, jamais favorecer o INSS na interpretação ou cálculo.
+Escolha da regra de transição mais vantajosa ao segurado filiado ao RGPS até 13/11/2019 (vigência da EC 103). Detalhe normativo, cenários e refutação em `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## As quatro regras de transição por tempo de contribuição
 
-EC 103/2019, art. 15. Regra dos pontos progressivos. Exige tempo mínimo de contribuição (35 anos homem, 30 anos mulher) e pontuação crescente (começou em 86 para mulher e 96 para homem, progredindo 1 ponto por ano até 100 e 105 respectivamente).
+| Regra | Requisitos | RMI |
+|---|---|---|
+| Pontos (art. 15) | 35 anos de contribuição (H) / 30 (M) e soma idade + tempo, apurada em dias (§2º) | 60% da média + 2% por ano acima de 20 (H) ou 15 (M) (art. 26, §§2º, I, e 5º) |
+| Idade progressiva (art. 16) | 35/30 anos de contribuição e idade mínima progressiva | 60% + 2% (art. 26, §2º, I) |
+| Pedágio 50% (art. 17) | mais de 33 (H) / 28 (M) anos de contribuição em 13/11/2019; 35/30 anos e período adicional de 50% do tempo que faltava em 13/11/2019; sem idade mínima | média × fator previdenciário (art. 17, parágrafo único) |
+| Pedágio 100% (art. 20) | 60 anos (H) / 57 (M), 35/30 anos e período adicional igual ao tempo que faltava em 13/11/2019 | 100% da média (art. 26, §3º, I) |
 
-EC 103/2019, art. 16. Regra da idade mínima progressiva. Exige tempo mínimo de contribuição (35 anos homem, 30 anos mulher) e idade mínima crescente (começou em 56 para mulher e 61 para homem, aumentando 6 meses por ano).
+Art. 18 (aposentadoria por idade de transição: 65 H / 62 M, com acréscimo de 6 meses por ano para a mulher a partir de 60 anos em 2019, e 15 anos de contribuição) é tratado em `aposentadoria-idade-hibrida`.
 
-EC 103/2019, art. 17. Pedágio de 50% sobre o tempo faltante em 13 de novembro de 2019 para quem estava a menos de 2 anos de completar os requisitos mínimos.
+## Tabela anual de exigências (arts. 15, §1º, e 16, §1º)
 
-EC 103/2019, art. 20. Pedágio de 100% sobre o tempo faltante em 13 de novembro de 2019. Exige idade mínima (57 mulher, 60 homem) e pagamento integral do dobro do tempo restante.
+| Ano | Pontos M / H | Idade M / H (art. 16) |
+|---|---|---|
+| 2019 | 86 / 96 | 56 / 61 |
+| 2020 | 87 / 97 | 56a6m / 61a6m |
+| 2021 | 88 / 98 | 57 / 62 |
+| 2022 | 89 / 99 | 57a6m / 62a6m |
+| 2023 | 90 / 100 | 58 / 63 |
+| 2024 | 91 / 101 | 58a6m / 63a6m |
+| 2025 | 92 / 102 | 59 / 64 |
+| 2026 | 93 / 103 | 59a6m / 64a6m |
+| 2027 | 94 / 104 | 60 / 65 (limite H) |
+| 2028 | 95 / 105 (limite H) | 60a6m / 65 |
+| 2029 | 96 / 105 | 61 / 65 |
+| 2030 | 97 / 105 | 61a6m / 65 |
+| 2031 | 98 / 105 | 62 (limite M) / 65 |
+| 2032 | 99 / 105 | 62 / 65 |
+| 2033 | 100 (limite M) / 105 | 62 / 65 |
 
-EC 103/2019, arts. 15 a 18, 20 e 21. Regras de transição para quem já era filiado ao RGPS em 13 de novembro de 2019; o art. 4º trata do servidor público federal (auditoria 03/10/2026).
+Professor (art. 15, §3º; art. 16, §2º; art. 20, §1º): redução de 5 anos no tempo e na idade, com tabelas próprias em `base-professor-regra-transicao-pontos-ec103`, `base-professor-regra-transicao-idade-progressiva-ec103` e `base-professor-regra-transicao-pedagio-ec103`. O art. 17 não tem versão de professor.
 
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+## Estratégia
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+1. Apurar o tempo de contribuição em 13/11/2019 (define a elegibilidade ao art. 17 e o pedágio dos arts. 17 e 20) e em cada ano seguinte.
+2. Simular as quatro transições, o direito adquirido (`base-aposentadoria-direito-adquirido`) e a regra permanente (`base-aposentadoria-regra-permanente-ec103`), com DIB, RMI e renda líquida de cada hipótese (`base-calculo-rmi-ec103`).
+3. Escolher a regra de maior RMI ou de acesso mais próximo, conforme o interesse do segurado. A escolha é direito do segurado (Tema 334 STF; art. 122 da Lei 8.213/91).
+4. Requerimento prematuro: reafirmação da DER (Tema 995 STJ; `reafirmacao-der`).
+5. Tempo especial até 13/11/2019 converte-se em comum (art. 25, §2º, EC 103) e compõe o tempo da transição (`base-tempo-especial-conversao`).
 
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+## Alertas
 
-## Regra geral e as quatro portas de transição
-
-A regra geral é de que o segurado filiado ao RGPS até 13 de novembro de 2019 pode escolher a regra de transição mais vantajosa entre as quatro disponíveis. A escolha é direito subjetivo do segurado, não prerrogativa do INSS.
-
-Cada regra tem trade-off próprio. Pontos exige maior tempo de contribuição mas dispensa idade mínima rígida. Idade progressiva exige idade mínima mas não exige pontuação. Pedágio de 50% acelera o acesso para quem estava próximo do direito adquirido. Pedágio de 100% compensa idade mínima mais baixa com tempo adicional dobrado.
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado (homem) que em 2026 soma 103 pontos e tem 35 anos de contribuição. Regra dos pontos (art. 15), em 2026 exigem-se 103 pontos do homem e 93 da mulher.
-
-Segundo, segurada que em 2026 completa 59 anos e 6 meses de idade e 30 anos de contribuição. Regra da idade progressiva (art. 16), a idade exigida da mulher em 2026 é 59a6m (homem: 64a6m).
-
-Terceiro, segurado que em 13 de novembro de 2019 faltavam apenas 1 ano e 8 meses para completar 35 anos de contribuição. Pedágio de 50% (art. 17). Acesso mais rápido ao benefício.
-
-Quarto, segurado que em 13/11/2019 estava próximo do tempo mínimo: no pedágio de 100% (art. 20), exige-se idade de 60 (homem) ou 57 (mulher), o tempo mínimo de 35/30 anos E o cumprimento do dobro do tempo que faltava na promulgação, a conta do pedágio é indispensável.
-
-Quinto, professor com 25 ou 30 anos de magistério e enquadramento em transição específica (art. 15 §3º, art. 16 §2º, art. 20 §1º), com redução de 5 anos em relação aos demais segurados.
-
-Sexto, segurado com tempo especial convertido até 13 de novembro de 2019. Aproveitamento do tempo especial convertido para compor o tempo de contribuição da transição, conforme `base-aposentadoria-especial-transicao-ec103` e `auditoria-ppp`.
-
-## Regra e estratégia
-
-A regra geral da escolha cabe ao segurado, sempre comparando as quatro transições e a regra permanente, nunca se submetendo à regra imposta pelo INSS quando há opção mais vantajosa.
-
-Fazer simulação detalhada em cada porta de transição, com apuração de DIB, RMI e renda mensal líquida em cada hipótese. Comparar com direito adquirido eventualmente presente (acionar `base-aposentadoria-direito-adquirido`) e com a regra permanente (acionar `base-aposentadoria-regra-permanente-ec103`).
-
-Quando houver divergência entre RMI administrativa e a calculada pelo advogado, impugnar com base nos arts. 15 a 18 e 20 da EC 103 e no direito de escolha (auditoria 03/10/2026, corrigida a remissão ao art. 4º, que trata do servidor público federal).
+- O INSS costuma conceder pela primeira regra satisfeita, sem comparativo. Exigir o comparativo em recurso administrativo ou ação judicial.
+- Exceções à fórmula 60% + 2%: art. 20 (100% da média) e art. 17 (média × fator). Para perfis de salários altos e idade baixa, o fator do art. 17 pode reduzir a RMI abaixo da obtida no art. 15 ou 16.
+- A exigência de pontos e de idade varia por ano-calendário. A DIB deve coincidir com o dia em que se completam os requisitos da regra eleita.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao verificar direito adquirido, acione `base-aposentadoria-direito-adquirido`.
-Ao comparar com regra permanente, acione `base-aposentadoria-regra-permanente-ec103`.
-Ao calcular RMI, acione `base-calculo-rmi-ec103`.
-Ao postergar DER, acione `reafirmacao-der`.
-Ao buscar jurisprudência, acione `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, a escolha da regra é do segurado. O INSS frequentemente aplica a regra que gera RMI menor sem apresentar o comparativo. Exigir planilha comparativa em recurso administrativo ou ação judicial.
-
-As exceções são duas: o pedágio de 100% (art. 20), que mantém 100% da média, e o pedágio de 50% (art. 17), cujo cálculo é a média multiplicada pelo fator previdenciário (art. 17, parágrafo único).
-
-Terceiro, cuidado com a retroatividade do requerimento. A DER escolhida deve coincidir com o preenchimento dos requisitos da transição eleita. Em caso de requerimento prematuro, cabe reafirmação da DER (Tema 995 STJ).
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta que a escolha da regra é direito subjetivo do segurado, com comparativo obrigatório pelo INSS.
-
-Hugo Goes, em Manual, detalha as quatro regras de transição e defende a aplicação da mais vantajosa como regra de ouro do planejamento previdenciário.
-
-Fábio Zambitte Ibrahim, em Curso, critica a complexidade da transição e sustenta o dever de informação do INSS sobre todas as opções disponíveis.
-
-Wladimir Novaes Martinez analisa o pedágio de 100% e defende que a exigência de tempo dobrado é compensada pela RMI integral.
-
-O IBDP sustenta institucionalmente o direito do segurado à análise comparativa obrigatória antes de qualquer concessão ou indeferimento.
-
-## O que NÃO está nesta skill
-
-Não está aqui o direito adquirido pré-reforma, objeto de `base-aposentadoria-direito-adquirido`. Não está aqui a regra permanente pós-reforma, objeto de `base-aposentadoria-regra-permanente-ec103`. Não está aqui o cálculo da RMI, objeto de `base-calculo-rmi-ec103`. Não está aqui a aposentadoria especial de transição, objeto de `base-aposentadoria-especial-transicao-ec103`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria pelas regras de transição" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+- Peça: `peticao-previdenciaria`, bloco "Aposentadoria pelas regras de transição" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`.
+- Especial de transição (art. 21): `base-aposentadoria-especial-transicao-ec103`.
+- Fungibilidade: `base-fungibilidade-previdenciaria`. Portarias: `base-portarias-dpmf-inss-hub`. Período rural: `base-segurado-especial-autodeclaracao-arts-92-93-94`.
+- Jurisprudência: `precedentes-previdenciarios`.

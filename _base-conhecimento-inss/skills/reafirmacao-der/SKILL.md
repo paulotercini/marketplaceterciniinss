@@ -1,6 +1,6 @@
 ---
 name: reafirmacao-der
-description: Skill de reafirmação da DER (Data de Entrada do Requerimento) para concessão ou revisão de benefício mais vantajoso. Use SEMPRE que mencionar reafirmação da DER, DER reafirmada, Tema 995 STJ, Tema 334 STF, melhor benefício, benefício mais vantajoso, art. 577 IN 128, art. 176-D Decreto 3.048, art. 690 IN 77/2015, quatro hipóteses de reafirmação administrativa, art. 33 Portaria 993/2022, art. 34 Portaria 993/2022, reafirmação na análise inicial até a DDB, reafirmação em revisão administrativa, arts. 21 e 22 Portaria 996/2022, reafirmação de ofício pelo INSS, fato superveniente art. 493 CPC, reafirmação administrativa, reafirmação judicial, DIB reafirmada, efeitos financeiros reafirmação, juros mora reafirmação, honorários reafirmação, desaposentação vs reafirmação, PUIL 5001623-70.2022.4.02.5005/ES, Enunciado 1 CRPS, Questão de Ordem 20 TNU, concordância formal reafirmação, prequestionamento reafirmação, ou planejamento previdenciário envolvendo mudança de DER. Acionar AUTOMATICAMENTE com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, planejamento-previdenciario quando o caso envolver reafirmação. NÃO use para desaposentação (Tema 503/STF).
+description: Skill de reafirmação da DER (Data de Entrada do Requerimento) para concessão ou revisão de benefício mais vantajoso. Use SEMPRE que mencionar reafirmação da DER, DER reafirmada, Tema 995 STJ, Tema 334 STF, melhor benefício, benefício mais vantajoso, art. 577 IN 128, art. 176-D Decreto 3.048, art. 690 IN 77/2015, quatro hipóteses de reafirmação administrativa, art. 33 Portaria 993/2022, art. 34 Portaria 993/2022, reafirmação na análise inicial até a DDB, reafirmação em revisão administrativa, arts. 21 e 22 Portaria 996/2022, reafirmação de ofício pelo INSS, fato superveniente art. 493 CPC, reafirmação administrativa, reafirmação judicial, DIB reafirmada, efeitos financeiros reafirmação, juros mora reafirmação, honorários reafirmação, desaposentação vs reafirmação, PUIL 5001623-70.2022.4.02.5005/ES, Enunciado 1 CRPS, Questão de Ordem 20 TNU, concordância formal reafirmação, prequestionamento reafirmação, ou planejamento previdenciário envolvendo mudança de DER. Acionar AUTOMATICAMENTE com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-planejamento-previdenciario quando o caso envolver reafirmação. NÃO use para desaposentação (Tema 503/STF).
 ---
 
 # Reafirmação da DER. Skill Hub
@@ -14,7 +14,7 @@ NÃO é desaposentação. A distinção é fundamental e deve ser feita expressa
 ## 2. Marco Normativo
 
 ### Constituição e lei
-- Art. 201, §1º, CF, direito adquirido à aposentadoria.
+- Art. 5º, XXXVI, CF (direito adquirido) e Tema 334 STF (melhor benefício).
 - Arts. 493 e 933, CPC/2015, fato superveniente constitutivo, modificativo ou extintivo, inclusive em grau recursal.
 
 ### Regulamento
@@ -22,66 +22,54 @@ NÃO é desaposentação. A distinção é fundamental e deve ser feita expressa
 - **Art. 176-E, Decreto 3.048/99**, dever do INSS de conceder benefício mais vantajoso ou diverso do requerido.
 
 ### Instrução Normativa 128/2022
+- O art. 690 da IN 77/2015, citado em peças antigas, está revogado; a base vigente é a IN 128/2022.
 - **Art. 577, I**, dever do INSS de oferecer opção ao benefício mais vantajoso, com demonstrativos financeiros.
 - **Art. 577, II**, reafirmação quando requisitos implementados após DER e antes da decisão, mediante concordância formal.
 - **Art. 222, §3º**, opção pelo cálculo mais vantajoso, observada reafirmação da DER.
 - **Art. 589, §1º**, revisão e alteração para espécie mais vantajosa quando não oferecida na concessão.
 
 ### CRPS. Enunciado 1 (DOU 12/11/2019)
+
 - Inciso III, reafirmação da DER até o cumprimento da decisão do CRPS.
 - Inciso IV, opção mediante expressa concordância, aplicável a todas as situações que resultem em benefício mais vantajoso.
 
-[NÃO CONFIRMADO, Onda 122] A referência anterior a este enunciado como "antigo Enunciado 5" foi removida do título por falta de confirmação em fonte oficial. O catálogo conferido registra o Enunciado 1 no DOU de 12/11/2019 e o Enunciado 5 como matéria diversa, contribuinte individual em atraso, com alteração no DOU de 06/12/2021. Antes de afirmar renumeração, conferir no PDF consolidado do CRPS.
 
 Texto literal dos quatro incisos em `base-precedentes-catalogo-vinculantes/references/CATALOGO-ENUNCIADOS-CRPS.md`, que é a fonte a transcrever em peça.
 
-## 2-A. As QUATRO HIPÓTESES DE REAFIRMAÇÃO NA VIA ADMINISTRATIVA (Onda 102)
+## 2-A. As quatro hipóteses de reafirmação na via administrativa
 
-Divisão didática das hipóteses previstas nas normas infralegais do INSS, incorporada de material do Prof. Alexandre Triches apresentado no evento Estrategista Previdenciário (julho de 2026). Conhecer o limite temporal e o requisito de cada hipótese é o que separa a reafirmação bem pedida da perdida por prazo.
+Portaria DIRBEN/INSS 993/2022 (Livro IV, processo administrativo) e Portaria DIRBEN/INSS 996/2022 (Livro VII, recursos), conferidas no corpus de normas.
 
-Taxonomia conferida. Portaria DIRBEN/INSS 993/2022 é o Livro IV, processo administrativo previdenciário. Portaria DIRBEN/INSS 996/2022 é o Livro VII, recursos. Coerente com a taxonomia corrigida da `base-portarias-dpmf-inss-hub`.
+### Hipótese 1. Análise inicial (Portaria 993, art. 33)
 
-### Hipótese 1. Análise inicial do requerimento (art. 33 da Portaria 993/2022)
+Caput: havendo direito a mais de uma aposentadoria na DER, "deverá ser oferecida ao segurado a opção pelo benefício que seja mais vantajoso". §1º: o mesmo vale para direito implementado após a DER até a data do despacho do benefício (DDB). §2º: se o segurado não cumpria os requisitos na DER e os cumpriu até a DDB, "deverá o servidor informar ao interessado sobre a possibilidade de reafirmação da DER para esta data", com "expressa concordância por escrito ou por meio digital".
 
-[CONFERIDO em texto literal, 30/07/2026]
+Uso pró-segurado: o §2º cria dever de informar. Indeferimento sem essa informação, havendo implemento até a DDB, é vício de instrução arguível no recurso ao CRPS e em mandado de segurança. Limite: a DDB.
 
-Caput. "Em se tratando de análise inicial de requerimento de benefício de aposentadoria, na hipótese de reconhecimento do direito a mais de uma aposentadoria na DER, deverá ser oferecida ao segurado a opção pelo benefício que seja mais vantajoso."
+### Hipótese 2. Revisão administrativa (Portaria 993, art. 34)
 
-§ 1º. Estende o caput às situações em que o direito a mais de uma aposentadoria for implementado APÓS a DER até a data do despacho do benefício (DDB), "devendo ser oferecido ao segurado a possibilidade de reafirmação da DER para esta data, observado que ela deve ser anterior a DDB".
+Caput: se o direito a uma ou mais aposentadorias existia até a DDB e a opção pelo melhor benefício não foi oferecida, "deverá ser garantido esta opção no requerimento de revisão". §1º: fora dessa hipótese, "não cabe reafirmação da DER nos pedidos de revisão". §2º: a alteração da DER limita-se à DDB.
 
-§ 2º. Quando na DER o segurado NÃO satisfazia os requisitos mas os implementou depois, até a DDB, "deverá o servidor informar ao interessado sobre a possibilidade de reafirmação da DER para esta data", exigindo-se "a expressa concordância por escrito ou por meio digital com validação de acesso por senha, como no Portal Meu INSS".
+A peça deve demonstrar o enquadramento no caput desde o início. A condição de não ter recebido o primeiro pagamento nem sacado FGTS ou PIS não está na Portaria 993; ela é requisito da desistência do pedido de aposentadoria (Decreto 3.048/99, art. 181-B, §2º).
 
-Uso pró-segurado. O § 2º cria DEVER DE INFORMAR do servidor. Requerimento indeferido sem que a possibilidade de reafirmação tenha sido informada, havendo implemento até a DDB, é indeferimento com vício de instrução, arguível em recurso ao CRPS e no eventual MS. O limite temporal desta hipótese é a DDB.
+### Hipótese 3. Via recursal (Portaria 996, art. 22; Enunciado 1 do CRPS)
 
-### Hipótese 2. Revisão administrativa (art. 34 da Portaria 993/2022)
+Art. 22: "Salvo disposto em contrário no acórdão, e se houver autorização do interessado no requerimento, será verificada a implementação dos requisitos para mais de uma aposentadoria na data do cumprimento do acórdão, caso em que caberá a reafirmação da DER para a data da implementação do benefício mais vantajoso." §1º: a reafirmação "somente poderá ser realizada até a data do cumprimento do acórdão". O Enunciado 1, III, do CRPS admite a reafirmação até o cumprimento da decisão.
 
-[CONFERIDO em texto literal, 30/07/2026]
+### Hipótese 4. De ofício, por novos elementos (Portaria 996, art. 21)
 
-Caput. "Na hipótese de o segurado ter implementado todas as condições para uma ou mais de uma espécie de aposentadoria na DER ou até a data do despacho do benefício, na forma do disposto no art. 33, e em não lhe tendo sido oferecido o direito de opção pelo melhor benefício, deverá ser garantido esta opção no requerimento de revisão."
+Caput: com novos elementos no recurso, "os efeitos financeiros deverão observar a data da sua apresentação". §3º: se os novos elementos fundamentarem o acórdão e o órgão julgador não determinar a manutenção da DER original, "o INSS deve fazer a reafirmação da DER de ofício" (Decreto 3.048/99, art. 176, §§6º e 7º, e art. 347, §4º). §4º: no recurso contra indeferimento, a DER pode ser fixada na data do novo elemento, em qualquer fase antes da decisão definitiva.
 
-§ 1º. "Com exceção da hipótese prevista no caput, NÃO CABE reafirmação da DER nos pedidos de revisão ou em decorrência de procedimento de apuração de indício de irregularidade, considerando tratar-se de procedimento exclusivo da concessão."
+A hipótese dispensa provocação, mas os efeitos financeiros partem da apresentação do novo elemento.
 
-§ 2º. "A alteração da DER prevista no caput está limitada à data do despacho do benefício na concessão."
+### Limites temporais
 
-Leitura de rigor. A hipótese 2 é EXCEÇÃO estreita. Só cabe reafirmação em revisão quando o direito à opção pelo melhor benefício existia e não foi oferecido. Fora disso, o § 1º veda expressamente, e essa vedação é o argumento que o INSS usará, de modo que a peça deve demonstrar o enquadramento no caput desde o início.
-
-[NÃO LOCALIZADO na Portaria 993/2022] A condição de o interessado não ter recebido a prestação previdenciária nem sacado PIS ou FGTS, mencionada no material de origem, NÃO consta do art. 34 nem de qualquer passagem da Portaria 993/2022 na varredura de 30/07/2026. A condição pode estar em outro diploma (a hipótese mais provável é a disciplina da desistência ou da renúncia ao benefício já concedido). Antes de afirmá-la em peça ou parecer, localizar o dispositivo exato. Enquanto isso, tratar como requisito NÃO CONFIRMADO.
-
-### Hipótese 3. Via recursal (Enunciado 1 do CRPS e art. 22 da Portaria 996/2022)
-
-[PARCIALMENTE CONFERIDO] O Enunciado 1 do CRPS já consta desta skill (seção 3) e do catálogo. A reafirmação na via recursal até o cumprimento da decisão do CRPS ou do acórdão é o que o material afirma, com apoio no art. 22 da Portaria 996/2022, cujo texto literal NÃO foi conferido nesta rodada. Conferir o art. 22 na Portaria 996/2022 antes de citá-lo com número. A tese em si, reafirmação possível na via recursal, é sustentada pelo Enunciado 1 do CRPS e pelo Tema 995/STJ, ambos já verificados na base.
-
-### Hipótese 4. De ofício pelo INSS (art. 21 da Portaria 996/2022)
-
-[NÃO CONFIRMADO] O material afirma que a reafirmação de ofício é OBRIGATÓRIA quando há apresentação de novos elementos enfrentados no acórdão, sem limitação dos efeitos financeiros, no curso do processo. Se confirmado, é a hipótese mais favorável ao segurado das quatro, porque dispensa provocação e não limita efeitos. Justamente por isso, exige conferência do texto literal do art. 21 da Portaria 996/2022 antes de qualquer uso em peça. Pendência de manutenção prioritária.
-
-### Quadro de limites temporais
-
-Hipótese 1, limite na DDB. Hipótese 2, limite na data do despacho do benefício na concessão (§ 2º do art. 34), com a vedação do § 1º fora do caput. Hipótese 3, limite no cumprimento da decisão do CRPS ou do acórdão (a conferir no art. 22). Hipótese 4, no curso do processo, sem limitação de efeitos financeiros (a conferir no art. 21).
-
-### Nota de manutenção
-
-Conferência de 30/07/2026 pela `pesquisa-jurisprudencia-chrome` e por fonte secundária de legislação. Arts. 33 e 34 da Portaria 993/2022 conferidos em TEXTO LITERAL. Arts. 21 e 22 da Portaria 996/2022 e a ressalva de PIS/FGTS seguem PENDENTES, e a skill não os afirma como certos. Fechar a conferência no primeiro uso, pelo Comet, e promover os itens.
+| Hipótese | Limite |
+|---|---|
+| 1. Análise inicial | DDB |
+| 2. Revisão | DDB da concessão; vedada fora do caput do art. 34 |
+| 3. Recurso | Cumprimento do acórdão |
+| 4. De ofício | Decisão definitiva; efeitos desde o novo elemento |
 
 ## 3. Precedentes Vinculantes
 
@@ -98,7 +86,7 @@ Conferência de 30/07/2026 pela `pesquisa-jurisprudencia-chrome` e por fonte sec
 Fundamento constitucional do direito ao melhor benefício. A TNU utiliza o Tema 334 como pilar para a reafirmação da DER na esfera administrativa.
 
 ### TNU. Tese consolidada (PUIL 5001623-70.2022.4.02.5005/ES)
-**Rel. João Carlos Cabrelon de Oliveira, julgado em 04/12/2024** (auditoria 03/10/2026)
+**Rel. João Carlos Cabrelon de Oliveira, julgado em 04/12/2024**
 "Não há óbice à reafirmação da data de entrada do requerimento administrativo para o momento em que o segurado implementou os requisitos para um melhor benefício, enquanto aguarda a análise do seu pleito na via administrativa."
 
 Confirmado por pelo menos 7 julgados da TNU em 2025 (ver references/precedentes-reafirmacao.md).
@@ -132,7 +120,7 @@ Confirmado por pelo menos 7 julgados da TNU em 2025 (ver references/precedentes-
 - **Base normativa.** Tema 334/STF + art. 577, I, IN 128 + Enunciado 1, IV, CRPS.
 - **DIB**, data de implementação dos requisitos para o benefício mais vantajoso.
 - **Honorários**, quando há reforma de improcedência, base até o acórdão.
-- **Status.** CONSOLIDADO para o cenário administrativo (PUIL 5001623-70.2022.4.02.5005/ES, julgado em 04/12/2024) (auditoria 03/10/2026). Em evolução nos demais cenários.
+- **Status.** CONSOLIDADO para o cenário administrativo (PUIL 5001623-70.2022.4.02.5005/ES, julgado em 04/12/2024) . Em evolução nos demais cenários.
 
 ## 5. Distinção com Desaposentação. Fundamentação Obrigatória
 
@@ -148,7 +136,7 @@ A TNU enfrentou expressamente essa distinção no PUIL 5001623-70, afastando a e
 
 **Aposentadoria por tempo de contribuição (regras de transição EC 103/2019)**, caso mais comum. Segurado não atingiu pontuação/tempo na DER mas completou durante o trâmite. Reafirmação para escapar do fator previdenciário ou atingir regra mais vantajosa.
 
-**Aposentadoria especial**, segurado completa 25 anos de exposição durante o trâmite. TRF3 admitiu via MS (ApelRemNec 5007016-49.2019.4.03.6105). TRF4 admitiu com base no IAC nº 5 para motoristas.
+**Aposentadoria especial**, segurado completa 25 anos de exposição durante o trâmite. TRF3 admitiu via MS (ApelRemNec 5007016-49.2019.4.03.6105).
 
 **Aposentadoria rural por idade**, completamento da idade mínima (55F/60M) durante o trâmite.
 
@@ -195,7 +183,7 @@ Esta skill DEVE ser acionada automaticamente quando:
 - `peticao-previdenciaria` redigir petição de aposentadoria e houver indicação de que os requisitos foram completados após a DER.
 - `revisao-peticao` auditar petição que envolva reafirmação da DER.
 - `precedentes-previdenciarios` for consultada sobre Tema 995, Tema 334 ou melhor benefício.
-- `planejamento-previdenciario` for acionada e houver cenário de reafirmação.
+- `base-planejamento-previdenciario` for acionada e houver cenário de reafirmação.
 - `triagem-caso-novo` identificar caso com requisitos completados após a DER.
 
 Esta skill DEVE acionar automaticamente:
@@ -208,6 +196,6 @@ Esta skill DEVE acionar automaticamente:
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo aplicou a reafirmação da DER uma vez no corpus, em sentença de juíza substituta, e o modelo do titular a mencionou apenas para negá-la. A peça formula o pedido expresso e subsidiário, com a planilha de cada cenário. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 8.

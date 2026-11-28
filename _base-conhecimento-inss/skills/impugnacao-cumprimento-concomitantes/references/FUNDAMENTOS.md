@@ -32,7 +32,7 @@ Art. 29 da EC 103/2019. Regras transitórias de complementação, utilização d
 
 Aplicação temporal. A regra vale somente para competências a partir de 13/11/2019. Art. 19-E do Decreto 3.048/99 (Decreto 10.410/2020) é expresso nesse sentido.
 
-Direito adquirido. Art. 3º da EC 103/2019 garante que benefícios cujos requisitos foram cumpridos antes da Emenda são calculados pela legislação vigente à época. STF, Súmula 359 e ADI 3.104/DF.
+Direito adquirido. Art. 3º da EC 103/2019 garante que benefícios cujos requisitos foram cumpridos antes da Emenda são calculados pela legislação vigente à época. STF, Súmula 359.
 
 ## 4. Tema 349/TNU. Contribuição Abaixo do Mínimo
 
@@ -44,7 +44,7 @@ Tese fixada. "O recolhimento de contribuição previdenciária em valor inferior
 
 Ratio decidendi. O art. 195, §14, CF prevê como única penalidade o não cômputo como tempo de contribuição, sendo inconstitucional a extensão da restrição para outros fins por mero decreto (Decreto 10.410/2020 extrapolou poder regulamentar).
 
-**ATENÇÃO** O INSS interpôs Recurso Extraordinário admitido pelo STF (março/2025). A questão aguarda pronunciamento definitivo. Sempre informar esse fato ao usar o Tema 349 como fundamento.
+**Atenção.** Contra o acórdão do Tema 349 TNU, o STF reconheceu repercussão geral no RE 1.544.748 (Tema 1467 STF, sessão virtual encerrada em 19/06/2026) e determinou a suspensão nacional dos processos sobre a mesma controvérsia. Nos benefícios com DIB anterior a 13/11/2019, o fundamento principal não depende do Tema 349: o art. 195, §14, da CF e o art. 19-E do Decreto 3.048/99 alcançam apenas competências a partir de 13/11/2019. Verificar se a suspensão alcança o caso antes de citar o tema.
 
 ## 5. Contribuinte Individual Prestador de Serviço e Cooperado
 
@@ -64,7 +64,7 @@ PSC-MEN-SM-EC103. Substitui o PREC-MENOR-MIN para competências a partir de 11/2
 
 ## 7. Tempus Regit Actum
 
-Princípio consolidado no STF (Súmula 359, ADI 3.104/DF, RE 567.360/MG-ED) e no STJ (EDcl no REsp 1.240.190/PR).
+Princípio consolidado no STF (Súmula 359). Os precedentes RE 567.360/MG-ED e EDcl no REsp 1.240.190/PR, citados em versões anteriores, seguem [NÃO CONFIRMADO].
 
 Aplicação prática. Para benefícios com DIB anterior a 13/11/2019, aplicam-se as regras vigentes à época da concessão. Não havia vedação ao cômputo de contribuições abaixo do salário mínimo para fins de cálculo da RMI.
 
@@ -107,7 +107,7 @@ Tese fixada (Tema 14 do TRF4)
 
 Relação com o Tema 1.207/STJ. O IRDR 14 é a origem regional da tese que o STJ posteriormente consolidou em âmbito nacional. As teses são substancialmente idênticas. O IRDR 14 permanece aplicável diretamente no TRF4 e pode ser invocado como precedente persuasivo em outros TRFs.
 
-## 12. Tema 195/TNU, Compensação pelo Total com Vedação Apenas do Saldo Final Negativo (auditoria 03/10/2026)
+## 12. Tema 195/TNU, Compensação pelo Total com Vedação Apenas do Saldo Final Negativo
 
 PEDILEF 5068010-43.2016.4.04.7100
 TNU, Rel. Juíza Federal Isadora Segalla Afanasieff

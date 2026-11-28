@@ -1,133 +1,31 @@
-# Direito Adquirido Professor EC 20. Fundamentos e Cenários
+# Direito Adquirido do Professor EC 20. Cenários e Metodologia
 
-## 1. Conceito operacional
+Fundamentos no SKILL.md.
 
-Direito adquirido do professor com bônus de 17 por cento homem e 20 por cento mulher sobre o tempo de magistério exercido até 16/12/1998. Art. 9º §2º EC 20/98.
+## 1. Cenários favoráveis
 
-## 2. Fundamento constitucional
+- **A. Professora com 15 anos até 16/12/1998.** Acréscimo de 20% = 3 anos; 18 anos contados até 16/12/1998, somados ao tempo posterior para alcançar 30 anos.
+- **B. Professor com 10 anos até 16/12/1998.** Acréscimo de 17% = 1,7 ano; 11,7 anos contados até 16/12/1998, somados ao tempo posterior para alcançar 35 anos.
+- **C. Professor universitário.** Não tem a aposentadoria do art. 56 após a EC 20, mas recebe o acréscimo sobre o magistério até 16/12/1998 (IN 128, art. 251, §1º).
+- **D. Requisitos do art. 56 completos até 13/11/2019.** Professora com 25 anos ou professor com 30 anos de magistério na educação básica: aposentadoria sem idade mínima (IN 128, art. 251, caput), com fator, afastável pelo art. 29-C, §3º.
+- **E. Coordenadora pedagógica ou diretora escolar antes de 1998.** Conta como magistério se exercida em estabelecimento de educação básica por professor (ADI 3772).
+- **F. Educação infantil antes de 1998.** Conta com prova da função docente (`base-professor-educacao-infantil-lei15326`).
 
-CF/88, art. 5º XXXVI. Direito adquirido.
+## 2. Cenários sem aplicação
 
-CF/88, art. 201 §8º. Professor.
+- **G. Ingresso no magistério após 16/12/1998.** Sem acréscimo.
+- **H. Requisitos completados após 13/11/2019.** Acréscimo indisponível; usar as transições do professor.
 
-EC 20/98, art. 9º §2º. Bônus.
+## 3. Metodologia
 
-EC 103/2019, art. 3º. Preservação.
+1. Mapa cronológico dos vínculos, separando magistério da educação básica, magistério superior e atividade diversa.
+2. Tempo de magistério até 16/12/1998 e cálculo do acréscimo.
+3. Soma com o tempo posterior até 13/11/2019.
+4. Comparação com o art. 56 (se cumprido), com as transições do professor e com as transições gerais.
+5. Simulação do fator e da pontuação do art. 29-C.
+6. Escolha da regra de maior RMI.
 
-## 3. Fundamento legal
+## 4. Riscos
 
-Lei 8.213/91, arts. 56 e 57.
-
-Lei 11.301/2006.
-
-IN 128/2022.
-
-## 4. Marco jurisprudencial central
-
-### Súmula 359 STF
-
-Direito adquirido preserva lei vigente no preenchimento.
-
-### Súmula 726/STF (restritiva) e sua mitigação
-
-Texto real. "Para efeito de aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula." Aplicação mitigada pela Lei 11.301/2006 e pela ADI 3772, que asseguram o cômputo de direção, coordenação e assessoramento pedagógico exercidos por professor de carreira (auditoria 25/07/2026).
-
-### ADI 3772 STF
-
-Funções de magistério.
-
-### Tema 1011 STJ
-
-Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
-
-## 5. Requisitos do bônus
-
-Primeiro, ser professor em 16/12/1998.
-
-Segundo, ter exercido magistério exclusivamente até essa data.
-
-Terceiro, aplicar 17 por cento ou 20 por cento ao tempo anterior.
-
-Quarto, usar o bônus só na aposentadoria integral, com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (EC 20, art. 9º, §2º; IN 128, art. 251, §1º) (auditoria 03/10/2026).
-
-## 6. Cenários pró-segurado
-
-### Cenário A. Professora com muito tempo antigo
-
-15 anos até 16/12/1998. Bônus de 3 anos (20%). Total 18 + pós (auditoria 03/10/2026).
-
-### Cenário B. Professor com tempo antigo
-
-10 anos até 16/12/1998. Bônus 2 anos. Total 12 + pós.
-
-### Cenário C. Requisitos antes da EC 103
-
-Direito adquirido pleno.
-
-### Cenário D. Coordenadora pedagógica pré-98
-
-Conta se exercia função de magistério.
-
-### Cenário E. Diretora escolar pré-98
-
-Conta.
-
-### Cenário F. Educação infantil pré-98
-
-Conta com prova.
-
-## 7. Cenários limitados
-
-### Cenário G. Ingresso posterior
-
-Não se aplica.
-
-### Cenário H. Professor universitário
-
-Aplica-se. O universitário também tem o acréscimo, desde que se aposente com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (IN 128, art. 251, §1º) (auditoria 03/10/2026).
-
-### Cenário I. Tempo não exclusivo em magistério
-
-Bônus aplica-se ao magistério efetivo.
-
-## 8. Metodologia
-
-Primeiro, mapa cronológico.
-
-Segundo, identificação do tempo até 16/12/1998.
-
-Terceiro, cálculo do bônus.
-
-Quarto, soma ao tempo posterior.
-
-Quinto, comparação com regras de transição.
-
-Sexto, escolha da mais vantajosa.
-
-## 9. Riscos processuais
-
-Risco de contagem indevida de pós-98.
-
-Risco de exclusão de função não regência.
-
-Risco de negativa de universitário.
-
-Risco de o INSS aplicar a Súmula 726 STF, tese adversa superada pela ADI 3772 para direção, coordenação e assessoramento pedagógico na educação básica (auditoria 03/10/2026).
-
-## 10. Estratégia pró-segurado
-
-Primeiro, prova do magistério pré-98.
-
-Segundo, cálculo do bônus.
-
-Terceiro, fundamentação com art. 5º XXXVI e Súmula 359.
-
-Quarto, afastar o fator só quando os requisitos se completaram antes da Lei 9.876/99 (Tema 1011/STJ; Tema 149/TNU); a Súmula 726 não trata do fator (auditoria 03/10/2026).
-
-Quinto, comparação com EC 103.
-
-Sexto, opção pela mais vantajosa.
-
-## 11. Integração prática
-
-`aposentadoria-professor-rgps`, `base-professor-regra-transicao-pontos-ec103`, `base-professor-regra-transicao-pedagio-ec103`, `base-professor-regra-transicao-idade-progressiva-ec103`, `peticao-previdenciaria`, `precedentes-previdenciarios`.
+- INSS conta o acréscimo sobre tempo posterior a 16/12/1998 ou o nega por ausência de exclusividade: conferir a contagem e invocar a IN 128, art. 251, §1º.
+- INSS exclui direção ou coordenação com base na Súmula 726 STF: ADI 3772.

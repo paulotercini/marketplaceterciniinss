@@ -7,119 +7,39 @@ description: "Revisão pelo art. 29, II, da Lei 8.213/91 e direito adquirido ao 
 
 ## Escopo
 
-Skill temática pró-segurado. Consolida duas frentes correlatas. Primeira, a revisão do cálculo do Salário de Benefício pelo art. 29, II, da Lei 8.213/91, aplicável a aposentadoria por invalidez, auxílio-doença e benefícios não programados. Segunda, a tese do direito adquirido ao melhor benefício, com base no Tema 334 STF (RE 630.501).
+Duas frentes: (1) o cálculo do salário de benefício dos benefícios do art. 29, II, da Lei 8.213/91, com descarte dos 20% menores salários; (2) o direito ao melhor benefício (Tema 334 STF).
 
-## Marco normativo central
+## 1. Revisão do art. 29, II
 
-CF/88, art. 5º, XXXVI. Direito adquirido.
+- **Texto (redação da Lei 9.876/99):** para os benefícios das alíneas a, d, e e h do art. 18, I (aposentadoria por invalidez, aposentadoria especial, auxílio-doença e auxílio-acidente), o salário de benefício é a "média aritmética simples dos maiores salários-de-contribuição correspondentes a oitenta por cento de todo o período contributivo".
+- **Vício:** o Decreto 3.048/99, na redação anterior ao Decreto 6.939/2009, mandava usar todos os salários quando o segurado tinha menos de 144 contribuições, sem descartar os 20% menores. A pensão derivada sofre o reflexo.
+- **Alcance temporal:** DIB entre 29/11/1999 e 13/11/2019. Após a EC 103, a média usa 100% dos salários desde 07/1994 (art. 26), e a revisão perde objeto.
+- **Via administrativa e coletiva:** o INSS reconheceu o direito no Memorando-Circular Conjunto 21/DIRBEN/PFEINSS, de 15/04/2010, e a ACP 0002320-59.2012.4.03.6183 fixou cronograma de pagamento. A ação individual independe da ACP (Tema 273 TNU).
+- **Decadência:** Tema 134 TNU fixa o início do prazo em 15/04/2010 (Memorando-Circular 21). Benefícios concedidos até 2009 tendem a estar decaídos desde 15/04/2020. Para a aposentadoria por invalidez decorrente de auxílio-doença, o marco é a concessão do benefício originário (Tema 120 TNU). O Tema 1220 STJ, sobre o memorando como marco da prescrição, foi cancelado e não se cita.
 
-CF/88, art. 201, §1º. Regime contributivo.
+## 2. Aposentadoria por invalidez precedida de auxílio-doença
 
-Lei 8.213/91, art. 29, I. Cálculo do Salário de Benefício para benefícios programados.
+- Conversão sem retorno ao trabalho: RMI pelo art. 36, §7º, do Decreto 3.048/99, isto é, 100% do salário de benefício do auxílio-doença reajustado (Tema 704 STJ; Súmula 557 STJ).
+- Auxílio-doença intercalado com atividade: o benefício entra como salário de contribuição (Lei 8.213/91, art. 29, §5º; Tema 88 STF).
 
-Lei 8.213/91, art. 29, II. Cálculo específico para aposentadoria por invalidez, auxílio-doença, auxílio-acidente e pensão por morte decorrentes, com média aritmética simples dos maiores salários de contribuição, correspondentes a 80% do período contributivo.
+## 3. Melhor benefício
 
-Lei 8.213/91, art. 29, §5º. Salário de benefício como base para benefícios acidentários e auxílio-doença intercalado.
+- Tema 334 STF: "Para o cálculo da renda mensal inicial, cumpre observar o quadro mais favorável ao beneficiário, pouco importando o decesso remuneratório ocorrido em data posterior ao implemento das condições legais para a aposentadoria, respeitadas a decadência do direito à revisão e a prescrição quanto às prestações vencidas."
+- Aplicação: simular a RMI em cada data em que os requisitos estavam cumpridos antes da DIB, inclusive pelas regras anteriores à Lei 9.876/99 e à EC 103, e fixar a DIB fictícia na data mais vantajosa, com efeitos financeiros a partir da DER.
+- Decadência: incide (Tema 966 STJ) e alcança matéria não apreciada no ato (Tema 975 STJ). Prescrição quinquenal das parcelas (Súmula 85 STJ).
 
-Lei 8.213/91, art. 103. Decadência decenal.
+## Método
 
-EC 103/2019, art. 26. Nova regra de cálculo para concessões pós 13/11/2019, com média de todos os salários sem desprezo dos menores.
-
-## Marco jurisprudencial
-
-### Tema 334 STF, RE 630.501
-
-Tese. O segurado tem direito adquirido ao melhor benefício, sendo possível a fixação da DIB na data em que a renda foi a mais vantajosa ao longo de sua história contributiva, mesmo que tenha formalizado o requerimento em data posterior, desde que implementados os requisitos.
-
-Fonte oficial em https://portal.stf.jus.br
-
-Aplicação nuclear da revisão por melhor benefício.
-
-### Súmula 85 STJ
-
-Tese. Prescrição quinquenal das parcelas vencidas.
-
-Fonte oficial em https://www.stj.jus.br
-
-## Espaço pró-segurado
-
-Primeiro, benefícios concedidos entre a publicação da Lei 9.876/1999 e 13/11/2019, cujo segurado já havia implementado os requisitos antes da mudança legal, com cálculo mais vantajoso pela regra anterior.
-
-Segundo, aposentadoria por invalidez ou auxílio-doença calculada incorretamente pela regra do art. 29, II, sem consideração dos maiores salários do período contributivo.
-
-Terceiro, benefícios não programados com PBC truncado ou com média incorreta.
-
-Quarto, congelamento da DIB em data pretérita com RMI superior, mesmo após novo requerimento em data em que a renda seria inferior.
-
-Quinto, recálculo por conversão de benefício em outro (aposentadoria por invalidez decorrente de auxílio-doença) preservando a base mais vantajosa.
-
-## Decadência e prescrição
-
-Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento.
-
-Súmula 85 STJ. Prescrição quinquenal das parcelas.
-
-## Regra pró-segurado
-
-Primeiro, obter Carta de Concessão e memória de cálculo.
-
-Segundo, levantar CNIS completo.
-
-Terceiro, identificar todos os momentos em que o segurado implementou os requisitos, verificando a RMI hipotética em cada data.
-
-Quarto, comparar com a RMI efetivamente concedida.
-
-Quinto, em caso de distorção, calcular diferença.
-
-Sexto, requerimento administrativo antes do ajuizamento (Tema 1124 STJ).
-
-Sétimo, ação judicial com pedido de revisão.
+1. Carta de concessão, memória de cálculo e CNIS.
+2. Contagem das contribuições do PBC e conferência do descarte de 20%.
+3. Simulação da RMI em cada data de implemento anterior à DIB.
+4. Controle de decadência e prescrição.
+5. Requerimento administrativo com cálculo anexo e, negado, ação.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça, acionar `peticao-previdenciaria`.
-Ao simular cálculo, acionar `base-calculo-rmi-ec103`.
-Ao verificar direito adquirido, acionar `base-aposentadoria-direito-adquirido`.
-Ao verificar decadência, acionar `decadencia-revisao-previdenciaria`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
-Em revisão geral, acionar `revisao-peticao`.
-
-## Alertas
-
-Primeiro, decadência decenal é crítica. Alerta imediato.
-
-Segundo, simulação profissional de cálculo é obrigatória.
-
-Terceiro, comparação entre regras deve ser documentada.
-
-Quarto, congelamento da DIB por melhor benefício exige implementação completa dos requisitos na data pretérita.
-
-Quinto, nos benefícios concedidos pós EC 103/2019, o melhor benefício tende a seguir a regra única e a discussão sobre art. 29 II perde espaço relativo, mas permanece em situações específicas.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Doutrina de apoio
-
-Wladimir Novaes Martinez, teoria do melhor benefício.
-
-Frederico Amado, Tema 334 STF.
-
-Hugo Goes, cálculo do Salário de Benefício.
-
-Fábio Zambitte Ibrahim, princípio do melhor benefício.
-
-Daniel Pulino, direito adquirido em matéria previdenciária.
-
-Marco Aurélio Serau Junior, regras de transição.
-
-IBDP, defesa do melhor benefício.
-
-## O que NÃO está nesta skill
-
-RVT está em `base-revisao-vida-toda-rvt`. Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Reajustes ORTN/OTN estão em `base-revisao-reajuste-ortn-otn`.
+`base-calculo-rmi-ec103`, `base-aposentadoria-direito-adquirido`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`, `precedentes-previdenciarios`, `revisao-peticao`, `base-portarias-dpmf-inss-hub`. Outras revisões: `base-revisao-vida-toda-rvt`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-irsm-fevereiro-1994`, `base-revisao-reajuste-ortn-otn`.

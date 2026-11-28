@@ -1,157 +1,20 @@
-# Revisão do Teto. Jurisprudência Verificada e Refutação
+# Revisão do Teto. Jurisprudência e Refutação
 
-## 1. Precedentes vinculantes
+## 1. Precedentes
 
-### Tema 76 STF, RE 564.354
+- Tema 76 STF (RE 564.354): tese literal no SKILL.md.
+- Tema 930 STF (RE 937.595): buraco negro, caso a caso. Trânsito em 10/06/2017.
+- Tema 1005 STJ (adverso): prescrição interrompida pelo ajuizamento individual.
+- Tema 313 STF: decadência das revisões da RMI, contada de 01/08/1997 para benefícios anteriores à MP 1.523/97.
+- Súmula 85 STJ: prescrição das parcelas.
 
-Tese. Cabível a readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, para os segurados cuja RMI teria sido maior se o novo teto já estivesse em vigor.
+Não se citam: Tema 975 STJ (decadência na revisão do ato, alheia à readequação); REsp 1.554.596 (leading case do Tema 999 STJ); RE 1.054.232 (não localizado); Súmula 260 do ex-TFR (reajuste pré-CF/88, sem relação com o teto).
 
-Fonte oficial em https://portal.stf.jus.br
+## 2. Refutação
 
-Aplicação. Fundamento nuclear.
-
-### Tema 930 STF, RE 937.595
-
-Tese literal [CONFERIDO, portal do STF, 04/10/2026]. "Os benefícios concedidos entre 05.10.1988 e 05.04.1991 (período do buraco negro) não estão, em tese, excluídos da possibilidade de readequação segundo os tetos instituídos pelas EC´s nº 20/1998 e 41/2003, a ser aferida caso a caso, conforme os parâmetros definidos no julgamento do RE 564.354, em regime de repercussão geral." Trânsito em julgado em 10/06/2017.
-
-Aplicação. Buraco negro. A numeração antiga desta entrada ("Tema 327") estava errada e foi corrigida na Onda 173.
-
-### RE 1.054.232 STF
-
-Não localizado na pesquisa processual do portal do STF em 04/10/2026. Não citar.
-
-### Tema 975 STJ
-
-Tese ADVERSA (CATALOGO-TEMAS-STJ). Aplica a decadência decenal do art. 103 às questões não apreciadas no ato de concessão. Não se cita para a readequação ao teto, que não revisa o ato de concessão, porque aplica o novo teto ao benefício em manutenção (Tema 76 STF). Precedente específico do STJ sobre a não incidência da decadência na readequação, Não localizado nesta conferência; Você deve verificar isso antes de citar (Onda 173).
-
-### REsp 1.554.596 STJ
-
-ERRO corrigido na Onda 173. O REsp 1.554.596 é leading case do Tema 999 STJ (revisão da vida toda), conferido no portal do STJ em 04/10/2026, e não trata de decadência na revisão do teto. Não citar nesta matéria.
-
-### Súmula 260 ex-TFR
-
-Tese. Reajuste pela maior variação. Não trata da readequação ao teto.
-
-Aplicação supletiva, preservada até edição de norma posterior.
-
-### Súmula 85 STJ
-
-Tese. Prescrição quinquenal.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 29, 33, 103 e 144
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.870/1994, art. 26
-
-Fonte oficial em https://www.planalto.gov.br
-
-### EC 20/1998
-
-Fonte oficial em https://www.planalto.gov.br
-
-### EC 41/2003
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Decadência consumada
-
-Argumento adversário. Benefício com mais de 10 anos do primeiro pagamento não admite revisão.
-
-Refutação. Verificar data exata do primeiro pagamento. Considerar pedidos administrativos que tenham interrompido prazo. Em caso limite, acionar `decadencia-revisao-previdenciaria`.
-
-### Argumento 2. Inexistência de glosa
-
-Argumento adversário. Benefício não foi limitado pelo teto.
-
-Refutação. Apresentar Carta de Concessão com Salário de Benefício registrado acima do teto vigente à época. Exigir memória administrativa completa.
-
-### Argumento 3. Coisa julgada em revisão anterior
-
-Argumento adversário. Revisão do teto já foi julgada.
-
-Refutação. Verificar causa de pedir. Se a ação anterior tratou apenas de uma das ECs, a outra pode ser objeto de nova ação. Acionar `coisa-julgada-previdenciaria`.
-
-### Argumento 4. Aplicação automática pelo INSS
-
-Argumento adversário. O INSS já aplicou o Tema 76 STF administrativamente.
-
-Refutação. Verificar extrato de pagamento e memória de cálculo. Na prática, aplicações parciais são frequentes. Recálculo independente obrigatório.
-
-### Argumento 5. Pensão por morte sem direito à revisão
-
-Argumento adversário. Pensão derivada não se submete à revisão do benefício instituidor.
-
-Refutação. Revisão reflexa é direito dos dependentes. Decadência autônoma, art. 103, parágrafo único. Leitura do STJ.
-
-### Argumento 6. Revisão do buraco negro já aplicada
-
-Argumento adversário. O art. 144 da Lei 8.213/91 foi aplicado.
-
-Refutação. Conferir planilha de recomposição. Em regra, aplicações administrativas do buraco negro foram truncadas. Recálculo é imperativo.
-
-### Argumento 7. Revisão do buraco verde não existe em lei
-
-Argumento adversário. Inexistência de previsão legal expressa.
-
-Refutação. Fundamento é a correção integral do Salário de Benefício e a jurisprudência. O art. 26 da Lei 8.870/1994 operou congelamento que gerou distorção. Jurisprudência consolidada reconheceu o direito à correção integral.
-
-### Argumento 8. Súmula 260 ex-TFR não se aplica
-
-Argumento adversário. Revogada tacitamente.
-
-Refutação. Supletivamente válida, até a Lei 6.423/1977 ou para indexar a correção quando a legislação superveniente foi omissa. Relevante em recomposições anteriores.
-
-### Argumento 9. Tutela de urgência negada
-
-Argumento adversário. Negativa genérica.
-
-Refutação. Diferenças mensais acumuladas caracterizam perigo de dano. Cálculo demonstrativo como prova pré-constituída.
-
-### Argumento 10. Honorários sucumbenciais contra o segurado
-
-Argumento adversário. Risco financeiro alto.
-
-Refutação. Justiça gratuita (art. 98 CPC) e análise prévia rigorosa. Calibrar expectativa do cliente.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Wladimir Novaes Martinez, teto previdenciário e revisão.
-
-Frederico Amado, Tema 76 STF.
-
-Hugo Goes, cálculo da revisão do teto.
-
-Fábio Zambitte Ibrahim, princípio da contraprestação.
-
-Daniel Pulino, segurança jurídica.
-
-Marco Aurélio Serau Junior, reforma constitucional.
-
-IBDP, defesa dos novos tetos.
-
-## 5. Estratégia integrada
-
-Primeiro, obtenção da Carta de Concessão e da memória administrativa.
-
-Segundo, simulação de recomposição por profissional de cálculo.
-
-Terceiro, verificação de decadência e prescrição.
-
-Quarto, requerimento administrativo antes da ação judicial.
-
-Quinto, ação judicial com pedidos cumulados.
-
-Sexto, pedido de implantação imediata após trânsito em julgado.
-
-## 6. Diligência de atualização
-
-Acompanhar acórdãos do STF e STJ sobre Tema 76 STF e Tema 930 STF e pensões derivadas.
-
-Acompanhar IACs e IRDRs dos TRFs sobre decadência autônoma para dependentes.
-
-Revalidar jurisprudência sobre o buraco verde no TRF3 e TRF4.
+1. **"Decadência."** A readequação aplica o novo teto ao benefício em manutenção e não revê a concessão (Tema 76 STF).
+2. **"Não houve glosa."** Juntar a carta de concessão com o salário de benefício acima do teto ou a carta de revisão do art. 144 ou do art. 26.
+3. **"O INSS já readequou."** Exigir o demonstrativo e recalcular.
+4. **"Buraco negro excluído."** Tema 930 STF.
+5. **"Prescrição desde a ACP."** O Tema 1005 STJ fixa a interrupção no ajuizamento individual; o pedido abrange os cinco anos anteriores à ação.
+6. **"Coisa julgada."** Verificar se a ação anterior tratou do teto (`coisa-julgada-previdenciaria`).

@@ -1,167 +1,20 @@
-# RVT. Jurisprudência Verificada e Refutação
+# Revisão da Vida Toda. Jurisprudência
 
-## 1. Precedentes vinculantes
+## 1. Precedentes
 
-### Tema 1102 STF, RE 1.276.977
+- Tema 1102 STF (RE 1.276.977): tese vigente adversa, trânsito em 15/05/2026.
+- ADI 2110 e ADI 2111: constitucionalidade do art. 3º da Lei 9.876/99; embargos na ADI 2111 em 10/04/2025, trânsito em 09/07/2026.
+- Tema 975 STJ e art. 103 da Lei 8.213/91: decadência das revisões.
+- Súmula 85 STJ: prescrição das parcelas.
 
-Tese vigente. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`. A tese de 2022, que permitia a opção pela regra definitiva mais vantajosa, está SUPERADA.
+Não se citam: Tema 1117 STF (previdência complementar) e Tema 1157 STF (servidor).
 
-Fonte oficial em https://portal.stf.jus.br
+## 2. Defesa do segurado em ação pendente
 
-Aplicação. Tese adversa. Na peça do segurado, só a modulação.
+1. **INSS pede devolução de valores recebidos por tutela.** Irrepetibilidade dos valores recebidos por decisões prolatadas até 05/04/2024 (modulação, item a).
+2. **INSS pede honorários, custas ou perícia.** Dispensa para as ações pendentes em 05/04/2024 (modulação, item b).
+3. **INSS impugna título transitado.** Verificar o cabimento do art. 535, §5º, do CPC e o prazo; a coisa julgada anterior merece defesa.
 
-### ADI 2110 STF e ADI 2111 STF
+## 3. Ponto adverso
 
-Tese. Constitucionalidade do art. 3º da Lei 9.876/1999. Modulação de efeitos.
-
-Fonte oficial em https://portal.stf.jus.br
-
-Aplicação. Tese adversa à RVT; a modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da RVT [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão (auditoria 03/10/2026).
-
-### [Retirado na auditoria 25/07/2026] Tema 1117/STF
-
-Trata de previdência complementar privada, sem relação com a RVT.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### [Retirado na auditoria 25/07/2026] Tema 1157/STF
-
-Trata de reenquadramento de servidor; a modulação da RVT está nas ADIs 2110 e 2111.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Súmula 85 STJ
-
-Tese. Prescrição quinquenal das parcelas.
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação. Limita efeitos financeiros em revisões.
-
-### Tema 975 STJ
-
-Tese. Decadência decenal do art. 103. Incidência sobre pedidos revisionais.
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação. Alerta crítico em toda análise de RVT.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, art. 29
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.213/91, art. 103
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 9.876/1999, art. 3º
-
-Fonte oficial em https://www.planalto.gov.br
-
-### EC 103/2019, art. 26
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Inconstitucionalidade da RVT
-
-Argumento adversário. Não cabe a RVT porque o art. 3º é constitucional.
-
-Refutação. Tese adversa: as ADIs 2110 e 2111 declararam constitucional o art. 3º, e a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149] (auditoria 03/10/2026). Verificar a situação concreta do segurado.
-
-### Argumento 2. Fim da RVT com as ADIs
-
-Argumento adversário. RVT não cabe mais após 2024.
-
-Refutação. Tese adversa em regra, pois a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão (auditoria 03/10/2026). Coisa julgada, direito adquirido e vantagem concreta devem ser analisados caso a caso.
-
-### Argumento 3. Decadência
-
-Argumento adversário. Benefício com mais de 10 anos não pode ser revisado.
-
-Refutação. Verificar data do primeiro pagamento. Se houver prazo remanescente, pleito tempestivo. Se houver ação anterior protocolada, interrupção pode ter ocorrido.
-
-### Argumento 4. Coisa julgada
-
-Argumento adversário. RVT já foi discutida em ação anterior e julgada improcedente.
-
-Refutação. Verificar causa de pedir específica. Se não houve discussão sobre direito adquirido ou sobre a regra originária, possível repropositura. Acionar `coisa-julgada-previdenciaria`.
-
-### Argumento 5. Não há vantagem concreta
-
-Argumento adversário. Simulação não mostra renda maior.
-
-Refutação. Se o INSS fez a simulação, exigir memória de cálculo detalhada. Refazer cálculo independente. Verificar se todos os salários anteriores a julho de 1994 foram considerados com correção monetária adequada.
-
-### Argumento 6. Modulação bloqueia ação ajuizada antes do julgamento
-
-Argumento adversário. Ação deve ser extinta.
-
-Refutação. Verificar critérios da modulação, que só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149] (auditoria 03/10/2026). Sustentar segurança jurídica e boa-fé.
-
-### Argumento 7. Benefício pós EC 103/2019
-
-Argumento adversário. Segurado não tem direito à RVT.
-
-Refutação. Em tese está correto. Mas verificar se houve direito adquirido anterior à EC 103, com pedido de melhor benefício. Acionar `base-aposentadoria-direito-adquirido`.
-
-### Argumento 8. Honorários de sucumbência
-
-Argumento adversário. Negativa vai gerar honorários contra o segurado.
-
-Refutação. Justiça gratuita sob suspensão de exigibilidade (art. 98 CPC). Análise prévia rigorosa para reduzir risco.
-
-### Argumento 9. RVT e aposentadoria por idade
-
-Argumento adversário. RVT não se aplica a aposentadoria por idade.
-
-Refutação. Tecnicamente, a RVT pode impactar qualquer benefício cujo cálculo dependa do PBC. Verificar enquadramento.
-
-### Argumento 10. RVT e pensão por morte derivada
-
-Argumento adversário. Pensão derivada de benefício concedido antes de 1999 não pode ser revisada.
-
-Refutação. A revisão do benefício instituidor, se possível, reflete no valor da pensão. Verificar decadência contra os dependentes.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Wladimir Novaes Martinez, pioneiro da discussão da RVT.
-
-Frederico Amado, análise do Tema 1102 STF.
-
-Fábio Zambitte Ibrahim, princípio do melhor benefício.
-
-Hugo Goes, detalhamento do cálculo.
-
-Daniel Pulino, modulação e segurança jurídica.
-
-Marco Aurélio Serau Junior, regras de transição.
-
-IBDP, posicionamento institucional.
-
-## 5. Estratégia integrada
-
-Primeiro, triagem objetiva. Enquadrar em cenário residual ou descartar.
-
-Segundo, simulação vantajosa demonstrada.
-
-Terceiro, requerimento administrativo (Tema 1124 STJ).
-
-Quarto, ação judicial com pedido principal pró-segurado e pedido subsidiário.
-
-Quinto, alerta permanente sobre decadência.
-
-Sexto, comunicação transparente ao cliente.
-
-## 6. Diligência de atualização
-
-Acompanhar acórdãos das 1ª e 2ª Seções do STJ sobre modulação das ADIs.
-
-Acompanhar teses da TNU.
-
-Acompanhar novas manifestações do STF.
-
-Revisar a skill a cada julgamento relevante.
+O direito à revisão não subsiste após a tese vigente do Tema 1102. Nenhuma peça invoca o tema a favor da revisão.

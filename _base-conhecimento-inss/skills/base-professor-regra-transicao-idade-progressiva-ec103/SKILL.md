@@ -1,142 +1,59 @@
 ---
 name: base-professor-regra-transicao-idade-progressiva-ec103
-description: "Regra de transição por idade progressiva para professor no RGPS (art. 16 §2º EC 103/2019), idade mínima progressiva a cada ano, tempo mínimo de magistério, funções de magistério Lei 11.301/2006, ADI 3772 STF e integração com direito adquirido. Use SEMPRE que mencionar regra de idade progressiva professor, art. 16 §2º EC 103, idade progressiva professor RGPS, 51 anos mulher 56 anos homem professor, acréscimo 6 meses por ano idade professor, ingresso até 13/11/2019 professor, comparação pontos idade progressiva professor, integração regras transição professor. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, aposentadoria-professor-rgps, base-professor-regra-transicao-pontos-ec103, base-professor-regra-transicao-pedagio-ec103 e base-professor-direito-adquirido-ec20."
+description: "Regra de transição por idade progressiva do professor no RGPS (art. 16, §2º, EC 103/2019): idade mínima de 51 anos (mulher) e 56 (homem) em 2019, mais 6 meses por ano até 57 e 60, com 25/30 anos de magistério; funções de magistério (Lei 11.301/2006, ADI 3772). Use SEMPRE que mencionar regra de idade progressiva professor, art. 16 §2º EC 103, idade progressiva professor RGPS, 51 anos mulher 56 anos homem professor, acréscimo 6 meses por ano idade professor, ingresso até 13/11/2019 professor, comparação pontos idade progressiva professor. Cruza com aposentadoria-professor-rgps, base-professor-regra-transicao-pontos-ec103, base-professor-regra-transicao-pedagio-ec103, base-professor-direito-adquirido-ec20 e peticao-previdenciaria."
 ---
 
-# Regra de Transição por Idade Progressiva para Professor
+# Regra de Transição por Idade Progressiva do Professor (EC 103, art. 16, §2º)
 
-## Escopo
+## Requisitos
 
-Skill pró-segurado sobre regra de idade progressiva do professor, art. 16 §2º EC 103/2019, idade mínima progressiva e tempo mínimo de magistério.
+- Filiação ao RGPS até 13/11/2019.
+- 25 anos (M) ou 30 anos (H) de contribuição exclusivamente em efetivo exercício de magistério na educação infantil, no ensino fundamental ou no ensino médio (art. 16, I, reduzido em 5 anos pelo §2º).
+- Idade mínima progressiva da tabela.
+- Carência de 180 contribuições.
+- RMI: 60% da média + 2% por ano acima de 20 (H) ou 15 (M) (art. 16, §3º; art. 26, §§2º, I, e 5º). Sem fator.
 
-## Marco normativo central
+## Tabela anual (art. 16, §2º: +6 meses por ano desde 01/01/2020)
 
-CF/88, art. 201 §8º.
+| Ano | Mulher | Homem |
+|---|---|---|
+| 2019 | 51 | 56 |
+| 2020 | 51a6m | 56a6m |
+| 2021 | 52 | 57 |
+| 2022 | 52a6m | 57a6m |
+| 2023 | 53 | 58 |
+| 2024 | 53a6m | 58a6m |
+| 2025 | 54 | 59 |
+| 2026 | 54a6m | 59a6m |
+| 2027 | 55 | 60 (limite) |
+| 2028 | 55a6m | 60 |
+| 2029 | 56 | 60 |
+| 2030 | 56a6m | 60 |
+| 2031 em diante | 57 (limite) | 60 |
 
-EC 103/2019, art. 16 §2º.
+A exigência é a do ano-calendário em que o segurado completa a idade. Quem completa a idade exigida no ano cumpre o requisito na data do aniversário.
 
-Lei 8.213/91, arts. 56 e 57.
+## Cômputo
 
-Lei 11.301/2006.
+- Funções de magistério na educação básica: docência, direção, coordenação e assessoramento pedagógico (Lei 9.394/96, art. 67, §2º; ADI 3772). Súmula 726 STF superada nesse ponto.
+- Professor universitário não se enquadra (CF, art. 201, §8º).
+- Tempo de outra atividade, comum ou especial, não integra os 25/30 anos de magistério; tempo de magistério não se converte em comum (IN 128/2022, art. 255, §§1º e 2º).
 
-IN 128/2022.
+## Cenários (conferidos)
 
-Portaria 991/2022.
-
-## Marco jurisprudencial
-
-### ADI 3772 STF
-
-Funções de magistério.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 1011 STJ
-
-Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
-
-### Tema 1091 STF
-
-Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2020). Tese. "É constitucional o fator previdenciário previsto no art. 29, caput, incisos e parágrafos, da Lei nº 8.213/91, com a redação dada pelo art. 2º da Lei nº 9.876/99." Tese adversa, sem efeito nesta regra, cujo valor se calcula pelo art. 26, §2º, I, da EC 103/2019, sem fator (auditoria 03/10/2026).
-
-### Súmula 726/STF (restritiva) e sua mitigação
-
-Texto real. "Para efeito de aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula." Aplicação mitigada pela Lei 11.301/2006 e pela ADI 3772, que asseguram o cômputo de direção, coordenação e assessoramento pedagógico exercidos por professor de carreira (auditoria 25/07/2026).
-
-## Requisitos (art. 16 §2º EC 103)
-
-Primeiro, ingresso no RGPS até 13/11/2019.
-
-Segundo, tempo mínimo de magistério. 25 mulher, 30 homem.
-
-Terceiro, idade mínima progressiva. Na promulgação (13/11/2019), 51 mulher e 56 homem; a partir de 1º/1/2020, acréscimo de 6 meses a cada ano (EC 103, art. 16, §§1º e 2º).
-
-Quarto, exclusividade em magistério.
-
-## Idade progressiva em detalhes
-
-2019 (13/11 a 31/12), 51 mulher, 56 homem.
-
-2020, 51 anos e 6 meses mulher, 56 anos e 6 meses homem.
-
-2021, 52 mulher, 57 homem.
-
-2022, 52 anos e 6 meses mulher, 57 anos e 6 meses homem.
-
-2023, 53 mulher, 58 homem.
-
-2024, 53 anos e 6 meses mulher, 58 anos e 6 meses homem.
-
-2025, 54 mulher, 59 homem.
-
-2026, 54 anos e 6 meses mulher, 59 anos e 6 meses homem.
-
-Conferência: é a mesma progressão que levou a mulher da regra comum (art. 18) de 60 anos em 2019 a 62 anos em 2023.
-
-Limite final, 57 mulher, 60 homem.
-
-## Aplicação pró-segurado
-
-Primeiro, regra acessível para quem já tem tempo mínimo de magistério.
-
-Segundo, adequada para quem não cumpre pontos ou pedágio.
-
-Terceiro, funções de magistério pela Lei 11.301 e ADI 3772.
-
-Quarto, professor universitário NÃO se insere.
-
-## Cenários pró-segurado
-
-Cenário A, professora com 25 anos de magistério e 54 anos completos em 2025. Idade exigida em 2025: 54. Aposenta.
-
-Cenário B, professor com 30 anos de magistério e 59 anos em 2025. Idade exigida em 2025: 59. Aposenta.
-
-Cenário C, coordenadora pedagógica. Conta.
-
-Cenário D, diretora escolar. Conta.
-
-Cenário E, professora em cargo híbrido. Lei 15.326/2026.
+- **A.** Professora com 25 anos de magistério e 54 anos completos em 2025: exigidos 54. Aposenta-se. RMI de 80% (60% + 2% × 10).
+- **B.** Professor com 30 anos de magistério e 59 anos em 2025: exigidos 59. Aposenta-se. RMI de 80% (60% + 2% × 10).
+- **C.** Professora com 25 anos de magistério e 53 anos em 2026: exigidos 54a6m. Em 2027 terá 54 contra 55; em 2028, 55 contra 55a6m; em 2029, 56 contra 56. Alcança a exigência em 2029, no aniversário de 56 anos. Comparar com a regra de pontos (78 pontos em 2026, exigidos 88) e com o pedágio do art. 20, §1º (52 anos e pedágio).
 
 ## Alertas
 
-Primeiro, verificar cada data base para aplicar a idade correta.
-
-Segundo, combinar com reafirmação da DER.
-
-Terceiro, funções de magistério exigem prova.
-
-Quarto, tempo posterior a 13/11/2019 pode ser computado para fins de idade.
-
-## Comparação
-
-Primeiro, pontos (art. 15 §3º) para quem tem mais tempo.
-
-Segundo, pedágio (art. 20 §1º) para quem estava próximo em 2019.
-
-Terceiro, idade progressiva (art. 16 §2º) para quem tem tempo mínimo mas não pontos.
-
-Quarto, direito adquirido (EC 20) para quem preencheu antes da EC 103.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
+- Aplicar a idade do ano em que o requisito se completa; requerimento prematuro admite reafirmação da DER (Tema 995 STJ; `reafirmacao-der`).
+- Funções de direção e coordenação exigem prova documental.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Para detalhes, acionar `aposentadoria-professor-rgps`.
-Para pontos, acionar `base-professor-regra-transicao-pontos-ec103`.
-Para pedágio, acionar `base-professor-regra-transicao-pedagio-ec103`.
-Para direito adquirido, acionar `base-professor-direito-adquirido-ec20`.
-Para redação, acionar `peticao-previdenciaria`.
-
-## O que NÃO está nesta skill
-
-Regra de pontos em `base-professor-regra-transicao-pontos-ec103`. Pedágio em `base-professor-regra-transicao-pedagio-ec103`. Direito adquirido em `base-professor-direito-adquirido-ec20`. Educação infantil em `base-professor-educacao-infantil-lei15326`.
+`aposentadoria-professor-rgps`, `base-professor-regra-transicao-pontos-ec103`, `base-professor-regra-transicao-pedagio-ec103`, `base-professor-direito-adquirido-ec20`, `base-professor-educacao-infantil-lei15326`, `peticao-previdenciaria`, `base-fungibilidade-previdenciaria`, `base-portarias-dpmf-inss-hub`.

@@ -1,104 +1,42 @@
 ---
 name: base-revisao-reajuste-ortn-otn
-description: "Revisão por reajustes antigos, ORTN e OTN, Súmula 260 ex-TFR, revisões de planos econômicos anteriores à Lei 6.423/1977, Plano Bresser, Plano Verão, URP, com postura pró-segurado e honestidade radical sobre decadência. Use SEMPRE que mencionar revisão por ORTN, revisão por OTN, Súmula 260 ex-TFR, maior variação salarial, Lei 6.423/1977, reajuste pela média dos 36 meses, Plano Bresser, Plano Verão URP, reajuste de benefícios antigos, benefício concedido antes de 1977, benefício concedido entre 1977 e 1991, distorções inflacionárias anteriores a 1994, índices expurgados, correção monetária de benefícios antigos, revisão de benefícios extintos por óbito, pensões derivadas antigas, decadência absoluta, prescrição Fazenda Pública, prescrição dos quinquênios. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-revisao-teto-buraco-negro-verde e precedentes-previdenciarios."
+description: "Revisão por reajustes antigos, ORTN e OTN, Súmula 260 ex-TFR, correção dos salários de contribuição pela Lei 6.423/1977, Plano Bresser, Plano Verão, URP, com postura pró-segurado e franqueza sobre a decadência. Use SEMPRE que mencionar revisão por ORTN, revisão por OTN, Súmula 260 ex-TFR, maior variação salarial, Lei 6.423/1977, reajuste pela média dos 36 meses, Plano Bresser, Plano Verão URP, reajuste de benefícios antigos, benefício concedido antes de 1977, benefício concedido entre 1977 e 1991, distorções inflacionárias anteriores a 1994, índices expurgados, correção monetária de benefícios antigos, revisão de benefícios extintos por óbito, pensões derivadas antigas, decadência absoluta, prescrição Fazenda Pública, prescrição dos quinquênios. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-revisao-teto-buraco-negro-verde e precedentes-previdenciarios."
 ---
 
-# Revisão por Reajustes ORTN e OTN
+# Revisão por ORTN/OTN e Súmula 260 do ex-TFR
 
 ## Escopo
 
-Skill temática pró-segurado com honestidade radical. Orienta a discussão de revisões por reajustes inflacionários antigos, com base na Súmula 260 do ex-TFR, na legislação anterior à Lei 6.423/1977 e nas normas dos Planos Bresser, Verão e URP. A maior parte desses pedidos encontra barreira de decadência, especialmente após o art. 103 da Lei 8.213/91 na redação posterior a 1997. Esta skill é franca e alerta quando não há espaço viável.
+Revisões de benefícios concedidos antes da CF/88. Quase todas estão alcançadas pela decadência; a skill serve para identificar a tese, conferir ações antigas em execução e orientar o cliente com franqueza.
 
-## Marco normativo central
+## Teses
 
-CF/88, art. 201, §2º. Preservação do valor real do benefício.
-
-Lei 8.213/91, art. 41, atualmente art. 41-A. Reajuste anual dos benefícios.
-
-Lei 8.213/91, art. 103. Decadência decenal.
-
-Lei 6.423/1977. Alterou o sistema de correção monetária do país.
-
-Lei 7.604/1987 e Lei 7.730/1989. Planos Bresser e Verão.
-
-Plano Cruzado Novo. URP e congelamentos.
-
-## Marco jurisprudencial
-
-Súmula 260 do ex-TFR (texto autêntico): 'No primeiro reajuste do benefício previdenciário, deve-se aplicar o índice integral do aumento verificado, independentemente do mês da concessão, considerado, nos reajustes subsequentes, o salário mínimo então atualizado.' Aplicável a benefícios anteriores à CF/88.
-
-Fonte oficial em https://www.jusbrasil.com.br (consulta de súmulas históricas do TFR).
-
-Súmula 71 ex-TFR. Critérios de reajuste pela maior variação, contexto anterior à Lei 6.423/1977.
-
-Súmula 85 STJ. Prescrição quinquenal das parcelas vencidas.
-
-Fonte oficial em https://www.stj.jus.br
-
-## Espaço pró-segurado
-
-Primeiro, benefícios muito antigos cujo cálculo foi glosado por reajustes parciais e que, excepcionalmente, tenham escapado da decadência decenal.
-
-Segundo, pensões por morte derivadas de benefícios antigos, com decadência autônoma para os dependentes.
-
-Terceiro, revisões em execução já reconhecidas, em fase de cumprimento de sentença.
-
-Quarto, casos em que a legislação posterior preservou expressamente direito anterior.
-
-## Controvérsias vivas
-
-A aplicação da Súmula 260 ex-TFR tem tradição, mas sofre redução pela evolução legislativa. A decadência do art. 103 da Lei 8.213/91 atinge a maior parte dos pedidos, a menos que o segurado já possua demanda em curso antes do exaurimento.
+1. **ORTN/OTN (Lei 6.423/77, art. 1º).** A lei mandou corrigir obrigações pecuniárias pela variação da ORTN. Nos benefícios calculados pela média de 36 salários (aposentadorias por idade, por tempo de serviço e especial), a jurisprudência exigiu a correção pela ORTN/OTN dos 24 salários de contribuição anteriores aos 12 últimos. Auxílio-doença, aposentadoria por invalidez e pensão calculados pelos 12 últimos salários não tinham correção e ficam fora.
+2. **Súmula 260 do ex-TFR:** "No primeiro reajuste do benefício previdenciário, deve-se aplicar o índice integral do aumento verificado, independentemente do mês da concessão, considerado, nos reajustes subsequentes, o salário mínimo então atualizado." Alcança benefícios anteriores à CF/88, até a vigência do art. 58 do ADCT.
+3. **Planos econômicos.** Plano Bresser: Decreto-Lei 2.335/1987. Plano Verão: Lei 7.730/1989. A Lei 7.604/1987 não é o Plano Bresser; ela fixou o piso de 95% do salário mínimo e a atualização prevista no art. 2º do Decreto-Lei 2.171/84 para o período de 11/1979 a 05/1984.
 
 ## Decadência e prescrição
 
-Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento.
+- Benefícios anteriores à MP 1.523/97: prazo decenal contado de 01/08/1997, esgotado em 01/08/2007 (Tema 313 STF).
+- Prescrição: apenas as parcelas anteriores ao quinquênio (Súmula 85 STJ). A Súmula 443 STF trata da prescrição do fundo do direito e não afasta a decadência do art. 103.
+- Pensão derivada: o pensionista tem legitimidade para revisar o benefício originário (Tema 1057 STJ), mas a decadência do instituidor o alcança [NÃO CONFIRMADO: conferir a jurisprudência atual do STJ].
 
-Súmula 85 STJ. Prescrição quinquenal das parcelas.
+## Onde ainda há espaço
 
-Atenção. Benefícios concedidos antes de 2015 estão, em regra, com decadência consumada. A Súmula 443 STF trata de prescrição das prestações e não afasta a decadência do art. 103 (auditoria 03/10/2026). Em pensões derivadas de instituidor falecido em qualquer momento, verificar decadência autônoma dos dependentes.
+- Ação ajuizada antes do fim do prazo, em curso ou em execução: conferir o cálculo e os índices.
+- Título judicial antigo não cumprido: verificar prescrição da execução (`execucao-cumprimento-previdenciario`).
 
-## Regra pró-segurado
+## Método
 
-Primeiro, diagnóstico da DIB e da decadência.
-
-Segundo, levantamento de documentos históricos, Carta de Concessão antiga, recibos de pagamento.
-
-Terceiro, simulação pela regra aplicável à época.
-
-Quarto, comparação com a RMI praticada.
-
-Quinto, verificação de prescrição quinquenal.
-
-Sexto, se decadência consumada, comunicar francamente ao cliente.
-
-Sétimo, se houver pensão derivada, verificar prazo autônomo.
+1. DIB e espécie (média de 36 ou de 12 salários).
+2. Decadência antes de qualquer cálculo.
+3. Cópia integral do processo administrativo antigo.
+4. Se viável, recálculo com os índices oficiais da época.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça, acionar `peticao-previdenciaria`.
-Ao verificar decadência, acionar `decadencia-revisao-previdenciaria`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
-Em cumulação com revisão do teto, acionar `base-revisao-teto-buraco-negro-verde`.
-Em revisão geral, acionar `revisao-peticao`.
-
-## Alertas
-
-Primeiro, decadência decenal é barreira dominante. A maior parte dos pedidos está inviabilizada. Honestidade radical exige comunicação imediata.
-
-Segundo, simulação com profissional de cálculo é obrigatória, com pesquisa em índices históricos.
-
-Terceiro, documentos muito antigos podem estar indisponíveis. Solicitar ao INSS cópia integral do PA e da Carta de Concessão original.
-
-Quarto, cautela extrema na abertura de ações. Risco de sucumbência.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## O que NÃO está nesta skill
-
-RVT está em `base-revisao-vida-toda-rvt`. Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Revisão do art. 29 II e melhor benefício está em `base-revisao-art29-melhor-beneficio`.
+`decadencia-revisao-previdenciaria`, `peticao-previdenciaria`, `revisao-peticao`, `base-revisao-teto-buraco-negro-verde`, `precedentes-previdenciarios`, `execucao-cumprimento-previdenciario`, `base-portarias-dpmf-inss-hub`.

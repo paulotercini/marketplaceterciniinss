@@ -1,72 +1,37 @@
-# Direito Adquirido à Aposentadoria Pré EC 103/2019. Fundamentos e Cenários
+# Direito Adquirido Pré EC 103/2019. Cenários
 
-## 1. Fundamento constitucional
+Fundamentos e tabela de hipóteses estão no SKILL.md.
 
-O art. 5º, inciso XXXVI, da Constituição Federal protege o direito adquirido como garantia fundamental. A EC 103/2019, em seu art. 3º, reafirmou essa proteção ao garantir que o segurado que tenha cumprido os requisitos de aposentadoria até 13 de novembro de 2019 pode se aposentar pelas regras anteriores, com RMI calculada pelas regras anteriores.
+## Cenários
 
-## 2. Fundamento infraconstitucional
+### Cenário 1. Homem com 35 anos em 13/11/2019
+Direito à aposentadoria por tempo de contribuição integral, sem idade mínima. RMI com fator previdenciário, que pode ser superior a 1; se a soma de idade e tempo alcançava 96 pontos, opção pela não incidência do fator (art. 29-C).
 
-Lei 8.213/91, art. 52. Aposentadoria por tempo de contribuição integral (35 anos para homem e 30 anos para mulher), sob regras vigentes até a reforma.
+### Cenário 2. Mulher com 30 anos em 13/11/2019
+Mesmo raciocínio, com 86 pontos para afastar o fator.
 
-Lei 8.213/91, art. 53. Tabela de aposentadoria proporcional (30 anos para homem, 25 anos para mulher, com pedágio de 40% sobre o tempo faltante em 16 de dezembro de 1998 e idade mínima de 53 anos, homem, e 48 anos, mulher, pelo art. 9º, §1º, da EC 20/98 (revogado pelo art. 35, II, da EC 103/2019; aplica-se por direito adquirido a quem reuniu os requisitos até 13/11/2019), a quem não tinha o tempo naquela data) (auditoria 03/10/2026).
+### Cenário 3. Regra 85/95
+Pontuação exigida: 95/85 até 30/12/2018; 96/86 de 31/12/2018 a 13/11/2019 (art. 29-C, §2º). A elevação para 97/87 em 31/12/2020 ocorreria após a reforma e não alcança o direito adquirido. Quem atingiu a pontuação mantém a opção sem fator, ainda que tenha continuado a trabalhar.
 
-Lei 8.213/91, art. 56. Aposentadoria do professor com 30 anos de magistério (homem) e 25 anos (mulher), cobertura pela Lei 11.301/2006 e Lei 9.394/96.
+### Cenário 4. Proporcional da EC 20
+Homem com 53 anos e 30 anos de contribuição mais pedágio de 40% do tempo que faltava em 16/12/1998, tudo até 13/11/2019. Exemplo: com 26 anos em 16/12/1998, faltavam 4 anos para 30; pedágio de 1 ano e 7 meses (40% de 48 meses = 19,2 meses); total de 31 anos e 7 meses. Coeficiente de 70%, mais 5% por ano completo acima dessa soma, até 100%.
 
-Lei 13.183/2015. Regra 85/95 progressiva. Quem atingiu a fórmula antes da reforma tem direito adquirido à aposentadoria sem fator previdenciário.
+### Cenário 5. Professor
+Professor com 30 anos ou professora com 25 anos de magistério em 13/11/2019 (art. 56). Contam as funções de direção, coordenação e assessoramento pedagógico exercidas em estabelecimento de educação básica (Lei 9.394/96, art. 67, §2º, incluído pela Lei 11.301/2006; ADI 3.772). RMI com fator, afastável pelo art. 29-C, §3º (bônus de 5 pontos).
 
-Decreto 3.048/99, arts. 56 a 65. Regulamentação da aposentadoria por tempo de contribuição e proporcional pré-reforma.
+### Cenário 6. Rural
+Segurada especial com 55 anos e 15 anos de atividade rural em 13/11/2019 (ou homem com 60). Prova material complementada por testemunhal (Lei 8.213/91, art. 55, §3º; Súmula 149 STJ).
 
-## 3. Cenários operacionais
+### Cenário 7. Especial
+Segurado com 25, 20 ou 15 anos de atividade especial até 13/11/2019 (Decreto 3.048/99, Anexo IV). Aposentadoria especial sem idade mínima, com 100% do salário de benefício, ainda que requerida depois da reforma.
 
-### Cenário 1. Homem 35 anos em 13 de novembro de 2019
+### Cenário 8. Continuidade laboral
+Homem completou 35 anos de contribuição em 2017 e seguiu trabalhando até 2024 sem requerer. Em 2024 pode optar pela regra anterior, calculada na data em que reuniu os requisitos, ou por regra de transição se mais vantajosa (EC 103, art. 3º; Tema 334 STF).
 
-Segurado homem com 35 anos completos de contribuição em 13 de novembro de 2019. Direito adquirido à aposentadoria por tempo de contribuição integral. RMI com fator previdenciário ou sem, conforme mais vantajoso (Lei 9.876/99 e Lei 13.183/2015).
+## Documentos
 
-### Cenário 2. Mulher 30 anos em 13 de novembro de 2019
+CNIS até 13/11/2019; CTPS; PPP e LTCAT; certidão de tempo de contribuição de RPPS; documentos rurais; para professor, declaração da escola com funções e períodos; documento de identidade.
 
-Segurada mulher com 30 anos completos de contribuição em 13 de novembro de 2019. Direito adquirido à aposentadoria por tempo de contribuição integral. Mesmo raciocínio do Cenário 1.
+## Impugnação
 
-### Cenário 3. Regra 85/95 progressiva
-
-Soma de idade mais tempo de contribuição atingiu a pontuação vigente na data: 85/95 até 30/12/2018 e 86/96 de 31/12/2018 a 13/11/2019 (art. 29-C, §2º, da Lei 8.213/91); a pontuação 87/97 só valeria a partir de 31/12/2020, depois da reforma (auditoria 03/10/2026). Direito adquirido à aposentadoria sem fator previdenciário, mesmo que o segurado tenha continuado trabalhando após.
-
-### Cenário 4. Aposentadoria proporcional EC 20/98
-
-Segurado (homem) com 53 anos de idade, 30 anos de contribuição mais pedágio de 40% sobre o tempo faltante em dezembro de 1998. Segurada (mulher) com 48 anos de idade, 25 anos de contribuição mais pedágio de 40%. Direito adquirido à aposentadoria proporcional com coeficiente de 70%, mais 5% por ano que supere essa soma, até 100% (art. 9º, §1º, da EC 20/98 (revogado pelo art. 35, II, da EC 103/2019; aplica-se por direito adquirido a quem reuniu os requisitos até 13/11/2019)) (auditoria 03/10/2026).
-
-### Cenário 5. Professor magistério
-
-Professor (homem) com 30 anos de magistério em 13 de novembro de 2019. Professora (mulher) com 25 anos. Direito adquirido à aposentadoria especial do professor pela regra anterior. Atenção ao cômputo de tempo de efetivo exercício de magistério, incluindo coordenação, direção e supervisão pedagógica (Lei 11.301/2006).
-
-### Cenário 6. Aposentadoria rural
-
-Segurada especial (mulher) com 55 anos e 15 anos de atividade rural em 13 de novembro de 2019. Segurado (homem) com 60 anos e 15 anos. Direito adquirido à aposentadoria rural pré-reforma, com prova material complementada por testemunhal, conforme Súmula 149 STJ.
-
-### Cenário 7. Aposentadoria especial pré-reforma
-
-Segurado com 25 anos de atividade especial nos casos gerais, ou 20 anos nos de risco intermediário, ou 15 anos nos de maior risco, conforme o Anexo IV do Decreto 3.048/99 (auditoria 03/10/2026), até 13 de novembro de 2019. Direito adquirido à aposentadoria especial sob regra anterior, sem idade mínima, sem pedágio e sem incidência do fator previdenciário, se DER até a reforma.
-
-### Cenário 8. Segurado que continuou trabalhando após implementar requisitos
-
-Segurado que implementou 35 anos de contribuição em 2017 e continuou trabalhando até 2024 sem requerer benefício. Em 2024 pode requerer aposentadoria pelas regras pré-reforma, pois o direito já estava incorporado ao patrimônio jurídico. Súmula 359 STF e art. 3º EC 103.
-
-## 4. Cruzamento com outras skills
-
-Acionar `auditoria-ppp` para aproveitamento de tempo especial até 13 de novembro de 2019. Acionar `reafirmacao-der` para eventual postergação vantajosa. Acionar `peticao-previdenciaria` para redação da peça. Acionar `revisao-peticao` para revisão. Acionar `base-calculo-rmi-ec103` apenas se o caso migrar para regra pós-reforma.
-
-## 5. Documentos essenciais
-
-CNIS completo com todos os vínculos até 13 de novembro de 2019.
-CTPS com páginas de anotações e alterações contratuais.
-PPP para períodos especiais.
-LTCAT quando o PPP não for suficiente.
-Certidão de tempo de contribuição (CTC) de regime próprio, se houver.
-Comprovantes de atividade rural (notas de produtor, matrícula, DAP, CAF).
-Carteira funcional, diplomas e declarações para professor.
-Certidão de nascimento e casamento para prova de início em idade compatível.
-
-## 6. Alerta estratégico
-
-Sempre fechar o tempo em 13 de novembro de 2019 com cálculo detalhado. Quando o INSS aplica indevidamente regra pós-reforma em quem já tinha direito adquirido, a impugnação é pela via administrativa (reabertura do PA) ou pela via judicial com base no art. 3º da EC 103.
-
-Em caso de sentença que aplicou indevidamente regra pós-reforma, embargos de declaração com base na Súmula 359 STF. Caso não acolhidos, apelação ou recurso inominado.
+INSS que aplica regra pós-reforma a quem tinha direito adquirido: recurso administrativo ou ação com base no art. 3º da EC 103. Sentença que incorra no mesmo erro: embargos de declaração e, não acolhidos, recurso inominado ou apelação.

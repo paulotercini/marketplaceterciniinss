@@ -1,125 +1,24 @@
 # Planejamento Previdenciário. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 334 STF
+- Tema 334 STF: "Para o cálculo da renda mensal inicial, cumpre observar o quadro mais favorável ao beneficiário, pouco importando o decesso remuneratório ocorrido em data posterior ao implemento das condições legais para a aposentadoria, respeitadas a decadência do direito à revisão e a prescrição quanto às prestações vencidas."
+- Tema 995 STJ: "É possível a reafirmação da DER (Data de Entrada do Requerimento) para o momento em que implementados os requisitos para a concessão do benefício, mesmo que isso se dê no interstício entre o ajuizamento da ação e a entrega da prestação jurisdicional nas instâncias ordinárias, nos termos dos arts. 493 e 933 do CPC/2015, observada a causa de pedir."
+- Tema 966 STJ (adverso): "Incide o prazo decadencial previsto no caput do artigo 103 da Lei 8.213/1991 para reconhecimento do direito adquirido ao benefício previdenciário mais vantajoso."
+- Tema 350 STF: a concessão depende de requerimento administrativo; ver `tema-1124-instrucao-administrativa` para a instrução do pedido.
+- Tema 1124 STJ: prova apresentada apenas em juízo e termo inicial; ver `base-efeito-translativo-tema-1124-defesa`.
+- Súmula 359 STF: aplica-se a lei vigente ao tempo em que reunidos os requisitos.
 
-Direito ao melhor benefício.
+## 2. Refutação
 
-Fonte oficial em https://portal.stf.jus.br
+1. **"O Meu INSS aplicou a regra nova."** O segurado tem direito à regra mais vantajosa (Tema 334 STF; IN 128, art. 577).
+2. **"Reafirmação da DER não tem previsão."** IN 128, art. 577, e Tema 995 STJ.
+3. **"Contribuição abaixo do mínimo não conta."** Complementação, agrupamento ou utilização do excedente (EC 103, art. 29).
+4. **"Vínculo fora do CNIS."** Acerto de vínculo com prova documental (`base-cnis-acerto-indicadores`).
+5. **"CTC sem discriminação."** Contagem recíproca (`base-contagem-reciproca-rgps-rpps`).
+6. **"Tempo rural anterior a 1991 exige indenização."** Conta como tempo de contribuição sem recolhimento, exceto para carência (Lei 8.213/91, art. 55, §2º).
+7. **"Incide o fator."** Apenas no art. 17 e no direito adquirido que o prevê; na regra 85/95 ou 86/96 (art. 29-C) o fator é facultativo.
 
-### Tema 995 STJ
+## 3. Atualização
 
-Reafirmação da DER.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 1124 STJ
-
-Instrução administrativa.
-
-### Tema 350 STF
-
-Prévio requerimento administrativo.
-
-### Súmula 359 STF
-
-Direito adquirido.
-
-Fonte oficial em https://portal.stf.jus.br
-
-## 2. Marco legislativo
-
-### Lei 8.213/91
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 9.876/1999
-
-Fonte oficial em https://www.planalto.gov.br
-
-### EC 103/2019
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Regra automática aplicada pelo Meu INSS
-
-Argumento adversário. Benefício calculado pela regra nova.
-
-Refutação. Segurado tem direito à regra mais vantajosa, inclusive por direito adquirido. Tema 334 STF.
-
-### Argumento 2. Reafirmação da DER negada
-
-Argumento adversário. Sem previsão administrativa.
-
-Refutação. Tema 995 STJ. Art. 690 IN 77/2015. Direito administrativo ao melhor benefício.
-
-### Argumento 3. Contribuição facultativa insuficiente
-
-Argumento adversário. Valor abaixo do mínimo.
-
-Refutação. Complementação EC 103. Acionar `contribuicoes-complementacao-ec103`.
-
-### Argumento 4. Vínculos não reconhecidos no CNIS
-
-Argumento adversário. Ausência.
-
-Refutação. Acionar `cnis-acerto-indicadores`. RAC.
-
-### Argumento 5. Contagem recíproca recusada
-
-Argumento adversário. CTC sem registro.
-
-Refutação. Acionar `base-contagem-reciproca-rgps-rpps`.
-
-### Argumento 6. Tempo rural pré-1991 não cômputa
-
-Argumento adversário. Sem recolhimento.
-
-Refutação. Tempo de contribuição sim, ressalvada carência. Acionar `base-tempo-rural-anterior-1991`.
-
-### Argumento 7. Decadência em revisões
-
-Argumento adversário. Prazo superado.
-
-Refutação. Acionar `decadencia-revisao-previdenciaria`. Revisão preventiva.
-
-### Argumento 8. Fator previdenciário redutor
-
-Argumento adversário. Corte automático.
-
-Refutação. Regra 85/95 progressiva ou direito adquirido, quando aplicáveis.
-
-### Argumento 9. Ausência de prévio requerimento
-
-Argumento adversário. Tema 350 STF.
-
-Refutação. Acionar `tema-1124-instrucao-administrativa`.
-
-### Argumento 10. Simulação Meu INSS incorreta
-
-Argumento adversário. Dados automatizados.
-
-Refutação. Cálculo manual confiável. Juntar planilha. Acionar `base-calculo-rmi-ec103`.
-
-## 5. Estratégia integrada
-
-Primeiro, diagnóstico.
-
-Segundo, simulação.
-
-Terceiro, escolha.
-
-Quarto, contribuições.
-
-Quinto, requerimento.
-
-Sexto, revisão preventiva.
-
-## 6. Diligência de atualização
-
-Acompanhar Tema 334 STF, Tema 995 STJ, Tema 1124 STJ.
-
-Revalidar IN 128/2022 e Manual de Procedimentos.
+Acompanhar a aplicação do Tema 1124 STJ e as alterações da IN 128/2022.

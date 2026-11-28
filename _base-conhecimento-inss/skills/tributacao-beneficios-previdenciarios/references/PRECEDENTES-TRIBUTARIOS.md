@@ -76,27 +76,27 @@ A data do diagnóstico da moléstia marca o termo inicial do direito à isençã
 ## 6. ISENÇÃO POR DOENÇA GRAVE. ABRANGÊNCIA E LIMITES
 
 ### Rol taxativo
-O rol do art. 6º, XIV, da Lei 7.713/88 é taxativo. Doenças graves não listadas não geram isenção. REsp 1.116.620/BA (Rel. Min. Herman Benjamin, 2ª Turma).
+O rol do art. 6º, XIV, da Lei 7.713/88 é taxativo. Doenças graves não listadas não geram isenção. REsp 1.116.620/BA [NÃO CONFIRMADO: conferir relator, órgão e se é repetitivo]; ADI 6025 STF.
 
 ### Rendimentos abrangidos
 Proventos de aposentadoria, reforma e pensão por morte. Complementação de aposentadoria (previdência privada), inclusive resgate. Rendimentos do trabalho ativo NÃO estão abrangidos, mesmo que o titular tenha doença do rol (REsp 1.507.320/RS).
 
 ### Cegueira monocular
-Incluída expressamente pela Lei 14.126/2021.
+A cegueira do rol abrange a monocular na jurisprudência do STJ [NÃO CONFIRMADO: localizar o precedente]. A Lei 14.126/2021 trata da visão monocular como deficiência sensorial e não altera o art. 6º, XIV.
 
 ---
 
 ## 7. REPETIÇÃO DE INDÉBITO TRIBUTÁRIO. PRESCRIÇÃO
 
 ### Art. 168, I, do CTN
-Prazo de 5 anos contados da extinção do crédito tributário. No caso de retenção na fonte de IR, a prescrição inicia-se com a declaração de ajuste anual (momento em que se apura o indébito), não com a retenção mensal.
+Prazo de 5 anos contados da extinção do crédito tributário. Na retenção na fonte sujeita a ajuste anual, conta-se em regra da data da entrega da declaração de ajuste [NÃO CONFIRMADO: conferir o marco adotado pelo STJ]. Na tributação exclusiva na fonte (RRA do art. 12-A), o marco é a retenção.
 
 ---
 
 ## 8. REPETIÇÃO DE INDÉBITO. DISPENSA DE REQUERIMENTO ADMINISTRATIVO EM MATÉRIA TRIBUTÁRIA
 
-### ACO 3.442/STF (Pleno, abril/2025)
-O Plenário do STF reafirmou que é desnecessário prévio requerimento administrativo em matéria tributária de repetição de indébito.
+### ACO 3.442/STF [NÃO CONFIRMADO: conferir número e data]
+O Plenário do STF teria reafirmado que é desnecessário prévio requerimento administrativo em matéria tributária de repetição de indébito.
 
 ### Tema 1373/STF
 Embora voltado especificamente à isenção por doença grave, a tese abrange expressamente a repetição do indébito tributário, consolidando a dispensa de requerimento administrativo em demandas tributárias contra a União.
@@ -111,5 +111,5 @@ Embora voltado especificamente à isenção por doença grave, a tese abrange ex
 |---|---|---|
 | Tema 368/STF | RRA pelo regime de competência, mês a mês | Repercussão geral |
 | Tema 1373/STF | Isenção IR doença grave sem requerimento administrativo | Repercussão geral |
-| Súmula 627/STJ | Contemporaneidade desnecessária para isenção | Súmula vinculante STJ |
-| Súmula 598/STJ | Laudo oficial dispensável | Súmula vinculante STJ |
+| Súmula 627/STJ | Contemporaneidade desnecessária para isenção | Súmula do STJ (persuasiva qualificada, art. 927, IV, CPC) |
+| Súmula 598/STJ | Laudo oficial dispensável | Súmula do STJ (art. 927, IV, CPC) |

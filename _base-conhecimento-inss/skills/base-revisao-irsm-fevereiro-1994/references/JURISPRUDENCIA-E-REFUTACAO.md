@@ -1,133 +1,22 @@
-# Revisão IRSM/1994. Jurisprudência Verificada e Refutação
+# Revisão IRSM 1994. Jurisprudência e Refutação
 
-## 1. Fundamento e precedentes
+## 1. Normas e precedentes
 
-### Fundamento da revisão do IRSM
+- Lei 8.880/94, art. 21, §1º; Lei 10.999/2004, arts. 1º e 2º.
+- Tema 313 STF: decadência de 10 anos, contada de 01/08/1997 para benefícios anteriores à MP 1.523/97.
+- Tema 375 TNU (adverso): a MP 201/2004 não interrompeu a decadência.
+- Tema 1057 STJ: legitimidade do pensionista para revisar o benefício originário.
+- Súmula 85 STJ: prescrição das parcelas anteriores ao quinquênio.
 
-Tese. A correção dos salários de contribuição anteriores a março de 1994 vai até o mês de fevereiro de 1994 (art. 21, §1º, da Lei 8.880/1994), o que inclui o IRSM desse mês, de 39,67%, antes da apuração da RMI. A Lei 10.999/2004 autorizou a revisão administrativa nesses termos [NÃO CONFIRMADO]. O Tema 415 do STJ, antes citado aqui, trata de entrega de carnês de IPTU (auditoria 03/10/2026).
+Não se localizou precedente vinculante do STJ ou do STF sobre o mérito do índice; o direito decorre da própria Lei 10.999/2004. O Tema 415 STJ trata de tributo municipal e não se cita.
 
-Fonte oficial em https://www.planalto.gov.br
+## 2. Refutação
 
-Aplicação. Obrigatória por força de lei; não se identificou precedente vinculante sobre o mérito (auditoria 03/10/2026).
+1. **"O INSS já aplicou o IRSM."** Exigir a memória de cálculo e conferir o fator de cada competência anterior a 03/1994.
+2. **"Aplicação parcial."** O índice é de 39,67% sobre todas as competências anteriores a março de 1994 (Lei 10.999/2004, art. 1º).
+3. **"Bis in idem com reajustes posteriores."** O IRSM corrige o salário de contribuição; os reajustes incidem sobre o benefício. São camadas distintas.
+4. **"Coisa julgada."** Verificar se a ação anterior tratou do IRSM (`coisa-julgada-previdenciaria`).
 
-### Tema 975 STJ
+## 3. Ponto adverso
 
-Tese. Decadência decenal do art. 103 na revisão.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Súmula 85 STJ
-
-Tese. Prescrição quinquenal das parcelas.
-
-Fonte oficial em https://www.stj.jus.br
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 29 e 103
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.880/1994, art. 21
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Aplicação administrativa completa
-
-Argumento adversário. O INSS já aplicou o IRSM a todos os benefícios.
-
-Refutação. Aplicações administrativas frequentemente truncadas. Exigir memória detalhada de cálculo. Conferir benefício a benefício.
-
-### Argumento 2. Decadência consumada
-
-Argumento adversário. Benefício com mais de 10 anos não cabe revisão.
-
-Refutação. Confirmar data do primeiro pagamento. Em benefícios mais recentes, o prazo ainda está em curso. Para benefícios antigos, verificar pedidos administrativos que podem ter interrompido o prazo. Acionar `decadencia-revisao-previdenciaria`.
-
-### Argumento 3. Coisa julgada em ação anterior
-
-Argumento adversário. Revisão já foi discutida.
-
-Refutação. Verificar causa de pedir específica. Se o objeto da ação anterior não foi o IRSM, cabe nova ação. Acionar `coisa-julgada-previdenciaria`.
-
-### Argumento 4. Inexistência de salários pré-URV
-
-Argumento adversário. Segurado não tinha salários de contribuição antes de março de 1994.
-
-Refutação. Verificar CNIS completo. Em alguns casos, períodos antigos foram omitidos. Autoatualização pode faltar.
-
-### Argumento 5. Índice aplicado em percentual inferior
-
-Argumento adversário. INSS aplicou índice parcial.
-
-Refutação. O IRSM de fevereiro de 1994 é de 39,67%, e a correção do art. 21, §1º, da Lei 8.880/1994 o alcança por inteiro (auditoria 03/10/2026). Qualquer aplicação inferior é incompleta. Pedido de diferença é cabível.
-
-### Argumento 6. Revisão não cabe em pensão por morte
-
-Argumento adversário. Dependentes não têm direito à revisão do benefício originário.
-
-Refutação. Revisão reflexa é direito pacífico. Decadência autônoma do parágrafo único do art. 103.
-
-### Argumento 7. Bis in idem com reajustes posteriores
-
-Argumento adversário. A aplicação do IRSM seria dupla correção.
-
-Refutação. Após o IRSM aplicado sobre o SC, os reajustes subsequentes operam em camadas distintas. Não há bis in idem.
-
-### Argumento 8. Tutela de urgência negada
-
-Argumento adversário. Negativa genérica.
-
-Refutação. Diferenças mensais acumuladas. Perigo de dano. Prova pré-constituída por cálculo.
-
-### Argumento 9. Segurado não é competente para discutir cálculo
-
-Argumento adversário. Contraditório técnico.
-
-Refutação. Assistência profissional de calculista. Direito à igualdade de armas.
-
-### Argumento 10. Efeito retroativo limitado
-
-Argumento adversário. Efeitos financeiros somente do ajuizamento.
-
-Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. Tema 1124 STJ cuida do interesse de agir, não da eficácia material.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Wladimir Novaes Martinez, análise do Plano Real.
-
-Frederico Amado, revisão do IRSM (auditoria 03/10/2026).
-
-Hugo Goes, cálculo com IRSM.
-
-Fábio Zambitte Ibrahim, preservação do valor real.
-
-Daniel Pulino, regras de transição monetária.
-
-Marco Aurélio Serau Junior, análise do Plano Real.
-
-IBDP, defesa do IRSM.
-
-## 5. Estratégia integrada
-
-Primeiro, obtenção da Carta de Concessão e da memória administrativa.
-
-Segundo, simulação de recomposição por profissional de cálculo.
-
-Terceiro, verificação de decadência e prescrição.
-
-Quarto, requerimento administrativo antes da ação judicial.
-
-Quinto, ação judicial com cumulação possível com revisão do teto.
-
-Sexto, pedido de implantação imediata após trânsito em julgado.
-
-## 6. Diligência de atualização
-
-Acompanhar acórdãos do STJ sobre a aplicação concreta da revisão do IRSM (auditoria 03/10/2026).
-
-Acompanhar IACs dos TRFs.
-
-Revalidar legislação do Plano Real.
+A decadência (Temas 313 STF e 375 TNU) inviabiliza a maioria dos casos novos. Informar o cliente antes de qualquer cálculo.

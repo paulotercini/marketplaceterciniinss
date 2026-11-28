@@ -1,26 +1,21 @@
 ---
 name: base-aposentadoria-futura-pipeline
-description: "Pipeline operacional pró-segurado de gestão da carteira de Aposentadorias Futuras, identificando o momento exato de acionamento, antecipação documental e contato preventivo. Use SEMPRE que mencionar carteira de aposentadoria futura, lista 🙏 Aposentadorias Futuras, cliente esperando direito amadurecer, monitoramento de DER próxima, marco etário próximo, completar idade para aposentadoria, completar tempo de contribuição, gatilho de acionamento, contato preventivo cliente, maturação de direito, janela de protocolo, carteira potencial INSS, conversão futuro em ativo, follow-up de cliente em espera, dueDateTime D-60, contato D-90 preventivo, próxima ação aposentadoria futura, abandonadas Aposentadorias Futuras. Cruza com base-aposentadoria-regra-permanente-ec103, base-aposentadoria-transicao-ec103, base-aposentadoria-pcd-lc142, base-aposentadoria-direito-adquirido, ponte-orquestrador-previdenciario e base-cnis-acerto-indicadores."
+description: "Pipeline operacional pró-segurado de gestão da carteira de Aposentadorias Futuras, identificando o momento exato de acionamento, antecipação documental e contato preventivo. Use SEMPRE que mencionar carteira de aposentadoria futura, lista Aposentadorias Futuras, cliente esperando direito amadurecer, monitoramento de DER próxima, marco etário próximo, completar idade para aposentadoria, completar tempo de contribuição, gatilho de acionamento, contato preventivo cliente, maturação de direito, janela de protocolo, carteira potencial INSS, conversão futuro em ativo, follow-up de cliente em espera, dueDateTime D-60, contato D-90 preventivo, próxima ação aposentadoria futura, abandonadas Aposentadorias Futuras. Cruza com base-aposentadoria-regra-permanente-ec103, base-aposentadoria-transicao-ec103, base-aposentadoria-pcd-lc142, base-aposentadoria-direito-adquirido, ponte-orquestrador-previdenciario e base-cnis-acerto-indicadores."
 ---
 
 # Pipeline de Aposentadorias Futuras
 
 ## Escopo
 
-Skill operacional pró-segurado do escritório Paulo Roberto Tercini Filho. Orienta a gestão sistemática da lista 🙏 Aposentadorias Futuras do Microsoft To Do, que concentra clientes JÁ atendidos cujo direito ainda não amadureceu. Hoje a lista tem 377 tarefas, 89 % abertas, sendo 154 abandonadas há mais de 180 dias e apenas 11 % de taxa de fechamento. É a maior carteira potencial inativa do escritório e exige tratamento de funil ativo.
+Gestão da lista Aposentadorias Futuras do Microsoft To Do (nome da lista com emoji inicial), que reúne clientes já atendidos cujo direito ainda não se completou. É a maior carteira potencial inativa do escritório e exige acompanhamento ativo.
 
 ## Premissa central
 
-Cliente em Aposentadorias Futuras NÃO é cliente arquivado. É cliente em "stand-by" com acordo prévio de retorno. A janela útil de acionamento é estreita. Se o escritório não contata no momento certo, o cliente:
-1. Esquece de retornar e procura outro advogado
-2. Protocola sozinho pelo Meu INSS
-3. Perde a janela ideal e recebe benefício menor
-
-A boa gestão da carteira converte espera em receita futura. A má gestão é perda silenciosa.
+Cliente em Aposentadorias Futuras não está arquivado: aguarda, com acordo de retorno, o cumprimento do requisito. Sem contato no momento certo, o cliente procura outro advogado, protocola sozinho pelo Meu INSS ou perde a data mais vantajosa e recebe benefício menor.
 
 ## Regra dos 3 marcos temporais
 
-Para cada tarefa em 🙏 Aposentadorias Futuras com data alvo definida, configurar três marcos:
+Para cada tarefa em Aposentadorias Futuras com data alvo definida, configurar três marcos:
 
 **Marco D-90 (90 dias antes da data alvo).** Contato preventivo. Não pede ação. Apenas reativa o relacionamento. Mensagem padrão "estamos chegando perto, vamos preparar a documentação". Confirma telefone, endereço, e checa se o cliente continuará com o escritório.
 
@@ -30,7 +25,7 @@ Para cada tarefa em 🙏 Aposentadorias Futuras com data alvo definida, configur
 
 ## Configuração no Microsoft To Do
 
-Cada tarefa em 🙏 Aposentadorias Futuras deve ter no body, em formato fixo:
+Cada tarefa em Aposentadorias Futuras deve ter no body, em formato fixo:
 
 ```
 [BENEFÍCIO ALVO]: Aposentadoria por Idade Urbana / TC / PCD LC 142 / etc
@@ -46,9 +41,9 @@ FIXO: tem documentos físicos no envelope X do armário
 
 E no `dueDateTime` da tarefa, configurar a data alvo MENOS 60 dias (D-60). O Microsoft Graph não suporta múltiplos dueDateTimes, então adota-se o D-60 como gatilho operacional principal.
 
-## Diagnóstico atual da carteira
+## Diagnóstico da carteira (levantamento de 2026)
 
-A auditoria identificou:
+O levantamento identificou:
 - 377 tarefas totais, 336 abertas, 41 concluídas
 - 154 abandonadas há mais de 180 dias
 - 68 sem nenhuma entrada datada (vácuo informacional)
@@ -59,7 +54,7 @@ Há concentração de Aposentadoria por Idade Urbana (186 dos 336 abertos = 55 %
 
 ## Rotina mensal de varredura
 
-No primeiro dia útil de cada mês, executar `maturacao_aposentadorias.py` (a construir) que percorre a lista 🙏 Aposentadorias Futuras e gera três relatórios:
+No primeiro dia útil de cada mês, executar `maturacao_aposentadorias.py` (a construir) que percorre a lista Aposentadorias Futuras e gera três relatórios:
 
 1. **Acionamento iminente.** Tarefas cujo dueDateTime está nos próximos 60 dias. Aciona D-60.
 2. **Pré-acionamento.** Tarefas cujo dueDateTime está entre 60 e 120 dias. Aciona D-90.
@@ -81,7 +76,7 @@ Triagem em sessão dedicada (Paulo + Amanda) com 4 destinos possíveis:
 
 ## Documentação prévia obrigatória
 
-Por padrão, ao cadastrar cliente em 🙏 Aposentadorias Futuras, registrar no body:
+Por padrão, ao cadastrar cliente em Aposentadorias Futuras, registrar no body:
 
 - Espécie de benefício e regra de cálculo aplicável
 - Lista de contribuições já comprovadas
@@ -96,25 +91,25 @@ Isso evita que, na hora do acionamento, perca-se tempo refazendo onboarding.
 
 **Cliente perdeu qualidade de segurado durante a espera.** Verificar período de graça, contribuições facultativas em manutenção. Se perdeu, recalcular janela.
 
-**Surgiu nova regra mais favorável.** Periodicamente reavaliar se o caso ganhou hipótese alternativa (transição vs permanente, especial pós-Pareceres Fundacentro).
+**Surgiu regra mais favorável.** Reavaliar periodicamente as hipóteses alternativas (transição ou permanente, tempo especial, deficiência).
 
-**Cliente já contribuiu o suficiente para aposentadoria proporcional.** Avaliar se vale antecipar com cálculo menor antes da data alvo.
+**Cliente já cumpre outra regra antes da data alvo.** Comparar a RMI imediata com a da regra futura (por exemplo, art. 17 com fator previdenciário contra art. 15 ou 20) e o valor acumulado das parcelas.
 
 **Cliente faleceu sem aposentar.** Pensão por morte para dependentes. Skill `base-pensao-por-morte-pos-reforma`.
 
 ## Estratégia administrativa
 
-Protocolo no Meu INSS deve ser feito **no dia em que o requisito é cumprido**, não antes. Pedidos antecipados são indeferidos por ausência de requisito e geram retrabalho. Uma exceção é a aposentadoria especial pós-Tema 709 STF, em que se pode pedir antes da DER se já há tempo especial computado e o cliente continuar exposto.
+Protocolo no Meu INSS no dia em que o requisito é cumprido. Pedido antecipado tende ao indeferimento; se feito, requerer a reafirmação da DER no próprio processo administrativo (IN 128/2022, art. 577; Tema 995 STJ). Na aposentadoria especial, o segurado que permanece na atividade nociva tem o benefício cessado após a implantação (Tema 709 STF): orientar o afastamento antes.
 
-Quando o cliente PODE escolher entre regras (transição vs permanente), simular ambas e protocolar a mais vantajosa. Se houver dúvida, protocolar a mais fácil (idade ou TC) e, em paralelo, instruir judicial pela mais vantajosa.
+Havendo mais de uma regra cumprida, simular todas e requerer a mais vantajosa, com pedido expresso de análise do melhor benefício (Tema 334 STF).
 
 ## Estratégia judicial
 
-Se INSS demora mais de 60 dias após DER, MS por mora administrativa pelo acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Skill `base-ms-decadencia-omissao-demora`.
+Se o INSS ultrapassa o prazo de análise do acordo homologado no RE 1.171.152/STF, MS por mora administrativa (`base-ms-decadencia-omissao-demora`).
 
 Se INSS indefere DER cumprida, recurso ordinário ao CRPS em 30 dias. Skill `ponte-workflow-crps`.
 
-Se há divergência de cálculo, ação ordinária revisional pós-concessão. Não esperar. Decadência pode aproximar.
+Divergência de cálculo: revisão administrativa ou judicial logo após a concessão, dentro do prazo de 10 anos do art. 103 da Lei 8.213/91.
 
 ## Integração com outras skills do escritório
 
@@ -128,14 +123,14 @@ Se há divergência de cálculo, ação ordinária revisional pós-concessão. N
 ## Métrica de sucesso
 
 Indicadores a acompanhar mensalmente:
-- Quantidade de clientes em 🙏 Aposentadorias Futuras (estável é OK)
+- Quantidade de clientes em Aposentadorias Futuras (estável é OK)
 - Conversões para protocolado (meta crescente)
 - Taxa de abandono (clientes sem contato há mais de 1 ano - meta zero)
 - Tempo médio entre data alvo e protocolo efetivo (meta 0 a 30 dias)
 
 ## Link operacional
 
-Lista no Microsoft To Do, `🙏 Aposentadorias Futuras`. Acessível pelo conector Microsoft Graph com escopo `Tasks.ReadWrite`.
+Lista no Microsoft To Do, `Aposentadorias Futuras`. Acessível pelo conector Microsoft Graph com escopo `Tasks.ReadWrite`.
 
 Script auxiliar `maturacao_aposentadorias.py` (em construção no repositório `paulotercini/marketplaceterciniinss`).
 

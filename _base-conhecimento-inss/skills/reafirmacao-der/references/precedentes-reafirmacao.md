@@ -59,12 +59,12 @@ Plenário, julgado em 26/10/2016
 ### Tese firmada
 **PUIL 5001623-70.2022.4.02.5005/ES**
 Rel. Juiz Federal João Carlos Cabrelon de Oliveira
-TNU, julgado em 04/12/2024 (auditoria 03/10/2026)
+TNU, julgado em 04/12/2024
 Documento 900000273465
 
 "Não há óbice à reafirmação da data de entrada do requerimento administrativo para o momento em que o segurado implementou os requisitos para um melhor benefício, enquanto aguarda a análise do seu pleito na via administrativa."
 
-O voto fundamentou com o Tema 334/STF, art. 577 IN 128/2022, art. 690 IN 77/2015. Afastou a tese de desaposentação, distinguindo expressamente do Tema 503/STF. Aplicou a Questão de Ordem nº 20 para adequação do julgado.
+O voto fundamentou com o Tema 334/STF, o art. 577 da IN 128/2022 e o art. 690 da IN 77/2015 (revogada). Afastou a tese de desaposentação, distinguindo expressamente do Tema 503/STF. Aplicou a Questão de Ordem nº 20 para adequação do julgado.
 
 Paradigmas citados no voto (4ª TR/RS):
 - Recurso Cível 5009546-58.2023.4.04.7107/RS (1.70)
@@ -73,7 +73,7 @@ Paradigmas citados no voto (4ª TR/RS):
 ### PEDILEF provido. Reafirmação entre PA e ajuizamento
 **PEDILEF 5053159-26.2022.4.02.5101/RJ**
 Rel. Juiz Federal Paulo Roberto Parca de Pinho
-Incidente da parte autora conhecido e provido em 07/08/2024 (auditoria 03/10/2026)
+Incidente da parte autora conhecido e provido em 07/08/2024
 
 Hipótese específica, reafirmação da DER entre a comunicação da decisão administrativa e o ajuizamento da ação. Turma Recursal do RJ havia entendido que a reafirmação judicial só cabe para momento posterior ao ajuizamento. A TNU deu provimento ao incidente, com aplicação da Questão de Ordem 20.
 
@@ -104,29 +104,24 @@ Anulou decisão da 6ª TR/SP que rejeitava reafirmação no PA. Citou 5 preceden
 
 ## 5. TRF4. Precedentes Relevantes
 
-### IAC TRF4 nº 5. Penosidade de motoristas
-**AC 5007975-25.2013.4.04.7003**
-3ª Seção, 06/04/2017
-Tese favorável ao reconhecimento da penosidade de motoristas e cobradores de ônibus (por analogia, motoristas de caminhão), inclusive nos intervalos laborados após a extinção do enquadramento por categoria profissional pela Lei 9.032/1995.
-
 ### Reafirmação para regra 95/105 pontos. "obrigatória"
 **AC 5011644-55.2019.4.04.7204/SC**
 Rel. Juiz Federal Marcelo Roberto de Oliveira
 Central Digital de Auxílio 2
 
-Reafirmação de 01/12/2014 para 06/04/2016, quando segurado atingiu 95 pontos (art. 29-C, Lei 8.213/91). Acórdão declarou a reafirmação "obrigatória" para concessão do benefício mais vantajoso. Fundamento no art. 690, parágrafo único, IN 77/2015 e arts. 493/933 CPC.
+Reafirmação de 01/12/2014 para 06/04/2016, quando segurado atingiu 95 pontos (art. 29-C, Lei 8.213/91). Acórdão declarou a reafirmação "obrigatória" para concessão do benefício mais vantajoso. Fundamento no art. 690, parágrafo único, da IN 77/2015 (revogada; hoje IN 128, art. 577) e nos arts. 493 e 933 do CPC.
 
 ### Síntese dos cenários de efeitos financeiros
-**Acórdão TRF4, caso motorista de caminhão (identificado nos prints)**
+**Acórdão TRF4 sem número localizado** [NÃO CONFIRMADO: não citar sem o número]
 Sistematizou os três cenários de efeitos financeiros e juros conforme o momento da implementação, posteriormente adotado por outros julgados.
 
 ### Reafirmação no PA
 **AC 5002085-60.2021.4.04.9999**
 11ª Turma, Rel. Marina Vasques Duarte, 28/08/2024
-Ementa, reafirmação da DER no âmbito administrativo, art. 690 IN INSS/PRES nº 77/2015, aplicável a todas as situações que resultem em benefício mais vantajoso.
+Ementa, reafirmação da DER no âmbito administrativo, art. 690 da IN 77/2015 (revogada), aplicável a todas as situações que resultem em benefício mais vantajoso.
 
 ### Extensionista rural da EMATER. tempo especial + reafirmação + honorários
-**Acórdão TRF4 (identificado nos prints)**
+**Acórdão TRF4 sem número localizado** [NÃO CONFIRMADO: não citar sem o número]
 Reconhecimento de tempo especial de extensionista rural de bem estar social da EMATER. Reafirmação da DER de 23/02/2017 para 10/06/2017 (PA ainda em curso). Honorários sobre parcelas vencidas até o acórdão, majorados para 15% (art. 85, §3º, I, CPC).
 
 ---
@@ -146,7 +141,7 @@ Relevância para o escritório. TRF3, jurisdição do escritório. Admitiu MS co
 
 ## 7. CRPS. Enunciado 1
 
-**CORREÇÃO DE AUDITORIA (Onda 122, 04/09/2026).** Os incisos I e II deste arquivo traziam redação NÃO OFICIAL, que não corresponde ao texto publicado. A redação anterior parafraseava o direito ao melhor benefício em termos genéricos e atribuía a alteração a um "Despacho 37/2019" não confirmado. Substituída pelo texto oficial conferido no DOU, o mesmo que consta do `base-precedentes-catalogo-vinculantes/references/CATALOGO-ENUNCIADOS-CRPS.md`. Enunciado citado em peça com redação parafraseada é passivo, porque o CRPS confere o próprio enunciado.
+Texto conferido no DOU e em `base-precedentes-catalogo-vinculantes/references/CATALOGO-ENUNCIADOS-CRPS.md`.
 
 Texto oficial (DOU 12/11/2019). Caput. "A Previdência Social deve conceder o melhor benefício a que o beneficiário fizer jus, cabendo ao servidor orientá-lo nesse sentido."
 
@@ -154,7 +149,7 @@ I. Satisfeitos os requisitos para a concessão de mais de um tipo de benefício,
 
 II. Preenchidos os requisitos para mais de uma espécie de benefício na Data de Entrada do Requerimento (DER) e em não tendo sido oferecido ao interessado o direito de opção pelo melhor benefício, este poderá solicitar revisão e alteração para espécie que lhe é mais vantajosa, cujos efeitos financeiros remontarão à DER do benefício concedido originariamente, observada a decadência e a prescrição quinquenal.
 
-III. [O inciso mais útil desta skill.] Implementados os requisitos para o reconhecimento do direito em momento posterior ao requerimento administrativo, poderá ser reafirmada a DER até a data do cumprimento da decisão do CRPS.
+III. Implementados os requisitos para o reconhecimento do direito em momento posterior ao requerimento administrativo, poderá ser reafirmada a DER até a data do cumprimento da decisão do CRPS.
 
 IV. Retornando os autos ao INSS, cabe ao interessado a opção pela reafirmação da DER mediante expressa concordância, aplicando-se a todas as situações que resultem em benefício mais vantajoso ao interessado.
 

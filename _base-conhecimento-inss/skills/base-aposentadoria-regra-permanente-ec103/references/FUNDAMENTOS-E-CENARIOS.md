@@ -1,82 +1,35 @@
 # Regra Permanente EC 103/2019. Fundamentos e Cenários
 
-## 1. Fundamentos normativos
+## 1. Fundamentos complementares
 
-Constituição Federal, art. 201, §7º, redação da EC 103/2019. Idades mínimas de 65 anos (homem) e 62 anos (mulher) para o RGPS urbano, mantida a regra de 60 anos (homem) e 55 anos (mulher) para o trabalhador rural e segurado especial.
+- Decreto 3.048/99, art. 51: aposentadoria programada no regulamento.
+- Carência: 180 contribuições (art. 25, II). A tabela do art. 142 da Lei 8.213/91 vale apenas para quem se filiou até 24/07/1991, conforme o ano em que completou a idade.
+- Perda da qualidade de segurado: não se considera na aposentadoria por idade quando o segurado tem a carência na data do requerimento (Lei 10.666/2003, art. 3º, §1º). O art. 27-A da Lei 8.213/91 (metade da carência após nova filiação) alcança apenas os incisos I, III e IV do art. 25 (incapacidade, salário-maternidade e auxílio-reclusão).
+- Contribuinte individual: contribuições em atraso contam para carência apenas se posteriores à primeira paga em dia (Lei 8.213/91, art. 27, II).
 
-EC 103/2019, art. 19. Tempo mínimo de contribuição de 20 anos (homem) e 15 anos (mulher). A regra vale para filiados a partir de 14 de novembro de 2019; quem era filiado até 13 de novembro de 2019 se aposenta por idade pela transição do art. 18 (65 anos, homem; 62 anos, mulher; 15 anos de contribuição) (auditoria 03/10/2026).
+## 2. Cenários
 
-Lei 8.213/91, art. 25, II. Carência de 180 contribuições.
+### Cenário 1. Segurada filiada após a reforma
+Começou a contribuir em 2021, aos 45 anos. Aos 62 (2038) terá 17 anos de contribuição; carência cumprida em 2036. RMI de 64% da média (60% + 2% × 2 anos acima de 15).
 
-Lei 8.213/91, art. 48. Regra da aposentadoria rural por idade, mantida após a reforma, com 60 anos (homem), 55 anos (mulher) e 15 anos de atividade rural.
+### Cenário 2. Segurado filiado antes da reforma
+Contribuiu de forma esparsa entre 1985 e 2019 (16 anos). Aos 65 anos, com 15 anos ou mais de contribuição, aposenta-se pela transição do art. 18 da EC 103, que exige 15 anos também do homem. O art. 19, que exigiria 20 anos, não se aplica.
 
-Lei 8.213/91, art. 48, §3º e §4º. Aposentadoria híbrida (soma de tempo urbano e rural) mantida após a reforma.
-
-Decreto 3.048/99, art. 51 e seguintes. Regulamentação da aposentadoria por idade.
-
-## 2. Cenários operacionais pró-segurado
-
-### Cenário 1. Segurada com filiação após a reforma
-
-Segurada que começou a contribuir em 2021 aos 45 anos. Aos 62 anos (2038), terá 17 anos de contribuição, cumprindo o tempo mínimo de 15 anos. Carência de 180 já cumprida desde 2036. Elegível pela regra permanente.
-
-### Cenário 2. Segurado filiado antes da reforma sem transição vantajosa
-
-Segurado que contribuiu esporadicamente entre 1985 e 2019, com 16 anos de contribuição efetivos. Em 2024 aos 60 anos, continua contribuindo. Aos 65 anos com 21 anos de contribuição, elegível pela transição por idade do art. 18 da EC 103, que exige 15 anos de contribuição de quem era filiado até 13/11/2019, e não pela regra permanente (auditoria 03/10/2026). As transições por tempo de contribuição exigiriam 35 anos, inviáveis.
-
-### Cenário 3. Facultativa de baixa renda
-
-Dona de casa com renda familiar até 2 salários mínimos e família inscrita no CadÚnico. Contribui com alíquota de 5% sobre salário mínimo pelo art. 21 §2º II b da Lei 8.212/91. Aos 62 anos e 15 anos de contribuição, elegível pela regra permanente. Carência deve estar cumprida.
+### Cenário 3. Facultativa de baixa renda filiada após a reforma
+Sem renda própria, dedicada ao trabalho doméstico no âmbito da residência, família inscrita no CadÚnico com renda de até 2 salários mínimos (Lei 8.212/91, art. 21, §2º, II, "b", e §4º). Alíquota de 5% sobre o salário mínimo. Aos 62 anos, com 15 anos de contribuição validada, aposenta-se com 60% da média, elevada ao salário mínimo (CF, art. 201, §2º).
 
 ### Cenário 4. Segurado rural
+Homem com 60 anos e 18 anos de atividade rural comprovada: aposentadoria por idade rural (art. 48, §1º), com início de prova material complementado por prova testemunhal (art. 55, §3º).
 
-Rural com 60 anos (homem) em 2024 e 18 anos de atividade rural comprovada. Aposentadoria rural urbana pelo art. 48 da Lei 8.213/91. Não se aplica a regra permanente urbana do art. 19 da EC 103. Prova material complementada por testemunhal.
-
-### Cenário 5. Aposentadoria híbrida
-
-Segurado com 5 anos de atividade rural e 10 anos de atividade urbana. Aos 65 anos, elegível pela aposentadoria híbrida do art. 48 §3º da Lei 8.213/91. A reforma não alterou a híbrida.
+### Cenário 5. Híbrida
+Homem com 5 anos rurais e 10 urbanos, aos 65 anos: art. 48, §3º, com cômputo do tempo rural remoto para carência (Tema 1007 STJ).
 
 ### Cenário 6. Maximização da RMI
+Homem com 20 anos de contribuição aos 65 anos recebe 60% da média. Cada ano adicional acrescenta 2%. Comparar o ganho com o tempo de espera.
 
-Segurado que completará 20 anos de contribuição aos 65 anos. Pode optar por continuar contribuindo para elevar a RMI em 2% por ano excedente. Análise estratégica.
+### Cenário 7. Contribuinte individual com período sem recolhimento
+Atividade comprovada com recolhimento em atraso: conta como tempo após indenização (Lei 8.212/91, art. 45-A); para carência, observar o art. 27, II, da Lei 8.213/91 (`indenizacao-contribuicoes-atraso`).
 
-### Cenário 7. Cenário híbrido com contribuinte individual
+## 3. Documentos
 
-Segurado com 10 anos de contribuinte individual não recolhido, com indenização viável. Recolher em atraso e somar à carência pode viabilizar a regra permanente. Acionar `indenizacao-contribuicoes-atraso`.
-
-### Cenário 8. Segurado sem elegibilidade para transição ou direito adquirido
-
-Perfil esporádico, sem tempo mínimo para transição. Regra permanente torna-se a única via. O planejamento deve maximizar contribuições nos últimos anos para elevar a RMI.
-
-## 3. Documentos essenciais
-
-CNIS completo com todos os vínculos e carências acumuladas.
-CTPS com páginas de anotações.
-Guias GPS de contribuintes individuais e facultativos.
-Certidão de nascimento para conferência da idade.
-Inscrição no CadÚnico para facultativa de baixa renda.
-Documentos rurais (notas de produtor, DAP, CAF, contratos de arrendamento) quando aplicável.
-
-## 4. Carência específica
-
-Carência de 180 contribuições. Para filiados antes de 24 de julho de 1991, aplica-se a regra de transição do art. 142 da Lei 8.213/91, com tabela progressiva. Filiados após 24 de julho de 1991 seguem a regra de 180 contribuições.
-
-Atenção para a perda e recuperação da qualidade de segurado. O art. 27-A da Lei 8.213/91, com redação da Lei 13.846/2019, exige metade da carência após nova filiação apenas para auxílio-doença, aposentadoria por invalidez, salário-maternidade e auxílio-reclusão; nas aposentadorias programáveis, a perda da qualidade não é considerada (art. 3º, caput e §1º, da Lei 10.666/2003) (auditoria 03/10/2026, retirado o Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé). Acionar `periodo-graca-qualidade-segurado`.
-
-## 5. Cruzamento com outras skills
-
-Acionar `base-aposentadoria-transicao-ec103` para comparativo obrigatório.
-Acionar `base-aposentadoria-direito-adquirido` para verificar acervo pré-reforma.
-Acionar `base-calculo-rmi-ec103` para apuração detalhada da RMI.
-Acionar `cnis-acerto-indicadores` para acerto de pendências.
-Acionar `indenizacao-contribuicoes-atraso` para períodos faltantes.
-Acionar `aposentadoria-idade-hibrida` para híbrida.
-Acionar `segurado-especial-rural` para rural.
-
-## 6. Alerta estratégico
-
-Primeiro, o requerimento pela regra permanente deve ser feito apenas após confirmação de que nenhuma transição é mais vantajosa. A comparação com as transições dos arts. 15, 16, 17, 18 e 20 da EC 103 é obrigatória; a do art. 18 exige do homem filiado até 13/11/2019 só 15 anos de contribuição (auditoria 03/10/2026).
-
-Segundo, em caso de indeferimento da regra permanente por falta de carência ou tempo, verificar se há pedágio de 50% elegível que permite acesso antecipado.
-
-Terceiro, na regra permanente rural e híbrida, a prova é tema crítico. Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
+CNIS; CTPS; guias de recolhimento do contribuinte individual e do facultativo; documento de identidade; comprovante de inscrição no CadÚnico (facultativo de baixa renda); documentos rurais (notas de produtor, contratos de arrendamento, cadastro no CAF).

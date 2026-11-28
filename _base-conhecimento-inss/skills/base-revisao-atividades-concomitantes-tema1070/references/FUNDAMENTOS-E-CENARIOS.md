@@ -1,49 +1,23 @@
-# Atividades Concomitantes. Fundamentos e Cenários
+# Atividades Concomitantes. Cenários
 
-## 1. Marco normativo aplicável
+Base normativa e janela no SKILL.md.
 
-Lei 8.213/91, art. 32 (redações originária e atual). Lei 9.876/99. Lei 13.846/2019. MP 871/2019. EC 103/2019. IN INSS 128/2022, arts. 246 e 247.
+## 1. Cenário numérico
 
-## 2. Cenário 1. Professor com outra atividade
+Aposentadoria com DIB em 2017. Em parte do PBC, o segurado tinha emprego com salário de contribuição de R$ 3.000 e atividade de contribuinte individual com R$ 2.000, no mesmo mês. Pelo art. 32 original, sem cumprir os requisitos em cada atividade, a segunda atividade entrava na proporção entre os anos de contribuição nela e o tempo exigido. Pelo Tema 1070, o salário de contribuição daquele mês é R$ 5.000, desde que abaixo do teto. A diferença na média depende do número de meses concomitantes no PBC.
 
-Professor da rede pública com vínculo simultâneo na rede privada. Antes de 13/11/2019, cálculo proporcional. Pós, soma integral. Revisão pelo Tema 1.070 STJ.
+## 2. Situações
 
-## 3. Cenário 2. Médico em dois hospitais
+- **Dois empregos (médico, professor, enfermeiro):** soma, limitada ao teto mensal.
+- **Empregado e sócio com pró-labore:** soma; exigir o recolhimento do pró-labore no CNIS.
+- **Empregado e MEI:** soma; a contribuição do MEI (5% do salário mínimo) não conta para aposentadoria por tempo de contribuição sem complementação (Lei 8.212/91, art. 21, §3º).
+- **Empregado e vereador:** o exercente de mandato eletivo é segurado obrigatório (Lei 8.213/91, art. 11, I, "j"); soma.
+- **Empregado e cooperado:** soma, com prova da retenção pela cooperativa.
+- **Segurado especial com vínculo urbano:** o período rural sem contribuição não gera salário de contribuição; não há soma.
 
-Médico com vínculo em dois hospitais simultâneos. Soma dos salários de contribuição até o teto. Revisão admitida.
+## 3. Método
 
-## 4. Cenário 3. Vereador com vínculo CLT
-
-Vereador com mandato eletivo e emprego CLT. Soma admitida. CNIS deve registrar ambos.
-
-## 5. Cenário 4. Sócio administrador com emprego
-
-Sócio com pró-labore e empregado em outra empresa. Soma integral.
-
-## 6. Cenário 5. MEI com CLT
-
-MEI mínimo + emprego CLT. Soma admitida com observância do teto. Atenção à carência específica do MEI.
-
-## 7. Cenário 6. Segurado especial com vínculo
-
-Atividade rural concomitante com vínculo urbano. Cabe enquadramento como contribuinte individual ou empregado, com prova específica.
-
-## 8. Cenário 7. Cooperado e empregado
-
-Cooperado com retenção pela cooperativa e emprego CLT. Soma admitida.
-
-## 9. Cenário 8. Câmara Municipal e CLT
-
-Vínculo na Câmara como CI e empregado CLT. CNIS deve refletir ambos. Tema 1.070 STJ.
-
-## 10. Cenário 9. Atividade autônoma e empregado
-
-Profissional liberal com emprego CLT. Soma admitida desde que recolhidas as contribuições.
-
-## 11. Cenário 10. Período pré-Lei 9.876/99
-
-Cálculo proporcional. Benefícios concedidos no período são revisáveis pelo Tema 1.070 STJ.
-
-## 12. Documentos essenciais
-
-CNIS com todos os vínculos. CTPS. Carta de concessão. Memória de cálculo. Histórico salarial. Recibos de cooperativa, Câmara ou autônomo.
+1. Separar as competências concomitantes do PBC.
+2. Recalcular cada competência com a soma, limitada ao teto.
+3. Comparar a nova média com a da carta de concessão.
+4. Conferir decadência e prescrição antes de propor.

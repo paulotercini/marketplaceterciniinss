@@ -13,7 +13,7 @@ Esta skill consolida as regras de decadência aplicáveis à revisão de benefí
 
 ### Quando emitir alerta
 
-SEMPRE que o usuário informar dados de um caso concreto envolvendo revisão de benefício já concedido, a skill deve calcular automaticamente o prazo decadencial e emitir alerta visual conforme a seguinte classificação
+SEMPRE que o usuário informar dados de um caso concreto envolvendo revisão de benefício já concedido, a skill deve calcular automaticamente o prazo decadencial e emitir alerta visual conforme a seguinte classificação:
 
 **ALERTA VERMELHO. PRAZO CRÍTICO (menos de 6 meses para o esgotamento)**
 Informar que o prazo decadencial está em situação crítica. Recomendar ajuizamento imediato e, simultaneamente, protocolo de pedido de revisão administrativa como cautela adicional. Indicar que qualquer atraso pode resultar em perda irreversível do direito.
@@ -29,7 +29,7 @@ Informar o prazo restante e prosseguir normalmente.
 
 ### Como calcular o prazo
 
-O prazo decadencial de 10 anos conta do dia primeiro do mês seguinte ao do recebimento da primeira prestação (art. 103, caput, Lei 8.213/91, redação da Lei 10.839/2004, restaurada pela ADI 6096/STF).
+O prazo decadencial de 10 anos conta do dia primeiro do mês subsequente ao do recebimento da primeira prestação (art. 103, caput, I, da Lei 8.213/91, na redação da Lei 13.846/2019). A ADI 6096/STF afastou a decadência sobre o indeferimento, o cancelamento e a cessação; o inciso II, quanto à decisão do pedido administrativo de revisão, é o objeto do Tema 1370 STJ.
 
 Para benefícios concedidos antes de 28/06/1997, o prazo conta a partir de 01/08/1997 (Tema 313/STF, RE 626.489/SE).
 
@@ -55,7 +55,7 @@ O art. 103, caput, da Lei 8.213/91 estabelece prazo decadencial de 10 anos para 
 
 ### Consequências práticas do Tema 975
 
-O segurado não pode alegar que a matéria nunca foi submetida ao INSS para escapar da decadência. Mesmo tempo especial, tempo rural, melhor benefício ou qualquer outro elemento não analisado no ato de concessão está sujeito ao prazo decenal.
+O segurado não pode alegar que a matéria nunca foi submetida ao INSS para escapar da decadência. Mesmo tempo especial, tempo rural ou qualquer outro elemento não analisado no ato de concessão está sujeito ao prazo decenal. O direito ao benefício mais vantajoso também decai (Tema 966 STJ).
 
 ### Natureza do prazo
 
@@ -73,13 +73,13 @@ Se a pretensão do segurado é a concessão de benefício diverso (por exemplo, 
 
 ### Revisões determinadas por lei
 
-A decadência não se aplica a revisões impostas por determinação legal (ex. art. 26 da Lei 8.870/94). Esse entendimento constava expressamente da IN 45/2010 do INSS.
+A readequação aos tetos das EC 20/1998 e 41/2003 (Tema 76 STF) não revê o ato de concessão e não se sujeita à decadência; apenas as parcelas prescrevem (`base-revisao-teto-buraco-negro-verde`).
 
-## CONTROVÉRSIA SOBRE PRAZOS AUTÔNOMOS. SITUAÇÃO CRÍTICA EM 2025-2026
+## CONTROVÉRSIA SOBRE PRAZOS AUTÔNOMOS
 
 ### O que diz o Tema 256 da TNU (posição favorável ao segurado)
 
-Tese firmada em 27/05/2021 (PEDILEF 5003556-15.2011.4.04.7008/PR, relator para acórdão Juiz Federal Fábio de Souza Silva)
+Tese firmada em 27/05/2021 (PEDILEF 5003556-15.2011.4.04.7008/PR, relator para acórdão Juiz Federal Fábio de Souza Silva).
 
 Existem dois prazos decadenciais distintos e autônomos de 10 anos. O primeiro corre contra o ato original de concessão (contado do primeiro pagamento). O segundo corre contra o ato de indeferimento do pedido de revisão administrativa (contado da ciência da decisão administrativa). O segundo prazo somente aproveita às matérias efetivamente suscitadas no requerimento administrativo revisional.
 
@@ -93,11 +93,11 @@ O STJ, por decisões monocráticas, vem negando a existência do segundo prazo a
 
 ### O Tema Repetitivo 1370 do STJ (pendente. definirá a questão)
 
-Afetado em 12/08/2025 pela 1ª Seção do STJ (REsp 2.178.138/SC e REsp 2.205.049/RS, rel. Min. Gurgel de Faria). Suspensão nacional de todos os recursos sobre a matéria. Questão submetida a julgamento, na literalidade
+Afetado em 12/08/2025 pela 1ª Seção do STJ (REsp 2.178.138/SC e REsp 2.205.049/RS, rel. Min. Gurgel de Faria). Suspensão nacional de todos os recursos sobre a matéria. Questão submetida a julgamento, na literalidade:
 
 "Interpretação do art. 103, caput, I e II, da Lei n. 8.213/1991 à luz das redações introduzidas pela Lei n. 10.839/2004 e a Lei n. 13.846/2019, de modo a aferir a existência, ou não, de prazos de decadência distintos e autônomos para revisar (i) o ato de concessão e (ii) o ato de deferimento ou indeferimento de pedido administrativo de revisão de benefícios previdenciários."
 
-O julgamento está previsto para 2026. Até março de 2026, não há decisão colegiada do STJ sobre a matéria. Todas as manifestações contrárias foram monocráticas.
+Situação em 28/11/2026: "Em Julgamento", sem tese firmada (página de repetitivos do STJ e MCP `superiores`). As manifestações contrárias conhecidas são monocráticas. Conferir a situação antes de cada peça.
 
 ### PUIL 3687/PR
 
@@ -156,14 +156,15 @@ Ao auditar sentenças ou acórdãos que reconheceram ou negaram decadência, ver
 
 | Fonte | Conteúdo | Status |
 |---|---|---|
-| Art. 103, caput, Lei 8.213/91 | Prazo decadencial de 10 anos para revisão | Vigente (redação Lei 10.839/2004, restaurada pela ADI 6096) |
+| Art. 103, caput, Lei 8.213/91 | Prazo decadencial de 10 anos para revisão | Vigente (redação da Lei 13.846/2019, com a ADI 6096) |
 | Art. 207, Código Civil | Decadência não se suspende nem se interrompe | Vigente |
 | Tema 313/STF (RE 626.489) | Não há decadência para concessão inicial | Vigente |
-| ADI 6096/STF | Inconstitucionalidade da decadência para indeferimento/cessação | Vigente |
+| ADI 6096/STF | Inconstitucionalidade da decadência para indeferimento, cancelamento e cessação | Vigente |
 | Tema 975/STJ | Decadência incide mesmo sobre matéria não apreciada | Vigente |
 | Tema 256/TNU | Prazos autônomos para ato de concessão e ato de revisão | Em xeque pelo Tema 1370 |
 | IAC 11/TRF4 | Prazos autônomos (alinhado ao Tema 256) | Em xeque pelo Tema 1370 |
-| Tema 1370/STJ | Definirá existência ou não de prazos autônomos | Afetado em 12/08/2025, suspensão nacional, pendente |
+| Tema 966/STJ | Decadência alcança o direito ao benefício mais vantajoso | Vigente (adverso) |
+| Tema 1370/STJ | Definirá existência ou não de prazos autônomos | Afetado em 08/2025, em julgamento em 28/11/2026 |
 | PUIL 3687/PR | Uniformização contra Tema 256 | Pendente |
 | REsp 2.199.944 (Min. Falcão) | Nega prazos autônomos (monocrática) | Decisão de 17/03/2025 |
 

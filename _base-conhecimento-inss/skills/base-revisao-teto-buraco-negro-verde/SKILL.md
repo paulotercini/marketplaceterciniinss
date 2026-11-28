@@ -1,115 +1,50 @@
 ---
 name: base-revisao-teto-buraco-negro-verde
-description: "Revisão do teto previdenciário, buraco negro e buraco verde, com aplicação das ECs 20/1998 e 41/2003, Tema 76 STF (RE 564.354), revisão do art. 26 da Lei 8.870/1994 e revisão pelo art. 144 da Lei 8.213/91. Use SEMPRE que mencionar revisão do teto, aplicação do teto previdenciário, limitador de RMI, buraco negro (outubro 1988 a abril 1991), buraco verde (março 1994 a fevereiro 1997), art. 144 Lei 8.213/91, art. 26 Lei 8.870/1994, Tema 76 STF, RE 564.354, EC 20/1998, EC 41/2003, readequação ao novo teto, RMI glosada pelo teto, salário de benefício limitado, valores acima do teto, revisão do teto aposentadorias, integração teto pensão por morte, teto após reforma, decadência revisão teto, prescrição parcelas teto. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
+description: "Revisão do teto previdenciário, buraco negro e buraco verde, com aplicação das ECs 20/1998 e 41/2003, Tema 76 STF (RE 564.354), revisão do art. 26 da Lei 8.870/1994 e revisão pelo art. 144 da Lei 8.213/91, Tema 930 STF, Tema 1005 STJ. Use SEMPRE que mencionar revisão do teto, aplicação do teto previdenciário, limitador de RMI, buraco negro (outubro 1988 a abril 1991), buraco verde (DIB de 05/04/1991 a 31/12/1993), art. 144 Lei 8.213/91, art. 26 Lei 8.870/1994, Tema 76 STF, RE 564.354, EC 20/1998, EC 41/2003, readequação ao novo teto, RMI glosada pelo teto, salário de benefício limitado, valores acima do teto, revisão do teto aposentadorias, integração teto pensão por morte, teto após reforma, decadência revisão teto, prescrição parcelas teto. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
 ---
 
-# Revisão do Teto Previdenciário (Buraco Negro e Buraco Verde)
+# Revisão do Teto (Buraco Negro e Buraco Verde)
 
 ## Escopo
 
-Skill temática pró-segurado. Orienta a discussão da revisão por aplicação de novos tetos constitucionais aos benefícios cujo Salário de Benefício foi originariamente glosado pelo teto vigente à época da concessão. Inclui a revisão do buraco negro, período entre outubro de 1988 e abril de 1991, e a revisão do buraco verde, período para benefícios com DIB entre 05/04/1991 e 31/12/1993, além da readequação após as ECs 20/1998 e 41/2003.
+Readequação dos benefícios limitados ao teto aos novos limites das EC 20/1998 e 41/2003, inclusive os concedidos no buraco negro e no buraco verde.
 
-## Marco normativo central
+## Base normativa
 
-CF/88, art. 201, §2º e §11. Limite máximo do valor dos benefícios e regime contributivo.
+- **EC 20/1998, art. 14:** teto de R$ 1.200,00 a partir de 16/12/1998.
+- **EC 41/2003, art. 5º:** teto de R$ 2.400,00 a partir de 01/01/2004.
+- **Lei 8.213/91, art. 144 (buraco negro):** benefícios concedidos entre 05/10/1988 e 05/04/1991 tiveram a RMI recalculada pelas regras da Lei 8.213/91, sem diferenças de 10/1988 a 05/1992 (parágrafo único). Artigo revogado pela MP 2.187-13/2001.
+- **Lei 8.870/94, art. 26 (buraco verde):** benefícios com DIB entre 05/04/1991 e 31/12/1993, cujo salário de benefício foi limitado ao teto (art. 29, §2º, da Lei 8.213/91), foram revistos a partir de 04/1994 pelo percentual entre a média dos 36 salários e o salário de benefício, limitado ao teto de 04/1994.
+- **Lei 8.880/94, art. 21, §3º:** DIB a partir de 03/1994; a diferença entre a média e o teto incorpora-se no primeiro reajuste, também limitada ao teto.
 
-Lei 8.213/91, art. 29. Cálculo do Salário de Benefício.
+## Precedentes
 
-Lei 8.213/91, art. 33. Limites do Salário de Benefício ao teto do Salário de Contribuição.
+- **Tema 76 STF (RE 564.354):** "Não ofende o ato jurídico perfeito a aplicação imediata do art. 14 da Emenda Constitucional 20/1998 e do art. 5º da Emenda Constitucional 41/2003 aos benefícios previdenciários limitados a teto do regime geral de previdência estabelecido antes da vigência dessas normas, de modo a que passem a observar o novo teto constitucional."
+- **Tema 930 STF (RE 937.595):** os benefícios do buraco negro "não estão, em tese, excluídos da possibilidade de readequação segundo os tetos instituídos pelas EC's nº 20/1998 e 41/2003, a ser aferida caso a caso".
+- **Tema 1005 STJ (adverso):** na ação individual com pedido igual ao da ACP do teto, a prescrição se interrompe na data do ajuizamento da ação individual, e não na da ACP.
 
-Lei 8.213/91, art. 144. Reajuste de benefícios concedidos entre outubro de 1988 e abril de 1991 (buraco negro).
+## Mecânica
 
-Lei 8.870/1994, art. 26. Congelamento temporário, origem do buraco verde (DIB de 05/04/1991 a 31/12/1993).
-
-EC 20/1998. Novo teto.
-
-EC 41/2003. Novo teto.
-
-## Marco jurisprudencial
-
-Tema 76 STF, RE 564.354 (numeração corrigida de 327 para 76 na auditoria 25/07/2026). Julgado em 2010. Fixou tese pela readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, observada a parcela que excederia o teto anterior. Precedente nuclear da revisão do teto.
-
-Fonte oficial em https://portal.stf.jus.br
-
-Súmula 260 ex-TFR. Reajuste integral dos benefícios pela maior variação salarial antes da Lei 6.423/1977.
-
-Tema 930 STF, RE 937.595 [CONFERIDO, portal do STF, 04/10/2026]. O buraco negro não está, em tese, excluído da readequação aos tetos das EC 20/1998 e 41/2003, aferida caso a caso pelos parâmetros do RE 564.354. O RE 1.054.232 não foi localizado no portal do STF e não se cita. O Tema 975 STJ é tese adversa de decadência e não se cita na readequação ao teto, que não revisa o ato de concessão (Onda 173).
-
-## Espaço pró-segurado
-
-Primeiro, benefícios com DIB antes de dezembro de 1998 cuja RMI teria superado o teto vigente à época, cabendo revisão pelo teto da EC 20/1998 e pelo teto da EC 41/2003.
-
-Segundo, benefícios concedidos entre outubro de 1988 e abril de 1991, sem aplicação do art. 144 da Lei 8.213/91.
-
-Terceiro, benefícios concedidos para benefícios com DIB entre 05/04/1991 e 31/12/1993, pelo buraco verde, com limitação pelo art. 26 da Lei 8.870/1994.
-
-Quarto, pensões derivadas de benefícios revisáveis, com direito à revisão reflexa.
+A readequação exige que o salário de benefício real (sem limitador), evoluído pelos reajustes, supere o teto em 12/1998 ou em 12/2003. A renda é refeita a partir do valor sem limitação, limitada ao novo teto. Sem glosa pelo teto na concessão ou na revisão dos arts. 144 e 26, não há diferença.
 
 ## Decadência e prescrição
 
-Art. 103 da Lei 8.213/91. Decadência decenal contada do primeiro pagamento.
+- A readequação ao teto não revê o ato de concessão; aplica o novo teto ao benefício em manutenção. Por isso a decadência do art. 103 não incide. Precedente específico do STJ não localizado; conferir antes de citar.
+- A revisão da RMI pelos arts. 144 e 26 está sujeita à decadência e, em 2026, está decaída (Tema 313 STF).
+- Prescrição das parcelas anteriores ao quinquênio do ajuizamento individual (Súmula 85 STJ; Tema 1005 STJ).
 
-Súmula 85 STJ. Prescrição quinquenal das parcelas.
+## Método
 
-A readequação aos tetos das ECs 20/98 e 41/03 (RE 564.354) NÃO se sujeita à decadência do art. 103, por não rever o ato de concessão, apenas as parcelas prescrevem (Súmula 85 STJ).
-
-## Regra pró-segurado
-
-Primeiro, verificar Carta de Concessão e aferir se houve glosa pelo teto.
-
-Segundo, recompor o Salário de Benefício sem o limitador.
-
-Terceiro, aplicar o novo teto da EC 20/1998 em dezembro de 1998.
-
-Quarto, aplicar o novo teto da EC 41/2003 em dezembro de 2003.
-
-Quinto, calcular diferenças. Aplicar juros e correção.
-
-Sexto, aferir vantagem concreta. Protocolar requerimento administrativo (Tema 1124 STJ). Ajuizar ação se necessário.
+1. Carta de concessão e, se houver, carta da revisão do art. 144 ou do art. 26.
+2. Salário de benefício sem limitador e índice de excedente ao teto.
+3. Evolução até 12/1998 e 12/2003 e comparação com os novos tetos.
+4. Conferir se o INSS já readequou (revisão administrativa de 2011) e se há ação anterior.
+5. Requerimento e ação; pedido de diferenças nos cinco anos anteriores ao ajuizamento.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça, acionar `peticao-previdenciaria`.
-Ao simular cálculo, acionar `base-calculo-rmi-ec103`.
-Ao verificar decadência, acionar `decadencia-revisao-previdenciaria`.
-Ao buscar precedentes, acionar `precedentes-previdenciarios`.
-Em fase executiva, acionar `execucao-cumprimento-previdenciario`.
-Em revisão geral, acionar `revisao-peticao`.
-
-## Alertas
-
-A decadência decenal permanece aplicável apenas às revisões de RMI propriamente ditas (art. 144 da Lei 8.213 e art. 26 da Lei 8.870/94); a readequação ao teto escapa dela.
-
-Segundo, pensões derivadas seguem a sorte do benefício originário, com decadência autônoma para os dependentes, conforme IAC 11 TRF4 e leitura do STJ.
-
-Terceiro, revisão depende de glosa efetiva. Sem Salário de Benefício superior ao teto, não há espaço.
-
-Quarto, simulação profissional obrigatória antes do ajuizamento.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Doutrina de apoio
-
-Wladimir Novaes Martinez, teto previdenciário.
-
-Frederico Amado, Tema 76 STF.
-
-Hugo Goes, cálculo.
-
-Fábio Zambitte Ibrahim, princípio da contraprestação.
-
-Daniel Pulino, segurança jurídica.
-
-Marco Aurélio Serau Junior, reforma constitucional.
-
-IBDP, defesa do teto revisado.
-
-## O que NÃO está nesta skill
-
-RVT está em `base-revisao-vida-toda-rvt`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Melhor benefício do art. 29 II está em `base-revisao-art29-melhor-beneficio`. Reajustes ORTN/OTN estão em `base-revisao-reajuste-ortn-otn`.
+`decadencia-revisao-previdenciaria`, `peticao-previdenciaria`, `revisao-peticao`, `base-calculo-rmi-ec103`, `precedentes-previdenciarios`, `execucao-cumprimento-previdenciario`, `base-portarias-dpmf-inss-hub`. Outras revisões: `base-revisao-vida-toda-rvt`, `base-revisao-irsm-fevereiro-1994`, `base-revisao-art29-melhor-beneficio`, `base-revisao-reajuste-ortn-otn`.

@@ -9,7 +9,7 @@ I. pensão por morte deixada por cônjuge ou companheiro de um regime de previd�
 II. pensão por morte deixada por cônjuge ou companheiro de um regime de previdência social com aposentadoria concedida no âmbito do Regime Geral de Previdência Social ou de regime próprio de previdência social ou com proventos de inatividade decorrentes das atividades militares de que tratam os arts. 42 e 142 da Constituição Federal;
 III. pensões decorrentes das atividades militares de que tratam os arts. 42 e 142 da Constituição Federal com aposentadoria concedida no âmbito do Regime Geral de Previdência Social ou de regime próprio de previdência social.
 
-§ 2º. Nas hipóteses das acumulações previstas no § 1º, é assegurada a percepção do valor integral do benefício acumulável de maior valor e de uma parte de cada um dos demais benefícios, apurada cumulativamente de acordo com as seguintes faixas:
+§ 2º. Nas hipóteses das acumulações previstas no § 1º, é assegurada a percepção do valor integral do benefício mais vantajoso e de uma parte de cada um dos demais benefícios, apurada cumulativamente de acordo com as seguintes faixas:
 I. 60% do valor que exceder 1 (um) salário-mínimo, até o limite de 2 (dois) salários-mínimos;
 II. 40% do valor que exceder 2 (dois) salários-mínimos, até o limite de 3 (três) salários-mínimos;
 III. 20% do valor que exceder 3 (três) salários-mínimos, até o limite de 4 (quatro) salários-mínimos;
@@ -35,7 +35,7 @@ Aplicação por faixas, não em bloco único. Cada faixa do benefício de menor 
 
 ## 3. Exemplo numérico (referência salário-mínimo R$ 1.518,00)
 
-Aposentadoria mais vantajosa. R$ 4.500,00. Recebe 100% (R$ 4.500,00).
+Aposentadoria mais vantajosa. R$ 7.000,00. Recebe 100% (R$ 7.000,00).
 
 Pensão por morte. R$ 6.072,00 (4 SM).
 
@@ -51,7 +51,7 @@ Faixa IV. R$ 1.518,00 (de 3 a 4 SM). 20% = R$ 303,60.
 
 Total da pensão após redutor. R$ 3.339,60.
 
-Soma final. R$ 4.500,00 + R$ 3.339,60 = R$ 7.839,60.
+Soma final. R$ 7.000,00 + R$ 3.339,60 = R$ 10.339,60.
 
 Diferença em relação à acumulação integral. Perda de R$ 2.732,40.
 
@@ -89,7 +89,7 @@ Eventual estratégia limita-se a planejamento da DIB para escolher qual benefíc
 
 ### 4.4. Cenário 4. Duas aposentadorias decorrentes de cargos constitucionalmente acumuláveis
 
-Não incide a vedação de acumulação do art. 11 da EC 20/98 quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999 (auditoria 03/10/2026), regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR, auditoria 25/07/2026).
+Não incide a vedação de acumulação do art. 11 da EC 20/98 quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR, auditoria 25/07/2026).
 
 Cada vínculo é considerado isoladamente para fins de teto remuneratório (Temas 377 e 384/STF).
 
@@ -123,7 +123,7 @@ CF/88, art. 37, XVI. Hipóteses de acumulação lícita de cargos públicos.
 
 CF/88, art. 40, § 6º. Vedação à acumulação de mais de uma aposentadoria pelo RPPS, salvo cargos acumuláveis.
 
-CF/88, art. 201, § 4º (redação da EC 103/2019). Disciplina da acumulação no RGPS.
+CF/88, art. 201, § 15 (redação da EC 103/2019). Lei complementar poderá vedar ou limitar a acumulação no RGPS.
 
 EC 19/1998. Definiu o teto remuneratório.
 
@@ -197,7 +197,7 @@ Sempre confirmar o número e a data exata dos acórdãos no portal do STF antes 
 
 A acumulação de aposentadoria do RGPS com pensão por morte do RGPS, ambas posteriores à EC 103/2019, segue o art. 24 com integralidade do benefício mais vantajoso e redutor progressivo no de menor valor.
 
-O art. 24, § 4º, é a chave argumentativa central. Texto literal protege benefícios adquiridos antes de 13/11/2019.
+O art. 24, § 4º, é a chave argumentativa. O texto protege a acumulação quando todos os benefícios foram adquiridos até 13/11/2019.
 
 A Súmula 359 do STF é instrumento doutrinário forte aplicável também ao RGPS por analogia.
 

@@ -1,13 +1,13 @@
 ---
 name: base-acumulacao-beneficios-ec103-art24
-description: "Acumulação de benefícios sob EC 103/2019 art. 24, redutores progressivos e direito adquirido. Use SEMPRE que mencionar acumulação benefícios EC 103, art. 24 EC 103, redutor progressivo, redutor 60% 40% 20% 10%, acumulação aposentadoria pensão, art. 23 EC 103, art. 26 §2º III, ADI 7051, Tema 1300 STF, Tema 359 STF teto soma, Tema 377 STF cargos acumuláveis, Tema 384 STF, Tema 627 STF, RE 1.510.285, Súmula 359 STF, art. 5º XXXVI direito adquirido, art. 37 XI teto, art. 37 XVI cargos acumuláveis, art. 40 §6º RPPS, art. 201 §4º RGPS, controvérsia Primeira Turma STF, aposentadoria pré-reforma pensão pós-reforma, art. 124 Lei 8.213, art. 225 Lei 8.112, art. 165 Portaria MTP 1.467/2022, pensão militar Lei 3.765/1960. Cruza com pensao-por-morte, peticao-previdenciaria, decadencia-revisao-previdenciaria, mandado-seguranca-previdenciario, precedentes-previdenciarios, base-pensao-por-morte-pos-reforma."
+description: "Acumulação de benefícios sob EC 103/2019 art. 24, redutores progressivos e direito adquirido. Use SEMPRE que mencionar acumulação benefícios EC 103, art. 24 EC 103, redutor progressivo, redutor 60% 40% 20% 10%, acumulação aposentadoria pensão, art. 23 EC 103, art. 26 §2º III, ADI 7051, Tema 1300 STF, Tema 359 STF teto soma, Tema 377 STF cargos acumuláveis, Tema 384 STF, Tema 627 STF, RE 1.510.285, Súmula 359 STF, art. 5º XXXVI direito adquirido, art. 37 XI teto, art. 37 XVI cargos acumuláveis, art. 40 §6º RPPS, art. 201 §15 RGPS, controvérsia Primeira Turma STF, aposentadoria pré-reforma pensão pós-reforma, art. 124 Lei 8.213, art. 225 Lei 8.112, art. 165 Portaria MTP 1.467/2022, pensão militar Lei 3.765/1960. Cruza com pensao-por-morte, peticao-previdenciaria, decadencia-revisao-previdenciaria, mandado-seguranca-previdenciario, precedentes-previdenciarios, base-pensao-por-morte-pos-reforma."
 ---
 
 # Acumulação de Benefícios sob a EC 103/2019. Art. 24 e Direito Adquirido
 
 ## 1. Quando acionar esta skill
 
-Acione SEMPRE que houver acumulação de benefícios previdenciários sob ou após a EC 103/2019. Hipóteses típicas. Aposentadoria com pensão por morte. Duas aposentadorias por cargos constitucionalmente acumuláveis. Pensão militar com aposentadoria civil. Benefício pré-reforma com benefício pós-reforma. Aplicação de redutor progressivo pelo INSS.
+Acione SEMPRE que houver acumulação de benefícios previdenciários sob ou após a EC 103/2019. Hipóteses típicas: aposentadoria com pensão por morte. Duas aposentadorias por cargos constitucionalmente acumuláveis. Pensão militar com aposentadoria civil. Benefício pré-reforma com benefício pós-reforma. Aplicação de redutor progressivo pelo INSS.
 
 A skill é fonte primária pró-segurado para confronto do art. 24 da EC 103/2019 com o direito adquirido (CF, art. 5º, XXXVI), com o teto remuneratório (CF, art. 37, XI), com a cumulação lícita de cargos (CF, art. 37, XVI) e com a Súmula 359/STF.
 
@@ -21,19 +21,19 @@ CF/88, art. 37, XVI. Hipóteses de acumulação lícita de cargos públicos.
 
 CF/88, art. 40, § 6º. Vedação à acumulação de mais de uma aposentadoria pelo RPPS, salvo cargos acumuláveis.
 
-CF/88, art. 201, § 4º (redação dada pela EC 103/2019). Disciplina da acumulação no RGPS.
+CF/88, art. 201, § 15 (redação da EC 103/2019). Lei complementar poderá vedar ou limitar a acumulação no RGPS.
 
 EC 103/2019, art. 23, caput. Novo cálculo da pensão por morte (50% + cotas de 10% por dependente).
 
-EC 103/2019, art. 24, caput. Vedação genérica de acumulação de mais de uma pensão.
+EC 103/2019, art. 24, caput. Vedação de mais de uma pensão por morte deixada por cônjuge ou companheiro no mesmo regime, ressalvadas as pensões do mesmo instituidor por cargos acumuláveis.
 
 EC 103/2019, art. 24, § 1º, I a III. Hipóteses excepcionais de acumulação admitida (rol taxativo).
 
 EC 103/2019, art. 24, § 2º, I a IV. Redutores progressivos sobre o benefício de menor valor (60%, 40%, 20%, 10% por faixas de SM).
 
-EC 103/2019, art. 24, § 3º. Apuração do benefício mais vantajoso.
+EC 103/2019, art. 24, § 3º. A aplicação das faixas pode ser revista a qualquer tempo, a pedido, se algum benefício se alterar.
 
-EC 103/2019, art. 24, § 4º. Proteção do direito adquirido aos benefícios anteriores à entrada em vigor da Emenda.
+EC 103/2019, art. 24, § 4º: "As restrições previstas neste artigo não serão aplicadas se o direito aos benefícios houver sido adquirido antes da data de entrada em vigor desta Emenda Constitucional."
 
 EC 103/2019, art. 26, § 2º, III. Novo cálculo da aposentadoria por incapacidade permanente.
 
@@ -41,9 +41,9 @@ Lei 8.213/91, art. 124. Vedações de acumulação no RGPS.
 
 Lei 8.112/90, art. 225. Vedação de acumulação de pensões no RPPS federal.
 
-Lei 3.765/1960, art. 29, II. Acumulação militar autônoma.
+Lei 3.765/1960 (pensões militares) [NÃO CONFIRMADO: conferir o dispositivo exato sobre acumulação].
 
-Portaria MTP 1.467/2022, art. 165. Disciplina dos redutores e definição do benefício mais vantajoso (RPPS).
+Portaria MTP 1.467/2022 (RPPS), disciplina dos redutores [NÃO CONFIRMADO: conferir o artigo].
 
 Súmula 359/STF. "Ressalvada a revisão prevista em lei, os proventos da inatividade regulam-se pela lei vigente ao tempo em que o servidor reuniu os requisitos necessários".
 
@@ -61,25 +61,25 @@ Faixa IV. Acima de 3 até 4 SM. Redutor 80% (recebe 20%).
 
 Faixa V. Acima de 4 SM. Redutor 90% (recebe 10%).
 
-Aplicação progressiva por faixa, não em bloco único.
+O benefício mais vantajoso é pago integralmente; o redutor incide apenas sobre os demais, de forma cumulativa por faixa. Exemplo: benefício menor de 3 SM rende 1 SM + 60% de 1 SM + 40% de 1 SM = 2 SM.
 
 ## 4. Tese central pró-segurado. Direito adquirido (art. 24 § 4º + art. 5º XXXVI CF + Súmula 359/STF)
 
-A aposentadoria reconhecida antes de 13/11/2019 está protegida pelo direito adquirido. O fato superveniente (pensão posterior à reforma) só pode atrair o redutor sobre o benefício novo, não sobre a aposentadoria pré-existente.
+O § 4º afasta as restrições quando o direito "aos benefícios" (todos) foi adquirido até 13/11/2019. Se a aposentadoria é anterior e a pensão posterior, o texto não protege a acumulação integral; a tese pró-segurado sustenta que o redutor incida apenas sobre o benefício novo (a pensão), preservando a aposentadoria já incorporada ao patrimônio, mesmo quando a pensão for a de maior valor.
 
-Fundamentos. Art. 5º, XXXVI, CF. Art. 24, § 4º, EC 103/2019. Súmula 359/STF. Tempus regit actum. Vedação ao retrocesso social.
+Fundamentos. Art. 5º, XXXVI, CF. Art. 24, § 4º, EC 103/2019. Súmula 359/STF. Tempus regit actum.
 
 ## 5. STF. Precedentes consolidados
 
 ### 5.1. ADI 7051. Constitucionalidade do art. 23 (cálculo da pensão)
 
-Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, julgamento registrado no portal em 26/06/2023 (auditoria 03/10/2026).
+Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, julgamento registrado no portal em 26/06/2023.
 
 Tese. "É constitucional o art. 23, caput, da Emenda Constitucional nº 103/2019, que fixa novos critérios de cálculo para a pensão por morte no Regime Geral e nos Regimes Próprios de Previdência Social".
 
 Vencidos parcialmente. Min. Edson Fachin e Min. Rosa Weber.
 
-Resultado. Improcedente, por maioria (auditoria 03/10/2026). Decisão DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma. O caminho do segurado é o direito adquirido para óbito anterior a 13/11/2019 e, havendo dependente inválido ou com deficiência intelectual, mental ou grave, a pensão de 100% do art. 23, § 2º, I, da EC 103/2019, até o teto do RGPS (auditoria 03/10/2026).
+Resultado. Improcedente, por maioria. Decisão DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma. O caminho do segurado é o direito adquirido para óbito anterior a 13/11/2019 e, havendo dependente inválido ou com deficiência intelectual, mental ou grave, a pensão de 100% do art. 23, § 2º, I, da EC 103/2019, até o teto do RGPS.
 
 ### 5.2. Tema 1300/STF (RE 1.469.150)
 
@@ -119,11 +119,11 @@ Mesmo conteúdo do Tema 377, especificamente para servidores que já ocupavam do
 
 FAVORÁVEL ao segurado. Aplicação por analogia à acumulação de duas aposentadorias decorrentes de cargos acumuláveis.
 
-### 5.6. Tema 627/STF (RE 658.999) [CONFERIDO] (auditoria 03/10/2026)
+### 5.6. Tema 627/STF (RE 658.999) [CONFERIDO]
 
 Pleno.
 
-Tese. "Em se tratando de cargos constitucionalmente acumuláveis, descabe aplicar a vedação de acumulação de aposentadorias e pensões contida na parte final do artigo 11 da Emenda Constitucional 20/98, porquanto destinada apenas aos casos de que trata, ou seja, aos reingressos no serviço público por meio de concurso público antes da publicação da referida emenda e que envolvam cargos inacumuláveis." Plenário Virtual, mérito em 17/12/2022, trânsito em 21/04/2023 (auditoria 03/10/2026).
+Tese. "Em se tratando de cargos constitucionalmente acumuláveis, descabe aplicar a vedação de acumulação de aposentadorias e pensões contida na parte final do artigo 11 da Emenda Constitucional 20/98, porquanto destinada apenas aos casos de que trata, ou seja, aos reingressos no serviço público por meio de concurso público antes da publicação da referida emenda e que envolvam cargos inacumuláveis." Plenário Virtual, mérito em 17/12/2022, trânsito em 21/04/2023.
 
 Decisão por unanimidade.
 
@@ -131,9 +131,9 @@ FAVORÁVEL ao segurado, por analogia, pois a tese se restringe ao art. 11 da EC 
 
 ### 5.7. RE 1.510.285/DF AgR
 
-Atenção (auditoria 25/07/2026, rodada 2). As fontes divergem sobre órgão julgador e data deste AgR (Segunda Turma em 09/12/2024 versus Primeira Turma em 26/05/2026, possivelmente agravos sucessivos). Conferir no portal do STF antes de citar em peça.
+Atenção. As fontes divergem sobre órgão julgador e data deste AgR (Segunda Turma em 09/12/2024 versus Primeira Turma em 26/05/2026, possivelmente agravos sucessivos). Conferir no portal do STF antes de citar em peça.
 
-Primeira Turma. Rel. Min. Nunes Marques. Julgamento confirmado em fev/2025.
+Relator, órgão e data [NÃO CONFIRMADO].
 
 Aplicação do redutor do art. 24, § 2º, da EC 103/2019 em hipótese de acumulação de pensão por morte e aposentadoria de regimes distintos quando o óbito ocorreu APÓS 13/11/2019.
 
@@ -155,8 +155,6 @@ O § 4º do art. 24 da EC 103/2019 protege integralmente o benefício adquirido 
 
 Fundamentos. Art. 5º, XXXVI, CF. Súmula 359/STF. Tempus regit actum.
 
-Atribuída em quadro comparativo de redes sociais ao Min. Flávio Dino (relatoria de ARE com origem na Paraíba).
-
 ATENÇÃO. ARE 1.587.588/PB NÃO foi localizado em fonte primária oficial até 05/05/2026. Verificar inteiro teor no portal do STF antes de citar com número de processo.
 
 ### 6.2. Tese B. Desfavorável ao segurado
@@ -165,13 +163,11 @@ A aquisição da pensão posterior à EC 103/2019 inaugura nova relação juríd
 
 Linha sistêmica defendida no RE 1.510.285/DF e reiterada em julgados da Primeira Turma e do Pleno em 2024-2025.
 
-Atribuída ao Min. Alexandre de Moraes (relatoria de ARE com origem em Sergipe).
-
 ATENÇÃO. ARE 1.475.653/SE NÃO foi localizado em fonte primária oficial com a numeração divulgada. Verificar antes de citar.
 
 ### 6.3. Estratégia para o segurado
 
-A Tese A é a tecnicamente correta e deve ser sustentada em favor do segurado.
+A Tese A deve ser sustentada em favor do segurado, com a ressalva de que o texto do § 4º exige a aquisição de todos os benefícios antes da reforma.
 
 Riscos a documentar e mitigar.
 
@@ -213,7 +209,7 @@ Eventual estratégia limita-se a planejamento da DIB para escolher qual benefíc
 
 ### 7.4. Cenário 4. Duas aposentadorias decorrentes de cargos constitucionalmente acumuláveis
 
-Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999 [CONFERIDO] (auditoria 03/10/2026), vedação do art. 11 da EC 20/98, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR, auditoria 25/07/2026).
+Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999, sobre a vedação do art. 11 da EC 20/98, aplicado por analogia). O art. 24 da EC 103 trata de pensão com outro benefício; duas aposentadorias de cargos acumuláveis seguem o art. 37, XVI, e o art. 40, § 6º, da CF.
 
 Cada vínculo é considerado isoladamente para o teto remuneratório (Temas 377 e 384).
 
@@ -275,15 +271,15 @@ Demonstrativo do impacto financeiro da aplicação do redutor.
 
 ## 10. Status do tema
 
-ADI 7051. TRANSITADO EM JULGADO em 26/10/2023 (constitucionalidade do art. 23, caput, confirmada) [CONFERIDO] (auditoria 03/10/2026).
+ADI 7051. TRANSITADO EM JULGADO em 26/10/2023 (constitucionalidade do art. 23, caput, confirmada) [CONFERIDO].
 
-Tema 1300/STF. TRANSITADO EM JULGADO em 2025/2026 (constitucionalidade do art. 26, § 2º, III).
+Tema 1300/STF. TRANSITADO EM JULGADO em 18/04/2026 (constitucionalidade do art. 26, § 2º, III).
 
 Tema 359/STF. TRANSITADO EM JULGADO (teto sobre soma).
 
 Temas 377 e 384/STF. TESES VIGENTES (cada vínculo isolado para teto).
 
-Tema 627/STF [CONFERIDO]. TRANSITADO EM JULGADO em 21/04/2023 (cargos acumuláveis fora da vedação do art. 11 da EC 20/98; no art. 24 da EC 103, uso por analogia) (auditoria 03/10/2026).
+Tema 627/STF [CONFERIDO]. TRANSITADO EM JULGADO em 21/04/2023 (cargos acumuláveis fora da vedação do art. 11 da EC 20/98; no art. 24 da EC 103, uso por analogia).
 
 Aplicação do redutor do art. 24 sobre aposentadoria pré-reforma. MATÉRIA EM CONTROVÉRSIA na Primeira Turma do STF, sem repercussão geral fixada especificamente sobre o ponto.
 
@@ -293,9 +289,9 @@ Sempre confirmar o número e a data exata dos acórdãos no portal do STF antes 
 
 A acumulação de aposentadoria do RGPS com pensão por morte do RGPS, ambas posteriores à EC 103/2019, segue o art. 24 com integralidade do benefício mais vantajoso e redutor progressivo no de menor valor.
 
-O art. 24, § 4º, é a chave argumentativa central. Texto literal protege benefícios adquiridos antes de 13/11/2019.
+O art. 24, § 4º, é a chave argumentativa. O texto protege a acumulação quando todos os benefícios foram adquiridos até 13/11/2019.
 
-A Súmula 359 do STF é instrumento doutrinário forte. Foi citada expressamente no artigo do Migalhas de abril de 2026 como fundamento da tese de proteção do direito adquirido em RPPS, raciocínio aplicável também ao RGPS por analogia.
+A Súmula 359 do STF sustenta a proteção do direito adquirido em RPPS, raciocínio aplicável ao RGPS.
 
 Tema 1300/STF afeta indiretamente a base da pensão por morte quando o segurado falecido não era aposentado (a base é a aposentadoria por incapacidade permanente que ele teria direito, agora calculada em 60% + 2% ao ano).
 
@@ -313,7 +309,7 @@ Mandado de segurança em `mandado-seguranca-previdenciario`.
 
 Tributação em `tributacao-beneficios-previdenciarios` (IR sobre valores retroativos).
 
-CNIS em `cnis-acerto-indicadores`.
+CNIS em `base-cnis-acerto-indicadores`.
 
 Precedentes em `precedentes-previdenciarios`.
 
