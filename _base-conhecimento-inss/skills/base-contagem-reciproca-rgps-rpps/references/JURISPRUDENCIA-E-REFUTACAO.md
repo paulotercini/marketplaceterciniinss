@@ -1,129 +1,20 @@
-# Contagem Recíproca RGPS e RPPS. Jurisprudência e Refutação
+# Contagem Recíproca RGPS e RPPS. Refutação
 
-## 1. Precedentes relevantes
+Precedentes no SKILL.md. Requerimento prévio: Tema 350 STF. Instrução administrativa: Tema 1124 STJ.
 
-### Art. 201, §9º, da CF (contagem recíproca)
+## Teses do INSS ou do ente e refutação
 
-Base constitucional direta (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
+1. Demora na emissão da CTC. Lei 9.784/1999, art. 49, e razoável duração do processo (CF, art. 5º, LXXVIII); conferir se o acordo homologado no RE 1.171.152 STF fixa prazo para o serviço. Mandado de segurança por omissão (`mandado-seguranca-previdenciario`), sempre fora do JEF (Lei 10.259/2001, art. 3º, §1º, I).
+2. Recusa de averbação de CTC regular. CF, art. 201, §9º, e Lei 8.213/91, art. 94: a CTC formalmente válida obriga o regime de destino.
+3. Sobreposição. Demonstrar ausência de concomitância ou desaverbação prévia; na concomitância, conta-se o período uma vez (art. 96, II).
+4. Empregado sem recolhimento na CTC. Art. 96, V: para empregado, doméstico e avulso a CTC dispensa prova de contribuição, ônus do empregador (Lei 8.212/91, art. 30, I).
+5. Tempo anterior à EC 20/1998 equiparado por lei a tempo de contribuição. Art. 96, parágrafo único: certificável sem contribuição.
+6. Tempo rural pós-11/1991 sem recolhimento. Indenização (art. 96, IV; `indenizacao-contribuicoes-atraso`).
+7. Tempo especial no RPPS. Até 13/11/2019, conversão pelo Tema 942 STF; para aposentadoria especial, períodos discriminados sem conversão (art. 96, IX).
+8. CTC incompleta. Pedir retificação ao regime de origem, com os períodos e remunerações faltantes.
+9. Ausência de compensação financeira. É obrigação entre regimes (Lei 9.796/1999), não requisito do benefício.
+10. EC 103/2019 suprimiu a contagem recíproca. O art. 201, §9º, permanece; a EC 103 vedou a conversão de tempo especial posterior a 13/11/2019 e anulou a aposentadoria com tempo sem contribuição (art. 25, §§2º e 3º).
 
-Fonte oficial em https://portal.stf.jus.br
+## Atualização
 
-### Tema 609 STJ
-
-Tese adversa. O tempo rural anterior à Lei 8.213/91 dá direito à certidão, mas só se computa no regime estatutário com a prova do pagamento das contribuições. Caminho do segurado: no próprio RGPS esse tempo conta sem indenização, salvo para carência (art. 55, §2º, da Lei 8.213/91) (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-### Art. 94 da Lei 8.213/91
-
-Cômputo recíproco do tempo de contribuição entre regimes, com compensação financeira (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
-
-Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
-
-### Alerta corretivo Onda 66
-
-O Enunciado 6 do CRPS, na redação oficial publicada no DOU de 12/11/2019 e conferida via Comet na fonte primária, dispõe sobre salário-maternidade da gestante demitida sem justa causa. Não trata de CTC nem de contagem recíproca. Nenhum Enunciado do CRPS entre os Enunciados 1 a 19 vigentes trata especificamente de CTC e efeitos.
-
-Fonte primária dos Enunciados 1 a 19 do CRPS em https://www.gov.br/previdencia/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/conselho-de-recursos-da-previdencia-social/enunciados-e-editais/enunciadosn1aon19dou_08-09-2025-atualizado.pdf
-
-### Tema 1124 STJ
-
-Instrução administrativa.
-
-### Tema 350 STF
-
-Prévio requerimento.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 94 a 99
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 9.796/1999
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 10.188/2019
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS e do ente público
-
-### Argumento 1. Demora na emissão da CTC
-
-Argumento adversário. Prazo indefinido.
-
-Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Razoável duração do processo.
-
-### Argumento 2. Recusa de averbação
-
-Argumento adversário. Tempo não aceito.
-
-Refutação. Direito líquido e certo. Mandado de segurança. Acionar `mandado-seguranca-previdenciario`.
-
-### Argumento 3. Sobreposição alegada indevidamente
-
-Argumento adversário. Dupla contagem.
-
-Refutação. Demonstrar desaverbação prévia ou ausência de sobreposição concreta.
-
-### Argumento 4. Tempo rural sem indenização
-
-Argumento adversário. Tempo rural pós-1991 sem recolhimento.
-
-Refutação. Possível indenização das contribuições (auditoria 03/10/2026; o Tema 609 STJ, antes citado aqui, trata do tempo rural anterior a 1991 e é adverso). Acionar `indenizacao-contribuicoes-atraso`.
-
-### Argumento 5. Vedação de conversão especial no RPPS
-
-Argumento adversário. Tempo especial não cômputa.
-
-Refutação. Jurisprudência admite em hipóteses específicas. Analisar regulamento do ente e decisões recentes.
-
-### Argumento 6. CTC incompleta
-
-Argumento adversário. Certidão sem detalhes.
-
-Refutação. Retificação da CTC pelo regime de origem. Requerimento formal.
-
-### Argumento 7. Tempo militar sem CTC
-
-Argumento adversário. Sem certidão militar.
-
-Refutação. Requerer à Força Armada. Direito à certidão.
-
-### Argumento 8. Ausência de compensação financeira
-
-Argumento adversário. Tempo rejeitado.
-
-Refutação. Compensação financeira é dever dos entes, não condição ao segurado.
-
-### Argumento 9. EC 103/2019 limitou contagem
-
-Argumento adversário. Reforma restringiu direitos.
-
-Refutação. Garantia constitucional do art. 201, §9º, permanece. Restrições específicas para servidores federais.
-
-### Argumento 10. Ausência de prévio requerimento
-
-Argumento adversário. Sem interesse de agir.
-
-Refutação. Protocolar requerimento administrativo com CTC e aguardar manifestação.
-
-## 5. Estratégia integrada
-
-Primeiro, solicitação tempestiva de CTC.
-
-Segundo, conferência.
-
-Terceiro, averbação.
-
-Quarto, requerimento do benefício.
-
-Quinto, em caso de recusa, via judicial.
-
-## 6. Diligência de atualização
-
-Acompanhar acórdãos do STJ sobre Tema 609.
-
-Revisar IN 128/2022 e regulamentos dos entes públicos.
+Acompanhar o Livro IX da Portaria 998/2022 e a jurisprudência sobre o Tema 609 STJ.

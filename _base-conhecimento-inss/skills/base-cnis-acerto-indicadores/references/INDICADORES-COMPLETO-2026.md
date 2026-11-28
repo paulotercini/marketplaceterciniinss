@@ -1,6 +1,6 @@
 # Catálogo Integral de Indicadores CNIS - Atualizado 06/2026
 
-Fonte. `https://planilha.tramitacaointeligente.com.br/indicadores-cnis` (consultado via Comet em 19/06/2026). Atualizada consoante os normativos do INSS até 06/2026.
+Fonte secundária: `https://planilha.tramitacaointeligente.com.br/indicadores-cnis`, consultada em 19/06/2026. Fonte oficial: Anexo V da Portaria DIRBEN/INSS 990/2022, na redação vigente, a conferir antes de citar em peça.
 
 ## INDICADORES DE ACERTO (Cs Acerto)
 
@@ -312,6 +312,6 @@ Em casos de duplicidades de grafia (ex. IVIN-DESLIG-JUSTICA-TRAB vs IVIN-DESLIG-
 
 ## ATUALIZAÇÃO
 
-Consultar regularmente a fonte primária para alterações. URL canônica `https://planilha.tramitacaointeligente.com.br/indicadores-cnis`.
+Conferir alterações no Anexo V da Portaria 990/2022 e no catálogo secundário acima.
 
 Próxima verificação recomendada. Trimestral, conforme `references/VERIFICACAO-TEMPORAL-BRASIL.md` da skill `base-revisao-peticao-aprofundada`.

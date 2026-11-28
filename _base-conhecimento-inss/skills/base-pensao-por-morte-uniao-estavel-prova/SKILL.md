@@ -1,74 +1,47 @@
 ---
 name: base-pensao-por-morte-uniao-estavel-prova
-description: "Skill base sobre prova de união estável para fins de pensão por morte previdenciária, à luz da Lei 13.846/2019, Tema 526/STF, Súmula 63/TNU, art. 1.723 do Código Civil e art. 16 da Lei 8.213/91. Use SEMPRE que mencionar união estável previdenciária, prova de união estável, companheiro segurado falecido, dependente companheira, art. 16 Lei 8.213, art. 22 Decreto 3.048, prova material companheiro, prova testemunhal pensão, conta bancária conjunta, plano de saúde dependente, recibo de aluguel conjunto, fotografia, declaração de imposto de renda, escritura pública união estável, justificação administrativa pensão, Tema 526 STF, concubinato impuro, Súmula 63 TNU, dependência presumida companheiro, REsp 1.388.030, inicio prova material companheiro, contemporaneidade prova união estável. Hub para defesa de companheiro/companheira em pensão por morte. NÃO use para cônjuge formalmente casado, ex-cônjuge ou filho dependente, Portaria 991/2022. Cruza com pensao-por-morte e peticao-previdenciaria."
+description: "Skill base sobre prova de união estável para fins de pensão por morte previdenciária, à luz da Lei 13.846/2019, Tema 526/STF, Súmula 63/TNU, art. 1.723 do Código Civil e art. 16 da Lei 8.213/91. Use SEMPRE que mencionar união estável previdenciária, prova de união estável, companheiro segurado falecido, dependente companheira, art. 16 Lei 8.213, art. 22 Decreto 3.048, prova material companheiro, prova testemunhal pensão, conta bancária conjunta, plano de saúde dependente, recibo de aluguel conjunto, fotografia, declaração de imposto de renda, escritura pública união estável, justificação administrativa pensão, Tema 526 STF, Tema 529 STF, Tema 371 TNU, art. 16 §5º Lei 8.213, art. 16 §6º, art. 180 IN 128, concubinato impuro, Súmula 63 TNU, dependência presumida companheiro, REsp 1.388.030, inicio prova material companheiro, contemporaneidade prova união estável. Hub para defesa de companheiro/companheira em pensão por morte. NÃO use para cônjuge formalmente casado, ex-cônjuge ou filho dependente, Portaria 991/2022. Cruza com pensao-por-morte e peticao-previdenciaria."
 ---
 
-# Pensão por Morte. União Estável e Prova
+# Pensão por Morte. Prova da União Estável
 
-## 1. Quando acionar esta skill
+Regras gerais da pensão não se repetem aqui: ver `base-pensao-por-morte-pos-reforma` (regras) e `pensao-por-morte` (estratégia). Esta skill concentra a prova da união estável. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Acione SEMPRE que houver pedido de pensão por morte fundado em união estável, especialmente em casos de início de prova material insuficiente, exigência de escritura pública, contemporaneidade questionada ou concubinato impuro.
+## Base normativa
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+- CF, art. 226, §3º; Código Civil, arts. 1.723 a 1.727 (o §1º do art. 1.723 admite a união de pessoa casada separada de fato).
+- Lei 8.213/91, art. 16, I e §4º: companheiro é dependente com dependência presumida.
+- Art. 16, §5º (Lei 13.846/2019): a prova de união estável e de dependência econômica exige início de prova material contemporâneo, produzido nos 24 meses anteriores ao óbito ou à prisão, vedada a prova só testemunhal, salvo força maior ou caso fortuito.
+- Art. 16, §6º: nas durações do art. 77, §2º, V, "c", exige-se também início de prova material de pelo menos 2 anos de união antes do óbito.
+- Decreto 3.048/99, art. 22, §3º: rol exemplificativo de documentos.
+- IN 128/2022, art. 180: duas provas materiais contemporâneas, uma delas dos 24 meses anteriores ao fato gerador; com um só documento desse período, Justificação Administrativa (parágrafo único).
 
-## 2. Marco normativo
+## Regime pela data do óbito
 
-A CF/88 no art. 226 §3º reconhece a união estável. O Código Civil nos arts. 1.723 a 1.727 disciplina a relação. A Lei 8.213/91 no art. 16 lista os dependentes, com presunção de dependência econômica para companheiro. O art. 22 do Decreto 3.048/99 detalha as provas.
+- Óbito até 17/01/2019: Súmula 63 TNU, redação de 18/09/2025: "Para fatos geradores ocorridos até a entrada em vigor da MP 871/2019, a comprovação de união estável para concessão de pensão por morte prescinde de início de prova material." Testemunhas bastam.
+- Óbito desde 18/01/2019: Tema 371 TNU. A exigência do §5º vale também no processo judicial (item 1, adverso) e só para fatos geradores desde a MP 871/2019 (item 2).
 
-A Lei 13.846/2019 alterou a forma de comprovação, exigindo início de prova material contemporâneo (art. 16 §5º). O Tema 526/STF firmou a impossibilidade de pensão a concubina em concomitância com cônjuge, sem exceção; é tese adversa, e o caminho é provar a separação de fato do instituidor, que afasta o concubinato e permite a união estável (CC, art. 1.723, §1º; Tema 529/STF) (auditoria 03/10/2026). Súmula 63/TNU (enunciado real): a comprovação de união estável para pensão por morte PRESCINDE de início de prova material, aplicável a fatos geradores até a MP 871/2019 (18/01/2019, redação da Súmula de 18/09/2025; auditoria 25/07/2026); para fatos posteriores, vale o art. 16, §5º (prova material contemporânea).
+## Defesa do companheiro, em ordem
 
-A CF/88 no art. 201, V e §2º consagra a pensão por morte como benefício previdenciário não inferior ao salário-mínimo. A Portaria DIRBEN/INSS 991/2022 disciplina os procedimentos administrativos de concessão.
+1. Reunir documentos dos 24 meses anteriores ao óbito em nome dos dois ou no mesmo endereço: conta conjunta, plano de saúde ou seguro com o companheiro como dependente, declaração de imposto de renda, contrato de aluguel, correspondência, ficha hospitalar, certidão de óbito com o declarante companheiro.
+2. Para a duração além de 4 meses, documento que mostre a união há pelo menos 2 anos.
+3. Com um só documento no período, pedir Justificação Administrativa (IN 128/2022, art. 180, parágrafo único).
+4. Escritura pública não é exigida; residência comum e filhos comuns ajudam mas não são requisitos.
+5. Relação paralela a casamento: Temas 526 e 529 STF, adversos. Provar a separação de fato do instituidor (Código Civil, art. 1.723, §1º).
+6. União homoafetiva: mesmas regras (ADI 4.277 e ADPF 132).
 
-## 3. Eixos centrais pró-segurado
+## Via processual
 
-A presunção de dependência econômica do companheiro é juris tantum (art. 16 §4º Lei 8.213).
-
-O início de prova material pode ser composto por documentos diversos. Servem certidão de nascimento de filho comum, conta bancária conjunta, plano de saúde com dependente, recibos de aluguel, declaração de imposto de renda com cônjuge, escritura pública de união estável e fotografias datadas.
-
-Para fatos geradores até a MP 871/2019 (18/01/2019), a Súmula 63/TNU (redação de 18/09/2025) dispensa o início de prova material; após, exige-se prova material contemporânea (art. 16, §5º) (auditoria 25/07/2026).
-
-A exigência de escritura pública de união estável é abusiva quando há provas suficientes da convivência.
-
-A contemporaneidade não exige prova mês a mês, mas demonstração da continuidade da relação.
-
-## 4. Fragilidades adversárias mais comuns
-
-O INSS exige escritura pública. Refute com o art. 1.723 do CC e, para óbito até 18/01/2019, com a Súmula 63/TNU.
-
-O INSS recusa prova testemunhal. Para óbito até 18/01/2019, refute com a Súmula 63/TNU; após, reúna prova material contemporânea (art. 16, §5º).
-
-O INSS questiona a contemporaneidade. Para óbito desde 18/01/2019, o início de prova material deve ser de até 24 meses antes do óbito, também no processo judicial (art. 16, §5º, da Lei 8.213/91; Tema 371/TNU). Refute com prova continuada desse período e, havendo um só documento nele, com justificação administrativa (IN 128/2022, art. 180, parágrafo único) (auditoria 03/10/2026).
-
-O INSS aplica concomitância com cônjuge. Refute provando a separação de fato do instituidor, que afasta o concubinato (CC, art. 1.723, §1º; Tema 529/STF), pois o Tema 526/STF é tese adversa e não admite exceção (auditoria 03/10/2026).
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em justificação administrativa, requerimento administrativo com documentos diversos, recurso ao CRPS, ação ordinária ou JEF. Combinar com `pensao-por-morte`, `documentos-comprobatorios-in128` e `peticao-previdenciaria`.
-
-## 6. Documentos essenciais
-
-Certidão de óbito. Início de prova material da união (qualquer documento que indique convivência). Prova testemunhal. Quando houver, escritura pública, declaração de IR, plano de saúde, conta conjunta, fotografias, residência comum.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
+Requerimento com Justificação Administrativa, recurso ao CRPS, JEF ou rito ordinário. Mandado de segurança só na Vara Federal, nunca no JEF, e nunca quando a tese depende de testemunhas.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
-O juízo de Catanduva exige início de prova material contemporâneo para a união estável e recusa a prova exclusivamente testemunhal, ainda que segura. Documento posterior ao óbito, ficha de empregador sem data e sentença estadual sem o INSS não bastaram. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+O juízo exige início de prova material contemporâneo e recusa a prova só testemunhal. Documento posterior ao óbito, ficha de empregador sem data e sentença estadual sem o INSS não bastaram. Blocos em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+
+## Integração
+
+`base-pensao-por-morte-pos-reforma`, `pensao-por-morte`, `ponte-workflow-pensao-por-morte`, `base-documentos-comprobatorios-in128`, `peticao-previdenciaria`, `perspectiva-genero-previdenciario`, `base-portarias-dpmf-inss-hub`.

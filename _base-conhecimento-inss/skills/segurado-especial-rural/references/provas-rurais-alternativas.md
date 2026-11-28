@@ -2,7 +2,7 @@
 
 ## Premissa
 
-Todos os róis de documentos comprobatórios de atividade rural (art. 106 da Lei 8.213/91, art. 116 da IN 128/2022) são exemplificativos. Na esfera judicial, a amplitude probatória é ainda maior (Súmula 149/STJ). Os documentos abaixo são provas testadas na prática advocatícia e aceitas por juízos e pelo CRPS, embora não estejam expressamente listados nos róis normativos.
+Todos os róis de documentos comprobatórios de atividade rural (art. 106 da Lei 8.213/91, art. 116 da IN 128/2022) são exemplificativos; o art. 116 da IN 128/2022 usa "dentre outros". Os documentos abaixo, fora dos róis, servem como início de prova material ou como prova complementar, conforme o caso.
 
 ---
 
@@ -48,7 +48,7 @@ Todos os róis de documentos comprobatórios de atividade rural (art. 106 da Lei
 
 ---
 
-## Fontes digitais de prova. Consulta obrigatória
+## Fontes digitais de prova. Consulta prévia
 
 ### 1. Sintegra (www.sintegra.gov.br)
 
@@ -58,7 +58,7 @@ Como consultar. Acessar o site, selecionar o estado, informar CNPJ ou IE. Para p
 
 ### 2. CAF. Cadastro da Agricultura Familiar (sistemas.agricultura.gov.br/caf/)
 
-Substituiu a DAP (Declaração de Aptidão ao PRONAF). Cadastro ativo comprova condição de agricultor familiar, que é equiparável a segurado especial para fins previdenciários.
+Substituiu a DAP (Declaração de Aptidão ao PRONAF). Cadastro ativo é indício forte da condição de agricultor familiar, que não coincide de modo automático com a de segurado especial.
 
 Como consultar. Acesso pelo portal com CPF do segurado.
 
@@ -82,20 +82,10 @@ Para instrução robusta, combinar documentos em três camadas
 
 ---
 
-## Precedentes sobre amplitude do rol probatório
+## Precedentes
 
-**Súmula 149/STJ.** A prova exclusivamente testemunhal não basta para comprovação de atividade rurícola, para efeito de obtenção de benefício previdenciário.
+Súmula 149 STJ (Tema 297), Tema 554 STJ e Súmula 577 STJ (Tema 638), resumidos em `precedentes-rurais.md`.
 
-**Tema 297/STJ.** Reafirma a Súmula 149/STJ: a prova exclusivamente testemunhal não basta. O caminho do segurado é o início de prova material, e o art. 116 da IN 128 admite documentos além dos listados ("dentre outros") (auditoria 03/10/2026).
+## Contemporaneidade
 
-**Tema 554/STJ.** Para fins de comprovação do tempo de serviço rural, é possível a utilização de prova testemunhal para estender o período reconhecido por início de prova material, sem que isso configure prova exclusivamente testemunhal.
-
-**Tema 638/STJ.** A certidão de casamento ou certidão de óbito em que conste a profissão de lavrador do cônjuge ou de um dos genitores constitui início de prova material para fins de aposentadoria rural.
-
----
-
-## Nota sobre contemporaneidade
-
-O art. 18 da IN 128/2022 exige contemporaneidade entre o documento e o período a ser comprovado. Documentos extemporâneos exigem corroboração por outra prova contemporânea. Na esfera judicial, a contemporaneidade é flexibilizada, especialmente quando aplicada perspectiva de gênero (Resolução CNJ 492/2023).
-
-Para o segurado especial, o Ofício-Circular 46/2019 estabelece limite temporal de 7 anos e meio para a autodeclaração ratificada por documento contemporâneo.
+A contemporaneidade do documento segue os critérios do art. 116, §2º, da IN 128/2022, e o instrumento ratificador vale para todo o grupo familiar (§3º, I). Em juízo, a exigência se flexibiliza com o julgamento com perspectiva de gênero (Resolução CNJ 492/2023).

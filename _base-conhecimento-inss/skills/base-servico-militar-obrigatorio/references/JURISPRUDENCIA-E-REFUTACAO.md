@@ -1,125 +1,17 @@
-# Tempo de Serviço Militar. Jurisprudência Verificada e Refutação
+# Tempo de Serviço Militar. Refutação
 
-## 1. Precedentes relevantes
+Precedentes e limites no SKILL.md.
 
-### Art. 55, I, da Lei 8.213/91
+## Teses do INSS e refutação
 
-O tempo de serviço militar, inclusive o voluntário, conta ainda que anterior à filiação ao RGPS, desde que não contado para inatividade remunerada nas Forças Armadas ou aposentadoria no serviço público (auditoria 03/10/2026, retirada a Súmula 45 do TFR, que trata de multas fiscais segundo fonte secundária).
+1. Sem contribuição não há tempo. O art. 55, I, da Lei 8.213/91 conta o tempo militar ainda que anterior à filiação, sem exigir recolhimento.
+2. Tempo militar não conta para carência. A IN 128/2022, art. 194, §1º, já admite o obrigatório posterior a 13/11/2019; para o período anterior, invocar o precedente da TNU (PEDILEF 0527059-78.2017.4.05.8100/CE) [NÃO CONFIRMADO] e a jurisprudência do TRF4 referida no PUIL 5002454-05.2023.4.04.7115.
+3. Exigência de CTC para tempo antigo. Até 13/11/2019 basta a certificação por autoridade competente (IN 128/2022, art. 217, I); o PUIL 5002454-05.2023.4.04.7115 aplica o tempus regit actum.
+4. Certidão sem detalhamento. Requerer à Força certidão complementar com datas e afastamentos; o certificado de reservista basta para período inferior a 18 meses (art. 217, parágrafo único).
+5. Tiro de Guerra não é serviço militar. Lei 4.375/1964 e Decreto 57.654/1966 o tratam como forma de prestação do serviço militar inicial.
+6. Período já usado em outro regime. Cabe ao INSS demonstrar o aproveitamento; juntar declaração da Força ou do ente de que o tempo não gerou inatividade ou aposentadoria.
+7. Decadência. Incide apenas sobre a revisão do ato de concessão (Lei 8.213/91, art. 103).
 
-### Art. 94 da Lei 8.213/91
+## Atualização
 
-Contagem recíproca entre regimes, com compensação financeira, também prevista no art. 201, §9º, da CF (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
-
-Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
-
-### PEDILEFs TNU
-
-Reafirmam o cômputo como tempo de contribuição e excluem carência.
-
-Fonte oficial em https://www.jf.jus.br
-
-### [Retirado na auditoria 25/07/2026] Tema 176/STF
-
-Tema de ICMS, estranho à matéria; a contagem recíproca decorre do art. 201, §9º, da CF.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 1124 STJ
-
-Instrução administrativa.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 55 e 96
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 4.375/1964
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 57.654/1966
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Ausência de contribuição
-
-Argumento adversário. Sem recolhimento, sem tempo de contribuição.
-
-Refutação. Tempo militar é tempo ficto reconhecido em lei. Não exige recolhimento específico.
-
-### Argumento 2. Carência
-
-Argumento adversário. Tempo militar não computa carência.
-
-Refutação. Correto em regra. Resguardar no pedido apenas o tempo de contribuição, não a carência.
-
-### Argumento 3. Certidão insuficiente
-
-Argumento adversário. Certidão sem detalhamento.
-
-Refutação. Requerer à Força Armada certidão complementar com datas exatas, períodos de afastamento e detalhamento de movimentação.
-
-### Argumento 4. Tempo Tiro de Guerra
-
-Argumento adversário. Não é serviço militar.
-
-Refutação. Lei 4.375/1964 e Decreto 57.654/1966 consideram Tiro de Guerra como forma de prestação do serviço militar.
-
-### Argumento 5. Tempo ESPCEX
-
-Argumento adversário. Aluno não é militar.
-
-Refutação. Aluno da ESPCEX tem status de militar ativo. Analisar regulamento específico e documentação.
-
-### Argumento 6. Sobreposição com tempo RPPS
-
-Argumento adversário. Período já cômputado em outro regime.
-
-Refutação. Vedado o cômputo duplicado. Compete verificar se houve aproveitamento anterior. Se não houve, cabe cômputo no RGPS.
-
-### Argumento 7. Carteira de Reservista insuficiente
-
-Argumento adversário. Documento incompleto.
-
-Refutação. Juntar certidão específica da Força Armada para complementação.
-
-### Argumento 8. Decadência
-
-Argumento adversário. Prazo esgotado.
-
-Refutação. Decadência conta do primeiro pagamento do benefício. Se o benefício ainda não foi concedido, o prazo não corre.
-
-### Argumento 9. Ausência de CNIS
-
-Argumento adversário. Sem CNIS, não cômputa.
-
-Refutação. Tempo anterior a 1998 tem prova documental e não por CNIS. Tempo militar tem regime próprio.
-
-### Argumento 10. Contagem recíproca negada
-
-Argumento adversário. RPPS nega reconhecimento.
-
-Refutação. Art. 96 da Lei 8.213 e art. 201, §9º, CF. Direito líquido e certo. Mandado de segurança cabível. Acionar `mandado-seguranca-previdenciario`.
-
-## 5. Estratégia integrada
-
-Primeiro, coleta documental completa.
-
-Segundo, requerimento administrativo.
-
-Terceiro, ação judicial em caso de indeferimento.
-
-Quarto, em contagem recíproca, emissão de CTC.
-
-Quinto, cômputo como tempo de contribuição.
-
-## 6. Diligência de atualização
-
-Acompanhar jurisprudência da TNU sobre cômputo de Tiro de Guerra.
-
-Acompanhar orientação do INSS na IN 128/2022.
-
-Revalidar regulamento da Força Armada respectiva.
+Ler o inteiro teor do PEDILEF 0527059-78.2017.4.05.8100/CE antes de citá-lo e acompanhar eventual tema da TNU sobre carência do tempo militar.

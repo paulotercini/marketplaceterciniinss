@@ -1,144 +1,52 @@
-# Taxonomia do Art. 90 da IN 128/2022. 41 Espécies de Contribuinte Individual Obrigatório
-
-## Índice
-
-1. Bloco 1. Rural e Extrativista
-2. Bloco 2. Empresarial e Gestão
-3. Bloco 3. Saúde e Profissionais Liberais
-4. Bloco 4. Especializado e Agentes Notariais
-5. Marco temporal da Lei 11.718/2008. Descaracterização do segurado especial
-6. Marco temporal da Lei 9.876/1999. Unificação em CI
-
----
-
-## Bloco 1. Rural e Extrativista
-
-Incisos I a IV, XIV, XXXVII do art. 90.
-
-Variável crítica. Auxílio de empregados e limites de módulos fiscais. A fronteira entre segurado especial e CI rural depende de marcos temporais e parâmetros objetivos.
-
-### Produtor agropecuário/pesqueiro (Inciso I)
-
-A condição de contribuinte individual é imposta quando há extrapolação dos limites do segurado especial (art. 11, VII, Lei 8.213/91). O enquadramento como CI rural ocorre nas seguintes hipóteses.
-
-**Até 22/06/2008 (véspera da Lei 11.718/2008).** Utilização de empregados, a qualquer título, mesmo não contínuo, descaracterizava o segurado especial e impunha o enquadramento como CI.
-
-**A partir de 23/06/2008 (Lei 11.718/2008).** Área superior a 4 módulos fiscais, ou auxílio de empregados em desacordo com o §7º do art. 11 da Lei 8.213/91 (mais de 120 pessoas/dia no ano civil). A Lei flexibilizou o critério, permitindo contratação limitada sem descaracterização.
-
-### Garimpeiros e assemelhados (Incisos II e III)
-
-Inciso II. Garimpeiro (extração mineral permanente/temporária). Enquadrado como CI quando a atividade extrapola os limites do garimpo artesanal individual.
-
-Inciso III. Apoio à pesca artesanal com excesso de empregados (mais de 120 pessoas/dia no ano civil) ou extração mineral permanente/temporária.
-
-### Parceiros marítimos (Incisos XIV e XXXVII)
-
-Inciso XIV. Pescador em embarcação de médio ou grande porte (Lei 11.959/2009). O porte da embarcação determina o enquadramento.
-
-Inciso XXXVII. Armador de pesca licenciado.
-
----
-
-## Bloco 2. Empresarial e Gestão
-
-Incisos VI, XVIII a XXI, XXVIII, XXXVIII do art. 90.
-
-Variável crítica. Percepção de pró-labore ou remuneração documentada. A condição condicional geral do inciso XVIII é a remuneração decorrente de trabalho.
-
-### Braço 1. Titularidade absoluta
-
-**Empresário individual e titular de EIRELI.** Segurados obrigatórios pela simples existência do registro empresarial. Até 28/11/1999 (pré-Lei 9.876), a existência legal presume atividade (bastam atos constitutivos). A partir de 29/11/1999, a filiação depende de remuneração comprovada.
-
-### Braço 2. Sociedades (requisito de pró-labore)
-
-Sócios em nome coletivo, sócio-administrador, cotista ou de serviço em LTDA, membros de conselho de administração ou diretores em S/A (sem vínculo de emprego). A filiação como CI depende de efetiva percepção de remuneração (pró-labore) na sociedade. A partir de 29/11/1999, comprovação mês a mês.
-
-### Braço 3. MEI (Inciso XXXVIII)
-
-Microempreendedor Individual, limitado à receita bruta legal, com permissão de 1 único empregado recebendo salário mínimo ou piso da categoria. Recolhimento simplificado via DAS. Regime diferenciado de contribuição (5% do salário mínimo), que exclui aposentadoria por tempo de contribuição, salvo complementação (art. 21, §§2º e 3º, Lei 8.212/91).
-
-### Braço 4. Administradores diversos (Incisos VI, XIX, XX, XXI)
-
-Inciso VI. Síndicos de condomínio (remunerados ou isentos de taxa condominial), desde 06/03/1997.
-
-Inciso XIX. Administradores de fundação pública (sem RPPS).
-
-Inciso XX. Liquidantes e interventores remunerados.
-
-Inciso XXI. Síndicos de massa falida remunerados.
-
----
-
-## Bloco 3. Saúde e Profissionais Liberais
-
-Incisos X, XI, XXVI, XXVII, XXX do art. 90.
-
-Variável crítica. Retenção presumida a partir de abril/2003 (Lei 10.666/03). Para prestadores de serviço a empresas, a partir dessa data a empresa retém e recolhe a contribuição previdenciária. O CI não precisa gerar GPS individual.
-
-### Pilar 1. Medicina e Estado
-
-**Médico-residente (Inciso X).** Filiação obrigatória via bolsa de residência médica. A partir de abril/2003, a responsabilidade pelo recolhimento é da instituição de ensino (empresa contratante).
-
-**Programa Mais Médicos (Inciso XI).** Segurados obrigatórios como CI, exceto se possuírem cobertura securitária internacional específica ou acordo de seguridade social que garanta proteção previdenciária no país de origem.
-
-### Pilar 2. Profissionais liberais (Incisos XXVI, XXVII, XXX)
-
-Inciso XXVI. Profissional liberal que exerce atividade por conta própria, com inscrição em conselho de classe (médicos, advogados, engenheiros, dentistas, contadores etc.).
-
-Inciso XXVII. Prestador de serviço eventual a empresas, sem relação de emprego.
-
-Inciso XXX. Trabalhador autônomo que presta serviço de natureza urbana ou rural, em caráter eventual, a uma ou mais empresas, sem relação de emprego.
-
-**Regra de comprovação.** Para profissionais liberais com inscrição em conselho de classe, a comprovação é feita por inscrição + documentos contemporâneos (prontuários, receitas, IR da época), aplicável a todas as eras temporais.
-
----
-
-## Bloco 4. Especializado e Agentes Notariais
-
-Incisos V, VII a IX, XII, XIII, XVII, XXXI do art. 90.
-
-Variável crítica. Marco temporal de nomeação e filiação a RPPS.
-
-### Trabalho religioso (Inciso V)
-
-Ministros de confissão religiosa e membros de instituto de vida consagrada, de congregação ou de ordem religiosa. Enquadrados como CI desde que exerçam atividade remunerada.
-
-### Cartórios e delegações. Marco temporal de 20/11/1994
-
-**Nomeados ATÉ 20/11/1994 (Incisos VII e VIII).** Notários e registradores não remunerados pelos cofres públicos. Segurados do RGPS como CI, mesmo se posteriormente amparados por RPPS após 16/12/1998 (EC 20/1998). Direito adquirido ao RGPS.
-
-**Admitidos APÓS 21/11/1994 (Inciso IX).** Titulares de cartório obrigatoriamente vinculados ao RGPS como CI (Lei 8.935/1994). Sem alternativa de RPPS.
-
-### Políticos (Inciso XII)
-
-Exercentes de mandato eletivo (vereadores, prefeitos, governadores etc.) vinculados ao RGPS quando o ente federativo não instituiu RPPS ou quando o mandato não gera filiação ao regime próprio.
-
-### Cooperados (Inciso XIII)
-
-Associados de cooperativa que prestam serviço a terceiros por intermédio da cooperativa. A cooperativa é equiparada a empresa (art. 15, parágrafo único, da Lei 8.212/91) e arrecada e recolhe a contribuição do cooperado (art. 4º, §1º, da Lei 10.666/2003).
-
-### Condutores e autônomos de transporte (Incisos XXXI e XVII)
-
-Inciso XXXI. Taxistas e motoristas de aplicativo.
-
-Inciso XVII. Operadores de trator (sem vínculo de emprego) e prestadores eventuais de serviço urbano ou rural a empresas.
-
----
-
-## Marco temporal da Lei 11.718/2008. Descaracterização do segurado especial
-
-O enquadramento do produtor rural como CI (e não como segurado especial) depende do marco temporal.
-
-**Até 22/06/2008.** Qualquer utilização de empregados, a qualquer título, mesmo não contínuo, descaracterizava o segurado especial.
-
-**A partir de 23/06/2008.** Descaracterização ocorre apenas quando a área é superior a 4 módulos fiscais OU quando o auxílio de empregados excede o limite do §7º do art. 11 da Lei 8.213/91 (120 pessoas/dia no ano civil).
-
-Quando descaracterizado, o produtor é enquadrado como CI rural (inciso I do art. 90) e passa a ter obrigação de recolhimento individual (ou, se prestar serviço a empresa, retenção pela contratante).
-
----
-
-## Marco temporal da Lei 9.876/1999. Unificação em CI
-
-Antes de 29/11/1999, existiam três categorias distintas de segurados (empresário, autônomo, equiparado a autônomo). A Lei 9.876/1999 unificou todas sob a denominação "contribuinte individual" (art. 11, V, Lei 8.213/91).
-
-Impacto prático. Para períodos anteriores a 29/11/1999, os documentos comprobatórios e a forma de recolhimento seguem o regime da categoria original. A unificação não retroage para alterar obrigações pretéritas.
+# Art. 90 da IN 128/2022. Incisos do Contribuinte Individual
+
+Texto conferido na IN 128/2022 consolidada. Responsável pelo recolhimento: o próprio segurado, salvo quando presta serviço a empresa ou cooperativa desde abril de 2003 (Lei 10.666/2003, art. 4º).
+
+## Rural, pesca e extração
+
+- I. Produtor agropecuário, pesqueiro ou extrativista: (a) de 01/01/1976 (Lei 6.260/1975) a 22/06/2008, com auxílio de empregado a qualquer título, ainda que não contínuo; (b) desde 23/06/2008 (Lei 11.718/2008), em área superior a 4 módulos fiscais, ou em área menor ou na pesca e extração com empregados além do limite do art. 11, §7º, da Lei 8.213/91, ou por prepostos.
+- II. Assemelhado ao pescador (apoio à pesca artesanal) com empregados além de 120 pessoas por dia no ano civil.
+- III. Garimpo e extração mineral, com ou sem empregados.
+- IV. Condômino de propriedade rural com empregado permanente ou parte acima de 4 módulos fiscais.
+- XIV. Pescador em parceria, meação ou arrendamento em embarcação de médio ou grande porte (Lei 11.959/2009).
+- XXXVII. Armador de pesca.
+
+## Empresário, gestão e direção
+
+- XVIII. Com remuneração decorrente de trabalho na empresa: (a) empresário individual e titular de EIRELI; (b) sócio em nome coletivo; (c) sócio-administrador, cotista, solidário, de serviço, gerente e administrador não empregado na limitada; (d) conselheiro de administração e diretor não empregado de S/A; (e) membro de conselho fiscal.
+- XXXVIII. MEI (LC 123/2006, arts. 18-A, 18-C e 18-F), com até um empregado de salário mínimo ou piso.
+- VI. Síndico ou administrador condominial eleito com remuneração direta ou indireta, inclusive isenção da taxa, desde 06/03/1997; antes, facultativo.
+- XVI. Interventor, liquidante, administrador especial e diretor fiscal de instituição financeira.
+- XIX. Administrador de fundação pública de direito privado, salvo servidor vinculado a RPPS.
+- XX. Associado eleito para direção de cooperativa, associação ou entidade, com remuneração.
+- XXI. Síndico da massa falida, administrador judicial e comissário de concordata remunerados.
+- XXVIII. Incorporador (Lei 4.591/1964, art. 29).
+
+## Saúde e serviços
+
+- X. Médico-residente e residente em área profissional da saúde.
+- XI. Médico do Programa Mais Médicos, salvo cobertura internacional ou do país de origem com acordo.
+- XXVI. Prestador eventual de serviço urbano ou rural a empresas ou a contribuinte individual, sem vínculo.
+- XXVII. Quem exerce por conta própria atividade econômica urbana.
+- XXX. Diarista que presta serviço à pessoa ou família até 2 dias por semana.
+
+## Atividades específicas
+
+- V. Ministro de confissão religiosa e membro de instituto de vida consagrada.
+- VII e VIII. Notário e registrador nomeados até 20/11/1994; o inciso VIII mantém o RGPS mesmo com RPPS, desde 16/12/1998 (Lei 8.935/1994, art. 51).
+- IX. Titular de cartório admitido desde 21/11/1994.
+- XII. Árbitro desportivo e auxiliares, desde 25/03/1998.
+- XIII. Membro de cooperativa de produção.
+- XV. Conselheiro tutelar remunerado.
+- XVII. Contratado por partido ou candidato para campanha eleitoral.
+- XXII. Aposentado nomeado magistrado classista temporário ou magistrado da Justiça Eleitoral.
+- XXIII a XXV. Brasileiro civil em organismo internacional, no exterior ou no Brasil, sem RPPS.
+- XXIX. Bolsista da Fundação Habitacional do Exército.
+- XXXI e XXXII. Condutor autônomo de veículo rodoviário (inclusive taxista e motorista de aplicativo), operador de trator e máquinas, e seus auxiliares.
+- XXXIII a XXXV. Ambulante, pequeno feirante e quem edifica obra com fins lucrativos.
+- XXXVI. Cooperado de trabalho que presta serviço a terceiros.
+- XXXIX a XLI. Transportador autônomo de cargas e auxiliar, repentista e artesão.
+
+## Fora do art. 90
+
+O exercente de mandato eletivo sem RPPS é segurado empregado (Lei 8.213/91, art. 11, I, "j"). O correspondente internacional autônomo e o brasileiro domiciliado no exterior não se filiam como contribuinte individual (art. 90, §§2º e 3º), salvo o inciso XXIII.

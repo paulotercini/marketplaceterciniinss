@@ -1,25 +1,25 @@
 ---
 name: base-documentos-comprobatorios-in128
-description: Skill versionada no plugin (Onda 50) sobre documentos comprobatórios da IN 128/2022, assinatura a rogo, cartas de documentos para clientes e checklists por benefício. Use SEMPRE que mencionar documentos para o INSS, provar vínculo, atividade rural, segurado especial, aposentadoria especial, contribuinte individual, PPP, LTCAT, SB-40, DSS-8030, provas de dependência, união estável, tempo de serviço, tempo militar, art. 46, art. 48, art. 54, art. 91, art. 116, art. 272, art. 275, art. 557 IN 128/2022, Justificação Administrativa, Pesquisa Externa, contemporaneidade, autodeclaração, DAP, CAF, PRONAF, bloco de notas, ITR, assinatura a rogo, Tema 1.116 STJ, carta de documentos, carta de documentos para cliente, gerador de carta, checklist documentos cliente, lista documentos benefício, refinamento checklist, documento que faltou, documento que fez diferença, documentos por benefício, doc B31 doc B32 doc B91 doc B92 doc B94 doc B21 doc B25 doc B80 doc B41 doc B42 doc B87 doc B88, salário-maternidade documentos, BPC documentos, pensão por morte documentos, aposentadoria por idade documentos, aposentadoria PCD documentos, auxílio-doença documentos, RG CIN CNH CTPS CPF requerimento, procuração modelo INSS, termo de representação legal, tutela curatela termo de guarda, carta-documentos-inss, advprevidenciaria.netlify.app, central do escritório, atestado médico CRM CRO RMS, comprovante dependência financeira, certidão união estável, declaração de hipossuficiência, declaração CadÚnico, comprovante residência 180 dias, certidão nascimento adoção, termo de guarda. Aciona AUTOMATICAMENTE no início de qualquer fluxo de requerimento administrativo, recurso ao CRPS, petição inicial de concessão e revisão. Cruza com base-cnis-acerto-indicadores (Onda 50), peticao-previdenciaria, requerimento-administrativo-inss, base-portarias-dpmf-inss-hub, base-aluno-aprendiz, base-servico-militar-obrigatorio, base-tempo-rural-anterior-1991, perspectiva-genero-previdenciario, segurado-especial-rural, formacao-documentacao-did-pcd, base-modelo-relatorio-medico-incapacidade-b31-b91-b92, base-modelo-relatorio-medico-bpc-loas-deficiente, base-modelo-relatorio-medico-aposentadoria-pcd-lc142, base-modelo-relatorio-medico-auxilio-acidente-b94, carta-servicos-inss. Fonte primária sobre documentação perante o INSS e cartas de documentos para clientes.
+description: Skill sobre documentos comprobatórios da IN 128/2022, assinatura a rogo, cartas de documentos para clientes e checklists por benefício. Use SEMPRE que mencionar documentos para o INSS, provar vínculo, atividade rural, segurado especial, aposentadoria especial, contribuinte individual, PPP, LTCAT, SB-40, DSS-8030, provas de dependência, união estável, tempo de serviço, tempo militar, art. 46, art. 48, art. 54, art. 91, art. 116, art. 272, art. 275, art. 567 IN 128/2022, Justificação Administrativa, Pesquisa Externa, contemporaneidade, autodeclaração, DAP, CAF, PRONAF, bloco de notas, ITR, assinatura a rogo, carta de documentos, carta de documentos para cliente, gerador de carta, checklist documentos cliente, lista documentos benefício, refinamento checklist, documento que faltou, documento que fez diferença, documentos por benefício, doc B31 doc B32 doc B91 doc B92 doc B94 doc B21 doc B25 doc B80 doc B41 doc B42 doc B87 doc B88, salário-maternidade documentos, BPC documentos, pensão por morte documentos, aposentadoria por idade documentos, aposentadoria PCD documentos, auxílio-doença documentos, RG CIN CNH CTPS CPF requerimento, procuração modelo INSS, termo de representação legal, tutela curatela termo de guarda, carta-documentos-inss, advprevidenciaria.netlify.app, central do escritório, atestado médico CRM CRO RMS, comprovante dependência financeira, certidão união estável, declaração de hipossuficiência, declaração CadÚnico, comprovante residência 180 dias, certidão nascimento adoção, termo de guarda. Aciona AUTOMATICAMENTE no início de qualquer fluxo de requerimento administrativo, recurso ao CRPS, petição inicial de concessão e revisão. Cruza com base-cnis-acerto-indicadores, peticao-previdenciaria, requerimento-administrativo-inss, base-portarias-dpmf-inss-hub, base-aluno-aprendiz, base-servico-militar-obrigatorio, base-tempo-rural-anterior-1991, perspectiva-genero-previdenciario, segurado-especial-rural, formacao-documentacao-did-pcd, base-modelo-relatorio-medico-incapacidade-b31-b91-b92, base-modelo-relatorio-medico-bpc-loas-deficiente, base-modelo-relatorio-medico-aposentadoria-pcd-lc142, base-modelo-relatorio-medico-auxilio-acidente-b94, carta-servicos-inss. Fonte primária sobre documentação perante o INSS e cartas de documentos para clientes.
 ---
 
-# Documentos Comprobatórios - IN 128/2022 e Carta para Clientes - Versão Plugin v1.40
+# Documentos Comprobatórios. IN 128/2022 e Carta para Clientes
 
-## VISÃO GERAL E POSTURA
+## VISÃO GERAL
 
-Esta skill é a versão versionada no plugin `base-conhecimento-inss` (Onda 50) da skill local do escritório `documentos-comprobatorios-in128`. Centraliza dois eixos de uso.
+A skill tem dois eixos.
 
-**Eixo 1 - Marco normativo da IN 128/2022.** Documentos exigíveis pelo INSS, formas de produção da prova material, contemporaneidade, autodeclaração, Justificação Administrativa, Pesquisa Externa, assinatura a rogo (Tema 1.116/STJ).
+**Eixo 1 - Marco normativo da IN 128/2022.** Documentos exigíveis pelo INSS, formas de produção da prova material, contemporaneidade, autodeclaração, Justificação Administrativa, Pesquisa Externa, assinatura a rogo.
 
-**Eixo 2 - Carta de documentos para clientes.** Checklist operacional por benefício para entregar ao cliente no início do atendimento, baseado no site oficial do escritório `https://advprevidenciaria.netlify.app/` (Carta gerada para clientes - v43.0).
+**Eixo 2 - Carta de documentos para clientes.** Checklist operacional por benefício para entregar ao cliente no início do atendimento, baseado no site do escritório.
 
-Postura exclusivamente pró-segurado. A carta deve PREVER documentos que não foram explicitamente pedidos pelo INSS para evitar exigências futuras e indeferimentos por insuficiência probatória.
+A carta deve prever documentos que o INSS ainda não pediu, para evitar exigências e indeferimentos por insuficiência de prova.
 
 ## FONTE PRIMÁRIA
 
-**Carta do escritório.** `https://advprevidenciaria.netlify.app/` - gerador interativo com checklist por benefício atualizado em 21/06/2026 (v43.0). Site mantido pela skill `carta-servicos-inss`.
+**Carta do escritório.** `https://advprevidenciaria.netlify.app/`, gerador interativo de checklist por benefício, mantido pela skill `carta-servicos-inss`.
 
-**IN PRES/INSS nº 128/2022.** Texto integral em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/05-Instrucoes-Normativas/` (Onda 31). Atualizada pela IN 164/2024.
+**IN PRES/INSS nº 128/2022.** Texto consolidado no MCP `normas` e em `mcp-normas/corpus/05-Instrucoes-Normativas/`, com as alterações até a IN 212/2026.
 
 **Portaria DIRBEN/INSS 991/2022.** Concessão e revisão (Livro II).
 
@@ -30,8 +30,8 @@ Em PRATICAMENTE TODOS os benefícios, são exigidos do titular.
 1. **Documento de identificação.** RG, CIN, CNH ou CTPS.
 2. **CPF.**
 3. **Comprovante de residência.** Até 180 dias da propositura, em nome do titular ou de terceiro (com declaração + RG do terceiro).
-4. **Procuração.** Modelo INSS ou pública, datada de até 12 meses.
-5. **Em caso de procuração eletrônica.** Plataforma credenciada pela ICP-Brasil (art. 1º §2º III "a" Lei 11.419/2006 e MP 2.200-2/2001).
+4. **Procuração.** Modelo do INSS ou pública; conferir a validade exigida pela IN 128/2022 (arts. 532 e seguintes).
+5. **Procuração eletrônica.** Assinatura com certificado ICP-Brasil (MP 2.200-2/2001).
 6. **Em caso de representação legal.** Identificação e CPF do representante + termo de representação (tutela, curatela, guarda).
 
 Cruzar com `base-cnis-acerto-indicadores` para o CNIS analisado e indicadores tratados ANTES do requerimento.
@@ -68,7 +68,7 @@ Soma de tempo rural + urbano.
 
 **Provas testemunhais.** Rol de 3-5 testemunhas qualificadas.
 
-Cruzar com `segurado-especial-rural`, `documentos-comprobatorios-in128`, `aposentadoria-idade-hibrida`, `perspectiva-genero-previdenciario`.
+Cruzar com `segurado-especial-rural`, `base-documentos-comprobatorios-in128`, `aposentadoria-idade-hibrida`, `perspectiva-genero-previdenciario`.
 
 ### APOSENTADORIA POR IDADE RURAL (60 H / 55 M)
 
@@ -82,7 +82,7 @@ Documentos do núcleo comum. CNIS analisado e tratado.
 - CTPS completa.
 - Carnê de contribuinte individual.
 - Comprovantes de GPS antigos.
-- DARF EC 103 (códigos 1163/1457/1503/1554/1872/1873).
+- Guias de complementação de contribuições abaixo do mínimo (códigos em `contribuicoes-complementacao-ec103`).
 - CTC de outros regimes (se aplicável - cruzar com `base-contagem-reciproca-rgps-rpps`).
 
 ### APOSENTADORIA ESPECIAL
@@ -90,11 +90,10 @@ Documentos do núcleo comum. CNIS analisado e tratado.
 Documentos do núcleo comum.
 
 **Documentos por agente nocivo.**
-- PPP (Perfil Profissiográfico Previdenciário) - obrigatório (art. 272 IN 128).
+- PPP (Perfil Profissiográfico Previdenciário), formulário legal desde 01/01/2004 (art. 272 IN 128).
 - LTCAT (Laudo Técnico das Condições Ambientais).
 - DSS-8030, SB-40 (períodos antigos).
 - CAT (Comunicação de Acidente do Trabalho) - se aplicável.
-- Comprovante de exposição a EPI (laudo médico).
 - PGR/PCMSO.
 
 Cruzar com `auditoria-ppp`, `defesa-probatoria-especial`, `tempo-especial-peticoes-por-rito`.
@@ -153,7 +152,7 @@ Cruzar com `base-incapacidade-b31-temporaria`, `analise-documental-incapacidade`
 
 Documentos do B31 + CAT (Comunicação de Acidente do Trabalho).
 
-Sem CAT da empresa, requerer CAT equiparada (art. 22 §2º Lei 8.213).
+Sem CAT da empresa, a comunicação pode ser feita pelo próprio segurado, dependentes, sindicato, médico ou autoridade pública (art. 22, §2º, Lei 8.213).
 
 Cruzar com `ntep-nexo-acidentario`, `base-incapacidade-acidentaria-b92`.
 
@@ -161,7 +160,7 @@ Cruzar com `ntep-nexo-acidentario`, `base-incapacidade-acidentaria-b92`.
 
 Documentos do B31 + sequela permanente comprovada.
 
-Aplicação do **padrão Núcleo 4.0 do TJSP** (9 tópicos) em ações judiciais. Cruzar com `base-auxilio-acidente-b94-pos-reforma` (Onda 43 atualizada).
+Aplicação do **padrão Núcleo 4.0 do TJSP** (9 tópicos) em ações judiciais. Cruzar com `base-auxilio-acidente-b94-pos-reforma`.
 
 ### APOSENTADORIA POR INCAPACIDADE PERMANENTE ACIDENTÁRIA (B92)
 
@@ -263,7 +262,7 @@ Cruzar com `base-salario-maternidade-pos-reforma`.
 
 **Documentos do núcleo comum + comprovação de atividade rural.**
 
-Autodeclaração rural (art. 38-B, §2º, da Lei 8.213/91), ratificada na forma dos arts. 92 a 94 da Portaria DIRBEN/INSS 990/2022, cujo art. 94, §5º, admite que um único instrumento ratifique todo o período. Lista exemplificativa.
+Autodeclaração rural (art. 38-B, §2º, da Lei 8.213/91), ratificada na forma dos arts. 92 a 94 da Portaria DIRBEN/INSS 990/2022 e do art. 116 da IN 128/2022 (36 incisos, rol exemplificativo). Detalhe em `base-segurado-especial-autodeclaracao-arts-92-93-94`.
 
 Material complementar.
 - DAP/CAF (Cadastro Nacional do Agricultor Familiar).
@@ -295,7 +294,7 @@ Cruzar com `contribuinte-individual-in128`.
 
 Documentos do núcleo comum + documentos comprobatórios da pendência.
 
-Cruzar com `base-cnis-acerto-indicadores` (Onda 50).
+Cruzar com `base-cnis-acerto-indicadores`.
 
 ### INDENIZAÇÃO DE CONTRIBUIÇÕES EM ATRASO (art. 45-A Lei 8.212)
 
@@ -309,26 +308,25 @@ Documentos do benefício original (CONCAL, CONBAS, CONPRI) + nova documentação
 
 Cruzar com `base-revisao-vida-toda-rvt`, `base-revisao-art29-melhor-beneficio`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-irsm-fevereiro-1994`, `base-revisao-atividades-concomitantes-tema1070`.
 
-## ASSINATURA A ROGO E ANALFABETO (Tema 1.116/STJ)
+## ASSINATURA A ROGO E ANALFABETO
 
 Quando o segurado for analfabeto ou impossibilitado de assinar.
 
 **Procedimento.**
-- Aposição de impressão digital na presença de funcionário do INSS (art. 15 §2º Decreto 6.214 para BPC).
-- Para outros benefícios, presença de duas testemunhas (assinatura a rogo).
-- Tema 1.116/STJ. Validade da procuração pública e cuidados procedimentais.
+- Impressão digital na presença do servidor do INSS ou assinatura a rogo com duas testemunhas.
+- Procuração do analfabeto: por instrumento público ou na forma admitida pela IN 128/2022 (arts. 532 e seguintes) [NÃO CONFIRMADO o dispositivo exato].
 
 ## JUSTIFICAÇÃO ADMINISTRATIVA E PESQUISA EXTERNA (IN 128/2022)
 
 Quando faltar prova documental suficiente.
 
-**Justificação Administrativa (JA).** Art. 557 IN 128/2022. Audiência administrativa com testemunhas. Útil para tempo rural, união estável, dependência econômica.
+**Justificação Administrativa (JA).** Art. 567 IN 128/2022: supre falta ou insuficiência de documento por oitiva de testemunhas, com início de prova material razoável (parágrafo único). Útil para tempo rural, união estável e dependência econômica.
 
 **Pesquisa Externa (PEXT).** Realizada pelo servidor do INSS. Útil para confirmar fato controvertido.
 
 REQUERER NO PRÓPRIO REQUERIMENTO. Anexar declaração de testemunhas e endereço do imóvel rural.
 
-## LIMBO PREVIDENCIÁRIO. CHECKLIST DOCUMENTAL PRÓPRIO (Onda 70)
+## LIMBO PREVIDENCIÁRIO. CHECKLIST DOCUMENTAL
 
 Aplicável sempre que o segurado tiver recebido alta ou indeferimento do INSS e o empregador houver recusado a reassunção do posto, mantendo o vínculo sem trabalho e sem salário. O Tema 300 da TNU mantém a qualidade de segurado nessa hipótese, porém exige prova do impedimento, que é onde os casos se perdem.
 
@@ -363,13 +361,11 @@ URL. `https://advprevidenciaria.netlify.app/`
 
 Skill responsável pela manutenção. `carta-servicos-inss`.
 
-Versão atual. v43.0 (21/06/2026).
-
 Funcionalidade. Cliente recebe carta personalizada com lista de documentos específicos do seu benefício, incluindo orientações sobre formatos aceitos e validade.
 
 ## CRUZAMENTO COM OUTRAS SKILLS
 
-- `base-cnis-acerto-indicadores` (Onda 50). Análise CNIS antes do requerimento.
+- `base-cnis-acerto-indicadores`. Análise do CNIS antes do requerimento.
 - `peticao-previdenciaria`. Geração de petição com documentos referenciados por ID.
 - `requerimento-administrativo-inss`. Protocolo administrativo.
 - `base-portarias-dpmf-inss-hub`. Portarias 990-996.
@@ -385,13 +381,11 @@ Funcionalidade. Cliente recebe carta personalizada com lista de documentos espec
 
 ## ALERTA FINAL
 
-Documento ENVIADO ao INSS no requerimento administrativo é IMPRESCINDÍVEL para fundamentar petição judicial posterior, em razão do Tema 1124/STJ (instrução administrativa adequada). Cruzar com `tema-1124-instrucao-administrativa`.
-
-Documento NÃO ENVIADO administrativamente pode causar EXTINÇÃO SEM MÉRITO na via judicial por falta de prévio requerimento adequado.
+O documento apresentado no requerimento administrativo sustenta a ação judicial posterior (Tema 1124 STJ, `tema-1124-instrucao-administrativa`). O documento não apresentado ao INSS pode levar à extinção sem mérito ou a efeitos financeiros só a partir da citação.
 
 Verificar checklist do escritório ANTES do requerimento administrativo e ANTES da petição judicial.
 
-## Representação por servidor público ou militar advogado (Onda 115)
+## Representação por servidor público ou militar advogado
 
 O art. 532, § 4º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que a exceção do inciso II do caput não se aplica aos servidores públicos e aos militares quando estiverem exercendo a ADVOCACIA.
 

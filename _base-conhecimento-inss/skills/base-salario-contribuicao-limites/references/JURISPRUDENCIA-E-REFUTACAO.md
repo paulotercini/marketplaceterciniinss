@@ -1,117 +1,22 @@
-# Salário-de-Contribuição. Jurisprudência e Refutação
+# Salário-de-Contribuição. Refutação
 
-## 1. Precedentes relevantes
+Base normativa e limite no SKILL.md.
 
-### Tema 985 STF
+## Precedentes
 
-Incidência da contribuição patronal sobre o terço constitucional de férias gozadas, tema já julgado [NÃO CONFIRMADO] (auditoria 03/10/2026).
+- Súmula 688 STF: "É legítima a incidência da contribuição previdenciária sobre o 13º salário."
+- Súmula 207 STF: "As gratificações habituais, inclusive a de Natal, consideram-se tacitamente convencionadas, integrando o salário."
+- Tema 20 STF: "A contribuição social a cargo do empregador incide sobre ganhos habituais do empregado, quer anteriores ou posteriores à Emenda Constitucional nº 20/1998."
+- Tema 985 STF, adverso ao contribuinte no custeio (terço de férias gozadas) [NÃO CONFIRMADO o texto e a modulação].
 
-Fonte oficial em https://portal.stf.jus.br
+## Teses do INSS e refutação
 
-### Tema 20 STF
+1. Verba habitual fora do salário-de-contribuição. CF, art. 201, §11, e Lei 8.212/91, art. 28, I: os ganhos habituais integram. O rol do §9º é exaustivo.
+2. Falta de recolhimento exclui o período ou a remuneração. Lei 8.212/91, art. 30, I, e Lei 8.213/91, art. 34, I: a responsabilidade é do empregador.
+3. Horas extras e adicional noturno eventuais. Pagos com habitualidade, integram (Súmula 207 STF; Tema 20 STF).
+4. Competência do contribuinte individual abaixo do mínimo. Admite complementação, excedente ou agrupamento (EC 103, art. 29); não se descarta antes de oferecer ao segurado essas opções.
+5. Contribuição acima do teto. Não eleva o salário-de-benefício (Lei 8.213/91, art. 29, §2º), mas a competência conta como tempo e carência.
 
-Tese. "A contribuição social a cargo do empregador incide sobre ganhos habituais do empregado, quer anteriores ou posteriores à Emenda Constitucional nº 20/1998." Para o 13º salário, a fonte é a Súmula 688 STF (auditoria 03/10/2026).
+## Atualização
 
-### Súmula 207 STF
-
-Gratificações habituais, inclusive a de Natal, consideram-se tacitamente convencionadas e integram o salário [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-### Súmula 688 STF
-
-Legitimidade da contribuição previdenciária sobre o 13º salário [CONFERIDO em 03/10/2026, https://jurisprudencia.stf.jus.br/pages/search/seq-sumula688/false] (auditoria 03/10/2026).
-
-## 2. Marco legislativo
-
-### Lei 8.212/91
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 10.101/2000
-
-Fonte oficial em https://www.planalto.gov.br
-
-### IN RFB 2.110/2022
-
-Fonte oficial em https://www.gov.br/receitafederal
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Verba remuneratória tratada como indenizatória
-
-Argumento adversário. Fora do SC.
-
-Refutação. Natureza remuneratória reconhecida. Integra SC.
-
-### Argumento 2. Verba indenizatória tratada como remuneratória
-
-Argumento adversário. Dentro do SC.
-
-Refutação. Natureza indenizatória, demonstrada verba a verba pelo art. 28, §9º, da Lei 8.212/91. O Tema 985 do STF não ampara a refutação, pois admitiu a contribuição sobre o terço constitucional de férias gozadas (auditoria 03/10/2026).
-
-### Argumento 3. Empregador omitiu contribuição
-
-Argumento adversário. Falta de recolhimento exclui o segurado.
-
-Refutação. Segurado empregado é isento da prova do recolhimento. Responsabilidade do empregador.
-
-### Argumento 4. Teto reduz o SB
-
-Argumento adversário. Limita benefício.
-
-Refutação. Contribuição acima do teto não gera SB acima, mas integra contagem.
-
-### Argumento 5. 13º fora do cômputo
-
-Argumento adversário. Parcela separada.
-
-Refutação. 13º integra o SC anual. Súmula 688 STF (auditoria 03/10/2026).
-
-### Argumento 6. Contribuição contribuinte individual abaixo do mínimo
-
-Argumento adversário. Não cômputa.
-
-Refutação. Complementação EC 103. Acionar `contribuicoes-complementacao-ec103`.
-
-### Argumento 7. Vale-transporte tributado
-
-Argumento adversário. Lançamento.
-
-Refutação. Lei 7.418/1985. Não integra SC.
-
-### Argumento 8. PLR tributada
-
-Argumento adversário. Salário disfarçado.
-
-Refutação. Lei 10.101/2000. Não integra se cumpridas as exigências.
-
-### Argumento 9. Adicional noturno e horas extras excluídos
-
-Argumento adversário. Verba eventual.
-
-Refutação. Integram SC. Natureza remuneratória habitual.
-
-### Argumento 10. Diárias acima do limite
-
-Argumento adversário. Isenção automática.
-
-Refutação. Diárias acima de 50% do salário integram.
-
-## 5. Estratégia integrada
-
-Primeiro, auditoria CNIS.
-
-Segundo, análise de folhas.
-
-Terceiro, identificação de verbas.
-
-Quarto, discussão em ação própria.
-
-Quinto, cômputo na RMI.
-
-## 6. Diligência de atualização
-
-Conferir no portal do STF o acórdão do Tema 985, já julgado (auditoria 03/10/2026).
-
-Revalidar IN RFB 2.110/2022.
-
-Acompanhar portarias de teto.
+Conferir o teto e as faixas na portaria interministerial do ano e a vigência da IN RFB 2.110/2022.

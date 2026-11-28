@@ -8,15 +8,15 @@ Súmula consolidada com inúmeras alterações até 2017.
 
 I - "A Justiça do Trabalho é competente para determinar o recolhimento das contribuições fiscais. A competência da Justiça do Trabalho, quanto à execução das contribuições previdenciárias, limita-se às sentenças condenatórias em pecúnia que proferir e aos valores, objeto de acordo homologado, que integrem o salário-de-contribuição."
 
-II - "É do empregador a responsabilidade pelo recolhimento das contribuições previdenciárias e fiscais, resultantes de crédito do empregado oriundo de condenação judicial. A culpa do empregador pelo inadimplemento das verbas remuneratórias, contudo, não exime a responsabilidade do empregado pelos pagamentos do imposto de renda devido e da contribuição previdenciária que recaia sobre sua quota-parte. (ex-OJ 363 da SBDI-1, parte final)." [NÃO CONFIRMADO, fonte secundária LegJur] (auditoria 03/10/2026, incisos II a VI refeitos pela LegJur porque o portal do TST não abriu)
+II - "É do empregador a responsabilidade pelo recolhimento das contribuições previdenciárias e fiscais, resultantes de crédito do empregado oriundo de condenação judicial. A culpa do empregador pelo inadimplemento das verbas remuneratórias, contudo, não exime a responsabilidade do empregado pelos pagamentos do imposto de renda devido e da contribuição previdenciária que recaia sobre sua quota-parte. (ex-OJ 363 da SBDI-1, parte final)." [incisos II a VI transcritos de fonte secundária; conferir no portal do TST antes de citar]
 
-III - "Os descontos previdenciários relativos à contribuição do empregado, no caso de ações trabalhistas, devem ser calculados mês a mês, de conformidade com o art. 276, § 4º, do Decreto 3.048/1999 que regulamentou a Lei nº 8.212/1991, aplicando-se as alíquotas previstas no art. 198, observado o limite máximo do salário de contribuição (ex-OJs 32 e 228 da SBDI-1 - inseridas, respectivamente, em 14/03/1994 e 20/06/2001)." [NÃO CONFIRMADO, fonte secundária]
+III - "Os descontos previdenciários relativos à contribuição do empregado, no caso de ações trabalhistas, devem ser calculados mês a mês, de conformidade com o art. 276, § 4º, do Decreto 3.048/1999 que regulamentou a Lei nº 8.212/1991, aplicando-se as alíquotas previstas no art. 198, observado o limite máximo do salário de contribuição (ex-OJs 32 e 228 da SBDI-1 - inseridas, respectivamente, em 14/03/1994 e 20/06/2001)."
 
-IV - "Considera-se fato gerador das contribuições previdenciárias decorrentes de créditos trabalhistas reconhecidos ou homologados em juízo, para os serviços prestados até 4.3.2009, inclusive, o efetivo pagamento das verbas, configurando-se a mora a partir do dia dois do mês seguinte ao da liquidação (art. 276, caput, do Decreto 3.048/1999). Eficácia não retroativa da alteração legislativa promovida pela Medida Provisória nº 449/2008, posteriormente convertida na Lei 11.941/2009, que deu nova redação ao art. 43 da Lei 8.212/1991." [NÃO CONFIRMADO, fonte secundária] É o critério chamado de regime de caixa.
+IV - "Considera-se fato gerador das contribuições previdenciárias decorrentes de créditos trabalhistas reconhecidos ou homologados em juízo, para os serviços prestados até 4.3.2009, inclusive, o efetivo pagamento das verbas, configurando-se a mora a partir do dia dois do mês seguinte ao da liquidação (art. 276, caput, do Decreto 3.048/1999). Eficácia não retroativa da alteração legislativa promovida pela Medida Provisória nº 449/2008, posteriormente convertida na Lei 11.941/2009, que deu nova redação ao art. 43 da Lei 8.212/1991." É o critério chamado de regime de caixa.
 
-V - "Para o labor realizado a partir de 05/03/2009, considera-se fato gerador das contribuições previdenciárias decorrentes de créditos trabalhistas reconhecidos ou homologados em juízo a data da efetiva prestação dos serviços. Sobre as contribuições previdenciárias não recolhidas a partir da prestação dos serviços incidem juros de mora e, uma vez apurados os créditos previdenciários, aplica-se multa a partir do exaurimento do prazo de citação para pagamento, se descumprida a obrigação, observado o limite legal de 20% (art. 61, § 2º, da Lei 9.430/1996)." [NÃO CONFIRMADO, fonte secundária] É o critério chamado de regime de competência.
+V - "Para o labor realizado a partir de 05/03/2009, considera-se fato gerador das contribuições previdenciárias decorrentes de créditos trabalhistas reconhecidos ou homologados em juízo a data da efetiva prestação dos serviços. Sobre as contribuições previdenciárias não recolhidas a partir da prestação dos serviços incidem juros de mora e, uma vez apurados os créditos previdenciários, aplica-se multa a partir do exaurimento do prazo de citação para pagamento, se descumprida a obrigação, observado o limite legal de 20% (art. 61, § 2º, da Lei 9.430/1996)." É o critério chamado de regime de competência.
 
-VI - "O imposto de renda decorrente de crédito do empregado recebido acumuladamente deve ser calculado sobre o montante dos rendimentos pagos, mediante a utilização de tabela progressiva resultante da multiplicação da quantidade de meses a que se refiram os rendimentos pelos valores constantes da tabela progressiva mensal correspondente ao mês do recebimento ou crédito, nos termos do art. 12-A da Lei 7.713, de 22/12/1988, com a redação conferida pela Lei 13.149/2015, observado o procedimento previsto nas Instruções Normativas da Receita Federal do Brasil." [NÃO CONFIRMADO, fonte secundária] O termo inicial dos juros de mora não está no inciso VI; decorre dos incisos IV e V.
+VI - "O imposto de renda decorrente de crédito do empregado recebido acumuladamente deve ser calculado sobre o montante dos rendimentos pagos, mediante a utilização de tabela progressiva resultante da multiplicação da quantidade de meses a que se refiram os rendimentos pelos valores constantes da tabela progressiva mensal correspondente ao mês do recebimento ou crédito, nos termos do art. 12-A da Lei 7.713, de 22/12/1988, com a redação conferida pela Lei 13.149/2015, observado o procedimento previsto nas Instruções Normativas da Receita Federal do Brasil." O termo inicial dos juros de mora não está no inciso VI; decorre dos incisos IV e V.
 
 ## TABELA SINTÉTICA
 
@@ -80,13 +80,13 @@ A prescrição quinquenal só começa a correr DEPOIS da liquidação da senten�
 
 ### Questão 2 - O INSS pode recusar o cômputo do tempo?
 
-NÃO. O art. 34 da Lei 8.213/91 obriga o INSS a computar o tempo reconhecido em sentença trabalhista para fins de benefício, INDEPENDENTEMENTE do recolhimento.
+Não, desde que a sentença se apoie em início de prova material contemporâneo (Tema 1188 STJ; IN 128/2022, art. 172, I e II). Para o empregado, o INSS computa os salários de contribuição devidos ainda que não recolhidos (Lei 8.213/91, art. 34, I; IN 128/2022, art. 172, III).
 
 Quem responde pelo recolhimento é o EMPREGADOR. O segurado não pode ser prejudicado pela inadimplência da empresa.
 
 ### Questão 3 - Se a empresa não recolher, o INSS pode cobrar do segurado?
 
-NÃO. O segurado empregado tem PRESUNÇÃO ABSOLUTA de recolhimento das contribuições (responsabilidade do empregador). O INSS deve cobrar da empresa via execução fiscal autônoma ou via processo trabalhista quando houver verba executável.
+Não. O recolhimento da contribuição do empregado é responsabilidade do empregador (Lei 8.212/91, art. 30, I). O INSS deve cobrar da empresa via execução fiscal autônoma ou via processo trabalhista quando houver verba executável.
 
 ### Questão 4 - Como provar o vínculo de 30 anos atrás?
 
@@ -118,17 +118,15 @@ Para CONTRIBUIÇÕES PREVIDENCIÁRIAS. Discussão técnica. A regra é a prescri
 - Art. 11 §1º CLT, incluído pela Lei 9.658/1998 (imprescritibilidade do reconhecimento para fins previdenciários).
 - Art. 39 §1º CLT (anotação compulsória da CTPS).
 - Art. 174 CTN (prescrição de 5 anos do crédito tributário).
-- Art. 34 e art. 125-A da Lei 8.213/91 (dever do INSS).
+- Art. 34, I, da Lei 8.213/91 (cômputo dos salários de contribuição devidos).
 - Art. 12-A da Lei 7.713/88 (IR sobre RRA).
 - Art. 28 e art. 20 da Lei 8.212/91 (cálculo da contribuição).
-- IN 128/2022 INSS, Livro I, Título I, Capítulo I, Seção XIX.
+- IN 128/2022, arts. 172 a 176 (Seção XIX, Da Reclamatória Trabalhista).
 
 ## REFERÊNCIAS DE PRECEDENTES
 
 - Súmula 368 TST (incisos I a VI).
 - Súmula Vinculante 8 STF.
 - Súmula Vinculante 53 STF.
-- Tema 1188/STJ (sentença trabalhista homologatória e documentos decorrentes como início de prova material, exigidos elementos contemporâneos; a Súmula 31/TNU foi revogada em 22/11/2023).
-- [Retirado na auditoria 25/07/2026. O Tema 297/TNU trata de auxílio emergencial; ver o Tema 1188/STJ.]
-- [Retirado na auditoria 25/07/2026. Não se confirma tema do STF sobre participação do INSS no processo trabalhista.]
+- Tema 1188/STJ (sentença homologatória e documentos decorrentes valem como início de prova apenas com elementos contemporâneos).
 - Súmula 149/STJ (prova testemunhal isolada).

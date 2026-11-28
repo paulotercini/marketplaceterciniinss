@@ -1,70 +1,49 @@
 ---
 name: base-facultativo-baixa-renda
-description: "Skill base sobre o segurado facultativo de baixa renda no RGPS, com alíquota reduzida de 5% sobre o salário-mínimo, requisitos do CadÚnico e estratégias pró-segurado em caso de exclusão indevida. Use SEMPRE que mencionar facultativo baixa renda, FBR, art. 21 §2º II Lei 8.212/91, art. 199-A Decreto 3.048/99, alíquota 5%, código GPS 1929, código GPS 1830, dona de casa segurado, mãe sem renda, CadÚnico facultativo, Bolsa Família facultativo, NIS facultativo, regularização FBR, complementação para maior alíquota, exclusão CadÚnico facultativo, retroação de FBR, indicador PFBR-AT-INVAL, art. 27 Lei 8.213, carência facultativo. Hub para defesa do segurado facultativo de baixa renda contra exclusão indevida, recusa de cômputo de carência e exigência de complementação. NÃO use para contribuinte individual, segurado especial ou empregado. Cruza com peticao-previdenciaria e cnis-acerto-indicadores."
+description: "Segurado facultativo de baixa renda (FBR) no RGPS: alíquota de 5% sobre o salário mínimo (Lei 8.212/91, art. 21, §2º, II, b, e §4º; Lei 12.470/2011), requisitos do CadÚnico, validação das contribuições, complementação e defesa contra invalidação. Use SEMPRE que mencionar facultativo baixa renda, FBR, dona de casa, cuidadora sem renda, CadÚnico, renda familiar até 2 salários mínimos, atualização bienal do CadÚnico, art. 199-A Decreto 3.048/99, código GPS 1929, contribuições invalidadas, complementação para 11% ou 20%, indicadores PREC-FBR, PREC-FBR-ANT, IREC-FBR, FBR-AUT-RENSUP, FBR-AUT-EXPCAD, FBR-AUT-PENDCAD, Tema 181 TNU, Tema 241 TNU, Tema 285 TNU, trabalho doméstico não remunerado e incapacidade. NÃO use para contribuinte individual, MEI, segurado especial ou empregado. Cruza com peticao-previdenciaria, base-cnis-acerto-indicadores e contribuicoes-complementacao-ec103."
 ---
 
 # Facultativo de Baixa Renda no RGPS
 
-## 1. Quando acionar esta skill
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Acione SEMPRE que o caso envolver segurado facultativo de baixa renda (FBR), com alíquota reduzida de 5%, especialmente em situações de exclusão do CadÚnico, recusa de cômputo de carência ou exigência de complementação.
+## Base normativa
 
-## 2. Marco normativo
+- CF, art. 201, §§12 e 13 (sistema especial de inclusão previdenciária para quem se dedica ao trabalho doméstico no âmbito da residência, sem renda própria, de família de baixa renda).
+- Lei 8.212/91, art. 21, §2º, II, b (Lei 12.470/2011): alíquota de 5% sobre o salário mínimo para o facultativo sem renda própria, dedicado exclusivamente ao trabalho doméstico na própria residência, de família de baixa renda.
+- Art. 21, §4º: baixa renda é a família inscrita no CadÚnico com renda mensal de até 2 salários mínimos.
+- Art. 21, §3º: para aposentadoria por tempo de contribuição ou contagem recíproca, exige-se complementação da diferença entre 5% e 20%, com juros. Após a EC 103/2019, vale para as regras de transição que dependem de tempo de contribuição.
+- Decreto 3.048/99, art. 199-A; IN 128/2022 (validação e complementação das contribuições invalidadas).
+- Requisitos cumulativos: (1) inscrição no CadÚnico, com atualização a cada 2 anos; (2) renda familiar de até 2 salários mínimos; (3) ausência de renda própria; (4) dedicação exclusiva ao trabalho doméstico na própria residência.
 
-A Lei 8.212/91, art. 21 §2º II, alterada pela Lei Complementar 123/2006 e Lei 12.470/2011, instituiu a alíquota de 5% para o segurado facultativo de baixa renda. O Decreto 3.048/99, art. 199-A, regulamenta. A IN INSS 128/2022 disciplina o procedimento.
+Renda própria não inclui o Bolsa Família nem outro benefício assistencial de transferência de renda. Contribuição anterior a 09/2011 na alíquota de 5% é inválida (indicador PREC-FBR-ANT).
 
-Os requisitos são pertencer a família de baixa renda, ser inscrito no CadÚnico, não ter renda própria, dedicar-se exclusivamente ao trabalho doméstico no próprio lar (art. 21 §2º II "b" Lei 8.212).
+## Precedentes TNU
 
-## 3. Eixos centrais pró-segurado
+- Tema 181, adverso: "A prévia inscrição no Cadastro Único (CadÚnico) é requisito essencial para validação das contribuições previdenciárias vertidas na alíquota de 5%."
+- Tema 241, adverso: "O exercício de atividade remunerada, ainda que informal e de baixa expressão econômica, obsta o enquadramento como segurado facultativo de baixa renda."
+- Tema 285, favorável: "A atualização/revalidação extemporânea das informações do CadÚnico, realizada antes da exclusão do cadastro, autoriza a validação retroativa das contribuições pela alíquota de 5%, desde que comprovados os requisitos de enquadramento como segurado facultativo."
 
-A alíquota de 5% gera direito a benefícios no valor mínimo (1 salário-mínimo). A aposentadoria por idade, pensão por morte, auxílio-reclusão e demais benefícios são acessíveis.
+## Defesa do segurado
 
-A inscrição no CadÚnico não pode ser exigida com retroatividade absoluta. O período sem inscrição comporta complementação para a alíquota de 11% (LC 123/2006).
+1. Contribuição invalidada por CadÚnico desatualizado: atualização antes da exclusão do cadastro valida retroativamente (Tema 285 TNU).
+2. Contribuição anterior à inscrição no CadÚnico: inválida na alíquota de 5% (Tema 181 TNU). Caminho: complementar para 11% ou 20% e aproveitar o período (`contribuicoes-complementacao-ec103`).
+3. Renda familiar acima de 2 salários mínimos apontada pelo INSS: conferir a composição do grupo familiar e a renda declarada no CadÚnico na competência; excluir benefício assistencial e Bolsa Família da renda própria.
+4. Atividade remunerada alegada: exigir prova do INSS. Comprovada, o enquadramento cai (Tema 241 TNU) e o caminho é o recolhimento como contribuinte individual.
+5. Incapacidade da dona de casa: o trabalho doméstico não remunerado tem exigência física equiparada ao remunerado. Precedente persuasivo: PUIL regional 5002876-10.2023.4.04.7202 (TRU da 4ª Região, sessão de 26/06/2026), com a Resolução CNJ 492/2023; detalhe em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md` e em `perspectiva-genero-previdenciario`.
 
-A exclusão do CadÚnico por superação temporária da renda não pode descaracterizar todo o histórico contributivo.
+## Benefícios
 
-A condição de "dedicação exclusiva ao trabalho doméstico no próprio lar" deve ser interpretada de forma flexível, abrangendo cuidadora de filhos, idosos e pessoas com deficiência.
+Todos os benefícios do RGPS no valor mínimo, salvo aposentadoria por tempo de contribuição e regras que dependam de tempo, sem complementação. Carência: 12 contribuições para B31 e B32 e 180 para aposentadoria por idade, contadas do primeiro pagamento em dia (Lei 8.213/91, art. 27, II). Salário-maternidade sem carência (ADI 2110 STF).
 
-## 4. Fragilidades adversárias mais comuns
+## Documentos
 
-O INSS exige inscrição no CadÚnico em momento da contribuição. Refute com a possibilidade de regularização e complementação.
-
-O INSS exclui contribuições por suposta atividade remunerada. Refute com prova da inexistência de vínculo.
-
-O INSS recusa o cômputo de carência por exclusão do CadÚnico. Refute com a possibilidade de complementação retroativa.
-
-O INSS aplica indicador PFBR-AT-INVAL sem fundamentação. Refute com art. 199-A do Decreto 3.048/99.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em regularização administrativa, complementação, recurso ao CRPS e ação judicial. Combinar com `cnis-acerto-indicadores`, `contribuicoes-complementacao-ec103` e `peticao-previdenciaria`.
-
-## 6. Documentos essenciais
-
-CadÚnico atualizado. CNIS. Comprovação de inexistência de renda. Declaração de exclusividade no trabalho doméstico. Quando houver, comprovantes de Bolsa Família ou auxílios assistenciais.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## TRABALHO DOMÉSTICO NÃO REMUNERADO EQUIPARADO AO REMUNERADO (Onda 52)
-
-**Precedente regional.** TRU 4ª Região, sem efeito vinculante (auditoria 03/10/2026), PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
-
-**Tese 1.** Salvo comprovação em sentido contrário, a execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado.
-
-**Tese 2.** NÃO SE PRESUME que o(a) segurado(a) facultativo(a), inserido(a) em categoria de filiação previdenciária que não exerce atividade remunerada (Decreto 3.048/99, art. 11), realiza trabalho doméstico com menor exigência física e menos riscos ergonômicos do que o(a) trabalhador(a) doméstico(a) remunerado(a).
-
-**Aplicação pró-segurada.** A dona de casa segurada facultativa (baixa renda ou comum) que fica incapaz para as tarefas domésticas cotidianas tem direito ao B31/B32. INSS ou juiz que negue com base em "atividade doméstica menor esforço" viola esta tese.
-
-Esta tese vincula regionalmente as Turmas Recursais da 4ª Região. Em outras regiões (TRF3 incluído), usar como precedente persuasivo em conjunto com a Resolução CNJ 492/2023 (Protocolo de Gênero).
-
-Detalhamento em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
+Folha resumo do CadÚnico com data de atualização, CNIS com indicadores (`base-cnis-acerto-indicadores`), comprovante de pagamento das guias, declaração de ausência de renda e dedicação ao lar, comprovante de Bolsa Família quando houver.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Integração
+
+Peça: `peticao-previdenciaria`. Portarias: `base-portarias-dpmf-inss-hub`. CadÚnico: `base-cadastro-domiciliar-cadunico-in21-2026`.

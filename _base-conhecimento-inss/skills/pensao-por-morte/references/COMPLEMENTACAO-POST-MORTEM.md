@@ -14,23 +14,21 @@
 
 Quando o instituidor é falecido, o serviço "ajustes para alcance do salário mínimo" no Meu INSS **não funciona** porque o CPF do falecido está cancelado na Receita Federal. O sistema fica inativo.
 
-**Via alternativa**, emitir a guia pelo site da Receita Federal, no SicalcWeb, utilizando o **código 1872**.
+**Via alternativa**, emitir a guia pelo SicalcWeb da Receita Federal, no código indicado para a complementação (código 1872 [NÃO CONFIRMADO]).
 
-### 2.2 Alíquotas aplicáveis sobre a diferença
+### 2.2 Alíquotas e limites
 
-**Empregado.** 8% sobre a diferença (competências até 03/2020) ou 7,5% (competências a partir de 04/2020).
-
-**Contribuinte individual prestador de serviço.** 20% sobre a diferença.
+Alíquota e código seguem `contribuicoes-complementacao-ec103`. Após o óbito, a IN 128/2022, art. 106, §§1º e 2º, só aceita a complementação de empregado, doméstico, avulso e contribuinte individual prestador de serviço a empresa, a partir de 11/2019, e de diferenças de reajuste do salário mínimo. Para os demais, a complementação depende de decisão judicial.
 
 ### 2.3 Efeito sobre a qualidade de segurado
 
-A contribuição abaixo do mínimo não rompe a filiação ao RGPS. A qualidade de segurado permanece hígida. A complementação regulariza a carência e permite o acesso dos dependentes à pensão por morte. A contribuição abaixo do mínimo, embora não seja considerada para fins de carência, não impossibilita o reconhecimento da qualidade de segurado, tampouco o acesso dos dependentes à pensão por morte, uma vez que assegura a filiação do contribuinte ao RGPS.
+A contribuição abaixo do mínimo não conta para carência nem para tempo (EC 103/2019, art. 29). A tese de que ela mantém a qualidade de segurado é o Tema 349 TNU, hoje suspenso pela repercussão geral do Tema 1467 STF (RE 1.544.748). Por isso, complementar sempre que possível.
 
-## 3. PRAZO PARA COMPLEMENTAÇÃO. CONTROVÉRSIA RESOLVIDA
+## 3. PRAZO PARA COMPLEMENTAÇÃO
 
 ### 3.1 Decisão da TRU/4ª Região
 
-Proc. 5006152-98.2022.4.04.7100/RS, Rel. Juiz Federal Daniel Machado da Rocha. A Turma Regional de Uniformização da 4ª Região decidiu, por maioria, que o prazo do §7º do art. 19-E do Decreto 3.048/99 é **irrazoável e desproporcional**. Dependentes podem complementar contribuições abaixo do mínimo do segurado falecido **a qualquer tempo**.
+Proc. 5006152-98.2022.4.04.7100/RS, Rel. Juiz Federal Daniel Machado da Rocha. A Turma Regional de Uniformização da 4ª Região decidiu [NÃO CONFIRMADO], por maioria, que o prazo do §7º do art. 19-E do Decreto 3.048/99 é **irrazoável e desproporcional**. Dependentes podem complementar contribuições abaixo do mínimo do segurado falecido **a qualquer tempo**.
 
 A decisão protege a boa-fé do contribuinte e aplica-se aos contribuintes individuais com especial ênfase.
 
@@ -46,7 +44,7 @@ Para dependentes menores e incapazes, não corre prazo prescricional para a comp
 
 ### 4.1 Posição da TNU
 
-A TNU definiu que os efeitos financeiros da pensão por morte, quando há necessidade de complementação de contribuições, são devidos a partir do **pagamento da guia de complementação**, não do óbito. Isso significa que a DIP retroage até a data do pagamento da guia, não até a DER ou o óbito.
+No Tema 286 TNU (facultativo de baixa renda), a TNU fixou que os efeitos financeiros da pensão por morte, quando há necessidade de complementação de contribuições, são devidos a partir do **pagamento da guia de complementação**, não do óbito. Isso significa que a DIP retroage até a data do pagamento da guia, não até a DER ou o óbito.
 
 ### 4.2 Posição favorável (MS, rito ordinário)
 
@@ -54,7 +52,7 @@ Em decisões concedidas em mandado de segurança (fora do JEF), o TRF4 determino
 
 ### 4.3 Estratégia processual
 
-**Quando o INSS recusa a emissão da guia**, impetrar mandado de segurança contra o Gerente Executivo da APS ou da CEAB, pedindo reabertura do processo administrativo, emissão da guia e efeitos financeiros desde o óbito.
+**Quando o INSS recusa a emissão da guia**, impetrar mandado de segurança na Vara Federal (nunca no JEF) contra o Gerente Executivo da APS ou da CEAB, pedindo reabertura do processo administrativo, emissão da guia e efeitos financeiros desde o óbito.
 
 **Quando a guia já foi paga**, no JEF, os efeitos provavelmente serão fixados a partir do pagamento. No rito ordinário, argumentar retroação ao óbito quando demonstrado que o INSS obstou a complementação.
 
@@ -66,7 +64,7 @@ Em decisões concedidas em mandado de segurança (fora do JEF), o TRF4 determino
 
 Proc. 5006152-98.2022.4.04.7100/RS. Tese, §7º do art. 19-E do Decreto 3.048/99 é irrazoável. Complementação a qualquer tempo. Aplicável a contribuintes individuais.
 
-### 5.2 MS TRF4. complementação post mortem com efeitos desde o óbito
+### 5.2 MS TRF4. complementação post mortem com efeitos desde o óbito [NÃO CONFIRMADO: sem número do processo]
 
 MS com recurso provido. Ementa, é possível a complementação de contribuições previdenciárias vertidas abaixo do mínimo legal post mortem para fins de pensão por morte. A jurisprudência do TRF4 admite a complementação pelos dependentes, com efeitos financeiros retroativos à DER, especialmente quando o INSS obstou o pedido administrativo de emissão de guia. A reabertura do processo administrativo para emissão da guia de complementação é devida, assegurando pensão por morte desde o óbito.
 

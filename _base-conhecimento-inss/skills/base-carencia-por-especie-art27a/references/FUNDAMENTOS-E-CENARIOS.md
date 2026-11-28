@@ -1,49 +1,13 @@
-# Carência por Espécie. Fundamentos e Cenários
+# Carência por Espécie. Cenários
 
-## 1. Marco normativo aplicável
+Tabelas de carência e de reingresso no SKILL.md.
 
-Lei 8.213/91, arts. 25, 26, 27, 27-A. Lei 13.846/2019. MP 871/2019. Decreto 3.048/99. IN INSS 128/2022. Portaria MS/MTPS 22/2022 (doenças graves).
-
-## 2. Cenário 1. Auxílio-doença com 12 contribuições
-
-Carência mínima de 12 contribuições (art. 25 I).
-
-## 3. Cenário 2. Aposentadoria por idade com 180 contribuições
-
-Carência de 180 (art. 25 II).
-
-## 4. Cenário 3. Aposentadoria por tempo com 180 contribuições
-
-Carência de 180 (art. 25 II).
-
-## 5. Cenário 4. Pensão por morte com 18 contribuições
-
-Sem carência (art. 26, I, da Lei 8.213/91). As 18 contribuições só afetam a duração da cota do cônjuge ou companheiro (art. 77, §2º, V, da Lei 8.213/91) (auditoria 03/10/2026).
-
-## 6. Cenário 5. Salário-maternidade sem carência (auditoria 03/10/2026)
-
-Carência inexigível. O art. 25, III, que previa 10 contribuições para CI, facultativa e segurada especial, foi declarado inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), e o Enunciado 19/CRPS exige só a qualidade de segurada, com os requisitos por categoria em `base-salario-maternidade-pos-reforma` (auditoria 03/10/2026).
-
-## 7. Cenário 6. Auxílio-acidente sem carência
-
-Independente de carência (art. 26 I).
-
-## 8. Cenário 7. Doença grave isenta carência
-
-Doenças listadas em portaria (art. 26 II).
-
-## 9. Cenário 8. Reingresso e art. 27-A
-
-Após perda, exigida metade da carência nos benefícios do art. 27-A (6 para auxílio-doença e aposentadoria por invalidez, 12 para auxílio-reclusão). As aposentadorias programadas ficam fora do art. 27-A (auditoria 03/10/2026).
-
-## 10. Cenário 9. Reingresso anterior à MP 871
-
-De 27/06/2017 a 17/01/2019 valia a metade da carência (Lei 13.457/2017). O 1/3 do antigo art. 24, parágrafo único, valeu até 07/07/2016 e de 05/11/2016 a 05/01/2017 (auditoria 03/10/2026).
-
-## 11. Cenário 10. Acumulação de períodos
-
-Períodos pretéritos somam-se. Não há perda.
-
-## 12. Documentos essenciais
-
-CNIS. Atestados. Portarias. Histórico contributivo.
+1. Segurada empregada com 8 contribuições, perda da qualidade e reingresso em 2023 com 6 novas contribuições, incapacitada a seguir. Cumpre a carência do B31: a Lei 13.846/2019 exige metade dos 12 meses a partir da nova filiação (art. 27-A).
+2. Reingresso em março de 2019 e DII em maio de 2019. Vigia a MP 871/2019, com carência integral. Conferir se as contribuições anteriores à perda, somadas às novas, alcançam 12; em caso negativo, verificar isenção do art. 26, II, ou DII posterior a 18/06/2019.
+3. Contribuinte individual com 150 contribuições até 2005, sem contribuir depois, e 30 novas a partir de 2022. Aposentadoria por idade com 180 contribuições: a perda da qualidade não se considera (Lei 10.666/2003, art. 3º, §1º).
+4. Óbito de segurado com 10 contribuições. Pensão sem carência (art. 26, I); a cota do cônjuge dura 4 meses (art. 77, §2º, V, b), salvo invalidez ou deficiência do dependente.
+5. Contribuinte individual gestante sem 10 contribuições. Salário-maternidade devido: a carência é inexigível (ADI 2110 STF; Enunciado 19 CRPS). Exige-se a qualidade de segurada (`base-salario-maternidade-pos-reforma`).
+6. Acidente de trânsito fora do trabalho com 3 contribuições. B31 isento de carência: acidente de qualquer natureza (art. 26, II).
+7. Neoplasia maligna diagnosticada após a filiação. Isenta (art. 26, II; Portaria Interministerial MTP/MS 22/2022). Se a doença é anterior à filiação, sustentar agravamento posterior (art. 59, §1º).
+8. Contribuinte individual que recolhe em atraso competências antigas. Valem para tempo de contribuição, mas não para carência antes do primeiro pagamento em dia (art. 27, II).
+9. Segurado com B31 intercalado entre vínculos. O período em benefício conta como carência (Tema 1125 STF; Enunciado 18 CRPS).

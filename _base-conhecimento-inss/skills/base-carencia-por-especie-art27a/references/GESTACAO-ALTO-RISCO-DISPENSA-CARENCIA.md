@@ -1,6 +1,6 @@
 # Gestação de Alto Risco e a Dispensa de Carência
 
-Onda 142 (18/09/2026). Conferido em fonte oficial no DOU pelo navegador em 18/09/2026.
+Conferido no DOU em 18/09/2026.
 
 ## A norma, com texto literal
 

@@ -1,128 +1,61 @@
 ---
 name: base-seguro-defeso-pescador-artesanal
-description: "Seguro-defeso do pescador artesanal (B04), ótica pró-segurado. Use SEMPRE que mencionar seguro-defeso, seguro defeso, pescador artesanal, Lei 10.779/2003, defeso, período de defeso, RGP Registro Geral da Atividade Pesqueira, TIE Termo de Inclusão Especial, portaria IBAMA defeso, MPA Ministério da Pesca, carência 12 meses pesca artesanal, seguro-desemprego pescador, benefício pescador na vedação de pesca, Instrução Normativa IBAMA, portarias interministeriais MMA MPA, Lei 13.134/2015, isenção carência por ato administrativo defeso, reconhecimento qualidade pescador, prova de atividade pesqueira, pescador segurado especial, exclusividade pesca artesanal, indeferimento seguro-defeso, recurso CRPS pescador, pescador companheiro familiar, tempo de pesca intercalado, auxílio-doença pescador, salário-maternidade pescadora. Cruza com peticao-previdenciaria, segurado-especial-rural, documentos-comprobatorios-in128, precedentes-previdenciarios e periodo-graca-qualidade-segurado."
+description: "Seguro-defeso do pescador artesanal (B04), ótica pró-segurado. Use SEMPRE que mencionar seguro-defeso, seguro defeso, pescador artesanal, Lei 10.779/2003, defeso, período de defeso, RGP Registro Geral da Atividade Pesqueira, TIE Termo de Inclusão Especial, portaria IBAMA defeso, MPA Ministério da Pesca, carência 12 meses pesca artesanal, seguro-desemprego pescador, benefício pescador na vedação de pesca, Instrução Normativa IBAMA, portarias interministeriais MMA MPA, Lei 13.134/2015, Lei 15.265/2025, Codefat, Ministério do Trabalho e Emprego, isenção carência por ato administrativo defeso, reconhecimento qualidade pescador, prova de atividade pesqueira, pescador segurado especial, exclusividade pesca artesanal, indeferimento seguro-defeso, recurso CRPS pescador, pescador companheiro familiar, tempo de pesca intercalado, auxílio-doença pescador, salário-maternidade pescadora. Cruza com peticao-previdenciaria, segurado-especial-rural, base-documentos-comprobatorios-in128, precedentes-previdenciarios e periodo-graca-qualidade-segurado."
 ---
 
-# Seguro-Defeso do Pescador Artesanal (B04) Pós EC 103/2019
+# Seguro-Defeso do Pescador Artesanal
 
-## Escopo
+Seguro-desemprego de 1 salário mínimo por mês de defeso ao pescador artesanal segurado especial. Cenários e documentos em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Skill temática pró-segurado. Orienta a concessão do seguro-defeso (1 salário mínimo por mês de duração do defeso (Lei 10.779/2003)) ao pescador artesanal durante o período de defeso da espécie em que atua. Integra-se com a categoria do segurado especial e tem particularidades operacionais fortes, pois o defeso varia por espécie, por região e por portaria do IBAMA, MMA ou MPA. Objetivo único é defender o pescador.
+## Base normativa
 
-## Marco normativo central
+- CF, art. 201, III (proteção ao trabalhador em situação de desemprego involuntário) e art. 239 (FAT).
+- Lei 10.779/2003, art. 1º (redação da Lei 13.134/2015): pescador artesanal das alíneas "b" do inciso VII do art. 12 da Lei 8.212/91 e do art. 11 da Lei 8.213/91, com atividade ininterrupta, individual ou em economia familiar, recebe 1 salário mínimo mensal durante o defeso.
+  - §1º e §3º: atividade habitual e ininterrupta é a exercida entre o defeso anterior e o atual, ou nos 12 meses anteriores ao defeso atual, o que for menor.
+  - §4º: sem outra fonte de renda diversa da pesca.
+  - §5º: um benefício por ano, ainda que haja defesos de espécies distintas.
+  - §6º: não se estende ao apoio à pesca nem a familiares que não cumpram os requisitos. §7º: pessoal e intransferível. §8º: limite do art. 4º da Lei 7.998/1990.
+  - §9º a §12: cruzamento de bases, biometria e inscrição no CadÚnico (sem efeito de limite de renda), domicílio em município abrangido ou limítrofe à área do defeso, canais de revisão por inconsistência cadastral ou biométrica.
+  - §13 (Lei 15.399/2026): pagamento durante o defeso.
+- Lei 10.779/2003, art. 2º (redação da Lei 15.265/2025): o Ministério do Trabalho e Emprego recebe, processa e habilita, conforme resolução do Codefat. Antes, a competência era do INSS (Lei 13.134/2015).
+  - §1º: não pode estar em gozo de benefício previdenciário ou assistencial continuado, exceto pensão por morte, auxílio-acidente e transferências de renda (CF, art. 6º, parágrafo único, e art. 203, VI; Lei 10.835/2004).
+  - §2º: RGP de pescador profissional artesanal atualizado com 1 ano de antecedência do requerimento; notas fiscais de venda com a contribuição do art. 30, §7º, da Lei 8.212/91, de ao menos 6 dos 12 meses anteriores ao defeso, ou comprovantes de contribuição mensal se vendeu a pessoa física.
+  - §3º: verificação da condição de segurado e da contribuição nos 12 meses anteriores ou desde o último defeso.
+- Decreto 8.424/2015 (regulamento). Ato do IBAMA ou ato conjunto dos ministérios fixa o defeso por espécie e região (art. 1º, §2º, redação original).
 
-CF/88, art. 201, III. Salário-desemprego protegido, amplo conceito que ampara o seguro-defeso.
+## Requisitos, em síntese
 
-Lei 10.779/2003. Institui o seguro-defeso do pescador artesanal.
+1. Pescador artesanal segurado especial, com RGP ativo há 1 ano.
+2. Pesca ininterrupta no período do art. 1º, §3º, sem outra fonte de renda.
+3. Contribuição sobre a comercialização (notas de 6 dos 12 meses anteriores ao defeso) ou contribuição mensal.
+4. Domicílio em município abrangido ou limítrofe à área do defeso.
+5. Sem benefício continuado incompatível.
+6. Biometria e CadÚnico.
 
-Lei 8.213/91, art. 11, VII, b. Pescador artesanal como segurado especial.
+## Valor e duração
 
-Lei 10.779/2003, art. 2º. Exigência de registro (RGP) e exercício da pesca há pelo menos 12 meses (com abrandamentos).
+1 salário mínimo por mês de defeso: defeso de 120 dias gera 4 parcelas. Limite do art. 4º da Lei 7.998/1990 (art. 1º, §8º).
 
-Lei 13.134/2015. Alterou a Lei 10.779/2003.
+## Defesa do segurado
 
-Decreto 8.424/2015. Regulamenta a Lei 10.779/2003.
+1. Manter o RGP atualizado; RGP suspenso impede o benefício até a regularização.
+2. Reunir notas fiscais, comprovantes de contribuição, declaração da colônia e documentos do art. 93 da Portaria 990/2022.
+3. Atividade remunerada de até 120 dias no ano civil não descaracteriza o segurado especial (Lei 8.213/91, art. 11, §9º, III), mas o art. 1º, §4º, da Lei 10.779/2003 exige ausência de outra fonte de renda no período de apuração. Demonstrar que a renda eventual não alterou a dependência da pesca.
+4. Pescadora em economia familiar: documentos do cônjuge e perspectiva de gênero (Tema 327 TNU; `perspectiva-genero-previdenciario`).
+5. Exclusão por inconsistência cadastral ou biometria: usar o canal de revisão do art. 1º, §12.
+6. Indeferimento: recurso administrativo no MTE conforme a resolução do Codefat [NÃO CONFIRMADO o rito]; para pedidos ainda processados pelo INSS antes da Lei 15.265/2025, recurso ao CRPS.
+7. Ação judicial: conferir o polo passivo conforme o órgão que processou o pedido (INSS ou União) [NÃO CONFIRMADO]. Mandado de segurança tramita na Vara Federal, nunca no JEF (Lei 10.259/2001, art. 3º, §1º, I).
 
-Instruções Normativas do IBAMA. Definem o período de defeso por espécie e por região.
+## Relação com outros benefícios
 
-Portarias interministeriais MMA/MPA. Integram o regime.
-
-RGP (Registro Geral da Atividade Pesqueira). Controle federal sobre pescadores.
-
-EC 103/2019. Não alterou estruturalmente o seguro-defeso.
-
-## Requisitos
-
-Primeiro, registro como pescador artesanal no RGP há pelo menos 12 meses antes do defeso.
-
-Segundo, exercício exclusivo da atividade pesqueira artesanal.
-
-Terceiro, não recebimento, no período de defeso, de outro benefício previdenciário continuado, exceto pensão por morte, auxílio-acidente e auxílio-suplementar, nos termos do art. 2º, §2º da Lei 10.779/2003.
-
-Quarto, pertencimento à região e espécie cobertas pelo ato de defeso.
-
-Quinto, comprovação da atividade pesqueira (notas, GTA, declaração de colônia, etc.).
-
-## Cenários operacionais pró-segurado
-
-Primeiro, pescador artesanal com RGP há 2 anos. Defeso de 120 dias. 4 parcelas mensais de 1 SM. Direito integral.
-
-Segundo, pescadora com RGP há 14 meses, tendo colaborado com o esposo pescador. Perspectiva de gênero. Reconhecimento.
-
-Terceiro, pescador que intercalou 2 meses em MEI de peixaria. Discutir preservação da exclusividade da atividade pesqueira com fundamento na subsistência familiar.
-
-Quarto, defeso prorrogado por portaria. Direito à parcela adicional proporcional.
-
-Quinto, pescador em região com defeso múltiplo por espécie. Direito cumulativo apenas se expressamente autorizado em portaria.
-
-Sexto, pescadora em salário-maternidade durante o defeso. Acumulação com seguro-defeso é controversa. Tese pró-segurada sustenta acumulação com fundamento na natureza distinta dos benefícios.
-
-Sétimo, pescador com auxílio-acidente. Acumulação expressamente autorizada pelo art. 2º, §2º da Lei 10.779/2003.
-
-Oitavo, pescador cujo RGP foi suspenso por atraso. Recurso com reativação retroativa.
-
-Nono, pescador que se recusou a emitir GTA. Discussão de prova robusta por outros meios.
-
-## Regra e estratégia
-
-A regra geral é deferimento amplo ao pescador artesanal que comprovar a atividade exclusiva e o registro. O INSS tende a indeferir por suspeita de atividade paralela, RGP desatualizado ou divergência em bases oficiais.
-
-Primeiro, manter RGP ativo durante todo o período.
-
-Segundo, comprovar a atividade pesqueira com notas fiscais, GTA, declaração da colônia, fotografias e redes sociais.
-
-Terceiro, em indeferimento por suposta pluriatividade, demonstrar subsistência e perspectiva de gênero.
-
-Em MS por mora, competência sempre da Vara Federal comum (MS não tramita no JEF, art. 3º, §1º, I, da Lei 10.259/2001).
-
-Quinto, em defeso prorrogado, exigir parcela suplementar.
+- O período de seguro-defeso não é benefício previdenciário; a qualidade de segurado do pescador decorre da atividade (`periodo-graca-qualidade-segurado`; Tema 348 TNU).
+- SDPA deferido de defeso iniciado desde 01/04/2015 ratifica a autodeclaração do segurado especial (Portaria 990/2022, art. 92, §4º; `base-segurado-especial-autodeclaracao-arts-92-93-94`).
+- Salário-maternidade e auxílio por incapacidade durante o defeso: o §1º do art. 2º veda benefício "de natureza continuada"; sustentar que o salário-maternidade, temporário, não se enquadra [NÃO CONFIRMADO precedente].
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao tratar segurada pescadora, acione `segurado-especial-rural` e `perspectiva-genero-previdenciario`.
-Ao reunir documentação, acione `documentos-comprobatorios-in128`.
-Ao buscar precedentes, acione `precedentes-previdenciarios`.
-Ao verificar qualidade, acione `periodo-graca-qualidade-segurado`.
-
-## Alertas
-
-Primeiro, defeso é regional e por espécie. Confirmar portaria exata.
-
-Segundo, RGP suspenso é impeditivo. Regularizar antes do pedido.
-
-Terceiro, pluriatividade formal (MEI, empregado) tende a ser usada pelo INSS para negar. Contra-argumentar com subsistência e economia familiar.
-
-Quarto, acumulação é vedada em regra, salvo as exceções legais.
-
-Quinto, em ações judiciais, usar jurisprudência regional do TRF da área (TRF3, TRF4, TRF5) dependendo do local.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta proteção ampla ao pescador artesanal.
-
-Hugo Goes, em Manual, detalha a sistemática do RGP e carência.
-
-Fábio Zambitte Ibrahim, em Curso, defende leitura integrada da pesca como economia familiar.
-
-Jane Berwanger, em obras sobre segurado especial, aprofunda a prova do pescador.
-
-Wladimir Novaes Martinez analisa a evolução do benefício.
-
-O IBDP sustenta a proteção integral ao pescador artesanal.
-
-## O que NÃO está nesta skill
-
-Não está aqui a aposentadoria do pescador como segurado especial, objeto de `segurado-especial-rural` e `aposentadoria-idade-hibrida`. Não está aqui o salário-maternidade da pescadora, objeto de `base-salario-maternidade-pos-reforma`. Não está aqui o auxílio-acidente, objeto de `base-auxilio-acidente-b94-pos-reforma`.
+`peticao-previdenciaria`, `segurado-especial-rural`, `base-segurado-especial-autodeclaracao-arts-92-93-94`, `perspectiva-genero-previdenciario`, `base-documentos-comprobatorios-in128`, `precedentes-previdenciarios`, `periodo-graca-qualidade-segurado`, `base-portarias-dpmf-inss-hub`. Aposentadoria do pescador em `segurado-especial-rural` e `aposentadoria-idade-hibrida`; salário-maternidade em `base-salario-maternidade-pos-reforma`; auxílio-acidente em `base-auxilio-acidente-b94-pos-reforma`.

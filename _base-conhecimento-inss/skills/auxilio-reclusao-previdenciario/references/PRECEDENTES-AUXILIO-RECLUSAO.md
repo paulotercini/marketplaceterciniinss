@@ -53,7 +53,7 @@ Para a concessão de auxílio-reclusão (art. 80 da Lei 8.213/1991) no regime an
 
 ### 2.3 Alcance temporal
 
-A tese só se aplica a fatos geradores anteriores a 18/01/2019. Para prisões posteriores, a sistemática da média dos 12 salários já resolve a questão do segurado desempregado, pois os meses sem contribuição entram no cálculo (zerados ou excluídos do divisor, conforme a divergência Tema 310/TNU vs. STJ).
+A tese só se aplica a fatos geradores anteriores a 18/01/2019. Para prisões posteriores, a sistemática da média dos 12 salários já resolve a questão do segurado desempregado, pois os meses sem contribuição entram no cálculo (fora do divisor pelo Tema 310 TNU e pelo art. 383, §6º, da IN 128/2022, ou no divisor 12 pela tese da 1ª Turma do STJ).
 
 ## 3. TEMA 357/TNU. PROGRESSÃO DE REGIME E DIREITO ADQUIRIDO
 
@@ -70,35 +70,29 @@ O benefício de auxílio-reclusão concedido para fatos geradores ocorridos ante
 
 ### 3.3 Fundamento
 
-Princípio do tempus regit actum. Art. 5º, XXXVI, CF (direito adquirido). A legislação vigente na data do fato gerador (recolhimento à prisão) define os requisitos. A MP 871/2019 não retroage para suprimir direitos consolidados. O IEPREV atuou como amicus curiae.
+Princípio do tempus regit actum. Art. 5º, XXXVI, CF (direito adquirido). A legislação vigente na data do fato gerador (recolhimento à prisão) define os requisitos. A MP 871/2019 não retroage para suprimir direitos consolidados. 
 
 ### 3.4 Impacto sobre cessações indevidas
 
-Todos os auxílios-reclusão cessados pelo INSS em razão de progressão de regime, quando o fato gerador era anterior a 18/01/2019, podem ser restabelecidos judicialmente (ou por MS, quando a cessação for ato administrativo recente). A prescrição quinquenal atinge apenas as parcelas vencidas, não o fundo de direito.
+Todos os auxílios-reclusão cessados pelo INSS em razão de progressão de regime, quando o fato gerador era anterior a 18/01/2019, podem ser restabelecidos judicialmente (ou por mandado de segurança na Vara Federal, quando a cessação for ato administrativo recente). A prescrição quinquenal atinge apenas as parcelas vencidas, não o fundo de direito.
 
 ## 4. TEMA 310/TNU. DIVISOR DA MÉDIA
 
 ### 4.1 Dados
 
-PUIL 5003395-11.2020.4.04.7001. Rel. Juiz Federal David Wilson de Abreu Pardo. TNU, j. 05/05/2022 (auditoria 03/10/2026).
+PUIL 5003395-11.2020.4.04.7001. Rel. Juiz Federal David Wilson de Abreu Pardo. TNU, j. 05/05/2022.
 
 ### 4.2 Tese
 
 A partir da vigência da MP 871/2019, convertida na Lei 13.846/2019, a aferição da renda para enquadramento do segurado como baixa renda, visando à concessão de auxílio-reclusão, dá-se pela média dos salários de contribuição apurados no período de 12 meses anteriores ao mês do recolhimento à prisão, computando-se no divisor apenas o número de salários de contribuição efetivamente existentes no período.
 
-### 4.3 Divergência com STJ 1ª Turma
+### 4.3 Divergência com a 1ª Turma do STJ [NÃO CONFIRMADO]
 
-AREsp 2.819.695/RS, Rel. Min. Gurgel de Faria, 1ª Turma do STJ, por unanimidade, j. 16/12/2025. Entendimento de que o divisor deve ser sempre fixo em 12, independentemente de existirem competências com salário de contribuição zero.
+AREsp 2.819.695/RS, Rel. Min. Gurgel de Faria, 1ª Turma, j. 16/12/2025: divisor fixo de 12, ainda que haja competências sem salário de contribuição. Precedente de Turma, sem afetação repetitiva. Ler o inteiro teor antes de citar.
 
-**Status**, não é repetitivo. É precedente de Turma. A matéria não foi afetada pela Primeira Seção. A divergência permanece aberta.
+### 4.4 Qual divisor favorece
 
-### 4.4 Quando cada divisor favorece o segurado
-
-**Divisor efetivo (Tema 310/TNU) favorece quando** o segurado teve contribuições altas concentradas em poucos meses e ficou desempregado nos demais. Exemplo com 4 contribuições de R$ 2.000,00 em 12 meses, pelo Tema 310, média = R$ 2.000,00 (divisor 4); pelo STJ, média = R$ 666,67 (divisor 12). Nesse caso, o divisor fixo de 12 é muito mais favorável.
-
-**Divisor fixo de 12 (STJ) favorece quando** o segurado teve contribuições moderadas em poucos meses. Sempre que houver meses sem contribuição, o divisor fixo dilui a média. Na grande maioria dos casos práticos, o divisor fixo de 12 beneficia o segurado.
-
-**Regra prática**, calcular com ambos os divisores e invocar o mais favorável, fundamentando conforme a instância (Tema 310 vincula no JEF; AREsp 2.819.695 tem prevalência hierárquica nos TRFs).
+Com meses sem contribuição, o divisor 12 sempre produz média igual ou menor que o divisor dos salários existentes. Exemplo: 4 contribuições de R$ 2.000,00 dão média de R$ 2.000,00 pelo Tema 310 TNU e de R$ 666,67 pelo divisor 12. A competência abaixo do limite mínimo fica fora da média (IN 128/2022, art. 383, §7º).
 
 ## 5. TEMA 89/STF. CONSTITUCIONALIDADE
 
@@ -106,7 +100,7 @@ RE 587.365/SC, Tribunal Pleno, Rel. Min. Ricardo Lewandowski, j. 25/03/2009.
 
 O requisito de baixa renda previsto no art. 201, IV, CF refere-se ao segurado, não aos dependentes. A constitucionalidade do critério legal de aferição da renda foi confirmada.
 
-## 6. PRECEDENTE REGIONAL. TRF6, SEMIABERTO SEM TRABALHO EXTERNO
+## 6. PRECEDENTE REGIONAL. TRF6, SEMIABERTO SEM TRABALHO EXTERNO [NÃO CONFIRMADO]
 
 ApCiv 1012773-27.2023.4.06.9999, Rel. Des. Federal Grégore Moreira de Moura, 1ª Turma do TRF6, j. 21/11/2023.
 
@@ -121,8 +115,8 @@ Precedente regional, não vinculante fora da 1ª Turma do TRF6. Anterior ao Tema
 | Tema 1162 | STJ, 1ª Seção | 12/11/2025 | Repetitivo | Flexibilização critério econômico |
 | Tema 896 | STJ, 1ª Seção | 24/02/2021 (revisão) | Repetitivo | Desempregado = renda zero (pré-MP) |
 | Tema 357 | TNU, Plenário | 04/12/2024 | Representativo TNU | Progressão regime pré-MP |
-| Tema 310 | TNU | 06/05/2022 | Representativo TNU | Divisor = meses com contribuição |
-| AREsp 2.819.695 | STJ, 1ª Turma | 16/12/2025 | Persuasivo | Divisor fixo = 12 |
+| Tema 310 | TNU | 05/05/2022 | Representativo TNU | Divisor = meses com contribuição |
+| AREsp 2.819.695 [NÃO CONFIRMADO] | STJ, 1ª Turma | 16/12/2025 | Persuasivo | Divisor fixo = 12 |
 | Tema 89 | STF, Plenário | 25/03/2009 | Rep. geral | Renda do segurado, não dos dependentes |
 | Tema 1017 | STF, Plenário Virtual | 16/11/2018 | Sem rep. geral | Matéria infraconstitucional |
 | TRF6 ApCiv | TRF6, 1ª Turma | 21/11/2023 | Regional | Semiaberto sem trabalho externo |

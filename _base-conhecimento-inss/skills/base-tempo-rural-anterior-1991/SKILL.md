@@ -1,115 +1,49 @@
 ---
 name: base-tempo-rural-anterior-1991
-description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização (art. 55 §2º Lei 8.213/91), Súmula 272 STJ contribuição facultativa do segurado especial, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU documento do cônjuge empregado rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
+description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização (art. 55 §2º Lei 8.213/91), Súmula 272 STJ contribuição facultativa do segurado especial, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, Tema 1007 STJ, Tema 609 STJ, Tema 219 TNU, trabalho rural do menor, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU documento do cônjuge empregado rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, base-documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
 ---
-
-> Nota da auditoria de citações (25/07/2026). Súmula 272 STJ (enunciado oficial, tese adversa): "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas" (auditoria 03/10/2026). O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 
 # Tempo Rural Anterior a Novembro de 1991
 
-## Escopo
+Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação às teses do INSS em `references/JURISPRUDENCIA-E-REFUTACAO.md`. Caracterização, autodeclaração e prova do segurado especial em `base-segurado-especial-autodeclaracao-arts-92-93-94`, que concentra o detalhe.
 
-Skill temática pró-segurado. Orienta o cômputo do tempo de atividade rural prestado antes da vigência da Lei 8.213/91 (24/07/1991, início de produção de efeitos plenos em novembro/1991) como tempo de contribuição previdenciária no RGPS, inclusive em regime de economia familiar, boia-fria e diarista rural, com as vedações jurisprudenciais e a possibilidade de indenização para fins de carência.
+## Base normativa
 
-## Marco normativo central
+- Lei 8.213/91, art. 55, §2º: o tempo de trabalhador rural anterior à vigência da lei conta como tempo de serviço, independentemente de contribuição, exceto para carência.
+- IN 128/2022, art. 194, II: o tempo rural anterior à competência novembro de 1991 não conta para carência, salvo nos benefícios do segurado especial do art. 39, I, e do art. 48, caput e §2º, da Lei 8.213/91.
+- Lei 8.213/91, art. 48, §3º (Lei 11.718/2008): aposentadoria híbrida, que soma tempo rural e urbano.
+- Lei 8.213/91, art. 38-B (Lei 13.846/2019): autodeclaração ratificada por bases governamentais; art. 106: documentos de prova.
+- CF, art. 201, §9º: contagem recíproca, com compensação financeira entre os regimes.
 
-CF/88, art. 201, §9º. Contagem recíproca.
+## Jurisprudência
 
-Lei 8.213/91, art. 55, §2º. Cômputo do tempo rural anterior à vigência da Lei, para fins de tempo de contribuição, sem recolhimento, vedada a carência.
+- Súmula 149 STJ (Tema 297): a prova exclusivamente testemunhal não basta.
+- Súmula 577 STJ (Tema 638): reconhece-se tempo rural anterior ao documento mais antigo, com prova testemunhal convincente colhida sob contraditório.
+- Tema 1007 STJ: o tempo rural anterior a 1991, ainda que remoto e descontínuo, conta para a carência da aposentadoria híbrida, sem recolhimento, qualquer que seja a predominância do trabalho.
+- Tema 629 STJ: a ausência de prova eficaz leva à extinção sem resolução de mérito, e o segurado pode repropor a ação com prova nova.
+- Tema 219 TNU: conta o trabalho rural prestado antes dos 12 anos, com prova da atividade. A Súmula 5 TNU admite o trabalho de 12 a 14 anos anterior à Lei 8.213/91 [NÃO CONFIRMADO no catálogo].
+- Tema 327 TNU: documento do cônjuge ou companheiro que o qualifica como empregado rural é início de prova material para a segurada especial.
+- Súmula 272 STJ, adversa: o segurado especial só obtém aposentadoria por tempo de serviço se recolher contribuições facultativas. Alcança o tempo posterior a 11/1991; o anterior conta sem recolhimento pelo art. 55, §2º.
+- Tema 609 STJ, adverso: a contagem recíproca do tempo rural anterior a 1991 no regime estatutário exige o comprovante de pagamento das contribuições.
+- Tema 642 STJ, adverso: o segurado especial deve estar no campo ao completar a idade da aposentadoria rural, ressalvado o direito adquirido de quem já reunira idade e carência.
 
-Lei 8.213/91, art. 106. Provas materiais e testemunhais.
+## Defesa do segurado, em ordem
 
-IN 128/2022. Regras operacionais.
+1. Cômputo do período como tempo de contribuição sem recolhimento (art. 55, §2º).
+2. Carência: na aposentadoria híbrida, Tema 1007 STJ; na rural por idade, art. 39, I, e art. 48, §2º. Nos demais benefícios, indenização (`indenizacao-contribuicoes-atraso`).
+3. Prova: documentos em nome próprio ou do grupo familiar, autodeclaração ratificada e testemunhas. Documento do cônjuge vale (Tema 327 TNU), e a prova testemunhal estende a eficácia do documento mais antigo (Súmula 577 STJ).
+4. Trabalho do menor: Tema 219 TNU, com prova da atividade efetiva.
+5. Ação anterior improcedente por falta de prova: conferir o Tema 629 STJ antes de repropor (`coisa-julgada-previdenciaria`).
+6. Servidor público: certidão de tempo rural para o RPPS, com o ônus do Tema 609 STJ (`base-contagem-reciproca-rgps-rpps`).
 
-Ofício-Circular 46/2019 DIRBEN. Orientações administrativas.
+## Via processual
 
-Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais (auditoria 03/10/2026).
-
-## Marco jurisprudencial
-
-Súmula 272 STJ (enunciado oficial, tese adversa): "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas" (auditoria 03/10/2026). O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
-
-Fonte oficial em https://www.stj.jus.br
-
-Súmula 149 STJ. Prova exclusivamente testemunhal não basta.
-
-Fonte oficial em https://www.stj.jus.br
-
-Súmula 577 STJ. Prova documental do início, complementada por testemunhal.
-
-Fonte oficial em https://www.stj.jus.br
-
-Tema 629 STJ. Coisa julgada em ações rurais, estratégias de repropositura.
-
-Fonte oficial em https://www.stj.jus.br
-
-Tema 642 STJ. Tese adversa: o segurado especial deve estar no campo ao completar a idade mínima da aposentadoria por idade rural. O caminho do segurado é a ressalva do direito adquirido, quando carência e idade foram preenchidas juntas no passado (auditoria 03/10/2026).
-
-Tema 327 TNU. Perspectiva de gênero e prova rural. A documentação em nome do cônjuge ou companheiro que o qualifica como empregado rural é início de prova material para benefício de segurado especial (auditoria 03/10/2026).
-
-Fonte oficial em https://www.jf.jus.br
-
-## Espaço pró-segurado
-
-Primeiro, segurado com atividade rural comprovada antes de novembro de 1991, em regime de economia familiar, boia-fria ou diarista rural, aproveita o tempo integralmente para cômputo de tempo de contribuição, sem necessidade de recolhimento.
-
-Segundo, para fins de carência, o tempo rural pré-1991 não computa, salvo indenização das contribuições. Exceção, aposentadoria rural por idade (art. 48, §§1º e 2º, Lei 8.213), em que se dispensa o recolhimento, ou híbrida (art. 48, §3º), em que a mescla é admitida.
-
-Terceiro, possibilidade de contagem recíproca do tempo rural para o RPPS, mediante indenização de contribuições (Tema 609 STJ).
-
-Quarto, perspectiva de gênero, Tema 327 TNU. Mulher rural pode ter prova flexibilizada, com início de prova material em documento do cônjuge ou companheiro qualificado como empregado rural (auditoria 03/10/2026).
-
-Quinto, menor de 12 ou 14 anos trabalhador rural. Cômputo admitido em juízo com prova robusta.
-
-## Regra pró-segurado
-
-Primeiro, levantamento de prova material (certidão de casamento, de nascimento, bloco de notas, ITR, título de eleitor com profissão lavrador, carteira sindical, CAF/DAP, certidões escolares, fichas médicas).
-
-Segundo, autodeclaração rural ratificada (art. 38-B da Lei 8.213/91, incluído pela Lei 13.846/2019).
-
-Terceiro, audiência com prova testemunhal.
-
-Quarto, cômputo do tempo.
-
-Quinto, se necessário, indenização para carência.
-
-Sexto, requerimento administrativo antes da ação judicial.
+Requerimento administrativo com autodeclaração e documentos, recurso ao CRPS e ação judicial. Mandado de segurança só na Vara Federal, nunca no JEF, e apenas para omissão na análise.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao caracterizar segurado especial, acionar `segurado-especial-rural`.
-Ao documentar prova, acionar `documentos-comprobatorios-in128`.
-Quando a segurada for mulher, acionar `perspectiva-genero-previdenciario`.
-Para contagem recíproca, acionar `base-contagem-reciproca-rgps-rpps`.
-Para indenização, acionar `indenizacao-contribuicoes-atraso`.
-Ao redigir peça, acionar `peticao-previdenciaria`.
-
-## Alertas
-
-Primeiro, carência não é alcançada pelo tempo rural pré-1991 sem indenização, salvo exceções específicas da aposentadoria rural pura ou híbrida.
-
-Segundo, prova exclusivamente testemunhal não basta.
-
-Terceiro, autodeclaração tem força probatória, mas precisa de início documental.
-
-Quarto, perspectiva de gênero reduz rigor probatório em trabalho rural feminino.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## O que NÃO está nesta skill
-
-Segurado especial pós-1991 está em `segurado-especial-rural`. Contagem recíproca está em `base-contagem-reciproca-rgps-rpps`. Tempo militar em `base-servico-militar-obrigatorio`. Aluno-aprendiz em `base-aluno-aprendiz`. Conversão de tempo especial em `base-tempo-especial-conversao`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria rural" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+Segurado especial: `base-segurado-especial-autodeclaracao-arts-92-93-94` e `segurado-especial-rural`. Documentos: `base-documentos-comprobatorios-in128`. Gênero: `perspectiva-genero-previdenciario`. Híbrida: `aposentadoria-idade-hibrida`. Contagem recíproca: `base-contagem-reciproca-rgps-rpps`. Indenização: `indenizacao-contribuicoes-atraso`. Peça: `peticao-previdenciaria`, bloco "Aposentadoria rural" de `references/REDACAO-POR-ESPECIE.md`. Portarias: `base-portarias-dpmf-inss-hub`. Fora do escopo: tempo militar (`base-servico-militar-obrigatorio`), aluno-aprendiz (`base-aluno-aprendiz`), tempo especial (`base-tempo-especial-conversao`).

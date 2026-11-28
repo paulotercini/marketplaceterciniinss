@@ -1,119 +1,26 @@
-# Carência por Espécie. Jurisprudência e Refutação
+# Carência por Espécie. Precedentes e Refutação
 
-## 1. Precedentes relevantes
+## Precedentes
 
-### Reingresso e art. 27-A da Lei 8.213/91
+- Tema 1125 STF: "É constitucional o cômputo, para fins de carência, do período no qual o segurado esteve em gozo do benefício de auxílio-doença, desde que intercalado com atividade laborativa."
+- ADI 2110 STF: inconstitucionalidade da carência do salário-maternidade (https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150).
+- Enunciado 18 CRPS (Resolução 27/2024): cômputo de benefício por incapacidade intercalado para carência. Enunciado 19 CRPS (Resolução 13/2025): inexigibilidade de carência no salário-maternidade.
+- Tema 365 TNU (PEDILEF 0500120-68.2021.4.05.8311/PE, julgado em 12/11/2025), adverso e restrito ao período de graça: "Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, § 1º, da Lei nº 8.213/91." Não alcança a carência.
 
-O reingresso se rege pelo art. 27-A da Lei 8.213/91, que exige, nos benefícios que enumera, metade da carência a partir da nova filiação. Fonte oficial em https://www.planalto.gov.br (auditoria 03/10/2026).
+## Teses do INSS e refutação
 
-### Tema 365 TNU (tese e data conferidas na página oficial do CJF, julgado em 12/11/2025, acórdão publicado em 18/12/2025. auditoria 25/07/2026, a data antes registrada, 13/11/2025, estava errada)
+1. Reingresso exige carência integral. Desde 18/06/2019, metade dos períodos dos incisos I, III e IV do art. 25 (art. 27-A, Lei 13.846/2019).
+2. Contribuições anteriores à perda não contam. O art. 27-A exige o mínimo a partir da nova filiação; as anteriores somam-se para completar o total.
+3. Regra atual aplicada a reingresso antigo. Aplica-se a lei vigente no fato gerador (tempus regit actum). Ver tabela de reingresso no SKILL.md.
+4. Aposentadoria por idade com perda da qualidade. Lei 10.666/2003, art. 3º, §1º: a perda não se considera, desde que cumprida a carência na DER.
+5. Doença grave sem isenção. Art. 26, II, e Portaria Interministerial MTP/MS 22/2022; enquanto não editada a lista, valia o rol do art. 151 da Lei 8.213/91.
+6. Doença preexistente. Art. 59, §1º: o agravamento posterior à filiação gera direito; demonstrar a progressão por exames datados.
+7. Acidente exige carência. Art. 26, II: acidente de qualquer natureza dispensa carência no B31 e no B32.
+8. Salário-maternidade exige 10 contribuições. ADI 2110 STF e Enunciado 19 CRPS.
+9. Pensão por morte exige 18 contribuições. Art. 26, I: sem carência; as 18 contribuições definem a duração da cota (art. 77, §2º, V).
+10. Auxílio-acidente exige carência. Art. 26, I.
+11. Benefício intercalado não conta. Tema 1125 STF; o Tema 365 TNU limita-se ao art. 15, §1º.
 
-Tese literal. "Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, § 1º, da Lei nº 8.213/91." PEDILEF 0500120-68.2021.4.05.8311/PE. ALERTA. Tese contrária ao segurado, restrita à prorrogação do período de graça (120 contribuições). Não confundir com o cômputo de benefício por incapacidade intercalado para CARÊNCIA, que permanece garantido pelo Tema 1125/STF e pelo Enunciado 18 do CRPS.
+## Limite a observar
 
-### Lei 8.213/91, art. 27-A
-
-Reingresso. Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.213/91, art. 25
-
-Carência específica. Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.213/91, art. 26
-
-Isenção. Fonte oficial em https://www.planalto.gov.br
-
-### Lei 13.846/2019
-
-Alteração na carência. Fonte oficial em https://www.planalto.gov.br
-
-### MP 871/2019
-
-Alteração na carência. Fonte oficial em https://www.planalto.gov.br
-
-### Portaria MS/MTPS 22/2022
-
-Doenças graves. Fonte oficial em https://www.gov.br
-
-## 2. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Carência integral após perda
-
-Argumento adversário. Reingresso zera.
-
-Refutação. Art. 27-A, metade da carência.
-
-### Argumento 2. Períodos pretéritos não somam
-
-Argumento adversário. Perda apaga.
-
-Refutação. Art. 27-A, caput, que exige no reingresso só metade da carência e aproveita as contribuições anteriores (auditoria 03/10/2026).
-
-### Argumento 3. Doença grave sem isenção
-
-Argumento adversário. Sem cobertura.
-
-Refutação. Art. 26 II.
-
-### Argumento 4. Acidente exige carência
-
-Argumento adversário. Tempo mínimo.
-
-Refutação. Art. 26 I, sem carência.
-
-### Argumento 5. Reingresso pré-MP 871
-
-Argumento adversário. Regra atual aplica.
-
-Refutação. Tempus regit actum.
-
-### Argumento 6. Salário-maternidade exige 12
-
-Argumento adversário. Mesma regra.
-
-Refutação. Não há carência alguma. A exigência do art. 25, III, foi declarada inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), e o Enunciado 19/CRPS a afasta, mantida só a prova da qualidade de segurada (auditoria 03/10/2026).
-
-### Argumento 7. Pensão exige 24
-
-Argumento adversário. Carência alta.
-
-Refutação. Pensão por morte independe de carência (art. 26, I, da Lei 8.213/91). As 18 contribuições só afetam a duração da cota do cônjuge ou companheiro (art. 77, §2º, V, da Lei 8.213/91) (auditoria 03/10/2026).
-
-### Argumento 8. Aposentadoria especial exige 180
-
-Argumento adversário. Mesma carência.
-
-Refutação. Art. 25 II.
-
-### Argumento 9. BPC exige carência
-
-Argumento adversário. Tempo mínimo.
-
-Refutação. BPC dispensa carência.
-
-### Argumento 10. Auxílio-acidente exige
-
-Argumento adversário. Sem cobertura.
-
-Refutação. Art. 26 I.
-
-## 3. Cláusulas doutrinárias de apoio
-
-Nenhuma posição doutrinária entra aqui sem obra e página conferidas (auditoria 03/10/2026).
-
-## 4. Estratégia integrada
-
-Primeiro, levantamento CNIS.
-
-Segundo, identificação da carência aplicável.
-
-Terceiro, recurso ao CRPS.
-
-Quarto, ação judicial.
-
-Quinto, dialeticidade.
-
-Sexto, monitoramento.
-
-## 5. Diligência de atualização
-
-Revalidar a Lei 13.846 e o art. 27-A (auditoria 03/10/2026). Monitorar Portarias.
+No contribuinte individual, a competência recolhida em atraso antes do primeiro pagamento em dia não conta para carência (art. 27, II). O caminho é demonstrar pagamento tempestivo anterior ou vínculo de empregado no período, cujo recolhimento é ônus do empregador (Lei 8.212/91, art. 30, I).

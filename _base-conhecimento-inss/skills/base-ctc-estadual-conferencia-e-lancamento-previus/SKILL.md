@@ -33,7 +33,7 @@ Atenção, páginas digitalizadas costumam vir em duplicidade (cada folha escane
 
 ## 4. Consolidação das remunerações
 
-O salário-de-contribuição de cada competência é a SOMA dos valores dos PVs daquele mês, porque os vínculos foram concomitantes no mesmo regime. A partir da reforma, salários de atividades simultâneas somam-se, respeitado o teto. Confira sempre se a soma do mês supera o teto da época; abaixo do teto, some direto.
+O salário-de-contribuição de cada competência é a SOMA dos valores dos PVs daquele mês, porque os vínculos foram concomitantes no mesmo regime. Salários de atividades concomitantes somam-se, respeitado o teto (Lei 8.213/91, art. 32, redação da Lei 13.846/2019). Confira sempre se a soma do mês supera o teto da época; abaixo do teto, some direto.
 
 O 13º não entra como competência mensal na média do RGPS. Fica em base separada.
 
@@ -91,17 +91,13 @@ Primeiro excluir os intervalos fictícios e ajustar os contínuos. Depois import
 
 ## 9. Fundamentos
 
-Todos conferidos no repositório de fontes primárias `base-legislacao-fontes-primarias` e em fonte oficial, em 20/07/2026 (ver seção 14 para o carimbo de verificação).
+- Lei 8.213/91, art. 96: I, vedada a contagem em dobro ou em condições especiais; II, vedada a soma de tempo público e privado concomitantes; III, tempo usado para aposentadoria em um regime não se reconta no outro; IV, indenização do tempo anterior ou posterior à filiação obrigatória.
+- Lei 8.213/91, art. 24: carência é o número mínimo de contribuições mensais.
+- IN 128/2022, art. 70, redação da IN 167/2024: CTC no modelo do Anexo IX da Portaria MTP 1.467/2022, acompanhada da Relação das Bases de Cálculo de Contribuição do Anexo X para período posterior a 06/1994.
+- Lei 8.213/91, art. 32 (redação da Lei 13.846/2019): salários de atividades concomitantes somam-se, limitados ao teto.
+- EC 103/2019, art. 26, caput (média de 100% dos salários desde 07/1994) e §6º: "Poderão ser excluídas da média as contribuições que resultem em redução do valor do benefício, desde que mantido o tempo mínimo de contribuição exigido, vedada a utilização do tempo excluído para qualquer finalidade".
 
-Contagem recíproca e efeitos, art. 96 da Lei 8.213/91. O inciso I veda contagem em dobro ou em condições especiais na recíproca. O inciso II veda a contagem de tempo de serviço público com o de atividade privada, quando concomitantes. O inciso III veda reaproveitar por um sistema o tempo já usado para aposentadoria pelo outro. O inciso IV condiciona à indenização o tempo anterior ou posterior à obrigatoriedade de filiação.
-
-Carência como número de contribuições mensais, art. 24 da Lei 8.213/91 ("Período de carência é o número mínimo de contribuições mensais indispensáveis para que o beneficiário faça jus ao benefício").
-
-CTC acompanhada da Relação das Remunerações de Contribuições por competências para períodos posteriores a junho de 1994, art. 70 da IN PRES/INSS 128/2022 (a CTC segue o modelo do Anexo XV e é acompanhada da Relação das Remunerações conforme Anexo XXIII, quando o período for posterior à competência junho de 1994). Do lado do RPPS emissor, a Relação das Bases de Cálculo de Contribuição segue o Anexo X da Portaria MTP 1.467/2022.
-
-Descarte das competências que reduzem a média, mantido o tempo mínimo, art. 26, §6º, da EC 103/2019 ("Poderão ser excluídas da média as contribuições que resultem em redução do valor do benefício, desde que mantido o tempo mínimo de contribuição exigido, vedada a utilização do tempo excluído para qualquer finalidade"). O caput do art. 26 fixa a média de 100% do período contributivo desde a competência julho de 1994.
-
-A redação literal dos dispositivos confere-se em `base-legislacao-fontes-primarias` (arquivos da Lei 8.213/91, EC 103/2019 e IN 128/2022) ou no Planalto antes de citar em peça.
+Dispositivos conferidos no corpus de `base-legislacao-fontes-primarias` em 20/07/2026; art. 70 da IN 128/2022 reconferido na redação da IN 167/2024. O formato dos importadores do Prévius é do software, não é norma.
 
 ## 10. Entregáveis padrão
 
@@ -128,22 +124,6 @@ Para o direito à contagem recíproca e à CTC, `base-contagem-reciproca-rgps-rp
 ## 13. Alertas
 
 Primeiro, o total bruto da CTC pode embutir dia contado em duplicidade por concomitância; o modelo correto pode ficar 1 dia abaixo, e isso é o certo. Segundo, remuneração de mês de substituição costuma ficar abaixo do salário mínimo da época, o que é normal na contagem recíproca e o Prévius trata pelo descarte. Terceiro, confira sempre se a correção do tempo antecipa o cumprimento do requisito, porque isso muda a DER e pode dispensar projeção e contribuições a pagar.
-
-## 14. Carimbo de verificação de fundamentos (Onda 74)
-
-Conferido em 20/07/2026 contra fonte primária, antes da criação desta skill.
-
-Art. 96, incisos I a IV, da Lei 8.213/91. CONFERIDO no arquivo local `Lei-8213-91-beneficios.md`. O inciso II trata de público versus privado concomitantes (ver a precisão da seção 7).
-
-Art. 24 da Lei 8.213/91 (carência como número de contribuições mensais). CONFERIDO no arquivo local.
-
-Art. 26, caput e §6º, da EC 103/2019 (média de 100% desde 07/1994 e exclusão das competências que reduzem a média mantido o tempo mínimo). CONFERIDO no arquivo local `EC-103-2019.md`, texto literal do §6º transcrito na seção 9.
-
-Art. 70 da IN PRES/INSS 128/2022 (CTC pelo Anexo XV, acompanhada da Relação das Remunerações pelo Anexo XXIII, período posterior a 06/1994). CONFERIDO no arquivo local `IN-128-2022-INSS-parte1`.
-
-Portaria MTP 1.467/2022, Anexo X (Relação das Bases de Cálculo de Contribuição, RBCC). CONFERIDO em fonte oficial (gov.br, Manual de CTC do INSS e Portal IN/INSS), por não constar do repositório local de legislação. Registrado nas notas de manutenção da `base-legislacao-fontes-primarias` como norma a baixar.
-
-Prévius. O formato dos importadores (colunas, tipos, separador) é do software de cálculo do escritório, não é norma. Descrição operacional, não jurídica.
 
 ## MCPs da casa
 

@@ -1,49 +1,37 @@
 ---
 name: base-reclamatoria-trabalhista-prova-previdenciaria
-description: "Skill base sobre uso de sentenças, acordos e provas de reclamatória trabalhista como prova previdenciária, à luz do Tema 1188/STJ e da Súmula 149/STJ (a Súmula 31/TNU foi revogada em 22/11/2023). Use SEMPRE que mencionar reclamatória trabalhista previdenciária, sentença trabalhista CNIS, vínculo reconhecido na justiça do trabalho, RT como prova, acordo trabalhista RGPS, anotação CTPS por sentença, INSS revisão por RT, Súmula 31 TNU, Tema 1188 STJ, Súmula 149 STJ, valor probatório sentença trabalhista, presunção relativa, INSS terceiro processo trabalhista, ampla defesa contraditório, art. 442 CPC, art. 506 CPC, eficácia perante terceiros sentença, salário-de-contribuição reconhecido em RT. Hub para defesa do segurado quando o INSS recusa cômputo de tempo ou salário-de-contribuição reconhecidos em sentença ou acordo trabalhista. NÃO use para revisão por atividades concomitantes (skill própria) nem para reclamatória ainda em curso. Cruza com documentos-comprobatorios-in128 e peticao-previdenciaria."
+description: "Uso de sentença, acordo homologado e provas de reclamatória trabalhista como prova previdenciária: Tema 1188 STJ, art. 55, §3º, Lei 8.213/91, IN 128/2022, arts. 172 a 176, Enunciado 3 CRPS, Súmula 149 STJ (Súmula 31 TNU revogada em 22/11/2023). Use SEMPRE que mencionar reclamatória trabalhista previdenciária, sentença trabalhista no CNIS, vínculo reconhecido na Justiça do Trabalho, acordo trabalhista, anotação da CTPS por sentença, salário de contribuição reconhecido em RT, reintegração, complementação de remuneração, INSS terceiro no processo trabalhista, limbo previdenciário reconhecido em RT. NÃO use para ajuizamento de RT (base-rt-ajuizamento-vinculo-previdenciario) nem para revisão por atividades concomitantes. Cruza com base-documentos-comprobatorios-in128 e peticao-previdenciaria."
 ---
 
 # Reclamatória Trabalhista como Prova Previdenciária
 
-## 1. Quando acionar esta skill
+Ajuizamento da RT e regime das contribuições: `base-rt-ajuizamento-vinculo-previdenciario`. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Acione SEMPRE que houver sentença ou acordo trabalhista a ser utilizado como prova de vínculo, salário ou condição de trabalho perante o INSS. A skill consolida o regime de aceitação probatória, mais favorável ao segurado.
+## Base normativa e precedentes
 
-## 2. Marco normativo
+- Lei 8.213/91, art. 55, §3º: tempo de serviço exige início de prova material contemporâneo, vedada a prova exclusivamente testemunhal, salvo força maior ou caso fortuito.
+- Tema 1188 STJ (julgado em 13/09/2023, transitado): "A sentença trabalhista homologatória de acordo, assim como a anotação na CTPS e demais documentos dela decorrentes, somente será considerada início de prova material válida, conforme o disposto no art. 55, § 3º, da Lei 8.213/91, quando houver nos autos elementos probatórios contemporâneos que comprovem os fatos alegados e sejam aptos a demonstrar o tempo de serviço no período que se pretende reconhecer na ação previdenciária, exceto na hipótese de caso fortuito ou força maior."
+- IN 128/2022:
+  - art. 172, I e II: início de prova material formado por documentos contemporâneos juntados à RT ou ao requerimento;
+  - art. 172, III: comprovado o vínculo, as remunerações da RT transitada computam-se independentemente de prova material e de recolhimento, nos limites do salário de contribuição;
+  - art. 172, IV: RT apenas de complementação de remuneração de vínculo comprovado dispensa prova material;
+  - art. 172, §4º: as regras dos incisos III e IV não valem para contribuinte individual até 03/2003 nem para doméstico antes de 06/2015;
+  - art. 173: reintegração dispensa prova material se o vínculo anterior está comprovado;
+  - art. 174: o reenquadramento de categoria por RT, com início de prova material, deve ser acatado;
+  - arts. 175 e 176: dúvida fundamentada e ofício da Justiça do Trabalho seguem à PFE-INSS.
+- Enunciado 3 CRPS: a RT transitada produz efeitos previdenciários com início de prova material contemporâneo; dispensa-se essa prova na reintegração e na complementação de remuneração de vínculo comprovado.
+- Súmula 149 STJ: prova exclusivamente testemunhal não basta.
+- A Súmula 31 TNU foi revogada em 22/11/2023 e não se cita.
 
-CORREÇÃO DE AUDITORIA (11/07/2026). A Súmula 31/TNU foi REVOGADA pela TNU em 22/11/2023 e não pode ser citada como vigente. O fundamento atual é o Tema 1188/STJ (transitado em julgado), com a seguinte tese literal. "A sentença trabalhista homologatória de acordo, assim como a anotação na CTPS e demais documentos dela decorrentes, somente será considerada início de prova material válida, conforme o disposto no art. 55, § 3º, da Lei 8.213/91, quando houver nos autos elementos probatórios contemporâneos que comprovem os fatos alegados e sejam aptos a demonstrar o tempo de serviço no período que se pretende reconhecer na ação previdenciária, exceto na hipótese de caso fortuito ou força maior." A Súmula 149/STJ dispõe que prova exclusivamente testemunhal não basta. O Tema 297/TNU detalhou requisitos. O Tema 1.188/STF tratou da participação do INSS no processo trabalhista. O CPC, no art. 506, regula a eficácia perante terceiros.
+## Roteiro
 
-## 3. Eixos centrais pró-segurado
+1. Obter a cópia integral da RT: inicial, documentos, atas, depoimentos, sentença, cálculos homologados e certidão de trânsito.
+2. Separar os documentos contemporâneos ao período (holerites, recibos, cartões de ponto, fotografias datadas, correspondência).
+3. Classificar a RT: reconhecimento de vínculo (exige prova contemporânea), complementação salarial ou reintegração (dispensa, se o vínculo está comprovado).
+4. Requerer ao INSS o cômputo, com a sentença, os cálculos e a prova contemporânea (art. 172, §1º).
+5. No indeferimento, ação previdenciária com produção de prova testemunhal complementar.
 
-A sentença trabalhista é prova legítima desde que apoiada em início de prova material, ainda que produzida no processo trabalhista.
-
-A ausência do INSS no processo trabalhista não retira o valor probatório, mas exige que a sentença seja revisada pelo INSS na via administrativa ou judicial autônoma.
-
-O acordo trabalhista pode ser aceito como início de prova, complementado por outros documentos.
-
-A anotação na CTPS decorrente de sentença vincula o INSS quando a sentença está fundada em prova material e segue o devido processo.
-
-A Súmula 149/STJ não impede o reconhecimento, apenas exige início de prova material.
-
-## 4. Fragilidades adversárias mais comuns
-
-O INSS recusa qualquer aceitação. Refute com o Tema 1188/STJ (sentença fundada em elementos contemporâneos é início de prova material) e, na via administrativa, com o Enunciado 3 do CRPS. Não citar a Súmula 31/TNU, revogada em 22/11/2023.
-
-O INSS exige tríplice identidade. Refute com art. 506 CPC e jurisprudência.
-
-O INSS desconsidera anotação na CTPS por sentença. Refute com a fé pública da CTPS após o trânsito.
-
-O INSS argumenta ausência no processo trabalhista. Refute com a possibilidade de impugnação posterior.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em juntada da sentença trabalhista, contracheques, CTPS anotada, prova testemunhal complementar e ação ordinária ou JEF. Combinar com `cnis-acerto-indicadores`, `documentos-comprobatorios-in128` e `peticao-previdenciaria`.
-
-## 6. Documentos essenciais
-
-Sentença trabalhista. Acordo homologado. CTPS com anotação. Cópia integral do processo trabalhista. Comprovantes de pagamento. CNIS.
-
-## 7. Limbo previdenciário. Aplicação de maior rendimento (Onda 70)
+## Limbo previdenciário
 
 A sentença trabalhista que reconhece o limbo previdenciário é a prova de primeira linha do Tema 300 da TNU. Ela produz dois efeitos simultâneos.
 
@@ -53,13 +41,9 @@ Foi exatamente o que decidiu a 2ª Turma Recursal de São Paulo no RI 5001689-93
 
 Ao receber sentença trabalhista de cliente, verificar sempre se o limbo foi objeto da causa de pedir, ainda que o cliente não use esse nome. Acionar `base-limbo-previdenciario-tema300`.
 
-## 8. Fontes
+## Portarias
 
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
+Portarias DPMF, DIRBEN e INSS em `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 

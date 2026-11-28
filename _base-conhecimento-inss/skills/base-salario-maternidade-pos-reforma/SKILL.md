@@ -1,156 +1,57 @@
 ---
 name: base-salario-maternidade-pos-reforma
-description: "Salário-maternidade B80 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, LC 146/2014 prorrogação morte mãe, Lei 12.873/2013 pai adotante, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência inexigível ADI 2110 CI/facultativa/segurada especial, desempregada sem carência, aborto espontâneo, óbito mãe pai, natimorto, qualidade segurada DIB, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario e precedentes-previdenciarios."
+description: "Salário-maternidade B80 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, art. 71-B Lei 8.213 óbito da mãe, Lei 12.873/2013 pai adotante, art. 73-A Lei 15.415/2026 prazo 30 dias, Tema 344 TNU adoção, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência inexigível ADI 2110 CI/facultativa/segurada especial, desempregada sem carência, aborto espontâneo, óbito mãe pai, natimorto, qualidade segurada DIB, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, base-documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario e precedentes-previdenciarios."
 ---
 
-## ATUALIZAÇÃO LEGISLATIVA (Etapa 5 da auditoria, 12/07/2026)
+# Salário-Maternidade (B80)
 
-Lei 15.415/2026 (conferida em fontes convergentes, selo no Planalto pendente). Inseriu o art. 73-A na Lei 8.213/91 e fixou prazo máximo de 30 dias para o INSS conceder o salário-maternidade, com regime de concessão diante da mora administrativa. Usar em MS por demora e em pedido administrativo de salário-maternidade parado além do prazo. Conferir o texto do art. 73-A no Planalto antes de transcrever em peça.
+Qualidade de segurada por categoria, cenários e cálculo em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-# Salário-Maternidade (B80) Pós EC 103/2019
+## Base normativa
 
-## Escopo
+- CF, art. 7º, XVIII, e art. 201, II.
+- Lei 8.213/91:
+  - art. 71: 120 dias, com início entre 28 dias antes do parto e a data deste.
+  - art. 71-A (Lei 12.873/2013): adoção ou guarda judicial para adoção de criança, 120 dias, sem escala por idade; um só benefício por processo de adoção (§2º).
+  - art. 71-B (Lei 12.873/2013): falecida a segurada ou o segurado com direito ao benefício, o cônjuge ou companheiro sobrevivente com qualidade de segurado recebe pelo tempo restante, salvo falecimento ou abandono do filho.
+  - art. 72: valor da empregada e da avulsa, igual à remuneração integral; a empresa paga e compensa (§1º).
+  - art. 73: valor das demais seguradas, pago pelo INSS, nunca inferior ao salário mínimo.
+  - art. 73-A (Lei 15.415/2026): o benefício pago pelo INSS deve ser concedido em até 30 dias do requerimento; descumprido o prazo, há concessão provisória e automática (§1º).
+  - art. 26, VI: empregada, doméstica e avulsa sem carência. Art. 39, parágrafo único: segurada especial, 1 salário mínimo, com atividade rural nos 12 meses anteriores, ainda que descontínua.
+- Carência do art. 25, III, para contribuinte individual, facultativa e segurada especial: inconstitucional (ADI 2110 e 2111, julgamento concluído em 21/03/2024). Enunciado 19 CRPS (Resolução 13/2026): carência inexigível, mantida a prova da qualidade de segurada. A IN 188/2025 revogou o art. 197 da IN 128/2022.
+- Decreto 3.048/99, art. 93 (§3º, afastamento até 28 dias antes do parto; §5º, aborto não criminoso, duas semanas).
+- IN 128/2022, arts. 358 e seguintes: natimorto conta como parto (art. 358, I); adoção de menor até 12 anos (art. 358, II), ampliada pelo Tema 344 TNU para adotado menor de 18 anos.
+- Lei 11.770/2008: prorrogação de 60 dias na Empresa Cidadã, paga pela empresa, fora do RGPS.
 
-Skill temática pró-segurada do acervo do escritório Paulo Roberto Tercini Filho. Orienta a concessão do salário-maternidade em suas várias espécies (parto, adoção, aborto não criminoso, natimorto) e para todas as categorias de seguradas (empregada, CI, facultativa, especial rural, desempregada, MEI, doméstica). Objetivo único é defender a segurada e as famílias.
+## Hipóteses (espécie única B80)
 
-## Marco normativo central
-
-CF/88, art. 7º, XVIII. Licença-maternidade de 120 dias.
-
-Lei 8.213/91, art. 71. Salário-maternidade à segurada gestante (ou mãe adotiva/guardiã para fins de adoção).
-
-Lei 8.213/91, art. 71-A. Salário-maternidade em caso de adoção ou guarda para fins de adoção.
-
-Lei 8.213/91, art. 71-B (incluído pela Lei 12.873/2013). Transferência do salário-maternidade ao cônjuge/companheiro sobrevivente em caso de óbito da mãe.
-
-Lei 8.213/91, art. 71. Duração de 120 dias (o art. 72 trata do valor: remuneração integral da empregada).
-
-Lei 8.213/91, art. 73. Pagamento pelo empregador no caso de empregada, com compensação. Pagamento direto pelo INSS em outros casos.
-
-Lei 8.213/91, art. 26, VI. Isenção de carência para empregada, empregada doméstica e trabalhadora avulsa.
-
-Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para a CI, a facultativa e a segurada especial, e o STF declarou essa exigência inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150], com a ADI 2111, julgamento concluído em 21/03/2024 e acórdão publicado em 24/05/2024, sem modulação temporal segundo fonte secundária). O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) declara a carência inexigível e mantém a prova da qualidade de segurada, e a IN PRES/INSS 188/2025 revogou o art. 197 da IN 128/2022, que fixava a carência por categoria (auditoria 03/10/2026).
-
-Lei 8.213/91, art. 39, par. único. Garante à segurada especial o salário-maternidade de 1 salário mínimo, com prova de atividade rural, ainda que descontínua, nos 12 meses imediatamente anteriores ao início do benefício. Os 10 meses que o INSS cobrava como carência não se exigem mais, e o Enunciado 19/CRPS, III, trata o período de 12 meses como prova da qualidade de segurada, sem exigir exercício contínuo (auditoria 03/10/2026).
-
-Lei 12.873/2013. Pai adotante/guardião com direito ao salário-maternidade.
-
-LC 146/2014. Estende a estabilidade provisória da gestante (ADCT, art. 10, II, b) a quem detiver a guarda em caso de falecimento da genitora.
-
-EC 103/2019. Não alterou estruturalmente o salário-maternidade.
-
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
-
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
-
-## Hipóteses do salário-maternidade (espécie única B80; não existem B81, B82 ou B83 para este benefício)
-
-Primeira, parto.
-
-Segunda, aborto não criminoso e natimorto.
-
-Terceira, adoção ou guarda para fins de adoção: 120 dias, independentemente da idade da criança ou adolescente (art. 71-A, redação da Lei 12.873/2013, escalas etárias abolidas).
-
-Quarta, guarda judicial para adoção.
-
-Quinta, salário-maternidade ao pai em caso de óbito da mãe (LC 146/2014).
+Parto, inclusive natimorto (120 dias); aborto não criminoso (duas semanas); adoção ou guarda para adoção (120 dias); pagamento ao cônjuge ou companheiro sobrevivente (art. 71-B).
 
 ## Requisitos
 
-Primeiro, qualidade de segurada na DIB.
+1. Qualidade de segurada na data do fato gerador, conforme a categoria (Enunciado 19 CRPS).
+2. Fato gerador.
+3. Sem carência para nenhuma categoria.
 
-Segundo, carência, que não se exige mais de nenhuma categoria. A empregada, a doméstica e a avulsa já eram isentas (art. 26, VI), e a exigência do art. 25, III, para CI, facultativa e segurada especial caiu com a ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150] e com o Enunciado 19/CRPS. Prova-se a qualidade de segurada, com os requisitos de cada categoria em `references/FUNDAMENTOS-E-CENARIOS.md`, seção 2 (auditoria 03/10/2026).
+## Defesa da segurada
 
-Terceiro, parto, adoção, guarda ou evento equivalente.
+- Desempregada: qualidade pelo art. 15, inclusive a prorrogação por desemprego involuntário; pagamento direto pelo INSS.
+- Segurada especial: atividade rural nos 12 meses anteriores, ainda que descontínua (Enunciado 19 CRPS, III); documento do cônjuge qualificado como empregado rural (Tema 327 TNU); `base-segurado-especial-autodeclaracao-arts-92-93-94`.
+- Contribuinte individual e MEI: qualidade no fato gerador, com contribuição paga até o vencimento; sem inscrição formal, prova da atividade e de ao menos uma contribuição (Enunciado 19, I).
+- Facultativa, inclusive de baixa renda: pagamento e filiação anterior ao fato gerador (Enunciado 19, IV); validação do código em `base-facultativo-baixa-renda`.
+- Adotante de criança mais velha: 120 dias (art. 71-A; Tema 344 TNU).
+- Óbito da mãe: art. 71-B, pelo tempo restante.
+- Gestação de alto risco: auxílio por incapacidade temporária durante a gestação, sem carência pela Portaria Interministerial MPS/MS 15/2026, e salário-maternidade a partir do parto (`base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`).
+- Pedido parado há mais de 30 dias: invocar o art. 73-A e a concessão provisória.
 
-## Cenários operacionais pró-segurada
+## Via processual
 
-Primeiro, segurada desempregada dispensada após gravidez. Se manteve qualidade (período de graça), direito ao salário-maternidade. Pagamento direto pelo INSS.
-
-Segundo, segurada especial rural. Comprovação da atividade rural nos 12 meses anteriores ao fato gerador, ainda que descontínua, com documentos (ITR, CCIR, DAP, CAF), sem exigência de 10 meses (Enunciado 19/CRPS, III) (auditoria 03/10/2026). 1 salário mínimo.
-
-Terceiro, MEI. Sem carência. Basta a qualidade de segurada no fato gerador, com a contribuição paga até o vencimento da competência (Enunciado 19/CRPS, § 2º). Pagamento direto (auditoria 03/10/2026).
-
-Quarto, facultativa de baixa renda (código 1929). Sem carência. Prova o pagamento da contribuição, com filiação regular anterior ao fato gerador (Enunciado 19/CRPS, IV), e a validação do recolhimento de baixa renda se confere em `base-facultativo-baixa-renda`. Pagamento direto (auditoria 03/10/2026).
-
-Quinto, adoção de criança com 10 anos. Direito ao salário-maternidade pela Lei 10.421/2002 combinada com arts. 71-A.
-
-Sexto, óbito da mãe no parto. Transferência para o pai (LC 146/2014). 120 dias.
-
-Sétimo, aborto espontâneo ou natimorto. 14 dias a 120 dias conforme marco (jurisprudência).
-
-Oitavo, gravidez de risco com afastamento antes do parto. B80 antecipado a critério médico (até 28 dias antes do parto).
-
-Nono, adoção conjunta. Apenas um dos adotantes recebe o salário-maternidade. Planejamento familiar relevante.
-
-## Regra e estratégia
-
-A regra geral é concessão ampla do salário-maternidade para todas as seguradas. O INSS tende a indeferir por ausência de qualidade, carência não cumprida ou deficiências documentais. A carência, porém, já não fundamenta indeferimento, por força da ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150] e do Enunciado 19/CRPS (auditoria 03/10/2026).
-
-Primeiro, em desempregada, verificar período de graça (art. 15 Lei 8.213). Prorrogação por 12 meses em caso de desemprego involuntário.
-
-Segundo, em segurada especial rural, reunir documentação robusta (autodeclaração, DAP/CAF, contratos de arrendamento, notas, CCIR, ITR).
-
-Terceiro, em CI/facultativa, conferir a qualidade de segurada no fato gerador, e não mais 10 contribuições. A CI sem inscrição formal prova a atividade remunerada e ao menos uma contribuição com documentação idônea. A facultativa prova o pagamento, com filiação regular anterior ao fato gerador. Em ambas, a contribuição vale se paga até o vencimento da competência (Enunciado 19/CRPS, I, IV e § 2º) (auditoria 03/10/2026).
-
-Quarto, em morte da mãe, transferência automática ao pai.
-
-Quinto, em adoção, provar os 10 dias cumpridos de guarda com sentença judicial.
+Requerimento pelo Meu INSS ou ao empregador; recurso ao CRPS; JEF. Mandado de segurança por mora só na Vara Federal, nunca no JEF (Lei 10.259/2001, art. 3º, §1º, I).
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao verificar qualidade, acione `periodo-graca-qualidade-segurado`.
-Em segurada rural, acione `segurado-especial-rural` e `perspectiva-genero-previdenciario`.
-Ao reunir documentação, acione `documentos-comprobatorios-in128`.
-Ao buscar precedentes, acione `precedentes-previdenciarios`.
-
-## Alertas
-
-Primeiro, DIB é na data do parto (ou 28 dias antes a critério médico). Em adoção, na sentença de guarda ou adoção.
-
-Segundo, em desempregada, prazo do período de graça é decisivo. Requerer tempestivamente.
-
-Terceiro, segurada especial com atividade rural intermitente não precisa provar 10 meses. Basta demonstrar a atividade rural nos 12 meses anteriores ao fato gerador, ainda que descontínua, sem exercício contínuo em todo o período (Enunciado 19/CRPS, III) (auditoria 03/10/2026).
-
-Em MS por mora, competência sempre da Vara Federal comum (MS não tramita no JEF, art. 3º, §1º, I, da Lei 10.259/2001).
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a proteção ampla à maternidade.
-
-Hugo Goes, em Manual, detalha os requisitos e as categorias de seguradas.
-
-Fábio Zambitte Ibrahim, em Curso, defende interpretação pró-segurada no critério de carência e qualidade.
-
-Wladimir Novaes Martinez analisa a evolução do benefício.
-
-Jane Berwanger trata da segurada especial rural.
-
-O IBDP sustenta institucionalmente a proteção integral à maternidade.
-
-## O que NÃO está nesta skill
-
-Não está aqui o salário-família, objeto de `base-salario-familia-quota`. Não está aqui o seguro-defeso feminino, objeto de `base-seguro-defeso-pescador-artesanal`. Não está aqui a pensão por morte em caso de óbito da mãe, objeto de `base-pensao-por-morte-pos-reforma`.
-
-## Gestação de alto risco, benefício diverso do salário-maternidade (Onda 142)
-
-A Portaria Interministerial MPS/MS nº 15, de 03/07/2026, incluiu a gestação de alto risco entre as afecções que dispensam carência nos benefícios por INCAPACIDADE, e não no salário-maternidade.
-
-São benefícios diversos e sucessivos. A gestante de alto risco com incapacidade por mais de quinze dias recebe B31 durante a gestação, e o salário-maternidade a partir do parto, que dispensa carência e exige a qualidade de segurada (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS) (auditoria 03/10/2026). Confundir os dois leva a pedido errado. Ver `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
+`peticao-previdenciaria`, `periodo-graca-qualidade-segurado`, `segurado-especial-rural`, `perspectiva-genero-previdenciario`, `base-documentos-comprobatorios-in128`, `base-cnis-acerto-indicadores`, `base-fungibilidade-previdenciaria`, `base-portarias-dpmf-inss-hub`. Fora do escopo: salário-família (`base-salario-familia-quota`), seguro-defeso (`base-seguro-defeso-pescador-artesanal`), pensão (`base-pensao-por-morte-pos-reforma`).

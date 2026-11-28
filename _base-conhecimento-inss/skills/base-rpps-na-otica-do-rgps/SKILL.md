@@ -1,56 +1,32 @@
 ---
 name: base-rpps-na-otica-do-rgps
-description: "Skill base sobre o Regime Próprio de Previdência Social (RPPS) na ótica do segurado do RGPS, com foco em contagem recíproca, certidão de tempo de contribuição (CTC), migração de regime e desaverbação. Use SEMPRE que mencionar RPPS, regime próprio, servidor público, certidão tempo contribuição, CTC, contagem recíproca, art. 96 Lei 8.213, art. 201 §9º CF, EC 103/2019 RPPS, migração RGPS para RPPS, migração RPPS para RGPS, desaverbação, exoneração, demissão servidor, posse cargo público, art. 130 IN 128/2022, Portaria SPS 154/2008, regime próprio municipal, abono permanência, Tema 942 STF (RE 1.014.286). Hub para o segurado do RGPS que tem ou teve vínculo com RPPS, com defesa contra negativa de averbação, recusa de CTC e perda de tempo. NÃO use para servidor público em ação contra ente federativo (foco no RGPS). Cruza com cnis-acerto-indicadores e peticao-previdenciaria."
+description: "Vínculo pretérito ou atual com Regime Próprio (RPPS) visto pelo segurado do RGPS: exoneração, demissão, RPPS municipal extinto, servidor sem RPPS, desaverbação, uso no RGPS do tempo de RPPS por CTC e escolha do regime mais vantajoso. Use SEMPRE que mencionar RPPS, regime próprio, servidor público exonerado ou demitido, posse em cargo público, RPPS municipal extinto, desaverbação, art. 96 Lei 8.213, art. 201 §9º CF, art. 70 IN 128/2022, Portaria MTP 1.467/2022, Tema 942 STF (RE 1.014.286). O núcleo de CTC e compensação está em base-contagem-reciproca-rgps-rpps. NÃO use para ação do servidor contra o ente federativo. Cruza com base-cnis-acerto-indicadores e peticao-previdenciaria."
 ---
 
-# RPPS na ótica do RGPS
+# RPPS na Ótica do RGPS
 
-## 1. Quando acionar esta skill
+Regras de CTC, vedações do art. 96 da Lei 8.213/91 e compensação financeira estão em `base-contagem-reciproca-rgps-rpps`. Esta skill trata das situações de quem saiu ou vai sair do RPPS e se aposentará no RGPS. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-Acione SEMPRE que o segurado do RGPS tiver vínculo com o RPPS (atual ou pretérito), especialmente em casos de necessidade de CTC, contagem recíproca, migração ou desaverbação.
+## Pontos de decisão
 
-## 2. Marco normativo
+1. Havia RPPS no ente durante o vínculo? Sem RPPS instituído, o servidor era segurado obrigatório do RGPS (empregado) e o tempo deve estar no CNIS; ausente, cabe RAC contra a omissão do ente, que responde pelos recolhimentos (Lei 8.212/91, art. 30, I).
+2. O vínculo estatutário terminou? O RPPS emite CTC apenas para ex-servidor (Lei 8.213/91, art. 96, VI). Exoneração ou demissão antes da DER abre o caminho; vínculo ativo atrai o Enunciado 17 da Jornada do TRF4 (adverso).
+3. O tempo foi usado em aposentadoria no RPPS? Não se reconta no RGPS (art. 96, III).
+4. O tempo gerou vantagem remuneratória ao servidor ativo? A desaverbação é vedada (art. 96, VIII). Fora dessa hipótese e sem benefício concedido, o segurado pode desaverbar para usar o tempo no outro regime.
+5. Qual regime dá o melhor benefício? Simular nos dois antes de pedir a CTC.
 
-A CF/88 no art. 201 §9º assegura a contagem recíproca entre RGPS e RPPS. A Lei 8.213/91 no art. 96 disciplina a contagem. A IN INSS 128/2022 no art. 130 detalha o procedimento. A Portaria SPS 154/2008 padronizou a CTC. A EC 103/2019 alterou regras de migração e tempo.
+## Documentos
 
-## 3. Eixos centrais pró-segurado
+CTC no modelo do Anexo IX da Portaria MTP 1.467/2022, com a Relação das Bases de Cálculo de Contribuição do Anexo X para período posterior a 06/1994 (IN 128/2022, art. 70, redação da IN 167/2024); ato de exoneração ou demissão; declaração de não aposentadoria pelo RPPS; histórico funcional; CNIS.
 
-A contagem recíproca é direito constitucional. Não há vedação para o uso de tempo do RPPS no RGPS, e vice-versa.
+## Via processual
 
-A CTC é documento de emissão obrigatória pelo ente público. Negativa configura ato ilegal.
-
-A desaverbação é direito do segurado, exceto se já houver concessão de benefício no regime.
-
-A migração com manutenção do tempo anterior é regra. EC 103 não alterou o direito adquirido.
-
-O abono permanência é direito do servidor que opta por permanecer em atividade. Não é tempo perdido.
-
-## 4. Fragilidades adversárias mais comuns
-
-O ente público recusa emissão de CTC. Refute com art. 96 Lei 8.213 e dever de cooperação.
-
-O INSS recusa averbação de tempo do RPPS. Refute com art. 201 §9º CF.
-
-O INSS aplica fator previdenciário ao tempo do RPPS. Refute com regras específicas de cálculo.
-
-O INSS recusa desaverbação. Refute com direito potestativo do segurado.
-
-## 5. Estratégia processual
-
-A defesa pró-segurado pivota em mandado de segurança contra negativa de CTC pelo ente público, ação ordinária para averbação no RGPS, recurso ao CRPS. Combinar com `base-contagem-reciproca-rgps-rpps`, `peticao-previdenciaria` e `mandado-seguranca-previdenciario`.
-
-## 6. Documentos essenciais
-
-CTC do RPPS. Histórico funcional. Termo de exoneração ou demissão. Comprovação de não recebimento de benefício pelo RPPS. CNIS.
-
-## 7. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
+Recusa de CTC pelo ente estadual ou municipal: mandado de segurança na Justiça Estadual. Recusa de averbação pelo INSS: recurso ao CRPS ou ação na Justiça Federal; mandado de segurança na Vara Federal, nunca no JEF (Lei 10.259/2001, art. 3º, §1º, I).
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Integração
+
+CTC e compensação: `base-contagem-reciproca-rgps-rpps`. CTC estadual no Prévius: `base-ctc-estadual-conferencia-e-lancamento-previus`. CNIS: `base-cnis-acerto-indicadores`. Peça: `peticao-previdenciaria`. MS: `mandado-seguranca-previdenciario`. Portarias: `base-portarias-dpmf-inss-hub`.

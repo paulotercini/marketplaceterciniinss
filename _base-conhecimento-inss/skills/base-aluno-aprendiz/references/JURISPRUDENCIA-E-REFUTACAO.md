@@ -1,143 +1,19 @@
-# Tempo de Aluno-Aprendiz. Jurisprudência Verificada e Refutação
+# Tempo de Aluno-Aprendiz. Refutação às Teses do INSS
 
-## 1. Precedentes relevantes
+Texto da Súmula 96 TCU e da Súmula 18 TNU no SKILL.md. Requerimento prévio: Tema 350 STF. Instrução administrativa: Tema 1124 STJ.
 
-### Súmula 96 TCU
+## Teses do INSS e refutação
 
-Reconhecimento do tempo de aluno-aprendiz em escolas profissionais, com retribuição direta ou indireta.
+1. Ausência de recibo de pagamento. A retribuição pode ser indireta: alimentação, fardamento, material escolar e parcela da renda das encomendas (Súmula 96 TCU; Súmula 18 TNU; Portaria DIRBEN 990/2022, art. 128-A, III).
+2. Ausência de registro no CNIS. O período é anterior ao CNIS; a prova é a certidão escolar ou a CTC prevista no art. 129 da Portaria 990.
+3. Escola não enquadrada. A Portaria 990, art. 128, III, inclui as escolas federais, as equiparadas (estaduais e distritais) e as reconhecidas (municipais e privadas autorizadas pelo Governo Federal).
+4. Ausência de recolhimento. O tempo é reconhecido por norma própria e não exige contribuição do aluno; até 16/12/1998 conta independentemente da data dos demais requisitos (IN 128/2022, art. 135).
+5. Recorte temporal em 1971 ou 1959. A Súmula 18 TNU, na redação do Tema 216, não traz recorte; o art. 128-A, II, da Portaria 990 admite o tempo em qualquer época, comprovados vínculo e remuneração. O único marco final é 16/12/1998.
+6. Certidão genérica. Requerer certidão complementar que descreva a contraprestação por encomendas para terceiros e juntar regulamento, atas e histórico.
+7. Testemunhas insuficientes. A prova testemunhal complementa a documental; o conjunto é valorado pelo juiz (CPC, art. 371).
+8. Recusa na contagem recíproca. CF, art. 201, §9º, e Lei 8.213/91, art. 96: o tempo reconhecido em um regime é aproveitado no outro mediante CTC.
+9. Decadência. O art. 103 da Lei 8.213/91 incide sobre a revisão do ato de concessão. Antes da concessão não há prazo; na revisão, conferir a data do primeiro pagamento e a matéria efetivamente apreciada pelo INSS.
 
-Fonte oficial em https://pesquisa.apps.tcu.gov.br
+## Atualização
 
-### Súmula 18 TNU
-
-Cômputo com retribuição, mesmo indireta, à conta do orçamento, como contraprestação por labor na execução de bens e serviços para terceiros, sem recorte temporal (redação revista em 14/02/2020, Tema 216) [NÃO CONFIRMADO] (auditoria 03/10/2026).
-
-Fonte oficial em https://www.jf.jus.br
-
-### PEDILEFs TNU
-
-Reafirmação da Súmula 18. Confirmam que alimentação, fardamento e material escolar caracterizam retribuição indireta.
-
-### Tema 350 STF
-
-Prévio requerimento administrativo.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 1124 STJ
-
-Instrução administrativa mínima.
-
-Fonte oficial em https://www.stj.jus.br
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 55 e 96
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 4.073/1942
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 3.552/1959
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Ausência de retribuição pecuniária
-
-Argumento adversário. Sem recibo de pagamento, sem tempo.
-
-Refutação. A retribuição pode ser indireta, como alimentação, fardamento, material escolar, moradia, conforme Súmula 96 TCU e Súmula 18 TNU.
-
-### Argumento 2. Ausência de CNIS
-
-Argumento adversário. Sem registro no CNIS, não computa.
-
-Refutação. Período anterior a 1960 não tinha CNIS. A prova é documental e testemunhal.
-
-### Argumento 3. Escola não enquadrada
-
-Argumento adversário. Instituição não é escola profissional federal.
-
-Refutação. Cotejar com lista histórica das escolas industriais, técnicas e agrícolas federais. Instituto Federal é sucessor.
-
-### Argumento 4. Prazo decadencial
-
-Argumento adversário. Decadência consumada.
-
-Refutação. Decadência conta do primeiro pagamento do benefício. Se o benefício ainda não foi concedido, o prazo não corre. Em revisão, verificar caso a caso.
-
-### Argumento 5. Declaração insuficiente
-
-Argumento adversário. Declaração sem detalhes.
-
-Refutação. Requerer à instituição declaração complementar com detalhamento. Juntar ata, regulamento e histórico escolar.
-
-### Argumento 6. Ausência de contribuição
-
-Argumento adversário. Sem recolhimento, sem tempo de contribuição.
-
-Refutação. O regime aluno-aprendiz é tempo de contribuição ficto, reconhecido por lei e jurisprudência. Não exige recolhimento próprio.
-
-### Argumento 7. Não se aplica a contagem recíproca
-
-Argumento adversário. RPPS não reconhece.
-
-Refutação. Art. 96 da Lei 8.213/91 e art. 201, §9º, CF. Tempo reconhecido pelo RGPS é aproveitado no RPPS e vice-versa.
-
-### Argumento 8. Período posterior a 1971
-
-Argumento adversário. O período posterior a 1971 não seria computável. A Súmula 18 TNU não traz esse recorte (auditoria 03/10/2026).
-
-Refutação. Verificar o regime da instituição específica. Alguns estabelecimentos mantiveram o regime após 1971. Prova caso a caso.
-
-### Argumento 9. Prova testemunhal insuficiente
-
-Argumento adversário. Testemunhas não bastam.
-
-Refutação. Combinação de prova documental e testemunhal. Ata, histórico escolar, declaração da instituição.
-
-### Argumento 10. Ausência de regulamento oficial
-
-Argumento adversário. Sem regulamento, sem prova do regime.
-
-Refutação. Buscar o Decreto 4.073/1942 e Lei 3.552/1959 como fundamento normativo geral. Declaração da instituição como prova específica.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Frederico Amado, aluno-aprendiz e Súmula 96 TCU.
-
-Hugo Goes, tempo atípico.
-
-Fábio Zambitte Ibrahim, tempo de contribuição.
-
-Wladimir Novaes Martinez, tempo ficto.
-
-Daniel Pulino, contagem recíproca.
-
-Marco Aurélio Serau Junior, tempo atípico.
-
-IBDP, defesa do aluno-aprendiz.
-
-## 5. Estratégia integrada
-
-Primeiro, documentação completa da instituição.
-
-Segundo, prova testemunhal supletiva.
-
-Terceiro, requerimento administrativo.
-
-Quarto, ação judicial em caso de indeferimento.
-
-Quinto, pedido de cômputo para aposentadoria ou revisão.
-
-## 6. Diligência de atualização
-
-Acompanhar PEDILEFs e acórdãos TNU sobre Súmula 18.
-
-Acompanhar decisões TCU sobre Súmula 96.
-
-Revalidar orientação do INSS sobre aluno-aprendiz na IN 128/2022.
+Acompanhar a jurisprudência da TNU sobre a Súmula 18 e eventual nova alteração do Livro I da Portaria 990.
