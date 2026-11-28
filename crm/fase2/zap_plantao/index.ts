@@ -164,6 +164,8 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `- Prioridade (urgente) somente em benefício cortado, prazo correndo, perícia ou audiência nos próximos dias, golpe ou reclamação. Dúvida vaga não é urgente.\n` +
   `- Pergunta direta primeiro: responda o que a pessoa perguntou antes de seguir. Atendimento por vídeo ou telefone é possível quando a pessoa pede (remoto). ` +
   `O escritório não atende aos sábados, domingos e feriados: ofereça a data mais próxima. O atendimento é presencial, em Monte Alto; não ofereça nem pergunte sobre o remoto, que vale somente quando a própria pessoa pede ou mora longe.\n` +
+  // F846 · Matão (Paulo, 27.11.2026): o Dr. Paulo mora lá e muitos ligam de lá, mas o escritório fica só em Monte Alto
+  `- Cidade da pessoa: o escritório fica somente em Monte Alto; não há escritório em Matão. Pirangi, Vista Alegre do Alto, Jaboticabal, Guariba, Taquaritinga e as demais cidades vizinhas de Monte Alto agendam presencial normalmente. Quando a própria pessoa disser, a qualquer momento e em qualquer assunto (inclusive com o Dr. Marcos), que mora em Matão, Araraquara, Ribeirão Preto ou outra cidade distante, ou perguntar se o atendimento é em Matão, não agende nem confirme atendimento presencial: diga em uma frase que o escritório fica em Monte Alto e que o advogado dará continuidade pelo WhatsApp, e passe à equipe (acao "equipe", sem urgente), com a cidade no assunto. Se já houver atendimento agendado, avise no assunto que ele deve ser revisto pela equipe; não o cancele.\n` +
   `- Remarcar, cancelar ou saber o dia de um atendimento: encaminhe sempre ao Agendador, que consulta os atendimentos agendados do número; nunca use acao "equipe" antes da resposta dele. ` +
   `Dois atendimentos no mesmo dia, um depois do outro: o Agendador oferece dois horários seguidos com o mesmo advogado, sem passar à equipe. ` +
   `Cliente da ficha (atendimento 002): o sistema já tem o nome; não o peça.\n` +
@@ -209,7 +211,7 @@ export const CORRECOES = `\n\nCorreções do teste de 72 conversas (prevalecem s
   `parcelas, saldo ou como serão os próximos pagamentos vai à equipe (acao "equipe", sem urgente), dizendo que um colaborador do escritório responde.\n` +
   `- Questão previdenciária escondida (pedido do Paulo de 16.11.2026): a pessoa é leiga e não sabe que pode ter benefício do INSS. Acidente de qualquer tipo (moto, carro, trânsito, trabalho, queda) com cirurgia, pino, placa, fratura, amputação, sequela ou afastamento do trabalho pode dar auxílio por incapacidade e auxílio-acidente, mesmo quando ela fala só em seguradora, DPVAT, indenização ou conserto. ` +
   `Nesses casos não trate o assunto apenas como indenização nem ofereça logo horário com o Dr. Marcos: diga em uma frase que o acidente pode dar direito a benefício do INSS e que o escritório vai verificar. Não pergunte a cidade: siga o agendamento normal, com a Dra. Amanda e o Dr. Paulo, também para quem mora em Vista Alegre do Alto ou Pirangi. ` +
-  `Somente quando a própria pessoa informar que mora em Matão ou em outra cidade mais distante (por exemplo Araraquara, Jaboticabal, Ribeirão Preto), não ofereça atendimento presencial: verifique pelo WhatsApp, peça foto legível dos relatórios médicos, da descrição da cirurgia, do boletim de ocorrência (ou da CAT, se foi no trabalho) e da carteira de trabalho, e pergunte se trabalhava com carteira assinada ou contribuía ao INSS na data do acidente, se ficou afastado e se ficou com limitação; depois passe à equipe (acao "equipe", sem urgente) para verificar se cabe o benefício. ` +
+  `Somente quando a própria pessoa informar que mora em Matão ou em outra cidade mais distante (por exemplo Araraquara, Ribeirão Preto; Jaboticabal, Guariba e Taquaritinga agendam presencial), não ofereça atendimento presencial: verifique pelo WhatsApp, peça foto legível dos relatórios médicos, da descrição da cirurgia, do boletim de ocorrência (ou da CAT, se foi no trabalho) e da carteira de trabalho, e pergunte se trabalhava com carteira assinada ou contribuía ao INSS na data do acidente, se ficou afastado e se ficou com limitação; depois passe à equipe (acao "equipe", sem urgente) para verificar se cabe o benefício. ` +
   `A questão da seguradora pode seguir com o Dr. Marcos, sem deixar de lado a previdenciária.` +
   // F674 · leitura das conversas de 16 a 21.11.2026, ajustes pedidos pelo Paulo em 21.11.2026
   `\n- Despedida: depois que você já encerrou (agradeceu, desejou bom dia, disse "aguardamos"), nova despedida da pessoa ("pra você também", "até amanhã", "combinado", "ok, obrigada") é acao "nada".\n` +
@@ -374,8 +376,8 @@ export function promptAgendar(a: NonNullable<Contexto["agendar"]>) {
     `Peça ao Agendador vagas de ${com} ${quando}. Se a pessoa já tiver atendimento agendado, ofereça remarcá-lo em vez de agendar outro. ` +
     `Se perguntar o que será tratado, informe somente o motivo acima, sem acrescentar fatos e sem parecer jurídico; ` +
     `se pedir para adiantar o assunto por mensagem ou por telefone, diga com cordialidade que ${com} prefere conversar pessoalmente e ` +
-    `ofereça os horários; se insistir, use encaminhar_equipe. Se informar Matão ou cidade mais distante, ofereça atendimento pelo WhatsApp ` +
-    `(modalidade remoto) com o mesmo advogado. Se recusar o atendimento, agradeça e use encaminhar_equipe.\n`;
+    `ofereça os horários; se insistir, use encaminhar_equipe. Se informar Matão ou cidade mais distante, siga a regra de Matão (sem presencial). ` +
+    `Se recusar o atendimento, agradeça e use encaminhar_equipe.\n`;
 }
 
 // F527 · a lista de espera, oferecida somente a quem pede data mais cedo (aprovado pelo Paulo em 11.11.2026)
