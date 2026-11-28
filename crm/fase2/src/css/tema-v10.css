@@ -62,7 +62,7 @@ html[data-tema="v10"] .lista-item .priv{color:var(--cinza);background:var(--plac
 html[data-tema="v10"] .lista-item.alvo{background:var(--azul-fundo);box-shadow:inset 3px 0 0 var(--azul);outline-color:var(--azul)}
 html[data-tema="v10"] .novo-cli{background:var(--azul);font-weight:600;border-radius:6px}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .novo-cli:hover{background:var(--azul-escuro)}}
-html[data-tema="v10"] .app.mini-lateral .sidebar .cont{background:var(--placa);color:var(--texto);box-shadow:0 0 0 2px var(--lateral)}
+html[data-tema="v10"] .app.mini-lateral .sidebar .cont{background:var(--p-cinza-4);color:var(--texto);box-shadow:0 0 0 2px var(--lateral);right:-2px}
 html[data-tema="v10"] .app.mini-lateral .sidebar .lista-item.ativa .cont{background:var(--azul);color:var(--p-branco)}
 html[data-tema="v10"] .app.mini-lateral .sidebar .lista-item.ativa::before{background:var(--azul)}
 html[data-tema="v10"] .sidebar .avatar{box-shadow:0 0 0 1px rgba(19,28,36,.08)}
@@ -708,6 +708,7 @@ html[data-tema="v10"] .pl-grupo{background:var(--p-branco);border:1px solid var(
 html[data-tema="v10"] .pl-grupo h3.secao{margin:0;padding:10px 16px;background:var(--placa);color:var(--cinza);
   font-size:12px;font-weight:600;letter-spacing:.08em;border-bottom:1px solid var(--borda)}
 html[data-tema="v10"] .pl-grupo h3.secao .pl-n{margin-left:4px;font-family:var(--f-mono);letter-spacing:0}
+html[data-tema="v10"] .md-ontem h3.secao .pl-n{text-transform:none;font-weight:400;font-family:inherit}
 html[data-tema="v10"] .pl-grupo[data-tom="venc"] h3.secao{background:var(--venc-fundo);color:var(--venc-tinta);border-bottom-color:var(--p-vermelho-4)}
 /* F443 · seleção múltipla: a linha marcada e a barra do pé */
 .cartao.sel,html[data-tema="v10"] #conteudo-meio .ag-linha.sel{background:color-mix(in srgb,var(--verde,var(--p-verde-25)) 10%,var(--p-branco));box-shadow:inset 3px 0 0 var(--verde,var(--p-verde-25))}
@@ -4375,9 +4376,10 @@ html[data-tema="v10"] .ltc-v .ltc-r{border:0;background:var(--p-cinza-2)}
 .ma-dt[open] > summary::after{content:"▴"}
 .ma-dt[open] > summary{margin-bottom:6px}
 .ma-dt > summary:focus-visible{outline:2px solid var(--azul,var(--p-petroleo-12));outline-offset:2px;border-radius:4px}
-.ma-px-r{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza-claro,var(--p-cinza-26))}
+.ma-px-r{white-space:nowrap;flex:none;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza-claro,var(--p-cinza-26))}
 .ma-px-n,.ma-px-t{color:var(--cinza,var(--p-cinza-34));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .ma-dt b{font-weight:600;font-variant-numeric:tabular-nums}
+.ma-dt b.venc{color:var(--venc-tinta)}
 .app.celular .ma-dt > summary{min-height:44px;align-items:center}
 /* F836 · lista em faixa com a ficha aberta: nome e data, o resto volta pela alça. Não vale para as Configurações, que ficam com 380px */
 .lista-alca{display:none}

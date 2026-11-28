@@ -1412,9 +1412,10 @@ async function gravarReq(casoId, rid, passo){
   if(!await gravarCamposCli(c, {requisicoes:{...antes, [k.id]:nova}})) return;
   fecharCaixa();
   const pg = passo==="repasse" ? await honorariosDoRepasse(c, k, nova.find(y=>y.id===rid).repasse) : null;
-  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})}).catch(()=>{});
+  const falha = await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})})
+    .then(()=>"", e=>". Não foi possível gravar a anotação no caso: "+msgErro(e));
   repintarFicha();
-  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo], async()=>{
+  avisoDesfazer({expedida:"Requisição registrada", pago:"Pagamento registrado", levantado:"Levantamento registrado", repasse:"Repasse registrado"}[passo] + falha, async()=>{
     await gravarCamposCli(c, {requisicoes:antes});
     if(pg) await api(`/rest/v1/pagamentos?id=eq.${pg.p.id}`, pg.antes ? {method:"PATCH",headers:{Prefer:"return=minimal"}, body:JSON.stringify(pg.antes)} : {method:"DELETE"}).catch(()=>{});
     if(pg){ if(pg.antes) Object.assign(pg.p, pg.antes); else D.pagamentos = D.pagamentos.filter(y=>y!==pg.p); }

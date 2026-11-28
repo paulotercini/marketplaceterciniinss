@@ -479,12 +479,17 @@ async function desfazerCumprimento(respId){
   catch(e){ return aviso("Não consegui desfazer"); }
   D._andsFicha = (D._andsFicha||[]).filter(a=>a.id!==r.id);
   const m = og && /\[PRAZO (\d{2}\.\d{2}\.\d{4})\]/.exec(og.texto||""), data = m && isoDoCarimbo(m[1]);
-  if(k && data && !k.prazo && k.fase!=="encerrado"){ await patchCaso(k.id, {prazo: data}).catch(()=>{}); k.prazo = data; }
+  let falha = "";
+  if(k && data && !k.prazo && k.fase!=="encerrado"){
+    try{ await patchCaso(k.id, {prazo: data}); k.prazo = data; }
+    catch(e){ falha = "Não foi possível gravar o prazo de volta no caso: "+msgErro(e); } }
   const junto = og ? tarefasDe(og).filter(t=>t.concluida_em && Math.abs(new Date(t.concluida_em) - new Date(r.criado_em)) < 120000) : [];
-  for(const t of junto){ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({concluida_em: null})}).catch(()=>{}); t.concluida_em = null; }
-  if(k && junto.length) D.tarefasPorCaso.set(k.id, [...(D.tarefasPorCaso.get(k.id)||[]), ...junto.filter(t=>!(D.tarefasPorCaso.get(k.id)||[]).includes(t))]);
-  aviso("Registro desfeito: o prazo voltou ao caso", false);
+  for(const t of junto){
+    try{ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({concluida_em: null})}); t.concluida_em = null; }
+    catch(e){ falha = falha || "Não foi possível reabrir a tarefa concluída junto: "+msgErro(e); } }
+  if(k && junto.length) D.tarefasPorCaso.set(k.id, [...(D.tarefasPorCaso.get(k.id)||[]), ...junto.filter(t=>!t.concluida_em && !(D.tarefasPorCaso.get(k.id)||[]).includes(t))]);
+  aviso(falha ? "Registro desfeito. "+falha : "Registro desfeito: o prazo voltou ao caso", !!falha);
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 // a resposta do registro: o selo no lugar do colchete e o comprovante preso a ela

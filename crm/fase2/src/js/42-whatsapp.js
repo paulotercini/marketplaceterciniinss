@@ -129,3 +129,17 @@ new MutationObserver(ms=>{
     try{ await iniciar(); }catch{ if(await renovar()){ try{ await iniciar(); }catch{ sair(); } } }
   }
 })();
+
+// Trava de duplo clique: enquanto a gravação anterior do mesmo item não termina, o segundo clique é ignorado.
+// Fica no último módulo porque troca as quatro funções globais chamadas por onclick, já declaradas nos módulos anteriores.
+const _gravando = new Set();
+for(const n of ["novoPgto", "confirmarRecebido", "registrarMovimento", "semNovidade"]){
+  const f = window[n];
+  if(typeof f !== "function") continue;
+  window[n] = async function(...a){
+    const ch = n + ":" + a[0];
+    if(_gravando.has(ch)){ a.forEach(x=>x && x.stopPropagation && x.stopPropagation()); return; }   // o clique ignorado não sobe para a linha
+    _gravando.add(ch);
+    try{ return await f.apply(this, a); } finally{ _gravando.delete(ch); }
+  };
+}
