@@ -1073,7 +1073,12 @@ function lerProcesso(casoId, aba, i, caminho){
 function baixarProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, aba)[i]; if(!x) return;
-  baixarDocsZip(casoId, false, docsLegiveis(k, x));
+  // F848 · no Judicial, a tela de Expedientes do PJe entra no .zip como HTML (pedido do Paulo, 28.11.2026)
+  const vs = aba==="cnj" ? expedientesDe(k, x.d) : [];
+  const exp = vs.length ? [["Expedientes.html", `<!doctype html><meta charset="utf-8"><title>Expedientes · ${esc(x.id)}</title>
+<style>body{font:14px sans-serif;margin:24px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:6px;text-align:left;vertical-align:top}.meio-sub{color:#666}</style>
+<h1>Expedientes · ${esc(x.id)}</h1>${vs.map(v=>`${vs.length>1?`<h2>${esc(v.grau||"")}</h2>`:""}${tabelaExpedientes(v, null, x.d)}`).join("")}`]] : [];
+  baixarDocsZip(casoId, false, docsLegiveis(k, x), exp);
 }
 function telaDoProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;

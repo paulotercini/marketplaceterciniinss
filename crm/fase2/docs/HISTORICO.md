@@ -1268,6 +1268,10 @@ Achado do piloto do saneamento dos cadastros. `fundirCasos` (35-casos.js) mudava
 Decisão do Paulo em 28.11.2026 para gravar a organização no acervo. `moverNumero` deixa no caso de origem o andamento que o destino já tem (mesma origem e `origem_id`), em vez de apagá-lo; `fundirCasos` deixa na casca o agendamento repetido e a atribuição de quem já está no destino. `planoOrganizar` junta ao caso em Pagamento o caso aberto do mesmo NB (mesmas travas do "juntar": tarefa do To Do, um NB, sem NUP divergente, revisão x concessão, processo divergente); `clientesVariosCasos` passa a contar o cliente cujo caso em Pagamento divide o NB com outro caso. Teste: `testes/cadastro/f842.js` (14 verificações).
 
 
+## F848 · Baixar do Judicial leva o processo inteiro e os expedientes (28.11.2026)
+
+- O Baixar do cartão Judicial junta no .zip todos os documentos guardados do processo e a tela de Expedientes do PJe (`Expedientes.html`). `baixarDocsZip` aceita arquivos extras.
+
 ## F847 · Linha do tempo do caso: ajustes visuais (28.11.2026, v14.50)
 Aprovados pelo Paulo em 28.11. Trilho da fase atual no tom claro da cor da fase; percentual ao lado do ano ("2026 · 78%"), acima da barra; fase atual sem data cadastrada mostra "sem data" em cinza; "Implantação" abreviada para "Implant." (nome completo no title).
 - **F846** (28.11.2026) · Cliente de Matão: a IA não agenda presencial para quem mora em Matão ou cidade distante em qualquer assunto (inclusive Dr. Marcos) e passa ao advogado; Jaboticabal, Guariba, Taquaritinga, Pirangi e Vista Alegre agendam. Caso novo já agendado pela IA não cai mais no robô de horários na 8ª resposta. Resposta livre na escolha de horário recebe o endereço de Monte Alto. Migração f846_matao_agenda.sql.
