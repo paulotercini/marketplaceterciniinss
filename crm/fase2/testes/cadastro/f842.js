@@ -20,7 +20,7 @@ const T = banco.t;
 
 const cli = n => `c0000000-0000-0000-0000-00000000084${n}`, k = n => `b0000000-0000-0000-0000-0000000084${n}`;
 const NB = n => `600.000.084-${n}`;
-for (const n of [1, 2, 3, 4]) T.clientes.push({ id: cli(n), nome: `Cliente Teste ${n}`, cpf: null, telefone: `55000000008${n}`, sexo: "F", campos: {}, criado_em: "2024-01-10T12:00:00Z" });
+for (const n of [1, 2, 3, 4, 5]) T.clientes.push({ id: cli(n), nome: `Cliente Teste ${n}`, cpf: null, telefone: `55000000008${n}`, sexo: "F", campos: {}, criado_em: "2024-01-10T12:00:00Z" });
 const caso = o => ({ titulo: "Cliente Teste", protocolos: [], processos: [], crps_nups: [], crps: [], nbs: [], arquivados: {}, marcadores: [], criado_em: "2025-01-01T12:00:00Z", ...o });
 T.casos.push(
   // 1 · INSS e Judicial com o mesmo NB, os dois do To Do: junta ao Judicial
@@ -35,7 +35,13 @@ T.casos.push(
   caso({ id: k(32), cliente_id: cli(3), fase: "judicial", origem_lista: "👪 Judicial", nb: NB(3), todo_task_id: "t32" }),
   // 4 · revisão do benefício já concedido: outro pedido sobre o mesmo NB
   caso({ id: k(41), cliente_id: cli(4), fase: "inss", origem_lista: "🌻 INSS", beneficio: "Revisão", nb: NB(4), todo_task_id: "t41" }),
-  caso({ id: k(42), cliente_id: cli(4), fase: "judicial", origem_lista: "👪 Judicial", beneficio: "Apos. por Idade", nb: NB(4), todo_task_id: "t42" }));
+  caso({ id: k(42), cliente_id: cli(4), fase: "judicial", origem_lista: "👪 Judicial", beneficio: "Apos. por Idade", nb: NB(4), todo_task_id: "t42" }),
+  // 5 · F844 · Judicial e Pagamento com o mesmo NB: o Judicial se junta ao caso em Pagamento
+  caso({ id: k(51), cliente_id: cli(5), fase: "judicial", origem_lista: "👪 Judicial", beneficio: "BPC", nb: NB(5), todo_task_id: "t51" }),
+  caso({ id: k(52), cliente_id: cli(5), fase: "pagamento", origem_lista: "💰 Pagamento", beneficio: "BPC", nb: NB(5), todo_task_id: "t52" }));
+// F844 · o mesmo agendamento nos dois casos do cliente 5: a fusão não apaga a cópia
+T.eventos.push({ id: "f0000000-0000-0000-0000-000000008451", caso_id: k(51), tipo: "pericia", data: "2026-12-10" },
+  { id: "f0000000-0000-0000-0000-000000008452", caso_id: k(52), tipo: "pericia", data: "2026-12-10" });
 T.andamentos.push({ id: "e0000000-0000-0000-0000-000000008401", caso_id: k(11), origem: "app", texto: "Anotação do caso do INSS", criado_em: "2026-01-05T12:00:00Z", autor_id: FIX.colaboradores[0].id });
 // F843 · o mesmo andamento coletado nos dois casos (o banco não deixa repetir no destino) e um documento do incorporado
 const and = (id, caso) => ({ id: `e0000000-0000-0000-0000-00000000840${id}`, caso_id: caso, origem: "pat", origem_id: "ev-1", texto: "Exigência cumprida", criado_em: "2026-01-06T12:00:00Z" });
@@ -74,6 +80,9 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
   conf("dois recursos com NUP diferente não se juntam", !(await plano(cli(2))).length);
   conf("o caso que nasceu no CRM não é incorporado (a fusão o apagaria)", !(await plano(cli(3))).length);
   conf("revisão e concessão sobre o mesmo NB não se juntam", !(await plano(cli(4))).length);
+  const p5 = await plano(cli(5));
+  conf("F844 · Judicial e Pagamento com o mesmo NB: o Judicial se junta ao caso em Pagamento", p5.length === 1 && p5[0].acao === "juntar" && p5[0].de === k(51) && p5[0].para === k(52));
+  conf("F844 · o cliente com caso em Pagamento entra na lista do lote", await p.evaluate(c => clientesVariosCasos().some(l => l.c.id === c), cli(5)));
 
   await p.evaluate(async c => { window.confirmar = async () => true; const { passos } = planoOrganizar(c); await aplicarPlano(c, passos); }, cli(1));
   const casca = T.casos.find(x => x.id === k(11)), dest = T.casos.find(x => x.id === k(12));
@@ -81,6 +90,10 @@ const conf = (nome, v) => { ok.push([nome, !!v]); console.log((v ? "PASSOU  " : 
     !!casca && !!casca.encerrado_em && ((casca.arquivados || {}).fundido || {}).para === k(12));
   conf("a anotação do caso incorporado passa ao destino, que mantém NB e processo",
     T.andamentos.find(a => a.id === "e0000000-0000-0000-0000-000000008401").caso_id === k(12) && dest.nb === NB(1) && !!dest.processo);
+  await p.evaluate(async c => { const { passos } = planoOrganizar(c); await aplicarPlano(c, passos); }, cli(5));
+  const ev = T.eventos.filter(e => e.tipo === "pericia" && e.data === "2026-12-10");
+  conf("F844 · aplicado o Pagamento: casca encerrada e o agendamento repetido não se apaga",
+    !!T.casos.find(x => x.id === k(51)).encerrado_em && ev.length === 2);
   const andDe = n => T.andamentos.find(x => x.id === `e0000000-0000-0000-0000-00000000840${n}`).caso_id, anexo = () => T.anexos.find(x => x.caminho === "teste/f843/carta.pdf").caso_id;
   conf("F843 · o andamento que o destino já tem fica no incorporado e não impede os outros de ir", andDe(2) === k(11) && andDe(3) === k(12) && andDe(1) === k(12));
   conf("F843 · o documento do caso incorporado vai para o destino", anexo() === k(12));

@@ -1,4 +1,4 @@
--- F844 · botão Agendar na ficha (plano aprovado pelo Paulo em 28.11.2026): o advogado pede e a assistente virtual
+-- F845 · botão Agendar na ficha (plano aprovado pelo Paulo em 28.11.2026): o advogado pede e a assistente virtual
 -- escreve ao cliente, oferece as vagas e agenda. O pedido fica em zap_conversas.agendar até o agendamento.
 -- A chave config_app.zap_ia_agendar_botao nasce 'nao': a IA só entra com a publicação do zap_plantao aprovada.
 alter table public.zap_conversas add column if not exists agendar jsonb;

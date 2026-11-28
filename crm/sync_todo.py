@@ -99,6 +99,13 @@ def _data_e_do_evento(meio):
 RE_TELEFONE = re.compile(r"\(?\b\d{2}\)?\s?9?\d{4}[- ]?\d{4}\b")
 RE_PROCESSO = re.compile(r"\b\d{7}-?\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\b")
 RE_NB = re.compile(r"\bNB[:\s]*(\d[\d.\-/ ]{7,})", re.I)
+# o NB de 10 dígitos dentro do capturado: sem a espécie na frente ("42/") nem o que vem depois (ponto, data)
+RE_NB_DEZ = re.compile(r"(?:\d{2}\s*/\s*)?(\d{3}\.?\d{3}\.?\d{3}-?\d)(?![\d])")
+
+
+def nb_limpo(s):
+    m = RE_NB_DEZ.match(s.strip())
+    return m.group(1) if m else s.strip()
 
 
 def _sem_acento(s):
@@ -233,7 +240,7 @@ def normalizar_tarefa(lista_nome, t):
         "dn": dn_from_aniversario(checklist) or dn_from_items(checklist) or dn_from_body(corpo),
         "telefone": tel.group(0) if tel else None,
         "processo": proc.group(0) if proc else None,
-        "nb": nb.group(1).strip() if nb else None,
+        "nb": nb_limpo(nb.group(1)) if nb else None,
         "beneficio": beneficio_do_titulo(t.get("title"))
                      or beneficio_de(t.get("title", "") + "\n" + preambulo + "\n" + corpo[:1500]),
         "parceria": parceria_do_titulo(t.get("title")),

@@ -1263,5 +1263,10 @@ No Meu Dia e no Planejado, o selo "Prazo do Microsoft To Do" saía cortado ("Pra
 
 Achado do piloto do saneamento dos cadastros. `fundirCasos` (35-casos.js) mudava os andamentos em um só PATCH por `caso_id`; quando o destino já tinha o mesmo andamento coletado (índice único `caso_id, origem, origem_id`, ou a mesma mensagem do WhatsApp), o banco recusava o lote inteiro e o histórico ficava na casca encerrada, sem aviso no modo em lote. Agora a fusão lê as chaves do destino, leva por id só o que ele não tem (lotes de 80) e deixa o repetido no incorporado. Os documentos (`anexos`) do caso incorporado passam ao destino e entram no registro do Desfazer. Teste: `testes/cadastro/f842.js` (11 itens).
 
-## F844 · Botão Agendar na ficha: a assistente virtual agenda o atendimento pedido pelo advogado (28.11.2026, v14.48)
+## F844 · Organização sem apagar repetidos e fusão do caso em Pagamento pelo mesmo NB (28.11.2026, v14.48)
+
+Decisão do Paulo em 28.11.2026 para gravar a organização no acervo. `moverNumero` deixa no caso de origem o andamento que o destino já tem (mesma origem e `origem_id`), em vez de apagá-lo; `fundirCasos` deixa na casca o agendamento repetido e a atribuição de quem já está no destino. `planoOrganizar` junta ao caso em Pagamento o caso aberto do mesmo NB (mesmas travas do "juntar": tarefa do To Do, um NB, sem NUP divergente, revisão x concessão, processo divergente); `clientesVariosCasos` passa a contar o cliente cujo caso em Pagamento divide o NB com outro caso. Teste: `testes/cadastro/f842.js` (14 verificações).
+
+
+## F845 · Botão Agendar na ficha: a assistente virtual agenda o atendimento pedido pelo advogado (28.11.2026, v14.49)
 Plano aprovado pelo Paulo em 28.11.2026. O botão (chave `zap_ia_agendar_botao`, nasce `nao`) pergunta Quando (Urgente, Data e horário, Sem pressa), Com quem e o Motivo; `agendar_pedir` abre a conversa, grava `zap_conversas.agendar`, liga `ia_conversa` e envia a primeira mensagem; o zap_plantao lê `agendar_contexto` (`promptAgendar`) e fecha com `agendar_fechar` ao agendar; `agendar_sem_resposta` (cron diário 9h) manda lembrete em 1 dia útil e avisa o advogado após 2. Ligar a chave somente após publicar o zap_plantao com o ok do Paulo.

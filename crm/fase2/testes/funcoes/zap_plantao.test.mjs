@@ -893,7 +893,7 @@ assert.match(regras(), /nunca copie o nome do ato do portal/);
   assert.ok(!m.promptAndamento({ conversa_id: "c", contato: "A", casos: [{ ...caso, expedientes: [] }], mensagens: [] }).includes("Expedientes do PJe"));
 }
 {
-  // F844 · o pedido do botão Agendar entra no prompt com o motivo, o advogado e a regra do horário escolhido
+  // F845 · o pedido do botão Agendar entra no prompt com o motivo, o advogado e a regra do horário escolhido
   const { promptAgendar } = await import("../../zap_plantao/index.ts");
   const d = promptAgendar({ quando: "data", prof: "marcos", motivo: "entregar as chaves", data: "2026-11-30", hora: "17:00" });
   assert.ok(d.includes("o Dr. Marcos") && d.includes("entregar as chaves") && d.includes("não ofereça outro"));

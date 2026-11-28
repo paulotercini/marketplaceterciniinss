@@ -51,7 +51,7 @@ function botaoZapCliente(cliId){
     style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
     title="ler as mensagens de WhatsApp deste cliente">${iconeFonte("zap")}${n?` <b>${n}</b><span class="sr-only"> nova${n>1?"s":""}</span>`:""}</button>`;
 }
-// F844 · Agendar: o advogado pede e a assistente virtual escreve ao cliente, oferece as vagas e agenda (plano aprovado em 28.11.2026)
+// F845 · Agendar: o advogado pede e a assistente virtual escreve ao cliente, oferece as vagas e agenda (plano aprovado em 28.11.2026)
 const PROF_AG = [["paulo","Dr. Paulo"],["marcos","Dr. Marcos"],["amanda","Dra. Amanda"]];
 const profDoColab = id => { const n = String((D.colPorId.get(id)||{}).nome||"").split(" ")[0].toLowerCase(); return PROF_AG.some(([k])=>k===n) ? n : ""; };
 function botaoAgendarIA(cliId){

@@ -92,7 +92,7 @@ export type Contexto = {
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
   andamentos?: { em: string; beneficio: string; texto: string }[];
   remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean; ler?: boolean; classe?: string } | null;
-  // F844 · o pedido do botão Agendar da ficha
+  // F845 · o pedido do botão Agendar da ficha
   agendar?: { quando: string; prof: string; motivo: string; data?: string | null; hora?: string | null; por?: string | null } | null
   pericia?: { tipo: string; data: string; hora: string; local: string | null; profissional: string; ate_hora: string; limite_presenca: string; telefone_em: string; atendido?: string | null } | null;
 };
@@ -361,7 +361,7 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
-// F844 · o advogado pediu pelo botão Agendar da ficha; a primeira mensagem já saiu (agendar_texto, no banco)
+// F845 · o advogado pediu pelo botão Agendar da ficha; a primeira mensagem já saiu (agendar_texto, no banco)
 const COM_PROF: Record<string, string> = { paulo: "o Dr. Paulo", marcos: "o Dr. Marcos", amanda: "a Dra. Amanda" };
 export function promptAgendar(a: NonNullable<Contexto["agendar"]>) {
   const com = COM_PROF[a.prof] || "o advogado";
@@ -1084,7 +1084,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       // shortcut: sem a migração f422q no banco, a versão de 4 argumentos confirma; sai quando ela for aplicada
       await banco("zap_plantao_marcado", { ...conf, p_para: para || null }).catch(() => banco("zap_plantao_marcado", conf));
       await banco("pericia_atendimento_marcado", { p_conversa: conversa, p_data: v.data, p_inicio: v.inicio }).catch(() => null);   // F549
-      await banco("agendar_fechar", { p_conversa: conversa }).catch(() => null);   // F844
+      await banco("agendar_fechar", { p_conversa: conversa }).catch(() => null);   // F845
       return { marcado: true, aviso: "o sistema já enviou ao cliente a confirmação com dia, hora e orientações: não repita; se for presencial, informe somente o endereço" };
     },
     async remarcar_atendimento(i: { atendimentoId?: string; novoEventoId?: string }) {
@@ -1708,7 +1708,7 @@ if (typeof Deno !== "undefined") {
       x.ferias = await emFerias().catch(() => []);
       if (x.advogado) x.advogado = semFerias("", x.advogado, x.ferias).advogado;   // F819
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
-      if (x.conversa_id) x.agendar = await rpc("agendar_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F844
+      if (x.conversa_id) x.agendar = await rpc("agendar_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F845
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       if (x.pericia) x.pericia.atendido = await atendidoHaPouco(x.cliente?.nome).catch(() => null);   // F661
       // F633 · os andamentos dos portais, só para o telefone principal da ficha
