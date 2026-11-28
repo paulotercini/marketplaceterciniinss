@@ -222,3 +222,11 @@ def test_pericia_agendada_de_verdade_continua_virando_evento():
                       ("avaliação social para o dia 29/10/2026 às 13:00", "2026-10-29")]:
         evs = sync_todo.eventos_de(txt, d)
         assert evs and evs[0]["data"] == data, txt
+
+
+def test_nb_limpo_tira_especie_e_sobra():
+    for bruto, limpo in [("194.656.991-4.", "194.656.991-4"), ("42/242.990.642-7", "242.990.642-7"),
+                         ("2088371715 31/12/2023 00", "2088371715"), ("7336049100.", "7336049100"),
+                         ("725.392.486-0 -", "725.392.486-0"), ("87/722.659.055-8", "722.659.055-8"),
+                         ("123.456.789-0", "123.456.789-0"), ("1234567", "1234567")]:
+        assert sync_todo.nb_limpo(bruto) == limpo

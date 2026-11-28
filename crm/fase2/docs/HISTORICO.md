@@ -1270,3 +1270,4 @@ Decisão do Paulo em 28.11.2026 para gravar a organização no acervo. `moverNum
 
 ## F845 · Linha do tempo do caso: ajustes visuais (28.11.2026, v14.49)
 Aprovados pelo Paulo em 28.11. Trilho da fase atual no tom claro da cor da fase; percentual ao lado do ano ("2026 · 78%"), acima da barra; fase atual sem data cadastrada mostra "sem data" em cinza; "Implantação" abreviada para "Implant." (nome completo no title).
+- **F846** (28.11.2026) · Cliente de Matão: a IA não agenda presencial para quem mora em Matão ou cidade distante em qualquer assunto (inclusive Dr. Marcos) e passa ao advogado; Jaboticabal, Guariba, Taquaritinga, Pirangi e Vista Alegre agendam. Caso novo já agendado pela IA não cai mais no robô de horários na 8ª resposta. Resposta livre na escolha de horário recebe o endereço de Monte Alto. Migração f846_matao_agenda.sql.
