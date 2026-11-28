@@ -1,6 +1,6 @@
 ---
 name: base-siglas-inss
-description: Glossário consolidado das siglas, acrônimos e abreviações usadas no INSS, na Previdência Social e no contencioso previdenciário, com definições técnicas e contextualização pró-segurado. Use SEMPRE que mencionar sigla INSS, abreviação previdenciária, o que significa CNIS APS CAT DER DIB DCB DIP DAT DDB DEPEND DESDOBRADO DIC DID DII DN DO DRB FAP GEX GFIP GPS HRP HISCRE INFBEN JRPS MR NTEP NB NIT PAB PBC PCMSO PESCPF PESCRE PESNOM PI PIS PLENUS SISBEN PNS PR RGPS RMI REVSIT RPV SABI SMR CRPS CTC CTPS CPF CADPF CEI CONBAS CONCAL CONPRI CONREAJ COM-RMI CNPS RPC RPPS DARF DCTF GR RAC RAT SAT, glossário INSS, dicionário previdenciário, o que significa DER, o que é PBC, definição RMI, sigla DIP, conferir CNIS, leitura HISCRE, abreviação INFBEN, identificar sigla em laudo INSS, sigla CRPS, sigla PJe INSS. Acionar AUTOMATICAMENTE quando o cliente, o segurado ou o advogado precisar identificar significado de sigla em documento do INSS, decisão administrativa, sentença, acórdão, laudo pericial, CNIS, carta de concessão, comunicado de decisão, indeferimento, recurso, despacho administrativo. Cruza com cnis-acerto-indicadores, base-meu-inss-pat-gerid-fluxo, base-legislacao-fontes-primarias, peticao-previdenciaria, base-jef-previdenciario, base-jef-trf3-manual-2025. Postura exclusivamente pró-segurado. NÃO use para conceitos doutrinários complexos sem ligação com siglas (estes ficam nas skills temáticas específicas).
+description: Glossário consolidado das siglas, acrônimos e abreviações usadas no INSS, na Previdência Social e no contencioso previdenciário, com definições técnicas e contextualização pró-segurado. Use SEMPRE que mencionar sigla INSS, abreviação previdenciária, o que significa CNIS APS CAT DER DIB DCB DIP DAT DDB DEPEND DESDOBRADO DIC DID DII DN DO DRB FAP GEX GFIP GPS HRP HISCRE INFBEN JRPS MR NTEP NB NIT PAB PBC PCMSO PESCPF PESCRE PESNOM PI PIS PLENUS SISBEN PRISMA RA FF RAFF PNS PR RGPS RMI REVSIT RPV SABI SMR CRPS CTC CTPS CPF CADPF CEI CONBAS CONCAL CONPRI CONREAJ COM-RMI CNPS RPC RPPS DARF DCTF GR RAC RAT SAT, glossário INSS, dicionário previdenciário, o que significa DER, o que é PBC, definição RMI, sigla DIP, conferir CNIS, leitura HISCRE, tela PRISMA, ramo de atividade, forma de filiação, períodos dos documentos, abreviação INFBEN, identificar sigla em laudo INSS, sigla CRPS, sigla PJe INSS. Acionar AUTOMATICAMENTE quando o cliente, o segurado ou o advogado precisar identificar significado de sigla em documento do INSS, decisão administrativa, sentença, acórdão, laudo pericial, CNIS, carta de concessão, comunicado de decisão, indeferimento, recurso, despacho administrativo. Cruza com cnis-acerto-indicadores, base-meu-inss-pat-gerid-fluxo, base-legislacao-fontes-primarias, peticao-previdenciaria, base-jef-previdenciario, base-jef-trf3-manual-2025. Postura exclusivamente pró-segurado. NÃO use para conceitos doutrinários complexos sem ligação com siglas (estes ficam nas skills temáticas específicas).
 ---
 
 # Glossário Consolidado de Siglas do INSS, da Previdência Social e do Contencioso Previdenciário
@@ -357,6 +357,25 @@ Formulário oficial que comunica ao INSS a ocorrência de acidente de trabalho. 
 ### SABI - Sistema de Acompanhamento de Benefício por Incapacidade
 
 Sistema do INSS para gestão dos benefícios por incapacidade (B31, B32, B91, B92).
+
+### PRISMA - tela "Períodos dos Documentos" do processo administrativo
+
+Sistema do INSS em que o servidor lança e conta os períodos que instruem o requerimento. A tela "PERÍODOS DOS DOCUMENTOS", juntada na cópia do processo administrativo, traz as colunas ND, NP, DATA INI., DATA FIM, TBC, A, TP, RA, FF, SP/RD, ANO MES DIA, CARENCIA, D TC e EMPREGADOR, e linhas como "Tipo de documento: AVERB" e "Qualid. segurado - ingresso". O significado de ND, NP, TBC, A, TP, SP/RD e D TC: Não localizado em fonte oficial.
+
+**RA, Ramo de Atividade**, e **FF, Forma de Filiação**: os dois campos que dizem ao sistema a natureza do período, a atividade exercida e a categoria do segurado. Juntos formam o "cadastro RAFF". A IN PRES/INSS 128/2022, art. 467, parágrafo único, manda alterar o "Ramo de Atividade – RA/Forma de Filiação – FF no sistema", e a Portaria DIRBEN/INSS 992/2022, art. 77, encaminha ao serviço de revisão a categoria incompatível no cadastro RAFF [CONFERIDO no corpus local de normas].
+
+Tabela oficial dos códigos de RA e FF: Não localizado. As combinações abaixo vêm de fonte secundária (publicação profissional em rede social, novembro de 2026) e servem apenas de pista de leitura, nunca de fundamento em peça [NÃO CONFIRMADO]:
+
+- RA 2 com FF 1: empregado urbano (comerciário).
+- RA 8 com FF 1: empregado rural.
+- RA 8 com FF 7: segurado especial.
+
+**Checagem obrigatória ao ler a tela, período por período:**
+
+1. Compare RA e FF com a natureza real do período (sentença, averbação, CTPS, autodeclaração rural). Período rural lançado com RA urbano, ou segurado especial lançado como empregado, é classificação incompatível.
+2. Cruze com a coluna CARENCIA. Tempo rural anterior a novembro de 1991 sem contribuição não conta para carência (Lei 8.213/91, art. 55, § 2º), salvo na aposentadoria por idade rural ou híbrida. Se o PRISMA computou carência nesse período, a classificação está errada.
+3. Erro contra o segurado (período urbano ou contributivo sem carência, RA ou FF que apaga tempo): apontar no recurso ou no pedido de revisão, com o art. 467, parágrafo único, da IN 128.
+4. Erro a favor do segurado (carência indevidamente computada): registrar APENAS na análise interna. É risco de revisão de ofício pelo INSS (Portaria DIRBEN 992, art. 77), por isso refazer a contagem SEM esses meses e verificar se o direito se mantém. Nunca expor o erro em peça.
 
 ### PLENUS / SISBEN - Sistema de Benefícios
 
