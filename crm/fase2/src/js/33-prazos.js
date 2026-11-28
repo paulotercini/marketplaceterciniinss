@@ -241,14 +241,17 @@ async function registrarMovimento(casoId, i){
   }
   const antes = Object.fromEntries(Object.keys(muda).map(c=>[c, k[c]===undefined ? null : k[c]]));   // 11.92 · JUR-06
   Object.assign(k, muda);
-  if(Object.keys(muda).length) await patchCaso(casoId, muda).catch(()=>{});
+  if(Object.keys(muda).length) try{ await patchCaso(casoId, muda); }
+    catch(e){ Object.assign(k, antes); montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
+      return aviso("A anotação foi gravada, mas o caso NÃO foi atualizado. Registre o movimento de novo."); }
   // a data da perícia ou da pauta vira lembrete do advogado responsável, nesse dia
+  let semLembrete = "";   // vai na faixa do Desfazer: um aviso() aqui seria coberto por ela no mesmo instante
   if(data && efeito==="data") try{ const [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){}
+      body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:advId || eu.id, atribuido_por:eu.id, lembrar_em:data, natureza:"lembrete"})}); tarefaNaMemoria(tf); }catch(e){ semLembrete = ". O lembrete da data não foi gravado: "+String(e.message||e).slice(0,80); }
   if(advId && advId!==eu.id) criarMencoes(texto, casoId, and.id, [advId]).catch(()=>{});
   montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha();
   // 11.92 · JUR-06: desfazer como no "Em análise": o caso volta e a anotação sai (com a menção e o lembrete, em cascata no banco)
-  avisoDesfazer(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}`, async ()=>{
+  avisoDesfazer(`${rot}${adv && adv.id!==eu.id ? ` · ${adv.nome.split(" ")[0]} avisado` : ""}${semLembrete}`, async ()=>{
     Object.assign(k, antes);
     if(Object.keys(antes).length) await patchCaso(casoId, antes).catch(()=>{});
     await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});

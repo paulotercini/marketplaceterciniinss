@@ -892,18 +892,22 @@ async function semNovidade(casoId, dias, ev){
   // a conferência que vencia (o lembrete de conferir, de hoje ou de antes) sai; a data volta daqui a N dias
   const velhas = (D.tarefasPorCaso.get(casoId)||[]).filter(t=>!t.concluida_em && t.natureza==="lembrete" && t.lembrar_em && t.lembrar_em<=hj);
   const agora = new Date().toISOString();
+  let falha = "";   // vai na faixa do desfazer, que apagaria um aviso solto
   for(const t of velhas){ t.concluida_em = agora;
-    api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida_em:agora})}).catch(()=>{}); }
+    try{ await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({concluida_em:agora})}); }
+    catch(e){ t.concluida_em = null; falha = ". Não foi possível gravar a conclusão do lembrete anterior: "+msgErro(e); } }
   // o "Concluir em" do To Do (casos.prazo) vencido é a própria data de conferir: anda junto. Ele não é apagado, porque
   // o To Do só preenche o vazio e devolveria a data velha
   const prazoAntes = k.prazo; let tf = null;
-  if(k.prazo && k.prazo<=hj){ k.prazo = quando; await patchCaso(casoId, {prazo:quando}).catch(()=>{}); }
+  if(k.prazo && k.prazo<=hj){ k.prazo = quando;
+    try{ await patchCaso(casoId, {prazo:quando}); }
+    catch(e){ k.prazo = prazoAntes; falha = ". Não foi possível gravar a nova data de conferência: "+msgErro(e); } }
   else { try{ [tf] = await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id, atribuido_por:eu.id, lembrar_em:quando, natureza:"lembrete"})});
-    tarefaNaMemoria(tf); }catch(e){} }
+    tarefaNaMemoria(tf); }catch(e){ falha = ". Não foi possível gravar o lembrete da nova conferência: "+msgErro(e); } }
   const repinta = () => { montarSidebar(); render(); if(clienteAberto===k.cliente_id) repintarFicha(); };
   repinta();
-  avisoDesfazer(`${c.rot} · conferir de novo em ${fmtBarra(quando)}`, async ()=>{
+  avisoDesfazer(`${c.rot} · conferir de novo em ${fmtBarra(quando)}${falha}`, async ()=>{
     await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
     if(Array.isArray(D._andsFicha)) D._andsFicha = D._andsFicha.filter(a=>a.id!==and.id);
     for(const t of velhas){ t.concluida_em = null;
@@ -1123,8 +1127,11 @@ async function gravarSeparar(){
   if(and && Array.isArray(D._andsFicha) && clienteAberto===c.id) D._andsFicha.unshift(and);
   if(s.para!==eu.id) criarMencoes(texto, k.id, and.id).catch(()=>{});
   const item = {id:"en_"+Date.now().toString(36), docs, anexos:[...novos, ...ans].map(a=>a.id), caso_id:k.id, and_id:and.id, tf_id:tf&&tf.id, para:s.para, ate:s.ate, em:hoje(), por:eu.id};
+  const camposAntes = c.campos;
   c.campos = {...(c.campos||{}), entregar:[...entregarDe(c), item]};
-  await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  try{ await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ c.campos = camposAntes; if(clienteAberto===c.id) repintarFicha();
+    return aviso("A anotação e a tarefa foram criadas, mas não foi possível gravar os papéis na pasta do cliente: "+msgErro(e)); }
   aviso(`🖨 Separado: ${nomeQuem} imprime até ${fmtBarra(s.ate)}`, false);
   if(clienteAberto===c.id) repintarFicha();
 }

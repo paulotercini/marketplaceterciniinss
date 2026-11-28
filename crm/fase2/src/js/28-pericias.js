@@ -374,10 +374,10 @@ function lcGradeArea(k){
   const vara = orgaoJudCurto(dv(/^[óo]rg[ãa]o julgador/i) || k.orgao_judicial || "");
   const polos = [dv(/^polo ativo/i), dv(/^polo passivo/i)].filter(Boolean).join(" × ");
   const partes = (k.ronda||{}).partes || polos, valor = dv(/^valor da causa/i);
-  const f = (rot, v, cls="") => `<span class="lc-f${cls}"><span class="lc-k">${rot}</span>${v || `<span class="lc-vazio">não informado</span>`}</span>`;
+  const f = (rot, v, cls="") => `<span class="lc-f${cls}"><span class="lc-k">${rot}</span>${v || `<span class="lc-vazio">a informar</span>`}</span>`;
   return [f("Processo", k.processo ? lcCop(fmtProc(k.processo), "Número do processo") : ""),
     f("Vara", vara ? esc(vara) : ""),
-    `<span class="lc-f lc-partes"><span class="lc-k">Partes</span>${partes ? `<b class="lc-manual">${esc(partes)}</b>` : `<span class="lc-vazio">não informadas</span>`}<button class="lapis" title="escrever as partes" onclick="editarPartes('${k.id}')">✎</button></span>`,
+    `<span class="lc-f lc-partes"><span class="lc-k">Partes</span>${partes ? `<b class="lc-manual">${esc(partes)}</b>` : `<span class="lc-vazio">a informar</span>`}<button class="lapis" title="escrever as partes" onclick="editarPartes('${k.id}')">✎</button></span>`,
     f("Valor da causa", valor ? esc(valor) : "")].join("");
 }
 async function gravarRonda(k, ronda, msg){
@@ -451,7 +451,7 @@ function linhaCaso(k){
       <div class="lc-placa lc5-grade">
       ${!prev ? lcGradeArea(k) : `${k.fase==="encerrado" && !k.der ? "" : `<span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar${esc(fonteQuadro(k,"der"))}">${fmtBarra(k.der)}</span>`
-        : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
+        : `<span class="lc-vazio">a informar</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>`}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       ${k.nb && !camposEssenciais(k).some(c=>soCampo(c)==="nb") ? `<span class="lc-f lc-nb"><span class="lc-k">NB</span>${lcCop(fmtNb(k.nb),"NB")}</span>` : ""}
       ${pr ? `<span class="lc-f lc-prot"><span class="lc-k">Protocolo</span>${lcCop(pr,"Protocolo")}</span>` : ""}

@@ -34,9 +34,10 @@ function quadroDatas(k){
 function prazosDoCliente(cliId){
   const {soltas} = linhasDeDatas(cliId), grupos = new Map();
   for(const x of soltas){ const g = x.casoId || ""; if(!grupos.has(g)) grupos.set(g, []); grupos.get(g).push(x); }
-  const hj = hoje(), venc = soltas.filter(x=>x.data<hj && !x.aConfirmar).length;
+  const vis = PZ_SO_TODO ? soltas.filter(doTodoPz) : soltas;   // F849 · o contador da aba conta só o que a aba mostra
+  const hj = hoje(), venc = vis.filter(x=>x.data<hj && !x.aConfirmar).length;
   const lista = soltas.slice().sort((a, b)=>a.data<b.data?-1:a.data>b.data?1:(natDaLinha(a)==="fatal"?-1:0)-(natDaLinha(b)==="fatal"?-1:0));
-  return {grupos, total: soltas.length, venc, lista};
+  return {grupos, total: vis.length, venc, lista};
 }
 // F453 · A ABA PRAZOS EM MÊS E LISTA (proposta C escolhida pelo Paulo em 08.11.2026, https://claude.ai/artifact/A2LoP3MwVs5STJyKYzzpHJ,
 // ideias do Replit e do Base44). No alto, a faixa do próximo prazo fatal; depois a natureza (com Retorno à parte) e Por data
@@ -1262,11 +1263,14 @@ function miniAgenda(k){
 }
 let _maAberta = false;
 function maProximo(cliId){
-  const hj = hoje(), x = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x)) && x.data>=hj).sort((a, b)=>a.data<b.data ? -1 : a.data>b.data ? 1 : 0)[0];
+  const todas = prazosDoCliente(cliId).lista.filter(x=>!x.aConfirmar && (!PZ_SO_TODO || doTodoPz(x))).sort((a, b)=>a.data<b.data ? -1 : a.data>b.data ? 1 : 0);
+  const hj = hoje(), x = todas.find(x=>x.data>=hj), v = todas[0];
+  // F849 · sem prazo futuro, o vencido mais antigo aparece em vez de "nenhum marcado"
+  if(!x && v) return `<span class="ma-px-r">Próximo prazo</span><b class="venc">vencido ${fmtBarra(v.data).slice(0,5)}</b>`;
   if(!x) return `<span class="ma-px-r">Próximo prazo</span><span class="ma-px-n">nenhum marcado</span>`;
   prepPz(x, 0);
   const quando = x.data===hj ? "hoje" : fmtBarra(x.data).slice(0,5);
-  return `<span class="ma-px-r">Próximo prazo</span><b>${quando}</b><span class="ma-px-t">${esc(ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete")}</span>`;
+  return `<span class="ma-px-r">Próximo prazo</span><b>${quando}</b><span class="ma-px-t">${esc(doTodoPz(x) ? "To Do" : ehRetornoPz(x) ? x.rotulo : NAT_ROT[x._nat] || "Lembrete")}</span>`;
 }
 function maMes(n){
   const d = new Date((_pzMes || hoje().slice(0,7))+"-15T12:00:00"); d.setMonth(d.getMonth()+n); _pzMes = d.toISOString().slice(0,7);

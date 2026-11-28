@@ -329,6 +329,7 @@ async function desfazerAgora(){
   esconderDesfazer();
   if(f) await f();
 }
+window.addEventListener("offline", ()=>aviso("Sem internet: nada será gravado até a conexão voltar"));
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
 async function api(caminho, opcoes={}, tentativa=0){
@@ -344,10 +345,12 @@ async function api(caminho, opcoes={}, tentativa=0){
       "Content-Type": "application/json",
       ...(opcoes.headers||{}),
     },
-  });
+  }).catch(()=>{ throw new Error("Sem internet. O que foi escrito continua na tela; tente de novo."); });
   if(r.status === 401 && sessao && tentativa === 0){
     const ok = await renovar();
     if(ok) return api(caminho, opcoes, 1);
+    // soluço de rede no refresh não é sessão vencida: não desloga
+    if(!renovarRecusou) throw new Error("Sem conexão para renovar a sessão. Tente de novo.");
     // já dentro do sistema: sessão vencida, recomeça. Ainda no login:
     // recarregar apagaria a mensagem e a tela voltaria ao início sem dizer nada
     if(eu) return sair();
@@ -422,17 +425,24 @@ async function todas(tabela, filtro=""){  // paginação (Supabase limita a 1000
   }
 }
 
-async function renovar(){
-  try{
-    const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/auth/v1/token?grant_type=refresh_token", {
-      method:"POST", headers:{apikey:CONFIG.ANON_KEY,"Content-Type":"application/json"},
-      body: JSON.stringify({refresh_token: sessao.refresh_token}),
-    });
-    if(!r.ok) return false;
-    sessao = await r.json();
-    guardar("crm_sessao", JSON.stringify(sessao));
-    return true;
-  }catch{ return false; }
+let renovarRecusou = false;   // true só quando o banco recusou o refresh token (400/401); rede, 5xx e 429 não deslogam
+let renovando = null;         // vários 401 ao mesmo tempo dividem um único refresh (o token de refresh é de uso único)
+function renovar(){
+  if(renovando) return renovando;
+  renovando = (async()=>{
+    renovarRecusou = false;
+    try{
+      const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/auth/v1/token?grant_type=refresh_token", {
+        method:"POST", headers:{apikey:CONFIG.ANON_KEY,"Content-Type":"application/json"},
+        body: JSON.stringify({refresh_token: sessao.refresh_token}),
+      });
+      if(!r.ok){ renovarRecusou = r.status===400 || r.status===401; return false; }
+      sessao = await r.json();
+      guardar("crm_sessao", JSON.stringify(sessao));
+      return true;
+    }catch{ return false; }
+  })().finally(()=>{ renovando = null; });   // fora do corpo: se ele falhar antes do primeiro await, o finally interno rodaria antes da atribuição e a Promise ficaria presa
+  return renovando;
 }
 
 // ── login ─────────────────────────────────────────────────────────────────
@@ -575,7 +585,9 @@ async function iniciar(){
   _hashIni.c = null;
   if(!vigiaLigada){ vigiaLigada = true; setInterval(vigiarMudancas, VIGIA_MS);
     // como o To Do ao voltar para a frente: a aba que reaparece busca o que mudou na hora, sem esperar a volta do relógio
-    document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) vigiarMudancas(); });
+    document.addEventListener("visibilitychange", ()=>{ if(document.hidden) return; vigiarMudancas();
+      // sem rede o recarregarZap trocaria a lista pela mensagem de "banco sem tabelas"
+      if(visao==="whatsapp" && navigator.onLine && typeof recarregarZap==="function") recarregarZap(true).catch(()=>{}); });
     vigiarLembretes(); setInterval(vigiarLembretes, 30000);
     setTimeout(()=>verGravacaoGuardada().catch(()=>{}), 1500); }   // F537: a gravação interrompida volta com Continuar
   // F187 · "online agora" no painel do gestor: um ponto por minuto

@@ -966,7 +966,7 @@ async function renderWhats(){ zapAbaAuto = true;
   pararZapTimer();
   // sem WebSocket: uma olhada a cada 6 segundos é o suficiente para quem está
   // atendendo e não deixa a página pesada
-  zapTimer = setInterval(()=>{ if(visao==="whatsapp"){ recarregarZap(true); if(zagAberta()) zagCarregar(); } else pararZapTimer(); }, 6000);
+  zapTimer = setInterval(()=>{ if(document.hidden) return; if(visao==="whatsapp"){ recarregarZap(true); if(zagAberta()) zagCarregar(); } else pararZapTimer(); }, 6000);
 }
 
 async function recarregarZap(silencioso){

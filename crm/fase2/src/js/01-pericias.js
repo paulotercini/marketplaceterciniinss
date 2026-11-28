@@ -537,10 +537,12 @@ async function gravarEtapa(casoId, etapa){
 // a etapa que a própria providência declara, sem mover o caso de lista
 async function marcarEtapa(casoId, etapa){
   const k = D.casoPorId.get(casoId); if(!k || !etapa || k.etapa===etapa) return false;
+  const etapaAntes = k.etapa;
   k.etapa = etapa;
   const trM = trilhaSegueEtapa(k, etapa);   // F183
-  try{ await patchCaso(casoId, {etapa}); }catch(e){ return false; }
-  if(trM) try{ await patchCaso(casoId, {trilha:trM}); k.trilha = trM; }catch(e){}
+  // etapa e trilha na mesma gravação (como o gravarEtapa): ou as duas, ou nenhuma
+  try{ await patchCaso(casoId, {etapa, ...(trM?{trilha:trM}:{})}); if(trM) k.trilha = trM; }
+  catch(e){ k.etapa = etapaAntes; aviso("Não foi possível gravar a etapa do caso: "+msgErro(e)); return false; }
   return true;
 }
 async function andarEtapa(casoId, lista, motivo, etapa){
@@ -554,10 +556,9 @@ async function andarEtapa(casoId, lista, motivo, etapa){
   // F119 · etapa da fase antiga não faz sentido na nova
   const nova = etapa || null;
   k.fase = fase; k.mover_para = lista; k.etapa = nova;
-  try{ await patchCaso(casoId, {fase, mover_para:lista, etapa:nova}); }
+  const trA = trilhaSegueEtapa(k, nova);   // F183 · na mesma gravação: ou tudo, ou nada
+  try{ await patchCaso(casoId, {fase, mover_para:lista, etapa:nova, ...(trA?{trilha:trA}:{})}); if(trA) k.trilha = trA; }
   catch(e){ Object.assign(k, antes); return false; }
-  const trA = trilhaSegueEtapa(k, nova);   // F183
-  if(trA) try{ await patchCaso(casoId, {trilha:trA}); k.trilha = trA; }catch(e){}
   montarSidebar(); render(); if(clienteAberto) repintarFicha();
   avisoDesfazer(`Caso movido para ${lista}${k.etapa?`, ${k.etapa}`:""} · ${motivo}`, async ()=>{
     Object.assign(k, antes);
@@ -832,7 +833,7 @@ async function aceitarEtapaProposta(casoId){
   const p = propostaDeEtapa(k, andsDoCaso(k));
   if(!p) return aviso("A etapa já está de acordo com os fatos oficiais");
   const antes = {etapa:k.etapa||null, trilha:k.trilha||null, resultado:k.resultado||null, decisao_em:k.decisao_em||null};
-  let volta = null;
+  let volta = null, falha = "";
   if(p.mover){
     const lista = (LISTAS_MOVER.find(([,f])=>f===p.mover)||[])[0];
     if(!lista || !await andarEtapa(casoId, lista, porDaProposta(p), p.etapa))
@@ -846,7 +847,8 @@ async function aceitarEtapaProposta(casoId){
       const c = {};
       if(p.resultado && (!k.resultado || (k.decisao_em||"") < p.data)) c.resultado = p.resultado;
       if(!k.decisao_em || k.decisao_em < p.data) c.decisao_em = p.data;
-      if(Object.keys(c).length) try{ await patchCaso(k.id, c); Object.assign(k, c); }catch(e){}
+      if(Object.keys(c).length) try{ await patchCaso(k.id, c); Object.assign(k, c); }
+        catch(e){ falha = ". Não foi possível gravar o resultado e a data da decisão: "+msgErro(e); }
     }
   }
   let andId = null;
@@ -858,7 +860,7 @@ async function aceitarEtapaProposta(casoId){
   }catch(e){}
   const repinta = () => { montarSidebar(); render(); if(clienteAberto) (p.mover ? abrirFicha(clienteAberto) : repintarFicha()); };
   repinta();
-  avisoDesfazer(`Etapa: ${rotuloProposta(p)} ✔ — registrado no caso`, async () => {
+  avisoDesfazer(`Etapa: ${rotuloProposta(p)} ✔ — registrado no caso${falha}`, async () => {
     if(volta) await volta();
     else { Object.assign(k, antes); await patchCaso(k.id, antes).catch(()=>{}); }
     if(andId){ await api(`/rest/v1/andamentos?id=eq.${andId}`,{method:"DELETE"}).catch(()=>{});
