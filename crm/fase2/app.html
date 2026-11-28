@@ -7470,7 +7470,7 @@ html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
   --p-roxo-1:#F1EAFB; --p-roxo-2:#E7E1F1; --p-roxo-3:#DDD4EC; --p-roxo-4:#DACBF2; --p-roxo-5:#DCC8E6; --p-roxo-6:#CDBDEB; --p-roxo-7:#8A5CF6; --p-roxo-8:#8764B8; --p-roxo-9:#7A5AA8; --p-roxo-10:#5B3A9B; --p-roxo-11:#5B3F8C; --p-roxo-12:#5C4B7D; --p-roxo-13:#5C2E91;
   --p-rosa-1:#FDF2F9; --p-rosa-2:#F3DDEC; --p-rosa-3:#E7BEDA; --p-rosa-4:#D64570; --p-rosa-5:#A5187F;
 }
-/* F845 · trilho da fase atual no tom claro da própria fase; "sem data" em cinza */
+/* F847 · trilho da fase atual no tom claro da própria fase; "sem data" em cinza */
 html[data-tema="v10"] .app .ltc .ltc-a .ltc-r{background:color-mix(in srgb,var(--c) 16%,var(--p-branco))}
 html[data-tema="v10"] .ltc .ltc-y.ltc-sd{color:var(--p-cinza-20);font-weight:400}
 </style>
@@ -7485,7 +7485,7 @@ html[data-tema="v10"] .ltc .ltc-y.ltc-sd{color:var(--p-cinza-20);font-weight:400
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>AdvPrev <span class="versao">· versão 14.49</span></h1>
+    <h1>AdvPrev <span class="versao">· versão 14.50</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -46547,7 +46547,7 @@ function linhaTempoCaso(k){
   const bar = segs.filter(([f,s])=>s!=="n" || bt[f]).map(([f,s,a,fl])=>{
     const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v" || s==="n";
     const pc = s==="a" ? pctFase(k, f, a0[f]) : null, fill = pc==null ? "" : `<i class="ltc-p" style="--p:${pc.p}%"></i>`;
-    // F845 · fase atual: percentual ao lado do ano; sem data cadastrada, "sem data" em cinza
+    // F847 · fase atual: percentual ao lado do ano; sem data cadastrada, "sem data" em cinza
     const y = fut ? `<span class="ltc-y"></span>` : !a && s==="a" ? `<span class="ltc-y ltc-sd">sem data</span>`
       : `<span class="ltc-y">${esc(a)}${pc&&pc.mostra?` · ${pc.p}%`:""}</span>`;
     if(bt[f]) return bt[f].replace('class="jn-b ', `class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""} jn-b `).replace('style="', `style="flex:${fl};--c:${fut?"#B7BCC2":c};`)

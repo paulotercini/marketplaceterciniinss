@@ -1384,7 +1384,7 @@ function linhaTempoCaso(k){
   const bar = segs.filter(([f,s])=>s!=="n" || bt[f]).map(([f,s,a,fl])=>{
     const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v" || s==="n";
     const pc = s==="a" ? pctFase(k, f, a0[f]) : null, fill = pc==null ? "" : `<i class="ltc-p" style="--p:${pc.p}%"></i>`;
-    // F845 · fase atual: percentual ao lado do ano; sem data cadastrada, "sem data" em cinza
+    // F847 · fase atual: percentual ao lado do ano; sem data cadastrada, "sem data" em cinza
     const y = fut ? `<span class="ltc-y"></span>` : !a && s==="a" ? `<span class="ltc-y ltc-sd">sem data</span>`
       : `<span class="ltc-y">${esc(a)}${pc&&pc.mostra?` · ${pc.p}%`:""}</span>`;
     if(bt[f]) return bt[f].replace('class="jn-b ', `class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""} jn-b `).replace('style="', `style="flex:${fl};--c:${fut?"#B7BCC2":c};`)
