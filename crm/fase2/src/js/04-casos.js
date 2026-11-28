@@ -151,7 +151,7 @@ function dbBotoes(k, aba, dig, sis, fim=""){
   const det = aba==="cnj" ? b(`dbPainel('${k.id}','det')`, "Detalhes", "Ver os dados do cabeçalho do processo", "", ab==="det")
     : b(`irSubAba('${aba}')`, "Detalhes", `Abrir a aba ${ROT_FASE[aba]||"do processo"}`);
   const pn = ab==="exp" && exp ? dbExpedientes(k, x) : ab==="det" ? dbDetalhes(k, x) : "";
-  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", aba==="cnj" && exp ? "Baixar o processo inteiro e os expedientes (.zip)" : "Baixar o processo inteiro (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}${fim}</div>${pn}`;
+  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", aba==="cnj" && exp ? "Baixar o processo inteiro e os atos de comunicação do PJe (.zip)" : "Baixar o processo inteiro (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}${fim}</div>${pn}`;
 }
 function dbExpedientes(k, x){
   const vs = expedientesDe(k, x.d);
