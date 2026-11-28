@@ -51,6 +51,42 @@ function botaoZapCliente(cliId){
     style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
     title="ler as mensagens de WhatsApp deste cliente">${iconeFonte("zap")}${n?` <b>${n}</b><span class="sr-only"> nova${n>1?"s":""}</span>`:""}</button>`;
 }
+// F845 · Agendar: o advogado pede e a assistente virtual escreve ao cliente, oferece as vagas e agenda (plano aprovado em 28.11.2026)
+const PROF_AG = [["paulo","Dr. Paulo"],["marcos","Dr. Marcos"],["amanda","Dra. Amanda"]];
+const profDoColab = id => { const n = String((D.colPorId.get(id)||{}).nome||"").split(" ")[0].toLowerCase(); return PROF_AG.some(([k])=>k===n) ? n : ""; };
+function botaoAgendarIA(cliId){
+  if(cfgApp("zap_ia_agendar_botao")!=="sim") return "";
+  return `<button class="btn-mini" onclick="abrirAgendarIA('${cliId}')" title="Pedir à assistente virtual que agende atendimento com este cliente pelo WhatsApp"><span aria-hidden="true">Agendar</span><span class="sr-only">Pedir à assistente virtual que agende atendimento</span></button>`;
+}
+function abrirAgendarIA(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const resp = profDoColab(advogadoDoCliente(cliId)[0]) || "paulo";
+  const ks = (D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  caixa(`<h3 style="margin:0 0 8px">Agendar <small class="meio-sub">· ${esc(c.nome)}</small></h3>
+    <fieldset class="ag-ia" style="border:0;padding:0;margin:0 0 8px"><legend>Quando</legend>
+      <label><input type="radio" name="ag-quando" value="urgente"> Urgente</label>
+      <label><input type="radio" name="ag-quando" value="data" onchange="document.getElementById('ag-dh').hidden=false"> Data e horário</label>
+      <label><input type="radio" name="ag-quando" value="sem_pressa" checked> Sem pressa</label>
+      <span id="ag-dh" hidden><input type="date" id="ag-data"> <input type="time" id="ag-hora" step="900"></span></fieldset>
+    <label style="display:block;margin:8px 0">Com quem <select id="ag-prof">${PROF_AG.map(([k,n])=>`<option value="${k}" ${k===resp?"selected":""}>${n}</option>`).join("")}</select></label>
+    ${ks.length?`<label style="display:block;margin:8px 0">Caso <select id="ag-caso"><option value="">nenhum</option>${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select></label>`:""}
+    <label style="display:block;margin:8px 0">Motivo (vai ao cliente)<br> <input id="ag-motivo" maxlength="140" placeholder="ex.: conversar sobre a perícia" style="width:100%"></label>
+    <p class="meio-sub">A assistente virtual escreve ao cliente pelo WhatsApp, oferece as vagas livres e agenda.</p>
+    <button class="btn-rap forte" onclick="enviarAgendarIA('${cliId}')" title="Enviar o pedido à assistente virtual">Enviar</button>`);
+}
+async function enviarAgendarIA(cliId){
+  const q = (document.querySelector('input[name="ag-quando"]:checked')||{}).value;
+  const v = id => (document.getElementById(id)||{}).value || null;
+  const motivo = String(v("ag-motivo")||"").trim();
+  if(motivo.length<4) return aviso("Informe o motivo do atendimento");
+  if(q==="data" && !(v("ag-data") && v("ag-hora"))) return aviso("Informe o dia e o horário");
+  try{
+    const r = await api(`/rest/v1/rpc/agendar_pedir`,{method:"POST", body:JSON.stringify({p_cliente:cliId, p_quando:q, p_prof:v("ag-prof"),
+      p_motivo:motivo, p_caso:v("ag-caso"), p_data:q==="data"?v("ag-data"):null, p_hora:q==="data"?v("ag-hora"):null})});
+    if(r && r.erro) return aviso(r.erro);
+    fecharCaixa(); aviso("Pedido enviado: a assistente virtual escreveu ao cliente");
+  }catch(e){ aviso("O pedido não foi enviado: "+String(e.message||e).slice(0,120)); }
+}
 // F282 · o "Abrir ficha" do WhatsApp abre a ficha (o caso, quando há) com a conversa ao lado, como o botão WhatsApp da ficha
 async function fichaComZap(cliId){ await abrirFicha(cliId); if(clienteAberto===cliId) await zapAoLado(cliId); }
 // no celular não há "ao lado": a conversa cobriria a ficha que a pessoa pediu para ver (teste da colaboradora, 02.11.2026)

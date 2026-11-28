@@ -561,6 +561,7 @@ function pintarFicha(){
       ${temaV10() ? "" : chipParceria(c, ks)}
       ${chipsParentes(c)}${chipEntregar(c)}
       ${botaoZapCliente(cliId)}
+      ${botaoAgendarIA(cliId)}
       ${/* F401 · CPF, Meu INSS, telefone, advogado e a situação na linha do nome, sem a segunda linha (pedido do Paulo, 05.11.2026) */""}
       ${temaV10() && !celular() ? `<span class="linha2"><span class="resumo resumo-lado">${resumoIn}</span>${linhaAdvogado(c, chipParceria(c, ks))}${chipAlarme}${alCli && !ativosCli.length ? "" : stCli}</span>` : ""}
       ${temaV10() && celular() ? `<span class="resumo resumo-lado">${resumoIn}</span>` : ""}

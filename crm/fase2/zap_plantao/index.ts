@@ -92,6 +92,8 @@ export type Contexto = {
   cliente: { nome: string; mesmo_telefone: boolean; casos: Caso[] } | null;
   andamentos?: { em: string; beneficio: string; texto: string }[];
   remarcar?: { rotulo: string | null; profissional: string | null; duvida?: boolean; ler?: boolean; classe?: string } | null;
+  // F845 · o pedido do botão Agendar da ficha
+  agendar?: { quando: string; prof: string; motivo: string; data?: string | null; hora?: string | null; por?: string | null } | null
   pericia?: { tipo: string; data: string; hora: string; local: string | null; profissional: string; ate_hora: string; limite_presenca: string; telefone_em: string; atendido?: string | null } | null;
 };
 
@@ -361,6 +363,23 @@ export const AG_DUVIDA = `\n\nNa dúvida, a equipe (pedido do Paulo de 07.11.202
   `continuar sem saber se o atendimento é novo ou troca de um já agendado, ou quando o atendimento a remarcar ou cancelar não aparecer ` +
   `em atendimentos_marcados; nesse caso não ofereça horários nem diga que anotou, e diga em uma frase que um colaborador do escritório vai responder. ` +
   `Não presuma acompanhante, parentesco nem outra pessoa que a conversa não citou; para confirmar, repita dia, hora e advogado e pergunte somente se pode confirmar.`;
+// F845 · o advogado pediu pelo botão Agendar da ficha; a primeira mensagem já saiu (agendar_texto, no banco)
+const COM_PROF: Record<string, string> = { paulo: "o Dr. Paulo", marcos: "o Dr. Marcos", amanda: "a Dra. Amanda" };
+export function promptAgendar(a: NonNullable<Contexto["agendar"]>) {
+  const com = COM_PROF[a.prof] || "o advogado";
+  const quando = a.quando === "data" ? `somente no dia ${a.data} às ${a.hora}, que o advogado escolheu; se o horário não estiver livre ou a pessoa ` +
+      `recusar, não ofereça outro: use encaminhar_equipe para que ${com} combine diretamente`
+    : a.quando === "urgente" ? "nas duas vagas livres mais próximas, inclusive hoje, porque o advogado marcou o assunto como urgente"
+    : "nas duas vagas livres mais próximas nos próximos 15 dias, ou no dia e período que a pessoa preferir";
+  return `Agendamento pedido pelo escritório: ${com} pediu, pelo CRM, um atendimento com esta pessoa para tratar de: ${a.motivo}. ` +
+    `A mensagem do escritório já foi enviada; você é a assistente virtual do escritório e pode se apresentar assim. ` +
+    `Peça ao Agendador vagas de ${com} ${quando}. Se a pessoa já tiver atendimento agendado, ofereça remarcá-lo em vez de agendar outro. ` +
+    `Se perguntar o que será tratado, informe somente o motivo acima, sem acrescentar fatos e sem parecer jurídico; ` +
+    `se pedir para adiantar o assunto por mensagem ou por telefone, diga com cordialidade que ${com} prefere conversar pessoalmente e ` +
+    `ofereça os horários; se insistir, use encaminhar_equipe. Se informar Matão ou cidade mais distante, siga a regra de Matão (sem presencial). ` +
+    `Se recusar o atendimento, agradeça e use encaminhar_equipe.\n`;
+}
+
 // F527 · a lista de espera, oferecida somente a quem pede data mais cedo (aprovado pelo Paulo em 11.11.2026)
 export const AG_ESPERA = `\n\nLista de espera: ofereça somente quando consultar_vagas devolver espera: true e a pessoa pedir data mais cedo ` +
   `do que as livres ou disser que a data está longe. Primeiro ofereça agendar a data livre ou manter o atendimento já agendado: a lista não ` +
@@ -551,6 +570,7 @@ export function contexto(x: Contexto) {
       `sem oferecer horários; se ela não quiser, diga que o escritório fica à disposição para agendar quando ela preferir. ` +
       `Se ela pedir outro dia ou horário, peça ao Agendador que ofereça dois horários com o mesmo advogado${x.remarcar.profissional ? ` (${x.remarcar.profissional})` : ""}, um de manhã e outro à tarde, ` +
       `e que remarque esse atendimento (ou agende um novo, se ele já foi cancelado) quando ela escolher. Não cumprimente de novo e não peça o assunto.\n` : "") +
+    (x.agendar ? promptAgendar(x.agendar) : "") +
     // F549 · a perícia aprovada pelo Ligar: a IA oferece o atendimento presencial de preparação
     // F661 · atendida há pouco (caso de 19.11.2026: atendido na véspera, a IA ofereceu a preparação de novo)
     (x.pericia?.atendido ? `Perícia: a pessoa tem ${x.pericia.tipo} em ${x.pericia.data} às ${x.pericia.hora}${x.pericia.local ? `, em ${x.pericia.local}` : ""}, e o escritório avisou por esta conversa. ` +
@@ -1066,6 +1086,7 @@ export function ferramentasDaConversa(conversa: string, chamar = agenda, banco =
       // shortcut: sem a migração f422q no banco, a versão de 4 argumentos confirma; sai quando ela for aplicada
       await banco("zap_plantao_marcado", { ...conf, p_para: para || null }).catch(() => banco("zap_plantao_marcado", conf));
       await banco("pericia_atendimento_marcado", { p_conversa: conversa, p_data: v.data, p_inicio: v.inicio }).catch(() => null);   // F549
+      await banco("agendar_fechar", { p_conversa: conversa }).catch(() => null);   // F845
       return { marcado: true, aviso: "o sistema já enviou ao cliente a confirmação com dia, hora e orientações: não repita; se for presencial, informe somente o endereço" };
     },
     async remarcar_atendimento(i: { atendimentoId?: string; novoEventoId?: string }) {
@@ -1689,6 +1710,7 @@ if (typeof Deno !== "undefined") {
       x.ferias = await emFerias().catch(() => []);
       if (x.advogado) x.advogado = semFerias("", x.advogado, x.ferias).advogado;   // F819
       x.atendente = await atendenteDe(x.conversa_id).catch(() => null);   // F485 · a sugestão sai na primeira pessoa de quem atende
+      if (x.conversa_id) x.agendar = await rpc("agendar_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F845
       if (x.conversa_id) x.pericia = await rpc("pericia_contexto", { p_conversa: x.conversa_id }).catch(() => null);   // F549
       if (x.pericia) x.pericia.atendido = await atendidoHaPouco(x.cliente?.nome).catch(() => null);   // F661
       // F633 · os andamentos dos portais, só para o telefone principal da ficha
@@ -1766,7 +1788,7 @@ if (typeof Deno !== "undefined") {
       // para todo cliente com perícia marcada, e a primeira resposta do dia saía sem o aviso)
       const hoje = enviadosHoje(x.mensagens);
       const resposta = comAvisoGolpe(emLinhas(r.resposta, antes), hoje,
-        acao !== "nada" && !x.atendente && (!(x.remarcar || x.pericia) || !hoje.length));
+        acao !== "nada" && !x.atendente && (!(x.remarcar || x.pericia || x.agendar) || !hoje.length));
       await rpc("zap_plantao_aplicar", {
         p_msg: msg, p_acao: acao, p_resposta: resposta, p_advogado: String(r.advogado || ""),
         p_urgente: r.urgente === true, p_assunto: (ehGolpe({ ...r, acao }, x.mensagens) ? "golpe: " : "") + String(r.assunto || ""),
