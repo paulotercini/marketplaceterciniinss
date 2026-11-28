@@ -91,9 +91,9 @@ Todo conjunto de quesitos em ação de conversão ou reconhecimento de natureza 
 6. A incapacidade guarda nexo de causalidade ou concausalidade com a atividade laboral
 7. Fixar a data de início da doença (DID) e a data de início da incapacidade (DII)
 
-**Assistente técnico.** Altamente recomendável. O assistente técnico pode acompanhar a perícia, formular quesitos complementares e elaborar parecer divergente (art. 477, §1º, CPC). O parecer técnico do assistente é prova autônoma e pode superar o laudo pericial em robustez (auditoria 03/10/2026, retirado o Tema 339/STJ, que trata de liberação de veículo retido, e corrigido o art. 472).
+**Assistente técnico.** Altamente recomendável. O assistente técnico pode acompanhar a perícia, formular quesitos complementares e elaborar parecer divergente (art. 477, §1º, CPC). O parecer técnico do assistente é prova autônoma e pode superar o laudo pericial em robustez.
 
-### 3.4. Tema 1124/STJ. Interesse de Agir
+### 3.4. Tema 1124/STJ. Termo inicial dos efeitos financeiros
 
 Verificar se o segurado apresentou ao INSS os documentos que fundamentam o nexo. Se a prova do nexo é nova e não foi apresentada administrativamente, os efeitos financeiros podem ser fixados a partir da citação (e não da DER). A skill tema-1124-instrucao-administrativa deve ser consultada.
 

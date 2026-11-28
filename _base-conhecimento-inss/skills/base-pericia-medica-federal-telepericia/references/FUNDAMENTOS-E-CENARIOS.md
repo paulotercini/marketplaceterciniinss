@@ -1,165 +1,60 @@
-# Perícia Médica Federal e Teleperícia. Fundamentos e Cenários
+# Perícia Médica Federal e Teleperícia. Fundamentos e cenários
 
-## 1. Fundamentos normativos
+O marco normativo conferido está em `../SKILL.md`.
 
-Lei 8.213/91, arts. 42, 59, 60, 86, 101. Exigência de perícia para concessão, manutenção e revisão de benefícios por incapacidade.
+## Hipóteses em que o exame remoto é inadequado
 
-Lei 8.213/91, art. 60, §11-A. Regime de análise documental para B31.
-
-Decreto 3.048/99, arts. 304 e seguintes. Estrutura da PMF.
-
-Decreto 9.765/2019. Criou a carreira de Perito Médico Federal.
-
-Lei 13.846/2019. Consolidou normas sobre perícia médica.
-
-Portaria Conjunta MPS/INSS 13/2026. Análise documental B31.
-
-Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para 90 dias o limite de duração do B31 concedido por análise documental, prorrogada por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026). Não é a norma da análise documental do B91.
-
-Portaria Conjunta MPS/INSS 15/2026. Análise documental B94.
-
-Portaria DPMF/INSS 19/2026. Teleperícia. Regula videoconferência, requisitos técnicos, hipóteses de cabimento e direito à perícia presencial subsidiária.
-
-Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026) e sucessores. Avaliação biopsicossocial BPC.
-
-Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026). IF-BrA para aposentadoria PCD.
-
-Resoluções CFM 2.314/2022 e 2.378/2024. Ética em telemedicina.
-
-## 2. Teleperícia. requisitos técnicos e procedimentais
-
-Primeiro, equipamento com câmera, microfone, tela adequada.
-
-Segundo, conexão de internet estável.
-
-Terceiro, ambiente apropriado com iluminação e privacidade.
-
-Quarto, identificação do perito e do segurado.
-
-Quinto, tempo suficiente para exame.
-
-Sexto, direito a acompanhante.
-
-Sétimo, direito à acessibilidade (Libras, legendas).
-
-Oitavo, possibilidade de interrupção e reagendamento em caso de problemas técnicos.
-
-Nono, registro gravado quando autorizado.
-
-## 3. Hipóteses em que a Teleperícia é inadequada
-
-Primeira, condição que exija exame físico (palpação, ausculta, testes de força, mobilidade, reflexos).
+Primeira, quadro que exige palpação, ausculta, testes de força, mobilidade ou reflexos.
 
 Segunda, deficiência visual, auditiva ou cognitiva sem suporte adequado.
 
-Terceira, paciente psiquiátrico descompensado sem acompanhante.
+Terceira, quadro psiquiátrico descompensado sem acompanhante.
 
-Quarta, idoso sem familiaridade com tecnologia e sem suporte.
+Quarta, lesão dermatológica ou estomatológica que exige exame próximo.
 
-Quinta, condição dermatológica ou estomatológica que exija proximidade.
+Quinta, múltiplas doenças com repercussão funcional combinada.
 
-Sexta, suspeita de dissimulação ou simulação que exija avaliação presencial prolongada.
+## Limites da análise documental
 
-Sétima, casos complexos com múltiplos CIDs.
+Primeiro, é etapa prévia sem exame clínico.
 
-## 4. Análise documental. limitações
+Segundo, o indeferimento admite reanálise em dez dias, antes do recurso (Portaria Conjunta MPS/INSS 13/2026, art. 8º-A). O recurso interposto antes, dentro do prazo, preclui a reanálise (art. 8º-A, §1º).
 
-Primeira, é triagem, não substitui perícia com exame clínico.
+Terceiro, após dois indeferimentos documentais sucessivos, o requerimento seguinte vai a exame presencial, admitida a telemedicina (art. 8º).
 
-Segunda, parecer de verossimilhança não é laudo.
+Quarto, em juízo, a prova é a perícia judicial, valorada com a documentação médica (CPC, arts. 371 e 479).
 
-Terceira, não cria coisa julgada administrativa nem vincula juízo.
+## Cenários
 
-Quarta, negativas devem ser fundamentadas.
+| Cenário | Atuação |
+|---|---|
+| 1. Lesão de joelho com limitação de marcha; Teleperícia conclui capacidade sem exame físico | Recurso ao CRPS com pedido de perícia presencial ou ação com perícia judicial |
+| 2. B31 indeferido por análise documental com documentação robusta | Reanálise em dez dias; depois, recurso ou ação |
+| 3. Perícia presencial com laudo genérico, sem exame descrito | Impugnação por falta de fundamentação |
+| 4. Segurado surdo sem intérprete de Libras | Nulidade por violação da Lei 13.146/2015 |
+| 5. Aposentadoria por incapacidade permanente cessada em revisão com laudo que repete o anterior | Restabelecimento com tutela; perícia judicial |
+| 6. Segurado acamado com perícia externa negada | Mandado de segurança |
+| 7. Laudo sem CID e sem fundamentação | Impugnação (Lei 9.784/99, art. 50) |
+| 8. BPC com avaliação biopsicossocial incompleta | Impugnação com a Portaria Conjunta MDS/INSS 2/2015 |
 
-Quinta, cabe pedido de prorrogação (P1) ou recurso.
+## Documentos
 
-Sexta, em ação judicial, cabe perícia judicial.
+Laudos e atestados contemporâneos, exames complementares, receituários, relatórios de especialistas, prontuário, declaração de cuidadores, CAT (acidentário) e PPP ou LTCAT (doença ocupacional).
 
-## 5. Cenários operacionais pró-segurado
+## Quesitos à perícia judicial
 
-### Cenário 1. Teleperícia inadequada
+Primeiro, diagnóstico e CID.
 
-Segurado com lesão de joelho e limitação de marcha. A Teleperícia não permitiu exame físico. Laudo concluiu capacidade. Recurso ao CRPS com pedido de perícia presencial ou ação judicial com perícia judicial.
+Segundo, data de início da doença (DID) e da incapacidade (DII), com o documento que a sustenta.
 
-### Cenário 2. Análise documental negativa
-
-Segurado com documentação médica robusta teve B31 indeferido por análise documental. Recurso ao CRPS com novos elementos ou ação judicial.
-
-### Cenário 3. Perícia presencial superficial
-
-Segurado teve perícia presencial de 5 minutos. Laudo genérico sem exame detalhado. Impugnação por cerceamento e superficialidade.
-
-### Cenário 4. Teleperícia sem acessibilidade
-
-Segurado surdo, sem intérprete de Libras na Teleperícia. Violação do direito à acessibilidade. Nulidade.
-
-### Cenário 5. Reavaliação sem exame específico
-
-Segurado em B32 cessado em reavaliação com laudo que apenas repete o anterior. Impugnação com argumento de ausência de exame real.
-
-### Cenário 6. Perícia domiciliar negada
-
-Segurado acamado com negativa de PMF externa. Violação do direito à perícia acessível. MS.
-
-### Cenário 7. Laudo sem CID e sem fundamentação
-
-Laudo da PMF sem CID explícito e sem fundamentação técnica. Impugnação por ausência de fundamentação.
-
-### Cenário 8. BPC com avaliação incompleta
-
-BPC indeferido com avaliação biopsicossocial superficial. Impugnação com base na Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026).
-
-## 6. Documentos essenciais
-
-Laudos e atestados médicos contemporâneos.
-Exames complementares atualizados.
-Receituários e históricos terapêuticos.
-Relatórios de especialistas.
-Prontuário médico (quando disponível).
-Declaração de familiares ou cuidadores (quando pertinente).
-CAT (em casos acidentários).
-PPP, LTCAT, PGR (em doenças ocupacionais).
-
-## 7. Quesitos à perícia judicial
-
-Primeiro, descrição detalhada da patologia e CID.
-
-Segundo, data de início da incapacidade (DII) e da doença (DID).
-
-Terceiro, grau de incapacidade (total ou parcial, temporária ou permanente).
+Terceiro, grau e duração da incapacidade (total ou parcial, temporária ou permanente).
 
 Quarto, possibilidade de reabilitação.
 
-Quinto, nexo com o trabalho (acidentário ou não).
+Quinto, nexo com o trabalho.
 
-Sexto, necessidade de assistência permanente (grande invalidez).
+Sexto, necessidade de assistência permanente de outra pessoa (art. 45 da Lei 8.213/91).
 
-Sétimo, limitações específicas para a atividade habitual.
+Sétimo, limitações para a atividade habitual.
 
-Oitavo, prognóstico.
-
-Nono, adequação de EPI ou medidas de adaptação.
-
-Décimo, indicação de assistente técnico.
-
-## 8. Alerta estratégico
-
-Primeiro, Teleperícia não é solução universal. Exigir perícia presencial sempre que adequado ao quadro.
-
-Segundo, análise documental negativa não encerra o caminho. Recurso e ação judicial são opções.
-
-Terceiro, laudo da PMF deve ser sempre requisitado e analisado. Impugnar vícios.
-
-Quarto, quesitos precisos fazem diferença na perícia judicial. Investir na formulação.
-
-Quinto, em cerceamento, MS pela urgência e pelo direito à perícia adequada.
-
-## 9. Cruzamento com outras skills
-
-Acionar `orientacao-cliente-pericia` para preparação do segurado.
-Acionar `auditoria-laudo-pericial` para revisão técnica.
-Acionar `analise-documental-incapacidade` para detalhes do regime documental.
-Acionar `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92` e `base-auxilio-acidente-b94-pos-reforma` para benefícios específicos.
-Acionar `analise-bpc-loas` e `aposentadoria-deficiencia` para perícia biopsicossocial.
-Acionar `mandado-seguranca-previdenciario` em caso de demora ou cerceamento grave.
+Oitavo, prognóstico e prazo estimado de recuperação.

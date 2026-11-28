@@ -1,75 +1,61 @@
 ---
 name: base-incapacidade-b32-permanente
-description: "Aposentadoria por incapacidade permanente B32 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar B32, aposentadoria por invalidez, arts. 42 a 48 Lei 8.213, acréscimo 25% grande invalidez, art. 42 §2º doença preexistente, conversão B31 em B32, prognóstico desfavorável, laudo B32, RMI B32 60% mais 2% excedente, RMI B92 acidentária 100%, art. 26 §3º II EC 103, Tema 982 STJ, assistência permanente, insuscetibilidade reabilitação, reavaliação periódica, MP 739/2016, Programa Revisão, Portaria Conjunta 14/2026, análise documental B32, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-acidentaria-b92, ntep-nexo-acidentario, base-calculo-rmi-ec103 e orientacao-cliente-pericia."
+description: "Aposentadoria por incapacidade permanente B32 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar B32, aposentadoria por invalidez, arts. 42 a 47 Lei 8.213, acréscimo 25% grande invalidez, art. 42 §2º doença preexistente, conversão B31 em B32, prognóstico desfavorável, laudo B32, RMI B32 60% mais 2% excedente, RMI B92 acidentária 100%, art. 26 §2º III e §3º II EC 103, Tema 1095 STF, Tema 982 STJ superado, Súmula 47 TNU, Tema 272 TNU, isenção de reavaliação art. 101, assistência permanente, insuscetibilidade reabilitação, reavaliação periódica, MP 739/2016, Programa Revisão, Portaria Conjunta 14/2026, análise documental B32, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-acidentaria-b92, ntep-nexo-acidentario, base-calculo-rmi-ec103 e orientacao-cliente-pericia."
 ---
 
-Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
+# Aposentadoria por incapacidade permanente (B32) após a EC 103/2019
 
-# Aposentadoria por Incapacidade Permanente (B32) Pós EC 103/2019
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente.
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta a concessão, manutenção e proteção do B32 (aposentadoria por incapacidade permanente, antes denominada aposentadoria por invalidez) sob o novo regime jurídico pós-reforma e sob a vigência do regime de análise documental do art. 60 §11-A e da Portaria Conjunta 14/2026. Objetivo único é defender o segurado, jamais favorecer o INSS.
+Concessão, cálculo, acréscimo de 25%, reavaliação e cessação do B32. Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`. B92 em `base-incapacidade-acidentaria-b92`.
 
-## Marco normativo central
+## Requisitos
 
-Lei 8.213/91, art. 42. Concede B32 ao segurado que, estando ou não em B31, for considerado incapaz e insuscetível de reabilitação para o exercício de atividade que lhe garanta a subsistência.
+1. Qualidade de segurado na DII (`periodo-graca-qualidade-segurado`).
+2. Carência de 12 contribuições, salvo as dispensas do art. 26, II (ver `base-incapacidade-b31-temporaria`).
+3. Incapacidade total e permanente, com insuscetibilidade de reabilitação para atividade que garanta a subsistência (Lei 8.213/91, art. 42).
+4. Incapacidade não preexistente à filiação, salvo progressão ou agravamento (art. 42, §2º).
 
-Lei 8.213/91, art. 42, §2º. Doença preexistente só exclui o benefício se a incapacidade NÃO decorrer de progressão ou agravamento. Interpretação pró-segurado.
+Incapacidade parcial com condições pessoais desfavoráveis (idade, escolaridade, histórico profissional) sustenta o B32 (Súmula 47 TNU). Recuperação que dependa de cirurgia não autoriza, por si, o B32: verificar a viabilidade de reabilitação (Tema 272 TNU).
 
-Lei 8.213/91, art. 43. DIB do B32 a partir do dia imediato à cessação do B31. No requerimento direto, DIB no 16º dia do afastamento para o segurado empregado e na DII para os demais, ou na DER se entre essas datas decorrerem mais de 30 dias (art. 43, §1º) (auditoria 03/10/2026).
+## DIB e RMI
 
-Lei 8.213/91, art. 44. A RMI integral, após a reforma, é calculada conforme art. 26 da EC 103.
+- DIB: dia seguinte à cessação do B31; sem B31, 16º dia do afastamento (empregado) ou DII (demais), ou DER se decorridos mais de 30 dias (art. 43, §1º).
+- RMI previdenciária, fato gerador desde 14/11/2019: 60% da média, mais 2% por ano de contribuição acima de 20 anos (homem) ou 15 anos (mulher) (EC 103/2019, art. 26, §2º, III, e §5º).
+- RMI acidentária (B92): 100% da média (art. 26, §3º, II). A diferença justifica investigar sempre o nexo (`ntep-nexo-acidentario`).
+- Fato gerador até 13/11/2019: 100% do salário de benefício (Lei 8.213/91, art. 44). Conversão de B31 sem retorno ao trabalho: Súmula 557 STJ.
 
-Lei 8.213/91, art. 45. Acréscimo de 25% ao valor do benefício para quem necessite de assistência permanente de outra pessoa (grande invalidez).
+## Acréscimo de 25%
 
-Lei 8.213/91, arts. 46 e 47. Regulam o retorno voluntário à atividade e as mensalidades de recuperação (cessação gradual do B32).
+Devido ao aposentado por incapacidade permanente que necessite de assistência permanente de outra pessoa, ainda que ultrapasse o teto (art. 45). O Anexo I do Decreto 3.048/99 é exemplificativo. Pedir expressamente, com laudo e, se possível, relatório social. Não se estende a outras aposentadorias (Tema 1095 STF, RE 1.221.446, que superou o Tema 982 STJ).
 
-EC 103/2019, art. 26, §2º. RMI do B32 não acidentário é de 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher).
+## Reavaliação e cessação
 
-EC 103/2019, art. 26, §3º, II. RMI da aposentadoria por incapacidade permanente acidentária (B92) é de 100% da média.
+- O aposentado pode ser convocado a reavaliação (art. 101). Isentos, se não retornaram à atividade: maiores de 60 anos, ou de 55 anos com 15 anos de benefício contados da concessão do B32 ou do B31 que o precedeu (art. 101, §1º, na redação da Lei 15.157/2025, observados os §§4º a 6º do art. 43; conferir na fonte oficial a vigência do inciso I, afetado pela MP 871/2019). A isenção não alcança o exame para o acréscimo de 25% ou a pedido do aposentado (§2º).
+- Recuperação da capacidade gera mensalidades de recuperação, com redução gradual (art. 47). O retorno voluntário à atividade cancela o benefício (art. 46).
+- Cessação sem exame específico ou sem recuperação demonstrada: restabelecimento direto em juízo (Tema 350 STF) com tutela de urgência.
 
-Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para 90 dias o limite de duração do B31 concedido por análise documental, prorrogada por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026). Não é a norma da análise documental do B32. Acionar `analise-documental-incapacidade`.
+## Estratégia
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+1. Laudo especializado com diagnóstico, evolução, prognóstico e impossibilidade de reabilitação.
+2. B31 que se prolonga com prognóstico desfavorável: pedir a conversão em B32, com DIB na data da incapacidade permanente provada.
+3. Reabilitação inviável atestada no próprio programa: conversão em B32 (art. 62, §1º).
+4. Doença preexistente: demonstrar agravamento posterior à filiação (art. 42, §2º); se o trabalho contribuiu, concausa (art. 21, I) e B92.
+5. No JEF, incapacidade parcial: Súmula 47 TNU; implantação por tutela de urgência (CPC, art. 300; Lei 10.259/2001, art. 4º).
 
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+## Fungibilidade aplicável
 
-## Requisitos cumulativos
+Acionar `base-fungibilidade-previdenciaria` (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
-Primeiro, qualidade de segurado na DII. Acionar `periodo-graca-qualidade-segurado`.
+## Hub de portarias administrativas
 
-Segundo, carência de 12 contribuições mensais, salvo isenção pelo art. 26, II, da Lei 8.213/91.
+Portarias DIRBEN/INSS 991/2022 e 992/2022: `base-portarias-dpmf-inss-hub`. A Portaria Conjunta MPS/INSS 14/2026 amplia de 30 para 90 dias a duração do B31 por análise documental (prorrogada pela Portaria Conjunta 43/2026); não regula o B32 (`analise-documental-incapacidade`).
 
-Terceiro, incapacidade total e permanente para qualquer atividade laborativa que garanta a subsistência.
+## Redação da peça
 
-Quarto, insuscetibilidade de reabilitação profissional.
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado em B31 com quadro agravado e prognóstico desfavorável. Conversão em B32 com DIB na data do agravamento comprovado por perícia. Acionar `base-incapacidade-b31-temporaria`.
-
-Segundo, segurada com neoplasia maligna avançada com metástases, incapacidade total confirmada. B32 direto, com isenção de carência pelo art. 26, II.
-
-Terceiro, segurado com acidente que cause incapacidade total e permanente. Aposentadoria acidentária (B92 na classificação do sistema, com RMI integral de 100%). Acionar `base-incapacidade-acidentaria-b92`.
-
-Quarto, segurado com grande invalidez (tetraplegia, cegueira total, demência avançada). Acréscimo de 25% do art. 45 da Lei 8.213/91.
-
-Quinto, segurado com cessação indevida de B32 após reavaliação. Impugnar por ausência de recuperação real da capacidade. Acionar `auditoria-laudo-pericial`.
-
-Sexto, segurado em reabilitação profissional com indicação de inviabilidade. Conversão em B32. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação imediata (auditoria 03/10/2026).
-
-## Regra e estratégia
-
-A regra geral é a concessão ampla do B32 quando há incapacidade total e permanente com documentação médica robusta. O INSS tenta manter o segurado em B31 para postergar a aposentadoria definitiva. Enfrentar com laudos especializados e prognóstico desfavorável.
-
-Em perícia documental, apresentar conjunto robusto de atestados, exames, relatórios de especialistas, histórico de internações e evolução da doença. Em caso de parecer de verossimilhança desfavorável, ação judicial com perícia judicial.
-
-Em reavaliação periódica (Programa Revisão de Benefícios por Incapacidade, MP 739/2016 e sucessores), impugnar cessações sem base técnica. Acionar `auditoria-laudo-pericial`.
-
-Sempre verificar caráter acidentário. Se presente, converter para aposentadoria acidentária (B92) com RMI integral. Acionar `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
-
-Sempre verificar direito ao acréscimo de 25% (grande invalidez), com avaliação da necessidade de assistência permanente. Art. 45 da Lei 8.213/91. Atenção: o STF (Tema 1095, RE 1.221.446, j. 2021) restringiu o acréscimo de 25% à aposentadoria por incapacidade permanente, superando a extensão a outros benefícios que se discutia no Tema 982 STJ.
+Seguir o bloco "Aposentadoria por incapacidade permanente" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`. Validação formal do relatório médico: `base-validacao-formal-laudo-medico-checklist-ab`. Acumulação com pensão por morte (EC 103/2019, art. 24): `base-acumulacao-beneficios-ec103-art24`. Segurado especial: `base-segurado-especial-autodeclaracao-arts-92-93-94`.
 
 ## MCPs da casa
 
@@ -77,62 +63,9 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 ## Integração com outras skills
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao converter B31 em B32, acione `base-incapacidade-b31-temporaria`.
-Ao atestar caráter acidentário, acione `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
-Ao calcular RMI, acione `base-calculo-rmi-ec103`.
-Ao auditar laudo, acione `auditoria-laudo-pericial`.
-Ao analisar perícia documental, acione `analise-documental-incapacidade`.
-Ao orientar segurado, acione `orientacao-cliente-pericia`.
-Ao verificar qualidade, acione `periodo-graca-qualidade-segurado`.
+Peça: `peticao-previdenciaria`. B31: `base-incapacidade-b31-temporaria`. Acidentário: `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`. RMI: `base-calculo-rmi-ec103`. Laudo: `auditoria-laudo-pericial`. Análise documental: `analise-documental-incapacidade`. Perícia: `orientacao-cliente-pericia` e `base-pericia-medica-federal-telepericia`. B94: `base-auxilio-acidente-b94-pos-reforma`.
 
-## Alertas
-
-Primeiro, a RMI do B32 não acidentário pós-reforma é severamente reduzida em comparação com a regra anterior de 100% da média. Segurados com poucos anos de contribuição terão RMI próxima do salário mínimo. Conversão em B92 acidentário (100%) é estratégia crítica.
-
-Segundo, o acréscimo de 25% do art. 45 deve ser pedido expressamente. O INSS não concede de ofício. Prova da necessidade de assistência permanente é fundamental.
-
-Terceiro, a cessação do B32 pelo Programa Revisão exige perícia com base técnica robusta. Cessações em massa sem exame específico são impugnáveis.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do B32 quando há prognóstico desfavorável e defende a conversão em acidentário sempre que possível.
-
-Hugo Goes, em Manual, detalha o B32 e adverte para a necessidade de avaliação da necessidade de assistência permanente.
-
-Fábio Zambitte Ibrahim, em Curso, critica a redução da RMI pós-reforma e defende o reconhecimento do caráter acidentário como estratégia de mitigação.
-
-Wladimir Novaes Martinez analisa a grande invalidez e defende interpretação ampla da assistência permanente.
-
-O IBDP sustenta institucionalmente o direito do segurado à proteção integral em caso de incapacidade permanente, com inclusão de dependentes em pensão por morte posterior.
-
-## Cruzamento com Onda 24
-
-Para validação formal de relatório médico de incapacidade permanente pelo Checklist A do escritório, com ênfase na insuscetibilidade de reabilitação, acionar `base-validacao-formal-laudo-medico-checklist-ab`.
-
-Para acumulação de B32 com pensão por morte sob EC 103/2019 art. 24, redutores progressivos e direito adquirido, acionar `base-acumulacao-beneficios-ec103-art24`.
-
-## O que NÃO está nesta skill
-
-Não está aqui o B31 temporário, objeto de `base-incapacidade-b31-temporaria`. Não estão aqui os detalhes do caráter acidentário e da RMI integral, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia médica em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`. Não está aqui a acumulação sob EC 103/2019 art. 24, objeto de `base-acumulacao-beneficios-ec103-art24`.
-
-## Redação da peça neste tema
-
-Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por incapacidade permanente" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
-
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos conferentes
 
 No B32 o que decide é a insuscetibilidade de reabilitação, e essa conclusão depende de prognóstico clínico. Despachar o médico da área com os documentos antes de fechar a tese.
 
@@ -147,10 +80,10 @@ No B32 o que decide é a insuscetibilidade de reabilitação, e essa conclusão 
 | Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
 | Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
 
-Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no prognóstico, na análise de reabilitação e no acréscimo de 25% quando houver necessidade de terceiro.
+Havendo mais de uma área nos documentos, despachar até três agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no prognóstico, na análise de reabilitação e no acréscimo de 25% quando houver necessidade de terceiro.
 
-O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+O parecer médico é instrumento interno. Orienta a peça, os quesitos e o pedido ao médico assistente, e não vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo concede a incapacidade permanente apenas quando o laudo pericial a afirma e confere a qualidade de segurado na DII fixada pelo perito. O acréscimo de 25% depende de quesito específico sobre a assistência permanente de terceiro. Quando o perito separa a DII da data da incapacidade permanente, a sentença deve ser conferida, porque o corpus traz caso em que a DIB seguiu a data mais tardia. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

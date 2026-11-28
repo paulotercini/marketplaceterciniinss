@@ -13,13 +13,13 @@ Texto integral consolidado em https://www.planalto.gov.br/ccivil_03/_Ato2019-202
 
 A ESPIN-Covid-19 foi declarada pela Portaria GM/MS 188/2020, de 03/02/2020. O encerramento formal da emergência ocorreu em 22/04/2022, conforme Portaria GM/MS 913/2022. Esses marcos delimitam a janela temporal de cobertura da Lei.
 
-## 2. Veto, derrubada e omissão regulamentar
+## 2. Veto, rejeição do veto e omissão regulamentar
 
-O Projeto de Lei foi vetado integralmente pelo Presidente da República (**Mensagem 431/2020. VET 36/2020**, DOU de 04/08/2020). O Congresso Nacional **derrubou integralmente o veto em sessão conjunta de 17/03/2021** (MSG CN 29/2021), sendo a Lei promulgada em 26/03/2021 pelo Presidente do Senado Federal por força do art. 66, §5º, CF. A norma original integral foi restaurada.
+O Projeto de Lei foi vetado integralmente pelo Presidente da República (**Mensagem 431/2020. VET 36/2020**, DOU de 04/08/2020). O Congresso Nacional **rejeitou integralmente o veto em sessão conjunta de 17/03/2021** (MSG CN 29/2021), sendo a Lei promulgada em 26/03/2021 pelo Presidente do Senado Federal por força do art. 66, §5º, CF. A norma original integral foi restaurada.
 
 A Lei segue **sem regulamentação executiva até abril de 2026**, mais de cinco anos após a publicação. Não há decreto, portaria interministerial ou instrução normativa de operacionalização. A DPU oficiou cinco ministérios (Saúde, Fazenda, Direitos Humanos, Previdência, Planejamento) e cada um alegou falta de competência. Em 13/04/2026 a DPU ajuizou ação civil pública para forçar a regulamentação.
 
-A omissão regulamentar é fato gerador de duas teses fortes para o beneficiário, autoaplicabilidade (Tema 362/TNU) e não fluência do prazo prescricional (art. 4º, Decreto 20.910/1932, ver seção 11).
+A omissão regulamentar é fato gerador de duas teses para o beneficiário: autoaplicabilidade (Tema 362/TNU) e não fluência do prazo prescricional (art. 4º, Decreto 20.910/1932, ver seção 11).
 
 ## 3. Beneficiários
 
@@ -71,7 +71,7 @@ A Lei estabelece **presunções legais robustas** que reduzem significativamente
 
 **§3º, exigência de comprovação por perito médico federal**. Esta é a única exigência da Lei que pode obstar o requerimento administrativo. Em ação judicial, é substituída pela **perícia judicial** (TRF3, TRF4, TRF5). Em casos de óbito, a perícia médica é dispensada, basta certidão de óbito com causa Covid-19 ou laudo clínico compatível.
 
-**§4º, cobertura temporal expandida**. A infecção deve ter ocorrido durante o ESPIN-Covid-19, mas a manifestação da incapacidade ou o óbito podem ser **superveniente ao fim da emergência ou anteriores à publicação da Lei**. Isso protege casos de Covid longa em que a incapacidade só se consolidou em 2023, 2024 ou 2025, e casos de óbito retroativos a 2020.
+**§4º, cobertura temporal expandida**. A infecção deve ter ocorrido durante o ESPIN-Covid-19, mas a manifestação da incapacidade ou o óbito podem ser **superveniente ao fim da emergência ou anteriores à publicação da Lei**. Isso protege casos de Covid longa em que a incapacidade apenas se consolidou em 2023, 2024 ou 2025, e casos de óbito retroativos a 2020.
 
 ## 7. Vedação de tributação e cumulação plena
 
@@ -103,7 +103,7 @@ A TNU firmou tese vinculante no microssistema dos JEFs em **06/11/2024**, sob o 
 
 Página oficial em https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/temas-representativos/tema-362.
 
-A consequência processual é direta. Processos sobrestados nas Turmas Recursais retornam para juízo de retratação. Sentenças e acórdãos divergentes podem ser alvo de pedido de uniformização (PEDILEF) com base no Tema 362, na forma do art. 14, §4º, Lei 10.259/2001.
+A consequência processual é direta. Processos sobrestados nas Turmas Recursais retornam para juízo de retratação. Sentenças e acórdãos divergentes podem ser objeto de pedido de uniformização (PEDILEF) com base no Tema 362, na forma do art. 14, §4º, Lei 10.259/2001.
 
 A vinculação formal é restrita ao microssistema dos JEFs, mas a tese vem sendo seguida pela Justiça Federal Comum e pelos TRFs por força persuasiva.
 
@@ -111,7 +111,7 @@ A vinculação formal é restrita ao microssistema dos JEFs, mas a tese vem send
 
 A pesquisa nos seis TRFs revela orientação **uniformemente pró-beneficiário**. Não há TRF com posição majoritária em sentido contrário.
 
-**TRF3** (jurisdição do escritório). 2ª Turma, Des. Wilson Zauhy (caso G. M. × União, médica falecida em 27/01/2021) (auditoria 03/10/2026), reconheceu desnecessidade de prévio requerimento administrativo e desnecessidade de perícia médica federal em ação judicial. 3ª Turma, AC 5001042-87.2023.4.03.6138 (enfermeira de UBS de Barretos/SP), confirmou condenação de R$ 160.000,00 a filha e companheiro. JF Campo Grande/MS condenou em R$ 400.850,00 viúva e dois filhos de fisioterapeuta.
+**TRF3** (jurisdição do escritório). 2ª Turma, Des. Wilson Zauhy (caso G. M. × União, médica falecida em 27/01/2021), reconheceu desnecessidade de prévio requerimento administrativo e desnecessidade de perícia médica federal em ação judicial. 3ª Turma, AC 5001042-87.2023.4.03.6138 (enfermeira de UBS de Barretos/SP), confirmou condenação de R$ 160.000,00 a filha e companheiro. JF Campo Grande/MS condenou em R$ 400.850,00 viúva e dois filhos de fisioterapeuta.
 
 **TRF1**. 12ª Turma, Desa. Ana Carolina Roman, manteve sentença de procedência em favor de companheiro e filha de técnica de enfermagem falecida.
 
@@ -121,35 +121,35 @@ A pesquisa nos seis TRFs revela orientação **uniformemente pró-beneficiário*
 
 **TRF6**. 3ª Turma, processo 1004648-56.2022.4.06.3807, j. 21/05/2025, médico falecido em Montes Claros, condenação por unanimidade.
 
-**TRF2**. Não localizado acórdão paradigmático. Ironicamente, o PEDILEF que originou o Tema 362 partiu do RJ, o acórdão da Turma Recursal era contrário e foi revertido pela TNU.
+**TRF2**. Não localizado acórdão paradigmático. O PEDILEF que originou o Tema 362 partiu do RJ; a TNU reformou o acórdão contrário da Turma Recursal.
 
 **Não há IRDR ou IAC sobre a Lei 14.128/2021 em nenhum dos seis TRFs**. Não há sobrestamento regional.
 
-## 11. Prescrição. neutralização do principal argumento da União
+## 11. Prescrição. Refutação do principal argumento da União
 
 A AGU sustenta rotineiramente prescrição quinquenal pelo **art. 1º do Decreto 20.910/1932**, contada do óbito ou da publicação da Lei (26/03/2021). Em **abril de 2026, óbitos de 2020 podem estar formalmente prescritos pela tese rigorosa** e óbitos de 2021 estão na zona crítica. Ajuizamento urgente.
 
-A defesa do beneficiário tem **cinco eixos articulados de neutralização**.
+A defesa do beneficiário tem **cinco eixos articulados de refutação**.
 
 **Eixo 1, art. 4º do Decreto 20.910/1932**. Não corre a prescrição durante a demora das repartições no estudo, reconhecimento ou pagamento da dívida. A omissão regulamentar deliberada da União, agora documentada pela ACP da DPU de 13/04/2026, enquadra-se literalmente. Argumento mais forte da defesa.
 
 **Eixo 2, actio nata subjetiva (Súmula 278/STJ; REsp 1.836.016, Inf. 736)**. Antes do julgamento da ADI 6.970 (16/08/2022), persistia incerteza objetiva sobre a constitucionalidade. Antes do Tema 362 (06/11/2024), persistia incerteza sobre a autoaplicabilidade. O termo inicial pode ser deslocado para uma dessas datas.
 
-**Eixo 3. Lei 14.010/2020 (RJET)**, art. 3º. Suspendeu prazos prescricionais entre 12/06/2020 e 30/10/2020 (141 dias). Aplicação ao Direito Público por isonomia, com respaldo recente do TST no Tema 46 (decisão de 16/03/2026).
+**Eixo 3. Lei 14.010/2020 (RJET)**, art. 3º. Suspendeu prazos prescricionais entre 12/06/2020 e 30/10/2020 (141 dias). Aplicação ao Direito Público por isonomia, [NÃO CONFIRMADO quanto ao precedente do TST citado como Tema 46, de 16/03/2026; conferir antes de citar].
 
 **Eixo 4, causas interruptivas**. Requerimento administrativo (mesmo sem regulamento, protocolizado no Ministério da Saúde, INSS ou AGU), atendimento na DPU, notificação extrajudicial. DL 4.597/1942, art. 3º, admite interrupção única, com retomada pela metade.
 
 **Eixo 5, actioni nondum natae non praescribitur**. Antes de 26/03/2021 inexistia direito subjetivo, e a contagem não pode iniciar antes da existência do direito. Após 26/03/2021, a omissão regulamentar criou óbice fático ao exercício do direito.
 
-A **Súmula 85/STJ tem aplicabilidade limitada** ao caso. A indenização é prestação única (art. 3º, I) ou múltipla calculada sobre fato instantâneo (art. 3º, II), paga em três parcelas. Não configura tecnicamente trato sucessivo. Não apostar nela como argumento principal.
+A **Súmula 85/STJ tem aplicabilidade limitada** ao caso. A indenização é prestação única (art. 3º, I) ou múltipla calculada sobre fato instantâneo (art. 3º, II), paga em três parcelas. Não configura tecnicamente trato sucessivo. Não usá-la como argumento principal.
 
-**Particularidade dos casos de incapacidade.** O termo inicial pode ser deslocado para a **data da consolidação da incapacidade permanente**, e não da data do contágio ou da Lei. Em Covid longa cuja sequela só se consolidou em 2023-2025, a janela é confortável.
+**Particularidade dos casos de incapacidade.** O termo inicial pode ser deslocado para a **data da consolidação da incapacidade permanente**, e não da data do contágio ou da Lei. Em Covid longa cuja sequela apenas se consolidou em 2023-2025, a janela é confortável.
 
 ## 12. Competência, polo passivo, foro e rito
 
 **Justiça Federal** (art. 109, I, CF). **Polo passivo exclusivo da União**, sem inclusão do INSS, a Lei é expressa nos arts. 1º, 5º e 6º quanto ao custeio pelo Tesouro Nacional. STF na ADI 6.970 reforçou que não é benefício previdenciário.
 
-**Foro territorial à escolha do autor**, domicílio, local do fato, capital da seção judiciária ou DF (art. 109, §2º, CF; STF Tema 1.277, RE 1.426.083).
+**Foro territorial à escolha do autor**, domicílio, local do fato, capital da seção judiciária ou DF (art. 109, §2º, CF) [NÃO CONFIRMADO o precedente antes citado como Tema 1.277 do STF, RE 1.426.083].
 
 **Rito**. Salário mínimo vigente desde 01/01/2026 é de **R$ 1.621,00**. Teto do JEF Cível em 2026 é de **R$ 97.260,00** (60 × R$ 1.621,00). A indenização base de R$ 50.000,00 cabe folgadamente. Para casos com parcela variável que ultrapasse o teto, duas alternativas.
 
@@ -171,7 +171,7 @@ A prova divide-se em três blocos articulados.
 
 **Bloco 3, incapacidade permanente ou óbito.** Para incapacidade, **laudo pericial judicial** determinado pelo juízo, que substitui a perícia da carreira de Perito Médico Federal exigida pelo art. 2º, §3º. **Aposentadoria por incapacidade permanente já concedida pelo INSS é prova ideal, especialmente B92 acidentário** que opera presunção de nexo com o trabalho. CNIS e HISCRE no Meu INSS demonstram histórico de afastamentos por Covid-19. Atestados de incapacidade meramente temporária têm sido rejeitados pelos TRFs. Para óbito, certidão de óbito com causa Covid-19 (CID-10 U07.1 ou U07.2), comprovação do vínculo profissional na linha de frente durante o período do contágio, escala de plantão e habilitação profissional. Os TRFs reiteradamente dispensam perícia médica em casos de óbito.
 
-## 14. Argumentos típicos da União e neutralizações
+## 14. Argumentos típicos da União e refutações
 
 A AGU repete um repertório padronizado de defesas, todas refutadas pela jurisprudência consolidada.
 
@@ -193,7 +193,7 @@ A AGU repete um repertório padronizado de defesas, todas refutadas pela jurispr
 
 ## 15. Roteiro operacional de propositura
 
-A inicial deve invocar **logo no preâmbulo a ADI 6.970/STF, o Tema 362/TNU e o precedente local do TRF correspondente**, neutralizando preliminarmente os argumentos da AGU.
+A inicial deve invocar **logo no preâmbulo a ADI 6.970/STF, o Tema 362/TNU e o precedente local do TRF correspondente**, refutando preliminarmente os argumentos da AGU.
 
 **Pedidos cumulativos.** Parcela fixa de R$ 50.000,00 do art. 3º, I (com rateio se houver múltiplos beneficiários). Parcela variável de R$ 10.000,00 multiplicada pelos anos restantes para cada dependente menor (art. 3º, II). Reembolso de despesas funerárias do art. 3º, §4º, com notas e recibos. Correção monetária pelo IPCA-E até 09/12/2021 e SELIC após. Honorários sucumbenciais conforme Tema 1.076/STJ (vedação de fixação por equidade quando o proveito econômico é definido).
 
@@ -241,7 +241,7 @@ Antes de aceitar o caso, confirmar os elementos críticos.
 
 Este é hoje **um dos terrenos mais favoráveis ao beneficiário no contencioso federal**, constitucionalidade declarada pelo STF por unanimidade, autoaplicabilidade reconhecida pela TNU em tema vinculante, jurisprudência uniforme em cinco dos seis TRFs, tributação vedada por lei e cumulatividade plena com benefícios do RGPS.
 
-A janela de oportunidade é grande, mas a **pressão prescricional é real e crescente**. Cada mês de omissão da União aproxima beneficiários do limite quinquenal pela tese rigorosa. A captação deve ser proativa e o ajuizamento ágil, com construção argumentativa pronta para neutralizar a alegação de prescrição que a AGU oporá em todas as contestações.
+A janela de oportunidade é grande, mas a **pressão prescricional é real e crescente**. Cada mês de omissão da União aproxima beneficiários do limite quinquenal pela tese rigorosa. A captação deve ser proativa e o ajuizamento ágil, com construção argumentativa pronta para refutar a alegação de prescrição que a AGU oporá em todas as contestações.
 
 **Para clientes do escritório que possam conhecer profissionais de saúde falecidos por Covid-19 ou com sequelas permanentes, a divulgação ativa do direito é estratégica**, o público-alvo majoritariamente desconhece a existência da Lei.
 

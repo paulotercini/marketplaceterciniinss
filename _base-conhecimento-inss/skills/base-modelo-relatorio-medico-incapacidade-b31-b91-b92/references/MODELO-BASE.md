@@ -1,8 +1,8 @@
 # Modelo Base. Relatório Médico para Incapacidade
 
-Onda 165, 03/10/2026. Versão curta, de meia a uma página, a pedido do titular. Serve à incapacidade temporária (B31 previdenciária e B91 acidentária) e à permanente (B32 previdenciária e B92 acidentária), pela tabela oficial de espécies do INSS.
+Versão curta, de meia a uma página. Serve à incapacidade temporária (B31 previdenciária e B91 acidentária) e à permanente (B32 previdenciária e B92 acidentária), pela tabela oficial de espécies do INSS.
 
-O relatório não cita artigo de lei. A fundamentação jurídica fica na petição, e o médico escreve só o que examinou e o que os exames mostram, porque o laudo que cita a lei parece redigido pelo advogado e perde peso na perícia. Atende aos requisitos do art. 2º da Portaria Conjunta MPS/INSS 13/2026, que são a identificação do requerente, a data de emissão, o diagnóstico por extenso ou CID e a assinatura com identificação legível do emitente.
+O relatório não cita artigo de lei. A fundamentação jurídica fica na petição, e o médico escreve apenas o que examinou e o que os exames mostram, porque o laudo que cita a lei parece redigido pelo advogado e perde peso na perícia. Atende aos requisitos do art. 2º da Portaria Conjunta MPS/INSS 13/2026, que são a identificação do requerente, a data de emissão, o diagnóstico por extenso ou CID e a assinatura com identificação legível do emitente.
 
 ---
 

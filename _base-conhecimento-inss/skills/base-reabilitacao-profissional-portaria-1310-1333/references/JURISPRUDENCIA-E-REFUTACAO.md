@@ -1,123 +1,15 @@
-# Reabilitação Profissional 1.310/2025 e 1.333/2026. Jurisprudência e Refutação
+# Reabilitação profissional no Livro X. Refutação
 
-## 1. Precedentes relevantes
+Precedentes qualificados aplicáveis: Tema 177 TNU e Súmula 47 TNU (teses literais em `base-reabilitacao-profissional`).
 
-### Lei 8.213/91, art. 62
-
-Determina o dever de habilitação ou reabilitação antes da alta. A jurisprudência do STJ é firme em exigir a conclusão do PRP antes da cessação. Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
-
-### Lei 8.213/91, art. 89
-
-Dispõe sobre o programa de reabilitação como dever multidisciplinar do INSS. Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 3.048/99, arts. 136 a 141
-
-Regulamenta o programa, a fundamentação técnica e o certificado. Fonte oficial em https://www.planalto.gov.br/ccivil_03/decreto/d3048.htm
-
-### Portaria DIRBEN/INSS 1.310/2025
-
-Disciplina o PRP, o agendamento, a justificativa, a suspensão e o encerramento.
-
-### Portaria DIRBEN/INSS 1.333/2026
-
-Atualiza pontos da 1.310/2025 e introduz reagendamento excepcional.
-
-### Tema 1124/STJ
-
-Aplica-se por analogia à exigência de novo DER. Fonte oficial em https://www.stj.jus.br
-
-### Lei 13.460/2017, arts. 5º e 6º
-
-Veda barreiras administrativas abusivas. Fonte oficial em https://www.planalto.gov.br
-
-## 2. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Falta única encerra o PRP
-
-Argumento adversário. Falta sem justificativa autoriza encerramento.
-
-Refutação. As Portarias DIRBEN 1.310/2025 e 1.333/2026 garantem prazo de 7 dias para justificativa. Encerramento prematuro sem oportunizar justificativa viola o devido processo administrativo (art. 5º LV CF) e o art. 12 das Portarias.
-
-### Argumento 2. Recusa enseja cancelamento imediato
-
-Argumento adversário. Recusa equivale a abandono e gera cancelamento.
-
-Refutação. As Portarias estabelecem suspensão de 60 dias, não cancelamento. O ato de cessação direta é nulo (art. 13 das Portarias).
-
-### Argumento 3. Reclusão cancela o PRP
-
-Argumento adversário. Reclusão extingue a reabilitação.
-
-Refutação. Os arts. 14 e 29 §2º A e B das Portarias garantem suspensão de 60 dias. O cancelamento imediato é nulo.
-
-### Argumento 4. Não necessita de RP afasta B32
-
-Argumento adversário. Conclusão de não necessidade afasta conversão em aposentadoria.
-
-Refutação. A conclusão exige fundamentação multidisciplinar do art. 89 da Lei 8.213/91. Em ato exclusivamente médico, há nulidade. Sem reabilitação, deve haver conversão em B32 (art. 62 §2º Lei 8.213/91).
-
-### Argumento 5. Cessação antes do PRP concluído
-
-Argumento adversário. Alta médica encerra o benefício mesmo sem reabilitação.
-
-Refutação. O art. 62 da Lei 8.213/91 e o STJ exigem conclusão do PRP. Cessação prematura gera limbo e configura ato ilegal.
-
-### Argumento 6. Encerramento sem certificado
-
-Argumento adversário. Encerramento dispensa certificado de reabilitação.
-
-Refutação. O art. 53 das Portarias DIRBEN exige certificado quando houver retorno ao trabalho. Sem certificado, o segurado não pode comprovar habilitação no mercado.
-
-### Argumento 7. Negativa de reagendamento
-
-Argumento adversário. Reagendamento é discricionário.
-
-Refutação. A Portaria 1.333/2026 admite reagendamento excepcional em até 30 dias. A negativa sem motivação viola a Lei 13.460/2017.
-
-### Argumento 8. Exigência de novo DER
-
-Argumento adversário. Conversão de B31 em B32 demanda novo requerimento.
-
-Refutação. O Tema 1124 STJ vedou a exigência de prévio requerimento administrativo quando o INSS já analisou a incapacidade. Conversão é dever de cooperação.
-
-### Argumento 9. Função compatível em qualquer mercado
-
-Argumento adversário. Mercado nacional autoriza alta.
-
-Refutação. A função compatível deve ser real e localizada na região do segurado. Realocação geográfica forçada viola a dignidade do trabalhador.
-
-### Argumento 10. Súmula 47/TNU não se aplica
-
-Argumento adversário. Sequela mínima afasta reabilitação.
-
-Refutação. A Súmula 47/TNU manda examinar as condições pessoais e sociais quando reconhecida a incapacidade parcial, o que impede reduzir a análise ao dado médico; o critério multidisciplinar prevalece (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a previsão de reabilitação).
-
-## 3. Cláusulas doutrinárias de apoio
-
-Sebastião Geraldo de Oliveira sustenta a obrigatoriedade da reabilitação como dever do Estado.
-
-Frederico Amado destaca que a alta sem reabilitação caracteriza abandono institucional.
-
-Hugo Goes aponta que o INSS não pode confundir alta médica com habilitação ao mercado.
-
-Marco Aurélio Serau Junior critica o uso da "não necessita de RP" como expediente para cessação.
-
-IBDP defende a conversão automática de B31 em B32 quando esgotadas as possibilidades de reabilitação.
-
-## 4. Estratégia integrada
-
-Primeiro, requerimento administrativo de continuidade do PRP com fundamentação técnica.
-
-Segundo, mandado de segurança contra encerramento abusivo, com pedido de liminar.
-
-Terceiro, recurso ao CRPS contra cessação prematura.
-
-Quarto, ação ordinária para conversão de B31 em B32.
-
-Quinto, dialeticidade nas razões finais com vinculação aos arts. 62 e 89 da Lei 8.213/91.
-
-Sexto, monitoramento das Portarias DIRBEN futuras.
-
-## 5. Diligência de atualização
-
-Acompanhar atos normativos do INSS sobre reabilitação. Revalidar Tema 1124 STJ. Monitorar súmulas TNU pertinentes.
+| Argumento do INSS | Resposta | Fundamento |
+|---|---|---|
+| Falta única encerra o PRP | A falta admite reagendamento em até 7 dias corridos, com justificativa plausível | Livro X, art. 10, §1º, e art. 12, parágrafo único |
+| Recusa autoriza cessação imediata | A recusa gera suspensão com prazo de defesa de 60 dias; o desligamento vem depois | Livro X, arts. 13 e 18, II; CF, art. 5º, LV |
+| Prisão cessa o benefício de imediato | Suspensão por até 60 dias; restabelecimento na soltura | Livro X, art. 14, §§2º a 5º |
+| "Não necessita de RP" dispensa motivação | Exige hipótese do art. 29, II, e parecer com condições pessoais, sociais e educacionais | Livro X, art. 29, §1º; Lei 9.784/99, art. 50 |
+| Conversão em aposentadoria exige novo requerimento | Preenchidos carência e incapacidade parcial e permanente, a conversão é administrativa | Livro X, art. 29, §2º-A; Lei 8.213/91, art. 42 |
+| Alta médica encerra o benefício antes do PRP | O benefício é mantido até a reabilitação ou a aposentadoria | Lei 8.213/91, art. 62, §1º |
+| Encerramento sem certificado | O retorno ao trabalho exige certificado | Lei 8.213/91, art. 92; Livro X, art. 53 |
+| Empresa ofertou função, logo cabe alta | Função incompatível não encerra o programa | Livro X, art. 39 |
+| Condições pessoais irrelevantes | Incapacidade parcial exige exame das condições pessoais e sociais | Súmula 47 TNU |

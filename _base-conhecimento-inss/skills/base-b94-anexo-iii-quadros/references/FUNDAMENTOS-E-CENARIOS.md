@@ -1,123 +1,26 @@
-# Anexo III B94. Fundamentos e Cenários
+# Anexo III B94. Cenários
 
-## 1. Conceito operacional
+Fundamento e quadros no SKILL.md. Aqui, o enquadramento de cada cenário.
 
-O Anexo III é exemplificativo. Sequelas fora do rol também ensejam B94 desde que reduzam a capacidade laborativa habitual.
+| Cenário | Enquadramento | Prova e argumento |
+|---|---|---|
+| A. Amputação parcial de dedo abaixo do grau do Quadro 5 | Fora do quadro; Tema 416 STJ, Súmula 88 TNU, art. 354, §1º, IN 128 | Função de pinça e preensão; descrição da atividade manual (ver MAIOR-ESFORCO-E-PERDA-DE-DEDO.md) |
+| B. Perda auditiva unilateral parcial pós-trauma | Quadro 2 ou, abaixo do grau, Súmula 44 STJ | Audiometria aérea com média de 500 a 3.000 Hz; exigência auditiva da função |
+| C. Sequela neurológica leve e permanente | Quadro 8, se grau sofrível; abaixo disso, redução concreta | Exame de força, eletroneuromiografia, relato funcional |
+| D. Cicatriz facial ou cervical | Quadro 4 (grau médio ou máximo) | Fotografias, laudo de cirurgia plástica; repercussão na atividade |
+| E. Joelho com limitação de flexão | Quadro 6, "g" (grau médio ou superior) ou redução concreta | Goniometria; exigência de deambulação, agachamento, escadas |
+| F. Coluna lombar com limitação | Quadro 6, "c", exige grau máximo; abaixo, demonstrar redução na atividade | Goniometria, exames de imagem, descrição de carga |
+| G. Fratura de osso longo consolidada em posição viciosa | Quadro 6, nota 2 | Radiografia, eixo, amplitude |
 
-## 2. Fundamento constitucional
+## Cenários sem direito
 
-CF/88, art. 201 §10.
+- Lesão sem sequela definitiva ou com recuperação integral: falta a consolidação com sequela (art. 86).
+- Sequela que não reduz a capacidade habitual nem exige maior esforço: Súmula 89 TNU.
+- Contribuinte individual e facultativo: excluídos (Lei 8.213/91, art. 18, §1º; Tema 201 TNU).
 
-CF/88, art. 5º caput.
+## Metodologia
 
-CF/88, art. 7º XXVIII.
-
-## 3. Fundamento legal
-
-Lei 8.213/91, art. 86.
-
-Decreto 3.048/99, Anexo III.
-
-IN 128/2022.
-
-## 4. Marco jurisprudencial central
-
-### Súmula 88 TNU
-
-Exemplificativo.
-
-### Súmula 89 TNU
-
-Sequela permanente.
-
-### Tema 416 STJ
-
-Redução parcial.
-
-### Tema 350 TNU
-
-Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Dedo parcial
-
-Súmula 88.
-
-### Cenário B. Perda auditiva parcial
-
-Funcional.
-
-### Cenário C. Neurológico leve
-
-Permanente.
-
-### Cenário D. Ofensa estética
-
-Grave.
-
-### Cenário E. Joelho com sequela
-
-Anexo III.
-
-### Cenário F. Coluna lombar
-
-Sequela.
-
-### Cenário G. Membro superior
-
-Quadros.
-
-## 6. Cenários limitados
-
-### Cenário H. Sem sequela permanente
-
-Não enquadra.
-
-### Cenário I. Sequela com cura total
-
-Sem residual.
-
-### Cenário J. Doença não acidentária
-
-Outra espécie.
-
-## 7. Metodologia
-
-Primeiro, perícia detalhada.
-
-Segundo, comparação com Anexo III.
-
-Terceiro, fundamentação Súmula 88.
-
-Quarto, prova de redução habitual.
-
-Quinto, requerimento ou recurso.
-
-Sexto, monitoramento.
-
-## 8. Riscos processuais
-
-Risco de exigência literal.
-
-Risco de exigência de incapacidade total.
-
-Risco de descarte de sequela mínima.
-
-Risco de sem CID específico.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, perícia técnica.
-
-Segundo, comparação com quadros.
-
-Terceiro, fundamentação Súmula 88 e Tema 416 STJ.
-
-Quarto, recurso ou ação.
-
-Quinto, monitoramento.
-
-## 10. Integração prática
-
-`auxilio-acidente-b94`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-sumula88-tnu`, `base-b94-nexo-acidentario-ntep`, `peticao-previdenciaria`.
+1. Identificar a atividade habitual na data do acidente.
+2. Comparar a sequela com o quadro; registrar o grau medido.
+3. Fora do quadro, construir a redução funcional concreta.
+4. Requerer administrativamente com o art. 354, §1º, da IN 128; recorrer ao CRPS ou ajuizar.

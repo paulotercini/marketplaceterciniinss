@@ -58,20 +58,22 @@ Nos casos de negligência quanto às normas padrão de segurança e higiene do t
 
 ## 3. Decreto 3.048/99 (Regulamento da Previdência Social)
 
-### Art. 337. Nexo técnico previdenciário
-Regulamenta as três espécies de nexo técnico
+### Art. 337. Caracterização técnica do acidente do trabalho
+Caput: o acidente do trabalho é caracterizado tecnicamente pela Perícia Médica Federal, pela identificação do nexo entre o trabalho e o agravo (redação do Decreto 10.491/2020).
 
-**§3º. Nexo Profissional (NP).** Considera-se estabelecido o nexo entre o trabalho e o agravo quando se verificar nexo técnico profissional ou do trabalho, assim entendida a relação entre a atividade da empresa e a entidade mórbida motivadora da incapacidade, listada na Lista A do Anexo II.
+**§3º. NTEP.** Considera-se estabelecido o nexo quando houver nexo técnico epidemiológico entre a atividade da empresa e a entidade mórbida, identificada na CID, conforme a Lista C do Anexo II (redação do Decreto 6.957/2009; a redação original de 2007 remetia à Lista B).
 
-**§4º. NTEP.** Considera-se estabelecido o nexo entre o trabalho e o agravo quando se verificar nexo técnico epidemiológico entre a atividade da empresa e a entidade mórbida motivadora da incapacidade, identificada na CID, em conformidade com a Lista B e a Lista C do Anexo II.
+**§4º.** Define agravo: lesão, doença, transtorno, distúrbio, disfunção ou síndrome, aguda, subaguda ou crônica, clínica ou subclínica, inclusive morte, independentemente do tempo de latência.
 
-**§5º. Nexo Individual (NI).** Reconhecido pela perícia médica do INSS em razão de avaliação individualizada do caso.
+**§5º.** Reconhecidos a incapacidade e o nexo na forma do §3º, são devidas as prestações acidentárias.
 
-**§7º.** A empresa poderá requerer ao INSS a não aplicação do nexo técnico epidemiológico ao caso concreto mediante apresentação de provas. O prazo é de 15 dias da data para a entrega da GFIP que registre a movimentação do trabalhador.
+**§6º.** A Perícia Médica Federal deixa de aplicar o §3º quando demonstrada a inexistência de nexo.
 
-**§8º.** O requerimento da empresa será analisado pela perícia médica do INSS.
+**§§7º a 10.** A empresa pode requerer a não aplicação do NTEP, com alegações e provas, no prazo de quinze dias da data de entrega da GFIP que registre a movimentação do trabalhador, ou da ciência da decisão pericial quando não conhecia o diagnóstico.
 
-**§9º.** Da decisão sobre o requerimento da empresa caberá recurso com efeito suspensivo, da empresa ou do segurado, ao CRPS.
+**§12.** O INSS informa o segurado sobre a contestação da empresa, para que a impugne.
+
+**§13.** Da decisão sobre o requerimento cabe recurso, com efeito suspensivo, da empresa ou do segurado, ao CRPS.
 
 ### Anexo II. Listas de correlação
 **Lista A.** Agentes Patogênicos causadores de Doenças Profissionais ou do Trabalho (art. 20, Lei 8.213/91). Correlação direta entre agente e doença. Nexo Profissional.
@@ -86,7 +88,7 @@ Regulamenta as três espécies de nexo técnico
 STF, ADI 3931, Plenário Virtual, Rel. Min. Cármen Lúcia. Proposta pela Confederação Nacional da Indústria (CNI). Julgamento concluído em abril de 2020. Improcedente por maioria.
 
 ### Dispositivos impugnados
-Art. 21-A da Lei 8.213/91 e §§3º e 5º a 13º do art. 337 do Decreto 3.048/99.
+Art. 21-A da Lei 8.213/91 e §§3º e 5º a 13 do art. 337 do Decreto 3.048/99.
 
 ### Tese da CNI (derrotada)
 A caracterização do nexo deveria decorrer de exposição individual e concreta, não de presunção estatística. O NTEP violaria os arts. 5º, XIII; 7º, XXVIII; e 201, §1º da CF.

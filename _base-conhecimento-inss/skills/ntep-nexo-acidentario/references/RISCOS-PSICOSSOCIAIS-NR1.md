@@ -10,7 +10,7 @@ Esta skill orienta a utilização dos riscos psicossociais reconhecidos no PGR (
 A Portaria MTE 1.419/2024 alterou o item 1.5.3.1.1 da NR-1 para incluir expressamente os fatores de risco psicossociais relacionados ao trabalho entre os riscos que o GRO deve abranger, ao lado dos agentes físicos, químicos, biológicos, riscos de acidentes e fatores ergonômicos. A vigência plena foi prorrogada para 26/05/2026 pela Portaria MTE 765/2025, com período educativo (fiscalização orientativa) de 26/05/2025 a 25/05/2026.
 
 ### Nexo Técnico Epidemiológico Previdenciário (NTEP)
-O Decreto 6.957/2009 atualizou a Lista B do Anexo II do Decreto 3.048/99, estabelecendo correlação entre atividades econômicas e entidades mórbidas. Transtornos mentais e comportamentais (CIDs F00-F99) estão contemplados na lista para determinadas CNAEs. Quando o CNAE do empregador está correlacionado ao CID do transtorno mental do segurado, o INSS deve aplicar automaticamente o NTEP, classificando o benefício como acidentário (B91) independentemente de CAT.
+O Decreto 6.957/2009 atualizou a Lista C do Anexo II do Decreto 3.048/99, estabelecendo correlação entre atividades econômicas e entidades mórbidas. Transtornos mentais e comportamentais (CIDs F00-F99) estão contemplados na lista para determinadas CNAEs. Quando o CNAE do empregador está correlacionado ao CID do transtorno mental do segurado, o INSS deve aplicar automaticamente o NTEP, classificando o benefício como acidentário (B91) independentemente de CAT.
 
 ### Doenças Psiquiátricas Ocupacionais
 Os principais CIDs relevantes são F32 e F33 (episódios e transtorno depressivos), F41 (transtornos ansiosos, incluindo F41.1 ansiedade generalizada), F43 (reações ao estresse grave e transtornos de adaptação, incluindo F43.1 TEPT) e QD85 na CID-11 (síndrome de burnout, classificada como fenômeno ocupacional pela OMS).
@@ -33,11 +33,11 @@ Em juízo, o argumento é direto. A empresa era obrigada a mapear riscos psicoss
 
 Quando o perito judicial conclui pela ausência de nexo causal entre o transtorno mental e o trabalho, o PGR que reconhece riscos psicossociais no ambiente é prova documental apta a impugnar o laudo. A conclusão pericial que ignora os riscos formalmente mapeados pela própria empresa é tecnicamente inconsistente.
 
-Nessa hipótese, requerer esclarecimentos periciais específicos sobre os riscos psicossociais identificados no PGR (art. 477 do CPC) e, se necessário, produção de parecer técnico contrário (art. 477, §1º, do CPC) (auditoria 03/10/2026, retirado o Tema 339/STJ e corrigido o art. 472).
+Nessa hipótese, requerer esclarecimentos periciais específicos sobre os riscos psicossociais identificados no PGR (art. 477 do CPC) e, se necessário, produção de parecer técnico contrário (art. 477, §1º, do CPC).
 
 ### 4. NTEP e Inversão do Ônus da Prova
 
-Quando o CNAE do empregador está correlacionado ao CID do transtorno mental na Lista B (Anexo II, Decreto 3.048/99), o NTEP se aplica automaticamente (art. 21-A da Lei 8.213/91). O ônus de provar que a doença não é ocupacional recai sobre a empresa. O PGR que reconhece riscos psicossociais impede a empresa de se desincumbir desse ônus, porque o próprio documento patronal confirma o risco.
+Quando o CNAE do empregador está correlacionado ao CID do transtorno mental na Lista C (Anexo II, Decreto 3.048/99), o NTEP se aplica automaticamente (art. 21-A da Lei 8.213/91). O ônus de provar que a doença não é ocupacional recai sobre a empresa. O PGR que reconhece riscos psicossociais impede a empresa de se desincumbir desse ônus, porque o próprio documento patronal confirma o risco.
 
 Se o INSS deixar de aplicar o NTEP apesar da correlação CNAE-CID, o benefício concedido como B31 (previdenciário) pode ser revisado para B91 (acidentário) na via administrativa ou judicial.
 
@@ -58,13 +58,13 @@ Entre maio/2025 e maio/2026, a fiscalização da inclusão de riscos psicossocia
 ## Regras Críticas
 
 ### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
+Dois-pontos apenas antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas.
 
 ### Honestidade Radical
-Se a documentação médica do segurado não demonstra nexo temporal entre o trabalho e o transtorno mental, declare sem rodeios. Se o CID não consta na Lista B para o CNAE do empregador, informe que o NTEP não se aplica automaticamente, mas que o nexo pode ser demonstrado por outros meios.
+Se a documentação médica do segurado não demonstra nexo temporal entre o trabalho e o transtorno mental, declare sem rodeios. Se o CID não consta na Lista C para o CNAE do empregador, informe que o NTEP não se aplica automaticamente, mas que o nexo pode ser demonstrado por outros meios.
 
 ### Verificação de Fontes
-Confirmar vigência de todos os dispositivos e CIDs citados. Nunca inventar correlações CNAE-CID. Se não houver certeza sobre a inclusão na Lista B, orientar a consulta direta ao Anexo II do Decreto 3.048/99.
+Confirmar vigência de todos os dispositivos e CIDs citados. Nunca inventar correlações CNAE-CID. Se não houver certeza sobre a inclusão na Lista C, orientar a consulta direta ao Anexo II do Decreto 3.048/99.
 
 ### Complementaridade
 Usar em conjunto com a skill auditoria-laudo-pericial (para impugnação de laudos que negam nexo) e a skill precedentes-previdenciarios (para fundamentação jurisprudencial sobre NTEP e doenças ocupacionais).

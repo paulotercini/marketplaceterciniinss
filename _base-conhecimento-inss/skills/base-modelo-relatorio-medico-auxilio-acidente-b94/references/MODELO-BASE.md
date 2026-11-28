@@ -35,7 +35,7 @@ As limitações são permanentes e irreversíveis, com tendência à manutençã
 
 **Nexo causal**
 
-O nexo causal entre as sequelas e a atividade laboral está [documentado pela CAT emitida em DD/MM/AAAA] / [reconhecido pelo NTEP automático em razão da correlação entre o CID e o CNAE da empresa, nos termos do art. 21-A da Lei 8.213/91 e da Lista B do Anexo II do Decreto 3.048/99] / [caracterizado por doença ocupacional decorrente da exposição a (agente) durante o exercício da função, nos termos do art. 20 da Lei 8.213/91] / [equiparado a acidente do trabalho nos termos do art. 21, inciso (X), da Lei 8.213/91].
+O nexo causal entre as sequelas e a atividade laboral está [documentado pela CAT emitida em DD/MM/AAAA] / [reconhecido pelo NTEP automático em razão da correlação entre o CID e o CNAE da empresa, nos termos do art. 21-A da Lei 8.213/91 e da Lista C do Anexo II do Decreto 3.048/99] / [caracterizado por doença ocupacional decorrente da exposição a (agente) durante o exercício da função, nos termos do art. 20 da Lei 8.213/91] / [equiparado a acidente do trabalho nos termos do art. 21, inciso (X), da Lei 8.213/91].
 
 **Conclusão**
 
@@ -88,4 +88,4 @@ Integração ao salário-de-benefício de aposentadoria. Art. 31 da Lei 8.213/91
 
 Anexo III do Decreto 3.048/99 é EXEMPLIFICATIVO (Súmulas 88 e 89/TNU + Tema 416/STJ).
 
-Sequela mínima admite B94 (Súmula 88/TNU e Tema 416/STJ; auditoria 03/10/2026).
+Sequela mínima admite B94 (Súmula 88 TNU e Tema 416 STJ).

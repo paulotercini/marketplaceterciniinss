@@ -13,7 +13,7 @@ Auxílio por incapacidade temporária, previdenciário (B31) ou acidentário (B9
 
 Aposentadoria por incapacidade permanente, previdenciária (B32) ou acidentária (B92).
 
-As espécies seguem a tabela oficial do INSS desde a Onda 165 (03/10/2026). O nome da pasta desta skill foi mantido para não quebrar referências.
+As espécies seguem os códigos oficiais do INSS: B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente. O nome da pasta desta skill foi mantido para não quebrar referências.
 
 A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (cabe em 1 folha) no estilo do escritório Paulo Roberto Tercini Filho, com variantes por especialidade médica.
 
@@ -21,7 +21,7 @@ A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (
 
 Narrativo em parágrafos corridos (não checklist com lacunas, salvo variante específica).
 
-Cabe em meia página, no máximo uma folha A4, e não cita artigo de lei (Onda 165).
+Cabe em meia página, no máximo uma folha A4, e não cita artigo de lei.
 
 Estrutura. Cabeçalho simples + Diagnósticos (CID-10) + Histórico clínico + Avaliação funcional/prognóstico + Local, data e assinatura.
 
@@ -94,7 +94,7 @@ Psiquiatra. Transtornos depressivos, ansiosos, somatoformes, bipolar, psicose, a
 
 Reumatologista. Fibromialgia, artrite reumatoide, lúpus, espondilite anquilosante, osteoartrose.
 
-Em FIBROMIALGIA, aplicar OBRIGATORIAMENTE o roteiro de individualização de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87). A doença raramente tem o diagnóstico negado, o que se nega é a incapacidade, e o relatório genérico entrega ao perito a conclusão de doença sem repercussão funcional. Seis eixos obrigatórios, dor por região e comportamento (com alodínia e hiperalgesia à palpação localizadas), fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto na função real, humor com nexo funcional (nunca como causa alternativa que transforme o caso em psiquiátrico transitório) e resposta terapêutica com doses, tempo e intolerâncias. Instrumento validado (FIQR ou FSQ) aplicado, datado e transcrito POR DOMÍNIO, nunca só o total. Cada eixo termina na tarefa concreta da ocupação declarada no CNIS, e a DII se ancora em marco documental.
+Em FIBROMIALGIA, aplicar OBRIGATORIAMENTE o roteiro de individualização de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`. A doença raramente tem o diagnóstico negado, o que se nega é a incapacidade, e o relatório genérico entrega ao perito a conclusão de doença sem repercussão funcional. Seis eixos obrigatórios, dor por região e comportamento (com alodínia e hiperalgesia à palpação localizadas), fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto na função real, humor com nexo funcional (nunca como causa alternativa que transforme o caso em psiquiátrico transitório) e resposta terapêutica com doses, tempo e intolerâncias. Instrumento validado (FIQR ou FSQ) aplicado, datado e transcrito POR DOMÍNIO, nunca apenas o total. Cada eixo termina na tarefa concreta da ocupação declarada no CNIS, e a DII se ancora em marco documental.
 
 Clínico Geral. Quadros multissistêmicos, comorbidades, doenças metabólicas, hipertensão, diabetes complicada.
 
@@ -108,7 +108,7 @@ Cirurgião. Pós-operatório em recuperação funcional, com repouso, restriçã
 
 Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
 
-Ver `references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68) para roteiros probatórios enxutos com. elementos clínicos que devem ser demonstrados (não apenas alegados) em ortopedia, psiquiatria, cardiologia, neurologia e cirurgia/pós-operatório. Ancoragem em exame complementar típico de cada especialidade. Texto padrão para a petição, com referência a ID de documentos. Alerta contra o vício comum de cada especialidade. Mitigação de risco processual e distinguishing.
+Ver `references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` para roteiros probatórios enxutos com. elementos clínicos que devem ser demonstrados (não apenas alegados) em ortopedia, psiquiatria, cardiologia, neurologia e cirurgia/pós-operatório. Ancoragem em exame complementar típico de cada especialidade. Texto padrão para a petição, com referência a ID de documentos. Alerta contra o vício comum de cada especialidade. Mitigação de risco processual e distinguishing.
 
 ## 6. Pontos críticos pró-segurado
 
@@ -136,7 +136,7 @@ Se houver necessidade de auxílio de terceiros, indicar para fundamentar adicion
 
 Nexo causal com o trabalho é OBRIGATÓRIO.
 
-Hipóteses. Acidente típico (art. 19). Doença profissional/ocupacional (art. 20). Equiparação acidente (art. 21). NTEP automático (art. 21-A, Lista B do Anexo II do Decreto 3.048/99).
+Hipóteses. Acidente típico (art. 19). Doença profissional/ocupacional (art. 20). Equiparação acidente (art. 21). NTEP automático (art. 21-A, Lista C do Anexo II do Decreto 3.048/99).
 
 CAT (Comunicação de Acidente do Trabalho) referenciada quando emitida.
 
@@ -184,7 +184,7 @@ Tipo de benefício (B31, B91, B32 ou B92).
 
 Eu gero o relatório personalizado em formato .docx pronto para ser entregue ao médico assistente.
 
-### Requisitos obrigatórios x facultativos no Atestmed (Onda 72)
+### Requisitos obrigatórios x facultativos no Atestmed
 
 O art. 2º da Portaria Conjunta MPS/INSS 13/2026, conferido no DOU de 24/03/2026, exige documento oficial com foto (caput) e documentação médica legível e sem rasuras contendo cinco incisos. Identificação do requerente, data de emissão, diagnóstico por extenso OU código CID (alternativos), assinatura do emitente e identificação do emitente com registro no Conselho de Classe legível.
 
@@ -228,7 +228,7 @@ Validação formal do laudo está em `base-validacao-formal-laudo-medico-checkli
 
 Consulte os arquivos `references/MODELO-BASE.md` e `references/MODELOS-POR-ESPECIALIDADE.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Antes de redigir o modelo para o médico assistente, despachar o médico da área com os documentos já existentes, porque é ele que diz o que falta demonstrar e, portanto, o que o relatório precisa conter.
 

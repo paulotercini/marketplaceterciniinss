@@ -2,7 +2,7 @@
 
 ## Origem
 
-Onda 68, incorporada em 16/07/2026. Consolidação de material de campanha da colega advogada previdenciarista Thamires Matos (@thamiresmatos.adv), post publicado em 16/07/2026 no Instagram, adaptado à postura pró-segurado do escritório e integrado à disciplina do plugin.
+Roteiros adaptados à postura pró-segurado do escritório.
 
 Objetivo. Dar ao advogado do escritório uma pauta enxuta e imediatamente utilizável para orientar o médico assistente, redigir o laudo e ancorar cada tese na petição de B31, B32, B91 e B92, com correspondência direta entre elemento clínico exigido e texto para a peça.
 
@@ -44,7 +44,7 @@ Texto padrão para a petição.
 
 Alerta de mitigação. Doenças ortopédicas degenerativas (M15-M19, M50-M54) sofrem forte resistência do INSS sob a alegação de "quadro compatível com a idade". Confrontar com jornada, esforço físico específico e histórico ocupacional documentado. Nexo com atividade laboral reforça a tese para B91 ou B92.
 
-Em artrose (M15 a M19 e M47), o elemento de imagem é o grau de Kellgren-Lawrence na radiografia datada, e os graus III e IV são reforço documental, não prova de incapacidade. A prova é a limitação em verbos com medida ligada à tarefa da ocupação do CNIS. Ao argumento "é degenerativo, é da idade", responde-se que a lei avalia a incapacidade para a atividade habitual, e a mesma gonartrose grau III incapacita o pedreiro e não incapacita quem trabalha sentado. Quando a DID é anterior à filiação, a petição cita a progressão ou o agravamento (art. 42, § 2º, e art. 59, § 1º, da Lei 8.213/1991) com o marco documental da DII. Na tese acidentária, o INSS oporá o art. 20, § 1º, "a", que exclui a doença degenerativa do conceito de doença do trabalho, e a resposta é o agravamento pelo trabalho, art. 21, I (Onda 165).
+Em artrose (M15 a M19 e M47), o elemento de imagem é o grau de Kellgren-Lawrence na radiografia datada, e os graus III e IV são reforço documental, não prova de incapacidade. A prova é a limitação em verbos com medida ligada à tarefa da ocupação do CNIS. Ao argumento "é degenerativo, é da idade", responde-se que a lei avalia a incapacidade para a atividade habitual, e a mesma gonartrose grau III incapacita o pedreiro e não incapacita quem trabalha sentado. Quando a DID é anterior à filiação, a petição cita a progressão ou o agravamento (art. 42, § 2º, e art. 59, § 1º, da Lei 8.213/1991) com o marco documental da DII. Na tese acidentária, o INSS oporá o art. 20, § 1º, "a", que exclui a doença degenerativa do conceito de doença do trabalho, e a resposta é o agravamento pelo trabalho, art. 21, I.
 
 ## 2. Psiquiatria
 

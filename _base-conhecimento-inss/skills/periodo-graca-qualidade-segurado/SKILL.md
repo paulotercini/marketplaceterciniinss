@@ -25,7 +25,7 @@ Orientação padrão. Se o segurado está desempregado e já cumpriu carência p
 
 **Art. 15, §2º**, acréscimo de 12 meses se o segurado comprova desemprego involuntário por registro em órgão próprio do Ministério do Trabalho ou da Previdência Social.
 
-**Art. 15, §4º**, qualidade de segurado se mantém até o dia 15 do segundo mês seguinte ao término dos prazos do art. 15 (vencimento da contribuição do mês posterior ao fim do período de graça), e a perda ocorre no dia 16 (auditoria 03/10/2026).
+**Art. 15, §4º**, qualidade de segurado se mantém até o dia 15 do segundo mês seguinte ao término dos prazos do art. 15 (vencimento da contribuição do mês posterior ao fim do período de graça), e a perda ocorre no dia 16.
 
 **Art. 30, §2º, da Lei 8.212/91**, quando o vencimento de contribuição cai em dia sem expediente bancário, prorroga-se para o próximo dia útil.
 
@@ -45,7 +45,7 @@ O art. 15 estabelece seis hipóteses, não cumuláveis entre si, mas cumuláveis
 
 **Inciso II**, até 12 meses após a cessação das contribuições, para o segurado que deixar de exercer atividade remunerada abrangida pela Previdência Social ou estiver suspenso ou licenciado sem remuneração.
 
-**Inciso III**, até 12 meses após cessar a segregação, para o segurado acometido de doença de segregação compulsória (auditoria 03/10/2026).
+**Inciso III**, até 12 meses após cessar a segregação, para o segurado acometido de doença de segregação compulsória.
 
 **Inciso IV**, até 12 meses após o livramento, para o segurado detido ou recluso.
 
@@ -63,7 +63,7 @@ O segurado que comprova mais de 120 contribuições mensais sem interrupção qu
 
 **TRF4, AC 5015395-67.2021.4.04.7208/SC** (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023), confirmou a tese de incorporação ao patrimônio jurídico em caso de pensão por morte, negando apelação do INSS por unanimidade. A prorrogação é exercível a qualquer tempo, sendo irrelevante a posterior perda e readquisição da qualidade.
 
-**ALERTA. Tema 1352/STJ [PENDENTE]** (Rel. Min. Paulo Sérgio Domingues, REsp 2.188.858/SP e outros, afetação em junho/2025). O STJ definirá se a prorrogação por 120 contribuições se incorpora ao patrimônio jurídico para uso ilimitado ou se é de exercício único. A 2ª Turma do STJ (REsp 1.517.010/SP) sinalizou interpretação restritiva. A suspensão alcança apenas os recursos especiais e os agravos em recurso especial (auditoria 03/10/2026). A TNU abriu Tema 338 para revisão do Tema 255 à luz dessa jurisprudência superveniente. RISCO RELEVANTE de reversão.
+**ALERTA. Tema 1352/STJ [PENDENTE].** Afetado, mérito pendente, sem tese (REsp 2.189.004, conferido no MCP superiores em 28/11/2026). Questão: definir se o direito à prorrogação do período de graça por mais de 120 contribuições sem perda da qualidade se incorpora ao patrimônio jurídico do segurado ou se é de exercício único. Não citar como julgado. Sustentar a incorporação definitiva, pois o art. 15, §1º, da Lei 8.213/91 não limita o número de usos.
 
 ### 2.2 Prorrogação por desemprego involuntário (§2º)
 
@@ -93,11 +93,11 @@ O voto condutor reconheceu que a atividade dos segurados especiais se vincula a 
 
 **Cumulatividade**, a prorrogação do Tema 348 é cumulável com o §1º (120 meses de atividade rural sem interrupção que acarrete perda da qualidade), totalizando até 36 meses de período de graça para o segurado especial.
 
-**ALERTA**, o art. 184, §10, da IN 128/2022, na redação da IN PRES/INSS 212/2026, estende a prorrogação por desemprego (§5º) a todas as categorias de segurados obrigatórios, inclusive o segurado especial (auditoria 03/10/2026). Indeferimentos baseados na inaplicabilidade do §2º ao segurado especial devem ser combatidos por recurso ao CRPS ou mandado de segurança. Consultar skill `segurado-especial-rural` para estratégia completa.
+**ALERTA**, o art. 184, §10, da IN 128/2022, na redação da IN PRES/INSS 212/2026, estende a prorrogação por desemprego (§5º) a todas as categorias de segurados obrigatórios, inclusive o segurado especial. Indeferimentos baseados na inaplicabilidade do §2º ao segurado especial devem ser combatidos por recurso ao CRPS ou mandado de segurança. Consultar skill `segurado-especial-rural` para estratégia completa.
 
 ### 2.3 Cessação antecipada da prorrogação por desemprego. IN 188/2025
 
-A IN PRES/INSS 188/2025 (DOU 10/07/2025) deu nova redação ao §8º do art. 184 da IN 128/2022 (auditoria 03/10/2026), regulamentando três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego involuntário.
+A IN PRES/INSS 188/2025 (DOU 10/07/2025) deu nova redação ao §8º do art. 184 da IN 128/2022, regulamentando três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego involuntário.
 
 **Hipótese 1**, retorno à atividade remunerada que enquadre o segurado como segurado obrigatório. A Portaria DIRBEN/INSS 1301/2025 detalha que a atividade deve gerar salário de contribuição igual ou superior ao limite mínimo mensal, protegendo quem exerce trabalhos informais de baixíssima renda.
 
@@ -113,7 +113,7 @@ A cessação é imediata no momento do evento. Contudo, o segurado inicia novo p
 
 ### 3.1 Cômputo de benefício por incapacidade intercalado. Tema 365/TNU
 
-**Tema 365/TNU** (PUIL 0500120-68.2021.4.05.8311/PE, j. 12/11/2025 (auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF)), tese firmada por maioria. Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, §1º, da Lei 8.213/91.
+**Tema 365/TNU** (PUIL 0500120-68.2021.4.05.8311/PE, j. 12/11/2025), tese firmada por maioria. Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, §1º, da Lei 8.213/91.
 
 Voto vencedor do Juiz Federal Ivanir Cesar Ireno Junior. Fundamento literal, o §1º exige "contribuições mensais" efetivamente pagas, distinguindo-se de "tempo de contribuição". A Súmula 73/TNU e o Tema 1125/STF (que admitem cômputo de auxílio-doença intercalado para carência e tempo de contribuição) são inaplicáveis porque a prorrogação do período de graça é exceção ao princípio da contributividade. Amici curiae IEPREV, IBDP e DPU.
 
@@ -139,15 +139,15 @@ Fundamento, o art. 15, I, mantém a qualidade de segurado sem limite de prazo du
 
 ### 3.4 Término do período de graça em dia não útil
 
-**PEDILEF 0002300-36.2024.4.05.8109/CE** (atribuído ao Juiz Federal Fábio de Souza Silva, dezembro/2025), a TNU anulou acórdão da TR do Ceará para que se manifeste sobre a combinação do art. 15, §4º, com o art. 30, §2º, da Lei 8.212/91. A tese é que, se o vencimento da contribuição do mês posterior ao fim do período de graça cai em dia sem expediente bancário (sábado, domingo ou feriado), prorroga-se para o próximo dia útil. Precedente ainda não verificável em fonte primária oficial, mas a fundamentação jurídica é sólida.
+Se o vencimento da contribuição do mês posterior ao fim do período de graça cair em dia sem expediente bancário, o recolhimento é efetuado no dia útil imediatamente posterior (art. 30, §2º, da Lei 8.212/91). Por consequência, a qualidade de segurado se mantém até esse dia útil (art. 15, §4º, da Lei 8.213/91). Fundamento adicional: art. 132, §1º, do Código Civil.
 
-Fundamento adicional, art. 132, §1º, do Código Civil (prorrogação de prazo que vence em feriado). Art. 3º, §2º, da Lei 12.153/2009 (prorrogação de prazo processual). Interpretação sistemática que impede prejuízo ao segurado por circunstância alheia à sua vontade.
+O PEDILEF 0002300-36.2024.4.05.8109/CE anulou acórdão da Turma Recursal do Ceará, em 17/12/2025, para que examinasse essa combinação. Não fixou tese.
 
-**Aplicação prática**, em casos limítrofes em que o óbito ou a DII ocorra poucos dias após o fim teórico do período de graça, verificar se o término recaiu em dia não útil e invocar a prorrogação automática.
+**Aplicação prática**, em casos limítrofes em que o óbito ou a DII ocorra poucos dias após o fim teórico do período de graça, verificar se o vencimento recaiu em dia não útil.
 
 ### 3.5 Limbo previdenciário. Tema 1421/STF [PENDENTE]
 
-**Tema 1421/STF** (Rel. Min. Gilmar Mendes, RE 1.460.766, repercussão geral reconhecida por unanimidade), aborda o "limbo previdenciário" e a definição do início do período de graça quando o empregador impede o retorno ao trabalho após alta do INSS. Afeta estimados 2,5 milhões de beneficiários/ano de auxílio por incapacidade temporária. Sem data para julgamento do mérito. Tema 301/TNU (sobrestado) trata da mesma matéria.
+**Tema 1421/STF** (Rel. Min. Gilmar Mendes, RE 1.460.766, repercussão geral reconhecida por unanimidade), aborda o "limbo previdenciário" e a definição do início do período de graça quando o empregador impede o retorno ao trabalho após alta do INSS. Mérito não julgado. O Tema 300 TNU fixa a manutenção da qualidade de segurado no limbo; ver `base-limbo-previdenciario-tema300`.
 
 ## 4. CONTRIBUIÇÕES MÍNIMAS PARA REINGRESSO APÓS PERDA DA QUALIDADE
 
@@ -167,17 +167,17 @@ A carência de reingresso (art. 27-A da Lei 8.213/91) varia conforme a norma vig
 
 **18/01/2019 a 17/06/2019** (MP 871/2019), carência integral. Auxílio-reclusão passa a exigir 24 contribuições.
 
-**18/06/2019 em diante** (Lei 13.846/2019). 1/2 da carência. Auxílio-incapacidade exige 6. Salário-maternidade exigia 5, regra superada conforme o parágrafo seguinte (auditoria 03/10/2026). Auxílio-reclusão exige 12.
+**18/06/2019 em diante** (Lei 13.846/2019). 1/2 da carência. Auxílio-incapacidade exige 6. Salário-maternidade exigia 5, regra superada conforme o parágrafo seguinte. Auxílio-reclusão exige 12.
 
-**Salário-maternidade.** Não exige mais carência (ADI 2.110/STF, julgada em 21/03/2024), o que torna irrelevante a questão do reingresso para este benefício. O registro do portal do STF não mostra modulação para a carência [NÃO CONFIRMADO quanto à ausência de modulação, inteiro teor não lido], e 05/04/2024, data da ata, é o corte da irrepetibilidade na revisão da vida toda, não marco desta regra (auditoria 03/10/2026). O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) confirma a inexigibilidade e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
+**Salário-maternidade.** O STF declarou inconstitucional a exigência de carência do salário-maternidade (ADI 2.110, julgada em 21/03/2024), o que torna irrelevante a questão do reingresso para este benefício. O Enunciado 19 do CRPS (Resolução CRPS 13/2026) confirma a inexigibilidade e mantém a prova da qualidade de segurada.
 
 ## 5. §4º DO ART. 15. EXTENSÃO ATÉ O VENCIMENTO DA CONTRIBUIÇÃO SEGUINTE
 
 A qualidade de segurado não termina no último dia do prazo dos incisos I a VI. Ela se mantém até a data do vencimento da contribuição do segurado referente ao mês imediatamente posterior ao fim dos prazos fixados no art. 15.
 
-**Na prática**, se o período de graça termina em março/2024, o mês imediatamente posterior é abril/2024, cuja contribuição vence em 15/05/2024 (art. 30, II, da Lei 8.212/91). A qualidade se mantém até 15/05/2024 e a perda ocorre em 16/05/2024. Vale o vencimento do contribuinte individual para todas as categorias, inclusive o empregado (art. 14 do Decreto 3.048/99) (auditoria 03/10/2026).
+**Na prática**, se o período de graça termina em março/2024, o mês imediatamente posterior é abril/2024, cuja contribuição vence em 15/05/2024 (art. 30, II, da Lei 8.212/91). A qualidade se mantém até 15/05/2024 e a perda ocorre em 16/05/2024. Vale o vencimento do contribuinte individual para todas as categorias, inclusive o empregado (art. 14 do Decreto 3.048/99).
 
-**IMPORTANTE**, se o dia 15, data do vencimento, cai em sábado, domingo ou feriado (auditoria 03/10/2026), a prorrogação para o próximo dia útil decorre do art. 15, §4º, da Lei 8.213/91 c/c o art. 30, §2º, I, da Lei 8.212/91. O PEDILEF 0002300-36 (seção 3.4 acima) só anulou o acórdão e devolveu o caso à Turma Recursal em 17/12/2025, sem fixar tese (auditoria 03/10/2026).
+**IMPORTANTE**, se o dia 15 cair em dia sem expediente bancário, aplica-se a seção 3.4.
 
 ## 6. INTEGRAÇÕES COM O ECOSSISTEMA DE SKILLS
 
@@ -213,7 +213,7 @@ Ao analisar caso que envolva qualidade de segurado, verificar sequencialmente.
 
 **7.3** Comprovação de desemprego involuntário. Instruir com pelo menos um elemento além da CTPS/CNIS em branco (Tema 1360/STJ). Prova testemunhal isolada é suficiente (Súmula 27, PEDILEF 0015774-47). Contribuinte individual pode invocar prorrogação (Tema 239). Segurado especial tem direito à prorrogação por inatividade involuntária (Tema 348/TNU, transitado 17/06/2025).
 
-**7.4** Aplicar §4º. Verificar se o vencimento da contribuição do mês seguinte ao fim do período de graça cai em dia não útil (art. 30, §2º, I, da Lei 8.212/91; o PEDILEF 0002300-36 só anulou e devolveu o caso, sem fixar tese, auditoria 03/10/2026).
+**7.4** Aplicar §4º. Verificar se o vencimento da contribuição do mês seguinte ao fim do período de graça cai em dia não útil (art. 30, §2º, da Lei 8.212/91; seção 3.4).
 
 **7.5** Se o segurado fruiu benefício irregular de boa-fé, invocar Tema 245/TNU para manter qualidade durante todo o período de fruição.
 
@@ -221,7 +221,7 @@ Ao analisar caso que envolva qualidade de segurado, verificar sequencialmente.
 
 **7.7** Se a IN 188/2025 cessou antecipadamente a prorrogação por desemprego, verificar se o segurado iniciou novo período de graça pelo art. 15, II, e se completou carência suficiente.
 
-## IN 212/2026, prorrogações para TODAS as categorias (Onda 115)
+## IN 212/2026, prorrogações para TODAS as categorias
 
 O art. 184, § 10, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026), dispõe que "o disposto nos §§ 4º e 5º aplica-se para todas as categorias de segurados obrigatórios".
 
@@ -235,6 +235,6 @@ CONFRONTO OBRIGATÓRIO. O § 5º da IN continua exigindo registro no SINE ou seg
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
-O juízo conta uma a uma as contribuições sem perda da qualidade de segurado ("apenas 118 recolhimentos"), não computa o benefício intercalado para as 120 (Tema 365/TNU [NÃO CONFIRMADO], adverso) e exige do contribuinte individual prova positiva da cessação involuntária da atividade (Tema 239/TNU [NÃO CONFIRMADO]). CadÚnico e auxílio emergencial não bastaram. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+O juízo conta uma a uma as contribuições sem perda da qualidade de segurado ("apenas 118 recolhimentos"), não computa o benefício intercalado para as 120 (Tema 365 TNU, adverso) e exige do contribuinte individual prova positiva da cessação involuntária da atividade (Tema 239 TNU). CadÚnico e auxílio emergencial não bastaram. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

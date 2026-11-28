@@ -33,11 +33,11 @@ Estes pontos são onde a maioria dos relatórios falha. Verifique todos antes de
 
 **DII ancorada no histórico.** A data de início da incapacidade ou da deficiência se fixa pelo documento mais antigo e pela evolução, nunca pela data de emissão do relatório. Aponte a data e a prova que a sustenta.
 
-**Limitação amarrada à profissão real.** O impacto funcional só convence quando ligado à atividade habitual concreta do segurado. Se a profissão não constar nos documentos, NÃO invente. Deixe campo marcado como `[profissão da segurada]` e avise o usuário que precisa preencher.
+**Limitação amarrada à profissão real.** O impacto funcional apenas convence quando ligado à atividade habitual concreta do segurado. Se a profissão não constar nos documentos, NÃO invente. Deixe campo marcado como `[profissão da segurada]` e avise o usuário que precisa preencher.
 
 **Respeitar o escopo do médico.** Cada médico atesta o que é da sua especialidade. Reumatologista não diagnostica transtorno mental. O relatório do especialista pode referir comorbidade de outra área como contexto, mas não pode atestar diagnóstico fora do seu campo. Não force.
 
-**Alertar quando faltar laudo de especialista.** Se houver componente psíquico documentado só por psicólogo, avise que CID lançado por psicólogo tem peso probatório fraco e que relatório de psiquiatra fortalece o caso. O mesmo vale para qualquer comorbidade relevante sem laudo do especialista próprio.
+**Alertar quando faltar laudo de especialista.** Se houver componente psíquico documentado apenas por psicólogo, avise que CID lançado por psicólogo tem peso probatório fraco e que relatório de psiquiatra fortalece o caso. O mesmo vale para qualquer comorbidade relevante sem laudo do especialista próprio.
 
 **Não classificar grau de deficiência nem decidir a perícia.** O relatório descreve achados e limitações. A graduação (IF-BrA, grau leve, moderado, grave) é da perícia do INSS. Não asserte classificação no documento.
 
@@ -65,9 +65,9 @@ Esta skill guarda o método, nunca o caso concreto. Não registre nomes de clien
 
 ## Extensão
 
-Teto de o relatório para o médico assistente, 1 folha, no modelo já em uso pelo escritório. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto de o relatório para o médico assistente, 1 folha, no modelo já em uso pelo escritório. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Antes de gerar o modelo, despachar o médico da área com os documentos já existentes, porque é ele que identifica a lacuna que o novo relatório precisa fechar.
 

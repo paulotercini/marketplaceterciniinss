@@ -39,13 +39,13 @@ Passo 4. Redigir o documento .docx seguindo o padrão do escritório (Bookman Ol
 
 Passo 5. Revisar o documento quanto à aderência à realidade do caso, linguagem acessível ao cliente e completude dos pontos críticos da referência aplicável.
 
-## Regra de escopo (Onda 94). SOMENTE o ato pericial
+## Regra de escopo. SOMENTE o ato pericial
 
 O documento trata EXCLUSIVAMENTE do ato pericial. NÃO incluir logística nem etiqueta, nada de como se vestir, horário de chegada, descanso na véspera, dados de endereço e sala, duração média ou tom de voz. Essas informações o advogado passa pessoalmente ao cliente. Cada linha do documento existe para uma única finalidade, o cliente entender o que será avaliado e saber demonstrar, com a verdade, o requisito jurídico do benefício.
 
 O documento é CURTO, uma página, no máximo uma e meia. Autoexplicativo, o cliente estuda sozinho e entende sem ajuda. Linguagem simples de ponta a ponta, frases curtas, palavras do cotidiano, exemplos da vida e da profissão REAL do cliente.
 
-## Estrutura padrão do documento de orientação (Onda 94)
+## Estrutura padrão do documento de orientação
 
 Toda orientação segue a estrutura enxuta abaixo. É o espelho do `estudo-pre-pericia` traduzido para a linguagem do cliente, as duas peças saem do mesmo levantamento.
 
@@ -86,7 +86,7 @@ Advertir expressamente contra simulação, exagero e minimização. Simulação 
 Em todas as orientações, incluir uma frase-chave que o cliente deve memorizar. A frase sintetiza o conceito do benefício em linguagem comum. Exemplo para B94. Consigo trabalhar, mas demoro mais, me canso mais, preciso de mais cuidado com segurança e não tenho mais a mesma destreza. Cada referência traz frases-chave específicas.
 
 ### Contato após a perícia
-A instrução de contato imediato após a perícia (relatar tudo antes de sair do local, base da eventual impugnação ao laudo) é dada VERBALMENTE pelo advogado na reunião de preparação. Não entra no documento (regra de escopo da Onda 94).
+A instrução de contato imediato após a perícia (relatar tudo antes de sair do local, base da eventual impugnação ao laudo) é dada VERBALMENTE pelo advogado na reunião de preparação. Não entra no documento (regra de escopo).
 
 ### Adequação à capacidade cognitiva e cultural do cliente
 Cliente com baixa escolaridade ou dificuldade de leitura precisa de versão simplificada, com fontes maiores e frases ainda mais curtas. Quando for o caso, oferecer ao advogado leitura assistida da orientação com o cliente antes da perícia.
@@ -106,10 +106,10 @@ Gerar em .docx usando docx-js. Padrão de formatação é o seguinte.
 
 ## Verificação final antes de entregar
 
-1. O documento trata SOMENTE do ato pericial, sem logística, etiqueta ou dados de endereço (regra de escopo da Onda 94)?
+1. O documento trata SOMENTE do ato pericial, sem logística, etiqueta ou dados de endereço (regra de escopo)?
 2. A espécie correta do benefício foi identificada e a referência correta foi usada?
 3. A orientação está personalizada à profissão e ao histórico clínico do cliente (não sobrevive à troca do nome)?
-4. O PONTO MAIS IMPORTANTE abre o documento em destaque, é UM só e traz a frase-chave memorizável do conceito jurídico do benefício?
+4. O PONTO MAIS IMPORTANTE abre o documento em destaque, é UM apenas e traz a frase-chave memorizável do conceito jurídico do benefício?
 5. As armadilhas específicas da espécie estão na lista do que não fazer?
 6. O documento cabe em uma página, no máximo uma e meia, e é autoexplicativo em linguagem simples?
 7. Em caso de Teleperícia, análise documental ou avaliação biopsicossocial por dois profissionais, as peculiaridades estão descritas?
@@ -137,11 +137,11 @@ Esta skill se integra com as seguintes skills do escritório.
 - `analise-bpc-loas` em casos de BPC/LOAS
 - `auxilio-acidente-b94` em casos de B94
 
-## Estudo pré-perícia do advogado (Onda 92)
+## Estudo pré-perícia do advogado
 
 Antes do documento entregável desta skill, o advogado conduz reunião de preparação com o cliente. O roteiro INTERNO dessa reunião é gerado pela skill `estudo-pre-pericia`, em tópicos curtos para leitura em voz alta, com o ponto decisivo da perícia do caso concreto. As duas peças convivem, o estudo guia a reunião e não é entregue ao cliente, esta orientação fica com o cliente depois dela. Os references desta skill servem de fonte de conteúdo ao estudo, sem duplicação.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Para orientar o cliente com precisão, é preciso saber o que a perícia daquela área vai examinar. Despachar o médico da área com os documentos, e traduzir o que ele apontar em linguagem de cliente.
 

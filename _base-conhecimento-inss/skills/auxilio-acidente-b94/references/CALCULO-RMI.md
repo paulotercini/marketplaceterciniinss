@@ -1,4 +1,4 @@
-# Cálculo da RMI do Auxílio-Acidente. Erro Sistemático do INSS
+# Cálculo da RMI do auxílio-acidente
 
 ## 1. Regra Legal
 
@@ -6,11 +6,11 @@
 
 **Art. 104, §1º, Decreto 3.048/99**, o auxílio-acidente corresponderá a 50% do salário de benefício que deu origem ao auxílio-doença do segurado, corrigido até o mês anterior ao do início do auxílio-acidente.
 
-O **salário de benefício** é calculado pela média aritmética simples dos maiores salários-de-contribuição correspondentes a 80% de todo o período contributivo desde julho de 1994 (art. 3º da Lei 9.876/1999 c/c art. 29, II, da Lei 8.213/91). Essa regra vale para fato gerador até 13/11/2019. Depois da EC 103/2019, o salário de benefício é a média de 100% dos salários-de-contribuição desde julho de 1994 (art. 26 da EC 103/2019), e o B94 corresponde a 50% dessa média (auditoria 03/10/2026).
+O **salário de benefício** é calculado pela média aritmética simples dos maiores salários-de-contribuição correspondentes a 80% de todo o período contributivo desde julho de 1994 (art. 3º da Lei 9.876/1999 c/c art. 29, II, da Lei 8.213/91). Essa regra vale para fato gerador até 13/11/2019. Depois da EC 103/2019, o salário de benefício é a média de 100% dos salários-de-contribuição desde julho de 1994 (art. 26 da EC 103/2019), e o B94 corresponde a 50% dessa média.
 
-## 2. Erro do INSS
+## 2. Divergência de cálculo
 
-O INSS vem aplicando o **art. 233, inciso X, da IN PRES/INSS 128/2022**, que prevê 50% do salário de benefício que **serviu de base para o cálculo da renda mensal do auxílio incapacidade temporária**. Na prática operacional, o INSS calcula a RMI do B94 como 50% da **renda mensal** do auxílio-doença anterior, e não 50% do salário de benefício.
+O INSS aplica o **art. 233, inciso X, da IN PRES/INSS 128/2022**, que prevê 50% do salário de benefício que **serviu de base para o cálculo da renda mensal do auxílio incapacidade temporária**. Na prática operacional, o INSS calcula a RMI do B94 como 50% da **renda mensal** do auxílio-doença anterior, e não 50% do salário de benefício.
 
 **Salário de benefício e renda mensal são conceitos distintos.** A renda mensal do auxílio-doença já sofre a aplicação de coeficiente (91% do salário de benefício, conforme regras vigentes). Aplicar os 50% sobre a renda mensal resulta em valor inferior ao legal.
 
@@ -29,7 +29,7 @@ O juízo de origem, em cumprimento de sentença, rejeitou a manifestação do ex
 1. A decisão de origem adotou a planilha do INSS, que fixou a RMI do B94 com base no art. 233, X, da IN 128/2022 (50% do salário de benefício que serviu de base para o cálculo da RMI do auxílio-doença)
 2. A IN 128/2022, sendo norma infralegal, não pode prevalecer sobre a legislação federal
 3. Os arts. 86, §1º, da Lei 8.213/91 e 104, §1º, do Decreto 3.048/99 estabelecem que o B94 corresponde a 50% do **salário de benefício** que deu origem ao auxílio-doença
-4. O salário de benefício deve ser calculado pela média aritmética simples dos maiores salários-de-contribuição correspondentes a 80% de todo o período contributivo desde julho de 1994 (regra do art. 29, II, para fato gerador até 13/11/2019; depois, média de 100% pelo art. 26 da EC 103/2019) (auditoria 03/10/2026)
+4. O salário de benefício deve ser calculado pela média aritmética simples dos maiores salários-de-contribuição correspondentes a 80% de todo o período contributivo desde julho de 1994 (regra do art. 29, II, para fato gerador até 13/11/2019; depois, média de 100% pelo art. 26 da EC 103/2019)
 5. O entendimento de que os 50% devem incidir sobre a renda mensal do auxílio-doença é equivocado, pois a lei condiciona o cálculo ao salário de benefício, não à renda mensal do benefício anterior
 6. O cálculo apresentado pelo agravante, com SB apurado em R$ 1.181,37, está em consonância com o critério legal
 
@@ -44,34 +44,13 @@ TRF4, AG 5034174-92.2023.4.04.0000, 10ª Turma, Rel. Cláudia Cristina Cristofan
 A diferença entre calcular 50% do salário de benefício e 50% da renda mensal do auxílio-doença pode ser significativa, especialmente quando:
 - O segurado tem salários-de-contribuição elevados no PBC
 - O coeficiente do auxílio-doença (91% ou outro, conforme regra temporal) reduz substancialmente a renda mensal em relação ao salário de benefício
-- O caso envolve integração do B94 no salário-de-contribuição para aposentadoria futura (art. 31), onde cada centavo a mais no B94 impacta multiplicativamente a RMI da aposentadoria
+- O B94 integrará o salário de contribuição da aposentadoria futura (art. 31), o que reflete a diferença na RMI da aposentadoria
 
-## 5. Integração do B94 na Aposentadoria (Art. 31)
+## 5. Integração na aposentadoria e cumulação
 
-**Art. 31, Lei 8.213/91**, o valor mensal do auxílio-acidente integra o salário-de-contribuição, para fins de cálculo do salário-de-benefício de qualquer aposentadoria.
+Integração ao salário de benefício da aposentadoria (art. 31; Decreto 3.048/99, art. 32, §8º; Tema 322 TNU) em `base-b94-integracao-salario-beneficio-art31`. Cumulação e cessação (Súmula 507 STJ; Tema 555 STJ) em `base-b94-cessacao-acumulacao-vedacao`. B94 reconhecido tardiamente: a prescrição alcança as parcelas, e os meses reconhecidos integram o cálculo da aposentadoria.
 
-Isso significa que, mês a mês, o valor do B94 é somado ao salário do segurado para compor a base de cálculo da aposentadoria futura. Quando o INSS não considera o B94 no cálculo da aposentadoria, existe direito à revisão.
-
-**Tema 322/TNU**, o B94 pode incrementar inclusive a aposentadoria por idade rural do segurado especial, mesmo sem contribuição facultativa.
-
-## 6. B94 Reconhecido Tardiamente
-
-Cenário recorrente, o segurado obtém judicialmente o B94 anos depois, com parte do período prescrita. O valor do B94 no período reconhecido como devido integra o cálculo da aposentadoria, mesmo que os atrasados estejam prescritos.
-
-**A prescrição limita o pagamento de parcelas atrasadas, não extingue o direito.** O reconhecimento do período como devido sustenta o impacto no cálculo da RMI da aposentadoria e a possível revisão.
-
-**Art. 86, §2º.** DIB do B94 no dia seguinte à cessação do auxílio-doença.
-**Tema 862/STJ (repetitivo)**, trata do TERMO INICIAL do B94, dia seguinte à cessação do B31, com prescrição quinquenal da Súmula 85/STJ. Define desde quando existem valores a integrar, e não a integração em si, cujo fundamento é o art. 31 da Lei 8.213/91.
-
-## 7. Vedação de Cumulação com Aposentadoria
-
-**Súmula 507/STJ**, a acumulação de auxílio-acidente com aposentadoria pressupõe que a lesão incapacitante e a aposentadoria sejam anteriores à alteração do art. 86, §2º, da Lei 8.213/91, ocorrida em 11/11/1997 (Lei 9.528/97).
-
-**Tema 555/STJ**, impossibilidade de recebimento conjunto de B94 e aposentadoria quando a lesão incapacitante ou a aposentadoria for posterior a 11/11/1997, pois a acumulação exige que ambas sejam anteriores ao marco (auditoria 03/10/2026).
-
-Na prática, a vedação de cumulação não prejudica a integração do B94 ao salário-de-contribuição (art. 31). O B94 cessa com a aposentadoria, mas seu valor já foi incorporado nos salários-de-contribuição do período em que foi recebido.
-
-## 8. Estratégia de Impugnação em Cumprimento de Sentença
+## 6. Estratégia de Impugnação em Cumprimento de Sentença
 
 Quando o INSS apresentar planilha de cálculo aplicando 50% sobre a RMI do auxílio-doença anterior, impugnar com os seguintes fundamentos:
 
@@ -79,4 +58,4 @@ Quando o INSS apresentar planilha de cálculo aplicando 50% sobre a RMI do auxí
 2. Art. 104, §1º, Decreto 3.048/99, corrobora a base legal
 3. Art. 233, X, IN 128/2022, norma infralegal que não pode prevalecer sobre lei
 4. Precedente TRF4 (AI 5029923-60.2025.4.04.0000/RS), tese expressa sobre a prevalência da lei
-5. Apresentar cálculo alternativo com SB apurado conforme art. 29, II, Lei 8.213/91, se o fato gerador for até 13/11/2019, ou conforme art. 26 da EC 103/2019, se posterior (auditoria 03/10/2026)
+5. Apresentar cálculo alternativo com SB apurado conforme art. 29, II, Lei 8.213/91, se o fato gerador for até 13/11/2019, ou conforme art. 26 da EC 103/2019, se posterior

@@ -1,10 +1,8 @@
 # Anexo III do Decreto 3.048/99. Nove Quadros de Situações
 
-## Natureza Jurídica do Rol
+## Natureza jurídica do rol
 
-O art. 104 do Decreto 3.048/99 utiliza a expressão "situações que dão direito ao auxílio-acidente". A jurisprudência é consolidada no sentido de que esse rol é **exemplificativo, não taxativo**. O fundamento é o art. 86 da Lei 8.213/91, que não restringe o B94 às hipóteses do Anexo III, mas a qualquer sequela que implique redução da capacidade para o trabalho habitual.
-
-A prática pericial do INSS, contudo, frequentemente aplica o Anexo III como taxativo, indeferindo requerimentos quando a sequela não se enquadra literalmente nos quadros. Peritos judiciais por vezes cometem o mesmo erro.
+O rol é exemplificativo: Lei 8.213/91, art. 86 (não remete a rol); Decreto 3.048/99, art. 104, caput, na redação do Decreto 10.410/2020 ("a exemplo das situações discriminadas no Anexo III"); IN 128/2022, art. 354, §1º, incluído pela IN PRES/INSS 212/2026 ("rol meramente exemplificativo"); Tema 416 STJ. Fundamentação completa em `base-b94-anexo-iii-quadros`.
 
 ## Quadro 1. Aparelho Visual
 
@@ -34,7 +32,7 @@ Situações:
 - Redução em grau máximo. 71 a 90 dB
 - Perda de audição, mais de 90 dB
 
-**Observação para a skill deficiencia-auditiva-previdenciaria**, quando a perda auditiva configurar deficiência nos termos da Lei 14.768/2023 ou do Decreto 5.296/2004, verificar também o cabimento de aposentadoria por deficiência (LC 142/2013) ou BPC/LOAS, cumulativamente ou alternativamente ao B94.
+**Remissão a `deficiencia-auditiva-previdenciaria`.** Quando a perda auditiva configurar deficiência nos termos da Lei 14.768/2023 ou do Decreto 5.296/2004, verificar também o cabimento de aposentadoria por deficiência (LC 142/2013) ou BPC/LOAS, cumulativamente ou alternativamente ao B94.
 
 ## Quadro 3. Aparelho da Fonação
 
@@ -117,8 +115,8 @@ Situações:
 
 Quando a sequela do segurado se enquadra em algum dos quadros, o enquadramento deve ser expressamente demonstrado na petição, com remissão ao quadro específico e à documentação médica comprobatória.
 
-Quando a sequela NÃO se enquadra literalmente nos quadros, o advogado deve:
-1. Fundamentar o caráter exemplificativo do Anexo III
+Quando a sequela não se enquadra literalmente nos quadros:
+1. Fundamentar o caráter exemplificativo do Anexo III (art. 104, caput, do Decreto 3.048/99; art. 354, §1º, da IN 128/2022)
 2. Demonstrar a redução funcional com base no art. 86 da Lei 8.213/91
 3. Aplicar o Tema 416/STJ (grau da lesão irrelevante)
 4. Contextualizar a sequela à atividade habitual concreta

@@ -6,9 +6,9 @@ Para aposentadoria da pessoa com deficiência ou benefício assistencial. Foco n
 
 Aqui não basta dizer que a pessoa não pode trabalhar. Importa demonstrar barreira de longa duração que, em interação com fatores sociais e ambientais, restringe a participação plena. A avaliação do INSS é biopsicossocial. O relatório precisa alimentar os domínios funcionais.
 
-O tempo de impedimento deve ser superior a 2 anos, conforme art. 2º da Lei 13.146/2015.
+No BPC, o impedimento de longo prazo produz efeitos pelo prazo mínimo de 2 anos (art. 20, §10, da Lei 8.742/93; Tema 173 TNU). O conceito de pessoa com deficiência está no art. 2º da Lei 13.146/2015.
 
-A Lei 15.176/2025 trata especificamente de fibromialgia. Cite-a apenas quando a fibromialgia integrar o diagnóstico do caso. Em relatório sem fibromialgia, não invoque essa lei. Confirme a vigência e o alcance dela em fonte oficial antes de citar, e só use se apoiar o caso.
+A Lei 15.176/2025 trata especificamente de fibromialgia. Cite-a apenas quando a fibromialgia integrar o diagnóstico do caso. Em relatório sem fibromialgia, não invoque essa lei. Confirme a vigência e o alcance dela em fonte oficial antes de citar, e use-a apenas se apoiar o caso.
 
 ## Estrutura do relatório
 
@@ -42,8 +42,8 @@ Avaliação funcional e prognóstico   (negrito)
 [Cronicidade, sem cura, prognóstico desfavorável, tendência à persistência.]
 
 Impedimento de longo prazo   (negrito)
-Tempo de impedimento: Superior a 2 anos ininterruptos, desde [data], conforme
-art. 2º da Lei 13.146/2015. [Acrescentar c/c Lei 15.176/2025 SOMENTE se houver fibromialgia.]
+Tempo de impedimento: no mínimo 2 anos, desde [data], conforme
+art. 20, §10, da Lei 8.742/93. [Acrescentar c/c Lei 15.176/2025 SOMENTE se houver fibromialgia.]
 Natureza do impedimento: [físico / mental / sensorial / intelectual], por [causa].
 
 Local, data.
@@ -53,10 +53,10 @@ _______________________________
 
 ## Cuidados específicos
 
-Os domínios funcionais são o coração da peça. Cada um deve trazer impacto concreto, não frase genérica.
+Os domínios funcionais são o núcleo do relatório. Cada um deve trazer impacto concreto, não frase genérica.
 
 Não classifique grau de deficiência. A graduação pelo IF-BrA é da perícia.
 
-Se o impedimento mal supera os 2 anos, ancore na verdade documental e não infle a duração. Honestidade na data é mais segura que data inflada que o perito derruba.
+Se o impedimento mal supera os 2 anos, ancore na verdade documental e não infle a duração. A data fiel ao documento resiste melhor à perícia que a data inflada.
 
 Se o usuário enviou um modelo próprio para seguir, espelhe a estrutura dele e ignore este esqueleto. Troque toda a parte clínica do modelo pelos dados reais do caso, sem carregar comorbidades ou exames que pertenciam a outro paciente.

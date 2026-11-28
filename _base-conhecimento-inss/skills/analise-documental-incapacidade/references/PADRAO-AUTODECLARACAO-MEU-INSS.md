@@ -1,12 +1,12 @@
 # Padrão Validado de Autodeclaração no Meu INSS
 
-Onda 103 (30/07/2026). Padrão de redação dos quatro campos do requerimento, extraído de preenchimento real do escritório aprovado pelo advogado. Prevalece sobre a extensão indicada no Template operacional da SKILL.md, que passa a valer como TETO, não como meta.
+Padrão de redação dos quatro campos do requerimento, extraído de preenchimento real do escritório aprovado pelo advogado. Prevalece sobre a extensão indicada no Template operacional da SKILL.md, que passa a valer como TETO, não como meta.
 
 ## O padrão em uma frase
 
 Curto, em primeira pessoa, palavras da própria pessoa, e fechando com o pedido de ajuda. Quem lê precisa acreditar que foi a segurada que escreveu, porque foi ela mesma que falou aquilo ao advogado.
 
-## Modelo-referência (caso real, dados alterados)
+## Modelo-referência (dados fictícios)
 
 Data de início dos sintomas. `22/12/2025`
 
@@ -20,7 +20,7 @@ Descreva as atividades que a pessoa realiza no trabalho. `Trabalhava no cultivo 
 
 Primeiro, cabe na tela e o perito lê inteiro. Texto longo em campo de formulário é lido na diagonal, e o que importa se perde.
 
-Segundo, soa como a pessoa. Frase simples, sem conectivo de peça, sem "vem respeitosamente", sem CID recitado, sem artigo de lei. Autodeclaração que parece petição denuncia preenchimento por procurador e arma o perito.
+Segundo, soa como a pessoa. Frase simples, sem conectivo de peça, sem "vem respeitosamente", sem CID recitado, sem artigo de lei. Autodeclaração que parece petição denuncia preenchimento por procurador e predispõe o perito.
 
 Terceiro, o sintoma é preciso sem ser técnico. "Dores na região lombar com irradiação para a perna e formigamento" descreve dor lombar irradiada com parestesia sem usar uma palavra de médico. O perito reconhece o quadro, e a segurada continua falando como segurada.
 
@@ -50,7 +50,7 @@ Joelho e membro inferior, trabalho em pé. Sintomas, `Meu joelho incha e trava. 
 
 Transtorno mental. Sintomas, `Estou com crises de ansiedade e choro sem conseguir controlar. Não durmo direito, não consigo me concentrar e tenho medo de sair de casa. Estou em tratamento e tomando remédio todo dia.` Atividades, `Trabalhava atendendo o público o dia inteiro. Do jeito que estou não consigo lidar com as pessoas nem manter a atenção no serviço. Peço a ajuda de vocês, estou sem renda nenhuma.`
 
-Cardiopatia. Sintomas, `Sinto falta de ar com qualquer esforço e canso muito rápido. Sinto dor no peito e o coração dispara.` Atividades, `Meu serviço exigia esforço físico o dia todo. Hoje eu canso só de andar dentro de casa. Peço ajuda porque não tenho como trabalhar e estou sem nenhuma renda.`
+Cardiopatia. Sintomas, `Sinto falta de ar com qualquer esforço e canso muito rápido. Sinto dor no peito e o coração dispara.` Atividades, `Meu serviço exigia esforço físico o dia todo. Hoje eu canso apenas de andar dentro de casa. Peço ajuda porque não tenho como trabalhar e estou sem nenhuma renda.`
 
 Quadro oncológico ou tratamento pesado. Sintomas, `Estou em tratamento e passo muito mal depois das sessões. Fico fraca, com enjoo e sem forças para levantar da cama.` Atividades, `Trabalhava na função o dia todo. Durante o tratamento não tenho condição nenhuma de trabalhar. Peço a ajuda e a compreensão de vocês.`
 
@@ -60,7 +60,7 @@ Todos os exemplos se ADAPTAM ao caso concreto. Colar exemplo sem ajustar é o op
 
 Primeira, a verdade acima de tudo. Nenhuma frase entra se não for verdadeira e sustentável pela documentação médica e pelo CNIS. Autodeclaração é prova pré-constituída, e mentira ali contamina o caso inteiro, inclusive o judicial.
 
-Segunda, o pedido de ajuda é verdadeiro ou não existe. "Estou sem nenhuma renda" só entra se for o caso. Havendo outra fonte de renda, adaptar com honestidade ou suprimir a frase. Apelo falso é a maneira mais rápida de perder credibilidade com o perito.
+Segunda, o pedido de ajuda é verdadeiro ou não existe. "Estou sem nenhuma renda" apenas entra se for o caso. Havendo outra fonte de renda, adaptar com honestidade ou suprimir a frase. Apelo falso é a maneira mais rápida de perder credibilidade com o perito.
 
 Terceira, nada de lei, artigo, portaria, súmula, jurisprudência ou termo médico técnico, conforme a regra de forma universal da SKILL.md.
 

@@ -70,7 +70,7 @@ Erros frequentes do INSS e de peritos na aplicação deste enquadramento incluem
 Presunção legal relativa de nexo entre o trabalho e a doença, estabelecida pela correlação estatística entre o CNAE do empregador e o CID da patologia incapacitante, conforme a Lista C do Anexo II do Decreto 3.048/99.
 
 ### Quando se aplica
-Sempre que o CID do segurado estiver correlacionado ao CNAE do empregador na Lista C. A aplicação é automática pelo perito do INSS (art. 21-A, Lei 8.213/91; art. 337, §4º, Decreto 3.048/99).
+Sempre que o CID do segurado estiver correlacionado ao CNAE do empregador na Lista C. A aplicação é automática pelo perito do INSS (art. 21-A, Lei 8.213/91; art. 337, §3º, Decreto 3.048/99).
 
 ### Efeito jurídico
 Inversão do ônus da prova. O nexo é presumido. Cabe ao INSS ou à empresa demonstrar a inexistência do nexo. O segurado não precisa provar que a doença decorre do trabalho, esta é a presunção legal.

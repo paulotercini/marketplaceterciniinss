@@ -1,9 +1,9 @@
-# Período de Graça e Contribuinte Individual. Tese Nova da TNU
+# Período de graça e contribuinte individual
 
 ## 1. Evolução Jurisprudencial
 
 ### Tese anterior (superada)
-**PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022)**, a TRU da 4ª Região, e não a TNU, havia fixado, em julgado regional sem efeito vinculante (auditoria 03/10/2026), que o segurado contribuinte individual não tem direito ao B94, na forma do art. 18, §1º, da Lei 8.213/91, ainda que, em relação à relação empregatícia anterior, esteja em período de graça. **Esta tese foi expressamente superada.**
+**PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022)**, a TRU da 4ª Região havia fixado, em julgado regional, que o segurado contribuinte individual não tem direito ao B94, na forma do art. 18, §1º, da Lei 8.213/91, ainda que, em relação à relação empregatícia anterior, esteja em período de graça. Tese superada pela TNU.
 
 ### Tese vigente
 **PUIL 5000733-56.2021.4.04.7222/SC (14/05/2025)**, decisão por maioria de 10 x 2. Relator originário (vencido) Juiz Federal Nagibe de Melo Jorge Neto. Relator para o acórdão Juiz Federal Ivanir Cesar Ireno Junior.
@@ -19,7 +19,7 @@
 
 ## 2. Caso Concreto Paradigma
 
-Segurado empregado na Olaria Pedro Ivo Ltda de 01/08/2018 a 20/02/2020. Após a demissão, refiliou-se como CI de 01/03/2020 a 31/05/2020 (3 contribuições). Em 29/05/2020, sofreu acidente doméstico. Recebeu auxílio por incapacidade temporária de 29/05/2020 a 18/11/2020. Requereu B94 em 19/11/2020.
+Segurado empregado de 01/08/2018 a 20/02/2020. Após a demissão, refiliou-se como CI de 01/03/2020 a 31/05/2020 (3 contribuições). Em 29/05/2020, sofreu acidente doméstico. Recebeu auxílio por incapacidade temporária de 29/05/2020 a 18/11/2020. Requereu B94 em 19/11/2020.
 
 O acidente ocorreu apenas 3 meses após o fim do vínculo empregatício, dentro do período de graça de 12 meses. O INSS indeferiu com base no art. 18, §1º (CI não tem direito ao auxílio-acidente). A Turma Recursal de SC manteve o indeferimento com base na tese anterior. A TNU reformou.
 
@@ -69,28 +69,28 @@ Para fazer jus ao B94 com base nesta tese, todos os seguintes requisitos devem e
 |----------|-------|
 | Regra geral (após cessar contribuições/vínculo) | 12 meses |
 | Mais de 120 contribuições sem interrupção que acarrete perda da qualidade | +12 meses (24 total) |
-| Desemprego comprovado (registro no SINE ou recebimento de seguro-desemprego, art. 184, §5º, da IN 128/2022) (auditoria 03/10/2026) | +12 meses (36 total) |
+| Desemprego comprovado (art. 15, §2º; registro no SINE ou seguro-desemprego, IN 128/2022, art. 184, §5º) | +12 meses (até 36) |
 | Durante recebimento de auxílio-doença | Tempo do benefício (suspende o prazo) |
 | Até 12 meses após cessar auxílio-doença | 12 meses |
 
-**Atenção**, o recebimento de auxílio-doença suspende a contagem do período de graça (Portaria DIRBEN/INSS 991/2022, art. 44, caput e §1º, c/c arts. 53 e 54).
+Durante o benefício por incapacidade a qualidade se mantém sem limite de prazo (art. 15, I); o período de graça conta da cessação. Detalhe em `periodo-graca-qualidade-segurado`.
 
 ## 8. Cinco Situações Práticas
 
 ### Situação 1. Empregado → Desempregado → Acidente no período de graça
-**TEM DIREITO** (pacífico, sem controvérsia)
+Tem direito (pacífico).
 
 ### Situação 2. Empregado → CI → Acidente no período de graça do vínculo anterior
-**TEM DIREITO** (decisão paradigma da TNU)
+Tem direito (PUIL 5000733 TNU).
 
 ### Situação 3. Empregado → Facultativo → Acidente no período de graça
-**TEM DIREITO** (mesma ratio decidendi, art. 184 §7º IN 128/2022)
+Tem direito (mesma razão de decidir; IN 128/2022, art. 184, §7º).
 
 ### Situação 4. CI puro (nunca foi empregado) → Acidente
-**NÃO TEM DIREITO** (Tema 201/TNU permanece hígido)
+Não tem direito (Tema 201/TNU).
 
-### Situação 5. Empregado → CI → Acidente APÓS período de graça expirado
-**NÃO TEM DIREITO** (período de graça já consumido)
+### Situação 5. Empregado → CI → acidente após o fim do período de graça
+Não tem direito (período de graça encerrado).
 
 ## 9. Atividade Habitual no Período de Graça
 
@@ -98,7 +98,7 @@ A atividade habitual para fins de aferição da redução da capacidade, quando 
 
 Isso é determinante porque define tanto (i) se existe direito ao B94 quanto (ii) qual atividade será parâmetro para avaliar a redução funcional.
 
-## 10. Divergência no STJ. Monitoramento Obrigatório
+## 10. Divergência no STJ
 
 ### Linha restritiva (CI não tem direito)
 - **AgInt no REsp 2.077.714/SC.** Min. Gurgel de Faria, 1ª Turma, j. 24/06/2024, DJe 03/07/2024
@@ -108,7 +108,7 @@ Isso é determinante porque define tanto (i) se existe direito ao B94 quanto (ii
 - **REsp 2.217.297.** Min. Sérgio Kukina, DJe 06/08/2025 (decisão monocrática)
 
 ### Implicação prática
-- **JEF**, tese da TNU vinculante. Estratégia sólida.
+- **JEF**: tese uniformizada da TNU.
 - **Rito ordinário (TRFs)**, cenário incerto. Os TRFs não estão vinculados à TNU. A divergência no STJ pode gerar decisões desfavoráveis. Monitorar eventual afetação como repetitivo.
 - **CRPS**, a tese não tem aplicação direta no CRPS, que segue o art. 18 §1º literalmente. O caminho é judicial.
 
@@ -124,4 +124,4 @@ Para sustentar a tese do período de graça em petição:
 
 ## 12. Alerta Operacional do INSS
 
-O INSS ainda não adaptou seus sistemas administrativos à tese da TNU (decisão de maio/2025). O indeferimento administrativo é esperado. O caminho será judicial na maioria dos casos, com a tese vinculante da TNU como fundamento.
+O INSS não adotou administrativamente a tese da TNU. O indeferimento é provável; requerer assim mesmo (interesse de agir) e ajuizar com fundamento no PUIL 5000733.

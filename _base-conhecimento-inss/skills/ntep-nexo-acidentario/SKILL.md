@@ -5,9 +5,11 @@ description: "Skill GERAL do nexo acidentário e do NTEP para todas as espécies
 
 # Análise do Nexo Causal Acidentário, NTEP e Conversão de Espécie
 
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente por acidente do trabalho; B36 auxílio-acidente previdenciário.
+
 ## Visão Geral
 
-Esta skill orienta a análise sistemática do nexo causal entre trabalho e incapacidade em todos os benefícios por incapacidade (auxílio-doença, aposentadoria por invalidez, auxílio-acidente), a verificação da aplicação do NTEP pela perícia e pelo INSS, e a estratégia de conversão de espécie de benefício (B31→B91, B32→B92) na via administrativa e judicial.
+Esta skill orienta a análise sistemática do nexo causal entre trabalho e incapacidade em todos os benefícios por incapacidade (auxílio por incapacidade temporária, aposentadoria por incapacidade permanente e auxílio-acidente), a verificação da aplicação do NTEP pela perícia e pelo INSS, e a estratégia de conversão de espécie de benefício (B31→B91, B32→B92) na via administrativa e judicial.
 
 ## Premissa Fundamental
 
@@ -34,8 +36,8 @@ Verificar o CNAE do empregador nos documentos disponíveis (CNIS, CTPS, PPP, con
 **Passo 2. Identificar o CID da incapacidade**
 Verificar o CID-10 atribuído pelo médico assistente, pelo perito do INSS ou pelo perito judicial.
 
-**Passo 3. Cruzar CNAE × CID na Lista B e Lista C**
-Consultar o Anexo II do Decreto 3.048/99. Se houver correlação, o NTEP se aplica com presunção relativa de nexo. Alertar o usuário.
+**Passo 3. Cruzar CNAE × CID na Lista C e conferir a Lista B**
+Consultar o Anexo II do Decreto 3.048/99. A correlação CNAE × CID da Lista C gera o NTEP, com presunção relativa de nexo (art. 21-A da Lei 8.213/91; art. 337, §3º, do Decreto 3.048/99). A Lista B relaciona doenças a agentes e fatores de risco e sustenta o nexo profissional. Alertar o usuário.
 
 **Passo 4. Verificar CAT**
 Identificar se houve emissão de CAT. Se não houve, verificar se o NTEP supre a ausência. Se houve, verificar se a perícia reconheceu o nexo.
@@ -46,7 +48,7 @@ Se o benefício foi concedido como B31 ou B32 e há elementos para classificaç�
 ## Regras Críticas
 
 ### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
+Dois-pontos apenas antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas.
 
 ### Verificação de Fontes
 Nunca inventar correlações CNAE-CID. Se não houver certeza sobre a inclusão na Lista B ou Lista C do Decreto 3.048/99, orientar consulta direta ao Anexo II. Todos os artigos, precedentes e dispositivos citados devem ser verificados.
@@ -60,7 +62,7 @@ Toda análise deve ser orientada à defesa do segurado. Identificar todas as via
 ### Alerta Obrigatório
 Sempre que identificar que o benefício foi concedido como previdenciário e há indícios de natureza acidentária, emitir alerta destacado com a seguinte estrutura
 
-**⚠️ ALERTA. POSSÍVEL NATUREZA ACIDENTÁRIA NÃO RECONHECIDA**
+**ALERTA. POSSÍVEL NATUREZA ACIDENTÁRIA NÃO RECONHECIDA**
 Indicar o fundamento (NTEP, CAT, documentação médica, nexo individual) e a estratégia recomendada (revisão administrativa, ação judicial, complementação probatória).
 
 ## Enquadramento Legal do Acidente do Trabalho (Arts. 19 a 21)
@@ -86,18 +88,18 @@ A classificação como acidentário (B91/B92/B94) gera direitos que o benefício
 - **Depósito de FGTS** durante o afastamento (art. 15, §5º, Lei 8.036/90)
 - **Auxílio-acidente** (B94) em caso de sequela redutora da capacidade (art. 86, Lei 8.213/91)
 - **Dispensa de carência** (art. 26, II, Lei 8.213/91)
-- **Base de cálculo diferenciada** para fatos geradores anteriores à EC 103/2019 (100% do salário de benefício, sem aplicação do coeficiente de 60% + 2%)
+- **Coeficiente diferenciado** na aposentadoria por incapacidade permanente acidentária (B92) com fato gerador posterior à EC 103/2019: 100% da média, sem o coeficiente de 60% mais 2% (EC 103/2019, art. 26, §3º, II)
 - **Ação indenizatória** contra o empregador (art. 7º, XXVIII, CF; art. 927, CC)
 - **Ação regressiva** do INSS contra a empresa (art. 120, Lei 8.213/91)
 - **Impacto no FAP** da empresa (art. 10 da Lei 10.666/2003)
 
 ## Limbo Trabalhista-Previdenciário
 
-Quando o INSS cessa o benefício acidentário (alta de B91) mas o segurado permanece com limitações, e o empregador recusa o retorno, nasce o "limbo jurídico". Dois precedentes vinculantes do TST disciplinam essa situação.
+Quando o INSS cessa o benefício acidentário (alta de B91) mas o segurado permanece com limitações, e o empregador recusa o retorno, nasce o "limbo jurídico". Dois enunciados do TST incidem nessa situação.
 
-**Tema TST 88.** O empregador que impede o retorno do empregado ao trabalho após alta previdenciária e inviabiliza a percepção de remuneração pratica conduta ilícita que configura dano moral in re ipsa, sendo devida indenização.
+**Dano moral no limbo (IRR 88 do TST).** [NÃO CONFIRMADO] A tese de dano moral in re ipsa circula em fontes secundárias e não foi conferida na fonte oficial. Não usar em peça antes da conferência (ver `base-limbo-previdenciario-tema300`, seção A CONFERIR).
 
-**Tema TST 226.** Presume-se abandono de emprego se o trabalhador não retornar ao serviço no prazo de 30 dias após cessação do benefício previdenciário nem justificar o motivo.
+**Súmula 32 do TST.** "Presume-se o abandono de emprego se o trabalhador não retornar ao serviço no prazo de 30 (trinta) dias após a cessação do benefício previdenciário nem justificar o motivo de não o fazer."
 
 Orientação preventiva ao cliente. O segurado deve se reapresentar formalmente ao empregador dentro de 30 dias da cessação, por escrito (e-mail, protocolo, AR), declarando estar à disposição para retorno. Se houver limitação funcional, deve levar documentação médica e solicitar avaliação do médico do trabalho ou readaptação. Toda documentação de reapresentação deve ser preservada como prova.
 
@@ -107,7 +109,7 @@ A estratégia integrada em caso de limbo é dupla. Requerer novo benefício por 
 
 A Portaria MTE 1.419/2024 incluiu expressamente os fatores de risco psicossociais no PGR (NR-1). Vigência plena a partir de 26/05/2026 (prorrogada pela Portaria MTE 765/2025). Período educativo (fiscalização orientativa) de 26/05/2025 a 25/05/2026.
 
-Os CIDs relevantes são F32/F33 (depressão), F41 (ansiedade), F43 (TEPT), QD85 CID-11 (burnout). Quando o CNAE do empregador está correlacionado ao CID do transtorno mental na Lista B, o NTEP se aplica automaticamente. Burnout (QD85 CID-11) é fenômeno exclusivamente ocupacional pela OMS.
+Os CIDs relevantes são F32/F33 (depressão), F41 (ansiedade), F43 (TEPT), QD85 CID-11 (burnout). Quando o CNAE do empregador está correlacionado ao CID do transtorno mental na Lista C, o NTEP se aplica automaticamente. Burnout (QD85 CID-11) é fenômeno exclusivamente ocupacional pela OMS.
 
 **PGR que reconhece riscos psicossociais** é prova pré-constituída a favor do segurado. **PGR que omite riscos** demonstra negligência e reforça o nexo. A requisição judicial do PGR (art. 396 CPC) é estratégia obrigatória em toda ação de benefício por incapacidade decorrente de transtorno mental.
 

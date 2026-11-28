@@ -99,9 +99,9 @@ Perito que não examina adequadamente é frequente. Se o cliente perceber que o 
 - Mentir, simular dor, exagerar limitação real.
 - Discutir com o perito.
 - Responder por sim ou não em perguntas que exijam explicação.
-- Falar de benefícios indeferidos anteriores como ataque ao INSS (falar apenas dos fatos).
+- Falar de benefícios indeferidos anteriores como crítica ao INSS (falar apenas dos fatos).
 - Falar de temas pessoais não relacionados à doença (briga familiar, processo trabalhista, dívidas).
-- Dizer que só precisa do benefício por questão financeira (mesmo que seja verdade).
+- Dizer que apenas precisa do benefício por questão financeira (mesmo que seja verdade).
 
 ## Particularidades por espécie
 

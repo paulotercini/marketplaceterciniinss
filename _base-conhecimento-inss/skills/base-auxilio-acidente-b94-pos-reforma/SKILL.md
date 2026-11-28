@@ -1,189 +1,59 @@
 ---
 name: base-auxilio-acidente-b94-pos-reforma
-description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado, com padrão estrutural OBRIGATÓRIO da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral (TJSP) instituído pela Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024, conforme decisão paradigma proferida pelo Juiz Matheus de Souza Parducci Camargo em 22/05/2026 no processo 1013616-41.2026.8.26.0381. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, art. 129 par. único Lei 8.213 isenção custas, art. 129-A Lei 8.213 com Lei 14.331/2022, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 STF dispensa novo requerimento, Tema 660 STJ, Tema 862 STJ termo inicial, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 lesão anterior 11/11/1997 MP 1.596-14, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo, Núcleo 4.0 TJSP, Vara Especializada Acidentes Trabalho TJSP, Comunicado Conjunto 868/2024 TJSP, Portaria Conjunta 10.507/2024 TJSP, 17ª Câmara Direito Público TJSP, AI 2061943-13.2025.8.26.0000, Richard Pae Kim, 9 tópicos petição acidentária, emenda inicial Núcleo 4.0, B91 acidentário B92 B94 Justiça Estadual, art. 109 I CF acidentárias. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92, base-incapacidade-b31-temporaria, base-siglas-inss."
+description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado, com o padrão estrutural da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral (TJSP) instituído pela Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024, conforme decisão paradigma proferida pelo Juiz Matheus de Souza Parducci Camargo em 22/05/2026 no processo 1013616-41.2026.8.26.0381. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, art. 129 par. único Lei 8.213 isenção custas, art. 129-A Lei 8.213 com Lei 14.331/2022, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 STF dispensa novo requerimento, Tema 660 STJ, Tema 862 STJ termo inicial, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 lesão anterior 11/11/1997 MP 1.596-14, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo, Núcleo 4.0 TJSP, Vara Especializada Acidentes Trabalho TJSP, Comunicado Conjunto 868/2024 TJSP, Portaria Conjunta 10.507/2024 TJSP, 17ª Câmara Direito Público TJSP, AI 2061943-13.2025.8.26.0000, Richard Pae Kim, 9 tópicos petição acidentária, emenda inicial Núcleo 4.0, B91 acidentário B92 B94 Justiça Estadual, art. 109 I CF acidentárias. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92, base-incapacidade-b31-temporaria, base-siglas-inss."
 ---
 
-## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+# Auxílio-acidente (B94) após a EC 103/2019
 
-Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
-
-1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
-2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
-3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
-4-A. REsp 2.270.389/RS CONFERIDO POR INTEIRO TEOR (12/07/2026, fornecido pelo escritorio). Rel. Min. Teodoro Silva Santos, Segunda Turma, sessao virtual encerrada em 17/06/2026, unanime, DJEN 23/06/2026. Tres fundamentos pro-segurado. Primeiro, conversao de auxilio-doenca cessado em auxilio-acidente pelo mesmo fato gerador DISPENSA novo requerimento administrativo (excecao do Tema 350/STF, relacao juridica ja inaugurada com o B31), reforco federal a mesma tese do AI 2061943-13.2025 do TJSP. Segundo, DIB no dia seguinte a cessacao do B31 (Tema 862/STJ, leading cases REsp 1.729.555/SP e 1.786.736/SP), mesmo em acao ajuizada anos depois. Terceiro, fundo de direito imprescritivel, prescrevem apenas as parcelas quinquenais (EREsp 1.269.726/MG, Primeira Secao, j. 13/03/2019, DJe 20/03/2019, transcrito no voto). No caso concreto o B31 cessara em 08/02/2010 e a acao foi proposta muito depois, ainda assim provida.
-5. Etapa 3 (12/07/2026). PUIL 5000733-56.2021.4.04.7222/SC e PEDILEF 5026380-43.2022.4.02.5001/ES CONFERIDOS, existem e no sentido pro-segurado registrado (periodo de graca em B94). Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024 do TJSP CONFERIDOS em fonte oficial. QUARENTENA LEVANTADA em 12/07/2026. O AI 2061943-13.2025.8.26.0000 (Rel. Des. Richard Pae Kim, 17a Camara, j. 10/03/2025, Registro 2025.0000223191) e a decisao paradigma do processo 1013616-41.2026.8.26.0381 (Juiz Matheus de Souza Parducci Camargo, liberada em 22/05/2026) foram CONFERIDOS pelo inteiro teor extraido do ESAJ, fornecido pelo escritorio. Dados completos e regras adicionais na reference NUCLEO-4-0-TJSP-PADRAO-ACIDENTARIO.md.
-
-Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
-
-# Auxílio-Acidente (B94) Pós EC 103/2019
+Convenção de espécies (códigos INSS): B31 e B91 auxílio por incapacidade temporária previdenciário e acidentário; B32 e B92 aposentadoria por incapacidade permanente previdenciária e acidentária; B94 auxílio-acidente por acidente do trabalho; B36 auxílio-acidente previdenciário (acidente de qualquer natureza).
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta a concessão, manutenção, acumulação e revisão do B94 (auxílio-acidente) sob o regime pós-reforma e sob o regime de análise documental instituído pela Portaria Conjunta MPS/INSS 15/2026. Objetivo único é defender o segurado, jamais favorecer a autarquia.
+O que mudou no B94 desde 2019 e o rito da ação acidentária no Núcleo Especializado de Justiça 4.0 de Acidentes do Trabalho do TJSP. Regime geral do benefício em `auxilio-acidente-b94`; padrão anotado dos nove tópicos em `references/NUCLEO-4-0-TJSP-PADRAO-ACIDENTARIO.md`; cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; refutações em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## Marco normativo central
+## O que mudou desde 2019
 
-Lei 8.213/91, art. 86. Concede B94 ao segurado que, após consolidação das lesões decorrentes de acidente de qualquer natureza, apresente sequela que implique redução da capacidade para o trabalho habitualmente exercido.
+1. **Cálculo.** O B94 continua em 50% do salário de benefício (Lei 8.213/91, art. 86, §1º), mas o salário de benefício passou a ser a média de todos os salários de contribuição desde 07/1994 (EC 103/2019, art. 26).
+2. **Qualidade de segurado.** O titular de B94 não mantém mais a qualidade sem limite de prazo (art. 15, I, na redação da Lei 13.846/2019). Transição pelo Tema 350 TNU: 12 meses a partir da vigência da lei para quem estava em gozo de B94 ou teve consolidação até 17/06/2019.
+3. **Petição inicial.** O art. 129-A da Lei 8.213/91 (Lei 14.331/2022) exige, quando se discute ato da perícia médica federal: descrição da doença e das limitações; indicação da atividade para a qual o autor alega incapacidade; inconsistências da avaliação pericial; declaração sobre ação anterior (inciso I). Exige ainda comprovante de indeferimento ou não prorrogação, comprovante do acidente e documentação médica (inciso II). O perito judicial que divergir do laudo administrativo fundamenta o dissenso (§1º).
+4. **Anexo III.** O INSS reconheceu o rol como exemplificativo (IN 128/2022, art. 354, §1º, redação da IN PRES/INSS 212/2026): ver `base-b94-anexo-iii-quadros`.
+5. **Análise documental.** Regime da Portaria Conjunta MPS/INSS 15/2026: ver `analise-documental-incapacidade`.
+6. **Restabelecimento.** O B94 cessado para aposentadoria é restabelecido após a cessação da aposentadoria por incapacidade permanente ou na desistência da aposentadoria (IN 128/2022, art. 355, §1º, redação da IN 212/2026).
 
-Decreto 3.048/99, Anexo III. Lista exemplificativa de sequelas que geram B94. Exemplificativa, não exaustiva, conforme jurisprudência.
+Sem mudança: carência dispensada (art. 26, I); DIB no dia seguinte à cessação do auxílio por incapacidade temporária (art. 86, §2º; Tema 862 STJ); vedação de acumulação com aposentadoria desde 11/11/1997, salvo lesão e aposentadoria anteriores (Súmula 507 STJ); integração ao salário de benefício da aposentadoria (art. 31).
 
-Lei 8.213/91, art. 86, §1º. RMI de 50% do salário de benefício. Caráter indenizatório.
+## Competência
 
-Lei 8.213/91, art. 86, §2º. DIB a partir do dia seguinte à cessação do B31 que originou a sequela.
+Natureza acidentária (B91, B92, B94 por acidente do trabalho ou doença ocupacional): Justiça Estadual (CF, art. 109, I; Lei 8.213/91, art. 129, II; Súmula 15 STJ). No interior e litoral de São Paulo, Vara do Núcleo Especializado de Justiça 4.0 de Acidentes do Trabalho (Portaria Conjunta TJSP 10.507/2024; Comunicado Conjunto 868/2024). Acidente de qualquer outra natureza (B36): Justiça Federal.
 
-Lei 8.213/91, art. 86, §1º (redação da MP 1.596-14/97). Pagamento até a véspera do início de qualquer aposentadoria ou até o óbito (auditoria 03/10/2026).
+## Núcleo 4.0 TJSP. Inicial em nove tópicos
 
-Lei 8.213/91, art. 31. Integração do B94 ao salário-de-contribuição para fins de cálculo de outros benefícios.
+A decisão de emenda do processo 1013616-41.2026.8.26.0381 (22/05/2026) exige, sob pena de indeferimento (CPC, arts. 321, 330, IV, e 485, I), os itens: 3.1 doença ou acidente e limitações; 3.2 atividades afetadas e prejuízo ao trabalho habitual; 3.3 inconsistências da perícia administrativa; 3.4 declaração sobre ação anterior; 3.5 comprovante de residência; 3.6 procuração com assinatura ICP-Brasil (Lei 11.419/2006, art. 1º, §2º, III, "a") ou física; 3.7 comprovante de indeferimento ou não prorrogação; 3.8 comprovante do acidente; 3.9 documentação médica. Apresentação em tópicos, com indicação das folhas de cada documento. Prazo de emenda: 15 dias úteis. Template anotado na reference.
 
-Portaria Conjunta MPS/INSS 15/2026. Regulamenta a análise documental do B94. Acionar `analise-documental-incapacidade`.
+Regras de aplicação:
 
-MP 1.596-14/1997 (convertida na Lei 9.528/97). Desde 11/11/1997, vedou a acumulação de B94 com aposentadoria. Direito adquirido apenas quando a lesão e a aposentadoria são anteriores a 11/11/1997 (Súmula 507 STJ). Nos demais casos, o B94 integra o salário-de-contribuição (art. 31 da Lei 8.213/91).
+1. Protocolar já no padrão.
+2. No item 3.2, a decisão paradigma define trabalho habitual como aquele em que se gerou a doença ou ocorreu o acidente. Descrever a função com tarefas concretas e vincular cada limitação a uma tarefa.
+3. No item 3.3, confrontar o laudo administrativo com relatórios do médico assistente, exames, CAT, CNIS e PPP (`auditoria-laudo-pericial`).
+4. No item 3.7, em revisão, restabelecimento ou manutenção, o pedido vai direto a juízo (Tema 350 STF, RE 631.240/MG; Tema 660 STJ; TJSP, AI 2061943-13.2025.8.26.0000, 17ª Câmara de Direito Público, j. 10/03/2025). Federal, no mesmo sentido: REsp 2.270.389/RS (2ª Turma, DJEN 23/06/2026).
+5. No item 3.8, juntar CAT ou emiti-la pelo próprio segurado ou sindicato (art. 22, §2º); indicar NTEP quando houver (`ntep-nexo-acidentario`).
+6. No item 3.9, pedir ao médico assistente relatório nos parâmetros do art. 129-A (`base-modelo-relatorio-medico-auxilio-acidente-b94`).
+7. Declarar a isenção de custas e sucumbência do art. 129, parágrafo único; não requerer gratuidade.
+8. Tutela de urgência (CPC, art. 300) ancorada nos itens 3.1, 3.3 e 3.9: probabilidade pela prova médica confrontada; perigo pela ausência de renda.
 
-Lei 8.213/91, art. 26, I. B94 é isento de carência.
+## Alertas
 
-Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+- O B94 cessa apenas na véspera de aposentadoria, na emissão de CTC ou no óbito (art. 86, §1º; IN 128/2022, art. 355). Outras cessações são impugnáveis.
+- Súmula 89 TNU é adversa: demonstrar redução ou maior esforço na atividade habitual (Súmula 88 TNU; Tema 416 STJ).
+- Laudo que nega incapacidade e descreve maior esforço: `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
 
-Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+## Fungibilidade aplicável
 
-TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
+Acionar `base-fungibilidade-previdenciaria` (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
-Portaria Conjunta TJSP nº 10.507/2024. Criação da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral.
+## Hub de portarias administrativas
 
-Comunicado Conjunto TJSP nº 868/2024. Disciplinamento operacional do Núcleo 4.0 - Acidentes do Trabalho.
-
-Lei 14.331/2022. Inseriu o art. 129-A na Lei 8.213/91. Estabelece peculiaridades das ações acidentárias com obrigatoriedade de descrição clara da doença/acidente, das limitações laborais e da indicação das atividades para as quais a parte está incapacitada.
-
-## ESTRUTURA OBRIGATÓRIA DA PETIÇÃO INICIAL NO NÚCLEO 4.0 TJSP - PADRÃO
-
-Toda petição inicial de ação acidentária (B91 acidentário, B92, B94) ajuizada no Núcleo Especializado de Justiça 4.0 do TJSP DEVE conter, sob pena de emenda obrigatória (CPC art. 330 IV e art. 485 I), os 9 tópicos abaixo. Fonte. Decisão paradigma do Juiz Matheus de Souza Parducci Camargo no processo 1013616-41.2026.8.26.0381 (22/05/2026).
-
-### Bloco A - Descrição do quadro clínico e funcional
-
-**Tópico 3.1.** Descrição clara da doença ou do acidente do trabalho e das limitações laborais que a parte autora eventualmente apresente.
-
-**Tópico 3.2.** Indicação das atividades para as quais a parte autora alega estar incapacitada, relacionando-as com as limitações laborais e esclarecendo se há prejuízo ou não para o trabalho habitual, assim considerado aquele no qual gerada a doença do trabalho ou a doença profissional ou, ainda, no qual ocorrido o acidente do trabalho.
-
-### Bloco B - Inconsistências da avaliação administrativa
-
-**Tópico 3.3.** Possíveis inconsistências da avaliação médico-pericial eventualmente realizada na via administrativa, fazendo o devido confronto com outros laudos médicos ou exames laboratoriais.
-
-### Bloco C - Declaração processual
-
-**Tópico 3.4.** Declaração quanto à existência ou não de ação judicial anterior com pretensão semelhante à presente, esclarecendo os motivos pelos quais se entende não haver litispendência ou coisa julgada, quando for o caso.
-
-### Bloco D - Documentação obrigatória
-
-**Tópico 3.5.** Comprovante de residência em nome da parte autora.
-
-**Tópico 3.6.** Procuração com assinatura eletrônica em plataforma credenciada pela ICP-Brasil (art. 1º §2º III "a" Lei 11.419/2006 e MP 2.200-2/2001).
-
-**Tópico 3.7.** Comprovante de indeferimento do benefício ou de sua não prorrogação. ATENÇÃO PRÓ-SEGURADO. Em pedido de revisão, restabelecimento ou manutenção de benefício anteriormente concedido, DISPENSA-SE o prévio requerimento administrativo (paradigma. AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público, j. 10/03/2025, fundado no Tema 350/STF e Tema 660/STJ).
-
-**Tópico 3.8.** Comprovante da ocorrência do acidente do trabalho, sempre que houver acidente apontado como causa da incapacidade.
-
-**Tópico 3.9.** Documentação médica de que dispuser relativa à doença alegada como causa da incapacidade.
-
-### Bloco E - Forma de apresentação
-
-Petição de emenda DEVE ser apresentada EM TÓPICOS, com indicação expressa das folhas onde se encontram os documentos juntados.
-
-### Bloco F - Prazo e sanção
-
-Prazo. 15 dias úteis para emenda. Sanção. Indeferimento e extinção sem mérito (art. 330 IV e art. 485 I CPC).
-
-## ESTRATÉGIA PRÓ-SEGURADO NO NÚCLEO 4.0
-
-Primeira regra. PROTOCOLAR JÁ NO PADRÃO. Eliminar o risco de emenda da inicial é estratégia de celeridade. Cada emenda atrasa o processo em 15 a 60 dias.
-
-Segunda regra. NO TÓPICO 3.2, definir com PRECISÃO a profissão habitual e o conceito legal de "trabalho habitual" (art. 129-A §1º Lei 8.213/91 com Lei 14.331/2022). Trabalho habitual NÃO é qualquer trabalho. É aquele EM QUE foi gerada a doença ou ocorrido o acidente.
-
-Terceira regra. NO TÓPICO 3.3, sempre confrontar o laudo administrativo com.
-- Laudos do médico assistente (cruzar com `relatorio-medico-assistente`).
-- Exames complementares.
-- CAT (se houver).
-- Histórico do CNIS.
-- LTCAT/PPP da empresa (se houver).
-
-Cruzar com `auditoria-laudo-pericial`.
-
-Quarta regra. NO TÓPICO 3.7, em revisão/restabelecimento, INVOCAR o paradigma do TJSP (AI 2061943-13.2025.8.26.0000), o Tema 350/STF (RE 631.240/MG) e o Tema 660/STJ. Dispensa-se o requerimento administrativo.
-
-Quinta regra. NO TÓPICO 3.8, juntar CAT e cruzar com `ntep-nexo-acidentario`. Lembrar a presunção do art. 21-A Lei 8.213/91 quando aplicável o NTEP.
-
-Sexta regra. NO TÓPICO 3.9, modelo de relatório médico que segue os parâmetros do art. 129-A Lei 8.213 deve ser pedido ao médico assistente. Cruzar com `base-modelo-relatorio-medico-auxilio-acidente-b94`.
-
-Sétima regra. ISENÇÃO DE CUSTAS. Art. 129 par. único Lei 8.213/91. O segurado é isento "do pagamento de quaisquer custas e de verbas relativas à sucumbência". NÃO requerer gratuidade da justiça. Apenas declarar a isenção legal.
-
-## TUTELA DE URGÊNCIA NO NÚCLEO 4.0
-
-Pedido de tutela de urgência (CPC art. 300) deve estar AMARRADO aos 9 tópicos. Demonstrar.
-
-1. Probabilidade do direito. Pelos documentos médicos (tópico 3.1, 3.9) + laudo administrativo confrontado (tópico 3.3).
-2. Perigo da demora. Período sem renda, despesas com tratamento, dependentes.
-3. Reversibilidade.
-
-Acompanhar com `peticao-previdenciaria` para padrão visual.
-
-## CHECKLIST PRÉ-PROTOCOLO NO NÚCLEO 4.0
-
-Antes de protocolar inicial acidentária no Núcleo 4.0, varrer.
-
-- [ ] Tópico 3.1. Descrição clara da doença/acidente e limitações.
-- [ ] Tópico 3.2. Atividades incapacitadas com vínculo ao trabalho habitual.
-- [ ] Tópico 3.3. Confronto com laudo administrativo, se houver.
-- [ ] Tópico 3.4. Declaração sobre ação anterior.
-- [ ] Tópico 3.5. Comprovante de residência (180 dias).
-- [ ] Tópico 3.6. Procuração ICP-Brasil ou física com poderes específicos.
-- [ ] Tópico 3.7. Indeferimento, não prorrogação OU paradigma TJSP (AI 2061943-13.2025.8.26.0000) em revisão/restabelecimento.
-- [ ] Tópico 3.8. CAT ou comprovante de acidente (se aplicável).
-- [ ] Tópico 3.9. Documentos médicos com CRM e CID.
-- [ ] Apresentação em TÓPICOS.
-- [ ] Indicação das folhas onde se encontra cada documento.
-- [ ] Declaração da isenção do art. 129 par. único Lei 8.213.
-- [ ] Quesitos para o perito.
-- [ ] Pedido de tutela de urgência fundamentado nos 9 tópicos.
-
-## Requisitos cumulativos
-
-Primeiro, qualidade de segurado na data do acidente (não precisa persistir na DIB).
-
-Segundo, consolidação das lesões (cicatrização, fim do tratamento curativo).
-
-Terceiro, sequela permanente que reduza a capacidade laborativa.
-
-Quarto, nexo entre o acidente/doença e a sequela.
-
-## Cenários operacionais pró-segurado
-
-Primeiro, segurado com acidente de qualquer natureza (inclusive doméstico ou de trânsito, não necessariamente de trabalho) que deixou sequela redutora da capacidade. Sem nexo com o trabalho, o benefício é o auxílio-acidente previdenciário (espécie 36), na Justiça Federal; com nexo, é o B94 acidentário, na Justiça Estadual (art. 109, I, da CF) (auditoria 03/10/2026, retirado o Tema 416 STJ, que fala em lesão decorrente de acidente do trabalho).
-
-Segundo, segurado com sequela não listada no Anexo III do Decreto 3.048/99 mas que reduz a capacidade laboral. Súmula 88 e 89 TNU. Anexo III é exemplificativo.
-
-Terceiro, segurado com lesão mínima mas com redução comprovada de capacidade. Tema 416 STJ. Súmula 89 TNU. Não há exigência de sequela grave, bastando redução real.
-
-Quarto, segurado com lesão e aposentadoria anteriores a 11/11/1997. Direito adquirido à acumulação. Súmula 507 STJ e Tema 555 STJ.
-
-Quinto, segurado com B94 concedido com RMI equivocada. Cabe revisão para incluir verbas da integração, conforme art. 31.
-
-Sexto, segurado com redução auditiva (art. 86, §4º, da Lei 8.213/91). Súmula 44 STJ e Tema 22 STJ admitem o B94 mesmo abaixo do grau mínimo regulamentar de disacusia, desde que comprovados nexo e redução real (auditoria 03/10/2026, no lugar do Tema 322 TNU e da Súmula 44 TNU).
-
-Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §1º. Cessação apenas pela aposentadoria ou óbito (auditoria 03/10/2026). Restabelecimento cabível.
-
-Oitavo, segurado com B94 aguardando período de graça. PUIL 5000733 do TNU sobre período de graça em B94 (aplicar com cautela, verificar tese definitiva em `precedentes-previdenciarios`).
-
-## Regra e estratégia
-
-A regra geral é que redução real da capacidade laborativa, decorrente de sequela de acidente de qualquer natureza, gera B94. O INSS tende a indeferir por entender que sequela é mínima ou não listada no Anexo III. Enfrentar com Súmulas 88/89 TNU e Tema 416 STJ.
-
-Primeiro, obter laudo médico especializado que correlacione sequela e redução de capacidade para a atividade habitual.
-
-Segundo, demonstrar que a sequela, ainda que aparentemente leve, impacta o exercício da profissão específica do segurado.
-
-Terceiro, em caso de rol do Anexo III, usar como reforço. Em caso fora do rol, usar caráter exemplificativo.
-
-Quarto, em cessação indevida, restabelecer com pedido de tutela de urgência para implantação imediata (art. 300 do CPC) (auditoria 03/10/2026, retirada a Súmula 47/TNU).
-
-Quinto, quando lesão e aposentadoria forem anteriores a 11/11/1997, reivindicar a acumulação com aposentadoria (Súmula 507 STJ).
+Portarias DIRBEN/INSS 991/2022 e 992/2022: `base-portarias-dpmf-inss-hub`.
 
 ## MCPs da casa
 
@@ -191,68 +61,11 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 ## Integração com outras skills
 
-Ao redigir peça, acione `peticao-previdenciaria`.
-Ao analisar nexo, acione `ntep-nexo-acidentario`.
-Ao auditar laudo, acione `auditoria-laudo-pericial`.
-Ao converter B31 em B94 após consolidação, acione `base-incapacidade-b31-temporaria`.
-Ao tratar incapacidade permanente acidentária, acione `base-incapacidade-acidentaria-b92`.
-Ao analisar perícia documental do B94, acione `analise-documental-incapacidade`.
-Ao calcular RMI, acione `base-calculo-rmi-ec103`.
-Ao orientar para perícia, acione `orientacao-cliente-pericia`.
+Peça: `peticao-previdenciaria`. Nexo: `ntep-nexo-acidentario`. Laudo: `auditoria-laudo-pericial`. Conversão de B31 em B94: `base-incapacidade-b31-temporaria`. Incapacidade permanente acidentária: `base-incapacidade-acidentaria-b92`. Análise documental: `analise-documental-incapacidade`. RMI: `base-calculo-rmi-ec103`. Orientação para perícia: `orientacao-cliente-pericia`. Procedimento pericial: `base-pericia-medica-federal-telepericia`.
 
-## Alertas
+## Médicos conferentes
 
-Primeiro, Anexo III do Decreto 3.048/99 é exemplificativo, não taxativo. O INSS tende a limitar o B94 ao rol. Enfrentar com Súmulas 88 e 89 TNU.
-
-Segundo, RMI do B94 é de 50% do salário de benefício, com caráter indenizatório. Integração ao salário-de-contribuição pelo art. 31 garante inclusão em benefício posterior.
-
-Terceiro, a vedação da acumulação com aposentadoria vige desde 11/11/1997 (MP 1.596-14, convertida na Lei 9.528/97). Só há direito adquirido quando a lesão incapacitante E a aposentadoria são anteriores a 11/11/1997 (Súmula 507 STJ).
-
-Quarto, o B94 cessa apenas com a aposentadoria ou o óbito do segurado (art. 86, §1º; auditoria 03/10/2026). Cessações intermediárias são impugnáveis.
-
-## Fungibilidade aplicável
-
-Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Doutrina de apoio
-
-Frederico Amado, em Direito Previdenciário, sustenta a natureza indenizatória e o caráter exemplificativo do Anexo III.
-
-Hugo Goes, em Manual, detalha os requisitos e a integração pelo art. 31.
-
-Fábio Zambitte Ibrahim, em Curso, critica a Lei 13.846/2019 e defende a acumulação ampla.
-
-Wladimir Novaes Martinez analisa a consolidação das lesões e a redução da capacidade como exigências substanciais.
-
-O IBDP sustenta institucionalmente o caráter indenizatório e a proteção contra vedação de acumulação em direito adquirido.
-
-## O que NÃO está nesta skill
-
-Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B32 (incapacidade permanente), objeto de `base-incapacidade-b32-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
-
-## Anexo III exemplificativo por norma do INSS (Onda 115)
-
-O art. 354, § 1º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026), reconhece que o Anexo III do RPS é rol MERAMENTE EXEMPLIFICATIVO e que o não enquadramento não impede a Perícia Médica Federal de verificar, no caso concreto, o preenchimento dos requisitos.
-
-Em peça administrativa, este dispositivo é fundamento PRINCIPAL, com a Súmula 88 da TNU e o Tema 416 do STJ como reforço. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
-
-## Termo inicial em desistência de aposentadoria (Onda 115)
-
-O art. 355, § 1º, II, na redação da IN 212/2026, fixa o termo inicial, na hipótese de desistência de aposentadoria do art. 181-B, § 2º, do RPS, a partir do dia seguinte da DCB do auxílio-acidente. Conferir a subsunção à hipótese concreta antes de invocar.
-
-## Maior esforço, fundamentação atualizada (Onda 124)
-
-O "maior esforço" continua sendo argumento válido, mas MUDOU de base normativa. O art. 104, II, do Decreto 3.048/99 foi revogado pelo Decreto 10.410/2020, e a âncora atual é o Tema 416 do STJ (REsp 1.109.591/SC, Terceira Seção, j. 25/08/2010, DJe 08/09/2010, trânsito em julgado), cuja tese literal afirma que "o nível do dano e, em consequência, o grau do maior esforço, não interferem na concessão do benefício, o qual será devido ainda que mínima a lesão".
-
-Aplicação típica em amputação de quirodáctilo, com a construção da mão como conjunto harmônico e do órgão preensor. Detalhamento, quesitos e modelo em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
-
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
-
-No B94 o que decide é a sequela consolidada e a redução da capacidade. Despachar o médico da área com os documentos, porque é ele que descreve a perda funcional residual.
+No B94 decidem a sequela consolidada e a redução da capacidade. Despachar o médico da área com os documentos para descrever a perda funcional residual.
 
 | Se os documentos tratarem de | Despachar ao agente |
 |---|---|
@@ -265,6 +78,6 @@ No B94 o que decide é a sequela consolidada e a redução da capacidade. Despac
 | Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
 | Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
 
-Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na demonstração da sequela e na redução funcional.
+Havendo mais de uma área nos documentos, despachar até três agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na demonstração da sequela e na redução funcional.
 
-O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+O parecer médico é instrumento interno. Orienta a peça, os quesitos e o pedido ao médico assistente, e não vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.

@@ -13,15 +13,15 @@ Não confundir com a `orientacao-cliente-pericia`, que produz o documento ENTREG
 
 ## Princípio que organiza tudo
 
-Cada perícia tem UM ponto que a decide. O estudo existe para que o advogado saiba qual é esse ponto no caso concreto e concentre a reunião nele. Cliente que sai da reunião sabendo explicar o ponto decisivo com as próprias palavras ganha a perícia que o processo permite ganhar. Cliente afogado em dez instruções genéricas esquece todas.
+Cada perícia tem UM ponto que a decide. O estudo existe para que o advogado saiba qual é esse ponto no caso concreto e concentre a reunião nele. Cliente que sai da reunião sabendo explicar o ponto decisivo com as próprias palavras ganha a perícia que o processo permite ganhar. Cliente sobrecarregado com dez instruções genéricas esquece todas.
 
-Honestidade radical. A reunião NUNCA ensaia exagero ou simulação. Ensina o cliente a descrever a realidade da limitação dele em linguagem funcional. Perito desmascara teatro, e teatro desmascarado derruba caso tecnicamente forte.
+Honestidade radical. A reunião NUNCA ensaia exagero ou simulação. Ensina o cliente a descrever a realidade da limitação dele em linguagem funcional. O perito identifica a encenação, e a encenação identificada compromete caso tecnicamente consistente.
 
 ## Etapa zero, OBRIGATÓRIA. Puxar e ler a cópia integral do processo
 
 O estudo NUNCA se redige de memória ou de resumo. A cópia integral do processo fica na pasta do cliente no Google Drive, e a skill SEMPRE a localiza e lê antes de qualquer redação (localizar a pasta por nome ou CPF via search_files, baixar o PDF da cópia integral). Sem a cópia no Drive e sem PDF anexado na conversa, pedir o arquivo e PARAR.
 
-Protocolo de análise do processo, executar na ordem, só avançar após concluir o item anterior.
+Protocolo de análise do processo, executar na ordem, apenas avançar após concluir o item anterior.
 
 1. Pedir o PDF se não estiver anexado nem no Drive. Informar o total de páginas por contagem programática.
 
@@ -31,7 +31,7 @@ Protocolo de análise do processo, executar na ordem, só avançar após conclui
 
 4. Leitura INTEGRAL obrigatória de CNIS, PPP, documentos rurais, laudos e relatórios médicos, laudo pericial judicial, sentença, acórdão, demais decisões e, principalmente, da decisão atacada. Rasura ou dúvida, PARAR e perguntar.
 
-Só depois da etapa zero concluída o fluxo abaixo começa. A linha do tempo e a leitura integral alimentam diretamente as seções 1, 6 e 7 do estudo (o ponto decisivo sai do que o processo REALMENTE contém, os documentos da mão do cliente saem dos IDs reais, e a nota técnica registra o que a leitura revelou de fragilidade).
+Apenas depois da etapa zero concluída o fluxo abaixo começa. A linha do tempo e a leitura integral alimentam diretamente as seções 1, 6 e 7 do estudo (o ponto decisivo sai do que o processo REALMENTE contém, os documentos da mão do cliente saem dos IDs reais, e a nota técnica registra o que a leitura revelou de fragilidade).
 
 ## Fluxo de trabalho
 
@@ -80,7 +80,7 @@ ESTUDO PRÉ-PERÍCIA. [NOME DO CLIENTE]
 
 A equação é atividade habitual contra limitação. O perito não avalia doença, avalia se ESTA pessoa consegue exercer ESTA função. A reunião concentra em três coisas. O cliente sabe descrever a própria função em tarefas (quanto tempo em pé, quanto peso, qual movimento repetido). O cliente sabe ligar cada dor ou limitação a uma dessas tarefas. O cliente sabe contar a linha do tempo (quando começou, quando piorou, o que já tentou de tratamento).
 
-Detalhe que muda perícia, condições pessoais. Idade, escolaridade e histórico só de trabalho braçal entram na conversa quando a tese incluir a inviabilidade real de reabilitação (Súmula 47 da TNU).
+Detalhe que muda perícia, condições pessoais. Idade, escolaridade e histórico apenas de trabalho braçal entram na conversa quando a tese incluir a inviabilidade real de reabilitação (Súmula 47 da TNU).
 
 Em B32 ou B92, acrescentar o prognóstico, por que não há perspectiva de voltar a nenhuma função compatível. Em acidentário (B91/B92), o nexo com o trabalho entra no roteiro (CAT, NTEP, história do acidente contada sempre do mesmo jeito).
 
@@ -124,7 +124,7 @@ Aposentadoria PCD. `aposentadoria-deficiencia`, `base-aposentadoria-pcd-lc142`, 
 
 Auxílio-acidente. `auxilio-acidente-b94`, `base-auxilio-acidente-b94-pos-reforma`, `base-b94-sequela-minima-sumula88-tnu`, `base-b94-nexo-acidentario-ntep` e o reference AUXILIO-ACIDENTE da `orientacao-cliente-pericia`.
 
-Por patologia, somar a skill temática quando existir (`base-pcd-fibromialgia-lei15176` com o roteiro de individualização da Onda 87, `deficiencia-auditiva-previdenciaria`, TEA nas skills de BPC e PCD).
+Por patologia, somar a skill temática quando existir (`base-pcd-fibromialgia-lei15176` com o roteiro de individualização, `deficiencia-auditiva-previdenciaria`, TEA nas skills de BPC e PCD).
 
 ## Regras invioláveis
 
@@ -140,13 +140,13 @@ Quinta, o estudo é personalizado. Se o texto sobrevive à troca do nome do clie
 
 Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa.
 
-## Nota de grafia (registro de manutenção)
+## Nota de grafia
 
-A portaria do IF-BrA é a Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, conforme o texto oficial publicado no DOU de 30/01/2014 (auditoria 03/10/2026). A grafia "AGU/MPS/MF/MP/PR", que aparecia em parte da base, está errada e foi uniformizada.
+A portaria do IF-BrA é a Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (DOU de 30/01/2014).
 
 ## Extensão
 
-Teto de o estudo pré-perícia, 2 páginas, com o ponto que decide a perícia na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto de o estudo pré-perícia, 2 páginas, com o ponto que decide a perícia na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
@@ -156,13 +156,13 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 `orientacao-cliente-pericia` gera o entregável do cliente na sequência. `triagem-caso` fornece o dossiê quando o caso veio da fila. `auditoria-laudo-pericial` entra DEPOIS da perícia, sobre o laudo produzido, e a nota técnica do estudo (seção 7) alimenta os quesitos dela. `relatorio-medico-assistente` quando a reunião revelar que falta relatório do médico assistente.
 
-## Método Fuzzy, verificação obrigatória (Onda 106)
+## Método Fuzzy, verificação obrigatória
 
 Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
 
-A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
+A omissão é erro técnico frequente e impugnável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 O estudo pré-perícia existe para preparar o cliente no ponto que decide a perícia. Despachar o médico da área com os documentos, porque ele identifica o achado que o perito vai procurar e o que o cliente precisa saber demonstrar.
 
@@ -181,6 +181,6 @@ Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das �
 
 O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O juízo acolhe o laudo pericial por fórmula fixa e confere a qualidade de segurado e a carência na DII que o perito fixar, e não na DER. O estudo pré-perícia leva à perícia exames e relatórios datados que permitam ao perito fixar a DII ou a data do agravamento, e prepara quesito sobre a assistência permanente de terceiro quando houver pedido dos 25%. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`, seção de benefício por incapacidade.

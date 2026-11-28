@@ -1,129 +1,25 @@
-# Reabilitação Profissional. Jurisprudência e Refutação
-
-## 1. Precedentes relevantes
-
-### Tema 177 TNU
-
-Reabilitação e critérios de alta.
-
-Fonte oficial em https://www.jf.jus.br
-
-### Súmula 47 TNU
-
-Capacidade residual e prognóstico de reabilitação.
-
-Fonte oficial em https://www.jf.jus.br
-
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
-
-Razoável duração do processo.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Súmula 378 TST
-
-Estabilidade acidentária.
-
-Fonte oficial em https://www.tst.jus.br
-
-### Tema 1124 STJ
-
-Instrução administrativa.
-
-## 2. Marco legislativo
-
-### Lei 8.213/91, arts. 89, 93 e 101
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Decreto 3.048/99, arts. 136 a 140
-
-Fonte oficial em https://www.planalto.gov.br
-
-### IN 128/2022
-
-Fonte oficial em https://www.in.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Alta sem certificado de reabilitação
-
-Argumento adversário. Alta programada.
-
-Refutação. Art. 62 Lei 8.213, art. 101 Decreto 3.048. Sem certificado não há alta regular. Tema 177 TNU.
-
-### Argumento 2. Ausência de capacidade residual
-
-Argumento adversário. Segurado irrecuperável.
-
-Refutação. Súmula 47 TNU. Avaliação conjunta de idade, grau de instrução e condição social. Se irrecuperável, B32.
-
-### Argumento 3. Segurado com idade avançada
-
-Argumento adversário. Passível de reabilitação.
-
-Refutação. Realidade do mercado exclui recolocação. Acionar jurisprudência TRF4 sobre idade e perfil.
-
-### Argumento 4. Empregador recusa readaptação
-
-Argumento adversário. Sem vaga compatível.
-
-Refutação. Art. 93 Lei 8.213 impõe cota de PCD. Direito à manutenção do benefício até inserção.
-
-### Argumento 5. PRP inconcluso com alta
-
-Argumento adversário. Concluído pelo INSS.
-
-Refutação. Sem certificado, nulidade da alta. Impugnar judicialmente.
-
-### Argumento 6. Limbo previdenciário-trabalhista
-
-Argumento adversário. Ausência de benefício e de emprego.
-
-Refutação. Obrigação do INSS de restabelecer B26 ou B91. TRF4 fixou solução pró-segurado.
-
-### Argumento 7. Recusa do segurado ao PRP
-
-Argumento adversário. Cessação automática art. 101.
-
-Refutação. Justificativa plausível afasta cessação. Motivos de saúde, familiares ou impossibilidade logística.
-
-### Argumento 8. Certificado sem inserção real
-
-Argumento adversário. Formalidade cumprida.
-
-Refutação. Reabilitação pressupõe inserção efetiva no mercado. Sem ela, retorno do benefício.
-
-### Argumento 9. PRP restrito à função única
-
-Argumento adversário. Reabilitação em qualquer atividade.
-
-Refutação. Lei 8.213/91, art. 62, §2º. Atividade compatível com a condição do segurado.
-
-### Argumento 10. Perda da qualidade de segurado durante PRP
-
-Argumento adversário. Prazo de graça esgotado.
-
-Refutação. Art. 15 §1º Lei 8.213. Período de graça mantido enquanto houver benefício ativo.
-
-## 5. Estratégia integrada
-
-Primeiro, pleitear conversão para B26 em caso de prognóstico favorável.
-
-Segundo, acompanhar PRP com laudos atualizados.
-
-Terceiro, contestar alta prematura.
-
-Quarto, exigir inserção real via cota.
-
-Quinto, ação judicial no limbo.
-
-Sexto, em irrecuperabilidade, B32.
-
-## 6. Diligência de atualização
-
-Acompanhar Tema 177 TNU.
-
-Revalidar IN 128/2022 em reabilitação.
-
-Acompanhar TRF4 sobre limbo previdenciário-trabalhista.
+# Reabilitação profissional. Jurisprudência e refutação
+
+## Precedentes conferidos
+
+| Precedente | Tese | Uso |
+|---|---|---|
+| Tema 177 TNU | Incapacidade parcial e permanente autoriza o encaminhamento judicial à análise de elegibilidade; o INSS adota a conclusão judicial como premissa | Impede o INSS de negar a incapacidade já reconhecida |
+| Súmula 47 TNU | Incapacidade parcial exige análise das condições pessoais e sociais | Aposentadoria quando a reinserção é inviável |
+| Súmula 378, II, TST | Estabilidade do art. 118 exige afastamento superior a 15 dias e percepção de auxílio-doença acidentário, salvo doença ocupacional constatada após a despedida | Estabilidade do reabilitado acidentado |
+
+## Refutação a argumentos do INSS
+
+| Argumento do INSS | Resposta | Fundamento |
+|---|---|---|
+| Alta programada antes do fim do PRP | O benefício é mantido até a reabilitação | Lei 8.213/91, art. 62, §1º |
+| Programa concluído sem certificado | Sem certificado não há conclusão | Lei 8.213/91, art. 92; Decreto 3.048/99, art. 140 |
+| Reabilitação possível para qualquer atividade | A atividade deve garantir a subsistência e respeitar as limitações | Lei 8.213/91, art. 62, §1º |
+| Segurado idoso e de baixa escolaridade é reabilitável | Condições pessoais indicam inviabilidade; cabe aposentadoria | Súmula 47 TNU |
+| Ausência ao PRP autoriza cessação automática | A suspensão exige recusa injustificada; motivo de saúde ou deslocamento afasta a sanção | Lei 8.213/91, art. 101, II; IN 128/2022, arts. 419 e 423 |
+| Na análise de elegibilidade, o perito conclui pela capacidade plena | A análise parte da incapacidade reconhecida em juízo | Tema 177 TNU |
+| Perda da qualidade de segurado durante o PRP | O segurado em gozo de benefício mantém a qualidade | Lei 8.213/91, art. 15, I |
+
+## Diligência
+
+Conferir na IN 128/2022 a redação dos arts. 416 a 423 após a IN 195/2025 e o ato próprio de suspensão citado no art. 423.

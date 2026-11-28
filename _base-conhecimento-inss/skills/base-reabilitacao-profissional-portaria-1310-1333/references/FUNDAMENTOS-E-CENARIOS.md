@@ -1,49 +1,16 @@
-# Reabilitação Profissional 1.310/2025 e 1.333/2026. Fundamentos e Cenários
+# Reabilitação profissional no Livro X. Fundamentos e cenários
 
-## 1. Marco normativo aplicável
+Base legal: Lei 8.213/91, arts. 62 e 89 a 93; Decreto 3.048/99, arts. 136 a 141; IN 128/2022, arts. 415 a 423; Livro X (Portaria DIRBEN/INSS 999/2022), alterado pelas Portarias DIRBEN/INSS 1.310/2025 e 1.333/2026.
 
-Lei 8.213/91, arts. 62, 89, 90, 91, 92 e 93. Decreto 3.048/99, arts. 136 a 141. Portaria DIRBEN/INSS 1.310/2025. Portaria DIRBEN/INSS 1.333/2026.
-
-## 2. Cenário 1. Justificativa de faltas em até 7 dias
-
-O segurado tem direito de justificar a falta no prazo de 7 dias contados da data do agendamento. O encerramento direto por falta única, sem oportunidade de justificativa, viola o devido processo administrativo do art. 5º LV CF e o art. 12 das Portarias DIRBEN.
-
-## 3. Cenário 2. Recusa e abandono, suspensão de 60 dias
-
-A recusa em comparecer ao programa ou o abandono autorizam a suspensão pelo prazo de 60 dias, não o encerramento imediato. Durante a suspensão, o benefício de origem permanece ativo. Após 60 dias sem retomada, há possibilidade de encerramento, mas com nova oportunidade de manifestação. Fonte no art. 13 das Portarias DIRBEN 1.310/2025 e 1.333/2026.
-
-## 4. Cenário 3. Suspensão do recluso
-
-O segurado recluso submetido à RP tem direito à suspensão pelo prazo de 60 dias, conforme arts. 14 e 29, §2º A e B, das Portarias DIRBEN. Durante esse período não há decisão definitiva. A cessação imediata do benefício por reclusão é ato nulo.
-
-## 5. Cenário 4. Encerramento do PRP
-
-O encerramento do PRP (art. 51 das Portarias DIRBEN) só ocorre nas hipóteses taxativas, com retorno ao trabalho, alta da incapacidade, conclusão do programa, ou impossibilidade comprovada de reabilitação. Encerramento fora dessas hipóteses configura nulidade. O ato deve indicar fundamento técnico expresso da equipe multidisciplinar.
-
-## 6. Cenário 5. Retorno ao trabalho
-
-O retorno ao trabalho com função compatível encerra o PRP com certificado de reabilitação, nos termos do art. 53 das Portarias DIRBEN. Sem função compatível identificada, deve haver conversão em B32. A devolução do segurado ao mercado sem habilitação documentada é vedada.
-
-## 7. Cenário 6. Encaminhamento obrigatório à PMF
-
-A reabilitação demanda encaminhamento da PMF para a equipe multidisciplinar. A simples conclusão do perito médico, sem encaminhamento, viola o art. 89 da Lei 8.213/91. O ato de "não necessita de RP" só é válido com fundamentação técnica multidisciplinar (médica, social e funcional). Sem isso, há nulidade.
-
-## 8. Cenário 7. Reagendamento excepcional
-
-A Portaria 1.333/2026 admite reagendamento excepcional em até 30 dias, com motivação. A negativa de reagendamento sem motivação fere o dever de cooperação do INSS perante o usuário do serviço público (Lei 13.460/2017).
-
-## 9. Cenário 8. "Não necessita de RP"
-
-A conclusão de que o segurado "não necessita de RP" exige avaliação social, funcional e médica. Em ato puramente médico, sem assistente social e sem avaliação funcional, há nulidade. Em decorrência, deve-se requerer conversão em B32.
-
-## 10. Cenário 9. Conversão administrativa de B31 em B32
-
-Comprovada a impossibilidade de reabilitação, o INSS deve converter o B31 em B32 sem novo requerimento. A exigência de novo DER configura barreira administrativa abusiva, violando o art. 6º III Lei 13.460/2017 e o Tema 1124 STJ.
-
-## 11. Cenário 10. Limbo previdenciário pós-RP
-
-A alta sem reabilitação documentada e sem aposentadoria por incapacidade gera limbo. O segurado fica sem benefício e sem possibilidade de retorno ao trabalho. A solução é mandado de segurança para reativar o benefício, ou ação ordinária com tutela de urgência.
-
-## 12. Documentos essenciais
-
-Reúna agendamento, comprovantes de comparecimento, atestados de justificativa, parecer da equipe multidisciplinar, função identificada como compatível, certificado de reabilitação, relatório de retorno e PMF.
+| Cenário | Regra conferida | Atuação |
+|---|---|---|
+| 1. Falta a atendimento ou à perícia de RP | Reagendamento com manifestação em até 7 dias corridos do dia seguinte à ausência e justificativa plausível (art. 10, §1º) | Protocolar o pedido no prazo; pedir reativação do benefício (art. 12, parágrafo único) |
+| 2. Recusa ou abandono | Suspensão, despacho circunstanciado e prazo de defesa de 60 dias (art. 13) | Defesa com prova de força maior ou caso fortuito; sem notificação, mandado de segurança |
+| 3. Recluso em regime fechado | Suspensão por até 60 dias; restabelecimento na soltura (art. 14, §§2º a 5º) | Pedir restabelecimento desde a soltura e retomada do PRP |
+| 4. "Não necessita de RP" | Hipóteses do art. 29, II, e parecer fundamentado (art. 29, §1º) | Impugnar parecer genérico ou fora das hipóteses |
+| 5. Vínculo ativo no CNIS | Prazo de 30 dias para esclarecer a situação (art. 29, §1º-B) | Demonstrar vínculo apenas formal, afastamento ou atividade compatível |
+| 6. Insuscetibilidade com incapacidade parcial e permanente | Conversão administrativa em aposentadoria (art. 29, §2º-A) | Exigir a conversão sem novo requerimento |
+| 7. Indício de recuperação ou agravamento | Encaminhamento à Perícia Médica Federal (art. 6º-A) | Juntar relatório do médico assistente antes da reavaliação |
+| 8. Função incompatível ofertada pela empresa | Prosseguimento do PRP (art. 39) | Impugnar alta fundada em função incompatível |
+| 9. Retorno ao trabalho | Certificado, cessação e mensalidade de recuperação (art. 53) | Na aposentadoria cessada, conferir a mensalidade de recuperação (Lei 8.213/91, art. 47) |
+| 10. Alta sem certificado nem aposentadoria | Limbo previdenciário-trabalhista | Ver `base-limbo-previdenciario-tema300`; mandado de segurança ou ação com tutela de urgência |

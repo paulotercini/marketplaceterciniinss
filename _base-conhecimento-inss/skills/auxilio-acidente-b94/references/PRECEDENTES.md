@@ -13,19 +13,18 @@
 ## 1. Precedentes Vinculantes. STJ (Repetitivo)
 
 ### Tema 416/STJ
-- **Tese:** O grau da lesão não interfere na concessão do auxílio-acidente, bastando a existência de sequela que imponha maior esforço ao segurado para o desempenho de sua atividade laborativa habitual.
-- **Uso obrigatório:** em TODA petição de B94
-- **Alcance:** vinculante para todos os juízes e tribunais
+- **Tese literal (REsp 1.109.591/SC):** "Exige-se, para concessão do auxílio-acidente, a existência de lesão, decorrente de acidente do trabalho, que implique redução da capacidade para o labor habitualmente exercido. O nível do dano e, em consequência, o grau do maior esforço, não interferem na concessão do benefício, o qual será devido ainda que mínima a lesão."
+- **Uso:** em toda petição de B94.
 
 ### Tema 862/STJ. TERMO INICIAL
 - **Tese literal**, conferida na página oficial do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ."
 - **Situação:** trânsito em julgado. O Tema 1225/STF não teve repercussão geral reconhecida, por ser questão infraconstitucional, com trânsito em 15/09/2022.
 - **Uso:** apenas para a DIB do B94. NÃO serve à integração ao salário-de-benefício, cujo fundamento é o art. 31 da Lei 8.213/91.
-- **Regra prática desfavorável:** sem B31 prévio e sem requerimento administrativo, o STJ fixou o termo inicial na CITAÇÃO do INSS. O requerimento prévio evita a perda de retroativos
+- **Regra prática:** sem B31 prévio e sem requerimento administrativo, a DIB tende a recair na citação; o requerimento prévio preserva os atrasados.
 - **Combinação:** art. 86, §2º, Lei 8.213/91
 
 ### Tema 555/STJ
-- **Tese:** "A acumulação do auxílio-acidente com proventos de aposentadoria pressupõe que a eclosão da lesão incapacitante e a concessão da aposentadoria sejam anteriores à alteração do art. 86, §§ 2º e 3º, da Lei 8.213/1991, promovida em 11.11.1997." Basta que um dos dois fatos seja posterior ao marco para vedar a acumulação (auditoria 03/10/2026).
+- **Tese:** "A acumulação do auxílio-acidente com proventos de aposentadoria pressupõe que a eclosão da lesão incapacitante e a concessão da aposentadoria sejam anteriores à alteração do art. 86, §§ 2º e 3º, da Lei 8.213/1991, promovida em 11.11.1997." Basta que um dos dois fatos seja posterior ao marco para vedar a acumulação.
 - **Uso:** quando houver discussão sobre cumulação B94 + aposentadoria
 
 ## 2. Súmulas do STJ
@@ -38,7 +37,7 @@
 
 ### Súmula 88/TNU (Sessão Ordinária de 17/04/2024, unânime; DJeN 24/04/2024)
 - **Enunciado literal:** A existência de limitação, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessão do benefício de auxílio-acidente, em observância a tese fixada sob o Tema 416 do Superior Tribunal de Justiça.
-- **Uso obrigatório:** em toda petição de B94, especialmente quando o INSS ou perito minimizar a sequela. Citar o texto literal, sem paráfrase.
+- **Uso:** em toda petição de B94, pelo texto literal.
 
 ### Súmula 89/TNU (Sessão Ordinária de 17/04/2024, unânime; DJeN 24/04/2024)
 - **Enunciado literal:** Não há direito à concessão de benefício de auxílio-acidente quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que não reduzem a capacidade laborativa habitual nem sequer demandam dispêndio de maior esforço na execução da atividade habitual.
@@ -58,10 +57,9 @@
 ### Tema 350/TNU
 - **Tese:** O segurado em gozo de auxílio-acidente, ou que tenha a data da consolidação das lesões até 17 de junho de 2019, mantém a qualidade de segurado por 12 meses a partir da vigência da Lei 13.846/2019, observadas as possibilidades de prorrogação previstas nos §§ 1° e 2° do art. 15 da Lei 8.213/91.
 - **Uso:** quando houver discussão sobre qualidade de segurado em transição normativa da Lei 13.846/2019
-- **Regulamentação administrativa:** Portaria DIRBEN/INSS 991/2022, arts. 44 §1º, 53, 54
 
 ### Tema 322/TNU
-- **Tese:** O auxílio-acidente pode incrementar a aposentadoria por idade rural do segurado especial, mesmo sem contribuição facultativa.
+- **Tese:** "Devem ser computados os valores percebidos a título de auxílio-acidente no período básico de cálculo (PBC) da aposentadoria por idade rural do segurado especial, para fins de incremento da RMI, independentemente do recolhimento de contribuições facultativas."
 - **Uso:** combinação com art. 31 da Lei 8.213/91
 
 ## 5. PUILs da TNU (Teses Fixadas)
@@ -71,8 +69,8 @@
 - **Relator para acórdão:** Juiz Federal Ivanir Cesar Ireno Junior
 - **Resultado:** 10 x 2 (maioria)
 - **Tese:** O segurado refiliado como CI ou facultativo pode utilizar o período de graça do vínculo anterior como empregado, doméstico, avulso ou segurado especial para fins de B94, se mais favorável.
-- **Vinculação:** Turmas Recursais
-- **Prevalece sobre:** PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022), julgado da TRU da 4ª Região, não da TNU, sem efeito vinculante (auditoria 03/10/2026)
+- **Alcance:** orientação uniformizada para os JEFs; embargos de declaração rejeitados em 10/12/2025.
+- **Supera:** PUIL 5002615-35.2020.4.04.7207/SC (TRU da 4ª Região, 29/04/2022).
 
 ### PUIL 5026380-43.2022.4.02.5001/ES
 - **Julgamento:** 21/10/2025
@@ -85,8 +83,8 @@
 
 ### PUIL 5002615-35.2020.4.04.7207/SC, TRU da 4ª Região (SUPERADO)
 - **Julgamento:** 29/04/2022
-- **Tese (superada):** CI não tem direito a B94, mesmo em período de graça. Julgado regional da TRU da 4ª Região, não da TNU, sem efeito vinculante (auditoria 03/10/2026)
-- **Status:** SUPERADO pelo PUIL 5000733
+- **Tese (superada):** CI não tem direito a B94, mesmo em período de graça.
+- **Situação:** superado pelo PUIL 5000733 TNU.
 
 ## 6. Precedentes Relevantes dos TRFs
 
@@ -97,7 +95,7 @@
 - **Tese:** Juiz não está adstrito ao laudo pericial insuficiente. Sequelas mínimas justificam B94 quando impactam atividades que exigem pleno desempenho funcional.
 - **DIB:** 01/02/2019 (dia seguinte à cessação do auxílio-doença)
 - **Correção monetária:** EC 113/2021
-- **Relevância:** diretamente aplicável na 36ª Subseção de Catanduva (TRF3)
+- **Relevância:** precedente do TRF3, aplicável à Subseção de Catanduva.
 
 ### TRF3. ApCiv 5013553-90.2021.4.03.6105
 - **Turma:** 7ª Turma
@@ -118,7 +116,7 @@
 
 ### TRF5. AC 0004352-48.2025.4.05.0000-CE
 - **Caso:** Agricultor com acidente de trajeto
-- **Tese:** Sequela não precisa ser irreversível. A irreversibilidade da moléstia é irrelevante para B94.
+- **Tese:** a irreversibilidade da moléstia é irrelevante para o B94 (no mesmo sentido, Tema 156 STJ).
 
 ### TRF1. ApCiv 1009673912021401330
 - **Turma:** 9ª Turma
@@ -135,12 +133,12 @@
 ### Linha protetiva
 - **REsp 2.217.297.** Min. Sérgio Kukina, DJe 06/08/2025 (decisão monocrática). Reconhece que a categoria preservada do vínculo anterior prevalece quando a migração para CI ocorre dentro do período de graça.
 
-**Status:** sem afetação como repetitivo até março/2026. Monitorar.
+**Situação:** sem afetação como repetitivo até março/2026.
 
-## 5. Julgado novo conferido por inteiro teor (12/07/2026)
+## 8. Julgado conferido por inteiro teor (12/07/2026)
 
 ### REsp 2.270.389/RS (Segunda Turma, Rel. Min. Teodoro Silva Santos, j. 17/06/2026, DJEN 23/06/2026, unânime)
-- **Tese aplicada:** conversão de auxílio-doença cessado em auxílio-acidente pelo mesmo fato gerador DISPENSA novo requerimento administrativo (exceção do Tema 350/STF). A cessação do B31 sem concessão do B94 já configura o interesse de agir.
+- **Tese aplicada:** conversão de auxílio-doença cessado em auxílio-acidente pelo mesmo fato gerador dispensa novo requerimento administrativo (exceção do Tema 350/STF). A cessação do B31 sem concessão do B94 já configura o interesse de agir.
 - **DIB:** dia seguinte à cessação do B31 (Tema 862/STJ, leading cases REsp 1.729.555/SP e 1.786.736/SP), mesmo em ação ajuizada anos após a cessação.
-- **Prescrição:** só das parcelas do quinquênio. Fundo de direito imprescritível (EREsp 1.269.726/MG, Primeira Seção, transcrito no voto). No caso concreto o B31 cessara em 08/02/2010.
+- **Prescrição:** apenas das parcelas do quinquênio. Fundo de direito imprescritível (EREsp 1.269.726/MG, Primeira Seção, transcrito no voto). No caso concreto o B31 cessara em 08/02/2010.
 - **Uso:** reforço federal à mesma tese do AI 2061943-13.2025.8.26.0000 do TJSP. Em acidentária estadual, citar os dois. Julgado de Turma, persuasivo, ancorar sempre nos vinculantes Tema 350/STF e Tema 862/STJ.

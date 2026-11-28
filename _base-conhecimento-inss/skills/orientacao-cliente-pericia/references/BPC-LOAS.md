@@ -92,7 +92,7 @@ O que consegue fazer sozinho e o que precisa de ajuda. Não basta responder que 
 
 Na perícia médica, permitir exame completo. Demonstrar limitação real, sem exagero.
 
-Na avaliação social, não é exame físico. É conversa. Cliente precisa se mostrar como realmente é. Sem fingir força que não tem, sem fingir vulnerabilidade que não tem. A assistente social avalia em bloco, não só pelo que o cliente fala, mas pelo ambiente, pela postura, pelo relato dos familiares, pela coerência entre discurso e evidências.
+Na avaliação social, não é exame físico. É conversa. Cliente precisa se mostrar como realmente é. Sem fingir força que não tem, sem fingir vulnerabilidade que não tem. A assistente social avalia em bloco, não apenas pelo que o cliente fala, mas pelo ambiente, pela postura, pelo relato dos familiares, pela coerência entre discurso e evidências.
 
 ## Perguntas clássicas do perito médico em BPC
 
@@ -180,7 +180,7 @@ A avaliação segue IF-BrM (Índice de Funcionalidade Brasileiro Modificado), qu
 Benefício para idoso com 65 anos ou mais também existe (assistencial etário, Lei 8.742/93, art. 20). Nesse caso, não há perícia médica, apenas avaliação de renda e residência. A orientação é distinta. Esta referência foca no BPC por deficiência.
 
 ### Renda per capita
-O teto é de 1/4 do salário-mínimo per capita, com flexibilização pela jurisprudência (Tema 27/STF reformulado). Em juízo, é possível demonstrar miserabilidade acima desse teto com despesas essenciais. Isso não é matéria da perícia, mas o cliente deve levar comprovantes de despesa na avaliação social.
+O teto é de 1/4 do salário-mínimo per capita, com flexibilização admitida pelo STF (RE 567.985, Tema 27) e pelo art. 20, §11, da Lei 8.742/93. Em juízo, é possível demonstrar miserabilidade acima desse teto com despesas essenciais. Isso não é matéria da perícia, mas o cliente deve levar comprovantes de despesa na avaliação social.
 
 ### Dispensa de reavaliação
 Portaria 34/2025 e Portaria 37/2026 preveem dispensa de reavaliação periódica em casos de impedimento permanente, irreversível e irrecuperável. Cliente deve saber que tem direito a pedir dispensa na perícia, se for o caso, e advogado deve orientar conforme.

@@ -5,6 +5,8 @@ description: "Limbo previdenciário e manutenção da qualidade de segurado pelo
 
 # Limbo Previdenciário. Tema 300 da TNU
 
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente.
+
 ## 1. Quando acionar esta skill
 
 Acione sempre que o segurado tiver recebido alta do INSS, ou indeferimento, e o empregador houver recusado a reassunção do posto por considerá-lo inapto, mantendo o vínculo sem trabalho e sem salário.
@@ -15,9 +17,9 @@ Acione também, de forma retroativa, sempre que a análise do CNIS revelar vínc
 
 O limbo é a zona em que o INSS diz que o segurado pode trabalhar e o empregador diz que não pode. O trabalhador fica sem benefício e sem salário, com o contrato vivo.
 
-A TNU decidiu que, nessa situação, o art. 15, II, da Lei 8.213/91 não incide, porque o segurado não deixou de exercer atividade remunerada abrangida pela Previdência Social por vontade própria. A qualidade de segurado se mantém enquanto durar o vínculo, e o período de graça só começa a correr da rescisão contratual.
+A TNU decidiu que, nessa situação, o art. 15, II, da Lei 8.213/91 não incide, porque o segurado não deixou de exercer atividade remunerada abrangida pela Previdência Social por vontade própria. A qualidade de segurado se mantém enquanto durar o vínculo, e o período de graça apenas começa a correr da rescisão contratual.
 
-O ganho prático é grande. Um segurado que ficou seis anos em limbo permanece segurado no sexto ano, o que sustenta B31, B32, B94 e pensão por morte que o INSS indeferiria por perda da qualidade.
+Consequência prática: um segurado que ficou seis anos em limbo permanece segurado no sexto ano, o que sustenta B31, B32, B94 e pensão por morte que o INSS indeferiria por perda da qualidade.
 
 ## 3. Marco jurisprudencial
 
@@ -33,7 +35,7 @@ Não há tema repetitivo, súmula ou enunciado do STJ sobre a matéria. Declarar
 
 ## 4. Regra dura. A tese não se aplica sozinha
 
-O erro mais caro nesta matéria é supor que vínculo em aberto no CNIS basta. Não basta.
+Erro frequente nesta matéria é supor que vínculo em aberto no CNIS basta. Não basta.
 
 A 8ª Turma Recursal de São Paulo, no RI 5018508-56.2024.4.03.6301, negou o Tema 300 justamente por ausência de prova do impedimento, registrando que a tese se restringe às hipóteses de tentativa frustrada de retorno por conduta ilegítima do empregador. A segurada havia juntado apenas e-mails e mensagens de WhatsApp tardios e genéricos.
 
@@ -56,7 +58,7 @@ Ordem de força decrescente, detalhada em `references/FUNDAMENTOS-E-CENARIOS.md`
 
 **Nunca requerer RAC pedindo baixa do vínculo em aberto no CNIS.** O vínculo aberto é ativo processual, é ele que sustenta a manutenção da qualidade de segurado. Encerrá-lo administrativamente destrói a tese.
 
-Esse alerta prevalece sobre a rotina ordinária de saneamento de CNIS da skill `base-cnis-acerto-indicadores`, que em regra recomenda impugnar registros irregulares. Aqui a irregularidade aparente joga a favor do segurado.
+Esse alerta prevalece sobre a rotina ordinária de saneamento de CNIS da skill `base-cnis-acerto-indicadores`, que em regra recomenda impugnar registros irregulares. Aqui a irregularidade aparente favorece o segurado.
 
 ## 7. Estratégia por via
 

@@ -1,6 +1,6 @@
 # Carta ao Médico Assistente. Auxílio-Acidente
 
-Onda 165, 03/10/2026. Carta curta que acompanha o modelo de relatório. Preencher os colchetes e enviar com o modelo da skill (`references/MODELO-BASE.md`).
+Carta curta que acompanha o modelo de relatório. Preencher os colchetes e enviar com o modelo da skill (`references/MODELO-BASE.md`).
 
 ---
 

@@ -13,7 +13,7 @@ description: "Skill do regime de análise documental para B31, B91 e auxílio-ac
 - Objeto. Disciplina a execução do exame médico-pericial por meio de análise documental para o benefício de auxílio por incapacidade temporária (art. 60, §11-A, Lei 8.213/91)
 - Processos. 35014.060869/2026-86 e 10128.005193/2026-50
 - Revoga. Portarias Conjuntas MPS/INSS nº 38/2023, nº 6/2023, nº 7/2024, nº 19/2024, nº 59/2025, nº 72/2025, nº 82/2025 e nº 83/2025
-- Conferência [CONFERIDO], texto integral das Portarias 13, 14 e 15/2026 conferido em fonte oficial em 18/07/2026, assinadas por Wolney Queiroz Maciel (MPS) e Gilberto Waller Júnior (INSS). Redação original; os arts. 3º, 8º e 9º foram alterados pela Portaria 54/2026 (ver acima). Pontos nucleares confirmados na 13/2026, art. 3º (soma de duração até 30 dias), art. 6º, V (nova análise documental só a partir de 180 dias DA CESSAÇÃO, na hipótese de indeferimento de prorrogação por parecer contrário), art. 6º, VI (nova análise documental a partir de 30 dias da decisão, quando o indeferimento anterior foi documental), art. 6º, VII e VIII (admissão no dia seguinte quando o indeferimento anterior foi por perícia presencial/telemedicina ou sem avaliação da incapacidade), art. 8º (três indeferimentos sucessivos direcionam obrigatoriamente à perícia presencial) e art. 9º (recurso em 30 dias; a literalidade diz "da data da decisão", ler conforme o art. 305 do Decreto 3.048/99, que conta da ciência, ver seção Recurso). Referência última no DOU de 24/03/2026
+- Conferência [CONFERIDO], texto integral das Portarias 13, 14 e 15/2026 conferido em fonte oficial em 18/07/2026, assinadas por Wolney Queiroz Maciel (MPS) e Gilberto Waller Júnior (INSS). Redação original; os arts. 3º, 8º e 9º foram alterados pela Portaria 54/2026 (ver acima). Pontos nucleares confirmados na 13/2026, art. 3º (soma de duração até 30 dias), art. 6º, V (nova análise documental apenas a partir de 180 dias DA CESSAÇÃO, na hipótese de indeferimento de prorrogação por parecer contrário), art. 6º, VI (nova análise documental a partir de 30 dias da decisão, quando o indeferimento anterior foi documental), art. 6º, VII e VIII (admissão no dia seguinte quando o indeferimento anterior foi por perícia presencial/telemedicina ou sem avaliação da incapacidade), art. 8º (três indeferimentos sucessivos direcionam obrigatoriamente à perícia presencial) e art. 9º (recurso em 30 dias; a literalidade diz "da data da decisão", ler conforme o art. 305 do Decreto 3.048/99, que conta da ciência, ver seção Recurso). Referência última no DOU de 24/03/2026
 
 ### Portaria Conjunta MPS/INSS nº 54, de 05/11/2026 (altera a 13/2026)
 - Publicação e vigência. DOU de 06/11/2026, Edição 209, Seção 1, Página 100, vigência na publicação (art. 3º)
@@ -39,8 +39,8 @@ description: "Skill do regime de análise documental para B31, B91 e auxílio-ac
 
 ## Fluxo de Trabalho
 
-1. Leia `references/FLUXOS-REQUISITOS-ESTRATEGIAS.md` para os fluxos completos, requisitos documentais, regras de novos requerimentos, prazos e estratégias de defesa
-2. Leia `references/VIAS-IMPUGNACAO.md` para as vias de impugnação judicial, administrativa e extrajudicial contra cada ponto das portarias
+1. Confira os requisitos do art. 2º, os limites de duração e as travas dos arts. 6º e 8º nas seções abaixo
+2. Use a Árvore de Decisão Pós-Negativa e o Mapa de Vias de Impugnação desta skill; para os campos do Meu INSS, `references/PADRAO-AUTODECLARACAO-MEU-INSS.md`
 3. Aplique as regras ao caso concreto
 4. Ao redigir petição ou recurso, acione as skills complementares pertinentes
 
@@ -54,7 +54,7 @@ Quando o usuário anexar documentos de um requerimento de B31, B91 ou B94 e menc
 
 1. Identificar a espécie (B31, B91 ou B94)
 2. Ler cada documento anexado
-3. Executar a matriz de checagem da seção 14 do arquivo `references/FLUXOS-REQUISITOS-ESTRATEGIAS.md`, verificando inciso a inciso qual documento atende cada requisito
+3. Executar a checagem dos requisitos do art. 2º da Portaria Conjunta 13/2026 (seção "Requisitos REAIS do art. 2º" desta skill), verificando inciso a inciso qual documento atende cada requisito
 4. Apresentar ao usuário a MATRIZ COMPLETA (inciso → documento → status), os ITENS DESCOBERTOS, os ITENS FRÁGEIS e as RECOMENDAÇÕES
 5. Se todos os incisos obrigatórios estiverem atendidos, gerar automaticamente a petição de cumprimento de exigência conforme seção 15 do arquivo de referência, no padrão .docx do escritório (skill peticao-previdenciaria)
 6. Se houver itens descobertos, alertar o usuário e recomendar complementação antes de gerar a petição
@@ -78,7 +78,7 @@ Diante de um Atestmed negado, a primeira tarefa do advogado é identificar o mot
 
 Primeira via a examinar em todo indeferimento por parecer técnico com ciência a partir de 06/11/2026. O pedido corre DENTRO do mesmo requerimento, por isso preserva a DER e evita a espera de 30 dias do novo protocolo (art. 6º, VI). Cabe em dez dias da ciência e admite documento médico ou odontológico novo (parágrafo único). É a via própria quando a negativa decorreu de deficiência do documento, a mesma hipótese que antes levava ao novo requerimento (Via 1), e quando o escritório tem relatório complementar, exame ou prontuário que a PMF não viu. O documento juntado na reanálise integra o processo administrativo, o que atende ao Tema 1124/STJ em eventual ação.
 
-Regra de prazo. O recurso ao CRPS só começa a correr da ciência da decisão da reanálise (art. 9º, § 2º, II). O recurso interposto antes, dentro dos dez dias, PRECLUI a reanálise (art. 9º, § 1º). A Portaria não diz como se contam os dez dias; aplicar a contagem do art. 66 da Lei 9.784/99 e, por cautela, contar em dias corridos a partir do dia seguinte ao da ciência.
+Regra de prazo. O recurso ao CRPS apenas começa a correr da ciência da decisão da reanálise (art. 9º, § 2º, II). O recurso interposto antes, dentro dos dez dias, PRECLUI a reanálise (art. 9º, § 1º). A Portaria não diz como se contam os dez dias; aplicar a contagem do art. 66 da Lei 9.784/99 e, por cautela, contar em dias corridos a partir do dia seguinte ao da ciência.
 
 Quando NÃO usar. Negativa por questão de direito (qualidade de segurado, carência), que não é indeferimento por parecer técnico e não abre a reanálise, vai direto ao recurso ou à ação. Urgência sem documento novo vai à ação judicial.
 
@@ -86,22 +86,22 @@ Pontos que a Portaria deixou em aberto. Primeiro, não diz se o indeferimento ma
 
 ### Via 1. Novo requerimento por análise documental
 
-Cabível quando o motivo foi exclusivamente a deficiência do documento médico (falha formal, CID ausente, ausência de data de início do repouso, conteúdo insuficiente dos incisos do art. 2º) e o segurado consegue refazer o laudo com qualidade. **Regra operacional vigente, sem exceção de balcão.** Quando o indeferimento anterior foi por análise documental, o novo requerimento só é admitido a partir de 30 dias da decisão (art. 6º, VI, Portaria 13/2026). No fluxo administrativo não existe opção de o segurado escolher perícia presencial para escapar da espera, o requerimento de B31 ingressa pela via documental como regra (art. 1º) e o direcionamento ao exame presencial só ocorre nas hipóteses normativas (art. 6º, II, art. 8º). Protocolo antecipado será inadmitido. A superação da espera se dá apenas por recurso, mandado de segurança ou ação judicial, nunca por novo protocolo. A admissão no dia seguinte existe somente quando o indeferimento anterior foi por perícia presencial ou telemedicina (art. 6º, VII) ou sem avaliação da incapacidade, não comparecimento ou motivo administrativo (art. 6º, VIII). O novo pedido não preserva a data de entrada original, os efeitos financeiros correm do novo protocolo. Após dois indeferimentos documentais sucessivos, o requerimento seguinte vai obrigatoriamente à perícia presencial (art. 8º, na redação da Portaria 54/2026; três, para indeferimentos com ciência anterior a 06/11/2026). Com ciência a partir de 06/11/2026, a reanálise do art. 8º-A torna esta via residual, porque corrige o documento sem perder a DER. É o caminho que mais custa em data de entrada, reservar aos casos em que a incapacidade não é contínua desde o primeiro protocolo ou em que refazer o laudo é trivial.
+Cabível quando o motivo foi exclusivamente a deficiência do documento médico (falha formal, CID ausente, ausência de data de início do repouso, conteúdo insuficiente dos incisos do art. 2º) e o segurado consegue refazer o laudo com qualidade. **Regra operacional vigente, sem exceção de balcão.** Quando o indeferimento anterior foi por análise documental, o novo requerimento apenas é admitido a partir de 30 dias da decisão (art. 6º, VI, Portaria 13/2026). No fluxo administrativo não existe opção de o segurado escolher perícia presencial para escapar da espera, o requerimento de B31 ingressa pela via documental como regra (art. 1º) e o direcionamento ao exame presencial apenas ocorre nas hipóteses normativas (art. 6º, II, art. 8º). Protocolo antecipado será inadmitido. A superação da espera se dá apenas por recurso, mandado de segurança ou ação judicial, nunca por novo protocolo. A admissão no dia seguinte existe somente quando o indeferimento anterior foi por perícia presencial ou telemedicina (art. 6º, VII) ou sem avaliação da incapacidade, não comparecimento ou motivo administrativo (art. 6º, VIII). O novo pedido não preserva a data de entrada original, os efeitos financeiros correm do novo protocolo. Após dois indeferimentos documentais sucessivos, o requerimento seguinte vai obrigatoriamente à perícia presencial (art. 8º, na redação da Portaria 54/2026; três, para indeferimentos com ciência anterior a 06/11/2026). Com ciência a partir de 06/11/2026, a reanálise do art. 8º-A torna esta via residual, porque corrige o documento sem perder a DER. É o caminho que mais custa em data de entrada, reservar aos casos em que a incapacidade não é contínua desde o primeiro protocolo ou em que refazer o laudo é trivial.
 
 ### Via 2. Recurso ao CRPS
 
-Cabível quando o problema é o mérito da decisão pericial, não o laudo. Fundamentação genérica, ausência de análise dos documentos enviados ou erro material do perito abrem recurso no prazo de 30 dias da ciência (art. 9º, § 2º, Portaria 13/2026, na redação da Portaria 54/2026). Havendo reanálise, o prazo conta da ciência da decisão que a apreciar (§ 2º, II). Recorrer dentro dos dez dias sem pedir reanálise preclui a reanálise (§ 1º); só recorrer direto quando a negativa for de direito ou quando não houver documento novo a apresentar. O recurso preserva a data de entrada e os efeitos financeiros desde o primeiro protocolo se provido. O argumento central é o vício de motivação, decisão que não enfrenta os documentos apresentados viola o dever de fundamentação (art. 50 da Lei 9.784/99), tese aproveitável também na eventual ação judicial. Instruir com laudo complementado, exames que reforcem a incapacidade e contestação expressa da motivação da negativa.
+Cabível quando o problema é o mérito da decisão pericial, não o laudo. Fundamentação genérica, ausência de análise dos documentos enviados ou erro material do perito abrem recurso no prazo de 30 dias da ciência (art. 9º, § 2º, Portaria 13/2026, na redação da Portaria 54/2026). Havendo reanálise, o prazo conta da ciência da decisão que a apreciar (§ 2º, II). Recorrer dentro dos dez dias sem pedir reanálise preclui a reanálise (§ 1º); apenas recorrer direto quando a negativa for de direito ou quando não houver documento novo a apresentar. O recurso preserva a data de entrada e os efeitos financeiros desde o primeiro protocolo se provido. O argumento central é o vício de motivação, decisão que não enfrenta os documentos apresentados viola o dever de fundamentação (art. 50 da Lei 9.784/99), tese aproveitável também na eventual ação judicial. Instruir com laudo complementado, exames que reforcem a incapacidade e contestação expressa da motivação da negativa.
 
 ### Via 3. Ação judicial (JEF ou Vara Federal)
 
-Cabível quando há urgência (segurado sem renda, incapacidade comprovada, risco de dano grave) ou quando a via documental é estruturalmente inadequada ao quadro, caso das patologias de diagnóstico predominantemente clínico. Não se exige esgotamento administrativo, basta um indeferimento, pois o Tema 350/STF exige prévio requerimento, não exaurimento das instâncias. A tutela de urgência com dossiê médico robusto pode antecipar o pagamento antes da sentença. Duas cautelas do escritório. A primeira, o Tema 1124/STJ, toda documentação relevante deve ter passado pela via administrativa, sob pena de a DIB deslocar para a citação (prova nova só em juízo empurra os efeitos financeiros para frente). A segunda, a competência da casa, morador de Monte Alto, Vista Alegre do Alto ou Pirangi litiga na Justiça Federal de Catanduva, Matão em Araraquara, Jaboticabal ou Guariba em Ribeirão Preto, e o B91 acidentário corre na Justiça Estadual (art. 109, I, parte final, CF).
+Cabível quando há urgência (segurado sem renda, incapacidade comprovada, risco de dano grave) ou quando a via documental é estruturalmente inadequada ao quadro, caso das patologias de diagnóstico predominantemente clínico. Não se exige esgotamento administrativo, basta um indeferimento, pois o Tema 350/STF exige prévio requerimento, não exaurimento das instâncias. A tutela de urgência com dossiê médico robusto pode antecipar o pagamento antes da sentença. Duas cautelas do escritório. A primeira, o Tema 1124/STJ, toda documentação relevante deve ter passado pela via administrativa, sob pena de a DIB deslocar para a citação (prova nova apenas em juízo empurra os efeitos financeiros para frente). A segunda, a competência da casa, morador de Monte Alto, Vista Alegre do Alto ou Pirangi litiga na Justiça Federal de Catanduva, Matão em Araraquara, Jaboticabal ou Guariba em Ribeirão Preto, e o B91 acidentário corre na Justiça Estadual (art. 109, I, parte final, CF).
 
 ### Quadro comparativo
 
 | Via | Prazo | Preserva DIB | Melhor quando | Base conferida |
 |---|---|---|---|---|
 | Reanálise da documentação médica | 10 dias da ciência | Sim | Documento deficiente ou documento novo; ciência a partir de 06/11/2026 | Portaria 13/2026, art. 8º-A, redação da Portaria 54/2026 |
-| Nova análise documental | após 30 dias do indeferimento documental (imediato só nos casos do art. 6º, VII e VIII) | Não | Deficiência exclusiva do laudo e incapacidade não contínua | Portaria 13/2026, arts. 2º e 6º, VI a VIII |
+| Nova análise documental | após 30 dias do indeferimento documental (imediato apenas nos casos do art. 6º, VII e VIII) | Não | Deficiência exclusiva do laudo e incapacidade não contínua | Portaria 13/2026, arts. 2º e 6º, VI a VIII |
 | Recurso ao CRPS | 30 dias da ciência da decisão, ou da decisão da reanálise | Sim | Mérito pericial injusto, vício de motivação, negativa de direito | Portaria 13/2026, art. 9º, §§ 1º e 2º, redação da Portaria 54/2026 |
 | Ação judicial | imediato após 1 indeferimento | Sim, com ressalva | Urgência, quadro clínico, via documental inadequada | Tema 350/STF, Tema 1124/STJ |
 
@@ -118,7 +118,7 @@ A soma dos benefícios de auxílio por incapacidade temporária concedidos por a
 O parecer favorável em perícia presencial ou por telemedicina no requerimento imediatamente anterior interrompe a soma, que recomeça integralmente para nova concessão por análise documental. Vale desde 06/11/2026, porque o art. 2º da Portaria 54/2026 não o inclui na transição. Conferir no histórico do segurado se o último benefício veio de perícia presencial antes de afirmar que o teto se esgotou.
 
 ### Exceção transitória (Portaria 14/2026)
-Em caráter excepcional, o limite é ampliado para 90 dias, com vigência inicial de 180 dias a partir de 24/03/2026. A **Portaria Conjunta MPS/INSS 43/2026**, de 18/09/2026, publicada no DOU de 21/09/2026, prorrogou essa vigência por 365 dias, de modo que o teto de 90 dias segue até aproximadamente 20/09/2027, e as demais disposições da 14/2026 ficaram inalteradas (art. 2º). Fundamento, art. 60, § 11-I, da Lei 8.213/91. Só depois disso o teto retorna a 30 dias, salvo nova prorrogação [CONFERIDO no DOU em 22/09/2026].
+Em caráter excepcional, o limite é ampliado para 90 dias, com vigência inicial de 180 dias a partir de 24/03/2026. A **Portaria Conjunta MPS/INSS 43/2026**, de 18/09/2026, publicada no DOU de 21/09/2026, prorrogou essa vigência por 365 dias, de modo que o teto de 90 dias segue até aproximadamente 20/09/2027, e as demais disposições da 14/2026 ficaram inalteradas (art. 2º). Fundamento, art. 60, § 11-I, da Lei 8.213/91. Apenas depois disso o teto retorna a 30 dias, salvo nova prorrogação [CONFERIDO no DOU em 22/09/2026].
 
 ## Natureza Acidentária (B91)
 
@@ -136,7 +136,7 @@ Após dois indeferimentos sucessivos por análise documental (três, na redaçã
 
 Classificação. TESE a sustentar em MS ou ação judicial, NÃO é a regra operacional vigente. No balcão administrativo vale o fluxo da Portaria 13/2026, o requerimento entra pela análise documental, não há campo para o segurado exigir perícia presencial desde o início, e o novo pedido após indeferimento documental espera os 30 dias do art. 6º, VI. Feita essa distinção, a tese. O art. 8º cria uma obrigação do INSS (agendar perícia presencial após duas negativas), não uma barreira de acesso do segurado ao exame clínico. O art. 60, §11-A, da Lei 8.213/91 trata a análise documental como modalidade alternativa, não como etapa obrigatória prévia ao exame presencial. A Portaria 13/2026, como ato infralegal, não pode criar restrição que a lei não previu. Enquanto a tese não for acolhida no caso concreto, orientar o cliente pela regra, não pela tese.
 
-### ALERTA. Armadilha do "sucessivos"
+### ALERTA. Alcance do termo "sucessivos"
 
 O INSS interpretará "sucessivos" como exigência de continuidade ininterrupta. Uma concessão intermediária (mesmo que de poucos dias) reseta o contador para zero. O segurado com doença crônica que alterna entre concessões curtas e indeferimentos pode nunca atingir o gatilho, ficando permanentemente preso no ciclo documental.
 
@@ -150,9 +150,9 @@ Quando o segurado tiver o primeiro indeferimento por análise documental e a pat
 
 ## Trava dos 180 Dias (art. 6º, V, Portaria 13/2026)
 
-A trava atinge EXCLUSIVAMENTE o segurado que teve indeferimento de prorrogação (PP) por parecer desfavorável à incapacidade. Nesse cenário, o novo requerimento por análise documental só é admitido após 180 dias da cessação. A trava NÃO se aplica a cessação normal, a indeferimento de requerimento autônomo (que tem prazo de 30 dias pelo inciso VI), nem a qualquer outra hipótese do art. 6º. ALERTA, essa restrição não tem base no art. 60 da Lei 8.213/91 e é impugnável judicialmente.
+A trava atinge EXCLUSIVAMENTE o segurado que teve indeferimento de prorrogação (PP) por parecer desfavorável à incapacidade. Nesse cenário, o novo requerimento por análise documental apenas é admitido após 180 dias da cessação. A trava NÃO se aplica a cessação normal, a indeferimento de requerimento autônomo (que tem prazo de 30 dias pelo inciso VI), nem a qualquer outra hipótese do art. 6º. ALERTA, essa restrição não tem base no art. 60 da Lei 8.213/91 e é impugnável judicialmente.
 
-### ALERTA CRÍTICO. Prorrogação é faca de dois gumes
+### ALERTA CRÍTICO. Prorrogação com efeito ambivalente
 
 O indeferimento de PP ativa a trava de 180 dias (art. 6º, V). O indeferimento de novo requerimento autônomo tem prazo de apenas 30 dias (art. 6º, VI). Essa diferença de tratamento exige que o advogado avalie cuidadosamente se é mais seguro pedir PP ou fazer novo requerimento autônomo. Se a documentação médica não for significativamente mais forte que a apresentada originalmente, o risco de indeferimento da PP é alto, e a consequência (180 dias de bloqueio) é muito mais grave do que a consequência do indeferimento de requerimento autônomo (30 dias de bloqueio).
 
@@ -168,7 +168,7 @@ Contra indeferimento do auxílio-acidente pela análise documental prévia, cabe
 
 O art. 4º, §3º, da Portaria 13/2026 confere ao PMF autonomia para fixar data de início de repouso e duração do benefício de forma diversa do indicado na documentação médica, com base na literatura científica e nos tempos médios por CID (art. 4º, §4º). ALERTA, esse dispositivo será o principal instrumento de redução de benefícios concedidos por análise documental. O segurado deve obter atestados com data de início do repouso e prazo estimado em dias.
 
-## Requisitos REAIS do art. 2º da Portaria 13/2026 (Onda 72, conferido no DOU)
+## Requisitos REAIS do art. 2º da Portaria 13/2026
 
 Redação conferida no inteiro teor publicado no DOU de 24/03/2026, Edição 56, Seção 1, Página 93.
 
@@ -204,11 +204,11 @@ Ressalva de método. Obter atestado COM data de início do repouso e COM prazo e
 
 ## Alertas Estratégicos
 
-### ALERTA 1. Documentação é tudo
+### ALERTA 1. Documentação decide o pedido
 No regime de análise documental, a qualidade da documentação médica apresentada no requerimento administrativo define o resultado. Relatórios genéricos serão rejeitados. Cada requisito do art. 2º das Portarias nº 13 e nº 15 deve ser individualmente atendido, observada a distinção entre requisito obrigatório e elemento facultativo da seção anterior.
 
 ### ALERTA 2. Tema 1124/STJ
-A documentação apresentada no requerimento administrativo define o interesse de agir e os efeitos financeiros em eventual ação judicial. Toda documentação relevante deve ser apresentada na via administrativa, porque o documento médico que já existia e não foi levado ao INSS leva à extinção sem mérito, e só o surgido depois do ajuizamento, como o agravamento constatado na perícia judicial, desloca a DIB para a citação. A perícia médica judicial que reconhece a incapacidade desde a DER, sem agravamento nem doença nova, mantém a DIB na DER.
+A documentação apresentada no requerimento administrativo define o interesse de agir e os efeitos financeiros em eventual ação judicial. Toda documentação relevante deve ser apresentada na via administrativa, porque o documento médico que já existia e não foi levado ao INSS leva à extinção sem mérito, e apenas o surgido depois do ajuizamento, como o agravamento constatado na perícia judicial, desloca a DIB para a citação. A perícia médica judicial que reconhece a incapacidade desde a DER, sem agravamento nem doença nova, mantém a DIB na DER.
 
 Os embargos de declaração do Tema 1124 (j. 09/09/2026, DJEN 21/09/2026) registraram, como exemplo, que o restabelecimento ou a manutenção do benefício cessado por alta programada exige novo requerimento, porque a persistência da incapacidade é fato novo (Tema 1.196/STF). O mesmo voto dispensou o novo requerimento para o auxílio-acidente quando a perícia do INSS no benefício temporário constatou a recuperação e identificou sequela. O pedido de prorrogação tempestivo, dentro do benefício ainda ativo, é a forma de evitar a discussão. Detalhe em `tema-1124-instrucao-administrativa`.
 
@@ -221,8 +221,8 @@ Os documentos do parágrafo único do art. 2º da Portaria nº 15 (laudos, exame
 ### ALERTA 5. Impacto da expiração da Portaria nº 14
 A prorrogação veio, pela Portaria Conjunta 43/2026, e o teto de 90 dias vale até aproximadamente 20/09/2027. Segurados com doença de recuperação lenta continuam obtendo até 90 dias por análise documental, e a volta ao teto de 30 dias fica para setembro de 2027, salvo nova prorrogação. Monitorar em agosto de 2027.
 
-### ALERTA 6. Art. 8º como funil, regra vigente x tese impugnável
-No fluxo administrativo vigente, a via documental é a porta de entrada do B31 e o INSS opera o art. 8º como funil, perícia presencial garantida só após dois indeferimentos documentais sucessivos (Portaria 54/2026; três, para ciência anterior a 06/11/2026), e novo pedido pós-indeferimento documental só após 30 dias (art. 6º, VI). Orientar o cliente por essa regra. A leitura do art. 8º como norma de garantia (direito à perícia presencial desde o primeiro requerimento) é TESE DE IMPUGNAÇÃO, a sustentar por MS ou em juízo, ver seção própria e a seção 7.6 do arquivo de referência. Nunca apresentar a tese ao cliente como se fosse o funcionamento do sistema.
+### ALERTA 6. Art. 8º, regra vigente e tese impugnável
+No fluxo administrativo vigente, a via documental é a porta de entrada do B31 e o INSS opera o art. 8º como funil, perícia presencial garantida apenas após dois indeferimentos documentais sucessivos (Portaria 54/2026; três, para ciência anterior a 06/11/2026), e novo pedido pós-indeferimento documental apenas após 30 dias (art. 6º, VI). Orientar o cliente por essa regra. A leitura do art. 8º como norma de garantia (direito à perícia presencial desde o primeiro requerimento) é TESE DE IMPUGNAÇÃO, a sustentar por MS ou em juízo, ver seção própria e a seção 7.6 do arquivo de referência. Nunca apresentar a tese ao cliente como se fosse o funcionamento do sistema.
 
 ### ALERTA 7. Prorrogação (PP) vs novo requerimento autônomo
 Indeferimento de PP ativa trava de 180 dias (art. 6º, V). Indeferimento de novo requerimento autônomo tem prazo de apenas 30 dias (art. 6º, VI). Avaliar caso a caso se é mais seguro pedir PP ou fazer novo requerimento.
@@ -230,15 +230,15 @@ Indeferimento de PP ativa trava de 180 dias (art. 6º, V). Indeferimento de novo
 ### ALERTA 8. Portaria SE/MPS nº 490/2026. Incentivo econômico à perícia presencial
 A Portaria SE/MPS nº 490/2026, publicada no mesmo DOU de 24/03/2026, altera a tabela de pontuação das atividades da Perícia Médica Federal (PGDPMF). Perícias presenciais mantêm maior peso na pontuação. Análises documentais têm menor pontuação. Isso revela que o sistema incentiva o perito a direcionar casos para perícia presencial (mais pontos) ou a indeferir por via documental (menos trabalho). Argumento utilizável em impugnações para demonstrar viés institucional contra a análise documental favorável ao segurado.
 
-### ALERTA 9. Os quatro campos de autodeclaração do Meu INSS são armadilha para o segurado desassistido
+### ALERTA 9. Os quatro campos de autodeclaração do Meu INSS expõem o segurado desassistido a erro
 
 O sistema Meu INSS exige quatro campos de autodeclaração no requerimento de benefícios por incapacidade (Portaria Conjunta DTI/DIRBEN/INSS nº 16, de 31/03/2026), "data de início dos sintomas", "descrição dos sintomas", "atividade/trabalho que exercia" e "descrição da atividade/trabalho". Os dois primeiros alimentam a fixação de DIS/DII e o cotejo com a documentação médica. Os dois últimos fixam o parâmetro da incapacidade, porque o B31 é incapacidade para a atividade habitual, e o perito documental mede a doença contra exatamente o que estiver escrito ali. Tudo fica registrado, é confrontado com o CNIS e com a documentação médica e constitui prova pré-constituída em eventual ação judicial. O advogado DEVE orientar (ou redigir com o cliente) o preenchimento ANTES do protocolo, seguindo o Protocolo de Autodeclaração abaixo.
 
 ## Protocolo de Autodeclaração nos Campos do Meu INSS
 
-PADRÃO DE REDAÇÃO VALIDADO (Onda 103). O texto ordinário dos campos é CURTO, direto e fecha com pedido de ajuda verdadeiro. Modelo-referência aprovado pelo escritório, sintomas em `Estou com muitas dores na região lombar com irradiação para a perna e formigamento` e atividades em `Trabalhava no cultivo de cana-de-açúcar. Estou totalmente impossibilitada de retornar ao trabalho. Peço a ajuda e compreensão, pois estou sem nenhuma renda.` Sintoma preciso sem termo médico, atividade concreta em vez do nome do cargo, impossibilidade afirmada sem rodeio e apelo humano ancorado em fato verdadeiro. Banco de exemplos por quadro (coluna, ombro, joelho, transtorno mental, cardiopatia, oncológico) e regras do padrão em `references/PADRAO-AUTODECLARACAO-MEU-INSS.md`. A extensão de 6 a 10 linhas indicada no Template operacional abaixo passa a ser TETO para casos que exijam narrativa longa, não meta.
+PADRÃO DE REDAÇÃO VALIDADO. O texto ordinário dos campos é CURTO, direto e fecha com pedido de ajuda verdadeiro. Modelo-referência aprovado pelo escritório, sintomas em `Estou com muitas dores na região lombar com irradiação para a perna e formigamento` e atividades em `Trabalhava no cultivo de cana-de-açúcar. Estou totalmente impossibilitada de retornar ao trabalho. Peço a ajuda e compreensão, pois estou sem nenhuma renda.` Sintoma preciso sem termo médico, atividade concreta em vez do nome do cargo, impossibilidade afirmada sem rodeio e apelo humano ancorado em fato verdadeiro. Banco de exemplos por quadro (coluna, ombro, joelho, transtorno mental, cardiopatia, oncológico) e regras do padrão em `references/PADRAO-AUTODECLARACAO-MEU-INSS.md`. A extensão de 6 a 10 linhas indicada no Template operacional abaixo passa a ser TETO para casos que exijam narrativa longa, não meta.
 
-Cobre os quatro campos exigidos no requerimento. Regra de forma universal, válida para TODOS os campos. Texto em primeira pessoa do singular, linguagem simples de segurado sem conhecimento técnico, poucas linhas, sem formalismo. PROIBIDO citar lei, artigo, portaria, jurisprudência, súmula, termo médico técnico ou expressão de advogado em qualquer campo. Formalismo denuncia preenchimento por procurador, tira a espontaneidade da declaração e arma o perito contra o segurado. Esta skill GERA os quatro textos prontos quando receber o caso (CNIS + documentação médica + relato do cliente), sempre com base na verdade dos autos, nunca inventando fato.
+Cobre os quatro campos exigidos no requerimento. Regra de forma universal, válida para TODOS os campos. Texto em primeira pessoa do singular, linguagem simples de segurado sem conhecimento técnico, poucas linhas, sem formalismo. PROIBIDO citar lei, artigo, portaria, jurisprudência, súmula, termo médico técnico ou expressão de advogado em qualquer campo. Formalismo denuncia preenchimento por procurador, tira a espontaneidade da declaração e predispõe o perito contra o segurado. Esta skill GERA os quatro textos prontos quando receber o caso (CNIS + documentação médica + relato do cliente), sempre com base na verdade dos autos, nunca inventando fato.
 
 ### Distinção conceitual obrigatória
 
@@ -328,7 +328,7 @@ Este campo fixa o parâmetro contra o qual a incapacidade será medida. Regras.
 É aqui que o perito documental decide. Ele cruza a rotina descrita com os sintomas e com a documentação médica, e se a descrição não contiver as exigências que a doença compromete, conclui capacidade residual e indefere. Regras.
 
 1. Descrever o que a função exige do corpo e da mente, peso carregado, postura (em pé, agachado, movimento repetido), ritmo e meta, atenção e concentração, pressão e cobrança, atendimento ao público, altura, turno. São essas exigências que colidem com a limitação documentada.
-2. Sempre a verdade. Não inventar tarefa pesada nem exagerar, documento ou descrição falsos expõem o segurado (art. 10 da Portaria 13/2026) e derrubam o benefício.
+2. Sempre a verdade. Não inventar tarefa pesada nem exagerar, documento ou descrição falsos expõem o segurado (art. 10 da Portaria 13/2026) e levam à cessação do benefício.
 3. Não listar apenas as tarefas leves que o segurado ainda consegue fazer, isso dilui a incompatibilidade e entrega o indeferimento.
 4. Fechar com uma frase ligando a rotina à limitação, no padrão "do jeito que estou, não consigo fazer isso".
 5. De 3 a 6 linhas, primeira pessoa, linguagem de quem trabalha na função, observada a regra de forma universal (sem lei, sem jurisprudência, sem termo técnico).
@@ -374,7 +374,7 @@ Segurada com depressão grave, tratamento crônico no CAPS, piora durante víncu
 
 **Descrição da atividade/trabalho**, "Eu trabalhava na linha de produção, em pé o turno inteiro, com meta para bater e barulho de máquina o tempo todo. Precisava de atenção total para não errar peça e não me machucar, e era muita cobrança e correria. Do jeito que eu estou, chorando toda hora e sem conseguir me concentrar, não tenho condição de trabalhar em linha de produção."
 
-**Descrição dos sintomas**, "Eu tenho depressão e faço tratamento no CAPS de Monte Alto. A piora começou em fevereiro de 2026, quando eu estava trabalhando na HBA Hutchinson. Entrei na empresa em 13/01/2026, mas não aguentei. Era muita pressão, eu saía tarde e chegava em casa 23h chorando de nervoso, sem conseguir dormir. Pedi demissão em 24/02/2026 e de lá para cá só piorei. Choro toda hora sem motivo, perdi a vontade de fazer o que eu gostava, acordo várias vezes durante a noite e não consigo voltar a dormir. Moro sozinha, me isolei, não quero conversar com ninguém. Tenho pensamentos de morte. A médica ajustou a medicação em 08/04/2026 e pediu meu afastamento do trabalho por tempo indeterminado, mas não estou bem. Durante o dia os remédios me deixam com muito sono e não tenho condições de trabalhar tomando eles."
+**Descrição dos sintomas**, "Eu tenho depressão e faço tratamento no CAPS de Monte Alto. A piora começou em fevereiro de 2026, quando eu estava trabalhando na HBA Hutchinson. Entrei na empresa em 13/01/2026, mas não aguentei. Era muita pressão, eu saía tarde e chegava em casa 23h chorando de nervoso, sem conseguir dormir. Pedi demissão em 24/02/2026 e de lá para cá apenas piorei. Choro toda hora sem motivo, perdi a vontade de fazer o que eu gostava, acordo várias vezes durante a noite e não consigo voltar a dormir. Moro sozinha, me isolei, não quero conversar com ninguém. Tenho pensamentos de morte. A médica ajustou a medicação em 08/04/2026 e pediu meu afastamento do trabalho por tempo indeterminado, mas não estou bem. Durante o dia os remédios me deixam com muito sono e não tenho condições de trabalhar tomando eles."
 
 ### Exemplo aplicado. Doença osteomuscular
 
@@ -441,7 +441,7 @@ A Teleperícia é via alternativa, não obrigatória. O segurado tem direito de 
 - **lei-13460-usuario-servico-publico.** Impugnação de exigências documentais abusivas que extrapolem os requisitos mínimos legais
 - **ms-competencia-autoridade-coatora.** Para todos os mandados de segurança mapeados nesta skill
 
-## Mapa de Vias de Impugnação (detalhes em `references/VIAS-IMPUGNACAO.md`)
+## Mapa de Vias de Impugnação
 
 ### Mandado de segurança (8 hipóteses)
 1. Perícia presencial sem esgotar dois indeferimentos
@@ -474,7 +474,7 @@ Padrão sistêmico de indeferimentos por CID. Depende de dados via LAI.
 ### Requerimento administrativo de B31/B91/B94
 Quando o caso exigir novo requerimento administrativo de incapacidade (primeiro requerimento ou novo requerimento após cessação/indeferimento), acionar a skill `requerimento-administrativo-inss` para gerar a peça no formato adequado ao servidor do INSS, integrando os requisitos documentais das Portarias 13, 14 e 15/2026 mapeados por esta skill.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Na análise documental, o INSS decide sem examinar o segurado, e por isso o documento precisa demonstrar sozinho. Despachar o médico da área com os documentos ANTES de orientar o requerimento, porque é ele que diz se o dossiê se sustenta na via documental ou se o caso exige perícia presencial.
 

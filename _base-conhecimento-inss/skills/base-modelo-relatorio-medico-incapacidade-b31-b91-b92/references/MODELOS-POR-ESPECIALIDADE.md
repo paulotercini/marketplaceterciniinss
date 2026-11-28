@@ -1,6 +1,6 @@
 # Sub-Modelos por Especialidade. Incapacidade B31, B32, B91 e B92
 
-**Onda 165 (03/10/2026).** O relatório entregue ao médico segue a extensão e a ordem do `MODELO-BASE.md` curto, de meia a uma página e sem citar lei. Os sub-modelos abaixo servem como banco de conteúdo por especialidade, para escolher os achados, exames e verbos de cada área, e não como forma a copiar inteira.
+O relatório entregue ao médico segue a extensão e a ordem do `MODELO-BASE.md` curto, de meia a uma página e sem citar lei. Os sub-modelos abaixo servem como banco de conteúdo por especialidade, para escolher os achados, exames e verbos de cada área, e não como forma a copiar inteira.
 
 ## 1. ORTOPEDISTA
 

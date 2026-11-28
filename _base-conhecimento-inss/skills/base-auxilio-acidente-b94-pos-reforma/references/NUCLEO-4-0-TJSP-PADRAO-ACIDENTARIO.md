@@ -1,6 +1,6 @@
-# Padrão Estrutural do Núcleo Especializado de Justiça 4.0 do TJSP - Ações Acidentárias
+# Padrão estrutural do Núcleo Especializado de Justiça 4.0 do TJSP. Ações acidentárias
 
-## FONTE NORMATIVA
+## Fonte normativa
 
 Portaria Conjunta TJSP nº 10.507/2024. Criação da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral.
 
@@ -8,29 +8,29 @@ Comunicado Conjunto TJSP nº 868/2024. Disciplinamento operacional.
 
 Lei 14.331/2022. Inseriu o art. 129-A na Lei 8.213/91.
 
-Decisão paradigma. Processo 1013616-41.2026.8.26.0381, Juiz Matheus de Souza Parducci Camargo, liberada nos autos em 22/05/2026. Decisão de emenda à inicial que sistematiza o padrão estrutural exigido (itens 3.1 a 3.9). [CONFERIDO em 12/07/2026 por cópia oficial dos autos extraída do ESAJ, processo do próprio escritório. Os 9 tópicos desta reference correspondem literalmente aos itens 3.1 a 3.9 da decisão.]
+Decisão paradigma. Processo 1013616-41.2026.8.26.0381, Juiz Matheus de Souza Parducci Camargo, liberada nos autos em 22/05/2026. Decisão de emenda à inicial que sistematiza o padrão (itens 3.1 a 3.9), conferida em 12/07/2026 pela cópia dos autos no ESAJ. Os nove tópicos abaixo correspondem aos itens 3.1 a 3.9.
 
-Acórdão paradigma sobre dispensa de novo requerimento administrativo. AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público do TJSP, sessão permanente e virtual, julgado em 10/03/2025, votação unânime, Registro 2025.0000223191, Voto nº 4.703, participação dos Des. Carlos Monnerat (presidente sem voto), Antonio Moliterno e Ricardo Graccho. Origem, a própria Vara do Núcleo 4.0. [CONFERIDO em 12/07/2026 pelo inteiro teor. A decisão paradigma de 22/05/2026 transcreve esta ementa como fundamento do item 3.7.]
+Acórdão paradigma sobre dispensa de novo requerimento administrativo. AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público do TJSP, sessão permanente e virtual, julgado em 10/03/2025, votação unânime, Registro 2025.0000223191, Voto nº 4.703, participação dos Des. Carlos Monnerat (presidente sem voto), Antonio Moliterno e Ricardo Graccho. Origem, a própria Vara do Núcleo 4.0. Conferido pelo inteiro teor em 12/07/2026; a decisão de 22/05/2026 transcreve a ementa no item 3.7.
 
 Regras adicionais da decisão paradigma, conferidas no inteiro teor. Primeira, documento indisponível que a parte repute não imprescindível exige justificativa fundamentada da ausência, para apreciação judicial da suficiência. Segunda, documentos já juntados devem ter as folhas indicadas expressamente. Terceira, a emenda deve vir em tópicos. Quarta, o próprio juízo registra que o despacho padronizador não ostenta cunho decisório. Quinta, na não prorrogação de benefício é desnecessário comprovar indeferimento administrativo, bastando esclarecer a situação e anexar a documentação pertinente.
 
 Precedentes adicionais da 17ª Câmara de Direito Público colhidos do inteiro teor do AI (persuasivos, mesma tese). ApCiv 1003449-09.2022.8.26.0347, Rel. Des. Ricardo Graccho, j. 19/06/2023. AI 2050562-76.2023.8.26.0000, Rel. Des. Aldemar Silva, j. 07/06/2023. ApCiv 1001624-93.2022.8.26.0326, Rel. Des. Carlos Monnerat, j. 06/06/2023. ApCiv 1000385-70.2023.8.26.0568, Rel. Des. Antônio Moliterno, j. 02/06/2023 (este último aplica a dispensa também a requerimento pendente com prazo de análise excedido).
 
-## OBRIGATORIEDADE
+## Consequência do descumprimento
 
-Todo ajuizamento perante a Vara do Núcleo 4.0 - Acidentes do Trabalho do Interior e do Litoral deve seguir a estrutura abaixo, sob pena de.
+A inicial fora da estrutura sujeita-se a:
 
 1. Despacho de emenda da inicial em 15 dias úteis (CPC art. 321 c/c art. 330 IV).
 2. Indeferimento da inicial (CPC art. 330 IV).
 3. Extinção sem mérito (CPC art. 485 I).
 
-## TEMPLATE ANOTADO - 9 TÓPICOS OBRIGATÓRIOS
+## Template anotado dos nove tópicos
 
-### TÓPICO 1 - DESCRIÇÃO DA DOENÇA OU ACIDENTE E LIMITAÇÕES LABORAIS
+### Tópico 1. Doença ou acidente e limitações laborais
 
-**Fundamento.** Art. 129-A Lei 8.213/91 com Lei 14.331/2022.
+**Fundamento.** Lei 8.213/91, art. 129-A, I, "a".
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 1.1. A parte autora é portadora de [DOENÇA com CID], conforme demonstram
@@ -53,15 +53,15 @@ ID/fls. XX, decorrendo [SEQUELA RESULTANTE].
 1.3. As limitações laborais resultantes são. [LISTA].
 ```
 
-**Alerta pró-segurado.** Conceito de "limitação laboral" no Núcleo 4.0 deve ser DESCRITO DE FORMA CONCRETA, vinculado à anatomia/funcionalidade comprovada por documentação médica. Evitar superlativos sem ancoragem (Anti-Pattern 5 da skill `base-revisao-peticao-aprofundada`).
+**Cuidado.** Descrever a limitação de forma concreta, vinculada à função comprovada por documentação médica, sem superlativos (`base-revisao-peticao-aprofundada`).
 
-### TÓPICO 2 - ATIVIDADES INCAPACITADAS E NEXO COM O TRABALHO HABITUAL
+### Tópico 2. Atividades afetadas e trabalho habitual
 
-**Fundamento.** Art. 129-A §1º Lei 8.213/91.
+**Fundamento.** Lei 8.213/91, art. 129-A, I, "b".
 
-**Conceito legal de "trabalho habitual" (CRÍTICO).** Aquele NO QUAL foi gerada a doença do trabalho ou a doença profissional ou, ainda, no qual ocorrido o acidente do trabalho.
+**Trabalho habitual, segundo a decisão paradigma.** Aquele no qual foi gerada a doença do trabalho ou a doença profissional, ou no qual ocorreu o acidente do trabalho.
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 2.1. A parte autora exerceu por [TEMPO] a função de [PROFISSÃO PRECISA, ex:
@@ -71,13 +71,12 @@ caminhão, costureira em linha de produção].
 2.2. As atividades profissionais habituais consistiam em. [DETALHAMENTO
 DAS TAREFAS, COM ESFORÇO FÍSICO/MENTAL EXIGIDO].
 
-2.3. Em razão das limitações descritas no tópico 1, a parte autora ESTÁ
+2.3. Em razão das limitações descritas no tópico 1, a parte autora está
 INCAPACITADA para as seguintes atividades específicas de seu trabalho
 habitual. [LISTA].
 
 2.4. A redução/perda da capacidade laboral configura prejuízo ao trabalho
-habitual, conforme definido pelo art. 129-A §1º da Lei 8.213/91 (com
-redação da Lei 14.331/2022), pois.
+habitual, nos termos do art. 129-A, I, "b", da Lei 8.213/91, pois:
 - A profissão exercida foi onde se desenvolveu a doença/acidente;
 - As atividades específicas do exercício profissional habitual estão
 comprometidas;
@@ -85,13 +84,13 @@ comprometidas;
 demonstradas.
 ```
 
-**Alerta pró-segurado.** Detalhar tarefas concretas da profissão. Evitar abstração ("realizava as funções de seu cargo"). Vincular EXPRESSAMENTE cada limitação a uma tarefa específica.
+**Cuidado.** Detalhar tarefas concretas e vincular cada limitação a uma tarefa.
 
-### TÓPICO 3 - INCONSISTÊNCIAS DA AVALIAÇÃO MÉDICO-PERICIAL ADMINISTRATIVA
+### Tópico 3. Inconsistências da avaliação pericial administrativa
 
-**Fundamento.** Art. 129-A Lei 8.213/91 (impõe o confronto).
+**Fundamento.** Lei 8.213/91, art. 129-A, I, "c".
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 3.1. Em [DATA] foi realizada perícia médica administrativa que [CONCLUSÃO
@@ -118,25 +117,25 @@ da parte autora revela [VEREDITO PRÓ-SEGURADO].
 
 **Cruzar com.** `auditoria-laudo-pericial` (auditoria técnica completa do laudo administrativo).
 
-### TÓPICO 4 - DECLARAÇÃO DE AÇÃO ANTERIOR
+### Tópico 4. Declaração de ação anterior
 
-**Fundamento.** Verificação de litispendência e coisa julgada (CPC art. 337 VI e VII).
+**Fundamento.** Lei 8.213/91, art. 129-A, I, "d"; CPC, art. 337, VI e VII.
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 OPÇÃO A (sem ação anterior).
 ```
-4.1. A parte autora DECLARA, sob as penas da lei, que NÃO há ação judicial
+4.1. A parte autora declara, sob as penas da lei, que não há ação judicial
 anterior com pretensão semelhante à presente.
 ```
 
 OPÇÃO B (com ação anterior).
 ```
-4.1. A parte autora DECLARA que houve ação anterior, distribuída sob nº
+4.1. A parte autora declara que houve ação anterior, distribuída sob nº
 [XXXXX], em trâmite/transitada em julgado, na qual foi pleiteado
 [OBJETO DA AÇÃO ANTERIOR].
 
-4.2. NÃO HÁ litispendência nem coisa julgada com a presente demanda
+4.2. Não há litispendência nem coisa julgada com a presente demanda
 porque.
 
 4.2.1. [DIVERGÊNCIA DE OBJETO]. Aquela ação versava sobre [X]. A presente
@@ -147,15 +146,13 @@ versa sobre [Y].
 
 4.2.3. [FATO NOVO/SUPERVENIENTE]. A presente ação se baseia em fato
 ocorrido após o trânsito em julgado da ação anterior.
-
-4.3. Aplica-se, ainda, [Tema 629 STJ / etc.] (auditoria 03/10/2026, retirada a Súmula 239 STF, que é tributária).
 ```
 
 **Cruzar com.** `coisa-julgada-previdenciaria` para análise técnica.
 
-### TÓPICO 5 - COMPROVANTE DE RESIDÊNCIA EM NOME DA PARTE AUTORA
+### Tópico 5. Comprovante de residência
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 5.1. Comprovante de residência em nome da parte autora, datado dos
@@ -168,11 +165,11 @@ parte autora reside, conforme declaração datada e assinada por [TERCEIRO]
 (ID/fls. XX) e cópia do RG do declarante (ID/fls. XX).
 ```
 
-### TÓPICO 6 - PROCURAÇÃO COM ASSINATURA ELETRÔNICA ICP-BRASIL
+### Tópico 6. Procuração com assinatura ICP-Brasil
 
 **Fundamento.** Art. 1º §2º III "a" Lei 11.419/2006 e MP 2.200-2/2001.
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 6.1. Procuração outorgada pela parte autora ao advogado subscritor,
@@ -185,39 +182,39 @@ ICP-Brasil (ID/fls. XX).
 assinada de próprio punho (ID/fls. XX).
 ```
 
-**Atenção.** Procuração eletrônica fora da ICP-Brasil (ex. plataformas comerciais não credenciadas) gera DESPACHO DE EMENDA.
+**Cuidado.** Procuração eletrônica de plataforma não credenciada na ICP-Brasil gera despacho de emenda.
 
-### TÓPICO 7 - COMPROVANTE DE INDEFERIMENTO OU NÃO PRORROGAÇÃO
+### Tópico 7. Comprovante de indeferimento ou não prorrogação
 
-**Fundamento.** Tema 350/STF (RE 631.240/MG) e Tema 660/STJ.
+**Fundamento.** Lei 8.213/91, art. 129-A, II, "a"; Tema 350/STF (RE 631.240/MG); Tema 660/STJ.
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
-REGRA GERAL (primeira concessão).
+Regra geral (primeira concessão):
 ```
 7.1. Comprovante de indeferimento administrativo, datado de [DATA],
 proferido pelo INSS (ID/fls. XX), no qual o benefício foi negado pelo
 seguinte motivo. [MOTIVO].
 ```
 
-EXCEÇÃO 1 (não prorrogação de benefício já concedido).
+Exceção 1 (não prorrogação de benefício concedido):
 ```
 7.1. Trata-se de pedido de não prorrogação do benefício [NB], em
 recebimento desde [DATA].
 
-7.2. A parte autora teve o benefício CESSADO em [DATA] em razão de
+7.2. A parte autora teve o benefício cessado em [DATA] em razão de
 alta médica administrativa (ID/fls. XX).
 
-7.3. Aqui o INTERESSE DE AGIR está caracterizado pela própria
-cessação administrativa, sendo DESNECESSÁRIO novo requerimento.
+7.3. Aqui o interesse de agir está caracterizado pela própria
+cessação administrativa, sendo desnecessário novo requerimento.
 ```
 
-EXCEÇÃO 2 (revisão, restabelecimento, manutenção - paradigma TJSP).
+Exceção 2 (revisão, restabelecimento ou manutenção):
 ```
 7.1. Trata-se de pedido de [REVISÃO/RESTABELECIMENTO/MANUTENÇÃO] de
 benefício anteriormente concedido [NB].
 
-7.2. NÃO É EXIGIDO o prévio requerimento administrativo, conforme
+7.2. Não se exige o prévio requerimento administrativo, conforme
 firmado pela 17ª Câmara de Direito Público do TJSP no Agravo de
 Instrumento nº 2061943-13.2025.8.26.0000, julgado em 10/03/2025,
 Relator Des. RICHARD PAE KIM, in verbis.
@@ -237,13 +234,11 @@ quando a relação jurídica entre o segurado e o INSS já está
 inaugurada e há resistência manifesta da autarquia.
 ```
 
-### TÓPICO 8 - COMPROVANTE DA OCORRÊNCIA DO ACIDENTE DO TRABALHO
+### Tópico 8. Comprovante do acidente
 
-**Fundamento.** Art. 129-A §2º Lei 8.213/91.
+**Fundamento.** Lei 8.213/91, art. 129-A, II, "b".
 
-**Aplicável apenas em ação acidentária.**
-
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 8.1. O acidente do trabalho está documentado pela Comunicação de
@@ -259,10 +254,10 @@ por.
 
 [OU SE NÃO HÁ CAT]
 
-8.1. NÃO há CAT emitida pelo empregador. A parte autora REQUER o
-reconhecimento da CAT por equiparação, com fundamento no art. 22
-§2º Lei 8.213/91 (CAT emitida pela própria autoridade), tendo em
-vista [JUSTIFICATIVA, ex: a empresa se omitiu].
+8.1. Não há CAT emitida pelo empregador. A comunicação foi
+formalizada por [o próprio segurado / o sindicato / o médico
+assistente], na forma do art. 22, §2º, da Lei 8.213/91, diante da
+omissão da empresa (ID/fls. XX).
 
 8.2. O acidente está documentado por. (i) [ATESTADO DE INTERNAÇÃO];
 (ii) [BO da Polícia/PRF]; (iii) [PRONTUÁRIO HOSPITALAR].
@@ -270,11 +265,11 @@ vista [JUSTIFICATIVA, ex: a empresa se omitiu].
 
 **Cruzar com.** `ntep-nexo-acidentario`.
 
-### TÓPICO 9 - DOCUMENTAÇÃO MÉDICA
+### Tópico 9. Documentação médica
 
-**Fundamento.** Art. 129-A §3º Lei 8.213/91.
+**Fundamento.** Lei 8.213/91, art. 129-A, II, "c".
 
-**Conteúdo obrigatório.**
+**Conteúdo.**
 
 ```
 9.1. Relatório médico de [DATA] subscrito pelo Dr. [NOME COMPLETO],
@@ -301,26 +296,24 @@ vista [JUSTIFICATIVA, ex: a empresa se omitiu].
 
 **Cruzar com.** `relatorio-medico-assistente` (modelo de relatório a ser pedido ao médico) e `base-modelo-relatorio-medico-auxilio-acidente-b94`.
 
-## FORMA DE APRESENTAÇÃO
+## Forma de apresentação
 
-Apresentar a inicial EM TÓPICOS NUMERADOS. Indicar EXPRESSAMENTE em cada tópico as folhas (ID) onde se encontra cada documento citado.
+Apresentar a inicial em tópicos numerados. Indicar em cada tópico as folhas (ID) onde se encontra cada documento citado.
 
-## ISENÇÃO DE CUSTAS - REGRA ESPECIAL
+## Isenção de custas
 
-NÃO REQUERER GRATUIDADE DA JUSTIÇA em ações acidentárias.
-
-Fundamento. Art. 129 par. único Lei 8.213/91. Segurado da Previdência Social é ISENTO "do pagamento de quaisquer custas e de verbas relativas à sucumbência" em ações acidentárias.
+Não requerer gratuidade da justiça em ação acidentária. O procedimento judicial acidentário é isento "do pagamento de quaisquer custas e de verbas relativas à sucumbência" (Lei 8.213/91, art. 129, parágrafo único).
 
 Conteúdo.
 ```
 X. ISENÇÃO LEGAL
-A parte autora é ISENTA do pagamento de quaisquer custas e de verbas
+A parte autora é isenta do pagamento de quaisquer custas e de verbas
 relativas à sucumbência, na forma do art. 129 par. único da Lei
 8.213/91, conforme reconhecido pela decisão do Juiz Matheus de Souza
 Parducci Camargo (proc. 1013616-41.2026.8.26.0381).
 ```
 
-## CHECKLIST DE 14 PONTOS PRÉ-PROTOCOLO
+## Checklist pré-protocolo
 
 Antes de ajuizar, conferir.
 
@@ -333,19 +326,19 @@ Antes de ajuizar, conferir.
 - [ ] Tópico 7 com indeferimento OU paradigma TJSP em revisão/restabelecimento.
 - [ ] Tópico 8 com CAT ou equiparação documental.
 - [ ] Tópico 9 com documentação médica robusta.
-- [ ] Petição apresentada EM TÓPICOS NUMERADOS.
+- [ ] Petição em tópicos numerados.
 - [ ] Indicação das fls. onde se encontra cada documento.
 - [ ] Declaração da isenção do art. 129 par. único Lei 8.213.
 - [ ] Quesitos para o perito.
 - [ ] Pedido de tutela de urgência fundamentado nos 9 tópicos.
 
-## CASOS PRÁTICOS DE EMENDA EVITÁVEL
+## Emendas evitáveis
 
 ### Caso 1 - "Trabalho habitual" descrito de forma abstrata
 
 Errado. "A parte autora exercia suas funções habituais."
 
-Certo. "A parte autora exerceu por 12 anos a função de SOLDADOR INDUSTRIAL na empresa X, executando soldagem MIG/MAG em estruturas metálicas pesadas, com exposição a tabagismo passivo, ruído contínuo acima de 85 dB e movimentação repetitiva do ombro direito."
+Certo. "A parte autora exerceu por 12 anos a função de SOLDADOR INDUSTRIAL na empresa X, executando soldagem MIG/MAG em estruturas metálicas pesadas, com elevação repetitiva do ombro direito acima da linha dos ombros."
 
 ### Caso 2 - Indeferimento de não prorrogação sem justificar dispensa
 
@@ -371,7 +364,7 @@ Errado. Petição em prosa contínua.
 
 Certo. Tópicos numerados conforme padrão 1-9.
 
-## INTEGRAÇÃO COM SKILLS COMPLEMENTARES
+## Integração
 
 - `peticao-previdenciaria`. Padrão visual da peça.
 - `auditoria-laudo-pericial`. Auditoria do laudo administrativo (tópico 3).
@@ -382,10 +375,6 @@ Certo. Tópicos numerados conforme padrão 1-9.
 - `base-revisao-peticao-aprofundada`. Auditoria final.
 - `base-siglas-inss`. Glossário das siglas usadas.
 
-## ALERTA FINAL
+## Regra final
 
-A decisão paradigma do Juiz Matheus de Souza Parducci Camargo é estruturante. Toda inicial protocolada perante a Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral do TJSP deve aderir ao padrão de 9 tópicos sob pena de emenda obrigatória e atraso processual.
-
-A estratégia pró-segurado é PROTOCOLAR JÁ NO PADRÃO. Cada emenda da inicial = 15 a 60 dias perdidos.
-
-Pré-empt cada tópico.
+Protocolar a inicial já no padrão de nove tópicos evita a emenda e o atraso.

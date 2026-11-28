@@ -33,11 +33,11 @@ Legenda. `[CONFERIDO]` redação literal verificada em fonte oficial. `[NÃO CON
 
 ### Ressalva expressa do relator
 
-A TNU **não decidiu** se o período de limbo conta como tempo de contribuição ou carência. Afastou violação ao art. 201, §14, da CF/88 justamente por não ter avançado nesse ponto. Essa ressalva é munição defensiva, ver item 6.3.
+A TNU **não decidiu** se o período de limbo conta como tempo de contribuição ou carência. Afastou violação ao art. 201, §14, da CF/88 justamente por não ter avançado nesse ponto. Essa ressalva serve à defesa, ver item 6.3.
 
 ### Alerta operacional
 
-A exclusão expressa das hipóteses de contrato "suspenso ou licenciado" é a porta de defesa do INSS. Neutralização no item 6.1.
+A exclusão expressa das hipóteses de contrato "suspenso ou licenciado" é a porta de defesa do INSS. Refutação no item 6.1.
 
 ---
 
@@ -132,7 +132,7 @@ O **Tema 301 da TNU** trata de matéria inteiramente diversa, segurado especial 
 
 **Prova que venceu.** Sentença trabalhista transitada em julgado, RT 1000037-21.2022.5.02.0434, 4ª Vara do Trabalho de Santo André, reconhecendo o limbo, com execução e recolhimento das contribuições pela empregadora.
 
-**Lição operacional.** A reclamatória trabalhista é a prova de primeira linha. Resolve o requisito probatório do Tema 300 e ainda recompõe a cadeia contributiva, neutralizando a alegação de tempo fictício.
+**Lição operacional.** A reclamatória trabalhista é a prova de primeira linha. Resolve o requisito probatório do Tema 300 e ainda recompõe a cadeia contributiva, afastando a alegação de tempo fictício.
 
 ---
 
@@ -148,7 +148,7 @@ O voto condutor excluiu as hipóteses de contrato "suspenso ou licenciado". O IN
 
 Extratos do CAGED frequentemente listam vínculos antigos como Aberto por falha de encerramento, e o INSS usa isso para desqualificar o registro.
 
-**Refutação.** CTPS Digital e PPP são alimentados pelo eSocial e refletem declaração atual da empresa, o que neutraliza a objeção. Cotejar as três fontes na peça, apontando a convergência.
+**Refutação.** CTPS Digital e PPP são alimentados pelo eSocial e refletem declaração atual da empresa, o que afasta a objeção. Cotejar as três fontes na peça, apontando a convergência.
 
 ### 6.3 Objeção. Tempo fictício, ofensa ao art. 201, §14, da CF/88
 

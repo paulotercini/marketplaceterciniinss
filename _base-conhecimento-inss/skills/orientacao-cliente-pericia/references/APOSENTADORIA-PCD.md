@@ -129,7 +129,7 @@ Na avaliação social, a conversa é longa e exige paciência. Assistente social
 ## Armadilhas específicas
 
 ### A armadilha da DID pós-admissional
-Se a deficiência surgiu depois do primeiro emprego, o cliente pode minimizar os primeiros anos, achando que só vale depois da DID. Erro. A avaliação considera toda a carreira, mas o tempo com deficiência é o que conta para o benefício. Fixar com precisão a DID é crítico. Advogado deve examinar os documentos antes da perícia e orientar o cliente a ser consistente na data de início.
+Se a deficiência surgiu depois do primeiro emprego, o cliente pode minimizar os primeiros anos, achando que apenas vale depois da DID. Erro. A avaliação considera toda a carreira, mas o tempo com deficiência é o que conta para o benefício. Fixar com precisão a DID é crítico. Advogado deve examinar os documentos antes da perícia e orientar o cliente a ser consistente na data de início.
 
 ### A armadilha da adaptação invisível
 Cliente adaptou a vida, se acostumou com a limitação, e chega à perícia parecendo saudável. Orientar a descrever com precisão o esforço mental e físico dessa adaptação. Ela não é ausência de deficiência, é sua superação cotidiana.
@@ -144,7 +144,7 @@ Cliente relata apenas os últimos anos. Isso empobrece a avaliação social. O f
 Quando não há documentação médica antiga, a DID fica em disputa. Orientar o cliente a mencionar testemunhas familiares, prontuários de UBS, fichas de medicina do trabalho, ASO, documentação escolar. Advogado deve acionar a skill `formacao-documentacao-did-pcd` quando houver essa carência.
 
 ### A armadilha da confusão com incapacidade
-Perito pouco familiarizado com PCD avalia como se fosse BPC ou benefício por incapacidade. Cliente reage defendendo que consegue trabalhar, e isso desarma o benefício. Orientar para que o cliente, sem confronto, sempre traga o relato ao eixo da LC 142/2013. Consigo trabalhar, mas com as limitações que descrevi. Minha carreira toda foi afetada por essa condição.
+Perito pouco familiarizado com PCD avalia como se fosse BPC ou benefício por incapacidade. Cliente reage defendendo que consegue trabalhar, e isso compromete o benefício. Orientar para que o cliente, sem confronto, sempre traga o relato ao eixo da LC 142/2013. Consigo trabalhar, mas com as limitações que descrevi. Minha carreira toda foi afetada por essa condição.
 
 ## O que nunca fazer
 

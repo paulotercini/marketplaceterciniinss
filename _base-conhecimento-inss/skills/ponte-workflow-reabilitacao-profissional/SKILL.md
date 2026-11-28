@@ -5,6 +5,8 @@ description: "Workflow pró-segurado de Reabilitação Profissional do INSS, cos
 
 # Workflow Reabilitação Profissional
 
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária. A reabilitação profissional é serviço (arts. 89 a 92 da Lei 8.213/91), sem código de benefício próprio.
+
 ## 1. Quando acionar
 
 Sempre que o caso envolver Programa de Reabilitação Profissional (PRP), suspensão de benefício durante RP, encerramento abusivo, recusa de encaminhamento à PMF, alta sem reabilitação, conversão administrativa de B31 em B32 ou pleito de certificado de reabilitação.
@@ -27,7 +29,7 @@ Quando o segurado for PCD encaminhado à RP, acionar `aposentadoria-deficiencia`
 
 ### Passo 4. Identificação da violação
 
-Cessação prematura sem alta médica formalizada. Suspensão por mais de 60 dias sem justificativa legal. Encerramento por abandono sem oportunidade de justificativa em 7 dias. Recusa de encaminhamento à PMF para PRP. Determinação de retorno ao trabalho em função incompatível. Conversão administrativa de B31 em B32 sem cumprir o devido processo administrativo.
+Cessação do benefício antes da conclusão do PRP (art. 62, §1º, da Lei 8.213/91). Suspensão por recusa ou abandono sem despacho circunstanciado e sem notificação com prazo de defesa de 60 dias (Livro X, art. 13). Negativa de reagendamento pedido em até 7 dias corridos com justificativa plausível (Livro X, art. 10, §1º). Recusa de encaminhamento à PMF para PRP. Determinação de retorno ao trabalho em função incompatível. Insuscetibilidade de reabilitação reconhecida sem a conversão administrativa em aposentadoria por incapacidade permanente (Livro X, art. 29, §2º-A).
 
 ### Passo 5. Definição da via processual
 
@@ -41,7 +43,7 @@ Quando não couber MS por exigir dilação probatória, ação ordinária pelo r
 
 ### Passo 6. Verificações obrigatórias
 
-Tema 1124/STJ via `tema-1124-instrucao-administrativa` para confirmar pedido administrativo prévio quando o pleito for de novo direito.
+Tema 1124/STJ via `tema-1124-instrucao-administrativa` para o termo inicial dos efeitos financeiros quando houver prova nova não apresentada ao INSS.
 
 Lei 13.460/2017 via `lei-13460-usuario-servico-publico` para barreiras formais excessivas.
 
@@ -61,19 +63,19 @@ Convocações da equipe de reabilitação. Justificativas médicas anteriores. D
 
 ## 4. Pontos críticos pró-segurado
 
-Justificativa de faltas em até 7 dias é direito do segurado pelas Portarias 1.310/2025 e 1.333/2026. INSS não pode encerrar PRP por abandono sem oportunizar a justificativa.
+O segurado pode pedir reagendamento em até 7 dias corridos da falta, com justificativa plausível, e o benefício suspenso é reativado (Livro X, arts. 10, §1º, e 12, parágrafo único, nas redações das Portarias 1.310/2025 e 1.333/2026).
 
-Suspensão de até 60 dias é regra. Acima disso, INSS deve formalmente encerrar ou retomar o PRP. Limbo administrativo é ilegal.
+A recusa ou o abandono geram suspensão com prazo de defesa de 60 dias; o desligamento exige comunicação de decisão após esse prazo (Livro X, arts. 13 e 18, II). Benefício suspenso sem decisão formal configura omissão impugnável por mandado de segurança.
 
-Conversão administrativa de B31 em B32 sem encaminhamento à RP viola art. 62 §2º da Lei 8.213/91. Pleitear via MS.
+Cessação do auxílio por incapacidade temporária de segurado insuscetível de recuperação para a atividade habitual, sem encaminhamento à reabilitação, viola o art. 62, caput e §1º, da Lei 8.213/91. Constatada a insuscetibilidade de reabilitação, o INSS converte o benefício em aposentadoria (Livro X, art. 29, §2º-A).
 
 Função compatível deve respeitar limitações funcionais comprovadas, não basta existir vaga. Recusa de retorno em função incompatível não caracteriza abandono.
 
-Certificado de reabilitação é direito. INSS não pode encerrar PRP sem emitir certificado quando o programa foi concluído.
+O programa concluído exige certificado (art. 92 da Lei 8.213/91).
 
 ## 5. Postura
 
-Pró-segurado integral. Reabilitação profissional é direito subjetivo do segurado e o INSS atua como executor. Identificar atos coativos, omissões e violações ao devido processo administrativo, e atacar pela via mais rápida disponível, geralmente o mandado de segurança.
+Pró-segurado integral. Reabilitação profissional é direito subjetivo do segurado e o INSS atua como executor. Identificar atos coativos, omissões e violações ao devido processo administrativo, e impugná-los pela via mais rápida disponível, geralmente o mandado de segurança.
 
 ## Hub de portarias administrativas
 

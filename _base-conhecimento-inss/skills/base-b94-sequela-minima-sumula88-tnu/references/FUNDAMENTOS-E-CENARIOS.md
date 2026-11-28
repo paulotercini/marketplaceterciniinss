@@ -1,123 +1,25 @@
-# Sequela Mínima B94. Fundamentos e Cenários
+# Sequela mínima B94. Cenários
 
-## 1. Conceito operacional
+Precedentes literais no SKILL.md.
 
-Sequela mínima é a redução pequena, mas funcional e permanente, da capacidade laborativa habitual. A Súmula 88 TNU e o Tema 416 STJ admitem B94 nessa hipótese (auditoria 03/10/2026).
+| Cenário | Enquadramento | Prova funcional |
+|---|---|---|
+| A. Perda parcial de falange com repercussão na pinça | Tema 416 STJ; Súmula 88 TNU | Descrição da função manual habitual; teste de preensão |
+| B. Sequela leve de joelho em trabalhador que permanece em pé ou deambula | Idem | Goniometria; exigência de marcha, escada, agachamento |
+| C. Disacusia unilateral discreta de origem ocupacional | Art. 86, §4º; Temas 213 e 22 STJ; Súmula 44 STJ | Audiometria; exigência auditiva da função; nexo |
+| D. Cicatriz com componente funcional | Súmula 88 TNU | Repercussão concreta na atividade (Quadro 4 do Anexo III para face, crânio e pescoço) |
+| E. Coluna com limitação leve | Idem | Goniometria; carga habitual |
+| F. Sequela neurológica leve | Idem | Exame de força, eletroneuromiografia |
 
-## 2. Fundamento constitucional
+## Sem direito
 
-CF/88, art. 201 §10.
+- Sequela sem redução nem maior esforço: Súmula 89 TNU.
+- Lesão não consolidada: B31 ou B91.
+- Contribuinte individual ou facultativo na data do acidente: Tema 201 TNU.
 
-CF/88, art. 5º caput.
+## Metodologia
 
-CF/88, art. 7º XXVIII.
-
-## 3. Fundamento legal
-
-Lei 8.213/91, art. 86.
-
-Decreto 3.048/99, Anexo III.
-
-IN 128/2022.
-
-## 4. Marco jurisprudencial central
-
-### Tema 201 TNU (tese adversa)
-
-Tese. "O contribuinte individual não faz jus ao auxílio-acidente, diante de expressa exclusão legal." Não trata de sequela mínima (auditoria 03/10/2026). Caminho do segurado. Provar que, na data do acidente, a categoria real era de empregado, doméstico, avulso ou segurado especial (art. 18, §1º, da Lei 8.213/91).
-
-### Súmula 88 TNU
-
-Sequela mínima admitida. A limitação, ainda que leve, para a atividade habitual enseja o B94, em linha com o Tema 416 STJ (auditoria 03/10/2026).
-
-### Súmula 89 TNU
-
-Tese adversa, limite negativo. Texto. "Não há direito à concessão de benefício de auxílio-acidente quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que não reduzem a capacidade laborativa habitual nem sequer demandam dispêndio de maior esforço na execução da atividade habitual." Transcrito no PUIL 1007890-32.2024.4.01.3600 (TNU, D.E. 21/08/2026). O caminho do segurado é provar redução ou maior esforço na atividade habitual, ainda que leve, pela Súmula 88/TNU e pelo Tema 416/STJ (auditoria 03/10/2026).
-
-### Tema 416 STJ
-
-Redução parcial.
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Dedo com perda parcial
-
-Mínima funcional.
-
-### Cenário B. Joelho com sequela leve
-
-Permanente.
-
-### Cenário C. Perda auditiva discreta
-
-Funcional.
-
-### Cenário D. Ofensa estética leve
-
-Permanente.
-
-### Cenário E. Coluna com sequela leve
-
-Funcional.
-
-### Cenário F. Membro superior com perda parcial
-
-Funcional.
-
-### Cenário G. Sequela neurológica leve
-
-Funcional.
-
-## 6. Cenários limitados
-
-### Cenário H. Sem permanência
-
-Não enquadra.
-
-### Cenário I. Cura total
-
-Sem residual.
-
-### Cenário J. Doença não acidentária
-
-Outra espécie.
-
-## 7. Metodologia
-
-Primeiro, perícia detalhada.
-
-Segundo, comparação com Anexo III.
-
-Terceiro, fundamentação na Súmula 88 TNU e no Tema 416 STJ (auditoria 03/10/2026).
-
-Quarto, prova funcional.
-
-Quinto, recurso ou ação.
-
-Sexto, monitoramento.
-
-## 8. Riscos processuais
-
-Risco de exigência de severidade.
-
-Risco de descarte por insignificância.
-
-Risco de perícia inadequada.
-
-Risco de sequela transitória.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, perícia técnica.
-
-Segundo, fundamentação na Súmula 88 TNU e no Tema 416 STJ (auditoria 03/10/2026).
-
-Terceiro, recurso ou ação.
-
-Quarto, monitoramento.
-
-Quinto, dialeticidade.
-
-## 10. Integração prática
-
-`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-nexo-acidentario-ntep`, `peticao-previdenciaria`.
+1. Triagem de categoria.
+2. Descrição da atividade habitual na data do acidente.
+3. Quesitos sobre consolidação, redução ainda que mínima e maior esforço, nunca sobre incapacidade.
+4. Enquadramento no Anexo III, quando possível, como reforço.

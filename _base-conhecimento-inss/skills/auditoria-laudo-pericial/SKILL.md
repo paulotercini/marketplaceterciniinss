@@ -1,6 +1,6 @@
 ---
 name: auditoria-laudo-pericial
-description: "Skill para auditoria técnica de laudos periciais previdenciários. Use SEMPRE que enviar laudo pericial para análise, revisão, impugnação ou contestação. Use quando mencionar analisar laudo, revisar perícia, impugnar laudo, contestar perícia, problemas no laudo, contradições na perícia, laudo pericial, perícia médica, perito, quesitos, laudo do INSS, perícia judicial, parecer técnico contrário, ou análise crítica de laudos médicos em contexto previdenciário. Abrange laudos de incapacidade laboral (auxílio-doença, aposentadoria por invalidez, auxílio-acidente) e laudos de avaliação de deficiência (BPC/LOAS). Funciona com laudo isolado ou com cruzamento de documentos médicos. Teleperícia, laudo videoconferência, Portaria DPMF/INSS 19/2026, auditoria laudo remoto, cerceamento Teleperícia. Inclui o Modo 3 de impugnação dirigida em 9 blocos (Onda 84), acionado por impugnação em 9 blocos, roteiro de impugnação, dupla camada assistente técnico, quesitos cirúrgicos, quesitos suplementares, pedido de esclarecimentos ao perito, pedido de nova perícia, falhas metodológicas do laudo, padrão técnico exigido, estrutura da impugnação, risco da impugnação. Inclui o Modo 3-A (Onda 107), acionado por juiz indeferiu quesitos, quesitos do juízo suprem, esclarecimentos indeferidos, laudo insuficiente, cerceamento na perícia, diagnóstico não é incapacidade. NÃO use para criação de petições, consultas genéricas sobre perícia ou análise de documentos que não sejam laudos periciais."
+description: "Skill para auditoria técnica de laudos periciais previdenciários. Use SEMPRE que enviar laudo pericial para análise, revisão, impugnação ou contestação. Use quando mencionar analisar laudo, revisar perícia, impugnar laudo, contestar perícia, problemas no laudo, contradições na perícia, laudo pericial, perícia médica, perito, quesitos, laudo do INSS, perícia judicial, parecer técnico contrário, ou análise crítica de laudos médicos em contexto previdenciário. Abrange laudos de incapacidade laboral (auxílio-doença, aposentadoria por invalidez, auxílio-acidente) e laudos de avaliação de deficiência (BPC/LOAS). Funciona com laudo isolado ou com cruzamento de documentos médicos. Teleperícia, laudo videoconferência, Portaria DPMF/INSS 19/2026, auditoria laudo remoto, cerceamento Teleperícia. Inclui o Modo 3 de impugnação dirigida em 9 blocos, acionado por impugnação em 9 blocos, roteiro de impugnação, dupla camada assistente técnico, quesitos cirúrgicos, quesitos suplementares, pedido de esclarecimentos ao perito, pedido de nova perícia, falhas metodológicas do laudo, padrão técnico exigido, estrutura da impugnação, risco da impugnação. Inclui o Modo 3-A, acionado por juiz indeferiu quesitos, quesitos do juízo suprem, esclarecimentos indeferidos, laudo insuficiente, cerceamento na perícia, diagnóstico não é incapacidade. NÃO use para criação de petições, consultas genéricas sobre perícia ou análise de documentos que não sejam laudos periciais."
 ---
 
 # Skill de Auditoria Técnica de Laudos Periciais Previdenciários
@@ -22,7 +22,7 @@ Esta skill realiza auditoria técnico-jurídica de laudos periciais previdenciá
 ## Regras Críticas
 
 ### Dois-pontos
-Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
+Dois-pontos apenas antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas.
 
 ### Honestidade Radical
 Se o laudo for tecnicamente sólido e não apresentar vícios relevantes, diga isso com clareza. Não force achados inexistentes. Indique se a melhor estratégia é produzir prova técnica complementar (parecer de assistente técnico) em vez de impugnar.
@@ -52,12 +52,12 @@ Quando o usuário fornece apenas o laudo pericial, sem documentos médicos de co
 ### Modo 2. Cruzamento Completo (laudo + documentos médicos)
 Quando o usuário fornece o laudo pericial E documentos médicos particulares (atestados, laudos de especialistas, exames complementares, prontuários). A auditoria inclui tudo do Modo 1, acrescido do confronto entre as conclusões do perito e a prova documental médica.
 
-### Modo 3. Impugnação Dirigida em 9 Blocos (Onda 84)
+### Modo 3. Impugnação Dirigida em 9 Blocos
 Modo padrão sempre que o objetivo declarado for impugnar o laudo, pedir esclarecimentos, complementação ou nova perícia. Executa o roteiro operacional completo de `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`, em dupla camada (assistente técnico conforme a natureza do laudo e advogado previdenciário do segurado), na ordem fixa. Falhas metodológicas com página exata, contradições internas no formato trecho A contra trecho B, confronto documental por ID, padrão técnico com norma nomeável por número, ano e órgão (sem certeza, "não localizado, verificar em fonte primária"), vícios jurídicos traduzidos para o CPC com marcação [CONFERIDO] ou [NÃO CONFIRMADO], verificações obrigatórias de carência, qualidade de segurado e DII, cinco a oito quesitos cirúrgicos vinculados às falhas, estrutura da peça com alternativa para cada negativa do juiz, e análise de risco com a resposta esperada do INSS. A saída segue as regras do roteiro (sem travessão, sem dois-pontos introduzindo lista, sem a estrutura "não é X, é Y", parágrafos de três a quatro linhas, linha final de auditoria anti-IA). Este modo se combina com o Modo 2 quando houver documentos médicos e com os critérios de Teleperícia quando o laudo for remoto.
 
-### Modo 3-A. Quesitos Negados e Laudo Insuficiente (Onda 107)
+### Modo 3-A. Quesitos Negados e Laudo Insuficiente
 
-Variante do Modo 3 para o cenário recorrente na Justiça Federal em que o juízo INDEFERE os quesitos antes da perícia, dizendo que os quesitos do Juízo suprem a extensão da prova, e depois indefere também os esclarecimentos e julga. Executa o arsenal de `references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`, com seis argumentos ancorados no CPC (celeridade não substitui contraditório, incapacidade não é conceito exclusivamente médico, o perito não define a extensão do contraditório, o laudo judicial não tem presunção absoluta, diagnóstico não é avaliação de capacidade, e o conjunto probatório prevalece sobre conclusão isolada) e a escada processual de cinco degraus, do protesto no primeiro indeferimento ao prequestionamento.
+Variante do Modo 3 para o cenário recorrente na Justiça Federal em que o juízo INDEFERE os quesitos antes da perícia, dizendo que os quesitos do Juízo suprem a extensão da prova, e depois indefere também os esclarecimentos e julga. Executa o roteiro de `references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`, com seis argumentos ancorados no CPC (celeridade não substitui contraditório, incapacidade não é conceito exclusivamente médico, o perito não define a extensão do contraditório, o laudo judicial não tem presunção absoluta, diagnóstico não é avaliação de capacidade, e o conjunto probatório prevalece sobre conclusão isolada) e a escada processual de cinco degraus, do protesto no primeiro indeferimento ao prequestionamento.
 
 Chave da variante. A distinção entre DIVERGÊNCIA de conclusão, que o juiz resolve pela livre convicção, e INSUFICIÊNCIA metodológica, que ele precisa sanar. A peça sustenta a segunda, nunca a primeira.
 
@@ -126,17 +126,17 @@ A presença de qualquer desses vícios fundamenta impugnação por cerceamento d
 
 Antes de realizar a auditoria, leia obrigatoriamente o seguinte arquivo.
 
-- `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`. Roteiro operacional completo do Modo 3, com os 9 blocos, as regras de saída e a linha final de auditoria anti-IA (Onda 84)
+- `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`. Roteiro operacional completo do Modo 3, com os 9 blocos, as regras de saída e a linha final de auditoria anti-IA
 
-Nota de manutenção (auditoria 25/07/2026). Os arquivos CHECKLIST.md e FUNDAMENTOS.md antes listados aqui nunca existiram na pasta references e a menção foi removida. A base normativa por tipo de vício vive nas skills `base-cpc-prova-pericial-arts464-480` (dispositivos do CPC), `base-validacao-formal-laudo-medico-checklist-ab` (regime CFM e checklists A e B) e `base-pericia-medica-federal-telepericia` (PMF e Teleperícia), que devem ser consultadas em conjunto.
+Nota de manutenção. Os arquivos CHECKLIST.md e FUNDAMENTOS.md antes listados aqui nunca existiram na pasta references e a menção foi removida. A base normativa por tipo de vício vive nas skills `base-cpc-prova-pericial-arts464-480` (dispositivos do CPC), `base-validacao-formal-laudo-medico-checklist-ab` (regime CFM e checklists A e B) e `base-pericia-medica-federal-telepericia` (PMF e Teleperícia), que devem ser consultadas em conjunto.
 
-## Método Fuzzy, verificação obrigatória (Onda 106)
+## Método Fuzzy, verificação obrigatória
 
 Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
 
 A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
 
-## Laudo de B94 que nega incapacidade (Onda 124)
+## Laudo de B94 que nega incapacidade
 
 Trava de leitura. Em auditoria de laudo cujo objeto é auxílio-acidente, NÃO parar na conclusão. O requisito do B94 é a REDUÇÃO da capacidade, não a incapacidade, e o perito que conclui "capaz" frequentemente respondeu a pergunta errada.
 
@@ -144,13 +144,13 @@ Varrer a DESCRIÇÃO em busca de menção a esforço adicional, perda de força,
 
 ## Extensão
 
-Teto de o relatório de auditoria, 2 páginas, falhas em ordem de gravidade, e os nove blocos do Modo 3 são roteiro de análise, não de extensão. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto de o relatório de auditoria, 2 páginas, falhas em ordem de gravidade, e os nove blocos do Modo 3 são roteiro de análise, não de extensão. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "técnica 5 (impugnar o laudo por uma falha identificável)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Antes de auditar o laudo pericial, despachar o médico da área ao agente correspondente, com o laudo, os documentos do segurado e a descrição da atividade habitual. A auditoria jurídica do laudo confronta o que o perito escreveu com o que os documentos demonstram, e quem sabe dizer se o achado sustenta a conclusão é o médico da área.
 
@@ -177,8 +177,8 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
-O juízo trata o laudo pericial como prova de "maior credibilidade" por ser "equidistante dos interesses das partes" e indefere quesito complementar "englobado nos quesitos já respondidos". A divergência com relatório particular, sozinha, não altera o resultado. A manifestação sobre o laudo pericial ataca vício formal, quesito não respondido, contradição interna ou falta de habilitação do perito, sempre com o trecho do laudo e o ID, e o quesito complementar é novo. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
+O juízo trata o laudo pericial como prova de "maior credibilidade" por ser "equidistante dos interesses das partes" e indefere quesito complementar "englobado nos quesitos já respondidos". A divergência com relatório particular, sozinha, não altera o resultado. A manifestação sobre o laudo pericial impugna vício formal, quesito não respondido, contradição interna ou falta de habilitação do perito, sempre com o trecho do laudo e o ID, e o quesito complementar é novo. Blocos literais em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.
 
-Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.
+Forma da peça. Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.

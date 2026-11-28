@@ -1,12 +1,12 @@
-# Quesitos Negados e Laudo Insuficiente. Arsenal de Impugnação
+# Quesitos Negados e Laudo Insuficiente. Roteiro de Impugnação
 
-Onda 107 (11/08/2026). Arsenal argumentativo para o cenário recorrente na Justiça Federal em que o juízo indefere os quesitos antes da perícia, condiciona a manifestação à vinda do laudo e, apresentados os quesitos de esclarecimento, indefere e julga. Construído a partir de material de FE Wirth sobre Processo Civil Previdenciário, ancorado nos dispositivos do CPC já verificados na base.
+Roteiro argumentativo para o cenário recorrente na Justiça Federal em que o juízo indefere os quesitos antes da perícia, condiciona a manifestação à vinda do laudo e, apresentados os quesitos de esclarecimento, indefere e julga. Construído a partir de material de FE Wirth sobre Processo Civil Previdenciário, ancorado nos dispositivos do CPC já verificados na base.
 
 ## O cenário e a armadilha
 
 Sequência típica. Primeiro, o juízo nega os quesitos prévios dizendo que os quesitos do Juízo suprem a extensão da perícia. Segundo, o laudo vem enxuto, com exame clínico e conclusão de capacidade, sem correlação com a atividade real. Terceiro, apresentados os quesitos de esclarecimento, o juízo indefere e julga na sequência.
 
-A armadilha. Se o advogado só reclama no fim, o tribunal responde que houve preclusão ou que não se demonstrou prejuízo. A defesa começa no PRIMEIRO indeferimento, não no último.
+A armadilha. Se o advogado apenas reclama no fim, o tribunal responde que houve preclusão ou que não se demonstrou prejuízo. A defesa começa no PRIMEIRO indeferimento, não no último.
 
 Regra de ouro do escritório. Indeferido o quesito prévio, PROTESTAR desde logo, registrando que a via de esclarecimento fica reservada e que o prejuízo será demonstrado após o laudo. Sem esse protesto, o cerceamento posterior nasce enfraquecido.
 
@@ -34,7 +34,7 @@ Ancoragem. Art. 465, § 1º, III, do CPC (direito da parte de apresentar quesito
 
 A força probatória do laudo depende da consistência metodológica, da fundamentação e da compatibilidade com os demais elementos dos autos. NÃO existe hierarquia legal entre laudo judicial e documentos médicos particulares, e ambos se submetem à análise crítica.
 
-Ancoragem. Art. 479 do CPC, que manda o juiz indicar na sentença os motivos que o levaram a considerar ou a deixar de considerar as conclusões do laudo, o que só faz sentido porque o laudo NÃO vincula. Art. 371 do CPC (persuasão racional). Art. 480 do CPC (segunda perícia quando a matéria não estiver suficientemente esclarecida).
+Ancoragem. Art. 479 do CPC, que manda o juiz indicar na sentença os motivos que o levaram a considerar ou a deixar de considerar as conclusões do laudo, o que apenas faz sentido porque o laudo NÃO vincula. Art. 371 do CPC (persuasão racional). Art. 480 do CPC (segunda perícia quando a matéria não estiver suficientemente esclarecida).
 
 Uso prático. Este é o argumento que devolve valor aos laudos assistentes do segurado, que o juízo costuma descartar em bloco com a fórmula de que não prevalecem sobre o laudo judicial.
 
@@ -52,7 +52,7 @@ Ancoragem. Art. 371 e art. 479 do CPC. Art. 489, § 1º, IV, do CPC, porque a se
 
 ## Postura da peça
 
-O objetivo declarado NÃO é se opor à perícia nem atacar o perito. É exigir fundamentação técnica e juridicamente adequada. Peça que ataca a pessoa do perito perde credibilidade e facilita o indeferimento. Peça que demonstra insuficiência METODOLÓGICA obriga o juízo a enfrentar.
+O objetivo declarado NÃO é se opor à perícia nem criticar a pessoa do perito. É exigir fundamentação técnica e juridicamente adequada. Peça que critica a pessoa do perito perde credibilidade e facilita o indeferimento. Peça que demonstra insuficiência METODOLÓGICA obriga o juízo a enfrentar.
 
 ## Escada processual do cenário
 
@@ -68,7 +68,7 @@ Degrau 5, prequestionamento. Em todos os degraus, nomear os dispositivos (arts. 
 
 ## Modelo de tópico para a impugnação
 
-No tópico, transcreve-se o trecho do laudo ao lado do documento médico que o contradiz, e nenhuma lei vai em bloco, porque os dispositivos entram por remissão na frase (Onda 184, `peticao-previdenciaria/references/ESTILO-MODELO.md`).
+No tópico, transcreve-se o trecho do laudo ao lado do documento médico que o contradiz, e nenhuma lei vai em bloco, porque os dispositivos entram por remissão na frase.
 
 ```
 [N]. DA INSUFICIÊNCIA TÉCNICA DO LAUDO E DA NECESSIDADE DE ESCLARECIMENTOS

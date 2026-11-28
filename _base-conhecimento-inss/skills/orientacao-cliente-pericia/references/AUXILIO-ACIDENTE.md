@@ -84,7 +84,7 @@ Em cada pergunta, a orientação deve trazer resposta-modelo vinculada ao concei
 Perito pergunta se o cliente trabalha. Cliente, com medo de perder o benefício, diz que não, mesmo trabalhando. Isso é erro. Trabalhar não descaracteriza o B94. Perder a oportunidade de demonstrar a redução funcional real do dia a dia é erro muito maior. Orientar expressamente a responder com verdade.
 
 ### A armadilha do Anexo III
-Perito aplica o Anexo III do Decreto 3.048/99 como taxativo e diz que a sequela do segurado não se enquadra. Isso é erro, porque o rol é exemplificativo (jurisprudência pacífica). Cliente não pode rebater isso na perícia, mas o advogado deve registrar a posição do perito ao receber o relato pós-perícia, para impugnação com base no Tema 416/STJ.
+Perito aplica o Anexo III do Decreto 3.048/99 como taxativo e diz que a sequela do segurado não se enquadra. Isso é erro, porque o rol é exemplificativo (Decreto 3.048/99, art. 104, caput, "a exemplo"; IN 128/2022, art. 354, §1º). Cliente não pode rebater isso na perícia, mas o advogado deve registrar a posição do perito ao receber o relato pós-perícia, para impugnação com base no Tema 416/STJ.
 
 ### A armadilha da minimização
 Cliente diz que a sequela é pequena, que se acostumou, que já adaptou. Isso é interpretado como ausência de redução funcional. Orientar contra.
@@ -102,7 +102,7 @@ Se o cliente pratica hobby, atividade esportiva, trabalho doméstico, não escon
 - Simular limitação que não existe.
 - Dizer que está tudo bem, que se acostumou, que não sente mais nada.
 - Discutir com o perito sobre a perícia anterior do INSS que negou o benefício.
-- Dizer que só quer o benefício por razão financeira.
+- Dizer que apenas quer o benefício por razão financeira.
 
 ## Particularidades por tipo de acidente
 

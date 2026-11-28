@@ -62,7 +62,7 @@ Parágrafo central. Demonstrar irreversibilidade. Material de síntese definitiv
 
 ### 3.5. Nexo causal
 
-Hipótese adicional obrigatória: acidente de QUALQUER natureza (art. 86, caput, Lei 8.213/91; auditoria 03/10/2026, retirado o Tema 416/STJ, cuja tese fala em acidente do trabalho e trata da lesão mínima), o nexo laboral só é exigível quando se pleiteia a natureza acidentária/competência estadual.
+Hipótese adicional obrigatória: acidente de qualquer natureza (art. 86, caput, da Lei 8.213/91). O nexo laboral é exigível apenas quando se pleiteia a natureza acidentária, com competência da Justiça Estadual.
 
 Indicar expressamente.
 
@@ -72,7 +72,7 @@ Doença ocupacional (art. 20) com correlação CID-CNAE.
 
 Doença equiparada acidente (art. 21).
 
-NTEP automático (art. 21-A + Lista B do Anexo II do Decreto 3.048/99).
+NTEP automático (art. 21-A e Lista C do Anexo II do Decreto 3.048/99).
 
 CAT (Comunicação de Acidente do Trabalho), se emitida, com referência.
 
@@ -107,7 +107,7 @@ Cardiologista. Sequela cardíaca pós-IAM ocupacional, miocardiopatia pós-expos
 
 Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
 
-Ver também o reference cruzado `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68). Os roteiros de ortopedia, cardiologia e neurologia podem ser reaproveitados no B94, adaptando o foco para SEQUELA CONSOLIDADA e redução da capacidade laborativa, e não para incapacidade em curso.
+Ver também o reference cruzado `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md`. Os roteiros de ortopedia, cardiologia e neurologia podem ser reaproveitados no B94, adaptando o foco para SEQUELA CONSOLIDADA e redução da capacidade laborativa, e não para incapacidade em curso.
 
 ## 6. Pontos críticos pró-segurado
 
@@ -135,7 +135,7 @@ Cruzamento com `base-b94-anexo-iii-quadros`.
 
 ### 6.5. Sequela mínima
 
-Súmula 88/TNU e Tema 416/STJ. Sequela mínima admite B94 se há demonstração funcional (auditoria 03/10/2026).
+Súmula 88/TNU e Tema 416/STJ. Sequela mínima admite B94 se há demonstração funcional.
 
 Cruzamento com `base-b94-sequela-minima-sumula88-tnu`.
 
@@ -161,7 +161,7 @@ Laudo sem descrição funcional da sequela. "Paciente apresenta sequela de fratu
 
 Laudo sem correlação com a atividade laboral. Sequela genérica sem demonstração de como afeta o trabalho habitual.
 
-Confusão entre acidente e relação de trabalho. O B94 exige acidente de qualquer natureza, inclusive fora do trabalho; o nexo laboral só importa para a natureza acidentária e a competência estadual. Doença degenerativa sem evento traumático não gera B94.
+Confusão entre acidente e relação de trabalho. O B94 exige acidente de qualquer natureza, inclusive fora do trabalho; o nexo laboral apenas importa para a natureza acidentária e a competência estadual. Doença degenerativa sem evento traumático não gera B94.
 
 CID sem o código da sequela. Usar o código pós-traumático com quarto dígito (M17.2 ou M17.3 gonartrose pós-traumática, M16.4 ou M16.5 coxartrose pós-traumática, M19.1 artrose pós-traumática de outra articulação, T93 e T92 sequelas de lesões dos membros), ao lado do código da lesão original.
 
@@ -227,7 +227,7 @@ Modelo para BPC/LOAS está em `base-modelo-relatorio-medico-bpc-loas-deficiente`
 
 Consulte os arquivos `references/MODELO-BASE.md` e `references/MODELOS-POR-ESPECIALIDADE.md`.
 
-## Médicos Conferentes, acionamento obrigatório (Onda 141)
+## Médicos Conferentes, acionamento obrigatório
 
 Antes de redigir o modelo, despachar o médico da área com os documentos, porque no B94 o que decide é a sequela consolidada e a redução funcional, e é o médico quem identifica o que precisa estar descrito.
 

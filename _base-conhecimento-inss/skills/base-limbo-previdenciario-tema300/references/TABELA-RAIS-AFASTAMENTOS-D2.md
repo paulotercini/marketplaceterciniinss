@@ -56,7 +56,7 @@ Não existe código 80 em nenhuma das versões da tabela, nem na conferida no ma
 
 **Hipóteses remanescentes, nenhuma confirmada.** Código legado revogado. Erro de preenchimento pelo declarante. Ou código do sistema de folha do empregador que migrou indevidamente para o extrato.
 
-**Uso em peça.** Não usar como código válido. Se o código 80 aparecer em extrato de cliente, tratá-lo como declaração de afastamento sem motivo válido na tabela oficial, o que por si só é irregularidade da declaração patronal e pode ser explorado. Ver tese 7.
+**Uso em peça.** Não usar como código válido. Se o código 80 aparecer em extrato de cliente, tratá-lo como declaração de afastamento sem motivo válido na tabela oficial, o que por si apenas é irregularidade da declaração patronal e pode ser explorado. Ver tese 7.
 
 ---
 
@@ -88,7 +88,7 @@ Alto valor probatório. São elas que transformam a RAIS em confissão.
 Pela regra D.3, o afastamento declarado na RAIS pressupõe concessão pelo INSS. Se o empregador declarou código 40 em período no qual não havia benefício concedido, ele declarou afastamento previdenciário inexistente, o que evidencia que tratou o empregado como afastado por decisão própria, sem amparo do INSS e sem pagamento de salário. Isso é o suporte fático do limbo, confessado em declaração oficial.
 
 **Tese 2. Remuneração zero é confissão.**
-Pela regra D.3(a), remuneração só se declara se houver pagamento pelo empregador. Declaração de remuneração zerada durante afastamento é confissão administrativa de que nada foi pago.
+Pela regra D.3(a), remuneração apenas se declara se houver pagamento pelo empregador. Declaração de remuneração zerada durante afastamento é confissão administrativa de que nada foi pago.
 
 **Tese 3. Fatiamento anual não descaracteriza continuidade.**
 Blocos que iniciam em 1º de janeiro e encerram em 31 de dezembro em anos consecutivos são um único afastamento contínuo, por imposição da convenção de preenchimento, não afastamentos autônomos. Antecipa a alegação do INSS de que houve interrupções.
