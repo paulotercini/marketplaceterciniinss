@@ -12847,7 +12847,7 @@ function dbBotoes(k, aba, dig, sis, fim=""){
   const det = aba==="cnj" ? b(`dbPainel('${k.id}','det')`, "Detalhes", "Ver os dados do cabeçalho do processo", "", ab==="det")
     : b(`irSubAba('${aba}')`, "Detalhes", `Abrir a aba ${ROT_FASE[aba]||"do processo"}`);
   const pn = ab==="exp" && exp ? dbExpedientes(k, x) : ab==="det" ? dbDetalhes(k, x) : "";
-  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", "Baixar os documentos do processo (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}${fim}</div>${pn}`;
+  return `<div class="db-bts">${b(`lerProcesso('${k.id}','${aba}',${i})`, "Ler", "Ler o processo inteiro", "pri")}${tela ? b(`telaDoProcesso('${k.id}','${aba}',${i})`, "Tela", tela) : ""}${exp ? b(`dbPainel('${k.id}','exp')`, "Expedientes", "Ver os expedientes do PJe", "", ab==="exp") : ""}${det}${b(`baixarProcesso('${k.id}','${aba}',${i})`, "Baixar", aba==="cnj" && exp ? "Baixar o processo inteiro e os expedientes (.zip)" : "Baixar o processo inteiro (.zip)")}${b(`claudeDoProcesso('${k.id}','${aba}',${i})`, "Claude", "Pedir ao Claude sobre o processo")}${fim}</div>${pn}`;
 }
 function dbExpedientes(k, x){
   const vs = expedientesDe(k, x.d);
@@ -41952,7 +41952,7 @@ function rotuloDoCaso(k){
   tit = tit || k.especie || k.beneficio || "";
   return { cliente:c.nome||"cliente", titulo:tit, arquivo:nomeSeguro(tit ? `${c.nome||"cliente"}-${tit}` : (c.nome||"cliente")) };
 }
-async function baixarDocsZip(casoId, soSel, lista){
+async function baixarDocsZip(casoId, soSel, lista, extras=[]){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const docs = lista || docsEscolhidos(k, soSel);
   aviso(`Juntando ${docs.length} documento(s)…`, false);
@@ -41978,6 +41978,7 @@ async function baixarDocsZip(casoId, soSel, lista){
         zip.file(nome, await r.blob());
       }catch(e){ falhas++; }
     }
+    extras.forEach(([nome, conteudo])=>zip.file(nome, conteudo));   // F848 · a tela de Expedientes vai junto
     salvarBlob(`${rotuloDoCaso(k).arquivo}.zip`, await zip.generateAsync({type:"blob"}));
     aviso(falhas ? `⬇ zip pronto — ${falhas} documento(s) não baixaram` : "⬇ zip pronto");
   }catch(e){ aviso("Não consegui montar o zip: "+e.message); }
@@ -48931,7 +48932,12 @@ function lerProcesso(casoId, aba, i, caminho){
 function baixarProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
   const x = processosDaFase(k, aba)[i]; if(!x) return;
-  baixarDocsZip(casoId, false, docsLegiveis(k, x));
+  // F848 · no Judicial, a tela de Expedientes do PJe entra no .zip como HTML (pedido do Paulo, 28.11.2026)
+  const vs = aba==="cnj" ? expedientesDe(k, x.d) : [];
+  const exp = vs.length ? [["Expedientes.html", `<!doctype html><meta charset="utf-8"><title>Expedientes · ${esc(x.id)}</title>
+<style>body{font:14px sans-serif;margin:24px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:6px;text-align:left;vertical-align:top}.meio-sub{color:#666}</style>
+<h1>Expedientes · ${esc(x.id)}</h1>${vs.map(v=>`${vs.length>1?`<h2>${esc(v.grau||"")}</h2>`:""}${tabelaExpedientes(v, null, x.d)}`).join("")}`]] : [];
+  baixarDocsZip(casoId, false, docsLegiveis(k, x), exp);
 }
 function telaDoProcesso(casoId, aba, i){
   const k = D.casoPorId.get(casoId); if(!k) return;
