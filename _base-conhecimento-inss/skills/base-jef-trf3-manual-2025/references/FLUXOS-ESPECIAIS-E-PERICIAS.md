@@ -25,7 +25,7 @@ Aplicado especialmente em demandas onde a PROVA TESTEMUNHAL e o DEPOIMENTO PESSO
 #### Aplicações típicas no escritório
 
 - **Reconhecimento de tempo rural** (segurada especial, boia-fria).
-- **Aposentadoria por idade rural** (Tema 1115/STJ, Tema 1007/STJ).
+- **Aposentadoria por idade rural e híbrida** (Tema 1007/STJ).
 - **Reconhecimento de união estável** para pensão por morte.
 - **Reconhecimento de atividade urbana sem registro** (Reclamatória Trabalhista correlata).
 - **Atividade especial** dependente de prova testemunhal complementar.
@@ -43,7 +43,7 @@ Aplicado especialmente em demandas onde a PROVA TESTEMUNHAL e o DEPOIMENTO PESSO
 
 Fluxo especial desenvolvido para B31, B32 e B94 (alta demanda).
 
-Funcionamento. PERÍCIA ANTES da citação do INSS (art. 129-A §3º Lei 8.213/91 introduzido pela Lei 13.876/2019 e regulamentado em 2021).
+Funcionamento. PERÍCIA ANTES da citação do INSS (Lei 8.213/91, art. 129-A, §§2º e 3º, incluído pela Lei 14.331/2022).
 
 #### Sequência operacional
 
@@ -87,7 +87,7 @@ Quando a PFE-INSS oferece acordo na fase de resposta após laudo pericial favor�
 - [ ] DIB na DER ou data correta.
 - [ ] DIP imediata.
 - [ ] Atrasados completos.
-- [ ] Juros e correção pelo Tema 810/STF e Tema 905/STJ (SELIC após EC 113/2021).
+- [ ] Juros e correção em três fases: INPC até 11/2021, SELIC de 12/2021 a 08/2025 (EC 113/2021) e o regime de 09/2025 em `base-juros-correcao-monetaria`.
 - [ ] Honorários sucumbenciais (Tema 1050/STJ, Súmula 111/STJ).
 - [ ] Honorários contratuais destacados (art. 22 §4º EAOAB).
 
@@ -108,7 +108,7 @@ Quando a PFE-INSS oferece acordo na fase de resposta após laudo pericial favor�
 
 ### Honorários periciais
 
-Pagos pelo TRF3 (Resolução CJF 305/2014 atualizada). Em casos de BENEFICIÁRIO DE GRATUIDADE DA JUSTIÇA, o pagamento é feito pela Justiça Federal.
+Na perícia médica de benefício por incapacidade, o pagamento é antecipado pelo Poder Executivo federal, salvo autor com condição de arcar (Lei 13.876/2019, art. 1º, na redação da Lei 14.331/2022), com limite de uma perícia por processo. Nas demais perícias com gratuidade, paga a Justiça Federal (Resolução CJF 305/2014).
 
 ### Designação do perito
 
@@ -119,7 +119,7 @@ O juízo nomeia perito profissional habilitado. O autor pode indicar assistente 
 A parte autora tem prazo para apresentar quesitos. ESSENCIAL para a advocacia pró-segurado preparar quesitos detalhados, particularmente em.
 
 - B31. Comprovação da incapacidade temporária com termo final.
-- B32. Comprovação da incapacidade permanente para QUALQUER atividade habitual.
+- B32. Comprovação da incapacidade total e permanente, sem possibilidade de reabilitação para atividade que garanta a subsistência (Lei 8.213, art. 42), com as condições pessoais (Súmula 47 TNU).
 - B94. Comprovação da sequela com redução da capacidade.
 - BPC. Comprovação da deficiência de longo prazo (impedimentos físicos, mentais, intelectuais ou sensoriais por no mínimo 2 anos).
 
@@ -164,7 +164,7 @@ Acionar `orientacao-cliente-pericia` para preparação completa do cliente.
 
 2. **RPV.** Valor até 60 SM. Prazo de pagamento de até 60 dias após a expedição.
 
-3. **Precatório.** Valor acima de 60 SM. Pagamento conforme cronograma constitucional (geralmente 1 a 2 anos).
+3. **Precatório.** Valor acima de 60 SM. Apresentado até 1º de fevereiro, paga-se até o fim do exercício seguinte (CF, art. 100, §5º, na redação da EC 136/2025).
 
 4. **Destaque de honorários contratuais.** Pleitear na fase de execução (art. 22 §4º EAOAB) antes da expedição da RPV/Precatório.
 
@@ -174,7 +174,7 @@ Acionar `orientacao-cliente-pericia` para preparação completa do cliente.
 
 #### Recurso Inominado
 
-Prazo de 10 dias úteis (art. 41 Lei 9.099/95 c/c art. 1º Lei 10.259).
+Prazo de 10 dias úteis (Lei 9.099/95, arts. 12-A e 42, c/c Lei 10.259, art. 1º).
 
 Endereçado à Turma Recursal do TRF3.
 
@@ -184,11 +184,11 @@ Acionar `base-recursos-jef` para detalhamento.
 
 #### Embargos de Declaração
 
-5 dias.
+5 dias úteis (Lei 9.099/95, arts. 48 e 49).
 
 #### PUIL
 
-Acionar `base-tnu-admissibilidade-manual` (Onda 30) para o manual TNU.
+Acionar `base-tnu-admissibilidade-manual` para o manual da TNU.
 
 ## CAPÍTULO XX - JECRIM
 

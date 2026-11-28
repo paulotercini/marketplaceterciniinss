@@ -1,115 +1,27 @@
 # Honorários de Sucumbência. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-Honorários de sucumbência remuneram o advogado pelo trabalho processual, fixados pelo juiz em favor do vencedor. Em previdenciário, o regime do art. 85 §3º CPC, temperado pela Súmula 111/STJ, baliza a fixação.
+CF/88, art. 133. CPC, arts. 85, 86 e 98, §3º. Lei 9.099/95, art. 55. Lei 12.016/2009, art. 25. Lei 8.906/94, arts. 22 a 24.
 
-## 2. Fundamento constitucional
+## 2. Cenários
 
-Art. 5º LV CF/88.
+Cenário A. Concessão no rito comum. Base: parcelas vencidas até a sentença (Súmula 111 STJ). Sentença ilíquida: percentual definido na liquidação (art. 85, §4º, II).
 
-Art. 133 CF/88. Advogado indispensável.
+Cenário B. Improcedência reformada pelo TRF. Base até o acórdão que concedeu o benefício; majoração recursal (§11) se o INSS recorrer depois.
 
-## 3. Fundamento legal
+Cenário C. Reafirmação da DER no curso da ação. Sem honorários se o INSS não se opuser; havendo oposição, honorários sobre as parcelas vencidas até a decisão.
 
-CPC, art. 85.
+Cenário D. Recurso inominado do INSS improvido. Honorários de 10% a 20% sobre a condenação (art. 55 da Lei 9.099/95).
 
-Lei 8.906/94, arts. 22 e 24.
+Cenário E. Cumprimento de sentença com impugnação rejeitada. Honorários próprios do cumprimento (§1º), somados ao débito (§13).
 
-Súmula 111 STJ.
+Cenário F. Sucumbência recíproca. Distribuição proporcional (art. 86), vedada a compensação (§14); sucumbência mínima do segurado transfere o ônus integral ao INSS (art. 86, parágrafo único).
 
-## 4. Marco jurisprudencial central
+## 3. Cenários limitados
 
-### Tema 1050 STJ
+JEF em primeiro grau: sem honorários. Mandado de segurança: sem honorários. Cumprimento não impugnado iniciado após 01/07/2024: sem honorários (Tema 1190 STJ).
 
-Base de cálculo.
+## 4. Metodologia
 
-### Súmula 111 STJ
-
-Parcelas vencidas.
-
-### Tema 1076 STJ
-
-Escalonamento.
-
-### Tema 995 STJ
-
-Reafirmação.
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Concessão de benefício
-
-Base Súmula 111 até a sentença.
-
-### Cenário B. Reafirmação da DER
-
-Tema 995 STJ.
-
-### Cenário C. Revisão
-
-Base parcelas vencidas.
-
-### Cenário D. Majoração recursal
-
-Art. 85 §11.
-
-### Cenário E. Cumprimento
-
-Honorários próprios.
-
-### Cenário F. Acordo
-
-Respeitar percentuais.
-
-## 6. Cenários limitados
-
-### Cenário G. JEF em primeira instância
-
-Sem honorários. Art. 55 Lei 9.099.
-
-### Cenário H. MS
-
-Súmula 105 STJ.
-
-### Cenário I. Gratuidade
-
-Suspensão da exigibilidade.
-
-## 7. Metodologia
-
-Primeiro, base de cálculo.
-
-Segundo, percentual adequado.
-
-Terceiro, destaque e execução.
-
-Quarto, monitoramento recursal.
-
-Quinto, cumprimento direto se o caso.
-
-## 8. Riscos processuais
-
-Risco de fixação equitativa. Tema 1076 STJ.
-
-Risco de redução em grau recursal.
-
-Risco de inclusão indevida de parcelas posteriores.
-
-Risco de reserva mal calculada.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, pedir fixação escalonada.
-
-Segundo, defender Súmula 111.
-
-Terceiro, postular majoração recursal.
-
-Quarto, destacar nos ofícios.
-
-Quinto, executar diretamente se necessário.
-
-## 10. Integração prática
-
-`honorarios-contrato-previdenciario`, `execucao-cumprimento-previdenciario`, `peticao-previdenciaria`, `base-cumprimento-sentenca-rpv-precatorio`, `base-cpc-coisa-julgada-progressiva`.
+Primeiro, apurar as parcelas até a sentença. Segundo, definir a faixa do §3º e o escalonamento (§5º). Terceiro, pedir o percentual com base nos incisos do §2º. Quarto, requerer a majoração recursal nas contrarrazões. Quinto, requerer o destaque dos contratuais antes da requisição (art. 22, §4º, da Lei 8.906/94).

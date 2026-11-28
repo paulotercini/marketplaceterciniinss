@@ -69,7 +69,7 @@ O fato é a prestação de trabalho com subordinação, habitualidade e remunera
 
 ### Desemprego involuntário (período de graça, art. 15, § 2º)
 
-O fato é a situação de desemprego involuntário após o último vínculo, para estender o período de graça. O registro no SINE ou o seguro-desemprego ajudam mas não são indispensáveis, a prova testemunhal supre (Tema 1360/STJ e Súmula 27/TNU; auditoria 03/10/2026, retirado o Tema 255/TNU, que trata da prorrogação por mais de 120 contribuições). Depoimento precisa da procura ativa por trabalho, bicos sem vínculo não descaracterizam por si. Consultar `periodo-graca-qualidade-segurado`.
+O fato é a situação de desemprego involuntário após o último vínculo, para estender o período de graça. O registro no SINE ou o seguro-desemprego ajudam mas não são indispensáveis, a prova testemunhal supre (Tema 1360/STJ e Súmula 27/TNU). Depoimento precisa da procura ativa por trabalho, bicos sem vínculo não descaracterizam por si. Consultar `periodo-graca-qualidade-segurado`.
 
 ### Tempo especial com empresa extinta
 
@@ -85,7 +85,7 @@ Primeira, uma conversa por testemunha, sempre com o fato específico que ela vei
 
 Segunda, organizar a memória, nunca implantar memória. Perguntar o que ela lembra, ancorar em marcos dela (casamento, enchente, safra, patrão), e aceitar o que ela não lembra.
 
-Terceira, avisar sempre. Dizer a verdade, responder só o que foi perguntado, "não sei" e "não lembro" são respostas boas quando verdadeiras, não adivinhar data (dizer "por volta de" é melhor que chutar ano exato e errar).
+Terceira, avisar sempre. Dizer a verdade, responder apenas o que foi perguntado, "não sei" e "não lembro" são respostas boas quando verdadeiras, não adivinhar data (dizer "por volta de" é melhor que chutar ano exato e errar).
 
 Quarta, checar a contradita ANTES. Parente, amigo íntimo, inimigo, interessado no resultado. Se a testemunha é contraditável, saber disso na reunião, não na audiência.
 
@@ -103,11 +103,11 @@ Quarta, dados de cliente e testemunha ficam no documento do caso, nunca em skill
 
 Quinta, o estudo é personalizado, texto que sobrevive à troca do nome não está pronto.
 
-Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa.
+Sexta, português do padrão do escritório, com dois-pontos apenas antes de citação literal ou de enumeração.
 
 ## Extensão
 
-Teto de o estudo pré-audiência, 2 páginas, com o fato que a audiência existe para provar na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+O estudo pré-audiência tem teto de 2 páginas, com o fato que a audiência existe para provar na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 

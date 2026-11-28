@@ -3,10 +3,6 @@ name: ponte-workflow-recurso-sentenca
 description: "Workflow pró-segurado para atacar decisão contrária ao segurado, do diagnóstico à arquitetura do recurso por rito, costurando embargos, preliminares, mérito e precedentes conferidos até a peça. Use SEMPRE que mencionar workflow recurso, arquitetura da apelação, arquitetura do recurso, atacar sentença, destruir a fundamentação do juiz, recurso inominado, apelação, recurso ordinário ao CRPS, embargos de declaração, estrutura de tópicos de mérito, tom de inconformismo técnico, próximo passo após sentença contrária. Encadeia base-analise-decisao-tres-eixos, os eixos do CPC e a redação da peça. Cruza com base-analise-decisao-tres-eixos, base-cpc-embargos-declaracao, base-cpc-fundamentacao-art489, base-cpc-apelacao-efeitos-art1013, base-cpc-teoria-capitulos-sentenca, base-recursos-jef, base-rito-ordinario-trf, base-precedentes-catalogo-vinculantes, peticao-previdenciaria e revisao-peticao. NÃO use para contestação (use ponte-workflow-replica-contestacao) nem para mandado de segurança."
 ---
 
-## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
-
-O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
-
 # Workflow Recurso contra Decisão
 
 ## 1. Quando acionar
@@ -21,7 +17,7 @@ Trazer da `base-analise-decisao-tres-eixos` os achados dos cinco passos da Fase 
 
 ### Passo 2. Definir rito e prazo
 
-Identificar a sede. CRPS, recurso ordinário 30 dias ou recurso especial. JEF, recurso inominado 10 dias, depois PUIL e TNU. Rito ordinário, apelação 15 dias úteis. Registrar a data de ciência e o prazo fatal. Acionar `base-recurso-crps-peca-enxuta`, `base-recursos-jef` ou `base-rito-ordinario-trf` conforme a sede.
+Identificar a sede. CRPS, recurso ordinário 30 dias ou recurso especial. JEF, recurso inominado em 10 dias úteis, depois pedido de uniformização à TRU ou à TNU. Rito ordinário, apelação 15 dias úteis. Registrar a data de ciência e o prazo fatal. Acionar `base-recurso-crps-peca-enxuta`, `base-recursos-jef` ou `base-rito-ordinario-trf` conforme a sede.
 
 ### Passo 3. Embargos antes do recurso
 
@@ -37,13 +33,13 @@ Transformar o Passo 2 da auditoria em tópicos de erro de julgamento. Cada tópi
 
 ### Passo 6. Engenharia de precedentes
 
-Para cada fundamento determinante da decisão, opor o precedente vinculante que o contraria, na ordem STF, STJ, TNU, Enunciado do CRPS e Súmula da TRU3. Acionar `base-precedentes-catalogo-vinculantes` e `precedentes-previdenciarios`. Conferir cada tese na fonte. Só entra citação [CONFERIDO].
+Para cada fundamento determinante da decisão, opor o precedente vinculante que o contraria, na ordem STF, STJ, TNU, Enunciado do CRPS e Súmula da TRU3. Acionar `base-precedentes-catalogo-vinculantes` e `precedentes-previdenciarios`. Conferir cada tese na fonte. Entra apenas citação [CONFERIDO].
 
-Quando a sentença ou o recurso do INSS tocar o termo inicial dos efeitos financeiros, despachar o agente `conferente-tema-1124` (Onda 178). Nas contrarrazões, se o recurso do INSS não impugnou o termo inicial, dizer expressamente que o capítulo não foi devolvido, porque há Turma do TRF3 que aplica o Tema 1124 de ofício.
+Quando a sentença ou o recurso do INSS tocar o termo inicial dos efeitos financeiros, despachar o agente `conferente-tema-1124`. Nas contrarrazões, se o recurso do INSS não impugnou o termo inicial, dizer expressamente que o capítulo não foi devolvido, porque há Turma do TRF3 que aplica o Tema 1124 de ofício.
 
 ### Passo 7. Recurso parcial e capítulos
 
-Quando a decisão tiver capítulos autônomos, atacar só o capítulo gravoso e executar desde logo o incontroverso. Acionar `base-cpc-teoria-capitulos-sentenca`. Cuidar da vedação à reformatio in pejus quando o recurso for exclusivo do segurado.
+Quando a decisão tiver capítulos autônomos, atacar apenas o capítulo gravoso e executar desde logo o incontroverso. Acionar `base-cpc-teoria-capitulos-sentenca`. Cuidar da vedação à reformatio in pejus quando o recurso for exclusivo do segurado.
 
 ### Passo 8. Arquitetura da peça
 
@@ -52,6 +48,10 @@ Montar a estrutura de tópicos na ordem, preliminares de nulidade, prejudiciais,
 ### Passo 9. Redação e revisão
 
 Acionar `peticao-previdenciaria` para a peça e `base-peticao-previdenciaria-padrao-visual` para o padrão visual. Acionar `revisao-peticao` e `base-revisao-peticao-aprofundada` para a auditoria pós-redação, com atenção à dialeticidade, cada tópico do recurso deve enfrentar um fundamento específico da decisão.
+
+## Skills paralelas
+
+A família `base-auditoria-adversarial-contestacao-inss` e `base-auditoria-adversarial-decisao-judicial` cobre o mesmo terreno que `base-analise-contestacao-inss` e esta ponte. Usar as duas de forma complementar; em conflito, prevalece a que tiver citação [CONFERIDO] em fonte primária.
 
 ## 3. Documentos essenciais
 
@@ -65,7 +65,7 @@ Dialeticidade. Recurso que não enfrenta a fundamentação específica da decis�
 
 Prequestionamento. Sem a matéria enfrentada na origem não sobe recurso à instância superior. Usar embargos com fim de prequestionamento, art. 1.025 do CPC.
 
-Precedente inventado destrói a credibilidade da peça. Só citar [CONFERIDO], com conferência na fonte.
+Precedente inventado destrói a credibilidade da peça. Citar apenas o [CONFERIDO] na fonte.
 
 ## 5. Postura
 
@@ -79,6 +79,6 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis. Acionar `base-portarias-dpmf-ins
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.

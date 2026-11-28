@@ -1,119 +1,29 @@
 # Recursos no JEF. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Súmula 203 STJ
+Súmula 203 STJ. Não cabe recurso especial contra decisão proferida por órgão de segundo grau dos Juizados Especiais.
 
-REsp não cabe contra decisão de Turma Recursal.
+Súmula 640 STF. Cabe recurso extraordinário contra decisão proferida por juiz de primeiro grau nas causas de alçada, ou por turma recursal de juizado especial cível e criminal.
 
-Fonte oficial em https://www.stj.jus.br
+Súmula 376 STJ. Compete à Turma Recursal processar e julgar mandado de segurança contra ato de juizado especial.
 
-### Súmula 640 STF
+Súmula 43 TNU. Não cabe incidente de uniformização que verse sobre matéria processual. Reafirmada no PUIL 1028473-09.2022.4.01.3600 (D.E. 12/12/2025).
 
-RE cabe direto contra acórdão de Turma Recursal.
+Súmula 42 TNU. Não se conhece de incidente de uniformização que implique reexame de matéria de fato.
 
-Fonte oficial em https://portal.stf.jus.br
+## 2. Refutação aos argumentos típicos do INSS
 
-### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
+Argumento 1. Intempestividade. Refutação: prazo em dias úteis (art. 12-A da Lei 9.099/95), contado da intimação.
 
-Duração razoável do processo.
+Argumento 2. Deserção. Refutação: gratuidade deferida dispensa o preparo (art. 98 do CPC).
 
-Fonte oficial em https://portal.stf.jus.br
+Argumento 3. Falta de dialeticidade. Refutação: demonstrar a impugnação específica de cada fundamento da sentença.
 
-### Enunciado 91 FONAJEF
+Argumento 4. Paradigma inadequado no PUIL. Refutação: paradigma de Turma de outra Região, súmula da TNU ou jurisprudência dominante do STJ, com cotejo analítico da similitude fática e da divergência jurídica.
 
-"Os Juizados Especiais Federais são incompetentes para julgar causas que demandem perícias complexas ou onerosas que não se enquadrem no conceito de exame técnico". É tese que o INSS pode invocar, e não autoriza perícia por similaridade nem substitui o PPP. Para a prova técnica simplificada, o segurado invoca o Enunciado 225 do XVIII FONAJEF [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Argumento 5. Matéria processual no PUIL. Refutação: demonstrar que a controvérsia é de interpretação de norma de direito material (requisito do benefício, termo inicial), e não de rito.
 
-## 2. Marco legislativo
+Argumento 6. Embargos protelatórios. Refutação: vício interno indicado com o trecho do julgado e o ID em que a questão foi suscitada.
 
-### Lei 10.259/2001
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 9.099/1995
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Recurso intempestivo
-
-Argumento adversário. Fora do prazo.
-
-Refutação. Comprovar tempestividade. Contagem a partir da intimação, art. 219 CPC.
-
-### Argumento 2. Embargos protelatórios
-
-Argumento adversário. Multa.
-
-Refutação. Embargos com fundamentação clara em omissão, contradição, obscuridade ou erro material. Efeito modificativo excepcional.
-
-### Argumento 3. Ausência de dialeticidade
-
-Argumento adversário. Repetição de inicial.
-
-Refutação. Reescrever o recurso combatendo cada fundamento da sentença. Art. 1.010, III, CPC.
-
-### Argumento 4. PUIL não conhecido
-
-Argumento adversário. Paradigma inadequado.
-
-Refutação. Apresentar acórdãos paradigmas adequados, com cotejo analítico.
-
-### Argumento 5. Súmula 203 STJ
-
-Argumento adversário. REsp não cabe.
-
-Refutação. Se houve PUIL à TNU, art. 14, §4º, Lei 10.259, REsp é cabível em hipótese específica.
-
-### Argumento 6. RE sem matéria constitucional
-
-Argumento adversário. Matéria infraconstitucional.
-
-Refutação. Demonstrar o fundamento constitucional direto. Súmula 640 STF.
-
-### Argumento 7. MS inadequado
-
-Argumento adversário. Há recurso.
-
-Refutação. Cabível somente em ausência de recurso.
-
-### Argumento 8. Recurso sem preparo
-
-Argumento adversário. Deserção.
-
-Refutação. Segurado em demanda previdenciária é dispensado de preparo.
-
-### Argumento 9. Sentença transitada
-
-Argumento adversário. Preclusão.
-
-Refutação. Verificar intimação, prazo e eventual embargo.
-
-### Argumento 10. Negativa de seguimento monocrático
-
-Argumento adversário. Decisão monocrática do relator.
-
-Refutação. Agravo interno. Art. 1.021 CPC aplicado por analogia.
-
-## 5. Estratégia integrada
-
-Primeiro, controle do prazo.
-
-Segundo, tese clara.
-
-Terceiro, prequestionamento.
-
-Quarto, paradigma.
-
-Quinto, cotejo analítico.
-
-Sexto, insistência recursal em prol do segurado.
-
-## 6. Diligência de atualização
-
-Acompanhar PEDILEFs em representativos.
-
-Acompanhar Súmulas e Questões de Ordem da TNU.
-
-Revisar Súmulas 203 STJ e 640 STF.
+Argumento 7. Decisão monocrática do relator irrecorrível. Refutação: agravo interno previsto no regimento da Turma Recursal ou no RITNU.

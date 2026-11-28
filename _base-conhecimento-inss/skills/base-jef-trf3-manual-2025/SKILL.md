@@ -9,7 +9,7 @@ description: Skill especializada no Manual de Padronização dos Juizados Especi
 
 Esta skill consolida o Manual de Padronização dos Juizados Especiais Federais da 3ª Região, edição 2025 da GACO (Coordenadoria dos JEFs do TRF3, biênio 2024/2026), em postura exclusivamente pró-segurado do INSS.
 
-O TRF3 é o tribunal regional federal de São Paulo e Mato Grosso do Sul, foro principal do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110). O conhecimento DETALHADO das regras de processamento padronizadas é decisivo para evitar extinção sem mérito por inércia na regularização e para acelerar a tramitação processual.
+O TRF3 abrange São Paulo e Mato Grosso do Sul, foro principal do escritório. O conhecimento das regras de processamento padronizadas é decisivo para evitar extinção sem mérito por inércia na regularização e para acelerar a tramitação processual.
 
 Fontes oficiais. Manual publicado pelo TRF3, GACO biênio 2024/2026, sob coordenação das Desembargadoras Federais Consuelo Yoshida (Coordenadora) e Leila Paiva (Coordenadora Adjunta).
 
@@ -78,94 +78,11 @@ I. BO do acidente de trânsito.
 II. Contestação na esfera administrativa quanto ao não pagamento ou valor.
 III. Relatório médico com CID e CRM.
 
-## AS 52 HIPÓTESES DE IRREGULARIDADES DO ART. 20 §2º
+## AS 52 HIPÓTESES DE IRREGULARIDADE DO ART. 20, §2º
 
-Este é o ATIVO MAIS CRÍTICO desta skill. O art. 20 §2º enumera 52 hipóteses de irregularidades que geram intimação para regularização em 15 dias (art. 45). NÃO efetuada a regularização, é lançada sentença de EXTINÇÃO SEM MÉRITO (art. 47).
+O art. 20, §2º, do Manual enumera 52 irregularidades que geram intimação para regularizar em 15 dias (art. 45). Sem regularização, a sentença extingue o processo sem mérito (art. 47). As mais frequentes no previdenciário: procuração com mais de 12 meses (XIX), comprovante de endereço com mais de 180 dias (IX), falta do NB (XXVIII) ou da espécie (XXX), falta do prévio requerimento, do indeferimento ou do PA integral (XXXI a XXXIV), relatório médico sem CID e CRM (XXXVI), falta do CadÚnico no BPC (XL), valor da causa sem planilha (XLVI e XLVII) e, em benefício por incapacidade, falta dos itens do art. 129-A da Lei 8.213/91 (LI). Lista integral, com checklist item a item e checklist pré-protocolo, em `references/CHECKLIST-52-IRREGULARIDADES.md`.
 
-A advocacia pró-segurado deve EVITAR TODAS as 52 hipóteses na elaboração da petição inicial. Lista exaustiva (numerada como no Manual).
-
-I. Ausência dos requisitos do inciso II do art. 319 CPC.
-II. Divergência entre nome da parte autora na qualificação e procuração vs Receita Federal.
-III. Divergência entre nome na qualificação e procuração vs documentos juntados.
-IV. Ausência de documento com CPF da parte autora.
-V. Ausência de documento de identidade oficial (RG, CNH etc).
-VI. Ausência de documentos pessoais (RG e/ou CPF) do representante.
-VII. Ausência de documento com PIS/PASEP.
-VIII. Ausência de documentos pessoais da pessoa falecida (em caso de espólio).
-IX. Ausência de comprovante de residência LEGÍVEL E RECENTE, datado de até 180 dias.
-X. Ausência de declaração datada e assinada se comprovante de residência em nome de terceiro.
-XI. Divergência entre endereço declarado na inicial e endereço do comprovante anexado.
-XII. Ausência de documento com CNPJ no caso de pessoa jurídica.
-XIII. Ausência de documento que comprove condição de microempresa/EPP.
-XIV. Ausência de documentos da regularidade da representação de PJ.
-XV. Ausência de documentos da regularidade de representação de incapaz (termo de curatela).
-XVI. Em caso de analfabeto, ausência de procuração por instrumento público ou a rogo.
-XVII. Ausência de procuração do representante da parte com poderes para constituir advogado.
-XVIII. Ausência de substabelecimento.
-XIX. **Procuração com data de assinatura superior a 12 meses.**
-XX. Ausência de procuração judicial.
-XXI. Procuração em desconformidade com o §3º do art. 15 da Lei 8.906/1994 (Estatuto OAB).
-XXII. Advogado de outra UF que patrocinou mais de 5 ações no ano sem inscrição secundária.
-XXIII. Irregularidade na indicação do polo ativo (titular falecido).
-XXIV. Inadequação do polo passivo (entidade sem personalidade jurídica).
-XXV. Ausência de indicação no polo ativo de litisconsorte necessário.
-XXVI. Ausência de indicação no polo passivo de litisconsorte necessário.
-XXVII. Réu sem capacidade processual no JEF (não União/autarquia/fundação/EPF).
-XXVIII. **Ausência de indicação do NB (número do benefício) na petição inicial.**
-XXIX. Divergência entre NB da inicial e dos documentos.
-XXX. **Ausência de indicação clara da ESPÉCIE do benefício objeto da lide.**
-XXXI. **Ausência de comprovante de PRÉVIO REQUERIMENTO administrativo.**
-XXXII. **Ausência de comprovante de INDEFERIMENTO administrativo.**
-XXXIII. Ausência de indeferimento com data POSTERIOR à cessação do benefício.
-XXXIV. **Ausência da via INTEGRAL do PA.**
-XXXV. **Ausência de documento com NB e DIB previdenciário.**
-XXXVI. **Ausência de relatório médico com CID e CRM** (incapacidade/deficiência/sequela).
-XXXVII. Ausência de relatório médico justificando valor maior de indenização.
-XXXVIII. Ausência de telefone para contato.
-XXXIX. Ausência de ponto de referência (comércio, igreja, escola).
-XL. **Ausência de comprovante de inscrição no CadÚnico** (BPC).
-XLI. Ausência de atestado/certidão de permanência carcerária recente (auxílio-reclusão).
-XLII. **Ausência do PERÍODO CONTROVERSO a ser averbado** (revisão de tempo).
-XLIII. Ausência de pedido/indeferimento do seguro-desemprego administrativo.
-XLIV. Ausência de pedido/indeferimento de contestação administrativa (ações de cobrança).
-XLV. Ausência de pedido/indeferimento de isenção de IR sobre aposentadoria.
-XLVI. **Petição inicial sem valor da causa (arts. 291, 292 e 319 V CPC).**
-XLVII. **Valor da causa não justificado ou ausência de planilha de cálculos.**
-XLVIII. Valor superior ao limite de alçada do JEF (sem renúncia).
-XLIX. **Não formulado pedido de justiça gratuita apesar de juntada declaração de hipossuficiência.**
-L. Ausência ou irregularidade da declaração de hipossuficiência.
-LI. **Em B31/B32/B94, ausência dos itens do art. 129-A da Lei 8.213/91.**
-LII. Existência de documentos em língua estrangeira sem tradução juramentada.
-
-§3º. No caso de alteração da classe processual OU do número de registro da parte na Receita Federal, deve ser realizada NOVA verificação de prevenção.
-
-## CHECKLIST PRÉ-PROTOCOLO DO ESCRITÓRIO
-
-Antes de protocolar QUALQUER inicial JEF TRF3, conferir.
-
-- [ ] RG e CPF do autor.
-- [ ] PIS/PASEP do autor.
-- [ ] Comprovante de endereço RECENTE (até 180 dias).
-- [ ] Procuração com data DE ATÉ 12 MESES.
-- [ ] Substabelecimento se aplicável.
-- [ ] Inscrição OAB compatível ou OAB-SP secundária se patrocinar mais de 5 ações no ano.
-- [ ] NB indicado na inicial.
-- [ ] Espécie do benefício indicada com clareza.
-- [ ] PA INTEGRAL juntado.
-- [ ] Indeferimento administrativo juntado.
-- [ ] Comprovante de prévio requerimento.
-- [ ] Para B31/B32/B94. Documentos do art. 129-A Lei 8.213/91.
-- [ ] Para BPC. CadÚnico atualizado.
-- [ ] Relatório médico com CID e CRM se incapacidade/PCD.
-- [ ] Valor da causa calculado com planilha.
-- [ ] Renúncia ao excedente do teto de 60 SM se aplicável (Tema 1030/STJ).
-- [ ] Pedido de gratuidade da justiça.
-- [ ] Declaração de hipossuficiência.
-- [ ] Telefone para contato da parte.
-- [ ] Ponto de referência no endereço.
-- [ ] Pedidos de liminar/tutela quando cabíveis.
-- [ ] Indicar prioridade se autor 80+ ou em situação de rua.
-- [ ] Decidir sobre Juízo 100% Digital e Justiça 4.0.
+Se mudar a classe processual ou o CPF da parte, refaz-se a verificação de prevenção (art. 20, §3º).
 
 ## COMPETÊNCIA (CAPÍTULO VIII)
 
@@ -191,53 +108,25 @@ ATENÇÃO. Mandado de segurança NÃO é cabível no JEF. Para MS contra INSS, u
 
 **Renúncia ao excedente.** Tema 1030/STJ. "Ao autor que deseje litigar no âmbito de Juizado Especial Federal Cível, é lícito renunciar, de modo expresso e para fins de atribuição de valor à causa, ao montante que exceda os 60 (sessenta) salários mínimos previstos no art. 3º, caput, da Lei 10.259/2001, aí incluídas, sendo o caso, até doze prestações vincendas, nos termos do art. 3º, § 2º, da referida lei, c/c o art. 292, §§ 1º e 2º, do CPC/2015." (auditoria 03/10/2026)
 
-Estratégia pró-segurado. Em causas próximas do limite, calcular se a renúncia é vantajosa vs ajuizar na Vara Federal Comum. A renúncia é IRREVOGÁVEL.
+Estratégia pró-segurado. Perto do limite, comparar a renúncia com o rito comum (`base-rito-ordinario-trf`). A renúncia é expressa e alcança o valor da causa, não o crédito que se forma depois da propositura.
 
-## FLUXOS ESPECIAIS (CAPÍTULO XIX) - CRÍTICO PARA PREVIDENCIÁRIO
+## FLUXOS ESPECIAIS (CAPÍTULO XIX)
 
-### Seção I - Instrução Concentrada
+Instrução concentrada (Seção I). Antecipa depoimento pessoal e testemunhas num único ato. Serve a tempo rural, união estável e atividade sem registro. Pedir na inicial, com rol de testemunhas e início de prova material.
 
-A Instrução Concentrada é fluxo especial que ANTECIPA a produção de provas em demandas onde prova testemunhal e depoimento pessoal são essenciais.
+Pauta incapacidade (Seção II). Para B31, B32 e B94: perícia antes da citação (Lei 8.213, art. 129-A, §§2º e 3º, incluído pela Lei 14.331/2022); depois, citação do INSS para resposta e manifestação sobre o laudo, com possível proposta de acordo da Procuradoria. Conferir RMI, DIB, DIP, atrasados e juros antes de aceitar.
 
-Benefícios pró-segurado.
-
-1. Racionalização da prova oral.
-2. Redução do tempo médio de tramitação.
-3. Maior previsibilidade e segurança processual.
-
-Aplicação típica. Reconhecimento de tempo rural, união estável, segurada especial rural, comprovação de atividade urbana sem registro.
-
-### Seção II - Pauta Incapacidade (Fluxo Especial dos Benefícios por Incapacidade)
-
-Fluxo específico para B31, B32 e B94. CRÍTICO para a advocacia previdenciária pró-segurado.
-
-**Funcionamento. Perícia ANTES da citação do INSS** (art. 129-A §3º Lei 8.213/91).
-
-**Sequência.**
-1. Ajuizamento da inicial.
-2. Designação de perito imediata.
-3. Realização da perícia médica.
-4. Juntada do laudo pericial.
-5. Citação do INSS para resposta + manifestação sobre o laudo.
-6. **Possibilidade de proposta de acordo pela PFE-INSS na fase de resposta.**
-
-**Vantagens pró-segurado.**
-
-- Acordo possível ANTES da contestação plena.
-- Tempo médio menor de tramitação.
-- Tutela de urgência mais facilmente analisada após perícia.
-
-**Estratégia.** Em B31/B32/B94 com laudo médico particular robusto, a chance de proposta de acordo da PFE-INSS é significativa. Maximizar pelo aproveitamento desta fase.
+Sequência, estratégia e checklist do acordo em `references/FLUXOS-ESPECIAIS-E-PERICIAS.md`.
 
 ## REGRAS PROCESSUAIS COMPLEMENTARES
 
 ### Sobrestamento (Capítulo XV)
 
-O processo pode ser sobrestado por afetação a tema repetitivo do STJ (Tema 1140, 1220, 1321, 1328, 1341 ainda suspensos cf. Onda 38) ou repercussão geral do STF (Tema 1271, 1298, 1353 ainda aguardando). A estratégia pró-segurado é avaliar se o sobrestamento traz prejuízo ao cliente. Em alguns casos, pode-se requerer o NÃO sobrestamento alegando distinção fática.
+O processo pode ser sobrestado por afetação a repetitivo do STJ, IRDR ou repercussão geral do STF. Conferir no portal do tribunal se o tema segue suspenso. Se o caso tiver distinção, requerer o prosseguimento demonstrando-a (CPC, art. 1.037, §§9º e 10).
 
 ### Perícias (Capítulo XVI)
 
-Designação. Honorários periciais pagos pelo TRF3.
+Honorários. Na perícia médica de benefício por incapacidade, o pagamento é antecipado pelo Poder Executivo federal (Lei 13.876/2019, art. 1º, na redação da Lei 14.331/2022). Nas demais, com gratuidade, pela Justiça Federal (Resolução CJF 305/2014).
 Perícia médica. Para B31/B32/B94 e BPC.
 Perícia social. Para BPC.
 Perícia técnica. Para aposentadoria especial (PPP, LTCAT).
@@ -280,7 +169,7 @@ Estratégia. Em sentenças de B32/aposentadoria, a execução invertida é favor
 - [ ] PA com indeferimento.
 - [ ] CadÚnico atualizado nos últimos 24 meses.
 - [ ] Relatório médico com CID e CRM se PCD.
-- [ ] Comprovação de comprometimento de renda (acionar `base-bpc-comprometimento-renda` Onda 39).
+- [ ] Comprovação de comprometimento de renda (`base-bpc-comprometimento-renda`).
 
 ### Reconhecimento de Tempo Rural
 
@@ -312,17 +201,6 @@ Esta skill DEVE ser acionada em conjunto com.
 - `base-cpc-honorarios-sucumbencia-previdenciaria` para honorários.
 - `documentos-comprobatorios-in128` para matriz probatória.
 
-## AUDITORIA OBRIGATÓRIA PRÉ-PROTOCOLO
-
-Antes de protocolar QUALQUER inicial no JEF TRF3, executar.
-
-1. Checklist pré-protocolo (52 hipóteses do art. 20 §2º).
-2. Verificação de competência (art. 36 vs art. 37).
-3. Cálculo de valor da causa e decisão sobre renúncia (Tema 1030/STJ).
-4. Decisão sobre Juízo 100% Digital e Justiça 4.0.
-5. Decisão sobre Instrução Concentrada (se há prova testemunhal essencial).
-6. Acionar `base-revisao-peticao-aprofundada` para revisão final.
-
 ## NÚCLEOS DE JUSTIÇA 4.0 DO TRF3 (REMESSA E PERMANÊNCIA)
 
 A partir dos Provimentos CJF3R 73/2023, 82/2023, 103/2024 (matriz, 02/08/2024), 142/2025, 143/2025 e 175/2025, em conformidade com as Resoluções CNJ 385/2021 e 398/2021, os processos de JEFs federais selecionados podem ser REMETIDOS aos Núcleos de Justiça 4.0 do TRF3 para julgamento.
@@ -339,7 +217,7 @@ Detalhamento operacional completo em `references/NUCLEOS-JUSTICA-4-0-TRF3.md`, c
 
 ## ALERTA FINAL
 
-Extinção sem mérito por inércia na regularização (art. 47) é A CAUSA MAIS COMUM de perda processual evitável no JEF TRF3. A revisão prévia de qualquer inicial deve passar OBRIGATORIAMENTE pelo checklist das 52 irregularidades.
+Extinção sem mérito por inércia na regularização (art. 47) é a perda evitável mais comum no JEF TRF3. Antes do protocolo: checklist das 52 irregularidades, competência (arts. 36 e 37), valor da causa e renúncia, Juízo 100% Digital e Justiça 4.0, instrução concentrada e revisão final em `base-revisao-peticao-aprofundada`.
 
 Para detalhamento operacional dos Fluxos Especiais e do JECRIM, ver `references/FLUXOS-ESPECIAIS-E-PERICIAS.md` e `references/CHECKLIST-52-IRREGULARIDADES.md`. Para Núcleos 4.0 TRF3, ver `references/NUCLEOS-JUSTICA-4-0-TRF3.md`.
 

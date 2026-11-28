@@ -2,151 +2,73 @@
 name: base-rito-ordinario-trf
 description: "Rito ordinário previdenciário em Vara Federal comum, apelação ao TRF, reexame necessário, recursos especial e extraordinário, repercussão geral e repetitivos. Use SEMPRE que mencionar rito ordinário previdenciário, ação ordinária INSS, Vara Federal comum, apelação TRF, reexame necessário art. 496 CPC, Súmula 490 STJ, valor da causa superior a 60 SM, recurso especial, recurso extraordinário, repercussão geral, recurso repetitivo art. 1.036 CPC, embargos de divergência, agravo interno, agravo de instrumento, ação rescisória, tutela provisória, acordo judicial, sentença TRF3, TRF4, apelação 1.009 CPC, prequestionamento, fundamentação vinculante, Tema STF STJ. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-cumprimento-sentenca-rpv-precatorio e execucao-cumprimento-previdenciario."
 ---
-
 # Rito Ordinário Previdenciário em Vara Federal
 
 ## Escopo
 
-Skill pró-segurado sobre o rito ordinário em Vara Federal Comum, cabível para demandas previdenciárias com valor superior a 60 salários-mínimos ou hipóteses especiais. Orienta petição inicial, contestação, instrução, sentença, apelação, reexame necessário, recursos especial, extraordinário e agravos.
+Procedimento comum do CPC em Vara Federal, para causa previdenciária acima de 60 salários mínimos ou incompatível com o JEF. Cobre inicial, instrução, sentença, apelação, remessa necessária, REsp, RE e agravos. A postura é pró-segurado.
 
-## Marco normativo central
+## Marco normativo
 
-CF/88, arts. 109, 102, III e 105, III.
+CF, arts. 102, III, 105, III, e 109, I e §3º. CPC (Lei 13.105/2015). Lei 10.259/2001, art. 3º, para a fronteira com o JEF. Lei 8.213/91 e Decreto 3.048/99 no mérito. Regimentos do TRF3, do STJ e do STF.
 
-CPC. Lei 13.105/2015. Procedimento comum.
+## Escolha do rito
 
-Lei 8.213/91 e Decreto 3.048/99. Aspectos materiais.
+O valor da causa soma as parcelas vencidas e 12 vincendas (Lei 10.259, art. 3º, §2º; CPC, art. 292, §§1º e 2º). Acima de 60 salários mínimos, o autor escolhe entre o rito comum e a renúncia expressa ao excedente para litigar no JEF (Tema 1030 STJ). A renúncia alcança o valor da causa, não o crédito que se forma depois da propositura. O rito comum compensa quando os atrasados são altos, a prova pericial é complexa ou a tese depende de REsp.
 
-Súmula 490 STJ. Reexame necessário.
+## Prazos
 
-Regimentos internos dos TRFs e dos Tribunais Superiores.
-
-TRF3, jurisprudência consolidada da Terceira Região, em especial pela 7ª, 8ª, 9ª e 10ª Turmas.
-
-## Procedimento
-
-Primeiro, petição inicial com causa de pedir, pedidos, valor da causa e requerimento de tutela.
-
-Segundo, citação, contestação, réplica, especificação de provas.
-
-Terceiro, saneamento e fixação de controvérsias.
-
-Quarto, instrução probatória, incluindo perícias e audiência.
-
-Quinto, sentença.
-
-Sexto, fase recursal.
+O INSS tem prazo em dobro para todas as manifestações, contado da intimação pessoal (CPC, art. 183). O segurado não tem dobra, salvo se assistido pela Defensoria (art. 186) ou com litisconsortes de procuradores distintos em autos físicos (art. 229). Prazos em dias úteis (art. 219).
 
 ## Recursos
 
-### Apelação
+Apelação (arts. 1.009 a 1.014). 15 dias úteis. Efeito suspensivo como regra, mas a parte da sentença que confirma, concede ou revoga tutela provisória produz efeito imediato (art. 1.012, §1º, V). Causa madura e efeitos em `base-cpc-apelacao-efeitos-art1013`.
 
-Art. 1.009 CPC. 15 dias, duplicado. Efeito suspensivo, salvo exceção.
+Remessa necessária (art. 496). Não se aplica à condenação ou ao proveito econômico abaixo de 1.000 salários mínimos contra a União e suas autarquias (art. 496, §3º, I), nem à sentença fundada em súmula, repetitivo, IRDR ou entendimento administrativo vinculante (§4º). A Súmula 490 STJ, do CPC/73, é afastada nas sentenças ilíquidas contra o INSS cujo proveito mensurável fique abaixo do teto (REsp 1.735.097/RS, 1ª Turma, Informativo 658/2019). Na prática previdenciária, a remessa é exceção.
 
-### Reexame necessário
+Agravo de instrumento (art. 1.015, com a taxatividade mitigada do Tema 988 STJ). Detalhe em `base-cpc-agravo-instrumento-art1015`.
 
-Art. 496 CPC. Sentenças contra a Fazenda Pública estão sujeitas, com limites da Súmula 490 STJ (valor de alçada).
+Agravo interno (art. 1.021). Contra decisão monocrática do relator.
 
-### Recurso especial
+Embargos de declaração (art. 1.022). 5 dias úteis. Contradição é a interna ao julgado; inconformismo com a prova ou com a tese vai por recurso próprio. Multa por embargos manifestamente protelatórios de até 2% do valor da causa, elevada a até 10% na reiteração (art. 1.026, §§2º e 3º). Detalhe em `base-cpc-embargos-declaracao`.
 
-Art. 105, III, CF/88. Matéria infraconstitucional.
+REsp (CF, art. 105, III). Matéria infraconstitucional, prequestionada. Filtro de relevância da EC 125/2022 em `base-resp-relevancia-questao-federal`.
 
-### Recurso extraordinário
+RE (CF, art. 102, III). Matéria constitucional com repercussão geral (CPC, art. 1.035).
 
-Art. 102, III, CF/88. Matéria constitucional. Repercussão geral.
+Embargos de divergência (art. 1.043). Divergência entre órgãos do mesmo tribunal superior.
 
-### Agravo de instrumento
+Ação rescisória (arts. 966 a 975). Detalhe em `base-cpc-acao-rescisoria-previdenciaria`.
 
-Art. 1.015 CPC. Decisões interlocutórias.
+## Resumo do art. 343-A do RISTJ
 
-### Agravo interno
-
-Art. 1.021 CPC. Decisões monocráticas.
-
-### Embargos de declaração
-
-Art. 1.022 CPC. Omissão, contradição, obscuridade ou erro material. Prazo de 5 dias úteis. Cabem contra sentença, acórdão e decisão interlocutória.
-
-ALERTA TÉCNICO CRÍTICO. A contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos). NÃO se admite ED por contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Para inconformismo com o resultado, o caminho é a apelação (art. 1.009 CPC), o agravo de instrumento (art. 1.015 CPC) ou o recurso especial/extraordinário, conforme o caso. Embargos opostos com fundamento em contradição externa são rejeitados como protelatórios e podem gerar multa de até 2% (art. 1.026 §2º CPC), agravada para até 10% na reiteração. Detalhamento em `base-recurso-crps-peca-enxuta/references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
-
-### Embargos de divergência
-
-Art. 1.043 CPC. Divergência em Tribunal Superior.
-
-### Ação rescisória
-
-Arts. 966 a 975 CPC.
+A Emenda Regimental 53/2026 incluiu o art. 343-A no RISTJ e a Instrução Normativa STJ/GP 42/2026 o regulamentou. Toda inicial de ação originária e toda petição de recurso ao STJ deverá trazer resumo dos fundamentos, dos pedidos, da decisão impugnada e dos dispositivos invocados. O STJ informou, em 02/09/2026, que a exigência apenas vale depois de portaria da Presidência, ainda sem data. Conferir no portal do STJ se a portaria saiu antes de protocolar. Modelo em `references/ART-343-A-RISTJ-RESUMO-ANALITICO.md`.
 
 ## Espaço pró-segurado
 
-Primeiro, causas com atrasados superiores a 60 SM devem ir ao rito ordinário, salvo renúncia ao excedente.
+Primeiro, tutela de urgência desde a inicial (CPC, art. 300), com o detalhe em `base-cpc-tutela-provisoria-previdenciaria`.
+Segundo, instrução ampla, com perícia técnica, audiência e prova emprestada.
+Terceiro, acesso ao REsp, que o JEF não admite.
+Quarto, honorários pelo art. 85, §§3º e 4º, II, com base nas parcelas vencidas até a sentença (Súmula 111 STJ e Tema 1105 STJ). Detalhe em `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
-Segundo, tutela de urgência é admitida, art. 300 CPC.
+## Alertas
 
-Terceiro, instrução probatória mais robusta, inclusive prova pericial complexa.
-
-Quarto, acesso natural a REsp e RE, diferentemente do JEF.
-
-Quinto, honorários sucumbenciais nos termos do art. 85 CPC e Súmula 111 STJ.
-
-## Estratégia processual
-
-Primeiro, análise do valor da causa e da opção de rito.
-
-Segundo, petição inicial densa com fundamentação constitucional, legal e jurisprudencial.
-
-Terceiro, pedido de tutela quando cabível.
-
-Quarto, lista de provas e testemunhas.
-
-Quinto, prequestionamento para recursos superiores.
+Primeiro, dialeticidade. A apelação ataca cada fundamento da sentença (art. 1.010, II e III).
+Segundo, prequestionamento explícito desde a inicial, com embargos de declaração quando o acórdão silenciar (art. 1.025).
+Terceiro, juros e correção em três fases, conforme `base-juros-correcao-monetaria`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Integração com outras skills
+## Integração
 
-Ao redigir, acionar `peticao-previdenciaria`.
-Ao auditar, acionar `revisao-peticao`.
-Em precedentes, acionar `precedentes-previdenciarios`.
-Em execução, acionar `base-cumprimento-sentenca-rpv-precatorio` e `execucao-cumprimento-previdenciario`.
-Em tutelas, aplicar política do escritório.
+Redação em `peticao-previdenciaria`; auditoria em `revisao-peticao`; precedentes em `precedentes-previdenciarios`; execução em `execucao-cumprimento-previdenciario`, com o hub normativo em `base-cumprimento-sentenca-rpv-precatorio`; portarias em `base-portarias-dpmf-inss-hub`.
 
-## Alertas
+## Fora desta skill
 
-Primeiro, reexame necessário implica análise automática pelo TRF em sentenças contra INSS.
+JEF em `base-jef-previdenciario` e `base-recursos-jef`. CRPS em `base-crps-panorama-geral`.
 
-Segundo, dialeticidade em apelação e recursos superiores.
-
-Terceiro, prequestionamento deve estar explícito nas peças.
-
-Quarto, honorários sucumbenciais em rito ordinário têm base diversa do JEF.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## ART. 343-A DO RISTJ - RESUMO ANALÍTICO OBRIGATÓRIO (Onda 52)
-
-**Vigente desde junho/2026.** Novo artigo do Regimento Interno do STJ que impõe RESUMO ANALÍTICO em toda petição destinada ao STJ.
-
-**Redação.** "Art. 343-A. Nos termos de ato regulamentar da Presidência, todas as iniciais de ações originárias e as petições de recurso dirigidas ao Superior Tribunal de Justiça deverão conter resumo dos fundamentos de fato e de direito, dos pedidos formulados, do teor das eventuais decisões impugnadas e dos dispositivos legais invocados pelo autor ou pelo recorrente, conforme o caso."
-
-**Aplicação obrigatória em.** REsp, AREsp, Agravo Interno, Reclamação, Embargos de Divergência, HC, HD, MS contra ato de Ministro.
-
-**4 elementos do resumo.**
-1. Fundamentos de fato e de direito.
-2. Pedidos formulados.
-3. Teor das eventuais decisões impugnadas.
-4. Dispositivos legais invocados.
-
-Detalhamento operacional com modelo de estrutura em `references/ART-343-A-RISTJ-RESUMO-ANALITICO.md`.
-
-## O que NÃO está nesta skill
-
-JEF está em `base-jef-previdenciario` e `base-recursos-jef`. CRPS está em `base-crps-panorama-geral`. Cumprimento está em `base-cumprimento-sentenca-rpv-precatorio`.
-
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 O perfil da 1ª Vara Federal de Catanduva, com relatório completo, julgamento antecipado, análise do PPP período a período e fecho "Custas ex lege. PRI.", está na skill `base-juizo-catanduva`, e o esqueleto completo da sentença em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`.

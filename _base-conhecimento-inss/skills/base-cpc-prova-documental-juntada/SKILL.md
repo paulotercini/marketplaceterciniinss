@@ -7,7 +7,7 @@ description: "Prova documental e juntada de documentos no processo previdenciár
 
 ## Escopo
 
-Skill pró-segurado sobre a prova documental e o momento de juntá-la. O foco é juntar o documento necessário a qualquer tempo, com contraditório, e derrubar a alegação de preclusão que o INSS costuma levantar.
+Prova documental e momento da juntada. O foco é juntar o documento necessário a qualquer tempo, com contraditório, e afastar a alegação de preclusão do INSS.
 
 ## Marco normativo central
 
@@ -23,13 +23,13 @@ CPC, arts. 439 a 441. Documento eletrônico e sua força probante.
 
 ## Momento da juntada
 
-A regra é juntar com a inicial e com a contestação. A exceção do art. 435 é ampla. Documento formado depois, ou que só ficou acessível depois, pode entrar a qualquer tempo, desde que demonstrado o motivo e aberto o contraditório.
+A regra é juntar com a inicial e a contestação. Documento formado depois, ou acessível apenas depois, entra a qualquer tempo, demonstrado o motivo e aberto o contraditório (art. 435, parágrafo único).
 
 ## Documento novo, as duas portas
 
 Primeiro, documento sobre fato ocorrido após a petição. Vincula-se ao fato superveniente, ver `base-cpc-fato-superveniente-art493`.
 
-Segundo, documento antigo que só se tornou conhecido ou acessível depois. Comum no previdenciário, o PPP retificado, o laudo obtido tardiamente, a microficha localizada. Basta comprovar por que não estava disponível antes.
+Segundo, documento antigo que se tornou conhecido ou acessível depois: PPP retificado, laudo obtido tardiamente, microficha localizada. Comprovar por que não estava disponível antes.
 
 ## Contraditório obrigatório
 
@@ -37,15 +37,15 @@ Todo documento juntado abre prazo de manifestação à parte contrária, art. 43
 
 ## Juntada em grau recursal
 
-A jurisprudência admite a juntada de documento em grau recursal quando presente o motivo do art. 435 e assegurado o contraditório, sem má-fé nem intuito de surpresa. É via pró-segurado para o PPP ou o laudo que chegou depois da sentença.
+A juntada em grau recursal é admitida quando presente o motivo do art. 435, assegurado o contraditório e ausente má-fé. Serve ao PPP ou ao laudo obtido depois da sentença. Acórdão específico: Não localizado nos catálogos da casa; pesquisar no MCP trf3 antes de citar.
 
-Atenção ao efeito financeiro. Documento essencial não submetido antes ao INSS pode deslocar o termo dos atrasados, ver `base-efeito-translativo-tema-1124-defesa`.
+Efeito financeiro: documento essencial não submetido antes ao INSS desloca o termo inicial dos atrasados para a citação (Tema 1124 STJ). Ver `base-efeito-translativo-tema-1124-defesa`.
 
 ## Estratégia pró-segurado
 
 Primeiro, ao juntar documento tardio, indicar expressamente a hipótese do art. 435 e o motivo da juntada.
 
-Segundo, requerer o contraditório para blindar a prova contra nulidade.
+Segundo, requerer o contraditório, para afastar nulidade.
 
 Terceiro, contra a alegação de preclusão do INSS, opor o art. 435, parágrafo único, e a natureza social do direito.
 

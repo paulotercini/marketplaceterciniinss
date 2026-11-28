@@ -5,7 +5,7 @@ description: Execução e cumprimento de sentença previdenciária, coisa julgad
 
 # Execução e Cumprimento de Sentença Previdenciária
 
-Skill que reúne os fundamentos normativos, jurisprudenciais e estratégicos para a fase de execução e cumprimento de sentença em ações previdenciárias contra o INSS, incluindo coisa julgada progressiva, renúncias no JEF, expedição de RPV e precatório, e controle de dialeticidade recursal.
+Roteiro operacional da execução contra o INSS: cumprimento da parte incontroversa, renúncias no JEF, expedição de RPV e precatório e dialeticidade recursal. Quadro normativo de requisição, juros, honorários e tributação em `base-cumprimento-sentenca-rpv-precatorio`.
 
 ---
 
@@ -13,17 +13,17 @@ Skill que reúne os fundamentos normativos, jurisprudenciais e estratégicos par
 
 ### 1.1. Fundamento normativo
 
-O CPC/2015 consagrou a teoria dos capítulos da sentença (Liebman/Dinamarco), conferindo divisibilidade e autonomia às partes do dispositivo. Os dispositivos centrais são os seguintes.
+O CPC/2015 reconhece a autonomia dos capítulos da sentença (ver `base-cpc-teoria-capitulos-sentenca`).
 
-O art. 356, §§ 2º e 3º, do CPC trata do julgamento antecipado parcial do mérito, permitindo liquidação e execução imediata do capítulo decidido antecipadamente. O art. 523 do CPC autoriza o cumprimento de sentença quando não há recurso sobre determinado capítulo. O art. 535, §§ 3º e 4º, do CPC regula o cumprimento de sentença contra a Fazenda Pública, prevendo expedição de precatório ou RPV da parte incontroversa. O art. 1.002 do CPC delimita que o recurso abrange apenas os capítulos impugnados, deixando os demais transitados em julgado. O art. 966, § 3º, do CPC reconhece expressamente que a ação rescisória pode ter por objeto apenas um capítulo da sentença, confirmando a autonomia dos capítulos.
+O art. 356, §§ 2º e 3º, do CPC trata do julgamento antecipado parcial do mérito, permitindo liquidação e execução imediata do capítulo decidido antecipadamente. O art. 535, §§ 3º e 4º, do CPC regula o cumprimento de sentença contra a Fazenda Pública, prevendo expedição de precatório ou RPV da parte incontroversa. O art. 1.002 do CPC delimita que o recurso abrange apenas os capítulos impugnados, deixando os demais transitados em julgado. O art. 966, § 3º, do CPC reconhece expressamente que a ação rescisória pode ter por objeto apenas um capítulo da sentença, confirmando a autonomia dos capítulos.
 
 ### 1.2. IRDR 18 do TRF4
 
-O IRDR 18 (proc. 5048697-22.2017.4.04.0000/RS e 5044361-72.2017.4.04.0000), julgado pela Corte Especial do TRF4 em 24/10/2019, fixou a seguinte tese vinculante para toda a 4ª Região.
+O IRDR 18 (proc. 5048697-22.2017.4.04.0000/RS e 5044361-72.2017.4.04.0000), julgado pela Corte Especial do TRF4 em 24/10/2019, vincula a 4ª Região e é persuasivo no TRF3. Conferir a tese no portal do TRF4 antes de citar.
 
 **Tese firmada.** É legalmente admitido o imediato cumprimento definitivo de parcela transitada em julgado, tanto na hipótese de julgamento antecipado parcial do mérito (§§ 2º e 3º do art. 356 do CPC), como de recurso parcial da Fazenda Pública, e o prosseguimento, com expedição de RPV ou precatório, na hipótese de impugnação parcial no cumprimento de sentença que reconheça a exigibilidade de quantia certa (art. 523 e §§ 3º e 4º do art. 535 do CPC), respeitada a remessa oficial, nas hipóteses em que necessária, nas ações em que é condenada a Fazenda Pública na Justiça Federal, nos Juizados Especiais Federais e na competência federal delegada.
 
-Relator para o acórdão: Des. Federal Paulo Afonso Brum Vaz.
+Relator para o acórdão, Des. Federal Paulo Afonso Brum Vaz.
 
 ### 1.3. Tema 28 da Repercussão Geral do STF
 
@@ -31,7 +31,7 @@ O RE 1.205.530, sob a relatoria do Min. Marco Aurélio, fixou a tese do Tema 28 
 
 **Tese firmada.** Surge constitucional expedição de precatório ou requisição de pequeno valor para pagamento da parte incontroversa e autônoma do pronunciamento judicial transitada em julgado, observada a importância total executada para efeitos de dimensionamento como obrigação de pequeno valor.
 
-Precedente adicional: RE 666.589/DF (1ª Turma, Rel. Min. Marco Aurélio, j. 25/03/2014), que reconheceu a coisa julgada progressiva e a contagem autônoma do prazo de ação rescisória por capítulo. Súmula 354/STF ("Em caso de embargos infringentes parciais, é definitiva a parte da decisão embargada em que não houve divergência na votação").
+Precedente adicional, RE 666.589/DF (1ª Turma, Rel. Min. Marco Aurélio, j. 25/03/2014), que reconheceu a coisa julgada progressiva e a contagem autônoma do prazo de ação rescisória por capítulo. Súmula 354/STF ("Em caso de embargos infringentes parciais, é definitiva a parte da decisão embargada em que não houve divergência na votação").
 
 ### 1.4. Hipóteses práticas de aplicação em ações previdenciárias
 
@@ -57,7 +57,7 @@ Demonstração de que o recurso do INSS é parcial, identificando precisamente q
 
 ### 1.7. Ponto de atenção. Dimensionamento como obrigação de pequeno valor
 
-O Tema 28/STF [CONFERIDO] (auditoria 03/10/2026) determina que a classificação como RPV ou precatório observe a "importância total executada", não apenas a parcela incontroversa isoladamente. Se o valor total do crédito (incluindo a parte controvertida) superar 60 salários mínimos, mesmo a parcela incontroversa inferior a esse teto deverá ser expedida como precatório, salvo renúncia ao excedente na execução.
+O Tema 28/STF [CONFERIDO] determina que a classificação como RPV ou precatório observe a "importância total executada", não apenas a parcela incontroversa isoladamente. Se o valor total do crédito (incluindo a parte controvertida) superar 60 salários mínimos, mesmo a parcela incontroversa inferior a esse teto deverá ser expedida como precatório, salvo renúncia ao excedente na execução.
 
 ---
 
@@ -71,7 +71,7 @@ O Tema 28/STF [CONFERIDO] (auditoria 03/10/2026) determina que a classificação
 
 **Características desta renúncia.**
 
-Opera na fase de conhecimento, no ato da distribuição. Tem por objeto exclusivamente o valor da causa (prestações vencidas + 12 vincendas na data do ajuizamento). Não limita o valor da condenação. As parcelas que vencem durante o processo são devidas integralmente. Deve ser expressa (Súmula 17 do FONAJEF, tacitamente revogada pelo Tema 1.030, que exige renúncia expressa). A renúncia deve constar da petição inicial, preferencialmente em tópico destacado ou em termo apartado.
+Opera na fase de conhecimento, no ato da distribuição. Tem por objeto exclusivamente o valor da causa (prestações vencidas + 12 vincendas na data do ajuizamento). Não limita o valor da condenação. As parcelas que vencem durante o processo são devidas integralmente. Deve ser expressa. A renúncia deve constar da petição inicial, preferencialmente em tópico destacado ou em termo apartado.
 
 **Modelo de cláusula para petição inicial.**
 
@@ -110,7 +110,7 @@ O autor renuncia de maneira expressa ao montante que excede 60 (sessenta) salár
 
 **Risco 3. Cliente não orientado sobre renúncia na execução.** A renúncia para RPV implica perda real. O advogado deve orientar por escrito sobre o trade-off entre receber rapidamente (RPV, até 60 dias) versus receber integralmente (precatório, prazo indeterminado). Recomenda-se documentar a orientação e a ciência do cliente.
 
-**Risco 4. Fracionamento vedado.** O art. 17, § 4º, da Lei 10.259/2001 veda a expedição de RPV complementar pelo saldo renunciado. O Tema 28/STF [CONFERIDO] (auditoria 03/10/2026), ao tratar do dimensionamento da obrigação de pequeno valor, determina que se observe a importância total executada, não a parcela individualizada. Não é lícito fracionar o crédito em RPV e precatório para a mesma parte.
+**Risco 4. Fracionamento vedado.** O art. 17, § 4º, da Lei 10.259/2001 veda a expedição de RPV complementar pelo saldo renunciado. O Tema 28/STF [CONFERIDO], ao tratar do dimensionamento da obrigação de pequeno valor, determina que se observe a importância total executada, não a parcela individualizada. Não é lícito fracionar o crédito em RPV e precatório para a mesma parte.
 
 ---
 
@@ -124,7 +124,7 @@ A dialeticidade impõe que o recurso dialogue com a decisão impugnada, atacando
 
 ### 3.2. Precedente relevante. TRF4, AC 5036774-34.2020.4.04.7100
 
-A 6ª Turma do TRF4 (Rel. Des. Federal Fernando Quadros da Silva, j. 25/03/2026) não conheceu de apelação em ação previdenciária porque a sentença extinguiu o feito sem resolução do mérito (ausência de pressupostos de constituição e de interesse processual), mas a apelação discorreu exclusivamente sobre o mérito da revisão de aposentadoria por invalidez, sem atacar os fundamentos processuais da extinção.
+A 6ª Turma do TRF4 (Rel. Des. Federal Fernando Quadros da Silva, j. 25/03/2026; persuasivo, não conferido no portal) não conheceu de apelação em ação previdenciária porque a sentença extinguiu o feito sem resolução do mérito (ausência de pressupostos de constituição e de interesse processual), mas a apelação discorreu exclusivamente sobre o mérito da revisão de aposentadoria por invalidez, sem atacar os fundamentos processuais da extinção.
 
 ### 3.3. Situações de risco na advocacia previdenciária
 
@@ -162,9 +162,9 @@ Este checklist de dialeticidade deve ser incorporado à Camada 2 (verificação 
 
 O teto de RPV na Justiça Federal é de 60 salários mínimos por beneficiário (art. 17, caput, Lei 10.259/2001). Cada autor tem direito a RPV individual. Se há litisconsórcio ativo, cada litisconsorte tem seu teto próprio.
 
-### 4.2. Ordem de prioridade para RPV
+### 4.2. Preferência no precatório
 
-Créditos de natureza alimentar (incluindo previdenciários) têm prioridade constitucional (art. 100, § 1º, CF). Idosos (60+), portadores de doença grave e pessoas com deficiência têm superprioridade (art. 100, § 2º, CF), limitada ao triplo do teto de RPV para precatórios.
+Créditos alimentares, inclusive previdenciários, têm preferência (art. 100, § 1º, CF). Idosos a partir de 60 anos, portadores de doença grave e pessoas com deficiência têm superpreferência até o triplo do pequeno valor (art. 100, § 2º, CF). Precatórios apresentados até 1º de fevereiro são pagos até o fim do exercício seguinte (art. 100, § 5º, na redação da EC 136/2025).
 
 ### 4.3. Honorários advocatícios e RPV
 
@@ -172,11 +172,11 @@ Os honorários de sucumbência pertencem ao advogado (art. 23 do Estatuto da OAB
 
 ### 4.4. Atualização monetária e juros
 
-Os critérios de atualização seguem o Manual de Cálculos da Justiça Federal 2026 (Resolução CJF 990/2026), em três fases. Até 11/2021, Temas 810/STF e 905/STJ (INPC no benefício previdenciário e juros da poupança). De 12/2021 a 08/2025, SELIC única (art. 3º da EC 113/2021; Tema 1419/STF [CONFERIDO]). A partir de 09/2025, INPC com juros pela taxa legal (IPCA no assistencial), e, na fase de requisitório, o art. 3º da EC 113/2021 na redação da EC 136/2025 (Onda 173).
+Três fases do Manual de Cálculos da Justiça Federal 2026: INPC e juros da poupança até 11/2021; SELIC de 12/2021 a 08/2025; INPC e taxa legal a partir de 09/2025 (IPCA no assistencial). Antes de validar a conta, conferir a fase de cada competência em `base-juros-correcao-monetaria`.
 
 ### 4.5. Imposto de renda sobre atrasados
 
-Sobre valores pagos acumuladamente, aplica-se o regime de Rendimentos Recebidos Acumuladamente (RRA), na forma do art. 12-A da Lei 7.713/88. Os atrasados são tributados mês a mês (regime de competência), e não pelo valor global. Consultar a skill tributacao-beneficios-previdenciarios para detalhamento completo.
+Sobre valores pagos acumuladamente, aplica-se o regime de Rendimentos Recebidos Acumuladamente (RRA), na forma do art. 12-A da Lei 7.713/88. Os atrasados são tributados pelo número de meses (Tema 368 STF), e não pelo valor global. Detalhe em `tributacao-beneficios-previdenciarios`.
 
 ---
 
@@ -196,10 +196,6 @@ Apurar o valor total do crédito. Se inferior a 60 SM, solicitar expedição de 
 
 ---
 
-## Regime de juros e correção pós set/2025 (Onda 76)
-
-Antes de validar qualquer cálculo, conferir a fase de cada competência pelo regime de três fases do Manual CJF 2026 (Resolução CJF 990/2026). INPC e sistemática do 1º-F até nov/2021, SELIC de dez/2021 a ago/2025 (EC 113/2021) e, de set/2025 em diante, INPC com juros pela taxa legal com dedução do INPC (EC 136/2025 e Tema 1419 STF). Detalhamento e quadros em `base-juros-correcao-monetaria` e seu reference MANUAL-CJF-2026-QUADROS.md.
-
 ## 6. PRECEDENTES E NORMAS CONSOLIDADOS
 
 ### 6.1. Coisa julgada progressiva e execução da parte incontroversa
@@ -207,7 +203,7 @@ Antes de validar qualquer cálculo, conferir a fase de cada competência pelo re
 - Tema 28/STF, RE 1.205.530, Rel. Min. Marco Aurélio
 - RE 666.589/DF, 1ª Turma, Rel. Min. Marco Aurélio, j. 25/03/2014
 - Súmula 354/STF
-- Arts. 356, 523, 535, 966 § 3º, 1.002 do CPC
+- Arts. 356, 535, 966 § 3º, 1.002 do CPC
 
 ### 6.2. Renúncia ao excedente no JEF
 - Tema 1.030/STJ, REsp 1.807.665/SC, 1ª Seção, transitado em julgado
@@ -222,17 +218,17 @@ Antes de validar qualquer cálculo, conferir a fase de cada competência pelo re
 - TRF4, AC 5036774-34.2020.4.04.7100, 6ª Turma, Rel. Des. Federal Fernando Quadros da Silva, j. 25/03/2026
 
 ### 6.4. RPV e precatório
-- Art. 100, §§ 1º e 2º, CF
+- Art. 100, §§ 1º, 2º, 5º e 8º, CF
 - Art. 17, caput e § 4º, Lei 10.259/2001
 - Art. 13, Lei 10.259/2001 (inexistência de remessa necessária no JEF)
 - Tema 810/STF, RE 870.947 (atualização monetária)
-- EC 113/2021, art. 3º (SELIC unificada)
+- EC 113/2021, art. 3º, e EC 136/2025 (ver `base-juros-correcao-monetaria`)
 - Art. 12-A, Lei 7.713/88 (RRA)
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 No juízo de Catanduva, os cálculos vêm da Cecalc no JEF, em 10 dias úteis, ou do INSS na Vara, em 45 dias úteis, com 5 dias úteis para a parte se manifestar, e o silêncio homologa a conta. A discussão sobre o conteúdo do título se faz na fase de conhecimento. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 17.

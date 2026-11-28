@@ -7,87 +7,47 @@ description: "Fato superveniente (art. 493 CPC) aplicado ao Direito Previdenciá
 
 ## Escopo
 
-Skill pró-segurado sobre aplicação do art. 493 CPC em ações previdenciárias quando o segurado implementa requisitos durante o processo, com integração ao Tema 995/STJ (reafirmação da DER) e revisão por melhor benefício.
+Aplicação do art. 493 do CPC quando o segurado implementa requisito ou obtém prova durante o processo, com a reafirmação da DER (Tema 995 STJ). Cenários em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`. A reafirmação como instituto autônomo está em `reafirmacao-der`.
 
-## Marco normativo central
+## Marco normativo
 
-CPC, art. 493. Fato constitutivo, modificativo ou extintivo superveniente.
+CPC, art. 493. O fato constitutivo, modificativo ou extintivo posterior à propositura é considerado pelo juiz, de ofício ou a requerimento, no momento da decisão; constatado de ofício, as partes são ouvidas antes (parágrafo único). O art. 933 estende o dever ao tribunal.
 
-CPC, art. 462 CPC/1973 (equivalente histórico).
+CPC, art. 10. Vedação à decisão surpresa.
 
-Lei 8.213/91, arts. 18 e 102.
+CPC, art. 505, I. Na relação de trato continuado, a modificação do estado de fato ou de direito autoriza a revisão do que foi estatuído.
 
-Decreto 3.048/99, art. 176-D.
+Decreto 3.048/99, art. 176-D. Na via administrativa, o requisito implementado após a DER e antes da decisão do INSS permite reafirmar o requerimento. Art. 176-E: concessão do benefício mais vantajoso ou diverso do requerido.
 
-IN 128/2022.
+## Tema 995 STJ
 
-## Marco jurisprudencial
-
-### Tema 995 STJ
-
-REsp 1.727.063, 1.727.064, 1.727.069. Reafirmação da DER para fatos posteriores. Juros de mora só se o INSS não implantar o benefício em 45 dias da intimação (EDcl no REsp 1.727.063/SP). Honorários descabidos se o INSS reconhecer a procedência à luz do fato novo (auditoria 03/10/2026).
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 334 STF
-
-Direito adquirido ao melhor benefício. Harmonia com superveniência.
-
-### Questão de Ordem 20 TNU
-
-Provido o pedido de uniformização em matéria de direito que exija prova não produzida ou não apreciada, anula-se a decisão da turma recursal, e o juiz e a turma ficam vinculados à tese de direito fixada (DJ 11/09/2006) (auditoria 03/10/2026).
-
-## Conceito operacional
-
-Fato superveniente é aquele que se verifica depois da petição inicial ou no curso do processo. Deve ser considerado pelo juiz no momento da sentença. Art. 493 CPC. Em previdenciário, contribuições posteriores, implementação de idade, laudo pericial novo ou alteração legislativa benéfica.
+REsp 1.727.063/SP, 1.727.064/SP e 1.727.069/SP, Primeira Seção. Admite a reafirmação da DER para o momento do implemento dos requisitos, ainda que entre o ajuizamento e a entrega da prestação jurisdicional nas instâncias ordinárias, nos termos dos arts. 493 e 933 do CPC, observada a causa de pedir. Nos embargos de declaração: juros de mora apenas se o INSS não implantar o benefício em 45 dias da intimação; sem honorários se o INSS não se opuser à reafirmação. Copiar a tese literal da página de repetitivos antes de citar em peça.
 
 ## Aplicações pró-segurado
 
-Primeiro, reafirmação da DER. Se o segurado implementa requisito durante o processo, a DER é reafirmada. Tema 995/STJ.
+Primeiro, tempo de contribuição ou idade completados no curso da ação. Reafirmação da DER (Tema 995 STJ).
 
-Segundo, fato superveniente de cunho probatório. Documento novo, PPP retificado, laudo extemporâneo.
+Segundo, prova formada depois da inicial: PPP retificado, laudo, sentença trabalhista. Ver `base-cpc-prova-documental-juntada`.
 
-Terceiro, alteração legislativa benéfica. Aplicar ao caso por força do art. 493.
+Terceiro, recolhimento de indenização ou complementação no curso da ação, que regulariza o período.
 
-Quarto, implementação de idade durante processo. DIB na data do implemento.
-
-Quinto, novos vínculos ou salários-de-contribuição regularizados.
-
-## Cenários pró-segurado
-
-Cenário A, segurado ajuíza ação com 34 anos de contribuição. Completa 35 durante o processo. Reafirmação da DER.
-
-Cenário B, segurado completa a idade mínima legal durante o processo (art. 493 do CPC; auditoria 25/07/2026, retirado o Tema 33/STF, que trata de juros bancários).
-
-Cenário C, retificação do PPP durante a instrução, comprovando agente nocivo.
-
-Cenário D, nova lei reduz carência. Aplicação imediata.
-
-Cenário E, laudo pericial judicial altera quadro clínico.
+Quarto, agravamento da incapacidade constatado na perícia judicial, com DII posterior ao ajuizamento.
 
 ## Efeitos financeiros
 
-Primeiro, DIB reafirmada é a nova data de implemento.
+Primeiro, DIB na data do implemento reafirmado.
 
-Segundo, na reafirmação para data posterior ao ajuizamento, juros de mora só se o INSS não implantar o benefício em 45 dias da intimação (EDcl no REsp 1.727.063/SP, Tema 995/STJ); requisitos completos antes do ajuizamento seguem os juros desde a citação, conforme `reafirmacao-der` (auditoria 03/10/2026).
+Segundo, requisitos completos antes do ajuizamento. Juros desde a citação. Requisitos completos depois: juros apenas se o INSS descumprir o prazo de 45 dias (EDcl no Tema 995).
 
-Terceiro, honorários conforme Súmula 111/STJ e Tema 1050/STJ.
-
-Quarto, implantação imediata após trânsito em julgado ou tutela.
+Terceiro, honorários conforme Súmula 111 STJ e Tema 1105 STJ; afastados se o INSS não se opuser à reafirmação.
 
 ## Alertas
 
-Primeiro, fato superveniente exige contraditório (art. 10 CPC). O juiz não pode decidir de surpresa.
+Primeiro, a reafirmação depende de pedido ou de contraditório prévio (arts. 10 e 493, parágrafo único). O Tema 995 não exige concordância do INSS.
 
-Segundo, em JEF exige-se manifestação do INSS antes da reafirmação. TNU exige concordância expressa.
+Segundo, a reafirmação observa a causa de pedir; não se converte o pedido em benefício de natureza diversa sem pedido.
 
-Terceiro, se o INSS não se manifesta, há silêncio. Alguns tribunais exigem aquiescência.
-
-Quarto, em ação rescisória, o fato superveniente é diferente, aplica-se art. 966 CPC.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
+Terceiro, fato posterior ao julgamento nas instâncias ordinárias não entra pelo Tema 995; exige novo requerimento.
 
 ## MCPs da casa
 
@@ -95,11 +55,4 @@ Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta
 
 ## Integração com outras skills
 
-Para reafirmação da DER, acionar `reafirmacao-der`.
-Para planejamento, acionar `base-planejamento-previdenciario`.
-Para redação, acionar `peticao-previdenciaria`.
-Para coisa julgada progressiva, acionar `base-cpc-coisa-julgada-progressiva`.
-
-## O que NÃO está nesta skill
-
-Reafirmação da DER como instituto autônomo em `reafirmacao-der`. Coisa julgada progressiva em `base-cpc-coisa-julgada-progressiva`. Direito adquirido em `base-aposentadoria-direito-adquirido`.
+Reafirmação da DER em `reafirmacao-der`. Planejamento em `base-planejamento-previdenciario`. Direito adquirido e melhor benefício em `base-aposentadoria-direito-adquirido`. Coisa julgada progressiva em `base-cpc-coisa-julgada-progressiva`. Redação em `peticao-previdenciaria`. Portarias em `base-portarias-dpmf-inss-hub`.

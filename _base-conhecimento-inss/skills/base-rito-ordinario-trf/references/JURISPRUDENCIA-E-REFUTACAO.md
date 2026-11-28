@@ -1,125 +1,21 @@
 # Rito Ordinário TRF. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Súmula 490 STJ
+Súmula 490 STJ. "A dispensa de reexame necessário, quando o valor da condenação ou do direito controvertido for inferior a sessenta salários mínimos, não se aplica a sentenças ilíquidas." Editada sob o CPC/73.
+REsp 1.735.097/RS, Rel. Min. Gurgel de Faria, 1ª Turma (Informativo 658, nov. 2019). Dispensa a remessa nas sentenças ilíquidas contra o INSS cujo proveito mensurável fique abaixo de 1.000 salários mínimos.
+Tema 350 STF (RE 631.240). Prévio requerimento administrativo como condição do interesse de agir, dispensado quando o entendimento do INSS for notório e contrário à pretensão.
+Tema 1030 STJ. Renúncia expressa ao excedente de 60 salários mínimos para litigar no JEF, incluídas as vincendas.
+Tema 988 STJ. Taxatividade mitigada do art. 1.015 do CPC.
+Tema 1124 STJ. Prova nova não apresentada no processo administrativo.
+Temas 810 STF e 905 STJ. Correção e juros; regime atual em `base-juros-correcao-monetaria`.
 
-Reexame necessário e alçada.
+## 2. Refutação às teses do INSS
 
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 350 STF
-
-Prévio requerimento administrativo.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 810 STF
-
-Juros e correção Fazenda.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 905 STJ
-
-Juros e correção benefícios previdenciários.
-
-Fonte oficial em https://www.stj.jus.br
-
-### Tema 1030 STJ
-
-Renúncia ao excedente.
-
-### Tema 1124 STJ
-
-Instrução administrativa.
-
-## 2. Marco legislativo
-
-### CPC, Lei 13.105/2015
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.213/91
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Ausência de prévio requerimento
-
-Argumento adversário. Tema 350 STF.
-
-Refutação. Demonstrar indeferimento ou resistência. Acionar `tema-1124-instrucao-administrativa`.
-
-### Argumento 2. Sentença cassada pelo reexame
-
-Argumento adversário. Remessa devolve tudo.
-
-Refutação. Sentença com fundamentação sólida, tutela mantida.
-
-### Argumento 3. REsp e RE sem prequestionamento
-
-Argumento adversário. Óbice formal.
-
-Refutação. Embargos de declaração com prequestionamento explícito.
-
-### Argumento 4. Agravo de instrumento restrito
-
-Argumento adversário. Rol do art. 1.015 CPC taxativo.
-
-Refutação. Tema 988 STJ, mitigação. Cabível em urgência.
-
-### Argumento 5. Tutela de urgência indeferida
-
-Argumento adversário. Sem risco.
-
-Refutação. Comprovar probabilidade do direito e perigo de dano.
-
-### Argumento 6. Valor da causa subestimado
-
-Argumento adversário. Impugnação.
-
-Refutação. Art. 292 CPC, critérios do pedido. Ajustar.
-
-### Argumento 7. Sucumbência recíproca
-
-Argumento adversário. Rateio.
-
-Refutação. Proveito econômico. Súmula 111 STJ. Tema 1050 STJ.
-
-### Argumento 8. Ausência de provas
-
-Argumento adversário. Insuficiente.
-
-Refutação. Requerer perícia, oitiva, prova emprestada.
-
-### Argumento 9. Coisa julgada
-
-Argumento adversário. Já decidido.
-
-Refutação. Acionar `coisa-julgada-previdenciaria`.
-
-### Argumento 10. Juros e correção pelo IPCA-E
-
-Argumento adversário. Aplicar TR.
-
-Refutação. Tema 810 STF, IPCA-E a partir de 2009, SELIC a partir 12/2021. Tema 905 STJ.
-
-## 5. Estratégia integrada
-
-Primeiro, tutela de urgência.
-
-Segundo, prequestionamento.
-
-Terceiro, jurisprudência robusta.
-
-Quarto, audiência preparada.
-
-Quinto, recurso técnico de primeira.
-
-## 6. Diligência de atualização
-
-Acompanhar TRF3, TRF4, STJ e STF.
-
-Revalidar Temas 810, 905, 350, 1030, 1124.
+Falta de prévio requerimento. Demonstrar o indeferimento ou a resistência notória (Tema 350 STF). Prova nova em juízo segue `tema-1124-instrucao-administrativa`.
+Remessa necessária para rever a sentença. Mostrar que o proveito fica abaixo de 1.000 salários mínimos (art. 496, §3º, I) ou que a sentença segue precedente vinculante (§4º).
+Agravo de instrumento incabível. Urgência que torna inútil o julgamento na apelação (Tema 988 STJ).
+Valor da causa subestimado. Recalcular pelo art. 292, §§1º e 2º, do CPC.
+Sucumbência recíproca. Medir pelo proveito econômico; pagamento administrativo após a citação não reduz a base dos honorários (Tema 1050 STJ).
+Coisa julgada. Ver `coisa-julgada-previdenciaria`.
+Correção pela TR. Benefício previdenciário corrige pelo INPC (Lei 8.213, art. 41-A; Tema 905 STJ), com a SELIC desde 12/2021 (EC 113) e o regime de 09/2025 em `base-juros-correcao-monetaria`.

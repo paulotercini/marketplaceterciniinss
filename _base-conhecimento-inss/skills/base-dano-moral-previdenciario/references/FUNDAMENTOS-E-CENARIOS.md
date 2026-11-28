@@ -1,49 +1,25 @@
 # Dano Moral Previdenciário. Fundamentos e Cenários
 
-## 1. Marco normativo aplicável
+## 1. Marco normativo
 
-CF/88, arts. 5º X, 37 §6º. CC, arts. 186 e 927 (auditoria 03/10/2026, retirada a remissão aos arts. 71 a 75 da Lei 8.213/91, que tratam de salário-maternidade e pensão por morte). Súmula 37 STJ (auditoria 03/10/2026). Súmula 326 STJ.
+CF/88, arts. 5º, V, X, LIV e LV, e 37, §6º. Código Civil, arts. 186 e 927. Lei 8.212/91, art. 69. Decreto 20.910/32, art. 1º. Súmulas 37 e 326 STJ.
 
-## 2. Cenário 1. Cessação indevida de auxílio-doença
+## 2. Cenários
 
-Segurado em tratamento oncológico tem o auxílio-doença cessado por alta indevida. Configurado dano moral in re ipsa pela privação dos meios de subsistência durante tratamento.
+Cenário 1. B31 cessado por DCB automática de segurado em tratamento oncológico, com pedido de prorrogação não analisado. Prova: relatórios médicos, pedido de prorrogação, período sem renda.
 
-## 3. Cenário 2. Demora abusiva acima de 90 dias
+Cenário 2. Pensão por morte sem análise além de 60 dias, prazo do acordo homologado no RE 1.171.152. Prova: protocolo, cronologia, ausência de exigência pendente do segurado.
 
-Requerimento de pensão por morte sem análise por mais de 90 dias. Família privada de renda. Dano moral configurado.
+Cenário 3. Exigência reiterada de documento já anexado ao processo administrativo. Prova: cópia integral do processo administrativo com as datas de juntada.
 
-## 4. Cenário 3. Exigência reiterada de documentos
+Cenário 4. Suspensão por suspeita de fraude sem notificação e prazo de defesa (art. 69, §1º, da Lei 8.212/91). A Súmula 160 do extinto TFR veda a suspensão de plano por suspeita de fraude [NÃO CONFIRMADO na fonte oficial].
 
-INSS exige reiteradamente documentos já apresentados, prolongando indevidamente o processo. Configura abuso administrativo.
+Cenário 5. Perícia com tratamento vexatório. Prova: relato escrito no mesmo dia, reclamação na Ouvidoria, testemunhas.
 
-## 5. Cenário 4. Falso indício de fraude
+Cenário 6. Descumprimento de ordem judicial de implantação após o prazo fixado. Cumular com multa (art. 537 do CPC).
 
-INSS suspende benefício por suposta fraude sem prova ou apuração. A Súmula 160 TFR exige apuração em procedimento administrativo antes da suspensão [NÃO CONFIRMADO], e o dano moral vem da jurisprudência, não da súmula (auditoria 03/10/2026).
+Cenário 7. Cessação por óbito cadastrado por erro. Restabelecimento e indenização.
 
-## 6. Cenário 5. Perícia humilhante
+## 3. Cenários de baixa viabilidade
 
-Perito médico federal trata segurado com desdém, exposição vexatória ou pré-julgamento. Dano moral configurado.
-
-## 7. Cenário 6. Atraso na implantação após decisão
-
-INSS descumpre decisão judicial de implantação de benefício, gerando dano moral pelo descumprimento reiterado.
-
-## 8. Cenário 7. Suspensão sem contraditório
-
-INSS suspende benefício sem prévia notificação ou contraditório. Violação ao art. 5º LIV e LV CF.
-
-## 9. Cenário 8. BPC com renda zero
-
-Segurado idoso ou com deficiência sem renda alguma tem BPC indeferido por exigência abusiva. Configurado dano moral.
-
-## 10. Cenário 9. Acumulação proibida indevida
-
-INSS suspende benefício sob alegação de acumulação proibida sem fundamento. Dano moral.
-
-## 11. Cenário 10. Erro material reincidente
-
-Erro de cálculo sistemático em revisão judicial. Configura dano moral por descaso institucional.
-
-## 12. Documentos essenciais
-
-Indeferimento ou cessação. Histórico de pedidos. CNIS. Carta de concessão. Atestados médicos. Relatório social. Comprovantes de despesas. Testemunhas.
+Indeferimento fundamentado em interpretação razoável da prova; demora sem prejuízo demonstrado; erro de cálculo corrigido sem privação de renda.

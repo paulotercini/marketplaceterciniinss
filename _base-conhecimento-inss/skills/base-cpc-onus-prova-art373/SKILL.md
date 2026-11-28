@@ -7,7 +7,7 @@ description: "Ônus da prova pelo art. 373 do CPC e distribuição dinâmica, ó
 
 ## Escopo
 
-Skill pró-segurado sobre distribuição do ônus da prova e sua flexibilização. Em matéria previdenciária o ônus estático do art. 373 é frequentemente injusto, porque o INSS detém dados que o segurado não tem. A distribuição dinâmica corrige esse desequilíbrio.
+Distribuição do ônus da prova e sua flexibilização. O INSS detém dados que o segurado não tem, e a distribuição dinâmica corrige esse desequilíbrio.
 
 ## Marco normativo central
 
@@ -15,25 +15,27 @@ CPC, art. 373, I. Ao autor cabe provar o fato constitutivo do seu direito.
 
 CPC, art. 373, II. Ao réu cabe provar fato impeditivo, modificativo ou extintivo do direito do autor.
 
-CPC, art. 373, §1º. Distribuição dinâmica, o juiz pode atribuir o ônus a quem tem melhor aptidão para a prova, por decisão fundamentada e com oportunidade de desincumbência.
+CPC, art. 373, §1º. Distribuição dinâmica: diante da impossibilidade ou excessiva dificuldade de cumprir o encargo, ou da maior facilidade de obter a prova do fato contrário, o juiz atribui o ônus de modo diverso, por decisão fundamentada e com oportunidade de desincumbência. Agravável (art. 1.015, XI).
 
-CPC, art. 373, §2º. Veda atribuir à parte encargo de prova impossível ou excessivamente difícil.
+CPC, art. 373, §2º. A redistribuição não pode gerar situação em que a desincumbência seja impossível ou excessivamente difícil.
+
+CPC, arts. 396 a 400. Exibição de documento em poder da parte contrária; a recusa injustificada faz admitir como verdadeiros os fatos que o documento provaria (art. 400).
 
 ## Regra geral e exceção
 
-A regra geral é o ônus estático, cada parte prova o que alega. A exceção pró-segurado é a distribuição dinâmica, que desloca o ônus para o INSS quando ele tem melhor acesso à prova.
+Regra geral, ônus estático. Exceção, distribuição dinâmica, que desloca o ônus para o INSS quando ele tem melhor acesso à prova.
 
 ## Aplicação previdenciária
 
-Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ (auditoria 03/10/2026, retirado o Tema 629/STJ, que trata da extinção sem mérito por ausência de prova eficaz). Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
+Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ. A falta de início de prova material leva à extinção sem resolução de mérito, com possibilidade de repropositura (Tema 629 STJ). Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
 
-Segundo, dados em poder do INSS. CNIS, microficha, PPP arquivado, dossiê e processo administrativo estão com o INSS. Exigir do segurado a prova que só o INSS detém é impor prova diabólica, art. 373, §2º. Requerer a inversão dinâmica.
+Segundo, dados em poder do INSS. CNIS, microficha, PPP arquivado, dossiê e processo administrativo estão com o INSS. Exigir do segurado a prova que apenas o INSS detém viola o art. 373, §1º. Requerer a distribuição dinâmica ou a exibição (art. 396).
 
 Terceiro, prova emprestada. Documento e perícia de outro processo têm valor, art. 372 do CPC, útil quando a prova original é inacessível ao segurado.
 
 Quarto, hipossuficiência. A vulnerabilidade técnica e econômica do segurado reforça a aptidão do INSS para a prova e sustenta a dinâmica.
 
-Quinto, limbo previdenciário. O ônus da comunicação da alta ao empregador é do trabalhador, por se tratar de fato constitutivo, na linha do Enunciado 302/2026 do TRT7, persuasivo e não vinculante. O TST afetou a questão no IRR 302, RRAg-0100395-61.2022.5.01.0491, ainda sem tese firmada. Quando a notificação extrajudicial não tiver sido produzida em tempo, sustentar a aptidão do empregador para a prova, art. 373, §1º, porque o ASO de retorno, o prontuário do serviço médico do trabalho e o controle de ponto estão em poder da empresa. Acionar `base-limbo-previdenciario-tema300`.
+Quinto, limbo previdenciário. O ônus da comunicação da alta ao empregador recai sobre o trabalhador na linha do Enunciado 302/2026 do TRT7 (persuasivo); o IRR 302 do TST está afetado, sem tese. Sem notificação extrajudicial tempestiva, sustentar a aptidão do empregador (art. 373, §1º), que guarda ASO de retorno, prontuário e controle de ponto. Ver `base-limbo-previdenciario-tema300`.
 
 ## Estratégia pró-segurado
 

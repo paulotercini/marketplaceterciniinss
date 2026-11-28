@@ -1,161 +1,25 @@
 # Tutela Provisória Previdenciária. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### Tema 692/STJ (devolução na tutela revogada)
+Súmula 729 STF. "A decisão na Ação Direta de Constitucionalidade 4 não se aplica à antecipação de tutela em causa de natureza previdenciária."
 
-Devolução obrigatória com teto de 30 por cento (auditoria 25/07/2026, corte corrigida).
+Tema 692 STJ (tese revista em 2022). "A reforma da decisão que antecipa os efeitos da tutela final obriga o autor da ação a devolver os valores dos benefícios previdenciários ou assistenciais recebidos, o que pode ser feito por meio de desconto em valor que não exceda 30% da importância de eventual benefício que ainda lhe estiver sendo pago." Tese literal completa em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STJ.md`.
 
-Fonte oficial em https://portal.stf.jus.br
+Tema 1102 STF. Tese adversa ao segurado; não sustenta tutela de evidência.
 
-### Devolução na tutela antecipada previdenciária
+## 2. Refutação aos argumentos típicos do INSS
 
-Rege-se pelo Tema 692/STJ, acima (auditoria 03/10/2026, retirado o Tema 1009/STJ, que trata de servidor público).
+Argumento 1. Falta probabilidade do direito. Refutação: a prova documental do requisito (CNIS, PPP, laudo pericial judicial) atende o art. 300.
 
-Fonte oficial em https://www.stj.jus.br
+Argumento 2. Irreversibilidade. Refutação: o valor pago é recuperável por desconto de até 30% (art. 115, II, da Lei 8.213/91; Tema 692 STJ), o que afasta o art. 300, §3º; a irreversibilidade em prejuízo do segurado é a falta de subsistência.
 
-### [Retirado na auditoria 25/07/2026] Tema 313/STJ
+Argumento 3. Ausência de perigo de dano. Refutação: natureza alimentar somada à situação concreta demonstrada (desemprego, tratamento, renda familiar).
 
-Tema tributário (PIS/COFINS), sem relação com tutela previdenciária.
+Argumento 4. A ADC 4 veda tutela contra a Fazenda. Refutação: Súmula 729 STF.
 
-Fonte oficial em https://www.stj.jus.br
+Argumento 5. Tutela de evidência sem tese firmada. Refutação: art. 311, II, com repetitivo ou súmula vinculante aplicável e fatos provados por documento.
 
-### Súmula 729 STF
+Argumento 6. JEF não admite tutela. Refutação: art. 4º da Lei 10.259/2001.
 
-Texto oficial, "A decisão na Ação Direta de Constitucionalidade 4 não se aplica à antecipação de tutela em causa de natureza previdenciária." [CONFERIDO, https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=30&sumula=2705] (auditoria 03/10/2026).
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 1102 STF
-
-RVT. A ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II, o que afasta a tese e o seu uso em tutela de evidência (auditoria 03/10/2026).
-
-### Tema 76 STF
-
-Revisão do teto.
-
-### Estabilização da tutela antecedente
-
-Rege-se pelo art. 304 do CPC (auditoria 03/10/2026, retirado o Tema 1085/STJ, que trata do limite de desconto bancário).
-
-## 2. Marco legislativo
-
-### CPC, art. 294
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, arts. 300 a 304
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, art. 311
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 8.437/1992
-
-Fonte oficial em https://www.planalto.gov.br
-
-### Lei 10.259/2001
-
-Art. 4º. Tutela no JEF.
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Ausência de fumus boni iuris
-
-Argumento adversário. Dúvida quanto ao direito.
-
-Refutação. Documentos anexados e tese consolidada conferem probabilidade. Art. 300 CPC.
-
-### Argumento 2. Irreversibilidade
-
-Argumento adversário. Art. 300 §3º CPC.
-
-Atenção (auditoria 25/07/2026). O Tema 692/STJ impõe a devolução na tutela revogada (teto de 30 por cento); a tese alcança também o BPC, e o caminho do segurado é a distinção, quando o valor não decorreu da tutela revogada (auditoria 03/10/2026).
-
-### Argumento 3. Ausência de perigo de dano
-
-Argumento adversário. Não demonstrado.
-
-Refutação. Benefício alimentar presume urgência (art. 300 do CPC) (auditoria 25/07/2026).
-
-### Argumento 4. Julgamento antecipado resolve
-
-Argumento adversário. Dispensa tutela.
-
-Refutação. Demora impõe dano alimentar. Tutela exigível.
-
-### Argumento 5. Tutela de evidência inaplicável
-
-Argumento adversário. Tese não firmada.
-
-Refutação. Art. 311, II, CPC, quando os fatos se provarem só por documento e houver tese firmada em casos repetitivos ou súmula vinculante aplicável (auditoria 03/10/2026, retirados o Tema 1102 STF, da revisão da vida toda, e o Tema 327 STF, ausente do catálogo).
-
-### Argumento 6. ADC 4 veda
-
-Argumento adversário. A decisão na ADC 4 veda tutela contra a Fazenda.
-
-Refutação. A Súmula 729 STF afasta a ADC 4 da antecipação de tutela em causa previdenciária (auditoria 03/10/2026).
-
-### Argumento 7. Estabilização inaplicável
-
-Argumento adversário. Art. 304.
-
-Refutação. Cabível em tutela antecedente art. 303 se INSS não recorrer.
-
-### Argumento 8. Devolução em revogação
-
-Argumento adversário. Enriquecimento sem causa.
-
-Atenção (auditoria 25/07/2026). Devolução devida pelo Tema 692/STJ, que alcança também o BPC; o segurado invoca a distinção, quando o valor não decorreu da tutela revogada, e o teto de 30% (auditoria 03/10/2026).
-
-### Argumento 9. Suspensão de segurança
-
-Argumento adversário. Periculum ao Erário.
-
-Refutação. Lei 8.437/1992 art. 4º exige lesão grave concreta. Segurado individual não causa.
-
-### Argumento 10. JEF não admite tutela
-
-Argumento adversário. Rito sumário.
-
-Refutação. Art. 4º Lei 10.259/2001 autoriza expressamente.
-
-## 4. Cláusulas doutrinárias de apoio
-
-Fredie Didier Jr, Rafael Oliveira, Paula Sarno Braga, vol. 2.
-
-Cássio Scarpinella Bueno, Manual CPC.
-
-Luiz Guilherme Marinoni, Sérgio Cruz Arenhart, Processo Civil.
-
-Marco Aurélio Serau Junior, Processo Previdenciário.
-
-Jane Berwanger, previdenciário.
-
-José Antonio Savaris, Processual Previdenciário.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, pleitear em toda inicial com requisitos.
-
-Segundo, anexar prova robusta.
-
-Terceiro, pedir multa por descumprimento.
-
-Quarto, agravar indeferimento.
-
-Quinto, sustentar contra suspensão de segurança.
-
-Sexto, consolidar com julgamento final.
-
-## 6. Diligência de atualização
-
-Acompanhar a jurisprudência do STJ sobre a estabilização do art. 304 do CPC (auditoria 03/10/2026).
-
-Revalidar a Súmula 729 STF, favorável ao segurado (auditoria 03/10/2026).
-
-Acompanhar o Tema 692/STJ em cumprimento.
+Argumento 7. Suspensão de liminar por risco ao erário. Refutação: a Lei 8.437/1992, art. 4º, exige grave lesão à ordem, à saúde, à segurança ou à economia públicas, ausente em benefício individual.

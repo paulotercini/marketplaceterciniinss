@@ -1,6 +1,6 @@
 # Juízo federal de Catanduva, como escreve e como decide
 
-Onda 179, 16/10/2026. Extraído do CRM pela skill `base-juizo-catanduva`. Precedente citado pelo juízo não é citado pela peça sem a conferência da tabela de precedentes do `SKILL.md`.
+Extraído do CRM pela skill `base-juizo-catanduva`. Precedente citado pelo juízo não é citado pela peça sem a conferência da tabela de precedentes do `SKILL.md`.
 ## Tempo especial, aposentadoria especial e por tempo de contribuição, revisões e questões processuais
 
 Fonte: tabela `anexos` (origem `pje`), sentenças e decisões cujo cabeçalho é de Catanduva. São 78 textos distintos (o documento com cabeçalho de São José do Rio Preto ficou de fora). Os textos de mérito das matérias foram lidos na íntegra. Para as fórmulas processuais, as frases de todos os 78 documentos foram varridas e contadas.
@@ -23,7 +23,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
   - 8a6f85b5 (JEF, revisão ATC/vigia; parcialmente procedente)
   - e00d8133 (Vara, conversão ATC→especial; parcialmente procedente)
   - b0d4ab68 (Vara, ATC; improcedente)
-  - f91d9e75 (Vara, ATC; parcialmente procedente, só declaratória)
+  - f91d9e75 (Vara, ATC; parcialmente procedente, apenas declaratória)
   - 932569b5 (Vara, especial/ATC; parcialmente procedente, concede ATC)
   - b5d2ae28 (Vara, revisão; extinção parcial + improcedente)
   - 4500bc0a (Vara, revisão; improcedente)
@@ -82,7 +82,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
   - d110d00d: 88,14 dB(A) NR-15; procedente.
   - f91d9e75: 83,05 dB(A) NHO-01 reconhecido em 1988-89; 83,05 negado depois de 2003; parcial.
   - 932569b5: 86 dB "embasado em laudo"; metodologia idônea depois de 2003; parcial.
-  - fc512f1a: ruído só acima do limite em 2004-2005; laudo extraviado; parcial.
+  - fc512f1a: ruído apenas acima do limite em 2004-2005; laudo extraviado; parcial.
   - 34e304dd: 84,8 a 89,7 dB, LTCAT com NEN; procedente.
   - 8d845bd0: ruído "bem inferior à tolerância"; improcedente.
 - **Bloco-modelo literal, modelo A (EPI e ruído)**: ver seção 5.
@@ -164,7 +164,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **O que a petição deve trazer**:
   - Uma profissiografia que mostre contato direto e habitual com pacientes portadores de doenças infectocontagiosas, ou manuseio de material contaminado. Atividade de apoio (nutrição, transporte) é recusada.
   - Prova de que o EPI anotado como eficaz não elimina o risco biológico. Pelo Tema 1.090, item II, o ônus é do autor (ineficácia, certificado de aprovação, treinamento, troca). Sem isso, "EPI eficaz" no PPP derruba o pedido.
-  - A matéria do Tema 1.090, item III ("divergência ou dúvida … favorável ao autor"), só é transcrita pelo modelo B (34e304dd). O modelo A não a aplica nos casos lidos.
+  - A matéria do Tema 1.090, item III ("divergência ou dúvida … favorável ao autor"), apenas é transcrita pelo modelo B (34e304dd). O modelo A não a aplica nos casos lidos.
 
 ---
 
@@ -176,7 +176,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
   - f91d9e75 (mecânico; contato eventual; negado)
   - 932569b5 (agentes químicos controlados; negado)
   - fc512f1a (óleo mineral com creme protetor eficaz; negado)
-  - d110d00d (hidrocarbonetos alegados; decidido só pelo ruído)
+  - d110d00d (hidrocarbonetos alegados; decidido apenas pelo ruído)
 - **Bloco-modelo literal, modelo B (8f37193b)**:
 
 > "A exposição aos agentes químicos tolueno, xileno e etil benzeno encontra enquadramento nos itens 1.2.11 do Decreto nº 53.831/64, código 1.2.10 do Decreto nº 83.080/79 e 1.0.19 do Decreto 2172/97. Saliente-se que, até 06/05/1999, data da entrada em vigor do Decreto 3.048/99, não havia a exigência de análise quantitativa relativa aos limites de tolerância para agentes químicos para fins de aposentadoria especial. Assim, somente a partir dessa data passou a ser aplicado o parâmetro contido na NR-15 do MTE. Portanto, até 06/05/99 a análise dos agentes químicos era qualitativa (nocividade presumida e independe de mensuração). Ressalto que a eventual extemporaneidade do Perfil Profissiográfico Previdenciário não afasta a validade de suas conclusões. Neste sentido, a Súmula 68 da TNU, segundo a qual "o laudo pericial não contemporâneo ao período trabalhado é apto à comprovação da atividade especial do segurado". Além disso, foi apresentado LTCAT contemporâneo. Logo, há direito à contagem diferenciada."
@@ -252,7 +252,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **O que a petição deve trazer**:
   - O PPP completo, assinado por quem tem poderes (juntar a ficha da Jucesp ou o contrato social, como em b0d4ab68), com o responsável técnico para todo o período.
   - O LTCAT na inicial, ou o pedido de ofício à empresa já na inicial. É o único meio de instrução que o juízo defere.
-  - Perícia só se pedir com prova de empresa inativa ou recusa documentada. É a "hipótese excepcional" que o juízo nomeia.
+  - Perícia apenas se pedir com prova de empresa inativa ou recusa documentada. É a "hipótese excepcional" que o juízo nomeia.
   - Erro no PPP se corrige antes, na Justiça do Trabalho ou na empresa. O juízo não o corrige.
 
 ---
@@ -276,13 +276,13 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **Mecânico, literal (f91d9e75):** "Penso, e, no ponto, discordo do posicionamento defendido pelo autor, que, por ausência de previsão normativa a respeito, o período não pode ser aceito como especial por subsunção à categoria profissional. As atividades, devidamente detalhadas no formulário previdenciário, não se assemelham àqueles previstas nos itens 2.5.1, do Anexo II, do Decreto n.º 83.080/1979, e 2.5.3, do Quadro Anexo ao Decreto n.º 53.831/1964. Ou mesmo no item 1.2.11, do Quadro Anexo ao Decreto n.º 53.831/1964."
 - **Motorista**:
   - O motorista de caminhão ou de transporte pela categoria (código 2.4.4) não aparece decidido no corpus.
-  - O motorista de agroindústria foi reconhecido só pelo ruído (b09ba3f9).
+  - O motorista de agroindústria foi reconhecido apenas pelo ruído (b09ba3f9).
   - O motorista de ambulância foi negado pelo agente biológico e pelo ruído (8d845bd0): "A atividade desenvolvida pelo segurado não está prevista, normativamente, como passível de justificar o enquadramento especial por categoria."
 - **Citados**: item 2.5.7 do Decreto n° 53.831/64; Tema Repetitivo 1031 do STJ; código 2.2.1 do Decreto n. 53.831/64; TRF/3, apelação cível 2066888; PUIL 452/PE; AgInt no REsp n. 1.966.899/SP; Lei Complementar n.º 11/1971; itens 2.5.1 (Anexo II, Decreto 83.080/79) e 2.5.3 (Decreto 53.831/64); art. 57, §§ 3º e 4º, da Lei 8213/1991.
 - **O que a petição deve trazer**:
   - Vigia depois de 05/03/1997: um PPP ou laudo que descreva o risco à integridade física (porte de arma, patrimônio de valor, histórico de ocorrências). "Queda" e "trabalho noturno" não bastam.
   - Rural na agroindústria antes de 1991: prova de vínculo ao plano urbano antes da LC 11/1971, ou de agropecuária conjugada com exposição habitual. A cana e o sol são recusados.
-  - Motorista: o código 2.4.4 e o tipo de veículo. Nos casos lidos só o ruído medido salvou o pedido.
+  - Motorista: o código 2.4.4 e o tipo de veículo. Nos casos lidos apenas o ruído medido salvou o pedido.
 
 ---
 
@@ -295,7 +295,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 
 - **Conclusão da contagem, literal:**
   - "Diante desse quadro, se considerados os períodos especiais devidamente computados pelo INSS, e aqueles aqui reconhecidos como tais, passa o autor a somar, em condições especiais, na DER, [x] anos, [y] meses e [z] dias. Consequentemente, inexiste direito ao pagamento da aposentadoria especial. Por outro lado, convertidos, em tempo comum majorado, os períodos especiais reconhecidos na sentença, apura-se acréscimo de [x]. Com isso, o tempo de contribuição total, na DER, chega a [x]. Há, no apontado marco, direito à aposentadoria por tempo de contribuição." (932569b5)
-  - "Consequentemente, não há direito à concessão da aposentadoria por tempo de contribuição, ainda que reafirmada a DER." (f91d9e75; o juízo então só declara os períodos)
+  - "Consequentemente, não há direito à concessão da aposentadoria por tempo de contribuição, ainda que reafirmada a DER." (f91d9e75; o juízo então apenas declara os períodos)
   - "na DER ([DATA]), o autor tem direito ao benefício de aposentadoria especial, com fundamento na Lei nº 8.213, art. 57, pois (i) cumpriu o requisito tempo especial, com 25 anos e 14 dias, para o mínimo de 25 anos; (ii) cumpriu o requisito carência, com 384 meses, para o mínimo de 180 meses." (d110d00d)
   - "Por fim, com base nos cálculos anexos a esta sentença, verifico que a autora tem direito à Aposentadoria por Tempo de Contribuição Integral (CF, art. 201, § 7º, I - redação EC 20), com DIB em [DATA], mediante reafirmação da DER." (34e304dd)
   - "A renda mensal da prestação deverá ser calculada com base na legislação previdenciária vigente ao tempo do requerimento administrativo." (932569b5)
@@ -304,7 +304,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **Tempo urbano sem prova material, contra (5c7c90dc):** "Portanto, considero que não há, nos autos, elementos materiais que possam amparar a pretensão relativa à contagem, lembrando-se, na medida em que importante, de que a prova exclusivamente testemunhal não se presta ao desiderato. A prova, neste sentido, no caso concreto, seria exclusivamente testemunhal, e esse meio é categoricamente vedado pela legislação previdenciária. Desnecessária, desta forma, a colheita de prova oral em audiência."
 - **RPPS no pedido de especial (8d845bd0):** "Reconheço, de ofício, a ilegitimidade de passiva do INSS em relação ao pedido de enquadramento especial do período de [DATA] a [DATA], na medida em que, no mencionado intervalo, o autor foi filiado a RPPS mantido pelo [MUNICÍPIO]. Portanto, não se submeteu às normas do RGPS. Neste ponto, o processo deve ser extinto, sem resolução de mérito."
 - **Tema 1.090 e pedido de suspensão (f91d9e75):** "Indefiro a suspensão do processo, na forma requerida, em contestação, pelo INSS. No tema repetitivo 1090, foi apenas determinada a suspensão dos Recursos Especiais ou Agravos em Recursos Especiais interpostos nos Tribunais de segunda instância ou em tramitação no STJ, e recursos e incidentes em trâmite nas Turmas Recursais, Turmas de Uniformização, Regional ou Nacional, dos Juizados Especiais Federais e perante o STJ."
-- **Reafirmação da DER**: aplicada só pelo modelo B (34e304dd). O modelo A examina "ainda que reafirmada a DER" (f91d9e75) e não teve caso em que a reafirmação mudasse o resultado. O Tema 995 do STJ não é citado no corpus.
+- **Reafirmação da DER**: aplicada apenas pelo modelo B (34e304dd). O modelo A examina "ainda que reafirmada a DER" (f91d9e75) e não teve caso em que a reafirmação mudasse o resultado. O Tema 995 do STJ não é citado no corpus.
 - **Citados**: art. 201, § 7º, I, da CF; EC nº 20/1998; art. 25, II, da Lei 8.213/91; EC nº 103/2019, arts. 15, 16, 17, 18, 19, 20 e 21; Lei nº 8.213, art. 57; art. 70 do Decreto 3.048/99.
 - **O que a petição deve trazer**:
   - Uma planilha de contagem com o tempo especial puro, o convertido e o total.
@@ -381,7 +381,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **Citados**: art. 98 do CPC; art. 790, § 3º, da CLT (Lei nº 13.467/2017); Enunciado nº 52 do IV Encontro de Juízes Federais de Turmas Recursais e JEFs da 3ª Região.
 - **O que a petição deve trazer**:
   - Na Vara, quem ganha mais de cerca de R$ 4.000 no CNIS tem a revogação provável.
-  - A réplica precisa trazer despesas comprovadas (saúde, dependentes, dívidas) e não só "o padrão remuneratório". O juízo censura expressamente a réplica que "limitando-se a defender que, por seu padrão remuneratório, faria jus à gratuidade".
+  - A réplica precisa trazer despesas comprovadas (saúde, dependentes, dívidas) e não apenas "o padrão remuneratório". O juízo censura expressamente a réplica que "limitando-se a defender que, por seu padrão remuneratório, faria jus à gratuidade".
   - O recurso eficaz é o agravo de instrumento: o TRF3 reformou em 3 de 3 casos relatados. Embargos não servem.
   - No JEF, o critério é 40% do teto do RGPS.
 
@@ -473,7 +473,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
   - Embargos contra o saneador que indeferiu prova, para requisitar o LTCAT (fc512f1a).
 - **O que decide contra**: todo pedido de reexame da prova (PPP, EPI, CNIS), de critério da gratuidade, de suspensão por tema não transitado, de interpretação de tema (TNU 246, STF 1125) ou de rediscussão do cálculo homologado.
 - **Citados**: arts. 494, I e II, 1.022, I, II e III, e 1.023, caput, do CPC; Marcato (doutrina); Tema 246 da TNU; tema de repercussão geral 1125 do STF; tema 1102 do STF.
-- **O que a petição deve trazer**: embargos só por vício interno e objetivo, com o trecho da sentença transcrito ao lado do ponto omitido (um documento não examinado, um período sem dispositivo). Inconformismo vai ao recurso. A exceção que o juízo admite é o erro de fato evidente e documentado.
+- **O que a petição deve trazer**: embargos apenas por vício interno e objetivo, com o trecho da sentença transcrito ao lado do ponto omitido (um documento não examinado, um período sem dispositivo). Inconformismo vai ao recurso. A exceção que o juízo admite é o erro de fato evidente e documentado.
 
 ---
 
@@ -537,7 +537,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **Literais na Vara:**
   - Procedência integral: "O INSS responderá, por inteiro, pelas despesas processuais, e arcará com honorários advocatícios arbitrados em 10% sobre o valor da condenação, até a sentença (v. art. 86, parágrafo único, c.c. art. 85, caput, e §§, c.c. art. 98, §§ 2.º e 3.º, do CPC)." (d110d00d)
   - Sucumbência recíproca: "As despesas processuais serão distribuídas proporcionalmente entre as partes (v. art. 86, caput, do CPC). O autor, respeitada a condição de beneficiário da gratuidade da justiça, pagará honorários advocatícios em 10% sobre o valor atualizado da causa (v. art. 85, caput, e §§, c.c. art. 98, §§ 2.º, e 3.º, do CPC). O INSS pagará honorários advocatícios fixados em 10% sobre a condenação, até a sentença (v. art. 85, caput, e §§, do CPC)." (b09ba3f9, e00d8133, fc512f1a)
-  - Proveito inestimável: "O INSS, por sua vez, levando em consideração o valor inestimável do proveito econômico aqui obtido pelo autor, pagará honorários advocatícios arbitrados, por equidade, em R$ 1.000,00 (v. art. 85, caput, e §§, do CPC)." (f91d9e75, só declaratória)
+  - Proveito inestimável: "O INSS, por sua vez, levando em consideração o valor inestimável do proveito econômico aqui obtido pelo autor, pagará honorários advocatícios arbitrados, por equidade, em R$ 1.000,00 (v. art. 85, caput, e §§, do CPC)." (f91d9e75, apenas declaratória)
   - Improcedência com gratuidade: "A autora, respeitada a condição de beneficiária da gratuidade da justiça, responderá pelas despesas processuais, e pagará honorários advocatícios aos Procuradores Federais vinculados à defesa do INSS em 10% sobre o valor atualizado da causa (v. art. 85, caput, e §§, c.c. art. 98, §§ 2.º, e 3.º, do CPC)." (b0d4ab68)
   - Improcedência sem gratuidade: "A autora responderá pelas despesas processuais e pagará honorários advocatícios aos Procuradores Federais vinculados à defesa do INSS em 10% sobre o valor atualizado da causa (v. art. 85, caput, e §§, do CPC)." (4500bc0a)
   - Modelo B: "Condeno o INSS ao pagamento de honorários advocatícios, que fixo no percentual mínimo previsto no §3º do art. 85 do CPC, de acordo com o inciso correspondente ao valor da condenação/proveito econômico obtido pela parte autora, devendo observância ao disposto no §4º, II e § 5º, por ocasião da apuração do montante a ser pago." (34e304dd)
@@ -554,7 +554,7 @@ Convenções: [PARTE], [EMPRESA], [ENTE PÚBLICO], [MUNICÍPIO], [DATA], [NB], [
 - **Tutela**:
   - Não foi encontrada no corpus nenhuma concessão de tutela antecipada em matéria de tempo especial, ATC ou revisão.
   - As implantações são todas ordenadas "Com o trânsito em julgado".
-  - Encontrados: "Revogo eventual tutela deferida, nos termos do art. 296 do diploma processual civil." (vida toda); "Resta prejudicada a análise do pedido de concessão de tutela provisória …" (incapacidade); e em f9a5c775 o pedido de tutela de urgência só aparece no relatório.
+  - Encontrados: "Revogo eventual tutela deferida, nos termos do art. 296 do diploma processual civil." (vida toda); "Resta prejudicada a análise do pedido de concessão de tutela provisória …" (incapacidade); e em f9a5c775 o pedido de tutela de urgência apenas aparece no relatório.
 - **O que a petição deve trazer**: valor da causa com planilha, porque o juízo fixa o valor de ofício com a Contadoria e manda justificar. Pedido de honorários sobre a condenação até a sentença. Se quiser tutela, fundamentação autônoma do perigo (nenhum exemplo de deferimento no corpus).
 
 ---

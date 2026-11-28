@@ -7,7 +7,7 @@ description: "Instrução processual e poderes instrutórios do juiz no processo
 
 ## Escopo
 
-Skill pró-segurado sobre a produção da prova e os poderes do juiz na instrução. O foco é ativar o dever de o juiz buscar a verdade, provocando a prova de ofício quando ela é decisiva e o segurado é hipossuficiente.
+Produção da prova e poderes instrutórios do juiz. O foco é provocar a prova de ofício quando ela é decisiva e o segurado é hipossuficiente.
 
 ## Marco normativo central
 
@@ -15,19 +15,19 @@ CPC, art. 369. As partes têm o direito de provar por todos os meios legítimos,
 
 CPC, art. 370. O juiz determina de ofício as provas necessárias ao julgamento. O parágrafo único indefere apenas as diligências inúteis ou meramente protelatórias, por decisão fundamentada.
 
-CPC, art. 371. O juiz aprecia a prova pelo livre convencimento motivado.
+CPC, art. 371. O juiz aprecia a prova dos autos, independentemente de quem a promoveu, e indica na decisão as razões da formação de seu convencimento.
 
 CPC, art. 372. Prova emprestada, o juiz admite prova produzida em outro processo, com contraditório.
 
 CPC, art. 139, especialmente incisos IV e VI. Poderes de condução, de efetivação das decisões e de adequação da ordem e dos prazos das provas.
 
-CPC, art. 357. Saneamento e organização, fixação dos pontos controvertidos e das provas a produzir. O §3º admite audiência de saneamento em causa complexa.
+CPC, art. 357. Saneamento e organização: questões de fato controvertidas, provas admitidas e distribuição do ônus. As partes pedem esclarecimentos ou ajustes em 5 dias, após o que a decisão se estabiliza (§1º). O §3º admite audiência de saneamento em causa complexa.
 
 CPC, arts. 481 a 484. Inspeção judicial de pessoas ou coisas.
 
 ## Poder-dever de prova de ofício
 
-O art. 370 não é faculdade indiferente. Diante de dúvida sobre fato decisivo, o juiz deve determinar a prova, sobretudo quando a parte é vulnerável. A inércia do juiz que julga contra o segurado sem esgotar a prova necessária é atacável como cerceamento, ver `base-cpc-nulidades-cerceamento`.
+Diante de dúvida sobre fato decisivo, o juiz deve determinar a prova (art. 370), sobretudo quando a parte é vulnerável. A inércia do juiz que julga contra o segurado sem esgotar a prova necessária é atacável como cerceamento, ver `base-cpc-nulidades-cerceamento`.
 
 ## Prova emprestada
 
@@ -35,7 +35,7 @@ O art. 372 permite trazer laudo, perícia ou depoimento de outro processo, útil
 
 ## Saneamento como oportunidade
 
-No saneamento, art. 357, a parte deve pedir a fixação dos pontos controvertidos e a admissão das provas, documental, pericial e testemunhal. Ponto não fixado e prova não admitida geram risco de cerceamento na sentença.
+No saneamento (art. 357), pedir a fixação dos pontos controvertidos e a admissão das provas documental, pericial e testemunhal. Ponto omitido ou prova inadmitida exige o pedido de ajuste do §1º, sob pena de estabilização.
 
 ## Estratégia pró-segurado
 
@@ -45,11 +45,11 @@ Segundo, no saneamento, listar as provas e pedir a fixação dos pontos controve
 
 Terceiro, oferecer prova emprestada quando a produção originária é inviável.
 
-Quarto, sustentar o livre convencimento do art. 371 para valorar prova indiciária e testemunhal no contexto rural e informal.
+Quarto, sustentar a valoração motivada do art. 371 para a prova indiciária e testemunhal no contexto rural e informal.
 
 ## Alertas
 
-Primeiro, prova de ofício não substitui o ônus da parte, ver `base-cpc-onus-prova-art373`, ela o complementa.
+Primeiro, a prova de ofício complementa o ônus da parte, sem substituí-lo (ver `base-cpc-onus-prova-art373`).
 
 Segundo, requerimento de prova não registrado no momento próprio preclui e enfraquece a arguição de cerceamento.
 

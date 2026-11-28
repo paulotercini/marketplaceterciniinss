@@ -7,7 +7,7 @@ description: "Fundamentação das decisões pelo art. 489, §1º, do CPC, nulida
 
 ## Escopo
 
-Skill pró-segurado sobre o dever de fundamentação e a nulidade da decisão que o descumpre. Toda decisão judicial e, por simetria de devido processo, a decisão administrativa, deve enfrentar os fundamentos relevantes. A decisão que não fundamenta é nula.
+Dever de fundamentação e nulidade da decisão que o descumpre. A decisão judicial e a administrativa devem enfrentar os fundamentos relevantes; a decisão sem fundamentação é nula.
 
 ## Marco normativo central
 
@@ -21,9 +21,11 @@ CPC, art. 489, §1º. Rol do que NÃO se considera decisão fundamentada.
 
 CPC, art. 1.022, parágrafo único, II. É omissa a decisão que incorre nas condutas do art. 489, §1º, o que abre embargos.
 
+Lei 9.784/1999, art. 50. Motivação explícita, clara e congruente do ato administrativo que nega, limita ou afeta direito (inciso I e §1º).
+
 ## Os seis incisos do art. 489, §1º
 
-Não é fundamentada a decisão que.
+Não é fundamentada a decisão que:
 
 Primeiro, inciso I. Apenas indica, reproduz ou parafraseia ato normativo sem explicar sua relação com a causa.
 
@@ -31,7 +33,7 @@ Segundo, inciso II. Emprega conceito jurídico indeterminado sem explicar o moti
 
 Terceiro, inciso III. Invoca motivos que se prestariam a justificar qualquer outra decisão.
 
-Quarto, inciso IV. Não enfrenta todos os argumentos deduzidos capazes de, em tese, infirmar a conclusão adotada. Este é o inciso mais poderoso no previdenciário.
+Quarto, inciso IV. Não enfrenta todos os argumentos deduzidos capazes de, em tese, infirmar a conclusão adotada.
 
 Quinto, inciso V. Invoca precedente ou súmula sem identificar seus fundamentos determinantes nem demonstrar que o caso se ajusta.
 
@@ -45,7 +47,7 @@ Segundo, decisão que aplica Tema ou Súmula contra o segurado sem cotejo do cas
 
 Terceiro, decisão genérica que serviria a qualquer caso viola o inciso III. Arguir nulidade no eixo 1 de `base-analise-decisao-tres-eixos`.
 
-Quarto, a nulidade por falta de fundamentação é matéria de ordem pública, alegável em qualquer recurso e reconhecível de ofício.
+Quarto, reconhecida a nulidade por falta de fundamentação, o tribunal julga desde logo o mérito se a causa estiver madura (art. 1.013, §3º, IV). Pedir esse julgamento na apelação.
 
 ## Alertas
 
@@ -53,7 +55,7 @@ Primeiro, não confundir decisão contrária com decisão não fundamentada. Jul
 
 Segundo, o juiz não precisa rebater cada frase, apenas os argumentos capazes de mudar o resultado.
 
-Terceiro, no CRPS, a fundamentação deficiente da decisão administrativa também autoriza embargos, art. 92 do RICRPS.
+Terceiro, no CRPS, a omissão ou contradição do acórdão autoriza embargos (art. 92 do RICRPS, Portaria MPS 125/2026), e a falta de motivação viola o art. 50 da Lei 9.784/1999.
 
 ## MCPs da casa
 

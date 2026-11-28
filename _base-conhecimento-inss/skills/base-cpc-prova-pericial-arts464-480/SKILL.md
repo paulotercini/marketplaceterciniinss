@@ -7,7 +7,7 @@ description: "Prova pericial no processo previdenciário pelo CPC, quesitos, esc
 
 ## Escopo
 
-Skill pró-segurado sobre a condução da prova pericial no processo judicial. O foco é dirigir a perícia com bons quesitos, cobrar esclarecimentos e pedir nova perícia quando o laudo é frágil.
+Condução da prova pericial no processo judicial: quesitos, esclarecimentos e nova perícia quando o laudo é insuficiente.
 
 ## Marco normativo central
 
@@ -19,7 +19,7 @@ CPC, art. 473. Requisitos do laudo, exposição do objeto, análise técnica e r
 
 CPC, art. 477. Prazo de entrega do laudo. O §1º abre manifestação das partes e dos assistentes. O §2º obriga o perito a esclarecer ponto divergente ou dúvida. O §3º permite os esclarecimentos em audiência.
 
-CPC, art. 479. O juiz não fica adstrito ao laudo, aprecia a prova pelo livre convencimento motivado.
+CPC, art. 479. O juiz aprecia o laudo na forma do art. 371 e indica na sentença os motivos para considerar ou deixar de considerar suas conclusões.
 
 CPC, art. 480. O juiz determina segunda perícia quando a matéria não estiver suficientemente esclarecida.
 
@@ -29,7 +29,11 @@ CPC, art. 464, §§2º a 4º. O juiz pode substituir a perícia por prova técni
 
 ## Honorários periciais
 
-CPC, art. 95. Adiantamento pela parte que requereu, ou rateio. Em ação contra o INSS com a parte beneficiária da gratuidade, o custeio segue a regra do §3º e a Resolução do CJF, e o Tema 1044/STJ trata da responsabilidade e do adiantamento. A gratuidade não impede a perícia.
+CPC, art. 95. Adiantamento pela parte que requereu, ou rateio; para o beneficiário da gratuidade, custeio público (§3º).
+
+Lei 13.876/2019, art. 1º, na redação da Lei 14.331/2022. Nas ações de benefício por incapacidade e de BPC à pessoa com deficiência, o INSS antecipa os honorários periciais em qualquer rito (§5º), salvo autor com condição comprovada de arcar com a antecipação (§6º); o ônus final é do vencido (caput). O pagamento limita-se a uma perícia médica por processo, admitida outra excepcionalmente por determinação de instância superior (§4º). Esse limite orçamentário não afasta o art. 480 do CPC, mas o juízo o invoca para negar a segunda perícia: demonstrar a insuficiência concreta do primeiro laudo.
+
+Tema 1044 STJ. Nas ações acidentárias, os honorários periciais adiantados pelo INSS ficam a cargo do Estado quando sucumbente o autor isento (art. 129, parágrafo único, da Lei 8.213/91).
 
 ## Fluxo pró-segurado
 
@@ -41,13 +45,13 @@ Terceiro, requerer esclarecimentos ao perito, art. 477, §2º, quando o laudo é
 
 Quarto, se o laudo permanece insuficiente ou contraditório, requerer segunda perícia, art. 480.
 
-Quinto, sendo o laudo desfavorável mas frágil, sustentar o livre convencimento do art. 479 para afastá-lo com base em outras provas.
+Quinto, sendo o laudo desfavorável e insuficiente, sustentar o art. 479 para afastá-lo com base em outras provas.
 
 ## Auditoria do laudo
 
-A crítica técnica do laudo, quesito a quesito, é feita com `auditoria-laudo-pericial`. Quando o objetivo for impugnar, o Modo 3 daquela skill executa o roteiro de 9 blocos (`references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`, Onda 84), e o Bloco 5 traduz cada falha técnica para os dispositivos DESTA skill. A orientação do cliente para a perícia é feita com `orientacao-cliente-pericia`.
+A crítica técnica do laudo, quesito a quesito, é feita com `auditoria-laudo-pericial`. Quando o objetivo for impugnar, o Modo 3 daquela skill executa o roteiro de 9 blocos (`auditoria-laudo-pericial/references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`), e o Bloco 5 traduz cada falha técnica para os dispositivos DESTA skill. A orientação do cliente para a perícia é feita com `orientacao-cliente-pericia`.
 
-## Mapa dos vícios do laudo para o CPC (Onda 84)
+## Mapa dos vícios do laudo para o CPC
 
 Tradução de referência para o Bloco 5 do roteiro de impugnação, cada vício técnico com o dispositivo de ataque.
 
@@ -57,19 +61,19 @@ Ausência de resposta a quesito deferido ou resposta evasiva autoriza o pedido d
 
 Omissão de exame complementar necessário e avaliação puramente clínica de doença que exige exame de imagem caracterizam insuficiência técnica do laudo, fundamento da segunda perícia do art. 480, que se realiza sobre os MESMOS fatos e não substitui automaticamente a primeira (art. 480, §§ 2º e 3º, ambas valoradas pelo juiz).
 
-Ausência de enfrentamento da atividade habitual real e desconsideração de condições pessoais e sociais (idade, escolaridade, histórico laboral, Súmula 47 da TNU) sustentam o afastamento do laudo pelo livre convencimento motivado do art. 479, que obriga o juiz a indicar na sentença os motivos que o levaram a considerar ou deixar de considerar as conclusões do perito.
+Ausência de enfrentamento da atividade habitual real e desconsideração de condições pessoais e sociais (idade, escolaridade, histórico laboral, Súmula 47 da TNU) sustentam o afastamento do laudo pelo art. 479, que obriga o juiz a indicar na sentença os motivos que o levaram a considerar ou deixar de considerar as conclusões do perito.
 
-Perito sem especialidade compatível com a patologia fere o art. 465 (nomeação de perito especializado no objeto) e o art. 468, II (falta de conhecimento técnico), fundamento para substituição ou para nova perícia com especialista.
+Perito sem especialidade compatível com a patologia fere o art. 465 (nomeação de perito especializado no objeto) e o art. 468, I (falta de conhecimento técnico ou científico), fundamento para substituição ou para nova perícia com especialista.
 
 Indeferimento dos esclarecimentos ou da complementação necessária converte o vício em cerceamento de defesa, pela `base-cpc-nulidades-cerceamento`.
 
 ## Alertas
 
-Primeiro, perder o prazo do art. 465, §1º, é abrir mão de quesitos e assistente técnico.
+Primeiro, perdido o prazo do art. 465, §1º, a parte fica sem quesitos e sem assistente técnico.
 
 Segundo, o indeferimento de perícia necessária é cerceamento, ver `base-cpc-nulidades-cerceamento`.
 
-Terceiro, a segunda perícia depende de demonstrar a insuficiência concreta do primeiro laudo, não do mero inconformismo.
+Terceiro, a segunda perícia depende da insuficiência concreta do primeiro laudo.
 
 ## MCPs da casa
 
@@ -87,18 +91,18 @@ Para cerceamento por indeferimento de perícia, acionar `base-cpc-nulidades-cerc
 
 Prova documental está em `base-cpc-prova-documental-juntada`. Poderes instrutórios do juiz estão em `base-cpc-instrucao-poderes-do-juiz`. A crítica técnica do laudo está em `auditoria-laudo-pericial`.
 
-## Quesitos indeferidos e esclarecimentos negados (Onda 107)
+## Quesitos indeferidos e esclarecimentos negados
 
 Cenário recorrente na Justiça Federal. O juízo indefere os quesitos prévios afirmando que os quesitos do Juízo suprem a extensão da perícia, o laudo vem enxuto, e os esclarecimentos são indeferidos com julgamento na sequência.
 
-Resposta normativa. O art. 465, § 1º, III, assegura à parte o direito de apresentar quesitos, e o art. 477, § 2º, o de pedir esclarecimentos sobre pontos não abordados. A condução da instrução é do juiz pelo art. 370, jamais do auxiliar, de modo que o perito não define a extensão do contraditório. E o art. 479 impõe ao juiz indicar na sentença os motivos de considerar ou não as conclusões do laudo, o que só faz sentido porque o laudo NÃO vincula nem goza de presunção absoluta.
+Resposta normativa. O art. 465, § 1º, III, assegura à parte o direito de apresentar quesitos, e o art. 477, § 2º, o de pedir esclarecimentos sobre pontos não abordados. A condução da instrução é do juiz (art. 370), e não do auxiliar, de modo que o perito não define a extensão do contraditório. E o art. 479 impõe ao juiz indicar na sentença os motivos de considerar ou não as conclusões do laudo, o que apenas faz sentido porque o laudo NÃO vincula nem goza de presunção absoluta.
 
-Regra prática. Indeferido o quesito prévio, PROTESTAR desde logo e reservar a manifestação para depois do laudo. Indeferidos os esclarecimentos, consignar o PREJUÍZO concreto (qual ponto controvertido ficou sem resposta e por que decide o mérito), porque é o prejuízo que converte irregularidade em nulidade. Arsenal completo em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.
+Regra prática. Indeferido o quesito prévio, PROTESTAR desde logo e reservar a manifestação para depois do laudo. Indeferidos os esclarecimentos, consignar o PREJUÍZO concreto (qual ponto controvertido ficou sem resposta e por que decide o mérito), porque é o prejuízo que converte irregularidade em nulidade. Roteiro completo em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.
 
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "técnica 5 (impugnar o laudo por uma falha identificável)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
 
-## Juízo de Catanduva (Onda 179)
+## Juízo de Catanduva
 
 No juízo de Catanduva, a perícia técnica em tempo especial é deferida apenas com empresa inativa ou recusa documentada, o ofício à empregadora para juntar o LTCAT é deferido, e a impugnação ao laudo médico prospera apenas por vício formal ou omissão demonstrada. Detalhe em `base-juizo-catanduva/references/BLOCOS-ESPECIAL-PROCESSO.md`, seção 6, e em `base-juizo-catanduva/references/BLOCOS-BENEFICIOS.md`.

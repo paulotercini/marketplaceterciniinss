@@ -7,7 +7,7 @@ description: "Nulidades processuais e cerceamento de defesa no processo previden
 
 ## Escopo
 
-Skill pró-segurado sobre nulidades processuais, com foco no cerceamento de defesa. O eixo é o direito à prova e ao contraditório. Decisão que suprime prova necessária ou surpreende a parte é nula.
+Nulidades processuais, com foco no cerceamento de defesa. Decisão que suprime prova necessária ou surpreende a parte é nula.
 
 ## Marco normativo central
 
@@ -19,11 +19,11 @@ CPC, arts. 9º e 10. Vedação à decisão surpresa, ninguém é julgado com bas
 
 CPC, arts. 369 e 370. Direito à prova. O juiz indefere apenas as diligências inúteis ou meramente protelatórias, por decisão fundamentada.
 
-CPC, art. 355. Julgamento antecipado só quando não houver necessidade de outras provas.
+CPC, art. 355, I. Julgamento antecipado apenas quando não houver necessidade de outras provas.
 
 CPC, art. 357. Saneamento e organização do processo, fixação dos pontos controvertidos e das provas.
 
-CPC, arts. 277 e 282, §1º. Instrumentalidade das formas e exigência de prejuízo, não se anula o ato que atingiu sua finalidade nem sem demonstração de prejuízo.
+CPC, arts. 277, 278 e 282, §§1º e 2º. Instrumentalidade das formas e exigência de prejuízo; a nulidade é alegada na primeira oportunidade, sob pena de preclusão, salvo a decretável de ofício (art. 278).
 
 ## Hipóteses típicas no previdenciário
 
@@ -41,11 +41,11 @@ Sexto, perícia sem oportunidade de quesitos ou de assistente técnico.
 
 ## Nulidade absoluta e relativa
 
-A nulidade absoluta atinge norma de ordem pública, é reconhecível de ofício e a qualquer tempo. A nulidade relativa depende de alegação na primeira oportunidade, sob pena de preclusão. O cerceamento de defesa, por tocar garantia constitucional, é tratado como nulidade grave.
+A nulidade decretável de ofício não preclui (art. 278, parágrafo único). As demais exigem alegação na primeira oportunidade de falar nos autos (art. 278, caput). O cerceamento de defesa atinge o art. 5º, LV, da CF, mas exige o protesto tempestivo contra o indeferimento da prova.
 
 ## A régua do prejuízo
 
-Não há nulidade sem prejuízo. Toda arguição deve demonstrar, de forma concreta, o que a parte deixou de provar e como isso mudaria o resultado. Alegar cerceamento sem apontar a prova perdida e sua relevância é arguição vazia, que os tribunais rejeitam.
+Não há nulidade sem prejuízo (art. 282, §1º). A arguição demonstra o que a parte deixou de provar e como isso mudaria o resultado. Sem a prova perdida e sua relevância, os tribunais rejeitam a arguição.
 
 ## Estratégia pró-segurado
 
@@ -55,15 +55,13 @@ Segundo, pedir a anulação da sentença e o retorno dos autos para produção d
 
 Terceiro, demonstrar o prejuízo de forma objetiva, a prova indeferida, o fato que ela provaria e o impacto no resultado.
 
-Quarto, no JEF e na TNU, cuidar da Súmula 43/TNU, revestir a tese de cerceamento como questão de direito material sempre que possível. Acionar `base-puil-pedilef-vedacao-materia-processual`.
+Quarto, na TNU não cabe incidente sobre matéria processual (Súmula 43 TNU); vincular o cerceamento à questão de direito material sempre que possível. Acionar `base-puil-pedilef-vedacao-materia-processual`.
 
 ## Alertas
 
-Primeiro, cerceamento exige prova concreta do prejuízo, não basta o inconformismo.
+Primeiro, cerceamento exige demonstração concreta do prejuízo.
 
-Segundo, a nulidade relativa preclui se não alegada na primeira oportunidade.
-
-Terceiro, não confundir indeferimento fundamentado de prova inútil com cerceamento.
+Segundo, não confundir indeferimento fundamentado de prova inútil com cerceamento.
 
 ## MCPs da casa
 
@@ -81,6 +79,6 @@ Para requerimento de provas, acionar `especificacao-provas`.
 
 Fundamentação da decisão está em `base-cpc-fundamentacao-art489`. Ônus da prova está em `base-cpc-onus-prova-art373`. Embargos de declaração estão em `base-cpc-embargos-declaracao`.
 
-## Cerceamento na prova pericial previdenciária (Onda 107)
+## Cerceamento na prova pericial previdenciária
 
 Hipótese específica e frequente. Quesitos indeferidos antes da perícia, laudo insuficiente, esclarecimentos indeferidos e julgamento imediato. A nulidade aqui depende de dois registros feitos NO MOMENTO CERTO, o protesto ao primeiro indeferimento e a demonstração do prejuízo concreto ao segundo. Sem eles, o tribunal responde com preclusão ou ausência de prejuízo. Escada processual de cinco degraus e seis argumentos ancorados no CPC em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.

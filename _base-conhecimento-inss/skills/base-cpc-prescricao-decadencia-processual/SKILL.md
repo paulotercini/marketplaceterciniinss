@@ -7,27 +7,29 @@ description: "Prescrição e decadência no plano processual previdenciário pel
 
 ## Escopo
 
-Skill pró-segurado sobre como a prescrição e a decadência aparecem na decisão e como enfrentá-las. O eixo é duplo, impedir a decretação sem contraditório e limitar a prescrição às parcelas, preservando o direito ao benefício.
+Prescrição e decadência na decisão judicial. Dois objetivos: impedir a decretação sem contraditório e limitar a prescrição às parcelas, preservando o direito ao benefício.
 
 ## Distinção essencial
 
-Primeiro, decadência atinge o direito de revisar o benefício, prazo de dez anos do art. 103 da Lei 8.213/91. Tratada em `decadencia-revisao-previdenciaria`.
+Primeiro, a decadência de dez anos do art. 103 da Lei 8.213/91 atinge apenas a revisão do ato de concessão. Não há decadência para a concessão inicial (Tema 313 STF), e a extensão do prazo ao indeferimento, cancelamento e cessação, dada pela Lei 13.846/2019, foi declarada inconstitucional (ADI 6096). Detalhe em `decadencia-revisao-previdenciaria`.
 
-Segundo, prescrição atinge as parcelas vencidas, não o direito ao benefício em si.
+Segundo, a prescrição atinge as parcelas vencidas há mais de cinco anos do ajuizamento (art. 103, parágrafo único, da Lei 8.213/91), não o direito ao benefício.
 
 ## Regra geral, decretação de ofício com contraditório
 
-O juiz pode reconhecer de ofício a prescrição e a decadência, art. 487, II, do CPC. Mas antes deve ouvir as partes, art. 487, parágrafo único, e art. 10. Decretar prescrição ou decadência de surpresa, sem oportunidade de manifestação, é nulidade por decisão surpresa. Acionar `base-cpc-fundamentacao-art489` e o eixo 1 de `base-analise-decisao-tres-eixos`.
+O juiz pode reconhecer de ofício a prescrição e a decadência (art. 487, II, do CPC), mas antes ouve as partes, ressalvada a improcedência liminar (art. 487, parágrafo único, e art. 10). A decretação sem oportunidade de manifestação é decisão surpresa, nula. Acionar `base-cpc-fundamentacao-art489` e o eixo 1 de `base-analise-decisao-tres-eixos`.
 
 ## Prescrição das parcelas, Súmula 85/STJ
 
-Nas relações de trato sucessivo, como o benefício previdenciário, a prescrição atinge apenas as parcelas vencidas antes do quinquênio anterior à ação, não o fundo de direito, Súmula 85/STJ e art. 3º do Decreto 20.910/32. Quando o próprio direito é negado pela Administração, a discussão é do fundo de direito, com regra própria de contagem.
+Nas relações de trato sucessivo, a prescrição atinge apenas as parcelas vencidas antes do quinquênio anterior à ação (Súmula 85 STJ; art. 3º do Decreto 20.910/32). No benefício previdenciário, o indeferimento administrativo não faz prescrever o fundo de direito, porque o direito ao benefício pode ser exercido a qualquer tempo (Tema 313 STF). O INSS invoca a ressalva final da Súmula 85 ("quando não tiver sido negado o próprio direito"); refutar com o Tema 313 STF e a ADI 6096.
+
+A prescrição não corre contra o absolutamente incapaz (art. 198, I, do Código Civil, aplicável pelo art. 103, parágrafo único, da Lei 8.213/91).
 
 ## Improcedência liminar e intercorrente
 
-Primeiro, o juiz pode julgar liminarmente improcedente o pedido por prescrição ou decadência, art. 332, §1º, mas a defesa combate a contagem e a ausência de contraditório.
+Primeiro, o juiz pode julgar liminarmente improcedente o pedido por prescrição ou decadência (art. 332, §1º). Cabe apelação com retratação em 5 dias (art. 332, §3º).
 
-Segundo, na execução, a prescrição intercorrente do art. 921, III, corre após a suspensão, com intimação prévia, Súmula 150/STF sobre a execução.
+Segundo, a pretensão executiva prescreve no mesmo prazo da ação (Súmula 150 STF), e a prescrição intercorrente segue o art. 921, §§4º e 5º, com oitiva prévia das partes.
 
 ## Estratégia pró-segurado
 
@@ -41,7 +43,7 @@ Terceiro, na decadência de revisão, verificar marco interruptivo e a natureza 
 
 Primeiro, não confundir prescrição de parcelas com decadência do direito de revisar, os efeitos são distintos.
 
-Segundo, a decretação de ofício sem contraditório é nulidade, mas exige demonstração de prejuízo.
+Segundo, a decretação de ofício sem contraditório é nula, demonstrado o prejuízo (por exemplo, causa interruptiva ou incapacidade não examinada).
 
 Terceiro, o termo inicial varia por espécie, conferir `base-termo-inicial-dib-por-especie`.
 

@@ -1,125 +1,27 @@
 # Coisa Julgada Progressiva. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-Coisa julgada progressiva é a formação do trânsito em julgado em capítulos autônomos de sentença, à medida que cada capítulo se torna incontroverso. Sustenta execução imediata do que não foi impugnado.
+CF/88, art. 5º, XXXVI (coisa julgada) e LXXVIII (duração razoável); art. 100, §§3º, 5º e 8º. CPC, arts. 356, 502, 1.002, 1.013 e 535, §4º.
 
-## 2. Fundamento constitucional
+## 2. Cenários
 
-Art. 5º XXXV CF/88.
+Cenário A. Sentença concede aposentadoria e auxílio-acidente; o INSS apela apenas do auxílio-acidente. A aposentadoria transita e é implantada.
 
-Art. 5º XXXVI CF/88.
+Cenário B. Sentença reconhece tempo comum e especial; o INSS apela do especial. Averbação imediata do tempo comum.
 
-Art. 5º LXXVIII CF/88. Duração razoável.
+Cenário C. Sentença concede o benefício; o INSS apela apenas dos juros e da correção. Implantação e, transitado o principal, expedição do valor incontroverso.
 
-## 3. Fundamento legal
+Cenário D. Julgamento parcial do art. 356 sobre pedido incontroverso (por exemplo, averbação de vínculo constante do CNIS) enquanto se produz a perícia sobre o restante.
 
-CPC, art. 502.
+Cenário E. Impugnação parcial do INSS ao cálculo. Pedir a expedição imediata da parte não impugnada (art. 535, §4º), com a observação do valor total para o enquadramento como RPV (Tema 28 STF).
 
-CPC, art. 356.
+## 3. Cenários limitados
 
-CPC, art. 1.013 §§.
+Recurso do INSS que ataca a concessão e todos os capítulos dela dependentes: não há parte incontroversa.
 
-CPC, art. 523.
+Obrigação de pagar antes do trânsito: vedada contra a Fazenda; pedir tutela para a implantação e aguardar o trânsito para os atrasados.
 
-Lei 8.213/91, art. 102 §2º.
+## 4. Metodologia
 
-## 4. Marco jurisprudencial central
-
-### IRDR 18 TRF4
-
-Coisa julgada progressiva.
-
-### Tema 28 STF
-
-Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
-
-### Súmula 729 STF
-
-Tutela contra Fazenda.
-
-### Tema 1030 STJ
-
-Renúncia no JEF.
-
-### Tema 1070 STJ
-
-Revisão por concomitantes.
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Apelação parcial do INSS
-
-Implantação imediata.
-
-### Cenário B. Tempo especial em discussão
-
-Execução do tempo comum.
-
-### Cenário C. Juros discutidos
-
-Benefício implantado.
-
-### Cenário D. Julgamento parcial art. 356
-
-Implantação do incontroverso.
-
-### Cenário E. RPV parcial
-
-Recebimento da parte transitada.
-
-### Cenário F. Revisão por concomitantes
-
-Parte incontroversa executada.
-
-## 6. Cenários limitados
-
-### Cenário G. Recurso devolve integralmente
-
-Refutar com arts. 1.013 §1º CPC e IRDR 18.
-
-### Cenário H. Cumprimento provisório
-
-Restrito contra Fazenda. A parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28 STF) [CONFERIDO] (auditoria 03/10/2026).
-
-### Cenário I. JEF e dialeticidade
-
-Exigência reforçada.
-
-## 7. Metodologia
-
-Primeiro, identificar capítulos autônomos.
-
-Segundo, peticionar implantação.
-
-Terceiro, requerer RPV parcial.
-
-Quarto, sustentar autonomia perante recurso.
-
-Quinto, garantir efeitos.
-
-## 8. Riscos processuais
-
-Risco de devolução integral. Refutar.
-
-Risco de cumprimento provisório. A parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28 STF) [CONFERIDO] (auditoria 03/10/2026).
-
-Risco de dialeticidade rigorosa.
-
-Risco de suspensão de segurança.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, delimitar capítulos na inicial.
-
-Segundo, postular implantação imediata.
-
-Terceiro, cumprimento parcial.
-
-Quarto, resistir a suspensão.
-
-Quinto, integrar com fato superveniente.
-
-## 10. Integração prática
-
-`execucao-cumprimento-previdenciario`, `base-cumprimento-sentenca-rpv-precatorio`, `peticao-previdenciaria`, `base-cpc-fato-superveniente-art493`, `base-cpc-tutela-provisoria-previdenciaria`.
+Primeiro, mapear os capítulos da sentença e os capítulos atacados pelo recurso. Segundo, certificar o trânsito parcial. Terceiro, requerer a implantação ou averbação do capítulo transitado. Quarto, requerer a expedição do incontroverso no cumprimento. Quinto, nas contrarrazões, delimitar a devolução ao impugnado.

@@ -1,49 +1,27 @@
 # Devolução de Valores. Fundamentos e Cenários
 
-## 1. Marco normativo aplicável
+## 1. Marco normativo
 
-Lei 8.213/91, art. 115. Decreto 3.048/99, arts. 154 a 157. Súmula 34/AGU. Tema 979/STJ. Tema 692/STJ, tese adversa. CF, art. 5º, LV (auditoria 03/10/2026). CC, arts. 884 e 885.
+CF/88, art. 5º, LIV e LV. Lei 8.213/91, arts. 103-A e 115, II, §§1º e 3º. Lei 8.212/91, art. 69. Decreto 3.048/99, art. 154. Código Civil, arts. 884 e 885.
 
-## 2. Cenário 1. Tutela antecipada reformada
+## 2. Cenários
 
-Segurado recebe benefício por liminar, mas sentença improcedente reforma. O Tema 692/STJ, tese adversa, obriga a devolução, com desconto de até 30% do benefício, e não ressalva a boa-fé. O caminho do segurado é a distinção, quando o pagamento não decorreu da liminar, e o teto de 30% (auditoria 03/10/2026).
+Cenário 1. Tutela revogada pela sentença ou pelo tribunal. Tema 692 STJ: devolução por desconto de até 30%. Conferir se as parcelas cobradas correspondem ao período da tutela e se o desconto respeita o limite.
 
-## 3. Cenário 2. Erro administrativo do INSS
+Cenário 2. Erro de cálculo da RMI pelo INSS. Tema 979 STJ: repetível, salvo boa-fé objetiva comprovada. Prova: o segurado não tinha meio de conferir o cálculo; nenhuma informação falsa ou omitida.
 
-INSS concede benefício e depois descobre erro de cálculo ou enquadramento. O Tema 979/STJ admite a cobrança, com desconto de até 30%, salvo se o segurado comprovar boa-fé objetiva, que é a prova a produzir (auditoria 03/10/2026).
+Cenário 3. Concessão por interpretação jurídica depois revista pelo INSS. Fora do Tema 979; irrepetível o recebido de boa-fé.
 
-## 4. Cenário 3. Acúmulo indevido
+Cenário 4. Acumulação indevida não detectada pelo INSS (por exemplo, pensão e BPC). Verificar se o segurado declarou a situação no requerimento; declarada, a falha é do INSS e a boa-fé objetiva se demonstra pela declaração.
 
-INSS acumula benefícios incompatíveis e depois quer cobrar. Cabe analisar boa-fé do segurado.
+Cenário 5. B31 e retorno ao trabalho. A cobrança exige prova de capacidade no período; o trabalho por necessidade de subsistência durante a negativa do benefício não afasta a incapacidade (Tema 1013 STJ). Ver `base-incapacidade-b31-temporaria`.
 
-## 5. Cenário 4. Pensão por morte e BPC concomitantes
+Cenário 6. Ato concessório com mais de dez anos. Decadência do art. 103-A, salvo má-fé comprovada pelo INSS.
 
-Segurado recebe pensão por morte e BPC simultaneamente. Cabe análise da informação prestada e boa-fé.
+Cenário 7. Cessação por óbito cadastrado por erro. Restabelecimento, pagamento das parcelas suspensas e avaliação de dano moral (`base-dano-moral-previdenciario`).
 
-## 6. Cenário 5. Auxílio-doença e atividade
+Cenário 8. BPC cessado por suposta superação de renda. Exigir o processo do art. 69 da Lei 8.212/91 e a prova da alteração efetiva da renda.
 
-Segurado recebe auxílio-doença e mantém atividade incompatível. Cabe análise da efetiva incapacidade.
+## 3. Documentos
 
-## 7. Cenário 6. Aposentadoria com tempo descomputado
-
-Tempo computado equivocadamente pelo INSS. Se houve erro administrativo, o Tema 979/STJ admite a cobrança, salvo boa-fé objetiva comprovada pelo segurado, com desconto de até 30% (auditoria 03/10/2026).
-
-## 8. Cenário 7. Reforma na técnica de ampliação do colegiado do art. 942 do CPC (auditoria 03/10/2026)
-
-Sentença favorável reformada em segundo grau. Tema 692/STJ aplicável, tese adversa: devolução com desconto de até 30% do benefício. O segurado exige esse teto e a prova da origem de cada parcela (auditoria 03/10/2026).
-
-## 9. Cenário 8. Decisão monocrática reformada
-
-Liminar concedida e cassada. Análise individualizada da boa-fé.
-
-## 10. Cenário 9. Cessação por suposto óbito do segurado
-
-Cessação por erro cadastral. Devolução vedada e dano moral cabível.
-
-## 11. Cenário 10. BPC com renda alegadamente alterada
-
-INSS cessa BPC por suposta superação da renda. Análise da efetiva alteração.
-
-## 12. Documentos essenciais
-
-Histórico de pagamentos. Carta de concessão. Cessação ou reforma. Notificação de devolução. Comprovação de gasto.
+HISCRE, carta de concessão, processo administrativo de apuração, notificação com prazo de defesa, decisão judicial revogada, declarações prestadas pelo segurado ao INSS.

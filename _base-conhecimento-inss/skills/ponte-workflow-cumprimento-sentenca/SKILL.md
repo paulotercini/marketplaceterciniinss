@@ -19,7 +19,7 @@ Acionar `coisa-julgada-previdenciaria` para mapear os limites objetivos e subjet
 
 Quando houver coisa julgada progressiva (parcela transitada e parcela pendente), acionar `base-cpc-coisa-julgada-progressiva`.
 
-Quando o título remeter o termo inicial dos efeitos financeiros ao cumprimento de sentença por causa do Tema 1124/STJ, despachar o agente `conferente-tema-1124` antes do cálculo (Onda 178). No TRF3, o que o título afirmou sobre a prova decide a execução, e a tese se aplica sem esperar o trânsito no STJ. O PPP apresentado ao INSS com defeito e sem carta de exigência sustenta a DER também nessa fase.
+Quando o título remeter o termo inicial dos efeitos financeiros ao cumprimento de sentença por causa do Tema 1124/STJ, despachar o agente `conferente-tema-1124` antes do cálculo. No TRF3, o que o título afirmou sobre a prova decide a execução, e a tese se aplica sem esperar o trânsito no STJ. O PPP apresentado ao INSS com defeito e sem carta de exigência sustenta a DER também nessa fase.
 
 ### Passo 2. Cotejo com o CNIS
 
@@ -29,7 +29,7 @@ Quando o cumprimento for de revisão pelo Tema 1.070/STJ, acionar `impugnacao-cu
 
 ### Passo 3. Cálculo dos atrasados
 
-Acionar `base-juros-correcao-monetaria` para definição dos índices aplicáveis. Considerar Tema 905/STJ, Lei 11.960/2009, IPCA-E, Selic conforme o período.
+Acionar `base-juros-correcao-monetaria` para definição dos índices aplicáveis. Benefício previdenciário corrige pelo INPC (Lei 8.213, art. 41-A; Tema 905/STJ) até 11/2021, SELIC de 12/2021 a 08/2025 (EC 113/2021) e o regime de 09/2025 descrito naquela skill. O IPCA-E vale para o BPC.
 
 Acionar `base-cumprimento-sentenca-rpv-precatorio` para regime de pagamento.
 
@@ -37,7 +37,7 @@ Quando houver concomitância de atividades, acionar `base-revisao-atividades-con
 
 ### Passo 4. Tributação
 
-Acionar `tributacao-beneficios-previdenciarios` para IR sobre atrasados (RRA, art. 12-A da Lei 7.713/88, Tema 368/STF). Considerar isenção por doença grave (Súmula 627/STJ, Tema 1373/STF). Verificar tabela vigente na Lei 15.270/2025.
+Acionar `tributacao-beneficios-previdenciarios` para IR sobre atrasados (RRA, art. 12-A da Lei 7.713/88, Tema 368/STF). Considerar isenção por doença grave (Súmula 627/STJ; Tema 1373/STF, conferir a situação em `tributacao-beneficios-previdenciarios`). Verificar tabela vigente na Lei 15.270/2025.
 
 ### Passo 5. Honorários
 
@@ -47,7 +47,7 @@ Acionar `base-cpc-honorarios-sucumbencia-previdenciaria` para fundamentação ad
 
 ### Passo 6. Estratégia de renúncia
 
-Quando o valor exceder a alçada do JEF, avaliar renúncia ao excedente para garantir RPV mais célere. Acionar `execucao-cumprimento-previdenciario` para análise da estratégia (Tema 1030/STJ, art. 17 §4º Lei 10.259).
+Quando a execução no JEF passar de 60 salários mínimos, o pagamento é por precatório, salvo renúncia ao excedente para receber o saldo por RPV (Lei 10.259, art. 17, §4º). Essa renúncia é distinta da renúncia ao valor da causa do Tema 1030/STJ. Comparar o valor renunciado com o tempo do precatório; análise em `execucao-cumprimento-previdenciario`.
 
 ### Passo 7. Recursos do INSS
 
@@ -79,7 +79,7 @@ INSS apresenta cálculo deficiente como regra. Cotejo independente é obrigatór
 
 Cecalc tem tendência a importar cálculo do INSS sem cotejo. Impugnar com `impugnacao-cumprimento-concomitantes`.
 
-Deságio de 5% no JEF (art. 17 §4º Lei 10.259) é renunciável quando valor cabe na RPV sem renúncia.
+Renúncia ao excedente na execução do JEF (Lei 10.259, art. 17, §4º) apenas se avalia quando o crédito passa de 60 salários mínimos.
 
 IR retido na fonte sobre atrasados deve respeitar RRA. Excesso é repetível.
 
@@ -99,6 +99,6 @@ As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso est�
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-## Cadeia de cada pedido (regra permanente, 12/10/2026)
+## Cadeia de cada pedido
 
 Toda peça produzida com esta skill passa, antes da entrega, pela conferência individual de cada pedido, ligando pedido, fatos, provas por ID, cálculo ou critério e conclusão jurídica, com correção pontual e sem reescrever a peça. Protocolo em `base-revisao-peticao-aprofundada/references/CADEIA-DO-PEDIDO.md` e Fase 2-A da `peticao-previdenciaria`.

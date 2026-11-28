@@ -2,439 +2,91 @@
 name: base-fungibilidade-previdenciaria
 description: "Fungibilidade previdenciária ampliativa em favor do segurado e vedação à conversão prejudicial pelo REsp 2.246.096/MG (Informativo 885/STJ, Min. Gurgel de Faria, Primeira Turma, 14/04/2026). Use SEMPRE que mencionar fungibilidade previdenciária, REsp 2.246.096, Informativo 885 STJ, conversão de benefício, Tema 217 TNU, Tema 1018 STJ direito de opção, Tema 995 STJ reafirmação DER, Tema 350 STF, Tema 334 STF, Tema 1124 STJ, fungibilidade B31 B91 B32 B92 B94, fungibilidade aposentadoria invalidez auxílio-acidente, fungibilidade idade rural híbrida, fungibilidade BPC aposentadoria, julgamento extra petita, reformatio in pejus, arts. 141 492 CPC, art. 326 CPC pedidos sucessivos, congruência adstrição, decisão surpresa art. 10 CPC, Súmula 45 STJ, Súmula 47 TNU, condições pessoais sociais, dever melhor benefício. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, reafirmacao-der, tema-1124-instrucao-administrativa."
 ---
-
-## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
-
-Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
-
-1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
-2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
-3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
-
-Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
-
 # Fungibilidade Previdenciária. REsp 2.246.096/MG e Limites Processuais
 
-## 1. Quando acionar esta skill
+## 1. Quando acionar
 
-Acione SEMPRE que houver risco ou oportunidade de conversão de benefício previdenciário. Use em todas as petições iniciais, recursos, embargos de declaração e manifestações em audiência, sempre que o caso envolver benefícios por incapacidade (B31, B91, B32, B92, B94), benefícios programáveis (aposentadorias por idade, tempo de contribuição, especial, professor, PCD), benefícios de dependentes (pensão por morte, auxílio-reclusão), salário-maternidade ou BPC.
-
-A skill é fonte primária para garantir que a fungibilidade opere unidirecionalmente em favor do segurado, ampliando proteção, e nunca em sentido contrário, suprimindo direito patrimonial consolidado.
+Sempre que houver chance ou risco de o juiz, o tribunal ou o INSS conceder benefício diverso do pedido: incapacidade (B31, B32, B91, B92, B94), aposentadorias, BPC, pensão, auxílio-reclusão e salário-maternidade. A regra da casa é que a fungibilidade opera a favor do segurado, para ampliar a proteção, e nunca para suprimir direito consolidado.
 
 ## 2. Marco normativo
 
-CF/88, art. 5º, II (princípio da legalidade).
+CF, arts. 5º, LIV e LV, 6º e 194 a 204. CPC, arts. 10 (decisão surpresa), 141 e 492 (adstrição e congruência), 326 (pedido subsidiário e alternativo), 489, §1º, e 1.013 (efeito devolutivo). Decreto 3.048/99, art. 176-E: o INSS concede o benefício mais vantajoso ou diverso do requerido quando os elementos do processo administrativo asseguram o direito. Lei 8.213, art. 88 (serviço social e orientação ao beneficiário).
 
-CF/88, art. 5º, LIV (devido processo legal substancial).
+## 3. REsp 2.246.096/MG
 
-CF/88, art. 5º, LV (contraditório e ampla defesa).
+Rel. Min. Gurgel de Faria, 1ª Turma, unânime, j. 14/04/2026, Informativo 885/STJ. Ementa tópica: "Aposentadoria por invalidez. Auxílio-doença. Conversão de ofício em auxílio-acidente. Fungibilidade das demandas previdenciárias. Julgamento extra petita. Reformatio in pejus. Vedação".
 
-CF/88, art. 6º (direito social à previdência).
+Tese: "A ausência de postulação de benefício indenizatório, especialmente quando em gozo de auxílio-doença, inviabiliza o reconhecimento de ofício do benefício de auxílio-acidente, sob pena de ofensa aos princípios da congruência e da adstrição, materializados nos arts. 141 e 492 do Código de Processo Civil".
 
-CF/88, arts. 194 a 204 (Seguridade Social).
+No caso, o segurado pediu aposentadoria por invalidez, perdeu em primeiro grau e, na apelação, informou que recebia auxílio-doença. O tribunal de origem converteu de ofício o auxílio-doença em auxílio-acidente, de renda menor. O STJ anulou a conversão.
 
-CF/88, art. 201, §7º (regras de transição).
+A distinção do relator. Quem está sem amparo e pede um benefício pode receber outro, mais adequado à prova, porque isso amplia a proteção. Quem já recebe benefício maior não pode tê-lo trocado por benefício menor sem pedir.
 
-CPC, art. 141 (dever de adstrição ao pedido).
+Alcance. Acórdão de Turma, persuasivo, fora do rol do art. 927 do CPC. A 2ª Turma pode divergir.
 
-CPC, art. 326 (pedidos alternativos).
+## 4. Fungibilidade ampliativa
 
-CPC, art. 327 (cumulação de pedidos).
+4.1 Administrativa. Tema 350 STF (RE 631.240) exige requerimento prévio, com exceções. Se o processo administrativo já tinha a prova do benefício diverso, a omissão do INSS em examiná-lo, contra o art. 176-E do Decreto 3.048, equivale a indeferimento.
+4.2 Reafirmação da DER. Tema 995 STJ (REsp 1.727.063/SP): "É possível a reafirmação da DER (Data de Entrada do Requerimento) para o momento em que implementados os requisitos para a concessão do benefício, mesmo que isso se dê no interstício entre o ajuizamento da ação e a entrega da prestação jurisdicional nas instâncias ordinárias, nos termos dos arts. 493 e 933 do CPC/2015, observada a causa de pedir."
+4.3 Opção pelo mais vantajoso. Tema 1018 STJ (REsp 1.767.789/PR e 1.803.154/RS, DJe 01/07/2022): o segurado pode optar pelo benefício administrativo mais vantajoso concedido no curso da ação e, ao mesmo tempo, executar as parcelas do benefício judicial até a implantação do administrativo.
+4.4 Melhor benefício. Tema 334 STF (RE 630.501/RS): "Para o cálculo da renda mensal inicial, cumpre observar o quadro mais favorável ao beneficiário, pouco importando o decesso remuneratório ocorrido em data posterior ao implemento das condições legais para a aposentadoria, respeitadas a decadência do direito à revisão e a prescrição quanto às prestações vencidas".
+4.5 BPC e incapacidade. Tema 217 TNU (PEDILEF 0501880-97.2015.4.01.3507/GO): "Em relação ao benefício assistencial e aos benefícios por incapacidade, é possível conhecer de um deles em juízo, ainda que não seja o especificamente requerido na via administrativa, desde que preenchidos os requisitos legais, observando-se o contraditório e o disposto no artigo 9º e 10 do CPC".
+4.6 Tema 1124 STJ (REsp 1.905.830, acórdão publicado em 06/11/2025). Prova já no processo administrativo: DIB na DER. Prova que o INSS deveria ter pedido e não pediu: DIB na DER. Prova surgida após o ajuizamento: DIB na citação ou depois. Nos embargos de declaração (j. 09/09/2026, DJEN 21/09/2026), o STJ afirmou ser "impossível a fungibilidade de pedidos em esferas distintas": pedido diverso em juízo, com as mesmas provas, exigiria novo requerimento. A ementa dos embargos (item 3) trata as situações do voto como exemplos, com valor de obiter dictum, fora da tese vinculante. O Tema 217 TNU segue como fundamento nessa hipótese, com o risco explicado ao cliente. Detalhe em `tema-1124-instrucao-administrativa`.
 
-CPC, art. 489, §1º (fundamentação adequada).
+## 5. Fungibilidade vedada
 
-CPC, art. 490 (limites do julgamento).
+5.1 Conversão prejudicial sem pedido. Auxílio-doença ou aposentadoria por incapacidade convertidos de ofício em auxílio-acidente (o caso do REsp 2.246.096/MG). O mesmo raciocínio alcança o B91 ou o B92 acidentários convertidos em B94 e qualquer troca que reduza a renda.
+5.2 Reformatio in pejus. Súmula 45 STJ: "No reexame necessário, é defeso, ao tribunal, agravar a condenação imposta à Fazenda Pública". Por simetria, sem recurso do INSS o tribunal não piora a situação do segurado recorrente, cujo recurso devolve apenas o que impugnou (art. 1.013).
+5.3 Decisão surpresa. Mesmo a conversão ampliativa exige oitiva prévia (art. 10).
+5.4 Aposentadoria trocada por BPC. O BPC não tem 13º, não gera pensão, não se acumula e depende de renda familiar. A troca reduz o amparo.
+5.5 Pensão com quota menor. Inclusão de dependente controverso que reduz a quota do autor deve ser impugnada.
+5.6 Especial trocada por comum por dúvida sobre a prova. Exigir perícia ou prova complementar.
 
-CPC, art. 492 (vedação ao julgamento extra petita).
+## 6. Por espécie
 
-CPC, art. 1.013 (efeito devolutivo restrito).
+Incapacidade. Pedido de B32 com perícia de incapacidade temporária: cabe B31, entendimento pacífico. Súmula 47 TNU: "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez". Súmula 88 TNU e Tema 416 STJ: auxílio-acidente com limitação ainda que leve. Súmula 89 TNU, adversa: sem redução da capacidade habitual nem maior esforço, não há auxílio-acidente. Tema 862 STJ: o auxílio-acidente começa no dia seguinte à cessação do auxílio-doença que lhe deu origem.
+Acidentários. B91 e B92 são fungíveis entre si, na Justiça Estadual (CF, art. 109, I).
+Aposentadorias. Idade e tempo de contribuição são fungíveis, observada a carência. A especial depende de o INSS ter recebido PPP e LTCAT (Temas 350 STF e 1124 STJ). A do professor depende do magistério documentado. A da LC 142/2013 exige que a deficiência (CID, grau e data de início) tenha sido levada ao INSS. Entre as regras de transição da EC 103/2019 (arts. 15 a 21), vale a mais favorável (Tema 334 STF).
+Rural e híbrida. Fungíveis (Lei 8.213, art. 48, §§1º a 4º). Tema 1007 STJ: "O tempo de serviço rural, ainda que remoto e descontínuo, anterior ao advento da Lei 8.213/1991, pode ser computado para fins da carência necessária à obtenção da aposentadoria híbrida por idade, ainda que não tenha sido efetivado o recolhimento das contribuições".
+Pensão (B21 e B93), auxílio-reclusão (B25) e salário-maternidade (B80). Fungibilidade quanto à modalidade de dependência, à passagem do auxílio-reclusão para a pensão e à qualificação urbana ou rural na DER.
+BPC. Idoso e pessoa com deficiência são fungíveis, e o BPC é fungível com incapacidade (Tema 217 TNU). BPC no lugar de aposentadoria serve a quem está sem amparo; a troca inversa prejudica.
 
-CPC, art. 10 (vedação à decisão surpresa).
+## 7. Estratégia processual
 
-Lei 8.213/91, art. 42 (aposentadoria por invalidez).
+Inicial. Pedidos subsidiários em ordem de preferência (art. 326, caput):
+"a) concessão de aposentadoria por incapacidade permanente (B32; B92 quando acidentária) e, sucessivamente, b) auxílio por incapacidade temporária (B31) e, somente na ausência de ambos, c) auxílio-acidente (B94), respeitada a opção do autor pelo benefício mais vantajoso no cumprimento (Tema 1018 STJ)."
+Cláusula de reserva: "A fungibilidade só pode ser aplicada em favor do segurado, jamais em prejuízo, com fundamento no REsp 2.246.096/MG e nos arts. 141 e 492 do CPC."
+Mostrar que toda a documentação foi ao INSS, para a DIB na DER (Tema 1124 STJ).
 
-Lei 8.213/91, art. 86 (auxílio-acidente).
+Audiência e alegações finais. Reiterar a vedação e pedir oitiva prévia se o juiz cogitar benefício diverso (art. 10).
+Embargos de declaração. Omissão sobre a congruência (art. 489, §1º) e contradição com o pedido; efeitos infringentes ou, no mínimo, oitiva prévia.
+Apelação ou recurso inominado. Vedação da reformatio in pejus, Súmula 45 STJ por analogia e efeito devolutivo restrito.
+REsp. Violação dos arts. 141 e 492, questão de direito que afasta a Súmula 7 STJ.
+PEDILEF. Divergência com o Tema 217 TNU ou com a jurisprudência que veda a conversão prejudicial.
+Mandado de segurança. Só contra ato judicial teratológico sem recurso eficaz (Súmula 267 STF), com risco de cessação do benefício maior.
 
-Lei 8.213/91, art. 88 (dever de orientação do INSS).
+## 8. Via administrativa
 
-Lei 8.742/93 (LOAS).
+Pedir no requerimento a análise de todos os benefícios cabíveis e a aplicação do art. 176-E do Decreto 3.048. Havendo mais de um benefício possível, exigir os demonstrativos para a opção, com efeitos na DER.
 
-LC 142/2013 (aposentadoria PCD).
+## 9. Riscos
 
-EC 103/2019 (regras de transição).
+Conversão de ofício para renda menor: oitiva prévia, cláusula de reserva, embargos e recurso imediatos. Súmula 7 STJ, manter o recurso na violação dos arts. 141 e 492. Prescrição quinquenal das parcelas (Súmula 85 STJ). Tensão entre o Tema 217 TNU e o REsp 2.246.096/MG quando o BPC renderia menos que o auxílio pedido: a manifestação expressa do segurado decide.
 
-Lei 12.016/2009 (Mandado de Segurança).
+## 10. Alertas
 
-## 3. Tese central do REsp 2.246.096/MG
+Primeiro, toda inicial leva pedidos subsidiários e a cláusula de reserva.
+Segundo, conversão de B31 ou B32 em B94, de B91 ou B92 em B94, ou de aposentadoria em BPC se ataca de imediato.
+Terceiro, no cumprimento, preservar o benefício mais vantajoso (Tema 1018 STJ).
 
-### 3.1. Dados oficiais
+## 11. Fontes
 
-REsp 2.246.096-MG. Relator Ministro Gurgel de Faria. Primeira Turma. Decisão por unanimidade. Julgamento em 14/04/2026. [CONFERIDO na auditoria de 12/07/2026 contra o Informativo 885 no portal oficial do STJ, dados e tese literal batem integralmente.]
-
-Informativo de Jurisprudência nº 885/STJ. Publicado em 22/04/2026.
-
-Ementa tópica. "Aposentadoria por invalidez. Auxílio-doença. Conversão de ofício em auxílio-acidente. Fungibilidade das demandas previdenciárias. Julgamento extra petita. Reformatio in pejus. Vedação".
-
-### 3.2. Tese fixada
-
-"A ausência de postulação de benefício indenizatório, especialmente quando em gozo de auxílio-doença, inviabiliza o reconhecimento de ofício do benefício de auxílio-acidente, sob pena de ofensa aos princípios da congruência e da adstrição, materializados nos arts. 141 e 492 do Código de Processo Civil".
-
-### 3.3. Distinção pedagógica do Relator
-
-Cenário 1. Segurado sem amparo postula benefício. Judiciário pode conceder benefício diverso, mais adequado à prova, pois isso amplia a proteção social. Fungibilidade legítima.
-
-Cenário 2. Segurado já recebe benefício de maior valor. Conversão em benefício inferior caracteriza supressão de direito patrimonial consolidado. Fungibilidade vedada.
-
-### 3.4. Limites do precedente
-
-Decisão de Turma com efeito direto sobre as partes. Força persuasiva relevante. Não é precedente vinculante do art. 927 do CPC. Não é repetitivo. Segunda Turma pode, em tese, divergir.
-
-## 4. Fungibilidade ampliativa em favor do segurado
-
-### 4.1. Dimensão administrativa (Tema 350/STF, dever de orientação)
-
-Tema 350/STF (RE 631.240/MG, Min. Roberto Barroso, 03/09/2014). Concessão de benefícios depende de prévio requerimento administrativo, com exceções importantes.
-
-Lei 8.213/91, art. 88. INSS tem dever de orientar o segurado para o melhor benefício possível.
-
-Quando há documentação suficiente no processo administrativo, a recusa em apreciar benefício diverso configura recusa tácita e viabiliza a postulação judicial direta com fundamento na fungibilidade administrativa.
-
-### 4.2. Reafirmação da DER (Tema 995/STJ)
-
-REsp 1.727.063/SP, Min. Mauro Campbell Marques, Primeira Seção, 23/10/2019.
-
-"Em matéria previdenciária deve-se flexibilizar a análise do pedido contido na inicial, não se entendendo como julgamento extra ou ultra petita a concessão de benefício diverso do requerido na inicial".
-
-A reafirmação da DER pode ser reconhecida inclusive de ofício pelo julgador, desde que beneficie o segurado.
-
-### 4.3. Direito de opção pelo benefício mais vantajoso (Tema 1018/STJ)
-
-REsp 1.767.789/PR e REsp 1.803.154/RS, Min. Herman Benjamin, Primeira Seção, 08/06/2022, DJe 01/07/2022.
-
-"O Segurado tem direito de opção pelo benefício mais vantajoso concedido administrativamente, no curso de ação judicial em que se reconheceu benefício menos vantajoso. Em cumprimento de sentença, o segurado possui o direito à manutenção do benefício previdenciário concedido administrativamente no curso da ação judicial e, concomitantemente, à execução das parcelas do benefício reconhecido na via judicial, limitadas à data de implantação daquele conferido na via administrativa".
-
-### 4.4. Quadro mais favorável da RMI (Tema 334/STF)
-
-RE 630.501/RS, Min. Ellen Gracie, Rel. p/ Acórdão Min. Marco Aurélio, Tribunal Pleno, 21/02/2013, DJe 26/08/2013.
-
-"Para o cálculo da renda mensal inicial, cumpre observar o quadro mais favorável ao beneficiário, pouco importando o decesso remuneratório ocorrido em data posterior ao implemento das condições legais para a aposentadoria, respeitadas a decadência do direito à revisão e a prescrição quanto às prestações vencidas".
-
-### 4.5. Fungibilidade entre BPC e benefícios por incapacidade (Tema 217/TNU)
-
-PEDILEF 0501880-97.2015.4.01.3507/GO. Trânsito em julgado no STF em 23/08/2022.
-
-"Em relação ao benefício assistencial e aos benefícios por incapacidade, é possível conhecer de um deles em juízo, ainda que não seja o especificamente requerido na via administrativa, desde que preenchidos os requisitos legais, observando-se o contraditório e o disposto no artigo 9º e 10 do CPC".
-
-### 4.6. Tema 1124/STJ (instrução administrativa)
-
-REsp 1.905.830, Min. Paulo Sérgio Domingues, Primeira Seção. Acórdão publicado em 06/11/2025.
-
-Quando a prova já constava do administrativo, a DIB recai na DER. Quando o INSS deveria ter pedido complementação probatória e não o fez, a DIB pode ser fixada na DER. Quando a prova é genuinamente nova, surgida após o ajuizamento, a DIB é fixada na citação válida ou em data posterior.
-
-**Limite fixado nos embargos de declaração (j. 09/09/2026, DJEN 21/09/2026).** O STJ afirmou ser "impossível a fungibilidade de pedidos em esferas distintas". O segurado que pediu um benefício ao INSS e pede outro em juízo, aproveitando o mesmo conjunto de provas, precisa de novo requerimento, porque o pedido e a causa de pedir são diferentes, e o mesmo vale para o formulário eletrônico preenchido com pedido diverso do pretendido. A fungibilidade ampliativa desta skill continua cabível dentro da mesma esfera, quando o INSS ou o juiz, com base nos elementos do processo administrativo, reconhece o benefício mais vantajoso ou diverso (art. 176-E do Decreto 3.048/99). A petição deve demonstrar que a causa de pedir levada ao INSS é a mesma da ação, e a peça que pede em juízo benefício que o INSS nunca examinou arrisca a extinção.
-
-A ementa dos embargos (item 3) qualifica as situações do voto como exemplos, com valor de obiter dictum, e por isso a afirmação não integra a tese vinculante. O Tema 217/TNU, que admite conhecer em juízo do BPC ou do benefício por incapacidade não requerido especificamente, continua sendo o fundamento a invocar nessa hipótese, com o risco declarado ao cliente e com a demonstração de que o INSS já tinha, no processo administrativo, os elementos do benefício concedido em juízo.
-
-## 5. Fungibilidade restritiva. O que está VEDADO
-
-### 5.1. Conversão prejudicial sem postulação
-
-A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de ofício do auxílio-doença em auxílio-acidente sem postulação do segurado (auditoria 03/10/2026, retirada a espécie B91, que o acórdão não indica), quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
-
-### 5.2. Reformatio in pejus
-
-Súmula 45/STJ. "No reexame necessário, é defeso, ao tribunal, agravar a condenação imposta à Fazenda Pública".
-
-Aplicação simétrica em favor do segurado quando o INSS não recorre. O efeito devolutivo do recurso do segurado é restrito ao quantum apellatum (art. 1.013 do CPC).
-
-### 5.3. Decisão surpresa (art. 10 do CPC)
-
-Mesmo nos cenários em que a fungibilidade ampliaria a proteção, o juiz deve oitiva prévia das partes antes de conceder benefício diverso. A negativa dessa oportunidade configura nulidade.
-
-### 5.4. Conversão de aposentadoria em BPC
-
-Risco grave. BPC não tem 13º salário, não gera pensão por morte, não permite acúmulo, tem requisito de renda familiar. Aposentadoria, mesmo no piso, é mais vantajosa em termos de reversibilidade e direitos derivados. Pela diretriz do REsp 2.246.096/MG, qualquer conversão que diminua o amparo é vedada.
-
-### 5.5. Pensão por morte com rateio menor
-
-Quando a flexibilização indevida implica rateio menor com inclusão de dependente cuja dependência econômica era controversa, há prejuízo. O segurado deve impugnar conversões que reduzam a quota.
-
-## 6. Aplicação por espécie de benefício
-
-### 6.1. Benefícios por incapacidade
-
-Relação clássica fungível. B31 (auxílio-doença) e B32/B92 (aposentadoria por incapacidade permanente). Segurado pleiteia B32, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
-
-Inversa vedada pelo REsp 2.246.096/MG. Quando reduzir amparo, B32 não pode ser convertido em B31 nem em B94.
-
-Súmula 47/TNU. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez". Instrumento poderoso para impedir que B32 seja substituído por B31.
-
-Súmula 88/TNU (17/04/2024). Auxílio-acidente devido independentemente do grau (Tema 416/STJ).
-
-Súmula 89/TNU (17/04/2024). Não há direito a auxílio-acidente sem redução da capacidade laborativa habitual.
-
-Tema 862/STJ. Termo inicial do auxílio-acidente é o dia seguinte ao da cessação do auxílio-doença que lhe deu origem.
-
-### 6.2. Acidentários (B92, B91 acidentário, B94)
-
-Fungibilidade entre B91 acidentário e B92 admitida. Competência da Justiça Estadual em acidentes de trabalho (CF, art. 109, I).
-
-Conversão de B92 em B94 vedada quando reduzir renda (REsp 2.246.096/MG).
-
-### 6.3. Aposentadorias programáveis
-
-Aposentadoria por idade e por tempo de contribuição. Fungibilidade amplamente reconhecida pelo STJ desde longa data, observado o requisito comum de carência.
-
-Aposentadoria comum e aposentadoria especial. Fungibilidade depende de o INSS ter tido acesso à documentação (PPP, LTCAT). Sem isso, falta interesse de agir quanto à especial (Temas 350/STF e 1124/STJ).
-
-Aposentadoria comum e aposentadoria do professor. Admitida quando o magistério está documentado (Tema 1011/STJ).
-
-Aposentadoria comum e aposentadoria PCD pela LC 142/2013. Exige especificação da deficiência (CID, grau, data de início) na via administrativa.
-
-Regras de transição da EC 103/2019. Fungibilidade entre as próprias regras é tese poderosa para o segurado, com fundamento no art. 201, §7º, da CF, e no Tema 334/STF.
-
-### 6.4. Aposentadoria rural e híbrida
-
-Tema 1007/STJ. REsp 1.674.221/SP e REsp 1.788.404/PR, Min. Napoleão Nunes Maia Filho, Primeira Seção, 14/08/2019, DJe 04/09/2019.
-
-"O tempo de serviço rural, ainda que remoto e descontínuo, anterior ao advento da Lei 8.213/1991, pode ser computado para fins da carência necessária à obtenção da aposentadoria híbrida por idade, ainda que não tenha sido efetivado o recolhimento das contribuições".
-
-Fungibilidade entre aposentadoria por idade rural pura (art. 48 §§1º e 2º) e híbrida (art. 48 §§3º e 4º) é pacífica.
-
-### 6.5. Pensão por morte (B21/B93)
-
-Fungibilidade quanto à modalidade de dependência e quanto à legislação aplicável.
-
-Risco quando a flexibilização indevida implica rateio menor. Impugnar conversões que reduzam a quota.
-
-### 6.6. Auxílio-reclusão (B25)
-
-Interage com pensão por morte quando o segurado preso falece. Fungibilidade admitida para o trânsito do dependente entre os benefícios sem solução de continuidade.
-
-### 6.7. Salário-maternidade (B80)
-
-Fungibilidade entre urbana e rural depende da qualificação na DER, com efeitos financeiros adequados ao regime correspondente.
-
-### 6.8. BPC/LOAS
-
-Entre BPC idoso e BPC PCD. Fungibilidade direta e operada pelo Tema 217/TNU.
-
-Entre BPC e benefícios previdenciários. Admitida em via judicial, mas exige cuidado redobrado.
-
-Conversão de aposentadoria pleiteada em BPC quando ausente a qualidade de segurado é vantajosa ao demandante que estaria sem amparo. Conversão inversa tem risco grave de prejuízo.
-
-## 7. Estratégias processuais para o advogado do segurado
-
-### 7.1. Petição inicial
-
-Formular pedidos sucessivos e alternativos (art. 326 do CPC). Indicar hierarquia de preferência do segurado.
-
-Modelo recomendado.
-
-"a) concessão de aposentadoria por incapacidade permanente (B32; B92 quando acidentária), e, sucessivamente, na hipótese de não acolhimento, b) auxílio por incapacidade temporária (B31), e, somente na ausência de ambos, c) auxílio-acidente (B94), respeitada sempre a opção do autor pelo benefício mais vantajoso na fase de cumprimento, nos termos do Tema 1018/STJ".
-
-Cláusula de reserva. "Manifesta-se expressamente que a fungibilidade só pode ser aplicada em favor do segurado, jamais em prejuízo, com fundamento no REsp 2.246.096/MG e nos arts. 141 e 492 do CPC".
-
-Indicar que o INSS, na via administrativa, foi comunicado de toda a documentação relevante. Previne discussão sobre Tema 1124/STJ. Permite fixação da DIB na DER.
-
-### 7.2. Audiência e alegações finais
-
-Reiterar a vedação à fungibilidade prejudicial.
-
-Requerer oitiva prévia do segurado caso o juiz cogite conceder benefício diverso (art. 10 do CPC).
-
-### 7.3. Embargos de declaração
-
-Quando a sentença converter de ofício o benefício pleiteado em benefício menos vantajoso, embargos devem apontar.
-
-Omissão sobre a congruência (art. 489, §1º, do CPC).
-
-Contradição com o REsp 2.246.096/MG.
-
-Pedido de efeitos infringentes para restabelecer o pedido original ou, no mínimo, oitiva prévia do segurado.
-
-### 7.4. Apelação ou recurso inominado
-
-Quando o INSS não recorrer da sentença e o tribunal pretender converter o benefício de ofício, invocar com vigor a vedação à reformatio in pejus.
-
-Citar Súmula 45/STJ por analogia.
-
-Sustentar efeito devolutivo restrito ao quantum apellatum (art. 1.013 do CPC).
-
-### 7.5. Recurso especial
-
-Pautar em violação literal aos arts. 141 e 492 do CPC. Matéria estritamente jurídica, afasta o óbice da Súmula 7/STJ.
-
-### 7.6. PEDILEF
-
-Cabível quando o acórdão recorrido aplicar a fungibilidade de modo prejudicial em divergência com Tema 217/TNU ou com REsp 2.246.096/MG.
-
-### 7.7. Mandado de segurança
-
-Em casos excepcionais, contra ato judicial teratológico que imponha conversão prejudicial sem possibilidade de recurso ordinário. Especialmente quando há risco de implantação imediata do benefício menos vantajoso e cessação do mais vantajoso em manutenção.
-
-## 8. Aplicação na fase administrativa (CRPS)
-
-Conselho de Recursos da Previdência Social tem competência para uniformizar a jurisprudência administrativa mediante Enunciados.
-
-Há orientação no sentido de que "satisfeitos os requisitos para a concessão de mais de um tipo de benefício, o INSS oferecerá ao interessado o direito de opção, mediante a apresentação dos demonstrativos financeiros de cada benefício", com efeitos financeiros remontando à DER originária, observada a decadência. Aplicação administrativa do Tema 1018/STJ.
-
-Enunciado nº 18/CRPS (Resolução 27/2024) trata do cômputo de períodos em fruição de benefício por incapacidade para fins de carência.
-
-## 9. Riscos identificados e mitigação
-
-### 9.1. Risco principal
-
-Juiz ou tribunal aplica fungibilidade de ofício para converter benefício em renda menor.
-
-Hipóteses críticas. B32 para B31, B91 ou B31 para B94 (caso do REsp 2.246.096/MG), aposentadoria pleiteada substituída por BPC, pensão por morte com rateio reduzido.
-
-Mitigação. Pedido expresso de oitiva prévia, ressalva de fungibilidade só em favor, impugnação imediata por embargos e recurso.
-
-### 9.2. Risco da Súmula 7/STJ
-
-Pode obstar o recurso especial em hipóteses limítrofes.
-
-Mitigação. Fundamentação rigorosa em torno da violação literal aos arts. 141 e 492 do CPC, replicando a estratégia exitosa do REsp 2.246.096/MG.
-
-### 9.3. Risco da prescrição quinquenal
-
-Súmula 85/STJ. Prescrição quinquenal das parcelas anteriores aos cinco últimos anos contados da propositura.
-
-Mitigação. Atenção ao tempo de propositura.
-
-### 9.4. Heterogeneidade dos TRFs
-
-TRF4 admite fungibilidade ampla, geralmente em favor do segurado. TRF3 tem orientação consistente, mas com decisões pontuais que aplicaram a fungibilidade de modo desfavorável.
-
-Mitigação. Uso recorrente do REsp 2.246.096/MG como precedente referenciado.
-
-### 9.5. Tensão potencial Tema 217/TNU vs REsp 2.246.096/MG
-
-Em hipóteses extremas, quando o BPC concedido por fungibilidade resulta em renda inferior ao auxílio-doença pleiteado e o segurado já estava sem amparo previdenciário.
-
-Mitigação. Manifestação expressa do segurado nos autos é critério decisivo.
-
-## 10. Recomendações operacionais
-
-Etapa 1, imediata. Revisar petições iniciais ativas para incluir cláusula de fungibilidade só em favor e pedido sucessivo. Prazo 60 dias.
-
-Etapa 2, em sede recursal. Em todo processo com risco de conversão prejudicial, preparar minuta padrão de embargos e apelação invocando o REsp 2.246.096/MG e a Súmula 45/STJ.
-
-Etapa 3, em fase administrativa. Submeter pedidos administrativos detalhados com indicação de todos os benefícios potencialmente cabíveis. Requerimento expresso para análise de fungibilidade administrativa.
-
-Etapa 4, gestão de portfólio. Identificar processos em curso no TRF3 com risco de conversão e protocolar memorial específico citando o Informativo 885/STJ.
-
-Etapa 5, controle e monitoramento. Acompanhar evolução do tema na Segunda Turma do STJ e em eventual afetação à Primeira Seção como repetitivo.
-
-## 11. Documentos essenciais
-
-Cópia integral do PA do segurado.
-
-Comprovante das tentativas anteriores (carta de exigência, decisão administrativa).
-
-Identificação do número do processo, NB e DER.
-
-Minuta de petição com pedidos sucessivos e cláusula de fungibilidade pró-segurado.
-
-Cópia do REsp 2.246.096/MG e do Informativo 885/STJ para juntada como precedente.
-
-Cópia dos demais Temas e Súmulas citados.
-
-## 12. Integração com outras skills
-
-Geração de peça em `peticao-previdenciaria` (com cláusula de fungibilidade pró-segurado).
-
-Auditoria de petição em `revisao-peticao` (verificar pedidos sucessivos).
-
-Precedentes em `precedentes-previdenciarios`.
-
-Reafirmação DER em `reafirmacao-der`.
-
-Tema 1124 em `tema-1124-instrucao-administrativa`.
-
-Especificação de provas em `especificacao-provas`.
-
-Coisa julgada em `coisa-julgada-previdenciaria` (quando há decisão anterior limitando opções).
-
-Cumprimento de sentença em `execucao-cumprimento-previdenciario` (Tema 1018/STJ na fase executiva).
-
-Honorários em `honorarios-contrato-previdenciario` (impacto da conversão).
-
-Tributação em `tributacao-beneficios-previdenciarios` (RRA, IR sobre atrasados em conversão).
-
-Análise documental em `analise-documental-incapacidade`, `analise-bpc-loas`, `auxilio-acidente-b94`, `pensao-por-morte`, `auxilio-reclusao-previdenciario`, `aposentadoria-deficiencia`, `aposentadoria-idade-hibrida`, `aposentadoria-professor-rgps`, `segurado-especial-rural`.
-
-Auditoria de laudo em `auditoria-laudo-pericial` (para B32 vs B31 vs B94).
-
-Auditoria de PPP em `auditoria-ppp` (para aposentadoria comum vs especial).
-
-Decadência em `decadencia-revisao-previdenciaria`.
-
-Período de graça em `periodo-graca-qualidade-segurado`.
-
-Triagem em `triagem-caso-novo`.
-
-## 13. Alertas
-
-Primeiro, em TODA petição inicial inclua a cláusula expressa de fungibilidade só em favor do segurado.
-
-Segundo, formule SEMPRE pedidos sucessivos e alternativos (art. 326 do CPC).
-
-Terceiro, em embargos de declaração apontar omissão e contradição com REsp 2.246.096/MG.
-
-Quarto, na apelação invocar Súmula 45/STJ por analogia quando o INSS não recorreu.
-
-Quinto, em recurso especial pautar em violação literal aos arts. 141 e 492 do CPC.
-
-Sexto, em PEDILEF citar Tema 217/TNU e REsp 2.246.096/MG.
-
-Sétimo, em audiência reiterar vedação à fungibilidade prejudicial.
-
-Oitavo, em fase administrativa pedir aplicação do Tema 1018/STJ (direito de opção pelo benefício mais vantajoso).
-
-Nono, em cumprimento de sentença manter benefício mais vantajoso.
-
-Décimo, em conversão B32 → B31, B91 → B94, aposentadoria → BPC, atacar imediatamente.
-
-## 14. Doutrina de apoio
-
-José Antônio Savaris. Direito Processual Previdenciário, 11ª edição, 2023, Editora Alteridade. Capítulo específico sobre o princípio da fungibilidade e a congruência.
-
-Carlos Alberto Pereira de Castro e João Batista Lazzari. Manual de Direito Previdenciário. Aborda a fungibilidade administrativa e judicial.
-
-Frederico Amado. Curso de Direito e Processo Previdenciário. Trata da matéria.
-
-Hermes Arrais Alencar. Benefícios Previdenciários. Doutrina sobre fungibilidade entre as espécies.
-
-Marina Vasques Duarte. Direito Previdenciário.
-
-Wladimir Novaes Martinez. Curso de Direito Previdenciário.
-
-Daniel Pulino. Aposentadoria por Invalidez.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário.
-
-## 15. O que NÃO está nesta skill
-
-Análise específica de cada espécie de benefício. Cada uma tem skill própria.
-
-Auditoria probatória de laudos em `auditoria-laudo-pericial`.
-
-Cálculos de RMI específicos em skills de cálculo.
-
-## 16. Fontes
-
-Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
-
-## Hub de portarias administrativas
-
-As Portarias DPMF, DIRBEN e INSS que regem procedimento, cálculo e recurso estão em `base-portarias-dpmf-inss-hub`.
-
-## Autodeclaração rural
-
-Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
+Cenários e modelos em `references/FUNDAMENTOS-E-CENARIOS.md`; precedentes e refutação em `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Integração
+
+`peticao-previdenciaria`, `revisao-peticao`, `precedentes-previdenciarios`, `reafirmacao-der`, `tema-1124-instrucao-administrativa`, `especificacao-provas`, `coisa-julgada-previdenciaria`, `execucao-cumprimento-previdenciario` (Tema 1018 no cumprimento), `auditoria-laudo-pericial`, `auditoria-ppp`, `analise-bpc-loas`, `auxilio-acidente-b94`, `pensao-por-morte`, `aposentadoria-deficiencia`, `aposentadoria-idade-hibrida`, `segurado-especial-rural` e `base-segurado-especial-autodeclaracao-arts-92-93-94`. Portarias em `base-portarias-dpmf-inss-hub`.

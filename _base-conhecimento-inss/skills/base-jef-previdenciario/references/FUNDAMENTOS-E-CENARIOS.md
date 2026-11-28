@@ -1,109 +1,29 @@
 # JEF Previdenciário. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento
 
-O Juizado Especial Federal Previdenciário é o foro privilegiado para demandas do segurado até 60 salários-mínimos, com princípios da oralidade, simplicidade, informalidade, economia processual e celeridade. A Lei 10.259/2001 regulamenta o rito, com aplicação subsidiária da Lei 9.099/1995.
+CF/88, arts. 98, §1º, e 109, §§2º e 3º. Lei 10.259/2001, arts. 1º a 17. Lei 9.099/1995, subsidiária. CPC, art. 292, §§1º e 2º. Lei 5.010/1966, art. 15, III.
 
-## 2. Fundamento constitucional
+## 2. Competência
 
-Art. 98, §1º, CF/88. Autorização para os Juizados Especiais Federais.
+Valor: até 60 salários mínimos na data da distribuição, somando vencidas e doze vincendas. Absoluta onde houver JEF instalado (art. 3º, §3º). Território: domicílio do segurado, local do ato ou Distrito Federal (art. 109, §2º, da CF). Delegada à Justiça Estadual apenas com distância superior a 70 km da sede de Vara Federal (art. 15, III, da Lei 5.010/1966).
 
-Art. 109, §3º, CF/88. Competência delegada à Justiça Estadual onde não houver JEF.
+## 3. Cenários
 
-## 3. Fundamento legal
+Cenário A. B31 ou B32 com atrasados de poucos meses. JEF.
 
-Lei 10.259/2001.
+Cenário B. Revisão de RMI com diferenças acima do teto. Calcular; se a renúncia sacrificar pouco, JEF com renúncia expressa (Tema 1030 STJ).
 
-Lei 9.099/1995.
+Cenário C. BPC. JEF, com perícia médica e estudo social (art. 12, §2º).
 
-Regimentos internos dos JEFs nas cinco Regiões Federais.
+Cenário D. Aposentadoria com DER antiga e atrasados elevados. Vara Federal, para preservar o crédito integral e a ampla instrução.
 
-## 4. Competência em detalhe
+Cenário E. Tempo especial que depende de perícia ambiental complexa. Avaliar a Vara Federal (Enunciado 91 FONAJEF), ou demonstrar no JEF que a prova é exame técnico.
 
-### 4.1 Critério do valor
+## 4. Cenários limitados
 
-Até 60 salários-mínimos na data da propositura. Correção monetária e juros até a distribuição compõem o valor da causa quando houver pedido de atrasados.
+Mandado de segurança e ações coletivas: fora do JEF (art. 3º, §1º, I). Causa com perícia complexa e onerosa: risco de extinção (Enunciado 91 FONAJEF).
 
-### 4.2 Competência absoluta
+## 5. Metodologia
 
-A competência do JEF é absoluta. O juiz de vara comum, ao reconhecer competência do JEF, remete os autos.
-
-### 4.3 Competência territorial
-
-Foro do domicílio do segurado ou do local onde praticado o ato. Art. 109, §§2º e 3º, CF/88.
-
-### 4.4 Competência delegada
-
-Justiça Estadual onde não houver Vara Federal ou JEF. Recurso ao TRF.
-
-## 5. Cenários pró-segurado
-
-### Cenário A. Concessão de B32 com atrasados moderados
-
-Ação direta no JEF, valor estimado até o teto.
-
-### Cenário B. Revisão de RMI com impacto até o teto
-
-JEF com renúncia ao excedente se necessário.
-
-### Cenário C. BPC/LOAS
-
-Em regra, JEF.
-
-### Cenário D. Aposentadoria por idade urbana com atrasados de poucos anos
-
-JEF é adequado.
-
-### Cenário E. Pensão por morte recente
-
-JEF se atrasados dentro do teto.
-
-## 6. Cenários limitados
-
-### Cenário F. Atrasados superiores a 60 salários-mínimos
-
-Vara Federal comum. Se houver vantagem, renunciar ao excedente.
-
-### Cenário G. Ações coletivas
-
-Vara Federal comum. JEF não admite ações coletivas.
-
-### Cenário H. Causas contra entes distintos do INSS
-
-Verificar competência específica.
-
-## 7. Metodologia
-
-Primeiro, estimar atrasados.
-
-Segundo, comparar com o teto vigente.
-
-Terceiro, decidir JEF com ou sem renúncia.
-
-Quarto, petição inicial enxuta.
-
-Quinto, documentos organizados.
-
-Sexto, audiência preparada.
-
-## 8. Riscos processuais
-
-Risco de deslocamento por excesso de valor. Crítico.
-
-Risco de indeferimento de prova complexa. Adaptar quesitos.
-
-Risco de falta de jurisprudência uniforme na Turma Recursal local. Pesquisar.
-
-## 9. Estratégia pró-segurado
-
-Celeridade. Aproveitar o rito.
-
-Simplicidade. Peça enxuta, força no documento.
-
-Renúncia estratégica. Quando vantajosa.
-
-Tutela de urgência. Quando cabível.
-
-## 10. Integração prática
-
-Acionar `peticao-previdenciaria` na redação. `base-recursos-jef` em fase recursal. `base-cumprimento-sentenca-rpv-precatorio` em execução.
+Primeiro, apurar o valor da causa. Segundo, decidir o rito. Terceiro, redigir a renúncia, se houver, com ressalva de que não alcança a condenação. Quarto, organizar documentos por ID. Quinto, preparar quesitos e testemunhas.

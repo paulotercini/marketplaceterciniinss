@@ -1,147 +1,29 @@
 # Ação Rescisória Previdenciária. Jurisprudência e Refutação
 
-## 1. Precedentes relevantes
+## 1. Precedentes
 
-### [Corrigido na auditoria 25/07/2026] Tema 1370/STJ
+Súmula 343 STF. "Não cabe ação rescisória por ofensa a literal disposição de lei, quando a decisão rescindenda se tiver baseado em texto legal de interpretação controvertida nos tribunais."
 
-Tema de decadência de revisão administrativa, afetado e pendente; não é fundamento de rescisória.
+Tema 136 STF (RE 590.809/RS). "Não cabe ação rescisória quando o julgado estiver em harmonia com o entendimento firmado pelo Plenário do Supremo à época da formalização do acórdão rescindendo, ainda que ocorra posterior superação do precedente." Fonte: portal do STF, tema 136.
 
-Fonte oficial em https://www.stj.jus.br
+Tema 100 STF. É possível aplicar o art. 741, parágrafo único, do CPC/73 (atual art. 535, §5º, do CPC) aos feitos do procedimento sumaríssimo, para desconstituir a coisa julgada quando o título se amparar em norma declarada inconstitucional pelo STF. Via própria no JEF, onde a rescisória não cabe.
 
-### Tema 100 STF
+Tema 629 STJ. A ausência de conteúdo probatório eficaz na inicial implica extinção sem resolução de mérito e permite ao autor intentar novamente a ação. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STJ.md`.
 
-Rescisória e divergência.
+Enunciado 44 FONAJEF. "Não cabe ação rescisória no Juizado Especial Federal."
 
-Fonte oficial em https://portal.stf.jus.br
+Tema 1102 STF. Tese adversa ao segurado; não fundamenta rescisória. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
 
-### Súmula 343 STF
+## 2. Refutação aos argumentos típicos do INSS
 
-Interpretação divergente.
+Argumento 1. O documento não é novo. Refutação: o art. 966, VII, exige que o autor ignorasse o documento ou não pudesse usá-lo, não que ele tenha sido produzido após o trânsito. Demonstrar a data de emissão ou o obstáculo de acesso.
 
-Fonte oficial em https://portal.stf.jus.br
+Argumento 2. Decadência. Refutação: na prova nova, o biênio conta da descoberta, limitado a cinco anos do trânsito (art. 975, §2º).
 
-### Tema 629 STJ
+Argumento 3. Súmula 343 STF. Refutação: a súmula não alcança violação de texto expresso nem decisão que ignorou repetitivo ou súmula sem distinção (art. 966, §5º).
 
-Segurado especial rural, prova nova.
+Argumento 4. Falta de depósito. Refutação: o beneficiário da gratuidade está dispensado (art. 968, §1º).
 
-Fonte oficial em https://www.stj.jus.br
+Argumento 5. O erro de fato exige prova externa. Refutação: o art. 966, VIII, exige erro verificável do exame dos próprios autos, sem controvérsia prévia sobre o fato.
 
-### Tema 1102 STF
-
-Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`. Não fundamenta rescisória do segurado.
-
-### Tema 76 STF
-
-Teto.
-
-## 2. Marco legislativo
-
-### CPC, art. 966
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, art. 975
-
-Fonte oficial em https://www.planalto.gov.br
-
-### CPC, art. 525
-
-Fonte oficial em https://www.planalto.gov.br
-
-## 3. Refutação aos argumentos típicos do INSS
-
-### Argumento 1. Prova não é nova
-
-Argumento adversário. Documento conhecido.
-
-Refutação. Documento novo, descoberto, com eficácia modificativa. Art. 966 VII.
-
-### Argumento 2. Prazo decadencial
-
-Argumento adversário. Biênio.
-
-Refutação. Art. 975 §2º conta da descoberta, até 5 anos.
-
-### Argumento 3. Súmula 343 STF
-
-Argumento adversário. Interpretação divergente.
-
-Refutação. Matéria constitucional afasta. Tema 100 STF.
-
-### Argumento 4. Depósito prévio
-
-Argumento adversário. Art. 968.
-
-Refutação. Justiça gratuita afasta (art. 98 CPC).
-
-### Argumento 5. Falta de pertinência
-
-Argumento adversário. Segurado não tem interesse.
-
-Refutação. Coisa julgada desfavorável. Interesse presente.
-
-### Argumento 6. Ausência de violação manifesta
-
-Argumento adversário. Interpretação razoável.
-
-Refutação. Violação de norma jurídica (art. 966, V, do CPC) (auditoria 25/07/2026).
-
-### Argumento 7. Erro de fato exige documento
-
-Argumento adversário. Rigor.
-
-Refutação. Erro de fato pode decorrer da própria sentença. Art. 966 VIII.
-
-### Argumento 8. Coisa julgada é intocável
-
-Argumento adversário. Segurança jurídica.
-
-Refutação. Art. 966 prevê desconstituição.
-
-### Argumento 9. JEF não admite
-
-Argumento adversário. Rito sumário.
-
-Refutação. Tese adversa: o Enunciado 44 FONAJEF e o art. 59 da Lei 9.099/1995 vedam a rescisória no JEF. O caminho do segurado é o procedimento comum, com rescisória no TRF, art. 966 do CPC (auditoria 03/10/2026).
-
-### Argumento 10. Cumulação com revisão
-
-Argumento adversário. Incompatível.
-
-Refutação. Rescisória não impede repropositura (Tema 629 STJ).
-
-## 4. Cláusulas doutrinárias de apoio
-
-Fredie Didier Jr, vol. 3.
-
-Teresa Arruda Alvim, Rescisória.
-
-Luiz Guilherme Marinoni, Sérgio Cruz Arenhart, Precedentes.
-
-Marco Aurélio Serau Junior.
-
-José Antonio Savaris.
-
-IBDP.
-
-## 5. Estratégia integrada
-
-Primeiro, localizar hipótese.
-
-Segundo, reunir prova.
-
-Terceiro, respeitar biênio.
-
-Quarto, fundamentar precedente.
-
-Quinto, peticionar.
-
-Sexto, sustentar em contrarrazões.
-
-## 6. Diligência de atualização
-
-Acompanhar o Tema 1370/STJ (decadência de revisão, pendente).
-
-Revalidar Tema 100 STF.
-
-Acompanhar Tema 629 STJ.
+Argumento 6. Rescisória substitui recurso. Refutação: a via é autônoma e não exige esgotamento recursal; basta o trânsito e uma das hipóteses do art. 966.

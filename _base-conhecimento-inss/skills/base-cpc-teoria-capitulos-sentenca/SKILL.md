@@ -7,7 +7,7 @@ description: "Teoria dos capítulos da sentença no processo previdenciário, re
 
 ## Escopo
 
-Skill pró-segurado sobre os capítulos da decisão. A sentença previdenciária costuma ter mais de um capítulo, por exemplo o reconhecimento do tempo, a concessão do benefício, a DIB, os atrasados e os honorários. Cada capítulo tem vida própria para fins de recurso e de coisa julgada.
+Capítulos da decisão. A sentença previdenciária costuma ter vários: reconhecimento do tempo, concessão do benefício, DIB, atrasados e honorários. Cada capítulo é autônomo para recurso e coisa julgada.
 
 ## Conceito
 
@@ -15,11 +15,11 @@ Capítulo é cada unidade decisória autônoma do dispositivo, que poderia exist
 
 ## Consequências práticas
 
-Primeiro, recurso parcial. Impugnado só um capítulo, os demais transitam em julgado. O tantum devolutum quantum appellatum limita o tribunal ao que foi atacado.
+Primeiro, recurso parcial. Impugnado apenas um capítulo, os demais transitam em julgado (arts. 1.002 e 1.013, caput).
 
 Segundo, trânsito em julgado por capítulos. O capítulo não recorrido estabiliza-se antes do fim do processo, tema aprofundado em `base-cpc-coisa-julgada-progressiva`.
 
-Terceiro, execução do incontroverso. O capítulo já estável pode ser cumprido desde logo, sem esperar o julgamento do recurso sobre os demais, IRDR 18/TRF4 e Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Terceiro, execução do incontroverso. O capítulo transitado pode ser cumprido desde logo, inclusive por RPV ou precatório da parte incontroversa observada a importância total executada para o enquadramento como pequeno valor (Tema 28 STF, RE 1.205.530/SP). Tese literal em `auditoria-citacoes/references/CATALOGO-COMPLEMENTAR-VERIFICADO.md`.
 
 ## Sucumbência e honorários
 
@@ -27,7 +27,7 @@ Primeiro, sucumbência recíproca, art. 86, quando cada parte perde em parte. A 
 
 Segundo, sucumbência mínima, art. 86, parágrafo único, quando a parte decai de parte ínfima, o adversário responde sozinho pelas verbas.
 
-Terceiro, vedação de compensação de honorários, art. 85, §14. Cálculo detalhado em `base-cpc-honorarios-sucumbencia-previdenciaria`.
+Terceiro, vedação de compensação de honorários (art. 85, §14). Detalhe em `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
 ## Estratégia pró-segurado
 
@@ -39,7 +39,7 @@ Terceiro, na resposta ao recurso do INSS, delimitar que o capítulo não atacado
 
 ## Alertas
 
-Primeiro, recurso amplo demais reabre capítulo já favorável, cuidado com a extensão.
+Primeiro, recurso amplo reabre capítulo favorável; delimitar a extensão.
 
 Segundo, o trânsito parcial exige que o capítulo seja realmente autônomo, não mera parte da fundamentação.
 

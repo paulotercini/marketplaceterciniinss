@@ -11,47 +11,47 @@ Skill pró-segurado sobre o agravo de instrumento, o recurso das decisões inter
 
 ## Marco normativo central
 
-CPC, art. 1.015. Rol das decisões interlocutórias agraváveis, entre elas a que versa sobre tutela provisória, no inciso I.
+CPC, art. 1.015. Rol das interlocutórias agraváveis. No previdenciário importam: tutelas provisórias (I), mérito do processo (II), rejeição ou revogação da gratuidade (V), exibição de documento (VI) e redistribuição do ônus da prova do art. 373, §1º (XI). O parágrafo único torna agravável toda interlocutória na liquidação e no cumprimento de sentença.
 
-CPC, arts. 1.016 a 1.018. Forma, peças obrigatórias e processamento.
+CPC, arts. 1.016 e 1.017. Petição dirigida ao tribunal, com peças obrigatórias; em autos eletrônicos as peças dos incisos I e II do art. 1.017 são dispensadas (§5º).
 
-CPC, art. 1.019. Possibilidade de efeito suspensivo ou antecipação da pretensão recursal pelo relator.
+CPC, art. 1.019, I. O relator pode atribuir efeito suspensivo ou deferir, em antecipação de tutela, a pretensão recursal.
 
-CPC, art. 1.021. Agravo interno contra decisão monocrática do relator.
+CPC, art. 1.021. Agravo interno contra decisão monocrática do relator, em 15 dias.
 
-CPC, art. 1.009, §1º. As interlocutórias não agraváveis não precluem e são impugnadas em preliminar de apelação ou nas contrarrazões.
+CPC, art. 1.009, §1º. A interlocutória não agravável não preclui e é impugnada em preliminar de apelação ou nas contrarrazões.
 
-## Taxatividade mitigada, Tema 988/STJ
+## Taxatividade mitigada, Tema 988 STJ
 
-O STJ, no Tema 988, REsp 1.704.520, firmou que o rol do art. 1.015 é de taxatividade mitigada. Cabe agravo de instrumento fora das hipóteses expressas quando houver urgência decorrente da inutilidade do julgamento da questão apenas na apelação. É a porta pró-segurado para atacar interlocutória urgente não listada.
+REsp 1.696.396/MT e REsp 1.704.520/MT, Corte Especial, 05/12/2018: o rol do art. 1.015 é de taxatividade mitigada e admite agravo quando verificada a urgência decorrente da inutilidade do julgamento da questão na apelação. Copiar a redação literal da página de repetitivos antes de citar em peça.
+
+## JEF
+
+No JEF não há agravo de instrumento do CPC. Apenas a decisão sobre medida cautelar ou tutela de urgência é recorrível antes da sentença (arts. 4º e 5º da Lei 10.259/2001), por recurso à Turma Recursal. Demais interlocutórias são impugnadas no recurso inominado. Ver `base-recursos-jef`.
 
 ## Hipóteses típicas no previdenciário
 
-Primeiro, indeferimento ou revogação de tutela de urgência que implantava ou restabelecia o benefício. Art. 1.015, I. Acionar `base-cpc-tutela-provisoria-previdenciaria`.
+Primeiro, indeferimento ou revogação de tutela que implantava ou restabelecia o benefício (art. 1.015, I). Ver `base-cpc-tutela-provisoria-previdenciaria`.
 
-Segundo, decisão sobre competência que desloca a causa e prejudica o segurado, com urgência.
+Segundo, indeferimento da gratuidade (art. 1.015, V).
 
-Terceiro, decisão que indefere prova essencial cuja produção não pode aguardar a sentença, pelo Tema 988.
+Terceiro, interlocutória no cumprimento de sentença. Homologação de cálculo, rejeição parcial de impugnação, expedição de RPV ou precatório (parágrafo único).
 
-## O que fazer com a interlocutória não agravável
-
-Não sendo caso de agravo, a questão não preclui. Registra-se o inconformismo e leva-se o ponto em preliminar de apelação ou nas contrarrazões, art. 1.009, §1º. Não há perda do direito de rediscutir.
+Quarto, declínio de competência ou indeferimento de prova essencial cuja produção não pode aguardar a sentença, pela via do Tema 988, com a urgência demonstrada.
 
 ## Estratégia pró-segurado
 
-Primeiro, contra indeferimento de tutela que nega benefício urgente, agravo com pedido de efeito suspensivo ativo ao relator, art. 1.019.
+Primeiro, contra indeferimento de tutela, agravo com pedido de antecipação da pretensão recursal ao relator (art. 1.019, I).
 
-Segundo, fora do rol, invocar o Tema 988 e demonstrar a urgência concreta e a inutilidade do exame diferido.
+Segundo, fora do rol, demonstrar a urgência concreta e a inutilidade do exame diferido (Tema 988).
 
-Terceiro, contra decisão monocrática do relator desfavorável, agravo interno em 15 dias, art. 1.021.
+Terceiro, contra decisão monocrática desfavorável, agravo interno em 15 dias (art. 1.021).
 
 ## Alertas
 
-Primeiro, prazo de 15 dias úteis e peças obrigatórias, art. 1.017, sob pena de não conhecimento.
+Primeiro, prazo de 15 dias úteis (art. 1.003, §5º). O INSS tem prazo em dobro (art. 183).
 
-Segundo, fora das hipóteses do art. 1.015, o agravo só passa pelo Tema 988 com urgência demonstrada, não por conveniência.
-
-Terceiro, o que não é agravável não preclui, então não há desespero, há a via da apelação.
+Segundo, o que não é agravável não preclui. Registrar o inconformismo e devolver a questão na apelação (art. 1.009, §1º).
 
 ## MCPs da casa
 

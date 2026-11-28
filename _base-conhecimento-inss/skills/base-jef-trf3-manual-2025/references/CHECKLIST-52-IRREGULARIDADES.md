@@ -220,7 +220,7 @@ OPÇÃO B. Ajuizar na Vara Federal Comum (sem renúncia, mas com custas e prazos
 
 Cálculo do escritório. Se a renúncia for INFERIOR a 15% do valor total, normalmente vale a pena (JEF mais rápido). Se SUPERIOR, avaliar caso a caso.
 
-ATENÇÃO. A renúncia é IRREVOGÁVEL.
+ATENÇÃO. A renúncia é expressa e alcança o valor da causa na propositura.
 
 ### Caso 5 - Falta de NB
 

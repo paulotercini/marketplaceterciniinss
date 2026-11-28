@@ -1,129 +1,41 @@
 # Ação Rescisória Previdenciária. Fundamentos e Cenários
 
-## 1. Conceito operacional
+## 1. Fundamento constitucional e legal
 
-Ação rescisória é via excepcional para desconstituir coisa julgada. Art. 966 CPC lista hipóteses taxativas. Prazo decadencial bienal. Competência em regra do TRF sobre sentenças e acórdãos de primeiro e segundo grau do mesmo tribunal.
+CF/88, art. 5º, XXXVI (coisa julgada) e LV (contraditório). CPC, arts. 966 a 975. Lei 9.099/1995, art. 59, aplicável ao JEF pelo art. 1º da Lei 10.259/2001.
 
-## 2. Fundamento constitucional
+## 2. Pontos do texto legal que decidem casos
 
-Art. 5º XXXV CF/88.
+Art. 966, VII. A prova nova deve ser posterior ao trânsito quanto ao conhecimento ou ao acesso ("cuja existência ignorava ou de que não pôde fazer uso") e suficiente, por si só, para o resultado favorável.
 
-Art. 5º XXXVI CF/88. Coisa julgada.
+Art. 966, §1º. Há erro de fato quando a decisão admite fato inexistente ou considera inexistente fato ocorrido, e o fato não foi ponto controvertido sobre o qual o juiz devia se pronunciar.
 
-Art. 5º LV CF/88. Ampla defesa.
+Art. 968, §3º. Sem o depósito, a inicial é indeferida; por isso, pedir a gratuidade na própria inicial.
 
-## 3. Fundamento legal
+Art. 968, §5º. Reconhecida a incompetência do tribunal, o autor emenda a inicial, sem extinção.
 
-CPC, art. 966.
+Art. 970. Prazo de resposta do réu entre 15 e 30 dias, fixado pelo relator.
 
-CPC, art. 968.
+Art. 972. O relator pode delegar a instrução ao juízo de origem, por um a três meses.
 
-CPC, art. 969.
+## 3. Cenários
 
-CPC, art. 974.
+Cenário A. PPP retificado pelo empregador após o trânsito, por ação trabalhista ou pedido administrativo. Inciso VII, prazo do art. 975, §2º. Demonstrar a data de emissão e por que o segurado não dispunha do documento.
 
-CPC, art. 975.
+Cenário B. Sentença que deixou de computar vínculo anotado em CTPS e no CNIS juntados aos autos, sem controvérsia sobre ele. Inciso VIII.
 
-CPC, art. 525 §§12 a 15.
+Cenário C. Sentença que aplicou repetitivo sem examinar a distinção alegada pelo segurado. Inciso V, §§5º e 6º.
 
-## 4. Marco jurisprudencial central
+Cenário D. Sentença fundada em laudo pericial cuja falsidade foi apurada. Inciso VI.
 
-### [Corrigido na auditoria 25/07/2026] Tema 1370/STJ
+Cenário E. Sentença que rejulgou pedido já decidido com trânsito favorável ao segurado. Inciso IV.
 
-Tema de decadência de revisão administrativa, afetado e pendente; não é fundamento de rescisória.
+Cenário F. Improcedência rural por ausência de início de prova material. Preferir a repropositura com documentos novos (Tema 629 STJ), sem depósito e sem prazo decadencial processual.
 
-### Tema 100 STF
+## 4. Cenários de baixa viabilidade
 
-Rescisória e divergência.
+Interpretação divergente à época (Súmula 343 STF; Tema 136 STF). Documento que estava ao alcance do segurado e não foi juntado por falta de diligência. Prazo do art. 975 esgotado.
 
-### Súmula 343 STF
+## 5. Metodologia
 
-Interpretação divergente.
-
-### Enunciado 44 FONAJEF
-
-Não cabe ação rescisória no JEF, em linha com o art. 59 da Lei 9.099/1995. Tese adversa; o caminho do segurado é o procedimento comum, com rescisória no TRF (auditoria 03/10/2026).
-
-### Tema 629 STJ
-
-Rural, prova nova.
-
-## 5. Cenários pró-segurado
-
-### Cenário A. PPP retificado
-
-Prova nova.
-
-### Cenário B. Laudo novo sobre DID
-
-Erro de fato.
-
-### Cenário C. Tema 1102 STF [retirado em 13/10/2026]
-
-Não cabe rescisória do segurado, porque a tese vigente é adversa. Tema 1102/STF, tese vigente adversa ao segurado (trânsito em julgado em 15/05/2026, conferida em 13/10/2026 no MCP superiores e na fonte oficial). O art. 3º da Lei 9.876/1999 é cogente e o segurado não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/1991, ainda que mais favorável. A modulação apenas torna irrepetíveis os valores recebidos por decisões prolatadas até 05/04/2024 e dispensa honorários, custas e perícias contábeis nas ações pendentes naquela data. Tese literal em `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-STF.md`.
-
-### Cenário D. Documento falso
-
-Art. 966 VI.
-
-### Cenário E. Coisa julgada violada
-
-Art. 966 IV.
-
-### Cenário F. Erro de cômputo
-
-Art. 966 VIII.
-
-## 6. Cenários limitados
-
-### Cenário G. Interpretação divergente
-
-Súmula 343 STF limita.
-
-### Cenário H. Prova nova não contemporânea
-
-Avaliar admissibilidade.
-
-### Cenário I. Prazo esgotado
-
-Decadência rígida.
-
-## 7. Metodologia
-
-Primeiro, análise das hipóteses.
-
-Segundo, prova nova e documentação.
-
-Terceiro, cabimento e competência.
-
-Quarto, prazo.
-
-Quinto, peticionamento.
-
-Sexto, sustentação em contrarrazões.
-
-## 8. Riscos processuais
-
-Risco de decadência. Mapear prazo.
-
-Risco de inadmissibilidade. Fundamentar hipótese.
-
-Risco de Súmula 343 STF. Argumentar constitucional.
-
-Risco de depósito prévio, salvo isenção justiça gratuita.
-
-## 9. Estratégia pró-segurado
-
-Primeiro, monitorar prova nova.
-
-Segundo, peticionar dentro do biênio.
-
-Terceiro, fundamentar hipótese objetiva.
-
-Quarto, invocar Tema 1370.
-
-Quinto, comparar com repropositura.
-
-## 10. Integração prática
-
-`coisa-julgada-previdenciaria`, `peticao-previdenciaria`, `decadencia-revisao-previdenciaria`, `precedentes-previdenciarios`, `base-cpc-fato-superveniente-art493`.
+Primeiro, localizar o trânsito em julgado da última decisão e calcular o biênio. Segundo, enquadrar a hipótese em um inciso, com o documento correspondente. Terceiro, conferir competência e rito de origem (JEF afasta a via). Quarto, pedir gratuidade, rescisão e novo julgamento. Quinto, avaliar tutela provisória para suspender o cumprimento, se o título for desfavorável (art. 969).

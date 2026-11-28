@@ -2,177 +2,84 @@
 name: honorarios-contrato-previdenciario
 description: Honorários advocatícios previdenciários, contrato, cláusulas essenciais, destaque, notificação extrajudicial, execução e cálculo da base sucumbencial (Tema 1050/STJ, Súmula 111). Use SEMPRE que mencionar contrato de honorários, honorários contratuais ou sucumbenciais, base de cálculo, Tema 1050, Súmula 111, destaque em RPV/precatório, desistência ou revogação de mandato, inadimplência, notificação extrajudicial, execução de honorários, art. 22/23/24 EAOAB, proveito econômico, valor bruto/líquido, cláusula penal, multa por desistência, acordo judicial, tutela antecipada, implantação administrativa, tabela OAB, cobrança. Acionar com peticao-previdenciaria, revisao-peticao, impugnacao-cumprimento-concomitantes, tributacao-beneficios-previdenciarios. NÃO use para mérito de benefícios.
 ---
-
 # Honorários Advocatícios Previdenciários e Contrato de Honorários
 
-Skill de gestão financeira e jurídica dos honorários advocatícios na advocacia previdenciária, abrangendo honorários sucumbenciais (cálculo da base pelo Tema 1050/STJ), honorários contratuais (estrutura, cláusulas essenciais, limites éticos) e cobrança (notificação extrajudicial, execução de título extrajudicial).
+Esta skill concentra o regime jurídico do contrato de honorários: cláusulas, limites éticos, destaque, revogação e execução. A rotina de cobrança do escritório (lista Pagamentos, mensagens, prazos) está em `base-honorarios-contratuais-cobranca`. A sucumbência está em `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
-## 1. Marco normativo aplicável
+## 1. Marco normativo
 
-O contrato de honorários advocatícios é regido por três diplomas em cascata. O **Estatuto da Advocacia (Lei 8.906/94)** como lex specialis. O **Código de Ética e Disciplina da OAB (Resolução 02/2015)** como parâmetro ético. O **Código Civil** subsidiariamente.
+Lei 8.906/94 (EAOAB) como norma especial, Código de Ética e Disciplina da OAB (Resolução CFOAB 02/2015) como parâmetro ético e Código Civil de forma subsidiária.
 
-O art. 22 do EAOAB assegura três espécies de honorários (convencionados, arbitrados e sucumbenciais). O art. 23 garante ao advogado a titularidade autônoma dos honorários sucumbenciais, com natureza alimentar (Súmula Vinculante 47/STF). O art. 24 do EAOAB confere ao contrato escrito de honorários a natureza de **título executivo extrajudicial**, com crédito privilegiado em concurso de credores, dispensando assinatura de testemunhas (REsp 400.687/AC, Rel. Min. Aldir Passarinho Jr.; REsp 1.070.661/SP, Rel. Min. Raul Araújo).
+EAOAB, art. 22, caput. Três espécies: convencionados, arbitrados e sucumbenciais.
+EAOAB, art. 22, §4º. Juntado o contrato antes da expedição do mandado de levantamento ou do precatório, o juiz determina o pagamento direto ao advogado, por dedução da quantia do cliente.
+EAOAB, art. 23. Os honorários de sucumbência pertencem ao advogado. Súmula Vinculante 47 STF: honorários incluídos na condenação ou destacados do principal têm natureza alimentar.
+EAOAB, art. 24. O contrato escrito é título executivo e crédito privilegiado; combinar com o CPC, art. 784, XII. A dispensa de testemunhas decorre da força executiva dada pela lei especial (REsp 400.687/AC [NÃO CONFIRMADO]).
+O CDC não se aplica à relação advogado e cliente (REsp 532.377/RJ, 2003).
 
-O **CDC não se aplica** à relação advogado-cliente (REsp 532.377/RJ, 2003). O art. 49 do CDC (arrependimento em 7 dias) não incide sobre contratos de honorários.
+## 2. Sucumbência e o reflexo no contrato
 
-## 2. Cálculo dos honorários sucumbenciais. Tema 1050/STJ
+A base da sucumbência são as parcelas vencidas até a decisão concessiva, sentença ou acórdão que reforma a improcedência (Súmula 111 STJ; Tema 1105 STJ). O pagamento administrativo após a citação não reduz essa base (Tema 1050 STJ), nem a compensação de benefício inacumulável na liquidação (Tema 1207 STJ). No JEF, sucumbência apenas no recurso, paga pelo recorrente vencido (Lei 9.099, art. 55). Detalhe em `base-cpc-honorarios-sucumbencia-previdenciaria`.
 
-Para detalhamento completo dos precedentes, divergência TRF4 × STJ e remissões cruzadas, consultar a skill `precedentes-previdenciarios` (seção "Honorários advocatícios sucumbenciais, base de cálculo").
+## 3. Cláusulas essenciais
 
-### 2.1 Regra geral de cálculo em três etapas
+3.1 Valor bruto. Honorários sobre o proveito econômico bruto, antes de IR e contribuições retidos. Precedente citado na versão anterior (REsp 1.437.413/RS): [NÃO CONFIRMADO]. A cláusula expressa resolve sem depender dele.
+3.2 Proveito econômico. Definir no contrato o que entra na base: parcelas vencidas e um número fixo de prestações vincendas (o padrão de 12 vem do art. 292, §2º, do CPC, por analogia).
+3.3 Implantação administrativa no curso da ação. Honorários devidos sobre todo o proveito, inclusive o pago pelo INSS após a citação, na linha do Tema 1050 STJ.
+3.4 Tutela de urgência. Valores recebidos por tutela integram o proveito. Prever pagamento mensal sobre o benefício implantado para evitar acúmulo.
+3.5 Acordo judicial ou extrajudicial. Exigibilidade imediata dos honorários.
+3.6 Sucumbência autônoma. Separar contratuais e sucumbenciais. Com cláusula quota litis, a soma dos dois não supera a vantagem do cliente (CED, art. 50).
+3.7 Renúncia ou opção do cliente. Em escolha entre benefícios ou averbação sem implantação, fixar a base como se o benefício tivesse sido implantado.
+3.8 Procedência parcial. Honorários proporcionais ao proveito obtido.
+3.9 Despesas. Dizer se custas, certidões, diligências e assistente técnico estão incluídos.
+3.10 Foro. Comarca de Monte Alto ou Catanduva.
+3.11 CRPS. Dizer se o contrato abrange recurso ordinário e especial ao CRPS ou se exige contratação própria.
 
-**Etapa 1. Período.** Da DER (ou DIB) até a data da sentença de procedência, ou do acórdão se a sentença foi de improcedência (Súmula 76/TRF4, aplicável por analogia no TRF3).
+## 4. Multa por desistência é nula
 
-**Etapa 2. Base.** Valor integral de todas as parcelas do benefício concedido judicialmente nesse período, **sem excluir** pagamentos administrativos feitos após a citação válida (Tema 1050/STJ). Valores pagos administrativamente antes da citação podem ser excluídos (interpretação temporal do STJ).
+A multa no contrato de honorários para a hipótese de renúncia ou revogação unilateral do mandato é inválida, qualquer que seja a motivação (REsp 1.346.171/PR, 4ª Turma, Rel. Min. Luis Felipe Salomão, Informativo 593, 2016). Outros precedentes da versão anterior: REsp 1.882.117/MS e TED OAB/SP E-4.141/2012, ambos [NÃO CONFIRMADO].
 
-**Etapa 3. Percentual.** Aplicar o percentual fixado na sentença sobre a base integral. No TRF3, a 7ª Turma aplica 10% e a 10ª Turma aplica 15% sobre o valor da condenação. Nos JEFs, honorários somente em grau de recurso (art. 55, Lei 9.099/95).
+A revogação é direito do cliente (CC, art. 682, I). Ela não o desobriga dos honorários contratados, e a sucumbência é calculada em proporção ao serviço prestado (CED 2015, art. 17). As cláusulas escalonadas que circulam nas redes (70% após o protocolo, 100% após a audiência) são nulas.
 
-### 2.2 Compensação na liquidação
+## 5. Proteção lícita contra desistência
 
-Os valores pagos administrativamente são compensados exclusivamente na liquidação do crédito principal (Tema 1207/STJ para inacumuláveis). O segurado recebe apenas a diferença, mas **o advogado recebe honorários sobre o total do período**. Os honorários sucumbenciais não sofrem qualquer abatimento pela compensação.
+Primeira camada. Valor inicial que remunera análise, planejamento e peças preparatórias, compatível com a Tabela da OAB/SP e com o serviço real.
+Segunda camada. Etapas com percentuais, para cálculo proporcional em caso de rescisão. Sugestão: análise e planejamento 15%; inicial 20%; acompanhamento 25%; audiência 20%; cumprimento 20%.
+Terceira camada. Multa apenas por inadimplemento (CC, arts. 408 a 413), com juros e correção pactuados. Na falta de pacto, correção pelo IPCA e juros pela taxa legal (CC, arts. 389, parágrafo único, e 406, na redação da Lei 14.905/2024).
 
-### 2.3 Destaque de honorários contratuais em RPV/Precatório
+## 6. Destaque em RPV e precatório
 
-O art. 22, §4º do EAOAB autoriza o juiz a determinar pagamento direto ao advogado. O TRF3, após recomendação do Fórum Interinstitucional Previdenciário (junho/2023), orienta magistrados a deferir o destaque, **limitado a 30% do valor bruto da condenação** (Tabela de Honorários da OAB/SP). O contrato deve ser juntado aos autos já na petição inicial e o pedido de destaque reiterado no cumprimento de sentença.
+Juntar o contrato com a inicial e reiterar o pedido de destaque antes da expedição (EAOAB, art. 22, §4º). Orientação do TRF3 para limitar o destaque a 30% do valor bruto, atribuída a recomendação do Fórum Interinstitucional Previdenciário de junho de 2023: [NÃO CONFIRMADO]. Procedimento da requisição em `execucao-cumprimento-previdenciario`.
 
-## 3. Cláusulas essenciais para o contrato previdenciário
+## 7. Cobrança e execução
 
-### 3.1 Base de cálculo. valor bruto
+A sequência é contato amigável documentado, notificação extrajudicial (carta com AR ou Registro de Títulos e Documentos) e execução de título extrajudicial (CPC, art. 829, com citação para pagar em 3 dias). O crédito de honorários não autoriza duplicata nem protesto do contrato; apenas pode ir a protesto cheque ou nota promissória emitidos pelo cliente, frustrada a cobrança amigável (CED 2015, art. 52).
 
-A Tabela da OAB/SP, a jurisprudência do TRF3 e o STJ (REsp 1.437.413/RS) confirmam que os honorários incidem sobre o **proveito econômico bruto**, sem dedução de IR retido na fonte ou contribuições previdenciárias. Cláusula obrigatória expressa sobre incidência em valor bruto.
+A notificação traz qualificação das partes, contrato e cláusulas, memória do débito, prazo de 15 dias, dados para pagamento e as consequências. Modelo institucional em `base-notificacao-extrajudicial-mapeamento-institucional`.
 
-### 3.2 Proveito econômico. parcelas vencidas + vincendas
+## 8. Rito e estrutura do contrato
 
-A base não se limita aos atrasados pagos em RPV/precatório, mas inclui até **12 prestações vincendas** (art. 292, CPC). O contrato deve reproduzir essa definição para evitar discussão posterior.
+No JEF não há sucumbência na sentença, e a remuneração depende do contrato. Valor de entrada e percentual devem refletir isso. No rito comum, a sucumbência soma receita autônoma.
 
-### 3.3 Implantação administrativa durante a ação (Tema 1050)
+## 9. Checklist do contrato
 
-Cláusula indispensável prevendo que, caso o INSS implante o benefício na via administrativa durante o trâmite da ação judicial, os honorários contratuais permanecerão devidos sobre a totalidade do proveito econômico, incluindo valores pagos administrativamente após a citação válida.
-
-### 3.4 Tutela antecipada e liminar
-
-O contrato deve prever que valores recebidos por força de tutela de urgência integram o proveito econômico e que a desistência posterior não desobriga o pagamento. Recomendação de pagamento mensal dos honorários sobre o benefício implantado em tutela, evitando acúmulo.
-
-### 3.5 Acordo judicial ou extrajudicial
-
-Cláusula prevendo que a composição amigável enseja exigibilidade imediata dos honorários. O advogado tem preferência de recebimento se o acordo estipular pagamento parcelado.
-
-### 3.6 Sucumbência como receita autônoma
-
-O art. 23 do EAOAB garante que honorários sucumbenciais pertencem ao advogado. Separar expressamente honorários contratuais dos sucumbenciais, prevendo que estes não se compensam com aqueles (salvo estipulação diversa), respeitando o **teto ético do art. 50 do CED, contratuais + sucumbenciais não podem superar as vantagens obtidas pelo cliente**.
-
-### 3.7 Renúncia do benefício pelo cliente
-
-Nos casos de desaposentação ou escolha entre averbação de tempo e implantação, o contrato deve prever que os honorários serão calculados "como se o benefício tivesse sido implantado", considerando o proveito econômico integral.
-
-### 3.8 Reconhecimento parcial
-
-Se a sentença reconhecer apenas parte do pedido (ex. período parcial de tempo especial), o contrato deve prever incidência dos honorários proporcionalmente ao proveito econômico efetivamente obtido.
-
-### 3.9 Despesas processuais
-
-Cláusula expressa sobre responsabilidade pelas despesas (custas, diligências, certidões, perícias), indicando se estão incluídas nos honorários ou se serão cobradas à parte.
-
-### 3.10 Foro contratual
-
-Para o escritório em Monte Alto/SP, fixar o foro da Comarca de Monte Alto ou Catanduva para eventuais disputas sobre o contrato.
-
-## 4. ALERTA CRÍTICO. Cláusulas penais por desistência são ilegais
-
-As cláusulas progressivas de desistência amplamente divulgadas em redes sociais (70% do contrato se desistir após protocolo, 100% após audiência) **são nulas conforme jurisprudência pacífica do STJ**.
-
-**REsp 1.346.171/PR** (4ª Turma, Rel. Min. Luis Felipe Salomão, Info 593, 2016), não é possível estipular multa no contrato de honorários para hipóteses de renúncia ou revogação unilateral do mandato, independentemente de motivação.
-
-**REsp 1.882.117/MS** (3ª Turma, Rel. Min. Nancy Andrighi, 2020), anulação de cláusula que exigia pagamento integral em caso de revogação, por criar vinculação permanente do cliente.
-
-**TED OAB/SP E-4.141/2012**, inteiramente incabível a fixação de multa ante o exercício do direito de revogação.
-
-A razão é dogmática. A relação advogado-cliente é fiduciária, fundada na confiança pessoal. A revogação do mandato é direito potestativo do cliente (arts. 16 e 17 do CED/OAB; art. 682, I, CC) que não pode ser penalizado. O art. 14 do CED garante que a revogação não extingue o direito do advogado aos honorários, mas **proporcionais aos serviços efetivamente prestados**, não ao valor integral do contrato.
-
-## 5. Estrutura lícita de proteção contra desistência
-
-Em vez de cláusulas penais escalonadas (ilegais), o advogado previdenciário deve estruturar proteção em três camadas lícitas.
-
-### 5.1 Primeira camada. valor fixo de contratação (não restituível)
-
-Honorário inicial correspondente ao trabalho de análise do caso, planejamento jurídico e elaboração de peças preparatórias. Deve refletir o valor real do serviço prestado (não uma multa disfarçada) e respeitar a Tabela de Honorários da OAB/SP.
-
-### 5.2 Segunda camada. honorários proporcionais ao trabalho realizado
-
-Em caso de rescisão, o advogado tem direito à remuneração proporcional. Discriminar no contrato as etapas do serviço com percentuais atribuídos
-
-- Análise documental e planejamento. 15%
-- Elaboração e protocolo da petição inicial. 20%
-- Acompanhamento processual e manifestações. 25%
-- Audiência e sustentações. 20%
-- Cumprimento de sentença. 20%
-
-Se o cliente desiste após a audiência, o advogado cobra proporcionalmente pelas etapas cumpridas (80% do total contratado).
-
-### 5.3 Terceira camada. cláusula penal exclusivamente por inadimplemento
-
-A multa moratória é perfeitamente válida (arts. 408-413, CC). O que é vedado é a multa por exercício do direito de revogação. Pode-se prever multa de 2% sobre o valor em atraso, juros de 1% ao mês, correção monetária (INPC ou IPCA), e cláusula de honorários advocatícios de 20% para cobrança judicial.
-
-## 6. Notificação extrajudicial e execução
-
-### 6.1 Cadeia de cobrança
-
-Contato amigável documentado → notificação extrajudicial → protesto em cartório (RTD) → execução de título extrajudicial (art. 829, CPC).
-
-### 6.2 Elementos da notificação extrajudicial
-
-Qualificação completa das partes. Referência ao contrato com indicação de data e cláusulas relevantes. Memorial discriminado do débito (valores originais, correção monetária, juros moratórios). Prazo de 15 dias para pagamento. Dados bancários para quitação. Advertência expressa das consequências (protesto, execução judicial, negativação). Envio por carta registrada com AR ou notificação cartorária via RTD.
-
-### 6.3 Execução do contrato
-
-O art. 24 do EAOAB confere ao contrato a natureza de título executivo extrajudicial. A execução segue o rito do art. 829, CPC (citação para pagamento em 3 dias sob pena de penhora). Não é necessária assinatura de testemunhas. Foro competente conforme cláusula contratual.
-
-## 7. Particularidades por rito
-
-### 7.1 JEFs (Juizados Especiais Federais)
-
-Não há condenação em honorários sucumbenciais em primeira instância (art. 55, Lei 9.099/95). Honorários de sucumbência somente em recurso, se o recorrente for integralmente vencido. Isso torna o contrato de honorários contratuais **ainda mais crítico** para a sustentabilidade do escritório. Combinar valor fixo de entrada com percentual sobre o proveito econômico, garantindo remuneração mínima.
-
-### 7.2 CRPS
-
-Atuação administrativa deve ser objeto de contratação separada ou cláusula expressa no contrato judicial. Delimitar expressamente se o contrato abrange recursos administrativos (ordinário e especial ao CRPS), evitando trabalho não remunerado.
-
-### 7.3 TRF3
-
-Honorários sucumbenciais de 10% (7ª Turma) a 15% (10ª Turma) sobre o valor da condenação. Destaque de honorários contratuais limitado a 30% conforme Tabela da OAB/SP. Recomendação do Fórum Interinstitucional Previdenciário (junho/2023) favorável ao deferimento do destaque.
-
-### 7.4 Rito ordinário vs. JEF. impacto na estrutura contratual
-
-No rito ordinário, a sucumbência garante receita adicional independente do contrato. Nos JEFs, toda a remuneração depende do contrato. Contratos para ações de JEF devem ter valor fixo de entrada maior ou percentual contratual superior (ex. 25-30%) para compensar a ausência de sucumbência em primeira instância.
-
-## 8. Checklist de revisão contratual
-
-Ao redigir ou revisar contrato de honorários previdenciário, verificar
-
-1. Base de cálculo definida como valor bruto do proveito econômico
-2. Proveito econômico inclui parcelas vencidas + até 12 vincendas
-3. Cláusula sobre implantação administrativa (Tema 1050)
-4. Cláusula sobre tutela antecipada / liminar
-5. Cláusula sobre acordo judicial, exigibilidade imediata
-6. Separação expressa entre contratuais e sucumbenciais
-7. Teto ético respeitado (art. 50 CED, contratuais + sucumbenciais ≤ vantagens do cliente)
-8. Ausência de cláusula penal por desistência/revogação (ilegal)
-9. Etapas do serviço discriminadas com percentuais (proteção proporcional)
-10. Multa moratória apenas por inadimplemento de pagamento
-11. Cláusula sobre despesas processuais
-12. Cláusula sobre foro contratual
-13. Cláusula sobre destaque em RPV/Precatório (até 30%)
-14. Pedido de juntada do contrato na petição inicial para viabilizar destaque
-
-## 9. Remissões cruzadas
-
-- `precedentes-previdenciarios`. Tema 1050/STJ, Súmula 111/STJ, Tema 1105/STJ, Tema 1207/STJ (compensação inacumulável), divergência TRF4 × STJ
-- `peticao-previdenciaria`, pedido de destaque de honorários contratuais na petição inicial
-- `revisao-peticao`, verificação de pedido de honorários na revisão automática
-- `impugnacao-cumprimento-concomitantes`, cálculo da base sucumbencial em revisão por concomitantes
-- `tributacao-beneficios-previdenciarios`. IR sobre honorários, RRA em atrasados
-- `triagem-caso-novo`, avaliação de viabilidade econômica para definição do contrato
+1. Base sobre o valor bruto.
+2. Definição do proveito econômico.
+3. Implantação administrativa no curso da ação.
+4. Tutela de urgência.
+5. Acordo.
+6. Separação entre contratuais e sucumbenciais, com o teto do CED, art. 50.
+7. Sem multa por revogação.
+8. Etapas com percentuais.
+9. Multa apenas por inadimplemento.
+10. Despesas.
+11. Foro.
+12. Destaque em RPV e precatório, com o contrato juntado na inicial.
+13. Abrangência do CRPS.
 
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Remissões
+
+`base-honorarios-contratuais-cobranca` (rotina de cobrança), `base-cpc-honorarios-sucumbencia-previdenciaria`, `precedentes-previdenciarios`, `peticao-previdenciaria`, `impugnacao-cumprimento-concomitantes`, `tributacao-beneficios-previdenciarios`, `triagem-caso-novo`.
