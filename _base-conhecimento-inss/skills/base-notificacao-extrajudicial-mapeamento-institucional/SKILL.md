@@ -161,7 +161,7 @@ A jurisprudência consolidada do TRF3 admite mandado de segurança por omissão 
 
 45 dias do art. 41-A, §5º, da Lei 8.213/1991 e art. 174 do Decreto 3.048/1999, para implantação de benefício.
 
-90 dias do acordo homologado pelo STF no RE 1.171.152/SC (parâmetro nacional para análise de requerimentos previdenciários).
+Prazos do acordo homologado pelo STF no RE 1.171.152/SC, de até 90 dias conforme a espécie de benefício (parâmetro nacional para análise de requerimentos previdenciários).
 
 Em matéria de PCD, dada a prioridade legal (Lei 13.146/2015, art. 9º, VII) e a natureza alimentar do benefício, o TRF3 tem mitigado esses prazos em sede de liminar, especialmente quando demonstrada vulnerabilidade.
 
@@ -301,7 +301,7 @@ Tema 1124 em `tema-1124-instrucao-administrativa`.
 
 ## 10. Alertas
 
-Primeiro, sempre use endereçamento múltiplo. Notifique todas as chefias legitimadas pelo art. 13/26 §1º das Portarias DIRBEN. Multiplica os pontos de pressão e neutraliza alegação posterior de não recebimento.
+Primeiro, sempre use endereçamento múltiplo. Notifique todas as chefias legitimadas pelo art. 13/26 §1º das Portarias DIRBEN. O endereçamento múltiplo amplia o registro da ciência e afasta alegação posterior de não recebimento.
 
 Segundo, sempre inclua a cláusula de inversão do ônus argumentativo. "Caso o endereço institucional aqui presumido não seja válido, a unidade deverá reencaminhar ao endereço correto, comprovando o reencaminhamento". Isto impede defesa baseada em "ato não recebido".
 
@@ -313,27 +313,11 @@ Quinto, em PCD, inclua sempre a invocação expressa da prioridade (Lei 13.146/2
 
 Sexto, dimensione corretamente o escalonamento. Dia 1 para tudo paralelo. Dia 6 para MS. Não aguarde meses tentando administrativamente sem ajuizar.
 
-Sétimo, em MS, use litisconsórcio passivo necessário (Gerente-Executivo + Chefe do SGBEN + Superintendente Regional). O TRF3 admite. Reforça a tese e amplia a eficácia da liminar.
+Sétimo, em MS, use litisconsórcio passivo necessário (Gerente-Executivo + Chefe do SGBEN + Superintendente Regional). Confira a admissão do litisconsórcio no MCP trf3 antes de ajuizar. A pluralidade de autoridades amplia a eficácia da liminar.
 
-Oitavo, em casos PCD, peça astreintes diárias com base em REM. NEC. CÍVEL 5002980-84.2020.4.03.6183. Precedente expresso do TRF3.
+Oitavo, em casos PCD, peça astreintes diárias com base no art. 537 do CPC. O precedente REM. NEC. CÍVEL 5002980-84.2020.4.03.6183 (TRF3) consta da versão anterior desta skill [NÃO CONFIRMADO].
 
-## 11. Doutrina de apoio
-
-Hely Lopes Meirelles. Mandado de Segurança. Detalha o cabimento contra omissão.
-
-Calmon de Passos. Mandado de Segurança. Aprofunda técnica processual.
-
-Cassio Scarpinella Bueno. Mandado de Segurança. Manual contemporâneo.
-
-José dos Santos Carvalho Filho. Manual de Direito Administrativo. Detalha autoridade coatora.
-
-Frederico Amado e Hugo Goes. Direito Previdenciário. Detalham canais de defesa do segurado.
-
-Daniel Pulino. Aposentadoria por Invalidez. Aprofunda o processo administrativo previdenciário.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário. Analisa o MS previdenciário.
-
-## 12. O que NÃO está nesta skill
+## 11. O que NÃO está nesta skill
 
 IEA 13975 em `base-erro-administrativo-iea-13975`.
 
@@ -343,7 +327,7 @@ MPF, PFDC, PRM em `base-mpf-pfdc-prm-defesa-segurado`.
 
 PFE-INSS, ANPD, DPU, CONADE em `base-pfe-inss-anpd-dpu-conade`.
 
-## 13. Fontes
+## 12. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 

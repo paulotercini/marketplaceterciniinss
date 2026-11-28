@@ -10,7 +10,7 @@ Arquivo final validado, com `node --check` no script JS, contagens conferidas e 
 
 ## Passo 1, preparação do arquivo
 
-Renomeie o arquivo para `index.html`. O Netlify só serve a raiz da URL diretamente quando o arquivo se chama `index.html`. Sem isso, será necessário digitar o caminho completo da URL para acessar.
+Renomeie o arquivo para `index.html`. O Netlify apenas serve a raiz da URL diretamente quando o arquivo se chama `index.html`. Sem isso, será necessário digitar o caminho completo da URL para acessar.
 
 A versão e a data devem estar no rodapé do cabeçalho da página, no formato `vN.N. DD/MM/AAAA`.
 

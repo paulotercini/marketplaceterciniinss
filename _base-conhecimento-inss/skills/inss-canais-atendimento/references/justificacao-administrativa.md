@@ -24,7 +24,7 @@ A JA é procedimento administrativo gratuito destinado a suprir a falta ou insuf
 
 ## Requisito fundamental. início de prova material
 
-A JA só produz efeitos quando baseada em início de prova material contemporânea aos fatos alegados (art. 568, IN 128/2022; art. 143, Decreto 3.048/1999).
+A JA produz efeitos apenas quando baseada em início de prova material contemporânea aos fatos alegados (art. 568, IN 128/2022; art. 143, Decreto 3.048/1999).
 
 Prova exclusivamente testemunhal não é admitida.
 
@@ -93,7 +93,7 @@ A decisão que considera a JA ineficaz não comporta recurso ao CRPS.
 Isso é uma armadilha grave para a advocacia previdenciária. O segurado que teve a JA negada tem duas opções:
 
 **Opção 1. Apresentar novos documentos de início de prova material:**
-Se surgirem documentos novos que não foram apresentados na JA original, é possível requerer nova JA para o mesmo objeto. A vedação de nova JA só se aplica quando a anterior foi concluída sem novos elementos.
+Se surgirem documentos novos que não foram apresentados na JA original, é possível requerer nova JA para o mesmo objeto. A vedação de nova JA apenas se aplica quando a anterior foi concluída sem novos elementos.
 
 **Opção 2. Via judicial:**
 Ação de reconhecimento de tempo de serviço ou benefício previdenciário perante o Juizado Especial Federal. A Justificação Judicial (JJ) pode ser pedida nesse contexto, com oitiva de testemunhas perante o juízo.

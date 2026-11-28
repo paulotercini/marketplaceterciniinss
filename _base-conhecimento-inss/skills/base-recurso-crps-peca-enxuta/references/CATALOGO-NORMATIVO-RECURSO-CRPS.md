@@ -50,7 +50,7 @@ Artigos centrais para recursos.
 - Art. 89 a 93. Reabilitação profissional.
 - Art. 103. Decadência.
 - Art. 118. Estabilidade.
-- **Art. 126.** Recurso ao CRPS. Prazo de 30 dias no art. 77 do RICRPS; o art. 127 foi revogado pela Lei 9.711/98 (auditoria 03/10/2026).
+- **Art. 126.** Recurso ao CRPS. Prazo de 30 dias no art. 77 do RICRPS; o art. 127 foi revogado pela Lei 9.711/98.
 
 **Lei 8.212/91.** Custeio da Seguridade Social. Última alteração Lei 15.363/2026.
 
@@ -98,7 +98,7 @@ Atenção. Cada artigo deve ser verificado contra o arquivo do repositório ante
 
 ## NÍVEL 6 - PORTARIAS DIRBEN/INSS
 
-**Taxonomia correta verificada na Onda 32.**
+**Taxonomia verificada.**
 
 | Portaria | Livro | Tema |
 |---|---|---|
@@ -121,7 +121,7 @@ ALERTA. A Portaria 992 NÃO é cálculo de RMI. Cálculo está em IN 128/2022 e 
 
 ## NÍVEL 7 - PORTARIA MPS 125/2026 (RICRPS)
 
-**Regimento Interno do CRPS.** 154 artigos. A Portaria MPS 462/2026, citada em skills anteriores, não é outro regimento: ela altera a Portaria 125/2026, entre outros pontos nos §§7º e 8º do art. 112 (auditoria 03/10/2026). Versão consolidada até 20/03/2026, com alterações pelas Portarias MPS 235/2026 e 462/2026 (revogou art. 153).
+**Regimento Interno do CRPS.** 154 artigos. A Portaria MPS 462/2026, citada em skills anteriores, não é outro regimento: ela altera a Portaria 125/2026, entre outros pontos nos §§7º e 8º do art. 112. Versão consolidada até 20/03/2026, com alterações pelas Portarias MPS 235/2026 e 462/2026 (revogou art. 153).
 
 Artigos centrais do RICRPS para recursos pró-segurado.
 - Art. 85. Desistência.
@@ -130,36 +130,36 @@ Artigos centrais do RICRPS para recursos pró-segurado.
 - Art. 89. Alçada exclusiva.
 - Art. 90 e 91. Recurso especial.
 - Art. 92. Embargos de declaração.
-- Art. 93. Agravo interno (auditoria 03/10/2026).
+- Art. 93. Agravo interno.
 - Art. 108. Pareceres CONJUR/AGU vinculantes.
-- Art. 109. Precedentes judiciais. Observância obrigatória do controle concentrado transitado e da súmula vinculante (§2º); facultativa da RG do STF, dos repetitivos do STJ, do IRDR e do IAC (§§3º e 4º) (auditoria 03/10/2026).
+- Art. 109. Precedentes judiciais. Observância obrigatória do controle concentrado transitado e da súmula vinculante (§2º); facultativa da RG do STF, dos repetitivos do STJ, do IRDR e do IAC (§§3º e 4º).
 - Art. 110. Decisão monocrática.
-- Art. 112. Causas de não conhecimento e relevação da intempestividade. Prazos nos arts. 77 e 78 (auditoria 03/10/2026).
+- Art. 112. Causas de não conhecimento e relevação da intempestividade. Prazos nos arts. 77 e 78.
 - Art. 114. Normas vinculantes do CRPS.
 - Art. 115. Decisões.
-- Art. 116. Revisão de acórdão (auditoria 03/10/2026).
+- Art. 116. Revisão de acórdão.
 - Art. 117 §4º. Cumprimento.
 - Art. 120 a 124. PUJ - Pedido de Uniformização de Jurisprudência.
 
 ## NÍVEL 8 - PARECERES CONJUR/AGU VINCULANTES
 
-Por força do art. 108 do RICRPS, pareceres da CONJUR aprovados pelo Ministro de Estado são VINCULANTES para o CRPS e INSS; pareceres da AGU vinculam quando aprovados pelo Presidente da República (art. 40 da LC 73/93) (auditoria 03/10/2026). Citar sempre que houver parecer pertinente.
+Por força do art. 108 do RICRPS, pareceres da CONJUR aprovados pelo Ministro de Estado são VINCULANTES para o CRPS e INSS; pareceres da AGU vinculam quando aprovados pelo Presidente da República (art. 40 da LC 73/93). Citar sempre que houver parecer pertinente.
 
 Operacional. Antes de citar parecer, acionar a skill `precedentes-previdenciarios` para confirmar vigência.
 
 ## NÍVEL 9 - ENUNCIADOS, RESOLUÇÕES E SÚMULAS DO CRPS
 
-**Enunciados do Conselho Pleno do CRPS.** Vinculantes ao CRPS por força dos arts. 109, §1º, e 124 do RICRPS (auditoria 03/10/2026). Enunciado relevante pró-segurado deve ser citado literalmente.
+**Enunciados do Conselho Pleno do CRPS.** Vinculantes ao CRPS por força dos arts. 109, §1º, e 124 do RICRPS. Enunciado relevante pró-segurado deve ser citado literalmente.
 
 **Súmulas do CRPS.** Igualmente vinculantes.
 
-**Resoluções do CRPS.** Não têm caráter vinculante (art. 126, §2º, do RICRPS) (auditoria 03/10/2026).
+**Resoluções do CRPS.** Não têm caráter vinculante (art. 126, §2º, do RICRPS).
 
 Operacional. Os 18 Enunciados do CRPS catalogados nas preferências do escritório estão disponíveis para consulta. Verificar antes de citar.
 
 ## NÍVEL 10 - PRECEDENTES JUDICIAIS (USO EXCEPCIONAL)
 
-Pelo art. 109 do RICRPS, o CRPS deve observar a súmula vinculante e o controle concentrado do STF transitado em julgado (§2º). Os demais itens abaixo apenas poderão ser observados, nas condições dos §§3º e 4º (auditoria 03/10/2026).
+Pelo art. 109 do RICRPS, o CRPS deve observar a súmula vinculante e o controle concentrado do STF transitado em julgado (§2º). Os demais itens abaixo apenas poderão ser observados, nas condições dos §§3º e 4º.
 
 - Repercussão geral do STF.
 - Recursos repetitivos do STJ.
@@ -190,8 +190,8 @@ Passo 7. SOMENTE se necessário, citar UM precedente judicial vinculante do art.
 
 Passo 8. Aplicar o protocolo de 5 níveis da skill `base-revisao-peticao-aprofundada` para verificar a literalidade de cada citação.
 
-Passo 9. Auditar a peça final pela skill `base-revisao-peticao-aprofundada` (Onda 33).
+Passo 9. Auditar a peça final pela skill `base-revisao-peticao-aprofundada`.
 
 ## ALERTA CRÍTICO
 
-NUNCA citar artigo, enunciado ou parecer sem ABRIR previamente o arquivo correspondente no repositório `base-legislacao-fontes-primarias` ou consultar a skill `precedentes-previdenciarios` para enunciados e pareceres. Citação não verificada é achado BLOQUEANTE conforme o anti-pattern 22 da Onda 33.
+NUNCA citar artigo, enunciado ou parecer sem ABRIR previamente o arquivo correspondente no repositório `base-legislacao-fontes-primarias` ou consultar a skill `precedentes-previdenciarios` para enunciados e pareceres. Citação não verificada é achado BLOQUEANTE (anti-pattern 22 da `base-revisao-peticao-aprofundada`).

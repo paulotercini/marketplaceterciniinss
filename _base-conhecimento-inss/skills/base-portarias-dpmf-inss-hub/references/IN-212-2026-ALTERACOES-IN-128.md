@@ -1,6 +1,6 @@
 # Instrução Normativa PRES/INSS nº 212, de 06/08/2026
 
-Onda 115 (15/08/2026). Altera a IN PRES/INSS nº 128/2022. Publicada no DOU de 11/08/2026, com vigência na data da publicação. Assinada pela Presidente Ana Cristina Viana Silveira. Processo Administrativo nº 35014.341866/2020-55.
+Altera a IN PRES/INSS nº 128/2022. Publicada no DOU de 11/08/2026, com vigência na data da publicação. Assinada pela Presidente Ana Cristina Viana Silveira. Processo Administrativo nº 35014.341866/2020-55.
 
 [CONFERIDO em 15/08/2026] no portal oficial da IN consolidada (`portalin.inss.gov.br/in`), que registra "Atualizada em 12/08/2026 - Instrução Normativa nº 212, de 6 de Agosto de 2026". O texto dos artigos alterados e dos artigos apenas referenciados foi lido no próprio portal, para não haver remissão cega.
 
@@ -92,7 +92,7 @@ O art. 369, conferido no portal, fixa a DIP na DATA DO ÓBITO para dependente me
 
 ## 8. Art. 514, I. Contagem recíproca e alíquotas reduzidas
 
-Espelha o art. 216. Na contagem recíproca, o período com alíquota reduzida ou o salário-maternidade nessas condições só conta se complementadas as contribuições para 20%.
+Espelha o art. 216. Na contagem recíproca, o período com alíquota reduzida ou o salário-maternidade nessas condições apenas conta se complementadas as contribuições para 20%.
 
 ---
 

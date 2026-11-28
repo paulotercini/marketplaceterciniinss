@@ -46,11 +46,11 @@ Art. 8º, VIII. Acesso incondicional a banco de dados público.
 
 A requisição do MPF tem força vinculante. O não-atendimento pode caracterizar crime de desobediência (CP art. 330) ou de denegação injustificada de informação (Lei 12.527/2011, art. 32, IV).
 
-## 7. Resolução CNMP 174/2017. Prazos
+## 7. Prazos
 
-Art. 4º. Procedimento Preparatório. 90 dias prorrogáveis uma única vez por igual período.
+Procedimento Preparatório (Resolução CNMP 23/2007, art. 2º, § 6º). 90 dias prorrogáveis uma única vez por igual período.
 
-Art. 8º. Procedimento Administrativo. Prazo razoável, sem limite específico.
+Procedimento Administrativo (Resolução CNMP 174/2017, art. 8º). Procedimento Administrativo. Prazo razoável, sem limite específico.
 
 ## 8. Resolução CNMP 23/2007. Inquérito Civil
 
@@ -133,33 +133,17 @@ Refutação. A existência de ação judicial não impede a tramitação paralel
 
 ### 13.3. "A Convenção de Nova Iorque não tem força vinculante"
 
-Refutação. Tem status de emenda constitucional (rito do art. 5º §3º CF). Sua violação caracteriza descumprimento de obrigação internacional do Estado brasileiro e violação a parâmetro de controle de constitucionalidade. Vinculação imediata e automática.
+Refutação. Tem status de emenda constitucional (rito do art. 5º §3º CF). Sua violação caracteriza descumprimento de obrigação internacional do Estado brasileiro e violação a parâmetro de controle de constitucionalidade. 
 
 ### 13.4. "O ofício de requisição é faculdade do MPF, não direito do segurado"
 
-Refutação. Correto. O segurado não tem direito subjetivo a que o MPF expedisse ofício. Mas a Notícia de Fato fundamentada e bem documentada cria pressão institucional para que o MPF atue. A jurisprudência reconhece a Notícia de Fato como elemento probatório robusto da inércia administrativa.
+Refutação. Correto. O segurado não tem direito subjetivo a que o MPF expedisse ofício. A Notícia de Fato fundamentada e documentada favorece a atuação do MPF e documenta a inércia administrativa.
 
 ### 13.5. "A representação à PFDC é redundante com a Notícia de Fato à PRM"
 
-Refutação. Não é. A PFDC tem competência nacional e GT específico para PCD. A PRM atua localmente. A cópia à PFDC reforça repercussão institucional e abre caminho para atuação extrajudicial estratégica em nível nacional.
+Refutação. Não é. A PFDC tem competência nacional e GT específico para PCD. A PRM atua localmente. A cópia à PFDC permite atuação extrajudicial em nível nacional.
 
-## 14. Doutrina
-
-Hugo Nigro Mazzilli. Inquérito Civil e Ação Civil Pública. Detalha a atuação do MP em direitos coletivos.
-
-Geisa de Assis Rodrigues. Ação Civil Pública e Termo de Ajustamento de Conduta.
-
-Pedro Lenza. Direito Constitucional. Funções institucionais do MP.
-
-Marco Aurélio Serau Junior. Direito Previdenciário. Tutela coletiva em previdenciário.
-
-Wagner Balera. Sistema de Seguridade Social. Proteção social como direito coletivo.
-
-Daniel Pulino. Aposentadoria por Invalidez. Aprofunda processos administrativos previdenciários.
-
-Frederico Amado e Hugo Goes. Direito Previdenciário. Detalham canais de provocação extrajudicial.
-
-## 15. Fontes oficiais
+## 14. Fontes oficiais
 
 Portal MPF (https://www.mpf.mp.br/).
 

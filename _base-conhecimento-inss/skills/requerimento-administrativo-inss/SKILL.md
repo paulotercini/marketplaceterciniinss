@@ -7,11 +7,9 @@ description: "Skill de requerimentos administrativos ao INSS (requerimento de be
 
 ## Princípio Fundamental
 
-Requerimento administrativo NÃO é petição judicial. O destinatário é um servidor do INSS, frequentemente sem formação jurídica, cuja atuação é totalmente vinculada a normas internas (manuais, instruções normativas, portarias e checklists). O servidor não decide de forma discricionária. Ele aplica o entendimento consolidado do órgão.
+Requerimento administrativo não é petição judicial. O destinatário é o servidor do INSS, vinculado a normas internas (instruções normativas, portarias, manuais e checklists), que aplica o entendimento consolidado do órgão.
 
-A consequência prática é que o advogado nunca vai convencer o servidor a decidir contra o entendimento do INSS. Mas pode ajudá-lo a decidir a favor do segurado, facilitando a instrução do processo administrativo e demonstrando que o caso se enquadra nas hipóteses previstas nas normas internas.
-
-O erro mais comum é escrever para convencer quando o objetivo deveria ser instruir. Requerimentos longos, formais e cheios de teses jurídicas são ignorados pelo servidor, que percebe a peça como discussão jurídica e vai direto ao sistema aplicar o checklist interno.
+O requerimento não convence o servidor a decidir contra o entendimento do INSS. Ele instrui o processo e demonstra que o caso se enquadra nas hipóteses das normas internas. Requerimento longo, com teses jurídicas, é lido como discussão e cede ao checklist do sistema.
 
 ## Regras Estruturais
 
@@ -19,7 +17,7 @@ O erro mais comum é escrever para convencer quando o objetivo deveria ser instr
 
 O texto deve ser direto, objetivo e instrutivo. Frases curtas. Sem jargão jurídico. Sem citações de jurisprudência. Sem latinismos. Sem argumentação principiológica. O vocabulário deve refletir o universo normativo do INSS, não o universo processual do Poder Judiciário.
 
-A proibição absoluta de dois pontos do escritório se mantém também nos requerimentos administrativos.
+Dois-pontos apenas antes de citação literal ou de enumeração, como nas demais peças do escritório.
 
 ### Referências Normativas
 
@@ -29,7 +27,7 @@ NUNCA citar jurisprudência (temas repetitivos, repercussão geral, julgados de 
 
 ### Extensão
 
-Extensão de referência de UMA FOLHA, de preferência, como já pratica a `inicial-inss` (Onda 181, referência e não limite obrigatório). O servidor lê dezenas de requerimentos por dia e decide por norma infralegal e trava de sistema, não por fundamentação. Declarar o teto antes de redigir, nomear em uma frase o que se pede e por qual dispositivo, e o dado que sustenta o pedido acompanha cada pedido. Passou da folha, retira-se apenas a repetição, nunca o dado que o servidor precisa para deferir. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Extensão de referência de uma folha, como na `inicial-inss`. O servidor decide por norma infralegal e trava de sistema. Declarar o teto antes de redigir, nomear em uma frase o que se pede e por qual dispositivo, e o dado que sustenta o pedido acompanha cada pedido. Passou da folha, retira-se apenas a repetição, nunca o dado que o servidor precisa para deferir. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ### Formato
 
@@ -57,7 +55,7 @@ Tabela com os dados essenciais do caso, adaptada à espécie de benefício. O qu
 
 **Para aposentadoria (B42/B46/B41).** Campos obrigatórios incluem espécie de benefício, regra aplicável (pré-reforma, transição, pós-EC 103), tempo de contribuição total, carência, idade na DER, DIB pretendida e observações (complementação pendente, período rural, tempo especial).
 
-**Para incapacidade (B31/B91/B94).** Campos obrigatórios incluem espécie de benefício, CID principal, data de início dos sintomas (DIS) declarada no Meu INSS, data de início da incapacidade (DII), último vínculo ou contribuição, carência, qualidade de segurado e documentos médicos apresentados com referência a cada documento. A DIS declarada no Meu INSS precisa ser fixada em conformidade com o Protocolo de Autodeclaração da skill `analise-documental-incapacidade`. NUNCA usar data anterior à consolidação da qualidade de segurada e carência.
+**Para incapacidade (B31/B91/B94).** Campos obrigatórios incluem espécie de benefício, CID principal, data de início dos sintomas (DIS) declarada no Meu INSS, data de início da incapacidade (DII), último vínculo ou contribuição, carência, qualidade de segurado e documentos médicos apresentados com referência a cada documento. A DIS declarada no Meu INSS precisa ser fixada em conformidade com o Protocolo de Autodeclaração da skill `analise-documental-incapacidade`. A data declarada é a verdadeira, coerente com a documentação médica; a orientação evita erro de preenchimento e nunca altera o fato.
 
 **Para BPC/LOAS (B87).** Campos obrigatórios incluem requerente, tipo de impedimento, composição do grupo familiar (nomes e vínculos), renda per capita calculada (com referência aos documentos) e CadÚnico (NIS e data de atualização).
 
@@ -67,7 +65,7 @@ Parágrafos curtos e diretos descrevendo a situação fática. Sem adjetivação
 
 ### Enquadramento Normativo
 
-Uma seção curta, em linguagem simples, que liga o fato ao requisito. Sem transcrição de artigos (o servidor conhece a legislação). O artigo entra apenas quando extremamente necessário, isto é, quando o pedido depende dele ou quando o INSS costuma negar contra norma expressa, e entra por remissão curta na frase (Onda 184). Exemplo adequado. "A pensão por morte não exige carência. O instituidor mantinha a qualidade de segurado na data do óbito, porque o CNIS registra contribuições até [competência] e o óbito ocorreu dentro do período de graça (art. 15, II, da Lei 8.213/91)."
+Uma seção curta, em linguagem simples, que liga o fato ao requisito. Sem transcrição de artigos (o servidor conhece a legislação). O artigo entra apenas quando extremamente necessário, isto é, quando o pedido depende dele ou quando o INSS costuma negar contra norma expressa, e entra por remissão curta na frase. Exemplo adequado. "A pensão por morte não exige carência. O instituidor mantinha a qualidade de segurado na data do óbito, porque o CNIS registra contribuições até [competência] e o óbito ocorreu dentro do período de graça (art. 15, II, da Lei 8.213/91)."
 
 ### Documentos Anexos
 
@@ -101,7 +99,7 @@ Requerimento dirigido ao INSS solicitando revisão de benefício já concedido. 
 
 O Meu INSS exige, no momento do requerimento de benefícios por incapacidade, o preenchimento obrigatório de dois campos de autodeclaração. "Data de início dos sintomas" e "Descrição dos sintomas". Essas declarações são vinculantes, ficam registradas no sistema e são confrontadas pelo perito com a documentação médica apresentada.
 
-O preenchimento equivocado desses campos compromete o benefício. Data antiga entrega o argumento de preexistência ou ausência de carência. Data idêntica à da declaração médica gera contradição documental. Descrição técnica copiada do relatório soa artificial e pode gerar suspeita de fraude.
+O preenchimento equivocado compromete o benefício. Data imprecisa, sem apoio documental, abre espaço à alegação de preexistência ou de falta de carência. Data idêntica à da declaração médica gera contradição documental. Descrição técnica copiada do relatório soa artificial e pode gerar suspeita de fraude.
 
 A orientação ao preenchimento é etapa obrigatória do requerimento administrativo de B31, B91, B94 e de BPC com componente de incapacidade. O advogado NUNCA deixa a cliente preencher sozinha.
 
@@ -109,9 +107,9 @@ O protocolo operacional completo (distinção DIS/DID/DII, análise retroativa d
 
 O texto final da autodeclaração deve ser fornecido à cliente em formato pronto para copiar e colar, acompanhado da data exata a ser inserida no campo formal.
 
-### Campos do formulário do Meu INSS e o Tema 1124 (Onda 178)
+### Campos do formulário do Meu INSS e o Tema 1124
 
-O formulário eletrônico pergunta se há tempo especial, tempo rural, atividade de professor e outros dados que definem o que o INSS vai analisar. Resposta "não" em campo que o caso exige pode ser lida como indeferimento forçado. A TNU já tratou assim o "não" em período especial, e a 14ª e a 9ª Turmas Recursais de SP mantiveram extinções mesmo com PPP anexado e pedido escrito no corpo do requerimento. A 1ª Turma Recursal de SP e a 9ª Turma do TRF4 decidiram em sentido contrário, e os embargos de declaração do Tema 1124 vedaram o indeferimento automático sem oportunidade de complementação. A divergência existe e o risco é do segurado, de modo que a regra é não depender dela.
+O formulário eletrônico pergunta se há tempo especial, tempo rural, atividade de professor e outros dados que definem o que o INSS vai analisar. Resposta "não" em campo que o caso exige pode ser lida como indeferimento forçado. A TNU já tratou assim o "não" em período especial, e a 14ª e a 9ª Turmas Recursais de SP mantiveram extinções mesmo com PPP anexado e pedido escrito no corpo do requerimento. A 1ª Turma Recursal de SP e a 9ª Turma do TRF4 decidiram em sentido contrário, e os embargos de declaração do Tema 1124 vedaram o indeferimento automático sem oportunidade de complementação. Como a divergência persiste e o risco recai sobre o segurado, a regra é não depender dela.
 
 Regras do escritório. Responder "sim" em todo campo que corresponda a período ou condição que o caso vai pedir. Repetir o pedido no corpo do requerimento, com a lista dos períodos e dos documentos. Anexar os documentos no próprio protocolo. Pedir expressamente a justificação administrativa quando faltar documento. Guardar o comprovante do protocolo e a tela de resumo do formulário. Antes do protocolo, o advogado confere o formulário campo a campo e nunca deixa o cliente preencher sozinho. Julgados em `tema-1124-instrucao-administrativa/references/APLICACAO-TRF3-TEMA-1124.md`.
 
@@ -119,11 +117,11 @@ Regras do escritório. Responder "sim" em todo campo que corresponda a período 
 
 Antes de redigir qualquer requerimento administrativo, consultar as seguintes skills conforme o caso.
 
-**documentos-comprobatorios-in128.** Fonte primária sobre quais documentos são exigidos pelo INSS para cada categoria de segurado e espécie de direito. Consultar SEMPRE antes de montar a lista de documentos do requerimento.
+**base-documentos-comprobatorios-in128.** Fonte primária sobre quais documentos são exigidos pelo INSS para cada categoria de segurado e espécie de direito. Consultar SEMPRE antes de montar a lista de documentos do requerimento.
 
 **inss-canais-atendimento.** Para orientar o cliente sobre onde e como protocolar o requerimento (Meu INSS, agência presencial, modalidade de atendimento).
 
-**cnis-acerto-indicadores.** Quando o CNIS apresentar indicadores bloqueantes, orientar sobre a documentação necessária para supri-los no requerimento.
+**base-cnis-acerto-indicadores.** Quando o CNIS apresentar indicadores bloqueantes, orientar sobre a documentação necessária para supri-los no requerimento.
 
 **analise-documental-incapacidade.** Para requerimentos de B31, B91 e B94, verificar os requisitos documentais das Portarias Conjuntas 13, 14 e 15/2026 E aplicar obrigatoriamente o Protocolo de Autodeclaração nos Campos do Meu INSS (seção específica daquela skill) para orientar o preenchimento dos campos "Data de início dos sintomas" e "Descrição dos sintomas" antes do protocolo.
 
@@ -135,29 +133,27 @@ Antes de redigir qualquer requerimento administrativo, consultar as seguintes sk
 
 ## Regras de Formatação
 
-Aplicar o mesmo padrão visual do escritório (Bookman Old Style 12pt, espaçamento 1.5, timbre e rodapé). Recuo de primeira linha de 4 cm (mesmo padrão judicial, não o de 5 cm do CRPS). Tabelas seguem o mesmo estilo visual dos componentes Visual Law da peticao-previdenciaria (bordas SINGLE, header com fundo cinza claro).
+Aplicar o mesmo padrão visual do escritório (Bookman Old Style 12pt, espaçamento 1.5, timbre e rodapé). Recuo de primeira linha de 4 cm, o padrão administrativo (opção `--crps` da `base-peticao-previdenciaria-padrao-visual`). Tabelas seguem o mesmo estilo visual dos componentes Visual Law da peticao-previdenciaria (bordas SINGLE, header com fundo cinza claro).
 
 ## Anti-patterns (O que NUNCA incluir)
 
 Transcrição de ementas de julgados. Citação de temas repetitivos ou repercussão geral. Argumentação sobre princípios constitucionais. Referência a doutrina ou artigos acadêmicos. Superlativos e adjetivação ("extrema necessidade", "gravidade ímpar"). Frases que pareçam contestação, impugnação ou réplica. Uso de "Excelentíssimo" ou "Meritíssimo" (são tratamentos do Poder Judiciário). Petição judicial disfarçada de requerimento.
 
-O teste final é comparar o documento com uma petição judicial. Se parecer uma petição, refazer. Requerimento administrativo tem cara, estrutura e linguagem próprias.
+Teste final: se o documento parecer petição judicial, refazê-lo.
 
 ## Referências
 
 Consultar `references/FORMATTING.md` da skill peticao-previdenciaria para os parâmetros técnicos de formatação do .docx, adaptando apenas o endereçamento e o recuo.
 
-## Decisor simulado antes do protocolo (Onda 114)
+## Decisor simulado antes do protocolo
 
-Antes de protocolar, submeter a minuta e a relação de documentos ao agente `servidor-chefe-inss`, que decide por checklist e por trava de sistema, como o cargo real decide. Ele devolve DEFERIDO, EXIGÊNCIA, INDEFERIDO ou NÃO CONCLUÍDO POR PENDÊNCIA, com a motivação normativa e a lista fechada do que faria virar deferimento. Regra de ouro que ele revela, requerimento sustentado apenas em tese judicial é indeferido na origem, porque o servidor não aplica precedente do STJ nem relativiza critério legal.
+Antes de protocolar, submeter a minuta e a relação de documentos ao agente `servidor-chefe-inss`, que decide por checklist e por trava de sistema, como o cargo real decide. Ele devolve DEFERIDO, EXIGÊNCIA, INDEFERIDO ou NÃO CONCLUÍDO POR PENDÊNCIA, com a motivação normativa e a lista fechada do que faria virar deferimento. Requerimento sustentado apenas em tese judicial tende ao indeferimento, porque o servidor não aplica precedente do STJ nem relativiza critério legal.
 
-## Prazo de trinta dias da exigência e desistência (Onda 115)
+## Prazo de trinta dias da exigência e desistência
 
-Pelos arts. 574, § 4º, II, e 600, parágrafo único, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, a falta de manifestação sobre exigência após TRINTA DIAS da ciência configura DESISTÊNCIA, com encerramento SEM ANÁLISE DO MÉRITO.
+Pelos arts. 574, § 4º, II, e 600, parágrafo único, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, a falta de manifestação sobre exigência após 30 dias da ciência configura desistência, com encerramento sem análise do mérito. Não há decisão de mérito a recorrer, e a ação judicial enfrenta a falta de interesse de agir e o Tema 1124 do STJ.
 
-Pior que indeferimento, porque não há decisão de mérito a recorrer e a via judicial esbarra em falta de interesse de agir e nos efeitos financeiros do Tema 1124 do STJ.
-
-Regra dura. Lançar a data limite na agenda no momento do registro da exigência. Não conseguindo cumprir integralmente, MANIFESTAR-SE dentro do prazo com o que houver e requerer dilação, porque o gatilho da desistência é a falta de manifestação, não o cumprimento parcial.
+Regra do escritório: lançar o termo final na agenda ao registrar a exigência. Sem cumprimento integral, manifestar-se no prazo com o que houver e pedir dilação, pois a desistência decorre da falta de manifestação, não do cumprimento parcial.
 
 Registrar também o art. 566, § 9º, que SUSPENDE os prazos do INSS enquanto o processo estiver em exigência. Isso afeta o cálculo do tempo de mora para eventual mandado de segurança.
 
@@ -165,4 +161,4 @@ Registrar também o art. 566, § 9º, que SUSPENDE os prazos do INSS enquanto o 
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.
+Forma da peça: `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção "A mesma peça em todos os ritos".

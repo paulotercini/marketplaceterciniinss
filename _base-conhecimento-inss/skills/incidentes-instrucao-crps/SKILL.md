@@ -7,7 +7,7 @@ description: "Embargos de declaração, revisão de acórdão, agravo, conflito 
 
 ## Visão Geral
 
-Esta skill consolida embargos de declaração (art. 92), revisão de acórdão (art. 116), agravo (art. 93), conflito de competência (art. 115), sustentação oral (art. 81), decisões monocráticas (art. 110), diligências e instrução processual (art. 75), e o regime de óbito do segurado com recurso pendente (art. 68, par. único), conforme o Regimento Interno do CRPS (Portaria MPS nº 125/2026, compilada com as Portarias 235/2026 e 462/2026).
+Esta skill trata de embargos de declaração (art. 92), revisão de acórdão (art. 116), agravo (art. 93), conflito de competência (art. 115), sustentação oral (art. 81), decisões monocráticas (art. 110), diligências e instrução processual (art. 75), e o regime de óbito do segurado com recurso pendente (art. 68, par. único), conforme o Regimento Interno do CRPS (Portaria MPS nº 125/2026, compilada com as Portarias 235/2026 e 462/2026).
 
 ## Fluxo de Trabalho
 
@@ -57,7 +57,7 @@ Instrução eletrônica. O interessado pode produzir prova documental, requerer 
 
 O falecimento NÃO extingue o recurso administrativo (art. 68, par. único; art. 112, §4º). Sucessores podem solicitar habilitação. Ordem de preferência para pagamento do resíduo segue art. 112 da Lei 8.213/91 e art. 624 da IN 128/2022. Dependentes previdenciários habilitados à pensão por morte têm preferência sobre herdeiros civis.
 
-Riscos processuais a monitorar. Tentativa de renúncia tácita pelo INSS (afastar com ausência de identidade). Alegação de perda de objeto (direito incorpora-se ao patrimônio do segurado em vida). Ausência de habilitação (peticionar imediatamente). Tema 1057/STJ fundamenta legitimidade de pensionistas para pleitear revisão do benefício do instituidor. Tema 1254/STJ (pendente) sobre prescrição da habilitação exige cautela.
+Riscos processuais a monitorar. Tentativa de renúncia tácita pelo INSS (afastar com ausência de identidade). Alegação de perda de objeto (direito incorpora-se ao patrimônio do segurado em vida). Ausência de habilitação (peticionar imediatamente). Tema 1057/STJ fundamenta legitimidade de pensionistas para pleitear revisão do benefício do instituidor. Tema 1254/STJ, sobre prescrição na habilitação, afetado à Corte Especial, pede habilitação imediata; confira a situação atual antes de citar.
 
 Consultar `references/OBITO-RECURSO-PENDENTE.md` para protocolo completo com jurisprudência e estratégias por tipo de benefício.
 
@@ -82,11 +82,9 @@ Duas ou mais UJs se declaram competentes ou nenhuma se declara. Conflitos entre 
 - `references/DECISOES-MONOCRATICAS.md`. Mapa completo de monocráticas do Regimento
 - `references/OBITO-RECURSO-PENDENTE.md`. Óbito com recurso pendente, habilitação, efeitos financeiros e protocolo
 
-Sempre leia os arquivos de referência pertinentes antes de analisar incidentes processuais no CRPS.
+## Revisão de Acórdão não suspende o cumprimento
 
-## Revisão de Acórdão não suspende o cumprimento (Onda 88)
-
-A Revisão de Acórdão NÃO tem natureza de recurso e não suspende o prazo de cumprimento da decisão do CRPS. Base inequívoca no art. 308, § 1º, do Decreto 3.048/99 ("não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento"), reforçada pelo caput do art. 308, que só atribui efeito suspensivo a recurso interposto TEMPESTIVAMENTE. Quando o INSS usa a revisão para não implantar benefício já reconhecido, cabe mandado de segurança, conforme o TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). Roteiro em `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`. Cautela de citação, a numeração do dispositivo regimental da Revisão de Acórdão varia entre versões do RICRPS, conferir antes de citar e ancorar no Decreto 3.048/99.
+A Revisão de Acórdão NÃO tem natureza de recurso e não suspende o prazo de cumprimento da decisão do CRPS. Fundamento: art. 308, § 1º, do Decreto 3.048/99 ("não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento"), reforçada pelo caput do art. 308, que atribui efeito suspensivo apenas a recurso interposto TEMPESTIVAMENTE. Quando o INSS usa a revisão para não implantar benefício já reconhecido, cabe mandado de segurança, conforme o TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). Roteiro em `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`. Cautela de citação, a numeração do dispositivo regimental da Revisão de Acórdão varia entre versões do RICRPS, conferir antes de citar e ancorar no Decreto 3.048/99.
 
 ## MCPs da casa
 

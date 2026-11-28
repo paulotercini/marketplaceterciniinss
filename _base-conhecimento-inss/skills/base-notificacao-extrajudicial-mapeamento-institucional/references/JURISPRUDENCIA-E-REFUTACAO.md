@@ -14,121 +14,89 @@ RE 1.171.152/SC. Acordo homologado. Parâmetro nacional de 90 dias para análise
 
 ## 2. CF. Razoável duração do processo administrativo
 
-Art. 5º, LXXVIII, CF. Assegura a razoável duração do processo no âmbito judicial e administrativo (auditoria 03/10/2026, retirada a ADI 6038, que julgou lei alagoana sobre ensino).
+Art. 5º, LXXVIII, CF. Assegura a razoável duração do processo no âmbito judicial e administrativo.
 
-## 3. STJ. Polo passivo em MS contra INSS
+## 3. Polo passivo, astreintes e omissão continuada
 
-REsp 1.348.557/SP. Em matéria previdenciária, pode haver litisconsórcio passivo necessário entre o gerente local e a autoridade hierárquica superior em casos de omissão estrutural.
+Polo passivo: a autoridade com poder de praticar o ato omitido (Gerente-Executivo, chefe do SGBEN, Superintendente Regional). Detalhe em `ms-competencia-autoridade-coatora` e `base-ms-competencia-autoridade-coatora-inss-crps`.
 
-REsp 1.567.493/RS. Cabimento de astreintes em MS por omissão administrativa.
+Omissão continuada: enquanto persiste a omissão, o prazo de 120 dias do art. 23 da Lei 12.016/2009 não se consuma, entendimento reiterado do STJ. Localize o acórdão no MCP `superiores` antes de citá-lo; ver `base-ms-decadencia-omissao-demora`.
 
-## 4. STJ. Prazo decadencial e omissão continuada
+Astreintes e precedentes do TRF3 sobre mora: localizar no MCP `trf3` antes da citação.
 
-Súmula 376. Compete a Justiça Federal processar e julgar causa em que houver pedido cumulativo de prestação previdenciária e prestação por acidente do trabalho.
+## 4. Prazos de mora
 
-REsp 1.075.629/SP. Em omissão continuada, o prazo decadencial do art. 23 da Lei 12.016/2009 se renova diariamente.
+Lei 9.784/1999, art. 49: 30 dias após a instrução, prorrogáveis por igual período. Lei 8.213/1991, art. 41-A, § 5º: 45 dias para o primeiro pagamento. Acordo do RE 1.171.152/SC: prazos por espécie, até 90 dias. Em PCD, a prioridade legal (Lei 13.146/2015, art. 9º, VII) reforça a urgência da liminar.
 
-REsp 1.157.527/PE. Confirma a tese da omissão continuada.
+## 5. Lei 12.016/2009. Pontos centrais
 
-A omissão administrativa em abrir IEA, quando reiterada, é omissão continuada. O prazo decadencial se renova diariamente, preservando o cabimento do MS mesmo após meses de tentativas administrativas frustradas.
+Art. 1º. Cabimento contra ato comissivo ou omissivo que viole direito líquido e certo.
 
-## 5. TRF3. Omissão administrativa do INSS
+Art. 5º. Não cabe MS contra ato do qual caiba recurso administrativo com efeito suspensivo, independentemente de caução, contra decisão judicial recorrível com efeito suspensivo e contra decisão judicial transitada em julgado.
 
-REM. NEC. CÍVEL 5000095-66.2018.4.03.6119.
+Art. 7º, III. Liminar quando houver fundamento relevante e do ato impugnado puder resultar a ineficácia da medida.
 
-REM. NEC. CÍVEL nº 5002980-84.2020.4.03.6183, Rel. Des. Fed. Nery Júnior. Reconhece a Superintendência Regional como polo passivo legitimado em MS por mora administrativa. Admite expressamente astreintes diárias.
+Art. 23. Prazo decadencial de 120 dias da ciência do ato impugnado.
 
-Conflito de Competência 0003547-33.2017.4.03.0000 (Órgão Especial). Cabe à Segunda Seção o julgamento de MS contra omissão de agente do INSS quanto a pedido administrativo.
+Art. 26. O descumprimento da decisão em MS constitui crime de desobediência (CP, art. 330).
 
-Estes precedentes consolidam.
+## 6. Competência
 
-A Superintendência Regional como polo passivo legitimado.
+A Justiça Federal é competente para causas em que o INSS seja parte (CF, art. 109, I). Foro do domicílio do autor (CF art. 109, §2º) ou da sede funcional da autoridade coatora. O art. 2º da Lei 12.016/2009 define quando a autoridade é federal, sem tratar de foro.
 
-A possibilidade de litisconsórcio passivo (Gerente-Executivo + Chefe do SGBEN + Superintendente).
+## 7. Refutação a alegações comuns do INSS em MS por omissão
 
-Astreintes diárias como meio coercitivo eficaz.
-
-## 6. TRF3. Razoável duração e mora administrativa
-
-Em precedentes diversos, o TRF3 admite MS por mora administrativa quando ultrapassados os prazos do art. 49 da Lei 9.784/1999 (60 dias máximo), do art. 41-A §5º da Lei 8.213/1991 (45 dias) e do parâmetro nacional do STF (RE 1.171.152/SC, 90 dias).
-
-Em PCD, dada a prioridade legal (Lei 13.146/2015, art. 9º, VII), o TRF3 mitiga esses prazos em sede de liminar.
-
-## 7. Lei 12.016/2009. Pontos centrais
-
-Art. 1º. Cabimento. Direito líquido e certo, ato omissivo ou comissivo.
-
-Art. 5º. Não cabimento contra coisa julgada, ato disciplinar restrito ao mérito (salvo cassação de aposentadoria), ato de conteúdo decisório do CNJ etc.
-
-Art. 6º. Petição inicial.
-
-Art. 7º. Liminar (suspensão de eficácia do ato impugnado, ou determinação para fazer ato).
-
-III. Liminar quando relevante o fundamento e do ato impugnado puder resultar a ineficácia da medida, caso seja finalmente deferida.
-
-Art. 23. Prazo decadencial de 120 dias da ciência do ato impugnado. Em omissão continuada, renovação diária.
-
-Art. 24. Aplicação subsidiária do CPC.
-
-Art. 26. Comportamento do impetrado.
-
-## 8. Competência
-
-A Justiça Federal é competente para causas em que o INSS seja parte (CF, art. 109, I). A Súmula 376 STJ não rege o tema, pois cuida do MS contra ato de juizado especial (auditoria 03/10/2026). Foro do domicílio do autor (CF art. 109, §2º) ou da sede funcional da autoridade coatora. O art. 2º da Lei 12.016/2009 não trata de foro; só define quando a autoridade coatora é federal (auditoria 03/10/2026).
-
-## 9. Refutação a alegações comuns do INSS em MS por omissão
-
-### 9.1. "Há fila de análise, aguarde"
+### 7.1. "Há fila de análise, aguarde"
 
 Refutação. O argumento de "fila" não justifica a violação dos prazos legais. O art. 49 da Lei 9.784/1999, o art. 41-A §5º da Lei 8.213/1991 e o parâmetro do STF (RE 1.171.152/SC) são cogentes. Em PCD, há prioridade legal expressa (Lei 13.146/2015, art. 9º, VII).
 
-### 9.2. "A petição não foi recebida"
+### 7.2. "A petição não foi recebida"
 
 Refutação. Endereçamento múltiplo cobre todas as caixas institucionais padronizadas. A cláusula de inversão do ônus argumentativo (reencaminhamento obrigatório) impede esta defesa. Comprovação técnica do envio (header do e-mail, AR, número de protocolo) refuta a tese.
 
-### 9.3. "O autor não tem interesse de agir, pois não esgotou via administrativa"
+### 7.3. "O autor não tem interesse de agir, pois não esgotou via administrativa"
 
 Refutação. Tema 350/STF dispensa exaurimento. Com requerimento prévio e omissão na correção, há interesse de agir desde o primeiro dia da inércia. As provocações administrativas paralelas reforçam (sem condicionar) o cabimento.
 
-### 9.4. "A IEA é ato interno, não cabe MS"
+### 7.4. "A IEA é ato interno, não cabe MS"
 
 Refutação. O MS não pede a abertura de IEA pelo segurado. Pede que a autoridade legitimada cumpra o seu poder-dever de autotutela (art. 53 da Lei 9.784/1999 e Súmula 473/STF). O ato omissivo é a recusa em atuar, não a abertura da IEA por requerimento externo.
 
-### 9.5. "A Superintendência não é autoridade coatora"
+### 7.5. "A Superintendência não é autoridade coatora"
 
-Refutação. O TRF3 (REM. NEC. CÍVEL 5000095-66.2018.4.03.6119; 5002980-84.2020.4.03.6183) reconhece expressamente a Superintendência Regional como polo passivo legitimado em MS por mora administrativa. É autoridade hierárquica superior aos Gerentes-Executivos e às Coordenações COBEN/COREC.
+Refutação. A Superintendência Regional tem poder hierárquico para determinar o ato omitido e, por isso, responde no MS (precedentes do TRF3 a localizar no MCP `trf3`). É autoridade hierárquica superior aos Gerentes-Executivos e às Coordenações COBEN/COREC.
 
-### 9.6. "Não cabe litisconsórcio passivo"
+### 7.6. "Não cabe litisconsórcio passivo"
 
-Refutação. O TRF3 admite litisconsórcio passivo em MS por omissão estrutural. A omissão atinge cadeia hierárquica (APS → SARD → SGBEN → COBEN → SR). O litisconsórcio reforça a tese e amplia a eficácia da liminar.
+Refutação. A omissão atinge cadeia hierárquica (APS → SARD → SGBEN → COBEN → SR). O litisconsórcio alcança todas as autoridades com poder de praticar o ato.
 
-### 9.7. "Astreintes não cabem em MS"
+### 7.7. "Astreintes não cabem em MS"
 
-Refutação. O TRF3 admite expressamente astreintes diárias em MS por mora administrativa (REM. NEC. CÍVEL 5002980-84.2020.4.03.6183). Funda-se nos arts. 536 e 537 do CPC, aplicáveis subsidiariamente ao MS (Lei 12.016/2009, art. 24).
+Refutação. As astreintes decorrem dos arts. 536 e 537 do CPC, aplicáveis subsidiariamente ao MS. O descumprimento da ordem também configura desobediência (Lei 12.016/2009, art. 26).
 
-### 9.8. "O prazo decadencial de 120 dias está exaurido"
+### 7.8. "O prazo decadencial de 120 dias está exaurido"
 
-Refutação. Tratando-se de omissão continuada, o prazo se renova diariamente (TRF3 e STJ pacíficos). O decorrer do tempo não consume o direito de impetrar contra omissão atual.
+Refutação. Na omissão continuada, o prazo não se consuma enquanto persistir a inércia; o tempo decorrido não extingue o direito de impetrar contra omissão atual.
 
-## 10. Polo passivo recomendado em MS
+## 8. Polo passivo recomendado em MS
 
-### 10.1. Litisconsórcio passivo necessário
+### 8.1. Litisconsórcio passivo necessário
 
 Gerente-Executivo da GEX. Responsável imediato pela operação local.
 
 Chefe do SGBEN/GEX. Responsável formal pela abertura da IEA pelo art. 13/26 §1º das Portarias DIRBEN.
 
-Superintendente Regional. Autoridade hierárquica superior. Polo passivo legitimado pelo TRF3.
+Superintendente Regional. Autoridade hierárquica superior.
 
-### 10.2. Polo passivo opcional (cópia)
+### 8.2. Polo passivo opcional (cópia)
 
-Coordenador(a) COBEN/SR. Reforça pressão hierárquica.
+Coordenador(a) COBEN/SR.
 
 DIRBEN/CGRD. Em casos de vício estrutural ou política sistemática.
 
-## 11. Pedido liminar típico
+## 9. Pedido liminar típico
 
-### 11.1. Conteúdo
+### 9.1. Conteúdo
 
 Determinação às autoridades coatoras de.
 
@@ -138,41 +106,21 @@ Realização de avaliação biopsicossocial e perícia médica nos termos do IF-
 
 Suspensão imediata de eventuais efeitos prejudiciais da concessão viciada.
 
-Astreintes diárias (R$ ___/dia, com base em precedentes do TRF3).
+Astreintes diárias (R$ ___/dia).
 
-### 11.2. Causa de pedir
+### 9.2. Causa de pedir
 
 Violação a direito líquido e certo de o segurado ver seu pleito corretamente analisado, mediante avaliação biopsicossocial. Ver a Administração observar seu próprio normativo (art. 13 §1º Port. 1.231/2024 e art. 26 §1º Port. 1.309/2025).
 
-### 11.3. Pedido principal
+### 9.3. Pedido principal
 
 Confirmação da liminar. Determinação de realização de avaliação biopsicossocial e perícia médica nos termos do IF-BrA.
 
-### 11.4. Honorários
+### 9.4. Honorários
 
-Os honorários no MS seguem regra própria. Em regra não cabíveis nos termos do art. 25 da Lei 12.016/2009. Considerar pedido de honorários advocatícios contratuais (a destacar).
+Não há condenação em honorários de sucumbência no MS (Lei 12.016/2009, art. 25). Os honorários contratuais seguem o contrato com o cliente.
 
-## 12. Doutrina
-
-Hely Lopes Meirelles. Mandado de Segurança. Detalha cabimento e procedimento.
-
-Calmon de Passos. Mandado de Segurança.
-
-Cassio Scarpinella Bueno. Mandado de Segurança. Manual contemporâneo.
-
-Eduardo Talamini. Tutela de urgência e MS. Detalha pedido liminar.
-
-José dos Santos Carvalho Filho. Manual de Direito Administrativo. Detalha autoridade coatora.
-
-Maria Sylvia Zanella Di Pietro. Direito Administrativo. Aprofunda controle judicial da Administração.
-
-Frederico Amado e Hugo Goes. Direito Previdenciário. Detalham canais de defesa do segurado.
-
-Marco Aurélio Serau Junior. Processo Judicial Previdenciário. MS previdenciário.
-
-Daniel Pulino. Aposentadoria por Invalidez. Aprofunda processo administrativo previdenciário.
-
-## 13. Fontes oficiais
+## 10. Fontes oficiais
 
 Lei 12.016/2009 (LMS).
 

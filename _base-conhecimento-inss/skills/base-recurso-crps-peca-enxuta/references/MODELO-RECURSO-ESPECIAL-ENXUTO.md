@@ -1,6 +1,6 @@
 # Modelo de Recurso Especial ao CRPS - Versão Enxuta
 
-Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado, em padrão enxuto e com fundamentação normativa. O cabimento decorre do art. 90 do Regimento Interno do CRPS, e o pedido de anulação, das hipóteses do art. 91, § 1º (auditoria 03/10/2026). Na Onda 184, a peça passou à linguagem simples, com cada dispositivo citado uma vez.
+Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado, em padrão enxuto e com fundamentação normativa. O cabimento decorre do art. 90 do Regimento Interno do CRPS, e o pedido de anulação, das hipóteses do art. 91, § 1º. A peça usa linguagem simples, com cada dispositivo citado uma vez.
 
 ## DO CABEÇALHO
 
@@ -15,8 +15,6 @@ DD/MM/AAAA, da [X]ª Junta de Recursos, pelas razões a seguir.
 ```
 
 ## DO CORPO DA PEÇA
-
-O corpo foi revisto na auditoria de 03/10/2026 e na Onda 184, que alinhou a forma ao quadro "A mesma peça em todos os ritos" do `ESTILO-MODELO.md`.
 
 ```
 1. DA TEMPESTIVIDADE
@@ -37,7 +35,7 @@ especial (art. 90 do Regimento Interno do CRPS).
 do Regimento Interno e demonstrá-lo por UMA das opções abaixo.]
 
 [OPÇÃO 1. Falta de fundamentação ou de análise da documentação e dos
-pedidos, incisos I e II (auditoria 03/10/2026).]
+pedidos, incisos I e II.]
 
 O Recorrente apresentou [documento, pedido ou alegação] na folha [__], e o
 acórdão recorrido não o examinou, limitando-se a afirmar o seguinte:
@@ -100,7 +98,7 @@ DD/MM/AAAA.
 Caso a Câmara de Julgamento entenda pelo desprovimento, requer
 expressamente o pronunciamento sobre cada fundamento deste recurso,
 para fins de eventuais embargos de declaração por omissão (art. 92,
-III, do Regimento Interno do CRPS) (auditoria 03/10/2026).
+III, do Regimento Interno do CRPS).
 
 [Cidade], [data].
 
@@ -111,18 +109,18 @@ OAB/SP 331.110
 
 ## DAS INSTRUÇÕES OPERACIONAIS
 
-**Tamanho final esperado.** O recurso especial tem de 5 a 8 páginas e não depende de hipótese de cabimento, porque cabe contra qualquer acórdão da Junta de Recursos em recurso ordinário, salvo matéria de alçada exclusiva (art. 89, § 3º) e decisão de diligência (art. 90, § 2º) (auditoria 03/10/2026).
+**Tamanho final esperado.** O recurso especial tem de 5 a 8 páginas e não depende de hipótese de cabimento, porque cabe contra qualquer acórdão da Junta de Recursos em recurso ordinário, salvo matéria de alçada exclusiva (art. 89, § 3º) e decisão de diligência (art. 90, § 2º).
 
-**Anulação.** Se o pedido for de anulação, a peça identifica com PRECISÃO uma das 8 hipóteses do § 1º do art. 91, nenhuma delas de divergência, e a cita uma vez (auditoria 03/10/2026).
+**Anulação.** Se o pedido for de anulação, a peça identifica com PRECISÃO uma das 8 hipóteses do § 1º do art. 91, nenhuma delas de divergência, e a cita uma vez.
 
-**Contrariedade.** O que a admissibilidade exige continua na peça, isto é, a contrariedade a norma, a Enunciado ou a parecer vinculante, demonstrada de forma objetiva e sem retórica, com o paradigma transcrito literalmente uma vez (auditoria 03/10/2026). A tese pró-segurado se apoia no normativo, e cada dispositivo aparece uma vez na peça.
+**Contrariedade.** O que a admissibilidade exige continua na peça, isto é, a contrariedade a norma, a Enunciado ou a parecer vinculante, demonstrada de forma objetiva e sem retórica, com o paradigma transcrito literalmente uma vez. A tese pró-segurado se apoia no normativo, e cada dispositivo aparece uma vez na peça.
 
-**Forma do tópico (Onda 184).** Cada tópico abre pelo fato e pelo erro do acórdão, e o título nomeia o requisito ou o vício, como DA QUALIDADE DE SEGURADO, e nunca o número do artigo. Não se transcreve lei em bloco, salvo o trecho exato da norma ou do Enunciado que o acórdão contrariou.
+**Forma do tópico.** Cada tópico abre pelo fato e pelo erro do acórdão, e o título nomeia o requisito ou o vício, como DA QUALIDADE DE SEGURADO, e nunca o número do artigo. Não se transcreve lei em bloco, salvo o trecho exato da norma ou do Enunciado que o acórdão contrariou.
 
-**Vedações específicas.** É vedado repetir o recurso ordinário, porque o recurso especial ataca os fundamentos do acórdão da Junta de Recursos. Ainda assim, o reexame de fatos e provas é admitido, porque o recurso devolve o conhecimento integral da causa (art. 90, § 1º) (auditoria 03/10/2026).
+**Vedações específicas.** É vedado repetir o recurso ordinário, porque o recurso especial ataca os fundamentos do acórdão da Junta de Recursos. Ainda assim, o reexame de fatos e provas é admitido, porque o recurso devolve o conhecimento integral da causa (art. 90, § 1º).
 
 **Jurisprudência judicial.** A jurisprudência judicial não é vedada, porque o art. 109 do Regimento Interno determina a observância das decisões do STF em controle concentrado, transitadas em julgado, e das súmulas vinculantes (§ 2º), e permite observar os temas de repercussão geral transitados em julgado, os repetitivos, IAC e IRDR do STJ e as súmulas dos dois tribunais, nas condições dos §§ 3º e 4º.
 
-Por sua vez, o acórdão do próprio CRPS como paradigma de divergência é requisito do Pedido de Uniformização de Jurisprudência (art. 122), e não do recurso especial (auditoria 03/10/2026).
+Por sua vez, o acórdão do próprio CRPS como paradigma de divergência é requisito do Pedido de Uniformização de Jurisprudência (art. 122), e não do recurso especial.
 
-**Integração obrigatória.** A peça passa pela `recursos-superiores-crps`, para o cabimento e as 8 hipóteses de anulação (auditoria 03/10/2026), pela `admissibilidade-barreiras-crps`, para a verificação de cabimento, e pela `base-revisao-peticao-aprofundada`, para a auditoria após a geração.
+**Integração obrigatória.** A peça passa pela `recursos-superiores-crps`, para o cabimento e as 8 hipóteses de anulação, pela `admissibilidade-barreiras-crps`, para a verificação de cabimento, e pela `base-revisao-peticao-aprofundada`, para a auditoria após a geração.

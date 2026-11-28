@@ -5,11 +5,11 @@ description: "Protocolo operacional VINCULANTE do escritório Paulo Roberto Terc
 
 # Protocolo Operacional do Escritório
 
-Anexo operacional VINCULANTE do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110). Aplica-se a TODA sessão. Vigente desde 05/09/2026 (Onda 123).
+Anexo operacional VINCULANTE do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110). Aplica-se a TODA sessão. Vigente desde 05/09/2026.
 
 Esta skill é o espelho VERSIONADO do `CLAUDE.md` que fica na pasta de trabalho do escritório. O CLAUDE.md garante a aplicação automática em cada sessão. Esta skill garante o versionamento, a distribuição junto com o plugin e a consulta pelos agentes. Divergindo os dois, prevalece o mais recente, e a correção do outro é imediata.
 
-Este anexo NÃO substitui as constraints permanentes do escritório. Atuação exclusiva pelo segurado do INSS, rigor absoluto de verificação com "Não localizado" quando não houver confirmação oficial, vedação de dois-pontos para introduzir explicação, lista ou complemento lógico, e sigilo dos dados de cliente.
+Este anexo NÃO substitui as constraints permanentes do escritório. Atuação exclusiva pelo segurado do INSS, rigor de verificação com "Não localizado" quando não houver confirmação oficial, vedação de dois-pontos fora da citação literal e da enumeração (regra 10), e sigilo dos dados de cliente.
 
 ---
 
@@ -63,7 +63,7 @@ Cálculo de tempo, RMI e valor da causa é do Prévius. Não estimar, não impro
 
 Sem CNIS completo, NÃO calcular. Apontar o que falta.
 
-Antes de pedir o print do Prévius, PROCURAR na pasta do cliente. Pedir o que já está lá desgasta.
+Antes de pedir o print do Prévius, PROCURAR na pasta do cliente. Pedir o que já está na pasta gera retrabalho.
 
 ## 7. Skills centrais, acionamento obrigatório
 
@@ -105,21 +105,21 @@ Temas fora do previdenciário também exigem informação VERIFICADA. O rigor de
 
 ## 10. Padrão de escrita do escritório
 
-Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo de 132 Ondas. Detalhamento e tetos por tipo de documento em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Vigente desde 09/09/2026. Extraído das correções que o titular fez às entregas do Claude. Detalhamento e tetos por tipo de documento em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-**O leitor mede o texto pelo esforço de ler, não pelo que ele contém.** Todo entregável nasce dentro de um teto de extensão declarado ANTES da redação, e não é cortado depois. Parecer, uma página. Síntese do caso, duas ou três linhas. Anotação `(C)` no To Do, duas ou três linhas. Relatório de auditoria ou de agente, uma página. Documento que estoura o teto não sai, volta para o corte. A peça processual ou administrativa é a exceção: a extensão da Camada 6 é referência preferencial, e a peça não se corta para caber, porque o corte retirava fato, prova e raciocínio necessários à compreensão (Onda 181).
+**O leitor mede o texto pelo esforço de ler, não pelo que ele contém.** Todo entregável nasce dentro de um teto de extensão declarado ANTES da redação, e não é cortado depois. Parecer, uma página. Síntese do caso, duas ou três linhas. Anotação `(C)` no To Do, duas ou três linhas. Relatório de auditoria ou de agente, uma página. Documento que excede o teto não sai e volta para o corte. A peça processual ou administrativa é a exceção. Nela, a extensão da Camada 6 é referência preferencial, e a peça não se corta para caber, porque o corte retirava fato, prova e raciocínio necessários à compreensão.
 
-**Resposta em chat tem o tamanho da pergunta.** Fixado em 22/09/2026. Pergunta de uma linha recebe um parágrafo, e a resposta abre pelo veredito. Precedente, alerta e via judicial só entram quando pedidos ou quando mudam a resposta. A skill carregada informa o conteúdo, não dita o formato, e o que ela manda "sempre alertar" vale para peça e parecer, não para conversa. Pergunta que já traz a resposta certa recebe a confirmação em uma frase e o que a corrige, se houver.
+**Resposta em chat tem o tamanho da pergunta.** Fixado em 22/09/2026. Pergunta de uma linha recebe um parágrafo, e a resposta abre pelo veredito. Precedente, alerta e via judicial apenas entram quando pedidos ou quando mudam a resposta. A skill carregada informa o conteúdo, não dita o formato, e o que ela manda "sempre alertar" vale para peça e parecer, não para conversa. Pergunta que já traz a resposta certa recebe a confirmação em uma frase e o que a corrige, se houver.
 
 **Pesquisa entregue no chat, fixada em 04/10/2026.** A resposta que nasce de pesquisa tem até três parágrafos, recomendação, fundamento decisivo e risco, e no máximo três dados concretos. Julgado se cita pela corrente e pelo órgão, sem número, relator ou data, e a lista completa vai em planilha anexa, com a marcação de cada julgado. Detalhe e exemplo em `references/PADRAO-DE-ESCRITA.md`, seção "Resposta de chat com pesquisa".
 
 **Um ponto decisivo por documento.** Antes de escrever, nomear em uma frase o que decide o caso. O texto existe para provar essa frase. O que não a serve não entra.
 
-**Só o dado que decide.** Nome do segurado, idade, datas de nascimento, histórico sem consequência, explicação repetida, ato burocrático já visível no andamento, conversa de circunstância. Nada disso entra em síntese, quadro, tabela ou anotação. Tabela cheia cansa e esconde, tabela com três linhas mostra.
+**Apenas o dado que decide.** Nome do segurado, idade, datas de nascimento, histórico sem consequência, explicação repetida, ato burocrático já visível no andamento, conversa de circunstância. Nada disso entra em síntese, quadro, tabela ou anotação. Tabela longa cansa o leitor e esconde o essencial, e tabela com três linhas o mostra.
 
 **Formato do escritório, nunca formato inventado.** Toda peça parte do Modelo Ouro, todo relatório médico do modelo já em uso, toda anotação do padrão do To Do. Rótulo, seção, bloco ou estrutura que o escritório não pratica NÃO se cria. Na dúvida, prosa corrida em ordem decisória, abrindo pelo que decide.
 
-**Resolver, não delegar de volta.** Relatório que devolve "conferir X" sem ter conferido é trabalho empurrado ao titular. A skill abre a fonte, confere e reporta o resultado. Só sobe ao titular o que exige decisão dele.
+**Resolver, não delegar de volta.** Relatório que devolve "conferir X" sem ter conferido é trabalho transferido ao titular. A skill abre a fonte, confere e reporta o resultado. Apenas sobe ao titular o que exige decisão dele.
 
 **Linguagem pelo destinatário.** Cliente recebe texto simples, autoexplicativo e com o ponto que ele deve sustentar. Documento interno recebe técnica seca, sem didática. Juiz e conselheiro recebem o mínimo que prova o ponto.
 
@@ -127,13 +127,13 @@ Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo d
 
 **Redação das peças, fixada em 11/09/2026.** A linguagem é formal e jurídica, mas simples, e a peça convence pela precisão com que expõe o fato, a prova e a norma, nunca por adjetivos ou acusações. Em vez de escrever que "a decisão combatida revela-se manifestamente absurda e afronta os mais basilares princípios de justiça", escreve-se que "a decisão não examinou o documento apresentado pela parte autora, embora seu conteúdo seja relevante para a análise do requisito controvertido", porque a segunda redação diz o que aconteceu, aponta a prova e deixa a consequência ao alcance do julgador.
 
-Cada parágrafo desenvolve uma única ideia com começo, meio e fim, em frases completas e encadeadas por conectivos naturais. No papel do escritório uma linha tem cerca de dez palavras, medido em 16/09/2026, e o parágrafo tem de três a cinco linhas, de 30 a 55 palavras, com teto de 65 (Ondas 163 e 176). O `peticao-previdenciaria/scripts/medir_peca.py` aponta o parágrafo acima do teto para ser dividido em dois, ligados por transição, e nunca para ter conteúdo retirado.
+Cada parágrafo desenvolve uma única ideia com começo, meio e fim, em frases completas e encadeadas por conectivos naturais. No papel do escritório uma linha tem cerca de dez palavras, medido em 16/09/2026, e o parágrafo tem de três a cinco linhas, de 30 a 55 palavras, com teto de 65. O `peticao-previdenciaria/scripts/medir_peca.py` aponta o parágrafo acima do teto para ser dividido em dois, ligados por transição, e nunca para ter conteúdo retirado.
 
 A fundamentação é seletiva. Cita-se o dispositivo que decide e explica-se em uma frase por que ele se aplica ao caso, e a lista de artigos sem essa explicação não entra, porque é a forma mais comum de prolixidade nas peças geradas. Os pedidos são específicos, cada um com a providência, o objeto e o fundamento que o sustenta. Uma redação convincente não garante que artigos, precedentes e conclusões estejam certos, e por isso toda peça é conferida com os autos e com as fontes antes de sair.
 
 A fórmula do parágrafo argumentativo, fixada pelo titular em 11/09/2026, é afirmar o fato, localizar a prova, explicar sua relevância e formular a consequência pretendida, com firmeza proporcional ao que os autos demonstram. A medida é a brevidade máxima, e, quando não for possível ser breve, prevalece o desenvolvimento da ideia até demonstrar o que se quer sustentar. Corta-se toda repetição, nunca a demonstração. A peça abre pela controvérsia, de modo que o leitor identifique o benefício, o motivo do indeferimento e o ponto que precisa decidir, e não por parágrafos sobre a importância constitucional da Previdência. A amostra de voz por espécie, com os pares genérico e preciso, está em `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, e toda peça e toda passada da `humanizador-tedson` a tomam como referência.
 
-Permanecem as constraints de sempre. Dois-pontos só antes de citação literal ou enumeração (Onda 163), e fora disso a solução é o conectivo ou a subordinação, nunca picar o período. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.
+Permanecem as constraints de sempre. Dois-pontos apenas antes de citação literal ou enumeração, e fora disso a solução é o conectivo ou a subordinação, nunca fragmentar o período. Sem traços de texto gerado por IA, e a `humanizador-tedson` passa em todo texto em português.
 
 ## MCPs da casa
 

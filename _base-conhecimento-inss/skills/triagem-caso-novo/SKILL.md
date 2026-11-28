@@ -11,7 +11,7 @@ Esta skill é o ponto de entrada do ecossistema de skills do escritório. Recebe
 
 Funciona como um roteador inteligente. Não substitui nenhuma skill especializada, mas garante que nenhuma deixe de ser acionada quando pertinente.
 
-Quando a triagem envolver leitura de pasta de cliente no Drive ou houver mais de um caso na mesma conversa, despache a análise ao agente do plugin `base-conhecimento-inss:triagem-caso` (Onda 82), um cliente por despacho. O agente roda com contexto isolado, impede que dados de um caso vazem no contexto de outro e devolve o relatório nas mesmas oito seções desta skill. Sem o agente disponível, execute a triagem inline conforme este roteiro.
+Quando a triagem envolver leitura de pasta de cliente no Drive ou houver mais de um caso na mesma conversa, despache a análise ao agente do plugin `base-conhecimento-inss:triagem-caso`, um cliente por despacho. O agente roda com contexto isolado, impede que dados de um caso vazem no contexto de outro e devolve o relatório nas mesmas oito seções desta skill. Sem o agente disponível, execute a triagem inline conforme este roteiro.
 
 ## Protocolo de Coleta de Dados
 
@@ -41,7 +41,7 @@ Antes de classificar o caso, coletar os seguintes dados. Se o usuário não forn
 
 ### Regra de coleta progressiva
 
-Não bombardear o cliente com todas as perguntas de uma vez. Fazer a coleta em duas rodadas.
+Não apresentar ao cliente todas as perguntas de uma vez. Fazer a coleta em duas rodadas.
 
 **Rodada 1.** Dados críticos. Classificar provisoriamente o caso.
 
@@ -51,7 +51,7 @@ Se o usuário enviar documentos (CNIS, carta de indeferimento, laudo, PPP), extr
 
 ## Classificação do Caso
 
-Após a coleta, classificar o caso em uma ou mais das categorias abaixo. Ler o arquivo `references/MAPA-CLASSIFICACAO.md` para a árvore decisória completa com critérios de enquadramento.
+Após a coleta, classificar o caso em uma ou mais das categorias abaixo.
 
 ### Categorias principais
 
@@ -82,21 +82,21 @@ Um caso pode ter mais de uma classificação. Exemplo comum é o segurado que pr
 
 ## Roteamento de Skills
 
-Após a classificação, acionar automaticamente as skills pertinentes conforme a tabela em `references/MAPA-ROTEAMENTO.md`. O roteamento não é exaustivo. Se durante a análise surgir necessidade de skill não prevista na tabela, acionar igualmente.
+Após a classificação, acionar automaticamente as skills pertinentes conforme os pipelines por benefício da `ponte-orquestrador-previdenciario` (seção 3). O roteamento não é exaustivo. Se durante a análise surgir necessidade de skill não prevista na tabela, acionar igualmente.
 
 ### Skills universais (acionadas em TODO caso)
 
 Estas skills são acionadas independentemente da classificação.
 
-- **documentos-comprobatorios-in128**, documentação obrigatória por categoria e espécie
+- **base-documentos-comprobatorios-in128**, documentação obrigatória por categoria e espécie
 - **precedentes-previdenciarios**, temas vinculantes aplicáveis ao caso
-- **atendimento-respostas-padrao**, gerar o pedido de documentos ao cliente, no modelo da seção "Pedido de documentos ao cliente" (a skill cartas-documentos-previdencia não existe no plugin)
+- **atendimento-respostas-padrao**, gerar o pedido de documentos ao cliente, no modelo da seção "Pedido de documentos ao cliente"
 - **inss-canais-atendimento**, orientar canal adequado se for via administrativa
 - **requerimento-administrativo-inss**, quando o caso exigir requerimento administrativo, gerar peça no formato adequado ao servidor do INSS (linguagem instrutiva, normas internas, formato tabular)
 
 ### Skills condicionais (acionadas conforme classificação)
 
-Ler `references/MAPA-ROTEAMENTO.md` para a tabela completa de roteamento por classificação.
+Usar os pipelines por benefício da `ponte-orquestrador-previdenciario` e a skill do benefício classificado.
 
 ## Determinação do Rito e Foro
 
@@ -140,11 +140,11 @@ Gerar alerta quando identificar qualquer das seguintes situações.
 
 **ALERTA. Perspectiva de gênero.** Se a segurada é mulher em atividade rural, informal ou doméstica, acionar `perspectiva-genero-previdenciario`.
 
-**ALERTA. Segurado analfabeto.** Se identificado que o segurado não sabe ou não pode assinar, acionar `assinatura-a-rogo` para orientar procedimento de procuração e documentos.
+**ALERTA. Segurado analfabeto.** Se identificado que o segurado não sabe ou não pode assinar, orientar procuração por instrumento público ou assinatura a rogo com duas testemunhas, conforme a exigência do INSS e do juízo [conferir a exigência vigente].
 
 **ALERTA. Análise documental (B31/B91/B94).** Se o caso envolver requerimento de B31, B91 ou B94, acionar `analise-documental-incapacidade` para verificar o regime das Portarias Conjuntas 13/14/15/2026.
 
-**ALERTA. Portaria 462 (armadilha processual).** Se o segurado fez pedido de revisão do ato de indeferimento antes de recorrer, alertar sobre a restrição do art. 112 §7º e acionar `portaria-462-restricao-recursal`.
+**ALERTA. Art. 112, §7º, do RICRPS (redação da Portaria MPS 462/2026).** Se o segurado fez pedido de revisão do ato de indeferimento antes de recorrer, alertar sobre a restrição do art. 112, §7º, e acionar `admissibilidade-barreiras-crps`.
 
 **ALERTA. Segurado especial rural.** Se o caso envolver segurado especial, atividade rural em regime de economia familiar, aposentadoria rural por idade ou período rural a computar, acionar `segurado-especial-rural` para regime jurídico completo, estratégia probatória e precedentes específicos. Se CNPJ ativo no CPF do segurado, acionar imediatamente para defesa preventiva.
 
@@ -154,7 +154,7 @@ Gerar alerta quando identificar qualquer das seguintes situações.
 
 **ALERTA. Manutenção da qualidade de segurado.** Se o segurado já cumpriu carência para aposentadoria por idade mas ainda não atingiu a idade mínima, NUNCA orientar cessação total de contribuições, mesmo que a perda da qualidade não impeça a aposentadoria por idade (art. 3º, §1º, Lei 10.666/2003). A qualidade de segurado protege contra incapacidade (B31/B32) e garante pensão por morte (B21/B93) aos dependentes. Orientar manutenção de contribuições periódicas até implementação de todos os requisitos das aposentadorias programáveis. Acionar `periodo-graca-qualidade-segurado` para prazos e estratégia.
 
-**ALERTA. Doença preexistente à filiação (art. 59, parágrafo único).** Se a doença que fundamenta o pedido de incapacidade existia antes da filiação ou do reinício das contribuições, NÃO propor isenção de carência pelo art. 151 como argumento isolado. A isenção pressupõe doença surgida após a filiação. Para doença preexistente, o único fundamento viável é o agravamento posterior (art. 59, parágrafo único, Lei 8.213/91). Verificar se há prova clínica do agravamento e em que data ele ocorreu. Contar a carência nessa data antes de afirmar que o requisito está cumprido. Esse alerta se aplica especialmente quando o segurado inicia contribuições como facultativo após longo período sem filiação e já possui diagnóstico prévio.
+**ALERTA. Doença preexistente à filiação (art. 59, §1º, da Lei 8.213/91).** Se a doença que fundamenta o pedido de incapacidade existia antes da filiação ou do reinício das contribuições, NÃO propor isenção de carência pelo art. 151 como argumento isolado. A isenção pressupõe doença surgida após a filiação. Para doença preexistente, o único fundamento viável é o agravamento posterior (art. 59, parágrafo único, Lei 8.213/91). Verificar se há prova clínica do agravamento e em que data ele ocorreu. Contar a carência nessa data antes de afirmar que o requisito está cumprido. Esse alerta se aplica especialmente quando o segurado inicia contribuições como facultativo após longo período sem filiação e já possui diagnóstico prévio.
 
 ## Análise de Viabilidade
 
@@ -170,7 +170,7 @@ Classificar em ALTA (precedente vinculante favorável + legislação clara), MÉ
 
 ### Viabilidade probatória
 
-O cliente tem ou pode obter a prova necessária? Há lacunas documentais suprímíveis?
+O cliente tem ou pode obter a prova necessária? Há lacunas documentais supríveis?
 
 Classificar em ALTA (documentação completa ou facilmente obtenível), MÉDIA (documentação parcial com lacunas supríveis) ou BAIXA (prova principal ausente e de difícil obtenção).
 
@@ -225,7 +225,7 @@ Lista das skills consultadas durante a triagem, para rastreabilidade.
 
 ## Regras de Comportamento
 
-**Nunca classificar sem dados mínimos.** Se os dados críticos estão ausentes, perguntar antes de classificar. Não chutar.
+**Nunca classificar sem dados mínimos.** Se os dados críticos estão ausentes, perguntar antes de classificar. Não presumir.
 
 **Nunca omitir alertas.** Se um alerta foi disparado, ele aparece no relatório independentemente de o usuário ter perguntado.
 
@@ -239,20 +239,13 @@ Lista das skills consultadas durante a triagem, para rastreabilidade.
 
 **Registrar aprendizados.** Se durante a triagem o usuário relatar resultado de caso anterior que revele aprendizado documental, acionar `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") no Fluxo B.
 
-## Referências
-
-Antes de classificar qualquer caso, consultar os arquivos de referência.
-
-- `references/MAPA-CLASSIFICACAO.md`, árvore decisória de classificação por dados do segurado
-- `references/MAPA-ROTEAMENTO.md`, tabela de roteamento de skills por classificação
-
-## Análise do CNIS na triagem (Onda 117)
+## Análise do CNIS na triagem
 
 Havendo extrato do CNIS, despachar ao agente `analista-cnis` ANTES de classificar o benefício cabível e de avaliar viabilidade. A contagem em dois cenários que ele devolve, sem correção e com correção, é o que permite dizer se o caso é de requerimento imediato, de acerto administrativo prévio ou de espera.
 
 Triagem feita sobre a leitura superficial do CNIS erra o benefício e erra a DER.
 
-## Atendimento transcrito (Onda 125)
+## Atendimento transcrito
 
 Vindo o caso de atendimento gravado, de áudio ou de conversa de WhatsApp, passar antes pela `transcricao-atendimento`, que converte a fala na anotação padronizada e devolve a seção "Faltou perguntar", confrontando o atendimento com os dados mínimos desta skill.
 
@@ -260,7 +253,7 @@ Ganho da ordem. A triagem recebe o caso já com os dados críticos separados do 
 
 ## Extensão
 
-Teto de o relatório de triagem, 1 página, porque vira parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto do relatório de triagem, 1 página, porque vira parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que excede o teto volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e apenas o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 

@@ -4,7 +4,7 @@
 
 ### 1.1. Aposentadoria PCD concluída sem perícia médica e sem avaliação biopsicossocial
 
-Cenário central. Violação frontal aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026). Conclusão automática do PA sem realização da avaliação multiprofissional. Vício de mérito que reclama anulação.
+Cenário central. Violação aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014. Conclusão automática do PA sem realização da avaliação multiprofissional. Vício de mérito que reclama anulação.
 
 Provocação adequada. Notícia de Fato ao MPF/PRM com pedido de instauração de Procedimento Preparatório, ofício de requisição ao Gerente-Executivo (LC 75/93, art. 8º, II) e cópia à PFDC (GT Pessoa com Deficiência).
 
@@ -114,7 +114,7 @@ Portal do MPF. https://saj.mpf.mp.br/.
 
 Recomenda-se protocolar Notícia de Fato com pedido expresso de.
 
-Instauração de Procedimento Preparatório (art. 4º da Resolução CNMP nº 174/2017).
+Instauração de Procedimento Preparatório (Resolução CNMP nº 23/2007, art. 2º, § 4º).
 
 Ou Procedimento Administrativo (art. 8º da mesma Resolução).
 
@@ -124,19 +124,17 @@ Eventual ofício de requisição direta (LC 75/93, art. 8º, II e VIII) ao Geren
 
 ### 5.1. Notícia de Fato
 
-Art. 4º. "Notícia de Fato é qualquer demanda dirigida aos órgãos da atividade-fim do Ministério Público, submetida à apreciação das Procuradorias e Promotorias de Justiça".
+Art. 1º. Notícia de Fato é qualquer demanda dirigida aos órgãos da atividade-fim do Ministério Público. Pode ser apresentada por qualquer pessoa, por escrito ou oralmente.
 
-Art. 5º. Forma. Pode ser apresentada por qualquer pessoa, oralmente ou por escrito.
+### 5.2. Procedimento Preparatório (Resolução CNMP 23/2007, art. 2º, §§ 4º a 7º)
 
-### 5.2. Procedimento Preparatório
-
-Art. 4º. Cabe quando ainda não há os elementos mínimos para a instauração de Inquérito Civil.
+Cabe quando ainda não há os elementos mínimos para a instauração de Inquérito Civil.
 
 Prazo. 90 dias prorrogáveis uma única vez por igual período (180 dias máximo).
 
 ### 5.3. Procedimento Administrativo
 
-Art. 8º. Instrumento próprio para.
+Art. 8º. Instrumento próprio para:
 
 I. Acompanhar o cumprimento das cláusulas de termo de ajustamento de conduta celebrado.
 
@@ -172,7 +170,7 @@ Anexos.
 
 ### 6.2. Pedidos típicos
 
-Instauração de Procedimento Preparatório (Resolução CNMP 174/2017, art. 4º).
+Instauração de Procedimento Preparatório (Resolução CNMP 23/2007, art. 2º, § 4º).
 
 Expedição de ofício de requisição ao Gerente-Executivo da GEX competente, sob pena de prevaricação (CP art. 319).
 

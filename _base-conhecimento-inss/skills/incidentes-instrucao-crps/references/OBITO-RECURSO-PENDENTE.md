@@ -83,7 +83,7 @@ Aposentadorias, auxílio-doença, auxílio-acidente, salário-maternidade. O rec
 
 ### 5.2. BPC/LOAS
 
-Benefício personalíssimo e intransferível. Não gera pensão por morte. Porém, se o direito foi reconhecido (mesmo por decisão administrativa posterior ao óbito), os valores acumulados entre a DER e o óbito são devidos aos sucessores (Tema 1057/STJ; TRF3, 9ª Turma, AI 5010882-81.2018.4.03.0000).
+Benefício personalíssimo e intransferível. Não gera pensão por morte. Porém, se o direito foi reconhecido (mesmo por decisão administrativa posterior ao óbito), os valores acumulados entre a DER e o óbito são devidos aos sucessores (TRF3, 9ª Turma, AI 5010882-81.2018.4.03.0000).
 
 ALERTA, risco real quando instrução probatória está incompleta e depende de avaliação biopsicossocial presencial. Se o segurado falecer antes da avaliação, a análise ficará prejudicada. Esse risco é menor no CRPS (recurso já pressupõe decisão administrativa anterior), mas existe em matéria de alçada exclusiva (art. 89, §3º, Regimento) quando a PMF ainda não emitiu parecer.
 
@@ -117,7 +117,7 @@ REsp 1.856.967/ES (afetado). Possibilidade de reconhecimento da legitimidade ati
 
 ### 6.6. Tema 1.254/STJ. prescrição da habilitação (PENDENTE)
 
-REsp 2.034.210, 2.034.211 e 2.034.214, Corte Especial, Rel. Min. Humberto Martins. Controvérsia sobre se ocorre ou não prescrição para a habilitação de herdeiros ou sucessores da parte falecida no curso da ação. PENDENTE DE JULGAMENTO. Enquanto não julgado, a cautela recomenda habilitação imediata.
+REsp 2.034.210, 2.034.211 e 2.034.214, Corte Especial, Rel. Min. Humberto Martins. Controvérsia sobre se ocorre ou não prescrição para a habilitação de herdeiros ou sucessores da parte falecida no curso da ação. Situação a conferir na data da peça. Enquanto houver dúvida, habilitar de imediato.
 
 ## 7. PROTOCOLO DE ATUAÇÃO DO ESCRITÓRIO
 

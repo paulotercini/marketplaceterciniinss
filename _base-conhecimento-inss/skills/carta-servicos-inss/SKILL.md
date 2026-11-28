@@ -15,7 +15,7 @@ Acionar sempre que houver pedido para adicionar novo benefício, atualizar marco
 
 A carta é dirigida ao cliente leigo, não ao perito ou ao juiz. Linguagem deve ser clara, objetiva, com instruções acionáveis. Não escreva como petição.
 
-Toda afirmação jurídica entra somente após verificação em fonte primária oficial. Nunca invente Tema, Súmula, número de Lei ou Portaria. Se não confirmar, não cite.
+Toda afirmação jurídica entra apenas após verificação em fonte primária oficial. Nunca invente Tema, Súmula, número de Lei ou Portaria. Se não confirmar, não cite.
 
 A postura é exclusivamente pró-segurado. Nenhum alerta deve enfraquecer a posição do cliente. Quando há controvérsia jurisprudencial, escolha a redação que preserva o direito e indique a tese pró-segurado como cabível, sem prometer vitória.
 
@@ -65,7 +65,7 @@ Atualize o array `ids` do agrupamento em `GRUPOS`. Se o agrupamento certo não e
 
 Adicione entrada no objeto `B`, com todos os campos obrigatórios. A introdução fala diretamente ao cliente. As seções `s` listam documentos obrigatórios. Os alertas `al` cobrem prazos, riscos, controvérsias e dicas pró-segurado.
 
-Adicione entrada correspondente em `EX`, no formato `{grupos:[...]}` quando houver mais de uma categoria de exemplos. Use array simples só para benefícios muito enxutos.
+Adicione entrada correspondente em `EX`, no formato `{grupos:[...]}` quando houver mais de uma categoria de exemplos. Use array simples apenas para benefícios muito enxutos.
 
 Confirme com `grep` que o id aparece em todos os pontos certos antes de finalizar.
 
@@ -87,31 +87,21 @@ Atualize `references/marcos-normativos.md` com o novo item para futuras consulta
 
 ## Como publicar no Netlify Drop
 
-A publicação no Netlify Drop é simples, mas exige cuidado com nome do arquivo.
-
-Renomeie o arquivo final para `index.html` antes do upload. O Netlify só serve diretamente o `index.html` na raiz da URL. Sem essa renomeação, a URL exigirá complemento `/carta-documentos-inss-v8.html`.
-
-Acesse `app.netlify.com/drop` e arraste o arquivo. A URL é gerada automaticamente. Se o usuário cadastrou conta, é possível reservar nome próprio do site (por exemplo `carta-tercini.netlify.app`).
-
-Cada nova versão exige novo arrastar do arquivo atualizado, com mesmo nome `index.html`. Avise sempre o usuário a fazer o upload da versão final.
-
-Para configurar domínio próprio do escritório, oriente o usuário a apontar CNAME do subdomínio escolhido para o Netlify. Esta etapa é opcional.
-
-O passo a passo detalhado, incluindo controle de acesso e atualização, está em `references/publicacao-netlify.md`.
+Renomeie o arquivo final para `index.html` e arraste-o em `app.netlify.com/drop`; cada versão exige novo envio com o mesmo nome. Passo a passo, controle de acesso e domínio próprio em `references/publicacao-netlify.md`.
 
 ## Validação obrigatória antes de fechar o ciclo
 
 Antes de declarar a alteração concluída, faça a checagem abaixo.
 
-Validar JS com `node --check` em uma extração do conteúdo do `<script>`. Sintaxe quebrada torna a página inutilizável.
+Validar JS com `node --check` em uma extração do conteúdo do `<script>`.
 
 Confirmar contagens com `grep -c` para os ids novos e marcos normativos novos. Cada id deve aparecer no card, em B e em EX. Cada marco deve aparecer ao menos uma vez no alerta correspondente.
 
 Verificar a versão e a data no rodapé do cabeçalho.
 
-Conferir que nenhum alerta usa expressão hesitante como "parece que", "pode ser que", "talvez", "é possível que" em redação técnica. A skill segue a regra de honestidade radical do escritório. Se o fundamento existe, afirma. Se não existe, declara que não há base.
+Conferir que nenhum alerta usa expressão hesitante como "parece que", "pode ser que", "talvez", "é possível que" em redação técnica. Se o fundamento existe, a carta afirma; se não existe, declara que não há base.
 
-Conferir que nenhum dois-pontos foi usado para introduzir explicações ou listas no corpo da carta, conforme padrão editorial do escritório. A carta usa frases independentes ou conectadas por conjunções.
+Conferir que os dois-pontos aparecem apenas antes de citação literal ou de enumeração, conforme o padrão de escrita do escritório.
 
 ## Cruzamentos obrigatórios
 
@@ -119,7 +109,7 @@ Esta skill cruza automaticamente com as skills da `base-conhecimento-inss` corre
 
 Cruza também com `peticao-previdenciaria` quando o ajuste tiver origem em padrão usado nas peças. A carta deve refletir os argumentos pró-segurado que o escritório usa em juízo.
 
-Cruza com `documentos-comprobatorios-in128` para garantir que a lista de documentos siga a IN 128/2022.
+Cruza com `base-documentos-comprobatorios-in128` para garantir que a lista de documentos siga a IN 128/2022.
 
 Cruza com `precedentes-previdenciarios` para confirmar Temas e Súmulas antes de citá-los.
 
@@ -127,7 +117,7 @@ Cruza com `precedentes-previdenciarios` para confirmar Temas e Súmulas antes de
 
 Quando o usuário pedir benefício que ainda não existe na carta, primeiro confirme se há base normativa e demanda recorrente do escritório. Não criar card para situação muito específica que pode ser tratada em consulta individual.
 
-Para cada novo card, propor primeiro a estrutura completa e só depois aplicar. Evita retrabalho e padroniza a árvore de cards.
+Para cada novo card, propor primeiro a estrutura completa e depois aplicá-la. Evita retrabalho e padroniza a árvore de cards.
 
 ## Quando NÃO usar esta skill
 

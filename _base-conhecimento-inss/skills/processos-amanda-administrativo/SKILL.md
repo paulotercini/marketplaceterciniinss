@@ -11,7 +11,7 @@ Skill operacional do escritório Paulo Roberto Tercini Filho. Documenta os proce
 1. **Redundância**, permitindo que André ou Ingrid substitua a Amanda em férias, atestado ou em demanda de pico.
 2. **Descongestionar Paulo**, transferindo decisões repetíveis para o nível Amanda sem necessidade de aprovação caso a caso.
 
-A auditoria identificou que Amanda é última autora de 100 tarefas (8,1 % do backlog) e parceira de Paulo em 1.978 transições de body (par mais entrosado do escritório). Paulo segura 562 tarefas (45,6 %), sendo gargalo decisório. Esta skill formaliza os processos para reduzir a dependência mútua.
+O levantamento do To Do mostrou que Amanda é a última autora de 100 tarefas (8,1 % do backlog) e atua com Paulo em 1.978 transições de body, a dupla com mais trabalho conjunto. Paulo detém 562 tarefas (45,6 %) e concentra as decisões. Esta skill formaliza os processos para reduzir a dependência mútua.
 
 ## Premissa central
 
@@ -55,19 +55,19 @@ Tarefas administrativas previdenciárias seguem fluxos previsíveis. O que parec
 
 **Erro material em CNIS.** Identificação simples Amanda faz, mas a estratégia (administrativa ou judicial) é Paulo.
 
-## Semáforo de escalação (Onda 95)
+## Semáforo de escalação
 
 Régua objetiva aplicada a TODA tarefa que chega, antes de qualquer execução. Classificar em uma das três cores e agir conforme a cor. Em dúvida entre duas cores, vale a mais restritiva.
 
 VERDE, Amanda executa sozinha e registra no body. Tudo que está no quadro de delegação acima como decisão dela, onboarding documental, exigência simples de comunicado padrão, reiteração de contato, agendamento, confirmação de presença, GPS mensal, conferência de HISCRE, registro de fato consumado. Critério objetivo, existe regra escrita cobrindo o caso e nenhum gatilho VERMELHO presente.
 
-AMARELO, Amanda prepara e Paulo bate o martelo. A tarefa exige juízo, mas a preparação é delegável. Amanda monta o dossiê (documentos, prints, linha do tempo, minuta quando couber), registra `(A): Preparado para decisão, aguarda Paulo` e coloca a tarefa na fila dele. Casos típicos, exigência FORA do rol padrão, resposta a cliente que pergunta de estratégia, minuta de manifestação favorável simples em laudo, identificação de erro em CNIS (a estratégia é dele), acordo recebido (ela resume os termos, ele decide).
+AMARELO, Amanda prepara e Paulo decide. A tarefa exige juízo, mas a preparação é delegável. Amanda monta o dossiê (documentos, prints, linha do tempo, minuta quando couber), registra `(A): Preparado para decisão, aguarda Paulo` e coloca a tarefa na fila dele. Casos típicos, exigência FORA do rol padrão, resposta a cliente que pergunta de estratégia, minuta de manifestação favorável simples em laudo, identificação de erro em CNIS (a estratégia é dele), acordo recebido (ela resume os termos, ele decide).
 
 VERMELHO, direto para Paulo, sem preparação que atrase o aviso. Gatilhos objetivos, qualquer um basta. Prazo processual ou administrativo correndo que Amanda não tem regra para cumprir. Indeferimento, suspensão ou cessação de benefício. Cliente insatisfeito, alterado ou falando em desistir ou trocar de advogado. Honorário em discussão. Pedido de informação sobre valores de acordo ou de RPV. Suspeita de fraude, de documento adulterado ou de dado inconsistente. Óbito de cliente. Contato de outro advogado, de órgão público ou de imprensa. Qualquer coisa sem regra escrita E com consequência irreversível.
 
-Regra de ouro do semáforo. VERDE sem regra escrita não existe, se não há regra documentada, a tarefa é no mínimo AMARELA, e a solução permanente é Paulo escrever a regra para a próxima virar VERDE. O semáforo alimenta o treinamento, toda tarefa AMARELA decidida por Paulo gera uma linha nova de regra quando o padrão se repetir três vezes.
+Regra central do semáforo. VERDE sem regra escrita não existe, se não há regra documentada, a tarefa é no mínimo AMARELA, e a solução permanente é Paulo escrever a regra para a próxima virar VERDE. O semáforo alimenta o treinamento, toda tarefa AMARELA decidida por Paulo gera uma linha nova de regra quando o padrão se repetir três vezes.
 
-As respostas às consultas repetitivas de clientes, com os núcleos aprovados e os mesmos gatilhos VERMELHOS, estão na skill `atendimento-respostas-padrao` (Onda 95).
+As respostas às consultas repetitivas de clientes, com os núcleos aprovados e os mesmos gatilhos VERMELHOS, estão na skill `atendimento-respostas-padrao`.
 
 ## Fluxo de tarefa nova em 🌻 INSS
 
@@ -84,7 +84,7 @@ Quando entra cliente novo para benefício administrativo, fluxo padrão:
 
 ## Fluxo de redundância (André ou Ingrid substitui Amanda)
 
-**André pode substituir Amanda em.** Onboarding documental, cumprimento de exigência, monitoramento PAT, conferência HISCRE, geração de GPS. Já demonstra competência (mediana de 15 dias de posse, indica que pega rápido).
+**André pode substituir Amanda em.** Onboarding documental, cumprimento de exigência, monitoramento PAT, conferência HISCRE, geração de GPS. Já demonstra competência (mediana de 15 dias de posse, sinal de execução rápida).
 
 **Ingrid pode substituir Amanda em.** Digitalização, cadastro inicial no sistema, contato preventivo de aniversário, confirmação de comparecimento (perícia/audiência D-7, D-3, D-1).
 
@@ -117,11 +117,11 @@ Para cada processo da Amanda, deve haver checklist do To Do nas tarefas-modelo:
 
 ## Diagnóstico atual
 
-A auditoria identificou:
+O levantamento do To Do mostrou:
 - Amanda é última autora de 100 tarefas abertas (8,1 % do backlog)
 - Especializada em 🌻 INSS (27 % das entradas dela), seguida de 🙋 Escritório (17 %) e 🙏 Aposentadorias Futuras (15 %)
-- Mediana de tempo de posse 73 dias (mesma que Paulo) - bom indicador
-- Há 256 tarefas em que Amanda atuou junto com Marcos sem precisar de Paulo - prova de autonomia operacional já existente
+- Mediana de tempo de posse de 73 dias, igual à de Paulo
+- Há 256 tarefas em que Amanda atuou junto com Marcos sem precisar de Paulo, o que demonstra autonomia operacional
 
 Recomendação principal é formalizar mais o que já acontece informalmente, e construir gradualmente a redundância.
 
@@ -141,7 +141,7 @@ Meta operacional, reduzir a taxa de "Paulo último autor" de 45,6 % para 30 %.
 
 Caminhos:
 1. Triagem em massa das 169 tarefas abertas há mais de 180 dias com Paulo. Decidir em sessão Paulo+Amanda. Várias podem ir para Amanda ou para arquivo.
-2. Política do "Paulo segura no máximo 24h". Toda tarefa que entra com Paulo é registrada com data de entrada e tem que ter próxima ação ou passar para outro em 24h.
+2. Política de "no máximo 24h com Paulo". Toda tarefa que entra com Paulo é registrada com data de entrada e tem que ter próxima ação ou passar para outro em 24h.
 3. Aumentar volume de Amanda em INSS administrativo simples. Skill `base-meu-inss-pat-gerid-fluxo` orienta os passos.
 4. Aumentar volume de André em verificações sistemáticas e onboarding básico.
 
@@ -151,7 +151,7 @@ Caminhos:
 - `base-aposentadoria-futura-pipeline` (Amanda executa o D-60 e D-90)
 - `base-honorarios-contratuais-cobranca` (Amanda monitora 💵 Pagamentos)
 - `base-pericia-medica-federal-telepericia` (Amanda agenda e acompanha perícia)
-- `base-cnis-acerto-indicadores` (Amanda faz auditoria CNIS)
+- `base-cnis-acerto-indicadores` (Amanda faz a conferência do CNIS)
 - `ponte-workflow-crps` (recurso é Paulo, mas Amanda executa após decisão)
 
 ## Métrica de sucesso
@@ -160,7 +160,7 @@ Caminhos:
 - Quantidade de tarefas que Amanda fecha sem precisar de Paulo (meta crescente)
 - Quantidade de tarefas que André assume sob delegação (meta crescente)
 - Tempo médio de resposta do escritório a cliente (meta < 48h em horário comercial)
-- Quantidade de tarefas paradas por ausência de uma única pessoa (meta zero - prova de redundância)
+- Quantidade de tarefas paradas por ausência de uma única pessoa (meta zero, que comprova a redundância)
 
 ## Link operacional
 
@@ -169,7 +169,7 @@ Microsoft To Do, listas 🌻 INSS, 🙋 Escritório, 🙏 Aposentadorias Futuras
 Encontros semanais Amanda+André de 30 min, segunda 9h.
 Encontros mensais Amanda+Paulo de 1 hora, primeira segunda do mês 14h.
 
-## Transcrição de atendimento (Onda 125)
+## Transcrição de atendimento
 
 Atendimento gravado ou anotado de forma corrida vira anotação padronizada pela skill `transcricao-atendimento`, que entrega a linha datada no formato do escritório, a lista sugerida e os alertas disparados.
 

@@ -7,7 +7,7 @@ description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou
 
 Converte o que foi FALADO em atendimento na anotação que o escritório efetivamente usa. A saída é texto pronto para colar no Microsoft To Do, nunca um resumo livre.
 
-## Regra de ouro, o teste dos quatro elementos
+## O teste dos quatro elementos
 
 A anotação não existe para narrar o atendimento. Existe para deixar o caso OPERACIONALMENTE RETOMÁVEL, de modo que meses depois se saiba o que foi decidido, por quê, e o que precisa acontecer em seguida.
 
@@ -21,24 +21,24 @@ Quatro blocos rotulados, todos OPCIONAIS. Entra o bloco que tiver conteúdo novo
 
 **Rótulo em caixa alta seguido de dois-pontos, e o conteúdo na MESMA LINHA.** Exceção admitida à vedação geral de dois-pontos, porque campo estruturado não é prosa.
 
-**Cada bloco ocupa UMA LINHA CORRIDA, sem quebra interna.** A quebra de linha separa um bloco do outro, e nada mais. Texto quebrado artificialmente polui a leitura no To Do.
+**Cada bloco ocupa UMA LINHA CORRIDA, sem quebra interna.** A quebra de linha separa um bloco do outro, e nada mais. Texto quebrado artificialmente prejudica a leitura no To Do.
 
 | Bloco | O que recebe |
 |---|---|
-| `FATOS` | Só o objetivo e apurado. Situação contributiva, benefício, processo, documentos existentes, datas, resultado de perícia, conteúdo relevante de PPP, CNIS e laudo, o que o cliente informou e os eventos já ocorridos |
+| `FATOS` | Apenas o objetivo e apurado. Situação contributiva, benefício, processo, documentos existentes, datas, resultado de perícia, conteúdo relevante de PPP, CNIS e laudo, o que o cliente informou e os eventos já ocorridos |
 | `ANÁLISE` | A leitura técnica e estratégica. Direito possível, impedimento, risco, documento decisivo, tese principal, alternativa subsidiária, motivo para aguardar ou não requerer, impacto de determinada prova |
 | `PROVIDÊNCIAS DO CLIENTE` | Tudo que depende dele. Conseguir PPP, relatório médico, CTPS, comprovante, senha do Gov.br, comparecer à perícia, falar com o RH, localizar exame antigo, retornar informação |
 | `PROVIDÊNCIAS DO ESCRITÓRIO` | Tudo que depende do escritório. Conferir CNIS, calcular, protocolar, cobrar empresa, juntar documentos, revisar PPP, recorrer, avisar o cliente, acompanhar resultado e a data de nova verificação |
 
 ### As cinco regras que fazem o formato funcionar
 
-**Primeira, bloco vazio não entra.** Registro simples de acompanhamento tem dois blocos e acabou. Criar `ANÁLISE` sem conclusão nova, ou `PROVIDÊNCIAS DO CLIENTE` sem nada a pedir, é preencher formulário, não registrar caso.
+**Primeira, bloco vazio não entra.** Registro simples de acompanhamento tem apenas dois blocos. Criar `ANÁLISE` sem conclusão nova, ou `PROVIDÊNCIAS DO CLIENTE` sem nada a pedir, é preencher formulário, não registrar caso.
 
 **Segunda, `FATOS` não recebe juízo.** "Vínculo de 1999 provavelmente deverá ser excluído" é análise disfarçada de fato, e o "provavelmente" pertence ao bloco seguinte. Em `FATOS` vai o que se viu, em `ANÁLISE` o que se concluiu.
 
-**Terceira, `ANÁLISE` abre pela CONCLUSÃO.** Qual o melhor caminho, e só então por quê. Conclusão enterrada no meio do bloco obriga a reler tudo. E registra-se a CONSEQUÊNCIA PRÁTICA, não a fundamentação. Descoberta a coisa julgada sobre períodos especiais, escreve-se que só resta a aposentadoria por idade, não a teoria da coisa julgada, que é da peça e do parecer.
+**Terceira, `ANÁLISE` abre pela CONCLUSÃO.** Qual o melhor caminho, e apenas então por quê. Conclusão escondida no meio do bloco obriga a reler tudo. E registra-se a CONSEQUÊNCIA PRÁTICA, não a fundamentação. Descoberta a coisa julgada sobre períodos especiais, escreve-se que apenas resta a aposentadoria por idade, não a teoria da coisa julgada, que é da peça e do parecer.
 
-**Quarta, a separação entre as duas providências é a razão de ser do formato.** Ela não vem de frequência no acervo, vem de projeto. Anotação como "PPP incompleto, pedir correção, aguardar até 29/03" empacota conclusão, tarefa do cliente e tarefa interna numa frase só, e obriga quem retoma a desempacotar. Separadas, a equipe lê o bloco que é dela sem varrer o resto.
+**Quarta, a separação entre as duas providências é a razão de ser do formato.** Ela não vem de frequência no acervo, vem de projeto. Anotação como "PPP incompleto, pedir correção, aguardar até 29/03" empacota conclusão, tarefa do cliente e tarefa interna numa única frase, e obriga quem retoma a desempacotar. Separadas, a equipe lê o bloco que é dela sem varrer o resto.
 
 **Quinta, a data de retorno é obrigatória**, salvo encerramento. Fecha `PROVIDÊNCIAS DO ESCRITÓRIO`, porque controlar prazo é tarefa interna. "Verificar em DD/MM", "Aguardar até DD/MM", "Relembrar em DD/MM", "Cobrar em DD/MM". Presente em 14,3% das entradas do titular, é o elemento mais constante do sistema. Anotação sem data de retorno é anotação que morre.
 
@@ -57,7 +57,7 @@ Data em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses. `(P)` Paul
 FATOS: 43 anos e 3 meses, 26 anos e 7 meses de contribuição e 23 anos e 10 meses de atividade especial na projeção atual. Vínculos antigos sem data de saída e um vínculo de 1999 em duplicidade. Tem a CTPS física. PPP eletrônico a partir de 2023 aponta ruído de 94 dB. Informa hérnia de disco com episódios de limitação funcional.
 ANÁLISE: O melhor caminho tende a ser a aposentadoria da pessoa com deficiência, projetada em R$ 5.800,00 e sem exigir afastamento do trabalho, desde que haja prova antiga e atual da deficiência leve. A data de início da deficiência decide a contagem. A especial fica como alternativa, projetada em R$ 4.500,00, faltando 1 ano e 1 mês para os 25 anos, com requerimento possível em outubro de 2027 se o PPP confirmar os períodos anteriores.
 PROVIDÊNCIAS DO CLIENTE: Solicitar o PPP no RH. Trazer a CTPS física. Procurar exames antigos da coluna, tomografia ou ressonância, e não localizando, refazer o exame e passar em ortopedista para relatório que detalhe as limitações.
-PROVIDÊNCIAS DO ESCRITÓRIO: Conferir e corrigir os vínculos do CNIS pela CTPS. Revisar a contagem quando chegarem o PPP e os documentos médicos, e só então definir a via. Verificar em 09/10.
+PROVIDÊNCIAS DO ESCRITÓRIO: Conferir e corrigir os vínculos do CNIS pela CTPS. Revisar a contagem quando chegarem o PPP e os documentos médicos, e apenas então definir a via. Verificar em 09/10.
 ```
 
 ### Registro simples, acompanhamento
@@ -92,7 +92,7 @@ Terceiro, ênfase por CAIXA ALTA na palavra que vira a frase, e o acervo traz 11
 
 Quarto, aspas na fala do cliente SOMENTE quando ela descreve a limitação melhor que o termo técnico E a limitação altera a estratégia. Diagnóstico e sintoma que não mudam prova, via ou prazo ficam de fora, por mais vívidos que sejam.
 
-Quinto, número concreto inline. Valor, protocolo, NB e tempo apurado entram no meio da frase, sem cerimônia.
+Quinto, número concreto inline. Valor, protocolo, NB e tempo apurado entram no meio da frase.
 
 Sexto, referência a anexo entre parênteses, na forma "(anexo)".
 
@@ -115,7 +115,7 @@ Encerrando, NÃO inventar data de retorno.
 
 ## O que NUNCA entra
 
-Cumprimento, conversa fiada, repetição do que o cliente falou três vezes.
+Cumprimento, conversa sem relação com o caso, repetição do que o cliente falou três vezes.
 
 Diagnóstico jurídico definitivo dado como certeza. Atendimento gera HIPÓTESE, e a certeza vem depois do CNIS e dos documentos.
 

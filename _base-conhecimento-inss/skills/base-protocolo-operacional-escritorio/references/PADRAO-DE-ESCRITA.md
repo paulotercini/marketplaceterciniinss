@@ -1,12 +1,12 @@
 # Padrão de Escrita do Escritório
 
-Onda 133 (09/09/2026). Extraído da varredura de 343 mensagens do titular (173 diretas e 170 preservadas em resumos de sessões anteriores) e de 677 commits do repositório, com foco nas correções que ele fez a texto gerado. É a regra 10 do protocolo operacional, detalhada.
+Levantamento de 09/09/2026. Extraído da varredura de 343 mensagens do titular (173 diretas e 170 preservadas em resumos de sessões anteriores) e de 677 commits do repositório, com foco nas correções que ele fez a texto gerado. É a regra 10 do protocolo operacional, detalhada.
 
 ## Os oito padrões de correção, com a evidência
 
 Cada padrão abaixo traz as mensagens em que apareceu. Padrão sem evidência não entrou.
 
-**1. Extensão.** Onze correções distintas. Parecer de até uma página (protocolo, regra 4). Anotação `(C)` em duas a três linhas (regra 1). Síntese do caso em duas ou três linhas ("de bater o olho e entender", Onda 118). Recurso ao CRPS "enxuto, direto e claro" (Onda 34). Orientação ao cliente "não pode ser algo longo" (Onda 96). Estudo pré-perícia "direto, claro, sem enrolação" (Onda 95). Status report "enxuto, sem iniciar nova ação". Camada 6 com orçamento por tipo de peça e corte de 20% (Onda 120). Transcrição de atendimento, cinco rodadas até a forma decisória (Ondas 125 a 132). E o pedido que originou esta referência, "escrita prolixa, com muitas folhas, que cansa o leitor".
+**1. Extensão.** Onze correções distintas. Parecer de até uma página (protocolo, regra 4). Anotação `(C)` em duas a três linhas (regra 1). Síntese do caso em duas ou três linhas (nas palavras do titular, "de bater o olho e entender"). Recurso ao CRPS "enxuto, direto e claro". Orientação ao cliente "não pode ser algo longo". Estudo pré-perícia "direto, claro, sem enrolação". Status report "enxuto, sem iniciar nova ação". Camada 6 com orçamento por tipo de peça e corte de 20%. Transcrição de atendimento, cinco rodadas até a forma decisória (levantamento do To Do de 09/09/2026). E o pedido que originou esta referência, "escrita prolixa, com muitas folhas, que cansa o leitor".
 
 **2. Leitura por relance.** "Deve ser algo de bater o olho e entender", "direto ao assunto, com poucas palavras", "de fácil leitura do leitor", "quero algo direto e prático de ler e entender". O texto é medido pelo esforço de quem lê.
 
@@ -24,7 +24,7 @@ Cada padrão abaixo traz as mensagens em que apareceu. Padrão sem evidência n�
 
 ## Tetos por tipo de documento
 
-A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda por analogia. Teto proposto é ajustável, teto fixado não.
+A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO neste levantamento por analogia. Teto proposto é ajustável, teto fixado não.
 
 | Documento | Teto | Origem |
 |---|---|---|
@@ -34,22 +34,22 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 | Parecer | 1 página | Fixado, protocolo regra 4 |
 | Análise da Vida Completa | Conclusão no topo, sem teto de páginas | Fixado, protocolo regra 4 |
 | Anotação `(C)` no To Do | 2 a 3 linhas | Fixado, protocolo regra 1 |
-| Síntese do caso em petição | 2 a 3 linhas | Fixado, Onda 118 |
-| Componentes Visual Law por peça | 3 | Fixado, Onda 118 |
-| Petição inicial | 7 páginas, de preferência | Referência preferencial, Onda 181 |
-| Recurso inominado | 4 páginas, de preferência | Referência preferencial, Onda 181 |
-| Manifestação sobre laudo | 3 páginas, de preferência | Referência preferencial, Onda 181 |
-| Recurso ao CRPS | 3 páginas, de preferência | Referência preferencial, Onda 181 |
-| Embargos de declaração | 2 páginas, de preferência | Referência preferencial, Onda 181 |
-| Petição comum | 2 páginas, de preferência | Referência preferencial, Onda 181 |
-| Memorial | 2 páginas, de preferência | Referência preferencial, Onda 181 |
-| Jurisprudência transcrita em toda a peça | 1 página, 15 linhas por precedente, de preferência | Referência preferencial, Onda 181 |
+| Síntese do caso em petição | 2 a 3 linhas | Fixado |
+| Componentes Visual Law por peça | 3 | Fixado |
+| Petição inicial | 7 páginas, de preferência | Referência preferencial |
+| Recurso inominado | 4 páginas, de preferência | Referência preferencial |
+| Manifestação sobre laudo | 3 páginas, de preferência | Referência preferencial |
+| Recurso ao CRPS | 3 páginas, de preferência | Referência preferencial |
+| Embargos de declaração | 2 páginas, de preferência | Referência preferencial |
+| Petição comum | 2 páginas, de preferência | Referência preferencial |
+| Memorial | 2 páginas, de preferência | Referência preferencial |
+| Jurisprudência transcrita em toda a peça | 1 página, 15 linhas por precedente, de preferência | Referência preferencial |
 | Relatório médico ao médico assistente | 1 folha | Fixado, modelo Delgina |
-| Orientação ao cliente para perícia | 1 página | Fixado, Onda 96 |
-| Requerimento administrativo | 1 folha, de preferência | Referência preferencial, Onda 181 |
-| Transcrição de atendimento | Teste dos quatro elementos, sem contagem | Fixado, Onda 132 |
-| Mandado de segurança | 5 páginas e 4 seções, de preferência | Referência preferencial, Onda 181 |
-| Carta de retificação de PPP à empresa | 2 páginas, de preferência | Referência preferencial, Onda 181 |
+| Orientação ao cliente para perícia | 1 página | Fixado |
+| Requerimento administrativo | 1 folha, de preferência | Referência preferencial |
+| Transcrição de atendimento | Teste dos quatro elementos, sem contagem | Fixado |
+| Mandado de segurança | 5 páginas e 4 seções, de preferência | Referência preferencial |
+| Carta de retificação de PPP à empresa | 2 páginas, de preferência | Referência preferencial |
 | Estudo pré-perícia e pré-audiência | 2 páginas | Proposto, a partir de "sem enrolação" |
 | Relatório de auditoria (PPP, laudo, CNIS, contestação, decisão) | 2 páginas, achados em ordem de gravidade | Proposto |
 | Relatório de triagem | 1 página, é parecer | Proposto, por aplicação da regra 4 |
@@ -65,9 +65,9 @@ Primeiro, declarar o teto e o ponto decisivo ANTES de redigir. A peça nasce den
 
 Segundo, aferir sobre o arquivo gerado. Em .docx, converter em PDF e contar páginas. Em texto, contar linhas.
 
-Terceiro, estourou, não sai. Volta para o corte, com lista do que saiu. Excesso justificado por múltiplas matérias é admitido se declarado no relatório, matéria por matéria. Esta terceira regra vale para parecer, relatório, anotação e mensagem, e não para peça processual ou administrativa.
+Terceiro, documento que excede o teto não sai. Volta para o corte, com lista do que saiu. Excesso justificado por múltiplas matérias é admitido se declarado no relatório, matéria por matéria. Esta terceira regra vale para parecer, relatório, anotação e mensagem, e não para peça processual ou administrativa.
 
-Quarto, na peça processual ou administrativa a extensão é referência preferencial, e não limite obrigatório (Onda 181, determinação do titular de 17/10/2026). A peça tem a extensão que a compreensão de cada pedido exige. Dela sai apenas a repetição, e nunca fato, prova, cálculo, explicação de norma ou transição necessária à compreensão. Na dúvida, o trecho fica.
+Quarto, na peça processual ou administrativa a extensão é referência preferencial, e não limite obrigatório (determinação do titular de 17/10/2026). A peça tem a extensão que a compreensão de cada pedido exige. Dela sai apenas a repetição, e nunca fato, prova, cálculo, explicação de norma ou transição necessária à compreensão. Na dúvida, o trecho fica.
 
 ## Os anti-padrões que geram folha
 
@@ -89,21 +89,21 @@ Relatório de revisão que empilha os pareceres dos agentes em vez de consolidar
 
 Achado sem consequência, listado para justificar o parecer. Não entra. Sem achado, uma linha dizendo isso.
 
-## Resposta de chat com pesquisa (Onda 171, 04/10/2026)
+## Resposta de chat com pesquisa (04/10/2026)
 
 O titular mostrou uma resposta sobre enquadramento de trabalhador rural que dividia o TRF3 em três correntes e identificava nove julgados por número, Turma, relator e data. A queixa foi literal, "tudo isso cansa a minha leitura e faz com que eu demore para responder". A regra abaixo foi fixada em seguida e vale para toda resposta de chat que nasça de pesquisa de norma, precedente ou acervo.
 
 O chat entrega a decisão, e o anexo entrega a prova da pesquisa. A resposta tem até três parágrafos, e pergunta de uma linha continua recebendo um só. Na forma completa, o primeiro traz a recomendação e o pedido a fazer. O segundo traz o fundamento decisivo. O terceiro traz o risco principal e o modo de neutralizá-lo. Corrente desfavorável entra pelo efeito que produz no caso, em uma frase.
 
-Cada resposta leva no máximo três dados concretos, como número de processo, data, valor ou prazo, e só os que mudam a decisão ou exigem providência do titular. Julgado se cita pela corrente e pelo órgão, como em "duas Turmas do TRF3 admitem o enquadramento", sem número de processo, relator ou data. Tema e súmula se nomeiam pelo número, porque o número é o nome do precedente.
+Cada resposta leva no máximo três dados concretos, como número de processo, data, valor ou prazo, e apenas os que mudam a decisão ou exigem providência do titular. Julgado se cita pela corrente e pelo órgão, como em "duas Turmas do TRF3 admitem o enquadramento", sem número de processo, relator ou data. Tema e súmula se nomeiam pelo número, porque o número é o nome do precedente.
 
 A lista completa vai em planilha anexa (.xlsx), uma linha por julgado, com os campos da ficha do achado da `pesquisa-jurisprudencia-chrome` (seção 7) e a marcação de conferência de cada um. A mesma lista alimenta a peça. No chat, uma frase final informa a situação da conferência, como "os julgados ainda não foram abertos no portal" ou "todos conferidos no portal em 04/10/2026". Enquanto a personalização do titular não trouxer a regra de marcação em frase única, sugerida em 04/10/2026, a marcação continua julgado a julgado, mas dentro do anexo.
 
 Relatório de agente e saída de MCP são insumo. O chat recebe a síntese, e o detalhe que valer a pena guardar vai ao anexo.
 
-Exemplo de forma, com os fatos do caso trocados por marcadores. "Recomendo pedir o período em [empregador agroindustrial] como principal, com reafirmação da DER, e o período em [segundo empregador] como sucessivo. Parte das Turmas do TRF3 enquadra por categoria o rural de empresa agroindustrial até 28/04/1995, só com CTPS e PPP, que já estão no processo administrativo. O risco é a corrente que segue o PUIL 452/PE, que exige prova do agente nocivo, e prova feita só em juízo leva a DIB para a citação (Tema 1124/STJ). Os julgados ainda não foram abertos no portal, e a lista está na planilha anexa."
+Exemplo de forma, com os fatos do caso trocados por marcadores. "Recomendo pedir o período em [empregador agroindustrial] como principal, com reafirmação da DER, e o período em [segundo empregador] como sucessivo. Parte das Turmas do TRF3 enquadra por categoria o rural de empresa agroindustrial até 28/04/1995, apenas com CTPS e PPP, que já estão no processo administrativo. O risco é a corrente que segue o PUIL 452/PE, que exige prova do agente nocivo, e prova feita apenas em juízo leva a DIB para a citação (Tema 1124/STJ). Os julgados ainda não foram abertos no portal, e a lista está na planilha anexa."
 
-## Resposta de chat em lista (Onda 185, 19/10/2026)
+## Resposta de chat em lista (19/10/2026)
 
 O titular mostrou uma resposta sobre os documentos de uma ação de incapacidade com cerca de 430 palavras em prosa, em que cada documento virava uma frase. A queixa foi literal, "isso me faz perder muito tempo lendo". A mesma resposta em lista coube em cerca de 150 palavras, sem perder documento algum.
 
@@ -132,7 +132,7 @@ A regra vale para o chat, para o Cowork e para o relatório dos agentes ao titul
 
 **Decisões numeradas (19/10/2026).** Toda pendência que depende do titular vem como item numerado, com as opções em letras e a recomendada marcada com ✔, para que ele responda "1A, 2B". Exemplo, "**1. Prazo dos embargos no CRPS:** A) 30 dias, portaria ✔ · B) 5 dias, skill".
 
-**Rótulos fixos na resposta sobre caso (19/10/2026).** A resposta sobre caso usa, nesta ordem e apenas os que tiverem conteúdo, os rótulos em negrito **Recomendação**, **Fazer**, **Prazo** e **Risco**. O gatilho do protocolo (decadência, litispendência, Tema 1124, qualidade de segurado) só aparece quando dispara.
+**Rótulos fixos na resposta sobre caso (19/10/2026).** A resposta sobre caso usa, nesta ordem e apenas os que tiverem conteúdo, os rótulos em negrito **Recomendação**, **Fazer**, **Prazo** e **Risco**. O gatilho do protocolo (decadência, litispendência, Tema 1124, qualidade de segurado) apenas aparece quando dispara.
 
 **Relatório longo fora do chat (19/10/2026).** Lista com mais de dez itens ou relatório de lote vai em arquivo ou página, e o chat traz o resumo em até cinco linhas e o link.
 
@@ -145,19 +145,19 @@ A regra vale para o chat, para o Cowork e para o relatório dos agentes ao titul
 `transcricao-atendimento` para o teste dos quatro elementos.
 `humanizador-tedson` para a passada final em todo texto em português.
 
-## Redação argumentativa das peças (Onda 135, 11/09/2026)
+## Redação argumentativa das peças (11/09/2026)
 
-O titular avaliou as peças geradas e apontou dois defeitos que se somam. O primeiro é a prolixidade, já tratada na Onda 133. O segundo é a escrita truncada, feita de frases soltas que dificultam a compreensão, e ele foi claro ao dizer que quer linguagem formal e jurídica, mas simples, com argumentação desenvolvida e sem fórmulas vazias.
+O titular avaliou as peças geradas e apontou dois defeitos que se somam. O primeiro é a prolixidade, já tratada no levantamento de 09/09/2026. O segundo é a escrita truncada, feita de frases soltas que dificultam a compreensão, e ele foi claro ao dizer que quer linguagem formal e jurídica, mas simples, com argumentação desenvolvida e sem fórmulas vazias.
 
 ### De onde veio o truncamento
 
-A causa estava nas próprias regras do plugin. A seção de estilo das skills de petição mandava "parágrafos curtos" sem medida e "opiniões contundentes sem hesitação", e a regra dos dois-pontos trazia como exemplo correto uma frase picada em três períodos. Somadas, essas instruções produziam o texto telegráfico e adjetivado que o titular rejeitou. A correção retirou a contundência, fixou a medida do parágrafo e trocou o exemplo, de modo que o complemento que viria após os dois-pontos passe a integrar o período por conectivo ou subordinação.
+A causa estava nas próprias regras do plugin. A seção de estilo das skills de petição mandava "parágrafos curtos" sem medida e "opiniões contundentes sem hesitação", e a regra dos dois-pontos trazia como exemplo correto uma frase fragmentada em três períodos. Somadas, essas instruções produziam o texto telegráfico e adjetivado que o titular rejeitou. A correção retirou a contundência, fixou a medida do parágrafo e trocou o exemplo, de modo que o complemento que viria após os dois-pontos passe a integrar o período por conectivo ou subordinação.
 
 ### O estilo fixado
 
 A peça é escrita em estilo formal, técnico e argumentativo, e o titular dispensa padrão jurídico único e obrigatório. O que ele exige é clareza, com frases diretas e parágrafos bem organizados, argumentação ligada aos fatos, persuasão sóbria, fundamentação seletiva e pedidos específicos.
 
-**Clareza.** Frases completas, de 12 a 25 palavras, encadeadas por conectivo ou subordinação, sem rebuscamento e sem telegrama (medida fixada na Onda 157). O parágrafo tem de quatro a cinco linhas, no máximo seis, desde a Onda 163, e desenvolve uma única ideia do começo ao fim em frases ligadas por transições.
+**Clareza.** Frases completas, de 12 a 25 palavras, encadeadas por conectivo ou subordinação, sem rebuscamento e sem telegrama (medida fixada pelo titular). O parágrafo tem de quatro a cinco linhas, no máximo seis, desde 29/09/2026, e desenvolve uma única ideia do começo ao fim em frases ligadas por transições.
 
 **Argumentação ligada aos fatos.** O parágrafo típico diz o que aconteceu, aponta a prova que sustenta a afirmação, com o ID do documento, e explica como a norma se aplica ao caso. Os três elementos aparecem juntos, na ordem em que o julgador precisa deles.
 
@@ -173,13 +173,13 @@ Sequência de três ou mais frases com menos de doze palavras e sem conectivo en
 
 ### Aferição na revisão
 
-A Camada 6 da `base-revisao-peticao-aprofundada` passa a medir, além da extensão, o tamanho dos parágrafos e a fluidez das frases. Parágrafo com mais de seis linhas (65 palavras, Onda 163) é achado IMPORTANTE. Sequência de frases soltas é achado IMPORTANTE. Dispositivo citado sem explicação de aplicação é achado MENOR, e cinco ou mais na mesma seção elevam a IMPORTANTE.
+A Camada 6 da `base-revisao-peticao-aprofundada` passa a medir, além da extensão, o tamanho dos parágrafos e a fluidez das frases. Parágrafo com mais de seis linhas (65 palavras) é achado IMPORTANTE. Sequência de frases soltas é achado IMPORTANTE. Dispositivo citado sem explicação de aplicação é achado MENOR, e cinco ou mais na mesma seção elevam a IMPORTANTE.
 
 ### Nota de honestidade
 
-As regras das Ondas 126 a 133 foram escritas no ritmo de quem as escreveu, com veredito na frente e frase curta, e esse ritmo contaminou o plugin. O titular percebeu no resultado. Esta seção e as regras reescritas na Onda 135 foram redigidas no estilo que ele pediu, para que a própria skill sirva de exemplo do que manda fazer.
+As primeiras regras deste padrão foram escritas no ritmo de quem as escreveu, com veredito na frente e frase curta, e esse ritmo se espalhou pelo plugin. O titular percebeu no resultado. Esta seção e as regras reescritas em 11/09/2026 foram redigidas no estilo que ele pediu, para que a própria skill sirva de exemplo do que manda fazer.
 
-## Por que as regras não pegavam, e a arquitetura nova (Onda 138, 16/09/2026)
+## Por que as regras não pegavam, e a arquitetura nova (16/09/2026)
 
 O titular relatou que tentou skills, personalização e prompts para obter parágrafos de três a quatro linhas e texto menos truncado, sem resultado. A causa não era falta de regra. Era a forma como a regra chegava ao modelo.
 
@@ -187,7 +187,7 @@ O titular relatou que tentou skills, personalização e prompts para obter pará
 
 **Redação dentro de código.** A peça era escrita dentro de chamadas `new Paragraph({children:[new TextRun(...)]})`, com a atenção do modelo na sintaxe e não na prosa.
 
-**Medida errada.** "Três linhas" na cabeça do modelo é linha de tela, de sessenta a oitenta palavras. No papel do escritório, medido em 16/09/2026 com soffice e pdftotext em Bookman Old Style 12, A4, margens da skill, recuo de 2 cm e espaçamento 1,5, uma linha tem cerca de DEZ palavras. Trinta palavras são três linhas, quarenta são quatro. O modelo escrevia o dobro do que cabia, a revisão mandava cortar, e o corte produzia o texto picado. Prolixidade e truncamento eram o mesmo defeito, antes e depois do corte.
+**Medida errada.** "Três linhas" na cabeça do modelo é linha de tela, de sessenta a oitenta palavras. No papel do escritório, medido em 16/09/2026 com soffice e pdftotext em Bookman Old Style 12, A4, margens da skill, recuo de 2 cm e espaçamento 1,5, uma linha tem cerca de DEZ palavras. Trinta palavras são três linhas, quarenta são quatro. O modelo escrevia o dobro do que cabia, a revisão mandava cortar, e o corte produzia o texto fragmentado. Prolixidade e truncamento eram o mesmo defeito, antes e depois do corte.
 
 **Nenhuma verificação mecânica.** Toda regra era prosa instruindo prosa, sem script que medisse e devolvesse.
 
@@ -195,21 +195,21 @@ O titular relatou que tentou skills, personalização e prompts para obter pará
 
 Três fases separadas na `peticao-previdenciaria`. Redigir em Markdown puro. Medir com `scripts/medir_peca.py`, que devolve PASSA ou FALHA com a lista exata dos parágrafos fora do padrão calibrado, das sequências de frases curtas, dos adjetivos de intensidade, das fórmulas vazias, dos documentos sem ID, dos dispositivos sem explicação e do orçamento de páginas. Converter com `scripts/md2docx.js`, que aplica todo o padrão visual de forma determinística. A skill caiu de 8.600 para 4.000 palavras, o espelho visual de 10.600 para 400, e a mecânica foi para `references/MECANICA-DOCX.md` e `references/VISUAL-LAW.md`.
 
-O teto do medidor passou de 45 para 65 palavras na Onda 163, a pedido do titular, porque o teto antigo obrigava o modelo a comprimir fato, prova, norma e consequência em duas frases e produzia o texto picado. Ajustável em uma constante do script.
+O teto do medidor passou de 45 para 65 palavras em 29/09/2026, a pedido do titular, porque o teto antigo obrigava o modelo a comprimir fato, prova, norma e consequência em duas frases e produzia o texto fragmentado. Ajustável em uma constante do script.
 
 A Camada 6 da revisão roda o mesmo medidor antes de qualquer outra camada.
 
-## Calibragem de 29/09/2026 (Onda 163)
+## Calibragem de 29/09/2026
 
 O titular relatou que as peças continuavam truncadas e de difícil compreensão, e aprovou a calibragem em que o parágrafo passa a ter de quatro a cinco linhas, com teto de seis, a frase de 15 a 35 palavras e as transições se tornam obrigatórias. Também aprovou a retirada de proibições sem utilidade no texto jurídico formal, como a vedação absoluta de dois-pontos e a lista que tratava termos técnicos como adjetivos. As medidas, a lista de transições, o que continua vedado e os parágrafos-modelo estão em `peticao-previdenciaria/references/ESTILO-MODELO.md`.
 
-## Linguagem do juízo de Catanduva (Onda 176, 10/10/2026)
+## Linguagem do juízo de Catanduva (10/10/2026)
 
 O titular aprovou o Manual de Redação Jurídica do Escritório Tercini, extraído de nove decisões da Vara Federal e do JEF de Catanduva. As peças passam a usar a linguagem do juízo, isto é, o vocabulário, os conectores e a sequência de raciocínio que ele usa ao sentenciar, para que o juiz leia na petição o modo como o próprio juízo escreve. A formatação do escritório não muda. O manual está em `peticao-previdenciaria/references/ESTILO-MODELO.md`, e as medidas passam a ser frase de 15 a 30 palavras, até 40 quando preciso, e parágrafo de 30 a 55 palavras, com teto de 65.
 
-## Perfil decisório do juízo de Catanduva (Onda 179, 16/10/2026)
+## Perfil decisório do juízo de Catanduva (16/10/2026)
 
-O titular determinou a leitura de todas as sentenças e decisões do juízo de Catanduva guardadas no CRM, para que a peça traga o que o juízo escreveria. Foram lidas 78, que corrigiram a premissa do juiz único da Onda 176, porque o juízo tem três modelos de texto, do titular, das substitutas e da assessoria do JEF. O perfil, os blocos-modelo literais por matéria e os critérios de decisão estão na skill `base-juizo-catanduva`, e o agente `juiz-catanduva` simula a sentença antes do protocolo. As medidas do escritório não mudam, porque a frase do juízo, de cerca de 40 palavras, é mais longa do que a fluência de leitura recomenda.
+O titular determinou a leitura de todas as sentenças e decisões do juízo de Catanduva guardadas no CRM, para que a peça traga o que o juízo escreveria. Foram lidas 78, que corrigiram a premissa do juiz único adotada em 10/10/2026, porque o juízo tem três modelos de texto, do titular, das substitutas e da assessoria do JEF. O perfil, os blocos-modelo literais por matéria e os critérios de decisão estão na skill `base-juizo-catanduva`, e o agente `juiz-catanduva` simula a sentença antes do protocolo. As medidas do escritório não mudam, porque a frase do juízo, de cerca de 40 palavras, é mais longa do que a fluência de leitura recomenda.
 
 ## Registro formal (12/10/2026)
 
@@ -217,31 +217,31 @@ O titular determinou que toda escrita jurídica do escritório, peça, parecer e
 
 Em 17/10/2026 o titular acrescentou três correções, com o exemplo em `ESTILO-MODELO.md`, seção A frase. O recurso "foi interposto" e o requerimento "foi protocolado", e nunca "havia chegado". A norma "determina", "dispõe" ou "estabelece", e nunca "manda". O órgão se nomeia por extenso em todas as ocorrências, Junta de Recursos e Câmara de Julgamento, e nunca "a Junta" ou "a Câmara". O `medir_peca.py` aponta as três formas.
 
-## A mesma escrita em todos os ritos (Onda 184, 18/10/2026)
+## A mesma escrita em todos os ritos (18/10/2026)
 
 O titular determinou que todas as peças mantenham a mesma integridade de escrita, e não apenas a petição inicial, e que o recurso administrativo use linguagem mais simples, com artigo apenas quando extremamente necessário. O `ESTILO-MODELO.md` ganhou o quadro "A mesma peça em todos os ritos", que diz o que cada peça transcreve. Embargos e manifestação sobre laudo não transcrevem lei, e o recurso ao CRPS cita a norma por remissão curta. O medidor acusa a lei em bloco nessas peças. O prazo dos embargos no CRPS é de 30 dias (art. 92, § 2º, do Regimento Interno).
 
-## Modelos Ouro 3.0 (Onda 183, 18/10/2026)
+## Modelos Ouro 3.0 (18/10/2026)
 
-O titular aprovou os três pilotos e determinou a correção dos demais modelos pelas regras da Onda 182. A pasta `Acervo de Modelos\Modelos Ouro 3.0` do Drive reúne os 72 modelos nas mesmas 14 subpastas da versão 2.0, que permanece intacta como histórico e saiu do MCP acervo. Cada modelo transcreve no máximo um dispositivo por seção, narra os fatos com data, documento e número e segue a sequência do juízo de Catanduva. Os pontos que dependem de conferência ficam marcados "conferir antes de usar" no próprio modelo.
+O titular aprovou os três pilotos e determinou a correção dos demais modelos pelas regras de 17/10/2026 (seção "Fatos primeiro e lei na medida"). A pasta `Acervo de Modelos\Modelos Ouro 3.0` do Drive reúne os 72 modelos nas mesmas 14 subpastas da versão 2.0, que permanece intacta como histórico e saiu do MCP acervo. Cada modelo transcreve no máximo um dispositivo por seção, narra os fatos com data, documento e número e segue a sequência do juízo de Catanduva. Os pontos que dependem de conferência ficam marcados "conferir antes de usar" no próprio modelo.
 
-## Fatos primeiro e lei na medida (Onda 182, 17/10/2026)
+## Fatos primeiro e lei na medida (17/10/2026)
 
 O titular pediu texto direto, jurídico e formal, sem enrolação e sem excesso de lei, com preferência pelos fatos e pelo seu detalhamento, e aprovou a revisão do `ESTILO-MODELO.md`. A análise mostrou que o excesso de lei vinha do método, que mandava transcrever o artigo em toda seção de direito, e que o fato resumido vinha da falta de regra de conteúdo para os fatos. O manual passou a ter a seção "Os fatos primeiro, e detalhados" (ordem cronológica, atividade pelos gestos e pela jornada, limitação pelo que a pessoa deixou de conseguir fazer, quadro de períodos) e a seção "A lei na medida" (transcrição apenas do dispositivo contestado pelo INSS, no máximo um por seção, e remissão na frase para o restante). A regra "uma informação nova por frase" deu lugar a "cada frase acrescenta um fato ou a consequência do anterior". Saíram do método as fórmulas "senão vejamos", "decisão precipitada da Autarquia Federal", "Sentindo-se lesada [...] socorrer ao amparo do Poder Judiciário", "lhe sendo cabível", "devidamente comprovado" e "como medida de direito e de justiça", e o `medir_peca.py` passou a apontá-las, assim como dois ou mais artigos transcritos em recuo na mesma seção. O manual trocou o histórico das calibragens por dois trechos-modelo completos, e o exemplar da petição inicial de incapacidade deixou de transcrever cinco artigos.
 
-## Método Tercini de petição (Onda 174, 04/10/2026)
+## Método Tercini de petição (04/10/2026)
 
-O titular entregou o seu próprio modelo de petição inicial de benefício por incapacidade e determinou que todas as peças, em todos os temas, sigam a forma e a escrita dele. O método extraído está em `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` e prevalece sobre o `ESTILO-MODELO.md` na estrutura, nas fórmulas e na voz, mantidas as medidas da Onda 163. A petição inicial tem ordem fixa (inexistência de ação com o mesmo objeto, fatos com a subseção do fato decisivo, direito do benefício, requerimentos, valor da causa, fecho e quesitos), a parte é "a Parte Autora", o INSS é "a Autarquia Federal" depois da primeira menção, o documento vem com emitente, data e trecho literal em negrito e itálico, a lei é transcrita antes de aplicada e o fecho é "Termos em que," e "Pede deferimento.". Os 72 Modelos Ouro 2.0 foram reescritos no método na mesma data.
+O titular entregou o seu próprio modelo de petição inicial de benefício por incapacidade e determinou que todas as peças, em todos os temas, sigam a forma e a escrita dele. O método extraído está em `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` e prevalece sobre o `ESTILO-MODELO.md` na estrutura, nas fórmulas e na voz, mantidas as medidas de 29/09/2026. A petição inicial tem ordem fixa (inexistência de ação com o mesmo objeto, fatos com a subseção do fato decisivo, direito do benefício, requerimentos, valor da causa, fecho e quesitos), a parte é "a Parte Autora", o INSS é "a Autarquia Federal" depois da primeira menção, o documento vem com emitente, data e trecho literal em negrito e itálico, a lei é transcrita antes de aplicada e o fecho é "Termos em que," e "Pede deferimento.". Os 72 Modelos Ouro 2.0 foram reescritos no método na mesma data.
 
-## Persuasão com base empírica (Onda 157, 26/09/2026)
+## Persuasão com base empírica (26/09/2026)
 
-O titular pediu escrita de fácil interpretação, formal e jurídica, mas extremamente convincente, e sugeriu a programação neurolinguística. A pesquisa descartou a PNL e adotou nove técnicas, oito com eficácia medida em juízes, advogados ou leitores em geral e uma por inferência declarada, todas aplicadas sobre fato verdadeiro e prova que está nos autos. A Onda 160 incorporou o estudo de consolidação do titular, com o fundamento clássico, os limites do CPC e as cautelas sobre a evidência.
+O titular pediu escrita de fácil interpretação, formal e jurídica, mas extremamente convincente, e sugeriu a programação neurolinguística. A pesquisa descartou a PNL e adotou nove técnicas, oito com eficácia medida em juízes, advogados ou leitores em geral e uma por inferência declarada, todas aplicadas sobre fato verdadeiro e prova que está nos autos. A revisão seguinte incorporou o estudo de consolidação do titular, com o fundamento clássico, os limites do CPC e as cautelas sobre a evidência.
 
 ### Por que a PNL ficou de fora
 
 A revisão de Witkowski (2010), que examinou trinta e cinco anos de pesquisa sobre o método, concluiu que a base empírica não sustenta as afirmações da PNL. As técnicas típicas, como o comando embutido, a pressuposição oculta e o espelhamento, são percebidas pelo julgador experiente como manobra e corroem a credibilidade do advogado. O que a PNL divulga como ancoragem e enquadramento vem da psicologia cognitiva, e é dessa fonte que as regras abaixo foram tiradas.
 
-### Fundamento clássico (Onda 160)
+### Fundamento clássico
 
 Aristóteles, na Retórica, separou o caráter de quem fala, a demonstração racional e a disposição do ouvinte. Na petição, o caráter se constrói por precisão, porque cada dado correto com ID aumenta a confiança do julgador no dado seguinte, e a disposição do ouvinte nasce do fato documentado, sem adjetivo que a anuncie. Perelman e Olbrechts-Tyteca, no Tratado da Argumentação, mostraram que a argumentação eficaz parte dos acordos que o auditório já aceita, e no processo previdenciário esses acordos estão no CNIS, no resumo de tempo e no reconhecimento administrativo do próprio INSS.
 
@@ -281,7 +281,7 @@ Quase todos os estudos citados foram feitos nos Estados Unidos e na Alemanha, e 
 
 Witkowski, T., Thirty-Five Years of Research on Neuro-Linguistic Programming, Polish Psychological Bulletin, 2010. Oppenheimer, D., Consequences of erudite vernacular utilized irrespective of necessity, Applied Cognitive Psychology, 2006. Flammer, S., Persuading Judges, Legal Writing, v. 16, 2010. Spencer, S. e Feldman, A., Words Count, Legal Writing, 2018. Chestek, K., Judging by the Numbers, Legal Communication & Rhetoric: JALWD, 2010. Hansen, J. e Wänke, M., Truth From Language and Truth From Fit, Personality and Social Psychology Bulletin, 2010. Englich, B., Mussweiler, T. e Strack, F., Playing Dice With Criminal Sentences, Personality and Social Psychology Bulletin, 2006. Allen, M., Meta-analysis comparing the persuasiveness of one-sided and two-sided messages, Western Journal of Speech Communication, 1991. Scalia, A. e Garner, B., Making Your Case, 2008. Aristóteles, Retórica. Perelman, C. e Olbrechts-Tyteca, L., Tratado da Argumentação. Pennington, N. e Hastie, R., Explaining the Evidence, Journal of Personality and Social Psychology, v. 62, 1992. Englich, B., Blind or Biased?, Law & Policy, v. 28, 2006. Guthrie, C., Rachlinski, J. e Wistrich, A., Inside the Judicial Mind, Cornell Law Review, v. 86, 2001. Long, L. e Christensen, W., Clearly, Using Intensifiers Is Very Bad, or Is It?, Idaho Law Review, v. 45, 2008. Black, R., Hall, M., Owens, R. e Ringsmuth, E., The Role of Emotional Language in Briefs Before the U.S. Supreme Court, Journal of Law and Courts, v. 4, 2016. Estudo de consolidação do titular, "Formas de convencimento na advocacia previdenciária", 26/09/2026.
 
-## Médicos Conferentes e a linguagem do parecer clínico (Onda 141, 17/09/2026)
+## Médicos Conferentes e a linguagem do parecer clínico (17/09/2026)
 
 Oito agentes médicos passam a ler os documentos clínicos antes de a tese ser construída. O recorte NÃO foi escolhido por palpite. Saiu da medição das 616 tarefas do To Do que trazem documento médico ou perícia, feita em 17/09/2026.
 

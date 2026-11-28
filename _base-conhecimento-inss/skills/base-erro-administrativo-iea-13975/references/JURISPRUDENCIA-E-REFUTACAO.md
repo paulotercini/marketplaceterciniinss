@@ -4,7 +4,7 @@
 
 "A administração pode anular seus próprios atos, quando eivados de vícios que os tornam ilegais, porque deles não se originam direitos; ou revogá-los, por motivo de conveniência ou oportunidade, respeitados os direitos adquiridos, e ressalvada, em todos os casos, a apreciação judicial".
 
-A doutrina majoritária e a jurisprudência consolidada interpretam a expressão "pode" como poder-dever. A omissão diante de ato viciado é ilegal.
+O art. 53 da Lei 9.784/1999 converte a faculdade da súmula em dever: "A Administração deve anular seus próprios atos, quando eivados de vício de legalidade". A omissão diante de ato viciado é ilegal.
 
 ## 2. Tema 350/STF. Necessidade de prévio requerimento administrativo
 
@@ -18,39 +18,35 @@ Em casos de aposentadoria PCD concluída sem perícia médica nem avaliação bi
 
 ## 4. TRF3. MS por omissão administrativa do INSS
 
-REM. NEC. CÍVEL 5000095-66.2018.4.03.6119.
+REM. NEC. CÍVEL 5000095-66.2018.4.03.6119 [NÃO CONFIRMADO].
 
-REM. NEC. CÍVEL nº 5002980-84.2020.4.03.6183, Rel. Des. Fed. Nery Júnior. Reconhece a Superintendência Regional como polo passivo legitimado em MS por mora administrativa. Admite expressamente astreintes diárias.
+REM. NEC. CÍVEL nº 5002980-84.2020.4.03.6183, Rel. Des. Fed. Nery Júnior [NÃO CONFIRMADO]. Reconheceria a Superintendência Regional como polo passivo legitimado em MS por mora administrativa. Admitiria astreintes diárias.
 
-Conflito de Competência 0003547-33.2017.4.03.0000 (Órgão Especial do TRF3). Cabe à Segunda Seção o julgamento de MS contra omissão de agente do INSS quanto a pedido administrativo.
+Conflito de Competência 0003547-33.2017.4.03.0000 (Órgão Especial do TRF3) [NÃO CONFIRMADO]. Atribuiria à Segunda Seção o julgamento de MS contra omissão de agente do INSS quanto a pedido administrativo.
 
-Estes precedentes consolidam a tese de que a Superintendência Regional Sudeste I (SRSE-I), como autoridade hierárquica superior ao Gerente-Executivo, é polo passivo legitimado em MS por mora.
+Confirmados no MCP trf3, esses precedentes sustentam que a Superintendência Regional Sudeste I (SRSE-I), como autoridade hierárquica superior ao Gerente-Executivo, é polo passivo legitimado em MS por mora.
 
 ## 5. Lei 12.016/2009. MS por omissão
 
-Art. 5º, II. Não cabe MS contra decisão judicial transitada em julgado. Cabe contra ato administrativo omissivo ou comissivo, inclusive omissão.
+Art. 5º. Não cabe MS contra ato do qual caiba recurso administrativo com efeito suspensivo, independentemente de caução (I), contra decisão judicial da qual caiba recurso com efeito suspensivo (II) ou contra decisão judicial transitada em julgado (III). O art. 1º admite o MS contra ato comissivo ou omissivo.
 
 Art. 7º, III. Pedido de liminar (suspensão de eficácia/ato concreto). Cabível contra o gerente-executivo, chefes da SARD/SGBEN e, em última instância, contra a Superintendente Regional.
 
-Art. 23. Prazo decadencial de 120 dias da ciência do ato impugnado. Em omissão continuada, o prazo se renova diariamente (TRF3 e STJ pacíficos), o que preserva o cabimento do MS mesmo após meses de tentativas administrativas frustradas.
+Art. 23. Prazo decadencial de 120 dias da ciência do ato impugnado. Em omissão continuada, o prazo se renova diariamente (jurisprudência do STJ, conferir precedente atual no MCP superiores), o que preserva o cabimento do MS mesmo após meses de tentativas administrativas frustradas.
 
 ## 6. Lei 8.112/90. Responsabilidade do servidor
 
 Art. 116. São deveres do servidor.
 
-II. Ser leal às instituições a que servir.
+I. Exercer com zelo e dedicação as atribuições do cargo.
 
-IV. Cumprir as ordens superiores, exceto quando manifestamente ilegais.
+III. Observar as normas legais e regulamentares.
 
-VI. Levar ao conhecimento da autoridade superior as irregularidades de que tiver ciência em razão do cargo.
-
-XII. Representar contra ilegalidade, omissão ou abuso de poder.
+V. Atender com presteza ao público em geral.
 
 Art. 117. Ao servidor é proibido.
 
 IV. Opor resistência injustificada ao andamento de documento e processo ou execução de serviço.
-
-IX. Valer-se do cargo para lograr proveito pessoal ou de outrem, em detrimento da dignidade da função pública.
 
 A recusa injustificada de abrir IEA, quando legalmente cabível, caracteriza infração ao art. 117, IV, da Lei 8.112/90 e fundamenta representação à Corregedoria.
 
@@ -80,11 +76,11 @@ Lei 13.709/2018, art. 48. O controlador deverá comunicar à ANPD e ao titular a
 
 Aplicação. Juntada de documento de terceiro ao processo do segurado configura incidente de segurança envolvendo dados pessoais sensíveis (saúde). Comunicação obrigatória à ANPD.
 
-Lei 12.527/2011 (LAI). Permite ao advogado requerer informações sobre os atos administrativos, identidade dos servidores responsáveis, fluxos internos e protocolos. Prazo de resposta de 20 dias úteis prorrogável por mais 10 (art. 11).
+Lei 12.527/2011 (LAI). Permite ao advogado requerer informações sobre os atos administrativos, identidade dos servidores responsáveis, fluxos internos e protocolos. Prazo de resposta de 20 dias prorrogável por mais 10 (art. 11).
 
 ## 10. LC 142/2013 e Convenção de Nova Iorque
 
-LC 142/2013, arts. 4º e 5º. A avaliação para aposentadoria PCD será médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS, mediante IF-BrA. A conclusão automática (sem perícia médica e sem avaliação social) viola frontalmente o §1º do art. 201 da CF (com redação da EC 103/2019).
+LC 142/2013, arts. 4º e 5º. A avaliação para aposentadoria PCD será médica e funcional (biopsicossocial), realizada pelo INSS, com o IF-BrA da Portaria Interministerial 1/2014. A conclusão automática (sem perícia médica e sem avaliação social) viola o art. 201, §1º, I da CF (com redação da EC 103/2019).
 
 Decreto Legislativo 186/2008 e Decreto 6.949/2009. Convenção sobre os Direitos das Pessoas com Deficiência, status de emenda constitucional. Modelo social/biopsicossocial obrigatório.
 
@@ -94,11 +90,11 @@ Lei 13.146/2015, art. 9º, VII. Prioridade na tramitação processual e nos proc
 
 ### 11.1. "A IEA é ato interno, não cabe requerimento externo"
 
-Refutação. A vedação expressa de requerimento externo constava do art. 13, §9º, da revogada Portaria 1.056/2022 (redação da Portaria 1.231/2024) e não foi reproduzida na Portaria DIRBEN/INSS 1.309/2025, cujo art. 26, §1º, só enumera quem abre a tarefa. Ainda que se a entenda subsistente, ela atinge a forma do requerimento, não o dever de autotutela. O advogado não está requerendo a IEA. Está provocando as autoridades nominalmente legitimadas a abrirem-na de ofício, no exercício do art. 53 da Lei 9.784/1999 e da Súmula 473/STF. Registre-se que as revogadas Portarias 1.056/2022 e 1.231/2024 traziam disciplina equivalente, revogada em 04/11/2025.
+Refutação. A vedação expressa de requerimento externo constava do art. 13, §9º, da revogada Portaria 1.056/2022 (redação da Portaria 1.231/2024) e não foi reproduzida na Portaria DIRBEN/INSS 1.309/2025, cujo art. 26, §1º, apenas enumera quem abre a tarefa. Ainda que se a entenda subsistente, ela atinge a forma do requerimento, não o dever de autotutela. O advogado não está requerendo a IEA. Está provocando as autoridades nominalmente legitimadas a abrirem-na de ofício, no exercício do art. 53 da Lei 9.784/1999 e da Súmula 473/STF. Registre-se que as revogadas Portarias 1.056/2022 e 1.231/2024 traziam disciplina equivalente, revogada em 04/11/2025.
 
 ### 11.2. "A análise está em fila, aguarde"
 
-Refutação. O art. 49 da Lei 9.784/1999 fixa prazo máximo de 60 dias. O art. 41-A §5º da Lei 8.213/1991 fixa prazo de 45 dias. O parâmetro nacional do STF (RE 1.171.152/SC) é de 90 dias. Em PCD, há prioridade legal (Lei 13.146/2015, art. 9º, VII). Ultrapassados os prazos, há omissão administrativa apta a fundamentar MS.
+Refutação. O art. 49 da Lei 9.784/1999 fixa 30 dias após a instrução, prorrogáveis uma vez por igual período, com motivação. O art. 41-A §5º da Lei 8.213/1991 fixa prazo de 45 dias. O acordo homologado no RE 1.171.152/SC fixa prazos de até 90 dias, conforme a espécie. Em PCD, há prioridade legal (Lei 13.146/2015, art. 9º, VII). Ultrapassados os prazos, há omissão administrativa apta a fundamentar MS.
 
 ### 11.3. "Não há erro a corrigir"
 
@@ -112,31 +108,7 @@ Refutação. Os meios não se excluem. A IEA é instrumento de autotutela parale
 
 Refutação. A notificação extrajudicial usa endereçamento múltiplo com domínios institucionais padronizados (sigla.gex@inss.gov.br). A própria autarquia tem dever de reencaminhar ao endereço correto, comprovando o reencaminhamento, conforme dever de cooperação. Eventual alegação de "ato não recebido" é ilegítima quando demonstrado o envio à caixa institucional padronizada.
 
-## 12. Doutrina de apoio
-
-Hely Lopes Meirelles. Direito Administrativo Brasileiro. Funda a doutrina da autotutela. Sustenta que a Administração tem o poder-dever de rever seus atos viciados.
-
-Celso Antônio Bandeira de Mello. Curso de Direito Administrativo. Aprofunda o princípio da legalidade e o controle interno da Administração.
-
-Maria Sylvia Zanella Di Pietro. Direito Administrativo. Detalha o ato administrativo viciado e a teoria das nulidades administrativas.
-
-José dos Santos Carvalho Filho. Manual de Direito Administrativo. Aprofunda o processo administrativo federal (Lei 9.784/1999).
-
-Frederico Amado. Direito Previdenciário. Detalha procedimentos administrativos no INSS.
-
-Hugo Goes. Manual de Direito Previdenciário. Detalha recursos e provocações.
-
-Wladimir Novaes Martinez. Comentários à Lei Básica da Previdência Social. Crítica a formalismos infralegais.
-
-Daniel Pulino. Aposentadoria por Invalidez. Aprofunda o processo administrativo previdenciário.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário. Analisa a proteção social processual.
-
-Fábio Zambitte Ibrahim. Curso de Direito Previdenciário. Analisa o acesso à justiça previdenciária.
-
-O IBDP (Instituto Brasileiro de Direito Previdenciário) sustenta a proteção integral procedimental.
-
-## 13. Fontes oficiais consultáveis
+## 12. Fontes oficiais consultáveis
 
 DOU (Diário Oficial da União) para verificação da Portaria DIRBEN/INSS 1.309/2025 (norma vigente) e da Portaria DIRBEN/INSS 1.318/2025 (que a alterou). As Portarias DIRBEN/INSS 1.056/2022 e 1.231/2024 foram expressamente revogadas pelo art. 44, III e V, da Portaria 1.309/2025, e permanecem no DOU apenas como referência histórica.
 

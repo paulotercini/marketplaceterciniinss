@@ -7,7 +7,7 @@ description: "Canais externos complementares. PFE-INSS Regional (AGU), ANPD (LGP
 
 ## 1. Quando acionar esta skill
 
-Acione SEMPRE que houver erro administrativo no INSS e for cabível, em paralelo ou complementarmente, provocação da Procuradoria Federal Especializada junto ao INSS (PFE-INSS), comunicação à Autoridade Nacional de Proteção de Dados (ANPD) por incidente envolvendo dados pessoais sensíveis, atendimento pela Defensoria Pública da União (DPU) em caso de hipossuficiência, ou representação ao Conselho Nacional dos Direitos da Pessoa com Deficiência (CONADE) e instâncias correlatas.
+Acione SEMPRE que houver erro administrativo no INSS e for cabível, em paralelo ou complementarmente, provocação da Procuradoria Federal Especializada junto ao INSS (PFE-INSS), comunicação à Agência Nacional de Proteção de Dados (ANPD) por incidente envolvendo dados pessoais sensíveis, atendimento pela Defensoria Pública da União (DPU) em caso de hipossuficiência, ou representação ao Conselho Nacional dos Direitos da Pessoa com Deficiência (CONADE) e instâncias correlatas.
 
 A função desses canais é complementar e estratégica. Cada um cumpre papel distinto e não excludente em relação aos canais centrais (Fala.BR, Corregedoria, MPF).
 
@@ -81,7 +81,9 @@ Sugestão de revisão de ofício ou recomendação à GEX.
 
 Advertência de que a inércia ensejará MS contra autoridades hierárquicas.
 
-## 4. ANPD. Autoridade Nacional de Proteção de Dados
+## 4. ANPD. Agência Nacional de Proteção de Dados
+
+A ANPD é autarquia de natureza especial vinculada ao Ministério da Justiça e Segurança Pública (LGPD, art. 55-A, na redação da Lei 15.352/2026, que converteu a MP 1.317/2025 e trocou "Autoridade" por "Agência").
 
 ### 4.1. Quando acionar
 
@@ -99,13 +101,13 @@ LGPD, art. 52. Sanções administrativas (advertência, multa simples e diária,
 
 ### 4.3. Canal
 
-Sistema de Comunicação de Incidente de Segurança da ANPD. Disponível em https://www.gov.br/anpd/.
+O formulário de Comunicação de Incidente de Segurança da ANPD é do controlador, no caso o INSS (LGPD, art. 48). O titular usa o canal de petição ou denúncia no portal https://www.gov.br/anpd/.
 
-A comunicação pode ser feita pelo titular dos dados (no caso, o terceiro cujo documento foi indevidamente juntado) ou por seu representante legal (no caso, o advogado do segurado, quando houver pertinência argumentativa).
+O titular dos dados expostos é o terceiro cujo documento foi juntado indevidamente. O advogado do segurado apenas o representa com procuração dele. Sem ela, o segurado apresenta denúncia como interessado no processo administrativo.
 
 ### 4.4. Estratégia
 
-Comunicação direta à ANPD pelo canal próprio.
+Petição ou denúncia à ANPD pelo canal do titular.
 
 Cópia da comunicação à GEX, à Superintendência e à PFE-INSS Regional.
 
@@ -131,15 +133,15 @@ Endereço. Avenida Itatiaia, 365, Jardim Sumaré, Ribeirão Preto/SP (mesmo pré
 
 Funcionamento. Segunda a sexta, 11h30 às 17h30 (referência consolidada após mudança de dezembro/2024).
 
-Plantão em casos de urgência. (16) 9.9290-6707.
+Plantão em casos de urgência. (16) 9.9290-6707 (conferir no portal da DPU antes de usar).
 
 ### 5.3. DPU em São Paulo (capital)
 
 Vide página https://www.dpu.def.br/endereco-sao-paulo. Cadastramento e agendamento prévios obrigatórios.
 
-### 5.4. 0800 nacional DPU
+### 5.4. Atendimento remoto
 
-0800 773 4340 (apenas DPE/SP, complementar).
+A DPU atende pelos canais do portal https://www.dpu.def.br/. O número 0800 773 4340, citado em versão anterior, é da Defensoria Pública do Estado de São Paulo (DPE/SP), que não atua em matéria previdenciária federal [NÃO CONFIRMADO, conferir no portal da DPE/SP].
 
 ### 5.5. Estratégia
 
@@ -183,13 +185,13 @@ Casos com repercussão midiática.
 
 Disque 100 com viés de direitos humanos. Útil em violação grave da dignidade da pessoa com deficiência.
 
-## 7. CRPS. Conselho de Recursos do Seguro Social
+## 7. CRPS. Conselho de Recursos da Previdência Social
 
 Embora o CRPS julgue recursos administrativos contra decisões do INSS, NÃO é a via técnica para a IEA. Esta é instrumento interno de autotutela.
 
 Como a aposentadoria do segurado pode ter sido concluída de modo viciado, é possível interpor recurso ordinário em paralelo, suscitando nulidade absoluta por ausência de avaliação biopsicossocial, com pedido de anulação da decisão originária e devolução para nova análise com perícia médica e funcional.
 
-O CRPS, sediado no Ministério da Previdência, é a instância recursal cabível para impugnar a aposentadoria viciada como meio paralelo.
+O CRPS integra o Ministério da Previdência Social (Decreto 3.048/1999, art. 303; regimento aprovado pela Portaria MPS 125/2026) e é a instância recursal cabível para impugnar a aposentadoria viciada como meio paralelo.
 
 ## 8. Estratégia integrada
 
@@ -207,13 +209,13 @@ Disque 100 (direitos humanos).
 
 ### 8.2. Vantagens estratégicas
 
-Multiplicação de pontos de pressão.
+Registro da ciência da irregularidade por vários órgãos.
 
 Cobertura de aspectos técnicos diversos (legalidade administrativa, proteção de dados, hipossuficiência, direitos humanos, política pública).
 
-Constituição de prova robusta da omissão.
+Prova documental da omissão.
 
-Repercussão institucional e potencial midiática.
+Repercussão institucional do caso.
 
 ## 9. Documentação essencial
 
@@ -247,13 +249,13 @@ MS em `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`.
 
 ## 11. Alertas
 
-Primeiro, a PFE-INSS Regional não decide o mérito do ato administrativo. Avalia a legalidade e pode recomendar à GEX. A provocação serve para gerar pressão hierárquica externa.
+Primeiro, a PFE-INSS Regional não decide o mérito do ato administrativo. Avalia a legalidade e pode recomendar à GEX. A provocação leva a irregularidade ao órgão jurídico que orienta a autarquia.
 
 Segundo, a comunicação à ANPD é cabível mesmo que o titular dos dados não seja o segurado, desde que haja relação direta com o caso (juntada indevida).
 
-Terceiro, a DPU é canal alternativo robusto para hipossuficientes. Pode atuar em conjunto com o advogado constituído (quando há autorização) ou autonomamente.
+Terceiro, a DPU é canal alternativo para hipossuficientes. Pode atuar em conjunto com o advogado constituído (quando há autorização) ou autonomamente.
 
-Quarto, o CONADE e o Disque 100 não decidem casos individuais. Servem a fim institucional/político.
+Quarto, o CONADE e o Disque 100 não decidem casos individuais. Servem a fim institucional e de política pública.
 
 Quinto, sempre verificar atualização do e-mail da PFE-INSS Regional na página oficial da AGU. Domínio @agu.gov.br.
 
@@ -261,21 +263,7 @@ Sexto, em caso de juntada de documento de terceiro, preserve a identificação d
 
 Sétimo, recurso ao CRPS é meio paralelo e legítimo de impugnar aposentadoria viciada. Pode tramitar simultaneamente com IEA, MS e demais frentes extrajudiciais.
 
-## 12. Doutrina de apoio
-
-Maria Sylvia Zanella Di Pietro. Direito Administrativo. Detalha a AGU e a representação judicial e extrajudicial da União.
-
-Frederico Amado. Direito Previdenciário. Detalha a estrutura da PFE-INSS.
-
-Hugo Goes. Manual de Direito Previdenciário. Detalha canais de defesa do segurado.
-
-Marco Aurélio Serau Junior. Direito Previdenciário. Aprofunda a tutela coletiva.
-
-Mariana Loja Cintra. LGPD aplicada à Administração Pública. Detalha a comunicação de incidentes de segurança.
-
-Roberto Ceolin. LGPD e Setor Público.
-
-## 13. O que NÃO está nesta skill
+## 12. O que NÃO está nesta skill
 
 IEA 13975 em `base-erro-administrativo-iea-13975`.
 
@@ -285,7 +273,7 @@ MPF, PFDC e PRM em `base-mpf-pfdc-prm-defesa-segurado`.
 
 Notificação extrajudicial técnica em `base-notificacao-extrajudicial-mapeamento-institucional`.
 
-## 14. Fontes
+## 13. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 

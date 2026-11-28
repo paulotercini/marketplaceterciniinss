@@ -47,7 +47,7 @@ Orientações internas do INSS.
 
 A Portaria DPMF/DIRBEN não pode reduzir o alcance da Lei nem de precedente vinculante (Súmula, Tema repetitivo, Tema TNU).
 
-Toda exigência da Portaria que extrapole a Lei é argumento de derrotabilidade em recurso ou ação.
+Toda exigência da Portaria que extrapole a Lei pode ser afastada em recurso ou ação pelo princípio da legalidade.
 
 ## 4. Portaria DIRBEN/INSS 990/2022. Acerto de CNIS, indicadores e RAC
 
@@ -59,7 +59,7 @@ Anexos. Formulários I, I-A, I-B, I-C, I-D, I-E, I-F (RACs específicos).
 
 Indicadores bloqueantes. PEXT, PREC-MENOR-MIN, PDIV-DADOS-GFIP, PVIN-IRREG, PREC-FBR, PADM-EMPR.
 
-Detalhamento em `cnis-acerto-indicadores`.
+Detalhamento em `base-cnis-acerto-indicadores`.
 
 Alterações relevantes.
 
@@ -131,13 +131,13 @@ Portaria DIRBEN/INSS 1.333/2026. Alterações e atualizações da reabilitação
 
 Aplicação. Sempre que houver auxílio-doença prolongado, decisão sobre invalidez parcial, encaminhamento à reabilitação. Combinar com Súmula 47/TNU (condições pessoais e sociais).
 
-## 9. Portaria MPS 125/2026. Regimento Interno do CRPS (RICRPS), alterado pelas Portarias MPS 235/2026 e 462/2026 (RICRPS)
+## 9. Portaria MPS 125/2026. Regimento Interno do CRPS (RICRPS), alterado pelas Portarias MPS 235/2026 e 462/2026
 
 Disciplina o procedimento recursal administrativo no Conselho de Recursos da Previdência Social.
 
-Substitui o RICRPS anterior. Alterações em prazos, fungibilidade recursal, admissibilidade, instrução.
+Substitui o RICRPS da Portaria MTP 4.061/2022. Trata de prazos, fungibilidade recursal, admissibilidade e instrução. A Portaria 462/2026 alterou o art. 112, §§ 7º e 8º (relevação da intempestividade).
 
-Aplicação. Todo recurso administrativo (recurso ordinário à JR, recurso especial à CAJ, PUJ, Reclamação ao Pleno) é regido pela 462/2026.
+Aplicação. Rege todo recurso administrativo: recurso ordinário à Junta de Recursos, recurso especial à Câmara de Julgamento, embargos, agravo, revisão de acórdão e os incidentes perante o Conselho Pleno.
 
 Detalhamento em skills correlatas (admissibilidade, recursos superiores, incidentes).
 
@@ -169,25 +169,25 @@ Aplicação. Análise técnica da eficácia/efetividade de EPI em aposentadoria 
 
 Detalhamento em `base-tema383-tnu-fundacentro-epi-biologicos` e `base-especial-epi`.
 
-## 13. Portaria MTP 6.734/2020. PCMSO
+## 13. Portaria SEPRT/ME 6.734/2020. PCMSO
 
-Disciplina o Programa de Controle Médico de Saúde Ocupacional (PCMSO).
+Aprova a redação da NR-7, que disciplina o Programa de Controle Médico de Saúde Ocupacional (PCMSO). A portaria é da Secretaria Especial de Previdência e Trabalho do Ministério da Economia, anterior à criação do MTP.
 
 Aplicação. Documentação ambiental para B31, B32, B91, B92, B94 e aposentadoria especial. Cruza com NR-32 e PGR.
 
-## 14. Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026)
+## 14. Portaria Interministerial SDH/MPS/MF/MOG/AGU nº 1, de 27/01/2014
 
 Disciplina a avaliação biopsicossocial para aposentadoria PCD da LC 142/2013.
 
-Sete domínios do IF-BrA, com 41 atividades. Sensorial; comunicação; mobilidade; cuidados pessoais; vida doméstica; educação, trabalho e vida econômica; socialização e vida comunitária. A pontuação aplica o modelo linguístico Fuzzy (auditoria 03/10/2026).
+Sete domínios do IF-BrA, com 41 atividades. Sensorial; comunicação; mobilidade; cuidados pessoais; vida doméstica; educação, trabalho e vida econômica; socialização e vida comunitária. A pontuação aplica o modelo linguístico Fuzzy.
 
 Aplicação. Análise de aposentadoria PCD. Detalhamento em `base-pcd-if-bra-metodologia` e `base-aposentadoria-pcd-lc142`.
 
-## 15. Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026)
+## 15. Portaria Conjunta MDS/INSS nº 2, de 30/03/2015
 
 Disciplina a avaliação biopsicossocial do BPC/LOAS.
 
-TCQ, Tabela Conclusiva de Qualificadores do Anexo IV, prevista no art. 8º (auditoria 03/10/2026). Lógica de avaliação multidisciplinar.
+TCQ, Tabela Conclusiva de Qualificadores do Anexo IV, prevista no art. 8º. Lógica de avaliação multidisciplinar.
 
 Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-longo-prazo` e `analise-bpc-loas`.
 
@@ -201,7 +201,7 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 | Cálculo da RMI | IN 128/2022 e Portaria 991/2022 (Livro II - Reconhecimento) | base-calculo-rmi-ec103 |
 | Indicação de Erro Administrativo (IEA) | DIRBEN 1056, 1231, 1309, 1318 | base-erro-administrativo-iea-13975 |
 | Reabilitação Profissional | DIRBEN 1310/2025, 1333/2026 | base-reabilitacao-profissional-portaria-1310-1333 |
-| RICRPS (CRPS) | MPS 462/2026 | admissibilidade-barreiras-crps |
+| RICRPS (CRPS) | MPS 125/2026 (alterada pelas 235 e 462/2026) | admissibilidade-barreiras-crps |
 | Análise Documental B31 | Conjunta MPS/INSS 13/2026, alterada pela 54/2026 | analise-documental-incapacidade |
 | Análise Documental B91 | Conjunta MPS/INSS 14/2026 | analise-documental-incapacidade |
 | Análise Documental B94 | Conjunta MPS/INSS 15/2026 | analise-documental-incapacidade |
@@ -209,8 +209,8 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 | Autodeclaração rural | DIRBEN/INSS 990 arts. 92-94 (e alterações) | base-segurado-especial-autodeclaracao-arts-92-93-94 |
 | EPI (CA) | MTP 672/2021 | base-especial-epi, base-tema383-tnu-fundacentro-epi-biologicos |
 | PCMSO | MTP 6734/2020 | (transversal em saúde ocupacional) |
-| IF-BrA aposentadoria PCD | Interministerial 1/2014 (auditoria 03/10/2026) | base-pcd-if-bra-metodologia |
-| BPC biopsicossocial | Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026) | base-bpc-impedimento-longo-prazo |
+| IF-BrA aposentadoria PCD | Interministerial 1/2014 | base-pcd-if-bra-metodologia |
+| BPC biopsicossocial | Conjunta MDS/INSS 2/2015 | base-bpc-impedimento-longo-prazo |
 
 ## 17. Aplicação a cada análise de benefício
 
@@ -228,7 +228,7 @@ Portarias correlatas. Portaria 990/2022 para CNIS. Portaria 991/2022 para proced
 
 ### 17.4. Aposentadoria PCD
 
-Portarias correlatas. Portaria Interministerial 1/2014 para IF-BrA (auditoria 03/10/2026). Portaria 991/2022 para procedimento.
+Portarias correlatas. Portaria Interministerial 1/2014 para IF-BrA. Portaria 991/2022 para procedimento.
 
 ### 17.5. Auxílio-doença, aposentadoria por invalidez, auxílio-acidente
 
@@ -240,7 +240,7 @@ Portaria 991/2022 para procedimento de reconhecimento e cálculo. Portaria 992/2
 
 ### 17.7. BPC/LOAS
 
-Portaria Conjunta MDS/INSS 2/2015 para avaliação biopsicossocial (auditoria 03/10/2026). Portaria 991/2022 para procedimento.
+Portaria Conjunta MDS/INSS 2/2015 para avaliação biopsicossocial. Portaria 991/2022 para procedimento.
 
 ### 17.8. Salário-maternidade
 
@@ -252,7 +252,7 @@ Portaria 991/2022 para procedimento.
 
 ### 17.10. Recurso administrativo CRPS
 
-Portaria MPS 462/2026 para o RICRPS.
+Portaria MPS 125/2026 para o RICRPS, com as alterações das Portarias MPS 235/2026 e 462/2026.
 
 ### 17.11. Erro administrativo (IEA)
 
@@ -264,13 +264,13 @@ Portarias DIRBEN 1056/2022, 1231/2024, 1309/2025, 1318/2025.
 
 A Portaria não vincula o juízo. Em sede judicial, é apenas referência.
 
-Toda exigência da Portaria que extrapole a Lei é derrotável.
+Toda exigência da Portaria que extrapole a Lei pode ser afastada.
 
 Em recurso administrativo, atacar tanto o ato concreto quanto a interpretação restritiva da própria Portaria.
 
 ### 18.2. Portaria 990/2022
 
-Em CNIS com indicadores, aplicar acerto via RAC. Ver `cnis-acerto-indicadores`.
+Em CNIS com indicadores, aplicar acerto via RAC. Ver `base-cnis-acerto-indicadores`.
 
 Em autodeclaração rural, aplicar §5º do art. 94 sempre que possível. Ver `base-segurado-especial-autodeclaracao-arts-92-93-94`.
 
@@ -302,9 +302,9 @@ Diário Oficial da União (DOU) para todas as Portarias.
 
 Portal do INSS (gov.br/inss). Para Portarias DPMF e DIRBEN.
 
-Portal do MPS (gov.br/previdencia). Para Portaria MPS 462/2026.
+Portal do MPS (gov.br/previdencia). Para as Portarias MPS 125/2026, 235/2026 e 462/2026.
 
-Portal do MTE (gov.br/trabalho-e-emprego). Para Portarias MTP 672/2021 e MTP 6.734/2020.
+Portal do MTE (gov.br/trabalho-e-emprego). Para a Portaria MTP 672/2021 e a Portaria SEPRT/ME 6.734/2020.
 
 Portal Planalto. Para Decretos e Leis.
 
@@ -316,7 +316,7 @@ Portal CRPS. Para Resoluções e Enunciados.
 
 Detalhamento de cada portaria em skills específicas. Esta skill é hub orquestrador.
 
-CNIS. `cnis-acerto-indicadores`.
+CNIS. `base-cnis-acerto-indicadores`.
 
 Autodeclaração rural. `base-segurado-especial-autodeclaracao-arts-92-93-94`.
 
@@ -352,7 +352,7 @@ Primeiro, sempre verificar a vigência das Portarias antes de citar (DOU).
 
 Segundo, em recurso administrativo, citar a Portaria como suporte. Em ação judicial, a Portaria não vincula o juízo.
 
-Terceiro, toda Portaria que reduzir a Lei é derrotável.
+Terceiro, toda Portaria que reduzir a Lei pode ser afastada.
 
 Quarto, monitorar alterações sucessivas. Portarias DIRBEN são frequentemente alteradas.
 
@@ -362,25 +362,7 @@ Sexto, em todo procedimento administrativo, identificar QUAL Portaria rege QUAL 
 
 Sétimo, em estratégia processual, mapear todas as Portarias aplicáveis ao caso e usar como reforço normativo.
 
-## 22. Doutrina de apoio
-
-Frederico Amado. Direito Previdenciário.
-
-Hugo Goes. Manual de Direito Previdenciário.
-
-Wladimir Novaes Martinez. Curso de Direito Previdenciário.
-
-Carlos Alberto Pereira de Castro e João Batista Lazzari. Manual de Direito Previdenciário.
-
-Marina Vasques Duarte. Direito Previdenciário.
-
-Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previdenciário.
-
-Daniel Pulino. Aposentadoria por Invalidez.
-
-José Antônio Savaris. Direito Processual Previdenciário.
-
-## 23. O que NÃO está nesta skill
+## 22. O que NÃO está nesta skill
 
 Detalhamento operacional de cada Portaria. Está em skills específicas.
 
@@ -390,11 +372,11 @@ Cálculo concreto de RMI. Está em skills de cálculo.
 
 Texto integral das Portarias. Consultar fontes oficiais.
 
-## 24. Fontes
+## 23. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
-## IN PRES/INSS 212, de 06/08/2026 (Onda 115)
+## IN PRES/INSS 212, de 06/08/2026
 
 Altera a IN 128/2022, publicada no DOU de 11/08/2026, vigência imediata. Conferida em 15/08/2026 no portal oficial da IN consolidada, que registra a atualização. Análise artigo a artigo em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
 

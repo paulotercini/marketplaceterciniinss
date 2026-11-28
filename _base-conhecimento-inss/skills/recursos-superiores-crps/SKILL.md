@@ -7,7 +7,7 @@ description: "Recurso Especial às Câmaras de Julgamento, PUJ, Reclamação ao 
 
 ## Visão Geral
 
-Esta skill consolida o Recurso Especial às Câmaras de Julgamento (arts. 90-91), o Pedido de Uniformização de Jurisprudência (arts. 121-122), a Uniformização em Tese (art. 120), a Reclamação ao Conselho Pleno (art. 123) e o regime de enunciados, resoluções e normas vinculantes (arts. 124, 126, 108-109, 114), conforme o Regimento Interno do CRPS (Portaria MPS nº 125/2026, compilada com as Portarias 235/2026 e 462/2026).
+Esta skill trata do Recurso Especial às Câmaras de Julgamento (arts. 90-91), o Pedido de Uniformização de Jurisprudência (arts. 121-122), a Uniformização em Tese (art. 120), a Reclamação ao Conselho Pleno (art. 123) e o regime de enunciados, resoluções e normas vinculantes (arts. 124, 126, 108-109, 114), conforme o Regimento Interno do CRPS (Portaria MPS nº 125/2026, compilada com as Portarias 235/2026 e 462/2026).
 
 ## Fluxo de Trabalho
 
@@ -30,10 +30,10 @@ Cabível contra decisões das JRs em Recurso Ordinário, dirigido às CAJs (art.
 
 ### Hipóteses de Anulação (Art. 91, §1º). 8 hipóteses, sem prejuízo de outras
 
-I. Falta de fundamentação (auditoria 03/10/2026)
+I. Falta de fundamentação
 II. Ausência de análise da documentação e dos pedidos, salvo não conhecimento
 III. Não conhecimento pela JR em desacordo com requisitos legais
-IV. Contrariedade a pareceres vinculantes
+IV. Contrariedade a pareceres vinculantes da Consultoria Jurídica do MPS ou da AGU (LC 73/1993, art. 40)
 V. Violação a súmulas vinculantes do Ministro e a enunciados do CP
 VI. Falta de prévia remessa à Perícia Médica Federal em matéria exclusivamente médica
 VII. Julgamento em desacordo com parecer técnico fundamentado da Perícia Médica Federal
@@ -47,24 +47,24 @@ Em matéria de alçada exclusiva, mesmo sem recurso especial, cabem PUJ (art. 12
 
 ### Observância de Precedentes (Art. 109)
 
-**Obrigatórios.** Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP, decisões do STF transitadas em julgado em controle concentrado (ADI, ADC e ADPF) e súmulas vinculantes do STF (art. 109, §2º) (auditoria 03/10/2026).
-**Facultativos.** STF em repercussão geral, após o trânsito em julgado, e súmulas do STF em matéria constitucional (art. 109, §3º); STJ em repetitivo transitado em julgado, IAC, IRDR e súmulas em matéria infraconstitucional, desde que não tenham sido objeto de recurso extraordinário, ainda que superveniente, nem estejam suspensos pelo STF (art. 109, §4º) (auditoria 03/10/2026).
+**Obrigatórios.** Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP, decisões do STF transitadas em julgado em controle concentrado (ADI, ADC e ADPF) e súmulas vinculantes do STF (art. 109, §2º).
+**Facultativos.** STF em repercussão geral, após o trânsito em julgado, e súmulas do STF em matéria constitucional (art. 109, §3º); STJ em repetitivo transitado em julgado, IAC, IRDR e súmulas em matéria infraconstitucional, desde que não tenham sido objeto de recurso extraordinário, ainda que superveniente, nem estejam suspensos pelo STF (art. 109, §4º).
 
-A vedação do art. 109, caput, impede as UJs de afastarem lei ou decreto vigente. A violação dessa regra é hipótese de Revisão de Acórdão por violação literal de lei ou decreto (art. 116, I) (auditoria 03/10/2026).
+A vedação do art. 109, caput, impede as UJs de afastarem lei ou decreto vigente. A violação dessa regra é hipótese de Revisão de Acórdão por violação literal de lei ou decreto (art. 116, I).
 
 ### Distinguishing, Overriding e Overruling (Art. 114)
 
-Possibilidade expressa de afastar enunciados e súmulas. Distinguishing por particularidades do caso (art. 114, III). Overriding por nova norma ou jurisprudência (art. 114, II). Overruling por alteração no ordenamento ou jurisprudência (art. 114, I). A não aplicação indevida constitui hipótese de anulação pela CAJ e de Reclamação ao CP (art. 114, §3º).
+Possibilidade expressa de afastar enunciados e súmulas. Distinguishing por particularidades do caso (art. 114, III). Overriding por nova norma ou jurisprudência (art. 114, II). Overruling por alteração no ordenamento ou jurisprudência (art. 114, I). A não aplicação indevida é hipótese de anulação pela CAJ (art. 91, § 1º, VIII) e de Reclamação ao CP (art. 114, § 3º); o provimento da Reclamação anula a decisão (§ 4º).
 
 ### Pareceres Vinculantes (Art. 108)
 
-Pareceres da Consultoria Jurídica do MPS aprovados pelo Ministro vinculam as UJs. Mitigação quando desatualizados ou nas hipóteses do art. 114 (distinguishing, overriding, overruling), com fundamentação expressa. Violação é hipótese autônoma de anulação (art. 91, §1º, IV) e de Reclamação.
+Pareceres da Consultoria Jurídica do MPS aprovados pelo Ministro vinculam as UJs. A vinculação pode ser mitigada quando o parecer estiver desatualizado em relação à legislação vigente na data do julgamento ou nas hipóteses do art. 114, com fundamentação expressa (art. 108, parágrafo único). Violação é hipótese autônoma de anulação (art. 91, §1º, IV) e de Reclamação.
 
 ### Estrutura Recomendada do Recurso Especial
 
 1. Admissibilidade (tempestividade, legitimidade, não alçada exclusiva, interesse)
 2. Hipótese de anulação (enquadramento preciso no art. 91, §1º)
-3. Mérito, um tópico por requisito ou vício, aberto pelo fato e pelo erro do acórdão, com título nominal sem número de artigo e a norma (legislação, decreto, IN 128, enunciados, jurisprudência) por remissão curta, cada dispositivo citado uma vez e transcrito apenas o trecho exato da norma ou do Enunciado contrariado (Onda 184; modelo em `base-recurso-crps-peca-enxuta/references/MODELO-RECURSO-ESPECIAL-ENXUTO.md`)
+3. Mérito, um tópico por requisito ou vício, aberto pelo fato e pelo erro do acórdão, com título nominal sem número de artigo e a norma (legislação, decreto, IN 128, enunciados, jurisprudência) por remissão curta, cada dispositivo citado uma vez e transcrito apenas o trecho exato da norma ou do Enunciado contrariado (modelo em `base-recurso-crps-peca-enxuta/references/MODELO-RECURSO-ESPECIAL-ENXUTO.md`)
 4. Precedentes (art. 109, §§2º-4º)
 5. Pedido subsidiário de apreciação definitiva pela Câmara (art. 91, §3º)
 6. Sustentação oral (art. 81)
@@ -101,10 +101,8 @@ Provocação restrita a autoridades internas (Presidente do CRPS, CJ, CGT, Presi
 - `references/RECLAMACAO-CONSELHO-PLENO.md`. Reclamação ao CP
 - `references/UNIFORMIZACAO-TESE-ENUNCIADOS.md`. Uniformização em tese, enunciados e resoluções
 
-Sempre leia os arquivos de referência pertinentes antes de analisar ou redigir recurso às instâncias superiores do CRPS.
-
 ## MCPs da casa
 
 Pesquisa obrigatória. Norma, súmula, tema, enunciado ou acórdão citado nesta skill nasce [NÃO CONFIRMADO] e só entra em peça, parecer ou orientação depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`. A ordem de consulta dos MCPs (`normas`, `superiores`, `trf3`, `iurisprudencia` e `acervo`) e dos catálogos (`base-precedentes-catalogo-vinculantes` e catálogo complementar da `auditoria-citacoes`) está em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs". O acervo serve à leitura do que o escritório já sustentou, e o reaproveitamento automático de texto de um cliente em peça de outro é vedado. A entrega no chat segue `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
-Forma da peça (Onda 184). Segue ESTILO-MODELO.md, seção A mesma peça em todos os ritos.
+Forma da peça: `peticao-previdenciaria/references/ESTILO-MODELO.md`, seção "A mesma peça em todos os ritos".

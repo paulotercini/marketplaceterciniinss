@@ -41,7 +41,7 @@ Crie `skills/<slug>/SKILL.md` com YAML frontmatter (name, description) seguido d
 
 ### Etapa 6. Redação no padrão do escritório
 
-Aplique as regras rígidas. Ausência absoluta de dois-pontos como separador lógico. Postura exclusivamente pró-segurado. Português do Brasil. Parágrafos curtos, diretos e persuasivos. Doutrina reconhecida incorporada em cláusula final (Frederico Amado, Hugo Goes, Fábio Zambitte Ibrahim, Wladimir Novaes Martinez, IBDP).
+Aplique as regras rígidas. Ausência absoluta de dois-pontos como separador lógico. Postura exclusivamente pró-segurado. Português do Brasil. Parágrafos de uma ideia, no padrão de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`. Doutrina apenas com referência bibliográfica completa e conferida (obra, edição, página). Lista de autores sem fonte não entra.
 
 ### Etapa 7. Validação técnica
 
@@ -65,9 +65,9 @@ Segundo, nenhuma skill é publicada com description acima de 1024 caracteres.
 
 Terceiro, nenhuma skill é publicada com dois-pontos como separador lógico no corpo.
 
-Quarto, postura exclusivamente pró-segurado do INSS. Argumento favorável ao INSS, à Fazenda Pública ou à autarquia jamais consta da skill.
+Quarto, postura exclusivamente pró-segurado do INSS. Argumento favorável ao INSS apenas consta para ser refutado, e precedente adverso apenas consta marcado como adverso, com a resposta do segurado.
 
-Quinto, doutrina reconhecida é incorporada em cláusula própria, sempre ao final do SKILL.md e do JURISPRUDENCIA-E-REFUTACAO.md.
+Quinto, doutrina apenas entra com referência bibliográfica completa e conferida. Nome de autor sem obra e página não entra.
 
 Sexto, cada skill nova passa por revisão editorial antes da publicação definitiva. Dúvida de vigência resulta em "Não localizado" e exclusão do item da redação.
 

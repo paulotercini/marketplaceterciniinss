@@ -37,7 +37,7 @@
 
 **O que alegar:** violação ao art. 12 da IN 128/2022 (direito de solicitar acerto a qualquer momento), com documentação probatória insuficientemente analisada.
 
-**Se o servidor negar abertura do RAC sem benefício em andamento:** isso é ilegal. Citar expressamente o art. 12 da IN 128/2022 (com redação da IN 164/2024): "O filiado poderá solicitar, a qualquer momento, a inclusão, alteração, ratificação ou exclusão das informações divergentes... independentemente de requerimento de benefício." Registrar a negativa e formalizar reclamação na Ouvidoria do INSS.
+**Se o servidor negar abertura do RAC sem benefício em andamento:** citar expressamente o art. 12 da IN 128/2022 (com redação da IN 164/2024): "O filiado poderá solicitar, a qualquer momento, a inclusão, alteração, ratificação ou exclusão das informações divergentes, extemporâneas ou insuficientes do CNIS [...]". O dispositivo não condiciona o pedido a requerimento de benefício. Registrar a negativa e formalizar reclamação na Ouvidoria do INSS.
 
 ### 1.4 Via judicial após esgotamento administrativo
 
@@ -61,32 +61,29 @@
 
 ### 2.1 Prazos por tipo de demanda
 
-| Demanda | Prazo legal | Base normativa |
+| Demanda | Prazo | Base normativa |
 |---|---|---|
-| Requerimento de benefício (regra geral) | 45 dias corridos | Art. 41-A, Lei 8.213/1991 |
-| Benefício de aposentadoria por tempo de contribuição | 45 dias úteis | Carta de Serviços INSS 2025 |
-| BPC à pessoa com deficiência | 45 dias corridos | Carta de Serviços INSS 2025 |
-| Salário-maternidade | 45 dias corridos | Carta de Serviços INSS 2025 |
-| Pensão por morte | 45 dias corridos | Carta de Serviços INSS 2025 |
-| Acerto de CNIS (RAC) | 30 a 45 dias corridos | Carta de Serviços INSS 2025 |
-| Recurso ordinário no CRPS | Não há prazo legal expresso fixado | - |
-| Análise de JA após oitiva | 60 dias (estimado pelo INSS) | Gov.br/INSS |
-| Resposta a requerimento administrativo geral | 30 dias (prorrogáveis por mais 30) | Art. 49, Lei 9.784/1999 |
-| Decisão em processo administrativo com partes | 30 dias (prorrogáveis) | Art. 49, Lei 9.784/1999 |
+| Decisão após concluída a instrução | 30 dias, prorrogáveis uma vez por igual período, com motivação | Lei 9.784/1999, art. 49 |
+| Primeiro pagamento após a apresentação da documentação necessária | 45 dias | Lei 8.213/1991, art. 41-A, § 5º |
+| Conclusão do requerimento, por espécie | Até 90 dias, conforme a tabela do acordo | Acordo homologado pelo STF no RE 1.171.152/SC (2021) |
+| Julgamento do recurso no CRPS | Prazos regimentais de julgamento | RICRPS, art. 77, §§ 5º a 7º |
+| Resposta da ouvidoria | 30 dias, prorrogáveis uma vez | Lei 13.460/2017, art. 16 |
+
+Os prazos da Carta de Serviços são estimativas do INSS, não prazos legais. Confira a tabela por espécie no texto do acordo antes de citá-la.
 
 ### 2.2 O que fazer quando o INSS não responde no prazo
 
 **Passo 1. Ouvidoria do INSS:**
-Registrar manifestação em https://www.gov.br/inss > "Fale com o INSS" > Ouvidoria. Ou pelo 135 solicitando abertura de manifestação de reclamação. O INSS tem prazo de 20 dias para responder.
+Registrar manifestação em https://www.gov.br/inss > "Fale com o INSS" > Ouvidoria. Ou pelo 135 solicitando abertura de manifestação de reclamação. A ouvidoria responde em 30 dias, prorrogáveis uma vez (Lei 13.460/2017, art. 16).
 
 **Passo 2. Reclamação no Fala.BR (plataforma integrada de ouvidorias):**
-https://falabr.cgu.gov.br, registrar reclamação contra o INSS. O órgão tem prazo de 20 dias para responder.
+https://falabr.cgu.gov.br, registrar reclamação contra o INSS. Mesmo prazo de 30 dias, prorrogáveis uma vez.
 
 **Passo 3. Mandado de segurança por omissão:**
-Após esgotado o prazo legal e configurada a mora administrativa, o MS é cabível para compelir o INSS a decidir. Prazo: 120 dias da ciência da omissão (contado do dia em que o prazo legal venceu).
+Esgotado o prazo e configurada a mora, o MS compele o INSS a decidir. Na omissão continuada, o prazo decadencial de 120 dias não corre enquanto persistir a mora (`base-ms-decadencia-omissao-demora`).
 
 **Passo 4. Ação ordinária com tutela de urgência:**
-Para casos em que a demora causa dano grave ao segurado (ex: doente que precisa do auxílio-doença). Pedir tutela de urgência antecipada para concessão provisória do benefício.
+Para casos em que a demora causa dano grave ao segurado (ex.: segurado incapaz sem renda que aguarda o auxílio por incapacidade temporária). Pedir tutela de urgência antecipada para concessão provisória do benefício.
 
 ### 2.3 Benefícios com DER. data de entrada do requerimento
 

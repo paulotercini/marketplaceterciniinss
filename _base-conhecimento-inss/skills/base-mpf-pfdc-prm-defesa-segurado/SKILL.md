@@ -1,6 +1,6 @@
 ---
 name: base-mpf-pfdc-prm-defesa-segurado
-description: "Provocação do MPF em defesa do segurado contra omissões e ilegalidades do INSS. PFDC, GT Pessoa com Deficiência (Portaria PFDC 33/2024), PRM, Notícia de Fato (Resolução CNMP 174/2017), ofício de requisição (LC 75/93, art. 8º), Procedimento Preparatório, ACP (Lei 7.347/85), Convenção de Nova Iorque (Decreto 6.949/2009), prevaricação (CP art. 319). Use SEMPRE que mencionar MPF previdenciário, Notícia de Fato MPF, Procuradoria da República, PRM, PFDC, GT Pessoa com Deficiência, ofício requisição MPF, LC 75/93 art. 8º, ACP previdenciária, Lei 7.347/85, Convenção Nova Iorque, Decreto 6.949/2009, atendimento PR/SP, SAJ-MPF, peticionamento eletrônico MPF, distribuição reflexa, Resolução CNMP 174/2017, Procedimento Preparatório MPF, prevaricação CP 319 INSS, omissão estrutural INSS, prioridade Estatuto PCD, Lei 13.146 art. 9º VII. Cruza com base-erro-administrativo-iea-13975, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-notificacao-extrajudicial-mapeamento-institucional."
+description: "Provocação do MPF em defesa do segurado contra omissões e ilegalidades do INSS. PFDC, GT Pessoa com Deficiência (Portaria PFDC 33/2024), PRM, Notícia de Fato (Resolução CNMP 174/2017), ofício de requisição (LC 75/93, art. 8º), Procedimento Preparatório (Resolução CNMP 23/2007), ACP (Lei 7.347/85), Convenção de Nova Iorque (Decreto 6.949/2009), prevaricação (CP art. 319). Use SEMPRE que mencionar MPF previdenciário, Notícia de Fato MPF, Procuradoria da República, PRM, PFDC, GT Pessoa com Deficiência, ofício requisição MPF, LC 75/93 art. 8º, ACP previdenciária, Lei 7.347/85, Convenção Nova Iorque, Decreto 6.949/2009, atendimento PR/SP, SAJ-MPF, peticionamento eletrônico MPF, distribuição reflexa, Resolução CNMP 174/2017, Procedimento Preparatório MPF, prevaricação CP 319 INSS, omissão estrutural INSS, prioridade Estatuto PCD, Lei 13.146 art. 9º VII. Cruza com base-erro-administrativo-iea-13975, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-notificacao-extrajudicial-mapeamento-institucional."
 ---
 
 # MPF, PFDC e PRM. Defesa do Segurado
@@ -9,7 +9,7 @@ description: "Provocação do MPF em defesa do segurado contra omissões e ilega
 
 Acione SEMPRE que houver omissão estrutural do INSS, indícios de ilegalidade reiterada, violação a direito de pessoa com deficiência ou indícios de crime funcional (prevaricação, violação de sigilo, abuso de autoridade). O MPF tem legitimidade autônoma para tutelar direitos coletivos, difusos e individuais homogêneos relacionados à seguridade social, bem como para apurar crimes funcionais.
 
-A provocação do MPF cumpre três funções estratégicas. Constituir prova robusta da omissão. Gerar pressão correcional sobre o servidor responsável. Abrir caminho para Ação Civil Pública contra o INSS quando o vício for estrutural.
+A provocação do MPF documenta a omissão, provoca a requisição de informações à autoridade e prepara a Ação Civil Pública quando o vício for estrutural.
 
 ## 2. Marco normativo
 
@@ -17,9 +17,7 @@ CF/88, art. 127. Define o Ministério Público como instituição permanente, es
 
 CF/88, art. 129. Funções institucionais do Ministério Público.
 
-LC nº 75/1993. Lei Orgânica do Ministério Público da União. Em especial.
-
-Art. 5º, II. Cabe ao MPU defender os direitos e interesses individuais homogêneos, sociais, difusos e coletivos, relativos à comunidade indígena, aos idosos, à criança e ao adolescente, às minorias étnicas, ao consumidor, ao patrimônio cultural brasileiro, ao meio ambiente, ao trabalho, à previdência social.
+LC nº 75/1993. Lei Orgânica do Ministério Público da União.
 
 Art. 8º. Para o exercício de suas atribuições, o MPU pode (II) requisitar informações, exames, perícias e documentos de autoridades da Administração Pública direta ou indireta. (VIII) ter acesso incondicional a qualquer banco de dados de caráter público ou relativo a serviço de relevância pública.
 
@@ -27,13 +25,13 @@ Lei 7.347/1985. Lei da Ação Civil Pública.
 
 Lei 8.625/1993. Lei Orgânica Nacional do Ministério Público.
 
-Resolução CNMP nº 174/2017. Disciplina, no âmbito do Ministério Público, a instauração e tramitação da Notícia de Fato. Em especial.
+Resolução CNMP nº 174/2017. Disciplina a Notícia de Fato e o Procedimento Administrativo.
 
-Art. 4º. Notícia de Fato é qualquer demanda dirigida aos órgãos da atividade-fim do Ministério Público, submetida à apreciação das Procuradorias e Promotorias de Justiça.
+Art. 1º. Notícia de Fato é qualquer demanda dirigida aos órgãos da atividade-fim do Ministério Público.
 
 Art. 8º. Procedimento Administrativo. Instrumento próprio para acompanhar o cumprimento das cláusulas de termo de ajustamento de conduta celebrado, acompanhar e fiscalizar a execução de políticas públicas.
 
-Resolução CNMP nº 23/2007. Inquérito Civil.
+Resolução CNMP nº 23/2007. Inquérito Civil e Procedimento Preparatório (art. 2º, §§ 4º a 7º; prazo de 90 dias, prorrogável uma vez por igual período, § 6º).
 
 Decreto Legislativo nº 186/2008 e Decreto nº 6.949/2009. Convenção sobre os Direitos das Pessoas com Deficiência. Status de emenda constitucional. Impõe ao Brasil tratamento prioritário e modelo social/biopsicossocial.
 
@@ -67,7 +65,7 @@ Representação dirigida à PFDC, com pedido de distribuição reflexa ao Procur
 
 Endereço. Av. Rodrigo Fernando Grillo, nº 207, Jardim dos Manacás, Araraquara/SP, CEP 14801-534.
 
-Procuradores (referência atual). José Rubens Plates e Rudson Coutinho da Silva.
+Procuradores em exercício: conferir no portal do MPF antes do envio.
 
 Abrangência territorial. Américo Brasiliense, Araraquara, Boa Esperança do Sul, Borborema, Cândido Rodrigues, Dobrada, Fernando Prestes, Gavião Peixoto, Ibitinga, Matão, Motuca, Nova Europa, Rincão, Santa Ernestina, Santa Lúcia, Tabatinga, Taquaritinga e Trabiju. Inclui o município sede da GEX e municípios paulistas vinculados à GEX Araraquara (cód. 21.022).
 
@@ -77,15 +75,15 @@ Atendimento ao Cidadão (PR/SP). prsp-atendimento_cidadao@mpf.mp.br. Sede PR/SP.
 
 Portal do MPF. https://saj.mpf.mp.br/. Recomenda-se protocolar Notícia de Fato com pedido expresso de.
 
-Instauração de Procedimento Preparatório (art. 4º da Resolução CNMP nº 174/2017).
+Instauração de Procedimento Preparatório (Resolução CNMP nº 23/2007, art. 2º, § 4º).
 
 Ou Procedimento Administrativo (art. 8º da mesma Resolução).
 
-Eventual ofício de requisição direta (LC 75/93, art. 8º, II e VIII) ao Gerente-Executivo da GEX competente. Poder de requisição.
+Ofício de requisição (LC 75/93, art. 8º, II e VIII) ao Gerente-Executivo da GEX competente.
 
 ### 4.3. Modelagem da Notícia de Fato
 
-Pedido principal. Instauração de Procedimento Preparatório (Resolução CNMP 174/2017) com expedição de ofício de requisição (LC 75/93, art. 8º, II) ao Gerente-Executivo, exigindo a abertura da tarefa 13975 em prazo certo, sob pena de responsabilização criminal (CP, art. 319, prevaricação) e ajuizamento de Ação Civil Pública (Lei 7.347/1985).
+Pedido principal. Instauração de Procedimento Preparatório (Resolução CNMP 23/2007) com ofício de requisição (LC 75/93, art. 8º, II) ao Gerente-Executivo para abertura da tarefa 13975 em prazo certo, com a advertência da apuração de eventual prevaricação (CP, art. 319) e do ajuizamento de Ação Civil Pública (Lei 7.347/1985).
 
 Fundamentos. Violação à Convenção sobre os Direitos das Pessoas com Deficiência (Decreto 6.949/2009, equivalência de emenda constitucional). Violação à Lei 13.146/2015 (art. 9º, VII, prioridade). Violação à LC 142/2013 (arts. 4º e 5º, avaliação biopsicossocial). Violação à LGPD (art. 48, incidente de segurança envolvendo dados sensíveis de saúde, quando aplicável).
 
@@ -93,27 +91,27 @@ Fundamentos. Violação à Convenção sobre os Direitos das Pessoas com Defici�
 
 ### 5.1. Provocação simultânea
 
-Notícia de Fato à PRM do município do segurado, com cópia à PFDC. A cópia à PFDC reforça repercussão institucional e abre caminho para atuação extrajudicial estratégica.
+Notícia de Fato à PRM do município do segurado, com cópia à PFDC, que pode atuar extrajudicialmente.
 
-Pedido de ofício de requisição ao Gerente-Executivo da GEX. Multiplica a pressão sobre a Administração.
+Pedido de ofício de requisição ao Gerente-Executivo da GEX.
 
 ### 5.2. Tempos do MPF
 
-Procedimento Preparatório (Resolução CNMP 174/2017, art. 4º). Prazo de 90 dias prorrogáveis uma única vez por igual período (180 dias máximo).
+Procedimento Preparatório (Resolução CNMP 23/2007, art. 2º, § 6º). Prazo de 90 dias prorrogáveis uma única vez por igual período (180 dias máximo).
 
 Procedimento Administrativo (Resolução CNMP 174/2017, art. 8º). Prazo razoável.
 
 Inquérito Civil (Resolução CNMP 23/2007, art. 9º). Prazo de 1 ano prorrogável.
 
-A celeridade do MPF é variável, mas a expedição de ofício de requisição costuma ser rápida e gerar resposta imediata da autoridade requisitada.
+O tempo do MPF varia; o ofício de requisição tende a obter resposta mais rápida da autoridade.
 
-### 5.3. Vantagens estratégicas
+### 5.3. Utilidade
 
-Cria pressão hierárquica externa.
+Provoca controle externo sobre a Administração.
 
-Constitui prova robusta da omissão.
+Documenta a omissão.
 
-Abre caminho para ACP em casos de vício estrutural.
+Prepara ACP em casos de vício estrutural.
 
 Em PCD, fortalece a tese de violação a direito fundamental e à Convenção de Nova Iorque.
 
@@ -123,7 +121,7 @@ Pode antecipar solução por revisão de ofício ou recomendação à GEX.
 
 ### 6.1. Cabimento
 
-Lei 7.347/1985, art. 1º. Cabe ACP para defesa de direitos coletivos, difusos e individuais homogêneos relacionados, dentre outros, à proteção da pessoa com deficiência (V, incluído pela Lei 13.146/2015) e a qualquer outro interesse difuso ou coletivo (IV).
+Lei 7.347/1985, art. 1º, IV (qualquer outro interesse difuso ou coletivo), e Lei 7.853/1989, art. 3º (medidas judiciais do Ministério Público para proteção de interesses coletivos, difusos, individuais homogêneos e individuais indisponíveis da pessoa com deficiência).
 
 ### 6.2. Hipóteses típicas em previdenciário
 
@@ -179,13 +177,13 @@ Peça processual em `peticao-previdenciaria`.
 
 ## 9. Alertas
 
-Primeiro, a Notícia de Fato ao MPF não substitui o MS. A jurisprudência (Tema 350/STF) admite ação judicial imediata quando comprovada inércia. A Notícia de Fato é meio paralelo de pressão extrajudicial.
+Primeiro, a Notícia de Fato não substitui o MS. Excedido o prazo de análise, há interesse de agir (Tema 350/STF). A Notícia de Fato é meio extrajudicial paralelo.
 
-Segundo, sempre cumular o pedido de instauração de Procedimento Preparatório com pedido expresso de ofício de requisição ao Gerente-Executivo. O ofício de requisição costuma destravar a Administração.
+Segundo, sempre cumular o pedido de instauração de Procedimento Preparatório com pedido expresso de ofício de requisição ao Gerente-Executivo. O ofício de requisição costuma obter resposta da Administração.
 
 Terceiro, em PCD, sempre invocar a Convenção de Nova Iorque e o art. 9º, VII, da Lei 13.146/2015. A prioridade legal é fundamento autônomo.
 
-Quarto, a representação à PFDC (cópia) é técnica recomendada para reforçar repercussão institucional. A PFDC tem GT específico para pessoas com deficiência.
+Quarto, envie cópia da representação à PFDC. A PFDC tem GT específico para pessoas com deficiência.
 
 Quinto, cuidado com prazos e identificações. A Notícia de Fato deve ser precisa quanto a fatos, datas, identificação do servidor e documentos. Imprecisão dificulta a atuação do MPF.
 
@@ -193,19 +191,7 @@ Sexto, o e-mail prsp-atendimento_cidadao@mpf.mp.br é canal alternativo para a P
 
 Sétimo, em casos de vício estrutural (omissão sistêmica), considerar pedido expresso de instauração de Inquérito Civil para abrir caminho a ACP.
 
-## 10. Doutrina de apoio
-
-Hugo Nigro Mazzilli. Inquérito Civil e Ação Civil Pública. Detalha a atuação do MP em direitos coletivos.
-
-Geisa de Assis Rodrigues. Ação Civil Pública e Termo de Ajustamento de Conduta.
-
-Pedro Lenza. Direito Constitucional. Detalha as funções institucionais do MP.
-
-Marco Aurélio Serau Junior. Direito Previdenciário. Aprofunda a tutela coletiva em previdenciário.
-
-Wagner Balera. Sistema de Seguridade Social. Detalha a proteção social como direito coletivo.
-
-## 11. O que NÃO está nesta skill
+## 10. O que NÃO está nesta skill
 
 IEA 13975 em `base-erro-administrativo-iea-13975`.
 
@@ -215,7 +201,7 @@ PFE-INSS, ANPD, DPU e CONADE em `base-pfe-inss-anpd-dpu-conade`.
 
 Mapeamento institucional, notificação extrajudicial e MS em `base-notificacao-extrajudicial-mapeamento-institucional`.
 
-## 12. Fontes
+## 11. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 

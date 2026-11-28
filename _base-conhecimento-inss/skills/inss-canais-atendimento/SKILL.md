@@ -26,7 +26,7 @@ Antes de qualquer orientação, identificar três variáveis.
 
 **Canal de conclusão:** onde o serviço é finalizado (pode ser diferente do início).
 
-**Exige presença física?** Alguns serviços só existem no mundo presencial; outros iniciam online mas exigem presença para perícia ou entrega de documentos.
+**Exige presença física?** Alguns serviços existem apenas na forma presencial; outros iniciam online mas exigem presença para perícia ou entrega de documentos.
 
 ---
 
@@ -125,7 +125,7 @@ Esses serviços não constam da Carta de Serviços de março de 2025 e não têm
 
 **Formulários RAC aplicáveis:** Anexo I-B (2.2). Empregado e Empregado Doméstico; Anexo I-C (2.3). Trabalhador Avulso; Anexo I-D (2.4). CI Prestador de Serviço.
 
-**Atenção prática:** alguns servidores negam abertura do pedido sem requerimento de benefício em curso. Isso é ilegal. O acerto independe de benefício. Citar o art. 12 da IN 128/2022.
+**Atenção prática:** a recusa de abrir o pedido sem requerimento de benefício em curso contraria o art. 12 da IN 128/2022, que autoriza o acerto a qualquer momento.
 
 ### 3.2 Acerto de Contribuições (CNIS)
 
@@ -214,7 +214,7 @@ Aplicável ao auxílio por incapacidade temporária, aposentadoria por incapacid
 
 Para auxílio por incapacidade temporária (B31/B91), a análise documental pela PMF é a porta de entrada. A perícia presencial é obrigatória apenas quando (a) o teto de 30/90 dias for ultrapassado (art. 6º, II), (b) após dois indeferimentos documentais sucessivos (art. 8º, redação da Portaria Conjunta 54/2026; três, para ciência anterior a 06/11/2026), ou (c) na prorrogação (art. 5º). Posição do escritório, o segurado tem direito à perícia presencial desde o primeiro requerimento; o art. 8º é norma de garantia, não barreira. Consultar skill analise-documental-incapacidade.
 
-Para auxílio-acidente (B94), a análise documental prévia é etapa obrigatória anterior ao agendamento de perícia presencial (Portaria 15/2026). A PMF pode indeferir sem exame presencial se a documentação for insuficiente. A perícia presencial só é agendada quando a triagem documental constatar os requisitos legais mínimos (art. 4º, I).
+Para auxílio-acidente (B94), a análise documental prévia é etapa obrigatória anterior ao agendamento de perícia presencial (Portaria 15/2026). A PMF pode indeferir sem exame presencial se a documentação for insuficiente. A perícia presencial apenas é agendada quando a triagem documental constatar os requisitos legais mínimos (art. 4º, I).
 
 ---
 
@@ -270,13 +270,13 @@ Exige requerimento específico ao INSS, via 135 ou APS, por meio do acerto de v�
 
 **Nunca inventar serviços, canais ou artigos normativos.** Se não houver confirmação em fonte primária, declarar "Não localizado".
 
-**Acerto de CNIS independe de requerimento de benefício em curso.** Fundamento: art. 12, IN 128/2022. Servidores que negam isso estão em erro. Recusa deve ser registrada e comunicada à Ouvidoria.
+**Acerto de CNIS independe de requerimento de benefício em curso.** Fundamento: art. 12, IN 128/2022. A recusa deve ser registrada e comunicada à Ouvidoria.
 
 **GPS em código errado gera inconsistência no CNIS.** A solução é o Anexo I-F (acerto de contribuições), não recolhimento de nova guia.
 
 **Reabilitação Profissional e Justificação Administrativa não constam da Carta de Serviços** e não têm canal digital. Exigem APS.
 
-**Prazo de recurso ordinário ao CRPS é de 30 dias da ciência da decisão.** Perder esse prazo significa perder o direito na via administrativa.
+**Prazo de recurso ordinário ao CRPS é de 30 dias da ciência da decisão** (RICRPS, art. 77). Vencido o prazo, resta a relevação da intempestividade, apenas com direito líquido e certo (art. 112, §§ 1º e 2º), ou novo requerimento com DER nova (`admissibilidade-barreiras-crps`).
 
 ## MCPs da casa
 

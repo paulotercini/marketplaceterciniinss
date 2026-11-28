@@ -4,7 +4,7 @@
 
 ### 1.1. Servidor que conclui aposentadoria PCD sem perícia
 
-Acionar via Fala.BR como Denúncia. Pedir sigilo do denunciante (art. 13 da Lei 13.608/2018). Tipificar infração ao art. 117, IV, da Lei 8.112/90 (resistência injustificada ao andamento de processo). Cumular com Representação à Corregedoria.
+Acionar via Fala.BR como Denúncia. Pedir sigilo do denunciante (art. 4º-B da Lei 13.608/2018). Tipificar infração ao art. 117, IV, da Lei 8.112/90 (resistência injustificada ao andamento de processo). Cumular com Representação à Corregedoria.
 
 ### 1.2. Inércia da APS após provocação por e-mail
 
@@ -34,7 +34,7 @@ Definição. Comunicação de irregularidade praticada por agente público ou ou
 
 Elementos essenciais. Identificação do servidor (quando possível), descrição clara do fato, indicação de provas ou indícios, capitulação normativa (Lei 8.112/90, arts. 116 e 117).
 
-Sigilo. Solicitar sigilo do denunciante com base no art. 13 da Lei 13.608/2018 e Decreto 10.153/2019.
+Sigilo. Solicitar sigilo do denunciante com base no art. 4º-B da Lei 13.608/2018 e Decreto 10.153/2019.
 
 Tramitação. Encaminhamento à Corregedoria-Geral do INSS para apuração.
 
@@ -66,7 +66,7 @@ Base. Lei 12.527/2011.
 
 Aplicação. Útil para mapeamento institucional (relação de chefias, e-mails funcionais, telefones, fluxos de tramitação interna).
 
-Prazo de resposta. 20 dias úteis prorrogáveis por mais 10 (art. 11 da Lei 12.527/2011).
+Prazo de resposta. 20 dias, prorrogáveis por mais 10 (art. 11, §§ 1º e 2º, da Lei 12.527/2011).
 
 ## 3. Roteiro técnico de manifestação no Fala.BR
 
@@ -80,7 +80,7 @@ Elementos materiais. NB, processo, ID dos documentos.
 
 Pedido específico. "Determinar à GEX competente que o SGBEN abra imediatamente a tarefa 13975".
 
-Requerimento de sigilo do denunciante (art. 13 da Lei 13.608/2018).
+Requerimento de sigilo do denunciante (art. 4º-B da Lei 13.608/2018).
 
 Referência expressa à prioridade PCD (Lei 13.146/2015, art. 9º, VII).
 
@@ -88,7 +88,7 @@ Anexação dos comprovantes dos e-mails já enviados.
 
 ### 3.2. Endereçamento múltiplo
 
-Em uma mesma manifestação, indicar nominalmente todas as autoridades envolvidas. Gerente da APS, Chefe da SARD, Chefe do SGBEN, Gerente-Executivo. Multiplica os pontos de pressão.
+Em uma mesma manifestação, indicar nominalmente todas as autoridades envolvidas. Gerente da APS, Chefe da SARD, Chefe do SGBEN, Gerente-Executivo. Cada autoridade nominada fica obrigada a responder.
 
 ## 4. Roteiro técnico da representação à Corregedoria
 
@@ -138,13 +138,13 @@ Lei 8.112/90, arts. 116 e 117.
 
 LGPD, art. 48 (incidente de segurança).
 
-Decreto 11.529/2023 (competência da CGU).
+Decreto 5.480/2005 (SisCor) e Decreto 11.330/2023 (estrutura da CGU).
 
 Decreto 9.492/2018, art. 11 (competência subsidiária da CGU).
 
 ### 5.4. Sigilo
 
-Sigilo do denunciante (art. 13 da Lei 13.608/2018 e Decreto 10.153/2019).
+Sigilo do denunciante (art. 4º-B da Lei 13.608/2018 e Decreto 10.153/2019).
 
 ## 6. Cadeia de encaminhamento das manifestações no INSS
 
@@ -170,7 +170,7 @@ A cadeia padrão de encaminhamento da manifestação ao SGBEN é justamente o ca
 
 Lei 13.460/2017, art. 16. 30 dias prorrogáveis uma única vez por igual período. Total máximo 60 dias.
 
-Lei 12.527/2011 (LAI), art. 11. 20 dias úteis prorrogáveis por mais 10. Total máximo 30 dias úteis.
+Lei 12.527/2011 (LAI), art. 11, §§ 1º e 2º: 20 dias, prorrogáveis por mais 10. Total máximo 30 dias.
 
 Lei 9.784/1999, art. 49. 30 dias prorrogáveis uma única vez por igual período. Total máximo 60 dias.
 
@@ -180,7 +180,7 @@ Carta de Serviços ao Usuário do INSS. Disponível em gov.br/inss.
 
 Estrutura Regimental do INSS (Decreto 10.995/2022). Disponível em planalto.gov.br.
 
-Estrutura Regimental do MGISP/CGU (Decreto 11.529/2023). Disponível em planalto.gov.br.
+Estrutura Regimental da CGU (Decreto 11.330/2023). Disponível em planalto.gov.br.
 
 Portal Fala.BR (https://falabr.cgu.gov.br/).
 

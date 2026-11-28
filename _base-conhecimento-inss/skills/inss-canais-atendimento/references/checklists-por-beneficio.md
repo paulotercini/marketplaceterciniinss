@@ -187,7 +187,7 @@ PPP eletrônico é obrigatório para vínculos a partir de 01/01/2023, o PPP fí
 
 EPI não descaracteriza atividade especial para ruído e agentes biológicos (STF, Tema 555, vinculante para o INSS).
 
-Conversão de tempo especial em tempo comum só é possível para períodos até 12/11/2019.
+Conversão de tempo especial em tempo comum é possível apenas para períodos até 12/11/2019.
 
 Após a concessão, o segurado não pode retornar à mesma atividade especial. Se retornar, o benefício é cessado.
 
@@ -400,8 +400,8 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 ### A. Requisitos legais
 
 - Segurada empregada CLT: não precisa de carência, pago pela empresa pelos primeiros 120 dias, depois reembolsado pelo INSS
-- Segurada CI ou facultativa: sem carência (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS), exigida apenas a qualidade de segurada (auditoria 03/10/2026)
-- Segurada desempregada: qualidade de segurado mantida no período de graça, sem carência (auditoria 03/10/2026)
+- Segurada CI ou facultativa: sem carência (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS), exigida apenas a qualidade de segurada
+- Segurada desempregada: qualidade de segurado mantida no período de graça, sem carência
 
 ### B. Checklist de documentos
 
@@ -413,7 +413,7 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 **Para CI ou facultativa:**
 - [ ] Tudo acima
 - [ ] CTPS ou comprovante de inscrição como CI/facultativa
-- [ ] Extrato CNIS com a contribuição que mantém a qualidade de segurada, paga até o vencimento da competência, e, para CI sem inscrição formal, prova da atividade remunerada (Enunciado 19/CRPS, I, IV e § 2º) (auditoria 03/10/2026)
+- [ ] Extrato CNIS com a contribuição que mantém a qualidade de segurada, paga até o vencimento da competência, e, para CI sem inscrição formal, prova da atividade remunerada (Enunciado 19/CRPS, I, IV e § 2º)
 
 **Para salário-maternidade rural:**
 - [ ] Documentos de atividade rural
@@ -421,9 +421,9 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 
 ### C. Alertas técnicos
 
-Para empregada CLT, o salário-maternidade é pago pela empresa, o INSS só entra se a empresa não pagar. Se a empresa pagar, ela se reembolsa via compensação da guia de FGTS/INSS.
+Para empregada CLT, o salário-maternidade é pago pela empresa, o INSS paga diretamente apenas se a empresa não pagar. Se a empresa pagar, ela se reembolsa via compensação da guia de FGTS/INSS.
 
-Para CI que presta serviço a PJ, não há carência a conferir (Enunciado 19/CRPS). Confere-se a qualidade de segurada, e a falta de recolhimento pela empresa contratante, que responde por ele, não faz a segurada perder essa qualidade (Enunciado 5/CRPS, II) (auditoria 03/10/2026).
+Para CI que presta serviço a PJ, não há carência a conferir (Enunciado 19/CRPS). Confere-se a qualidade de segurada, e a falta de recolhimento pela empresa contratante, que responde por ele, não faz a segurada perder essa qualidade (Enunciado 5/CRPS, II).
 
 ---
 

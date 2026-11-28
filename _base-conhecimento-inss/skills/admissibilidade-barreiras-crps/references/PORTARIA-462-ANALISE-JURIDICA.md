@@ -28,7 +28,7 @@ A hierarquia normativa é clara. A Constituição Federal garante ampla defesa c
 
 ## 5. Incoerência Interna com o Regimento (Portaria 125/2026)
 
-O art. 112, caput, da Portaria 125/2026 estabelece, nos incisos I a VI, o rol de causas de não conhecimento do recurso (auditoria 03/10/2026). A inexistência de "elementos novos" não consta desse rol. O §7º foi inserido como parágrafo do art. 112, e não como novo inciso do caput. A técnica legislativa é atécnica e sugere que a intenção foi escapar do escrutínio do rol taxativo dos incisos do caput.
+O art. 112, caput, da Portaria 125/2026 estabelece, nos incisos I a VI, o rol de causas de não conhecimento do recurso. A inexistência de "elementos novos" não consta desse rol. O §7º foi inserido como parágrafo do art. 112, e não como novo inciso do caput. A técnica legislativa é atécnica e sugere que a intenção foi escapar do escrutínio do rol taxativo dos incisos do caput.
 
 A inserção deveria, no mínimo, ter sido feita como novo inciso do caput do art. 112, para manter a coerência interna do Regimento. A escolha de inserir como parágrafo é juridicamente questionável e revela que o próprio MPS reconhece que a hipótese não se enquadra nas causas tradicionais de inadmissibilidade.
 
@@ -50,7 +50,7 @@ O STF, na ADI 6096, declarou inconstitucional a incidência de prazo decadencial
 
 O §8º veda diligências no procedimento de relevação de intempestividade. O art. 112, §§1º e 2º exigem demonstração "inequívoca" de liquidez e certeza para a relevação. Se a prova dessa liquidez depender de consulta a bases de dados, atualização de CNIS, obtenção de PPP ou qualquer complementação, o conselheiro não poderá obtê-la.
 
-A vedação é especialmente prejudicial quando combinada com o art. 112, §2º, "b", que define liquidez inequívoca quando as "informações necessárias estiverem disponíveis nas bases de dados governamentais acessíveis ao conselheiro." Se o conselheiro não pode realizar diligência para consultar essas bases, a própria alínea "b" se torna letra morta na prática.
+A vedação é especialmente prejudicial quando combinada com o art. 112, § 2º, que define liquidez inequívoca quando as "informações necessárias estiverem disponíveis nas bases de dados governamentais acessíveis ao conselheiro." Se o conselheiro não pode realizar diligência para consultar essas bases, a própria alínea "b" se torna letra morta na prática.
 
 ## 10. Fundamentos para Impugnação. Síntese
 
@@ -62,8 +62,8 @@ A vedação é especialmente prejudicial quando combinada com o art. 112, §2º,
 - Art. 56 da Lei 9.784/99
 - Art. 5º, IV, XIII e XV da Lei 13.460/2017 (direitos do usuário do serviço público)
 - Princípio da hierarquia normativa
-- ADI 6096/STF (proteção contra atos negativos)
-- Incoerência com o rol do art. 112, caput, do próprio Regimento (auditoria 03/10/2026)
+- ADI 6096/STF (prazo extintivo sobre o indeferimento)
+- Incoerência com o rol do art. 112, caput, do próprio Regimento
 
 ### Em mandado de segurança
 

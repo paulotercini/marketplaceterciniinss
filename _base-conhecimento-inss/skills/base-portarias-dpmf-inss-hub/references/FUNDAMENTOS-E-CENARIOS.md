@@ -10,7 +10,7 @@ A vigência das Portarias DIRBEN é dinâmica. Recomenda-se verificação no DOU
 
 | Ano | Portaria | Tema central |
 |---|---|---|
-| 2020 | MTP 6.734 | PCMSO (NR-7) |
+| 2020 | SEPRT/ME 6.734 | PCMSO (NR-7) |
 | 2021 | MTP 672 | EPI (CA) |
 | 2022 | DIRBEN/INSS 990 | CNIS, indicadores, RAC |
 | 2022 | DIRBEN/INSS 991 | Concessão e revisão administrativa |
@@ -29,17 +29,17 @@ A vigência das Portarias DIRBEN é dinâmica. Recomenda-se verificação no DOU
 | 2025 | DIRBEN 1.318 | Alterações 1.309 |
 | 2026 | DPMF/INSS 19 | Teleperícia |
 | 2026 | Conjunta MPS/INSS 13 | Análise documental B31 |
-| 2026 | Conjunta MPS/INSS 14 | Análise documental B91 |
+| 2026 | Conjunta MPS/INSS 14 | Limite de 90 dias do B31 por análise documental |
 | 2026 | Conjunta MPS/INSS 15 | Análise documental B94 |
-| 2026 | MPS 462 | Novo RICRPS |
+| 2026 | MPS 125 (alterada pelas 235 e 462) | RICRPS |
 | 2026 | DIRBEN 1.333 | Reabilitação (atualização) |
 
 Portarias correlatas mais antigas e ainda relevantes.
 
 | Ano | Portaria | Tema |
 |---|---|---|
-| 2014 | Interministerial AGU/MPS/MF/SEDH/MP 1 (auditoria 03/10/2026) | IF-BrA aposentadoria PCD (LC 142) |
-| 2015 | Conjunta MDS/INSS 2 (auditoria 03/10/2026) | BPC biopsicossocial, TCQ |
+| 2014 | Interministerial SDH/MPS/MF/MOG/AGU 1 | IF-BrA aposentadoria PCD (LC 142) |
+| 2015 | Conjunta MDS/INSS 2 | BPC biopsicossocial, TCQ |
 | 2015 | PRES/INSS 1.165 | PFE-INSS Regional |
 
 ## 3. Cenários típicos de aplicação cruzada
@@ -76,13 +76,13 @@ DIRBEN/INSS 991/2022 (procedimento).
 
 MTP 672/2021 (EPI, CA).
 
-MTP 6.734/2020 (PCMSO).
+SEPRT/ME 6.734/2020 (PCMSO).
 
 ### 3.4. Aposentadoria PCD
 
 Portarias incidentes.
 
-Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026).
+Interministerial SDH/MPS/MF/MOG/AGU 1/2014 (IF-BrA).
 
 DIRBEN/INSS 991/2022 (procedimento).
 
@@ -110,7 +110,7 @@ DIRBEN/INSS 992/2022 (manutenção do benefício).
 
 Portarias incidentes.
 
-Conjunta MDS/INSS 2/2015 (avaliação biopsicossocial) (auditoria 03/10/2026).
+Conjunta MDS/INSS 2/2015 (avaliação biopsicossocial).
 
 DIRBEN/INSS 991/2022 (procedimento).
 
@@ -132,7 +132,7 @@ DIRBEN/INSS 991/2022 (procedimento).
 
 Portarias incidentes.
 
-MPS 462/2026 (RICRPS).
+MPS 125/2026, alterada pelas MPS 235/2026 e 462/2026 (RICRPS).
 
 ### 3.11. Erro administrativo (IEA)
 
@@ -216,7 +216,7 @@ PREC-FBR. Recolhimento sem falta de base remuneratória.
 
 PADM-EMPR. Pendência administrativa do empregador.
 
-Detalhamento em `cnis-acerto-indicadores`.
+Detalhamento em `base-cnis-acerto-indicadores`.
 
 ## 10. Documentação institucional consultável
 

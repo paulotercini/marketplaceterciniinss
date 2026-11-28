@@ -19,7 +19,7 @@ Cada pipeline cobre cinco fases. Fase 1, ingestão e auditoria documental. Fase 
 
 ### 3.1 Aposentadoria especial
 
-Fase 1. `auditoria-ppp` para o documento concreto, `cnis-acerto-indicadores` para os vínculos.
+Fase 1. `auditoria-ppp` para o documento concreto, `base-cnis-acerto-indicadores` para os vínculos.
 Fase 2. `base-especial-*` correspondente ao agente nocivo (ruído, EPI, químicos, biológicos, calor, frio, radiação, vibração, eletricidade, periculosidade motociclista, penosidade enfermagem, categoria pré-1995). Acionar também `base-especial-ppp-mudanca-layout-historico` quando o PPP atravessar mudanças de layout.
 Fase 3. `base-aposentadoria-especial-transicao-ec103` ou `base-aposentadoria-direito-adquirido` para enquadramento temporal. `tempo-especial-peticoes-por-rito` para definição de rito.
 Fase 4. `peticao-previdenciaria` para a peça final. Quando houver vícios sanáveis, `retificacao-ppp` antes do peticionamento. Em caso de demora administrativa, `mandado-seguranca-previdenciario`.
@@ -29,8 +29,8 @@ Skill-ponte dedicada. `ponte-workflow-aposentadoria-especial`.
 
 ### 3.2 Pensão por morte
 
-Fase 1. `cnis-acerto-indicadores` para qualidade de segurado do falecido.
-Fase 2. `base-pensao-por-morte-pos-reforma` e `base-pensao-por-morte-uniao-estavel-prova` quando houver companheiro. Acionar `documentos-comprobatorios-in128` para mapa de provas.
+Fase 1. `base-cnis-acerto-indicadores` para qualidade de segurado do falecido.
+Fase 2. `base-pensao-por-morte-pos-reforma` e `base-pensao-por-morte-uniao-estavel-prova` quando houver companheiro. Acionar `base-documentos-comprobatorios-in128` para mapa de provas.
 Fase 3. `base-jef-previdenciario` ou `base-rito-ordinario-trf` conforme alçada.
 Fase 4. `pensao-por-morte` para teses específicas, `peticao-previdenciaria` para a peça.
 Fase 5. `revisao-peticao`.
@@ -39,7 +39,7 @@ Skill-ponte dedicada. `ponte-workflow-pensao-por-morte`.
 
 ### 3.3 Benefícios por incapacidade (B31, B32, B91, B92, B94)
 
-Fase 1. `auditoria-laudo-pericial` quando houver laudo, `analise-documental-incapacidade` para análise documental, `cnis-acerto-indicadores` para qualidade de segurado.
+Fase 1. `auditoria-laudo-pericial` quando houver laudo, `analise-documental-incapacidade` para análise documental, `base-cnis-acerto-indicadores` para qualidade de segurado.
 Fase 2. `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92`, `base-auxilio-acidente-b94-pos-reforma` ou `base-b94-*` específicas. `base-pericia-medica-federal-telepericia` quando houver Teleperícia.
 Fase 3. `ntep-nexo-acidentario` quando houver nexo acidentário. `base-jef-previdenciario` para alçada do JEF.
 Fase 4. `peticao-previdenciaria`. Em caso de cessação indevida, `mandado-seguranca-previdenciario`.
@@ -55,7 +55,7 @@ Fase 5. `revisao-peticao`.
 
 ### 3.5 Revisões estruturantes
 
-Fase 1. `decadencia-revisao-previdenciaria` SEMPRE em primeiro lugar para verificar prazo decadencial. `cnis-acerto-indicadores` para divergências de cálculo.
+Fase 1. `decadencia-revisao-previdenciaria` SEMPRE em primeiro lugar para verificar prazo decadencial. `base-cnis-acerto-indicadores` para divergências de cálculo.
 Fase 2. `base-revisao-vida-toda-rvt`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-irsm-fevereiro-1994`, `base-revisao-art29-melhor-beneficio`, `base-revisao-reajuste-ortn-otn`, `base-revisao-atividades-concomitantes-tema1070`. `base-calculo-rmi-ec103` para revisão de RMI.
 Fase 3. `tema-1124-instrucao-administrativa` para verificar prévio pedido administrativo.
 Fase 4. `peticao-previdenciaria`. Em cumprimento deficiente, `impugnacao-cumprimento-concomitantes`.
@@ -65,7 +65,7 @@ Fase 5. `revisao-peticao`.
 
 Fase 1. `admissibilidade-barreiras-crps` para tempestividade e barreiras.
 Fase 2. Skill base-* do mérito específico. `base-crps-panorama-geral` para visão geral.
-Fase 3. `incidentes-instrucao-crps` para embargos, agravo, sustentação oral. `recursos-superiores-crps` para recurso especial e PUJ.
+Fase 3. `incidentes-instrucao-crps` para embargos, agravo, sustentação oral. `recursos-superiores-crps` para recurso especial e PUJ (RICRPS, art. 122).
 Fase 4. `peticao-previdenciaria` no padrão CRPS.
 Fase 5. `revisao-peticao`.
 
@@ -81,7 +81,7 @@ Fase 5. `revisao-peticao`.
 
 ### 3.8 Cumprimento de sentença
 
-Fase 1. `cnis-acerto-indicadores` para cotejo do CNIS com a planilha do INSS.
+Fase 1. `base-cnis-acerto-indicadores` para cotejo do CNIS com a planilha do INSS.
 Fase 2. `base-cumprimento-sentenca-rpv-precatorio`, `base-juros-correcao-monetaria`, `base-cpc-honorarios-sucumbencia-previdenciaria`. `base-revisao-atividades-concomitantes-tema1070` quando o cumprimento for de revisão pelo Tema 1.070.
 Fase 3. `execucao-cumprimento-previdenciario` para técnica processual. `tributacao-beneficios-previdenciarios` para IR sobre atrasados. `honorarios-contrato-previdenciario` para destaque.
 Fase 4. `peticao-previdenciaria`. Em descumprimento, `impugnacao-cumprimento-concomitantes`.
@@ -101,7 +101,7 @@ Skill-ponte dedicada. `ponte-workflow-reabilitacao-profissional`.
 
 ### 3.10 Recurso contra decisão contrária
 
-Fase 1. `base-analise-decisao-tres-eixos` para a auditoria forense da decisão e o mapa de ataque.
+Fase 1. `base-analise-decisao-tres-eixos` para a auditoria forense da decisão e o mapa de impugnação.
 Fase 2. Skill base-* do mérito controvertido. `base-precedentes-catalogo-vinculantes` para o contra-precedente conferido.
 Fase 3. `base-cpc-embargos-declaracao` para vício de integração. `base-recursos-jef`, `base-recurso-crps-peca-enxuta` ou `base-rito-ordinario-trf` conforme o rito.
 Fase 4. `peticao-previdenciaria` para a peça.
@@ -111,7 +111,7 @@ Skill-ponte dedicada. `ponte-workflow-recurso-sentenca`.
 
 ### 3.11 Réplica à contestação do INSS
 
-Fase 1. `base-analise-contestacao-inss` para a leitura forense da contestação e o mapa de ataque.
+Fase 1. `base-analise-contestacao-inss` para a leitura forense da contestação e o mapa de impugnação.
 Fase 2. Skill base-* do mérito. `base-cpc-onus-prova-art373` para o ônus e `base-precedentes-catalogo-vinculantes` para o contraponto.
 Fase 3. `especificacao-provas` para a fase probatória.
 Fase 4. `peticao-previdenciaria` para a peça.
@@ -140,9 +140,9 @@ Exemplo. Caso de aposentadoria especial por ruído com PPP do cliente.
 
 Pipeline. (1) `auditoria-ppp` no documento. (2) `base-especial-ruido` para fundamento. (3) `defesa-probatoria-especial` para EPI e standard probatório. (4) `tempo-especial-peticoes-por-rito` para rito. (5) `peticao-previdenciaria` para peça. (6) `revisao-peticao` para auditoria final.
 
-## Mapa dos quatro MCPs da casa (Onda 149)
+## Mapa dos MCPs da casa
 
-O escritório opera quatro servidores locais, cada um dono de uma matéria. O `trf3` guarda a jurisprudência do TRF3 e das Turmas Recursais da 3ª Região. O `iurisprudencia` guarda a da TNU e do CRPS, com os enunciados do Conselho Pleno. O `normas` guarda a legislação. O `acervo` guarda o que o próprio escritório já escreveu. A articulação entre eles é a remissão, nunca a cópia, de modo que um trecho do `acervo` que cite o Tema 1090 devolve a referência e o inteiro teor se lê no MCP de jurisprudência. **Nenhum dos quatro autoriza `[CONFERIDO]`.** A ordem de consulta é fixa. Primeiro o `normas`, para o texto do dispositivo. Depois o catálogo `base-precedentes-catalogo-vinculantes`, para o vinculante. Depois o `trf3` e o `iurisprudencia`, para o caso concreto da região e da TNU. Por último o `acervo`, para o que já se sustentou. As ferramentas de cada um estão no bloco "MCPs da casa" de toda skill.
+O escritório opera cinco servidores locais, cada um dono de uma matéria. O `superiores` guarda os temas e as decisões do STF e do STJ. O `trf3` guarda a jurisprudência do TRF3 e das Turmas Recursais da 3ª Região. O `iurisprudencia` guarda a da TNU e do CRPS, com os enunciados do Conselho Pleno. O `normas` guarda a legislação. O `acervo` guarda o que o próprio escritório já escreveu. A articulação entre eles é a remissão, nunca a cópia, de modo que um trecho do `acervo` que cite o Tema 1090 devolve a referência e o inteiro teor se lê no MCP de jurisprudência. **Nenhum deles autoriza `[CONFERIDO]`.** A ordem de consulta é fixa. Primeiro o `normas`, para o texto do dispositivo. Depois o catálogo `base-precedentes-catalogo-vinculantes` e o `superiores`, para o vinculante. Depois o `trf3` e o `iurisprudencia`, para o caso concreto da região e da TNU. Por último o `acervo`, para o que já se sustentou. As ferramentas de cada um estão no bloco "MCPs da casa" de toda skill.
 
 ## 6. Postura
 

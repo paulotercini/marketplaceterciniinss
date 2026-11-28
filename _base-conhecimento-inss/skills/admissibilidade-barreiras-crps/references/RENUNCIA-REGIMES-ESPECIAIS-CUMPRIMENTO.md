@@ -96,7 +96,7 @@ Mandado de segurança para compelir o INSS ao cumprimento de decisão administra
 
 ### Aplicação estratégica
 
-O precedente é arma direta para três situações recorrentes.
+O precedente se aplica a três situações recorrentes.
 
 **a) MS por descumprimento.** Quando o INSS recusa cumprir decisão do CRPS alegando necessidade de reavaliação, a Tese 4 demonstra que essa recusa viola a segurança jurídica e a coisa julgada administrativa. Fundamentação imediata para liminar em MS.
 
