@@ -1,24 +1,18 @@
 # Roteiros Probatórios por Especialidade Médica
 
-## Origem
-
-Roteiros adaptados à postura pró-segurado do escritório.
-
-Objetivo. Dar ao advogado do escritório uma pauta enxuta e imediatamente utilizável para orientar o médico assistente, redigir o laudo e ancorar cada tese na petição de B31, B32, B91 e B92, com correspondência direta entre elemento clínico exigido e texto para a peça.
-
-Regra do escritório. Cada roteiro é ponto de partida. Deve ser cruzado com o quadro concreto do segurado (documentos por ID, CID, DII/DID, prognóstico, ocupação declarada no CNIS). Nada de padronização cega. Nada de adjetivo inflado sem lastro documental.
+Pauta para orientar o médico assistente e ancorar cada tese na petição de B31, B32, B91 e B92, com correspondência entre o elemento clínico exigido e o texto da peça. Cada roteiro é ponto de partida e deve ser cruzado com o quadro concreto do segurado (documentos por ID, CID, DII e DID, prognóstico, ocupação declarada no CNIS). Adjetivo sem lastro documental não entra.
 
 ## Metodologia comum a todas as especialidades
 
-Primeiro, o médico assistente precisa NOMEAR o achado clínico, não apenas o CID. Diagnóstico isolado não sustenta incapacidade.
+Primeiro, o médico assistente precisa nomear o achado clínico, não apenas o CID. Diagnóstico isolado não sustenta incapacidade.
 
-Segundo, o achado deve ser TRADUZIDO em impacto funcional concreto para as atividades profissionais habituais do segurado. Ocupação declarada no CNIS é fio condutor.
+Segundo, o achado deve ser traduzido em impacto funcional concreto para as atividades profissionais habituais do segurado. Ocupação declarada no CNIS é fio condutor.
 
-Terceiro, o achado deve ser CONTEMPORÂNEO à DII e sustentado por exame complementar quando cabível.
+Terceiro, o achado deve ser contemporâneo à DII e sustentado por exame complementar quando cabível.
 
-Quarto, a redação da petição deve VINCULAR cada elemento probatório ao ID do documento anexado, sob a proibição de referências genéricas do padrão do escritório.
+Quarto, a redação da petição deve vincular cada elemento probatório ao ID do documento anexado, sem referência genérica.
 
-Quinto, a estrutura padrão dos roteiros abaixo é. Alerta contra o vício comum, elementos clínicos a comprovar, ancoragem em exame complementar típico, texto padrão para a petição, alerta de mitigação de risco processual.
+Quinto, a estrutura padrão dos roteiros abaixo é: alerta contra o vício comum, elementos clínicos a comprovar, ancoragem em exame complementar típico, texto padrão para a petição, alerta de mitigação de risco processual.
 
 ## 1. Ortopedia
 
@@ -42,13 +36,13 @@ Texto padrão para a petição.
 
 "Conforme documentos médicos anexos (ID [...], ID [...] e ID [...]), a parte autora apresenta importante limitação funcional osteomuscular, com restrição de mobilidade e dor persistente, incapacitante para atividades que demandem permanência prolongada em ortostatismo, sedestação ou deambulação, comprometendo diretamente sua capacidade laboral no exercício da atividade habitual de [ocupação do CNIS]."
 
-Alerta de mitigação. Doenças ortopédicas degenerativas (M15-M19, M50-M54) sofrem forte resistência do INSS sob a alegação de "quadro compatível com a idade". Confrontar com jornada, esforço físico específico e histórico ocupacional documentado. Nexo com atividade laboral reforça a tese para B91 ou B92.
+Alerta de mitigação. Doenças ortopédicas degenerativas (M15-M19, M50-M54) encontram resistência do INSS sob a alegação de "quadro compatível com a idade". Confrontar com jornada, esforço físico específico e histórico ocupacional documentado. Nexo com atividade laboral reforça a tese para B91 ou B92.
 
 Em artrose (M15 a M19 e M47), o elemento de imagem é o grau de Kellgren-Lawrence na radiografia datada, e os graus III e IV são reforço documental, não prova de incapacidade. A prova é a limitação em verbos com medida ligada à tarefa da ocupação do CNIS. Ao argumento "é degenerativo, é da idade", responde-se que a lei avalia a incapacidade para a atividade habitual, e a mesma gonartrose grau III incapacita o pedreiro e não incapacita quem trabalha sentado. Quando a DID é anterior à filiação, a petição cita a progressão ou o agravamento (art. 42, § 2º, e art. 59, § 1º, da Lei 8.213/1991) com o marco documental da DII. Na tese acidentária, o INSS oporá o art. 20, § 1º, "a", que exclui a doença degenerativa do conceito de doença do trabalho, e a resposta é o agravamento pelo trabalho, art. 21, I.
 
 ## 2. Psiquiatria
 
-Alerta contra o vício comum. Diagnóstico não basta. Laudo psiquiátrico limitado a CID e prescrição não vence perícia contrária.
+Alerta contra o vício comum. Diagnóstico não basta. Laudo psiquiátrico limitado a CID e prescrição não supera perícia contrária.
 
 Elementos clínicos a comprovar.
 
@@ -92,11 +86,11 @@ Texto padrão para a petição.
 
 "A patologia cardíaca documentada nos autos (ID [...] e ID [...]) limita substancialmente a capacidade funcional da parte autora, que apresenta dispneia aos médios esforços, fadiga precoce e intolerância a atividades físicas habituais, havendo risco concreto de agravamento clínico e eventos cardiovasculares agudos com a manutenção da rotina laboral de [ocupação do CNIS]."
 
-Alerta de mitigação. Insuficiência cardíaca (I50), cardiopatia isquêmica (I20-I25) e hipertensão de alto risco (I10 associado a lesão de órgão-alvo) exigem que o laudo descreva risco de eventos agudos, sob pena de o perito considerar o quadro compensado sob tratamento medicamentoso. Doença grave para fins de isenção de IR (Lei 7.713/1988, art. 6º, XIV) deve ser aventada quando presente cardiopatia grave.
+Alerta de mitigação. Insuficiência cardíaca (I50), cardiopatia isquêmica (I20-I25) e hipertensão de alto risco (I10 associado a lesão de órgão-alvo) exigem que o laudo descreva risco de eventos agudos, sob pena de o perito considerar o quadro compensado sob tratamento medicamentoso. Avaliar a isenção de IR (Lei 7.713/1988, art. 6º, XIV) quando presente cardiopatia grave.
 
 ## 4. Neurologia
 
-Alerta contra o vício comum. Diagnóstico neurológico sempre exige demonstração de IMPACTO FUNCIONAL, sob pena de o perito classificar o quadro como estável e compatível com o trabalho.
+Alerta contra o vício comum. Diagnóstico neurológico sempre exige demonstração de impacto funcional, sob pena de o perito classificar o quadro como estável e compatível com o trabalho.
 
 Elementos clínicos a comprovar.
 
@@ -116,7 +110,7 @@ Texto padrão para a petição.
 
 "As alterações neurológicas documentadas (ID [...] e ID [...]) acarretam prejuízo motor e cognitivo relevante, com perda de força, redução de coordenação motora e comprometimento funcional incompatível com a execução segura e eficiente das atividades profissionais habituais de [ocupação do CNIS], gerando ainda risco de agravamento e de acidentes de trabalho."
 
-Alerta de mitigação. Doenças neurodegenerativas (G20 Parkinson, G35 esclerose múltipla, G12 esclerose lateral amiotrófica) e sequelas de AVE (I69) devem ter registro de progressão e escalas funcionais. Doença grave para fins de isenção de IR quando presente Parkinson, EM, ELA ou paralisia irreversível.
+Alerta de mitigação. Doenças neurodegenerativas (G20 Parkinson, G35 esclerose múltipla, G12 esclerose lateral amiotrófica) e sequelas de AVE (I69) devem ter registro de progressão e escalas funcionais. Avaliar a isenção de IR (Lei 7.713/1988, art. 6º, XIV) quando presente doença de Parkinson, esclerose múltipla ou paralisia irreversível e incapacitante.
 
 ## 5. Cirurgia e Pós-Operatório
 
@@ -142,17 +136,17 @@ Texto padrão para a petição.
 
 "A parte autora encontra-se em período pós-operatório documentado (ID [...] relatório cirúrgico e ID [...] prescrição médica), ainda em recuperação funcional, necessitando de repouso e restrição de movimentos conforme prescrição médica anexada, sendo prematuro e clinicamente inadequado o retorno às atividades laborais de [ocupação do CNIS] neste momento."
 
-Alerta de mitigação. INSS costuma conceder DCB curta em pós-operatório sob alegação de recuperação previsível. Peticionar sempre com pedido de DCB alinhada ao prognóstico do médico assistente, e com pedido subsidiário de perícia complementar ao término da estimativa. Em pós-operatório de neoplasia (Z85), doença grave para isenção de IR.
+Alerta de mitigação. INSS costuma conceder DCB curta em pós-operatório sob alegação de recuperação previsível. Peticionar sempre com pedido de DCB alinhada ao prognóstico do médico assistente, e com pedido subsidiário de perícia complementar ao término da estimativa. Em pós-operatório de neoplasia maligna, avaliar a isenção de IR do mesmo dispositivo.
 
 ## Integração com o restante do plugin
 
-Este reference é aplicável ao modelo de relatório médico para B31, B32, B91 e B92. Deve ser cruzado com.
+Este arquivo se cruza com as skills abaixo.
 
-`base-modelo-relatorio-medico-incapacidade-b31-b91-b92`. Modelo narrativo enxuto de uma folha, com sub-modelos por especialidade que agora ganham roteiro probatório concreto.
+`base-modelo-relatorio-medico-incapacidade-b31-b91-b92`. Modelo narrativo de uma folha, com sub-modelos por especialidade.
 
-`base-modelo-relatorio-medico-auxilio-acidente-b94`. Adaptar o roteiro ortopédico, cardiológico e neurológico ao regime de SEQUELA consolidada quando o caso for de B94.
+`base-modelo-relatorio-medico-auxilio-acidente-b94`. Adaptar o roteiro ortopédico, cardiológico e neurológico ao regime de sequela consolidada quando o caso for de B94.
 
-`base-modelo-relatorio-medico-bpc-loas-deficiente`. Nas ortopedias, psiquiatrias e neurologias, cruzar o roteiro com os 7 domínios do IFBrM e com a demonstração de impedimento de longo prazo (2 anos).
+`base-modelo-relatorio-medico-bpc-loas-deficiente`. Em ortopedia, psiquiatria e neurologia, cruzar o roteiro com os 7 domínios do IFBrM e com a demonstração de impedimento de longo prazo (2 anos).
 
 `base-modelo-relatorio-medico-aposentadoria-pcd-lc142`. Cruzar com os 7 domínios do IF-BrA. O roteiro neurológico e psiquiátrico é especialmente útil na comprovação do grau de deficiência.
 
@@ -162,8 +156,8 @@ Este reference é aplicável ao modelo de relatório médico para B31, B32, B91 
 
 `peticao-previdenciaria`. Cada texto padrão pode ser adaptado ao caso e inserido na tese de mérito da petição, sempre com ID dos documentos referenciados.
 
-`analise-documental-incapacidade` e `auditoria-laudo-pericial`. Usar o roteiro para auditar o laudo pericial da PMF ou do perito judicial. Ausência de análise dos elementos essenciais da especialidade é vício de fundamentação passível de impugnação e pedido de esclarecimentos.
+`analise-documental-incapacidade` e `auditoria-laudo-pericial`. Usar o roteiro para auditar o laudo pericial da PMF ou do perito judicial. A falta de análise dos elementos essenciais da especialidade é vício de fundamentação, que autoriza impugnação e pedido de esclarecimentos.
 
 ## Alerta metodológico
 
-Nenhum dos textos padrão substitui a análise concreta do caso. Cada frase deve ser reescrita com dados verificáveis por ID. A padronização é ponto de partida, não ponto de chegada. Honestidade radical sobre a força probatória disponível é obrigatória.
+Nenhum dos textos padrão substitui a análise concreta do caso. Cada frase deve ser reescrita com dados verificáveis por ID. A avaliação da força probatória disponível deve ser franca.

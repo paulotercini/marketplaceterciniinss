@@ -91,7 +91,7 @@ Em relação à atividade laboral, o paciente exerce a função de [profissão],
 
 **Avaliação funcional e prognóstico**
 
-Os transtornos psiquiátricos comprometem a paciente nos domínios [autocuidado, mobilidade, relações interpessoais, vida laboral, vida social]. No autocuidado, a [fadiga, anedonia, lentificação psicomotora] dificulta a realização de tarefas básicas. Nas relações interpessoais, [o humor deprimido e a ansiedade favorecem o isolamento]. Na vida laboral, [a combinação de sintomas é incompatível com a manutenção da atividade].
+Os transtornos psiquiátricos comprometem o(a) paciente nos domínios [autocuidado, mobilidade, relações interpessoais, vida laboral, vida social]. No autocuidado, a [fadiga, anedonia, lentificação psicomotora] dificulta a realização de tarefas básicas. Nas relações interpessoais, [o humor deprimido e a ansiedade favorecem o isolamento]. Na vida laboral, [a combinação de sintomas é incompatível com a manutenção da atividade].
 
 O prognóstico funcional é [reservado / desfavorável], considerando o tempo de tratamento ([X anos / meses]), a refratariedade parcial ao tratamento medicamentoso, [a recorrência de crises, o histórico de internações, a polifarmacoterapia mantida].
 
@@ -123,9 +123,9 @@ CRM [número]
 
 **Histórico clínico**
 
-Paciente em acompanhamento reumatológico desde [mês/ano], com diagnóstico de [patologia], estabelecido por [critérios ACR 2010 para fibromialgia / critérios EULAR para artrite reumatoide / sorologia positiva para FAN, anti-DNA]. Apresenta [dor crônica musculoesquelética generalizada com tender points positivos / sinovite em múltiplas articulações com VHS e PCR elevados / manifestações sistêmicas com acometimento articular, renal, cutâneo].
+Paciente em acompanhamento reumatológico desde [mês/ano], com diagnóstico de [patologia], estabelecido por [critérios ACR 2010/2016 para fibromialgia, com índice de dor generalizada e escala de gravidade de sintomas / critérios ACR/EULAR 2010 para artrite reumatoide / sorologia positiva para FAN, anti-DNA]. Apresenta [dor crônica musculoesquelética generalizada, com alodínia e hiperalgesia à palpação localizadas / sinovite em múltiplas articulações com VHS e PCR elevados / manifestações sistêmicas com acometimento articular, renal, cutâneo].
 
-Refere [fadiga crônica, distúrbios do sono não reparador, rigidez matinal, cefaleia, comprometimento cognitivo conhecido como "fibro fog"]. As crises álgicas são [desencadeadas ou agravadas por esforço físico, ortostatismo prolongado, movimentos repetitivos, variações de temperatura, estresse emocional].
+Refere [fadiga crônica, distúrbios do sono não reparador, rigidez matinal, cefaleia, comprometimento cognitivo com exemplo concreto de erro na função]. As crises álgicas são [desencadeadas ou agravadas por esforço físico, ortostatismo prolongado, movimentos repetitivos, variações de temperatura, estresse emocional].
 
 Faz uso contínuo de [medicamentos como pregabalina, duloxetina, ciclobenzaprina, amitriptilina / metotrexato, prednisona, imunobiológicos]. A resposta terapêutica é [limitada / parcial / refratária]. Em virtude do mecanismo de sensibilização central da fibromialgia [ou processo autoimune da artrite/lúpus], não há cura, apenas controle sintomático.
 
@@ -218,7 +218,7 @@ A perda visual compromete [autocuidado, mobilidade autônoma, leitura, manuseio 
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [piora documentada na acuidade visual / descolamento de retina / cegueira instalada]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B32 ou B92: paciente insuscetível de reabilitação visual, em razão de (irreversibilidade da lesão)]. [Para B91 ou B92: nexo causal com (acidente ocular, exposição ocupacional a químicos, radiação)].
+A DII é fixada em [DD/MM/AAAA], conforme [piora documentada na acuidade visual / descolamento de retina / cegueira instalada]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B32 ou B92: paciente insuscetível de reabilitação profissional, em razão de (irreversibilidade da lesão)]. [Para B91 ou B92: nexo causal com (acidente ocular, exposição ocupacional a químicos, radiação)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -257,7 +257,7 @@ A cardiopatia compromete [tolerância ao esforço (NYHA III/IV inviabiliza ativi
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [internação por IAM / descompensação aguda / implante de dispositivo]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B32 ou B92: insuscetibilidade de reabilitação cardíaca, com manutenção de classe funcional NYHA III/IV após terapia otimizada]. [Para B91 ou B92: nexo causal com (estresse ocupacional, exposição a fatores de risco)].
+A DII é fixada em [DD/MM/AAAA], conforme [internação por IAM / descompensação aguda / implante de dispositivo]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B32 ou B92: insuscetibilidade de reabilitação profissional, com manutenção de classe funcional NYHA III/IV após terapia otimizada]. [Para B91 ou B92: nexo causal com (estresse ocupacional, exposição a fatores de risco)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -270,15 +270,13 @@ CRM [número]
 
 ## Observações comuns a todas as especialidades
 
-Todos os modelos seguem o padrão narrativo enxuto (cabe em 1 folha).
+Todos os modelos seguem o padrão narrativo de uma folha.
 
-DII (data de início da incapacidade) é OBRIGATÓRIA.
+DII (data de início da incapacidade) e DID (data de início da doença) constam sempre, cada uma com o exame ou atendimento que a documenta. Com doença anterior à filiação, a DII posterior prova o agravamento (art. 42, § 2º, e art. 59, § 1º, da Lei 8.213/91, citados apenas na petição).
 
-DID (data de início da doença) é importante quando há doença preexistente (art. 42 §2º da Lei 8.213/91, agravamento).
+Permanente (B32 ou B92): insuscetibilidade de reabilitação expressa.
 
-Permanente (B32 ou B92). Insuscetibilidade de reabilitação é OBRIGATÓRIA.
-
-Acidentária (B91 ou B92). Nexo causal com o trabalho é OBRIGATÓRIO (CAT, NTEP automático ou fundamentação técnica).
+Acidentária (B91 ou B92): nexo causal com o trabalho expresso (CAT, NTEP ou fundamentação técnica).
 
 Conectar limitação funcional com atividade laboral concreta do paciente.
 

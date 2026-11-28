@@ -3,31 +3,23 @@ name: base-modelo-relatorio-medico-auxilio-acidente-b94
 description: "Modelo narrativo enxuto (1 folha) de relatório médico para auxílio-acidente B94, com sub-modelos por especialidade. Foco em SEQUELA consolidada e redução da capacidade laborativa. Use SEMPRE que mencionar modelo relatório médico B94, modelo laudo auxílio-acidente, modelo laudo sequela, modelo laudo consolidação lesões, relatório ortopedista B94, relatório psiquiatra B94, relatório reumatologista B94, relatório clínico geral B94, relatório oftalmologista B94, relatório cardiologista B94, sequela permanente, consolidação lesões, redução capacidade laborativa, Anexo III Decreto 3.048, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, nexo acidentário NTEP B94, carta médico B94, gerar relatório auxílio-acidente. Cruza com base-validacao-formal-laudo-medico-checklist-ab, base-auxilio-acidente-b94-pos-reforma, auxilio-acidente-b94, base-b94-anexo-iii-quadros, base-b94-sequela-minima-sumula88-tnu, base-b94-nexo-acidentario-ntep, auditoria-laudo-pericial, ntep-nexo-acidentario, peticao-previdenciaria."
 ---
 
-## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
-
-Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
-
-1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
-2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
-3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
-
-Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
-
 # Modelo de Relatório Médico para Auxílio-Acidente (B94)
+
+Convenção de espécies (códigos INSS): B31 auxílio por incapacidade temporária previdenciário; B91 acidentário; B32 aposentadoria por incapacidade permanente previdenciária; B92 acidentária; B94 auxílio-acidente por acidente do trabalho (B36 quando decorre de acidente de qualquer natureza; a base usa B94 para ambos).
 
 ## 1. Quando acionar esta skill
 
 Acione SEMPRE que houver necessidade de gerar modelo de relatório médico para encaminhar a médico assistente, com finalidade de instruir requerimento administrativo ou ação judicial de auxílio-acidente (B94, art. 86 da Lei 8.213/91).
 
-A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (cabe em 1 folha) no estilo do escritório Paulo Roberto Tercini Filho, focado em SEQUELA consolidada e redução da capacidade laborativa.
+A skill produz modelo narrativo enxuto (cabe em 1 folha), no estilo do escritório, focado em sequela consolidada e redução da capacidade laborativa.
 
 ## 2. Distinção fundamental do B94
 
-O auxílio-acidente NÃO É benefício por incapacidade. É benefício indenizatório por SEQUELA permanente que reduz a capacidade laborativa para o trabalho habitualmente exercido.
+O auxílio-acidente é benefício indenizatório por sequela permanente que reduz a capacidade para o trabalho habitual (art. 86, caput, da Lei 8.213/91). Não pressupõe incapacidade.
 
-O segurado pode CONTINUAR trabalhando. O B94 paga 50% do salário-de-benefício como compensação pela redução da capacidade.
+O segurado pode continuar trabalhando, e o salário recebido não prejudica o benefício (art. 86, §3º). A renda mensal é de 50% do salário de benefício (art. 86, §1º). Têm direito o empregado, o doméstico, o avulso e o segurado especial (art. 18, §1º); o contribuinte individual está excluído (Tema 201 TNU).
 
-Por isso o relatório médico precisa demonstrar.
+O relatório médico precisa demonstrar os quatro elementos a seguir.
 
 Lesão CONSOLIDADA (sem possibilidade de recuperação ao estado anterior).
 
@@ -35,7 +27,7 @@ SEQUELA permanente.
 
 REDUÇÃO da capacidade laborativa para o trabalho habitual.
 
-Nexo causal com acidente (típico, doença ocupacional ou doença equiparada).
+Nexo entre a sequela e um acidente de qualquer natureza; na natureza acidentária, nexo com o trabalho (acidente típico, doença ocupacional ou situação equiparada).
 
 ## 3. Estrutura do modelo base
 
@@ -64,13 +56,13 @@ Parágrafo central. Demonstrar irreversibilidade. Material de síntese definitiv
 
 Hipótese adicional obrigatória: acidente de qualquer natureza (art. 86, caput, da Lei 8.213/91). O nexo laboral é exigível apenas quando se pleiteia a natureza acidentária, com competência da Justiça Estadual.
 
-Indicar expressamente.
+Quando houver natureza acidentária, indicar expressamente uma das hipóteses abaixo.
 
 Acidente típico (art. 19 Lei 8.213/91) com data e descrição.
 
-Doença ocupacional (art. 20) com correlação CID-CNAE.
+Doença profissional ou do trabalho (art. 20), com o agente ou a condição de trabalho que a produziu (Listas A e B do Anexo II do Decreto 3.048/99).
 
-Doença equiparada acidente (art. 21).
+Situação equiparada a acidente do trabalho (art. 21), inclusive o acidente de trajeto (art. 21, IV, "d").
 
 NTEP automático (art. 21-A e Lista C do Anexo II do Decreto 3.048/99).
 
@@ -121,21 +113,21 @@ Descrever objetivamente a sequela. Encurtamento de membro, perda de movimento ar
 
 ### 6.3. Redução da capacidade laborativa
 
-CRÍTICO. Conectar a sequela à atividade laboral HABITUAL do segurado. Demonstrar que a sequela exige maior esforço, adaptações, restrição de algumas atividades.
+Conectar a sequela à atividade laboral HABITUAL do segurado. Demonstrar que a sequela exige maior esforço, adaptações, restrição de algumas atividades.
 
-NÃO precisa demonstrar incapacidade total. Basta REDUÇÃO da capacidade.
+Não é preciso demonstrar incapacidade. Basta a redução da capacidade.
 
-### 6.4. Anexo III do Decreto 3.048/99 é EXEMPLIFICATIVO
+### 6.4. Anexo III do Decreto 3.048/99 é exemplificativo
 
-Súmula 88/TNU. Súmula 89/TNU. Tema 416/STJ.
-
-Mesmo que a sequela não esteja literalmente prevista no Anexo III, cabe B94 se há redução da capacidade laborativa.
+O art. 104, caput, do Decreto 3.048/99 remete às situações do Anexo III "a exemplo", e o art. 354, §1º, da IN 128/2022 declara o Anexo meramente exemplificativo. Mesmo que a sequela não esteja prevista no Anexo III, cabe B94 se há redução da capacidade laborativa.
 
 Cruzamento com `base-b94-anexo-iii-quadros`.
 
 ### 6.5. Sequela mínima
 
-Súmula 88/TNU e Tema 416/STJ. Sequela mínima admite B94 se há demonstração funcional.
+Súmula 88 TNU: "A existência de limitação, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessão do benefício de auxílio-acidente, em observância a tese fixada sob o Tema 416 do Superior Tribunal de Justiça." O Tema 416 STJ afasta a relevância do grau da lesão.
+
+Súmula 89 TNU (adversa): "Não há direito a concessão de benefício de auxílio-acidente quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que não reduzem a capacidade laborativa habitual nem sequer demandam dispêndio de maior esforço na execução da atividade habitual." Por isso o relatório descreve a limitação ou o maior esforço na atividade habitual.
 
 Cruzamento com `base-b94-sequela-minima-sumula88-tnu`.
 
@@ -151,17 +143,17 @@ Cruzamento com `base-b94-nexo-acidentario-ntep` e `ntep-nexo-acidentario`.
 
 ## 7. Armadilhas a evitar
 
-Laudo de "incapacidade". B94 NÃO é incapacidade, é REDUÇÃO de capacidade. Médico não pode redigir como se fosse B31/B91.
+Laudo de "incapacidade". O B94 exige redução da capacidade, e não incapacidade. O relatório não deve ser redigido como se fosse para B31 ou B91.
 
 Laudo sem consolidação. Se a lesão ainda está em tratamento sem consolidação, é B31 ou B91, não B94. Documentar a consolidação.
 
-Laudo sem nexo. Sem afirmação expressa do nexo causal, perícia indefere a tese acidentária.
+Laudo sem nexo. Sem afirmação expressa do nexo entre a sequela e o acidente, a perícia nega o benefício; sem nexo com o trabalho, nega a natureza acidentária.
 
 Laudo sem descrição funcional da sequela. "Paciente apresenta sequela de fratura" é insuficiente. Descrever a sequela funcional.
 
 Laudo sem correlação com a atividade laboral. Sequela genérica sem demonstração de como afeta o trabalho habitual.
 
-Confusão entre acidente e relação de trabalho. O B94 exige acidente de qualquer natureza, inclusive fora do trabalho; o nexo laboral apenas importa para a natureza acidentária e a competência estadual. Doença degenerativa sem evento traumático não gera B94.
+Confusão entre acidente e relação de trabalho. O B94 exige acidente de qualquer natureza, inclusive fora do trabalho; o nexo laboral importa apenas para a natureza acidentária e a competência estadual. Doença degenerativa sem evento traumático e sem nexo ocupacional não gera B94.
 
 CID sem o código da sequela. Usar o código pós-traumático com quarto dígito (M17.2 ou M17.3 gonartrose pós-traumática, M16.4 ou M16.5 coxartrose pós-traumática, M19.1 artrose pós-traumática de outra articulação, T93 e T92 sequelas de lesões dos membros), ao lado do código da lesão original.
 
@@ -177,7 +169,7 @@ Após o médico preencher, validar com `base-validacao-formal-laudo-medico-check
 
 ## 10. Como o Claude entrega na prática
 
-Quando você acionar a skill em caso concreto, indique.
+Ao acionar a skill em caso concreto, informe os dados abaixo, que ficam no documento do caso.
 
 Nome do cliente.
 
@@ -189,7 +181,7 @@ Atividade laboral habitual do segurado.
 
 Existência ou não de CAT emitida.
 
-Eu gero o relatório personalizado em formato .docx pronto para entrega ao médico assistente.
+Claude gera o relatório personalizado em formato .docx pronto para entrega ao médico assistente.
 
 ## 11. Cruzamento com outras skills
 

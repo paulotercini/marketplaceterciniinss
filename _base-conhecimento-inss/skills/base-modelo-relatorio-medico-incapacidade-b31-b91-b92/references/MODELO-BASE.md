@@ -28,7 +28,7 @@ A doença está documentada desde [DD/MM/AAAA], e a incapacidade para o trabalho
 
 ## Orientação ao médico assistente
 
-1. Data de emissão, CPF e CRM legível são exigidos pela análise documental do INSS, e o relatório sem eles volta.
+1. Data de emissão, identificação do paciente, CID ou diagnóstico por extenso e assinatura com CRM legível são exigidos pela análise documental do INSS, e o relatório sem eles volta.
 2. CID com o quarto dígito, porque M17.0 (artrose primária dos dois joelhos) e M17.3 (artrose pós-traumática) contam histórias diferentes.
 3. As duas datas, sempre. A data em que a doença começou e a data em que a incapacidade começou, cada uma com o exame ou atendimento que a prova. Doença antiga não impede o benefício quando a incapacidade veio depois, por agravamento.
 4. A limitação em verbos com medida, ligada à profissão. "Não permanece em pé mais de vinte minutos e a função de pedreiro exige o dia inteiro" convence, e "incapacitado" não.
