@@ -4433,5 +4433,8 @@ html[data-tema="v10"] .app.celular .det-topo .det-imp{width:44px;height:44px}
   --p-roxo-1:#F1EAFB; --p-roxo-2:#E7E1F1; --p-roxo-3:#DDD4EC; --p-roxo-4:#DACBF2; --p-roxo-5:#DCC8E6; --p-roxo-6:#CDBDEB; --p-roxo-7:#8A5CF6; --p-roxo-8:#8764B8; --p-roxo-9:#7A5AA8; --p-roxo-10:#5B3A9B; --p-roxo-11:#5B3F8C; --p-roxo-12:#5C4B7D; --p-roxo-13:#5C2E91;
   --p-rosa-1:#FDF2F9; --p-rosa-2:#F3DDEC; --p-rosa-3:#E7BEDA; --p-rosa-4:#D64570; --p-rosa-5:#A5187F;
 }
+/* F845 · trilho da fase atual no tom claro da própria fase; "sem data" em cinza */
+html[data-tema="v10"] .app .ltc .ltc-a .ltc-r{background:color-mix(in srgb,var(--c) 16%,var(--p-branco))}
+html[data-tema="v10"] .ltc .ltc-y.ltc-sd{color:var(--p-cinza-20);font-weight:400}
 </style>
 </head>

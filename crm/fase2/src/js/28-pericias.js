@@ -1384,10 +1384,13 @@ function linhaTempoCaso(k){
   const bar = segs.filter(([f,s])=>s!=="n" || bt[f]).map(([f,s,a,fl])=>{
     const [c, n] = COR[f] || [COR_FASE[f].c, f==="conselho" ? "CRPS" : COR_FASE[f].n], fut = s==="v" || s==="n";
     const pc = s==="a" ? pctFase(k, f, a0[f]) : null, fill = pc==null ? "" : `<i class="ltc-p" style="--p:${pc.p}%"></i>`;
+    // F845 · fase atual: percentual ao lado do ano; sem data cadastrada, "sem data" em cinza
+    const y = fut ? `<span class="ltc-y"></span>` : !a && s==="a" ? `<span class="ltc-y ltc-sd">sem data</span>`
+      : `<span class="ltc-y">${esc(a)}${pc&&pc.mostra?` · ${pc.p}%`:""}</span>`;
     if(bt[f]) return bt[f].replace('class="jn-b ', `class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""} jn-b `).replace('style="', `style="flex:${fl};--c:${fut?"#B7BCC2":c};`)
-      .replace(/<\/button>$/, `<span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r">${fill}</span>${pc&&pc.mostra?`<span class="ltc-q">${pc.p}%</span>`:""}</button>`);
+      .replace(/<\/button>$/, `${y}<span class="ltc-r">${fill}</span></button>`);
     return `<div class="ltc-s${fut?" ltc-v":""}${s==="a"?" ltc-a":""}" style="flex:${fl};--c:${fut?"#B7BCC2":c}" title="${esc(n)}${a&&!fut?` · desde ${a}`:""}">
-      <span class="ltc-y">${fut?"":esc(a)}</span><span class="ltc-r"></span><span class="ltc-n">${esc(n)}</span></div>`; }).join("");
+      ${y}<span class="ltc-r"></span><span class="ltc-n">${esc(f==="implantacao" ? "Implant." : n)}</span></div>`; }).join("");
   let tot = "";
   if(ini){ const d0 = new Date(ini), h = new Date(), m = (h.getFullYear()-d0.getFullYear())*12 + h.getMonth()-d0.getMonth() - (h.getDate()<d0.getDate()?1:0);
     const a = Math.floor(m/12), r = m%12;
